@@ -9,4 +9,12 @@ export interface Generator {
     generatorLanguage: FernRegistry.generators.GeneratorLanguage | undefined;
     /** The name of the docker image to pull to run this generator. */
     dockerImage: string;
+    /** The steps necessary to prepare the environment to run any of the scripts below, for example installing yarn itself. */
+    preInstallScript: FernRegistry.generators.Script | undefined;
+    /** The steps necessary for installing the generated resource, if any (ex - `yarn install`). */
+    installScript: FernRegistry.generators.Script | undefined;
+    /** The steps for building the generated resource. */
+    compileScript: FernRegistry.generators.Script | undefined;
+    /** The steps for running tests for the generated resource. */
+    testScript: FernRegistry.generators.Script | undefined;
 }

@@ -45,7 +45,19 @@ export class Generators {
      *             type: "sdk"
      *         },
      *         generatorLanguage: "python",
-     *         dockerImage: "string"
+     *         dockerImage: "string",
+     *         preInstallScript: {
+     *             steps: ["string"]
+     *         },
+     *         installScript: {
+     *             steps: ["string"]
+     *         },
+     *         compileScript: {
+     *             steps: ["string"]
+     *         },
+     *         testScript: {
+     *             steps: ["string"]
+     *         }
      *     })
      */
     public async upsertGenerator(

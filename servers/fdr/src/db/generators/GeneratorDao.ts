@@ -1,6 +1,12 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import * as prisma from "@prisma/client";
-import { Generator, GeneratorId, GeneratorLanguage, GeneratorType } from "../../api/generated/api/resources/generators";
+import {
+    Generator,
+    GeneratorId,
+    GeneratorLanguage,
+    GeneratorType,
+    Script,
+} from "../../api/generated/api/resources/generators";
 import { assertNever, readBuffer, writeBuffer } from "../../util";
 
 export interface LoadSnippetAPIRequest {
@@ -85,6 +91,10 @@ export class GeneratorsDaoImpl implements GeneratorsDao {
             generatorType: writeBuffer(generator.generatorType),
             generatorLanguage: convertGeneratorLanguage(generator.generatorLanguage),
             dockerImage: generator.dockerImage,
+            preInstallScript: generator.preInstallScript ? writeBuffer(generator.preInstallScript) : undefined,
+            installScript: generator.installScript ? writeBuffer(generator.installScript) : undefined,
+            compileScript: generator.compileScript ? writeBuffer(generator.compileScript) : undefined,
+            testScript: generator.testScript ? writeBuffer(generator.testScript) : undefined,
         };
         await this.prisma.generator.upsert({
             where: {
@@ -160,6 +170,12 @@ function convertPrismaGenerator(generator: prisma.Generator | null): Generator |
               generatorType: readBuffer(generator.generatorType) as GeneratorType,
               generatorLanguage: convertPrismaLanguage(generator.generatorLanguage),
               dockerImage: generator.dockerImage,
+              preInstallScript: generator.preInstallScript
+                  ? (readBuffer(generator.preInstallScript) as Script)
+                  : undefined,
+              installScript: generator.installScript ? (readBuffer(generator.installScript) as Script) : undefined,
+              compileScript: generator.compileScript ? (readBuffer(generator.compileScript) as Script) : undefined,
+              testScript: generator.testScript ? (readBuffer(generator.testScript) as Script) : undefined,
           }
         : undefined;
 }

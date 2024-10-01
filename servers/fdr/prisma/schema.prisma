@@ -169,6 +169,11 @@ model Generator {
   dockerImage       String    @unique
   generatorLanguage Language?
 
+  preInstallScript Bytes?
+  installScript    Bytes?
+  compileScript    Bytes?
+  testScript       Bytes?
+
   releases GeneratorRelease[]
 
   createdAt DateTime @default(now())

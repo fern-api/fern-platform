@@ -6,4 +6,5 @@ export * from "./ServerGenerator";
 export * from "./OtherGenerator";
 export * from "./GeneratorType";
 export * from "./GeneratorLanguage";
+export * from "./Script";
 export * from "./Generator";
