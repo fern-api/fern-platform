@@ -1,22 +1,22 @@
-import { ProxyRequest, ProxyResponse, ProtobufSchema } from "../generated/api";
-import { Buf } from "../libs/buf";
-import { fetchAndUnzip } from "./utils/fetchAndUnzip";
 import { mkdir } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
-import { DEFAULT_PROTO_DIRECTORY, DEFAULT_PROTO_SOURCE_URL } from "./constants";
+import { DEFAULT_PROTO_DIRECTORY, DEFAULT_PROTO_SOURCE_URL } from "../constants";
+import { ProtobufSchema, ProxyRequest, ProxyResponse } from "../generated/api";
+import { Buf } from "../libs/buf";
+import { fetchAndUnzip } from "../utils/fetchAndUnzip";
 
 interface Options {
     skipDefaultSchema?: boolean;
 }
 
-export async function proxyGrpcInternal({
+export async function proxyGrpc({
     request,
     options,
 }: {
-    request: GrpcProxyRequest;
+    request: ProxyRequest;
     options?: Options;
-}): Promise<GrpcProxyResponse> {
+}): Promise<ProxyResponse> {
     const buf = new Buf();
     try {
         const response = await buf.curl({
@@ -40,7 +40,7 @@ async function toCurlRequest({
     request,
     options,
 }: {
-    request: GrpcProxyRequest;
+    request: ProxyRequest;
     options?: Options;
 }): Promise<Buf.CurlRequest> {
     return {

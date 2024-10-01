@@ -1,9 +1,12 @@
 import express from "express";
-import { GrpcProxy } from "./GrpcProxy";
-import { register } from "./generated/api";
+import { GrpcProxy } from "./app/GrpcProxy";
+import { getConfig } from "./app/GrpcProxyConfig";
+import { getGrpcProxyService } from "./controllers/getGrpcProxyService";
+import { register } from "./generated/register";
 
 const PORT = 8080;
 const expressApp = express();
+const app = new GrpcProxy(getConfig());
 
 void startServer();
 
