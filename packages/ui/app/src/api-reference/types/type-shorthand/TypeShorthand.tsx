@@ -99,7 +99,6 @@ export function renderTypeShorthand(
     },
     types: Record<string, ResolvedTypeDefinition>,
 ): string {
-    console.log(shape);
     const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
         withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
     return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit({
