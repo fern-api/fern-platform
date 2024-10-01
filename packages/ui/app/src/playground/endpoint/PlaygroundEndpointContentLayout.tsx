@@ -48,6 +48,7 @@ export function PlaygroundEndpointContentLayout({
                     />
                 ) : (
                     <PlaygroundEndpointMobileLayout
+                        endpointId={endpointId}
                         form={form}
                         requestCard={requestCard}
                         responseCard={responseCard}
