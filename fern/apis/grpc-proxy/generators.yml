@@ -1,0 +1,14 @@
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-express
+        version: 0.17.6
+        output:
+          location: local-file-system
+          path: ../../../servers/grpc-proxy/src/generated
+        config:
+          outputEsm: true
+          noSerdeLayer: true
+          noOptionalProperties: true
+          useBrandedStringAliases: true
