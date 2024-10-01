@@ -52,9 +52,6 @@ export const SLUG_ATOM = atom(
             return;
         }
 
-        // eslint-disable-next-line no-console
-        console.debug("setting location to in slug atom", pathname);
-
         // replaces the current location with the new slug, and removes any hash (from an anchor) that may be present
         set(LOCATION_ATOM, { pathname, searchParams: location.searchParams, hash: "" }, { replace: true });
     },

@@ -145,6 +145,9 @@ const nextConfig = {
         }
         return config;
     },
+    compiler: {
+        removeConsole: true,
+    },
 };
 
 /** @type {import("next").NextConfig} */
