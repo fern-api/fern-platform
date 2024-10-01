@@ -1,4 +1,5 @@
 import { createLoggingExecutable, LoggingExecutable } from "@utils/createLoggingExecutable";
+import execa from "execa";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
 
@@ -64,16 +65,18 @@ export class Buf {
     }
 
     private async install(): Promise<LoggingExecutable> {
-        // Lambdas can only write into temporary directories.
-        const tmpDirPath = (await tmp.dir()).path;
+        // Running the commands on Lambdas is a bit odd...specifically you can only write to tmp on a lambda
+        // so here we make sure the CLI is bundled via the `external` block in serverless.yml
+        // and then execute the command directly via node_modules, with the home and cache set to /tmp.
+        const tmpDir = await tmp.dir();
+        const tmpDirPath = tmpDir.path;
         process.env.NPM_CONFIG_CACHE = `${tmpDirPath}/.npm`;
         process.env.HOME = tmpDirPath;
 
-        const npm = createLoggingExecutable("npm", {
-            cwd: process.cwd(),
-        });
-        console.debug(`Installing ${BUF_NPM_PACKAGE} ...`);
-        await npm(["install", "-g", `${BUF_NPM_PACKAGE}@${BUF_VERSION}`]);
+        // Update config to allow `npm install` to work from within the `fern upgrade` command
+        process.env.NPM_CONFIG_PREFIX = tmpDirPath;
+        // Re-install the CLI to ensure it's at the correct path, given the updated config
+        await execa("npm", ["install", "-g", `${BUF_NPM_PACKAGE}@${BUF_VERSION}`]);
 
         const cli = this.createBufExecutable();
         const version = await cli(["--version"]);
