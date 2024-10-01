@@ -7,6 +7,7 @@ import { PlaygroundEndpointDesktopLayout } from "./PlaygroundEndpointDesktopLayo
 import { PlaygroundEndpointMobileLayout } from "./PlaygroundEndpointMobileLayout";
 
 interface PlaygroundEndpointContentLayoutProps {
+    endpointId: string;
     sendRequest: () => void;
     form: ReactNode;
     requestCard: ReactNode;
@@ -14,6 +15,7 @@ interface PlaygroundEndpointContentLayoutProps {
 }
 
 export function PlaygroundEndpointContentLayout({
+    endpointId,
     sendRequest,
     form,
     requestCard,
@@ -38,6 +40,7 @@ export function PlaygroundEndpointContentLayout({
             >
                 {!isMobileScreen ? (
                     <PlaygroundEndpointDesktopLayout
+                        endpointId={endpointId}
                         scrollAreaHeight={scrollAreaHeight}
                         form={form}
                         requestCard={requestCard}

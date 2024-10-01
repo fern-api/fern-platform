@@ -3,6 +3,7 @@ import { useFeatureFlags } from "../../atoms";
 import { HorizontalSplitPane, VerticalSplitPane } from "../VerticalSplitPane";
 
 interface PlaygroundEndpointDesktopLayoutProps {
+    endpointId: string;
     scrollAreaHeight: number;
     form: ReactNode;
     requestCard: ReactNode;
@@ -10,6 +11,7 @@ interface PlaygroundEndpointDesktopLayoutProps {
 }
 
 export function PlaygroundEndpointDesktopLayout({
+    endpointId,
     scrollAreaHeight,
     form,
     requestCard,
@@ -26,8 +28,7 @@ export function PlaygroundEndpointDesktopLayout({
                 style={{ height: scrollAreaHeight }}
                 aboveClassName={
                     // TODO: Remove after pinecone demo
-                    // @ts-expect-error Pinecone hack
-                    grpcEndpoints?.includes(requestCard.props.endpoint.id)
+                    grpcEndpoints?.includes(endpointId)
                         ? "py-6 flex items-stretch justify-stretch"
                         : "pt-6 pb-1 flex items-stretch justify-stretch"
                 }
@@ -35,8 +36,7 @@ export function PlaygroundEndpointDesktopLayout({
             >
                 {
                     // TODO: Remove after pinecone demo
-                    // @ts-expect-error Pinecone hack
-                    grpcEndpoints?.includes(requestCard.props.endpoint.id) ? null : requestCard
+                    grpcEndpoints?.includes(endpointId) ? null : requestCard
                 }
                 {responseCard}
             </VerticalSplitPane>

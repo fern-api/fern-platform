@@ -1,7 +1,9 @@
 import { FernTabs } from "@fern-ui/components";
 import { ReactElement, ReactNode, useState } from "react";
+import { useFeatureFlags } from "../../atoms";
 
 interface PlaygroundEndpointMobileLayoutProps {
+    endpointId: string;
     form: ReactNode;
     requestCard: ReactNode;
     responseCard: ReactNode;
@@ -9,12 +11,14 @@ interface PlaygroundEndpointMobileLayoutProps {
 }
 
 export function PlaygroundEndpointMobileLayout({
+    endpointId,
     form,
     requestCard,
     responseCard,
     sendButton,
 }: PlaygroundEndpointMobileLayoutProps): ReactElement {
     const [tabValue, setTabValue] = useState<string>("0");
+    const { grpcEndpoints } = useFeatureFlags();
     return (
         <FernTabs
             className="px-4"
@@ -39,7 +43,7 @@ export function PlaygroundEndpointMobileLayout({
                                     }
                                 /> */}
                             </div>
-                            {requestCard}
+                            {grpcEndpoints?.includes(endpointId) && requestCard}
                         </div>
                     ),
                 },
