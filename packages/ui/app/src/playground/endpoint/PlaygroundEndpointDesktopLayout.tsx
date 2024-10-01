@@ -7,6 +7,7 @@ interface PlaygroundEndpointDesktopLayoutProps {
     form: ReactNode;
     requestCard: ReactNode;
     responseCard: ReactNode;
+    endpointId?: string;
 }
 
 export function PlaygroundEndpointDesktopLayout({
@@ -14,6 +15,7 @@ export function PlaygroundEndpointDesktopLayout({
     form,
     requestCard,
     responseCard,
+    endpointId,
 }: PlaygroundEndpointDesktopLayoutProps): ReactElement {
     const { grpcEndpoints } = useFeatureFlags();
 
@@ -26,8 +28,7 @@ export function PlaygroundEndpointDesktopLayout({
                 style={{ height: scrollAreaHeight }}
                 aboveClassName={
                     // TODO: Remove after pinecone demo
-                    // @ts-expect-error Pinecone hack
-                    grpcEndpoints?.includes(requestCard.props.endpoint.id)
+                    endpointId && grpcEndpoints?.includes(endpointId)
                         ? "py-6 flex items-stretch justify-stretch"
                         : "pt-6 pb-1 flex items-stretch justify-stretch"
                 }
@@ -35,8 +36,7 @@ export function PlaygroundEndpointDesktopLayout({
             >
                 {
                     // TODO: Remove after pinecone demo
-                    // @ts-expect-error Pinecone hack
-                    grpcEndpoints?.includes(requestCard.props.endpoint.id) ? null : requestCard
+                    endpointId && grpcEndpoints?.includes(endpointId) ? null : requestCard
                 }
                 {responseCard}
             </VerticalSplitPane>
