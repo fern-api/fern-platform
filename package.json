@@ -31,7 +31,8 @@
     "docs:build": "turbo docs:build",
     "docs:start": "turbo docs:start",
     "docs:e2e": "vitest --run test/docs-e2e/**/* --globals",
-    "fdr:generate": "pnpm fern generate --api fdr --local && pnpm turbo --filter=@fern-api/fdr-sdk compile"
+    "fdr:generate": "pnpm fern generate --api fdr --local && pnpm turbo --filter=@fern-api/fdr-sdk compile",
+    "grpc-proxy:generate": "pnpm fern generate --api grpc-proxy --local"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
