@@ -1,0 +1,53 @@
+name: Deploy FDR Dev
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PACKAGE_NAME: "@fern-platform/grpc-proxy"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  FERNIE_SLACK_APP_TOKEN: ${{ secrets.FERNIE_SLACK_APP_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+
+jobs:
+  deploy_dev:
+    runs-on: ubuntu-latest
+    environment: Fern Dev
+    strategy:
+      matrix:
+        concurrency: [1]
+    env:
+      APPLICATION_ENVIRONMENT: dev
+    steps:
+      - uses: actions/checkout@v4
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: 🧪 Build and test
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: |
+          pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
+          pnpm --filter "@fern-platform/grpc-proxy" sentry:sourcemaps
+
+      - name: 💻 Setup AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: 🚀 cdk deploy
+        run: |
+          git_version="$(scripts/git-version.sh)"
+          pnpm --filter=@fern-platform/grpc-proxy run docker:dev "${git_version}"
+          npm install -g aws-cdk
+          cd servers/grpc-proxy-deploy
+          VERSION="${git_version}" pnpm --filter=@fern-platform/grpc-proxy-deploy deploy:dev

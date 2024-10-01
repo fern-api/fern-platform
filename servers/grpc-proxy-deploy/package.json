@@ -1,0 +1,32 @@
+{
+  "name": "@fern-platform/grpc-proxy-deploy",
+  "version": "0.1.0",
+  "bin": "bin/grpc-proxydeploy.js",
+  "scripts": {
+    "watch": "tsc -w",
+    "cdk": "cdk",
+    "deploy:dev": "cdk deploy grpc-proxy-dev2 --require-approval never --progress events",
+    "deploy:prod": "cdk deploy grpc-proxy-prod --require-approval never --progress events",
+    "rediscli": "node ./node_modules/redis-cli/index.js"
+  },
+  "devDependencies": {
+    "@fern-platform/configs": "workspace:*",
+    "@types/node": "^18.7.18",
+    "@types/prettier": "2.6.0",
+    "aws-cdk": "^2.139.0",
+    "vitest": "^1.5.0",
+    "prettier": "^3.3.2",
+    "ts-node": "^10.9.1",
+    "@types/jest": "^29.5.12",
+    "redis-cli": "^2.1.2",
+    "typescript": "5.4.3"
+  },
+  "dependencies": {
+    "@fern-fern/fern-cloud-sdk": "^0.0.257",
+    "aws-cdk-lib": "^2.122.0",
+    "axios": "^1.6.5",
+    "constructs": "^10.3.0",
+    "redis": "^4.6.13",
+    "source-map-support": "^0.5.21"
+  }
+}
