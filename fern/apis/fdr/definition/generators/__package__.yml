@@ -45,6 +45,28 @@ types:
       - swift
       - rust
 
+  Script:
+    properties:
+      steps:
+        type: list<string>
+        docs: Each line of the script should be an entry within the list. These steps should be assumed to run via bash/command line.
+
+  # These scripts might be over specifiying, but also sets us up in a decent position to centralize information to generate CI actions files when the time comes
+  GeneratorScripts:
+    properties:
+      preInstallScript:
+        type: optional<Script>
+        docs: The steps necessary to prepare the environment to run any of the scripts below, for example installing yarn itself.
+      installScript:
+        type: optional<Script>
+        docs: The steps necessary for installing the generated resource, if any (ex - `yarn install`).
+      compileScript:
+        type: optional<Script>
+        docs: The steps for building the generated resource.
+      testScript:
+        type: optional<Script>
+        docs: The steps for running tests for the generated resource.
+
   Generator:
     properties:
       id: GeneratorId
@@ -54,6 +76,7 @@ types:
       dockerImage:
         type: string
         docs: The name of the docker image to pull to run this generator.
+      scripts: optional<GeneratorScripts>
 
 service:
   audiences:

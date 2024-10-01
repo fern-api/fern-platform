@@ -11,4 +11,5 @@ export interface Generator {
     generatorLanguage: FernRegistry.generators.GeneratorLanguage | undefined;
     /** The name of the docker image to pull to run this generator. */
     dockerImage: string;
+    scripts: FernRegistry.generators.GeneratorScripts | undefined;
 }

@@ -169,6 +169,8 @@ model Generator {
   dockerImage       String    @unique
   generatorLanguage Language?
 
+  scripts Bytes?
+
   releases GeneratorRelease[]
 
   createdAt DateTime @default(now())
