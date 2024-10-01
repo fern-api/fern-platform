@@ -78,5 +78,5 @@ export function PlaygroundEndpointRequestCard({
             </div>
             <PlaygroundRequestPreview endpoint={endpoint} formState={formState} requestType={requestType} />
         </FernCard>
-    ) : null;
+    );
 }
