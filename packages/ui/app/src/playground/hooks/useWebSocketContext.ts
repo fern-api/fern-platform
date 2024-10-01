@@ -13,15 +13,15 @@ interface LoadableWebSocketContext {
     isLoading: boolean;
 }
 
+const fetcher = (url: string): Promise<ApiDefinition> => fetch(url).then((res) => res.json());
+
 /**
  * This hook leverages SWR to fetch and cache the definition for this endpoint.
  * It should be refactored to store the resulting endpoint in a global state, so that it can be shared between components.
  */
 export function useWebSocketContext(node: FernNavigation.WebSocketNode): LoadableWebSocketContext {
     const route = useApiRoute(`/api/fern-docs/api-definition/${node.apiDefinitionId}/websocket/${node.webSocketId}`);
-    const { data: apiDefinition, isLoading } = useSWRImmutable<ApiDefinition>(route, (url: string) =>
-        fetch(url).then((res) => res.json()),
-    );
+    const { data: apiDefinition, isLoading } = useSWRImmutable(route, fetcher);
     const context = useMemo(() => createWebSocketContext(node, apiDefinition), [node, apiDefinition]);
 
     return { context, isLoading };
@@ -34,7 +34,7 @@ export function usePreloadWebSocketContext(): (node: FernNavigation.WebSocketNod
                 get,
                 `/api/fern-docs/api-definition/${node.apiDefinitionId}/websocket/${node.webSocketId}`,
             );
-            void preload(route, (url: string) => fetch(url).then((res) => res.json()));
+            void preload(route, fetcher);
         }, []),
     );
 }

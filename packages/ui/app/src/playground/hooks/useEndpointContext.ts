@@ -13,18 +13,15 @@ interface LoadableEndpointContext {
     isLoading: boolean;
 }
 
+const fetcher = (url: string): Promise<ApiDefinition> => fetch(url).then((res) => res.json());
+
 /**
  * This hook leverages SWR to fetch and cache the definition for this endpoint.
  * It should be refactored to store the resulting endpoint in a global state, so that it can be shared between components.
  */
 export function useEndpointContext(node: FernNavigation.EndpointNode | undefined): LoadableEndpointContext {
     const route = useApiRoute(`/api/fern-docs/api-definition/${node?.apiDefinitionId}/endpoint/${node?.endpointId}`);
-    const { data: apiDefinition, isLoading } = useSWRImmutable<ApiDefinition | undefined>(route, (url: string) => {
-        if (node == null) {
-            return undefined;
-        }
-        return fetch(url).then((res) => res.json());
-    });
+    const { data: apiDefinition, isLoading } = useSWRImmutable(node != null ? route : null, fetcher);
     const context = useMemo(() => createEndpointContext(node, apiDefinition), [node, apiDefinition]);
 
     return { context, isLoading };
@@ -37,7 +34,7 @@ export function usePreloadEndpointContext(): (node: FernNavigation.EndpointNode)
                 get,
                 `/api/fern-docs/api-definition/${node.apiDefinitionId}/endpoint/${node.endpointId}`,
             );
-            void preload(route, (url: string) => fetch(url).then((res) => res.json()));
+            void preload(route, fetcher);
         }, []),
     );
 }
