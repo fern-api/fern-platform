@@ -3,7 +3,7 @@ import { FernTooltipProvider } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
 import { Wifi, WifiOff } from "iconoir-react";
 import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react";
-import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState } from "../atoms";
+import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundEnvironment, usePlaygroundWebsocketFormState } from "../atoms";
 import { useSelectedEnvironmentId } from "../atoms/environment";
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
@@ -21,6 +21,7 @@ interface PlaygroundWebSocketProps {
 
 export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): ReactElement => {
     const [formState, setFormState] = usePlaygroundWebsocketFormState(context);
+    const playgroundEnvironment = usePlaygroundEnvironment();
 
     const [connectedState, setConnectedState] = useState<"opening" | "opened" | "closed">("closed");
     const { messages, pushMessage, clearMessages } = useWebsocketMessages(context.channel.id);
@@ -42,7 +43,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
     const settings = usePlaygroundSettings();
-    const baseUrl = resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl;
+    const baseUrl = playgroundEnvironment ?? resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl;
 
     const startSession = useCallback(async () => {
         return new Promise<boolean>((resolve) => {

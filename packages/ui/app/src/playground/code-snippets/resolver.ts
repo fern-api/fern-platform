@@ -21,6 +21,7 @@ export class PlaygroundCodeSnippetResolverBuilder {
         authState: PlaygroundAuthState,
         formState: PlaygroundEndpointRequestFormState,
         proxyEnvironment: string,
+        playgroundEnvironment: string | undefined,
         setOAuthValue: (value: (prev: any) => any) => void,
     ): PlaygroundCodeSnippetResolver {
         return new PlaygroundCodeSnippetResolver(
@@ -31,6 +32,7 @@ export class PlaygroundCodeSnippetResolverBuilder {
             this.isSnippetTemplatesEnabled,
             this.isFileForgeHackEnabled,
             proxyEnvironment,
+            playgroundEnvironment,
             setOAuthValue,
         );
     }
@@ -39,6 +41,7 @@ export class PlaygroundCodeSnippetResolverBuilder {
         authState: PlaygroundAuthState,
         formState: PlaygroundEndpointRequestFormState,
         proxyEnvironment: string,
+        playgroundEnvironment: string | undefined,
         setOAuthValue: (value: (prev: any) => any) => void,
     ): PlaygroundCodeSnippetResolver {
         return new PlaygroundCodeSnippetResolver(
@@ -49,6 +52,7 @@ export class PlaygroundCodeSnippetResolverBuilder {
             this.isSnippetTemplatesEnabled,
             this.isFileForgeHackEnabled,
             proxyEnvironment,
+            playgroundEnvironment,
             setOAuthValue,
         );
     }
@@ -83,6 +87,7 @@ export class PlaygroundCodeSnippetResolver {
         public isSnippetTemplatesEnabled: boolean,
         private isFileForgeHackEnabled: boolean,
         proxyEnvironment: string,
+        private playgroundEnvironment: string | undefined,
         setOAuthValue: (value: (prev: any) => any) => void,
     ) {
         const authHeaders = buildAuthHeaders(
@@ -93,6 +98,7 @@ export class PlaygroundCodeSnippetResolver {
                 formState,
                 endpoint,
                 proxyEnvironment,
+                playgroundEnvironment,
                 setValue: setOAuthValue,
             },
         );
@@ -152,7 +158,7 @@ export class PlaygroundCodeSnippetResolver {
 
     public toCurl(): string {
         const formState = { ...this.formState, headers: this.headers };
-        return new CurlSnippetBuilder(this.endpoint, formState)
+        return new CurlSnippetBuilder(this.endpoint, formState, this.playgroundEnvironment)
             .setFileForgeHackEnabled(this.isFileForgeHackEnabled)
             .build();
     }
@@ -166,12 +172,12 @@ export class PlaygroundCodeSnippetResolver {
         }
 
         const formState = { ...this.formState, headers };
-        return new TypescriptFetchSnippetBuilder(this.endpoint, formState).build();
+        return new TypescriptFetchSnippetBuilder(this.endpoint, formState, this.playgroundEnvironment).build();
     }
 
     public toPythonRequests(): string {
         const formState = { ...this.formState, headers: this.headers };
-        return new PythonRequestSnippetBuilder(this.endpoint, formState).build();
+        return new PythonRequestSnippetBuilder(this.endpoint, formState, this.playgroundEnvironment).build();
     }
 
     public toTypescriptSdkSnippet(apiDefinition?: APIV1Read.ApiDefinition): string | undefined {

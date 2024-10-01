@@ -14,16 +14,18 @@ import {
     useBasePath,
     useFeatureFlags,
     usePlaygroundEndpointFormState,
+    usePlaygroundEnvironment,
 } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { useApiRoute } from "../../hooks/useApiRoute";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { getAppBuildwithfernCom } from "../../hooks/useStandardProxyEnvironment";
 import { resolveEnvironment } from "../../resolver/types";
+import { executeGrpc } from "../fetch-utils/executeGrpc";
 import { executeProxyFile } from "../fetch-utils/executeProxyFile";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
-import type { ProxyRequest } from "../types";
+import type { GrpcProxyRequest, ProxyRequest } from "../types";
 import { EndpointContext } from "../types/endpoint-context";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import {
@@ -48,12 +50,20 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
     });
 
     const basePath = useBasePath();
-    const { usesApplicationJsonInFormDataValue, proxyShouldUseAppBuildwithfernCom } = useFeatureFlags();
+    const { usesApplicationJsonInFormDataValue, proxyShouldUseAppBuildwithfernCom, grpcEndpoints } = useFeatureFlags();
     const [response, setResponse] = useState<Loadable<PlaygroundResponse>>(notStartedLoading());
 
     const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
     const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
     const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
+    const playgroundEnvironment = usePlaygroundEnvironment();
+
+    // TODO: remove potentially
+    // const grpcClient = useMemo(() => {
+    //     return new FernProxyClient({
+    //         environment: "https://kmxxylsbwyu2f4x7rbhreris3i0zfbys.lambda-url.us-east-1.on.aws/",
+    //     });
+    // }, []);
 
     const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
 
@@ -81,6 +91,7 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
                     formState,
                     endpoint,
                     proxyEnvironment,
+                    playgroundEnvironment,
                     setValue: setOAuthValue,
                 },
             );
@@ -94,7 +105,7 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
             }
 
             const req: ProxyRequest = {
-                url: buildEndpointUrl(endpoint, formState),
+                url: buildEndpointUrl(endpoint, formState, playgroundEnvironment),
                 method: endpoint.method,
                 headers,
                 body: await serializeFormStateBody(
@@ -167,9 +178,65 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
         auth,
         formState,
         proxyEnvironment,
+        playgroundEnvironment,
         setOAuthValue,
         uploadEnvironment,
         usesApplicationJsonInFormDataValue,
+    ]);
+
+    // Figure out if GRPC endpoint
+    const sendGrpcRequest = useCallback(async () => {
+        if (endpoint == null) {
+            return;
+        }
+        setResponse(loading());
+        try {
+            const authHeaders = buildAuthHeaders(
+                endpoint.auth,
+                store.get(PLAYGROUND_AUTH_STATE_ATOM),
+                {
+                    redacted: false,
+                },
+                {
+                    formState,
+                    endpoint,
+                    proxyEnvironment,
+                    playgroundEnvironment,
+                    setValue: setOAuthValue,
+                },
+            );
+            const headers = {
+                ...authHeaders,
+                ...mapValues(formState.headers ?? {}, (value) => unknownToString(value)),
+            };
+
+            const req: GrpcProxyRequest = {
+                url: buildEndpointUrl(endpoint, formState, playgroundEnvironment),
+                endpointId: endpoint.id,
+                headers,
+                body: await serializeFormStateBody(
+                    uploadEnvironment,
+                    endpoint.requestBody?.shape,
+                    formState.body,
+                    usesApplicationJsonInFormDataValue,
+                ),
+            };
+
+            const res = await executeGrpc(proxyEnvironment, req);
+            setResponse(loaded(res));
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(e);
+            setResponse(failed(e));
+        }
+    }, [
+        endpoint,
+        formState,
+        proxyEnvironment,
+        uploadEnvironment,
+        usesApplicationJsonInFormDataValue,
+        playgroundEnvironment,
+        setOAuthValue,
     ]);
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
@@ -183,7 +250,8 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
                     <PlaygroundEndpointPath
                         method={endpoint.method}
                         formState={formState}
-                        sendRequest={sendRequest}
+                        // TODO: Remove this after pinecone demo, this is a temporary flag
+                        sendRequest={grpcEndpoints?.includes(endpoint.id) ? sendGrpcRequest : sendRequest}
                         environment={resolveEnvironment(endpoint, selectedEnvironmentId)}
                         environmentFilters={settings?.environments}
                         path={endpoint.path}
@@ -199,7 +267,8 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
                         resetWithExample={resetWithExample}
                         resetWithoutExample={resetWithoutExample}
                         response={response}
-                        sendRequest={sendRequest}
+                        // TODO: Remove this after pinecone demo, this is a temporary flag
+                        sendRequest={grpcEndpoints?.includes(endpoint.id) ? sendGrpcRequest : sendRequest}
                     />
                 </div>
             </div>

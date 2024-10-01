@@ -40,9 +40,16 @@ export function buildRequestUrl(
 export function buildEndpointUrl(
     endpoint: EndpointDefinition | undefined,
     formState: PlaygroundRequestFormState | undefined,
+    playgroundEnvironment: string | undefined,
 ): string {
-    const environment =
-        endpoint?.environments?.find((env) => env.id === endpoint.defaultEnvironment) ?? endpoint?.environments?.[0];
-
-    return buildRequestUrl(environment?.baseUrl, endpoint?.path, formState?.pathParameters, formState?.queryParameters);
+    return buildRequestUrl(
+        playgroundEnvironment ??
+            (
+                endpoint?.environments?.find((env) => env.id === endpoint.defaultEnvironment) ??
+                endpoint?.environments?.[0]
+            )?.baseUrl,
+        endpoint?.path,
+        formState?.pathParameters,
+        formState?.queryParameters,
+    );
 }

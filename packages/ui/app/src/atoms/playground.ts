@@ -357,3 +357,9 @@ export const PLAYGROUND_REQUEST_TYPE_ATOM = atomWithStorage<"curl" | "typescript
     "api-playground-atom-alpha",
     "curl",
 );
+
+export const PLAYGROUND_ENVIRONMENT_ATOM = atom<string | undefined>(undefined);
+
+export const usePlaygroundEnvironment = (): string | undefined => {
+    return useAtomValue(PLAYGROUND_ENVIRONMENT_ATOM);
+};

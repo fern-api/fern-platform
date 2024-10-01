@@ -13,6 +13,7 @@ export interface OAuthClientCredentialReferencedEndpointLoginFlowProps {
     endpoint: EndpointDefinition;
     proxyEnvironment: string;
     oAuthClientCredentialsReferencedEndpoint: APIV1Read.OAuthClientCredentialsReferencedEndpoint;
+    playgroundEnvironment: string | undefined;
     setValue: (value: (prev: any) => any) => void;
     closeContainer?: () => void;
     setDisplayFailedLogin?: (value: boolean) => void;
@@ -23,6 +24,7 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     endpoint,
     proxyEnvironment,
     oAuthClientCredentialsReferencedEndpoint,
+    playgroundEnvironment,
     setValue,
     closeContainer,
     setDisplayFailedLogin,
@@ -40,7 +42,7 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     }
 
     const req: ProxyRequest = {
-        url: buildEndpointUrl(endpoint, formState),
+        url: buildEndpointUrl(endpoint, formState, playgroundEnvironment),
         method: endpoint.method,
         headers,
         body: await serializeFormStateBody("", endpoint.request?.body, formState.body, false),

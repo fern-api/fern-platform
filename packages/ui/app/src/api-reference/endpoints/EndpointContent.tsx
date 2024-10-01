@@ -16,6 +16,7 @@ import {
     MOBILE_SIDEBAR_ENABLED_ATOM,
     store,
     useAtomEffect,
+    useFeatureFlags,
 } from "../../atoms";
 import { useHref } from "../../hooks/useHref";
 import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
@@ -128,8 +129,22 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
         return endpoint.examples.filter((e) => e.responseStatusCode === selectedError.statusCode);
     }, [endpoint.examples, selectedError]);
 
+    // TODO: remove after pinecone demo
+    const { grpcEndpoints } = useFeatureFlags();
     const [contentType, setContentType] = useState<string | undefined>(endpoint.requestBody?.contentType);
-    const clients = useMemo(() => generateCodeExamples(examples), [examples]);
+    const clients = useMemo(
+        () =>
+            generateCodeExamples(
+                examples,
+                grpcEndpoints?.includes(endpoint.id) &&
+                    !(
+                        examples.length === 1 &&
+                        examples[0]?.snippets.length === 1 &&
+                        examples[0].snippets[0]?.language === "curl"
+                    ),
+            ),
+        [examples, grpcEndpoints, endpoint.id],
+    );
     const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
     const [selectedClient, setSelectedClient] = useState<CodeExample>(() => {
         const curlExample = clients[0]?.examples[0];

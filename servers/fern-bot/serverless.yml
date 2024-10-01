@@ -127,6 +127,19 @@ functions:
           rate: cron(0 10 * * ? 1)
           enabled: true
 
+  # =============================================
+
+  # gRPC proxy endpooint, exposed as an endpoint (not scheduled).
+  proxyGrpc:
+    timeout: 30
+    memorySize: 5120
+    ephemeralStorageSize: 10240
+    handler: "src/functions/grpc-proxy/proxyGrpc.handler"
+    layers:
+      - arn:aws:lambda:us-east-1:553035198032:layer:git-lambda2:8
+    events:
+      - httpApi: "POST /grpc"
+
 stepFunctions:
   stateMachines:
     updateSpecs:
@@ -214,7 +227,7 @@ stepFunctions:
                           OutputPath: null
               - StartAt: UpdateFDRRepoDataBranch
                 States:
-                  UpdateGeneratorsBranch:
+                  UpdateFDRRepoDataBranch:
                     Type: Map
                     End: true
                     MaxConcurrency: 50
@@ -230,9 +243,9 @@ stepFunctions:
                       ProcessorConfig:
                         Mode: DISTRIBUTED
                         ExecutionType: STANDARD
-                      StartAt: HandleRepoForGenerator
+                      StartAt: HandleFDRRepoForGenerator
                       States:
-                        HandleRepoForGenerator:
+                        HandleFDRRepoForGenerator:
                           Type: Task
                           Resource: "arn:aws:states:::lambda:invoke"
                           Parameters:

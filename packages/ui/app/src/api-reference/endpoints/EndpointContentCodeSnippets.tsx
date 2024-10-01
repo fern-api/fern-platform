@@ -4,7 +4,7 @@ import { FernButton, FernButtonGroup, FernScrollArea } from "@fern-ui/components
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import { ReactNode, memo, useMemo, useRef, useState } from "react";
-import { useNavigationNodes } from "../../atoms";
+import { useNavigationNodes, usePlaygroundEnvironment } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { StatusCodeTag, statusCodeToIntent } from "../../components/StatusCodeTag";
@@ -128,6 +128,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     );
 
     const selectedEnvironmentId = useSelectedEnvironmentId();
+    const playgroundEnvironment = usePlaygroundEnvironment();
 
     return (
         <div className="fern-endpoint-code-snippets" ref={ref}>
@@ -180,7 +181,13 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         ) : undefined}
                     </>
                 }
-                code={resolveEnvironmentUrlInCodeSnippet(endpoint, requestCodeSnippet)}
+                code={resolveEnvironmentUrlInCodeSnippet(
+                    endpoint,
+                    requestCodeSnippet,
+                    playgroundEnvironment,
+                    undefined,
+                    true,
+                )}
                 language={selectedClient.language}
                 hoveredPropertyPath={selectedClient.language === "curl" ? hoveredRequestPropertyPath : undefined}
                 json={requestCurlJson}

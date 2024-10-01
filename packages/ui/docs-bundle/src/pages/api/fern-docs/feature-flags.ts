@@ -34,6 +34,7 @@ const FEATURE_FLAGS = [
     "file-forge-hack-enabled" as const,
     "hide-404-page" as const,
     "new-search-experience" as const,
+    "grpc-endpoints" as const,
 ];
 
 type FeatureFlag = (typeof FEATURE_FLAGS)[number];
@@ -92,6 +93,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         const isFileForgeHackEnabled = checkDomainMatchesCustomers(domain, config["file-forge-hack-enabled"]);
         const is404PageHidden = checkDomainMatchesCustomers(domain, config["hide-404-page"]);
         const isNewSearchExperienceEnabled = checkDomainMatchesCustomers(domain, config["new-search-experience"]);
+        const grpcEndpoints = config["grpc-endpoints"];
 
         return {
             isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain) || isApiPlaygroundEnabled,
@@ -122,6 +124,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isFileForgeHackEnabled,
             is404PageHidden,
             isNewSearchExperienceEnabled,
+            grpcEndpoints,
         };
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -155,6 +158,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isFileForgeHackEnabled: false,
             is404PageHidden: false,
             isNewSearchExperienceEnabled: false,
+            grpcEndpoints: [],
         };
     }
 }

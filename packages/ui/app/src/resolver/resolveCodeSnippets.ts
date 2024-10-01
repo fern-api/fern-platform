@@ -35,6 +35,7 @@ export async function resolveCodeSnippets(
     isHttpSnippetsEnabled: boolean,
     useJavaScriptAsTypeScript: boolean,
     alwaysEnableJavaScriptFetch: boolean,
+    playgroundEnvironment?: string,
 ): Promise<ResolvedCodeSnippet[]> {
     let toRet: ResolvedCodeSnippet[] = [];
 
@@ -114,7 +115,7 @@ export async function resolveCodeSnippets(
 
     try {
         if (isHttpSnippetsEnabled) {
-            const snippet = new HTTPSnippet(getHarRequest(endpoint, example, requestBody));
+            const snippet = new HTTPSnippet(getHarRequest(endpoint, example, requestBody, playgroundEnvironment));
             for (const { clientId, targetId } of CLIENTS) {
                 if (!alwaysEnableJavaScriptFetch) {
                     if (toRet.some((snippet) => cleanLanguage(snippet.language) === targetId)) {
@@ -180,6 +181,7 @@ function getHarRequest(
     endpoint: ResolvedEndpointDefinition,
     example: APIV1Read.ExampleEndpointCall,
     requestBody: ResolvedExampleEndpointRequest | undefined,
+    playgroundEnvironment: string | undefined,
 ): HarRequest {
     const request: HarRequest = {
         httpVersion: "1.1",
@@ -191,7 +193,11 @@ function getHarRequest(
         cookies: [],
         bodySize: -1,
     };
-    request.url = buildRequestUrl(resolveEnvironment(endpoint)?.baseUrl, endpoint.path, example.pathParameters);
+    request.url = buildRequestUrl(
+        playgroundEnvironment ?? resolveEnvironment(endpoint)?.baseUrl,
+        endpoint.path,
+        example.pathParameters,
+    );
     request.method = endpoint.method;
     request.queryString = Object.entries(example.queryParameters).map(([name, value]) => ({
         name,

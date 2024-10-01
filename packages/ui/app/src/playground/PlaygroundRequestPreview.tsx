@@ -1,7 +1,12 @@
 import { EndpointDefinition } from "@fern-api/fdr-sdk/api-definition";
 import { useAtom, useAtomValue } from "jotai";
 import { FC, useMemo } from "react";
-import { PLAYGROUND_AUTH_STATE_ATOM, PLAYGROUND_AUTH_STATE_OAUTH_ATOM, useFeatureFlags } from "../atoms";
+import {
+    PLAYGROUND_AUTH_STATE_ATOM,
+    PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
+    useFeatureFlags,
+    usePlaygroundEnvironment,
+} from "../atoms";
 import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
 import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
 import { PlaygroundCodeSnippetResolverBuilder } from "./code-snippets/resolver";
@@ -19,6 +24,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ en
     const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
     const { isFileForgeHackEnabled } = useFeatureFlags();
     const [oAuthValue, setOAuthValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
+    const playgroundEnvironment = usePlaygroundEnvironment();
 
     const builder = useMemo(
         () => new PlaygroundCodeSnippetResolverBuilder(endpoint, isSnippetTemplatesEnabled, isFileForgeHackEnabled),
@@ -27,8 +33,10 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ en
     const proxyEnvironment = useStandardProxyEnvironment();
 
     const resolver = useMemo(
-        () => oAuthValue && builder.createRedacted(authState, formState, proxyEnvironment, setOAuthValue),
-        [authState, builder, formState, proxyEnvironment, oAuthValue, setOAuthValue],
+        () =>
+            oAuthValue &&
+            builder.createRedacted(authState, formState, proxyEnvironment, playgroundEnvironment, setOAuthValue),
+        [authState, builder, formState, proxyEnvironment, oAuthValue, playgroundEnvironment, setOAuthValue],
     );
     const code = useSnippet(resolver, requestType);
 

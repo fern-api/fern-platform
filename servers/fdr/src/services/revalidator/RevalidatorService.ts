@@ -1,4 +1,5 @@
-import { FernDocs, FernDocsClient } from "@fern-fern/fern-docs-sdk";
+import { FernDocs } from "@fern-fern/fern-docs-sdk";
+import { FernRevalidationClient } from "@fern-fern/revalidation-sdk";
 import axios, { type AxiosInstance } from "axios";
 import * as AxiosLogger from "axios-logger";
 import { FdrApplication } from "../../app";
@@ -47,34 +48,61 @@ export class RevalidatorServiceImpl implements RevalidatorService {
     }): Promise<RevalidatedPathsResponse> {
         let revalidationFailed = false;
         try {
-            const client = new FernDocsClient({
+            const client = new FernRevalidationClient({
                 environment: baseUrl.toURL().toString(),
             });
             app?.logger.log("Revalidating paths at", baseUrl.toURL().toString());
-            const page = await client.revalidation.revalidateAllV4();
-
-            const successful: FernDocs.SuccessfulRevalidation[] = [];
-            const failed: FernDocs.FailedRevalidation[] = [];
-
-            for await (const result of page) {
-                if (!result.success) {
-                    failed.push(result);
-                    app?.logger.error(`Revalidation failed for ${result.url}`, result.error);
-                } else {
-                    successful.push(result);
-                }
-            }
-
+            await client.revalidateAllV3({
+                host: baseUrl.hostname,
+                basePath: baseUrl.path != null ? baseUrl.path : "",
+                xFernHost: baseUrl.hostname,
+            });
             return {
-                failed,
-                successful,
+                successful: [],
+                failed: [],
                 revalidationFailed: false,
             };
         } catch (e) {
             app?.logger.error("Failed to revalidate paths", e);
             revalidationFailed = true;
             console.log(e);
-            return { failed: [], successful: [], revalidationFailed: true };
+            return {
+                successful: [],
+                failed: [],
+                revalidationFailed: true,
+            };
         }
+
+        // let revalidationFailed = false;
+        // try {
+        //     const client = new FernDocsClient({
+        //         environment: baseUrl.toURL().toString(),
+        //     });
+        //     app?.logger.log("Revalidating paths at", baseUrl.toURL().toString());
+        //     const page = await client.revalidation.revalidateAllV4({ limit: 100 });
+
+        //     const successful: FernDocs.SuccessfulRevalidation[] = [];
+        //     const failed: FernDocs.FailedRevalidation[] = [];
+
+        //     for await (const result of page) {
+        //         if (!result.success) {
+        //             failed.push(result);
+        //             app?.logger.error(`Revalidation failed for ${result.url}`, result.error);
+        //         } else {
+        //             successful.push(result);
+        //         }
+        //     }
+
+        //     return {
+        //         failed,
+        //         successful,
+        //         revalidationFailed: false,
+        //     };
+        // } catch (e) {
+        //     app?.logger.error("Failed to revalidate paths", e);
+        //     revalidationFailed = true;
+        //     console.log(e);
+        //     return { failed: [], successful: [], revalidationFailed: true };
+        // }
     }
 }

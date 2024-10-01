@@ -1,15 +1,29 @@
-default-group: sdk
+default-group: local
 groups:
   sdk:
-    generators: []
-  #   - name: fernapi/fern-typescript-node-sdk
-  #     version: 0.17.1
-  #     output:
-  #       location: npm
-  #       url: npm.buildwithfern.com
-  #       package-name: "@fern-fern/proxy-sdk"
-  #     config:
-  #       skipResponseValidation: true
-  #       outputEsm: true
-  #       noSerdeLayer: true
-  #       noOptionalProperties: true
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.40.7
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/proxy-sdk"
+        config:
+          skipResponseValidation: true
+          outputEsm: false
+          noSerdeLayer: true
+          noOptionalProperties: true
+
+  local:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.20.9
+        output:
+          location: local-file-system
+          path: ../../../servers/fern-bot/src/generated
+        config:
+          includeUtilsOnUnionMembers: true
+          noSerdeLayer: true
+          useBrandedStringAliases: true
+          outputSourceFiles: true
+          outputEsm: true
