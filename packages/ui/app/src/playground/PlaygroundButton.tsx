@@ -37,7 +37,7 @@ export const PlaygroundButton: FC<{
                             // to the current `window` through their `window.opener`.
                             window.open(settings.button.href, "_blank");
                         } else {
-                            openPlayground(state);
+                            void openPlayground(state);
                         }
                     }}
                     rightIcon={<PlaySolid />}

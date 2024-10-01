@@ -7,8 +7,7 @@ import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, use
 import { useSetAndOpenPlayground } from "../../atoms";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
-import { usePreloadEndpointContext } from "../hooks/useEndpointContext";
-import { usePreloadWebSocketContext } from "../hooks/useWebSocketContext";
+import { usePreloadApiLeaf } from "../hooks/usePreloadApiLeaf";
 import { ApiGroup } from "../utils/flatten-apis";
 
 // const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
@@ -46,12 +45,11 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
         }, []);
 
         const createSelectEndpoint = (endpoint: FernNavigation.NavigationNodeApiLeaf) => () => {
-            setSelectionStateAndOpen(endpoint);
+            void setSelectionStateAndOpen(endpoint);
             closeDropdown?.();
         };
 
-        const preloadEndpoint = usePreloadEndpointContext();
-        const preloadWebSocket = usePreloadWebSocketContext();
+        const preload = usePreloadApiLeaf();
 
         function renderApiDefinitionPackage(apiGroup: ApiGroup) {
             const endpoints = apiGroup.items.filter((endpoint) => matchesEndpoint(filterValue, apiGroup, endpoint));
@@ -104,7 +102,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                                         className="mr-1"
                                                     />
                                                 }
-                                                onMouseEnter={() => preloadEndpoint(endpointItem)}
+                                                onMouseEnter={() => void preload(endpointItem)}
                                             />
                                         </FernTooltip>
                                     </li>
@@ -125,7 +123,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                                 active={active}
                                                 onClick={createSelectEndpoint(endpointItem)}
                                                 icon={<HttpMethodTag method="WSS" size="sm" className="mr-1" />}
-                                                onMouseEnter={() => preloadWebSocket(endpointItem)}
+                                                onMouseEnter={() => void preload(endpointItem)}
                                             />
                                         </FernTooltip>
                                     </li>

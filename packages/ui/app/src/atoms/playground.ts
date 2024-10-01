@@ -6,6 +6,7 @@ import { atomFamily, atomWithStorage, useAtomCallback } from "jotai/utils";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useCallbackOne } from "use-memo-one";
 import { selectHref } from "../hooks/useHref";
+import { usePreloadApiLeaf } from "../playground/hooks/usePreloadApiLeaf";
 import {
     PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL,
     PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL,
@@ -21,14 +22,17 @@ import {
     type PlaygroundRequestFormState,
     type PlaygroundWebSocketRequestFormState,
 } from "../playground/types";
-import { EndpointContext, WebSocketContext } from "../playground/types/endpoint-context";
+import {
+    EndpointContext,
+    WebSocketContext,
+    createEndpointContext,
+    createWebSocketContext,
+} from "../playground/types/endpoint-context";
 import {
     getInitialEndpointRequestFormState,
     getInitialEndpointRequestFormStateWithExample,
     getInitialWebSocketRequestFormState,
 } from "../playground/utils";
-import { isEndpoint, isWebSocket } from "../resolver/types";
-import { DEPRECATED_FLATTENED_APIS_ATOM } from "./apis";
 import { FEATURE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { HEADER_HEIGHT_ATOM } from "./layout";
@@ -245,50 +249,50 @@ export const usePlaygroundFormStateAtom = (
     return formStateAtom;
 };
 
-export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeApiLeaf) => void {
+export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeApiLeaf) => Promise<void> {
+    const preload = usePreloadApiLeaf();
+
     return useAtomCallback(
-        useCallbackOne((get, set, node: FernNavigation.NavigationNodeApiLeaf) => {
-            const formStateAtom = playgroundFormStateFamily(node.id);
-            set(PLAYGROUND_NODE_ID, node.id);
-            const apiPackage = get(DEPRECATED_FLATTENED_APIS_ATOM)[node.apiDefinitionId];
-            const formState = get(formStateAtom);
-            if (formState != null) {
-                playgroundFormStateFamily.remove(node.id);
-                return;
-            }
+        useCallbackOne(
+            async (get, set, node: FernNavigation.NavigationNodeApiLeaf) => {
+                const formStateAtom = playgroundFormStateFamily(node.id);
+                set(PLAYGROUND_NODE_ID, node.id);
 
-            if (apiPackage == null) {
-                captureMessage("Could not find package for API playground selection state", "fatal");
-                playgroundFormStateFamily.remove(node.id);
-                return;
-            }
-            if (node.type === "endpoint") {
-                const endpoint = apiPackage.endpoints
-                    .filter(isEndpoint)
-                    .find((definition) => definition.id === node.endpointId);
-                if (endpoint == null) {
-                    captureMessage("Could not find endpoint for API playground selection state", "fatal");
-                    return;
-                }
+                const definition = await preload(node);
 
-                set(
-                    formStateAtom,
-                    getInitialEndpointRequestFormStateWithExample(endpoint, endpoint.examples[0], apiPackage.types),
-                );
-            } else if (node.type === "webSocket") {
-                const webSocket = apiPackage.endpoints
-                    .filter(isWebSocket)
-                    .find((definition) => definition.id === node.webSocketId);
-                if (webSocket == null) {
-                    captureMessage("Could not find websocket for API playground selection state", "fatal");
+                const formState = get(formStateAtom);
+                if (formState != null) {
                     playgroundFormStateFamily.remove(node.id);
                     return;
                 }
 
-                set(formStateAtom, getInitialWebSocketRequestFormState(webSocket, apiPackage.types));
-            }
-            playgroundFormStateFamily.remove(node.id);
-        }, []),
+                if (node.type === "endpoint") {
+                    const context = createEndpointContext(node, definition);
+
+                    if (context == null) {
+                        captureMessage("Could not find endpoint for API playground selection state", "fatal");
+                        return;
+                    }
+
+                    set(
+                        formStateAtom,
+                        getInitialEndpointRequestFormStateWithExample(context, context.endpoint.examples?.[0]),
+                    );
+                } else if (node.type === "webSocket") {
+                    const context = createWebSocketContext(node, definition);
+
+                    if (context == null) {
+                        captureMessage("Could not find websocket for API playground selection state", "fatal");
+                        playgroundFormStateFamily.remove(node.id);
+                        return;
+                    }
+
+                    set(formStateAtom, getInitialWebSocketRequestFormState(context));
+                }
+                playgroundFormStateFamily.remove(node.id);
+            },
+            [preload],
+        ),
     );
 }
 
@@ -320,19 +324,14 @@ export function usePlaygroundEndpointFormState(
     ];
 }
 
-export function usePlaygroundWebsocketFormState({
-    node,
-    channel,
-    types,
-}: WebSocketContext): [
-    PlaygroundWebSocketRequestFormState,
-    Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>,
-] {
-    const formStateAtom = playgroundFormStateFamily(node.id);
-    const formState = useAtomValue(playgroundFormStateFamily(node.id));
+export function usePlaygroundWebsocketFormState(
+    context: WebSocketContext,
+): [PlaygroundWebSocketRequestFormState, Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>] {
+    const formStateAtom = playgroundFormStateFamily(context.node.id);
+    const formState = useAtomValue(playgroundFormStateFamily(context.node.id));
 
     return [
-        formState?.type === "websocket" ? formState : getInitialWebSocketRequestFormState(channel, types),
+        formState?.type === "websocket" ? formState : getInitialWebSocketRequestFormState(context),
         useAtomCallback(
             useCallbackOne(
                 (get, set, update: SetStateAction<PlaygroundWebSocketRequestFormState>) => {
@@ -342,12 +341,12 @@ export function usePlaygroundWebsocketFormState({
                             ? update(
                                   currentFormState?.type === "websocket"
                                       ? currentFormState
-                                      : getInitialWebSocketRequestFormState(channel, types),
+                                      : getInitialWebSocketRequestFormState(context),
                               )
                             : update;
                     set(formStateAtom, newFormState);
                 },
-                [formStateAtom, channel, types],
+                [formStateAtom, context],
             ),
         ),
     ];

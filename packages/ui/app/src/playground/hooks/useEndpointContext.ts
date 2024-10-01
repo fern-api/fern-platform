@@ -1,11 +1,8 @@
 import { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { useAtomCallback } from "jotai/utils";
 import { useMemo } from "react";
-import { preload } from "swr";
 import useSWRImmutable from "swr/immutable";
-import { useCallbackOne } from "use-memo-one";
-import { selectApiRoute, useApiRoute } from "../../hooks/useApiRoute";
+import { useApiRoute } from "../../hooks/useApiRoute";
 import { EndpointContext, createEndpointContext } from "../types/endpoint-context";
 
 interface LoadableEndpointContext {
@@ -25,16 +22,4 @@ export function useEndpointContext(node: FernNavigation.EndpointNode | undefined
     const context = useMemo(() => createEndpointContext(node, apiDefinition), [node, apiDefinition]);
 
     return { context, isLoading };
-}
-
-export function usePreloadEndpointContext(): (node: FernNavigation.EndpointNode) => void {
-    return useAtomCallback(
-        useCallbackOne((get, _set, node: FernNavigation.EndpointNode) => {
-            const route = selectApiRoute(
-                get,
-                `/api/fern-docs/api-definition/${node.apiDefinitionId}/endpoint/${node.endpointId}`,
-            );
-            void preload(route, fetcher);
-        }, []),
-    );
 }

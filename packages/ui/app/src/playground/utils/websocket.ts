@@ -1,20 +1,17 @@
-import { TypeDefinition, WebSocketChannel } from "@fern-api/fdr-sdk/api-definition";
 import { PlaygroundWebSocketRequestFormState } from "../types";
+import { WebSocketContext } from "../types/endpoint-context";
 import { getEmptyValueForObjectProperties, getEmptyValueForType } from "./default-values";
 
-export function getInitialWebSocketRequestFormState(
-    webSocket: WebSocketChannel | undefined,
-    types: Record<string, TypeDefinition>,
-): PlaygroundWebSocketRequestFormState {
+export function getInitialWebSocketRequestFormState(context: WebSocketContext): PlaygroundWebSocketRequestFormState {
     return {
         type: "websocket",
-        headers: getEmptyValueForObjectProperties(webSocket?.requestHeaders, types),
-        pathParameters: getEmptyValueForObjectProperties(webSocket?.pathParameters, types),
-        queryParameters: getEmptyValueForObjectProperties(webSocket?.queryParameters, types),
+        headers: getEmptyValueForObjectProperties(context.channel.requestHeaders, context.types),
+        pathParameters: getEmptyValueForObjectProperties(context.channel.pathParameters, context.types),
+        queryParameters: getEmptyValueForObjectProperties(context.channel.queryParameters, context.types),
         messages: Object.fromEntries(
-            webSocket?.messages
+            context.channel.messages
                 .filter((message) => message.origin === "client")
-                .map((message) => [message.type, getEmptyValueForType(message.body, types)]) ?? [],
+                .map((message) => [message.type, getEmptyValueForType(message.body, context.types)]) ?? [],
         ),
     };
 }
