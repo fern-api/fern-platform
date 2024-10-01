@@ -1,3 +1,4 @@
+import { FernProxyClient } from "@fern-fern/proxy-sdk";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { unknownToString } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
@@ -25,7 +26,6 @@ import { executeGrpc } from "../fetch-utils/executeGrpc";
 import { executeProxyFile } from "../fetch-utils/executeProxyFile";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
-import { FernProxyClient } from "../fetch-utils/generated";
 import type { GrpcProxyRequest, ProxyRequest } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import {
@@ -63,10 +63,10 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
     const playgroundEnvironment = usePlaygroundEnvironment();
 
-    // TODO: remove this after Pinecone demo
+    // TODO: remove potentially
     const grpcClient = useMemo(() => {
         return new FernProxyClient({
-            environment: "",
+            environment: "https://kmxxylsbwyu2f4x7rbhreris3i0zfbys.lambda-url.us-east-1.on.aws/",
         });
     }, []);
 
