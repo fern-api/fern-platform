@@ -1,10 +1,12 @@
 import { TypeDefinition, UndiscriminatedUnionType } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernDropdown, FernSegmentedControl } from "@fern-ui/components";
 import { NavArrowDown } from "iconoir-react";
+import dynamic from "next/dynamic";
 import { memo, useCallback, useMemo, useState } from "react";
-import { Markdown } from "../../mdx/Markdown";
 import { getEmptyValueForType, matchesTypeReference } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
+
+const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown));
 
 interface PlaygroundUniscriminatedUnionFormProps {
     undiscriminatedUnion: UndiscriminatedUnionType;

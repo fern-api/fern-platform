@@ -6,9 +6,9 @@ import { animate, motion, useMotionValue } from "framer-motion";
 import { Xmark } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";
-import { ReactElement, memo, useEffect, useMemo } from "react";
+import { ReactElement, memo, useEffect } from "react";
 import { useCallbackOne } from "use-memo-one";
-import { HEADER_HEIGHT_ATOM, useAtomEffect, useSidebarNodes } from "../atoms";
+import { HEADER_HEIGHT_ATOM, useAtomEffect } from "../atoms";
 import {
     MAX_PLAYGROUND_HEIGHT_ATOM,
     PLAYGROUND_NODE_ID,
@@ -21,14 +21,14 @@ import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATO
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { PlaygroundContent } from "./PlaygroundContent";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
-import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./endpoint/PlaygroundEndpointSelectorContent";
+import { PlaygroundEndpointSelectorContent } from "./endpoint/PlaygroundEndpointSelectorContent";
 import { useResizeY } from "./useSplitPlane";
+import { PLAYGROUND_API_GROUPS_ATOM } from "./utils/flatten-apis";
 
 export const PlaygroundDrawer = memo((): ReactElement | null => {
     const selectionState = usePlaygroundNode();
 
-    const sidebar = useSidebarNodes();
-    const apiGroups = useMemo(() => flattenApiSection(sidebar), [sidebar]);
+    const apiGroups = useAtomValue(PLAYGROUND_API_GROUPS_ATOM);
 
     const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
     const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
@@ -161,7 +161,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
                                         apiGroups={apiGroups}
                                         selectedEndpoint={selectedEndpoint}
                                         className="h-full"
-                                        nodeIdToApiDefinition={nodeIdToApiDefinition}
+                                        // nodeIdToApiDefinition={nodeIdToApiDefinition}
                                     />
 
                                     <PlaygroundContent />

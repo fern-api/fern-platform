@@ -3,68 +3,20 @@ import { FernButton, FernInput, FernScrollArea, FernTooltip, FernTooltipProvider
 import { isNonNullish } from "@fern-ui/core-utils";
 import cn, { clsx } from "clsx";
 import { Search, Slash, Xmark } from "iconoir-react";
-import dynamic from "next/dynamic";
 import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useSetAndOpenPlayground } from "../../atoms";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
-import { type ResolvedApiEndpointWithPackage } from "../../resolver/types";
 import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
-import { createBreadcrumbSlicer } from "../utils/breadcrumb";
+import { ApiGroup } from "../utils/flatten-apis";
 
-const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
+// const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
 
 export interface PlaygroundEndpointSelectorContentProps {
     apiGroups: ApiGroup[];
     closeDropdown?: () => void;
     selectedEndpoint?: FernNavigation.NavigationNodeApiLeaf;
     className?: string;
-    nodeIdToApiDefinition: Map<FernNavigation.NodeId, ResolvedApiEndpointWithPackage>;
-}
-
-export interface ApiGroup {
-    api: FernNavigation.ApiDefinitionId;
-    id: FernNavigation.NodeId;
-    breadcrumb: readonly string[];
-    items: FernNavigation.NavigationNodeApiLeaf[];
-}
-
-const trimBreadcrumbs = createBreadcrumbSlicer<ApiGroup>({
-    selectBreadcrumb: (apiGroup) => apiGroup.breadcrumb,
-    updateBreadcrumb: (apiGroup, breadcrumbs) => ({ ...apiGroup, breadcrumbs }),
-});
-
-export function flattenApiSection(root: FernNavigation.SidebarRootNode | undefined): ApiGroup[] {
-    if (root == null) {
-        return [];
-    }
-    const result: ApiGroup[] = [];
-    FernNavigation.traverseNavigation(root, (node, _, parents) => {
-        if (node.type === "changelog") {
-            return "skip";
-        }
-        if (node.type === "apiReference" || node.type === "apiPackage") {
-            // webhooks are not supported in the playground
-            const items = node.children.filter(FernNavigation.isApiLeaf).filter((item) => item.type !== "webhook");
-            if (items.length === 0) {
-                return;
-            }
-
-            // current node should be included in the breadcrumb
-            const breadcrumb = FernNavigation.utils
-                .createBreadcrumbs([...parents, node])
-                .map((breadcrumb) => breadcrumb.title);
-
-            result.push({
-                api: node.apiDefinitionId,
-                id: node.id,
-                breadcrumb,
-                items,
-            });
-        }
-        return;
-    });
-
-    return trimBreadcrumbs(result);
+    // nodeIdToApiDefinition: Map<FernNavigation.NodeId, ResolvedApiEndpointWithPackage>;
 }
 
 function matchesEndpoint(query: string, group: ApiGroup, endpoint: FernNavigation.NavigationNodeApiLeaf): boolean {
@@ -76,7 +28,7 @@ function matchesEndpoint(query: string, group: ApiGroup, endpoint: FernNavigatio
 }
 
 export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, PlaygroundEndpointSelectorContentProps>(
-    ({ apiGroups, closeDropdown, selectedEndpoint, className, nodeIdToApiDefinition }, ref) => {
+    ({ apiGroups, closeDropdown, selectedEndpoint, className }, ref) => {
         const scrollRef = useRef<HTMLDivElement>(null);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         useImperativeHandle(ref, () => scrollRef.current!);
@@ -117,18 +69,19 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                     )}
                     <ul className="relative z-0 list-none">
                         {endpoints.map((endpointItem) => {
-                            const apiDefinition = nodeIdToApiDefinition.get(endpointItem.id);
+                            // const apiDefinition = nodeIdToApiDefinition.get(endpointItem.id);
                             const active = endpointItem.id === selectedEndpoint?.id;
                             const text = renderTextWithHighlight(endpointItem.title, filterValue);
                             if (endpointItem.type === "endpoint") {
                                 return (
                                     <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
                                         <FernTooltip
-                                            content={
-                                                apiDefinition?.description != null ? (
-                                                    <Markdown size="xs" mdx={apiDefinition.description} />
-                                                ) : undefined
-                                            }
+                                            // content={
+                                            //     apiDefinition?.description != null ? (
+                                            //         <Markdown size="xs" mdx={apiDefinition.description} />
+                                            //     ) : undefined
+                                            // }
+                                            content={undefined}
                                             side="right"
                                         >
                                             <FernButton
@@ -158,11 +111,12 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                 return (
                                     <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
                                         <FernTooltip
-                                            content={
-                                                apiDefinition?.description != null ? (
-                                                    <Markdown size="xs" mdx={apiDefinition.description} />
-                                                ) : undefined
-                                            }
+                                            // content={
+                                            //     apiDefinition?.description != null ? (
+                                            //         <Markdown size="xs" mdx={apiDefinition.description} />
+                                            //     ) : undefined
+                                            // }
+                                            content={undefined}
                                             side="right"
                                         >
                                             <FernButton

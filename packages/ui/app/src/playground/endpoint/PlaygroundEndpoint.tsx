@@ -16,11 +16,9 @@ import {
     usePlaygroundEndpointFormState,
     usePlaygroundEnvironment,
 } from "../../atoms";
-import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { useApiRoute } from "../../hooks/useApiRoute";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { getAppBuildwithfernCom } from "../../hooks/useStandardProxyEnvironment";
-import { resolveEnvironment } from "../../resolver/types";
 import { executeGrpc } from "../fetch-utils/executeGrpc";
 import { executeProxyFile } from "../fetch-utils/executeProxyFile";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
@@ -35,6 +33,7 @@ import {
     getInitialEndpointRequestFormStateWithExample,
     serializeFormStateBody,
 } from "../utils";
+import { useSelectedEnvironment } from "../utils/select-environment";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 
@@ -192,7 +191,7 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
         setResponse(loading());
         try {
             const authHeaders = buildAuthHeaders(
-                endpoint.auth,
+                auth,
                 store.get(PLAYGROUND_AUTH_STATE_ATOM),
                 {
                     redacted: false,
@@ -216,7 +215,7 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
                 headers,
                 body: await serializeFormStateBody(
                     uploadEnvironment,
-                    endpoint.requestBody?.shape,
+                    endpoint.request?.body,
                     formState.body,
                     usesApplicationJsonInFormDataValue,
                 ),
@@ -231,17 +230,17 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
         }
     }, [
         endpoint,
+        auth,
         formState,
         proxyEnvironment,
-        uploadEnvironment,
-        usesApplicationJsonInFormDataValue,
         playgroundEnvironment,
         setOAuthValue,
+        uploadEnvironment,
+        usesApplicationJsonInFormDataValue,
     ]);
 
-    const selectedEnvironmentId = useSelectedEnvironmentId();
-
     const settings = usePlaygroundSettings();
+    const selectedEnvironment = useSelectedEnvironment(endpoint);
 
     return (
         <FernTooltipProvider>
@@ -252,7 +251,7 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
                         formState={formState}
                         // TODO: Remove this after pinecone demo, this is a temporary flag
                         sendRequest={grpcEndpoints?.includes(endpoint.id) ? sendGrpcRequest : sendRequest}
-                        environment={resolveEnvironment(endpoint, selectedEnvironmentId)}
+                        environment={selectedEnvironment}
                         environmentFilters={settings?.environments}
                         path={endpoint.path}
                         queryParameters={endpoint.queryParameters}

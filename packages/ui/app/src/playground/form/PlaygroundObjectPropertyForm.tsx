@@ -5,13 +5,11 @@ import cn from "clsx";
 import { PlusCircle } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
-import { renderDeprecatedTypeShorthandRoot } from "../../api-reference/types/type-shorthand/TypeShorthand";
+import { renderTypeShorthandRoot } from "../../type-shorthand";
 import { castToRecord, getEmptyValueForType, isExpandable } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 
-const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {
-    ssr: true,
-});
+const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown));
 
 const ADD_ALL_KEY = "__FERN_ADD_ALL__" as const;
 
@@ -120,7 +118,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                 type: "value",
                 value: property.key,
                 label: property.key,
-                helperText: renderDeprecatedTypeShorthandRoot(property.valueShape, types),
+                helperText: renderTypeShorthandRoot(property.valueShape, types),
                 labelClassName: "font-mono",
                 tooltip: property.description != null ? <Markdown size="xs" mdx={property.description} /> : undefined,
             }),

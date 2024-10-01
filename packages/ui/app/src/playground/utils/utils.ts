@@ -1,7 +1,9 @@
 import {
     HttpRequestBodyShape,
     TypeDefinition,
+    TypeReference,
     TypeShapeOrReference,
+    unwrapObjectType,
     unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
 import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
@@ -33,72 +35,51 @@ export function isExpandable(
     });
 }
 
-export function hasRequiredFields(bodyShape: HttpRequestBodyShape, types: Record<string, TypeDefinition>): boolean {
-    return visitHttpRequestBodyShape(bodyShape, {
-        formData: (formData) =>
-            formData.properties.some((property) =>
-                visitDiscriminatedUnion(property, "type")._visit<boolean>({
-                    file: (file) => !file.isOptional,
-                    fileArray: (fileArray) => !fileArray.isOptional,
-                    bodyProperty: (bodyProperty) => hasRequiredFields(bodyProperty.valueShape, types),
-                    _other: () => false,
-                }),
-            ) ?? true,
-        bytes: (bytes) => !bytes.isOptional,
-        typeShape: (shape) =>
-            visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit({
-                primitive: () => true,
-                literal: () => true,
-                object: (object) =>
-                    dereferenceObjectProperties(object, types).some((property) =>
-                        hasRequiredFields(property.valueShape, types),
-                    ),
-                undiscriminatedUnion: () => true,
-                discriminatedUnion: () => true,
-                enum: () => true,
-                optional: () => false,
-                list: () => true,
-                set: () => true,
-                map: () => true,
-                unknown: () => true,
-                alias: (alias) => hasRequiredFields(alias.shape, types),
-                _other: () => true,
-            }),
-    });
-}
-
-export function hasOptionalFields(bodyShape: HttpRequestBodyShape, types: Record<string, TypeDefinition>): boolean {
-    return visitHttpRequestBodyShape(bodyShape, {
-        formData: (formData) =>
-            formData.properties.some((property) =>
-                visitDiscriminatedUnion(property, "type")._visit<boolean>({
-                    file: (file) => file.isOptional,
-                    fileArray: (fileArray) => fileArray.isOptional,
-                    bodyProperty: (bodyProperty) => hasOptionalFields(bodyProperty.valueShape, types),
-                    _other: () => false,
-                }),
-            ) ?? false,
-        bytes: (bytes) => bytes.isOptional,
-        typeShape: (shape) =>
-            visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit({
-                primitive: () => false,
-                literal: () => false,
-                object: (object) =>
-                    dereferenceObjectProperties(object, types).some((property) =>
-                        hasOptionalFields(property.valueShape, types),
-                    ),
-                undiscriminatedUnion: () => false,
-                discriminatedUnion: () => false,
-                enum: () => false,
-                optional: () => true,
-                list: () => false,
-                set: () => false,
-                map: () => false,
-                unknown: () => false,
-                alias: (alias) => hasOptionalFields(alias.shape, types),
+export function hasRequiredFields(
+    bodyShape: HttpRequestBodyShape | TypeReference,
+    types: Record<string, TypeDefinition>,
+): boolean {
+    if (bodyShape.type === "formData") {
+        return bodyShape.fields.some((field) =>
+            visitDiscriminatedUnion(field, "type")._visit<boolean>({
+                file: (file) => !file.isOptional,
+                files: (files) => !files.isOptional,
+                property: (prop) => hasRequiredFields(prop.valueShape, types),
                 _other: () => false,
             }),
-    });
+        );
+    } else if (bodyShape.type === "bytes") {
+        return !bodyShape.isOptional;
+    } else {
+        const unwrapped = unwrapReference(bodyShape, types);
+        if (unwrapped.isOptional) {
+            return false;
+        }
+
+        return visitDiscriminatedUnion(unwrapped.shape)._visit<boolean>({
+            primitive: () => true,
+            literal: () => true,
+            object: (object) =>
+                unwrapObjectType(object, types).properties.some((property) =>
+                    hasRequiredFields(property.valueShape, types),
+                ),
+            undiscriminatedUnion: () => true,
+            discriminatedUnion: () => true,
+            enum: () => true,
+            list: () => true,
+            set: () => true,
+            map: () => true,
+            unknown: () => true,
+            _other: () => true,
+        });
+    }
+}
+
+export function hasOptionalFields(
+    bodyShape: HttpRequestBodyShape | TypeReference,
+    types: Record<string, TypeDefinition>,
+): boolean {
+    return !hasRequiredFields(bodyShape, types);
 }
 
 export const ENUM_RADIO_BREAKPOINT = 5;

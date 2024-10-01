@@ -1,49 +1,31 @@
-import { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { ArrowLeft } from "iconoir-react";
-import { ReactElement, useMemo } from "react";
-import useSWRImmutable from "swr/immutable";
+import { ReactElement } from "react";
 import { usePlaygroundNode } from "../atoms";
-import { useApiRoute } from "../hooks/useApiRoute";
 import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
 import { PlaygroundEndpoint } from "./endpoint/PlaygroundEndpoint";
 import { PlaygroundEndpointSkeleton } from "./endpoint/PlaygroundEndpointSkeleton";
-import { createEndpointContext } from "./types/endpoint-context";
+import { useEndpointContext } from "./hooks/useEndpointContext";
+import { useWebSocketContext } from "./hooks/useWebSocketContext";
 
 const PlaygroundContentForEndpoint = ({ node }: { node: FernNavigation.EndpointNode }) => {
-    const route = useApiRoute(`/api/fern-docs/api-definition/${node.apiDefinitionId}/endpoint/${node.endpointId}`);
-    const { data: apiDefinition, isLoading } = useSWRImmutable<ApiDefinition>(route, (url: string) =>
-        fetch(url).then((res) => res.json()),
-    );
-    const ctx = useMemo(() => createEndpointContext(node, apiDefinition), [node, apiDefinition]);
+    const { context, isLoading } = useEndpointContext(node);
 
-    if (ctx == null && isLoading) {
-        return <PlaygroundEndpointSkeleton />;
+    if (context == null) {
+        return isLoading ? <PlaygroundEndpointSkeleton /> : null;
     }
 
-    if (ctx == null) {
-        return null;
-    }
-
-    return <PlaygroundEndpoint context={ctx} />;
+    return <PlaygroundEndpoint context={context} />;
 };
 
 const PlaygroundContentForWebSocket = ({ node }: { node: FernNavigation.WebSocketNode }) => {
-    const route = useApiRoute(`/api/fern-docs/api-definition/${node.apiDefinitionId}/websocket/${node.webSocketId}`);
-    const { data: apiDefinition, isLoading } = useSWRImmutable<ApiDefinition>(route, (url: string) =>
-        fetch(url).then((res) => res.json()),
-    );
-    const websocket = apiDefinition?.websockets[node.webSocketId];
-    if (websocket == null && isLoading) {
-        return <PlaygroundEndpointSkeleton />;
+    const { context, isLoading } = useWebSocketContext(node);
+
+    if (context == null) {
+        return isLoading ? <PlaygroundEndpointSkeleton /> : null;
     }
 
-    if (websocket == null) {
-        return null;
-    }
-
-    return <PlaygroundWebSocket websocket={websocket} types={apiDefinition?.types ?? EMPTY_OBJECT} />;
+    return <PlaygroundWebSocket context={context} />;
 };
 
 export const PlaygroundContent = (): ReactElement => {

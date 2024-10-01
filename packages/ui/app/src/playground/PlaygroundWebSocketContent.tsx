@@ -1,27 +1,26 @@
-import { TypeDefinition, WebSocketChannel } from "@fern-api/fdr-sdk/api-definition";
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
 import { WebSocketMessage } from "../api-reference/web-socket/WebSocketMessages";
 import { PlaygroundWebSocketSessionForm } from "./PlaygroundWebSocketSessionForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
+import { WebSocketContext } from "./types/endpoint-context";
 
 interface PlaygroundWebSocketContentProps {
-    websocket: WebSocketChannel;
+    context: WebSocketContext;
     formState: PlaygroundWebSocketRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
     messages: WebSocketMessage[];
-    types: Record<string, TypeDefinition>;
     startSesssion: () => void;
     clearMessages: () => void;
-    sendMessage: (message: WebSocketMessage, data: unknown) => void;
+    sendMessage: (message: ApiDefinition.WebSocketMessage, data: unknown) => void;
     connected: boolean;
     error: string | null;
 }
 
 export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = ({
-    websocket,
+    context,
     formState,
     setFormState,
-    types,
     messages,
     sendMessage,
     startSesssion,
@@ -54,9 +53,8 @@ export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = (
                 className="mask-grad-top-6 w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
             >
                 <PlaygroundWebSocketSessionForm
-                    websocket={websocket}
+                    context={context}
                     formState={formState}
-                    types={types}
                     scrollAreaHeight={scrollAreaHeight}
                     messages={messages}
                     setFormState={setFormState}

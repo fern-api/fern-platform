@@ -3,14 +3,14 @@ import { FernTooltipProvider } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
 import { Wifi, WifiOff } from "iconoir-react";
 import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react";
-import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundEnvironment, usePlaygroundWebsocketFormState } from "../atoms";
-import { useSelectedEnvironmentId } from "../atoms/environment";
+import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState } from "../atoms";
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { PlaygroundEndpointPath } from "./endpoint/PlaygroundEndpointPath";
 import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
 import { WebSocketContext } from "./types/endpoint-context";
 import { buildAuthHeaders, buildRequestUrl } from "./utils";
+import { usePlaygroundBaseUrl, useSelectedEnvironment } from "./utils/select-environment";
 
 // TODO: decide if this should be an env variable, and if we should move REST proxy to the same (or separate) cloudflare worker
 const WEBSOCKET_PROXY_URI = "wss://websocket.proxy.ferndocs.com/ws";
@@ -21,7 +21,6 @@ interface PlaygroundWebSocketProps {
 
 export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): ReactElement => {
     const [formState, setFormState] = usePlaygroundWebsocketFormState(context);
-    const playgroundEnvironment = usePlaygroundEnvironment();
 
     const [connectedState, setConnectedState] = useState<"opening" | "opened" | "closed">("closed");
     const { messages, pushMessage, clearMessages } = useWebsocketMessages(context.channel.id);
@@ -41,9 +40,12 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
     // auto-destroy the socket when the component is unmounted
     useEffect(() => () => socket.current?.close(), []);
 
-    const selectedEnvironmentId = useSelectedEnvironmentId();
     const settings = usePlaygroundSettings();
-    const baseUrl = playgroundEnvironment ?? resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl;
+
+    const baseUrl = usePlaygroundBaseUrl(context.channel);
+
+    // TODO: is this is kind of weird that we're using the selected environment here?
+    const selectedEnvironment = useSelectedEnvironment(context.channel);
 
     const startSession = useCallback(async () => {
         return new Promise<boolean>((resolve) => {
@@ -146,7 +148,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
                                   ? socket.current?.close()
                                   : null
                         }
-                        environment={resolveEnvironment(websocket, selectedEnvironmentId)}
+                        environment={selectedEnvironment}
                         environmentFilters={settings?.environments}
                         path={context.channel.path}
                         queryParameters={context.channel.queryParameters}

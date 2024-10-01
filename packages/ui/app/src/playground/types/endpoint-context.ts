@@ -9,9 +9,12 @@ export type EndpointContext = {
 };
 
 export function createEndpointContext(
-    node: FernNavigation.EndpointNode,
+    node: FernNavigation.EndpointNode | undefined,
     api: ApiDefinition.ApiDefinition | undefined,
 ): EndpointContext | undefined {
+    if (!node) {
+        return undefined;
+    }
     const endpoint = api?.endpoints[node.endpointId];
     if (!endpoint) {
         return undefined;
@@ -32,9 +35,12 @@ export type WebSocketContext = {
 };
 
 export function createWebSocketContext(
-    node: FernNavigation.WebSocketNode,
+    node: FernNavigation.WebSocketNode | undefined,
     api: ApiDefinition.ApiDefinition | undefined,
 ): WebSocketContext | undefined {
+    if (!node) {
+        return undefined;
+    }
     const channel = api?.websockets[node.webSocketId];
     if (!channel) {
         return undefined;

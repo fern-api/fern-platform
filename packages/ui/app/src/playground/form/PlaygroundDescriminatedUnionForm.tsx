@@ -7,9 +7,7 @@ import { memo, useCallback, useMemo } from "react";
 import { castToRecord, getEmptyValueForObjectProperties } from "../utils";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 
-const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {
-    ssr: true,
-});
+const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown));
 
 interface PlaygroundDiscriminatedUnionFormProps {
     discriminatedUnion: DiscriminatedUnionType;

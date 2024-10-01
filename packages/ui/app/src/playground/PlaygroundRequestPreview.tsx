@@ -1,4 +1,3 @@
-import { EndpointDefinition } from "@fern-api/fdr-sdk/api-definition";
 import { useAtom, useAtomValue } from "jotai";
 import { FC, useMemo } from "react";
 import {
@@ -12,14 +11,15 @@ import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighligh
 import { PlaygroundCodeSnippetResolverBuilder } from "./code-snippets/resolver";
 import { useSnippet } from "./code-snippets/useSnippet";
 import { PlaygroundEndpointRequestFormState } from "./types";
+import { EndpointContext } from "./types/endpoint-context";
 
 interface PlaygroundRequestPreviewProps {
-    endpoint: EndpointDefinition;
+    context: EndpointContext;
     formState: PlaygroundEndpointRequestFormState;
     requestType: "curl" | "typescript" | "python";
 }
 
-export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ endpoint, formState, requestType }) => {
+export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ context, formState, requestType }) => {
     const { isSnippetTemplatesEnabled } = useFeatureFlags();
     const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
     const { isFileForgeHackEnabled } = useFeatureFlags();
@@ -27,8 +27,8 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ en
     const playgroundEnvironment = usePlaygroundEnvironment();
 
     const builder = useMemo(
-        () => new PlaygroundCodeSnippetResolverBuilder(endpoint, isSnippetTemplatesEnabled, isFileForgeHackEnabled),
-        [endpoint, isSnippetTemplatesEnabled, isFileForgeHackEnabled],
+        () => new PlaygroundCodeSnippetResolverBuilder(context, isSnippetTemplatesEnabled, isFileForgeHackEnabled),
+        [context, isSnippetTemplatesEnabled, isFileForgeHackEnabled],
     );
     const proxyEnvironment = useStandardProxyEnvironment();
 
@@ -46,7 +46,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ en
             language={requestType === "curl" ? "bash" : requestType}
             code={code}
             fontSize="sm"
-            id={endpoint.id}
+            id={context.endpoint.id}
         />
     );
 };

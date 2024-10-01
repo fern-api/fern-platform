@@ -1,5 +1,3 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { EndpointDefinition, TypeDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import {
     FernButton,
@@ -29,14 +27,15 @@ import {
     usePlaygroundEndpointFormState,
     usePlaygroundEnvironment,
 } from "../atoms";
-import { useOAuthEndpoint } from "../atoms/oauth";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
 import { Callout } from "../mdx/components/callout";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundEndpointForm } from "./endpoint/PlaygroundEndpointForm";
+import { useOAuthEndpointContext } from "./hooks/useOauthEndpointContext";
 import { PlaygroundAuthState } from "./types";
+import { EndpointContext } from "./types/endpoint-context";
 import { oAuthClientCredentialReferencedEndpointLoginFlow } from "./utils/oauth";
 
 interface PlaygroundAuthorizationFormProps {
@@ -153,23 +152,22 @@ function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; di
 }
 
 function FoundOAuthReferencedEndpointForm({
-    node,
-    oAuthEndpoint,
-    types,
+    context,
     oAuthClientCredentialsReferencedEndpoint,
     closeContainer,
     disabled,
 }: {
-    node: FernNavigation.EndpointNode;
-    oAuthEndpoint: EndpointDefinition;
-    types: Record<string, TypeDefinition>;
+    /**
+     * this must be the OAuth endpoint.
+     */
+    context: EndpointContext;
     oAuthClientCredentialsReferencedEndpoint: APIV1Read.OAuthClientCredentialsReferencedEndpoint;
     closeContainer: () => void;
     disabled?: boolean;
 }) {
     const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
     const proxyEnvironment = useStandardProxyEnvironment();
-    const [formState, setFormState] = usePlaygroundEndpointFormState(oAuthEndpoint);
+    const [formState, setFormState] = usePlaygroundEndpointFormState(context);
     const playgroundEnvironment = usePlaygroundEnvironment();
 
     const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
@@ -181,7 +179,7 @@ function FoundOAuthReferencedEndpointForm({
         setValue((prev) => ({ ...prev, isLoggingIn: true }));
         await oAuthClientCredentialReferencedEndpointLoginFlow({
             formState,
-            endpoint: oAuthEndpoint,
+            endpoint: context.endpoint,
             proxyEnvironment,
             oAuthClientCredentialsReferencedEndpoint,
             playgroundEnvironment,
@@ -221,10 +219,9 @@ function FoundOAuthReferencedEndpointForm({
                             <span className="font-mono text-sm">OAuth Client Credentials Login</span>
                         </label>
                         <PlaygroundEndpointForm
-                            endpoint={oAuthEndpoint}
+                            context={context}
                             formState={formState}
                             setFormState={setFormState}
-                            types={types}
                             ignoreHeaders={true}
                         />
                     </li>
@@ -298,18 +295,19 @@ function OAuthReferencedEndpointForm({
     closeContainer: () => void;
     disabled?: boolean;
 }) {
-    const { oAuthEndpoint, types } = useOAuthEndpoint(referencedEndpoint) ?? {};
+    const { context, isLoading } = useOAuthEndpointContext(referencedEndpoint);
 
-    if (oAuthEndpoint == null || types == null) {
-        // eslint-disable-next-line no-console
-        console.error("Could not find OAuth endpoint for referenced endpoint", referencedEndpoint);
+    if (context == null) {
+        if (!isLoading) {
+            // eslint-disable-next-line no-console
+            console.error("Could not find OAuth endpoint for referenced endpoint", referencedEndpoint);
+        }
         return <BearerAuthForm bearerAuth={{ tokenName: "token" }} disabled={disabled} />;
     }
 
     return (
         <FoundOAuthReferencedEndpointForm
-            oAuthEndpoint={oAuthEndpoint}
-            types={types}
+            context={context}
             oAuthClientCredentialsReferencedEndpoint={oAuthClientCredentialsReferencedEndpoint}
             closeContainer={closeContainer}
             disabled={disabled}
