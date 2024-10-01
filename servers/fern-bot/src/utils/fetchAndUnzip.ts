@@ -1,10 +1,10 @@
+import AdmZip from "adm-zip";
 import { createWriteStream } from "fs";
 import { unlink } from "fs/promises";
 import path from "path";
 import { pipeline } from "stream";
 import tmp from "tmp-promise";
 import { promisify } from "util";
-import { loggingExeca } from "./loggingExeca";
 
 export interface FetchAndUnzipRequest {
     destination: string;
@@ -21,12 +21,27 @@ export async function fetchAndUnzip(request: FetchAndUnzipRequest): Promise<void
     });
 
     console.debug(`Unzipping source from ${destinationPath} to ${request.destination}`);
-    await loggingExeca("unzip", ["-o", destinationPath, "-d", request.destination], {
-        doNotPipeOutput: true,
-    });
+    await unzipFile(destinationPath, request.destination);
 
     console.debug(`Removing ${destinationPath}`);
     await unlink(destinationPath);
+}
+
+async function unzipFile(sourcePath: string, destinationPath: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        try {
+            const zip = new AdmZip(sourcePath);
+
+            // Extract all files
+            zip.extractAllTo(destinationPath, true);
+
+            console.log(`Successfully extracted ${sourcePath} to ${destinationPath}`);
+            resolve();
+        } catch (error) {
+            console.error(`Error unzipping file: ${error}`);
+            reject(error);
+        }
+    });
 }
 
 async function downloadFile({

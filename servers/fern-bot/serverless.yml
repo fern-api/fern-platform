@@ -243,9 +243,9 @@ stepFunctions:
                       ProcessorConfig:
                         Mode: DISTRIBUTED
                         ExecutionType: STANDARD
-                      StartAt: HandleRepoForGenerator
+                      StartAt: HandleFDRRepoForGenerator
                       States:
-                        HandleRepoForGenerator:
+                        HandleFDRRepoForGenerator:
                           Type: Task
                           Resource: "arn:aws:states:::lambda:invoke"
                           Parameters:

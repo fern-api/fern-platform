@@ -1,4 +1,5 @@
-import { createLoggingExecutable, LoggingExecutable } from "@utils/createLoggingExecutable";
+import { createLoggingExecutable } from "@utils/createLoggingExecutable";
+import execa from "execa";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
 
@@ -30,8 +31,10 @@ export declare namespace Buf {
     }
 }
 
+export type CLI = (args?: string[]) => execa.ExecaChildProcess<string>;
+
 export class Buf {
-    private cli: LoggingExecutable | undefined;
+    private cli: CLI | undefined;
 
     public async curl({ request }: { request: Buf.CurlRequest }): Promise<Buf.CurlResponse> {
         const cli = await this.getOrInstall();
@@ -46,7 +49,7 @@ export class Buf {
         };
     }
 
-    private async getOrInstall(): Promise<LoggingExecutable> {
+    private async getOrInstall(): Promise<CLI> {
         if (this.cli) {
             return this.cli;
         }
@@ -63,24 +66,29 @@ export class Buf {
         return this.cli;
     }
 
-    private async install(): Promise<LoggingExecutable> {
-        // Lambdas can only write into temporary directories.
-        const tmpDirPath = (await tmp.dir()).path;
+    private async install(): Promise<CLI> {
+        // Running the commands on Lambdas is a bit odd...specifically you can only write to tmp on a lambda
+        // so here we make sure the CLI is bundled via the `external` block in serverless.yml
+        // and then execute the command directly via node_modules, with the home and cache set to /tmp.
+        const tmpDir = await tmp.dir();
+        const tmpDirPath = tmpDir.path;
         process.env.NPM_CONFIG_CACHE = `${tmpDirPath}/.npm`;
         process.env.HOME = tmpDirPath;
 
-        const npm = createLoggingExecutable("npm", {
-            cwd: process.cwd(),
-        });
-        console.debug(`Installing ${BUF_NPM_PACKAGE} ...`);
-        await npm(["install", "-f", "-g", `${BUF_NPM_PACKAGE}@${BUF_VERSION}`]);
+        // Update config to allow `npm install` to work from within the `fern upgrade` command
+        process.env.NPM_CONFIG_PREFIX = tmpDirPath;
+        // Re-install the CLI to ensure it's at the correct path, given the updated config
+        const install = await execa("npm", ["install", "-g", `${BUF_NPM_PACKAGE}@${BUF_VERSION}`]);
+        if (install.exitCode === 0) {
+            console.log(`Successfully installed ${BUF_NPM_PACKAGE}`);
+        } else {
+            const message = `Failed to install buf \n${install.stdout}\n${install.stderr}`;
+            console.log(message);
+            throw new Error(message);
+        }
 
-        const cli = this.createBufExecutable();
-        const version = await cli(["--version"]);
-        console.debug(`Successfully installed ${BUF_NPM_PACKAGE} version ${version.stdout}`);
-
-        this.cli = cli;
-        return cli;
+        this.cli = this.createBufExecutable();
+        return this.cli;
     }
 
     private getArgsForCurlRequest(request: Buf.CurlRequest): string[] {
@@ -104,10 +112,9 @@ export class Buf {
         return urlJoin(baseUrl, endpoint);
     }
 
-    private createBufExecutable(): LoggingExecutable {
-        return createLoggingExecutable("buf", {
-            cwd: process.cwd(),
-            reject: false, // We want to capture stderr without throwing.
-        });
+    private createBufExecutable(): CLI {
+        return (args) => {
+            return execa("npx", ["buf", ...(args ?? [])]);
+        };
     }
 }
