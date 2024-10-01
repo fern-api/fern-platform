@@ -109,11 +109,11 @@ types:
         docs: |
           The set of encoded headers to send with the request (e.g. 'Authorization: Bearer ...').
         type: map<string, string>
-      schema:
-        docs: |
-          The Protobuf schema that defines the API. If not specified, it's assumed the server
-          supports gRPC reflection.
-        type: optional<ProtobufSchema>
+      # schema:
+      #   docs: |
+      #     The Protobuf schema that defines the API. If not specified, it's assumed the server
+      #     supports gRPC reflection.
+      #   type: optional<ProtobufSchema>
       body:
         docs: |
           The request body (represented as JSON) to include in the request, if any.

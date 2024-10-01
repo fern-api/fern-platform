@@ -4,7 +4,8 @@ import { FernProxyClient } from "@fern-fern/proxy-sdk";
 import { assertNever } from "@fern-ui/core-utils";
 import type { ProxyRequest } from "@fern-ui/ui";
 import type { NextApiRequest, NextApiResponse } from "next/types";
-import { Headers, type BodyInit } from "node-fetch";
+import { type BodyInit } from "node-fetch";
+import { parse } from "url";
 
 /**
  * Note: this API route must be deployed as an node.js serverless function because
@@ -66,24 +67,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log("Starting proxy request to", req.url);
 
     try {
-        const headers = new Headers(req.body.headers);
-
-        headers.set("Content-Type", "application/json");
+        const request = JSON.parse(req.body);
 
         const startTime = Date.now();
 
         const grpcClient = new FernProxyClient({
-            environment: "https://kmxxylsbwyu2f4x7rbhreris3i0zfbys.lambda-url.us-east-1.on.aws/",
+            environment: "https://kmxxylsbwyu2f4x7rbhreris3i0zfbys.lambda-url.us-east-1.on.aws",
         });
 
-        const grpcResponse = await grpcClient.grpc({
-            baseUrl: req.body.baseUrl,
-            endpoint: req.body.endpointId,
-            headers: req.body.headers,
-            body: req.body.body,
-            schema: undefined,
-        });
+        const baseUrl = parse(request.baseUrl);
+        const grpcResponse = (await grpcClient.grpc({
+            baseUrl: `${baseUrl.protocol}//${baseUrl.host}`,
+            endpoint: request.endpoint,
+            headers: request.headers,
+            body: request.body,
+        })) as unknown as string;
 
+        if (grpcResponse === "Cannot convert undefined or null to object" || grpcResponse.includes("exit code")) {
+            throw new Error(grpcResponse);
+        }
         // commented out
         // let body = grpcResponse.body as string;
 
@@ -92,24 +94,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // eslint-disable-next-line no-console
         console.log("Proxy request to", req.url, "received response body after", endTime - startTime, "milliseconds");
 
-        // commented out
-        // try {
-        //     body = JSON.parse(body);
-        // } catch (e) {
-        //     // eslint-disable-next-line no-console
-        //     console.log("Failed to parse response body as JSON, but will return it as text.");
-        //     // eslint-disable-next-line no-console
-        //     console.error(e);
-        // }
+        let body;
+        try {
+            body = JSON.parse(grpcResponse);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.log("Failed to parse response body as JSON, but will return it as text.");
+            // eslint-disable-next-line no-console
+            console.error(e);
+        }
 
         return res.status(200).json({
             response: {
-                // body,
-                grpcResponse,
+                body,
             },
             time: endTime - startTime,
-            size: new TextEncoder().encode(JSON.stringify(grpcResponse.body)).length,
-            // size: new TextEncoder().encode(JSON.stringify(body)).length,
+            size: new TextEncoder().encode(JSON.stringify(body)).length,
         });
     } catch (err) {
         // eslint-disable-next-line no-console
