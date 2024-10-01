@@ -133,7 +133,16 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
     const { grpcEndpoints } = useFeatureFlags();
     const [contentType, setContentType] = useState<string | undefined>(endpoint.requestBody?.contentType);
     const clients = useMemo(
-        () => generateCodeExamples(examples, grpcEndpoints?.includes(endpoint.id)),
+        () =>
+            generateCodeExamples(
+                examples,
+                grpcEndpoints?.includes(endpoint.id) &&
+                    !(
+                        examples.length === 1 &&
+                        examples[0]?.snippets.length === 1 &&
+                        examples[0].snippets[0]?.language === "curl"
+                    ),
+            ),
         [examples, grpcEndpoints, endpoint.id],
     );
     const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
