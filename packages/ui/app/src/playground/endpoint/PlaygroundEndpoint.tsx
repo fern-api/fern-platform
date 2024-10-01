@@ -1,4 +1,3 @@
-import { FernProxyClient } from "@fern-fern/proxy-sdk";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { unknownToString } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
@@ -6,7 +5,7 @@ import { useEventCallback } from "@fern-ui/react-commons";
 import { SendSolid } from "iconoir-react";
 import { useSetAtom } from "jotai";
 import { mapValues } from "lodash-es";
-import { FC, ReactElement, useCallback, useMemo, useState } from "react";
+import { FC, ReactElement, useCallback, useState } from "react";
 import { captureSentryError } from "../../analytics/sentry";
 import {
     PLAYGROUND_AUTH_STATE_ATOM,
@@ -64,11 +63,11 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
     const playgroundEnvironment = usePlaygroundEnvironment();
 
     // TODO: remove potentially
-    const grpcClient = useMemo(() => {
-        return new FernProxyClient({
-            environment: "https://kmxxylsbwyu2f4x7rbhreris3i0zfbys.lambda-url.us-east-1.on.aws/",
-        });
-    }, []);
+    // const grpcClient = useMemo(() => {
+    //     return new FernProxyClient({
+    //         environment: "https://kmxxylsbwyu2f4x7rbhreris3i0zfbys.lambda-url.us-east-1.on.aws/",
+    //     });
+    // }, []);
 
     const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
 
@@ -223,7 +222,7 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
                 ),
             };
 
-            const res = await executeGrpc(grpcClient, req);
+            const res = await executeGrpc(proxyEnvironment, req);
             setResponse(loaded(res));
         } catch (e) {
             // eslint-disable-next-line no-console
@@ -238,7 +237,6 @@ export const PlaygroundEndpoint: FC<PlaygroundEndpointProps> = ({ endpoint, type
         usesApplicationJsonInFormDataValue,
         playgroundEnvironment,
         setOAuthValue,
-        grpcClient,
     ]);
 
     const selectedEnvironmentId = useSelectedEnvironmentId();

@@ -31,6 +31,7 @@
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/venus-api-sdk": "^0.1.0",
     "@fern-fern/fern-docs-sdk": "0.0.5",
+    "@fern-fern/proxy-sdk": "0.0.24",
     "@fern-ui/chatbot": "workspace:*",
     "@fern-ui/components": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
