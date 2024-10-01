@@ -1,5 +1,5 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { assertNever } from "@fern-ui/core-utils";
+import { UnreachableCaseError } from "ts-essentials";
 import { useFeatureFlags } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { Markdown } from "../../mdx/Markdown";
@@ -135,6 +135,6 @@ function getResponseSummary({
         case "undiscriminatedUnion":
             return `This endpoint returns ${renderTypeShorthand(responseBody.shape, { withArticle: true }, types)}.`;
         default:
-            assertNever(responseBody.shape);
+            throw new UnreachableCaseError(responseBody.shape);
     }
 }
