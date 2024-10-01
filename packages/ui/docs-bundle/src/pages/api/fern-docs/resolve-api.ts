@@ -12,6 +12,9 @@ import { getFeatureFlags } from "./feature-flags";
 
 export const dynamic = "force-dynamic";
 
+/**
+ * This is now deprecated. use /api/fern-docs/api-definition/{apiDefinitionId}/endpoint/{endpointId} instead.
+ */
 const resolveApiHandler: NextApiHandler = async (
     req,
     res: NextApiResponse<Record<string, ResolvedRootPackage> | null>,
