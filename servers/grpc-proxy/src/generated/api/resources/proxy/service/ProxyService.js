@@ -11,8 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from "express";
-import * as errors from "../../errors/index";
-export class RootService {
+import * as errors from "../../../../errors/index";
+export class ProxyService {
     constructor(methods, middleware = []) {
         this.methods = methods;
         this.router = express.Router({ mergeParams: true }).use(express.json({
@@ -26,7 +26,7 @@ export class RootService {
     toRouter() {
         this.router.post("/grpc", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                yield this.methods.rest(req, {
+                yield this.methods.grpc(req, {
                     send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
                         res.json(responseBody);
                     }),
@@ -37,7 +37,7 @@ export class RootService {
             }
             catch (error) {
                 if (error instanceof errors.FernGrpcProxyError) {
-                    console.warn(`Endpoint 'rest' unexpectedly threw ${error.constructor.name}.` +
+                    console.warn(`Endpoint 'grpc' unexpectedly threw ${error.constructor.name}.` +
                         ` If this was intentional, please add ${error.constructor.name} to` +
                         " the endpoint's errors list in your Fern Definition.");
                     yield error.send(res);

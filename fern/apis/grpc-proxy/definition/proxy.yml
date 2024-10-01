@@ -4,16 +4,16 @@ service:
   auth: false
   base-path: ""
   endpoints:
-    rest:
+    grpc:
       path: /grpc
       display-name: Proxy gRPC
       method: POST
       request:
-        body: GrpcProxyRequest
-      response: GrpcProxyResponse
+        body: ProxyRequest
+      response: ProxyResponse
 
 types:
-  GrpcProxyRequest:
+  ProxyRequest:
     properties:
       baseUrl:
         docs: The base URL to use for the call (e.g. https://acme.co).
@@ -35,7 +35,7 @@ types:
           The request body (represented as JSON) to include in the request, if any.
         type: optional<unknown>
 
-  GrpcProxyResponse:
+  ProxyResponse:
     properties:
       body: optional<unknown>
 
