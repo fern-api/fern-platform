@@ -1,4 +1,4 @@
-import { createLoggingExecutable, LoggingExecutable } from "@utils/createLoggingExecutable";
+import { createLoggingExecutable } from "@utils/createLoggingExecutable";
 import execa from "execa";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
@@ -31,8 +31,10 @@ export declare namespace Buf {
     }
 }
 
+export type CLI = (args?: string[]) => execa.ExecaChildProcess<string>;
+
 export class Buf {
-    private cli: LoggingExecutable | undefined;
+    private cli: CLI | undefined;
 
     public async curl({ request }: { request: Buf.CurlRequest }): Promise<Buf.CurlResponse> {
         const cli = await this.getOrInstall();
@@ -47,7 +49,7 @@ export class Buf {
         };
     }
 
-    private async getOrInstall(): Promise<LoggingExecutable> {
+    private async getOrInstall(): Promise<CLI> {
         if (this.cli) {
             return this.cli;
         }
@@ -64,7 +66,7 @@ export class Buf {
         return this.cli;
     }
 
-    private async install(): Promise<LoggingExecutable> {
+    private async install(): Promise<CLI> {
         // Running the commands on Lambdas is a bit odd...specifically you can only write to tmp on a lambda
         // so here we make sure the CLI is bundled via the `external` block in serverless.yml
         // and then execute the command directly via node_modules, with the home and cache set to /tmp.
@@ -107,10 +109,9 @@ export class Buf {
         return urlJoin(baseUrl, endpoint);
     }
 
-    private createBufExecutable(): LoggingExecutable {
-        return createLoggingExecutable("buf", {
-            cwd: process.cwd(),
-            reject: false, // We want to capture stderr without throwing.
-        });
+    private createBufExecutable(): CLI {
+        return (args) => {
+            return execa("buf", args);
+        };
     }
 }
