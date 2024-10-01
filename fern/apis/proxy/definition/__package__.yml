@@ -2,7 +2,7 @@
 
 service:
   auth: false
-  base-path: /
+  base-path: ""
   endpoints:
     rest:
       path: /rest
