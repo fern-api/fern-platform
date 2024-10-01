@@ -3,11 +3,11 @@ import { ReactElement, ReactNode, useState } from "react";
 import { useFeatureFlags } from "../../atoms";
 
 interface PlaygroundEndpointMobileLayoutProps {
-    endpointId: string;
     form: ReactNode;
     requestCard: ReactNode;
     responseCard: ReactNode;
     sendButton: ReactNode;
+    endpointId?: string;
 }
 
 export function PlaygroundEndpointMobileLayout({
@@ -43,7 +43,7 @@ export function PlaygroundEndpointMobileLayout({
                                     }
                                 /> */}
                             </div>
-                            {grpcEndpoints?.includes(endpointId) && requestCard}
+                            {endpointId && grpcEndpoints?.includes(endpointId) && requestCard}
                         </div>
                     ),
                 },
