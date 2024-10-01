@@ -113,6 +113,7 @@ export async function withInitialProps({
         mdxOptions: {
             files: docs.definition.jsFiles,
         },
+        serializeMdx,
     });
 
     if (content == null) {

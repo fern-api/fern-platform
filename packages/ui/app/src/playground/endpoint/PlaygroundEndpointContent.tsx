@@ -52,7 +52,7 @@ export function PlaygroundEndpointContent({
 
     return (
         <PlaygroundEndpointContentLayout
-            endpointId={endpoint.id}
+            endpointId={context.endpoint.id}
             sendRequest={sendRequest}
             form={form}
             requestCard={requestCard}

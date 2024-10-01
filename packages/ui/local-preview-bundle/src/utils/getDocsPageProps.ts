@@ -13,7 +13,7 @@ import {
     renderThemeStylesheet,
     resolveDocsContent,
 } from "@fern-ui/ui";
-import { getMdxBundler } from "@fern-ui/ui/bundlers";
+import { serializeMdx } from "@fern-ui/ui/bundlers/next-mdx-remote";
 import type { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
 import urljoin from "url-join";
@@ -69,6 +69,7 @@ export async function getDocsPageProps(
         mdxOptions: {
             files: docs.definition.jsFiles,
         },
+        serializeMdx,
     });
 
     if (content == null) {
@@ -108,8 +109,6 @@ export async function getDocsPageProps(
                 availability: version.availability,
             };
         });
-
-    const serializeMdx = await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote");
 
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,

@@ -7,7 +7,6 @@ import { reverse } from "lodash-es";
 import { captureSentryError } from "../analytics/sentry";
 import type { FeatureFlags } from "../atoms";
 import { MDX_SERIALIZER } from "../mdx/bundler";
-import { getMdxBundler } from "../mdx/bundlers";
 import { getFrontmatter } from "../mdx/frontmatter";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
@@ -59,14 +58,15 @@ export async function resolveDocsContent({
     pages,
     mdxOptions,
     featureFlags,
+    serializeMdx,
 }: {
     found: FernNavigation.utils.Node.Found;
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
     mdxOptions?: FernSerializeMdxOptions;
     featureFlags: FeatureFlags;
+    serializeMdx: MDX_SERIALIZER;
 }): Promise<DocsContent | undefined> {
-    const serializeMdx = await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote");
     const neighbors = await getNeighbors(found, pages, serializeMdx);
     const { node, apiReference, parents } = found;
 
@@ -170,7 +170,7 @@ export async function resolveDocsContent({
         };
     } else if (apiReference != null && apiReference.paginated && FernNavigation.hasMarkdown(node)) {
         // if long scrolling is disabled, we should render a markdown page by itself
-        return resolveMarkdownPage(node, found, apis, pages, mdxOptions, featureFlags, neighbors);
+        return resolveMarkdownPage(node, found, apis, pages, mdxOptions, featureFlags, neighbors, serializeMdx);
     } else if (apiReference != null) {
         let api = apis[apiReference.apiDefinitionId];
         if (api == null) {
@@ -241,7 +241,7 @@ export async function resolveDocsContent({
             // neighbors,
         };
     } else {
-        return resolveMarkdownPage(node, found, apis, pages, mdxOptions, featureFlags, neighbors);
+        return resolveMarkdownPage(node, found, apis, pages, mdxOptions, featureFlags, neighbors, serializeMdx);
     }
 }
 
@@ -253,9 +253,8 @@ async function resolveMarkdownPage(
     mdxOptions: FernSerializeMdxOptions | undefined,
     featureFlags: FeatureFlags,
     neighbors: DocsContent.Neighbors,
+    serializeMdx: MDX_SERIALIZER,
 ): Promise<DocsContent.CustomMarkdownPage | undefined> {
-    const serializeMdx = await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote");
-
     const pageId = FernNavigation.getPageId(node);
     if (pageId == null) {
         return;

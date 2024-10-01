@@ -10,6 +10,7 @@
   "type": "module",
   "exports": {
     "./bundlers": "./src/mdx/bundlers/index.ts",
+    "./bundlers/next-mdx-remote": "./src/mdx/bundlers/next-mdx-remote.ts",
     "./auth": "./src/auth/index.ts",
     ".": "./src/index.ts"
   },
