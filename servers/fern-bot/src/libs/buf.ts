@@ -78,8 +78,14 @@ export class Buf {
         // Update config to allow `npm install` to work from within the `fern upgrade` command
         process.env.NPM_CONFIG_PREFIX = tmpDirPath;
         // Re-install the CLI to ensure it's at the correct path, given the updated config
-        await execa("npm", ["install", "-g", `${BUF_NPM_PACKAGE}@${BUF_VERSION}`]);
-        console.debug(`Successfully installed ${BUF_NPM_PACKAGE}`);
+        const install = await execa("npm", ["install", "-g", `${BUF_NPM_PACKAGE}@${BUF_VERSION}`]);
+        if (install.exitCode === 0) {
+            console.log(`Successfully installed ${BUF_NPM_PACKAGE}`);
+        } else {
+            const message = `Failed to install buf \n${install.stdout}\n${install.stderr}`;
+            console.log(message);
+            throw new Error(message);
+        }
 
         this.cli = this.createBufExecutable();
         return this.cli;
