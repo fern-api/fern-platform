@@ -73,7 +73,7 @@ export class Buf {
             cwd: process.cwd(),
         });
         console.debug(`Installing ${BUF_NPM_PACKAGE} ...`);
-        await npm(["install", "-f", "-g", `${BUF_NPM_PACKAGE}@${BUF_VERSION}`]);
+        await npm(["install", "-g", `${BUF_NPM_PACKAGE}@${BUF_VERSION}`]);
 
         const cli = this.createBufExecutable();
         const version = await cli(["--version"]);
