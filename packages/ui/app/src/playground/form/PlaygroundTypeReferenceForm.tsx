@@ -29,8 +29,6 @@ interface PlaygroundTypeReferenceFormProps {
     onOpenStack?: () => void;
     onCloseStack?: () => void;
     renderAsPanel?: boolean;
-    onlyRequired?: boolean;
-    onlyOptional?: boolean;
     types: Record<string, TypeDefinition>;
     disabled?: boolean;
     indent?: boolean;

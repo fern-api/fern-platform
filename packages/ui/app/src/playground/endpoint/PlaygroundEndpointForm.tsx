@@ -1,8 +1,7 @@
+import { unwrapObjectType, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_ARRAY, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import titleCase from "@fern-ui/core-utils/titleCase";
 import { isEmpty } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
-import { dereferenceObjectProperties, unwrapReference } from "../../resolver/types";
 import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertiesForm } from "../form/PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "../form/PlaygroundTypeReferenceForm";
@@ -137,7 +136,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
             {endpoint.request?.body != null &&
                 visitDiscriminatedUnion(endpoint.request.body)._visit({
                     formData: (formData) => (
-                        <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title={titleCase(formData.name)}>
+                        <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Multipart Form">
                             <PlaygroundEndpointMultipartForm
                                 endpoint={endpoint}
                                 formState={formState}
@@ -163,44 +162,43 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                             />
                         </PlaygroundEndpointFormSection>
                     ),
-                    typeShape: (shape) => {
-                        shape = unwrapReference(shape, types);
+                    object: (value) => (
+                        <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Body Parameters">
+                            <PlaygroundObjectPropertiesForm
+                                id="body"
+                                properties={unwrapObjectType(value, types).properties}
+                                onChange={setBodyJson}
+                                value={formState?.body?.value}
+                                types={types}
+                            />
+                        </PlaygroundEndpointFormSection>
+                    ),
+                    alias: (alias) => {
+                        const { shape, isOptional } = unwrapReference(alias.value, types);
 
-                        if (shape.type === "object") {
+                        if (shape.type === "object" && !isOptional) {
                             return (
                                 <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Body Parameters">
                                     <PlaygroundObjectPropertiesForm
                                         id="body"
-                                        properties={dereferenceObjectProperties(shape, types)}
+                                        properties={unwrapObjectType(shape, types).properties}
                                         onChange={setBodyJson}
                                         value={formState?.body?.value}
-                                        types={types}
-                                    />
-                                </PlaygroundEndpointFormSection>
-                            );
-                        } else if (shape.type === "optional") {
-                            return (
-                                <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Optional Body">
-                                    <PlaygroundTypeReferenceForm
-                                        id="body"
-                                        shape={shape.shape}
-                                        onChange={setBodyJson}
-                                        value={formState?.body?.value}
-                                        onlyRequired
                                         types={types}
                                     />
                                 </PlaygroundEndpointFormSection>
                             );
                         }
-
                         return (
-                            <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Body">
+                            <PlaygroundEndpointFormSection
+                                ignoreHeaders={ignoreHeaders}
+                                title={isOptional ? "Optional Body" : "Body"}
+                            >
                                 <PlaygroundTypeReferenceForm
                                     id="body"
                                     shape={shape}
                                     onChange={setBodyJson}
                                     value={formState?.body?.value}
-                                    onlyRequired
                                     types={types}
                                 />
                             </PlaygroundEndpointFormSection>

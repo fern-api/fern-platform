@@ -67,7 +67,7 @@ export function PlaygroundEndpointRequestCard({
                     content={() => {
                         const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);
                         const resolver = new PlaygroundCodeSnippetResolverBuilder(
-                            context.endpoint,
+                            context,
                             isSnippetTemplatesEnabled,
                             isFileForgeHackEnabled,
                         ).create(authState, formState, proxyEnvironment, playgroundEnvironment, setOAuthValue);
@@ -76,7 +76,7 @@ export function PlaygroundEndpointRequestCard({
                     className="-mr-2"
                 />
             </div>
-            <PlaygroundRequestPreview endpoint={context.endpoint} formState={formState} requestType={requestType} />
+            <PlaygroundRequestPreview context={context} formState={formState} requestType={requestType} />
         </FernCard>
     );
 }
