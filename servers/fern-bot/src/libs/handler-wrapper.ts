@@ -6,6 +6,20 @@ export const handlerWrapper =
     async (event: APIGatewayProxyEvent, context: Context): Promise<APIGatewayProxyResult> => {
         context.callbackWaitsForEmptyEventLoop = false;
 
+        if (event.httpMethod === "OPTIONS") {
+            return {
+                statusCode: 200,
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
+                    "Access-Control-Allow-Headers":
+                        "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+                    "Access-Control-Allow-Credentials": true,
+                },
+                body: "",
+            };
+        }
+
         try {
             const response = await handlerFunction(event, context);
 
