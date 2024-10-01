@@ -61,6 +61,7 @@
     "@types/express": "^4.17.13",
     "@types/html-to-text": "^9.0.1",
     "@types/httpsnippet": "^1.23.1",
+    "@types/jest": "^29.5.11",
     "@types/lodash-es": "^4.17.12",
     "@types/marked": "^5.0.0",
     "@types/node-cron": "^3.0.8",
