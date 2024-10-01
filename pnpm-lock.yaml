@@ -2746,6 +2746,9 @@ importers:
       '@ungap/url-search-params':
         specifier: 0.2.2
         version: 0.2.2
+      adm-zip:
+        specifier: ^0.5.16
+        version: 0.5.16
       algoliasearch:
         specifier: ^4.24.0
         version: 4.24.0
@@ -2828,6 +2831,9 @@ importers:
       '@fern-platform/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@types/adm-zip':
+        specifier: ^0.5.5
+        version: 0.5.5
       '@types/compression':
         specifier: ^1.7.5
         version: 1.7.5
@@ -7408,6 +7414,9 @@ packages:
   '@types/acorn@4.0.6':
     resolution: {integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==}
 
+  '@types/adm-zip@0.5.5':
+    resolution: {integrity: sha512-YCGstVMjc4LTY5uK9/obvxBya93axZOVOyf2GSUulADzmLhYE45u2nAssCs/fWBs1Ifq5Vat75JTPwd5XZoPJw==}
+
   '@types/archiver@6.0.2':
     resolution: {integrity: sha512-KmROQqbQzKGuaAbmK+ZcytkJ51+YqDa7NmbXjmtC5YBLSyQYo21YaUnQ3HbaPFKL1ooo6RQ6OPYPIDyxfpDDXw==}
 
@@ -8676,9 +8685,9 @@ packages:
     resolution: {integrity: sha512-OXwN5b9pCUXNQHJpwwD2qP40byEmSgzj8B4ydSN0uMNYWiFmJ6x6KwUllMmfk8Rwu/HJDFR7U8ubsWBoN0Xp0A==}
     engines: {node: '>=8.9'}
 
-  adm-zip@0.5.12:
-    resolution: {integrity: sha512-6TVU49mK6KZb4qG6xWaaM4C7sA/sgUMLy/JYMOzkcp3BvVLpW0fXDFQiIzAuxFCt/2+xD7fNIiPFAoLZPhVNLQ==}
-    engines: {node: '>=6.0'}
+  adm-zip@0.5.16:
+    resolution: {integrity: sha512-TGw5yVi4saajsSEgz25grObGHEUaDrniwvA2qwSC060KfqGPdglhvPMA2lPIoxs3PQIItj2iag35fONcQqgUaQ==}
+    engines: {node: '>=12.0'}
 
   agent-base@6.0.2:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
@@ -21783,7 +21792,7 @@ snapshots:
 
   '@serverless/platform-client@4.5.1(supports-color@8.1.1)':
     dependencies:
-      adm-zip: 0.5.12
+      adm-zip: 0.5.16
       archiver: 5.3.2
       axios: 1.6.8
       fast-glob: 3.3.2
@@ -23930,6 +23939,10 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.5
 
+  '@types/adm-zip@0.5.5':
+    dependencies:
+      '@types/node': 20.12.12
+
   '@types/archiver@6.0.2':
     dependencies:
       '@types/readdir-glob': 1.1.5
@@ -25950,7 +25963,7 @@ snapshots:
       loader-utils: 2.0.4
       regex-parser: 2.3.0
 
-  adm-zip@0.5.12: {}
+  adm-zip@0.5.16: {}
 
   agent-base@6.0.2:
     dependencies:

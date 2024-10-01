@@ -1,3 +1,4 @@
+import AdmZip from "adm-zip";
 import { createWriteStream } from "fs";
 import { unlink } from "fs/promises";
 import path from "path";
@@ -14,19 +15,20 @@ export interface FetchAndUnzipRequest {
 const ZIP_FILENAME = "source.zip";
 
 export async function fetchAndUnzip(request: FetchAndUnzipRequest): Promise<void> {
-    const destinationPath = path.join((await tmp.dir()).path, ZIP_FILENAME);
+    const sourcePath = path.join((await tmp.dir()).path, ZIP_FILENAME);
     await downloadFile({
         sourceUrl: request.sourceUrl,
-        destinationPath,
+        destinationPath: sourcePath,
     });
 
-    console.debug(`Unzipping source from ${destinationPath} to ${request.destination}`);
-    await loggingExeca("unzip", ["-o", destinationPath, "-d", request.destination], {
+    console.debug(`Unzipping source from ${sourcePath} to ${request.destination}`);
+    await loggingExeca("unzip", ["-o", sourcePath, "-d", request.destination], {
         doNotPipeOutput: true,
     });
+    await unzipFile(sourcePath, request.destination);
 
-    console.debug(`Removing ${destinationPath}`);
-    await unlink(destinationPath);
+    console.debug(`Removing ${sourcePath}`);
+    await unlink(sourcePath);
 }
 
 async function downloadFile({
@@ -45,4 +47,20 @@ async function downloadFile({
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await promisify(pipeline)(response.body as any, fileStream);
+}
+
+async function unzipFile(sourcePath: string, destinationPath: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        try {
+            const zip = new AdmZip(sourcePath);
+
+            zip.extractAllTo(destinationPath, true);
+
+            console.log(`Successfully extracted ${sourcePath} to ${destinationPath}`);
+            resolve();
+        } catch (error) {
+            console.error(`Error unzipping file: ${error}`);
+            reject(error);
+        }
+    });
 }
