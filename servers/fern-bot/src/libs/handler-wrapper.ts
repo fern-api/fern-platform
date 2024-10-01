@@ -9,13 +9,27 @@ export const handlerWrapper =
         try {
             const response = await handlerFunction(event, context);
 
-            return { statusCode: 200, body: JSON.stringify(response) };
+            return {
+                statusCode: 200,
+                body: JSON.stringify(response),
+                headers: {
+                    "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+                    "Access-Control-Allow-Credentials": true, // Required for cookies, authorization headers with HTTPS
+                },
+            };
         } catch (err) {
             if (err instanceof Error) {
                 console.error(err);
                 return { statusCode: 500, body: err.message };
             }
 
-            return { statusCode: 500, body: "Unexpected Error" };
+            return {
+                statusCode: 500,
+                body: "Unexpected Error",
+                headers: {
+                    "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+                    "Access-Control-Allow-Credentials": true, // Required for cookies, authorization headers with HTTPS
+                },
+            };
         }
     };
