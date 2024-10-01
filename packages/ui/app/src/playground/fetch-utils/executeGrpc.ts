@@ -21,7 +21,7 @@ export async function executeGrpc(grpcClient: FernProxyClient, req: GrpcProxyReq
         baseUrl: req.url,
         endpoint: req.endpointId,
         headers: req.headers,
-        body: req.body,
+        body: req.body?.value,
         schema: undefined,
     });
     stopTimer();
