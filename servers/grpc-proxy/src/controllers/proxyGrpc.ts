@@ -1,4 +1,4 @@
-import { GrpcProxyRequest, GrpcProxyResponse, ProtobufSchema } from "@generated/api";
+import { ProxyRequest, ProxyResponse, ProtobufSchema } from "../generated/api";
 import { Buf } from "../libs/buf";
 import { fetchAndUnzip } from "./utils/fetchAndUnzip";
 import { mkdir } from "fs/promises";
