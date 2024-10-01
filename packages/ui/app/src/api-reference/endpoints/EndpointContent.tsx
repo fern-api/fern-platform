@@ -288,6 +288,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                     >
                         <EndpointContentLeft
                             endpoint={endpoint}
+                            example={selectedClient.exampleCall}
                             showErrors={showErrors}
                             onHoverRequestProperty={onHoverRequestProperty}
                             onHoverResponseProperty={onHoverResponseProperty}
