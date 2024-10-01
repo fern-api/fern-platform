@@ -4,13 +4,13 @@ import { HTTPSnippet, type HarRequest, type TargetId } from "httpsnippet-lite";
 import { noop } from "ts-essentials";
 import { convertEndpointExampleToHttpRequestExample } from "../api-reference/examples/HttpRequestExample";
 import { stringifyHttpRequestExampleToCurl } from "../api-reference/examples/stringifyHttpRequestExampleToCurl";
-import { buildRequestUrl } from "../playground/utils";
 import {
     ResolvedCodeSnippet,
     ResolvedEndpointDefinition,
     ResolvedExampleEndpointRequest,
     resolveEnvironment,
 } from "./types";
+import { buildRequestUrl } from "./url";
 
 interface HTTPSnippetClient {
     targetId: TargetId;
