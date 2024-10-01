@@ -37,6 +37,8 @@ export interface FeatureFlags {
     isFileForgeHackEnabled: boolean;
     is404PageHidden: boolean;
     isNewSearchExperienceEnabled: boolean;
+    // TODO: remove this after pinecone demo, this is a temporary flag
+    grpcEndpoints: readonly string[];
 }
 
 export interface NavigationProps {
