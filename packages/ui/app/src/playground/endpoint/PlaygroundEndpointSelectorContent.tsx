@@ -7,6 +7,8 @@ import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, use
 import { useSetAndOpenPlayground } from "../../atoms";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
+import { usePreloadEndpointContext } from "../hooks/useEndpointContext";
+import { usePreloadWebSocketContext } from "../hooks/useWebSocketContext";
 import { ApiGroup } from "../utils/flatten-apis";
 
 // const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
@@ -48,6 +50,9 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
             closeDropdown?.();
         };
 
+        const preloadEndpoint = usePreloadEndpointContext();
+        const preloadWebSocket = usePreloadWebSocketContext();
+
         function renderApiDefinitionPackage(apiGroup: ApiGroup) {
             const endpoints = apiGroup.items.filter((endpoint) => matchesEndpoint(filterValue, apiGroup, endpoint));
             if (endpoints.length === 0) {
@@ -76,11 +81,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                 return (
                                     <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
                                         <FernTooltip
-                                            // content={
-                                            //     apiDefinition?.description != null ? (
-                                            //         <Markdown size="xs" mdx={apiDefinition.description} />
-                                            //     ) : undefined
-                                            // }
+                                            // TODO: grab description from the API definition from global state
                                             content={undefined}
                                             side="right"
                                         >
@@ -103,6 +104,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                                         className="mr-1"
                                                     />
                                                 }
+                                                onMouseEnter={() => preloadEndpoint(endpointItem)}
                                             />
                                         </FernTooltip>
                                     </li>
@@ -111,11 +113,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                 return (
                                     <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
                                         <FernTooltip
-                                            // content={
-                                            //     apiDefinition?.description != null ? (
-                                            //         <Markdown size="xs" mdx={apiDefinition.description} />
-                                            //     ) : undefined
-                                            // }
+                                            // TODO: grab description from the API definition from global state
                                             content={undefined}
                                             side="right"
                                         >
@@ -127,6 +125,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                                                 active={active}
                                                 onClick={createSelectEndpoint(endpointItem)}
                                                 icon={<HttpMethodTag method="WSS" size="sm" className="mr-1" />}
+                                                onMouseEnter={() => preloadWebSocket(endpointItem)}
                                             />
                                         </FernTooltip>
                                     </li>

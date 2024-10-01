@@ -1,8 +1,11 @@
 import { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { useAtomCallback } from "jotai/utils";
 import { useMemo } from "react";
+import { preload } from "swr";
 import useSWRImmutable from "swr/immutable";
-import { useApiRoute } from "../../hooks/useApiRoute";
+import { useCallbackOne } from "use-memo-one";
+import { selectApiRoute, useApiRoute } from "../../hooks/useApiRoute";
 import { WebSocketContext, createWebSocketContext } from "../types/endpoint-context";
 
 interface LoadableWebSocketContext {
@@ -22,4 +25,16 @@ export function useWebSocketContext(node: FernNavigation.WebSocketNode): Loadabl
     const context = useMemo(() => createWebSocketContext(node, apiDefinition), [node, apiDefinition]);
 
     return { context, isLoading };
+}
+
+export function usePreloadWebSocketContext(): (node: FernNavigation.WebSocketNode) => void {
+    return useAtomCallback(
+        useCallbackOne((get, _set, node: FernNavigation.WebSocketNode) => {
+            const route = selectApiRoute(
+                get,
+                `/api/fern-docs/api-definition/${node.apiDefinitionId}/websocket/${node.webSocketId}`,
+            );
+            void preload(route, (url: string) => fetch(url).then((res) => res.json()));
+        }, []),
+    );
 }
