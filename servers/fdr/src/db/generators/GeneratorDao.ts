@@ -4,6 +4,7 @@ import {
     Generator,
     GeneratorId,
     GeneratorLanguage,
+    GeneratorScripts,
     GeneratorType,
     Script,
 } from "../../api/generated/api/resources/generators";
@@ -91,10 +92,7 @@ export class GeneratorsDaoImpl implements GeneratorsDao {
             generatorType: writeBuffer(generator.generatorType),
             generatorLanguage: convertGeneratorLanguage(generator.generatorLanguage),
             dockerImage: generator.dockerImage,
-            preInstallScript: generator.preInstallScript ? writeBuffer(generator.preInstallScript) : undefined,
-            installScript: generator.installScript ? writeBuffer(generator.installScript) : undefined,
-            compileScript: generator.compileScript ? writeBuffer(generator.compileScript) : undefined,
-            testScript: generator.testScript ? writeBuffer(generator.testScript) : undefined,
+            scripts: generator.scripts ? writeBuffer(generator.scripts) : undefined,
         };
         await this.prisma.generator.upsert({
             where: {
@@ -170,12 +168,7 @@ function convertPrismaGenerator(generator: prisma.Generator | null): Generator |
               generatorType: readBuffer(generator.generatorType) as GeneratorType,
               generatorLanguage: convertPrismaLanguage(generator.generatorLanguage),
               dockerImage: generator.dockerImage,
-              preInstallScript: generator.preInstallScript
-                  ? (readBuffer(generator.preInstallScript) as Script)
-                  : undefined,
-              installScript: generator.installScript ? (readBuffer(generator.installScript) as Script) : undefined,
-              compileScript: generator.compileScript ? (readBuffer(generator.compileScript) as Script) : undefined,
-              testScript: generator.testScript ? (readBuffer(generator.testScript) as Script) : undefined,
+              scripts: generator.scripts ? (readBuffer(generator.scripts) as GeneratorScripts) : undefined,
           }
         : undefined;
 }

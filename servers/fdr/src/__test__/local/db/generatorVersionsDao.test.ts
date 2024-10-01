@@ -19,17 +19,19 @@ it("generator version dao not semver", async () => {
             generatorType: { type: "sdk" },
             dockerImage: "this-fails-semver",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
-            preInstallScript: {
-                steps: [],
-            },
-            installScript: {
-                steps: [],
-            },
-            compileScript: {
-                steps: [],
-            },
-            testScript: {
-                steps: [],
+            scripts: {
+                preInstallScript: {
+                    steps: [],
+                },
+                installScript: {
+                    steps: [],
+                },
+                compileScript: {
+                    steps: [],
+                },
+                testScript: {
+                    steps: [],
+                },
             },
         },
     });
@@ -60,17 +62,19 @@ it("generator version get latest respects semver, not time", async () => {
             generatorType: { type: "sdk" },
             dockerImage: "this-picks-latest",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
-            preInstallScript: {
-                steps: [],
-            },
-            installScript: {
-                steps: [],
-            },
-            compileScript: {
-                steps: [],
-            },
-            testScript: {
-                steps: [],
+            scripts: {
+                preInstallScript: {
+                    steps: [],
+                },
+                installScript: {
+                    steps: [],
+                },
+                compileScript: {
+                    steps: [],
+                },
+                testScript: {
+                    steps: [],
+                },
             },
         },
     });
@@ -153,17 +157,19 @@ it("generator changelog", async () => {
             generatorType: { type: "sdk" },
             dockerImage: "this-gets-changelog",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
-            preInstallScript: {
-                steps: [],
-            },
-            installScript: {
-                steps: [],
-            },
-            compileScript: {
-                steps: [],
-            },
-            testScript: {
-                steps: [],
+            scripts: {
+                preInstallScript: {
+                    steps: [],
+                },
+                installScript: {
+                    steps: [],
+                },
+                compileScript: {
+                    steps: [],
+                },
+                testScript: {
+                    steps: [],
+                },
             },
         },
     });
@@ -386,17 +392,19 @@ it("generator version happy path update", async () => {
             generatorType: { type: "sdk" },
             dockerImage: "this-is-the-happy-path",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
-            preInstallScript: {
-                steps: [],
-            },
-            installScript: {
-                steps: [],
-            },
-            compileScript: {
-                steps: [],
-            },
-            testScript: {
-                steps: [],
+            scripts: {
+                preInstallScript: {
+                    steps: [],
+                },
+                installScript: {
+                    steps: [],
+                },
+                compileScript: {
+                    steps: [],
+                },
+                testScript: {
+                    steps: [],
+                },
             },
         },
     });
@@ -481,17 +489,19 @@ it("get generator that works for cli version", async () => {
             generatorType: { type: "sdk" },
             dockerImage: "this-is-cli-restricted",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
-            preInstallScript: {
-                steps: [],
-            },
-            installScript: {
-                steps: [],
-            },
-            compileScript: {
-                steps: [],
-            },
-            testScript: {
-                steps: [],
+            scripts: {
+                preInstallScript: {
+                    steps: [],
+                },
+                installScript: {
+                    steps: [],
+                },
+                compileScript: {
+                    steps: [],
+                },
+                testScript: {
+                    steps: [],
+                },
             },
         },
     });
@@ -590,17 +600,19 @@ it("get generator retain major version", async () => {
             generatorType: { type: "sdk" },
             dockerImage: "this-is-major-version-restricted",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
-            preInstallScript: {
-                steps: [],
-            },
-            installScript: {
-                steps: [],
-            },
-            compileScript: {
-                steps: [],
-            },
-            testScript: {
-                steps: [],
+            scripts: {
+                preInstallScript: {
+                    steps: [],
+                },
+                installScript: {
+                    steps: [],
+                },
+                compileScript: {
+                    steps: [],
+                },
+                testScript: {
+                    steps: [],
+                },
             },
         },
     });

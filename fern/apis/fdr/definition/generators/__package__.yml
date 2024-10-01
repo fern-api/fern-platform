@@ -51,17 +51,9 @@ types:
         type: list<string>
         docs: Each line of the script should be an entry within the list. These steps should be assumed to run via bash/command line.
 
-  Generator:
+  # These scripts might be over specifiying, but also sets us up in a decent position to centralize information to generate CI actions files when the time comes
+  GeneratorScripts:
     properties:
-      id: GeneratorId
-      displayName: string
-      generatorType: GeneratorType
-      generatorLanguage: optional<GeneratorLanguage>
-      dockerImage:
-        type: string
-        docs: The name of the docker image to pull to run this generator.
-
-      # These scripts might be over specifiying, but also sets us up in a decent position to centralize information to generate CI actions files when the time comes
       preInstallScript:
         type: optional<Script>
         docs: The steps necessary to prepare the environment to run any of the scripts below, for example installing yarn itself.
@@ -74,6 +66,17 @@ types:
       testScript:
         type: optional<Script>
         docs: The steps for running tests for the generated resource.
+
+  Generator:
+    properties:
+      id: GeneratorId
+      displayName: string
+      generatorType: GeneratorType
+      generatorLanguage: optional<GeneratorLanguage>
+      dockerImage:
+        type: string
+        docs: The name of the docker image to pull to run this generator.
+      scripts: optional<GeneratorScripts>
 
 service:
   audiences:

@@ -46,17 +46,19 @@ export class Generators {
      *         },
      *         generatorLanguage: "python",
      *         dockerImage: "string",
-     *         preInstallScript: {
-     *             steps: ["string"]
-     *         },
-     *         installScript: {
-     *             steps: ["string"]
-     *         },
-     *         compileScript: {
-     *             steps: ["string"]
-     *         },
-     *         testScript: {
-     *             steps: ["string"]
+     *         scripts: {
+     *             preInstallScript: {
+     *                 steps: ["string"]
+     *             },
+     *             installScript: {
+     *                 steps: ["string"]
+     *             },
+     *             compileScript: {
+     *                 steps: ["string"]
+     *             },
+     *             testScript: {
+     *                 steps: ["string"]
+     *             }
      *         }
      *     })
      */
