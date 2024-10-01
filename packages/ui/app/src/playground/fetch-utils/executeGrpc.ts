@@ -1,6 +1,6 @@
+import { FernProxyClient } from "@fern-fern/proxy-sdk";
 import { GrpcProxyRequest, ProxyResponse } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
-import { FernProxyClient } from "./generated";
 
 export async function executeGrpc(grpcClient: FernProxyClient, req: GrpcProxyRequest): Promise<PlaygroundResponse> {
     let time = 0;
@@ -22,6 +22,7 @@ export async function executeGrpc(grpcClient: FernProxyClient, req: GrpcProxyReq
         endpoint: req.endpointId,
         headers: req.headers,
         body: req.body,
+        schema: undefined,
     });
     stopTimer();
 

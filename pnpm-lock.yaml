@@ -1055,6 +1055,9 @@ importers:
       '@fern-api/template-resolver':
         specifier: workspace:*
         version: link:../../template-resolver
+      '@fern-fern/proxy-sdk':
+        specifier: 0.0.21
+        version: 0.0.21
       '@fern-ui/chatbot':
         specifier: workspace:*
         version: link:../chatbot
@@ -4056,6 +4059,9 @@ packages:
 
   '@fern-fern/paged-generators-sdk@0.0.5706':
     resolution: {integrity: sha512-E+qk3MT+opUqt4JXPw4OQ/2GwssUk5GJvLY3ytwIT7BQ/8F3/IVDqcpOP6/wByVCwU0UKRGJQUf/HrUwbk0XYA==}
+
+  '@fern-fern/proxy-sdk@0.0.21':
+    resolution: {integrity: sha512-BawSADGCkPI9BAmYlGz+HS9mbbf11UAHfh2ZmpVByY1WRIIJ2H/pWE9/gPzuyEqV44KnR4E4iwuSXef9gQH94A==}
 
   '@fern-fern/vercel@0.0.4655':
     resolution: {integrity: sha512-twz/gFcQo9Gk38byYLFsJDbHnvvBsOHfofdef15vzIeFCIr1yPsTWYmNoPllBeRLc4RjMel6T06afFZJMc8JSg==}
@@ -18816,6 +18822,17 @@ snapshots:
       form-data: 4.0.0
       formdata-node: 6.0.3
       js-base64: 3.7.2
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      readable-stream: 4.5.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/proxy-sdk@0.0.21':
+    dependencies:
+      form-data: 4.0.0
+      formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.11.2
       readable-stream: 4.5.2
