@@ -17,7 +17,9 @@ const fetcher = (url: string): Promise<ApiDefinition> => fetch(url).then((res) =
  * It should be refactored to store the resulting endpoint in a global state, so that it can be shared between components.
  */
 export function useEndpointContext(node: FernNavigation.EndpointNode | undefined): LoadableEndpointContext {
-    const route = useApiRoute(`/api/fern-docs/api-definition/${node?.apiDefinitionId}/endpoint/${node?.endpointId}`);
+    const route = useApiRoute(
+        `/api/fern-docs/api-definition/${encodeURIComponent(node?.apiDefinitionId ?? "")}/endpoint/${encodeURIComponent(node?.endpointId ?? "")}`,
+    );
     const { data: apiDefinition, isLoading } = useSWRImmutable(node != null ? route : null, fetcher);
     const context = useMemo(() => createEndpointContext(node, apiDefinition), [node, apiDefinition]);
 

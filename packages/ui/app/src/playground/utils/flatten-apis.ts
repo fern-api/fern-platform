@@ -12,7 +12,7 @@ export interface ApiGroup {
 
 const trimBreadcrumbs = createBreadcrumbSlicer<ApiGroup>({
     selectBreadcrumb: (apiGroup) => apiGroup.breadcrumb,
-    updateBreadcrumb: (apiGroup, breadcrumbs) => ({ ...apiGroup, breadcrumbs }),
+    updateBreadcrumb: (apiGroup, breadcrumb) => ({ ...apiGroup, breadcrumb }),
 });
 
 export function flattenApiSection(root: FernNavigation.SidebarRootNode | undefined): ApiGroup[] {

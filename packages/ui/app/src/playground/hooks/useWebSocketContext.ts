@@ -17,7 +17,9 @@ const fetcher = (url: string): Promise<ApiDefinition> => fetch(url).then((res) =
  * It should be refactored to store the resulting endpoint in a global state, so that it can be shared between components.
  */
 export function useWebSocketContext(node: FernNavigation.WebSocketNode): LoadableWebSocketContext {
-    const route = useApiRoute(`/api/fern-docs/api-definition/${node.apiDefinitionId}/websocket/${node.webSocketId}`);
+    const route = useApiRoute(
+        `/api/fern-docs/api-definition/${encodeURIComponent(node.apiDefinitionId)}/websocket/${encodeURIComponent(node.webSocketId)}`,
+    );
     const { data: apiDefinition, isLoading } = useSWRImmutable(route, fetcher);
     const context = useMemo(() => createWebSocketContext(node, apiDefinition), [node, apiDefinition]);
 

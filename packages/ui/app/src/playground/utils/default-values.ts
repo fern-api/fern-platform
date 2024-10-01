@@ -32,7 +32,7 @@ export function getEmptyValueForHttpRequestBody(
     }
     return visitDiscriminatedUnion(requestShape)._visit<PlaygroundFormStateBody | undefined>({
         object: (value) => ({ type: "json", value: getEmptyValueForType(value, types) }),
-        alias: (value) => getEmptyValueForHttpRequestBody(value, types),
+        alias: (value) => ({ type: "json", value: getEmptyValueForType(value, types) }),
         bytes: () => ({ type: "octet-stream", value: undefined }),
         formData: () => ({ type: "form-data", value: {} }),
     });
