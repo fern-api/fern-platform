@@ -62,7 +62,6 @@ export function PlaygroundEndpointRequestCard({
                         Python
                     </FernButton>
                 </FernButtonGroup>
-                )
                 <CopyToClipboardButton
                     content={() => {
                         const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);
