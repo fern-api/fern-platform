@@ -29,7 +29,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
                     clientId: edgeConfig.clientId,
 
                     // TODO: subpaths will not work
-                    redirectUri: `https://${domain}/api/fern-docs/oauth/webflow/callback`,
+                    // redirectUri: `https://${domain}/api/fern-docs/oauth/webflow/callback`,
 
                     // note: this is not validated
                     scope: (edgeConfig.scope as OauthScope | OauthScope[]) ?? "authorized_user:read",
