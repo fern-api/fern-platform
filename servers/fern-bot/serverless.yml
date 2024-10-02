@@ -46,6 +46,13 @@ provider:
             - s3:DeleteObject
           Resource: arn:aws:s3:::fern-bot-${opt:stage}/*
 
+  # Images that will be built locally and uploaded to ECR
+  ecr:
+    images:
+      generator_languages_image:
+        platform: linux/amd64
+        path: ./
+
 functions:
   # ========== Updater Step Function ============
   # The functions needed for the step function
@@ -142,7 +149,15 @@ functions:
 
   # A webhook listener for GitHub events, also an endpoint (not scheduled).
   githubWebhookListener:
-    handler: "src/functions/github-webhook-listenter/githubWebhookListener.handler"
+    timeout: 30
+    memorySize: 5120
+    ephemeralStorageSize: 10240
+    image:
+      name: generator_languages_image
+      command:
+        - "src/functions/github-webhook-listener/githubWebhookListener.handler"
+      entryPoint:
+        - "/lambda-entrypoint.sh"
     events:
       - httpApi:
           path: /api/github/webhooks

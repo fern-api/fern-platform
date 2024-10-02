@@ -4,13 +4,12 @@ import { setupGithubApp } from "@libs/github";
 
 export async function handleIncomingRequest(request: Request, env: Env): Promise<Response> {
     const application: App = setupGithubApp(env);
+    // Process the incoming events
+    await actionWebhook(application);
 
     try {
         // Verify the incoming webhook before proceeding
         await verifySignature(application, request);
-
-        // Process the incoming events
-        await actionWebhook(application);
 
         return new Response("{ 'ok': true }", {
             headers: { "content-type": "application/json" },
@@ -50,10 +49,10 @@ function stringifyRunId(runId: RunId): string {
     return JSON.stringify(runId);
 }
 
-function deserializeRunId(stringifiedRunId: string): RunId {
-    // TODO: we should throw here if it cannot deserialize correctly
-    return JSON.parse(stringifiedRunId) as RunId;
-}
+// function deserializeRunId(stringifiedRunId: string): RunId {
+//     // TODO: we should throw here if it cannot deserialize correctly
+//     return JSON.parse(stringifiedRunId) as RunId;
+// }
 
 const actionWebhook = async (app: App): Promise<void> => {
     app.log.info("Listening for issues.labeled webhooks");
@@ -106,7 +105,7 @@ const actionWebhook = async (app: App): Promise<void> => {
         const action = context.payload.action;
 
         if (action === "rerequested" || action === "created") {
-            const runId = deserializeRunId(context.payload.check_run.external_id);
+            // const runId = deserializeRunId(context.payload.check_run.external_id);
 
             // TODO: Parse the runId and then run an action based on the `action` field
 
