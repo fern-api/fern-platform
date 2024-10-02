@@ -28,6 +28,27 @@ export class ApiDefinitionKVCache {
         return `${PREFIX}:${this.domain}:${this.api}:${key}`;
     }
 
+    public async getApiDefinition(additionalKey = ""): Promise<ApiDefinition.ApiDefinition | null> {
+        const key = this.createKey(`api-definition/${additionalKey}`);
+        try {
+            return kv.get<ApiDefinition.ApiDefinition>(key);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(`Could not get ${key} from cache`, e);
+            return null;
+        }
+    }
+
+    public async setApiDefinition(apiDefinition: ApiDefinition.ApiDefinition, additionalKey = ""): Promise<void> {
+        const key = this.createKey(`api-definition/${additionalKey}`);
+        try {
+            await kv.set(key, apiDefinition);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(`Could not set ${key} in cache`, e);
+        }
+    }
+
     private async getResolvedDescription(key: string): Promise<FernDocs.MarkdownText | null> {
         try {
             return kv.get<FernDocs.MarkdownText>(this.createKey(key));
@@ -41,7 +62,7 @@ export class ApiDefinitionKVCache {
     private async mgetResolvedDescriptions(keys: string[]): Promise<Record<string, FernDocs.MarkdownText>> {
         const toRet: Record<string, FernDocs.MarkdownText> = {};
         try {
-            const response = await kv.mget<(FernDocs.MarkdownText | null)[]>(keys);
+            const response = await kv.mget<(FernDocs.MarkdownText | null)[]>(keys.map((key) => this.createKey(key)));
             keys.map((key, index) => [key, response[index] ?? null] as const).forEach(([key, value]) => {
                 if (value != null) {
                     toRet[key] = value;
@@ -66,7 +87,12 @@ export class ApiDefinitionKVCache {
     // TODO: validate that mset records is <1MB or else this will throw!
     private async msetResolvedDescriptions(records: Record<string, FernDocs.MarkdownText>): Promise<void> {
         try {
-            await kv.mset(records);
+            const entries = Object.entries(records).map(([key, value]) => [this.createKey(key), value] as const);
+            const batches = [];
+            while (entries.length > 0) {
+                batches.push(entries.splice(0, 100));
+            }
+            await Promise.all(batches.map((batch) => kv.mset(Object.fromEntries(batch))));
         } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
