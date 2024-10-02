@@ -609,6 +609,7 @@
                             },
                             "stream": {
                               "apiDefinitionId": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d",
+                              "canonicalSlug": "docs/v5/api-reference/prompts/call",
                               "endpointId": "endpoint_prompts.call_stream",
                               "id": "d8feb9f1-c5b3-4935-9375-ad1f1826d72d:endpoint_prompts.call_stream",
                               "isResponseStream": true,
@@ -2435,6 +2436,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/v5/getting-started/overview",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.getting-started.overview",
                         "pageId": "pages/getting-started/overview.mdx",
@@ -2443,6 +2445,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v5/getting-started/why-humanloop",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.getting-started.why-humanloop",
                         "pageId": "pages/getting-started/why-humanloop.mdx",
@@ -2451,6 +2454,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v5/tutorials/quickstart",
                         "hidden": false,
                         "id": "root..v4.uv.docs.docs.getting-started.tutorials/quickstart",
                         "pageId": "pages/getting-started/quickstart-tutorial.mdx",
@@ -2962,6 +2966,7 @@
                   {
                     "children": [
                       {
+                        "canonicalSlug": "docs/v5/api-reference/sdks",
                         "hidden": false,
                         "id": "root..v4.uv.api-reference.api-reference.introduction.sdks",
                         "pageId": "pages/api-reference/sdks.md",
@@ -2970,6 +2975,7 @@
                         "type": "page"
                       },
                       {
+                        "canonicalSlug": "docs/v5/api-reference/errors",
                         "hidden": false,
                         "id": "root..v4.uv.api-reference.api-reference.introduction.errors",
                         "pageId": "pages/api-reference/errors.md",
@@ -2988,6 +2994,7 @@
                   },
                   {
                     "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                    "canonicalSlug": "docs/v5/api-reference",
                     "children": [
                       {
                         "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
@@ -3006,6 +3013,7 @@
                             },
                             "stream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/chats/create",
                               "endpointId": "endpoint_chats.createStream",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_chats.createStream",
                               "isResponseStream": true,
@@ -3030,6 +3038,7 @@
                             },
                             "stream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/chats/create-deployed",
                               "endpointId": "endpoint_chats.create_deployed_stream",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_chats.create_deployed_stream",
                               "isResponseStream": true,
@@ -3054,6 +3063,7 @@
                             },
                             "stream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/chats/create-config",
                               "endpointId": "endpoint_chats.create_config_stream",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_chats.create_config_stream",
                               "isResponseStream": true,
@@ -3112,6 +3122,7 @@
                             },
                             "stream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/completions/create",
                               "endpointId": "endpoint_completions.createStream",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_completions.createStream",
                               "isResponseStream": true,
@@ -3136,6 +3147,7 @@
                             },
                             "stream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/completions/create-deployed",
                               "endpointId": "endpoint_completions.create_deployed_stream",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_completions.create_deployed_stream",
                               "isResponseStream": true,
@@ -3160,6 +3172,7 @@
                             },
                             "stream": {
                               "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                              "canonicalSlug": "docs/v4/api-reference/completions/create-config",
                               "endpointId": "endpoint_completions.create_config_stream",
                               "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_completions.create_config_stream",
                               "isResponseStream": true,
@@ -3260,6 +3273,7 @@
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
                             "availability": "Deprecated",
+                            "canonicalSlug": "docs/v4/api-reference/projects/list-datasets",
                             "endpointId": "endpoint_projects.list_evaluations",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_projects.list_evaluations",
                             "isResponseStream": false,
@@ -3452,6 +3466,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v5/api-reference/datasets/list",
                             "endpointId": "endpoint_datasets.list",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_datasets.list",
                             "isResponseStream": false,
@@ -3462,6 +3477,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v5/api-reference/datasets/get",
                             "endpointId": "endpoint_datasets.get",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_datasets.get",
                             "isResponseStream": false,
@@ -3472,6 +3488,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v5/api-reference/datasets/delete",
                             "endpointId": "endpoint_datasets.delete",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_datasets.delete",
                             "isResponseStream": false,
@@ -3522,6 +3539,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v5/api-reference/evaluations/get",
                             "endpointId": "endpoint_evaluations.get",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluations.get",
                             "isResponseStream": false,
@@ -3542,6 +3560,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v5/api-reference/evaluations/create",
                             "endpointId": "endpoint_evaluations.create",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluations.create",
                             "isResponseStream": false,
@@ -3572,6 +3591,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v5/api-reference/evaluations/update-status",
                             "endpointId": "endpoint_evaluations.update_status",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluations.update_status",
                             "isResponseStream": false,
@@ -3632,6 +3652,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v5/api-reference/evaluators/get",
                             "endpointId": "endpoint_evaluators.get",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluators.get",
                             "isResponseStream": false,
@@ -3642,6 +3663,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v5/api-reference/evaluators/delete",
                             "endpointId": "endpoint_evaluators.delete",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluators.delete",
                             "isResponseStream": false,
@@ -3692,6 +3714,7 @@
                         "children": [
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v5/api-reference/logs/list",
                             "endpointId": "endpoint_logs.list",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_logs.list",
                             "isResponseStream": false,
@@ -3712,6 +3735,7 @@
                           },
                           {
                             "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                            "canonicalSlug": "docs/v5/api-reference/logs/delete",
                             "endpointId": "endpoint_logs.delete",
                             "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_logs.delete",
                             "isResponseStream": false,
