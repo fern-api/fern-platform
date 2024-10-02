@@ -1,30 +1,26 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { FernButton, FernInput, FernScrollArea, FernTooltip, FernTooltipProvider } from "@fern-ui/components";
+import { FernButton, FernInput, FernScrollArea, FernTooltipProvider } from "@fern-ui/components";
 import { isNonNullish } from "@fern-ui/core-utils";
 import cn, { clsx } from "clsx";
 import { Search, Slash, Xmark } from "iconoir-react";
-import { Fragment, ReactElement, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { useSetAndOpenPlayground } from "../../atoms";
-import { HttpMethodTag } from "../../components/HttpMethodTag";
+import { Fragment, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
-import { usePreloadApiLeaf } from "../hooks/usePreloadApiLeaf";
 import { ApiGroup } from "../utils/flatten-apis";
-
-// const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), { ssr: true });
+import { PlaygroundEndpointSelectorLeafNode } from "./PlaygroundEndpointSelectorLeafNode";
 
 export interface PlaygroundEndpointSelectorContentProps {
     apiGroups: ApiGroup[];
     closeDropdown?: () => void;
     selectedEndpoint?: FernNavigation.NavigationNodeApiLeaf;
     className?: string;
-    // nodeIdToApiDefinition: Map<FernNavigation.NodeId, ResolvedApiEndpointWithPackage>;
 }
 
 function matchesEndpoint(query: string, group: ApiGroup, endpoint: FernNavigation.NavigationNodeApiLeaf): boolean {
     return (
         group.breadcrumb.some((breadcrumb) => breadcrumb.toLowerCase().includes(query.toLowerCase())) ||
         endpoint.title?.toLowerCase().includes(query.toLowerCase()) ||
-        (endpoint.type === "endpoint" && endpoint.method.toLowerCase().includes(query.toLowerCase()))
+        (endpoint.type === "endpoint" && endpoint.method.toLowerCase().includes(query.toLowerCase())) ||
+        (endpoint.type === "webSocket" && "websocket".includes(query.toLowerCase()))
     );
 }
 
@@ -34,8 +30,6 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         useImperativeHandle(ref, () => scrollRef.current!);
 
-        const setSelectionStateAndOpen = useSetAndOpenPlayground();
-
         const [filterValue, setFilterValue] = useState<string>("");
 
         const selectedItemRef = useRef<HTMLLIElement>(null);
@@ -44,16 +38,14 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
             selectedItemRef.current?.scrollIntoView({ block: "center" });
         }, []);
 
-        const createSelectEndpoint = (endpoint: FernNavigation.NavigationNodeApiLeaf) => () => {
-            void setSelectionStateAndOpen(endpoint);
-            closeDropdown?.();
-        };
-
-        const preload = usePreloadApiLeaf();
-
         function renderApiDefinitionPackage(apiGroup: ApiGroup) {
-            const endpoints = apiGroup.items.filter((endpoint) => matchesEndpoint(filterValue, apiGroup, endpoint));
-            if (endpoints.length === 0) {
+            const apiLeafNodes = apiGroup.items
+                .filter(
+                    (node): node is FernNavigation.EndpointNode | FernNavigation.WebSocketNode =>
+                        node.type === "endpoint" || node.type === "webSocket",
+                )
+                .filter((node) => matchesEndpoint(filterValue, apiGroup, node));
+            if (apiLeafNodes.length === 0) {
                 return null;
             }
             return (
@@ -71,66 +63,18 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
                         </div>
                     )}
                     <ul className="relative z-0 list-none">
-                        {endpoints.map((endpointItem) => {
-                            // const apiDefinition = nodeIdToApiDefinition.get(endpointItem.id);
-                            const active = endpointItem.id === selectedEndpoint?.id;
-                            const text = renderTextWithHighlight(endpointItem.title, filterValue);
-                            if (endpointItem.type === "endpoint") {
-                                return (
-                                    <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
-                                        <FernTooltip
-                                            // TODO: grab description from the API definition from global state
-                                            content={undefined}
-                                            side="right"
-                                        >
-                                            <FernButton
-                                                text={text}
-                                                className="w-full text-left"
-                                                variant="minimal"
-                                                intent={active ? "primary" : "none"}
-                                                active={active}
-                                                onClick={createSelectEndpoint(endpointItem)}
-                                                icon={
-                                                    <HttpMethodTag
-                                                        method={
-                                                            endpointItem.isResponseStream
-                                                                ? "STREAM"
-                                                                : endpointItem.method
-                                                        }
-                                                        size="sm"
-                                                        active={active}
-                                                        className="mr-1"
-                                                    />
-                                                }
-                                                onMouseEnter={() => void preload(endpointItem)}
-                                            />
-                                        </FernTooltip>
-                                    </li>
-                                );
-                            } else if (endpointItem.type === "webSocket") {
-                                return (
-                                    <li ref={active ? selectedItemRef : undefined} key={endpointItem.id}>
-                                        <FernTooltip
-                                            // TODO: grab description from the API definition from global state
-                                            content={undefined}
-                                            side="right"
-                                        >
-                                            <FernButton
-                                                text={text}
-                                                className="w-full text-left"
-                                                variant="minimal"
-                                                intent={active ? "primary" : "none"}
-                                                active={active}
-                                                onClick={createSelectEndpoint(endpointItem)}
-                                                icon={<HttpMethodTag method="WSS" size="sm" className="mr-1" />}
-                                                onMouseEnter={() => void preload(endpointItem)}
-                                            />
-                                        </FernTooltip>
-                                    </li>
-                                );
-                            } else {
-                                return null;
-                            }
+                        {apiLeafNodes.map((node) => {
+                            const active = node.id === selectedEndpoint?.id;
+                            return (
+                                <PlaygroundEndpointSelectorLeafNode
+                                    key={node.id}
+                                    node={node}
+                                    active={active}
+                                    ref={active ? selectedItemRef : undefined}
+                                    filterValue={filterValue}
+                                    closeDropdown={closeDropdown}
+                                />
+                            );
                         })}
                     </ul>
                 </li>
@@ -174,21 +118,3 @@ export const PlaygroundEndpointSelectorContent = forwardRef<HTMLDivElement, Play
 );
 
 PlaygroundEndpointSelectorContent.displayName = "PlaygroundEndpointSelectorContent";
-
-function renderTextWithHighlight(text: string, highlight: string): ReactElement[] {
-    highlight = highlight.trim();
-    if (highlight === "") {
-        return [<span key={0}>{text}</span>];
-    }
-    // Split text on higlight term, include term itself into parts, ignore case
-    const parts = text.split(new RegExp(`(${highlight})`, "gi"));
-    return parts.map((part, idx) =>
-        part.toLowerCase() === highlight.toLowerCase() ? (
-            <mark className="t-default bg-accent-highlight" key={idx}>
-                {part}
-            </mark>
-        ) : (
-            <span key={idx}>{part}</span>
-        ),
-    );
-}

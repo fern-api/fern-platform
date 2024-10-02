@@ -4,13 +4,14 @@ import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useAtomCallback } from "jotai/utils";
 import { preload } from "swr";
 import { useCallbackOne } from "use-memo-one";
+import { WRITE_API_DEFINITION_ATOM } from "../../atoms";
 import { selectApiRoute } from "../../hooks/useApiRoute";
 
 const fetcher = (url: string): Promise<ApiDefinition> => fetch(url).then((res) => res.json());
 
 export function usePreloadApiLeaf(): (node: NavigationNodeApiLeaf) => Promise<ApiDefinition> {
     return useAtomCallback(
-        useCallbackOne((get, _set, node: NavigationNodeApiLeaf) => {
+        useCallbackOne(async (get, set, node: NavigationNodeApiLeaf) => {
             const route = selectApiRoute(
                 get,
                 `/api/fern-docs/api-definition/${encodeURIComponent(node.apiDefinitionId)}/${visitDiscriminatedUnion(
@@ -21,7 +22,9 @@ export function usePreloadApiLeaf(): (node: NavigationNodeApiLeaf) => Promise<Ap
                     webhook: (node) => `webhook/${encodeURIComponent(node.webhookId)}`,
                 })}`,
             );
-            return preload(route, fetcher);
+            const apiDefinition = await preload(route, fetcher);
+            set(WRITE_API_DEFINITION_ATOM, apiDefinition);
+            return apiDefinition;
         }, []),
     );
 }
