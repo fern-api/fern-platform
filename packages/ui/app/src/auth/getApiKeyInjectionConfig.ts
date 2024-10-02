@@ -26,13 +26,14 @@ export type APIKeyInjectionConfig =
     | APIKeyInjectionConfigEnabledUnauthorized
     | APIKeyInjectionConfigEnabledAuthorized;
 
+// TODO: since this is for ORY (rightbrain) only, lets refactor
 export async function getAPIKeyInjectionConfig(
     domain: string,
     cookies?: NextRequest["cookies"],
     state?: string,
 ): Promise<APIKeyInjectionConfig> {
     const config = await getAuthEdgeConfig(domain);
-    if (config?.type === "oauth2" && config["api-key-injection-enabled"]) {
+    if (config?.type === "oauth2" && config.partner === "ory" && config["api-key-injection-enabled"]) {
         const client = new OAuth2Client(config, `https://${domain}/api/auth/callback`);
         const tokens = cookies != null ? await client.getOrRefreshAccessTokenEdge(cookies) : undefined;
 
@@ -61,13 +62,15 @@ export async function getAPIKeyInjectionConfig(
         enabled: false,
     };
 }
+
+// TODO: since this is for ORY (rightbrain) only, lets refactor
 export async function getAPIKeyInjectionConfigNode(
     domain: string,
     cookies?: NextApiRequestCookies,
     state?: string,
 ): Promise<APIKeyInjectionConfig> {
     const config = await getAuthEdgeConfig(domain);
-    if (config?.type === "oauth2" && config["api-key-injection-enabled"]) {
+    if (config?.type === "oauth2" && config.partner === "ory" && config["api-key-injection-enabled"]) {
         const client = new OAuth2Client(config, `https://${domain}/api/auth/callback`);
         const tokens = cookies != null ? await client.getOrRefreshAccessTokenNode(cookies) : undefined;
 

@@ -2,7 +2,7 @@ import { JWTPayload, createRemoteJWKSet, decodeJwt, jwtVerify } from "jose";
 import { NextApiRequestCookies } from "next/dist/server/api-utils";
 import type { NextRequest } from "next/server";
 import urlJoin from "url-join";
-import { AuthEdgeConfigOAuth2, OAuthTokenResponse, OAuthTokenResponseSchema } from "./types";
+import { AuthEdgeConfigOAuth2Ory, OAuthTokenResponse, OAuthTokenResponseSchema } from "./types";
 
 interface TokenInfo {
     access_token: string;
@@ -18,7 +18,7 @@ export class OAuth2Client {
     private readonly jwks: string | undefined;
 
     constructor(
-        config: AuthEdgeConfigOAuth2,
+        config: AuthEdgeConfigOAuth2Ory,
         private readonly redirect_uri?: string,
     ) {
         this.clientId = config.clientId;
