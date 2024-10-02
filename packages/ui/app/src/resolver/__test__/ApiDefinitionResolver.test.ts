@@ -34,7 +34,7 @@ describe("resolveApiDefinition", () => {
             },
             fixture,
         );
-        const node = FernNavigation.migrate.FernNavigationV1ToLatest.create().apiReference(v1);
+        const node = FernNavigation.migrate.FernNavigationV1ToLatest.create().apiReference(v1, []);
         const collector = FernNavigation.NodeCollector.collect(node);
 
         const resolved = await ApiDefinitionResolver.resolve(
@@ -75,7 +75,7 @@ describe("resolveApiDefinition", () => {
             },
             fixture,
         );
-        const node = FernNavigation.migrate.FernNavigationV1ToLatest.create().apiReference(v1);
+        const node = FernNavigation.migrate.FernNavigationV1ToLatest.create().apiReference(v1, []);
         const collector = FernNavigation.NodeCollector.collect(node);
 
         const resolved = await ApiDefinitionResolver.resolve(
@@ -88,8 +88,11 @@ describe("resolveApiDefinition", () => {
             serializeMdx,
         );
         expect(resolved).toMatchSnapshot();
+        // eslint-disable-next-line deprecation/deprecation
         expect((resolved.items[0] as ResolvedEndpointDefinition).auth).toBeUndefined();
+        // eslint-disable-next-line deprecation/deprecation
         expect((resolved.items[1] as ResolvedEndpointDefinition).auth?.type).toBe("bearerAuth");
+        // eslint-disable-next-line deprecation/deprecation
         expect((resolved.items[2] as ResolvedEndpointDefinition).auth).toEqual({
             type: "header",
             headerWireValue: "test-api-key",
