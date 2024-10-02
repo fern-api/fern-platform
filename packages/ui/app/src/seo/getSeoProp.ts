@@ -84,6 +84,11 @@ export function getSeoProps(
         const page = pages[pageId];
         if (page != null) {
             const { data: frontmatter, content } = getFrontmatter(page.markdown);
+
+            if (frontmatter["canonical-url"] != null) {
+                seo.canonical = frontmatter["canonical-url"];
+            }
+
             ogMetadata = { ...ogMetadata, ...frontmatter };
 
             // retrofit og:image, preferring og:image
