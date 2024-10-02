@@ -169,15 +169,46 @@ export class ApiDefinitionLoader {
         const engine = this.flags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
         const serializeMdx = await getMdxBundler(engine);
 
-        // TODO: batch resolved descriptions to avoid multiple round-trip requests to KV
-        const cachedTransformer = (description: FernDocs.MarkdownText, key: string) => {
-            return cache.resolveDescription(description, `${engine}/${key}`, (description) =>
-                serializeMdx(description),
-            );
-        };
-
-        const transformed = await Transformer.descriptions(cachedTransformer).apiDefinition(apiDefinition);
+        const descriptions = await this.#collectDescriptions(apiDefinition, engine);
+        const resolvedDescriptions = await cache.batchResolveDescriptions(descriptions, serializeMdx);
+        const transformed = await this.#transformDescriptions(apiDefinition, resolvedDescriptions, engine);
 
         return transformed;
+    };
+
+    /**
+     * Collect all descriptions to resolve, so that we can resolve all of them in a single batch
+     *
+     * @param apiDefinition The API definition to collect descriptions from
+     * @param engine to prefix the key, so that we can differentiate between different serialization engines
+     */
+    #collectDescriptions = async (
+        apiDefinition: ApiDefinition,
+        engine: string,
+    ): Promise<Record<string, FernDocs.MarkdownText>> => {
+        const descriptions: Record<string, FernDocs.MarkdownText> = {};
+        const descriptionCollector = (description: FernDocs.MarkdownText, key: string) => {
+            if (descriptions[`${engine}/${key}`] != null) {
+                // eslint-disable-next-line no-console
+                console.error(`Duplicate description key: ${key}!`);
+                return description;
+            }
+            descriptions[`${engine}/${key}`] = description;
+            return description;
+        };
+        await Transformer.descriptions(descriptionCollector).apiDefinition(apiDefinition);
+        return descriptions;
+    };
+
+    #transformDescriptions = async (
+        apiDefinition: ApiDefinition,
+        descriptions: Record<string, FernDocs.MarkdownText>,
+        engine: string,
+    ): Promise<ApiDefinition> => {
+        const transformer = (description: FernDocs.MarkdownText, key: string) => {
+            return descriptions[`${engine}/${key}`] ?? description;
+        };
+
+        return await Transformer.descriptions(transformer).apiDefinition(apiDefinition);
     };
 }
