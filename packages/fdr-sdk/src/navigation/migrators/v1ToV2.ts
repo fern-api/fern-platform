@@ -98,7 +98,8 @@ export class FernNavigationV1ToLatest {
 
     public landingPage = (node: FernNavigation.V1.LandingPageNode): FernNavigation.LandingPageNode => {
         const slug = FernNavigation.Slug(node.slug);
-        const canonicalSlug = this.#getAndSetCanonicalSlug(node.pageId, slug);
+        const canonicalSlug =
+            this.#getAndSetCanonicalSlug(node.pageId, slug) ?? this.#getAndSetCanonicalSlug(node.title, slug);
         const latest: FernNavigation.LandingPageNode = {
             type: "landingPage",
             title: node.title,
@@ -256,7 +257,8 @@ export class FernNavigationV1ToLatest {
 
     public page = (node: FernNavigation.V1.PageNode): FernNavigation.PageNode => {
         const slug = FernNavigation.Slug(node.slug);
-        const canonicalSlug = this.#getAndSetCanonicalSlug(node.pageId, slug);
+        const canonicalSlug =
+            this.#getAndSetCanonicalSlug(node.pageId, slug) ?? this.#getAndSetCanonicalSlug(node.title, slug);
         const latest: FernNavigation.PageNode = {
             type: "page",
             id: FernNavigation.NodeId(node.id),
@@ -274,7 +276,8 @@ export class FernNavigationV1ToLatest {
     public section = (node: FernNavigation.V1.SectionNode): FernNavigation.SectionNode => {
         const slug = FernNavigation.Slug(node.slug);
         const overviewPageId = node.overviewPageId ? FernNavigation.PageId(node.overviewPageId) : undefined;
-        const canonicalSlug = this.#getAndSetCanonicalSlug(overviewPageId, slug);
+        const canonicalSlug =
+            this.#getAndSetCanonicalSlug(overviewPageId, slug) ?? this.#getAndSetCanonicalSlug(node.title, slug);
         const latest: FernNavigation.SectionNode = {
             type: "section",
             id: FernNavigation.NodeId(node.id),
@@ -295,7 +298,8 @@ export class FernNavigationV1ToLatest {
     public apiReference = (node: FernNavigation.V1.ApiReferenceNode): FernNavigation.ApiReferenceNode => {
         const slug = FernNavigation.Slug(node.slug);
         const overviewPageId = node.overviewPageId ? FernNavigation.PageId(node.overviewPageId) : undefined;
-        const canonicalSlug = this.#getAndSetCanonicalSlug(overviewPageId, slug);
+        const canonicalSlug =
+            this.#getAndSetCanonicalSlug(overviewPageId, slug) ?? this.#getAndSetCanonicalSlug(node.title, slug);
         const latest: FernNavigation.ApiReferenceNode = {
             type: "apiReference",
             paginated: node.paginated,
@@ -322,7 +326,8 @@ export class FernNavigationV1ToLatest {
     public changelog = (node: FernNavigation.V1.ChangelogNode): FernNavigation.ChangelogNode => {
         const slug = FernNavigation.Slug(node.slug);
         const overviewPageId = node.overviewPageId ? FernNavigation.PageId(node.overviewPageId) : undefined;
-        const canonicalSlug = this.#getAndSetCanonicalSlug(overviewPageId, slug);
+        const canonicalSlug =
+            this.#getAndSetCanonicalSlug(overviewPageId, slug) ?? this.#getAndSetCanonicalSlug(node.title, slug);
         const latest: FernNavigation.ChangelogNode = {
             type: "changelog",
             id: FernNavigation.NodeId(node.id),
@@ -370,7 +375,8 @@ export class FernNavigationV1ToLatest {
 
     public changelogEntry = (node: FernNavigation.V1.ChangelogEntryNode): FernNavigation.ChangelogEntryNode => {
         const slug = FernNavigation.Slug(node.slug);
-        const canonicalSlug = this.#getAndSetCanonicalSlug(node.pageId, slug);
+        const canonicalSlug =
+            this.#getAndSetCanonicalSlug(node.pageId, slug) ?? this.#getAndSetCanonicalSlug(node.title, slug);
         const latest: FernNavigation.ChangelogEntryNode = {
             type: "changelogEntry",
             id: FernNavigation.NodeId(node.id),
@@ -389,7 +395,8 @@ export class FernNavigationV1ToLatest {
     public apiPackage = (node: FernNavigation.V1.ApiPackageNode): FernNavigation.ApiPackageNode => {
         const slug = FernNavigation.Slug(node.slug);
         const overviewPageId = node.overviewPageId ? FernNavigation.PageId(node.overviewPageId) : undefined;
-        const canonicalSlug = this.#getAndSetCanonicalSlug(overviewPageId, slug);
+        const canonicalSlug =
+            this.#getAndSetCanonicalSlug(overviewPageId, slug) ?? this.#getAndSetCanonicalSlug(node.title, slug);
         const latest: FernNavigation.ApiPackageNode = {
             type: "apiPackage",
             id: FernNavigation.NodeId(node.id),
@@ -411,10 +418,9 @@ export class FernNavigationV1ToLatest {
 
     public endpoint = (node: FernNavigation.V1.EndpointNode): FernNavigation.EndpointNode => {
         const slug = FernNavigation.Slug(node.slug);
-        const canonicalSlug = this.#getAndSetCanonicalSlug(
-            `:api:${node.apiDefinitionId}:endpoint:${node.endpointId}`,
-            slug,
-        );
+        const canonicalSlug =
+            this.#getAndSetCanonicalSlug(`:api:${node.apiDefinitionId}:endpoint:${node.endpointId}`, slug) ??
+            this.#getAndSetCanonicalSlug(node.title, slug);
         const latest: FernNavigation.EndpointNode = {
             type: "endpoint",
             id: FernNavigation.NodeId(node.id),
@@ -445,10 +451,9 @@ export class FernNavigationV1ToLatest {
 
     public webSocket = (node: FernNavigation.V1.WebSocketNode): FernNavigation.WebSocketNode => {
         const slug = FernNavigation.Slug(node.slug);
-        const canonicalSlug = this.#getAndSetCanonicalSlug(
-            `:api:${node.apiDefinitionId}:websocket:${node.webSocketId}`,
-            slug,
-        );
+        const canonicalSlug =
+            this.#getAndSetCanonicalSlug(`:api:${node.apiDefinitionId}:websocket:${node.webSocketId}`, slug) ??
+            this.#getAndSetCanonicalSlug(node.title, slug);
         const latest: FernNavigation.WebSocketNode = {
             type: "webSocket",
             id: FernNavigation.NodeId(node.id),
@@ -467,10 +472,9 @@ export class FernNavigationV1ToLatest {
 
     public webhook = (node: FernNavigation.V1.WebhookNode): FernNavigation.WebhookNode => {
         const slug = FernNavigation.Slug(node.slug);
-        const canonicalSlug = this.#getAndSetCanonicalSlug(
-            `:api:${node.apiDefinitionId}:webhook:${node.webhookId}`,
-            slug,
-        );
+        const canonicalSlug =
+            this.#getAndSetCanonicalSlug(`:api:${node.apiDefinitionId}:webhook:${node.webhookId}`, slug) ??
+            this.#getAndSetCanonicalSlug(node.title, slug);
         const latest: FernNavigation.WebhookNode = {
             type: "webhook",
             id: FernNavigation.NodeId(node.id),
