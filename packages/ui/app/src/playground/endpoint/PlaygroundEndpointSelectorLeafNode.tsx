@@ -48,13 +48,12 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<HTMLLIElement, Play
             closeDropdown?.();
         };
 
+        const tooltipContent = description != null ? <Markdown mdx={description} size="xs" /> : undefined;
+
         if (node.type === "endpoint") {
             return (
                 <li ref={ref}>
-                    <FernTooltip
-                        content={description != null ? <Markdown mdx={description} /> : undefined}
-                        side="right"
-                    >
+                    <FernTooltip content={tooltipContent} side="right">
                         <FernButton
                             text={text}
                             className="w-full text-left"
@@ -78,10 +77,7 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<HTMLLIElement, Play
         } else if (node.type === "webSocket") {
             return (
                 <li ref={ref}>
-                    <FernTooltip
-                        content={description != null ? <Markdown mdx={description} /> : undefined}
-                        side="right"
-                    >
+                    <FernTooltip content={tooltipContent} side="right">
                         <FernButton
                             text={text}
                             className="w-full text-left"
