@@ -1,4 +1,4 @@
-import { LOOP_TOLERANCE } from "./const";
+import { LARGE_LOOP_TOLERANCE } from "./const";
 import type * as Latest from "./latest";
 import { ApiTypeIdVisitor } from "./typeid-visitor";
 
@@ -118,7 +118,7 @@ class ApiDefinitionPruner {
 
         let loop = 0;
         while (queue.length > 0) {
-            if (loop > LOOP_TOLERANCE) {
+            if (loop > LARGE_LOOP_TOLERANCE) {
                 throw new Error("Infinite loop detected while expanding type references.");
             }
 
