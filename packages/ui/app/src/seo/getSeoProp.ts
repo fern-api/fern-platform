@@ -86,6 +86,10 @@ export function getSeoProps(
         const { data: frontmatter, content } = getFrontmatter(page.markdown);
         ogMetadata = { ...ogMetadata, ...frontmatter };
 
+        if (frontmatter["canonical-url"] != null) {
+            seo.canonical = frontmatter["canonical-url"];
+        }
+
         // retrofit og:image, preferring og:image
         // TODO: (rohin) Come back here and support more image transformations (twitter, logo, etc)
         for (const frontmatterImageVar of [frontmatter.image, frontmatter["og:image"]]) {
