@@ -475,6 +475,7 @@
               "children": [
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/client-session-api/retrieve-client-side-token",
                   "endpointId": "subpackage_clientSessionApi.retrieveClientSideToken",
                   "id": "root..v2.2.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.retrieveClientSideToken",
                   "isResponseStream": false,
@@ -485,6 +486,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/client-session-api/create-client-side-token",
                   "endpointId": "subpackage_clientSessionApi.createClientSideToken",
                   "id": "root..v2.2.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.createClientSideToken",
                   "isResponseStream": false,
@@ -495,6 +497,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/client-session-api/update-client-side-token",
                   "endpointId": "subpackage_clientSessionApi.updateClientSideToken",
                   "id": "root..v2.2.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.updateClientSideToken",
                   "isResponseStream": false,
@@ -515,6 +518,7 @@
               "children": [
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/list-payments",
                   "endpointId": "subpackage_paymentsApi.listPayments",
                   "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
                   "isResponseStream": false,
@@ -525,6 +529,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/create-payment",
                   "endpointId": "subpackage_paymentsApi.createPayment",
                   "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.createPayment",
                   "isResponseStream": false,
@@ -535,6 +540,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/authorize-payment",
                   "endpointId": "subpackage_paymentsApi.authorizePayment",
                   "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.authorizePayment",
                   "isResponseStream": false,
@@ -545,6 +551,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/capture-payment",
                   "endpointId": "subpackage_paymentsApi.capturePayment",
                   "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.capturePayment",
                   "isResponseStream": false,
@@ -555,6 +562,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/cancel-payment",
                   "endpointId": "subpackage_paymentsApi.cancelPayment",
                   "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.cancelPayment",
                   "isResponseStream": false,
@@ -565,6 +573,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/refund-payment",
                   "endpointId": "subpackage_paymentsApi.refundPayment",
                   "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.refundPayment",
                   "isResponseStream": false,
@@ -575,6 +584,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/resume-payment",
                   "endpointId": "subpackage_paymentsApi.resumePayment",
                   "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.resumePayment",
                   "isResponseStream": false,
@@ -585,6 +595,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/adjust-authorization",
                   "endpointId": "subpackage_paymentsApi.adjustAuthorization",
                   "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.adjustAuthorization",
                   "isResponseStream": false,
@@ -595,6 +606,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/get-payment-by-id",
                   "endpointId": "subpackage_paymentsApi.getPaymentById",
                   "id": "root..v2.2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.getPaymentById",
                   "isResponseStream": false,
@@ -615,6 +627,7 @@
               "children": [
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
                   "endpointId": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
                   "id": "root..v2.2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
                   "isResponseStream": false,
@@ -625,6 +638,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
                   "endpointId": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
                   "id": "root..v2.2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
                   "isResponseStream": false,
@@ -635,6 +649,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
                   "endpointId": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
                   "id": "root..v2.2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
                   "isResponseStream": false,
@@ -645,6 +660,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
                   "endpointId": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
                   "id": "root..v2.2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
                   "isResponseStream": false,
@@ -665,6 +681,7 @@
               "children": [
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/observability-api-beta/external-payment",
                   "endpointId": "subpackage_observabilityApiBeta.external_payment",
                   "id": "root..v2.2.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment",
                   "isResponseStream": false,
@@ -675,6 +692,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/observability-api-beta/external-payment-update",
                   "endpointId": "subpackage_observabilityApiBeta.external_payment_update",
                   "id": "root..v2.2.uv.api-reference.subpackage_observabilityApiBeta.subpackage_observabilityApiBeta.external_payment_update",
                   "isResponseStream": false,
@@ -695,6 +713,7 @@
               "children": [
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/loyalty-api/get-loyalty-customer",
                   "endpointId": "subpackage_loyaltyApi.get_loyalty_customer",
                   "id": "root..v2.2.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer",
                   "isResponseStream": false,
@@ -705,6 +724,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/loyalty-api/get-loyalty-customer-transactions",
                   "endpointId": "subpackage_loyaltyApi.get_loyalty_customer_transactions",
                   "id": "root..v2.2.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.get_loyalty_customer_transactions",
                   "isResponseStream": false,
@@ -715,6 +735,7 @@
                 },
                 {
                   "apiDefinitionId": "090e0b31-c453-4f41-8269-845a6e8a461f",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/loyalty-api/post-loyalty-transaction",
                   "endpointId": "subpackage_loyaltyApi.post_loyalty_transaction",
                   "id": "root..v2.2.uv.api-reference.subpackage_loyaltyApi.subpackage_loyaltyApi.post_loyalty_transaction",
                   "isResponseStream": false,
@@ -746,6 +767,7 @@
               "children": [
                 {
                   "apiDefinitionId": "c5629660-3984-4ce0-989e-9c6fb0df36d9",
+                  "canonicalSlug": "docs/api/v2.3/webhooks/payment-webhooks/payment-status-webhook-event",
                   "id": "root..v2.2.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_status_webhook_event",
                   "method": "POST",
                   "slug": "docs/api/v2.2/webhooks/payment-webhooks/payment-status-webhook-event",
@@ -755,6 +777,7 @@
                 },
                 {
                   "apiDefinitionId": "c5629660-3984-4ce0-989e-9c6fb0df36d9",
+                  "canonicalSlug": "docs/api/v2.3/webhooks/payment-webhooks/payment-refund-webhook-event",
                   "id": "root..v2.2.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_refund_webhook_event",
                   "method": "POST",
                   "slug": "docs/api/v2.2/webhooks/payment-webhooks/payment-refund-webhook-event",
@@ -774,6 +797,7 @@
               "children": [
                 {
                   "apiDefinitionId": "c5629660-3984-4ce0-989e-9c6fb0df36d9",
+                  "canonicalSlug": "docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
                   "id": "root..v2.2.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
                   "method": "POST",
                   "slug": "docs/api/v2.2/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
@@ -783,6 +807,7 @@
                 },
                 {
                   "apiDefinitionId": "c5629660-3984-4ce0-989e-9c6fb0df36d9",
+                  "canonicalSlug": "docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-status-webhook-event",
                   "id": "root..v2.2.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_status_webhook_event",
                   "method": "POST",
                   "slug": "docs/api/v2.2/webhooks/dispute-chargebacks-webhooks/dispute-status-webhook-event",
@@ -887,6 +912,7 @@
               "children": [
                 {
                   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/client-session-api/retrieve-client-side-token",
                   "endpointId": "subpackage_clientSessionApi.retrieveClientSideToken",
                   "id": "root..v2.1.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.retrieveClientSideToken",
                   "isResponseStream": false,
@@ -897,6 +923,7 @@
                 },
                 {
                   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/client-session-api/create-client-side-token",
                   "endpointId": "subpackage_clientSessionApi.createClientSideToken",
                   "id": "root..v2.1.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.createClientSideToken",
                   "isResponseStream": false,
@@ -907,6 +934,7 @@
                 },
                 {
                   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/client-session-api/update-client-side-token",
                   "endpointId": "subpackage_clientSessionApi.updateClientSideToken",
                   "id": "root..v2.1.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.updateClientSideToken",
                   "isResponseStream": false,
@@ -927,6 +955,7 @@
               "children": [
                 {
                   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/list-payments",
                   "endpointId": "subpackage_paymentsApi.listPayments",
                   "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
                   "isResponseStream": false,
@@ -937,6 +966,7 @@
                 },
                 {
                   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/create-payment",
                   "endpointId": "subpackage_paymentsApi.createPayment",
                   "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.createPayment",
                   "isResponseStream": false,
@@ -947,6 +977,7 @@
                 },
                 {
                   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/capture-payment",
                   "endpointId": "subpackage_paymentsApi.capturePayment",
                   "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.capturePayment",
                   "isResponseStream": false,
@@ -957,6 +988,7 @@
                 },
                 {
                   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/cancel-payment",
                   "endpointId": "subpackage_paymentsApi.cancelPayment",
                   "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.cancelPayment",
                   "isResponseStream": false,
@@ -967,6 +999,7 @@
                 },
                 {
                   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/refund-payment",
                   "endpointId": "subpackage_paymentsApi.refundPayment",
                   "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.refundPayment",
                   "isResponseStream": false,
@@ -977,6 +1010,7 @@
                 },
                 {
                   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/resume-payment",
                   "endpointId": "subpackage_paymentsApi.resumePayment",
                   "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.resumePayment",
                   "isResponseStream": false,
@@ -987,6 +1021,7 @@
                 },
                 {
                   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/get-payment-by-id",
                   "endpointId": "subpackage_paymentsApi.getPaymentById",
                   "id": "root..v2.1.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.getPaymentById",
                   "isResponseStream": false,
@@ -1007,6 +1042,7 @@
               "children": [
                 {
                   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
                   "endpointId": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
                   "id": "root..v2.1.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
                   "isResponseStream": false,
@@ -1017,6 +1053,7 @@
                 },
                 {
                   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
                   "endpointId": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
                   "id": "root..v2.1.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
                   "isResponseStream": false,
@@ -1027,6 +1064,7 @@
                 },
                 {
                   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
                   "endpointId": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
                   "id": "root..v2.1.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
                   "isResponseStream": false,
@@ -1037,6 +1075,7 @@
                 },
                 {
                   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
                   "endpointId": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
                   "id": "root..v2.1.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
                   "isResponseStream": false,
@@ -1068,6 +1107,7 @@
               "children": [
                 {
                   "apiDefinitionId": "3e1141df-b4bc-4dab-9542-53cf91851645",
+                  "canonicalSlug": "docs/api/v2.3/webhooks/payment-webhooks/payment-status-webhook-event",
                   "endpointId": "subpackage_paymentWebhooks.payment_status_webhook_event",
                   "id": "root..v2.1.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_status_webhook_event",
                   "isResponseStream": false,
@@ -1078,6 +1118,7 @@
                 },
                 {
                   "apiDefinitionId": "3e1141df-b4bc-4dab-9542-53cf91851645",
+                  "canonicalSlug": "docs/api/v2.3/webhooks/payment-webhooks/payment-refund-webhook-event",
                   "endpointId": "subpackage_paymentWebhooks.payment_refund_webhook_event",
                   "id": "root..v2.1.uv.webhooks.subpackage_paymentWebhooks.subpackage_paymentWebhooks.payment_refund_webhook_event",
                   "isResponseStream": false,
@@ -1098,6 +1139,7 @@
               "children": [
                 {
                   "apiDefinitionId": "3e1141df-b4bc-4dab-9542-53cf91851645",
+                  "canonicalSlug": "docs/api/v2.3/webhooks/dispute-chargebacks-webhooks/dispute-open-webhook-event",
                   "endpointId": "subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
                   "id": "root..v2.1.uv.webhooks.subpackage_disputeChargebacksWebhooks.subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
                   "isResponseStream": false,
@@ -1203,6 +1245,7 @@
               "children": [
                 {
                   "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/client-session-api/create-client-side-token",
                   "endpointId": "subpackage_clientSessionApi.createClientSideToken",
                   "id": "root..v2.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.createClientSideToken",
                   "isResponseStream": false,
@@ -1223,6 +1266,7 @@
               "children": [
                 {
                   "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/list-payments",
                   "endpointId": "subpackage_paymentsApi.listPayments",
                   "id": "root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.listPayments",
                   "isResponseStream": false,
@@ -1233,6 +1277,7 @@
                 },
                 {
                   "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/create-payment",
                   "endpointId": "subpackage_paymentsApi.createPayment",
                   "id": "root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.createPayment",
                   "isResponseStream": false,
@@ -1243,6 +1288,7 @@
                 },
                 {
                   "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/capture-payment",
                   "endpointId": "subpackage_paymentsApi.capturePayment",
                   "id": "root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.capturePayment",
                   "isResponseStream": false,
@@ -1253,6 +1299,7 @@
                 },
                 {
                   "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/cancel-payment",
                   "endpointId": "subpackage_paymentsApi.cancelPayment",
                   "id": "root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.cancelPayment",
                   "isResponseStream": false,
@@ -1263,6 +1310,7 @@
                 },
                 {
                   "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/refund-payment",
                   "endpointId": "subpackage_paymentsApi.refundPayment",
                   "id": "root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.refundPayment",
                   "isResponseStream": false,
@@ -1273,6 +1321,7 @@
                 },
                 {
                   "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/resume-payment",
                   "endpointId": "subpackage_paymentsApi.resumePayment",
                   "id": "root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.resumePayment",
                   "isResponseStream": false,
@@ -1283,6 +1332,7 @@
                 },
                 {
                   "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payments-api/get-payment-by-id",
                   "endpointId": "subpackage_paymentsApi.getPaymentById",
                   "id": "root..v2.uv.api-reference.subpackage_paymentsApi.subpackage_paymentsApi.getPaymentById",
                   "isResponseStream": false,
@@ -1303,6 +1353,7 @@
               "children": [
                 {
                   "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payment-methods-api/vault-payment-method-payment-methods-token-vault-post",
                   "endpointId": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
                   "id": "root..v2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
                   "isResponseStream": false,
@@ -1313,6 +1364,7 @@
                 },
                 {
                   "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payment-methods-api/get-payment-methods-payment-methods-get",
                   "endpointId": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
                   "id": "root..v2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
                   "isResponseStream": false,
@@ -1323,6 +1375,7 @@
                 },
                 {
                   "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payment-methods-api/delete-payment-method-payment-methods-token-delete",
                   "endpointId": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
                   "id": "root..v2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
                   "isResponseStream": false,
@@ -1333,6 +1386,7 @@
                 },
                 {
                   "apiDefinitionId": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
+                  "canonicalSlug": "docs/api/v2.3/api-reference/payment-methods-api/set-payment-method-default-payment-methods-token-default-post",
                   "endpointId": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
                   "id": "root..v2.uv.api-reference.subpackage_paymentMethodsApi.subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
                   "isResponseStream": false,

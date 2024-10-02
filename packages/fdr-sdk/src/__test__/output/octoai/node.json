@@ -1258,6 +1258,7 @@
                         },
                         "stream": {
                           "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                          "canonicalSlug": "docs/api-reference/text-gen/create-chat-completion",
                           "endpointId": "endpoint_text-gen.createChatCompletion_stream",
                           "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_text-gen.endpoint_text-gen.createChatCompletion_stream",
                           "isResponseStream": true,
@@ -1282,6 +1283,7 @@
                         },
                         "stream": {
                           "apiDefinitionId": "270fcb14-fecb-45b5-8075-3e207a0d4b31",
+                          "canonicalSlug": "docs/api-reference/text-gen/create-completion",
                           "endpointId": "endpoint_text-gen.createCompletion_stream",
                           "id": "root.uv.api-reference.api-reference.octo-ai-api.subpackage_text-gen.endpoint_text-gen.createCompletion_stream",
                           "isResponseStream": true,

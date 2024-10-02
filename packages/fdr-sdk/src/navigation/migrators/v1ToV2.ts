@@ -18,9 +18,9 @@ export class FernNavigationV1ToLatest {
         const latest: FernNavigation.RootNode = {
             type: "root",
             child: visitDiscriminatedUnion(node.child)._visit<FernNavigation.RootChild>({
-                versioned: this.versioned,
-                unversioned: this.unversioned,
-                productgroup: this.productGroup,
+                versioned: (value) => this.versioned(value, [node]),
+                unversioned: (value) => this.unversioned(value, [node]),
+                productgroup: (value) => this.productGroup(value, [node]),
             }),
             version: "v2",
             title: node.title,
@@ -35,7 +35,10 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public versioned = (node: FernNavigation.V1.VersionedNode): FernNavigation.VersionedNode => {
+    public versioned = (
+        node: FernNavigation.V1.VersionedNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.VersionedNode => {
         if (node.children.length === 0) {
             return {
                 type: "versioned",
@@ -53,15 +56,15 @@ export class FernNavigationV1ToLatest {
          * the default version should be the preferred canonical slug
          */
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const defaultVersion = this.version(node.children[defaultVersionIdx]!);
+        const defaultVersion = this.version(node.children[defaultVersionIdx]!, [...parents, node]);
 
         /**
          * visit the rest of the children, but splice the default version in its original position
          */
         const children = [
-            ...node.children.slice(0, defaultVersionIdx).map((child) => this.version(child)),
+            ...node.children.slice(0, defaultVersionIdx).map((child) => this.version(child, [...parents, node])),
             defaultVersion,
-            ...node.children.slice(defaultVersionIdx + 1).map((child) => this.version(child)),
+            ...node.children.slice(defaultVersionIdx + 1).map((child) => this.version(child, [...parents, node])),
         ];
 
         const latest: FernNavigation.VersionedNode = {
@@ -73,16 +76,19 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public version = (node: FernNavigation.V1.VersionNode): FernNavigation.VersionNode => {
-        const landingPage = node.landingPage ? this.landingPage(node.landingPage) : undefined;
+    public version = (
+        node: FernNavigation.V1.VersionNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.VersionNode => {
+        const landingPage = node.landingPage ? this.landingPage(node.landingPage, [...parents, node]) : undefined;
         const latest: FernNavigation.VersionNode = {
             type: "version",
             default: node.default,
             versionId: node.versionId,
             landingPage,
             child: visitDiscriminatedUnion(node.child)._visit<FernNavigation.VersionChild>({
-                tabbed: this.tabbed,
-                sidebarRoot: this.sidebarRoot,
+                tabbed: (value) => this.tabbed(value, [...parents, node]),
+                sidebarRoot: (value) => this.sidebarRoot(value, [...parents, node]),
             }),
             availability: this.#availability(node.availability),
             title: node.title,
@@ -96,9 +102,15 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public landingPage = (node: FernNavigation.V1.LandingPageNode): FernNavigation.LandingPageNode => {
+    public landingPage = (
+        node: FernNavigation.V1.LandingPageNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.LandingPageNode => {
         const slug = FernNavigation.Slug(node.slug);
-        const canonicalSlug = this.#getAndSetCanonicalSlug(node.pageId, slug);
+        const canonicalSlug = this.#getAndSetCanonicalSlug(
+            [node.pageId, this.#createTitleDisambiguationKey(node, parents)],
+            slug,
+        );
         const latest: FernNavigation.LandingPageNode = {
             type: "landingPage",
             title: node.title,
@@ -113,25 +125,31 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public tabbed = (node: FernNavigation.V1.TabbedNode): FernNavigation.TabbedNode => {
+    public tabbed = (
+        node: FernNavigation.V1.TabbedNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.TabbedNode => {
         const latest: FernNavigation.TabbedNode = {
             type: "tabbed",
             id: FernNavigation.NodeId(node.id),
             children: node.children.map((child) =>
                 visitDiscriminatedUnion(child)._visit<FernNavigation.TabChild>({
-                    tab: this.tab,
-                    link: this.link,
-                    changelog: this.changelog,
+                    tab: (value) => this.tab(value, [...parents, node]),
+                    link: (value) => this.link(value, [...parents, node]),
+                    changelog: (value) => this.changelog(value, [...parents, node]),
                 }),
             ),
         };
         return latest;
     };
 
-    public tab = (node: FernNavigation.V1.TabNode): FernNavigation.TabNode => {
+    public tab = (
+        node: FernNavigation.V1.TabNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.TabNode => {
         const latest: FernNavigation.TabNode = {
             type: "tab",
-            child: this.sidebarRoot(node.child),
+            child: this.sidebarRoot(node.child, [...parents, node]),
             title: node.title,
             slug: FernNavigation.Slug(node.slug),
             canonicalSlug: undefined,
@@ -143,7 +161,10 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public link = (node: FernNavigation.V1.LinkNode): FernNavigation.LinkNode => {
+    public link = (
+        node: FernNavigation.V1.LinkNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.LinkNode => {
         const latest: FernNavigation.LinkNode = {
             type: "link",
             id: FernNavigation.NodeId(node.id),
@@ -154,22 +175,28 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public unversioned = (node: FernNavigation.V1.UnversionedNode): FernNavigation.UnversionedNode => {
+    public unversioned = (
+        node: FernNavigation.V1.UnversionedNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.UnversionedNode => {
         const latest: FernNavigation.UnversionedNode = {
             type: "unversioned",
             child: visitDiscriminatedUnion(node.child)._visit<FernNavigation.VersionChild>({
-                tabbed: this.tabbed,
-                sidebarRoot: this.sidebarRoot,
+                tabbed: (value) => this.tabbed(value, [...parents, node]),
+                sidebarRoot: (value) => this.sidebarRoot(value, [...parents, node]),
             }),
-            landingPage: node.landingPage ? this.landingPage(node.landingPage) : undefined,
+            landingPage: node.landingPage ? this.landingPage(node.landingPage, [...parents, node]) : undefined,
             id: FernNavigation.NodeId(node.id),
         };
 
         return latest;
     };
 
-    public productGroup = (node: FernNavigation.V1.ProductGroupNode): FernNavigation.ProductGroupNode => {
-        const landingPage = node.landingPage ? this.landingPage(node.landingPage) : undefined;
+    public productGroup = (
+        node: FernNavigation.V1.ProductGroupNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.ProductGroupNode => {
+        const landingPage = node.landingPage ? this.landingPage(node.landingPage, [...parents, node]) : undefined;
         if (node.children.length === 0) {
             return {
                 type: "productgroup",
@@ -189,15 +216,15 @@ export class FernNavigationV1ToLatest {
          * the default product should be the preferred canonical slug
          */
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const defaultProduct = this.product(node.children[defaultProductIdx]!);
+        const defaultProduct = this.product(node.children[defaultProductIdx]!, [...parents, node]);
 
         /**
          * visit the rest of the children, but splice the default product in its original position
          */
         const children = [
-            ...node.children.slice(0, defaultProductIdx).map((child) => this.product(child)),
+            ...node.children.slice(0, defaultProductIdx).map((child) => this.product(child, [...parents, node])),
             defaultProduct,
-            ...node.children.slice(defaultProductIdx + 1).map((child) => this.product(child)),
+            ...node.children.slice(defaultProductIdx + 1).map((child) => this.product(child, [...parents, node])),
         ];
 
         const latest: FernNavigation.ProductGroupNode = {
@@ -209,7 +236,10 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public product = (node: FernNavigation.V1.ProductNode): FernNavigation.ProductNode => {
+    public product = (
+        node: FernNavigation.V1.ProductNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.ProductNode => {
         const latest: FernNavigation.ProductNode = {
             type: "product",
             id: FernNavigation.NodeId(node.id),
@@ -222,41 +252,53 @@ export class FernNavigationV1ToLatest {
             default: node.default,
             productId: FernNavigation.ProductId(node.productId),
             child: visitDiscriminatedUnion(node.child)._visit<FernNavigation.ProductChild>({
-                unversioned: this.unversioned,
-                versioned: this.versioned,
+                unversioned: (value) => this.unversioned(value, [...parents, node]),
+                versioned: (value) => this.versioned(value, [...parents, node]),
             }),
             subtitle: node.subtitle,
         };
         return latest;
     };
 
-    public sidebarRoot = (node: FernNavigation.V1.SidebarRootNode): FernNavigation.SidebarRootNode => {
+    public sidebarRoot = (
+        node: FernNavigation.V1.SidebarRootNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.SidebarRootNode => {
         const latest: FernNavigation.SidebarRootNode = {
             type: "sidebarRoot",
             id: FernNavigation.NodeId(node.id),
             children: node.children.map((child) =>
                 visitDiscriminatedUnion(child)._visit<FernNavigation.SidebarRootChild>({
-                    sidebarGroup: this.sidebarGroup,
-                    apiReference: this.apiReference,
-                    section: this.section,
+                    sidebarGroup: (value) => this.sidebarGroup(value, [...parents, node]),
+                    apiReference: (value) => this.apiReference(value, [...parents, node]),
+                    section: (value) => this.section(value, [...parents, node]),
                 }),
             ),
         };
         return latest;
     };
 
-    public sidebarGroup = (node: FernNavigation.V1.SidebarGroupNode): FernNavigation.SidebarGroupNode => {
+    public sidebarGroup = (
+        node: FernNavigation.V1.SidebarGroupNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.SidebarGroupNode => {
         const latest: FernNavigation.SidebarGroupNode = {
             type: "sidebarGroup",
             id: FernNavigation.NodeId(node.id),
-            children: node.children.map((child) => this.#navigationChild(child)),
+            children: node.children.map((child) => this.#navigationChild(child, [...parents, node])),
         };
         return latest;
     };
 
-    public page = (node: FernNavigation.V1.PageNode): FernNavigation.PageNode => {
+    public page = (
+        node: FernNavigation.V1.PageNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.PageNode => {
         const slug = FernNavigation.Slug(node.slug);
-        const canonicalSlug = this.#getAndSetCanonicalSlug(node.pageId, slug);
+        const canonicalSlug = this.#getAndSetCanonicalSlug(
+            [node.pageId, this.#createTitleDisambiguationKey(node, parents)],
+            slug,
+        );
         const latest: FernNavigation.PageNode = {
             type: "page",
             id: FernNavigation.NodeId(node.id),
@@ -271,14 +313,23 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public section = (node: FernNavigation.V1.SectionNode): FernNavigation.SectionNode => {
+    public section = (
+        node: FernNavigation.V1.SectionNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.SectionNode => {
         const slug = FernNavigation.Slug(node.slug);
         const overviewPageId = node.overviewPageId ? FernNavigation.PageId(node.overviewPageId) : undefined;
-        const canonicalSlug = this.#getAndSetCanonicalSlug(overviewPageId, slug);
+        const canonicalSlug =
+            overviewPageId != null
+                ? this.#getAndSetCanonicalSlug(
+                      [overviewPageId, this.#createTitleDisambiguationKey(node, parents)],
+                      slug,
+                  )
+                : undefined;
         const latest: FernNavigation.SectionNode = {
             type: "section",
             id: FernNavigation.NodeId(node.id),
-            children: node.children.map((child) => this.#navigationChild(child)),
+            children: node.children.map((child) => this.#navigationChild(child, [...parents, node])),
             title: node.title,
             slug,
             canonicalSlug,
@@ -292,17 +343,26 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public apiReference = (node: FernNavigation.V1.ApiReferenceNode): FernNavigation.ApiReferenceNode => {
+    public apiReference = (
+        node: FernNavigation.V1.ApiReferenceNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.ApiReferenceNode => {
         const slug = FernNavigation.Slug(node.slug);
         const overviewPageId = node.overviewPageId ? FernNavigation.PageId(node.overviewPageId) : undefined;
-        const canonicalSlug = this.#getAndSetCanonicalSlug(overviewPageId, slug);
+        const canonicalSlug =
+            overviewPageId != null
+                ? this.#getAndSetCanonicalSlug(
+                      [overviewPageId, this.#createTitleDisambiguationKey(node, parents)],
+                      slug,
+                  )
+                : undefined;
         const latest: FernNavigation.ApiReferenceNode = {
             type: "apiReference",
             paginated: node.paginated,
             showErrors: node.showErrors,
             hideTitle: node.hideTitle,
-            children: node.children.map((child) => this.#apiPackageChild(child)),
-            changelog: node.changelog ? this.changelog(node.changelog) : undefined,
+            children: node.children.map((child) => this.#apiPackageChild(child, [...parents, node])),
+            changelog: node.changelog ? this.changelog(node.changelog, [...parents, node]) : undefined,
             playground: node.playground,
             title: node.title,
             slug,
@@ -319,14 +379,23 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public changelog = (node: FernNavigation.V1.ChangelogNode): FernNavigation.ChangelogNode => {
+    public changelog = (
+        node: FernNavigation.V1.ChangelogNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.ChangelogNode => {
         const slug = FernNavigation.Slug(node.slug);
         const overviewPageId = node.overviewPageId ? FernNavigation.PageId(node.overviewPageId) : undefined;
-        const canonicalSlug = this.#getAndSetCanonicalSlug(overviewPageId, slug);
+        const canonicalSlug =
+            overviewPageId != null
+                ? this.#getAndSetCanonicalSlug(
+                      [overviewPageId, this.#createTitleDisambiguationKey(node, parents)],
+                      slug,
+                  )
+                : undefined;
         const latest: FernNavigation.ChangelogNode = {
             type: "changelog",
             id: FernNavigation.NodeId(node.id),
-            children: node.children.map((child) => this.changelogYear(child)),
+            children: node.children.map((child) => this.changelogYear(child, [...parents, node])),
             title: node.title,
             slug,
             canonicalSlug,
@@ -338,11 +407,14 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public changelogYear = (node: FernNavigation.V1.ChangelogYearNode): FernNavigation.ChangelogYearNode => {
+    public changelogYear = (
+        node: FernNavigation.V1.ChangelogYearNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.ChangelogYearNode => {
         const latest: FernNavigation.ChangelogYearNode = {
             type: "changelogYear",
             id: FernNavigation.NodeId(node.id),
-            children: node.children.map((child) => this.changelogMonth(child)),
+            children: node.children.map((child) => this.changelogMonth(child, [...parents, node])),
             title: node.title,
             slug: FernNavigation.Slug(node.slug),
             canonicalSlug: undefined,
@@ -353,11 +425,14 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public changelogMonth = (node: FernNavigation.V1.ChangelogMonthNode): FernNavigation.ChangelogMonthNode => {
+    public changelogMonth = (
+        node: FernNavigation.V1.ChangelogMonthNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.ChangelogMonthNode => {
         const latest: FernNavigation.ChangelogMonthNode = {
             type: "changelogMonth",
             id: FernNavigation.NodeId(node.id),
-            children: node.children.map((child) => this.changelogEntry(child)),
+            children: node.children.map((child) => this.changelogEntry(child, [...parents, node])),
             title: node.title,
             slug: FernNavigation.Slug(node.slug),
             canonicalSlug: undefined,
@@ -368,9 +443,15 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public changelogEntry = (node: FernNavigation.V1.ChangelogEntryNode): FernNavigation.ChangelogEntryNode => {
+    public changelogEntry = (
+        node: FernNavigation.V1.ChangelogEntryNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.ChangelogEntryNode => {
         const slug = FernNavigation.Slug(node.slug);
-        const canonicalSlug = this.#getAndSetCanonicalSlug(node.pageId, slug);
+        const canonicalSlug = this.#getAndSetCanonicalSlug(
+            [node.pageId, this.#createTitleDisambiguationKey(node, parents)],
+            slug,
+        );
         const latest: FernNavigation.ChangelogEntryNode = {
             type: "changelogEntry",
             id: FernNavigation.NodeId(node.id),
@@ -386,14 +467,23 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public apiPackage = (node: FernNavigation.V1.ApiPackageNode): FernNavigation.ApiPackageNode => {
+    public apiPackage = (
+        node: FernNavigation.V1.ApiPackageNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.ApiPackageNode => {
         const slug = FernNavigation.Slug(node.slug);
         const overviewPageId = node.overviewPageId ? FernNavigation.PageId(node.overviewPageId) : undefined;
-        const canonicalSlug = this.#getAndSetCanonicalSlug(overviewPageId, slug);
+        const canonicalSlug =
+            overviewPageId != null
+                ? this.#getAndSetCanonicalSlug(
+                      [overviewPageId, this.#createTitleDisambiguationKey(node, parents)],
+                      slug,
+                  )
+                : undefined;
         const latest: FernNavigation.ApiPackageNode = {
             type: "apiPackage",
             id: FernNavigation.NodeId(node.id),
-            children: node.children.map((child) => this.#apiPackageChild(child)),
+            children: node.children.map((child) => this.#apiPackageChild(child, [...parents, node])),
             title: node.title,
             slug,
             canonicalSlug,
@@ -409,10 +499,16 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public endpoint = (node: FernNavigation.V1.EndpointNode): FernNavigation.EndpointNode => {
+    public endpoint = (
+        node: FernNavigation.V1.EndpointNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.EndpointNode => {
         const slug = FernNavigation.Slug(node.slug);
         const canonicalSlug = this.#getAndSetCanonicalSlug(
-            `:api:${node.apiDefinitionId}:endpoint:${node.endpointId}`,
+            [
+                `:api:${node.apiDefinitionId}:endpoint:${node.endpointId}`,
+                this.#createTitleDisambiguationKey(node, parents),
+            ],
             slug,
         );
         const latest: FernNavigation.EndpointNode = {
@@ -433,20 +529,29 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public endpointPair = (node: FernNavigation.V1.EndpointPairNode): FernNavigation.EndpointPairNode => {
+    public endpointPair = (
+        node: FernNavigation.V1.EndpointPairNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.EndpointPairNode => {
         const latest: FernNavigation.EndpointPairNode = {
             type: "endpointPair",
             id: FernNavigation.NodeId(node.id),
-            nonStream: this.endpoint(node.nonStream),
-            stream: this.endpoint(node.stream),
+            nonStream: this.endpoint(node.nonStream, [...parents, node]),
+            stream: this.endpoint(node.stream, [...parents, node]),
         };
         return latest;
     };
 
-    public webSocket = (node: FernNavigation.V1.WebSocketNode): FernNavigation.WebSocketNode => {
+    public webSocket = (
+        node: FernNavigation.V1.WebSocketNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.WebSocketNode => {
         const slug = FernNavigation.Slug(node.slug);
         const canonicalSlug = this.#getAndSetCanonicalSlug(
-            `:api:${node.apiDefinitionId}:websocket:${node.webSocketId}`,
+            [
+                `:api:${node.apiDefinitionId}:websocket:${node.webSocketId}`,
+                this.#createTitleDisambiguationKey(node, parents),
+            ],
             slug,
         );
         const latest: FernNavigation.WebSocketNode = {
@@ -465,10 +570,16 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    public webhook = (node: FernNavigation.V1.WebhookNode): FernNavigation.WebhookNode => {
+    public webhook = (
+        node: FernNavigation.V1.WebhookNode,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.WebhookNode => {
         const slug = FernNavigation.Slug(node.slug);
         const canonicalSlug = this.#getAndSetCanonicalSlug(
-            `:api:${node.apiDefinitionId}:webhook:${node.webhookId}`,
+            [
+                `:api:${node.apiDefinitionId}:webhook:${node.webhookId}`,
+                this.#createTitleDisambiguationKey(node, parents),
+            ],
             slug,
         );
         const latest: FernNavigation.WebhookNode = {
@@ -487,25 +598,31 @@ export class FernNavigationV1ToLatest {
         return latest;
     };
 
-    #navigationChild = (child: FernNavigation.V1.NavigationChild): FernNavigation.NavigationChild => {
+    #navigationChild = (
+        child: FernNavigation.V1.NavigationChild,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.NavigationChild => {
         return visitDiscriminatedUnion(child)._visit<FernNavigation.NavigationChild>({
-            apiReference: this.apiReference,
-            section: this.section,
-            link: this.link,
-            page: this.page,
-            changelog: this.changelog,
+            apiReference: (value) => this.apiReference(value, parents),
+            section: (value) => this.section(value, parents),
+            link: (value) => this.link(value, parents),
+            page: (value) => this.page(value, parents),
+            changelog: (value) => this.changelog(value, parents),
         });
     };
 
-    #apiPackageChild = (child: FernNavigation.V1.ApiPackageChild): FernNavigation.ApiPackageChild => {
+    #apiPackageChild = (
+        child: FernNavigation.V1.ApiPackageChild,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): FernNavigation.ApiPackageChild => {
         return visitDiscriminatedUnion(child)._visit<FernNavigation.ApiPackageChild>({
-            page: this.page,
-            link: this.link,
-            apiPackage: this.apiPackage,
-            endpoint: this.endpoint,
-            endpointPair: this.endpointPair,
-            webSocket: this.webSocket,
-            webhook: this.webhook,
+            page: (value) => this.page(value, parents),
+            link: (value) => this.link(value, parents),
+            apiPackage: (value) => this.apiPackage(value, parents),
+            endpoint: (value) => this.endpoint(value, parents),
+            endpointPair: (value) => this.endpointPair(value, parents),
+            webSocket: (value) => this.webSocket(value, parents),
+            webhook: (value) => this.webhook(value, parents),
         });
     };
 
@@ -533,15 +650,38 @@ export class FernNavigationV1ToLatest {
 
     #canonicalSlugs = new Map<string, FernNavigation.Slug>();
 
-    #getAndSetCanonicalSlug = (key: string | undefined, slug: FernNavigation.Slug): FernNavigation.Slug | undefined => {
-        if (key == null) {
+    #getAndSetCanonicalSlug = (
+        keyOrKeys: string | string[],
+        slug: FernNavigation.Slug,
+    ): FernNavigation.Slug | undefined => {
+        if (keyOrKeys == null) {
             return undefined;
         }
-        const existing = this.#canonicalSlugs.get(key);
+
+        if (Array.isArray(keyOrKeys)) {
+            /**
+             * This will set the canonical slug to each of the keys in the array, and return the first non-null slug
+             */
+            return keyOrKeys.map((key) => this.#getAndSetCanonicalSlug(key, slug)).find((s) => s != null);
+        }
+
+        const existing = this.#canonicalSlugs.get(keyOrKeys);
         if (existing != null) {
             return existing;
         }
-        this.#canonicalSlugs.set(key, slug);
+        this.#canonicalSlugs.set(keyOrKeys, slug);
         return undefined;
+    };
+
+    #createTitleDisambiguationKey = (
+        node: FernNavigation.V1.NavigationNodeWithMetadata,
+        parents: FernNavigation.V1.NavigationNode[],
+    ): string => {
+        const versionIdx = parents.findIndex((parent) => parent.type === "version");
+        const unversionedParents = versionIdx >= 0 ? parents.slice(versionIdx + 1) : parents;
+        const unversionedParentTitles = unversionedParents
+            .filter(FernNavigation.V1.hasMetadata)
+            .map((parent) => parent.title);
+        return [...unversionedParentTitles, node.title].join(":");
     };
 }

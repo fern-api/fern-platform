@@ -97,38 +97,37 @@ function testNavigationConfigConverter(fixtureName: string): void {
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 const node = collector.slugMap.get(slug)!;
                 expect(node).toBeDefined();
-                expect(FernNavigation.isPage(node)).toBe(true);
-                expect(node.hidden).not.toBe(true);
-
                 if (!FernNavigation.isPage(node)) {
-                    return;
+                    console.log(node);
                 }
+                expect(FernNavigation.isPage(node), `${slug} is a page`).toBe(true);
+                expect(node.hidden, `${slug} is not hidden`).not.toBe(true);
 
                 if (FernNavigation.hasMarkdown(node)) {
-                    expect(node.noindex).not.toBe(true);
+                    expect(node.noindex, `${slug} is indexable`).not.toBe(true);
                 }
 
-                const pageId = FernNavigation.getPageId(node);
+                const pageId = FernNavigation.isPage(node) ? FernNavigation.getPageId(node) : undefined;
                 if (pageId != null) {
-                    expect(visitedPageIds.has(pageId)).toBe(false);
+                    expect(visitedPageIds.has(pageId), `${slug} must not be repeated key=${pageId}`).toBe(false);
                     visitedPageIds.add(pageId);
                 }
 
                 if (node.type === "endpoint") {
                     const pageId = `${node.apiDefinitionId}-${node.endpointId}`;
-                    expect(visitedPageIds.has(pageId)).toBe(false);
+                    expect(visitedPageIds.has(pageId), `${slug} must not be repeated key=${pageId})`).toBe(false);
                     visitedPageIds.add(pageId);
                 }
 
                 if (node.type === "webSocket") {
                     const pageId = `${node.apiDefinitionId}-${node.webSocketId}`;
-                    expect(visitedPageIds.has(pageId)).toBe(false);
+                    expect(visitedPageIds.has(pageId), `${slug} must not be repeated key=${pageId})`).toBe(false);
                     visitedPageIds.add(pageId);
                 }
 
                 if (node.type === "webhook") {
                     const pageId = `${node.apiDefinitionId}-${node.webhookId}`;
-                    expect(visitedPageIds.has(pageId)).toBe(false);
+                    expect(visitedPageIds.has(pageId), `${slug} must not be repeated key=${pageId})`).toBe(false);
                     visitedPageIds.add(pageId);
                 }
             });

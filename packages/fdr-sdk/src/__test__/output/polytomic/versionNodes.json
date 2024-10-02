@@ -3800,6 +3800,7 @@
         {
           "children": [
             {
+              "canonicalSlug": "2023-04-25/introduction",
               "hidden": false,
               "id": "root..2022-12-12.uv.getting-started.introduction",
               "pageId": "docs/2022-12-12/pages/getting-started/introduction.mdx",
@@ -3808,6 +3809,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/obtaining-api-keys",
               "hidden": false,
               "id": "root..2022-12-12.uv.getting-started.obtaining-api-keys",
               "pageId": "docs/2022-12-12/pages/getting-started/obtain-key.mdx",
@@ -3816,6 +3818,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/quickstart",
               "hidden": false,
               "id": "root..2022-12-12.uv.getting-started.quickstart",
               "pageId": "docs/2022-12-12/pages/getting-started/quickstart.mdx",
@@ -3824,6 +3827,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/native-clients",
               "hidden": false,
               "id": "root..2022-12-12.uv.getting-started.native-clients",
               "pageId": "docs/2022-12-12/pages/getting-started/native-clients.mdx",
@@ -3832,6 +3836,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/concepts",
               "hidden": false,
               "id": "root..2022-12-12.uv.getting-started.concepts",
               "pageId": "docs/2022-12-12/pages/getting-started/concepts.mdx",
@@ -3840,6 +3845,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/embedding-authentication",
               "hidden": false,
               "id": "root..2022-12-12.uv.getting-started.embedding-authentication",
               "pageId": "docs/2022-12-12/pages/getting-started/embed-auth.mdx",
@@ -3848,6 +3854,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/versioning",
               "hidden": false,
               "id": "root..2022-12-12.uv.getting-started.versioning",
               "pageId": "docs/2022-12-12/pages/getting-started/versioning.mdx",
@@ -3856,6 +3863,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/idempotent-requests",
               "hidden": false,
               "id": "root..2022-12-12.uv.getting-started.idempotent-requests",
               "pageId": "docs/2022-12-12/pages/getting-started/idempotent-requests.mdx",
@@ -3864,6 +3872,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/events",
               "hidden": false,
               "id": "root..2022-12-12.uv.getting-started.events",
               "pageId": "docs/2022-12-12/pages/getting-started/events.mdx",
@@ -3883,6 +3892,7 @@
         {
           "children": [
             {
+              "canonicalSlug": "2023-04-25/configuring-your-connections/cdc-streaming-from-databases",
               "hidden": false,
               "id": "root..2022-12-12.uv.configuring-your-connections.cdc-streaming-from-databases",
               "pageId": "docs/2022-12-12/pages/configuring-your-connections/enabling-cdc.mdx",
@@ -3893,6 +3903,7 @@
             {
               "children": [
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/affinity",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.affinity",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/affinity.md",
@@ -3901,6 +3912,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/airtable",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.airtable",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/airtable.md",
@@ -3909,6 +3921,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/amplitude",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.amplitude",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/amplitude.md",
@@ -3917,6 +3930,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/api",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.api",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/api.md",
@@ -3925,6 +3939,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/apollo-io",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.apollo-io",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/apollo.md",
@@ -3933,6 +3948,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/asana",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.asana",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/asana.md",
@@ -3941,6 +3957,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/ascend",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.ascend",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/ascend.md",
@@ -3949,6 +3966,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/attio",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.attio",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/attio.md",
@@ -3957,6 +3975,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/aws-s-3",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.aws-s-3",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/s3.md",
@@ -3965,6 +3984,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/aws-athena",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.aws-athena",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/awsathena.md",
@@ -3973,6 +3993,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/aws-open-search",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.aws-open-search",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/awsopensearch.md",
@@ -3981,6 +4002,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/azure-blob-storage",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.azure-blob-storage",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/azureblob.md",
@@ -3989,6 +4011,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/azure-sql",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.azure-sql",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/azuresql.md",
@@ -3997,6 +4020,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/biq-query",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.biq-query",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/bigquery.md",
@@ -4005,6 +4029,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/cloud-sql-my-sql",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.cloud-sql-my-sql",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/googlecloudmysql.md",
@@ -4013,6 +4038,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/cloud-sql-postgres",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.cloud-sql-postgres",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/googlecloudsql.md",
@@ -4021,6 +4047,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/chargebee",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.chargebee",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/chargebee.md",
@@ -4029,6 +4056,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/construction-wire",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.construction-wire",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/constructionwire.md",
@@ -4037,6 +4065,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/cosmos-db",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.cosmos-db",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/cosmosdb.md",
@@ -4045,6 +4074,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/customer-io",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.customer-io",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/customerio.md",
@@ -4053,6 +4083,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/databricks",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.databricks",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/databricks.md",
@@ -4061,6 +4092,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/datadog",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.datadog",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/datadog.md",
@@ -4069,6 +4101,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/dbt-cloud",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.dbt-cloud",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/dbtcloud.md",
@@ -4077,6 +4110,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/delighted",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.delighted",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/delighted.md",
@@ -4085,6 +4119,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/dialpad",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.dialpad",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/dialpad.md",
@@ -4093,6 +4128,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/dittofeed",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.dittofeed",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/dittofeed.md",
@@ -4101,6 +4137,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/dynamo-db",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.dynamo-db",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/dynamodb.md",
@@ -4109,6 +4146,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/facebook-ads",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.facebook-ads",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/fbaudience.md",
@@ -4117,6 +4155,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/freshdesk",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.freshdesk",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/freshdesk.md",
@@ -4125,6 +4164,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/front",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.front",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/front.md",
@@ -4133,6 +4173,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/full-story",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.full-story",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/fullstory.md",
@@ -4141,6 +4182,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/google-cloud-storage",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.google-cloud-storage",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/gcs.md",
@@ -4149,6 +4191,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/github",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.github",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/github.md",
@@ -4157,6 +4200,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/google-ads",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.google-ads",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/googleads.md",
@@ -4165,6 +4209,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/google-workspace",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.google-workspace",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/googleworkspace.md",
@@ -4173,6 +4218,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/google-sheets",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.google-sheets",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/gsheets.md",
@@ -4181,6 +4227,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/harmonic",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.harmonic",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/harmonic.md",
@@ -4189,6 +4236,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/heap",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.heap",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/heap.md",
@@ -4197,6 +4245,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/honeycomb",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.honeycomb",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/honeycomb.md",
@@ -4205,6 +4254,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/hub-spot",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.hub-spot",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/hubspot.md",
@@ -4213,6 +4263,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/intercom",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.intercom",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/intercom.md",
@@ -4221,6 +4272,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/iterable",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.iterable",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/iterable.md",
@@ -4229,6 +4281,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/jira",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.jira",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/jira.md",
@@ -4237,6 +4290,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/klaviyo",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.klaviyo",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/klaviyo.md",
@@ -4245,6 +4299,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/kustomer",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.kustomer",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/kustomer.md",
@@ -4253,6 +4308,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/linear",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.linear",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/linear.md",
@@ -4261,6 +4317,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/linkedin-ads",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.linkedin-ads",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/linkedinads.md",
@@ -4269,6 +4326,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/lob",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.lob",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/lob.md",
@@ -4277,6 +4335,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/mailercheck",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.mailercheck",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/mailercheck.md",
@@ -4285,6 +4344,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/marketo",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.marketo",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/marketo.md",
@@ -4293,6 +4353,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/mongo-db",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.mongo-db",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/mongodb.md",
@@ -4301,6 +4362,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/microsoft-ads",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.microsoft-ads",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/msads.md",
@@ -4309,6 +4371,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/my-sql",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.my-sql",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/mysql.md",
@@ -4317,6 +4380,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/netsuite",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.netsuite",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/netsuite.md",
@@ -4325,6 +4389,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/outreach",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.outreach",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/outreach.md",
@@ -4333,6 +4398,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/pardot",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.pardot",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/pardot.md",
@@ -4341,6 +4407,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/pipedrive",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.pipedrive",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/pipedrive.md",
@@ -4349,6 +4416,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/postgres",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.postgres",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/postgresql.md",
@@ -4357,6 +4425,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/predict-leads",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.predict-leads",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/predictleads.md",
@@ -4365,6 +4434,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/quickbooks",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.quickbooks",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/quickbooks.md",
@@ -4373,6 +4443,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/recharge",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.recharge",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/recharge.md",
@@ -4381,6 +4452,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/redshift",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.redshift",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/redshift.md",
@@ -4389,6 +4461,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/redshift-serverless",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.redshift-serverless",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/redshiftserverless.md",
@@ -4397,6 +4470,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/reply-io",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.reply-io",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/replyio.md",
@@ -4405,6 +4479,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/salesforce",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.salesforce",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/salesforce.md",
@@ -4413,6 +4488,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/segment",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.segment",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/segment.md",
@@ -4421,6 +4497,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/sftp",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.sftp",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/sftp.md",
@@ -4429,6 +4506,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/shopify",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.shopify",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/shopify.md",
@@ -4437,6 +4515,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/short-io",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.short-io",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/shortio.md",
@@ -4445,6 +4524,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/slack",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.slack",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/slack.md",
@@ -4453,6 +4533,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/snowflake",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.snowflake",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/snowflake.md",
@@ -4461,6 +4542,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/statsig",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.statsig",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/statsig.md",
@@ -4469,6 +4551,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/stripe",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.stripe",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/stripe.md",
@@ -4477,6 +4560,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/survicate",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.survicate",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/survicate.md",
@@ -4485,6 +4569,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/synapse",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.synapse",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/synapse.md",
@@ -4493,6 +4578,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/tixr",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.tixr",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/tixr.md",
@@ -4501,6 +4587,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/unbounce",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.unbounce",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/unbounce.md",
@@ -4509,6 +4596,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/uservoice",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.uservoice",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/uservoice.md",
@@ -4517,6 +4605,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/vanilla-forums",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.vanilla-forums",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/vanilla.md",
@@ -4525,6 +4614,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/webhooks",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.webhooks",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/webhook.md",
@@ -4533,6 +4623,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/zendesk-chat",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.zendesk-chat",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/zendesk_chat.md",
@@ -4541,6 +4632,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/zendesk-support",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.zendesk-support",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/zendesk_support.md",
@@ -4549,6 +4641,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/zoom-info",
                   "hidden": false,
                   "id": "root..2022-12-12.uv.configuring-your-connections.connections.zoom-info",
                   "pageId": "docs/2022-12-12/pages/configuring-your-connections/zoominfo.md",
@@ -4577,6 +4670,7 @@
         {
           "children": [
             {
+              "canonicalSlug": "2023-04-25/code-examples/bulk-sync-elt-from-hub-spot-to-postgre-sql",
               "hidden": false,
               "id": "root..2022-12-12.uv.code-examples.bulk-sync-elt-from-hub-spot-to-postgre-sql",
               "pageId": "docs/2022-12-12/pages/examples/hubspot-postgres-sync.mdx",
@@ -4585,6 +4679,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/code-examples/bulk-sync-elt-from-salesforce-to-s-3",
               "hidden": false,
               "id": "root..2022-12-12.uv.code-examples.bulk-sync-elt-from-salesforce-to-s-3",
               "pageId": "docs/2022-12-12/pages/examples/salesforce-s3-sync.mdx",
@@ -4593,6 +4688,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/code-examples/bulk-sync-elt-from-salesforce-to-snowflake",
               "hidden": false,
               "id": "root..2022-12-12.uv.code-examples.bulk-sync-elt-from-salesforce-to-snowflake",
               "pageId": "docs/2022-12-12/pages/examples/salesforce-snowflake-sync.mdx",
@@ -4601,6 +4697,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/code-examples/model-sync-reverse-etl-from-mongo-db-to-salesforce",
               "hidden": false,
               "id": "root..2022-12-12.uv.code-examples.model-sync-reverse-etl-from-mongo-db-to-salesforce",
               "pageId": "docs/2022-12-12/pages/examples/mongo-salesforce-sync.mdx",
@@ -4625,6 +4722,7 @@
               "children": [
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/bulk-sync/get-destination",
                   "endpointId": "endpoint_bulkSync.GetDestination",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.GetDestination",
                   "isResponseStream": false,
@@ -4635,6 +4733,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/bulk-sync/get-source",
                   "endpointId": "endpoint_bulkSync.GetSource",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.GetSource",
                   "isResponseStream": false,
@@ -4645,6 +4744,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/bulk-sync/list",
                   "endpointId": "endpoint_bulkSync.List",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.List",
                   "isResponseStream": false,
@@ -4655,6 +4755,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/bulk-sync/create",
                   "endpointId": "endpoint_bulkSync.Create",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.Create",
                   "isResponseStream": false,
@@ -4665,6 +4766,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/bulk-sync/get",
                   "endpointId": "endpoint_bulkSync.Get",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.Get",
                   "isResponseStream": false,
@@ -4675,6 +4777,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/bulk-sync/remove",
                   "endpointId": "endpoint_bulkSync.Remove",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.Remove",
                   "isResponseStream": false,
@@ -4685,6 +4788,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/bulk-sync/update",
                   "endpointId": "endpoint_bulkSync.Update",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.Update",
                   "isResponseStream": false,
@@ -4695,6 +4799,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/bulk-sync/activate",
                   "endpointId": "endpoint_bulkSync.Activate",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.Activate",
                   "isResponseStream": false,
@@ -4708,6 +4813,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/bulk-sync/schemas/list",
                       "endpointId": "endpoint_bulkSync/schemas.List",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas.endpoint_bulkSync/schemas.List",
                       "isResponseStream": false,
@@ -4718,6 +4824,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/bulk-sync/schemas/patch",
                       "endpointId": "endpoint_bulkSync/schemas.Patch",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas.endpoint_bulkSync/schemas.Patch",
                       "isResponseStream": false,
@@ -4728,6 +4835,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/bulk-sync/schemas/get",
                       "endpointId": "endpoint_bulkSync/schemas.Get",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas.endpoint_bulkSync/schemas.Get",
                       "isResponseStream": false,
@@ -4738,6 +4846,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/bulk-sync/schemas/update",
                       "endpointId": "endpoint_bulkSync/schemas.Update",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas.endpoint_bulkSync/schemas.Update",
                       "isResponseStream": false,
@@ -4765,6 +4874,7 @@
               "children": [
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/get-types",
                   "endpointId": "endpoint_connections.GetTypes",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.GetTypes",
                   "isResponseStream": false,
@@ -4775,6 +4885,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/list",
                   "endpointId": "endpoint_connections.List",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.List",
                   "isResponseStream": false,
@@ -4785,6 +4896,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/create",
                   "endpointId": "endpoint_connections.Create",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.Create",
                   "isResponseStream": false,
@@ -4795,6 +4907,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/get",
                   "endpointId": "endpoint_connections.Get",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.Get",
                   "isResponseStream": false,
@@ -4805,6 +4918,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/remove",
                   "endpointId": "endpoint_connections.Remove",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.Remove",
                   "isResponseStream": false,
@@ -4815,6 +4929,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/update",
                   "endpointId": "endpoint_connections.Update",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.Update",
                   "isResponseStream": false,
@@ -4825,6 +4940,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/get-parameter-values",
                   "endpointId": "endpoint_connections.GetParameterValues",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.GetParameterValues",
                   "isResponseStream": false,
@@ -4835,6 +4951,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/get-source",
                   "endpointId": "endpoint_connections.GetSource",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.GetSource",
                   "isResponseStream": false,
@@ -4845,6 +4962,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/get-source-fields",
                   "endpointId": "endpoint_connections.GetSourceFields",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.GetSourceFields",
                   "isResponseStream": false,
@@ -4855,6 +4973,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/get-target",
                   "endpointId": "endpoint_connections.GetTarget",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.GetTarget",
                   "isResponseStream": false,
@@ -4865,6 +4984,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/get-target-fields",
                   "endpointId": "endpoint_connections.GetTargetFields",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.GetTargetFields",
                   "isResponseStream": false,
@@ -4885,6 +5005,7 @@
               "children": [
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/models/post",
                   "endpointId": "endpoint_models.Post",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.Post",
                   "isResponseStream": false,
@@ -4895,6 +5016,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/models/preview",
                   "endpointId": "endpoint_models.Preview",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.Preview",
                   "isResponseStream": false,
@@ -4905,6 +5027,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/models/list",
                   "endpointId": "endpoint_models.List",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.List",
                   "isResponseStream": false,
@@ -4915,6 +5038,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/models/create",
                   "endpointId": "endpoint_models.Create",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.Create",
                   "isResponseStream": false,
@@ -4925,6 +5049,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/models/get",
                   "endpointId": "endpoint_models.Get",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.Get",
                   "isResponseStream": false,
@@ -4935,6 +5060,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/models/remove",
                   "endpointId": "endpoint_models.Remove",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.Remove",
                   "isResponseStream": false,
@@ -4945,6 +5071,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/models/update",
                   "endpointId": "endpoint_models.Update",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.Update",
                   "isResponseStream": false,
@@ -4955,6 +5082,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/models/sample",
                   "endpointId": "endpoint_models.Sample",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.Sample",
                   "isResponseStream": false,
@@ -4975,6 +5103,7 @@
               "children": [
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/events/list",
                   "endpointId": "endpoint_events.List",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_events.endpoint_events.List",
                   "isResponseStream": false,
@@ -4985,6 +5114,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/events/get-types",
                   "endpointId": "endpoint_events.GetTypes",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_events.endpoint_events.GetTypes",
                   "isResponseStream": false,
@@ -5005,6 +5135,7 @@
               "children": [
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/jobs/get",
                   "endpointId": "endpoint_jobs.Get",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_jobs.endpoint_jobs.Get",
                   "isResponseStream": false,
@@ -5025,6 +5156,7 @@
               "children": [
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/identity/get",
                   "endpointId": "endpoint_identity.Get",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_identity.endpoint_identity.Get",
                   "isResponseStream": false,
@@ -5045,6 +5177,7 @@
               "children": [
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/organization/list",
                   "endpointId": "endpoint_organization.List",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_organization.endpoint_organization.List",
                   "isResponseStream": false,
@@ -5055,6 +5188,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/organization/create",
                   "endpointId": "endpoint_organization.Create",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_organization.endpoint_organization.Create",
                   "isResponseStream": false,
@@ -5065,6 +5199,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/organization/get",
                   "endpointId": "endpoint_organization.Get",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_organization.endpoint_organization.Get",
                   "isResponseStream": false,
@@ -5075,6 +5210,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/organization/remove",
                   "endpointId": "endpoint_organization.Remove",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_organization.endpoint_organization.Remove",
                   "isResponseStream": false,
@@ -5085,6 +5221,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/organization/update",
                   "endpointId": "endpoint_organization.Update",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_organization.endpoint_organization.Update",
                   "isResponseStream": false,
@@ -5105,6 +5242,7 @@
               "children": [
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/users/list",
                   "endpointId": "endpoint_users.List",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_users.endpoint_users.List",
                   "isResponseStream": false,
@@ -5115,6 +5253,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/users/create",
                   "endpointId": "endpoint_users.Create",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_users.endpoint_users.Create",
                   "isResponseStream": false,
@@ -5125,6 +5264,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/users/get",
                   "endpointId": "endpoint_users.Get",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_users.endpoint_users.Get",
                   "isResponseStream": false,
@@ -5135,6 +5275,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/users/remove",
                   "endpointId": "endpoint_users.Remove",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_users.endpoint_users.Remove",
                   "isResponseStream": false,
@@ -5145,6 +5286,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/users/update",
                   "endpointId": "endpoint_users.Update",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_users.endpoint_users.Update",
                   "isResponseStream": false,
@@ -5155,6 +5297,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/users/create-api-key",
                   "endpointId": "endpoint_users.CreateApiKey",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_users.endpoint_users.CreateApiKey",
                   "isResponseStream": false,
@@ -5178,6 +5321,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/permissions/policies/list",
                       "endpointId": "endpoint_permissions/policies.List",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.List",
                       "isResponseStream": false,
@@ -5188,6 +5332,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/permissions/policies/create",
                       "endpointId": "endpoint_permissions/policies.Create",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.Create",
                       "isResponseStream": false,
@@ -5198,6 +5343,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/permissions/policies/get",
                       "endpointId": "endpoint_permissions/policies.Get",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.Get",
                       "isResponseStream": false,
@@ -5208,6 +5354,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/permissions/policies/remove",
                       "endpointId": "endpoint_permissions/policies.Remove",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.Remove",
                       "isResponseStream": false,
@@ -5218,6 +5365,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/permissions/policies/update",
                       "endpointId": "endpoint_permissions/policies.Update",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.Update",
                       "isResponseStream": false,
@@ -5238,6 +5386,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/permissions/roles/list",
                       "endpointId": "endpoint_permissions/roles.List",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.List",
                       "isResponseStream": false,
@@ -5248,6 +5397,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/permissions/roles/create",
                       "endpointId": "endpoint_permissions/roles.Create",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.Create",
                       "isResponseStream": false,
@@ -5258,6 +5408,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/permissions/roles/get",
                       "endpointId": "endpoint_permissions/roles.Get",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.Get",
                       "isResponseStream": false,
@@ -5268,6 +5419,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/permissions/roles/remove",
                       "endpointId": "endpoint_permissions/roles.Remove",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.Remove",
                       "isResponseStream": false,
@@ -5278,6 +5430,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/permissions/roles/update",
                       "endpointId": "endpoint_permissions/roles.Update",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.Update",
                       "isResponseStream": false,
@@ -5305,6 +5458,7 @@
               "children": [
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/model-sync/list",
                   "endpointId": "endpoint_modelSync.List",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.List",
                   "isResponseStream": false,
@@ -5315,6 +5469,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/model-sync/create",
                   "endpointId": "endpoint_modelSync.Create",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Create",
                   "isResponseStream": false,
@@ -5325,6 +5480,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/model-sync/get-schedule-options",
                   "endpointId": "endpoint_modelSync.GetScheduleOptions",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.GetScheduleOptions",
                   "isResponseStream": false,
@@ -5335,6 +5491,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/model-sync/get",
                   "endpointId": "endpoint_modelSync.Get",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Get",
                   "isResponseStream": false,
@@ -5345,6 +5502,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/model-sync/remove",
                   "endpointId": "endpoint_modelSync.Remove",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Remove",
                   "isResponseStream": false,
@@ -5355,6 +5513,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/model-sync/update",
                   "endpointId": "endpoint_modelSync.Update",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Update",
                   "isResponseStream": false,
@@ -5365,6 +5524,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/model-sync/activate",
                   "endpointId": "endpoint_modelSync.Activate",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Activate",
                   "isResponseStream": false,
@@ -5375,6 +5535,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/model-sync/start",
                   "endpointId": "endpoint_modelSync.Start",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Start",
                   "isResponseStream": false,
@@ -5385,6 +5546,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/model-sync/get-status",
                   "endpointId": "endpoint_modelSync.GetStatus",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.GetStatus",
                   "isResponseStream": false,
@@ -5398,6 +5560,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/model-sync/executions/list",
                       "endpointId": "endpoint_modelSync/executions.List",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.List",
                       "isResponseStream": false,
@@ -5408,6 +5571,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/model-sync/executions/get",
                       "endpointId": "endpoint_modelSync/executions.Get",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.Get",
                       "isResponseStream": false,
@@ -5418,6 +5582,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/model-sync/executions/get-log-urls",
                       "endpointId": "endpoint_modelSync/executions.GetLogUrls",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.GetLogUrls",
                       "isResponseStream": false,
@@ -5428,6 +5593,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                      "canonicalSlug": "2023-04-25/api-reference/model-sync/executions/get-logs",
                       "endpointId": "endpoint_modelSync/executions.GetLogs",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.GetLogs",
                       "isResponseStream": false,
@@ -5455,6 +5621,7 @@
               "children": [
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/webhooks/list",
                   "endpointId": "endpoint_webhooks.List",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_webhooks.endpoint_webhooks.List",
                   "isResponseStream": false,
@@ -5465,6 +5632,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/webhooks/create",
                   "endpointId": "endpoint_webhooks.Create",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_webhooks.endpoint_webhooks.Create",
                   "isResponseStream": false,
@@ -5475,6 +5643,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/webhooks/get",
                   "endpointId": "endpoint_webhooks.Get",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_webhooks.endpoint_webhooks.Get",
                   "isResponseStream": false,
@@ -5485,6 +5654,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/webhooks/remove",
                   "endpointId": "endpoint_webhooks.Remove",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_webhooks.endpoint_webhooks.Remove",
                   "isResponseStream": false,
@@ -5495,6 +5665,7 @@
                 },
                 {
                   "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
+                  "canonicalSlug": "2023-04-25/api-reference/webhooks/update",
                   "endpointId": "endpoint_webhooks.Update",
                   "id": "root..2022-12-12.uv.api-reference.subpackage_webhooks.endpoint_webhooks.Update",
                   "isResponseStream": false,
@@ -5540,6 +5711,7 @@
         {
           "children": [
             {
+              "canonicalSlug": "2023-04-25/introduction",
               "hidden": false,
               "id": "root..2021-05-23.uv.getting-started.introduction",
               "pageId": "docs/2021-05-23/pages/getting-started/introduction.mdx",
@@ -5548,6 +5720,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/obtaining-api-keys",
               "hidden": false,
               "id": "root..2021-05-23.uv.getting-started.obtaining-api-keys",
               "pageId": "docs/2021-05-23/pages/getting-started/obtain-key.mdx",
@@ -5556,6 +5729,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/quickstart",
               "hidden": false,
               "id": "root..2021-05-23.uv.getting-started.quickstart",
               "pageId": "docs/2021-05-23/pages/getting-started/quickstart.mdx",
@@ -5564,6 +5738,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/concepts",
               "hidden": false,
               "id": "root..2021-05-23.uv.getting-started.concepts",
               "pageId": "docs/2021-05-23/pages/getting-started/concepts.mdx",
@@ -5572,6 +5747,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/embedding-authentication",
               "hidden": false,
               "id": "root..2021-05-23.uv.getting-started.embedding-authentication",
               "pageId": "docs/2021-05-23/pages/getting-started/embed-auth.mdx",
@@ -5580,6 +5756,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/versioning",
               "hidden": false,
               "id": "root..2021-05-23.uv.getting-started.versioning",
               "pageId": "docs/2021-05-23/pages/getting-started/versioning.mdx",
@@ -5588,6 +5765,7 @@
               "type": "page"
             },
             {
+              "canonicalSlug": "2023-04-25/idempotent-requests",
               "hidden": false,
               "id": "root..2021-05-23.uv.getting-started.idempotent-requests",
               "pageId": "docs/2021-05-23/pages/getting-started/idempotent-requests.mdx",
@@ -5607,6 +5785,7 @@
         {
           "children": [
             {
+              "canonicalSlug": "2023-04-25/configuring-your-connections/cdc-streaming-from-databases",
               "hidden": false,
               "id": "root..2021-05-23.uv.configuring-your-connections.cdc-streaming-from-databases",
               "pageId": "docs/2021-05-23/pages/configuring-your-connections/enabling-cdc.mdx",
@@ -5617,6 +5796,7 @@
             {
               "children": [
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/affinity",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.affinity",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/affinity.md",
@@ -5625,6 +5805,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/airtable",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.airtable",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/airtable.md",
@@ -5633,6 +5814,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/amplitude",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.amplitude",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/amplitude.md",
@@ -5641,6 +5823,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/api",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.api",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/api.md",
@@ -5649,6 +5832,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/apollo-io",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.apollo-io",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/apollo.md",
@@ -5657,6 +5841,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/asana",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.asana",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/asana.md",
@@ -5665,6 +5850,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/ascend",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.ascend",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/ascend.md",
@@ -5673,6 +5859,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/attio",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.attio",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/attio.md",
@@ -5681,6 +5868,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/aws-s-3",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.aws-s-3",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/s3.md",
@@ -5689,6 +5877,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/aws-athena",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.aws-athena",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/awsathena.md",
@@ -5697,6 +5886,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/aws-open-search",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.aws-open-search",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/awsopensearch.md",
@@ -5705,6 +5895,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/azure-blob-storage",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.azure-blob-storage",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/azureblob.md",
@@ -5713,6 +5904,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/azure-sql",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.azure-sql",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/azuresql.md",
@@ -5721,6 +5913,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/biq-query",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.biq-query",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/bigquery.md",
@@ -5729,6 +5922,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/cloud-sql-my-sql",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.cloud-sql-my-sql",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/googlecloudmysql.md",
@@ -5737,6 +5931,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/cloud-sql-postgres",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.cloud-sql-postgres",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/googlecloudsql.md",
@@ -5745,6 +5940,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/chargebee",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.chargebee",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/chargebee.md",
@@ -5753,6 +5949,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/construction-wire",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.construction-wire",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/constructionwire.md",
@@ -5761,6 +5958,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/cosmos-db",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.cosmos-db",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/cosmosdb.md",
@@ -5769,6 +5967,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/customer-io",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.customer-io",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/customerio.md",
@@ -5777,6 +5976,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/databricks",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.databricks",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/databricks.md",
@@ -5785,6 +5985,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/datadog",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.datadog",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/datadog.md",
@@ -5793,6 +5994,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/dbt-cloud",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.dbt-cloud",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/dbtcloud.md",
@@ -5801,6 +6003,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/delighted",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.delighted",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/delighted.md",
@@ -5809,6 +6012,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/dialpad",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.dialpad",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/dialpad.md",
@@ -5817,6 +6021,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/dittofeed",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.dittofeed",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/dittofeed.md",
@@ -5825,6 +6030,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/dynamo-db",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.dynamo-db",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/dynamodb.md",
@@ -5833,6 +6039,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/facebook-ads",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.facebook-ads",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/fbaudience.md",
@@ -5841,6 +6048,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/freshdesk",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.freshdesk",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/freshdesk.md",
@@ -5849,6 +6057,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/front",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.front",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/front.md",
@@ -5857,6 +6066,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/full-story",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.full-story",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/fullstory.md",
@@ -5865,6 +6075,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/google-cloud-storage",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.google-cloud-storage",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/gcs.md",
@@ -5873,6 +6084,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/github",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.github",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/github.md",
@@ -5881,6 +6093,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/google-ads",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.google-ads",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/googleads.md",
@@ -5889,6 +6102,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/google-workspace",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.google-workspace",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/googleworkspace.md",
@@ -5897,6 +6111,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/google-sheets",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.google-sheets",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/gsheets.md",
@@ -5905,6 +6120,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/harmonic",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.harmonic",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/harmonic.md",
@@ -5913,6 +6129,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/heap",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.heap",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/heap.md",
@@ -5921,6 +6138,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/honeycomb",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.honeycomb",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/honeycomb.md",
@@ -5929,6 +6147,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/hub-spot",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.hub-spot",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/hubspot.md",
@@ -5937,6 +6156,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/intercom",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.intercom",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/intercom.md",
@@ -5945,6 +6165,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/iterable",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.iterable",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/iterable.md",
@@ -5953,6 +6174,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/jira",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.jira",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/jira.md",
@@ -5961,6 +6183,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/klaviyo",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.klaviyo",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/klaviyo.md",
@@ -5969,6 +6192,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/kustomer",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.kustomer",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/kustomer.md",
@@ -5977,6 +6201,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/linear",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.linear",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/linear.md",
@@ -5985,6 +6210,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/linkedin-ads",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.linkedin-ads",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/linkedinads.md",
@@ -5993,6 +6219,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/lob",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.lob",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/lob.md",
@@ -6001,6 +6228,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/mailercheck",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.mailercheck",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/mailercheck.md",
@@ -6009,6 +6237,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/marketo",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.marketo",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/marketo.md",
@@ -6017,6 +6246,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/mongo-db",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.mongo-db",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/mongodb.md",
@@ -6025,6 +6255,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/microsoft-ads",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.microsoft-ads",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/msads.md",
@@ -6033,6 +6264,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/my-sql",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.my-sql",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/mysql.md",
@@ -6041,6 +6273,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/netsuite",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.netsuite",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/netsuite.md",
@@ -6049,6 +6282,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/outreach",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.outreach",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/outreach.md",
@@ -6057,6 +6291,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/pardot",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.pardot",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/pardot.md",
@@ -6065,6 +6300,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/pipedrive",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.pipedrive",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/pipedrive.md",
@@ -6073,6 +6309,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/postgres",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.postgres",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/postgresql.md",
@@ -6081,6 +6318,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/predict-leads",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.predict-leads",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/predictleads.md",
@@ -6089,6 +6327,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/quickbooks",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.quickbooks",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/quickbooks.md",
@@ -6097,6 +6336,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/recharge",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.recharge",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/recharge.md",
@@ -6105,6 +6345,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/redshift",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.redshift",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/redshift.md",
@@ -6113,6 +6354,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/redshift-serverless",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.redshift-serverless",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/redshiftserverless.md",
@@ -6121,6 +6363,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/reply-io",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.reply-io",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/replyio.md",
@@ -6129,6 +6372,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/salesforce",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.salesforce",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/salesforce.md",
@@ -6137,6 +6381,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/segment",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.segment",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/segment.md",
@@ -6145,6 +6390,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/sftp",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.sftp",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/sftp.md",
@@ -6153,6 +6399,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/shopify",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.shopify",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/shopify.md",
@@ -6161,6 +6408,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/short-io",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.short-io",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/shortio.md",
@@ -6169,6 +6417,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/slack",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.slack",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/slack.md",
@@ -6177,6 +6426,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/snowflake",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.snowflake",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/snowflake.md",
@@ -6185,6 +6435,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/statsig",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.statsig",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/statsig.md",
@@ -6193,6 +6444,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/stripe",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.stripe",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/stripe.md",
@@ -6201,6 +6453,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/survicate",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.survicate",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/survicate.md",
@@ -6209,6 +6462,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/synapse",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.synapse",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/synapse.md",
@@ -6217,6 +6471,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/tixr",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.tixr",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/tixr.md",
@@ -6225,6 +6480,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/unbounce",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.unbounce",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/unbounce.md",
@@ -6233,6 +6489,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/uservoice",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.uservoice",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/uservoice.md",
@@ -6241,6 +6498,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/vanilla-forums",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.vanilla-forums",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/vanilla.md",
@@ -6249,6 +6507,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/webhooks",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.webhooks",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/webhook.md",
@@ -6257,6 +6516,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/zendesk-chat",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.zendesk-chat",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/zendesk_chat.md",
@@ -6265,6 +6525,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/zendesk-support",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.zendesk-support",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/zendesk_support.md",
@@ -6273,6 +6534,7 @@
                   "type": "page"
                 },
                 {
+                  "canonicalSlug": "2023-04-25/configuring-your-connections/connections/zoom-info",
                   "hidden": false,
                   "id": "root..2021-05-23.uv.configuring-your-connections.connections.zoom-info",
                   "pageId": "docs/2021-05-23/pages/configuring-your-connections/zoominfo.md",
@@ -6306,6 +6568,7 @@
               "children": [
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/get-types",
                   "endpointId": "endpoint_connections.GetTypes",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_connections.endpoint_connections.GetTypes",
                   "isResponseStream": false,
@@ -6316,6 +6579,7 @@
                 },
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/list",
                   "endpointId": "endpoint_connections.List",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_connections.endpoint_connections.List",
                   "isResponseStream": false,
@@ -6326,6 +6590,7 @@
                 },
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/create",
                   "endpointId": "endpoint_connections.Create",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_connections.endpoint_connections.Create",
                   "isResponseStream": false,
@@ -6336,6 +6601,7 @@
                 },
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/get",
                   "endpointId": "endpoint_connections.Get",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_connections.endpoint_connections.Get",
                   "isResponseStream": false,
@@ -6346,6 +6612,7 @@
                 },
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/remove",
                   "endpointId": "endpoint_connections.Remove",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_connections.endpoint_connections.Remove",
                   "isResponseStream": false,
@@ -6356,6 +6623,7 @@
                 },
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/connections/update",
                   "endpointId": "endpoint_connections.Update",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_connections.endpoint_connections.Update",
                   "isResponseStream": false,
@@ -6376,6 +6644,7 @@
               "children": [
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/identity/get",
                   "endpointId": "endpoint_identity.api/v1.GetIdentity",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_identity.endpoint_identity.api/v1.GetIdentity",
                   "isResponseStream": false,
@@ -6396,6 +6665,7 @@
               "children": [
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/organization/list",
                   "endpointId": "endpoint_organization.List",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_organization.endpoint_organization.List",
                   "isResponseStream": false,
@@ -6406,6 +6676,7 @@
                 },
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/organization/create",
                   "endpointId": "endpoint_organization.Create",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_organization.endpoint_organization.Create",
                   "isResponseStream": false,
@@ -6416,6 +6687,7 @@
                 },
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/organization/get",
                   "endpointId": "endpoint_organization.Get",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_organization.endpoint_organization.Get",
                   "isResponseStream": false,
@@ -6426,6 +6698,7 @@
                 },
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/organization/update",
                   "endpointId": "endpoint_organization.Update",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_organization.endpoint_organization.Update",
                   "isResponseStream": false,
@@ -6446,6 +6719,7 @@
               "children": [
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/users/create",
                   "endpointId": "endpoint_users.Create",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_users.endpoint_users.Create",
                   "isResponseStream": false,
@@ -6456,6 +6730,7 @@
                 },
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/users/get",
                   "endpointId": "endpoint_users.Get",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_users.endpoint_users.Get",
                   "isResponseStream": false,
@@ -6466,6 +6741,7 @@
                 },
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/users/remove",
                   "endpointId": "endpoint_users.Remove",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_users.endpoint_users.Remove",
                   "isResponseStream": false,
@@ -6476,6 +6752,7 @@
                 },
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/users/update",
                   "endpointId": "endpoint_users.Update",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_users.endpoint_users.Update",
                   "isResponseStream": false,
@@ -6496,6 +6773,7 @@
               "children": [
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/model-sync/list",
                   "endpointId": "endpoint_modelSync.List",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_modelSync.endpoint_modelSync.List",
                   "isResponseStream": false,
@@ -6506,6 +6784,7 @@
                 },
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/model-sync/get",
                   "endpointId": "endpoint_modelSync.Get",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Get",
                   "isResponseStream": false,
@@ -6516,6 +6795,7 @@
                 },
                 {
                   "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                  "canonicalSlug": "2023-04-25/api-reference/model-sync/start",
                   "endpointId": "endpoint_modelSync.Start",
                   "id": "root..2021-05-23.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Start",
                   "isResponseStream": false,
@@ -6529,6 +6809,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
+                      "canonicalSlug": "2023-04-25/api-reference/model-sync/executions/get",
                       "endpointId": "endpoint_modelSync/executions.Get",
                       "id": "root..2021-05-23.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.Get",
                       "isResponseStream": false,
