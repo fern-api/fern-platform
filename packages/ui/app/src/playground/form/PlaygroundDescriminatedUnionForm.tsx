@@ -1,23 +1,17 @@
+import { DiscriminatedUnionType, TypeDefinition, unwrapObjectType } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernDropdown, FernSegmentedControl } from "@fern-ui/components";
 import { titleCase } from "@fern-ui/core-utils";
 import { NavArrowDown } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useMemo } from "react";
-import {
-    ResolvedDiscriminatedUnionShape,
-    ResolvedTypeDefinition,
-    dereferenceObjectProperties,
-} from "../../resolver/types";
-import { castToRecord, getDefaultValueForObjectProperties } from "../utils";
+import { castToRecord, getEmptyValueForObjectProperties } from "../utils";
 import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
 
-const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {
-    ssr: true,
-});
+const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown));
 
 interface PlaygroundDiscriminatedUnionFormProps {
-    discriminatedUnion: ResolvedDiscriminatedUnionShape;
-    types: Record<string, ResolvedTypeDefinition>;
+    discriminatedUnion: DiscriminatedUnionType;
+    types: Record<string, TypeDefinition>;
     onChange: (value: unknown) => void;
     value: unknown;
     id: string;
@@ -47,7 +41,7 @@ export const PlaygroundDiscriminatedUnionForm = memo<PlaygroundDiscriminatedUnio
                 }
                 return {
                     [discriminatedUnion.discriminant]: variantKey,
-                    ...getDefaultValueForObjectProperties(dereferenceObjectProperties(selectedVariant, types), types),
+                    ...getEmptyValueForObjectProperties(unwrapObjectType(selectedVariant, types).properties, types),
                 };
             });
         },
@@ -76,7 +70,7 @@ export const PlaygroundDiscriminatedUnionForm = memo<PlaygroundDiscriminatedUnio
         (variant) => variant.discriminantValue === selectedVariantKey,
     );
 
-    const properties = selectedVariant != null ? dereferenceObjectProperties(selectedVariant, types) : [];
+    const properties = selectedVariant != null ? unwrapObjectType(selectedVariant, types).properties : [];
 
     return (
         <div className="w-full">

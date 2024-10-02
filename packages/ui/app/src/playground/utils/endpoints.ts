@@ -1,34 +1,34 @@
+import { ExampleEndpointCall } from "@fern-api/fdr-sdk/api-definition";
+import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { mapValues } from "lodash-es";
-import { ResolvedEndpointDefinition, ResolvedExampleEndpointCall, ResolvedTypeDefinition } from "../../resolver/types";
 import { PlaygroundEndpointRequestFormState, PlaygroundFormDataEntryValue } from "../types";
-import { getDefaultValueForObjectProperties, getDefaultValuesForBody } from "./default-values";
+import { EndpointContext } from "../types/endpoint-context";
+import { getEmptyValueForHttpRequestBody, getEmptyValueForObjectProperties } from "./default-values";
 
 export function getInitialEndpointRequestFormState(
-    endpoint: ResolvedEndpointDefinition | undefined,
-    types: Record<string, ResolvedTypeDefinition>,
+    ctx: EndpointContext | undefined,
 ): PlaygroundEndpointRequestFormState {
     return {
         type: "endpoint",
-        headers: getDefaultValueForObjectProperties(endpoint?.headers, types),
-        pathParameters: getDefaultValueForObjectProperties(endpoint?.pathParameters, types),
-        queryParameters: getDefaultValueForObjectProperties(endpoint?.queryParameters, types),
-        body: getDefaultValuesForBody(endpoint?.requestBody?.shape, types),
+        headers: getEmptyValueForObjectProperties(ctx?.endpoint?.requestHeaders, ctx?.types ?? EMPTY_OBJECT),
+        pathParameters: getEmptyValueForObjectProperties(ctx?.endpoint?.pathParameters, ctx?.types ?? EMPTY_OBJECT),
+        queryParameters: getEmptyValueForObjectProperties(ctx?.endpoint?.queryParameters, ctx?.types ?? EMPTY_OBJECT),
+        body: getEmptyValueForHttpRequestBody(ctx?.endpoint?.request?.body, ctx?.types ?? EMPTY_OBJECT),
     };
 }
 
 export function getInitialEndpointRequestFormStateWithExample(
-    endpoint: ResolvedEndpointDefinition | undefined,
-    exampleCall: ResolvedExampleEndpointCall | undefined,
-    types: Record<string, ResolvedTypeDefinition>,
+    context: EndpointContext | undefined,
+    exampleCall: ExampleEndpointCall | undefined,
 ): PlaygroundEndpointRequestFormState {
     if (exampleCall == null) {
-        return getInitialEndpointRequestFormState(endpoint, types);
+        return getInitialEndpointRequestFormState(context);
     }
     return {
         type: "endpoint",
-        headers: exampleCall.headers,
-        pathParameters: exampleCall.pathParameters,
-        queryParameters: exampleCall.queryParameters,
+        headers: exampleCall.headers ?? {},
+        pathParameters: exampleCall.pathParameters ?? {},
+        queryParameters: exampleCall.queryParameters ?? {},
         body:
             exampleCall.requestBody?.type === "form"
                 ? {
@@ -36,9 +36,9 @@ export function getInitialEndpointRequestFormStateWithExample(
                       value: mapValues(
                           exampleCall.requestBody.value,
                           (exampleValue): PlaygroundFormDataEntryValue =>
-                              exampleValue.type === "file"
+                              exampleValue.type === "filename" || exampleValue.type === "filenameWithData"
                                   ? { type: "file", value: undefined }
-                                  : exampleValue.type === "fileArray"
+                                  : exampleValue.type === "filenames" || exampleValue.type === "filenamesWithData"
                                     ? { type: "fileArray", value: [] }
                                     : { type: "json", value: exampleValue.value },
                       ),

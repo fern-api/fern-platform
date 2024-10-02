@@ -8,8 +8,8 @@ import { noop } from "ts-essentials";
 import { usePlaygroundEnvironment } from "../../atoms";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
-import { buildRequestUrl } from "../../playground/utils";
 import { ResolvedEndpointPathParts } from "../../resolver/types";
+import { buildRequestUrl } from "../../resolver/url";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{

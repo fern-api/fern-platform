@@ -1,8 +1,8 @@
-import { LOOP_TOLERANCE } from "./const";
+import { LARGE_LOOP_TOLERANCE } from "./const";
 import type * as Latest from "./latest";
 import { ApiTypeIdVisitor } from "./typeid-visitor";
 
-type NodeType =
+export type PruningNodeType =
     | { type: "endpoint"; endpointId: Latest.EndpointId }
     | { type: "webSocket"; webSocketId: Latest.WebSocketId }
     | { type: "webhook"; webhookId: Latest.WebhookId };
@@ -25,7 +25,7 @@ class ApiDefinitionPruner {
      * @param node of the navigation tree to prune the API definition to
      * @returns a new API definition that is the result of pruning the input API definition to the desired node
      */
-    public prune(node: NodeType): Latest.ApiDefinition {
+    public prune(...nodes: PruningNodeType[]): Latest.ApiDefinition {
         const toRet: Latest.ApiDefinition = {
             ...this.api,
             endpoints: {},
@@ -39,25 +39,27 @@ class ApiDefinitionPruner {
         const namespaces = new Set<Latest.SubpackageId>();
         const authSchemes = new Set<Latest.AuthSchemeId>();
 
-        if (node.type === "endpoint") {
-            const found = this.api.endpoints[node.endpointId];
-            if (found) {
-                toRet.endpoints[node.endpointId] = found;
-                found.namespace?.forEach((subpackageId) => namespaces.add(subpackageId));
-                found.auth?.forEach((authSchemeId) => authSchemes.add(authSchemeId));
-            }
-        } else if (node.type === "webSocket") {
-            const found = this.api.websockets[node.webSocketId];
-            if (found) {
-                toRet.websockets[node.webSocketId] = found;
-                found.namespace?.forEach((subpackageId) => namespaces.add(subpackageId));
-                found.auth?.forEach((authSchemeId) => authSchemes.add(authSchemeId));
-            }
-        } else if (node.type === "webhook") {
-            const found = this.api.webhooks[node.webhookId];
-            if (found) {
-                toRet.webhooks[node.webhookId] = found;
-                found.namespace?.forEach((subpackageId) => namespaces.add(subpackageId));
+        for (const node of nodes) {
+            if (node.type === "endpoint") {
+                const found = this.api.endpoints[node.endpointId];
+                if (found) {
+                    toRet.endpoints[node.endpointId] = found;
+                    found.namespace?.forEach((subpackageId) => namespaces.add(subpackageId));
+                    found.auth?.forEach((authSchemeId) => authSchemes.add(authSchemeId));
+                }
+            } else if (node.type === "webSocket") {
+                const found = this.api.websockets[node.webSocketId];
+                if (found) {
+                    toRet.websockets[node.webSocketId] = found;
+                    found.namespace?.forEach((subpackageId) => namespaces.add(subpackageId));
+                    found.auth?.forEach((authSchemeId) => authSchemes.add(authSchemeId));
+                }
+            } else if (node.type === "webhook") {
+                const found = this.api.webhooks[node.webhookId];
+                if (found) {
+                    toRet.webhooks[node.webhookId] = found;
+                    found.namespace?.forEach((subpackageId) => namespaces.add(subpackageId));
+                }
             }
         }
 
@@ -116,7 +118,7 @@ class ApiDefinitionPruner {
 
         let loop = 0;
         while (queue.length > 0) {
-            if (loop > LOOP_TOLERANCE) {
+            if (loop > LARGE_LOOP_TOLERANCE) {
                 throw new Error("Infinite loop detected while expanding type references.");
             }
 
@@ -138,6 +140,6 @@ class ApiDefinitionPruner {
     }
 }
 
-export function prune(api: Latest.ApiDefinition, node: NodeType): Latest.ApiDefinition {
-    return ApiDefinitionPruner.from(api).prune(node);
+export function prune(api: Latest.ApiDefinition, ...nodes: PruningNodeType[]): Latest.ApiDefinition {
+    return ApiDefinitionPruner.from(api).prune(...nodes);
 }

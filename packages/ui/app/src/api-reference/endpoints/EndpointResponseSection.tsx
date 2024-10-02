@@ -7,7 +7,7 @@ import { ResolvedExampleEndpointResponseWithSchema } from "../../resolver/Schema
 import { ResolvedResponseBody, ResolvedTypeDefinition, visitResolvedHttpResponseBodyShape } from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { renderDeprecatedTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace EndpointResponseSection {
     export interface Props {
@@ -119,7 +119,7 @@ function getResponseSummary({
         case "streamCondition":
             return "This endpoint returns a stream.";
         case "stream":
-            return `This endpoint returns a stream of ${exampleResponseBody?.type === "sse" ? "server sent events" : renderTypeShorthand(responseBody.shape.value, { withArticle: false }, types)}.`;
+            return `This endpoint returns a stream of ${exampleResponseBody?.type === "sse" ? "server sent events" : renderDeprecatedTypeShorthand(responseBody.shape.value, { withArticle: false }, types)}.`;
         case "alias":
         case "discriminatedUnion":
         case "enum":
@@ -133,7 +133,7 @@ function getResponseSummary({
         case "set":
         case "unknown":
         case "undiscriminatedUnion":
-            return `This endpoint returns ${renderTypeShorthand(responseBody.shape, { withArticle: true }, types)}.`;
+            return `This endpoint returns ${renderDeprecatedTypeShorthand(responseBody.shape, { withArticle: true }, types)}.`;
         default:
             throw new UnreachableCaseError(responseBody.shape);
     }

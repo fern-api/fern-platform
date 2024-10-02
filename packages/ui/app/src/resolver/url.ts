@@ -1,7 +1,9 @@
 import { unknownToString } from "@fern-ui/core-utils";
-import { ResolvedEndpointDefinition, ResolvedEndpointPathParts, resolveEnvironment } from "../../resolver/types";
-import { PlaygroundRequestFormState } from "../types";
+import { ResolvedEndpointPathParts } from "./types";
 
+/**
+ * @deprecated
+ */
 export function buildQueryParams(queryParameters: Record<string, unknown> | undefined): string {
     if (queryParameters == null) {
         return "";
@@ -15,18 +17,25 @@ export function buildQueryParams(queryParameters: Record<string, unknown> | unde
     return queryParams.size > 0 ? "?" + queryParams.toString() : "";
 }
 
+/**
+ * @deprecated
+ */
 function buildPath(path: ResolvedEndpointPathParts[], pathParameters?: Record<string, unknown>): string {
     return path
         .map((part) => {
             if (part.type === "pathParameter") {
-                const stateValue = unknownToString(pathParameters?.[part.key]);
-                return stateValue.length > 0 ? encodeURIComponent(stateValue) : ":" + part.key;
+                const key = part.key;
+                const stateValue = unknownToString(pathParameters?.[key]);
+                return stateValue.length > 0 ? encodeURIComponent(stateValue) : ":" + key;
             }
             return part.value;
         })
         .join("");
 }
 
+/**
+ * @deprecated
+ */
 export function buildRequestUrl(
     baseUrl: string = "",
     path: ResolvedEndpointPathParts[] = [],
@@ -34,17 +43,4 @@ export function buildRequestUrl(
     queryParameters: Record<string, unknown> = {},
 ): string {
     return baseUrl + buildPath(path, pathParameters) + buildQueryParams(queryParameters);
-}
-
-export function buildEndpointUrl(
-    endpoint: ResolvedEndpointDefinition | undefined,
-    formState: PlaygroundRequestFormState | undefined,
-    playgroundEnvironment: string | undefined,
-): string {
-    return buildRequestUrl(
-        playgroundEnvironment ?? (endpoint && resolveEnvironment(endpoint)?.baseUrl),
-        endpoint?.path,
-        formState?.pathParameters,
-        formState?.queryParameters,
-    );
 }

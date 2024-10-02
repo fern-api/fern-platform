@@ -2,17 +2,9 @@ import { DocsKVCache } from "@/server/DocsCache";
 import { buildUrlFromApiNode } from "@/server/buildUrlFromApi";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/navigation";
-import {
-    ApiDefinitionResolver,
-    provideRegistryService,
-    serializeMdx,
-    setMdxBundler,
-    type FernSerializeMdxOptions,
-    type ResolvedRootPackage,
-} from "@fern-ui/ui";
+import { ApiDefinitionResolver, provideRegistryService, type ResolvedRootPackage } from "@fern-ui/ui";
 import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { NextApiHandler, NextApiResponse } from "next";
@@ -20,21 +12,9 @@ import { getFeatureFlags } from "./feature-flags";
 
 export const dynamic = "force-dynamic";
 
-async function serializeMdxWithCaching(
-    content: string,
-    options?: FernSerializeMdxOptions,
-): Promise<FernDocs.MarkdownText>;
-async function serializeMdxWithCaching(
-    content: string | undefined,
-    options?: FernSerializeMdxOptions,
-): Promise<FernDocs.MarkdownText | undefined>;
-async function serializeMdxWithCaching(
-    content: string | undefined,
-    options: FernSerializeMdxOptions = {},
-): Promise<FernDocs.MarkdownText | undefined> {
-    return await serializeMdx(content, options);
-}
-
+/**
+ * This is now deprecated. use /api/fern-docs/api-definition/{apiDefinitionId}/endpoint/{endpointId} instead.
+ */
 const resolveApiHandler: NextApiHandler = async (
     req,
     res: NextApiResponse<Record<string, ResolvedRootPackage> | null>,
@@ -78,7 +58,7 @@ const resolveApiHandler: NextApiHandler = async (
 
         const collector = FernNavigation.NodeCollector.collect(root);
 
-        setMdxBundler(await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote"));
+        const serializeMdx = await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote");
 
         const packagesPromise: Promise<ResolvedRootPackage>[] = [];
         FernNavigation.utils.collectApiReferences(root).forEach((apiReference) => {
@@ -94,7 +74,7 @@ const resolveApiHandler: NextApiHandler = async (
                 docs.definition.pages,
                 { files: docs.definition.jsFiles },
                 featureFlags,
-                serializeMdxWithCaching,
+                serializeMdx,
                 DocsKVCache.getInstance(xFernHost),
             );
             packagesPromise.push(resolved);

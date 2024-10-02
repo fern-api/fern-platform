@@ -1,12 +1,12 @@
+import { type EndpointDefinition } from "@fern-api/fdr-sdk/api-definition";
 import { unknownToString } from "@fern-ui/core-utils";
-import { ResolvedEndpointPathParts } from "../../../resolver/types";
 
-export function buildPath(path: ResolvedEndpointPathParts[], pathParameters?: Record<string, unknown>): string {
+export function buildPath(path: EndpointDefinition["path"], pathParameters?: Record<string, unknown>): string {
     return path
         .map((part) => {
             if (part.type === "pathParameter") {
-                const stateValue = unknownToString(pathParameters?.[part.key]);
-                return stateValue.length > 0 ? encodeURIComponent(stateValue) : ":" + part.key;
+                const stateValue = unknownToString(pathParameters?.[part.value]);
+                return stateValue.length > 0 ? encodeURIComponent(stateValue) : ":" + part.value;
             }
             return part.value;
         })

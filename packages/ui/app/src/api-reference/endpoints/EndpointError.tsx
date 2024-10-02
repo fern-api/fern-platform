@@ -13,7 +13,7 @@ import {
 } from "../../resolver/types";
 import { type JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { renderDeprecatedTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 import { getErrorNameForStatus } from "../utils/getErrorNameForStatus";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
@@ -73,7 +73,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                 <FernCollapse open={isSelected} className="w-full">
                     <div className="space-y-2 pt-2">
                         <div className="t-muted w-full text-start text-sm leading-7">
-                            {`This error return ${renderTypeShorthand(error.shape, { withArticle: true }, types)}.`}
+                            {`This error return ${renderDeprecatedTypeShorthand(error.shape, { withArticle: true }, types)}.`}
                         </div>
                         {shouldHideShape(error.shape, types) ? null : (
                             <div className="w-full text-start">

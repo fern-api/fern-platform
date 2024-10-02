@@ -1,19 +1,18 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
+import { EndpointDefinition, buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
 import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import jsonpath from "jsonpath";
 import { mapValues } from "lodash-es";
-import { ResolvedEndpointDefinition } from "../../resolver/types";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { PlaygroundEndpointRequestFormState, ProxyRequest } from "../types";
 import { serializeFormStateBody } from "./serialize";
-import { buildEndpointUrl } from "./url";
 
 export interface OAuthClientCredentialReferencedEndpointLoginFlowProps {
     formState: PlaygroundEndpointRequestFormState;
-    endpoint: ResolvedEndpointDefinition;
+    endpoint: EndpointDefinition;
     proxyEnvironment: string;
     oAuthClientCredentialsReferencedEndpoint: APIV1Read.OAuthClientCredentialsReferencedEndpoint;
-    playgroundEnvironment: string | undefined;
+    baseUrl: string | undefined;
     setValue: (value: (prev: any) => any) => void;
     closeContainer?: () => void;
     setDisplayFailedLogin?: (value: boolean) => void;
@@ -24,7 +23,7 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     endpoint,
     proxyEnvironment,
     oAuthClientCredentialsReferencedEndpoint,
-    playgroundEnvironment,
+    baseUrl,
     setValue,
     closeContainer,
     setDisplayFailedLogin,
@@ -37,15 +36,20 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
         ...mapValues(formState.headers ?? {}, (value) => unknownToString(value)),
     };
 
-    if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
-        headers["Content-Type"] = endpoint.requestBody.contentType;
+    if (endpoint.method !== "GET" && endpoint.request?.contentType != null) {
+        headers["Content-Type"] = endpoint.request.contentType;
     }
 
     const req: ProxyRequest = {
-        url: buildEndpointUrl(endpoint, formState, playgroundEnvironment),
+        url: buildEndpointUrl({
+            endpoint,
+            pathParameters: formState.pathParameters,
+            queryParameters: formState.queryParameters,
+            baseUrl,
+        }),
         method: endpoint.method,
         headers,
-        body: await serializeFormStateBody("", endpoint.requestBody?.shape, formState.body, false),
+        body: await serializeFormStateBody("", endpoint.request?.body, formState.body, false),
     };
     const res = await executeProxyRest(proxyEnvironment, req);
 

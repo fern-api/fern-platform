@@ -1,7 +1,7 @@
 import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { APIS_ATOM, useIsReady } from "../atoms";
+import { DEPRECATED_APIS_ATOM, useIsReady } from "../atoms";
 import { ApiPageContext } from "../contexts/api-page";
 import type { ResolvedRootPackage } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
@@ -16,7 +16,7 @@ export declare namespace ApiReferencePage {
 
 export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({ initialApi, showErrors }) => {
     const hydrated = useIsReady();
-    const setDefinitions = useSetAtom(APIS_ATOM);
+    const setDefinitions = useSetAtom(DEPRECATED_APIS_ATOM);
     useEffect(() => {
         setDefinitions((prev) => ({ ...prev, [initialApi.api]: initialApi }));
     }, [initialApi, setDefinitions]);

@@ -5,19 +5,18 @@ import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
 import { CURRENT_NODE_ATOM, useClosePlayground } from "../../atoms";
 import { FernLink } from "../../components/FernLink";
-import { ResolvedEndpointDefinition } from "../../resolver/types";
 
 const USE_EXAMPLE_TEXT = "Use example";
 const CLEAR_FORM_TEXT = "Clear form";
 
 interface PlaygroundEndpointFormButtonsProps {
-    endpoint: ResolvedEndpointDefinition;
+    node: FernNavigation.EndpointNode;
     resetWithExample: () => void;
     resetWithoutExample: () => void;
 }
 
 export function PlaygroundEndpointFormButtons({
-    endpoint,
+    node,
     resetWithExample,
     resetWithoutExample,
 }: PlaygroundEndpointFormButtonsProps): ReactElement {
@@ -36,8 +35,8 @@ export function PlaygroundEndpointFormButtons({
             </FernButtonGroup>
 
             <FernLink
-                href={`/${endpoint.slug}`}
-                shallow={apiReferenceId === endpoint.apiDefinitionId}
+                href={`/${node.slug}`}
+                shallow={apiReferenceId === node.apiDefinitionId}
                 className="t-muted inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:t-accent hover:decoration-2"
                 onClick={closePlayground}
             >

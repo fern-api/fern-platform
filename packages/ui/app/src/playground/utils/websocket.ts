@@ -1,20 +1,17 @@
-import { ResolvedTypeDefinition, ResolvedWebSocketChannel } from "../../resolver/types";
 import { PlaygroundWebSocketRequestFormState } from "../types";
-import { getDefaultValueForObjectProperties, getDefaultValueForType } from "./default-values";
+import { WebSocketContext } from "../types/endpoint-context";
+import { getEmptyValueForObjectProperties, getEmptyValueForType } from "./default-values";
 
-export function getInitialWebSocketRequestFormState(
-    webSocket: ResolvedWebSocketChannel | undefined,
-    types: Record<string, ResolvedTypeDefinition>,
-): PlaygroundWebSocketRequestFormState {
+export function getInitialWebSocketRequestFormState(context: WebSocketContext): PlaygroundWebSocketRequestFormState {
     return {
         type: "websocket",
-        headers: getDefaultValueForObjectProperties(webSocket?.headers, types),
-        pathParameters: getDefaultValueForObjectProperties(webSocket?.pathParameters, types),
-        queryParameters: getDefaultValueForObjectProperties(webSocket?.queryParameters, types),
+        headers: getEmptyValueForObjectProperties(context.channel.requestHeaders, context.types),
+        pathParameters: getEmptyValueForObjectProperties(context.channel.pathParameters, context.types),
+        queryParameters: getEmptyValueForObjectProperties(context.channel.queryParameters, context.types),
         messages: Object.fromEntries(
-            webSocket?.messages
+            context.channel.messages
                 .filter((message) => message.origin === "client")
-                .map((message) => [message.type, getDefaultValueForType(message.body, types)]) ?? [],
+                .map((message) => [message.type, getEmptyValueForType(message.body, context.types)]) ?? [],
         ),
     };
 }

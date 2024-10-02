@@ -2,7 +2,7 @@ import { MarkdownText } from "@fern-api/fdr-sdk/docs";
 import { BaseHit, Hit } from "instantsearch.js";
 import { useEffect, useState } from "react";
 import { MdxContent } from "../../mdx/MdxContent";
-import { serializeMdx } from "../../mdx/bundler";
+import { serializeMdx } from "../../mdx/bundlers/next-mdx-remote";
 import { replaceBackticksWithCodeTags } from "../../util/replaceBackticksWithCodeTag";
 import { replaceMarksInUrls } from "../../util/replaceMarksInUrls";
 

@@ -1,12 +1,14 @@
+import { EnumValue } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernDropdown } from "@fern-ui/components";
 import { NavArrowDown } from "iconoir-react";
 import { sortBy } from "lodash-es";
+import dynamic from "next/dynamic";
 import { memo, useMemo } from "react";
-import { Markdown } from "../../mdx/Markdown";
-import { ResolvedEnumValue } from "../../resolver/types";
+
+const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown));
 
 interface PlaygroundEnumFormProps {
-    enumValues: ResolvedEnumValue[];
+    enumValues: EnumValue[];
     onChange: (value: unknown) => void;
     value: unknown;
     id: string;

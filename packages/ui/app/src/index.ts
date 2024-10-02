@@ -4,7 +4,6 @@ export type { DocsProps, FeatureFlags } from "./atoms";
 export * from "./docs/DocsPage";
 export * from "./docs/NextApp";
 export { getApiRouteSupplier } from "./hooks/useApiRoute";
-export { serializeMdx, setMdxBundler } from "./mdx/bundler";
 export { getFrontmatter } from "./mdx/frontmatter";
 export * from "./mdx/types";
 export { Stream } from "./playground/Stream";

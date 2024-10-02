@@ -1,16 +1,17 @@
+import { cleanLanguage } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { HTTPSnippet, type HarRequest, type TargetId } from "httpsnippet-lite";
 import { noop } from "ts-essentials";
 import { convertEndpointExampleToHttpRequestExample } from "../api-reference/examples/HttpRequestExample";
 import { stringifyHttpRequestExampleToCurl } from "../api-reference/examples/stringifyHttpRequestExampleToCurl";
-import { buildRequestUrl } from "../playground/utils";
 import {
     ResolvedCodeSnippet,
     ResolvedEndpointDefinition,
     ResolvedExampleEndpointRequest,
     resolveEnvironment,
 } from "./types";
+import { buildRequestUrl } from "./url";
 
 interface HTTPSnippetClient {
     targetId: TargetId;
@@ -154,27 +155,6 @@ export async function resolveCodeSnippets(
     }
 
     return toRet;
-}
-
-function cleanLanguage(language: string): string {
-    language = language.toLowerCase().trim();
-    if (["node", "nodejs", "js", "javascript"].includes(language)) {
-        return "javascript";
-    }
-
-    if (["py", "python"].includes(language)) {
-        return "python";
-    }
-
-    if (["ts", "typescript", "ts-node"].includes(language)) {
-        return "typescript";
-    }
-
-    if (["go", "golang"].includes(language)) {
-        return "go";
-    }
-
-    return language;
 }
 
 function getHarRequest(

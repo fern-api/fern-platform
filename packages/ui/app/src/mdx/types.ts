@@ -15,7 +15,6 @@ export type FernSerializeMdxOptions = {
     files?: Record<string, string>;
 };
 
-export type SerializeMdxFunc = (
-    content: string | undefined,
-    options?: FernSerializeMdxOptions,
-) => Promise<FernDocs.MarkdownText | undefined>;
+export type SerializeMdxFunc =
+    | ((content: string, options?: FernSerializeMdxOptions) => Promise<FernDocs.MarkdownText>)
+    | ((content: string | undefined, options?: FernSerializeMdxOptions) => Promise<FernDocs.MarkdownText | undefined>);

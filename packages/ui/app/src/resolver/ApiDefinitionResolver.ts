@@ -18,6 +18,9 @@ import type {
     ResolvedWithApiDefinition,
 } from "./types";
 
+/**
+ * @deprecated
+ */
 export interface ApiDefinitionResolverCache {
     putResolvedEndpoint({
         apiDefinitionId,
@@ -70,6 +73,9 @@ export interface ApiDefinitionResolverCache {
     }): Promise<ResolvedTypeDefinition | null | undefined>;
 }
 
+/**
+ * @deprecated
+ */
 export class ApiDefinitionResolver {
     public static async resolve(
         collector: FernNavigation.NodeCollector,
