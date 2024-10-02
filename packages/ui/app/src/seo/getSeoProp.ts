@@ -296,7 +296,7 @@ function getPreloadedFont(
     };
 }
 
-function stripMarkdown(markdown: string | undefined): string | undefined {
+export function stripMarkdown(markdown: string | undefined): string | undefined {
     if (markdown == null) {
         return undefined;
     }
