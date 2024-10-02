@@ -40,7 +40,9 @@ jobs:
           npm install -g fern-api
 
       - name: Compile and build
-        run: pnpm turbo compile codegen build
+        run: |
+          pnpm turbo compile codegen build
+          pnpm --filter=@fern-platform/fern-bot compile:github-webhook
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}

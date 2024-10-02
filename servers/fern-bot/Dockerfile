@@ -20,6 +20,7 @@ RUN set -ex; pip install --no-cache-dir poetry;
 
 # TypeScript (as this is a Node base image, npm and Node are already present!)
 RUN npm install --global yarn
+RUN npm install --global pnpm
 
 # Go
 RUN yum -y install golang
@@ -47,6 +48,7 @@ RUN ruby --version
 # Copy all of the functions into the lambda, allowing us to reuse this image if needed
 ENV LAMBDA_TASK_ROOT=/var/task
 RUN mkdir -p ${LAMBDA_TASK_ROOT}
+COPY ./lib/githubWebhookListener.js ${LAMBDA_TASK_ROOT}/githubWebhookListener.js
 COPY ./lib/src ${LAMBDA_TASK_ROOT}/src
 COPY ./node_modules ${LAMBDA_TASK_ROOT}/node_modules
 

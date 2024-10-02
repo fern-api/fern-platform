@@ -155,7 +155,7 @@ functions:
     image:
       name: generator_languages_image
       command:
-        - "src/functions/github-webhook-listener/githubWebhookListener.handler"
+        - "githubWebhookListener.handler"
       entryPoint:
         - "/lambda-entrypoint.sh"
     events:

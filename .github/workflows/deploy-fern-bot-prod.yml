@@ -34,7 +34,9 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Compile
-        run: pnpm compile
+        run: |
+          pnpm compile
+          pnpm --filter=@fern-platform/fern-bot compile:github-webhook
 
       - name: 🚀 serverless deploy
         env:
