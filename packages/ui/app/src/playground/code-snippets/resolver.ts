@@ -87,7 +87,7 @@ export class PlaygroundCodeSnippetResolver {
         public isSnippetTemplatesEnabled: boolean,
         private isFileForgeHackEnabled: boolean,
         proxyEnvironment: string,
-        private playgroundEnvironment: string | undefined,
+        private baseUrl: string | undefined,
         setOAuthValue: (value: (prev: any) => any) => void,
     ) {
         const authHeaders = buildAuthHeaders(
@@ -98,7 +98,7 @@ export class PlaygroundCodeSnippetResolver {
                 formState,
                 endpoint: this.context.endpoint,
                 proxyEnvironment,
-                playgroundEnvironment,
+                baseUrl: this.baseUrl,
                 setValue: setOAuthValue,
             },
         );
@@ -158,7 +158,7 @@ export class PlaygroundCodeSnippetResolver {
 
     public toCurl(): string {
         const formState = { ...this.formState, headers: this.headers };
-        return new CurlSnippetBuilder(this.context, formState, this.authState, this.playgroundEnvironment)
+        return new CurlSnippetBuilder(this.context, formState, this.authState, this.baseUrl)
             .setFileForgeHackEnabled(this.isFileForgeHackEnabled)
             .build();
     }
@@ -172,22 +172,12 @@ export class PlaygroundCodeSnippetResolver {
         }
 
         const formState = { ...this.formState, headers };
-        return new TypescriptFetchSnippetBuilder(
-            this.context,
-            formState,
-            this.authState,
-            this.playgroundEnvironment,
-        ).build();
+        return new TypescriptFetchSnippetBuilder(this.context, formState, this.authState, this.baseUrl).build();
     }
 
     public toPythonRequests(): string {
         const formState = { ...this.formState, headers: this.headers };
-        return new PythonRequestSnippetBuilder(
-            this.context,
-            formState,
-            this.authState,
-            this.playgroundEnvironment,
-        ).build();
+        return new PythonRequestSnippetBuilder(this.context, formState, this.authState, this.baseUrl).build();
     }
 
     public toTypescriptSdkSnippet(apiDefinition?: APIV1Read.ApiDefinition): string | undefined {

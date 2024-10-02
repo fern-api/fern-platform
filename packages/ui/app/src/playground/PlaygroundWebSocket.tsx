@@ -1,4 +1,4 @@
-import { WebSocketMessage } from "@fern-api/fdr-sdk/api-definition";
+import { WebSocketMessage, buildRequestUrl } from "@fern-api/fdr-sdk/api-definition";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
 import { Wifi, WifiOff } from "iconoir-react";
@@ -9,7 +9,7 @@ import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { PlaygroundEndpointPath } from "./endpoint/PlaygroundEndpointPath";
 import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
 import { WebSocketContext } from "./types/endpoint-context";
-import { buildAuthHeaders, buildRequestUrl } from "./utils";
+import { buildAuthHeaders } from "./utils";
 import { usePlaygroundBaseUrl, useSelectedEnvironment } from "./utils/select-environment";
 
 // TODO: decide if this should be an env variable, and if we should move REST proxy to the same (or separate) cloudflare worker
@@ -56,12 +56,12 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
 
             setError(null);
 
-            const url = buildRequestUrl(
+            const url = buildRequestUrl({
                 baseUrl,
-                context.channel.path,
-                formState.pathParameters,
-                formState.queryParameters,
-            );
+                path: context.channel.path,
+                pathParameters: formState.pathParameters,
+                queryParameters: formState.queryParameters,
+            });
 
             setConnectedState("opening");
 

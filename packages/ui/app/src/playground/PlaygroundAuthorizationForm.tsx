@@ -25,7 +25,6 @@ import {
     PLAYGROUND_AUTH_STATE_HEADER_ATOM,
     PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
     usePlaygroundEndpointFormState,
-    usePlaygroundEnvironment,
 } from "../atoms";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
@@ -37,6 +36,7 @@ import { useOAuthEndpointContext } from "./hooks/useOauthEndpointContext";
 import { PlaygroundAuthState } from "./types";
 import { EndpointContext } from "./types/endpoint-context";
 import { oAuthClientCredentialReferencedEndpointLoginFlow } from "./utils/oauth";
+import { usePlaygroundBaseUrl } from "./utils/select-environment";
 
 interface PlaygroundAuthorizationFormProps {
     auth: APIV1Read.ApiAuth;
@@ -168,7 +168,7 @@ function FoundOAuthReferencedEndpointForm({
     const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
     const proxyEnvironment = useStandardProxyEnvironment();
     const [formState, setFormState] = usePlaygroundEndpointFormState(context);
-    const playgroundEnvironment = usePlaygroundEnvironment();
+    const baseUrl = usePlaygroundBaseUrl(context.endpoint);
 
     const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
 
@@ -182,7 +182,7 @@ function FoundOAuthReferencedEndpointForm({
             endpoint: context.endpoint,
             proxyEnvironment,
             oAuthClientCredentialsReferencedEndpoint,
-            playgroundEnvironment,
+            baseUrl,
             setValue,
             closeContainer,
             setDisplayFailedLogin,

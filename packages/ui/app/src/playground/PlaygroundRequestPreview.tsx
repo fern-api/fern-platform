@@ -1,17 +1,13 @@
 import { useAtom, useAtomValue } from "jotai";
 import { FC, useMemo } from "react";
-import {
-    PLAYGROUND_AUTH_STATE_ATOM,
-    PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
-    useFeatureFlags,
-    usePlaygroundEnvironment,
-} from "../atoms";
+import { PLAYGROUND_AUTH_STATE_ATOM, PLAYGROUND_AUTH_STATE_OAUTH_ATOM, useFeatureFlags } from "../atoms";
 import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
 import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighlighter";
 import { PlaygroundCodeSnippetResolverBuilder } from "./code-snippets/resolver";
 import { useSnippet } from "./code-snippets/useSnippet";
 import { PlaygroundEndpointRequestFormState } from "./types";
 import { EndpointContext } from "./types/endpoint-context";
+import { usePlaygroundBaseUrl } from "./utils/select-environment";
 
 interface PlaygroundRequestPreviewProps {
     context: EndpointContext;
@@ -24,7 +20,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ co
     const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
     const { isFileForgeHackEnabled } = useFeatureFlags();
     const [oAuthValue, setOAuthValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
-    const playgroundEnvironment = usePlaygroundEnvironment();
+    const baseUrl = usePlaygroundBaseUrl(context.endpoint);
 
     const builder = useMemo(
         () => new PlaygroundCodeSnippetResolverBuilder(context, isSnippetTemplatesEnabled, isFileForgeHackEnabled),
@@ -33,10 +29,8 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ co
     const proxyEnvironment = useStandardProxyEnvironment();
 
     const resolver = useMemo(
-        () =>
-            oAuthValue &&
-            builder.createRedacted(authState, formState, proxyEnvironment, playgroundEnvironment, setOAuthValue),
-        [authState, builder, formState, proxyEnvironment, oAuthValue, playgroundEnvironment, setOAuthValue],
+        () => oAuthValue && builder.createRedacted(authState, formState, proxyEnvironment, baseUrl, setOAuthValue),
+        [authState, builder, formState, proxyEnvironment, oAuthValue, baseUrl, setOAuthValue],
     );
     const code = useSnippet(resolver, requestType);
 

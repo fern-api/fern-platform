@@ -7,13 +7,13 @@ import {
     PLAYGROUND_REQUEST_TYPE_ATOM,
     store,
     useFeatureFlags,
-    usePlaygroundEnvironment,
 } from "../../atoms";
 import { useStandardProxyEnvironment } from "../../hooks/useStandardProxyEnvironment";
 import { PlaygroundRequestPreview } from "../PlaygroundRequestPreview";
 import { PlaygroundCodeSnippetResolverBuilder } from "../code-snippets/resolver";
 import { PlaygroundEndpointRequestFormState } from "../types";
 import { EndpointContext } from "../types/endpoint-context";
+import { usePlaygroundBaseUrl } from "../utils/select-environment";
 
 interface PlaygroundEndpointRequestCardProps {
     context: EndpointContext;
@@ -28,7 +28,7 @@ export function PlaygroundEndpointRequestCard({
     const [requestType, setRequestType] = useAtom(PLAYGROUND_REQUEST_TYPE_ATOM);
     const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
     const proxyEnvironment = useStandardProxyEnvironment();
-    const playgroundEnvironment = usePlaygroundEnvironment();
+    const baseUrl = usePlaygroundBaseUrl(context.endpoint);
     return (
         <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
             <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">
@@ -69,7 +69,7 @@ export function PlaygroundEndpointRequestCard({
                             context,
                             isSnippetTemplatesEnabled,
                             isFileForgeHackEnabled,
-                        ).create(authState, formState, proxyEnvironment, playgroundEnvironment, setOAuthValue);
+                        ).create(authState, formState, proxyEnvironment, baseUrl, setOAuthValue);
                         return resolver.resolve(requestType);
                     }}
                     className="-mr-2"

@@ -1,6 +1,6 @@
+import { buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
 import { PlaygroundAuthState, PlaygroundEndpointRequestFormState } from "../../types";
 import { EndpointContext } from "../../types/endpoint-context";
-import { buildEndpointUrl } from "../../utils";
 
 export abstract class PlaygroundCodeSnippetBuilder {
     protected url: string;
@@ -9,10 +9,15 @@ export abstract class PlaygroundCodeSnippetBuilder {
         protected context: EndpointContext,
         protected formState: PlaygroundEndpointRequestFormState,
         protected authState: PlaygroundAuthState,
-        protected playgroundEnvironment: string | undefined,
+        protected baseUrl: string | undefined,
     ) {
         // TODO: wire through the environment from hook
-        this.url = buildEndpointUrl(context.endpoint, formState, playgroundEnvironment);
+        this.url = buildEndpointUrl({
+            endpoint: context.endpoint,
+            pathParameters: formState.pathParameters,
+            queryParameters: formState.queryParameters,
+            baseUrl,
+        });
     }
 
     public abstract build(): string;

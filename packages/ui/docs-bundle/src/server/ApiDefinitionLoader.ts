@@ -2,23 +2,20 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import {
     ApiDefinitionId,
     ApiDefinitionV1ToLatest,
-    AuthSchemeId,
-    CodeSnippet,
-    EndpointDefinition,
-    ExampleEndpointCall,
-    ExampleEndpointRequest,
     Transformer,
     prune,
     type ApiDefinition,
+    type CodeSnippet,
+    type EndpointDefinition,
+    type ExampleEndpointCall,
     type PruningNodeType,
 } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { DEFAULT_FEATURE_FLAGS, provideRegistryService, type FeatureFlags } from "@fern-ui/ui";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
-import { HTTPSnippet, type HarRequest, type TargetId } from "httpsnippet-lite";
-import { buildRequestUrl } from "../../../app/src/playground/utils/url";
+import { HTTPSnippet, type TargetId } from "httpsnippet-lite";
 import { ApiDefinitionKVCache } from "./ApiDefinitionCache";
+import { getHarRequest } from "./getHarRequest";
 
 interface HTTPSnippetClient {
     targetId: TargetId;
@@ -124,14 +121,22 @@ export class ApiDefinitionLoader {
 
         const snippet = new HTTPSnippet(getHarRequest(endpoint, example, apiDefinition.auths, example.requestBody));
         for (const { clientId, targetId } of CLIENTS) {
-            if (!this.flags.alwaysEnableJavaScriptFetch) {
-                if (snippets[targetId]?.length) {
-                    continue;
-                }
+            /**
+             * If the snippet already exists, skip it
+             */
+            if (snippets[targetId]?.length) {
+                continue;
+            }
 
-                if (targetId === "javascript" && snippets["typescript"]?.length) {
-                    continue;
-                }
+            /**
+             * If alwaysEnableJavaScriptFetch is disabled, skip generating JavaScript snippets if TypeScript snippets are available
+             */
+            if (
+                targetId === "javascript" &&
+                snippets[APIV1Read.SupportedLanguage.Typescript]?.length &&
+                !this.flags.alwaysEnableJavaScriptFetch
+            ) {
+                continue;
             }
 
             const convertedCode = await snippet.convert(targetId, clientId);
@@ -141,9 +146,10 @@ export class ApiDefinitionLoader {
                     : convertedCode != null
                       ? convertedCode[0]
                       : undefined;
+
             if (code != null) {
                 pushSnippet({
-                    name: this.flags.alwaysEnableJavaScriptFetch ? "HTTP Request" : undefined,
+                    name: "HTTP Request",
                     language: targetId,
                     install: undefined,
                     code,
@@ -174,138 +180,4 @@ export class ApiDefinitionLoader {
 
         return transformed;
     };
-}
-
-function getHarRequest(
-    endpoint: EndpointDefinition,
-    example: ExampleEndpointCall,
-    auths: Record<AuthSchemeId, APIV1Read.ApiAuth>,
-    requestBody: ExampleEndpointRequest | undefined,
-): HarRequest {
-    const request: HarRequest = {
-        httpVersion: "1.1",
-        method: "GET",
-        url: "",
-        headers: [],
-        headersSize: -1,
-        queryString: [],
-        cookies: [],
-        bodySize: -1,
-    };
-    request.url = buildRequestUrl(
-        (endpoint?.environments?.find((env) => env.id === endpoint.defaultEnvironment) ?? endpoint?.environments?.[0])
-            ?.baseUrl,
-        endpoint.path,
-        example.pathParameters,
-    );
-    request.method = endpoint.method;
-    request.queryString = Object.entries(example.queryParameters ?? {}).map(([name, value]) => ({
-        name,
-        value: unknownToString(value),
-    }));
-    request.headers = Object.entries(example.headers ?? {}).map(([name, value]) => ({
-        name,
-        value: unknownToString(value),
-    }));
-
-    let mimeType = endpoint.request?.contentType as string | undefined;
-
-    if (requestBody != null) {
-        if (mimeType == null) {
-            mimeType = requestBody.type === "json" ? "application/json" : "multipart/form-data";
-        }
-        request.postData = {
-            mimeType,
-        };
-
-        if (requestBody.type === "json") {
-            request.postData.text = JSON.stringify(requestBody.value, null, 2);
-        } else if (requestBody.type === "form") {
-            request.postData.params = [];
-
-            for (const [name, value] of Object.entries(requestBody.value)) {
-                if (value.type === "json") {
-                    request.postData.params.push({
-                        name,
-                        value: JSON.stringify(value.value, null, 2),
-                    });
-                } else if (value.type === "filename") {
-                    request.postData.params.push({
-                        name,
-                        fileName: value.value,
-                    });
-                } else if (value.type === "filenameWithData") {
-                    request.postData.params.push({
-                        name,
-                        fileName: value.filename,
-                    });
-                } else if (value.type === "filenames") {
-                    for (const fileName of value.value) {
-                        request.postData.params.push({
-                            name,
-                            fileName,
-                        });
-                    }
-                } else if (value.type === "filenamesWithData") {
-                    for (const { filename } of value.value) {
-                        request.postData.params.push({
-                            name,
-                            fileName: filename,
-                        });
-                    }
-                }
-            }
-        } else if (requestBody.type === "bytes") {
-            // TODO: verify this is correct
-            request.postData.params = [{ name: "file", value: requestBody.value.value }];
-        }
-    }
-
-    const auth = endpoint.auth?.[0] != null ? auths[endpoint.auth[0]] : undefined;
-
-    if (auth != null) {
-        visitDiscriminatedUnion(auth)._visit({
-            basicAuth: ({ usernameName = "username", passwordName = "password" }) => {
-                request.headers.push({
-                    name: "Authorization",
-                    value: `Basic <${usernameName}>:<${passwordName}>`,
-                });
-            },
-            bearerAuth: ({ tokenName = "token" }) => {
-                request.headers.push({
-                    name: "Authorization",
-                    value: `Bearer <${tokenName}>`,
-                });
-            },
-            header: ({ headerWireValue, nameOverride = headerWireValue, prefix }) => {
-                request.headers.push({
-                    name: headerWireValue,
-                    value: prefix != null ? `${prefix} <${nameOverride}>` : `<${nameOverride}>`,
-                });
-            },
-            oAuth: (oAuth) => {
-                visitDiscriminatedUnion(oAuth.value, "type")._visit({
-                    clientCredentials: (clientCredentials) => {
-                        visitDiscriminatedUnion(clientCredentials.value, "type")._visit({
-                            referencedEndpoint: () => {
-                                request.headers.push({
-                                    name: "Authorization",
-                                    value: "Bearer <token>",
-                                });
-                            },
-                        });
-                    },
-                });
-            },
-        });
-    }
-
-    if (mimeType != null) {
-        request.headers.push({
-            name: "Content-Type",
-            value: mimeType,
-        });
-    }
-
-    return request;
 }

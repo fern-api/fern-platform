@@ -1,4 +1,11 @@
-import { Environment, EnvironmentId, HttpMethod, ObjectProperty, PathPart } from "@fern-api/fdr-sdk/api-definition";
+import {
+    Environment,
+    EnvironmentId,
+    HttpMethod,
+    ObjectProperty,
+    PathPart,
+    buildRequestUrl,
+} from "@fern-api/fdr-sdk/api-definition";
 import { CopyToClipboardButton, FernButton } from "@fern-ui/components";
 import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
@@ -13,7 +20,6 @@ import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState } from "../types";
-import { buildRequestUrl } from "../utils";
 
 interface PlaygroundEndpointPathProps {
     method: HttpMethod | undefined;
@@ -116,12 +122,12 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                 <CopyToClipboardButton
                     className="playground-endpoint-copy-button"
                     content={() =>
-                        buildRequestUrl(
-                            playgroundEnvironment ?? environment?.baseUrl,
+                        buildRequestUrl({
                             path,
-                            formState.pathParameters,
-                            formState.queryParameters,
-                        )
+                            pathParameters: formState.pathParameters,
+                            queryParameters: formState.queryParameters,
+                            baseUrl: playgroundEnvironment ?? environment?.baseUrl,
+                        })
                     }
                 />
             </div>

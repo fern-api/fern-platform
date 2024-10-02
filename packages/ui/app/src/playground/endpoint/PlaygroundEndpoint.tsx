@@ -1,3 +1,4 @@
+import { buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { unknownToString } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
@@ -14,7 +15,6 @@ import {
     useBasePath,
     useFeatureFlags,
     usePlaygroundEndpointFormState,
-    usePlaygroundEnvironment,
 } from "../../atoms";
 import { useApiRoute } from "../../hooks/useApiRoute";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
@@ -28,16 +28,17 @@ import { EndpointContext } from "../types/endpoint-context";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import {
     buildAuthHeaders,
-    buildEndpointUrl,
     getInitialEndpointRequestFormState,
     getInitialEndpointRequestFormStateWithExample,
     serializeFormStateBody,
 } from "../utils";
-import { useSelectedEnvironment } from "../utils/select-environment";
+import { usePlaygroundBaseUrl, useSelectedEnvironment } from "../utils/select-environment";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 
 export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): ReactElement => {
+    const { node, endpoint, auth } = context;
+
     const [formState, setFormState] = usePlaygroundEndpointFormState(context);
 
     const resetWithExample = useEventCallback(() => {
@@ -55,7 +56,8 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
     const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
     const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
     const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
-    const playgroundEnvironment = usePlaygroundEnvironment();
+    const baseUrl = usePlaygroundBaseUrl(endpoint);
+    const selectedEnvironment = useSelectedEnvironment(endpoint);
 
     // TODO: remove potentially
     // const grpcClient = useMemo(() => {
@@ -66,7 +68,6 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
 
     const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
 
-    const { node, endpoint, auth } = context;
     const sendRequest = useCallback(async () => {
         if (endpoint == null) {
             return;
@@ -90,7 +91,7 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
                     formState,
                     endpoint,
                     proxyEnvironment,
-                    playgroundEnvironment,
+                    baseUrl,
                     setValue: setOAuthValue,
                 },
             );
@@ -104,7 +105,12 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
             }
 
             const req: ProxyRequest = {
-                url: buildEndpointUrl(endpoint, formState, playgroundEnvironment),
+                url: buildEndpointUrl({
+                    endpoint,
+                    pathParameters: formState.pathParameters,
+                    queryParameters: formState.queryParameters,
+                    baseUrl,
+                }),
                 method: endpoint.method,
                 headers,
                 body: await serializeFormStateBody(
@@ -177,7 +183,7 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
         auth,
         formState,
         proxyEnvironment,
-        playgroundEnvironment,
+        baseUrl,
         setOAuthValue,
         uploadEnvironment,
         usesApplicationJsonInFormDataValue,
@@ -200,7 +206,7 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
                     formState,
                     endpoint,
                     proxyEnvironment,
-                    playgroundEnvironment,
+                    baseUrl,
                     setValue: setOAuthValue,
                 },
             );
@@ -210,7 +216,12 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
             };
 
             const req: GrpcProxyRequest = {
-                url: buildEndpointUrl(endpoint, formState, playgroundEnvironment),
+                url: buildEndpointUrl({
+                    endpoint,
+                    pathParameters: formState.pathParameters,
+                    queryParameters: formState.queryParameters,
+                    baseUrl,
+                }),
                 endpointId: endpoint.id,
                 headers,
                 body: await serializeFormStateBody(
@@ -233,14 +244,13 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
         auth,
         formState,
         proxyEnvironment,
-        playgroundEnvironment,
+        baseUrl,
         setOAuthValue,
         uploadEnvironment,
         usesApplicationJsonInFormDataValue,
     ]);
 
     const settings = usePlaygroundSettings();
-    const selectedEnvironment = useSelectedEnvironment(endpoint);
 
     return (
         <FernTooltipProvider>
