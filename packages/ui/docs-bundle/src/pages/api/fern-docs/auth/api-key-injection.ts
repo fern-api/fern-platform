@@ -20,7 +20,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
 
     // assume that if the edge config is set for webflow, api key injection is always enabled
     if (edgeConfig?.type === "oauth2" && edgeConfig.partner === "webflow") {
-        const accessToken = req.nextUrl.searchParams.get("access_token");
+        const accessToken = req.cookies.get("access_token")?.value;
         if (accessToken == null) {
             return NextResponse.json({
                 enabled: true,
