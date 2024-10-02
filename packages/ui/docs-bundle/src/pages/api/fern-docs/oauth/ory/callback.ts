@@ -40,7 +40,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const domain = getXFernHostEdge(req);
     const config = await getAuthEdgeConfig(domain);
 
-    if (config == null || config.type !== "oauth2" || config.partner === "ory") {
+    if (config == null || config.type !== "oauth2" || config.partner !== "ory") {
         return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
     }
 
