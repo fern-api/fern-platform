@@ -202,6 +202,7 @@ export class FdrDeployStack extends Stack {
                     ALGOLIA_ADMIN_API_KEY: getEnvironmentVariableOrThrow("ALGOLIA_ADMIN_API_KEY"),
                     ALGOLIA_SEARCH_INDEX: getEnvironmentVariableOrThrow("ALGOLIA_SEARCH_INDEX"),
                     ALGOLIA_SEARCH_API_KEY: getEnvironmentVariableOrThrow("ALGOLIA_SEARCH_API_KEY"),
+                    ALGOLIA_SEARCH_V2_DOMAINS: getEnvironmentVariableOrThrow("ALGOLIA_SEARCH_V2_DOMAINS"),
                     SLACK_TOKEN: getEnvironmentVariableOrThrow("FERNIE_SLACK_APP_TOKEN"),
                     LOG_LEVEL: getLogLevel(environmentType),
                     DOCS_CACHE_ENDPOINT: fernDocsCacheEndpoint,
