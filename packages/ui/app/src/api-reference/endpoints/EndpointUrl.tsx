@@ -96,7 +96,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                                     })}
                                 >
                                     {showEnvironment && (
-                                        <span className="inline-flex whitespace-nowrap max-sm:hidden">
+                                        <span className="whitespace-nowrap max-sm:hidden">
                                             <MaybeEnvironmentDropdown
                                                 selectedEnvironment={selectedEnvironment}
                                                 urlTextStyle="t-muted"
