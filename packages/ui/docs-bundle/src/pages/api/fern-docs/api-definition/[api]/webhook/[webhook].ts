@@ -1,7 +1,7 @@
 import { ApiDefinitionLoader } from "@/server/ApiDefinitionLoader";
+import { checkViewerAllowedNode } from "@/server/auth/checkViewerAllowed";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 import { NextApiHandler, NextApiResponse } from "next";
 import { getFeatureFlags } from "../../../feature-flags";
 

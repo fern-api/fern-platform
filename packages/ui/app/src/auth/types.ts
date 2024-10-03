@@ -34,6 +34,12 @@ export const AuthEdgeConfigBasicTokenVerificationSchema = z.object({
     secret: z.string(),
     issuer: z.string(),
     redirect: z.string(),
+
+    allowlist: z
+        .array(z.string(), {
+            description: "List of pages that are public and do not require authentication",
+        })
+        .optional(),
 });
 
 export const AuthEdgeConfigSchema = z.union([

@@ -1,12 +1,12 @@
 import type { DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
-import { NextSeoProps } from "@fern-ui/next-seo";
-import { CustomerAnalytics } from "../analytics/types";
-import { FernUser } from "../auth";
-import { DocsContent } from "../resolver/DocsContent";
-import { FernTheme } from "../themes/ThemedDocs";
+import type { ColorsConfig, SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
+import type { NextSeoProps } from "@fern-ui/next-seo";
+import type { CustomerAnalytics } from "../analytics/types";
+import type { FernUser } from "../auth";
+import type { DocsContent } from "../resolver/DocsContent";
+import type { FernTheme } from "../themes/ThemedDocs";
 
 export interface FeatureFlags {
     isApiPlaygroundEnabled: boolean;

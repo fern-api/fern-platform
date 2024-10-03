@@ -2,10 +2,13 @@ import { extractBuildId, extractNextDataPathname } from "@/server/extractNextDat
 import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "@/server/pageRoutes";
 import { rewritePosthog } from "@/server/rewritePosthog";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import { FernUser, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
+import type { FernUser } from "@fern-ui/ui/auth";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
+import { verifyFernJWTConfig } from "./server/auth/FernJWT";
+import { getAuthEdgeConfig } from "./server/auth/getAuthEdgeConfig";
+import { withBasicTokenViewAllowed } from "./server/withBasicTokenViewAllowed";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 const CHANGELOG_PATTERN = /\.(rss|atom)$/;
@@ -98,9 +101,11 @@ export const middleware: NextMiddleware = async (request) => {
      * redirect to the custom auth provider
      */
     if (!isLoggedIn && authConfig?.type === "basic_token_verification") {
-        const destination = new URL(authConfig.redirect);
-        destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, pathname));
-        return NextResponse.redirect(destination, { status: 302 });
+        if (!withBasicTokenViewAllowed(authConfig.allowlist, pathname)) {
+            const destination = new URL(authConfig.redirect);
+            destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, pathname));
+            return NextResponse.redirect(destination, { status: 302 });
+        }
     }
 
     /**

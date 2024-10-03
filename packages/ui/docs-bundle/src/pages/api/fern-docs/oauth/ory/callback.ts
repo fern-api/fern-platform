@@ -1,12 +1,9 @@
+import { signFernJWT } from "@/server/auth/FernJWT";
+import { OAuth2Client } from "@/server/auth/OAuth2Client";
+import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
+import { withSecureCookie } from "@/server/auth/withSecure";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import {
-    FernUser,
-    OAuth2Client,
-    OryAccessTokenSchema,
-    getAuthEdgeConfig,
-    signFernJWT,
-    withSecureCookie,
-} from "@fern-ui/ui/auth";
+import { FernUser, OryAccessTokenSchema } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";

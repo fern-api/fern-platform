@@ -14,11 +14,11 @@ import {
     renderThemeStylesheet,
     resolveDocsContent,
 } from "@fern-ui/ui";
-import { getAPIKeyInjectionConfigNode } from "@fern-ui/ui/auth";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
 import urlJoin from "url-join";
+import { getAPIKeyInjectionConfigNode } from "./auth/getApiKeyInjectionConfig";
 import type { AuthProps } from "./authProps";
 import { getSeoDisabled } from "./disabledSeo";
 import { getCustomerAnalytics } from "./getCustomerAnalytics";

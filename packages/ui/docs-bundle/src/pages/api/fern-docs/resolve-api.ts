@@ -1,11 +1,11 @@
 import { DocsKVCache } from "@/server/DocsCache";
+import { checkViewerAllowedNode } from "@/server/auth/checkViewerAllowed";
 import { buildUrlFromApiNode } from "@/server/buildUrlFromApi";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionResolver, provideRegistryService, type ResolvedRootPackage } from "@fern-ui/ui";
-import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { NextApiHandler, NextApiResponse } from "next";
 import { getFeatureFlags } from "./feature-flags";

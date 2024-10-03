@@ -1,4 +1,4 @@
-import { type DocsPage } from "@fern-ui/ui";
+import type { DocsPage } from "@fern-ui/ui";
 import type { FernUser } from "@fern-ui/ui/auth";
 import type { GetServerSidePropsResult } from "next";
 import type { ComponentProps } from "react";

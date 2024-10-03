@@ -1,3 +1,4 @@
+import { checkViewerAllowedNode } from "@/server/auth/checkViewerAllowed";
 import { buildUrlFromApiNode } from "@/server/buildUrlFromApi";
 import { loadWithUrl } from "@/server/loadWithUrl";
 import { getXFernHostNode } from "@/server/xfernhost/node";
@@ -6,7 +7,6 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever } from "@fern-ui/core-utils";
 import { getFrontmatter } from "@fern-ui/ui";
-import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 import * as Sentry from "@sentry/nextjs";
 import { Feed, Item } from "feed";
 import { NextApiRequest, NextApiResponse } from "next";

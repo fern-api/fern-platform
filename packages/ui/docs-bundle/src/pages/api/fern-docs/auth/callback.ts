@@ -1,6 +1,9 @@
+import { signFernJWT } from "@/server/auth/FernJWT";
+import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
+import { withSecureCookie } from "@/server/auth/withSecure";
 import { getWorkOS, getWorkOSClientId } from "@/server/workos";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import { FernUser, getAuthEdgeConfig, signFernJWT, withSecureCookie } from "@fern-ui/ui/auth";
+import { FernUser } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";

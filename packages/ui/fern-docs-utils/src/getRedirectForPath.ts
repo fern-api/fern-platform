@@ -4,22 +4,29 @@ import type { Redirect } from "next/types";
 import { compile, match } from "path-to-regexp";
 import urljoin from "url-join";
 
-function safeMatch(source: string, path: string): ReturnType<ReturnType<typeof match>> {
-    if (source === path) {
+/**
+ * Match a path against a pattern, wrapped in a try-catch block to prevent crashes
+ *
+ * @param pattern path should follow path-to-regexp@6 syntax
+ * @param path the current path to match against
+ * @returns false if the path does not match the pattern, otherwise an object with the params and the path
+ */
+export function matchPath(pattern: string, path: string): ReturnType<ReturnType<typeof match>> {
+    if (pattern === path) {
         return { params: {}, path, index: 0 };
     }
     try {
-        return match(source)(path);
+        return match(pattern)(path);
     } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e, { source, path });
+        console.error(e, { pattern, path });
         return false;
     }
 }
 
 function safeCompile(
     destination: string,
-    match: Exclude<ReturnType<typeof safeMatch>, false>,
+    match: Exclude<ReturnType<typeof matchPath>, false>,
 ): ReturnType<ReturnType<typeof compile>> {
     try {
         return compile(destination)(match.params);
@@ -37,7 +44,7 @@ export function getRedirectForPath(
 ): { redirect: Redirect } | undefined {
     for (const redirect of redirects) {
         const source = removeTrailingSlash(withBasepath(redirect.source, baseUrl.basePath));
-        const result = safeMatch(source, pathWithoutBasepath);
+        const result = matchPath(source, pathWithoutBasepath);
         if (result) {
             const destination = safeCompile(redirect.destination, result);
 
