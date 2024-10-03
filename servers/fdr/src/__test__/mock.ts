@@ -139,6 +139,7 @@ export const baseMockFdrConfig: FdrConfig = {
     algoliaAdminApiKey: "",
     algoliaSearchIndex: "",
     algoliaSearchApiKey: "",
+    algoliaSearchV2Domains: [],
     slackToken: "",
     logLevel: "debug",
     docsCacheEndpoint: process.env["DOCS_CACHE_ENDPOINT"] || "",
