@@ -280,6 +280,7 @@ async function uploadToAlgolia(
 
     app.logger.debug(`[${url.getFullUrl()}] Generating search records for all versions`);
     const searchRecords = await app.services.algolia.generateSearchRecords({
+        url: url.getFullUrl(),
         docsDefinition: dbDocsDefinition,
         apiDefinitionsById,
         configSegmentTuples,
