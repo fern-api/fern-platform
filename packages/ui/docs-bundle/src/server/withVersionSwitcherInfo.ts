@@ -1,4 +1,5 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { isNonNullish } from "@fern-ui/core-utils";
 import { VersionSwitcherInfo } from "@fern-ui/fdr-utils";
 
 interface WithVersionSwitcherInfoArgs {
@@ -18,10 +19,10 @@ interface WithVersionSwitcherInfoArgs {
     versions: readonly FernNavigation.VersionNode[];
 
     /**
-     * @param slug which is constructed via joining the version slug and the unversioned slug.
-     * @returns whether or not the slug exists in the navigation tree.
+     * A map of slugs to nodes for ALL nodes in the tree.
+     * This is used to check if a node exists in a different version.s
      */
-    slugExists: (slug: FernNavigation.Slug) => boolean;
+    slugMap: Map<string, FernNavigation.NavigationNodeWithMetadata>;
 }
 
 /**
@@ -40,7 +41,7 @@ export function withVersionSwitcherInfo({
     node,
     parents,
     versions,
-    slugExists,
+    slugMap,
 }: WithVersionSwitcherInfoArgs): VersionSwitcherInfo[] {
     const { version: currentVersion, nodes } = getNodesUnderCurrentVersionAscending(node, parents);
 
@@ -68,9 +69,34 @@ export function withVersionSwitcherInfo({
                 };
             }
 
-            // if the same page exists in multiple versions, return the full slug of that page, otherwise default to version's landing page (pointsTo)
             const expectedSlugs = unversionedSlugs.map((slug) => FernNavigation.slugjoin(version.slug, slug));
-            const pointsTo = expectedSlugs.find(slugExists) ?? version.pointsTo;
+
+            const expectedSlug = expectedSlugs
+                .map((slug) => {
+                    const node = slugMap.get(slug);
+
+                    // if the node doesn't exist in this version, return undefined
+                    if (node == null) {
+                        return undefined;
+                    }
+
+                    // if the node is a visitable page, return the slug
+                    else if (FernNavigation.isPage(node)) {
+                        return node.slug;
+                    }
+
+                    // if the node is a redirect, return the slug it points to (which can be undefined)
+                    else if (FernNavigation.hasRedirect(node)) {
+                        return node.pointsTo;
+                    }
+
+                    return undefined;
+                })
+                // select the first non-nullish slug
+                .filter(isNonNullish)[0];
+
+            // if the same page exists in this version, return the full slug of that page, otherwise default to version's landing page (pointsTo)
+            const pointsTo = expectedSlug ?? version.pointsTo;
 
             return {
                 title: version.title,
@@ -84,6 +110,10 @@ export function withVersionSwitcherInfo({
 }
 
 /**
+ * This function returns the current node + all parents under the current version, in ascending order
+ *
+ * ascending order = from the current node to its ancestors
+ *
  * @internal
  */
 export function getNodesUnderCurrentVersionAscending(

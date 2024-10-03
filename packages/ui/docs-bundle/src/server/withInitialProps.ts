@@ -140,7 +140,7 @@ export async function withInitialProps({
         node: node.node,
         parents: node.parents,
         versions: node.versions,
-        slugExists: (slug) => node.collector.slugMap.has(slug),
+        slugMap: node.collector.slugMap,
     });
 
     const logoHref =
