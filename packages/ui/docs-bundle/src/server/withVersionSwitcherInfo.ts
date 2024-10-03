@@ -9,7 +9,7 @@ interface WithVersionSwitcherInfoArgs {
     node: FernNavigation.NavigationNodeWithMetadata;
 
     /**
-     * The parents of the current node.
+     * The parents of the current node, in descending order.
      */
     parents: readonly FernNavigation.NavigationNode[];
 
@@ -114,25 +114,41 @@ export function withVersionSwitcherInfo({
  *
  * ascending order = from the current node to its ancestors
  *
- * @internal
+ * @internal visibleForTesting
  */
-export function getNodesUnderCurrentVersionAscending(
-    node: FernNavigation.NavigationNode,
-    parents: readonly FernNavigation.NavigationNode[],
+export function getNodesUnderCurrentVersionAscending<
+    NODE extends { type: FernNavigation.NavigationNode["type"] } = FernNavigation.NavigationNode,
+    VERSION_NODE extends { type: FernNavigation.VersionNode["type"] } = FernNavigation.VersionNode,
+>(
+    node: NODE,
+
+    /**
+     * The parents of the current node should be in descending order.
+     */
+    parents: readonly NODE[],
 ): {
-    version: FernNavigation.VersionNode | undefined;
-    nodes: FernNavigation.NavigationNode[];
+    version: VERSION_NODE | undefined;
+    nodes: NODE[];
 } {
-    const currentVersionIndex = parents.findIndex(FernNavigation.isVersionNode);
+    const currentVersionIndex = parents.findIndex((node) => node.type === "version");
 
     // if the current node is not under a version, return an empty array
     if (currentVersionIndex < 0) {
         return { version: undefined, nodes: [] };
     }
 
-    const version = parents[currentVersionIndex] as FernNavigation.VersionNode;
+    const version = parents[currentVersionIndex];
+    if (version == null || version.type !== "version") {
+        return { version: undefined, nodes: [] };
+    }
 
     parents = parents.slice(currentVersionIndex + 1);
 
-    return { version, nodes: [...parents, node].reverse() };
+    return {
+        // this is safe because of the checks above
+        version: version as unknown as VERSION_NODE,
+
+        // reverse the array to get the nodes in ascending order
+        nodes: [...parents, node].reverse(),
+    };
 }
