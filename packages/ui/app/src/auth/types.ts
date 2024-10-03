@@ -17,6 +17,7 @@ export const AuthEdgeConfigOAuth2OrySchema = z.object({
     scope: z.optional(z.string()),
     clientId: z.string(),
     clientSecret: z.string(),
+    redirectUri: z.string().optional(),
     "api-key-injection-enabled": z.optional(z.boolean()),
 });
 export const AuthEdgeConfigOAuth2WebflowSchema = z.object({
@@ -25,6 +26,7 @@ export const AuthEdgeConfigOAuth2WebflowSchema = z.object({
     scope: z.optional(z.union([z.string(), z.array(z.string())])),
     clientId: z.string(),
     clientSecret: z.string(),
+    redirectUri: z.string().optional(),
 });
 
 export const AuthEdgeConfigBasicTokenVerificationSchema = z.object({
