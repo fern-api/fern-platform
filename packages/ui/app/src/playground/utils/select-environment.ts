@@ -22,5 +22,5 @@ export function useSelectedEnvironment(endpoint: WebSocketChannel | EndpointDefi
 export function usePlaygroundBaseUrl(endpoint: WebSocketChannel | EndpointDefinition): string | undefined {
     const environment = useSelectedEnvironment(endpoint);
     const playgroundBaseUrl = usePlaygroundEnvironment();
-    return environment?.baseUrl ?? playgroundBaseUrl;
+    return playgroundBaseUrl ?? environment?.baseUrl;
 }
