@@ -1,5 +1,6 @@
 import { DocsKVCache } from "@/server/DocsCache";
 import { checkViewerAllowedNode } from "@/server/auth/checkViewerAllowed";
+import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { buildUrlFromApiNode } from "@/server/buildUrlFromApi";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import { FdrAPI } from "@fern-api/fdr-sdk";
@@ -26,8 +27,9 @@ const resolveApiHandler: NextApiHandler = async (
         }
 
         const xFernHost = getXFernHostNode(req);
+        const auth = await getAuthEdgeConfig(xFernHost);
 
-        const status = await checkViewerAllowedNode(xFernHost, req);
+        const status = await checkViewerAllowedNode(auth, req);
         if (status >= 400) {
             res.status(status).json(null);
             return;

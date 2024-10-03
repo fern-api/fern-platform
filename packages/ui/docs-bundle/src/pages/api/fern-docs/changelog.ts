@@ -1,4 +1,5 @@
 import { checkViewerAllowedNode } from "@/server/auth/checkViewerAllowed";
+import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { buildUrlFromApiNode } from "@/server/buildUrlFromApi";
 import { loadWithUrl } from "@/server/loadWithUrl";
 import { getXFernHostNode } from "@/server/xfernhost/node";
@@ -26,8 +27,9 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
     }
 
     const xFernHost = getXFernHostNode(req);
+    const auth = await getAuthEdgeConfig(xFernHost);
 
-    const status = await checkViewerAllowedNode(xFernHost, req);
+    const status = await checkViewerAllowedNode(auth, req);
     if (status >= 400) {
         return res.status(status).end();
     }

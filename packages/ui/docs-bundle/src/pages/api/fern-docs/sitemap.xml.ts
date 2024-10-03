@@ -1,10 +1,13 @@
 import { checkViewerAllowedEdge } from "@/server/auth/checkViewerAllowed";
+import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { buildUrlFromApiEdge } from "@/server/buildUrlFromApi";
 import { loadWithUrl } from "@/server/loadWithUrl";
 import { conformTrailingSlash } from "@/server/trailingSlash";
+import { withBasicTokenViewAllowed } from "@/server/withBasicTokenViewAllowed";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
+import { withDefaultProtocol } from "@fern-ui/core-utils";
 import { NextRequest, NextResponse } from "next/server";
 import urljoin from "url-join";
 
@@ -16,14 +19,12 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         return new NextResponse(null, { status: 405 });
     }
     const xFernHost = getXFernHostEdge(req);
+    const auth = await getAuthEdgeConfig(xFernHost);
 
-    const status = await checkViewerAllowedEdge(xFernHost, req);
+    const status = await checkViewerAllowedEdge(auth, req);
     if (status >= 400) {
         return NextResponse.next({ status });
     }
-
-    const headers = new Headers();
-    headers.set("x-fern-host", xFernHost);
 
     const url = buildUrlFromApiEdge(xFernHost, req);
     const docs = await loadWithUrl(url);
@@ -34,10 +35,17 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
     const node = FernNavigation.utils.toRootNode(docs.body);
     const collector = NodeCollector.collect(node);
-    const urls = collector.indexablePageSlugs.map((slug) => urljoin(xFernHost, slug));
+    let slugs = collector.indexablePageSlugs;
 
-    const sitemap = getSitemapXml(urls.map((url) => conformTrailingSlash(`https://${url}`)));
+    // If the domain is basic_token_verification, we only want to include slugs that are allowed
+    if (auth?.type === "basic_token_verification") {
+        slugs = slugs.filter((slug) => withBasicTokenViewAllowed(auth.allowlist, `/${slug}`));
+    }
 
+    const urls = slugs.map((slug) => conformTrailingSlash(urljoin(withDefaultProtocol(xFernHost), slug)));
+    const sitemap = getSitemapXml(urls);
+
+    const headers = new Headers();
     headers.set("Content-Type", "text/xml");
 
     return new NextResponse(sitemap, { headers });

@@ -1,5 +1,6 @@
 import { ApiDefinitionLoader } from "@/server/ApiDefinitionLoader";
 import { checkViewerAllowedNode } from "@/server/auth/checkViewerAllowed";
+import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { NextApiHandler, NextApiResponse } from "next";
@@ -13,7 +14,8 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ApiDe
         return;
     }
 
-    const status = await checkViewerAllowedNode(xFernHost, req);
+    const auth = await getAuthEdgeConfig(xFernHost);
+    const status = await checkViewerAllowedNode(auth, req);
     if (status >= 400) {
         res.status(status).end();
         return;

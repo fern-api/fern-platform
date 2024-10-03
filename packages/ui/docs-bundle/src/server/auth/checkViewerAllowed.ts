@@ -1,12 +1,11 @@
+import { AuthEdgeConfig } from "@fern-ui/ui/auth";
 import { captureException } from "@sentry/nextjs";
 import type { NextApiRequest } from "next";
 import type { NextRequest } from "next/server";
 import { withBasicTokenViewAllowed } from "../withBasicTokenViewAllowed";
 import { verifyFernJWT } from "./FernJWT";
-import { getAuthEdgeConfig } from "./getAuthEdgeConfig";
 
-export async function checkViewerAllowedEdge(domain: string, req: NextRequest): Promise<number> {
-    const auth = await getAuthEdgeConfig(domain);
+export async function checkViewerAllowedEdge(auth: AuthEdgeConfig | undefined, req: NextRequest): Promise<number> {
     const fern_token = req.cookies.get("fern_token")?.value;
 
     if (auth?.type === "basic_token_verification") {
@@ -17,7 +16,7 @@ export async function checkViewerAllowedEdge(domain: string, req: NextRequest): 
         if (fern_token == null) {
             return 401;
         } else {
-            const verified = verifyFernJWT(fern_token, auth.secret, auth.issuer);
+            const verified = await verifyFernJWT(fern_token, auth.secret, auth.issuer);
             if (!verified) {
                 return 403;
             }
@@ -26,8 +25,7 @@ export async function checkViewerAllowedEdge(domain: string, req: NextRequest): 
     return 200;
 }
 
-export async function checkViewerAllowedNode(domain: string, req: NextApiRequest): Promise<number> {
-    const auth = await getAuthEdgeConfig(domain);
+export async function checkViewerAllowedNode(auth: AuthEdgeConfig | undefined, req: NextApiRequest): Promise<number> {
     const fern_token = req.cookies.fern_token;
 
     if (auth?.type === "basic_token_verification") {
@@ -43,7 +41,7 @@ export async function checkViewerAllowedNode(domain: string, req: NextApiRequest
         if (fern_token == null) {
             return 401;
         } else {
-            const verified = verifyFernJWT(fern_token, auth.secret, auth.issuer);
+            const verified = await verifyFernJWT(fern_token, auth.secret, auth.issuer);
             if (!verified) {
                 return 403;
             }
