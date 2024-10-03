@@ -6,7 +6,7 @@ export interface ColorsConfig {
     dark: DocsV1Read.ThemeConfig | undefined;
 }
 
-export interface SidebarVersionInfo {
+export interface VersionSwitcherInfo {
     id: FernNavigation.VersionId;
     title: string;
     slug: FernNavigation.Slug;
