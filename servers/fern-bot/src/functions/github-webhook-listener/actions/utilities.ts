@@ -1,6 +1,26 @@
 import { App } from "octokit";
 import { EmitterWebhookEvent } from "@octokit/webhooks";
 
+export interface RunId {
+    // TODO: This should become some union of strings/enums of possible actions we can switch on in the check_run function
+    action: "sdk_preview";
+    githubRepositoryFullName: string | undefined;
+
+    // Also the docker image for the generator
+    generatorDockerImage: string;
+    groupName: string;
+    apiName: string | undefined;
+}
+
+export function stringifyRunId(runId: RunId): string {
+    return JSON.stringify(runId);
+}
+
+export function deserializeRunId(stringifiedRunId: string): RunId {
+    // TODO: we should throw here if it cannot deserialize correctly
+    return JSON.parse(stringifiedRunId) as RunId;
+}
+
 // Octokit isn't exporting these types
 export type CheckStatus = "queued" | "in_progress" | "completed";
 
