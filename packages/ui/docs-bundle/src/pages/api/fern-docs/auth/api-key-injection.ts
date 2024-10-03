@@ -8,7 +8,6 @@ import {
     withSecureCookie,
 } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
-import urlJoin from "url-join";
 import { WebflowClient } from "webflow-api";
 import type { OauthScope } from "webflow-api/api/types/OAuthScope";
 
@@ -27,12 +26,10 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
                 authenticated: false,
                 url: WebflowClient.authorizeURL({
                     clientId: edgeConfig.clientId,
-
-                    // TODO: subpaths will not work
-                    // redirectUri: `https://${domain}/api/fern-docs/oauth/webflow/callback`,
+                    redirectUri: edgeConfig.redirectUri,
 
                     // note: this is not validated
-                    scope: (edgeConfig.scope as OauthScope | OauthScope[]) ?? "authorized_user:read",
+                    scope: (edgeConfig.scope as OauthScope | OauthScope[]) ?? [],
                 }),
             });
         }
@@ -59,7 +56,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
         let exp = expires;
 
         if (edgeConfig != null && edgeConfig.type === "oauth2" && edgeConfig.partner === "ory") {
-            const oauthClient = new OAuth2Client(edgeConfig, urlJoin(`https://${domain}/api/auth/callback`));
+            const oauthClient = new OAuth2Client(edgeConfig);
 
             const token = OryAccessTokenSchema.parse(await oauthClient.decode(access_token));
             exp = token.exp == null ? undefined : new Date(token.exp * 1000);

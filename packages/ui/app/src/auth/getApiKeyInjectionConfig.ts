@@ -34,7 +34,7 @@ export async function getAPIKeyInjectionConfig(
 ): Promise<APIKeyInjectionConfig> {
     const config = await getAuthEdgeConfig(domain);
     if (config?.type === "oauth2" && config.partner === "ory" && config["api-key-injection-enabled"]) {
-        const client = new OAuth2Client(config, `https://${domain}/api/auth/callback`);
+        const client = new OAuth2Client(config);
         const tokens = cookies != null ? await client.getOrRefreshAccessTokenEdge(cookies) : undefined;
 
         if (tokens != null) {
@@ -71,7 +71,7 @@ export async function getAPIKeyInjectionConfigNode(
 ): Promise<APIKeyInjectionConfig> {
     const config = await getAuthEdgeConfig(domain);
     if (config?.type === "oauth2" && config.partner === "ory" && config["api-key-injection-enabled"]) {
-        const client = new OAuth2Client(config, `https://${domain}/api/auth/callback`);
+        const client = new OAuth2Client(config);
         const tokens = cookies != null ? await client.getOrRefreshAccessTokenNode(cookies) : undefined;
 
         if (tokens != null) {

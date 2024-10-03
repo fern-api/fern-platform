@@ -41,6 +41,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         const accessToken = await WebflowClient.getAccessToken({
             clientId: config.clientId,
             clientSecret: config.clientSecret,
+            redirectUri: config.redirectUri,
             code,
         });
 

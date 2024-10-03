@@ -8,7 +8,6 @@ import {
     withSecureCookie,
 } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
-import urlJoin from "url-join";
 
 export const runtime = "edge";
 
@@ -44,7 +43,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
     }
 
-    const oauthClient = new OAuth2Client(config, urlJoin(`https://${domain}`, req.nextUrl.pathname));
+    const oauthClient = new OAuth2Client(config);
     try {
         const { access_token, refresh_token } = await oauthClient.getToken(code);
         const token = OryAccessTokenSchema.parse(await oauthClient.decode(access_token));

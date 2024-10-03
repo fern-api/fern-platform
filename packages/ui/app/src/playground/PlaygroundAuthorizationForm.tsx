@@ -396,7 +396,7 @@ export function PlaygroundAuthorizationFormCard({
             }
             url.searchParams.set("state", state.toString());
 
-            if (apiKeyInjection.partner === "ory") {
+            if (apiKeyInjection.partner === "ory" || apiKeyInjection.partner === "webflow") {
                 const redirect_uri = urlJoin(window.location.origin, callbackApiRoute);
                 url.searchParams.set("redirect_uri", redirect_uri);
             }
