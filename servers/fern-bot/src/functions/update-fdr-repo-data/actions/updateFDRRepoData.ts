@@ -1,14 +1,13 @@
 import { FernRegistryClient } from "@fern-fern/generators-sdk";
+import { PullRequestReviewer, PullRequestState } from "@fern-fern/generators-sdk/api";
 import { Env } from "@libs/env";
-import { setupGithubApp } from "@libs/github";
-import { App, Octokit } from "octokit";
-import { readFile } from "fs/promises";
-import { Repository, PullRequest } from "@libs/github";
-import tmp from "tmp-promise";
 import { cleanFernStdout, execFernCli, getGenerators, NO_API_FALLBACK_KEY } from "@libs/fern";
+import { PullRequest, Repository, setupGithubApp } from "@libs/github";
 import { cloneRepo, configureGit } from "@libs/github/utilities";
 import { RepoData } from "@libs/schemas";
-import { PullRequestReviewer, PullRequestState } from "@fern-fern/generators-sdk/api";
+import { readFile } from "fs/promises";
+import { App, Octokit } from "octokit";
+import tmp from "tmp-promise";
 
 // Note given we're making requests to FDR, this could take time, so we're parallelizing this function with a Map step in
 // the step function, as we do for all the other actions.

@@ -67,3 +67,19 @@ export async function getGenerators(fullRepoPath: string): Promise<GeneratorList
 
     return yaml.load(data) as GeneratorList;
 }
+
+export function getQualifiedGeneratorName({
+    generatorName,
+    groupName,
+    apiName,
+}: {
+    generatorName: string;
+    groupName: string;
+    apiName: string | undefined;
+}): string {
+    let additionalName = groupName;
+    if (apiName != null && apiName !== NO_API_FALLBACK_KEY) {
+        additionalName = `${apiName}/${groupName}`;
+    }
+    return `${generatorName.replace("fernapi/", "")}@${additionalName}`;
+}
