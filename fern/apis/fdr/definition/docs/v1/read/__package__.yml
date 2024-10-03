@@ -7,6 +7,7 @@ imports:
   apiCommonsV1: ../../../api/v1/commons.yml
   commons: ../commons/commons.yml
   navigation: ../../../navigation/v1/__package__.yml
+  navigationCommons: ../../../navigation/commons.yml
 
 service:
   base-path: /registry/docs
@@ -238,7 +239,7 @@ types:
   NavigationNodeMetadata:
     properties:
       icon: optional<string>
-      hidden: optional<boolean>
+      hidden: optional<navigationCommons.HiddenConfig>
       urlSlug: string
       fullSlug: optional<list<string>>
 

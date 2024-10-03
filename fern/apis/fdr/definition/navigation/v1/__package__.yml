@@ -2,6 +2,7 @@
 
 imports:
   commons: ../../commons.yml
+  navigationCommons: ../commons.yml
 
 types:
   Slug:
@@ -320,7 +321,7 @@ types:
       title: string
       slug: Slug
       icon: optional<string>
-      hidden: optional<boolean>
+      hidden: optional<navigationCommons.HiddenConfig>
 
   WithPage:
     properties:

@@ -1,0 +1,7 @@
+types: 
+  HiddenConfig: 
+    discriminated: false
+    union: 
+      - boolean
+      - literal<"true-but-indexed">
+      

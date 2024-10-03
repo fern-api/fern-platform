@@ -6,6 +6,7 @@ imports:
   apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
   docsReadV1: ../read/__package__.yml
   commons: ../commons/commons.yml
+  navigationCommons: ../../../navigation/commons.yml
 
 types:
   DocsDefinitionDb:
@@ -193,7 +194,7 @@ types:
       artifacts: optional<docsReadV1.ApiArtifacts>
       showErrors: optional<boolean>
       changelog: optional<docsReadV1.ChangelogSection>
-      hidden: optional<boolean>
+      hidden: optional<navigationCommons.HiddenConfig>
       fullSlug: optional<list<string>>
       navigation: optional<docsReadV1.ApiNavigationConfigRoot>
       longScrolling: optional<boolean>
@@ -207,6 +208,6 @@ types:
       urlSlug: string
       skipUrlSlug: boolean
       collapsed: boolean
-      hidden: optional<boolean>
+      hidden: optional<navigationCommons.HiddenConfig>
       fullSlug: optional<list<string>>
       overviewPageId: optional<rootCommons.PageId>

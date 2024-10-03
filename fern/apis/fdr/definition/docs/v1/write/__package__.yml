@@ -5,6 +5,7 @@ imports:
   commons: ../commons/commons.yml
   navigation: ../../../navigation/v1/__package__.yml
   apiCommonsV1: ../../../api/v1/commons.yml
+  navigationCommons: ../../../navigation/commons.yml
 
 service:
   base-path: /registry/docs
@@ -240,7 +241,7 @@ types:
   NavigationNodeMetadata:
     properties:
       icon: optional<string>
-      hidden: optional<boolean>
+      hidden: optional<navigationCommons.HiddenConfig>
       urlSlugOverride:
         type: optional<string>
         docs: |
@@ -311,7 +312,7 @@ types:
       icon:
         type: optional<string>
         docs: Defaults to ActivityLog icon
-      hidden: optional<boolean>
+      hidden: optional<navigationCommons.HiddenConfig>
       description: optional<string>
       pageId:
         type: optional<rootCommons.PageId>
@@ -337,7 +338,7 @@ types:
     properties:
       date: date
       pageId: rootCommons.PageId
-      hidden: optional<boolean>
+      hidden: optional<navigationCommons.HiddenConfig>
 
   DocsSection:
     extends: NavigationNodeMetadata
