@@ -1,7 +1,7 @@
 import execa from "execa";
 import tmp from "tmp-promise";
 import { doesPathExist } from "./fs";
-
+import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
@@ -82,4 +82,27 @@ export function getQualifiedGeneratorName({
         additionalName = `${apiName}/${groupName}`;
     }
     return `${generatorName.replace("fernapi/", "")}@${additionalName}`;
+}
+
+export async function getOrganzation(fullRepoPath: string): Promise<string | undefined> {
+    try {
+        return cleanFernStdout((await execFernCli("organization", fullRepoPath)).stdout);
+    } catch (error) {
+        console.error(
+            "Could not determine the repo owner, continuing to upgrade CLI, but will fail generator upgrades.",
+        );
+        return;
+    }
+}
+
+export async function isOrganizationCanary(orgId: string, venusUrl: string): Promise<boolean> {
+    const client = new FernVenusApiClient({ environment: venusUrl });
+
+    const response = await client.organization.get(FernVenusApi.OrganizationId(orgId));
+    console.log(`Organization response: ${JSON.stringify(response)}, orgId: ${orgId}.`);
+    if (!response.ok) {
+        throw new Error(`Organization ${orgId} not found`);
+    }
+
+    return response.body.isFernbotCanary;
 }

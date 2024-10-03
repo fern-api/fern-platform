@@ -1,5 +1,5 @@
 import { EmitterWebhookEvent } from "@octokit/webhooks";
-import { execFernCli, getGenerators, NO_API_FALLBACK_KEY } from "@libs/fern";
+import { execFernCli, getGenerators, getOrganzation, isOrganizationCanary, NO_API_FALLBACK_KEY } from "@libs/fern";
 import { App } from "octokit";
 import tmp from "tmp-promise";
 import { stringifyRunId } from "./utilities";
@@ -11,11 +11,13 @@ export async function initiatePreviewRuns({
     app,
     fernBotLoginName,
     fernBotLoginId,
+    venusUrl,
 }: {
     context: EmitterWebhookEvent<"check_suite">;
     app: App;
     fernBotLoginName: string;
     fernBotLoginId: string;
+    venusUrl: string;
 }): Promise<void> {
     if (context.payload.installation == null) {
         // If there's no installation ID, do not kick off any checks
@@ -27,6 +29,20 @@ export async function initiatePreviewRuns({
     const repository = context.payload.repository;
     const [git, fullRepoPath] = await configureGit(repository);
     await cloneRepo(git, repository, octokit, fernBotLoginName, fernBotLoginId);
+
+    // Don't kick anything off unless it's a fern bot canary
+    try {
+        const maybeOrganization = await getOrganzation(fullRepoPath);
+        if (maybeOrganization == null) {
+            throw new Error("No organization was found, quitting before generator upgrades.");
+        } else if (!(await isOrganizationCanary(maybeOrganization, venusUrl))) {
+            console.log("Organization is not a fern-bot canary, skipping upgrade.");
+            return;
+        }
+    } catch (error) {
+        console.error("Could not determine if the repo owner was a fern-bot canary, quitting.");
+        throw error;
+    }
 
     const generatorsList = await getGenerators(fullRepoPath);
     for (const [apiName, api] of Object.entries(generatorsList)) {

@@ -11,7 +11,7 @@ FROM public.ecr.aws/lambda/nodejs:18
 RUN yum update
 
 # Install all the cross-lang deps
-# Python (the lambda actually has Python installed already)
+# Python
 RUN yum install -y amazon-linux-extras update-alternatives
 RUN amazon-linux-extras install python3.8
 RUN yum -y install python3-pip
@@ -20,14 +20,12 @@ RUN set -ex; pip install --no-cache-dir poetry;
 
 # TypeScript (as this is a Node base image, npm and Node are already present!)
 RUN npm install --global yarn
-RUN npm install --global pnpm
 
 # Go
 RUN yum -y install golang
 RUN go version
 
-# Java (8, woof)
-# Install OpenJDK-8
+# Java
 RUN yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel;
 RUN ls /usr/lib/jvm
 ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk/

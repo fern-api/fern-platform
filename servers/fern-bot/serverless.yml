@@ -152,6 +152,7 @@ functions:
     timeout: 30
     memorySize: 5120
     ephemeralStorageSize: 10240
+    url: true
     image:
       name: generator_languages_image
       command:
