@@ -43,20 +43,57 @@ function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1
     });
 }
 
-export function getSeoProps(
-    domain: string,
-    { metadata, title, favicon, typographyV2: typography }: DocsV1Read.DocsConfig,
-    pages: Record<string, DocsV1Read.PageContent>,
-    files: Record<string, DocsV1Read.File_>,
-    apis: Record<string, APIV1Read.ApiDefinition>,
-    {
-        node,
-        parents,
-        currentVersion,
-    }: Pick<FernNavigation.utils.Node.Found, "node" | "parents" | "currentVersion" | "root">,
-    isSeoDisabled: boolean,
-    isTrailingSlashEnabled: boolean,
-): NextSeoProps {
+interface GetSeoPropsOptions {
+    /**
+     * This comes from headers["x-fern-host"] ?? headers.host
+     */
+    domain: string;
+
+    /**
+     * If set, it will add `- ${siteName}` to the end of the title template.
+     */
+    siteName: string | undefined;
+
+    /**
+     * SEO metadata options
+     */
+    metadata: DocsV1Read.MetadataConfig | undefined;
+
+    favicon: DocsV1Read.FileId | undefined;
+    typography: DocsV1Read.DocsTypographyConfigV2 | undefined;
+    pages: Record<DocsV1Read.PageId, DocsV1Read.PageContent>;
+    files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
+    apis: Record<DocsV1Read.ApiDefinitionId, APIV1Read.ApiDefinition>;
+
+    /**
+     * Typically true if *.docs.buildwithfern.com or *.docs.dev.buildwithfern.com
+     */
+    isSeoDisabled: boolean;
+    isTrailingSlashEnabled: boolean;
+
+    /**
+     * Node and parent information
+     */
+    node: FernNavigation.NavigationNodePage;
+    parents: FernNavigation.NavigationNode[];
+    version: FernNavigation.VersionNode | undefined;
+}
+
+export function getSeoProps({
+    domain,
+    siteName,
+    metadata,
+    favicon,
+    typography,
+    pages,
+    files,
+    apis,
+    isSeoDisabled,
+    isTrailingSlashEnabled,
+    node,
+    parents,
+    version,
+}: GetSeoPropsOptions): NextSeoProps {
     const additionalMetaTags: MetaTag[] = [];
     const additionalLinkTags: LinkTag[] = [];
     const openGraph: NextSeoProps["openGraph"] = {};
@@ -212,7 +249,7 @@ export function getSeoProps(
 
     // defaults
     seo.title ??= node.title;
-    openGraph.siteName ??= title;
+    openGraph.siteName ??= siteName;
 
     /**
      * Disambiguate the title via the version title, if it exists and is not the default version.
@@ -221,15 +258,15 @@ export function getSeoProps(
      * v1:       Get Plants (v1) - Plant Store
      * v2:       Get Plants (v2) - Plant Store
      */
-    if (title != null && currentVersion != null && !currentVersion.default) {
-        seo.titleTemplate ??= `%s (${currentVersion.title}) — ${title}`;
+    if (siteName != null && version != null && !version.default) {
+        seo.titleTemplate ??= `%s (${version.title}) — ${siteName}`;
     }
 
     /**
      * Fallback title template: "Page Title — Site Title"
      */
-    if (title != null) {
-        seo.titleTemplate ??= `%s — ${title}`;
+    if (siteName != null) {
+        seo.titleTemplate ??= `%s — ${siteName}`;
     }
 
     if (favicon != null && files[favicon] != null) {
@@ -265,8 +302,9 @@ export function getSeoProps(
     seo.noindex = ogMetadata.noindex;
     seo.nofollow = ogMetadata.nofollow;
 
-    // do not index the page if it is hidden, or has noindex set, or if SEO is disabled
-    if ((FernNavigation.hasMarkdown(node) && node.noindex) || node.hidden || isSeoDisabled) {
+    // do not index the page if noindex set, or if SEO is disabled
+    // note: we allow indexing hidden pages unless explicitly set to noindex
+    if ((FernNavigation.hasMarkdown(node) && node.noindex) || isSeoDisabled) {
         seo.noindex = true;
     }
 

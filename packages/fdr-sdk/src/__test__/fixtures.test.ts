@@ -101,7 +101,6 @@ function testNavigationConfigConverter(fixtureName: string): void {
                     console.log(node);
                 }
                 expect(FernNavigation.isPage(node), `${slug} is a page`).toBe(true);
-                expect(node.hidden, `${slug} is not hidden`).not.toBe(true);
 
                 if (FernNavigation.hasMarkdown(node)) {
                     expect(node.noindex, `${slug} is indexable`).not.toBe(true);

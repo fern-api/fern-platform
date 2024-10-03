@@ -1,36 +1,95 @@
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { DefinitionObjectFactory } from "@fern-ui/fdr-utils";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { extractHeadline, getSeoProps, stripMarkdown } from "../getSeoProp";
 
 describe("getSeoProps", () => {
     it("seo disabled", () => {
-        const props = getSeoProps(
-            "host",
-            DefinitionObjectFactory.createDocsDefinition().config,
-            {},
-            {},
-            {},
-            {
-                node: {
-                    id: FernNavigation.NodeId("id"),
-                    type: "page",
-                    pageId: FernNavigation.PageId("pageId"),
-                    title: "page",
-                    slug: FernNavigation.Slug("slug"),
-                    canonicalSlug: undefined,
-                    icon: undefined,
-                    hidden: false,
-                    noindex: undefined,
-                },
-                parents: [],
-                currentVersion: undefined,
-                root: { slug: FernNavigation.Slug("") } as FernNavigation.RootNode,
+        const props = getSeoProps({
+            domain: "https://plantstore.dev",
+            siteName: "Plant Store",
+            metadata: undefined,
+            favicon: undefined,
+            typography: undefined,
+            pages: {},
+            files: {},
+            apis: {},
+            isSeoDisabled: true,
+            isTrailingSlashEnabled: false,
+            node: {
+                id: FernNavigation.NodeId("id"),
+                type: "page",
+                pageId: FernNavigation.PageId("pageId"),
+                title: "page",
+                slug: FernNavigation.Slug("slug"),
+                canonicalSlug: undefined,
+                icon: undefined,
+                hidden: false,
+                noindex: undefined,
             },
-            true,
-            false,
-        );
+            parents: [],
+            version: undefined,
+        });
         expect(props.noindex).toBe(true);
         expect(props.nofollow).toBe(true);
+    });
+
+    it("seo enabled on hidden page", () => {
+        const props = getSeoProps({
+            domain: "https://plantstore.dev",
+            siteName: "Plant Store",
+            metadata: undefined,
+            favicon: undefined,
+            typography: undefined,
+            pages: {},
+            files: {},
+            apis: {},
+            isSeoDisabled: false,
+            isTrailingSlashEnabled: false,
+            node: {
+                id: FernNavigation.NodeId("id"),
+                type: "page",
+                pageId: FernNavigation.PageId("pageId"),
+                title: "page",
+                slug: FernNavigation.Slug("slug"),
+                canonicalSlug: undefined,
+                icon: undefined,
+                hidden: true,
+                noindex: undefined,
+            },
+            parents: [],
+            version: undefined,
+        });
+        expect(props.noindex).toBe(false);
+        expect(props.nofollow).toBe(false);
+    });
+
+    it("seo disabled on hidden page with noindex=true", () => {
+        const props = getSeoProps({
+            domain: "https://plantstore.dev",
+            siteName: "Plant Store",
+            metadata: undefined,
+            favicon: undefined,
+            typography: undefined,
+            pages: {},
+            files: {},
+            apis: {},
+            isSeoDisabled: false,
+            isTrailingSlashEnabled: false,
+            node: {
+                id: FernNavigation.NodeId("id"),
+                type: "page",
+                pageId: FernNavigation.PageId("pageId"),
+                title: "page",
+                slug: FernNavigation.Slug("slug"),
+                canonicalSlug: undefined,
+                icon: undefined,
+                hidden: true,
+                noindex: true,
+            },
+            parents: [],
+            version: undefined,
+        });
+        expect(props.noindex).toBe(true);
+        expect(props.nofollow).toBe(false);
     });
 
     it("extracts SEO title properly", () => {

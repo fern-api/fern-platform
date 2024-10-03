@@ -226,6 +226,7 @@
   "docs/v5/changelog/2023/2/20",
   "docs/v4/tutorials/create-your-first-gpt-4-app",
   "docs/v4/tutorials/chatgpt-clone-in-nextjs",
+  "docs/v4/tutorials/debug-a-langchain-agent",
   "docs/v4/guides/create-prompt",
   "docs/v4/guides/generate-and-log-with-the-sdk",
   "docs/v4/guides/completion-using-the-sdk",

@@ -1,3 +1,4 @@
+import { captureException } from "@sentry/nextjs";
 import { get } from "@vercel/edge-config";
 
 export async function getSeoDisabled(host: string): Promise<boolean> {
@@ -8,6 +9,11 @@ export async function getSeoDisabled(host: string): Promise<boolean> {
     ) {
         return true;
     }
-    const config = (await get<Array<string>>("seo-disabled")) ?? [];
-    return config.includes(host);
+    try {
+        const config = (await get<Array<string>>("seo-disabled")) ?? [];
+        return config.includes(host);
+    } catch (e) {
+        captureException(e);
+        return false;
+    }
 }

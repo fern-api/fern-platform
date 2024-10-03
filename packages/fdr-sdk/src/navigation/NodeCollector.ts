@@ -175,13 +175,15 @@ export class NodeCollector {
     /**
      * Returns a list of slugs for pages that should be indexed by search engines, and by algolia.
      *
-     * This excludes hidden pages and noindex pages, and uses the canonical slug if it exists.
+     * This excludes noindex pages, and uses the canonical slug if it exists.
+     *
+     * IMPORTANT: hidden pages will be included, unless explicitly marked as noindex.
      */
     #getIndexablePageSlugs = once((): string[] => {
         return Array.from(
             new Set(
                 [...this.slugToNode.values()]
-                    .filter(({ node }) => FernNavigation.isPage(node) && !node.hidden)
+                    .filter(({ node }) => FernNavigation.isPage(node))
                     .filter(({ node }) => (FernNavigation.hasMarkdown(node) ? !node.noindex : true))
                     .map(({ node }) => node.canonicalSlug ?? node.slug),
             ),
