@@ -18,6 +18,7 @@ services:
       ALGOLIA_APP_ID: dummy
       ALGOLIA_ADMIN_API_KEY: dummy
       ALGOLIA_SEARCH_INDEX: dummy
+      ALGOLIA_SEARCH_V2_DOMAINS: dummy
       ALGOLIA_SEARCH_API_KEY: dummy
       SLACK_TOKEN: dummy
       DOCS_CACHE_ENDPOINT: redis_0:6379
