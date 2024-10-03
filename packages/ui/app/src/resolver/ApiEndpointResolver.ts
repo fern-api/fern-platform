@@ -657,7 +657,7 @@ export class ApiEndpointResolver {
         return visitDiscriminatedUnion(requestBodyV3, "type")._visit<ResolvedExampleEndpointRequest | undefined>({
             json: (json) => ({
                 type: "json",
-                value: this.safeSortKeysByShape(json.value, shape),
+                value: json.value,
             }),
             form: (form) => ({
                 type: "form",
