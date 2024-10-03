@@ -16,11 +16,13 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         return new NextResponse(null, { status: 405 });
     }
 
+    const domain = getXFernHostEdge(req);
+
     const code = req.nextUrl.searchParams.get("code");
     const state = req.nextUrl.searchParams.get("state");
     const error = req.nextUrl.searchParams.get("error");
     const error_description = req.nextUrl.searchParams.get("error_description");
-    const redirectLocation = state ?? req.nextUrl.origin;
+    const redirectLocation = state ?? `https://${domain}/`;
 
     if (error != null) {
         return redirectWithLoginError(redirectLocation, error_description ?? error);
@@ -30,7 +32,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
     }
 
-    const domain = getXFernHostEdge(req);
     const config = await getAuthEdgeConfig(domain);
 
     if (config == null || config.type !== "oauth2" || config.partner === "ory") {
