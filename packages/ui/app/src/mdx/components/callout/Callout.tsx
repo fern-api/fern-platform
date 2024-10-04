@@ -109,7 +109,11 @@ export function InfoCallout({ children, title, icon }: PropsWithChildren<Omit<Ca
     );
 }
 
-export function WarningCallout({ children, title, icon }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function WarningCallout({
+    children,
+    title,
+    icon,
+}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
         <Callout intent="warning" title={title} icon={icon}>
             {children}
@@ -117,7 +121,11 @@ export function WarningCallout({ children, title, icon }: PropsWithChildren<Omit
     );
 }
 
-export function SuccessCallout({ children, title, icon }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function SuccessCallout({
+    children,
+    title,
+    icon,
+}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
         <Callout intent="success" title={title} icon={icon}>
             {children}
@@ -125,7 +133,11 @@ export function SuccessCallout({ children, title, icon }: PropsWithChildren<Omit
     );
 }
 
-export function ErrorCallout({ children, title, icon }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function ErrorCallout({
+    children,
+    title,
+    icon,
+}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
         <Callout intent="error" title={title} icon={icon}>
             {children}
@@ -141,7 +153,11 @@ export function NoteCallout({ children, title, icon }: PropsWithChildren<Omit<Ca
     );
 }
 
-export function LaunchNoteCallout({ children, title, icon }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function LaunchNoteCallout({
+    children,
+    title,
+    icon,
+}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
         <Callout intent="launch" title={title} icon={icon}>
             {children}
@@ -157,7 +173,11 @@ export function TipCallout({ children, title, icon }: PropsWithChildren<Omit<Cal
     );
 }
 
-export function CheckCallout({ children, title, icon }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function CheckCallout({
+    children,
+    title,
+    icon,
+}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
         <Callout intent="check" title={title} icon={icon}>
             {children}
