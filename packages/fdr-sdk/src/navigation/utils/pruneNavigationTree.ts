@@ -1,4 +1,4 @@
-import structuredClone from "core-js-pure/actual/structured-clone";
+// import structuredClone from "core-js-pure/actual/structured-clone";
 import { DeepReadonly } from "ts-essentials";
 import { FernNavigation } from "../..";
 import { prunetree } from "../../utils/traversers/prunetree";
