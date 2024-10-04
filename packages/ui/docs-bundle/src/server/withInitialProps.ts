@@ -58,11 +58,13 @@ export async function withInitialProps({
     }
 
     const featureFlags = await getFeatureFlags(xFernHost);
-    let root: FernNavigation.RootNode | undefined = FernNavigation.utils.toRootNode(
+
+    const original: FernNavigation.RootNode = FernNavigation.utils.toRootNode(
         docs,
         featureFlags.isBatchStreamToggleDisabled,
         featureFlags.isApiScrollingDisabled,
     );
+    let root: FernNavigation.RootNode | null = original;
 
     const authConfig = await getAuthEdgeConfig(xFernHost);
 
@@ -91,6 +93,15 @@ export async function withInitialProps({
     const node = FernNavigation.utils.findNode(root, slug);
 
     if (node.type === "notFound") {
+        // this is a special case where the user is not authenticated, and the page requires authentication,
+        // but the user is trying to access a page that is not found. in this case, we should redirect to the auth page.
+        if (authConfig?.type === "basic_token_verification" && auth == null) {
+            const node = FernNavigation.utils.findNode(original, slug);
+            if (node.type !== "notFound") {
+                return { redirect: { destination: authConfig.redirect, permanent: false } };
+            }
+        }
+
         // TODO: returning "notFound: true" here will render vercel's default 404 page
         // this is better than following redirects, since it will signal a proper 404 status code.
         // however, we should consider rendering a custom 404 page in the future using the customer's branding.
