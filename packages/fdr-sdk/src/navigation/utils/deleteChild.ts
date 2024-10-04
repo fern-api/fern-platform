@@ -26,6 +26,11 @@ export function mutableDeleteChild(
         // if the node to be deleted is a section, remove the overviewPageId
         if (FernNavigation.isSectionOverview(node)) {
             (node as MarkOptional<typeof node, "overviewPageId">).overviewPageId = undefined;
+
+            if (node.children.length === 0) {
+                return "deleted";
+            }
+
             return "noop";
         } else {
             throw new UnreachableCaseError(node);
@@ -44,60 +49,65 @@ export function mutableDeleteChild(
     switch (parent.type) {
         case "apiPackage":
             parent.children = parent.children.filter((child) => child.id !== node.id);
-            return "deleted";
+            break;
         case "apiReference":
             parent.children = parent.children.filter((child) => child.id !== node.id);
             parent.changelog = parent.changelog?.id === node.id ? undefined : parent.changelog;
-            return "deleted";
+            break;
         case "changelog":
             parent.children = parent.children.filter((child) => child.id !== node.id);
-            return "deleted";
+            break;
         case "changelogYear":
             parent.children = parent.children.filter((child) => child.id !== node.id);
-            return "deleted";
+            break;
         case "changelogMonth":
             parent.children = parent.children.filter((child) => child.id !== node.id);
-            return "deleted";
+            break;
         case "endpointPair":
             return "should-delete-parent";
         case "productgroup":
             parent.children = parent.children.filter((child) => child.id !== node.id);
             parent.landingPage = parent.landingPage?.id === node.id ? undefined : parent.landingPage;
-            return "deleted";
+            break;
         case "product":
-            return "should-delete-parent";
         case "root":
             return "should-delete-parent";
         case "unversioned":
             if (node.id === parent.landingPage?.id) {
                 parent.landingPage = undefined;
-                return "deleted";
             }
-            return "should-delete-parent";
+            break;
         case "section":
             parent.children = parent.children.filter((child) => child.id !== node.id);
-            return "deleted";
+            break;
         case "sidebarGroup":
             parent.children = parent.children.filter((child) => child.id !== node.id);
-            return "deleted";
+            break;
         case "tab":
             return "should-delete-parent";
         case "sidebarRoot":
             parent.children = parent.children.filter((child) => child.id !== node.id);
-            return "deleted";
+            break;
         case "tabbed":
             parent.children = parent.children.filter((child) => child.id !== node.id);
-            return "deleted";
+            break;
         case "version":
             if (node.id === parent.landingPage?.id) {
                 parent.landingPage = undefined;
-                return "deleted";
             }
-            return "should-delete-parent";
+            break;
         case "versioned":
             parent.children = parent.children.filter((child) => child.id !== node.id);
-            return "deleted";
+            break;
         default:
             throw new UnreachableCaseError(parent);
+    }
+
+    if (FernNavigation.isPage(parent)) {
+        return "noop";
+    } else if (FernNavigation.getChildren(parent).length > 0) {
+        return "deleted";
+    } else {
+        return "should-delete-parent";
     }
 }

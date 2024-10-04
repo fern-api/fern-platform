@@ -31,8 +31,8 @@ function mutablePruneNavigationTree<ROOT extends FernNavigation.NavigationNode>(
 
         // after deletion, if the node no longer has any children, we can delete the parent node too
         // but only if the parent node is NOT a visitable page
-        shouldDeleteParent: (parent: FernNavigation.NavigationNodeParent) =>
-            !hasChildren(parent) && !FernNavigation.isPage(parent),
+        // shouldDeleteParent: (parent: FernNavigation.NavigationNodeParent) =>
+        //     !hasChildren(parent) && !FernNavigation.isPage(parent),
     });
 
     if (result == null) {

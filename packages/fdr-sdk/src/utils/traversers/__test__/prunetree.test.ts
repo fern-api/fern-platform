@@ -7,6 +7,11 @@ const DELETER = (parent: Record | undefined, child: Record): DeleterAction => {
         return "deleted";
     }
     parent.children = parent.children.filter((c) => c.id !== child.id);
+
+    if (parent.children.length === 0) {
+        return "should-delete-parent";
+    }
+
     return "deleted";
 };
 
