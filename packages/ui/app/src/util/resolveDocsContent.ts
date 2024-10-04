@@ -270,7 +270,7 @@ async function resolveMarkdownPage(
         filename: pageId,
         frontmatterDefaults: {
             title: node.title,
-            breadcrumb: found.breadcrumb,
+            breadcrumb: [...found.breadcrumb],
             "edit-this-page-url": pageContent.editThisPageUrl,
             "force-toc": featureFlags.isTocDefaultEnabled,
         },
