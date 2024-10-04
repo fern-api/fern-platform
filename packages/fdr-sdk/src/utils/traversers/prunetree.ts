@@ -37,6 +37,8 @@ interface PruneTreeOptions<NODE, PARENT extends NODE = NODE, POINTER = NODE> {
     getPointer?: (node: NODE) => POINTER;
 }
 
+// TODO: this algorithm is not optimal, as it traverses the tree twice, and should be refactored to traverse only once
+// it would be more efficient to BFS the tree once, collect all the nodes in an array, and reverse the array to delete the nodes from the bottom up
 export function prunetree<NODE, ROOT extends NODE = NODE, PARENT extends NODE = NODE, POINTER = NODE>(
     root: ROOT,
     opts: PruneTreeOptions<NODE, PARENT, POINTER>,
