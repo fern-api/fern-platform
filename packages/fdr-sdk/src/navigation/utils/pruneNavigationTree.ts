@@ -23,7 +23,7 @@ function mutablePruneNavigationTree<ROOT extends FernNavigation.NavigationNode>(
     root: ROOT,
     keep: (node: FernNavigation.NavigationNode) => boolean,
 ): ROOT | undefined {
-    const [result, deleted] = prunetree(root, {
+    const [result] = prunetree(root, {
         predicate: keep,
         getChildren: FernNavigation.getChildren,
         getPointer: (node) => node.id,
@@ -38,10 +38,8 @@ function mutablePruneNavigationTree<ROOT extends FernNavigation.NavigationNode>(
         return undefined;
     }
 
-    if (deleted.size > 0) {
-        // since the tree has been pruned, we need to update the pointsTo property
-        mutableUpdatePointsTo(result);
-    }
+    // since the tree has been pruned, we need to update the pointsTo property
+    mutableUpdatePointsTo(result);
 
     return result;
 }

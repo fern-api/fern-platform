@@ -9,7 +9,8 @@ import { followRedirect } from "./followRedirect";
 export function mutableUpdatePointsTo(input: FernNavigation.NavigationNode): void {
     FernNavigation.traverseDF(input, (node) => {
         if (FernNavigation.hasPointsTo(node)) {
-            node.pointsTo = followRedirect(node);
+            const pointsTo = followRedirect(node);
+            node.pointsTo = node.slug === pointsTo ? undefined : pointsTo;
         }
     });
 }

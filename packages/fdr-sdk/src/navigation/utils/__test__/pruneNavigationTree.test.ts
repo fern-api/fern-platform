@@ -59,7 +59,7 @@ describe("pruneNavigationTree", () => {
             hidden: undefined,
             overviewPageId: undefined,
             noindex: undefined,
-            pointsTo: undefined,
+            pointsTo: FernNavigation.Slug("root/page"),
         });
     });
 
@@ -88,7 +88,7 @@ describe("pruneNavigationTree", () => {
             hidden: undefined,
             overviewPageId: undefined,
             noindex: undefined,
-            pointsTo: undefined,
+            pointsTo: FernNavigation.Slug("root/page"),
         };
 
         const result = pruneNavigationTree(root, (node) => node.id !== FernNavigation.NodeId("page"));
@@ -148,6 +148,55 @@ describe("pruneNavigationTree", () => {
                     noindex: undefined,
                 },
             ],
+            collapsed: undefined,
+            canonicalSlug: undefined,
+            icon: undefined,
+            hidden: undefined,
+            noindex: undefined,
+            pointsTo: FernNavigation.Slug("root/page"),
+        });
+    });
+
+    it("should not prune section even if children are pruned", () => {
+        const root: FernNavigation.NavigationNode = {
+            type: "section",
+            id: FernNavigation.NodeId("root"),
+            slug: FernNavigation.Slug("root"),
+            title: "Root",
+            overviewPageId: FernNavigation.PageId("overview.mdx"), // this is a visitable page
+            children: [
+                {
+                    type: "page",
+                    id: FernNavigation.NodeId("page"),
+                    slug: FernNavigation.Slug("root/page"),
+                    title: "Page",
+                    pageId: FernNavigation.PageId("page.mdx"),
+                    canonicalSlug: undefined,
+                    icon: undefined,
+                    hidden: undefined,
+                    noindex: undefined,
+                },
+            ],
+            collapsed: undefined,
+            canonicalSlug: undefined,
+            icon: undefined,
+            hidden: undefined,
+            noindex: undefined,
+            pointsTo: undefined,
+        };
+
+        const result = pruneNavigationTree(root, (node) => node.id !== "page");
+
+        // structuredClone should duplicate the object
+        expect(result === root).toBe(false);
+
+        expect(result).toStrictEqual({
+            type: "section",
+            id: FernNavigation.NodeId("root"),
+            slug: FernNavigation.Slug("root"),
+            overviewPageId: FernNavigation.PageId("overview.mdx"), // this is a visitable page
+            title: "Root",
+            children: [], // children is empty, but the section is still there because it has an overview page
             collapsed: undefined,
             canonicalSlug: undefined,
             icon: undefined,
@@ -214,7 +263,7 @@ describe("pruneNavigationTree", () => {
             icon: undefined,
             hidden: undefined,
             noindex: undefined,
-            pointsTo: undefined,
+            pointsTo: FernNavigation.Slug("root/page"),
         });
     });
 
