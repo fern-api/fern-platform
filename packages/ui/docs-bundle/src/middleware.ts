@@ -104,7 +104,7 @@ export const middleware: NextMiddleware = async (request) => {
         if (!withBasicTokenViewAllowed(authConfig.allowlist, pathname)) {
             const destination = new URL(authConfig.redirect);
             destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, pathname));
-            return NextResponse.redirect(destination, { status: 302 });
+            return NextResponse.redirect(destination);
         }
     }
 

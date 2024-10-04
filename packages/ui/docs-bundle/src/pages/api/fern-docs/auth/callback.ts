@@ -44,7 +44,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             "/api/fern-docs/oauth/ory/callback",
         );
         // Permanent GET redirect to the Ory callback endpoint
-        return NextResponse.redirect(nextUrl, { status: 307 });
+        return NextResponse.redirect(nextUrl);
     }
 
     try {

@@ -3,7 +3,7 @@ import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { buildUrlFromApiEdge } from "@/server/buildUrlFromApi";
 import { loadWithUrl } from "@/server/loadWithUrl";
 import { conformTrailingSlash } from "@/server/trailingSlash";
-import { withBasicTokenViewAllowed } from "@/server/withBasicTokenViewAllowed";
+import { pruneWithBasicTokenViewAllowed } from "@/server/withBasicTokenViewAllowed";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
@@ -33,14 +33,15 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         return new NextResponse(null, { status: 404 });
     }
 
-    const node = FernNavigation.utils.toRootNode(docs.body);
-    const collector = NodeCollector.collect(node);
-    let slugs = collector.indexablePageSlugs;
+    let node = FernNavigation.utils.toRootNode(docs.body);
 
     // If the domain is basic_token_verification, we only want to include slugs that are allowed
     if (auth?.type === "basic_token_verification") {
-        slugs = slugs.filter((slug) => withBasicTokenViewAllowed(auth.allowlist, `/${slug}`));
+        node = pruneWithBasicTokenViewAllowed(node, auth.allowlist);
     }
+
+    const collector = NodeCollector.collect(node);
+    const slugs = collector.indexablePageSlugs;
 
     const urls = slugs.map((slug) => conformTrailingSlash(urljoin(withDefaultProtocol(xFernHost), slug)));
     const sitemap = getSitemapXml(urls);

@@ -26,7 +26,7 @@ import { getCustomerAnalytics } from "./getCustomerAnalytics";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";
-import { withBasicTokenViewAllowed } from "./withBasicTokenViewAllowed";
+import { pruneWithBasicTokenViewAllowed } from "./withBasicTokenViewAllowed";
 
 interface WithInitialProps {
     docs: LoadWithUrlResponse;
@@ -69,14 +69,8 @@ export async function withInitialProps({
     // if the user is not authenticated, and the page requires authentication, prune the navigation tree
     // to only show pages that are allowed to be viewed without authentication.
     // note: the middleware will not show this page at all if the user is not authenticated.
-    if (authConfig != null && authConfig.type === "basic_token_verification" && auth == null) {
-        root = FernNavigation.utils.pruneNavigationTree(root, (node) => {
-            if (FernNavigation.isPage(node)) {
-                return withBasicTokenViewAllowed(authConfig.allowlist, `/${node.slug}`);
-            }
-
-            return true;
-        });
+    if (authConfig?.type === "basic_token_verification" && auth == null) {
+        root = pruneWithBasicTokenViewAllowed(root, authConfig.allowlist);
     }
 
     // this should not happen, but if it does, we should return a 404
