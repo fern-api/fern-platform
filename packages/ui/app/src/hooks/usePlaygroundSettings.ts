@@ -15,7 +15,7 @@ export function usePlaygroundSettings(currentNodeId?: NodeId): PlaygroundSetting
         if (maybeCurrentHasPlayground) {
             return maybeCurrentHasPlayground;
         } else {
-            for (const node of navigationNodes.getParents(nodeIdToUse).reverse()) {
+            for (const node of [...navigationNodes.getParents(nodeIdToUse)].reverse()) {
                 const maybeNodeHasPlayground = nodeHasPlayground(node);
                 if (maybeNodeHasPlayground) {
                     return maybeNodeHasPlayground;
