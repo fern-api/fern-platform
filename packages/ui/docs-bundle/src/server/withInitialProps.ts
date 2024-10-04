@@ -1,5 +1,6 @@
 import { getFeatureFlags } from "@/pages/api/fern-docs/feature-flags";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { withDefaultProtocol } from "@fern-ui/core-utils";
 import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { SidebarTab } from "@fern-ui/fdr-utils";
 import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
@@ -147,6 +148,11 @@ export async function withInitialProps({
         return { notFound: true };
     }
 
+    const getApiRoute = getApiRouteSupplier({
+        basepath: docs.baseUrl.basePath,
+        includeTrailingSlash: isTrailingSlashEnabled(),
+    });
+
     const colors = {
         light:
             docs.definition.config.colorsV3?.type === "light"
@@ -183,6 +189,34 @@ export async function withInitialProps({
         docs.definition.config.logoHref ??
         (node.landingPage?.slug != null && !node.landingPage.hidden ? `/${node.landingPage.slug}` : undefined);
 
+    const navbarLinks = docs.definition.config.navbarLinks ?? [];
+
+    // TODO: This is a hack to add a login/logout button to the navbar. This should be done in a more generic way.
+    if (authConfig?.type === "basic_token_verification") {
+        if (auth == null) {
+            const redirect = new URL(withDefaultProtocol(authConfig.redirect));
+            redirect.searchParams.set("state", urlJoin(withDefaultProtocol(xFernHost), slug));
+
+            navbarLinks.push({
+                type: "outlined",
+                text: "Login",
+                url: FernNavigation.Url(redirect.toString()),
+                icon: undefined,
+                rightIcon: undefined,
+                rounded: false,
+            });
+        } else {
+            navbarLinks.push({
+                type: "outlined",
+                text: "Logout",
+                url: FernNavigation.Url(getApiRoute("/api/fern-docs/auth/logout")),
+                icon: undefined,
+                rightIcon: undefined,
+                rounded: false,
+            });
+        }
+    }
+
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
         layout: docs.definition.config.layout,
@@ -190,7 +224,7 @@ export async function withInitialProps({
         favicon: docs.definition.config.favicon,
         colors,
         js: docs.definition.config.js,
-        navbarLinks: docs.definition.config.navbarLinks ?? [],
+        navbarLinks,
         logoHeight: docs.definition.config.logoHeight,
         logoHref: logoHref != null ? FernNavigation.Url(logoHref) : undefined,
         files: docs.definition.filesV2,
@@ -263,11 +297,6 @@ export async function withInitialProps({
             node.tabs.length > 0,
         ),
     };
-
-    const getApiRoute = getApiRouteSupplier({
-        basepath: docs.baseUrl.basePath,
-        includeTrailingSlash: isTrailingSlashEnabled(),
-    });
 
     props.fallback[getApiRoute("/api/fern-docs/search")] = await getSearchConfig(
         provideRegistryService(),
