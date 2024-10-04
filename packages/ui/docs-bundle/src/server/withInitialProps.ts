@@ -26,7 +26,7 @@ import { getCustomerAnalytics } from "./getCustomerAnalytics";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";
-import { pruneWithBasicTokenViewAllowed } from "./withBasicTokenViewAllowed";
+import { pruneWithBasicTokenPublic } from "./withBasicTokenPublic";
 
 interface WithInitialProps {
     docs: LoadWithUrlResponse;
@@ -70,7 +70,7 @@ export async function withInitialProps({
     // to only show pages that are allowed to be viewed without authentication.
     // note: the middleware will not show this page at all if the user is not authenticated.
     if (authConfig?.type === "basic_token_verification" && auth == null) {
-        root = pruneWithBasicTokenViewAllowed(root, authConfig.allowlist);
+        root = pruneWithBasicTokenPublic(authConfig, root);
     }
 
     // this should not happen, but if it does, we should return a 404

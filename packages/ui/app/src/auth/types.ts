@@ -37,7 +37,12 @@ export const AuthEdgeConfigBasicTokenVerificationSchema = z.object({
 
     allowlist: z
         .array(z.string(), {
-            description: "List of pages that are public and do not require authentication",
+            description: "List of pages (regexp allowed) that are public and do not require authentication",
+        })
+        .optional(),
+    denylist: z
+        .array(z.string(), {
+            description: "List of pages (regexp allowed) that are private and require authentication",
         })
         .optional(),
 });

@@ -2,7 +2,7 @@ import { AuthEdgeConfig } from "@fern-ui/ui/auth";
 import { captureException } from "@sentry/nextjs";
 import type { NextApiRequest } from "next";
 import type { NextRequest } from "next/server";
-import { withBasicTokenViewAllowed } from "../withBasicTokenViewAllowed";
+import { withBasicTokenPublic } from "../withBasicTokenPublic";
 import { verifyFernJWT } from "./FernJWT";
 
 export async function checkViewerAllowedEdge(auth: AuthEdgeConfig | undefined, req: NextRequest): Promise<number> {
@@ -29,7 +29,7 @@ export async function checkViewerAllowedPathname(
     fern_token: string | undefined,
 ): Promise<number> {
     if (auth?.type === "basic_token_verification") {
-        if (withBasicTokenViewAllowed(auth.allowlist, pathname)) {
+        if (withBasicTokenPublic(auth, pathname)) {
             return 200;
         }
 

@@ -8,7 +8,7 @@ import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
 import { verifyFernJWTConfig } from "./server/auth/FernJWT";
 import { getAuthEdgeConfig } from "./server/auth/getAuthEdgeConfig";
-import { withBasicTokenViewAllowed } from "./server/withBasicTokenViewAllowed";
+import { withBasicTokenPublic } from "./server/withBasicTokenPublic";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 const CHANGELOG_PATTERN = /\.(rss|atom)$/;
@@ -101,7 +101,7 @@ export const middleware: NextMiddleware = async (request) => {
      * redirect to the custom auth provider
      */
     if (!isLoggedIn && authConfig?.type === "basic_token_verification") {
-        if (!withBasicTokenViewAllowed(authConfig.allowlist, pathname)) {
+        if (!withBasicTokenPublic(authConfig, pathname)) {
             const destination = new URL(authConfig.redirect);
             destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, pathname));
             return NextResponse.redirect(destination);

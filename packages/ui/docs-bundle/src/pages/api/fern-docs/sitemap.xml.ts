@@ -3,7 +3,7 @@ import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { buildUrlFromApiEdge } from "@/server/buildUrlFromApi";
 import { loadWithUrl } from "@/server/loadWithUrl";
 import { conformTrailingSlash } from "@/server/trailingSlash";
-import { pruneWithBasicTokenViewAllowed } from "@/server/withBasicTokenViewAllowed";
+import { pruneWithBasicTokenPublic } from "@/server/withBasicTokenPublic";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
@@ -37,7 +37,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
     // If the domain is basic_token_verification, we only want to include slugs that are allowed
     if (auth?.type === "basic_token_verification") {
-        node = pruneWithBasicTokenViewAllowed(node, auth.allowlist);
+        node = pruneWithBasicTokenPublic(auth, node);
     }
 
     const collector = NodeCollector.collect(node);
