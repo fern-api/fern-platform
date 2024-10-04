@@ -1,5 +1,5 @@
 import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
-import { FernNavigation } from "../../../dist";
+import { FernNavigation } from "../..";
 
 export function followRedirect(
     nodeToFollow: FernNavigation.NavigationNode | undefined,
