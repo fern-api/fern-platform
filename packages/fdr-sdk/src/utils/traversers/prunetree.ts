@@ -1,4 +1,6 @@
+import { UnreachableCaseError } from "ts-essentials";
 import { bfs } from "./bfs";
+import { DeleterAction } from "./types";
 
 interface PruneTreeOptions<NODE, PARENT extends NODE = NODE, POINTER = NODE> {
     /**
@@ -13,7 +15,7 @@ interface PruneTreeOptions<NODE, PARENT extends NODE = NODE, POINTER = NODE> {
      * @param child the child that should be deleted
      * @returns the pointer to the child node, or **null** if the child cannot be deleted
      */
-    deleter: (parent: PARENT, child: NODE) => POINTER | null;
+    deleter: (parent: PARENT | undefined, child: NODE) => DeleterAction;
 
     /**
      * After the child is deleted, we can check if the parent should be deleted too,
@@ -84,7 +86,7 @@ export function prunetree<NODE, ROOT extends NODE = NODE, PARENT extends NODE = 
 }
 
 interface DeleteChildOptions<NODE, PARENT extends NODE = NODE, POINTER = NODE> {
-    deleter: (parent: PARENT, child: NODE) => POINTER | null;
+    deleter: (parent: PARENT | undefined, child: NODE) => DeleterAction;
     shouldDeleteParent: (parent: PARENT) => boolean;
     getPointer: (node: NODE) => POINTER;
 }
@@ -99,23 +101,32 @@ function deleteChildAndMaybeParent<NODE, PARENT extends NODE = NODE, POINTER = N
     const ancestors = [...parents];
     const parent = ancestors.pop();
 
-    // if the parent is the root, we cannot delete it here
-    // so we mark it as deleted and the parent function will be responsible for deleting it
-    if (parent == null) {
+    const result = deleter(parent, node);
+
+    // if the node was only updated, don't mark it as deleted
+    if (result === "noop") {
+        return [];
+    }
+
+    // if no parent exists, then the node is the root
+    else if (parent == null) {
         return [getPointer(node)];
     }
 
-    const deleted = deleter(parent, node);
-
     // if the node was not deletable, then we need to delete the parent too
-    if (deleted == null) {
+    else if (result === "should-delete-parent") {
         return [getPointer(node), ...deleteChildAndMaybeParent(parent, ancestors, opts)];
     }
 
     // traverse up the tree and delete the parent if necessary
-    if (shouldDeleteParent(parent)) {
-        return [getPointer(node), deleted, ...deleteChildAndMaybeParent(parent, ancestors, opts)];
+    else if (result === "deleted") {
+        if (shouldDeleteParent(parent)) {
+            return [getPointer(node), ...deleteChildAndMaybeParent(parent, ancestors, opts)];
+        } else {
+            return [getPointer(node)];
+        }
     }
 
-    return [getPointer(node), deleted];
+    // type safety check
+    throw new UnreachableCaseError(result);
 }
