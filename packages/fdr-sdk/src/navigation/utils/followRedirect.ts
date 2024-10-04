@@ -23,6 +23,8 @@ export function followRedirect(
             return followRedirect([...nodeToFollow.children].sort(defaultFirst)[0]);
         case "apiReference":
         case "apiPackage":
+        case "changelogMonth": // note: changelog month nodes don't exist yet as pages
+        case "changelogYear": // note: changelog month nodes don't exist yet as pages
         case "endpointPair":
         case "product":
         case "root":

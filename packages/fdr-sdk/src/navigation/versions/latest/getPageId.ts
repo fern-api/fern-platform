@@ -19,7 +19,7 @@ export function getPageId(node: NavigationNodePage): PageId | undefined {
         endpoint: RETURN_UNDEFINED,
         webSocket: RETURN_UNDEFINED,
         webhook: RETURN_UNDEFINED,
-        changelogYear: RETURN_UNDEFINED,
-        changelogMonth: RETURN_UNDEFINED,
+        // changelogYear: RETURN_UNDEFINED,
+        // changelogMonth: RETURN_UNDEFINED,
     });
 }
