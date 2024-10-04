@@ -72,7 +72,7 @@ export async function resolveDocsContent({
 
     if (node.type === "changelog") {
         const pageIds = new Set<FernNavigation.PageId>();
-        FernNavigation.traverseNavigation(node, (n) => {
+        FernNavigation.traverseDF(node, (n) => {
             if (FernNavigation.hasMarkdown(n)) {
                 const pageId = FernNavigation.getPageId(n);
                 if (pageId != null) {

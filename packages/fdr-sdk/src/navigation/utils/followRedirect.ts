@@ -1,4 +1,4 @@
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import { UnreachableCaseError } from "ts-essentials";
 import { FernNavigation } from "../..";
 
 export function followRedirect(
@@ -7,41 +7,39 @@ export function followRedirect(
     if (nodeToFollow == null) {
         return undefined;
     }
-    return visitDiscriminatedUnion(nodeToFollow)._visit<FernNavigation.Slug | undefined>({
-        link: () => undefined,
 
-        // leaf nodes
-        page: (node) => node.slug,
-        changelog: (node) => node.slug,
-        changelogYear: (node) => node.slug,
-        changelogMonth: (node) => node.slug,
-        changelogEntry: (node) => node.slug,
-        endpoint: (node) => node.slug,
-        webSocket: (node) => node.slug,
-        webhook: (node) => node.slug,
-        landingPage: (node) => node.slug,
+    if (FernNavigation.isPage(nodeToFollow)) {
+        return nodeToFollow.slug;
+    }
 
-        // nodes with overview
-        apiPackage: (node) => (node.overviewPageId != null ? node.slug : followRedirects(node.children)),
-        section: (node) => (node.overviewPageId != null ? node.slug : followRedirects(node.children)),
-        apiReference: (node) => (node.overviewPageId != null ? node.slug : followRedirects(node.children)),
-
-        // version is a special case where it should only consider it's first child (the first version)
-        product: (node) => followRedirect(node.child),
-        productgroup: (node) => followRedirect(node.children.filter((node) => !node.hidden)[0]),
-        versioned: (node) => followRedirect(node.children.filter((node) => !node.hidden)[0]),
-        unversioned: (node) => followRedirect(node.landingPage ?? node.child),
-        tabbed: (node) => followRedirects(node.children),
-        sidebarRoot: (node) => followRedirects(node.children),
-        endpointPair: (node) => followRedirect(node.nonStream),
-        root: (node) => followRedirect(node.child),
-        version: (node) => followRedirect(node.child),
-        tab: (node) => followRedirect(node.child),
-        sidebarGroup: (node) => followRedirects(node.children),
-    });
+    switch (nodeToFollow.type) {
+        case "link":
+            return undefined;
+        /**
+         * Versioned and ProductGroup nodes are special in that they have a default child.
+         */
+        case "productgroup":
+        case "versioned":
+            return followRedirect([...nodeToFollow.children].sort(defaultFirst)[0]);
+        case "apiReference":
+        case "apiPackage":
+        case "endpointPair":
+        case "product":
+        case "root":
+        case "section":
+        case "sidebarRoot":
+        case "sidebarGroup":
+        case "tab":
+        case "tabbed":
+        case "unversioned":
+        case "version":
+            return followRedirects(FernNavigation.getChildren(nodeToFollow));
+        default:
+            throw new UnreachableCaseError(nodeToFollow);
+    }
 }
 
-export function followRedirects(nodes: FernNavigation.NavigationNode[]): FernNavigation.Slug | undefined {
+export function followRedirects(nodes: readonly FernNavigation.NavigationNode[]): FernNavigation.Slug | undefined {
     for (const node of nodes) {
         // skip hidden nodes
         if (FernNavigation.hasMetadata(node) && node.hidden) {
@@ -53,4 +51,12 @@ export function followRedirects(nodes: FernNavigation.NavigationNode[]): FernNav
         }
     }
     return;
+}
+
+function rank<T extends { default: boolean; hidden: boolean | undefined }>(node: T): number {
+    return node.default && !node.hidden ? 1 : node.hidden ? -1 : 0;
+}
+
+function defaultFirst<T extends { default: boolean; hidden: boolean | undefined }>(a: T, b: T): number {
+    return rank(b) - rank(a);
 }

@@ -13,13 +13,13 @@ export declare namespace Node {
     interface Found {
         type: "found";
         node: FernNavigation.NavigationNodePage;
-        parents: FernNavigation.NavigationNode[];
-        breadcrumb: FernNavigation.BreadcrumbItem[];
+        parents: readonly FernNavigation.NavigationNode[];
+        breadcrumb: readonly FernNavigation.BreadcrumbItem[];
         root: FernNavigation.RootNode;
-        versions: FernNavigation.VersionNode[];
+        versions: readonly FernNavigation.VersionNode[];
         currentVersion: FernNavigation.VersionNode | undefined;
         currentTab: FernNavigation.TabNode | FernNavigation.ChangelogNode | undefined;
-        tabs: FernNavigation.TabChild[];
+        tabs: readonly FernNavigation.TabChild[];
         sidebar: FernNavigation.SidebarRootNode | undefined;
         apiReference: FernNavigation.ApiReferenceNode | undefined;
         next: FernNavigation.NavigationNodeNeighbor | undefined;

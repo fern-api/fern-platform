@@ -1,7 +1,7 @@
 import { UnreachableCaseError } from "ts-essentials";
-import { NavigationNodeWithChildren } from "../versions";
+import { NavigationNodeParent } from "../versions";
 
-export function hasChildren(node: NavigationNodeWithChildren): boolean {
+export function hasChildren(node: NavigationNodeParent): boolean {
     switch (node.type) {
         case "apiPackage":
             return node.children.length > 0;
