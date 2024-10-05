@@ -25,6 +25,7 @@ import { getCustomerAnalytics } from "./getCustomerAnalytics";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";
+import { withVersionSwitcherInfo } from "./withVersionSwitcherInfo";
 
 interface WithInitialProps {
     docs: LoadWithUrlResponse;
@@ -135,22 +136,12 @@ export async function withInitialProps({
                   : undefined,
     };
 
-    const versions = node.versions
-        .filter((version) => !version.hidden)
-        .map((version, index) => {
-            // if the same page exists in multiple versions, return the full slug of that page, otherwise default to version's landing page (pointsTo)
-            const expectedSlug = FernNavigation.slugjoin(version.slug, node.unversionedSlug);
-            const pointsTo = node.collector.slugMap.has(expectedSlug) ? expectedSlug : version.pointsTo;
-
-            return {
-                title: version.title,
-                id: version.versionId,
-                slug: version.slug,
-                pointsTo,
-                index,
-                availability: version.availability,
-            };
-        });
+    const versions = withVersionSwitcherInfo({
+        node: node.node,
+        parents: node.parents,
+        versions: node.versions,
+        slugMap: node.collector.slugMap,
+    });
 
     const logoHref =
         docs.definition.config.logoHref ??

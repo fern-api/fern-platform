@@ -5,3 +5,4 @@ export * from "./findNode";
 export * from "./getApiReferenceId";
 export * from "./getNoIndexFromFrontmatter";
 export * from "./toRootNode";
+export * from "./toUnversionedSlug";
