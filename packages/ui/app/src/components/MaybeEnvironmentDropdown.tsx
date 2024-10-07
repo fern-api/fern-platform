@@ -162,14 +162,21 @@ export function MaybeEnvironmentDropdown({
                                     size={small ? "small" : "normal"}
                                     variant="outlined"
                                     mono={true}
-                                    onDoubleClick={
-                                        editable
+                                    onPointerMoveCapture={(e) => {
+                                        e.stopPropagation();
+                                    }}
+                                    onDoubleClickCapture={(e) => {
+                                        e.stopPropagation();
+                                        return editable
                                             ? () => {
                                                   setInitialState(inputValue);
                                                   isEditingEnvironment.setTrue();
                                               }
-                                            : () => undefined
-                                    }
+                                            : undefined;
+                                    }}
+                                    onClickCapture={(e) => {
+                                        e.stopPropagation();
+                                    }}
                                 />
                             </FernDropdown>
                         ) : (
@@ -182,6 +189,9 @@ export function MaybeEnvironmentDropdown({
                                             small ? "text-xs" : "text-sm",
                                             "hover:shadow-lg",
                                         )}
+                                        onClickCapture={(e) => {
+                                            e.stopPropagation();
+                                        }}
                                         onDoubleClick={
                                             editable
                                                 ? () => {
