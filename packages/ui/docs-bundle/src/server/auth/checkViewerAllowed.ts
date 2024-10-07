@@ -1,6 +1,4 @@
 import { AuthEdgeConfig } from "@fern-ui/ui/auth";
-import { captureException } from "@sentry/nextjs";
-import type { NextApiRequest } from "next";
 import type { NextRequest } from "next/server";
 import { withBasicTokenPublic } from "../withBasicTokenPublic";
 import { verifyFernJWT } from "./FernJWT";
@@ -9,18 +7,6 @@ export async function checkViewerAllowedEdge(auth: AuthEdgeConfig | undefined, r
     const fern_token = req.cookies.get("fern_token")?.value;
 
     return checkViewerAllowedPathname(auth, req.nextUrl.pathname, fern_token);
-}
-
-export async function checkViewerAllowedNode(auth: AuthEdgeConfig | undefined, req: NextApiRequest): Promise<number> {
-    const fern_token = req.cookies.fern_token;
-    try {
-        const pathname = new URL(req.url ?? "").pathname;
-        return checkViewerAllowedPathname(auth, pathname, fern_token);
-    } catch (e) {
-        // something went wrong with the URL parsing
-        captureException(e);
-        return 500;
-    }
 }
 
 export async function checkViewerAllowedPathname(

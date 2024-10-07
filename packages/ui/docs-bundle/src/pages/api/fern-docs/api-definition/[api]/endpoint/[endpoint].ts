@@ -1,6 +1,4 @@
 import { ApiDefinitionLoader } from "@/server/ApiDefinitionLoader";
-import { checkViewerAllowedNode } from "@/server/auth/checkViewerAllowed";
-import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { NextApiHandler, NextApiResponse } from "next";
@@ -14,14 +12,9 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ApiDe
         return;
     }
 
-    const auth = await getAuthEdgeConfig(xFernHost);
-    const status = await checkViewerAllowedNode(auth, req);
-    if (status >= 400) {
-        res.status(status).end();
-        return;
-    }
-
     const flags = await getFeatureFlags(xFernHost);
+
+    // TODO: authenticate the request in FDR
     const apiDefinition = await ApiDefinitionLoader.create(xFernHost, ApiDefinition.ApiDefinitionId(api))
         .withFlags(flags)
         .withPrune({ type: "endpoint", endpointId: ApiDefinition.EndpointId(endpoint) })

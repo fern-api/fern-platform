@@ -1,11 +1,6 @@
-import { checkViewerAllowedEdge } from "@/server/auth/checkViewerAllowed";
-import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
-import { buildUrlFromApiEdge } from "@/server/buildUrlFromApi";
-import { loadWithUrl } from "@/server/loadWithUrl";
+import { DocsLoader } from "@/server/DocsLoader";
 import { conformTrailingSlash } from "@/server/trailingSlash";
-import { pruneWithBasicTokenPublic } from "@/server/withBasicTokenPublic";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-ui/core-utils";
 import { NextRequest, NextResponse } from "next/server";
@@ -19,31 +14,17 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         return new NextResponse(null, { status: 405 });
     }
     const xFernHost = getXFernHostEdge(req);
-    const auth = await getAuthEdgeConfig(xFernHost);
 
-    const status = await checkViewerAllowedEdge(auth, req);
-    if (status >= 400) {
-        return NextResponse.next({ status });
-    }
+    // load the root node
+    const root = await DocsLoader.for(xFernHost).root();
 
-    const url = buildUrlFromApiEdge(xFernHost, req);
-    const docs = await loadWithUrl(url);
+    // collect all indexable page slugs
+    const slugs = NodeCollector.collect(root).indexablePageSlugs;
 
-    if (!docs.ok) {
-        return new NextResponse(null, { status: 404 });
-    }
-
-    let node = FernNavigation.utils.toRootNode(docs.body);
-
-    // If the domain is basic_token_verification, we only want to include slugs that are allowed
-    if (auth?.type === "basic_token_verification") {
-        node = pruneWithBasicTokenPublic(auth, node);
-    }
-
-    const collector = NodeCollector.collect(node);
-    const slugs = collector.indexablePageSlugs;
-
+    // convert slugs to full urls
     const urls = slugs.map((slug) => conformTrailingSlash(urljoin(withDefaultProtocol(xFernHost), slug)));
+
+    // generate sitemap xml
     const sitemap = getSitemapXml(urls);
 
     const headers = new Headers();

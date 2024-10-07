@@ -1,6 +1,4 @@
 import { DocsKVCache } from "@/server/DocsCache";
-import { checkViewerAllowedNode } from "@/server/auth/checkViewerAllowed";
-import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { buildUrlFromApiNode } from "@/server/buildUrlFromApi";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import { FdrAPI } from "@fern-api/fdr-sdk";
@@ -15,6 +13,8 @@ export const dynamic = "force-dynamic";
 
 /**
  * This is now deprecated. use /api/fern-docs/api-definition/{apiDefinitionId}/endpoint/{endpointId} instead.
+ *
+ * @deprecated
  */
 const resolveApiHandler: NextApiHandler = async (
     req,
@@ -27,19 +27,14 @@ const resolveApiHandler: NextApiHandler = async (
         }
 
         const xFernHost = getXFernHostNode(req);
-        const auth = await getAuthEdgeConfig(xFernHost);
-
-        const status = await checkViewerAllowedNode(auth, req);
-        if (status >= 400) {
-            res.status(status).json(null);
-            return;
-        }
 
         res.setHeader("host", xFernHost);
 
         const url = buildUrlFromApiNode(xFernHost, req);
         // eslint-disable-next-line no-console
         console.log("[resolve-api] Loading docs for", url);
+
+        // we're not doing any auth here because api definitions are not authed in FDR.
         const docsResponse = await provideRegistryService().docs.v2.read.getDocsForUrl({
             url: FdrAPI.Url(url),
         });
