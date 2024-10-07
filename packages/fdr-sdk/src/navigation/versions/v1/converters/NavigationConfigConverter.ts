@@ -79,7 +79,7 @@ export class NavigationConfigConverter {
             };
 
             // tag all children of hidden nodes as hidden
-            FernNavigation.V1.traverseNavigation(toRet, (node, _index, parents) => {
+            FernNavigation.V1.traverseDF(toRet, (node, parents) => {
                 if (
                     FernNavigation.V1.hasMetadata(node) &&
                     parents.some((p) => FernNavigation.V1.hasMetadata(p) && p.hidden === true)

@@ -5,7 +5,6 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionResolver, provideRegistryService, type ResolvedRootPackage } from "@fern-ui/ui";
-import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { NextApiHandler, NextApiResponse } from "next";
 import { getFeatureFlags } from "./feature-flags";
@@ -27,17 +26,13 @@ const resolveApiHandler: NextApiHandler = async (
 
         const xFernHost = getXFernHostNode(req);
 
-        const status = await checkViewerAllowedNode(xFernHost, req);
-        if (status >= 400) {
-            res.status(status).json(null);
-            return;
-        }
-
         res.setHeader("host", xFernHost);
 
         const url = buildUrlFromApiNode(xFernHost, req);
         // eslint-disable-next-line no-console
         console.log("[resolve-api] Loading docs for", url);
+
+        // we're not doing any auth here because api definitions are not authed in FDR.
         const docsResponse = await provideRegistryService().docs.v2.read.getDocsForUrl({
             url: FdrAPI.Url(url),
         });

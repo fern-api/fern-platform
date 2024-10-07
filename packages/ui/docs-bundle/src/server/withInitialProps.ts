@@ -1,5 +1,6 @@
 import { getFeatureFlags } from "@/pages/api/fern-docs/feature-flags";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { withDefaultProtocol } from "@fern-ui/core-utils";
 import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { SidebarTab } from "@fern-ui/fdr-utils";
 import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
@@ -14,17 +15,20 @@ import {
     renderThemeStylesheet,
     resolveDocsContent,
 } from "@fern-ui/ui";
-import { getAPIKeyInjectionConfigNode } from "@fern-ui/ui/auth";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { GetServerSidePropsResult } from "next";
+import type { NextApiRequestCookies } from "next/dist/server/api-utils";
 import { ComponentProps } from "react";
 import urlJoin from "url-join";
+import { getAPIKeyInjectionConfigNode } from "./auth/getApiKeyInjectionConfig";
+import { getAuthEdgeConfig } from "./auth/getAuthEdgeConfig";
 import type { AuthProps } from "./authProps";
 import { getSeoDisabled } from "./disabledSeo";
 import { getCustomerAnalytics } from "./getCustomerAnalytics";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";
+import { pruneWithBasicTokenPublic } from "./withBasicTokenPublic";
 import { withVersionSwitcherInfo } from "./withVersionSwitcherInfo";
 
 interface WithInitialProps {
@@ -32,6 +36,7 @@ interface WithInitialProps {
     slug: string[];
     xFernHost: string;
     auth?: AuthProps;
+    cookies?: NextApiRequestCookies;
 }
 
 export async function withInitialProps({
@@ -39,6 +44,7 @@ export async function withInitialProps({
     slug: slugArray,
     xFernHost,
     auth,
+    cookies,
 }: WithInitialProps): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
     if (!docsResponse.ok) {
         return handleLoadDocsError(xFernHost, slugArray, docsResponse.error);
@@ -57,11 +63,27 @@ export async function withInitialProps({
     }
 
     const featureFlags = await getFeatureFlags(xFernHost);
-    const root = FernNavigation.utils.toRootNode(
+
+    const original: FernNavigation.RootNode = FernNavigation.utils.toRootNode(
         docs,
         featureFlags.isBatchStreamToggleDisabled,
         featureFlags.isApiScrollingDisabled,
     );
+    let root: FernNavigation.RootNode | null = original;
+
+    const authConfig = await getAuthEdgeConfig(xFernHost);
+
+    // if the user is not authenticated, and the page requires authentication, prune the navigation tree
+    // to only show pages that are allowed to be viewed without authentication.
+    // note: the middleware will not show this page at all if the user is not authenticated.
+    if (authConfig?.type === "basic_token_verification" && auth == null) {
+        root = pruneWithBasicTokenPublic(authConfig, root);
+    }
+
+    // this should not happen, but if it does, we should return a 404
+    if (root == null) {
+        return { notFound: true };
+    }
 
     // if the root has a slug and the current slug is empty, redirect to the root slug, rather than 404
     if (root.slug.length > 0 && slug.length === 0) {
@@ -76,6 +98,15 @@ export async function withInitialProps({
     const node = FernNavigation.utils.findNode(root, slug);
 
     if (node.type === "notFound") {
+        // this is a special case where the user is not authenticated, and the page requires authentication,
+        // but the user is trying to access a page that is not found. in this case, we should redirect to the auth page.
+        if (authConfig?.type === "basic_token_verification" && auth == null) {
+            const node = FernNavigation.utils.findNode(original, slug);
+            if (node.type !== "notFound") {
+                return { redirect: { destination: authConfig.redirect, permanent: false } };
+            }
+        }
+
         // TODO: returning "notFound: true" here will render vercel's default 404 page
         // this is better than following redirects, since it will signal a proper 404 status code.
         // however, we should consider rendering a custom 404 page in the future using the customer's branding.
@@ -121,6 +152,11 @@ export async function withInitialProps({
         return { notFound: true };
     }
 
+    const getApiRoute = getApiRouteSupplier({
+        basepath: docs.baseUrl.basePath,
+        includeTrailingSlash: isTrailingSlashEnabled(),
+    });
+
     const colors = {
         light:
             docs.definition.config.colorsV3?.type === "light"
@@ -147,6 +183,34 @@ export async function withInitialProps({
         docs.definition.config.logoHref ??
         (node.landingPage?.slug != null && !node.landingPage.hidden ? `/${node.landingPage.slug}` : undefined);
 
+    const navbarLinks = docs.definition.config.navbarLinks ?? [];
+
+    // TODO: This is a hack to add a login/logout button to the navbar. This should be done in a more generic way.
+    if (authConfig?.type === "basic_token_verification") {
+        if (auth == null) {
+            const redirect = new URL(withDefaultProtocol(authConfig.redirect));
+            redirect.searchParams.set("state", urlJoin(withDefaultProtocol(xFernHost), slug));
+
+            navbarLinks.push({
+                type: "outlined",
+                text: "Login",
+                url: FernNavigation.Url(redirect.toString()),
+                icon: undefined,
+                rightIcon: undefined,
+                rounded: false,
+            });
+        } else {
+            navbarLinks.push({
+                type: "outlined",
+                text: "Logout",
+                url: FernNavigation.Url(getApiRoute("/api/fern-docs/auth/logout")),
+                icon: undefined,
+                rightIcon: undefined,
+                rounded: false,
+            });
+        }
+    }
+
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
         layout: docs.definition.config.layout,
@@ -154,7 +218,7 @@ export async function withInitialProps({
         favicon: docs.definition.config.favicon,
         colors,
         js: docs.definition.config.js,
-        navbarLinks: docs.definition.config.navbarLinks ?? [],
+        navbarLinks,
         logoHeight: docs.definition.config.logoHeight,
         logoHref: logoHref != null ? FernNavigation.Url(logoHref) : undefined,
         files: docs.definition.filesV2,
@@ -228,11 +292,6 @@ export async function withInitialProps({
         ),
     };
 
-    const getApiRoute = getApiRouteSupplier({
-        basepath: docs.baseUrl.basePath,
-        includeTrailingSlash: isTrailingSlashEnabled(),
-    });
-
     props.fallback[getApiRoute("/api/fern-docs/search")] = await getSearchConfig(
         provideRegistryService(),
         xFernHost,
@@ -251,7 +310,7 @@ export async function withInitialProps({
         }
     }
 
-    const apiKeyInjectionConfig = await getAPIKeyInjectionConfigNode(xFernHost, auth?.cookies);
+    const apiKeyInjectionConfig = await getAPIKeyInjectionConfigNode(xFernHost, cookies);
     props.fallback[getApiRoute("/api/fern-docs/auth/api-key-injection")] = apiKeyInjectionConfig;
 
     return {

@@ -72,7 +72,7 @@ export async function resolveDocsContent({
 
     if (node.type === "changelog") {
         const pageIds = new Set<FernNavigation.PageId>();
-        FernNavigation.traverseNavigation(node, (n) => {
+        FernNavigation.traverseDF(node, (n) => {
             if (FernNavigation.hasMarkdown(n)) {
                 const pageId = FernNavigation.getPageId(n);
                 if (pageId != null) {
@@ -270,7 +270,7 @@ async function resolveMarkdownPage(
         filename: pageId,
         frontmatterDefaults: {
             title: node.title,
-            breadcrumb: found.breadcrumb,
+            breadcrumb: [...found.breadcrumb],
             "edit-this-page-url": pageContent.editThisPageUrl,
             "force-toc": featureFlags.isTocDefaultEnabled,
         },

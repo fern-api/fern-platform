@@ -20,7 +20,7 @@ export function flattenApiSection(root: FernNavigation.SidebarRootNode | undefin
         return [];
     }
     const result: ApiGroup[] = [];
-    FernNavigation.traverseNavigation(root, (node, _, parents) => {
+    FernNavigation.traverseDF(root, (node, parents) => {
         if (node.type === "changelog") {
             return "skip";
         }

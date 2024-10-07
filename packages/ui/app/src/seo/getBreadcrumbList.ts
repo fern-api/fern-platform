@@ -12,7 +12,7 @@ function toUrl(domain: string, slug: FernNavigation.Slug): string {
 export function getBreadcrumbList(
     domain: string,
     pages: Record<string, DocsV1Read.PageContent>,
-    parents: FernNavigation.NavigationNode[],
+    parents: readonly FernNavigation.NavigationNode[],
     node: FernNavigation.NavigationNodePage,
 ): FernDocs.JsonLdBreadcrumbList {
     let title = node.title;

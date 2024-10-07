@@ -1,9 +1,10 @@
+import { checkViewerAllowedEdge } from "@/server/auth/checkViewerAllowed";
+import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { loadWithUrl } from "@/server/loadWithUrl";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { SearchConfig, getSearchConfig } from "@fern-ui/search-utils";
 import { provideRegistryService } from "@fern-ui/ui";
-import { checkViewerAllowedEdge } from "@fern-ui/ui/auth";
-import * as Sentry from "@sentry/nextjs";
+import { captureException } from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
@@ -14,9 +15,10 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Se
     }
 
     const domain = getXFernHostEdge(req);
+    const auth = await getAuthEdgeConfig(domain);
 
     try {
-        const status = await checkViewerAllowedEdge(domain, req);
+        const status = await checkViewerAllowedEdge(auth, req);
         if (status >= 400) {
             return NextResponse.json({ isAvailable: false }, { status });
         }
@@ -33,7 +35,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Se
         const config = await getSearchConfig(provideRegistryService(), domain, searchInfo);
         return NextResponse.json(config, { status: config.isAvailable ? 200 : 503 });
     } catch (e) {
-        const id = Sentry.captureException(e, { level: "fatal" });
+        const id = captureException(e, { level: "fatal" });
         // eslint-disable-next-line no-console
         console.error(`Error fetching search config for domain ${domain}. Sentry event ID: ${id}`, e);
         return NextResponse.json({ isAvailable: false }, { status: 500 });

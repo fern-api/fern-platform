@@ -1,7 +1,6 @@
 import { ApiDefinitionLoader } from "@/server/ApiDefinitionLoader";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 import { NextApiHandler, NextApiResponse } from "next";
 import { getFeatureFlags } from "../../../feature-flags";
 
@@ -13,13 +12,9 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ApiDe
         return;
     }
 
-    const status = await checkViewerAllowedNode(xFernHost, req);
-    if (status >= 400) {
-        res.status(status).end();
-        return;
-    }
-
     const flags = await getFeatureFlags(xFernHost);
+
+    // TODO: authenticate the request in FDR
     const apiDefinition = await ApiDefinitionLoader.create(xFernHost, ApiDefinition.ApiDefinitionId(api))
         .withFlags(flags)
         .withPrune({ type: "webSocket", webSocketId: ApiDefinition.WebSocketId(websocket) })
