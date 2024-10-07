@@ -1,18 +1,18 @@
+import { TypeDefinition, TypeShapeOrReference, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton } from "@fern-ui/components";
 import { isPlainObject, unknownToString } from "@fern-ui/core-utils";
 import { Plus, Xmark } from "iconoir-react";
 import { memo, useCallback, useEffect, useState } from "react";
-import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapOptional } from "../../resolver/types";
-import { getDefaultValueForType } from "../utils";
+import { getEmptyValueForType } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 
 interface PlaygroundMapFormProps {
     id: string;
-    keyShape: ResolvedTypeShape;
-    valueShape: ResolvedTypeShape;
+    keyShape: TypeShapeOrReference;
+    valueShape: TypeShapeOrReference;
     onChange: (value: unknown) => void;
     value: unknown;
-    types: Record<string, ResolvedTypeDefinition>;
+    types: Record<string, TypeDefinition>;
 }
 
 function toKeyValuePairs(value: unknown): Array<{ key: unknown; value: unknown }> {
@@ -44,8 +44,8 @@ export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
         setInternalState((oldState) => [
             ...oldState,
             {
-                key: getDefaultValueForType(keyShape, types),
-                value: getDefaultValueForType(valueShape, types),
+                key: getEmptyValueForType(keyShape, types),
+                value: getEmptyValueForType(valueShape, types),
             },
         ]);
     }, [keyShape, types, valueShape]);
@@ -103,7 +103,7 @@ export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
                                 <span className="t-muted text-xs">{"value"}</span>
                                 <PlaygroundTypeReferenceForm
                                     id={`${id}[${idx}].value`}
-                                    shape={unwrapOptional(valueShape, types)}
+                                    shape={unwrapReference(valueShape, types).shape}
                                     value={item.value}
                                     onChange={(newValue) => handleChangeValue(idx, newValue)}
                                     types={types}

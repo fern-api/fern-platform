@@ -1,3 +1,5 @@
+import { useSetAtom } from "jotai";
+import { ALL_ENVIRONMENTS_ATOM } from "../atoms/environment";
 import { ApiPageContext } from "../contexts/api-page";
 import type { ResolvedApiEndpoint, ResolvedTypeDefinition } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
@@ -12,6 +14,11 @@ export declare namespace ApiEndpointPage {
 }
 
 export const ApiEndpointPage: React.FC<ApiEndpointPage.Props> = ({ item, showErrors, types }) => {
+    const setEnvironmentIds = useSetAtom(ALL_ENVIRONMENTS_ATOM);
+    if (item.type === "endpoint" || item.type === "websocket") {
+        setEnvironmentIds(item.environments.map((env) => env.id));
+    }
+
     return (
         <ApiPageContext.Provider value={true}>
             <SingleApiPageContent item={item} showErrors={showErrors} types={types} />

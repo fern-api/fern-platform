@@ -1,54 +1,51 @@
+import { WebSocketMessage, buildRequestUrl } from "@fern-api/fdr-sdk/api-definition";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
 import { Wifi, WifiOff } from "iconoir-react";
 import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react";
-import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundEnvironment, usePlaygroundWebsocketFormState } from "../atoms";
-import { useSelectedEnvironmentId } from "../atoms/environment";
+import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState } from "../atoms";
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
-import {
-    ResolvedTypeDefinition,
-    ResolvedWebSocketChannel,
-    ResolvedWebSocketMessage,
-    resolveEnvironment,
-} from "../resolver/types";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { PlaygroundEndpointPath } from "./endpoint/PlaygroundEndpointPath";
 import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
-import { buildAuthHeaders, buildRequestUrl } from "./utils";
+import { WebSocketContext } from "./types/endpoint-context";
+import { buildAuthHeaders } from "./utils";
+import { usePlaygroundBaseUrl, useSelectedEnvironment } from "./utils/select-environment";
 
 // TODO: decide if this should be an env variable, and if we should move REST proxy to the same (or separate) cloudflare worker
 const WEBSOCKET_PROXY_URI = "wss://websocket.proxy.ferndocs.com/ws";
 
 interface PlaygroundWebSocketProps {
-    websocket: ResolvedWebSocketChannel;
-    types: Record<string, ResolvedTypeDefinition>;
+    context: WebSocketContext;
 }
 
-export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, types }): ReactElement => {
-    const [formState, setFormState] = usePlaygroundWebsocketFormState(websocket);
-    const playgroundEnvironment = usePlaygroundEnvironment();
+export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): ReactElement => {
+    const [formState, setFormState] = usePlaygroundWebsocketFormState(context);
 
     const [connectedState, setConnectedState] = useState<"opening" | "opened" | "closed">("closed");
-    const { messages, pushMessage, clearMessages } = useWebsocketMessages(websocket.id);
+    const { messages, pushMessage, clearMessages } = useWebsocketMessages(context.channel.id);
     const [error, setError] = useState<string | null>(null);
 
     const socket = useRef<WebSocket | null>(null);
 
     // close the socket when the websocket changes
-    const prevWebsocket = usePrevious(websocket);
+    const prevWebsocket = usePrevious(context.channel);
     useEffect(() => {
-        if (prevWebsocket.id !== websocket.id) {
+        if (prevWebsocket.id !== context.channel.id) {
             socket.current?.close();
             setError(null);
         }
-    }, [prevWebsocket.id, websocket.id]);
+    }, [context.channel.id, prevWebsocket.id]);
 
     // auto-destroy the socket when the component is unmounted
     useEffect(() => () => socket.current?.close(), []);
 
-    const selectedEnvironmentId = useSelectedEnvironmentId();
     const settings = usePlaygroundSettings();
-    const baseUrl = playgroundEnvironment ?? resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl;
+
+    const baseUrl = usePlaygroundBaseUrl(context.channel);
+
+    // TODO: is this is kind of weird that we're using the selected environment here?
+    const selectedEnvironment = useSelectedEnvironment(context.channel);
 
     const startSession = useCallback(async () => {
         return new Promise<boolean>((resolve) => {
@@ -59,7 +56,12 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
 
             setError(null);
 
-            const url = buildRequestUrl(baseUrl, websocket.path, formState.pathParameters, formState.queryParameters);
+            const url = buildRequestUrl({
+                baseUrl,
+                path: context.channel.path,
+                pathParameters: formState.pathParameters,
+                queryParameters: formState.queryParameters,
+            });
 
             setConnectedState("opening");
 
@@ -67,7 +69,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
 
             socket.current.onopen = () => {
                 const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);
-                const authHeaders = buildAuthHeaders(websocket.auth, authState, { redacted: false });
+                const authHeaders = buildAuthHeaders(context.auth, authState, { redacted: false });
                 const headers = {
                     ...authHeaders,
                     ...formState.headers,
@@ -106,17 +108,17 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
             };
         });
     }, [
-        formState.headers,
+        baseUrl,
+        context.channel.path,
+        context.auth,
         formState.pathParameters,
         formState.queryParameters,
+        formState.headers,
         pushMessage,
-        websocket.auth,
-        baseUrl,
-        websocket.path,
     ]);
 
     const handleSendMessage = useCallback(
-        async (message: ResolvedWebSocketMessage, data: unknown) => {
+        async (message: WebSocketMessage, data: unknown) => {
             const isConnected = await startSession();
             if (isConnected && socket.current != null && socket.current.readyState === WebSocket.OPEN) {
                 // TODO: handle validation
@@ -146,10 +148,10 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
                                   ? socket.current?.close()
                                   : null
                         }
-                        environment={resolveEnvironment(websocket, selectedEnvironmentId)}
+                        environment={selectedEnvironment}
                         environmentFilters={settings?.environments}
-                        path={websocket.path}
-                        queryParameters={websocket.queryParameters}
+                        path={context.channel.path}
+                        queryParameters={context.channel.queryParameters}
                         sendRequestButtonLabel={
                             connectedState === "closed"
                                 ? "Connect"
@@ -168,11 +170,10 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ websocket, t
                 </div>
                 <div className="flex min-h-0 flex-1 shrink">
                     <PlaygroundWebSocketContent
-                        websocket={websocket}
+                        context={context}
                         formState={formState}
                         setFormState={setFormState}
                         messages={messages}
-                        types={types}
                         sendMessage={handleSendMessage}
                         startSesssion={startSession}
                         clearMessages={clearMessages}

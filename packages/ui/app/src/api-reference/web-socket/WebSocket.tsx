@@ -252,7 +252,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         size="sm"
                                         className="t-muted border-default border-b leading-6"
                                         mdx={websocket.publish.description}
-                                        fallback={`This channel expects ${renderTypeShorthand(websocket.publish.shape, {
+                                        fallback={`This channel expects ${renderDeprecatedTypeShorthand(websocket.publish.shape, {
                                             withArticle: true,
                                         })}.`}
                                     /> */}
@@ -284,7 +284,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         size="sm"
                                         className="t-muted border-default border-b leading-6"
                                         mdx={websocket.subscribe.description}
-                                        fallback={`This channel emits ${renderTypeShorthand(websocket.subscribe.shape, {
+                                        fallback={`This channel emits ${renderDeprecatedTypeShorthand(websocket.subscribe.shape, {
                                             withArticle: true,
                                         })}.`}
                                     /> */}

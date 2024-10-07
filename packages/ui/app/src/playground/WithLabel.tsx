@@ -1,25 +1,25 @@
+import {
+    ObjectProperty,
+    TypeDefinition,
+    WithAvailability,
+    WithDescription,
+    unwrapReference,
+} from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernTooltip } from "@fern-ui/components";
 import cn from "clsx";
 import { HelpCircle, Xmark } from "iconoir-react";
 import { FC, PropsWithChildren } from "react";
 import { EndpointAvailabilityTag } from "../api-reference/endpoints/EndpointAvailabilityTag";
-import { renderTypeShorthand } from "../api-reference/types/type-shorthand/TypeShorthand";
 import { Markdown } from "../mdx/Markdown";
-import {
-    ResolvedObjectProperty,
-    ResolvedTypeDefinition,
-    WithAvailability,
-    WithDescription,
-    unwrapOptional,
-} from "../resolver/types";
+import { renderTypeShorthand } from "../type-shorthand";
 import { shouldRenderInline } from "./utils";
 
 interface WithLabelProps {
     htmlFor?: string;
-    property?: ResolvedObjectProperty;
+    property?: ObjectProperty;
     value: unknown;
     onRemove: () => void;
-    types: Record<string, ResolvedTypeDefinition>;
+    types: Record<string, TypeDefinition>;
 }
 
 export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
@@ -33,8 +33,8 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
     if (!property) {
         return <>{children}</>;
     }
-    const valueShape = unwrapOptional(property.valueShape, types);
-    const renderInline = shouldRenderInline(valueShape, types);
+    const unwrapped = unwrapReference(property.valueShape, types);
+    const renderInline = shouldRenderInline(unwrapped.shape, types);
 
     return (
         <WithLabelInternal
@@ -46,9 +46,9 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
             description={property.description}
             renderInline={renderInline}
             isRequired={property.valueShape.type !== "optional"}
-            isList={valueShape.type === "list"}
-            isBoolean={valueShape.type === "primitive" && valueShape.value.type === "boolean"}
-            typeShorthand={renderTypeShorthand(valueShape, undefined, types)}
+            isList={unwrapped.shape.type === "list"}
+            isBoolean={unwrapped.shape.type === "primitive" && unwrapped.shape.value.type === "boolean"}
+            typeShorthand={renderTypeShorthand(unwrapped.shape, undefined, types)}
         >
             {children}
         </WithLabelInternal>

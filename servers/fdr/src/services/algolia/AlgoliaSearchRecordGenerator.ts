@@ -252,7 +252,7 @@ export class AlgoliaSearchRecordGenerator {
                   } satisfies Algolia.AlgoliaRecordVersionV3)
                 : undefined;
 
-        function toBreadcrumbs(parents: FernNavigation.V1.NavigationNode[]): string[] {
+        function toBreadcrumbs(parents: readonly FernNavigation.V1.NavigationNode[]): string[] {
             return [
                 ...breadcrumbs,
                 ...parents
@@ -268,7 +268,7 @@ export class AlgoliaSearchRecordGenerator {
             ];
         }
 
-        FernNavigation.V1.traverseNavigation(root, (node, _index, parents) => {
+        FernNavigation.V1.traverseDF(root, (node, parents) => {
             if (!FernNavigation.V1.hasMetadata(node)) {
                 return;
             }
@@ -698,7 +698,7 @@ export class AlgoliaSearchRecordGenerator {
                   }
                 : undefined;
 
-        function toBreadcrumbs(parents: FernNavigation.V1.NavigationNode[]): string[] {
+        function toBreadcrumbs(parents: readonly FernNavigation.V1.NavigationNode[]): string[] {
             return [
                 ...breadcrumbs,
                 ...parents
@@ -714,7 +714,7 @@ export class AlgoliaSearchRecordGenerator {
             ];
         }
 
-        FernNavigation.V1.traverseNavigation(root, (node, _index, parents) => {
+        FernNavigation.V1.traverseDF(root, (node, parents) => {
             if (!FernNavigation.V1.hasMetadata(node)) {
                 return;
             }

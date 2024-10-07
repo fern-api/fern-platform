@@ -34,6 +34,20 @@ it("generator dao", async () => {
         generatorType: { type: "sdk" },
         dockerImage: "my-cool/example",
         generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
+        scripts: {
+            preInstallScript: {
+                steps: [],
+            },
+            installScript: {
+                steps: [],
+            },
+            compileScript: {
+                steps: [],
+            },
+            testScript: {
+                steps: [],
+            },
+        },
     };
     await fdrApplication.dao.generators().upsertGenerator({
         generator: generatorStarter,
@@ -51,6 +65,20 @@ it("generator dao", async () => {
             displayName: "My Cool Example",
             dockerImage: "changing things up",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Typescript,
+            scripts: {
+                preInstallScript: {
+                    steps: [],
+                },
+                installScript: {
+                    steps: [],
+                },
+                compileScript: {
+                    steps: [],
+                },
+                testScript: {
+                    steps: [],
+                },
+            },
         },
     });
     const generatorUpdated = await fdrApplication.dao.generators().listGenerators();
@@ -61,6 +89,20 @@ it("generator dao", async () => {
         displayName: "My Cool Example",
         dockerImage: "changing things up",
         generatorLanguage: FdrAPI.generators.GeneratorLanguage.Typescript,
+        scripts: {
+            preInstallScript: {
+                steps: [],
+            },
+            installScript: {
+                steps: [],
+            },
+            compileScript: {
+                steps: [],
+            },
+            testScript: {
+                steps: [],
+            },
+        },
     });
 });
 
@@ -73,6 +115,20 @@ it("generator dao non-unique", async () => {
             generatorType: { type: "sdk" },
             dockerImage: "my-cool/example",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
+            scripts: {
+                preInstallScript: {
+                    steps: [],
+                },
+                installScript: {
+                    steps: [],
+                },
+                compileScript: {
+                    steps: [],
+                },
+                testScript: {
+                    steps: [],
+                },
+            },
         },
     });
 
@@ -83,6 +139,20 @@ it("generator dao non-unique", async () => {
             generatorType: { type: "sdk" },
             dockerImage: "my-cool/example-1",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
+            scripts: {
+                preInstallScript: {
+                    steps: [],
+                },
+                installScript: {
+                    steps: [],
+                },
+                compileScript: {
+                    steps: [],
+                },
+                testScript: {
+                    steps: [],
+                },
+            },
         },
     });
 
@@ -93,6 +163,20 @@ it("generator dao non-unique", async () => {
             generatorType: { type: "sdk" },
             dockerImage: "my-cool/example-2",
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
+            scripts: {
+                preInstallScript: {
+                    steps: [],
+                },
+                installScript: {
+                    steps: [],
+                },
+                compileScript: {
+                    steps: [],
+                },
+                testScript: {
+                    steps: [],
+                },
+            },
         },
     });
 
@@ -107,6 +191,20 @@ it("generator dao image non-unique", async () => {
         generatorType: { type: "sdk" },
         dockerImage: "my-cool/example",
         generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
+        scripts: {
+            preInstallScript: {
+                steps: ["here I am! a step!"],
+            },
+            installScript: {
+                steps: [],
+            },
+            compileScript: {
+                steps: [],
+            },
+            testScript: {
+                steps: [],
+            },
+        },
     };
     await fdrApplication.dao.generators().upsertGenerator({ generator });
 
@@ -118,6 +216,20 @@ it("generator dao image non-unique", async () => {
                 generatorType: { type: "sdk" },
                 dockerImage: "my-cool/example",
                 generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
+                scripts: {
+                    preInstallScript: {
+                        steps: [],
+                    },
+                    installScript: {
+                        steps: [],
+                    },
+                    compileScript: {
+                        steps: [],
+                    },
+                    testScript: {
+                        steps: [],
+                    },
+                },
             },
         });
     }).rejects.toThrowError(

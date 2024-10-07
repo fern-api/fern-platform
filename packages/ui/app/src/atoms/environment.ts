@@ -1,24 +1,13 @@
-import type { APIV1Read } from "@fern-api/fdr-sdk";
-import { atom, useAtomValue } from "jotai";
+import { atom, useAtomValue, useSetAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { isEndpoint, isWebSocket } from "../resolver/types";
-import { FLATTENED_APIS_ATOM } from "./apis";
 
 // Capture all possible environments in a list, in useEffect at top level
-export const ALL_ENVIRONMENTS_ATOM = atom((get) => {
-    const flatApis = get(FLATTENED_APIS_ATOM);
-    const allEnvironmentIds = new Set<string>();
-    Object.values(flatApis).forEach((api) => {
-        api.endpoints.forEach((endpoint) => {
-            if (isEndpoint(endpoint) || isWebSocket(endpoint)) {
-                endpoint.environments.forEach((environment: APIV1Read.Environment) => {
-                    allEnvironmentIds.add(environment.id);
-                });
-            }
-        });
-    });
-    return Array.from(allEnvironmentIds);
-});
+export const ALL_ENVIRONMENTS_ATOM = atom<string[]>([]);
+
+export const useSetAllEnvironments = (allEnvironmentIds: string[]): void => {
+    const setAllEnvironments = useSetAtom(ALL_ENVIRONMENTS_ATOM);
+    setAllEnvironments(allEnvironmentIds);
+};
 
 // Get or select an environment
 export const SELECTED_ENVIRONMENT_ATOM = atomWithStorage<string | undefined>("selected-environment", undefined);

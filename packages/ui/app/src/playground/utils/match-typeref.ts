@@ -1,25 +1,25 @@
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
-import { isPlainObject } from "@fern-ui/core-utils";
 import {
-    ResolvedObjectProperty,
-    ResolvedTypeDefinition,
-    ResolvedTypeShape,
-    dereferenceObjectProperties,
+    ObjectProperty,
+    TypeDefinition,
+    TypeShapeOrReference,
+    unwrapObjectType,
     unwrapReference,
-} from "../../resolver/types";
+} from "@fern-api/fdr-sdk/api-definition";
+import { isPlainObject } from "@fern-ui/core-utils";
+import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 
 export function matchesTypeReference(
-    shape: ResolvedTypeShape,
+    shape: TypeShapeOrReference,
     value: unknown,
-    types: Record<string, ResolvedTypeDefinition>,
+    types: Record<string, TypeDefinition>,
 ): boolean {
-    return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit<boolean>({
+    return visitDiscriminatedUnion(unwrapReference(shape, types).shape, "type")._visit<boolean>({
         object: (object) => {
             if (!isPlainObject(value)) {
                 return false;
             }
-            const propertyMap = new Map<string, ResolvedObjectProperty>();
-            dereferenceObjectProperties(object, types).forEach((property) => propertyMap.set(property.key, property));
+            const propertyMap = new Map<string, ObjectProperty>();
+            unwrapObjectType(object, types).properties.forEach((property) => propertyMap.set(property.key, property));
             return Object.keys(value).every((key) => {
                 const property = propertyMap.get(key);
                 if (property == null) {
@@ -42,8 +42,8 @@ export function matchesTypeReference(
                     return false;
                 }
 
-                const propertyMap = new Map<string, ResolvedObjectProperty>();
-                dereferenceObjectProperties(variant, types).forEach((property) =>
+                const propertyMap = new Map<string, ObjectProperty>();
+                unwrapObjectType(variant, types).properties.forEach((property) =>
                     propertyMap.set(property.key, property),
                 );
                 return Object.keys(value).every((key) => {
@@ -83,11 +83,10 @@ export function matchesTypeReference(
                 _other: () => value == null,
             }),
         literal: (literal) => value === literal.value.value,
-        optional: (optionalType) => value == null || matchesTypeReference(optionalType.shape, value, types),
         list: (listType) =>
-            Array.isArray(value) && value.every((item) => matchesTypeReference(listType.shape, item, types)),
+            Array.isArray(value) && value.every((item) => matchesTypeReference(listType.itemShape, item, types)),
         set: (setType) =>
-            Array.isArray(value) && value.every((item) => matchesTypeReference(setType.shape, item, types)),
+            Array.isArray(value) && value.every((item) => matchesTypeReference(setType.itemShape, item, types)),
         map: (MapTypeContextProvider) =>
             isPlainObject(value) &&
             Object.keys(value).every((key) =>
@@ -95,6 +94,5 @@ export function matchesTypeReference(
             ),
         unknown: () => value == null,
         _other: () => value == null,
-        alias: (reference) => matchesTypeReference(reference.shape, value, types),
     });
 }

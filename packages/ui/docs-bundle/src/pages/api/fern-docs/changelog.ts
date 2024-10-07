@@ -1,12 +1,11 @@
-import { buildUrlFromApiNode } from "@/server/buildUrlFromApi";
-import { loadWithUrl } from "@/server/loadWithUrl";
+import { DocsLoader } from "@/server/DocsLoader";
+import { COOKIE_FERN_TOKEN } from "@/server/constants";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever } from "@fern-ui/core-utils";
 import { getFrontmatter } from "@fern-ui/ui";
-import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
 import * as Sentry from "@sentry/nextjs";
 import { Feed, Item } from "feed";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -27,22 +26,15 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
 
     const xFernHost = getXFernHostNode(req);
 
-    const status = await checkViewerAllowedNode(xFernHost, req);
-    if (status >= 400) {
-        return res.status(status).end();
-    }
+    const fernToken = req.cookies[COOKIE_FERN_TOKEN];
+    const loader = DocsLoader.for(xFernHost, fernToken);
 
-    const headers = new Headers();
-    headers.set("x-fern-host", xFernHost);
+    const root = await loader.root();
 
-    const url = buildUrlFromApiNode(xFernHost, req);
-    const docs = await loadWithUrl(url);
-
-    if (!docs.ok) {
+    if (!root) {
         return res.status(404).end();
     }
 
-    const root = FernNavigation.utils.toRootNode(docs.body);
     const collector = NodeCollector.collect(root);
 
     const slug = FernNavigation.slugjoin(decodeURIComponent(path));
@@ -62,11 +54,14 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
         generator: "buildwithfern.com",
     });
 
+    const pages = await loader.pages();
+    const files = await loader.files();
+
     node.children.forEach((year) => {
         year.children.forEach((month) => {
             month.children.forEach((entry) => {
                 try {
-                    feed.addItem(toFeedItem(entry, xFernHost, docs.body.definition.pages, docs.body.definition.files));
+                    feed.addItem(toFeedItem(entry, xFernHost, pages, files));
                 } catch (e) {
                     // eslint-disable-next-line no-console
                     console.error(e);
@@ -75,6 +70,8 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
             });
         });
     });
+
+    const headers = new Headers();
 
     if (format === "json") {
         headers.set("Content-Type", "application/json");
@@ -92,7 +89,7 @@ function toFeedItem(
     entry: FernNavigation.ChangelogEntryNode,
     xFernHost: string,
     pages: Record<DocsV1Read.PageId, DocsV1Read.PageContent>,
-    files: Record<DocsV1Read.FileId, DocsV1Read.Url>,
+    files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Item {
     const item: Item = {
         title: entry.title,
@@ -133,7 +130,7 @@ function toFeedItem(
 
 function toUrl(
     idOrUrl: DocsV1Read.FileIdOrUrl | undefined,
-    files: Record<DocsV1Read.FileId, DocsV1Read.Url>,
+    files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): string | undefined {
     if (idOrUrl == null) {
         return undefined;
@@ -141,7 +138,7 @@ function toUrl(
     if (idOrUrl.type === "url") {
         return idOrUrl.value;
     } else if (idOrUrl.type === "fileId") {
-        return files[idOrUrl.value];
+        return files[idOrUrl.value]?.url;
     } else {
         assertNever(idOrUrl);
     }

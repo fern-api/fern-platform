@@ -1,13 +1,15 @@
 import { APIV1Db, DocsV1Db } from "@fern-api/fdr-sdk";
 import algolia, { type SearchClient } from "algoliasearch";
-import type { FdrApplication } from "../../app";
+import { getConfig, type FdrApplication } from "../../app";
 import { AlgoliaSearchRecordGenerator } from "./AlgoliaSearchRecordGenerator";
+import { AlgoliaSearchRecordGeneratorV2 } from "./AlgoliaSearchRecordGeneratorV2";
 import type { AlgoliaSearchRecord, ConfigSegmentTuple } from "./types";
 
 export interface AlgoliaService {
     deleteIndexSegmentRecords(indexSegmentIds: string[]): Promise<void>;
 
     generateSearchRecords(params: {
+        url: string;
         docsDefinition: DocsV1Db.DocsDefinitionDb;
         apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>;
         configSegmentTuples: ConfigSegmentTuple[];
@@ -39,16 +41,20 @@ export class AlgoliaServiceImpl implements AlgoliaService {
     }
 
     public async generateSearchRecords({
+        url,
         docsDefinition,
         apiDefinitionsById,
         configSegmentTuples,
     }: {
+        url: string;
         docsDefinition: DocsV1Db.DocsDefinitionDb;
         apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>;
         configSegmentTuples: ConfigSegmentTuple[];
     }) {
         return configSegmentTuples.flatMap(([config, indexSegment]) => {
-            const generator = new AlgoliaSearchRecordGenerator({ docsDefinition, apiDefinitionsById });
+            const generator = getConfig().algoliaSearchV2Domains.some((domains) => url.includes(domains))
+                ? new AlgoliaSearchRecordGeneratorV2({ docsDefinition, apiDefinitionsById })
+                : new AlgoliaSearchRecordGenerator({ docsDefinition, apiDefinitionsById });
             return generator.generateAlgoliaSearchRecordsForSpecificDocsVersion(config, indexSegment);
         });
     }

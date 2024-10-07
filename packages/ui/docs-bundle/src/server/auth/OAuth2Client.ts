@@ -1,8 +1,8 @@
+import { OAuthTokenResponseSchema, type AuthEdgeConfigOAuth2Ory, type OAuthTokenResponse } from "@fern-ui/ui/auth";
 import { JWTPayload, createRemoteJWKSet, decodeJwt, jwtVerify } from "jose";
 import { NextApiRequestCookies } from "next/dist/server/api-utils";
 import type { NextRequest } from "next/server";
 import urlJoin from "url-join";
-import { AuthEdgeConfigOAuth2, OAuthTokenResponse, OAuthTokenResponseSchema } from "./types";
 
 interface TokenInfo {
     access_token: string;
@@ -16,16 +16,15 @@ export class OAuth2Client {
     private readonly environment: string;
     private readonly scope: string | undefined;
     private readonly jwks: string | undefined;
+    private readonly redirectUri?: string;
 
-    constructor(
-        config: AuthEdgeConfigOAuth2,
-        private readonly redirect_uri?: string,
-    ) {
+    constructor(config: AuthEdgeConfigOAuth2Ory) {
         this.clientId = config.clientId;
         this.clientSecret = config.clientSecret;
         this.environment = config.environment;
         this.scope = config.scope;
         this.jwks = config.jwks;
+        this.redirectUri = config.redirectUri;
     }
 
     public async getToken(code: string): Promise<OAuthTokenResponse> {
@@ -34,8 +33,8 @@ export class OAuth2Client {
         form.append("client_secret", this.clientSecret);
         form.append("grant_type", "authorization_code");
         form.append("client_id", this.clientId);
-        if (this.redirect_uri != null) {
-            form.append("redirect_uri", this.redirect_uri);
+        if (this.redirectUri != null) {
+            form.append("redirect_uri", this.redirectUri);
         }
 
         const response = await fetch(urlJoin(this.environment, "/token"), {
@@ -55,8 +54,8 @@ export class OAuth2Client {
         form.append("client_secret", this.clientSecret);
         form.append("grant_type", "refresh_token");
         form.append("client_id", this.clientId);
-        if (this.redirect_uri != null) {
-            form.append("redirect_uri", this.redirect_uri);
+        if (this.redirectUri != null) {
+            form.append("redirect_uri", this.redirectUri);
         }
 
         const response = await fetch(urlJoin(this.environment, "/token"), {
@@ -74,8 +73,8 @@ export class OAuth2Client {
         const url = new URL(urlJoin(this.environment, "/auth"));
         url.searchParams.set("response_type", "code");
         url.searchParams.set("client_id", this.clientId);
-        if (this.redirect_uri != null) {
-            url.searchParams.set("redirect_uri", this.redirect_uri);
+        if (this.redirectUri != null) {
+            url.searchParams.set("redirect_uri", this.redirectUri);
         }
         if (state != null) {
             url.searchParams.set("state", state);

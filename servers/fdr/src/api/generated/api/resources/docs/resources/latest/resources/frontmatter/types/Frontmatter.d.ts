@@ -39,4 +39,6 @@ export interface Frontmatter extends FernRegistry.docs.latest.WithMetadataConfig
     breadcrumb: FernRegistry.navigation.latest.BreadcrumbItem[] | undefined;
     /** Use subtitle instead. */
     excerpt: string | undefined;
+    /** The canonical URL of the page. This is used for the <link rel="canonical"> tag in the HTML. */
+    "canonical-url": string | undefined;
 }

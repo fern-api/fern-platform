@@ -6,7 +6,7 @@ import GithubSlugger from "github-slugger";
 import { reverse } from "lodash-es";
 import { captureSentryError } from "../analytics/sentry";
 import type { FeatureFlags } from "../atoms";
-import { serializeMdx } from "../mdx/bundler";
+import { MDX_SERIALIZER } from "../mdx/bundler";
 import { getFrontmatter } from "../mdx/frontmatter";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import { ApiDefinitionResolver } from "../resolver/ApiDefinitionResolver";
@@ -18,6 +18,7 @@ import type { ResolvedApiEndpoint, ResolvedRootPackage } from "../resolver/types
 async function getSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,
     pages: Record<string, DocsV1Read.PageContent>,
+    serializeMdx: MDX_SERIALIZER,
 ): Promise<FernDocs.MarkdownText | undefined> {
     const pageId = FernNavigation.getPageId(node);
     if (pageId == null) {
@@ -56,22 +57,22 @@ export async function resolveDocsContent({
     apis,
     pages,
     mdxOptions,
-    domain,
     featureFlags,
+    serializeMdx,
 }: {
     found: FernNavigation.utils.Node.Found;
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
     mdxOptions?: FernSerializeMdxOptions;
-    domain: string;
     featureFlags: FeatureFlags;
+    serializeMdx: MDX_SERIALIZER;
 }): Promise<DocsContent | undefined> {
-    const neighbors = await getNeighbors(found, pages);
+    const neighbors = await getNeighbors(found, pages, serializeMdx);
     const { node, apiReference, parents } = found;
 
     if (node.type === "changelog") {
         const pageIds = new Set<FernNavigation.PageId>();
-        FernNavigation.traverseNavigation(node, (n) => {
+        FernNavigation.traverseDF(node, (n) => {
             if (FernNavigation.hasMarkdown(n)) {
                 const pageId = FernNavigation.getPageId(n);
                 if (pageId != null) {
@@ -169,7 +170,7 @@ export async function resolveDocsContent({
         };
     } else if (apiReference != null && apiReference.paginated && FernNavigation.hasMarkdown(node)) {
         // if long scrolling is disabled, we should render a markdown page by itself
-        return resolveMarkdownPage(node, found, apis, pages, mdxOptions, featureFlags, domain, neighbors);
+        return resolveMarkdownPage(node, found, apis, pages, mdxOptions, featureFlags, neighbors, serializeMdx);
     } else if (apiReference != null) {
         let api = apis[apiReference.apiDefinitionId];
         if (api == null) {
@@ -240,7 +241,7 @@ export async function resolveDocsContent({
             // neighbors,
         };
     } else {
-        return resolveMarkdownPage(node, found, apis, pages, mdxOptions, featureFlags, domain, neighbors);
+        return resolveMarkdownPage(node, found, apis, pages, mdxOptions, featureFlags, neighbors, serializeMdx);
     }
 }
 
@@ -251,8 +252,8 @@ async function resolveMarkdownPage(
     pages: Record<string, DocsV1Read.PageContent>,
     mdxOptions: FernSerializeMdxOptions | undefined,
     featureFlags: FeatureFlags,
-    domain: string,
     neighbors: DocsContent.Neighbors,
+    serializeMdx: MDX_SERIALIZER,
 ): Promise<DocsContent.CustomMarkdownPage | undefined> {
     const pageId = FernNavigation.getPageId(node);
     if (pageId == null) {
@@ -269,7 +270,7 @@ async function resolveMarkdownPage(
         filename: pageId,
         frontmatterDefaults: {
             title: node.title,
-            breadcrumb: found.breadcrumb,
+            breadcrumb: [...found.breadcrumb],
             "edit-this-page-url": pageContent.editThisPageUrl,
             "force-toc": featureFlags.isTocDefaultEnabled,
         },
@@ -332,11 +333,12 @@ async function resolveMarkdownPage(
 async function getNeighbor(
     node: FernNavigation.NavigationNodeNeighbor | undefined,
     pages: Record<string, DocsV1Read.PageContent>,
+    serializeMdx: MDX_SERIALIZER,
 ): Promise<DocsContent.Neighbor | null> {
     if (node == null) {
         return null;
     }
-    const excerpt = await getSubtitle(node, pages);
+    const excerpt = await getSubtitle(node, pages, serializeMdx);
     return {
         slug: node.slug,
         title: node.title,
@@ -347,8 +349,12 @@ async function getNeighbor(
 async function getNeighbors(
     node: FernNavigation.utils.Node.Found,
     pages: Record<string, DocsV1Read.PageContent>,
+    serializeMdx: MDX_SERIALIZER,
 ): Promise<DocsContent.Neighbors> {
-    const [prev, next] = await Promise.all([getNeighbor(node.prev, pages), getNeighbor(node.next, pages)]);
+    const [prev, next] = await Promise.all([
+        getNeighbor(node.prev, pages, serializeMdx),
+        getNeighbor(node.next, pages, serializeMdx),
+    ]);
     return { prev, next };
 }
 

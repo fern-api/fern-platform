@@ -12,8 +12,8 @@ import {
     getSeoProps,
     renderThemeStylesheet,
     resolveDocsContent,
-    serializeMdx,
 } from "@fern-ui/ui";
+import { serializeMdx } from "@fern-ui/ui/bundlers/next-mdx-remote";
 import type { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
 import urljoin from "url-join";
@@ -65,11 +65,11 @@ export async function getDocsPageProps(
         found: node,
         apis: docs.definition.apis,
         pages: docs.definition.pages,
-        domain: docs.baseUrl.domain,
         featureFlags,
         mdxOptions: {
             files: docs.definition.jsFiles,
         },
+        serializeMdx,
     });
 
     if (content == null) {

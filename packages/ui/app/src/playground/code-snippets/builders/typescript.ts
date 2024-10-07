@@ -6,12 +6,9 @@ import { PlaygroundCodeSnippetBuilder } from "./types";
 export class TypescriptFetchSnippetBuilder extends PlaygroundCodeSnippetBuilder {
     // TODO: write more tests for this
     #buildFetch(body: string | undefined): string {
-        if (this.endpoint == null) {
-            return "";
-        }
-        return `// ${this.endpoint.title} (${this.endpoint.method} ${buildPath(this.endpoint.path)})
+        return `// ${this.context.node.title} (${this.context.endpoint.method} ${buildPath(this.context.endpoint.path)})
 const response = await fetch("${this.url}", {
-  method: "${this.endpoint.method}",
+  method: "${this.context.endpoint.method}",
   headers: ${indentAfter(JSON.stringify(this.formState.headers, undefined, 2), 2, 0)},${!isEmpty(body) ? `\n  body: ${body},` : ""}
 });
 

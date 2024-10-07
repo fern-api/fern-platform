@@ -1,6 +1,6 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { DefinitionObjectFactory } from "@fern-ui/fdr-utils";
-import { extractHeadline, getSeoProps } from "../getSeoProp";
+import { extractHeadline, getSeoProps, stripMarkdown } from "../getSeoProp";
 
 describe("getSeoProps", () => {
     it("seo disabled", () => {
@@ -34,9 +34,9 @@ describe("getSeoProps", () => {
     });
 
     it("extracts SEO title properly", () => {
-        expect(extractHeadline("#")).toBe("");
-        expect(extractHeadline("# goodcase")).toBe("goodcase");
-        expect(extractHeadline("## h2")).toBe(undefined);
-        expect(extractHeadline("##nospaceh2")).toBe(undefined);
+        expect(stripMarkdown(extractHeadline("#"))).toBe("");
+        expect(stripMarkdown(extractHeadline("# goodcase"))).toBe("goodcase");
+        expect(stripMarkdown(extractHeadline("## h2"))).toBe(undefined);
+        expect(stripMarkdown(extractHeadline("##nospaceh2"))).toBe(undefined);
     });
 });

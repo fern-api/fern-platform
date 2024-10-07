@@ -1,15 +1,14 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton } from "@fern-ui/components";
-import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { animate, motion, useMotionValue } from "framer-motion";
-import { ArrowLeft, Xmark } from "iconoir-react";
+import { Xmark } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";
-import { ReactElement, memo, useEffect, useMemo } from "react";
+import { ReactElement, memo, useEffect } from "react";
 import { useCallbackOne } from "use-memo-one";
-import { HEADER_HEIGHT_ATOM, useAtomEffect, useFlattenedApis, useSidebarNodes } from "../atoms";
+import { HEADER_HEIGHT_ATOM, useAtomEffect } from "../atoms";
 import {
     MAX_PLAYGROUND_HEIGHT_ATOM,
     PLAYGROUND_NODE_ID,
@@ -20,38 +19,16 @@ import {
 } from "../atoms/playground";
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATOM } from "../atoms/viewport";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { isEndpoint, isWebSocket, type ResolvedApiEndpointWithPackage } from "../resolver/types";
-import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
+import { PlaygroundContent } from "./PlaygroundContent";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
-import { PlaygroundEndpoint } from "./endpoint/PlaygroundEndpoint";
-import { PlaygroundEndpointSelectorContent, flattenApiSection } from "./endpoint/PlaygroundEndpointSelectorContent";
-import { PlaygroundEndpointSkeleton } from "./endpoint/PlaygroundEndpointSkeleton";
+import { PlaygroundEndpointSelectorContent } from "./endpoint/PlaygroundEndpointSelectorContent";
 import { useResizeY } from "./useSplitPlane";
+import { PLAYGROUND_API_GROUPS_ATOM } from "./utils/flatten-apis";
 
-interface PlaygroundDrawerProps {
-    isLoading: boolean;
-}
-
-export const PlaygroundDrawer = memo(({ isLoading }: PlaygroundDrawerProps): ReactElement | null => {
+export const PlaygroundDrawer = memo((): ReactElement | null => {
     const selectionState = usePlaygroundNode();
-    const apis = useFlattenedApis();
 
-    const sidebar = useSidebarNodes();
-    const apiGroups = useMemo(() => flattenApiSection(sidebar), [sidebar]);
-
-    const matchedSection = selectionState != null ? apis[selectionState.apiDefinitionId] : undefined;
-
-    const nodeIdToApiDefinition = useMemo(() => {
-        const nodes = new Map<FernNavigation.NodeId, ResolvedApiEndpointWithPackage>();
-        Object.values(apis).forEach((api) => {
-            api.endpoints.forEach((endpoint) => {
-                nodes.set(endpoint.nodeId, endpoint);
-            });
-        });
-        return nodes;
-    }, [apis]);
-
-    const types = matchedSection?.types ?? EMPTY_OBJECT;
+    const apiGroups = useAtomValue(PLAYGROUND_API_GROUPS_ATOM);
 
     const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
     const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
@@ -88,20 +65,6 @@ export const PlaygroundDrawer = memo(({ isLoading }: PlaygroundDrawerProps): Rea
     const isPlaygroundOpen = useIsPlaygroundOpen();
     const togglePlayground = useTogglePlayground();
 
-    const matchedEndpoint =
-        selectionState?.type === "endpoint"
-            ? (matchedSection?.endpoints.find(
-                  (definition) => isEndpoint(definition) && definition.id === selectionState.endpointId,
-              ) as ResolvedApiEndpointWithPackage.Endpoint | undefined)
-            : undefined;
-
-    const matchedWebSocket =
-        selectionState?.type === "webSocket"
-            ? (matchedSection?.endpoints.find(
-                  (definition) => isWebSocket(definition) && definition.id === selectionState.webSocketId,
-              ) as ResolvedApiEndpointWithPackage.WebSocket | undefined)
-            : undefined;
-
     useEffect(() => {
         // if keyboard press "ctrl + `", open playground
         const togglePlaygroundHandler = (e: KeyboardEvent) => {
@@ -123,20 +86,6 @@ export const PlaygroundDrawer = memo(({ isLoading }: PlaygroundDrawerProps): Rea
     };
 
     const setFormState = useSetAtom(usePlaygroundFormStateAtom(selectionState?.id ?? FernNavigation.NodeId("")));
-
-    const renderContent = () =>
-        selectionState?.type === "endpoint" && matchedEndpoint != null ? (
-            <PlaygroundEndpoint endpoint={matchedEndpoint} types={types} />
-        ) : selectionState?.type === "webSocket" && matchedWebSocket != null ? (
-            <PlaygroundWebSocket websocket={matchedWebSocket} types={types} />
-        ) : isLoading ? (
-            <PlaygroundEndpointSkeleton />
-        ) : (
-            <div className="size-full flex flex-col items-center justify-center">
-                <ArrowLeft className="size-8 mb-2 t-muted" />
-                <h6 className="t-muted">Select an endpoint to get started</h6>
-            </div>
-        );
 
     const renderMobileHeader = () => (
         <div className="grid h-10 grid-cols-2 gap-2 px-4">
@@ -201,7 +150,7 @@ export const PlaygroundDrawer = memo(({ isLoading }: PlaygroundDrawerProps): Rea
                                 renderMobileHeader()
                             )}
                             {isMobileSidebarEnabled ? (
-                                renderContent()
+                                <PlaygroundContent />
                             ) : (
                                 <HorizontalSplitPane
                                     mode="pixel"
@@ -212,10 +161,10 @@ export const PlaygroundDrawer = memo(({ isLoading }: PlaygroundDrawerProps): Rea
                                         apiGroups={apiGroups}
                                         selectedEndpoint={selectedEndpoint}
                                         className="h-full"
-                                        nodeIdToApiDefinition={nodeIdToApiDefinition}
+                                        // nodeIdToApiDefinition={nodeIdToApiDefinition}
                                     />
 
-                                    {renderContent()}
+                                    <PlaygroundContent />
                                 </HorizontalSplitPane>
                             )}
                         </motion.div>

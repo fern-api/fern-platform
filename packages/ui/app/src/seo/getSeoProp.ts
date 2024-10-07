@@ -7,7 +7,6 @@ import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
 import { visit } from "unist-util-visit";
 import { getToHref } from "../hooks/useHref";
-import { stringHasMarkdown } from "../mdx/common/util";
 import { getFrontmatter } from "../mdx/frontmatter";
 import { getFontExtension } from "../themes/stylesheet/getFontVariables";
 import { getBreadcrumbList } from "./getBreadcrumbList";
@@ -50,7 +49,11 @@ export function getSeoProps(
     pages: Record<string, DocsV1Read.PageContent>,
     files: Record<string, DocsV1Read.File_>,
     apis: Record<string, APIV1Read.ApiDefinition>,
-    { node, parents }: Pick<FernNavigation.utils.Node.Found, "node" | "parents" | "currentVersion" | "root">,
+    {
+        node,
+        parents,
+        currentVersion,
+    }: Pick<FernNavigation.utils.Node.Found, "node" | "parents" | "currentVersion" | "root">,
     isSeoDisabled: boolean,
     isTrailingSlashEnabled: boolean,
 ): NextSeoProps {
@@ -77,49 +80,46 @@ export function getSeoProps(
     const pageId = FernNavigation.getPageId(node);
 
     let ogMetadata: DocsV1Read.MetadataConfig = metadata ?? EMPTY_METADATA_CONFIG;
-    let seoTitleFromMarkdownH1;
-    let frontmatterHeadline;
 
-    if (pageId != null) {
-        const page = pages[pageId];
-        if (page != null) {
-            const { data: frontmatter, content } = getFrontmatter(page.markdown);
-            ogMetadata = { ...ogMetadata, ...frontmatter };
+    const page = pageId != null ? pages[pageId] : undefined;
+    if (page != null) {
+        const { data: frontmatter, content } = getFrontmatter(page.markdown);
+        ogMetadata = { ...ogMetadata, ...frontmatter };
 
-            // retrofit og:image, preferring og:image
-            // TODO: (rohin) Come back here and support more image transformations (twitter, logo, etc)
-            for (const frontmatterImageVar of [frontmatter.image, frontmatter["og:image"]]) {
-                if (frontmatterImageVar != null) {
-                    // TODO: (rohin) remove string check when fully migrated, but keeping for back compat
-                    if (typeof frontmatterImageVar === "string") {
-                        ogMetadata["og:image"] ??= {
-                            type: "url",
-                            value: APIV1Read.Url(frontmatterImageVar),
-                        };
-                    } else {
-                        visitDiscriminatedUnion(frontmatterImageVar, "type")._visit({
-                            fileId: (fileId) => {
-                                const realId = fileId.value.split(":")[1];
-                                if (realId != null) {
-                                    fileId.value = APIV1Read.FileId(realId);
-                                    ogMetadata["og:image"] = fileId;
-                                }
-                            },
-                            url: (url) => {
-                                ogMetadata["og:image"] = url;
-                            },
-                            _other: undefined,
-                        });
-                    }
+        if (frontmatter["canonical-url"] != null) {
+            seo.canonical = frontmatter["canonical-url"];
+        }
+
+        // retrofit og:image, preferring og:image
+        // TODO: (rohin) Come back here and support more image transformations (twitter, logo, etc)
+        for (const frontmatterImageVar of [frontmatter.image, frontmatter["og:image"]]) {
+            if (frontmatterImageVar != null) {
+                // TODO: (rohin) remove string check when fully migrated, but keeping for back compat
+                if (typeof frontmatterImageVar === "string") {
+                    ogMetadata["og:image"] ??= {
+                        type: "url",
+                        value: APIV1Read.Url(frontmatterImageVar),
+                    };
+                } else {
+                    visitDiscriminatedUnion(frontmatterImageVar, "type")._visit({
+                        fileId: (fileId) => {
+                            const realId = fileId.value.split(":")[1];
+                            if (realId != null) {
+                                fileId.value = APIV1Read.FileId(realId);
+                                ogMetadata["og:image"] = fileId;
+                            }
+                        },
+                        url: (url) => {
+                            ogMetadata["og:image"] = url;
+                        },
+                        _other: undefined,
+                    });
                 }
             }
-
-            seoTitleFromMarkdownH1 = extractHeadline(content);
-            frontmatterHeadline = frontmatter.headline;
-
-            seo.title ??= frontmatterHeadline ?? seoTitleFromMarkdownH1 ?? frontmatter.title;
-            seo.description ??= frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt;
         }
+
+        seo.title = stripMarkdown(frontmatter.headline ?? extractHeadline(content) ?? frontmatter.title);
+        seo.description = stripMarkdown(frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt);
     }
 
     if (FernNavigation.isApiLeaf(node) && apis[node.apiDefinitionId] != null) {
@@ -148,13 +148,6 @@ export function getSeoProps(
                 },
             });
         }
-    }
-
-    if (seo.title != null && stringHasMarkdown(seo.title)) {
-        seo.title = stripMarkdown(seo.title);
-    }
-    if (seo.description != null && stringHasMarkdown(seo.description)) {
-        seo.description = stripMarkdown(seo.description);
     }
 
     openGraph.title ??= ogMetadata["og:title"];
@@ -220,8 +213,23 @@ export function getSeoProps(
     // defaults
     seo.title ??= node.title;
     openGraph.siteName ??= title;
+
+    /**
+     * Disambiguate the title via the version title, if it exists and is not the default version.
+     *
+     * default:  Get Plants - Plant Store
+     * v1:       Get Plants (v1) - Plant Store
+     * v2:       Get Plants (v2) - Plant Store
+     */
+    if (title != null && currentVersion != null && !currentVersion.default) {
+        seo.titleTemplate ??= `%s (${currentVersion.title}) — ${title}`;
+    }
+
+    /**
+     * Fallback title template: "Page Title — Site Title"
+     */
     if (title != null) {
-        seo.titleTemplate ??= frontmatterHeadline ?? seoTitleFromMarkdownH1 ?? `%s — ${title}`;
+        seo.titleTemplate ??= `%s — ${title}`;
     }
 
     if (favicon != null && files[favicon] != null) {
@@ -292,7 +300,10 @@ function getPreloadedFont(
     };
 }
 
-function stripMarkdown(markdown: string): string {
+export function stripMarkdown(markdown: string | undefined): string | undefined {
+    if (markdown == null) {
+        return undefined;
+    }
     try {
         const tree = toHast(fromMarkdown(markdown));
 
@@ -307,9 +318,10 @@ function stripMarkdown(markdown: string): string {
     }
 }
 
+// TODO: make this more robust and well-tested i.e. title over multiple lines
 export function extractHeadline(markdownContent: string): string | undefined {
     if (markdownContent.trim().startsWith("#") && !markdownContent.trim().startsWith("##")) {
-        return stripMarkdown(markdownContent.trim().split("\n")[0] ?? "");
+        return markdownContent.trim().split("\n")[0];
     }
     return;
 }

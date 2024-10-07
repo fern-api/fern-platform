@@ -1,24 +1,24 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernCard, FernScrollArea } from "@fern-ui/components";
 import { titleCase } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { WebSocketMessage, WebSocketMessages } from "../api-reference/web-socket/WebSocketMessages";
-import { ResolvedTypeDefinition, ResolvedWebSocketChannel, ResolvedWebSocketMessage } from "../resolver/types";
 import { PlaygroundWebSocketHandshakeForm } from "./PlaygroundWebSocketHandshakeForm";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
 import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
+import { WebSocketContext } from "./types/endpoint-context";
 
 interface PlaygroundWebSocketSessionFormProps {
-    websocket: ResolvedWebSocketChannel;
+    context: WebSocketContext;
     formState: PlaygroundWebSocketRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
     // response: Loadable<ResponsePayload>;
     // sendRequest: () => void;
-    types: Record<string, ResolvedTypeDefinition>;
     scrollAreaHeight: number;
     messages: WebSocketMessage[];
-    sendMessage: (message: ResolvedWebSocketMessage, data: unknown) => void;
+    sendMessage: (message: ApiDefinition.WebSocketMessage, data: unknown) => void;
     clearMessages: () => void;
     startSession: () => void;
     connected: boolean;
@@ -26,10 +26,9 @@ interface PlaygroundWebSocketSessionFormProps {
 }
 
 export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormProps> = ({
-    websocket,
+    context,
     formState,
     setFormState,
-    types,
     scrollAreaHeight,
     messages,
     sendMessage,
@@ -38,7 +37,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
     error,
 }) => {
     const setMessage = useCallback(
-        (message: ResolvedWebSocketMessage, data: unknown) => {
+        (message: ApiDefinition.WebSocketMessage, data: unknown) => {
             setFormState((old) => ({
                 ...old,
                 messages: {
@@ -59,15 +58,14 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
             <div className="mx-auto w-full max-w-5xl space-y-6 py-6">
                 <div className="space-y-8">
                     <PlaygroundWebSocketHandshakeForm
-                        websocket={websocket}
+                        context={context}
                         formState={formState}
                         setFormState={setFormState}
-                        types={types}
                         error={error}
                         disabled={connected}
                     />
 
-                    {websocket.messages
+                    {context.channel.messages
                         .filter((message) => message.origin === "client")
                         .map((message) => (
                             <div key={message.type}>
@@ -81,7 +79,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                                             shape={message.body}
                                             onChange={(data) => setMessage(message, data)}
                                             value={formState?.messages[message.type]}
-                                            types={types}
+                                            types={context.types}
                                         />
                                     </div>
 

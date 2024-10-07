@@ -9,7 +9,7 @@ export const FernUserSchema = z.object({
 
 export type FernUser = z.infer<typeof FernUserSchema>;
 
-export const AuthEdgeConfigOAuth2Schema = z.object({
+export const AuthEdgeConfigOAuth2OrySchema = z.object({
     type: z.literal("oauth2"),
     partner: z.literal("ory"),
     environment: z.string(),
@@ -17,7 +17,16 @@ export const AuthEdgeConfigOAuth2Schema = z.object({
     scope: z.optional(z.string()),
     clientId: z.string(),
     clientSecret: z.string(),
+    redirectUri: z.string().optional(),
     "api-key-injection-enabled": z.optional(z.boolean()),
+});
+export const AuthEdgeConfigOAuth2WebflowSchema = z.object({
+    type: z.literal("oauth2"),
+    partner: z.literal("webflow"),
+    scope: z.optional(z.union([z.string(), z.array(z.string())])),
+    clientId: z.string(),
+    clientSecret: z.string(),
+    redirectUri: z.string().optional(),
 });
 
 export const AuthEdgeConfigBasicTokenVerificationSchema = z.object({
@@ -25,12 +34,29 @@ export const AuthEdgeConfigBasicTokenVerificationSchema = z.object({
     secret: z.string(),
     issuer: z.string(),
     redirect: z.string(),
+
+    allowlist: z
+        .array(z.string(), {
+            description: "List of pages (regexp allowed) that are public and do not require authentication",
+        })
+        .optional(),
+    denylist: z
+        .array(z.string(), {
+            description: "List of pages (regexp allowed) that are private and require authentication",
+        })
+        .optional(),
 });
 
-export const AuthEdgeConfigSchema = z.union([AuthEdgeConfigOAuth2Schema, AuthEdgeConfigBasicTokenVerificationSchema]);
+export const AuthEdgeConfigSchema = z.union([
+    AuthEdgeConfigOAuth2OrySchema,
+    AuthEdgeConfigOAuth2WebflowSchema,
+    AuthEdgeConfigBasicTokenVerificationSchema,
+    AuthEdgeConfigBasicTokenVerificationSchema,
+]);
 
 export type AuthEdgeConfig = z.infer<typeof AuthEdgeConfigSchema>;
-export type AuthEdgeConfigOAuth2 = z.infer<typeof AuthEdgeConfigOAuth2Schema>;
+export type AuthEdgeConfigOAuth2Ory = z.infer<typeof AuthEdgeConfigOAuth2OrySchema>;
+export type AuthEdgeConfigOAuth2Webflow = z.infer<typeof AuthEdgeConfigOAuth2WebflowSchema>;
 export type AuthEdgeConfigBasicTokenVerification = z.infer<typeof AuthEdgeConfigBasicTokenVerificationSchema>;
 
 export const OAuthTokenResponseSchema = z.object({

@@ -1,6 +1,13 @@
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import * as prisma from "@prisma/client";
-import { Generator, GeneratorId, GeneratorLanguage, GeneratorType } from "../../api/generated/api/resources/generators";
+import {
+    Generator,
+    GeneratorId,
+    GeneratorLanguage,
+    GeneratorScripts,
+    GeneratorType,
+    Script,
+} from "../../api/generated/api/resources/generators";
 import { assertNever, readBuffer, writeBuffer } from "../../util";
 
 export interface LoadSnippetAPIRequest {
@@ -85,6 +92,7 @@ export class GeneratorsDaoImpl implements GeneratorsDao {
             generatorType: writeBuffer(generator.generatorType),
             generatorLanguage: convertGeneratorLanguage(generator.generatorLanguage),
             dockerImage: generator.dockerImage,
+            scripts: generator.scripts ? writeBuffer(generator.scripts) : undefined,
         };
         await this.prisma.generator.upsert({
             where: {
@@ -160,6 +168,7 @@ function convertPrismaGenerator(generator: prisma.Generator | null): Generator |
               generatorType: readBuffer(generator.generatorType) as GeneratorType,
               generatorLanguage: convertPrismaLanguage(generator.generatorLanguage),
               dockerImage: generator.dockerImage,
+              scripts: generator.scripts ? (readBuffer(generator.scripts) as GeneratorScripts) : undefined,
           }
         : undefined;
 }

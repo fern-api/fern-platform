@@ -78,4 +78,20 @@ describe("breadcrumb", () => {
             ]),
         ).toStrictEqual([["b", "c"], ["b", "c", "d"], ["b"]]);
     });
+
+    it("successfully trims syndicate breadcrumbs", () => {
+        expect(
+            trimBreadcrumb([
+                ["API", "Admin", "Projects"],
+                ["API", "Admin", "Contracts & Function Signatures"],
+                ["API", "Signatures"],
+                ["API", "Wallets"],
+            ]),
+        ).toStrictEqual([
+            ["Admin", "Projects"],
+            ["Admin", "Contracts & Function Signatures"],
+            ["Signatures"],
+            ["Wallets"],
+        ]);
+    });
 });

@@ -1,6 +1,6 @@
 import { unknownToString } from "@fern-ui/core-utils";
 import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
-import { HttpRequest } from "./HttpRequest";
+import { SnippetHttpRequest } from "./SnippetHttpRequest";
 
 function requiresUrlEncode(str: string): boolean {
     return encodeURIComponent(str) !== str;
@@ -10,7 +10,7 @@ interface Flags {
     usesApplicationJsonInFormDataValue: boolean;
 }
 
-export function convertToCurl(request: HttpRequest, opts: Flags): string {
+export function convertToCurl(request: SnippetHttpRequest, opts: Flags): string {
     try {
         return unsafeStringifyHttpRequestExampleToCurl(request, opts);
     } catch (e) {
@@ -22,7 +22,7 @@ export function convertToCurl(request: HttpRequest, opts: Flags): string {
 }
 
 function unsafeStringifyHttpRequestExampleToCurl(
-    { method, url, searchParams, headers, basicAuth, body }: HttpRequest,
+    { method, url, searchParams, headers, basicAuth, body }: SnippetHttpRequest,
     { usesApplicationJsonInFormDataValue }: Flags,
 ): string {
     const queryParams = toUrlEncoded(searchParams)

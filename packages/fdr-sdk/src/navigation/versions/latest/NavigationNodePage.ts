@@ -1,4 +1,4 @@
-import type { ChangelogMonthNode, ChangelogNode, ChangelogYearNode } from ".";
+import type { ChangelogNode } from ".";
 import type { NavigationNode } from "./NavigationNode";
 import { isApiLeaf, type NavigationNodeApiLeaf } from "./NavigationNodeApiLeaf";
 import { hasMarkdown, type NavigationNodeWithMarkdown } from "./NavigationNodeMarkdown";
@@ -6,14 +6,11 @@ import { hasMarkdown, type NavigationNodeWithMarkdown } from "./NavigationNodeMa
 /**
  * A navigation node that represents a visitable page in the documentation
  */
-export type NavigationNodePage =
-    | NavigationNodeWithMarkdown
-    | NavigationNodeApiLeaf
-    | ChangelogNode
-    | ChangelogYearNode
-    | ChangelogMonthNode;
+export type NavigationNodePage = NavigationNodeWithMarkdown | NavigationNodeApiLeaf | ChangelogNode;
+// | ChangelogYearNode
+// | ChangelogMonthNode;
 
-export function isPage(node: NavigationNode): node is NavigationNodePage {
+export function isPage<N extends NavigationNode>(node: N): node is N & NavigationNodePage {
     return (
         isApiLeaf(node) ||
         node.type === "changelog" ||

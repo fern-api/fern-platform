@@ -1,29 +1,52 @@
+import { OAuth2Client } from "@/server/auth/OAuth2Client";
+import { getAPIKeyInjectionConfig } from "@/server/auth/getApiKeyInjectionConfig";
+import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
+import { withSecureCookie } from "@/server/auth/withSecure";
+import { COOKIE_FERN_TOKEN } from "@/server/constants";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import {
-    APIKeyInjectionConfig,
-    OAuth2Client,
-    OryAccessTokenSchema,
-    getAPIKeyInjectionConfig,
-    getAuthEdgeConfig,
-    withSecureCookie,
-} from "@fern-ui/ui/auth";
+import { APIKeyInjectionConfig, OryAccessTokenSchema } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
-import urlJoin from "url-join";
+import { WebflowClient } from "webflow-api";
+import type { OauthScope } from "webflow-api/api/types/OAuthScope";
 
 export const runtime = "edge";
 
 export default async function handler(req: NextRequest): Promise<NextResponse<APIKeyInjectionConfig>> {
     const domain = getXFernHostEdge(req);
-    const fern_token = req.cookies.get("fern_token")?.value;
+    const edgeConfig = await getAuthEdgeConfig(domain);
+
+    // assume that if the edge config is set for webflow, api key injection is always enabled
+    if (edgeConfig?.type === "oauth2" && edgeConfig.partner === "webflow") {
+        const accessToken = req.cookies.get("access_token")?.value;
+        if (accessToken == null) {
+            return NextResponse.json({
+                enabled: true,
+                authenticated: false,
+                url: WebflowClient.authorizeURL({
+                    clientId: edgeConfig.clientId,
+                    redirectUri: edgeConfig.redirectUri,
+
+                    // note: this is not validated
+                    scope: (edgeConfig.scope as OauthScope | OauthScope[]) ?? [],
+                }),
+            });
+        }
+        return NextResponse.json({
+            enabled: true,
+            authenticated: true,
+            access_token: accessToken,
+        });
+    }
+
+    const fernToken = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
 
     const config = await getAPIKeyInjectionConfig(domain, req.cookies);
-    const edgeConfig = await getAuthEdgeConfig(domain);
     const response = NextResponse.json(config);
 
     if (config.enabled && config.authenticated) {
         const expires = config.exp != null ? new Date(config.exp * 1000) : undefined;
-        if (fern_token != null) {
-            response.cookies.set("fern_token", fern_token, withSecureCookie({ expires }));
+        if (fernToken != null) {
+            response.cookies.set(COOKIE_FERN_TOKEN, fernToken, withSecureCookie({ expires }));
         }
 
         let access_token = config.access_token;
@@ -31,7 +54,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
         let exp = expires;
 
         if (edgeConfig != null && edgeConfig.type === "oauth2" && edgeConfig.partner === "ory") {
-            const oauthClient = new OAuth2Client(edgeConfig, urlJoin(`https://${domain}/api/auth/callback`));
+            const oauthClient = new OAuth2Client(edgeConfig);
 
             const token = OryAccessTokenSchema.parse(await oauthClient.decode(access_token));
             exp = token.exp == null ? undefined : new Date(token.exp * 1000);

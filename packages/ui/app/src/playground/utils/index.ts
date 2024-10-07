@@ -6,6 +6,5 @@ export * from "./oauth";
 export * from "./obfuscate-secret";
 export * from "./serialize";
 export * from "./snippets";
-export * from "./url";
 export * from "./utils";
 export * from "./websocket";

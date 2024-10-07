@@ -1,9 +1,10 @@
+import { toCurlyBraceEndpointPathLiteral } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { UnreachableCaseError } from "ts-essentials";
-import { ResolvedEndpointDefinition, stringifyResolvedEndpointPathPartsTemplate } from "../../resolver/types";
 import { provideRegistryService } from "../../services/registry";
 import { PlaygroundAuthState, PlaygroundEndpointRequestFormState } from "../types";
+import { EndpointContext } from "../types/endpoint-context";
 import { buildAuthHeaders, convertToCustomSnippetPayload } from "../utils";
 import { CurlSnippetBuilder } from "./builders/curl";
 import { PythonRequestSnippetBuilder } from "./builders/python";
@@ -11,7 +12,7 @@ import { TypescriptFetchSnippetBuilder } from "./builders/typescript";
 
 export class PlaygroundCodeSnippetResolverBuilder {
     constructor(
-        private endpoint: ResolvedEndpointDefinition,
+        private context: EndpointContext,
         private isSnippetTemplatesEnabled: boolean,
         private isFileForgeHackEnabled: boolean,
     ) {}
@@ -24,7 +25,7 @@ export class PlaygroundCodeSnippetResolverBuilder {
         setOAuthValue: (value: (prev: any) => any) => void,
     ): PlaygroundCodeSnippetResolver {
         return new PlaygroundCodeSnippetResolver(
-            this.endpoint,
+            this.context,
             authState,
             formState,
             false,
@@ -44,7 +45,7 @@ export class PlaygroundCodeSnippetResolverBuilder {
         setOAuthValue: (value: (prev: any) => any) => void,
     ): PlaygroundCodeSnippetResolver {
         return new PlaygroundCodeSnippetResolver(
-            this.endpoint,
+            this.context,
             authState,
             formState,
             true,
@@ -79,37 +80,37 @@ export class PlaygroundCodeSnippetResolver {
     }
 
     constructor(
-        public endpoint: ResolvedEndpointDefinition,
-        authState: PlaygroundAuthState,
+        public context: EndpointContext,
+        private authState: PlaygroundAuthState,
         private formState: PlaygroundEndpointRequestFormState,
         isAuthHeadersRedacted: boolean,
         public isSnippetTemplatesEnabled: boolean,
         private isFileForgeHackEnabled: boolean,
         proxyEnvironment: string,
-        private playgroundEnvironment: string | undefined,
+        private baseUrl: string | undefined,
         setOAuthValue: (value: (prev: any) => any) => void,
     ) {
         const authHeaders = buildAuthHeaders(
-            endpoint.auth,
+            this.context.auth,
             authState,
             { redacted: isAuthHeadersRedacted },
             {
                 formState,
-                endpoint,
+                endpoint: this.context.endpoint,
                 proxyEnvironment,
-                playgroundEnvironment,
+                baseUrl: this.baseUrl,
                 setValue: setOAuthValue,
             },
         );
 
         this.headers = { ...authHeaders, ...formState.headers };
 
-        if (endpoint.method !== "GET" && endpoint.requestBody?.contentType != null) {
-            this.headers["Content-Type"] = endpoint.requestBody.contentType;
+        if (this.context.endpoint.method !== "GET" && this.context.endpoint.request?.contentType != null) {
+            this.headers["Content-Type"] = this.context.endpoint.request.contentType;
         }
 
-        if (isSnippetTemplatesEnabled && endpoint.snippetTemplates != null) {
-            if (endpoint.snippetTemplates.typescript != null) {
+        if (isSnippetTemplatesEnabled && this.context.endpoint.snippetTemplates != null) {
+            if (this.context.endpoint.snippetTemplates.typescript != null) {
                 this.typescriptSdkResolver = new SnippetTemplateResolver({
                     payload: convertToCustomSnippetPayload(formState, authState),
                     endpointSnippetTemplate: {
@@ -119,11 +120,11 @@ export class PlaygroundCodeSnippetResolver {
                             version: "",
                         },
                         endpointId: {
-                            path: stringifyResolvedEndpointPathPartsTemplate(endpoint.path),
-                            method: endpoint.method,
+                            path: toCurlyBraceEndpointPathLiteral(this.context.endpoint.path),
+                            method: this.context.endpoint.method,
                             identifierOverride: undefined,
                         },
-                        snippetTemplate: endpoint.snippetTemplates.typescript,
+                        snippetTemplate: this.context.endpoint.snippetTemplates.typescript,
                         apiDefinitionId: undefined,
                         additionalTemplates: undefined,
                     },
@@ -131,7 +132,7 @@ export class PlaygroundCodeSnippetResolver {
                 });
             }
 
-            if (endpoint.snippetTemplates.python != null) {
+            if (this.context.endpoint.snippetTemplates.python != null) {
                 this.pythonRequestsResolver = new SnippetTemplateResolver({
                     payload: convertToCustomSnippetPayload(formState, authState),
                     endpointSnippetTemplate: {
@@ -141,11 +142,11 @@ export class PlaygroundCodeSnippetResolver {
                             version: "",
                         },
                         endpointId: {
-                            path: stringifyResolvedEndpointPathPartsTemplate(endpoint.path),
-                            method: endpoint.method,
+                            path: toCurlyBraceEndpointPathLiteral(this.context.endpoint.path),
+                            method: this.context.endpoint.method,
                             identifierOverride: undefined,
                         },
-                        snippetTemplate: endpoint.snippetTemplates.python,
+                        snippetTemplate: this.context.endpoint.snippetTemplates.python,
                         apiDefinitionId: undefined,
                         additionalTemplates: undefined,
                     },
@@ -157,7 +158,7 @@ export class PlaygroundCodeSnippetResolver {
 
     public toCurl(): string {
         const formState = { ...this.formState, headers: this.headers };
-        return new CurlSnippetBuilder(this.endpoint, formState, this.playgroundEnvironment)
+        return new CurlSnippetBuilder(this.context, formState, this.authState, this.baseUrl)
             .setFileForgeHackEnabled(this.isFileForgeHackEnabled)
             .build();
     }
@@ -171,12 +172,12 @@ export class PlaygroundCodeSnippetResolver {
         }
 
         const formState = { ...this.formState, headers };
-        return new TypescriptFetchSnippetBuilder(this.endpoint, formState, this.playgroundEnvironment).build();
+        return new TypescriptFetchSnippetBuilder(this.context, formState, this.authState, this.baseUrl).build();
     }
 
     public toPythonRequests(): string {
         const formState = { ...this.formState, headers: this.headers };
-        return new PythonRequestSnippetBuilder(this.endpoint, formState, this.playgroundEnvironment).build();
+        return new PythonRequestSnippetBuilder(this.context, formState, this.authState, this.baseUrl).build();
     }
 
     public toTypescriptSdkSnippet(apiDefinition?: APIV1Read.ApiDefinition): string | undefined {

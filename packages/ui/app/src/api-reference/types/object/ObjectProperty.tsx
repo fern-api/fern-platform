@@ -20,7 +20,7 @@ import {
     hasInlineEnum,
     hasInternalTypeReference,
 } from "../type-reference/InternalTypeReferenceDefinitions";
-import { renderTypeShorthandRoot } from "../type-shorthand/TypeShorthand";
+import { renderDeprecatedTypeShorthandRoot } from "../type-shorthand/TypeShorthand";
 
 export declare namespace ObjectProperty {
     export interface Props {
@@ -127,7 +127,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                         {property.key}
                     </span>
                 </FernAnchor>
-                {renderTypeShorthandRoot(property.valueShape, types, contextValue.isResponse)}
+                {renderDeprecatedTypeShorthandRoot(property.valueShape, types, contextValue.isResponse)}
                 {property.availability != null && (
                     <EndpointAvailabilityTag availability={property.availability} minimal={true} />
                 )}

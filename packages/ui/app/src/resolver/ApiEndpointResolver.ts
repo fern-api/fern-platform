@@ -34,6 +34,9 @@ interface MergedAuthAndHeaders {
     headers: ResolvedObjectProperty[];
 }
 
+/**
+ * @deprecated
+ */
 export class ApiEndpointResolver {
     public constructor(
         private collector: FernNavigation.NodeCollector,

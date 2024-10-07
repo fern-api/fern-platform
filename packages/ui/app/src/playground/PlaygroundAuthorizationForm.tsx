@@ -25,18 +25,18 @@ import {
     PLAYGROUND_AUTH_STATE_HEADER_ATOM,
     PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
     usePlaygroundEndpointFormState,
-    usePlaygroundEnvironment,
 } from "../atoms";
-import { useOAuthEndpoint } from "../atoms/oauth";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
 import { Callout } from "../mdx/components/callout";
-import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../resolver/types";
 import { useApiKeyInjectionConfig } from "../services/useApiKeyInjectionConfig";
 import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundEndpointForm } from "./endpoint/PlaygroundEndpointForm";
+import { useOAuthEndpointContext } from "./hooks/useOauthEndpointContext";
 import { PlaygroundAuthState } from "./types";
+import { EndpointContext } from "./types/endpoint-context";
 import { oAuthClientCredentialReferencedEndpointLoginFlow } from "./utils/oauth";
+import { usePlaygroundBaseUrl } from "./utils/select-environment";
 
 interface PlaygroundAuthorizationFormProps {
     auth: APIV1Read.ApiAuth;
@@ -152,22 +152,23 @@ function HeaderAuthForm({ header, disabled }: { header: APIV1Read.HeaderAuth; di
 }
 
 function FoundOAuthReferencedEndpointForm({
-    oAuthEndpoint,
-    types,
+    context,
     oAuthClientCredentialsReferencedEndpoint,
     closeContainer,
     disabled,
 }: {
-    oAuthEndpoint: ResolvedEndpointDefinition;
-    types: Record<string, ResolvedTypeDefinition>;
+    /**
+     * this must be the OAuth endpoint.
+     */
+    context: EndpointContext;
     oAuthClientCredentialsReferencedEndpoint: APIV1Read.OAuthClientCredentialsReferencedEndpoint;
     closeContainer: () => void;
     disabled?: boolean;
 }) {
     const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
     const proxyEnvironment = useStandardProxyEnvironment();
-    const [formState, setFormState] = usePlaygroundEndpointFormState(oAuthEndpoint);
-    const playgroundEnvironment = usePlaygroundEnvironment();
+    const [formState, setFormState] = usePlaygroundEndpointFormState(context);
+    const baseUrl = usePlaygroundBaseUrl(context.endpoint);
 
     const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
 
@@ -178,10 +179,10 @@ function FoundOAuthReferencedEndpointForm({
         setValue((prev) => ({ ...prev, isLoggingIn: true }));
         await oAuthClientCredentialReferencedEndpointLoginFlow({
             formState,
-            endpoint: oAuthEndpoint,
+            endpoint: context.endpoint,
             proxyEnvironment,
             oAuthClientCredentialsReferencedEndpoint,
-            playgroundEnvironment,
+            baseUrl,
             setValue,
             closeContainer,
             setDisplayFailedLogin,
@@ -218,10 +219,9 @@ function FoundOAuthReferencedEndpointForm({
                             <span className="font-mono text-sm">OAuth Client Credentials Login</span>
                         </label>
                         <PlaygroundEndpointForm
-                            endpoint={oAuthEndpoint}
+                            context={context}
                             formState={formState}
                             setFormState={setFormState}
-                            types={types}
                             ignoreHeaders={true}
                         />
                     </li>
@@ -295,18 +295,19 @@ function OAuthReferencedEndpointForm({
     closeContainer: () => void;
     disabled?: boolean;
 }) {
-    const { oAuthEndpoint, types } = useOAuthEndpoint(referencedEndpoint) ?? {};
+    const { context, isLoading } = useOAuthEndpointContext(referencedEndpoint);
 
-    if (oAuthEndpoint == null || types == null) {
-        // eslint-disable-next-line no-console
-        console.error("Could not find OAuth endpoint for referenced endpoint", referencedEndpoint);
+    if (context == null) {
+        if (!isLoading) {
+            // eslint-disable-next-line no-console
+            console.error("Could not find OAuth endpoint for referenced endpoint", referencedEndpoint);
+        }
         return <BearerAuthForm bearerAuth={{ tokenName: "token" }} disabled={disabled} />;
     }
 
     return (
         <FoundOAuthReferencedEndpointForm
-            oAuthEndpoint={oAuthEndpoint}
-            types={types}
+            context={context}
             oAuthClientCredentialsReferencedEndpoint={oAuthClientCredentialsReferencedEndpoint}
             closeContainer={closeContainer}
             disabled={disabled}
@@ -395,7 +396,7 @@ export function PlaygroundAuthorizationFormCard({
             }
             url.searchParams.set("state", state.toString());
 
-            if (apiKeyInjection.partner === "ory") {
+            if (apiKeyInjection.partner === "ory" || apiKeyInjection.partner === "webflow") {
                 const redirect_uri = urlJoin(window.location.origin, callbackApiRoute);
                 url.searchParams.set("redirect_uri", redirect_uri);
             }

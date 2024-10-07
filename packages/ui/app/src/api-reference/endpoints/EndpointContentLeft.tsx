@@ -4,9 +4,11 @@ import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
 import { useFeatureFlags } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
+import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
 import {
     ResolvedEndpointDefinition,
     ResolvedError,
+    ResolvedExampleEndpointCall,
     ResolvedObjectProperty,
     ResolvedTypeDefinition,
     getParameterDescription,
@@ -26,6 +28,7 @@ export interface HoveringProps {
 export declare namespace EndpointContentLeft {
     export interface Props {
         endpoint: ResolvedEndpointDefinition;
+        example: ResolvedExampleEndpointCall;
         showErrors: boolean;
         onHoverRequestProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         onHoverResponseProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
@@ -48,6 +51,7 @@ const RESPONSE_ERROR = ["response", "error"];
 
 const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     endpoint,
+    example,
     showErrors,
     onHoverRequestProperty,
     onHoverResponseProperty,
@@ -272,6 +276,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 <EndpointSection title="Response" anchorIdParts={RESPONSE} slug={endpoint.slug}>
                     <EndpointResponseSection
                         responseBody={endpoint.responseBody}
+                        exampleResponseBody={mergeEndpointSchemaWithExample(endpoint, example).responseBody}
                         onHoverProperty={onHoverResponseProperty}
                         anchorIdParts={RESPONSE_BODY}
                         slug={endpoint.slug}

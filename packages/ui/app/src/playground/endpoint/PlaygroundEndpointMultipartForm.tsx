@@ -1,15 +1,15 @@
+import { EndpointDefinition, HttpRequestBodyShape, TypeDefinition } from "@fern-api/fdr-sdk/api-definition";
+import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { ReactElement, useCallback } from "react";
-import { ResolvedEndpointDefinition, ResolvedFormData, ResolvedTypeDefinition } from "../../resolver/types";
 import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertyForm } from "../form/PlaygroundObjectPropertyForm";
 import { PlaygroundEndpointRequestFormState, PlaygroundFormDataEntryValue, PlaygroundFormStateBody } from "../types";
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 
 interface PlaygroundEndpointMultipartFormProps {
-    endpoint: ResolvedEndpointDefinition;
+    endpoint: EndpointDefinition;
     formState: PlaygroundEndpointRequestFormState | undefined;
-    formData: ResolvedFormData;
-    types: Record<string, ResolvedTypeDefinition>;
+    formData: HttpRequestBodyShape.FormData;
+    types: Record<string, TypeDefinition>;
     setBody: (
         value:
             | PlaygroundFormStateBody
@@ -67,8 +67,8 @@ export function PlaygroundEndpointMultipartForm({
     const handleFormDataFileChange = useCallback(
         (key: string, files: ReadonlyArray<File> | undefined) => {
             const type =
-                endpoint.requestBody?.shape.type === "formData"
-                    ? endpoint.requestBody?.shape.properties.find((p) => p.key === key)?.type
+                endpoint.request?.body.type === "formData"
+                    ? endpoint.request?.body.fields.find((p) => p.key === key)?.type
                     : undefined;
             if (files == null || files.length === 0) {
                 setFormDataEntry(key, undefined);
@@ -76,11 +76,11 @@ export function PlaygroundEndpointMultipartForm({
             } else {
                 setFormDataEntry(
                     key,
-                    type === "fileArray" ? { type: "fileArray", value: files } : { type: "file", value: files[0] },
+                    type === "files" ? { type: "fileArray", value: files } : { type: "file", value: files[0] },
                 );
             }
         },
-        [endpoint.requestBody, setFormDataEntry],
+        [endpoint, setFormDataEntry],
     );
 
     const handleFormDataJsonChange = useCallback(
@@ -99,18 +99,18 @@ export function PlaygroundEndpointMultipartForm({
 
     return (
         <ul className="list-none space-y-8">
-            {formData.properties.map((property) =>
-                visitDiscriminatedUnion(property, "type")._visit({
+            {formData.fields.map((field) =>
+                visitDiscriminatedUnion(field)._visit({
                     file: (file) => {
-                        const currentValue = formDataFormValue[property.key];
+                        const currentValue = formDataFormValue[field.key];
                         return (
-                            <li key={property.key}>
+                            <li key={field.key}>
                                 <PlaygroundFileUploadForm
-                                    id={`body.${property.key}`}
-                                    propertyKey={property.key}
+                                    id={`body.${field.key}`}
+                                    propertyKey={field.key}
                                     type={file.type}
                                     isOptional={file.isOptional}
-                                    onValueChange={(files) => handleFormDataFileChange(property.key, files)}
+                                    onValueChange={(files) => handleFormDataFileChange(field.key, files)}
                                     value={
                                         currentValue?.type === "file"
                                             ? currentValue.value != null
@@ -122,33 +122,32 @@ export function PlaygroundEndpointMultipartForm({
                             </li>
                         );
                     },
-                    fileArray: (fileArray) => {
-                        const currentValue = formDataFormValue[property.key];
+                    files: (fileArray) => {
+                        const currentValue = formDataFormValue[field.key];
                         return (
-                            <li key={property.key}>
+                            <li key={field.key}>
                                 <PlaygroundFileUploadForm
-                                    id={`body.${property.key}`}
-                                    propertyKey={property.key}
+                                    id={`body.${field.key}`}
+                                    propertyKey={field.key}
                                     type={fileArray.type}
                                     isOptional={fileArray.isOptional}
-                                    onValueChange={(files) => handleFormDataFileChange(property.key, files)}
+                                    onValueChange={(files) => handleFormDataFileChange(field.key, files)}
                                     value={currentValue?.type === "fileArray" ? currentValue.value : undefined}
                                 />
                             </li>
                         );
                     },
-                    bodyProperty: (bodyProperty) => (
-                        <li key={property.key}>
+                    property: (bodyProperty) => (
+                        <li key={field.key}>
                             <PlaygroundObjectPropertyForm
                                 id="body"
                                 property={bodyProperty}
                                 onChange={handleFormDataJsonChange}
-                                value={formDataFormValue[property.key]?.value}
+                                value={formDataFormValue[field.key]?.value}
                                 types={types}
                             />
                         </li>
                     ),
-                    _other: () => null,
                 }),
             )}
         </ul>

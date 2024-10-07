@@ -31,6 +31,7 @@ export function MaybeEnvironmentDropdown({
     const [selectedEnvironmentId, setSelectedEnvironmentId] = useAtom(SELECTED_ENVIRONMENT_ATOM);
     const [playgroundEnvironment, setPlaygroundEnvironment] = useAtom(PLAYGROUND_ENVIRONMENT_ATOM);
     const [inputValue, setInputValue] = useState<string | undefined>(undefined);
+    const [initialState, setInitialState] = useState<string | undefined>(undefined);
 
     const environmentIds = environmentFilters
         ? environmentFilters.filter((environmentFilter) => allEnvironmentIds.includes(environmentFilter))
@@ -54,12 +55,16 @@ export function MaybeEnvironmentDropdown({
         inputValue != null && inputValue !== "" && parse(inputValue).host != null && parse(inputValue).protocol != null;
 
     const urlProtocol = url ? url.protocol : "";
-    const fullyQualifiedDomainAndBasePath = url ? (url.pathname !== "/" ? `${url.host}${url.pathname}` : url.host) : "";
+    const fullyQualifiedDomainAndBasePath = url
+        ? url.pathname != null && url.pathname !== "/"
+            ? `${url.host}${url.pathname}`
+            : url.host
+        : "";
 
     return (
         <>
             {isEditingEnvironment.value ? (
-                <span key="url" className="whitespace-nowrap max-sm:hidden font-mono">
+                <span key="url" className="inline-flex whitespace-nowrap max-sm:hidden font-mono">
                     <FernInput
                         autoFocus={isEditingEnvironment.value}
                         size={inputValue?.length ?? 0}
@@ -68,7 +73,20 @@ export function MaybeEnvironmentDropdown({
                         onClick={(e) => {
                             e.stopPropagation();
                         }}
-                        onBlur={isEditingEnvironment.setFalse}
+                        onBlur={(e) => {
+                            if (isValidInput) {
+                                if (playgroundEnvironment) {
+                                    setInputValue(playgroundEnvironment);
+                                }
+                                isEditingEnvironment.setFalse();
+                            } else {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setInputValue(initialState);
+                                setPlaygroundEnvironment(initialState);
+                                isEditingEnvironment.setFalse();
+                            }
+                        }}
                         onValueChange={(value) => {
                             if (
                                 value === "" ||
@@ -82,16 +100,18 @@ export function MaybeEnvironmentDropdown({
                                 setPlaygroundEnvironment(value);
                             }
                         }}
-                        onKeyDown={(e) => {
+                        onKeyDownCapture={(e) => {
                             if (e.key === "Enter" && isValidInput) {
                                 if (playgroundEnvironment) {
                                     setInputValue(playgroundEnvironment);
                                 }
                                 isEditingEnvironment.setFalse();
                             } else if (e.key === "Escape") {
-                                setInputValue(playgroundEnvironment ?? selectedEnvironment?.baseUrl);
-                                isEditingEnvironment.setFalse();
                                 e.preventDefault();
+                                e.stopPropagation();
+                                setInputValue(initialState);
+                                setPlaygroundEnvironment(initialState);
+                                isEditingEnvironment.setFalse();
                             }
                         }}
                         className={cn("p-0", isValidInput ? "" : "error", "h-auto", "flex flex-col")}
@@ -128,7 +148,14 @@ export function MaybeEnvironmentDropdown({
                                     size={small ? "small" : "normal"}
                                     variant="outlined"
                                     mono={true}
-                                    onDoubleClick={editable ? isEditingEnvironment.setTrue : () => undefined}
+                                    onDoubleClick={
+                                        editable
+                                            ? () => {
+                                                  setInitialState(inputValue);
+                                                  isEditingEnvironment.setTrue();
+                                              }
+                                            : () => undefined
+                                    }
                                 />
                             </FernDropdown>
                         ) : (
@@ -141,7 +168,14 @@ export function MaybeEnvironmentDropdown({
                                             small ? "text-xs" : "text-sm",
                                             "hover:shadow-lg",
                                         )}
-                                        onDoubleClick={isEditingEnvironment.setTrue}
+                                        onDoubleClick={
+                                            editable
+                                                ? () => {
+                                                      setInitialState(inputValue);
+                                                      isEditingEnvironment.setTrue();
+                                                  }
+                                                : () => undefined
+                                        }
                                     >
                                         {`${urlProtocol}//${fullyQualifiedDomainAndBasePath}`}
                                     </span>

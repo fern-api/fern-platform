@@ -1,15 +1,18 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { UnreachableCaseError } from "ts-essentials";
 import { useFeatureFlags } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { Markdown } from "../../mdx/Markdown";
+import { ResolvedExampleEndpointResponseWithSchema } from "../../resolver/SchemaWithExample";
 import { ResolvedResponseBody, ResolvedTypeDefinition, visitResolvedHttpResponseBodyShape } from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { renderTypeShorthand } from "../types/type-shorthand/TypeShorthand";
+import { renderDeprecatedTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace EndpointResponseSection {
     export interface Props {
         responseBody: ResolvedResponseBody;
+        exampleResponseBody: ResolvedExampleEndpointResponseWithSchema | undefined;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
@@ -19,6 +22,7 @@ export declare namespace EndpointResponseSection {
 
 export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = ({
     responseBody,
+    exampleResponseBody,
     onHoverProperty,
     anchorIdParts,
     slug,
@@ -32,7 +36,12 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                 size="sm"
                 className="!t-muted border-default border-b pb-5 leading-6"
                 mdx={responseBody.description}
-                fallback={getResponseSummary({ responseBody, types, isAudioFileDownloadSpanSummary })}
+                fallback={getResponseSummary({
+                    responseBody,
+                    exampleResponseBody,
+                    types,
+                    isAudioFileDownloadSpanSummary,
+                })}
             />
             {visitResolvedHttpResponseBodyShape(responseBody.shape, {
                 fileDownload: () => null,
@@ -85,28 +94,47 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
 
 function getResponseSummary({
     responseBody,
+    exampleResponseBody,
     types,
     isAudioFileDownloadSpanSummary,
 }: {
     responseBody: ResolvedResponseBody;
+    exampleResponseBody: ResolvedExampleEndpointResponseWithSchema | undefined;
     types: Record<string, ResolvedTypeDefinition>;
     isAudioFileDownloadSpanSummary: boolean;
 }) {
-    if (responseBody.shape.type === "fileDownload") {
-        if (isAudioFileDownloadSpanSummary) {
-            return (
-                <span>
-                    This endpoint returns an <code>audio/mpeg</code> file.
-                </span>
-            );
+    switch (responseBody.shape.type) {
+        case "fileDownload": {
+            if (isAudioFileDownloadSpanSummary) {
+                return (
+                    <span>
+                        This endpoint returns an <code>audio/mpeg</code> file.
+                    </span>
+                );
+            }
+            return "This endpoint returns a file.";
         }
-        return "This endpoint returns a file.";
-    } else if (responseBody.shape.type === "streamingText") {
-        return "This endpoint sends text responses over a long-lived HTTP connection.";
-    } else if (responseBody.shape.type === "streamCondition") {
-        return "This endpoint returns a stream.";
-    } else if (responseBody.shape.type === "stream") {
-        return `This endpoint returns a stream of ${renderTypeShorthand(responseBody.shape.value, { withArticle: false }, types)}.`;
+        case "streamingText":
+            return "This endpoint sends text responses over a long-lived HTTP connection.";
+        case "streamCondition":
+            return "This endpoint returns a stream.";
+        case "stream":
+            return `This endpoint returns a stream of ${exampleResponseBody?.type === "sse" ? "server sent events" : renderDeprecatedTypeShorthand(responseBody.shape.value, { withArticle: false }, types)}.`;
+        case "alias":
+        case "discriminatedUnion":
+        case "enum":
+        case "primitive":
+        case "optional":
+        case "map":
+        case "list":
+        case "literal":
+        case "object":
+        case "reference":
+        case "set":
+        case "unknown":
+        case "undiscriminatedUnion":
+            return `This endpoint returns ${renderDeprecatedTypeShorthand(responseBody.shape, { withArticle: true }, types)}.`;
+        default:
+            throw new UnreachableCaseError(responseBody.shape);
     }
-    return `This endpoint returns ${renderTypeShorthand(responseBody.shape, { withArticle: true }, types)}.`;
 }

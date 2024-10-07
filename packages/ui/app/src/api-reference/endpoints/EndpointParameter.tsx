@@ -10,7 +10,7 @@ import { Markdown } from "../../mdx/Markdown";
 import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getAnchorId } from "../../util/anchor";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { renderTypeShorthandRoot } from "../types/type-shorthand/TypeShorthand";
+import { renderDeprecatedTypeShorthandRoot } from "../types/type-shorthand/TypeShorthand";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
 export declare namespace EndpointParameter {
@@ -39,7 +39,7 @@ export const EndpointParameter = memo<EndpointParameter.Props>(
         <EndpointParameterContent
             name={name}
             description={description}
-            typeShorthand={renderTypeShorthandRoot(shape, types, false)}
+            typeShorthand={renderDeprecatedTypeShorthandRoot(shape, types, false)}
             anchorIdParts={anchorIdParts}
             slug={slug}
             availability={availability}

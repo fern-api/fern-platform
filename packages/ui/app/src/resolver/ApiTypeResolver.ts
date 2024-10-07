@@ -13,6 +13,9 @@ import {
     ResolvedTypeShape,
 } from "./types";
 
+/**
+ * @deprecated
+ */
 export class ApiTypeResolver {
     public constructor(
         private apiDefinitionId: APIV1Read.ApiDefinitionId,

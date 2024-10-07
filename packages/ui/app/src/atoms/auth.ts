@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
-import { FernUser } from "../auth";
+import type { FernUser } from "../auth";
 import { DOCS_ATOM } from "./docs";
 
 export const FERN_USER_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.user, isEqual);

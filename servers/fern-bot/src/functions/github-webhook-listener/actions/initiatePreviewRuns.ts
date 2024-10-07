@@ -46,7 +46,7 @@ export async function initiatePreviewRuns({
         throw error;
     }
 
-    const generatorsList = await getGenerators(fullRepoPath);
+    const generatorsList = await getGenerators(fullRepoPath, "--exclude-mode local");
     for (const [apiName, api] of Object.entries(generatorsList)) {
         for (const [groupName, group] of Object.entries(api)) {
             for (const generator of group) {

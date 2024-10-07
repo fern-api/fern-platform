@@ -1,15 +1,11 @@
+import { signFernJWT } from "@/server/auth/FernJWT";
+import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
+import { withSecureCookie } from "@/server/auth/withSecure";
+import { COOKIE_FERN_TOKEN } from "@/server/constants";
 import { getWorkOS, getWorkOSClientId } from "@/server/workos";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import {
-    FernUser,
-    OAuth2Client,
-    OryAccessTokenSchema,
-    getAuthEdgeConfig,
-    signFernJWT,
-    withSecureCookie,
-} from "@fern-ui/ui/auth";
+import { FernUser } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
-import urlJoin from "url-join";
 
 export const runtime = "edge";
 
@@ -20,12 +16,17 @@ function redirectWithLoginError(location: string, errorMessage: string): NextRes
 }
 
 export default async function GET(req: NextRequest): Promise<NextResponse> {
+    if (req.method !== "GET") {
+        return new NextResponse(null, { status: 405 });
+    }
+    const domain = getXFernHostEdge(req);
+
     // The authorization code returned by AuthKit
     const code = req.nextUrl.searchParams.get("code");
     const state = req.nextUrl.searchParams.get("state");
     const error = req.nextUrl.searchParams.get("error");
     const error_description = req.nextUrl.searchParams.get("error_description");
-    const redirectLocation = state ?? req.nextUrl.origin;
+    const redirectLocation = state ?? `https://${domain}/`;
 
     if (error != null) {
         return redirectWithLoginError(redirectLocation, error_description ?? error);
@@ -35,35 +36,16 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
     }
 
-    const domain = getXFernHostEdge(req);
     const config = await getAuthEdgeConfig(domain);
 
     if (config != null && config.type === "oauth2" && config.partner === "ory") {
-        const oauthClient = new OAuth2Client(config, urlJoin(`https://${domain}`, req.nextUrl.pathname));
-        try {
-            const { access_token, refresh_token } = await oauthClient.getToken(code);
-            const token = OryAccessTokenSchema.parse(await oauthClient.decode(access_token));
-            const fernUser: FernUser = {
-                type: "user",
-                partner: "ory",
-                name: token.ext?.name,
-                email: token.ext?.email,
-            };
-            const expires = token.exp == null ? undefined : new Date(token.exp * 1000);
-            const res = NextResponse.redirect(redirectLocation);
-            res.cookies.set("fern_token", await signFernJWT(fernUser), withSecureCookie({ expires }));
-            res.cookies.set("access_token", access_token, withSecureCookie({ expires }));
-            if (refresh_token != null) {
-                res.cookies.set("refresh_token", refresh_token, withSecureCookie({ expires }));
-            } else {
-                res.cookies.delete("refresh_token");
-            }
-            return res;
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.error(error);
-            return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
-        }
+        const nextUrl = req.nextUrl.clone();
+        nextUrl.pathname = nextUrl.pathname.replace(
+            "/api/fern-docs/auth/callback",
+            "/api/fern-docs/oauth/ory/callback",
+        );
+        // Permanent GET redirect to the Ory callback endpoint
+        return NextResponse.redirect(nextUrl);
     }
 
     try {
@@ -85,7 +67,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         const token = await signFernJWT(fernUser, user);
 
         const res = NextResponse.redirect(redirectLocation);
-        res.cookies.set("fern_token", token, withSecureCookie());
+        res.cookies.set(COOKIE_FERN_TOKEN, token, withSecureCookie());
         return res;
     } catch (error) {
         // eslint-disable-next-line no-console

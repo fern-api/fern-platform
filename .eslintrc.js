@@ -91,7 +91,7 @@ module.exports = {
         semi: ["error", "always"],
         indent: "off",
         "object-shorthand": ["error"],
-        "deprecation/deprecation": "error",
+        "deprecation/deprecation": "warn",
         // "import/no-internal-modules": ["error"],
         eqeqeq: [
             "error",

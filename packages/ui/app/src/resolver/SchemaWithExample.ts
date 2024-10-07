@@ -17,16 +17,25 @@ import {
     visitResolvedHttpResponseBodyShape,
 } from "./types";
 
+/**
+ * @deprecated
+ */
 export interface ResolvedExampleValueWithSchema {
     schema: ResolvedTypeShape;
     value: unknown;
 }
 
+/**
+ * @deprecated
+ */
 export type ResolvedExampleEndpointRequestWithSchema =
     | ResolvedExampleEndpointRequestWithSchema.Json
     | ResolvedExampleEndpointRequestWithSchema.Form
     | ResolvedExampleEndpointRequestWithSchema.Bytes;
 
+/**
+ * @deprecated
+ */
 export declare namespace ResolvedExampleEndpointRequestWithSchema {
     interface Json {
         type: "json";
@@ -42,11 +51,17 @@ export declare namespace ResolvedExampleEndpointRequestWithSchema {
     interface Bytes extends ResolvedExampleEndpointRequest.Bytes, APIV1Read.HttpRequestBodyShape.Bytes {}
 }
 
+/**
+ * @deprecated
+ */
 export type ResolvedExampleFormValueWithSchema =
     | ResolvedExampleFormValueWithSchema.Json
     | ResolvedExampleFormValueWithSchema.SingleFile
     | ResolvedExampleFormValueWithSchema.MultipleFiles;
 
+/**
+ * @deprecated
+ */
 export declare namespace ResolvedExampleFormValueWithSchema {
     interface Json {
         type: "json";
@@ -67,12 +82,18 @@ export declare namespace ResolvedExampleFormValueWithSchema {
     }
 }
 
+/**
+ * @deprecated
+ */
 export type ResolvedExampleEndpointResponseWithSchema =
     | ResolvedExampleEndpointResponseWithSchema.Json
     | ResolvedExampleEndpointResponseWithSchema.Filename
     | ResolvedExampleEndpointResponseWithSchema.Stream
     | ResolvedExampleEndpointResponseWithSchema.ServerSentEvents;
 
+/**
+ * @deprecated
+ */
 export declare namespace ResolvedExampleEndpointResponseWithSchema {
     interface Json {
         type: "json";
@@ -106,6 +127,9 @@ export declare namespace ResolvedExampleEndpointResponseWithSchema {
     }
 }
 
+/**
+ * @deprecated
+ */
 export interface ResolvedExampleEndpointCallWithSchema {
     name: string | undefined;
     description: string | undefined;
@@ -119,6 +143,9 @@ export interface ResolvedExampleEndpointCallWithSchema {
     snippets: ResolvedCodeSnippet[];
 }
 
+/**
+ * @deprecated
+ */
 function mergeSchemaWithExample(
     properties: ResolvedObjectProperty[] | undefined,
     example: Record<string, unknown> | undefined,
@@ -136,6 +163,9 @@ function mergeSchemaWithExample(
     }, {});
 }
 
+/**
+ * @deprecated
+ */
 function mergeRequestBodySchemaWithExample(
     requestBody: ResolvedRequestBody | undefined,
     example: ResolvedExampleEndpointRequest | undefined,
@@ -211,6 +241,9 @@ function mergeRequestBodySchemaWithExample(
     });
 }
 
+/**
+ * @deprecated
+ */
 function mergeResponseBodySchemaWithExample(
     responseBody: ResolvedResponseBody | undefined,
     example: ResolvedExampleEndpointResponse | undefined,
@@ -266,6 +299,9 @@ function mergeResponseBodySchemaWithExample(
     );
 }
 
+/**
+ * @deprecated
+ */
 export function mergeEndpointSchemaWithExample(
     endpoint: ResolvedEndpointDefinition | undefined,
     example: ResolvedExampleEndpointCall,

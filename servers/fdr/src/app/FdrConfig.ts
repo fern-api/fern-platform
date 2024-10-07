@@ -19,6 +19,7 @@ const ALGOLIA_APP_ID_ENV_VAR = "ALGOLIA_APP_ID";
 const ALGOLIA_ADMIN_API_KEY_ENV_VAR = "ALGOLIA_ADMIN_API_KEY";
 const ALGOLIA_SEARCH_INDEX_ENV_VAR = "ALGOLIA_SEARCH_INDEX";
 const ALGOLIA_SEARCH_API_KEY_ENV_VAR = "ALGOLIA_SEARCH_API_KEY";
+const ALGOLIA_SEARCH_V2_DOMAINS_ENV_VAR = "ALGOLIA_SEARCH_V2_DOMAINS";
 const SLACK_TOKEN_ENV_VAR = "SLACK_TOKEN";
 const LOG_LEVEL_ENV_VAR = "LOG_LEVEL";
 const DOCS_CACHE_ENDPOINT_ENV_VAR = "DOCS_CACHE_ENDPOINT";
@@ -45,6 +46,7 @@ export interface FdrConfig {
     algoliaAdminApiKey: string;
     algoliaSearchApiKey: string;
     algoliaSearchIndex: string;
+    algoliaSearchV2Domains: string[];
     slackToken: string;
     logLevel: string;
     docsCacheEndpoint: string;
@@ -79,6 +81,7 @@ export function getConfig(): FdrConfig {
         algoliaAdminApiKey: getEnvironmentVariableOrThrow(ALGOLIA_ADMIN_API_KEY_ENV_VAR),
         algoliaSearchIndex: getEnvironmentVariableOrThrow(ALGOLIA_SEARCH_INDEX_ENV_VAR),
         algoliaSearchApiKey: getEnvironmentVariableOrThrow(ALGOLIA_SEARCH_API_KEY_ENV_VAR),
+        algoliaSearchV2Domains: getEnvironmentVariableOrThrow(ALGOLIA_SEARCH_V2_DOMAINS_ENV_VAR).split(",") ?? [],
         slackToken: getEnvironmentVariableOrThrow(SLACK_TOKEN_ENV_VAR),
         logLevel: process.env[LOG_LEVEL_ENV_VAR] ?? "info",
         docsCacheEndpoint: getEnvironmentVariableOrThrow(DOCS_CACHE_ENDPOINT_ENV_VAR),

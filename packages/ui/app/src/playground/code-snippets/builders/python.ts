@@ -12,11 +12,8 @@ interface PythonRequestParams {
 export class PythonRequestSnippetBuilder extends PlaygroundCodeSnippetBuilder {
     // TODO: write more tests for this
     #buildRequests({ json, data, files }: PythonRequestParams) {
-        if (this.endpoint == null) {
-            return "";
-        }
-        return `# ${this.endpoint.title} (${this.endpoint.method} ${buildPath(this.endpoint.path)})
-response = requests.${this.endpoint.method.toLowerCase()}(
+        return `# ${this.context.node.title} (${this.context.endpoint.method} ${buildPath(this.context.endpoint.path)})
+response = requests.${this.context.endpoint.method.toLowerCase()}(
   "${this.url}",
   headers=${indentAfter(JSON.stringify(this.formState.headers, undefined, 2), 2, 0)},${json != null ? `\n  json=${indentAfter(json, 2, 0)},` : ""}${
       data != null ? `\n  data=${indentAfter(data, 2, 0)},` : ""

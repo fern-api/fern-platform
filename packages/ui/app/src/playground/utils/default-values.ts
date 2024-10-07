@@ -1,21 +1,21 @@
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import {
-    ResolvedHttpRequestBodyShape,
-    ResolvedObjectProperty,
-    ResolvedTypeDefinition,
-    ResolvedTypeShape,
-    dereferenceObjectProperties,
+    HttpRequestBodyShape,
+    ObjectProperty,
+    TypeDefinition,
+    TypeShapeOrReference,
+    unwrapDiscriminatedUnionVariant,
+    unwrapObjectType,
     unwrapReference,
-    visitResolvedHttpRequestBodyShape,
-} from "../../resolver/types";
+} from "@fern-api/fdr-sdk/api-definition";
+import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { PlaygroundFormStateBody } from "../types";
 
-export function getDefaultValueForObjectProperties(
-    properties: ResolvedObjectProperty[] = [],
-    types: Record<string, ResolvedTypeDefinition>,
+export function getEmptyValueForObjectProperties(
+    properties: ObjectProperty[] = [],
+    types: Record<string, TypeDefinition>,
 ): Record<string, unknown> {
     return properties.reduce<Record<string, unknown>>((acc, property) => {
-        const defaultValue = getDefaultValueForType(property.valueShape, types);
+        const defaultValue = getEmptyValueForType(property.valueShape, types);
         if (defaultValue != null) {
             acc[property.key] = defaultValue;
         }
@@ -23,29 +23,30 @@ export function getDefaultValueForObjectProperties(
     }, {});
 }
 
-export function getDefaultValuesForBody(
-    requestShape: ResolvedHttpRequestBodyShape | undefined,
-    types: Record<string, ResolvedTypeDefinition>,
+export function getEmptyValueForHttpRequestBody(
+    requestShape: HttpRequestBodyShape | undefined,
+    types: Record<string, TypeDefinition>,
 ): PlaygroundFormStateBody | undefined {
     if (requestShape == null) {
         return undefined;
     }
-    return visitResolvedHttpRequestBodyShape<PlaygroundFormStateBody | undefined>(requestShape, {
-        formData: () => ({ type: "form-data", value: {} }),
+    return visitDiscriminatedUnion(requestShape)._visit<PlaygroundFormStateBody | undefined>({
+        object: (value) => ({ type: "json", value: getEmptyValueForType(value, types) }),
+        alias: (value) => ({ type: "json", value: getEmptyValueForType(value, types) }),
         bytes: () => ({ type: "octet-stream", value: undefined }),
-        typeShape: (typeShape) => ({
-            type: "json",
-            value: getDefaultValueForType(typeShape, types),
-        }),
+        formData: () => ({ type: "form-data", value: {} }),
     });
 }
 
-export function getDefaultValueForType(
-    shape: ResolvedTypeShape,
-    types: Record<string, ResolvedTypeDefinition>,
-): unknown {
-    return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit<unknown>({
-        object: (object) => getDefaultValueForObjectProperties(dereferenceObjectProperties(object, types), types),
+export function getEmptyValueForType(shape: TypeShapeOrReference, types: Record<string, TypeDefinition>): unknown {
+    const unwrapped = unwrapReference(shape, types);
+
+    if (unwrapped.isOptional) {
+        return undefined;
+    }
+
+    return visitDiscriminatedUnion(unwrapped.shape)._visit<unknown>({
+        object: (object) => getEmptyValueForObjectProperties(unwrapObjectType(object, types).properties, types),
         discriminatedUnion: (discriminatedUnion) => {
             const variant = discriminatedUnion.variants[0];
 
@@ -54,7 +55,10 @@ export function getDefaultValueForType(
             }
 
             return {
-                ...getDefaultValueForObjectProperties(dereferenceObjectProperties(variant, types), types),
+                ...getEmptyValueForObjectProperties(
+                    unwrapDiscriminatedUnionVariant(discriminatedUnion, variant, types).properties,
+                    types,
+                ),
                 [discriminatedUnion.discriminant]: variant.discriminantValue,
             };
         },
@@ -63,10 +67,10 @@ export function getDefaultValueForType(
             if (variant == null) {
                 return undefined;
             }
-            return getDefaultValueForType(variant.shape, types);
+            return getEmptyValueForType(variant.shape, types);
         },
         // if enum.length === 1, select it, otherwise, we don't presume to select an incorrect enum.
-        enum: (value) => (value.values.length === 1 ? value.values[0]?.value : null),
+        enum: (value) => value.default ?? (value.values.length === 1 ? value.values[0]?.value : null),
         primitive: (primitive) =>
             visitDiscriminatedUnion(primitive.value, "type")._visit<unknown>({
                 string: () => "",
@@ -84,12 +88,9 @@ export function getDefaultValueForType(
                 _other: () => undefined,
             }),
         literal: (literal) => literal.value.value,
-        optional: () => undefined,
         list: () => [],
         set: () => [],
         map: () => ({}),
         unknown: () => undefined,
-        _other: () => undefined,
-        alias: (alias) => getDefaultValueForType(alias.shape, types),
     });
 }

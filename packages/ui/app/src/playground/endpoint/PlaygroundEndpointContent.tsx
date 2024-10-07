@@ -1,8 +1,8 @@
 import { Loadable } from "@fern-ui/loadable";
 import { Dispatch, ReactElement, SetStateAction, useDeferredValue } from "react";
-import { ResolvedEndpointDefinition, ResolvedTypeDefinition } from "../../resolver/types";
 import { PlaygroundAuthorizationFormCard } from "../PlaygroundAuthorizationForm";
 import { PlaygroundEndpointRequestFormState } from "../types";
+import { EndpointContext } from "../types/endpoint-context";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import { PlaygroundEndpointContentLayout } from "./PlaygroundEndpointContentLayout";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
@@ -11,54 +11,48 @@ import { PlaygroundEndpointRequestCard } from "./PlaygroundEndpointRequestCard";
 import { PlaygroundResponseCard } from "./PlaygroundResponseCard";
 
 interface PlaygroundEndpointContentProps {
-    endpoint: ResolvedEndpointDefinition;
+    context: EndpointContext;
     formState: PlaygroundEndpointRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
     resetWithExample: () => void;
     resetWithoutExample: () => void;
     response: Loadable<PlaygroundResponse>;
     sendRequest: () => void;
-    types: Record<string, ResolvedTypeDefinition>;
 }
 
 export function PlaygroundEndpointContent({
-    endpoint,
+    context,
     formState,
     setFormState,
     resetWithExample,
     resetWithoutExample,
     response,
     sendRequest,
-    types,
 }: PlaygroundEndpointContentProps): ReactElement {
     const deferredFormState = useDeferredValue(formState);
 
     const form = (
         <div className="mx-auto w-full max-w-5xl space-y-6 pt-6 max-sm:pt-0 sm:pb-20">
-            {endpoint.auth != null && <PlaygroundAuthorizationFormCard auth={endpoint.auth} disabled={false} />}
+            {context.auth != null && <PlaygroundAuthorizationFormCard auth={context.auth} disabled={false} />}
 
             <div className="col-span-2 space-y-8">
-                <PlaygroundEndpointForm
-                    endpoint={endpoint}
-                    formState={formState}
-                    setFormState={setFormState}
-                    types={types}
-                />
+                <PlaygroundEndpointForm context={context} formState={formState} setFormState={setFormState} />
             </div>
 
             <PlaygroundEndpointFormButtons
-                endpoint={endpoint}
+                node={context.node}
                 resetWithExample={resetWithExample}
                 resetWithoutExample={resetWithoutExample}
             />
         </div>
     );
 
-    const requestCard = <PlaygroundEndpointRequestCard endpoint={endpoint} formState={deferredFormState} />;
+    const requestCard = <PlaygroundEndpointRequestCard context={context} formState={deferredFormState} />;
     const responseCard = <PlaygroundResponseCard response={response} sendRequest={sendRequest} />;
 
     return (
         <PlaygroundEndpointContentLayout
+            endpointId={context.endpoint.id}
             sendRequest={sendRequest}
             form={form}
             requestCard={requestCard}

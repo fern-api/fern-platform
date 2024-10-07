@@ -1,49 +1,44 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { ResolvedEndpointDefinition } from "../../../resolver/types";
+import { EndpointDefinition, EndpointId, EnvironmentId, PropertyKey } from "@fern-api/fdr-sdk/api-definition";
+import { ApiDefinitionId, EndpointNode, NodeId, Slug } from "@fern-api/fdr-sdk/navigation";
 import { PlaygroundEndpointRequestFormState } from "../../types";
+import { EndpointContext } from "../../types/endpoint-context";
 import { CurlSnippetBuilder } from "../builders/curl";
 import { PythonRequestSnippetBuilder } from "../builders/python";
 import { TypescriptFetchSnippetBuilder } from "../builders/typescript";
 
 describe("PlaygroundCodeSnippetBuilder", () => {
-    const endpoint: ResolvedEndpointDefinition = {
+    const node: EndpointNode = {
         type: "endpoint",
-        nodeId: FernNavigation.NodeId(""),
-        breadcrumb: [],
-        id: FernNavigation.EndpointId(""),
-        apiDefinitionId: FernNavigation.ApiDefinitionId(""),
-        slug: FernNavigation.Slug(""),
+        method: "POST",
+        endpointId: EndpointId(""),
+        isResponseStream: undefined,
+        playground: undefined,
+        title: "My endpoint",
+        slug: Slug(""),
+        canonicalSlug: undefined,
+        icon: undefined,
+        hidden: undefined,
+        id: NodeId(""),
+        apiDefinitionId: ApiDefinitionId(""),
+        availability: undefined,
+    };
+
+    const endpoint: EndpointDefinition = {
+        id: EndpointId(""),
         auth: undefined,
         availability: undefined,
-        defaultEnvironment: {
-            id: FernNavigation.EnvironmentId("Prod"),
-            baseUrl: "https://example.com",
-        },
-        environments: [],
+        defaultEnvironment: EnvironmentId("Prod"),
+        environments: [
+            {
+                id: EnvironmentId("Prod"),
+                baseUrl: "https://example.com",
+            },
+        ],
         method: "POST",
-        title: "My endpoint",
         path: [
             { type: "literal", value: "/test/" },
-            {
-                key: APIV1Read.PropertyKey("test"),
-                type: "pathParameter",
-                valueShape: {
-                    type: "primitive",
-                    value: {
-                        type: "string",
-                        regex: undefined,
-                        minLength: undefined,
-                        maxLength: undefined,
-                        default: undefined,
-                    },
-                    description: undefined,
-                    availability: undefined,
-                },
-                hidden: false,
-                description: undefined,
-                availability: undefined,
-            },
+            { value: PropertyKey("test"), type: "pathParameter" },
         ],
         pathParameters: [
             {
@@ -57,23 +52,21 @@ describe("PlaygroundCodeSnippetBuilder", () => {
                         maxLength: undefined,
                         default: undefined,
                     },
-                    description: undefined,
-                    availability: undefined,
                 },
-                hidden: false,
                 description: undefined,
                 availability: undefined,
             },
         ],
-        queryParameters: [],
-        headers: [],
-        requestBody: undefined,
-        responseBody: undefined,
+        queryParameters: undefined,
+        requestHeaders: undefined,
+        request: undefined,
+        response: undefined,
         errors: [],
         examples: [],
         snippetTemplates: undefined,
-        stream: undefined,
         description: undefined,
+        responseHeaders: undefined,
+        namespace: undefined,
     };
     const formState: PlaygroundEndpointRequestFormState = {
         type: "endpoint",
@@ -96,15 +89,22 @@ describe("PlaygroundCodeSnippetBuilder", () => {
         },
     };
 
+    const context: EndpointContext = {
+        node,
+        endpoint,
+        auth: undefined,
+        types: {},
+    };
+
     it("should render curl", () => {
-        expect(new CurlSnippetBuilder(endpoint, formState).build()).toMatchSnapshot();
+        expect(new CurlSnippetBuilder(context, formState, {}, undefined).build()).toMatchSnapshot();
     });
 
     it("should render python", () => {
-        expect(new PythonRequestSnippetBuilder(endpoint, formState).build()).toMatchSnapshot();
+        expect(new PythonRequestSnippetBuilder(context, formState, {}, undefined).build()).toMatchSnapshot();
     });
 
     it("should render typescript", () => {
-        expect(new TypescriptFetchSnippetBuilder(endpoint, formState).build()).toMatchSnapshot();
+        expect(new TypescriptFetchSnippetBuilder(context, formState, {}, undefined).build()).toMatchSnapshot();
     });
 });

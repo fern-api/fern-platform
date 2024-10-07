@@ -29,6 +29,7 @@ describe("S3 Service", () => {
             algoliaAdminApiKey: "string",
             algoliaSearchApiKey: "string",
             algoliaSearchIndex: "string",
+            algoliaSearchV2Domains: ["string"],
             slackToken: "string",
             logLevel: "string",
             docsCacheEndpoint: "string",

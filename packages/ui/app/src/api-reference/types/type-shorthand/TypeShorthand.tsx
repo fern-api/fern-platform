@@ -19,12 +19,15 @@ export interface TypeShorthandOptions {
     nullable?: boolean; // determines whether to render "Optional" or "Nullable"
 }
 
-export function renderTypeShorthandRoot(
+/**
+ * @deprecated
+ */
+export function renderDeprecatedTypeShorthandRoot(
     shape: ResolvedTypeShape,
     types: Record<string, ResolvedTypeDefinition>,
     isResponse: boolean = false,
 ): ReactNode {
-    const typeShorthand = renderTypeShorthand(unwrapOptional(shape, types), { nullable: isResponse }, types);
+    const typeShorthand = renderDeprecatedTypeShorthand(unwrapOptional(shape, types), { nullable: isResponse }, types);
     const unaliasedShape = unwrapAlias(shape, types);
     const defaultsTo = renderDefaultsTo(unaliasedShape);
     return (
@@ -45,7 +48,10 @@ export function renderTypeShorthandRoot(
     );
 }
 
-export function renderTypeShorthandFormDataProperty(
+/**
+ * @deprecated
+ */
+export function renderDeprecatedTypeShorthandFormDataProperty(
     property: Exclude<ResolvedFormDataRequestProperty, ResolvedFormDataRequestProperty.BodyProperty>,
 ): ReactNode {
     return (
@@ -90,7 +96,10 @@ function renderDefaultToPrimitive(shape: APIV1Read.PrimitiveType): string | unde
     });
 }
 
-export function renderTypeShorthand(
+/**
+ * @deprecated
+ */
+export function renderDeprecatedTypeShorthand(
     shape: ResolvedTypeShape,
     { plural = false, withArticle = false, nullable = false }: TypeShorthandOptions = {
         plural: false,
@@ -124,7 +133,9 @@ export function renderTypeShorthand(
         object: () => (plural ? "objects" : maybeWithArticle("an", "object")),
         undiscriminatedUnion: (union) => {
             return uniq(
-                union.variants.map((variant) => renderTypeShorthand(variant.shape, { plural, withArticle }, types)),
+                union.variants.map((variant) =>
+                    renderDeprecatedTypeShorthand(variant.shape, { plural, withArticle }, types),
+                ),
             ).join(" or ");
         },
         discriminatedUnion: () => (plural ? "objects" : maybeWithArticle("an", "object")),
@@ -138,25 +149,25 @@ export function renderTypeShorthand(
 
         // containing shapes
         optional: (optional) =>
-            `${maybeWithArticle("an", nullable ? "optional" : "optional")} ${renderTypeShorthand(optional.shape, { plural }, types)}`,
+            `${maybeWithArticle("an", nullable ? "optional" : "optional")} ${renderDeprecatedTypeShorthand(optional.shape, { plural }, types)}`,
         list: (list) =>
-            `${plural ? "lists of" : maybeWithArticle("a", "list of")} ${renderTypeShorthand(
+            `${plural ? "lists of" : maybeWithArticle("a", "list of")} ${renderDeprecatedTypeShorthand(
                 list.shape,
                 { plural: true },
                 types,
             )}`,
         set: (set) =>
-            `${plural ? "sets of" : maybeWithArticle("a", "set of")} ${renderTypeShorthand(
+            `${plural ? "sets of" : maybeWithArticle("a", "set of")} ${renderDeprecatedTypeShorthand(
                 set.shape,
                 { plural: true },
                 types,
             )}`,
         map: (map) =>
-            `${plural ? "maps from" : maybeWithArticle("a", "map from")} ${renderTypeShorthand(
+            `${plural ? "maps from" : maybeWithArticle("a", "map from")} ${renderDeprecatedTypeShorthand(
                 map.keyShape,
                 { plural: true },
                 types,
-            )} to ${renderTypeShorthand(map.valueShape, { plural: true }, types)}`,
+            )} to ${renderDeprecatedTypeShorthand(map.valueShape, { plural: true }, types)}`,
 
         // literals
         literal: (literal) =>
@@ -170,6 +181,6 @@ export function renderTypeShorthand(
             return unknown.displayName ?? "any";
         },
         _other: () => "<unknown>",
-        alias: (reference) => renderTypeShorthand(reference.shape, { plural, withArticle }, types),
+        alias: (reference) => renderDeprecatedTypeShorthand(reference.shape, { plural, withArticle }, types),
     });
 }

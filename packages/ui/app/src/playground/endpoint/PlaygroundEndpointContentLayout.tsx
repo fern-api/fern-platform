@@ -11,6 +11,7 @@ interface PlaygroundEndpointContentLayoutProps {
     form: ReactNode;
     requestCard: ReactNode;
     responseCard: ReactNode;
+    endpointId?: string;
 }
 
 export function PlaygroundEndpointContentLayout({
@@ -18,6 +19,7 @@ export function PlaygroundEndpointContentLayout({
     form,
     requestCard,
     responseCard,
+    endpointId,
 }: PlaygroundEndpointContentLayoutProps): ReactElement {
     const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
 
@@ -42,6 +44,7 @@ export function PlaygroundEndpointContentLayout({
                         form={form}
                         requestCard={requestCard}
                         responseCard={responseCard}
+                        endpointId={endpointId}
                     />
                 ) : (
                     <PlaygroundEndpointMobileLayout
@@ -49,6 +52,7 @@ export function PlaygroundEndpointContentLayout({
                         requestCard={requestCard}
                         responseCard={responseCard}
                         sendButton={<PlaygroundSendRequestButton sendRequest={sendRequest} />}
+                        endpointId={endpointId}
                     />
                 )}
             </div>

@@ -14,7 +14,10 @@ import {
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { renderTypeShorthand, renderTypeShorthandFormDataProperty } from "../types/type-shorthand/TypeShorthand";
+import {
+    renderDeprecatedTypeShorthand,
+    renderDeprecatedTypeShorthandFormDataProperty,
+} from "../types/type-shorthand/TypeShorthand";
 import { EndpointParameter, EndpointParameterContent } from "./EndpointParameter";
 
 export declare namespace EndpointRequestSection {
@@ -53,7 +56,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                         return `a multipart form${fileArrays.length > 0 || files.length > 1 ? " with multiple files" : files[0] != null ? ` containing ${files[0].isOptional ? "an optional" : "a"} file` : ""}`;
                     },
                     bytes: (bytes) => `binary data${bytes.contentType != null ? ` of type ${bytes.contentType}` : ""}`,
-                    typeShape: (typeShape) => renderTypeShorthand(typeShape, { withArticle: true }, types),
+                    typeShape: (typeShape) => renderDeprecatedTypeShorthand(typeShape, { withArticle: true }, types),
                 })}.`}
             />
             {visitResolvedHttpRequestBodyShape<ReactNode | null>(requestBody.shape, {
@@ -66,7 +69,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                     <EndpointParameterContent
                                         name={file.key}
                                         description={file.description}
-                                        typeShorthand={renderTypeShorthandFormDataProperty(file)}
+                                        typeShorthand={renderDeprecatedTypeShorthandFormDataProperty(file)}
                                         anchorIdParts={[...anchorIdParts, file.key]}
                                         slug={slug}
                                         availability={file.availability}
@@ -76,7 +79,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                     <EndpointParameterContent
                                         name={fileArray.key}
                                         description={fileArray.description}
-                                        typeShorthand={renderTypeShorthandFormDataProperty(fileArray)}
+                                        typeShorthand={renderDeprecatedTypeShorthandFormDataProperty(fileArray)}
                                         anchorIdParts={[...anchorIdParts, fileArray.key]}
                                         slug={slug}
                                         availability={fileArray.availability}

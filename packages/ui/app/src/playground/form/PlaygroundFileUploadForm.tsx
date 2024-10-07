@@ -9,7 +9,7 @@ import { WithLabelInternal } from "../WithLabel";
 export interface PlaygroundFileUploadFormProps {
     id: string;
     propertyKey: string;
-    type: "file" | "fileArray";
+    type: "file" | "files";
     isOptional?: boolean;
     onValueChange: (value: ReadonlyArray<File> | undefined) => void;
     value: ReadonlyArray<File> | undefined;
@@ -48,7 +48,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
 
         const handleChangeFiles = (files: FileList | null | undefined) => {
             const filesArray = files != null ? Array.from(files) : [];
-            if (type === "fileArray") {
+            if (type === "files") {
                 // append files
                 onValueChange(uniqueFiles([...(value ?? []), ...filesArray]));
                 return;
@@ -101,7 +101,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                     id={id}
                     onChange={handleChange}
                     className="hidden"
-                    multiple={type === "fileArray"}
+                    multiple={type === "files"}
                 />
                 <FernCard
                     className={cn("w-full rounded-lg", {
@@ -162,7 +162,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                                     </FernButtonGroup>
                                 </div>
                             ))}
-                            {type === "fileArray" && (
+                            {type === "files" && (
                                 <div className="flex justify-end p-4">
                                     <FernButton
                                         onClick={() => ref.current?.click()}

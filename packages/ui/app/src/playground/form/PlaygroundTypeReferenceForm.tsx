@@ -1,14 +1,14 @@
+import {
+    ObjectProperty,
+    TypeDefinition,
+    TypeShapeOrReference,
+    unwrapObjectType,
+    unwrapReference,
+} from "@fern-api/fdr-sdk/api-definition";
 import { FernInput, FernNumericInput, FernSwitch, FernTextarea } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactElement, memo, useCallback } from "react";
 import { useFeatureFlags } from "../../atoms";
-import {
-    ResolvedObjectProperty,
-    ResolvedTypeDefinition,
-    ResolvedTypeShape,
-    dereferenceObjectProperties,
-    unwrapReference,
-} from "../../resolver/types";
 import { WithLabel } from "../WithLabel";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
 import { PlaygroundElevenLabsVoiceIdForm } from "./PlaygroundElevenLabsVoiceIdForm";
@@ -20,8 +20,8 @@ import { PlaygroundUniscriminatedUnionForm } from "./PlaygroundUniscriminatedUni
 
 interface PlaygroundTypeReferenceFormProps {
     id: string;
-    property?: ResolvedObjectProperty;
-    shape: ResolvedTypeShape;
+    property?: ObjectProperty;
+    shape: TypeShapeOrReference;
     onChange: (value: unknown) => void;
     value?: unknown;
     // onFocus?: () => void;
@@ -29,9 +29,7 @@ interface PlaygroundTypeReferenceFormProps {
     onOpenStack?: () => void;
     onCloseStack?: () => void;
     renderAsPanel?: boolean;
-    onlyRequired?: boolean;
-    onlyOptional?: boolean;
-    types: Record<string, ResolvedTypeDefinition>;
+    types: Record<string, TypeDefinition>;
     disabled?: boolean;
     indent?: boolean;
 }
@@ -42,11 +40,11 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
     const onRemove = useCallback(() => {
         onChange(undefined);
     }, [onChange]);
-    return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit<ReactElement | null>({
+    return visitDiscriminatedUnion(unwrapReference(shape, types).shape)._visit<ReactElement | null>({
         object: (object) => (
             <WithLabel property={property} value={value} onRemove={onRemove} types={types}>
                 <PlaygroundObjectPropertiesForm
-                    properties={dereferenceObjectProperties(object, types)}
+                    properties={unwrapObjectType(object, types).properties}
                     onChange={onChange}
                     value={value}
                     indent={indent}
@@ -249,15 +247,20 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                 ),
                 _other: () => null,
             }),
-        optional: () => null, // should be handled by the parent
         list: (list) => (
             <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                <PlaygroundListForm itemShape={list.shape} onChange={onChange} value={value} id={id} types={types} />
+                <PlaygroundListForm
+                    itemShape={list.itemShape}
+                    onChange={onChange}
+                    value={value}
+                    id={id}
+                    types={types}
+                />
             </WithLabel>
         ),
         set: (set) => (
             <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                <PlaygroundListForm itemShape={set.shape} onChange={onChange} value={value} id={id} types={types} />
+                <PlaygroundListForm itemShape={set.itemShape} onChange={onChange} value={value} id={id} types={types} />
             </WithLabel>
         ),
         map: (map) => (
@@ -298,17 +301,6 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
             </WithLabel>
         ),
         _other: () => null,
-        alias: (alias) => (
-            <PlaygroundTypeReferenceForm
-                id={id}
-                property={property}
-                shape={alias.shape}
-                onChange={onChange}
-                value={value}
-                types={types}
-                disabled={disabled}
-            />
-        ),
     });
 });
 

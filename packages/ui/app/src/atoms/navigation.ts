@@ -1,6 +1,6 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { SidebarTab, SidebarVersionInfo } from "@fern-ui/fdr-utils";
+import { SidebarTab, VersionSwitcherInfo } from "@fern-ui/fdr-utils";
 import { atom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { isEqual } from "lodash-es";
@@ -19,7 +19,7 @@ TABS_ATOM.debugLabel = "TABS_ATOM";
 
 export const VERSIONS_ATOM = selectAtom(
     DOCS_ATOM,
-    (docs): ReadonlyArray<SidebarVersionInfo> => docs.navigation.versions,
+    (docs): ReadonlyArray<VersionSwitcherInfo> => docs.navigation.versions,
     isEqual,
 );
 VERSIONS_ATOM.debugLabel = "VERSIONS_ATOM";

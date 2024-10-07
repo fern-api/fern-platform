@@ -1,6 +1,7 @@
-import { type DocsPage } from "@fern-ui/ui";
+import type { DocsPage } from "@fern-ui/ui";
 import type { FernUser } from "@fern-ui/ui/auth";
 import type { GetServerSidePropsResult } from "next";
+import type { NextApiRequestCookies } from "next/dist/server/api-utils";
 import type { ComponentProps } from "react";
 import { LoadDocsPerformanceTracker } from "./LoadDocsPerformanceTracker";
 import type { AuthProps } from "./authProps";
@@ -18,6 +19,7 @@ export async function getDocsPageProps(
     xFernHost: string | undefined,
     slug: string[],
     auth?: AuthProps,
+    cookies?: NextApiRequestCookies,
 ): Promise<SSGDocsPageProps> {
     if (xFernHost == null || Array.isArray(xFernHost)) {
         return { notFound: true };
@@ -33,7 +35,9 @@ export async function getDocsPageProps(
     /**
      * Convert the docs into initial props for the page.
      */
-    const initialProps = await performance.trackInitialPropsPromise(withInitialProps({ docs, slug, xFernHost, auth }));
+    const initialProps = await performance.trackInitialPropsPromise(
+        withInitialProps({ docs, slug, xFernHost, auth, cookies }),
+    );
 
     /**
      * Send performance data to Vercel Analytics.

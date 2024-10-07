@@ -10,6 +10,7 @@
   "type": "module",
   "exports": {
     "./bundlers": "./src/mdx/bundlers/index.ts",
+    "./bundlers/next-mdx-remote": "./src/mdx/bundlers/next-mdx-remote.ts",
     "./auth": "./src/auth/index.ts",
     ".": "./src/index.ts"
   },
@@ -19,7 +20,7 @@
   ],
   "scripts": {
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
+    "lint:eslint": "eslint --max-warnings 1000 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
@@ -59,7 +60,6 @@
     "@sentry/nextjs": "^8.30.0",
     "@shikijs/transformers": "^1.2.2",
     "@types/nprogress": "^0.2.3",
-    "@vercel/edge-config": "^1.1.0",
     "algoliasearch": "^4.24.0",
     "bezier-easing": "^2.1.0",
     "clsx": "^2.1.0",

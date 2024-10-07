@@ -16,7 +16,7 @@ import {
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
 import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
-import { renderTypeShorthand } from "../type-shorthand/TypeShorthand";
+import { renderDeprecatedTypeShorthand } from "../type-shorthand/TypeShorthand";
 
 type IconInfo = {
     content: string;
@@ -119,7 +119,11 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                         <span className="t-default font-mono text-sm">{unionVariant.displayName}</span>
                     )}
                     <span className="t-muted inline-flex items-baseline gap-2 text-xs">
-                        {renderTypeShorthand(unionVariant.shape, { nullable: contextValue.isResponse }, types)}
+                        {renderDeprecatedTypeShorthand(
+                            unionVariant.shape,
+                            { nullable: contextValue.isResponse },
+                            types,
+                        )}
                     </span>
                     {unionVariant.availability != null && (
                         <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />

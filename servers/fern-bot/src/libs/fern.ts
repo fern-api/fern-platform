@@ -59,10 +59,14 @@ export function cleanFernStdout(stdout: string): string {
 // defined in the OSS repo.
 type GeneratorList = Record<string, Record<string, string[]>>;
 export const NO_API_FALLBACK_KEY = "NO_API_FALLBACK";
-export async function getGenerators(fullRepoPath: string): Promise<GeneratorList> {
+export async function getGenerators(fullRepoPath: string, additionalConfig?: string): Promise<GeneratorList> {
     const tmpDir = await tmp.dir();
     const outputPath = `${tmpDir.path}/gen_list.yml`;
-    await execFernCli(`generator list --api-fallback ${NO_API_FALLBACK_KEY} -o ${outputPath}`, fullRepoPath);
+    let command = `generator list --api-fallback ${NO_API_FALLBACK_KEY} -o ${outputPath} `;
+    if (additionalConfig != null) {
+        command += additionalConfig;
+    }
+    await execFernCli(command, fullRepoPath);
 
     const data = await readFile(outputPath, "utf-8");
 
