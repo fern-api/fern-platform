@@ -4,6 +4,7 @@ import { FernCollapse } from "@fern-ui/components";
 import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { MouseEventHandler, memo } from "react";
+import { MdxContent } from "../../mdx/MdxContent";
 import {
     ResolvedError,
     ResolvedTypeDefinition,
@@ -73,7 +74,10 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                 <FernCollapse open={isSelected} className="w-full">
                     <div className="space-y-2 pt-2">
                         <div className="t-muted w-full text-start text-sm leading-7">
-                            {`This error return ${renderDeprecatedTypeShorthand(error.shape, { withArticle: true }, types)}.`}
+                            <MdxContent
+                                mdx={error.description}
+                                fallback={`This error return ${renderDeprecatedTypeShorthand(error.shape, { withArticle: true }, types)}.`}
+                            />
                         </div>
                         {shouldHideShape(error.shape, types) ? null : (
                             <div className="w-full text-start">

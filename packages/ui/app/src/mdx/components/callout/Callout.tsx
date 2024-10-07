@@ -101,65 +101,68 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({ intent: intentRa
 
 // aliases
 
-export function InfoCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function InfoCallout({ children, ...props }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout intent="info" title={title}>
+        <Callout intent="info" {...props}>
             {children}
         </Callout>
     );
 }
 
-export function WarningCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function WarningCallout({ children, ...props }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout intent="warning" title={title}>
+        <Callout intent="warning" {...props}>
             {children}
         </Callout>
     );
 }
 
-export function SuccessCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function SuccessCallout({ children, ...props }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout intent="success" title={title}>
+        <Callout intent="success" {...props}>
             {children}
         </Callout>
     );
 }
 
-export function ErrorCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function ErrorCallout({ children, ...props }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout intent="error" title={title}>
+        <Callout intent="error" {...props}>
             {children}
         </Callout>
     );
 }
 
-export function NoteCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function NoteCallout({ children, ...props }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout intent="note" title={title}>
+        <Callout intent="note" {...props}>
             {children}
         </Callout>
     );
 }
 
-export function LaunchNoteCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function LaunchNoteCallout({
+    children,
+    ...props
+}: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout intent="launch" title={title}>
+        <Callout intent="launch" {...props}>
             {children}
         </Callout>
     );
 }
 
-export function TipCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function TipCallout({ children, ...props }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout intent="tip" title={title}>
+        <Callout intent="tip" {...props}>
             {children}
         </Callout>
     );
 }
 
-export function CheckCallout({ children, title }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
+export function CheckCallout({ children, ...props }: PropsWithChildren<Omit<Callout.Props, "intent">>): ReactElement {
     return (
-        <Callout intent="check" title={title}>
+        <Callout intent="check" {...props}>
             {children}
         </Callout>
     );
