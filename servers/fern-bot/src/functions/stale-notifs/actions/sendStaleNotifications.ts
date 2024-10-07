@@ -31,13 +31,11 @@ export async function sendStaleNotificationsInternal(env: Env): Promise<void> {
     const orgPullMap = new Map<string, PullRequest[]>();
     let staleBotPRsFound = false;
     for await (const pull of botPulls) {
-        console.log(`about to process pull ${pull.repositoryOwner}`);
         if (EXCLUDE_ORGS.has(pull.repositoryOwner)) {
             continue;
         }
 
         if (pull.createdAt < new Date(Date.now() - STALE_IN_MS)) {
-            console.log("processing pull");
             orgPullMap.set(pull.repositoryOwner, [...(orgPullMap.get(pull.repositoryOwner) || []), pull]);
             staleBotPRsFound = true;
         }
@@ -49,7 +47,6 @@ export async function sendStaleNotificationsInternal(env: Env): Promise<void> {
         let maybeApiSpecPull: PullRequest | undefined;
         const versionUpdatePulls: PullRequest[] = [];
         for (const pull of pulls) {
-            console.log("found pull");
             if (pull.title.includes("Update API Spec")) {
                 maybeApiSpecPull = pull;
             } else {
@@ -57,7 +54,6 @@ export async function sendStaleNotificationsInternal(env: Env): Promise<void> {
             }
         }
         if (maybeApiSpecPull != null || versionUpdatePulls.length > 0) {
-            console.log("we're here");
             const allPulls = versionUpdatePulls.concat(maybeApiSpecPull ? [maybeApiSpecPull] : []);
             const aPull = allPulls[0];
             upgradesSlackClient.notifyStaleUpgradePRs({
