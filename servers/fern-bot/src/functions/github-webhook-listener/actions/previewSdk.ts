@@ -1,10 +1,10 @@
 import { FernRegistryClient } from "@fern-fern/paged-generators-sdk";
-import { execFernCli } from "@libs/fern";
+import { execFernCli, getPreviewPath } from "@libs/fern";
 import { cloneRepo, configureGit } from "@libs/github";
 import { EmitterWebhookEvent } from "@octokit/webhooks";
-import execa from "execa";
-import { App } from "octokit";
 import { markCheckInProgress, updateCheck, RunId } from "./utilities";
+import { Octokit } from "octokit";
+import { runScript } from "@libs/execaUtils";
 
 // We want to:
 //  1. Update the status to in_progress
@@ -16,46 +16,31 @@ import { markCheckInProgress, updateCheck, RunId } from "./utilities";
 //    6a. Include detailed logs in the `output` block
 export async function previewSdk({
     context,
-    app,
+    installationOctokit,
     fernBotLoginName,
     fernBotLoginId,
     runId,
     fdrUrl,
 }: {
     context: EmitterWebhookEvent<"check_run">;
-    app: App;
+    installationOctokit: Octokit;
     fernBotLoginName: string;
     fernBotLoginId: string;
     runId: RunId;
     fdrUrl: string;
 }): Promise<void> {
     // Tell github we're working on this now
-    await markCheckInProgress({ context, app });
-    if (context.payload.installation == null) {
-        await updateCheck({
-            context,
-            app,
-            status: "completed",
-            conclusion: "failure",
-            output: {
-                title: "No installation found",
-                summary: "🌱 The Fern bot app was unable to determine the installation, and could not run checks. 😵",
-                text: undefined,
-            },
-        });
-        return;
-    }
+    await markCheckInProgress({ context, installationOctokit });
 
+    // ==== DO THE ACTUAL ACTION ====
     const fdrClient = new FernRegistryClient({ environment: fdrUrl });
     const { generatorDockerImage, groupName, apiName } = runId;
-    // ==== DO THE ACTUAL ACTION ====
-    const octokit = await app.getInstallationOctokit(context.payload.installation.id);
     const repository = context.payload.repository;
     const [git, fullRepoPath] = await configureGit(repository);
     // Get the config repo
-    await cloneRepo(git, repository, octokit, fernBotLoginName, fernBotLoginId);
+    await cloneRepo(git, repository, installationOctokit, fernBotLoginName, fernBotLoginId);
     // Generate preview
-    let previewCommand = `generate --group ${groupName}`;
+    let previewCommand = `generate --preview --group ${groupName}`;
     if (apiName != null) {
         previewCommand += ` --api ${apiName}`;
     }
@@ -63,39 +48,59 @@ export async function previewSdk({
     // Kick off the checks + compile a summary
     const generatorEntity = await fdrClient.generators.getGeneratorByImage({ dockerImage: generatorDockerImage });
     if (generatorEntity == null || generatorEntity.scripts == null) {
-        await runDefaultAction({ context, app });
+        await runDefaultAction({ context, installationOctokit });
         return;
     }
     const { preInstallScript, installScript, compileScript, testScript } = generatorEntity.scripts;
+
+    const previewPath = await getPreviewPath({
+        generatorDockerImage,
+        currentRepoPath: fullRepoPath,
+        apiName,
+    });
 
     let details: string | undefined;
     let totalTasks = 0;
     let failedTasks = 0;
     if (preInstallScript != null) {
+        if (details == null) {
+            details = "";
+        }
         totalTasks++;
-        const [log, didFail] = await runScriptAndCollectOutput(preInstallScript.steps, "Setup");
+        const [log, didFail] = await runScriptAndCollectOutput(preInstallScript.steps, "Setup", previewPath);
         if (didFail) {
             failedTasks++;
         }
         details += log + "\n\n";
     }
     if (installScript != null) {
+        if (details == null) {
+            details = "";
+        }
         totalTasks++;
-        const [log, didFail] = await runScriptAndCollectOutput(installScript.steps, "Install");
+        const [log, didFail] = await runScriptAndCollectOutput(installScript.steps, "Install", previewPath);
         if (didFail) {
             failedTasks++;
         }
         details += log + "\n\n";
     }
     if (compileScript != null) {
-        const [log, didFail] = await runScriptAndCollectOutput(compileScript.steps, "Compile");
+        if (details == null) {
+            details = "";
+        }
+        totalTasks++;
+        const [log, didFail] = await runScriptAndCollectOutput(compileScript.steps, "Compile", previewPath);
         if (didFail) {
             failedTasks++;
         }
         details += log + "\n\n";
     }
     if (testScript != null) {
-        const [log, didFail] = await runScriptAndCollectOutput(testScript.steps, "Test");
+        if (details == null) {
+            details = "";
+        }
+        totalTasks++;
+        const [log, didFail] = await runScriptAndCollectOutput(testScript.steps, "Test", previewPath);
         if (didFail) {
             failedTasks++;
         }
@@ -104,28 +109,38 @@ export async function previewSdk({
     // ====== ACTION COMPLETE ======
 
     // Tell github we're done and deliver the deets
-    const summary = `### 🌱 ${generatorEntity.generatorLanguage ?? "SDK"} Preview Checks - ${failedTasks}/${totalTasks} ${failedTasks > 0 ? "❌" : "✅"}\n\n`;
     await updateCheck({
         context,
-        app,
+        installationOctokit,
         status: "completed",
-        conclusion: "success",
+        conclusion: failedTasks > 0 ? "failure" : "success",
         output: {
-            title: `Preview ${generatorEntity.displayName} Generator: (\`${groupName}\`)`,
-            summary,
+            title: `🌱 ${generatorEntity.generatorLanguage ?? "SDK"} Preview Checks - ${failedTasks}/${totalTasks} ${failedTasks > 0 ? "❌" : "✅"}`,
+            summary: "",
             text: details,
         },
     });
 }
 
-async function runScriptAndCollectOutput(commands: string[], sectionTitle: string): Promise<[string, boolean]> {
-    let outputs: string | undefined;
+async function runScriptAndCollectOutput(
+    commands: string[],
+    sectionTitle: string,
+    workingDir: string,
+): Promise<[string, boolean]> {
+    let outputs: string = "";
     let didFail = false;
 
-    for (const command in commands) {
+    for (const command of commands) {
+        console.log(`[Preview] Running command: ${command} at workingDir: ${workingDir} `);
         // Write the command
         outputs += `> $ ${command}\n\n`;
-        const out = await execa(command, { reject: false, all: true });
+        const out = await runScript({
+            commands,
+            workingDir,
+        });
+        console.log(
+            `[Preview] exit code: ${out.exitCode}, StdOut: ${out.stderr}, StdErr ${out.stdout}, all ${out.all}, full out: ${JSON.stringify(out)}`,
+        );
         if (out.exitCode != 0) {
             didFail = true;
         }
@@ -136,20 +151,23 @@ async function runScriptAndCollectOutput(commands: string[], sectionTitle: strin
         }
     }
 
-    const log = `**${sectionTitle}** - ${didFail ? "❌" : "✅"}\n\n\`\`\`\n${outputs}\n\`\`\``;
+    let log = `**${sectionTitle}** - ${didFail ? "❌" : "✅"}\n\n`;
+    if (outputs != "") {
+        log += `\`\`\`bash\n${outputs}\n\`\`\``;
+    }
     return [log, didFail];
 }
 
 export async function runDefaultAction({
     context,
-    app,
+    installationOctokit,
 }: {
     context: EmitterWebhookEvent<"check_run">;
-    app: App;
+    installationOctokit: Octokit;
 }): Promise<void> {
     await updateCheck({
         context,
-        app,
+        installationOctokit,
         status: "completed",
         conclusion: "neutral",
         output: {

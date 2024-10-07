@@ -22,6 +22,8 @@ provider:
     GITHUB_APP_CLIENT_ID: ${env:GITHUB_APP_CLIENT_ID, 'placeholder'}
     GITHUB_APP_CLIENT_SECRET: ${env:GITHUB_APP_CLIENT_SECRET, 'placeholder'}
     GITHUB_APP_WEBHOOK_SECRET: ${env:GITHUB_APP_WEBHOOK_SECRET, 'placeholder'}
+    # This is the Lambda URL, locally you can use the URL from smee: https://smee.io/3DXoSvCO2NH87w8e
+    GITHUB_APP_WEBHOOK_PROXY_URL: ${env:GITHUB_APP_WEBHOOK_PROXY_URL, 'placeholder'}
     CO_API_KEY: ${env:CO_API_KEY, 'placeholder'}
     DEFAULT_VENUS_ORIGIN: ${env:DEFAULT_VENUS_ORIGIN, 'placeholder'}
     DEFAULT_FDR_ORIGIN: ${env:DEFAULT_FDR_ORIGIN, 'placeholder'}
@@ -30,6 +32,10 @@ provider:
     CUSTOMER_PULLS_SLACK_CHANNEL: ${env:CUSTOMER_PULLS_SLACK_CHANNEL, 'placeholder'}
     REPO_TO_RUN_ON: ${env:REPO_TO_RUN_ON, 'OMIT'}
     FERN_TOKEN: ${env:FERN_TOKEN, 'OMIT'}
+    # For Probot explicitly (it picks these up by default)
+    APP_ID: ${env:GITHUB_APP_ID, 'placeholder'}
+    WEBHOOK_SECRET: ${env:GITHUB_APP_WEBHOOK_SECRET, 'placeholder'}
+    WEBHOOK_PROXY_URL: ${env:GITHUB_APP_WEBHOOK_PROXY_URL, 'placeholder'}
 
   # Roles for the lambda functions
   iam:

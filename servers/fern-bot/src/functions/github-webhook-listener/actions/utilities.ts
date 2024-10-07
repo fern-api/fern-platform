@@ -1,10 +1,9 @@
-import { App } from "octokit";
 import { EmitterWebhookEvent } from "@octokit/webhooks";
+import { Octokit } from "octokit";
 
 export interface RunId {
     // TODO: This should become some union of strings/enums of possible actions we can switch on in the check_run function
     action: "sdk_preview";
-    githubRepositoryFullName: string | undefined;
 
     // Also the docker image for the generator
     generatorDockerImage: string;
@@ -42,20 +41,19 @@ export interface CheckOutput {
 
 export async function updateCheck({
     context,
-    app,
+    installationOctokit,
     status,
     conclusion,
     output,
 }: {
     context: EmitterWebhookEvent<"check_run">;
-    app: App;
+    installationOctokit: Octokit;
     status: CheckStatus;
     conclusion: Conclusion;
     output: CheckOutput;
 }): Promise<void> {
-    await app.octokit.rest.checks.update({
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        owner: context.payload.repository.owner.name!,
+    await installationOctokit.rest.checks.update({
+        owner: context.payload.repository.owner.login,
         repo: context.payload.repository.name,
         check_run_id: context.payload.check_run.id,
         status,
@@ -66,14 +64,13 @@ export async function updateCheck({
 
 export async function markCheckInProgress({
     context,
-    app,
+    installationOctokit,
 }: {
     context: EmitterWebhookEvent<"check_run">;
-    app: App;
+    installationOctokit: Octokit;
 }): Promise<void> {
-    await app.octokit.rest.checks.update({
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        owner: context.payload.repository.owner.name!,
+    await installationOctokit.rest.checks.update({
+        owner: context.payload.repository.owner.login,
         repo: context.payload.repository.name,
         check_run_id: context.payload.check_run.id,
         status: "in_progress",

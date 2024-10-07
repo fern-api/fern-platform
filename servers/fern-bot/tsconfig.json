@@ -9,13 +9,13 @@
       "@utils/*": ["src/utils/*"]
     },
     "lib": ["ESNext", "DOM"],
-    "target": "esnext",
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": true,
     "sourceMap": true,
+    "target": "ES2020",
     "outDir": "lib",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -31,7 +31,10 @@
     "src/__test__/**/*"
   ],
   "ts-node": {
-    "require": ["tsconfig-paths/register"]
+    "require": ["tsconfig-paths/register"],
+    "compilerOptions": {
+      "module": "commonjs"
+    }
   },
   "references": [
     {

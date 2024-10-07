@@ -1,63 +1,42 @@
 import { Env } from "@libs/env";
-import { setupGithubApp } from "@libs/github";
-import { App } from "octokit";
 import { deserializeRunId } from "./utilities";
 import { previewSdk, runDefaultAction } from "./previewSdk";
 import { initiatePreviewRuns } from "./initiatePreviewRuns";
+import { Probot } from "probot";
+import { setupGithubApp } from "@libs/github";
+import { App } from "octokit";
 
-export async function handleIncomingRequest(request: Request, env: Env): Promise<Response> {
-    const application: App = setupGithubApp(env);
-    // Process the incoming events
-    await actionWebhook(application, env);
-
-    try {
-        // Verify the incoming webhook before proceeding
-        await verifySignature(application, request);
-
-        return new Response("{ 'ok': true }", {
-            headers: { "content-type": "application/json" },
-        });
-    } catch (error) {
-        return new Response(`{ "error": "${error}" }`, {
-            status: 500,
-            headers: { "content-type": "application/json" },
-        });
-    }
-}
-
-const verifySignature = async (app: App, request: Request): Promise<void> => {
-    const eventName = request.headers.get("X-GitHub-Event");
-    if (eventName == null) {
-        throw new Error("Missing X-GitHub-Event header");
-    }
-    await app.webhooks.verifyAndReceive({
-        id: request.headers.get("X-GitHub-Delivery") ?? "x-github-delivery",
-        // @ts-expect-error: octokit does not export the type needed here to be able to cast
-        name: eventName,
-        signature: request.headers.get("X-Hub-Signature-256")?.replace(/sha256=/, "") ?? "",
-        payload: await request.json(),
-    });
-};
-
-const actionWebhook = async (app: App, env: Env): Promise<void> => {
+export async function actionWebhook(app: Probot, env: Env): Promise<void> {
     app.log.info("Listening for webhooks");
+
+    const githubApp: App = setupGithubApp(env);
+    app.webhooks.on("pull_request.closed", (_) => {
+        app.log.info("PR Closed");
+    });
+
+    app.webhooks.on("pull_request.opened", (_) => {
+        app.log.info("PR Opened");
+    });
 
     // Adding checks for preview as outlined in
     // https://docs.github.com/en/apps/creating-github-apps/writing-code-for-a-github-app/building-ci-checks-with-a-github-app
     //
     // With this event, github is saying that a repo this app is installed on has a commit that should be running checks
     // We check that it is a Fern config repo and then declare to github that we will be running SDK previews if so
+    //
+    // We might want to make this on PR open instead of this, which is every elligible commit (e.g. even to main)
     app.webhooks.on("check_suite", async (context) => {
         const action = context.payload.action;
+        app.log.info(`A check run was requested: ${action}`);
         if (action === "requested" || action === "rerequested") {
-            app.log.info(`A check run was requested: ${action}`);
-
             // Kick off SDK previews
             await initiatePreviewRuns({
                 context,
-                app,
+                githubApp,
                 fernBotLoginName: env.GITHUB_APP_LOGIN_NAME,
                 fernBotLoginId: env.GITHUB_APP_LOGIN_ID,
+                venusUrl: env.DEFAULT_VENUS_ORIGIN,
+                fdrUrl: env.DEFAULT_FDR_ORIGIN,
             });
         }
     });
@@ -73,6 +52,14 @@ const actionWebhook = async (app: App, env: Env): Promise<void> => {
         // Now you know you've been given a check to run
         const action = context.payload.action;
 
+        if (context.payload.installation == null) {
+            // This should never happen, as far as I know, but because we need an installation ID to be able to get the
+            // installation Octokit below, we need to quit out of here for type-safety, ensuring the ID is there.
+            throw new Error("No installation ID found, could not complete or update the queued check run.");
+        }
+
+        const installationOctokit = await githubApp.getInstallationOctokit(context.payload.installation.id);
+
         if (action === "rerequested" || action === "created") {
             const runId = deserializeRunId(context.payload.check_run.external_id);
 
@@ -81,7 +68,7 @@ const actionWebhook = async (app: App, env: Env): Promise<void> => {
                 case "sdk_preview":
                     await previewSdk({
                         context,
-                        app,
+                        installationOctokit,
                         fernBotLoginName: env.GITHUB_APP_LOGIN_NAME,
                         fernBotLoginId: env.GITHUB_APP_LOGIN_ID,
                         runId,
@@ -89,8 +76,8 @@ const actionWebhook = async (app: App, env: Env): Promise<void> => {
                     });
                     break;
                 default:
-                    await runDefaultAction({ context, app });
+                    await runDefaultAction({ context, installationOctokit });
             }
         }
     });
-};
+}

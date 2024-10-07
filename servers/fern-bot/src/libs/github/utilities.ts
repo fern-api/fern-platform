@@ -1,5 +1,6 @@
 import { doesPathExist } from "@libs/fs";
 import { components } from "@octokit/openapi-types";
+import { Repository as WebhooksRepository } from "@octokit/webhooks-types";
 import { mkdir } from "fs/promises";
 import { Octokit } from "octokit";
 import * as path from "path";
@@ -7,7 +8,7 @@ import simpleGit, { SimpleGit } from "simple-git";
 import tmp from "tmp-promise";
 
 export const DEFAULT_REMOTE_NAME = "origin";
-export type Repository = components["schemas"]["repository"];
+export type Repository = components["schemas"]["repository"] | WebhooksRepository;
 export type PullRequest = components["schemas"]["pull-request"];
 
 export async function configureGit(repository: Repository): Promise<[SimpleGit, string]> {

@@ -4,13 +4,14 @@ import { doesPathExist } from "./fs";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+import { join } from "path";
 
 export async function execFernCli(
     command: string,
     cwd?: string,
     pipeYes: boolean = false,
 ): Promise<execa.ExecaChildProcess<string>> {
-    console.log(`Running command on fern CLI: ${command}`);
+    console.log(`[Fern CLI] Running command on fern CLI: ${command}`);
     const commandParts = command.split(" ");
     try {
         // Running the commands on Lambdas is a bit odd...specifically you can only write to tmp on a lambda
@@ -42,7 +43,7 @@ export async function execFernCli(
         }
         return command;
     } catch (error) {
-        console.error("fern command failed.");
+        console.error("[Fern CLI] fern command failed.");
         throw error;
     }
 }
@@ -105,4 +106,23 @@ export async function isOrganizationCanary(orgId: string, venusUrl: string): Pro
     }
 
     return response.body.isFernbotCanary;
+}
+
+export async function getPreviewPath({
+    generatorDockerImage,
+    currentRepoPath,
+    apiName,
+}: {
+    generatorDockerImage: string;
+    currentRepoPath: string;
+    apiName: string | undefined;
+}): Promise<string> {
+    // Push the preview to a new branch
+    // HACK HACK: we should likely add a command to the CLI that spits out the preview path, since it's the one
+    // downloading the preview repo to disk
+    let relativePathToPreview = `./.preview/${generatorDockerImage.replace("fernapi/", "")}`;
+    if (apiName != null) {
+        relativePathToPreview = join(`./apis/${apiName}`, relativePathToPreview);
+    }
+    return join(currentRepoPath, "fern", relativePathToPreview);
 }

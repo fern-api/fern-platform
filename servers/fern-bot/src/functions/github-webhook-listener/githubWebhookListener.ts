@@ -1,12 +1,7 @@
-import { evaluateEnv } from "@libs/env";
-import { handlerWrapper } from "@libs/handler-wrapper";
-import { handleIncomingRequest } from "./actions/githubWebhookListener";
+import { createLambdaFunction, createProbot } from "@probot/adapter-aws-lambda-serverless";
 
-const githubWebhookListener = async (event: unknown) => {
-    console.debug("Beginning scheduled run of `githubWebhookListener`, received event:", event);
-    const env = evaluateEnv();
-    console.debug("Environment evaluated, continuing to actual action execution.");
-    return await handleIncomingRequest(event as Request, env);
-};
+import appFn from "./actionWrapper";
 
-export const handler = handlerWrapper(githubWebhookListener);
+export const handler = createLambdaFunction(appFn, {
+    probot: createProbot(),
+});
