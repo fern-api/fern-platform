@@ -47,14 +47,20 @@ export class DocsLoader {
         };
     }
 
-    private loadForDocsUrlResponse: DocsV2Read.LoadDocsForUrlResponse | undefined;
+    #loadForDocsUrlResponse: DocsV2Read.LoadDocsForUrlResponse | undefined;
+    #error: DocsV2Read.getDocsForUrl.Error | undefined;
+
+    get error(): DocsV2Read.getDocsForUrl.Error | undefined {
+        return this.#error;
+    }
+
     public withLoadDocsForUrlResponse(loadForDocsUrlResponse: DocsV2Read.LoadDocsForUrlResponse): DocsLoader {
-        this.loadForDocsUrlResponse = loadForDocsUrlResponse;
+        this.#loadForDocsUrlResponse = loadForDocsUrlResponse;
         return this;
     }
 
     private async loadDocs(): Promise<DocsV2Read.LoadDocsForUrlResponse | undefined> {
-        if (!this.loadForDocsUrlResponse) {
+        if (!this.#loadForDocsUrlResponse) {
             const { user } = await this.loadAuth();
             const authProps: AuthProps | undefined =
                 user && this.fernToken ? { user, token: this.fernToken } : undefined;
@@ -62,10 +68,12 @@ export class DocsLoader {
             const response = await loadWithUrl(this.xFernHost, authProps);
 
             if (response.ok) {
-                this.loadForDocsUrlResponse = response.body;
+                this.#loadForDocsUrlResponse = response.body;
+            } else {
+                this.#error = response.error;
             }
         }
-        return this.loadForDocsUrlResponse;
+        return this.#loadForDocsUrlResponse;
     }
 
     public async root(): Promise<FernNavigation.RootNode | undefined> {
