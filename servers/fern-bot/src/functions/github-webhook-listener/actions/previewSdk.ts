@@ -40,7 +40,7 @@ export async function previewSdk({
     // Get the config repo
     await cloneRepo(git, repository, installationOctokit, fernBotLoginName, fernBotLoginId);
     // Generate preview
-    let previewCommand = `generate --preview --group ${groupName}`;
+    let previewCommand = `generate --preview --group ${groupName} --log-level debug`;
     if (apiName != null) {
         previewCommand += ` --api ${apiName}`;
     }

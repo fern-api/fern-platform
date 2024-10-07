@@ -32,7 +32,7 @@ export async function initiatePreviewRuns({
     const [git, fullRepoPath] = await configureGit(repository);
     await cloneRepo(git, repository, octokit, fernBotLoginName, fernBotLoginId);
 
-    // Don't kick anything off unless it's a fern bot canary
+    // Don't kick anything off unless it's a fern bot canary, especially if you cannot determine if it's a canary
     try {
         const maybeOrganization = await getOrganzation(fullRepoPath);
         if (maybeOrganization == null) {
@@ -46,7 +46,7 @@ export async function initiatePreviewRuns({
         throw error;
     }
 
-    const generatorsList = await getGenerators(fullRepoPath, "--exclude-mode local");
+    const generatorsList = await getGenerators(fullRepoPath, "--exclude-mode local-file-system");
     for (const [apiName, api] of Object.entries(generatorsList)) {
         for (const [groupName, group] of Object.entries(api)) {
             for (const generator of group) {
