@@ -1,4 +1,4 @@
-import { getChildren, isPage, utils, type RootNode } from "@fern-api/fdr-sdk/navigation";
+import { getChildren, isLeaf, isPage, utils, type NavigationNode, type RootNode } from "@fern-api/fdr-sdk/navigation";
 import { matchPath } from "@fern-ui/fern-docs-utils";
 import type { AuthEdgeConfigBasicTokenVerification } from "@fern-ui/ui/auth";
 import { captureMessage } from "@sentry/nextjs";
@@ -26,16 +26,25 @@ export function withBasicTokenPublic(
     return false;
 }
 
-export function pruneWithBasicTokenPublic(auth: AuthEdgeConfigBasicTokenVerification, node: RootNode): RootNode {
-    const result = utils.pruneNavigationTree(node, (node) => {
+/**
+ * @internal visibleForTesting
+ */
+export function withBasicTokenPublicCheck(
+    auth: Pick<AuthEdgeConfigBasicTokenVerification, "allowlist" | "denylist">,
+): (node: NavigationNode) => boolean {
+    return (node: NavigationNode) => {
         if (isPage(node)) {
             return withBasicTokenPublic(auth, `/${node.slug}`);
-        } else if (getChildren(node).length === 0) {
+        } else if (!isLeaf(node) && getChildren(node).length === 0) {
             return false;
         }
 
         return true;
-    });
+    };
+}
+
+export function pruneWithBasicTokenPublic(auth: AuthEdgeConfigBasicTokenVerification, node: RootNode): RootNode {
+    const result = utils.pruneNavigationTree(node, withBasicTokenPublicCheck(auth));
 
     // TODO: handle this more gracefully
     if (result == null) {
