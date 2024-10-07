@@ -1,5 +1,6 @@
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { DEFAULT_FEATURE_FLAGS, FeatureFlags } from "@fern-ui/ui";
 import type { AuthEdgeConfig, FernUser } from "@fern-ui/ui/auth";
 import { verifyFernJWTConfig } from "./auth/FernJWT";
 import { getAuthEdgeConfig } from "./auth/getAuthEdgeConfig";
@@ -17,9 +18,15 @@ export class DocsLoader {
         private fernToken: string | undefined,
     ) {}
 
+    private featureFlags = DEFAULT_FEATURE_FLAGS;
+    public withFeatureFlags(featureFlags: FeatureFlags): DocsLoader {
+        this.featureFlags = featureFlags;
+        return this;
+    }
+
     private user: FernUser | undefined;
     private auth: AuthEdgeConfig | undefined;
-    public withAuth(auth: AuthEdgeConfig, user: FernUser | undefined): DocsLoader {
+    public withAuth(auth: AuthEdgeConfig | undefined, user: FernUser | undefined): DocsLoader {
         this.auth = auth;
         this.user = user;
         return this;
@@ -76,18 +83,28 @@ export class DocsLoader {
         return this.#loadForDocsUrlResponse;
     }
 
-    public async root(): Promise<FernNavigation.RootNode | undefined> {
-        const { authConfig, user } = await this.loadAuth();
+    public async unprunedRoot(): Promise<FernNavigation.RootNode | undefined> {
         const docs = await this.loadDocs();
 
         if (!docs) {
             return undefined;
         }
 
-        let node = FernNavigation.utils.toRootNode(docs);
+        return FernNavigation.utils.toRootNode(
+            docs,
+            this.featureFlags.isBatchStreamToggleDisabled,
+            this.featureFlags.isApiScrollingDisabled,
+        );
+    }
 
-        // If the domain is basic_token_verification, we only want to include slugs that are allowed
-        if (authConfig?.type === "basic_token_verification" && !user) {
+    public async root(): Promise<FernNavigation.RootNode | undefined> {
+        const { authConfig, user } = await this.loadAuth();
+        let node = await this.unprunedRoot();
+
+        // if the user is not authenticated, and the page requires authentication, prune the navigation tree
+        // to only show pages that are allowed to be viewed without authentication.
+        // note: the middleware will not show this page at all if the user is not authenticated.
+        if (node && authConfig?.type === "basic_token_verification" && !user) {
             try {
                 // TODO: store this in cache
                 node = pruneWithBasicTokenPublic(authConfig, node);

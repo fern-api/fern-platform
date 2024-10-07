@@ -20,6 +20,7 @@ import { GetServerSidePropsResult } from "next";
 import type { NextApiRequestCookies } from "next/dist/server/api-utils";
 import { ComponentProps } from "react";
 import urlJoin from "url-join";
+import { DocsLoader } from "./DocsLoader";
 import { getAPIKeyInjectionConfigNode } from "./auth/getApiKeyInjectionConfig";
 import { getAuthEdgeConfig } from "./auth/getAuthEdgeConfig";
 import type { AuthProps } from "./authProps";
@@ -28,7 +29,6 @@ import { getCustomerAnalytics } from "./getCustomerAnalytics";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";
-import { pruneWithBasicTokenPublic } from "./withBasicTokenPublic";
 import { withVersionSwitcherInfo } from "./withVersionSwitcherInfo";
 
 interface WithInitialProps {
@@ -64,21 +64,13 @@ export async function withInitialProps({
 
     const featureFlags = await getFeatureFlags(xFernHost);
 
-    const original: FernNavigation.RootNode = FernNavigation.utils.toRootNode(
-        docs,
-        featureFlags.isBatchStreamToggleDisabled,
-        featureFlags.isApiScrollingDisabled,
-    );
-    let root: FernNavigation.RootNode | null = original;
-
     const authConfig = await getAuthEdgeConfig(xFernHost);
+    const loader = DocsLoader.for(xFernHost, auth?.token)
+        .withFeatureFlags(featureFlags)
+        .withAuth(authConfig, auth?.user)
+        .withLoadDocsForUrlResponse(docs);
 
-    // if the user is not authenticated, and the page requires authentication, prune the navigation tree
-    // to only show pages that are allowed to be viewed without authentication.
-    // note: the middleware will not show this page at all if the user is not authenticated.
-    if (authConfig?.type === "basic_token_verification" && auth == null) {
-        root = pruneWithBasicTokenPublic(authConfig, root);
-    }
+    const root = await loader.root();
 
     // this should not happen, but if it does, we should return a 404
     if (root == null) {
@@ -101,9 +93,12 @@ export async function withInitialProps({
         // this is a special case where the user is not authenticated, and the page requires authentication,
         // but the user is trying to access a page that is not found. in this case, we should redirect to the auth page.
         if (authConfig?.type === "basic_token_verification" && auth == null) {
-            const node = FernNavigation.utils.findNode(original, slug);
-            if (node.type !== "notFound") {
-                return { redirect: { destination: authConfig.redirect, permanent: false } };
+            const original = await loader.unprunedRoot();
+            if (original) {
+                const node = FernNavigation.utils.findNode(original, slug);
+                if (node.type !== "notFound") {
+                    return { redirect: { destination: authConfig.redirect, permanent: false } };
+                }
             }
         }
 
