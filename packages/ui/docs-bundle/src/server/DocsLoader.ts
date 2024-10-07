@@ -1,12 +1,16 @@
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { DEFAULT_FEATURE_FLAGS, FeatureFlags } from "@fern-ui/ui";
 import type { AuthEdgeConfig, FernUser } from "@fern-ui/ui/auth";
 import { verifyFernJWTConfig } from "./auth/FernJWT";
 import { getAuthEdgeConfig } from "./auth/getAuthEdgeConfig";
 import { AuthProps } from "./authProps";
 import { loadWithUrl } from "./loadWithUrl";
 import { pruneWithBasicTokenPublic } from "./withBasicTokenPublic";
+
+interface DocsLoaderFlags {
+    isBatchStreamToggleDisabled: boolean;
+    isApiScrollingDisabled: boolean;
+}
 
 export class DocsLoader {
     static for(xFernHost: string, fernToken: string | undefined): DocsLoader {
@@ -18,8 +22,11 @@ export class DocsLoader {
         private fernToken: string | undefined,
     ) {}
 
-    private featureFlags = DEFAULT_FEATURE_FLAGS;
-    public withFeatureFlags(featureFlags: FeatureFlags): DocsLoader {
+    private featureFlags: DocsLoaderFlags = {
+        isBatchStreamToggleDisabled: false,
+        isApiScrollingDisabled: false,
+    };
+    public withFeatureFlags(featureFlags: DocsLoaderFlags): DocsLoader {
         this.featureFlags = featureFlags;
         return this;
     }
