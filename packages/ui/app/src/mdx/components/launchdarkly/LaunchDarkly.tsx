@@ -4,6 +4,7 @@ import { loadable, useHydrateAtoms } from "jotai/utils";
 import * as LDClient from "launchdarkly-js-client-sdk";
 import { PropsWithChildren, ReactNode, useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
+import { LinkPreloadApiRoute } from "../../../components/LinkPreload";
 import { useApiRoute } from "../../../hooks/useApiRoute";
 
 interface LaunchDarklyInfo {
@@ -96,5 +97,10 @@ export function LaunchDarkly({ flag, children }: PropsWithChildren<LaunchDarklyP
         return null;
     }
 
-    return children;
+    return (
+        <>
+            <LinkPreloadApiRoute href="/api/fern-docs/integrations/launchdarkly" />
+            {children}
+        </>
+    );
 }

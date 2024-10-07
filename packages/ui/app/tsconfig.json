@@ -27,7 +27,7 @@
       "path": "../../commons/search-utils"
     },
     {
-      "path": "../../fdr-sdk"
+      "path": "../../fdr-sdk/tsconfig.build.json"
     },
     {
       "path": "../../template-resolver"
@@ -37,6 +37,9 @@
     },
     {
       "path": "../fern-docs-auth"
+    },
+    {
+      "path": "../fern-docs-utils"
     },
     {
       "path": "../components"

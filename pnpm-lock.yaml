@@ -1067,6 +1067,9 @@ importers:
       '@fern-ui/fdr-utils':
         specifier: workspace:*
         version: link:../../commons/fdr-utils
+      '@fern-ui/fern-docs-utils':
+        specifier: workspace:*
+        version: link:../fern-docs-utils
       '@fern-ui/loadable':
         specifier: workspace:*
         version: link:../../commons/loadable
@@ -2155,9 +2158,6 @@ importers:
       '@fern-ui/search-utils':
         specifier: workspace:*
         version: link:../../commons/search-utils
-      '@fern-ui/ui':
-        specifier: workspace:*
-        version: link:../app
       '@types/node':
         specifier: ^18.7.18
         version: 18.19.33

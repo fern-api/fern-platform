@@ -3,7 +3,6 @@ import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { LaunchDarklyEdgeConfig, getAuthEdgeConfig, getLaunchDarklySettings } from "@fern-ui/fern-docs-edge";
 import { COOKIE_EMAIL, COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { randomUUID } from "crypto";
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse, userAgent } from "next/server";
 
 export const runtime = "edge";
@@ -62,7 +61,7 @@ async function hashString(input: string | undefined): Promise<string | undefined
 }
 
 async function getUserContext(req: NextRequest): Promise<LaunchDarklyInfo["user"]> {
-    const jar = cookies();
+    const jar = req.cookies;
 
     const fernToken = jar.get(COOKIE_FERN_TOKEN)?.value;
     const email = jar.get(COOKIE_EMAIL)?.value;

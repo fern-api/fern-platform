@@ -1,5 +1,5 @@
+import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
 import { isCustomDomain, isDevelopment, isFern } from "@fern-ui/fern-docs-utils";
-import type { FeatureFlags } from "@fern-ui/ui";
 import { getAll } from "@vercel/edge-config";
 
 export const runtime = "edge";

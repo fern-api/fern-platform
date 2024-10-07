@@ -43,7 +43,6 @@
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@fern-ui/search-utils": "workspace:*",
-    "@fern-ui/ui": "workspace:*",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",

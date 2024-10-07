@@ -13,9 +13,6 @@
       "path": "../fern-docs-utils"
     },
     {
-      "path": "../app"
-    },
-    {
       "path": "../../commons/search-utils"
     }
   ]

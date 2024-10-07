@@ -39,6 +39,7 @@
     "@fern-ui/components": "workspace:*",
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/fdr-utils": "workspace:*",
+    "@fern-ui/fern-docs-utils": "workspace:*",
     "@fern-ui/loadable": "workspace:*",
     "@fern-ui/next-seo": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
