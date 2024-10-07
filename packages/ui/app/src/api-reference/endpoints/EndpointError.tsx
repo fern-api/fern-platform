@@ -76,7 +76,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                         <div className="t-muted w-full text-start text-sm leading-7">
                             <MdxContent
                                 mdx={error.description}
-                                fallback={`This error return ${renderDeprecatedTypeShorthand(error.shape, { withArticle: true }, types)}.`}
+                                fallback={`This error returns ${renderDeprecatedTypeShorthand(error.shape, { withArticle: true }, types)}.`}
                             />
                         </div>
                         {shouldHideShape(error.shape, types) ? null : (
