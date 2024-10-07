@@ -1,30 +1,43 @@
 import { captureException } from "@sentry/nextjs";
 import { atom, useAtomValue } from "jotai";
-import { loadable } from "jotai/utils";
+import { loadable, useHydrateAtoms } from "jotai/utils";
 import * as LDClient from "launchdarkly-js-client-sdk";
 import { PropsWithChildren, ReactNode, useCallback, useEffect, useState } from "react";
-import { selectApiRoute } from "../../../hooks/useApiRoute";
+import useSWR from "swr";
+import { useApiRoute } from "../../../hooks/useApiRoute";
 
-async function fetchClientSideId(route: string): Promise<string | undefined> {
-    const json = await fetch(route).then((res) => res.json());
-    return json?.["client-side-id"];
+interface LaunchDarklyInfo {
+    clientSideId: string;
+    kind: "multi";
+    user:
+        | { anonymous: true }
+        | {
+              key: string;
+              email?: string;
+              name?: string;
+          };
+    device: {
+        key: string;
+        [key: string]: unknown;
+    };
 }
 
+const LAUNCH_DARKLY_INFO_ATOM = atom<LaunchDarklyInfo | undefined>(undefined);
+
 // this is a singleton atom that initializes the LaunchDarkly client-side SDK
-const ldClientAtom = atom<Promise<LDClient.LDClient | undefined>>(async (get) => {
+const LD_CLIENT_ATOM = atom<Promise<LDClient.LDClient | undefined>>(async (get) => {
     if (typeof window === "undefined") {
         return undefined;
     }
-    const route = selectApiRoute(get, "/api/fern-docs/integrations/launchdarkly");
-    const clientSideId = await fetchClientSideId(route);
-    if (!clientSideId) {
+
+    const info = get(LAUNCH_DARKLY_INFO_ATOM);
+    if (!info) {
         return undefined;
     }
 
-    const client = LDClient.initialize(clientSideId, {
-        kind: "user",
-        anonymous: true,
-    });
+    const { clientSideId, ...context } = info;
+
+    const client = LDClient.initialize(clientSideId, context);
 
     await client.waitForInitialization();
 
@@ -32,8 +45,9 @@ const ldClientAtom = atom<Promise<LDClient.LDClient | undefined>>(async (get) =>
 });
 
 const useLaunchDarklyFlag = (flag: string): boolean => {
-    const loadableClient = useAtomValue(loadable(ldClientAtom));
+    const loadableClient = useAtomValue(loadable(LD_CLIENT_ATOM));
     const client = loadableClient.state === "hasData" ? loadableClient.data : undefined;
+
     if (loadableClient.state === "hasError") {
         captureException(loadableClient.error);
     }
@@ -72,6 +86,10 @@ export interface LaunchDarklyProps {
 }
 
 export function LaunchDarkly({ flag, children }: PropsWithChildren<LaunchDarklyProps>): ReactNode {
+    const route = useApiRoute("/api/fern-docs/integrations/launchdarkly");
+    const { data } = useSWR(route, (key): Promise<LaunchDarklyInfo> => fetch(key).then((res) => res.json()));
+    useHydrateAtoms([[LAUNCH_DARKLY_INFO_ATOM, data]], { dangerouslyForceHydrate: true });
+
     const ldClient = useLaunchDarklyFlag(flag);
 
     if (!ldClient) {

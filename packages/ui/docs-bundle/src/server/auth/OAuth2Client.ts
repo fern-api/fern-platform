@@ -1,4 +1,8 @@
-import { OAuthTokenResponseSchema, type AuthEdgeConfigOAuth2Ory, type OAuthTokenResponse } from "@fern-ui/ui/auth";
+import {
+    OAuthTokenResponseSchema,
+    type AuthEdgeConfigOAuth2Ory,
+    type OAuthTokenResponse,
+} from "@fern-ui/fern-docs-auth";
 import { JWTPayload, createRemoteJWKSet, decodeJwt, jwtVerify } from "jose";
 import { NextApiRequestCookies } from "next/dist/server/api-utils";
 import type { NextRequest } from "next/server";

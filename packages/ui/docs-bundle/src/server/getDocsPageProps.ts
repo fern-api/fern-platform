@@ -1,5 +1,5 @@
+import type { FernUser } from "@fern-ui/fern-docs-auth";
 import type { DocsPage } from "@fern-ui/ui";
-import type { FernUser } from "@fern-ui/ui/auth";
 import type { GetServerSidePropsResult } from "next";
 import type { NextApiRequestCookies } from "next/dist/server/api-utils";
 import type { ComponentProps } from "react";

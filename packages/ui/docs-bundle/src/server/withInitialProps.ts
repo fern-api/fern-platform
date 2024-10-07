@@ -4,24 +4,20 @@ import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion
 import { SidebarTab } from "@fern-ui/fdr-utils";
 import { getAuthEdgeConfig, getCustomerAnalytics, getFeatureFlags, getSeoDisabled } from "@fern-ui/fern-docs-edge";
 import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
-import { getSearchConfig } from "@fern-ui/search-utils";
 import {
     DocsPage,
     getApiRouteSupplier,
     getGitHubInfo,
     getGitHubRepo,
     getSeoProps,
-    provideRegistryService,
     renderThemeStylesheet,
     resolveDocsContent,
 } from "@fern-ui/ui";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { GetServerSidePropsResult } from "next";
-import type { NextApiRequestCookies } from "next/dist/server/api-utils";
 import { ComponentProps } from "react";
 import urlJoin from "url-join";
 import { DocsLoader } from "./DocsLoader";
-import { getAPIKeyInjectionConfigNode } from "./auth/getApiKeyInjectionConfig";
 import type { AuthProps } from "./authProps";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
@@ -33,7 +29,6 @@ interface WithInitialProps {
     slug: string[];
     xFernHost: string;
     auth?: AuthProps;
-    cookies?: NextApiRequestCookies;
 }
 
 export async function withInitialProps({
@@ -41,7 +36,6 @@ export async function withInitialProps({
     slug: slugArray,
     xFernHost,
     auth,
-    cookies,
 }: WithInitialProps): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
     if (!docsResponse.ok) {
         return handleLoadDocsError(xFernHost, slugArray, docsResponse.error);
@@ -284,12 +278,6 @@ export async function withInitialProps({
         ),
     };
 
-    props.fallback[getApiRoute("/api/fern-docs/search")] = await getSearchConfig(
-        provideRegistryService(),
-        xFernHost,
-        docs.definition.search,
-    );
-
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
     const githubNavbarLink = docsConfig.navbarLinks?.find((link) => link.type === "github");
     if (githubNavbarLink) {
@@ -301,9 +289,6 @@ export async function withInitialProps({
             }
         }
     }
-
-    const apiKeyInjectionConfig = await getAPIKeyInjectionConfigNode(xFernHost, cookies);
-    props.fallback[getApiRoute("/api/fern-docs/auth/api-key-injection")] = apiKeyInjectionConfig;
 
     return {
         props: JSON.parse(JSON.stringify(props)), // remove all undefineds

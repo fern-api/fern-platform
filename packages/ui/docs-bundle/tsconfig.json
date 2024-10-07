@@ -20,10 +20,13 @@
       "path": "../../commons/search-utils"
     },
     {
-      "path": "../fern-docs-utils"
+      "path": "../fern-docs-auth"
     },
     {
       "path": "../fern-docs-edge"
+    },
+    {
+      "path": "../fern-docs-utils"
     },
     {
       "path": "../../fdr-sdk"

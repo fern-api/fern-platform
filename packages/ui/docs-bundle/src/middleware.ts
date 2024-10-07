@@ -2,9 +2,9 @@ import { extractBuildId, extractNextDataPathname } from "@/server/extractNextDat
 import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "@/server/pageRoutes";
 import { rewritePosthog } from "@/server/rewritePosthog";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import type { FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge";
 import { COOKIE_FERN_TOKEN, HEADER_X_FERN_HOST } from "@fern-ui/fern-docs-utils";
-import type { FernUser } from "@fern-ui/ui/auth";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";

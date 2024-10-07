@@ -1,7 +1,7 @@
 import { checkViewerAllowedEdge } from "@/server/auth/checkViewerAllowed";
 import { loadWithUrl } from "@/server/loadWithUrl";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge";
+import { getAuthEdgeConfig, getInkeepSettings } from "@fern-ui/fern-docs-edge";
 import { SearchConfig, getSearchConfig } from "@fern-ui/search-utils";
 import { provideRegistryService } from "@fern-ui/ui";
 import { captureException } from "@sentry/nextjs";
@@ -31,8 +31,9 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Se
             return NextResponse.json({ isAvailable: false }, { status: 503 });
         }
 
+        const inkeepSettings = await getInkeepSettings(domain);
         const searchInfo = docs.body.definition.search;
-        const config = await getSearchConfig(provideRegistryService(), domain, searchInfo);
+        const config = await getSearchConfig(provideRegistryService(), searchInfo, inkeepSettings);
         return NextResponse.json(config, { status: config.isAvailable ? 200 : 503 });
     } catch (e) {
         const id = captureException(e, { level: "fatal" });

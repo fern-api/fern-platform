@@ -36,6 +36,9 @@
       "path": "../chatbot"
     },
     {
+      "path": "../fern-docs-auth"
+    },
+    {
       "path": "../components"
     }
   ]

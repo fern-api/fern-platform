@@ -1,20 +1,22 @@
 {
-  "name": "@fern-ui/search-utils",
+  "name": "@fern-ui/fern-docs-auth",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
-    "directory": "packages/commons/search-utils"
+    "directory": "packages/ui/fern-docs-auth"
   },
   "private": true,
   "files": [
     "dist"
   ],
   "type": "module",
-  "source": "src/index.ts",
-  "module": "src/index.ts",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
@@ -27,23 +29,21 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "depcheck": "depcheck",
+    "dev": "tsc --watch",
+    "docs:dev": "pnpm dev"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "workspace:*",
-    "@fern-ui/core-utils": "workspace:*"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
-    "@inkeep/widgets": "^0.2.288",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
-    "instantsearch.js": "^4.63.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.3.2",
     "stylelint": "^16.1.0",
-    "ts-essentials": "^10.0.1",
     "typescript": "5.4.3",
     "vitest": "^1.5.0"
   }

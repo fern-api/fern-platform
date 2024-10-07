@@ -726,9 +726,6 @@ importers:
       '@fern-ui/core-utils':
         specifier: workspace:*
         version: link:../core-utils
-      '@vercel/edge-config':
-        specifier: ^1.1.0
-        version: 1.1.0(@opentelemetry/api@1.9.0)(typescript@5.4.3)
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
@@ -1314,6 +1311,9 @@ importers:
       '@fern-platform/configs':
         specifier: workspace:*
         version: link:../../configs
+      '@fern-ui/fern-docs-auth':
+        specifier: workspace:*
+        version: link:../fern-docs-auth
       '@mdx-js/esbuild':
         specifier: ^3.0.1
         version: 3.0.1(esbuild@0.20.2)
@@ -1775,6 +1775,9 @@ importers:
       '@fern-ui/fdr-utils':
         specifier: workspace:*
         version: link:../../commons/fdr-utils
+      '@fern-ui/fern-docs-auth':
+        specifier: workspace:*
+        version: link:../fern-docs-auth
       '@fern-ui/fern-docs-edge':
         specifier: workspace:*
         version: link:../fern-docs-edge
@@ -2094,8 +2097,45 @@ importers:
         specifier: ^5.2.0
         version: 5.2.11(@types/node@20.12.12)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
 
+  packages/ui/fern-docs-auth:
+    dependencies:
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@fern-platform/configs':
+        specifier: workspace:*
+        version: link:../../configs
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.19.33
+      depcheck:
+        specifier: ^1.4.3
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.57.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^3.3.2
+        version: 3.3.2
+      stylelint:
+        specifier: ^16.1.0
+        version: 16.5.0(typescript@5.4.3)
+      typescript:
+        specifier: 5.4.3
+        version: 5.4.3
+      vitest:
+        specifier: ^1.5.0
+        version: 1.6.0(@edge-runtime/vm@3.2.0)(@types/node@18.19.33)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
+
   packages/ui/fern-docs-edge:
     dependencies:
+      '@fern-ui/fern-docs-auth':
+        specifier: workspace:*
+        version: link:../fern-docs-auth
       '@fern-ui/fern-docs-utils':
         specifier: workspace:*
         version: link:../fern-docs-utils
@@ -2105,10 +2145,16 @@ importers:
       '@vercel/edge-config':
         specifier: ^1.1.0
         version: 1.1.0(@opentelemetry/api@1.9.0)(typescript@5.4.3)
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
         version: link:../../configs
+      '@fern-ui/search-utils':
+        specifier: workspace:*
+        version: link:../../commons/search-utils
       '@fern-ui/ui':
         specifier: workspace:*
         version: link:../app

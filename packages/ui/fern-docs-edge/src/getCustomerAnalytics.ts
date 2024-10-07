@@ -1,6 +1,15 @@
-import type { CustomerAnalytics } from "@fern-ui/ui";
 import { get } from "@vercel/edge-config";
 import urlJoin from "url-join";
+
+interface GTMParams {
+    tagId: string;
+}
+interface CustomerAnalytics {
+    ga4?: {
+        measurementId: string;
+    };
+    gtm?: GTMParams;
+}
 
 /**
  * @deprecated please migrate to docs.yml

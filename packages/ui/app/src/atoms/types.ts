@@ -2,9 +2,9 @@ import type { DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk/client/ty
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ColorsConfig, SidebarTab, VersionSwitcherInfo } from "@fern-ui/fdr-utils";
+import type { FernUser } from "@fern-ui/fern-docs-auth";
 import { NextSeoProps } from "@fern-ui/next-seo";
 import { CustomerAnalytics } from "../analytics/types";
-import { FernUser } from "../auth";
 import { DocsContent } from "../resolver/DocsContent";
 import { FernTheme } from "../themes/ThemedDocs";
 

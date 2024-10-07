@@ -34,13 +34,16 @@
     "docs:dev": "pnpm dev"
   },
   "dependencies": {
+    "@fern-ui/fern-docs-auth": "workspace:*",
     "@fern-ui/fern-docs-utils": "workspace:*",
+    "@sentry/nextjs": "^8.30.0",
     "@vercel/edge-config": "^1.1.0",
-    "@sentry/nextjs": "^8.30.0"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@fern-ui/ui": "workspace:*",
     "@fern-platform/configs": "workspace:*",
+    "@fern-ui/search-utils": "workspace:*",
+    "@fern-ui/ui": "workspace:*",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",

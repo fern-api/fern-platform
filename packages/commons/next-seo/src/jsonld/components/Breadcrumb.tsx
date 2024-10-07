@@ -7,6 +7,7 @@ export const Breadcrumb = memo(
         return (
             <Head>
                 <script
+                    key="jsonld-breadcrumb"
                     type="application/ld+json"
                     id="jsonld-breadcrumb"
                     dangerouslySetInnerHTML={{

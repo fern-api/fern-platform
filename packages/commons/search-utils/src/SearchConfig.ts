@@ -7,10 +7,7 @@ import type {
     InkeepSearchSettings,
     InkeepWidgetBaseSettings,
 } from "@inkeep/widgets";
-import { getAll } from "@vercel/edge-config";
 import type { DeepReadonly } from "ts-essentials";
-
-const FEATURE_FLAGS = ["inkeep-enabled" as const];
 
 export type InkeepSharedSettings = DeepReadonly<{
     replaceSearch: boolean;
@@ -19,10 +16,6 @@ export type InkeepSharedSettings = DeepReadonly<{
     searchSettings?: Partial<InkeepSearchSettings>;
     modalSettings?: Partial<InkeepModalSettings>;
 }>;
-
-interface EdgeConfigResponse {
-    "inkeep-enabled"?: Record<string, InkeepSharedSettings>;
-}
 
 export declare namespace SearchConfig {
     interface Unversioned {
@@ -128,8 +121,8 @@ async function getAlgoliaSearchConfig(
 
 export async function getSearchConfig(
     client: FdrClient,
-    domain: string,
     searchInfo: Algolia.SearchInfo,
+    inkeep: InkeepSharedSettings | undefined,
 ): Promise<SearchConfig> {
     const algolia = await getAlgoliaSearchConfig(client, searchInfo);
 
@@ -138,20 +131,12 @@ export async function getSearchConfig(
         return { isAvailable: false };
     }
 
-    try {
-        const config = await getAll<EdgeConfigResponse>(FEATURE_FLAGS);
-        const maybeInkeep = config["inkeep-enabled"]?.[domain];
-
-        if (maybeInkeep?.baseSettings.integrationId != null) {
-            return {
-                isAvailable: true,
-                algolia,
-                inkeep: maybeInkeep,
-            };
-        }
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error("Error fetching edge config", e);
+    if (inkeep?.baseSettings.integrationId != null) {
+        return {
+            isAvailable: true,
+            algolia,
+            inkeep,
+        };
     }
 
     return { isAvailable: true, algolia };
