@@ -1,4 +1,5 @@
 import { DocsLoader } from "@/server/DocsLoader";
+import { COOKIE_FERN_TOKEN } from "@/server/constants";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -25,7 +26,8 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
 
     const xFernHost = getXFernHostNode(req);
 
-    const loader = DocsLoader.for(xFernHost, req.cookies.fern_token);
+    const fernToken = req.cookies[COOKIE_FERN_TOKEN];
+    const loader = DocsLoader.for(xFernHost, fernToken);
 
     const root = await loader.root();
 

@@ -1,28 +1,29 @@
 import { AuthEdgeConfig } from "@fern-ui/ui/auth";
 import type { NextRequest } from "next/server";
+import { COOKIE_FERN_TOKEN } from "../constants";
 import { withBasicTokenPublic } from "../withBasicTokenPublic";
 import { verifyFernJWT } from "./FernJWT";
 
 export async function checkViewerAllowedEdge(auth: AuthEdgeConfig | undefined, req: NextRequest): Promise<number> {
-    const fern_token = req.cookies.get("fern_token")?.value;
+    const fernToken = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
 
-    return checkViewerAllowedPathname(auth, req.nextUrl.pathname, fern_token);
+    return checkViewerAllowedPathname(auth, req.nextUrl.pathname, fernToken);
 }
 
 export async function checkViewerAllowedPathname(
     auth: AuthEdgeConfig | undefined,
     pathname: string,
-    fern_token: string | undefined,
+    fernToken: string | undefined,
 ): Promise<number> {
     if (auth?.type === "basic_token_verification") {
         if (withBasicTokenPublic(auth, pathname)) {
             return 200;
         }
 
-        if (fern_token == null) {
+        if (fernToken == null) {
             return 401;
         } else {
-            const verified = await verifyFernJWT(fern_token, auth.secret, auth.issuer);
+            const verified = await verifyFernJWT(fernToken, auth.secret, auth.issuer);
             if (!verified) {
                 return 403;
             }

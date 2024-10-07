@@ -8,6 +8,7 @@ import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
 import { verifyFernJWTConfig } from "./server/auth/FernJWT";
 import { getAuthEdgeConfig } from "./server/auth/getAuthEdgeConfig";
+import { COOKIE_FERN_TOKEN, HEADER_X_FERN_HOST } from "./server/constants";
 import { withBasicTokenPublic } from "./server/withBasicTokenPublic";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
@@ -31,8 +32,8 @@ export const middleware: NextMiddleware = async (request) => {
     /**
      * Add x-fern-host header to the request
      */
-    if (!headers.has("x-fern-host")) {
-        headers.set("x-fern-host", xFernHost);
+    if (!headers.has(HEADER_X_FERN_HOST)) {
+        headers.set(HEADER_X_FERN_HOST, xFernHost);
     }
 
     /**
@@ -80,7 +81,7 @@ export const middleware: NextMiddleware = async (request) => {
 
     const pathname = extractNextDataPathname(request.nextUrl.pathname);
 
-    const fernToken = request.cookies.get("fern_token");
+    const fernToken = request.cookies.get(COOKIE_FERN_TOKEN);
     const authConfig = await getAuthEdgeConfig(xFernHost);
     let fernUser: FernUser | undefined;
 

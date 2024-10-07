@@ -14,13 +14,13 @@ function withPrefix(token: string, partner: FernUser["partner"]): string {
     return `${partner}_${token}`;
 }
 
-export async function withAuthProps(xFernHost: string, fern_token: string | null | undefined): Promise<AuthProps> {
-    if (fern_token == null) {
+export async function withAuthProps(xFernHost: string, fernToken: string | null | undefined): Promise<AuthProps> {
+    if (fernToken == null) {
         throw new Error("Missing fern_token cookie");
     }
     const config = await getAuthEdgeConfig(xFernHost);
-    const user: FernUser = await verifyFernJWTConfig(fern_token, config);
-    const token = withPrefix(fern_token, user.partner);
+    const user: FernUser = await verifyFernJWTConfig(fernToken, config);
+    const token = withPrefix(fernToken, user.partner);
 
     const authProps: AuthProps = {
         token,

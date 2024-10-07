@@ -2,6 +2,7 @@ import { signFernJWT } from "@/server/auth/FernJWT";
 import { OAuth2Client } from "@/server/auth/OAuth2Client";
 import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { withSecureCookie } from "@/server/auth/withSecure";
+import { COOKIE_ACCESS_TOKEN, COOKIE_FERN_TOKEN, COOKIE_REFRESH_TOKEN } from "@/server/constants";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { FernUser, OryAccessTokenSchema } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
@@ -53,12 +54,12 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         };
         const expires = token.exp == null ? undefined : new Date(token.exp * 1000);
         const res = NextResponse.redirect(redirectLocation);
-        res.cookies.set("fern_token", await signFernJWT(fernUser), withSecureCookie({ expires }));
-        res.cookies.set("access_token", access_token, withSecureCookie({ expires }));
+        res.cookies.set(COOKIE_FERN_TOKEN, await signFernJWT(fernUser), withSecureCookie({ expires }));
+        res.cookies.set(COOKIE_ACCESS_TOKEN, access_token, withSecureCookie({ expires }));
         if (refresh_token != null) {
-            res.cookies.set("refresh_token", refresh_token, withSecureCookie({ expires }));
+            res.cookies.set(COOKIE_REFRESH_TOKEN, refresh_token, withSecureCookie({ expires }));
         } else {
-            res.cookies.delete("refresh_token");
+            res.cookies.delete(COOKIE_REFRESH_TOKEN);
         }
         return res;
     } catch (error) {

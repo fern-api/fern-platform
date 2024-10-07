@@ -1,4 +1,5 @@
 import { DocsLoader } from "@/server/DocsLoader";
+import { COOKIE_FERN_TOKEN } from "@/server/constants";
 import { conformTrailingSlash } from "@/server/trailingSlash";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
@@ -16,8 +17,8 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const xFernHost = getXFernHostEdge(req);
 
     // load the root node
-    const fern_token = req.cookies.get("fern_token")?.value;
-    const root = await DocsLoader.for(xFernHost, fern_token).root();
+    const fernToken = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
+    const root = await DocsLoader.for(xFernHost, fernToken).root();
 
     // collect all indexable page slugs
     const slugs = NodeCollector.collect(root).indexablePageSlugs;

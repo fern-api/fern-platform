@@ -1,6 +1,6 @@
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import type { AuthEdgeConfig } from "@fern-ui/ui/auth";
+import type { AuthEdgeConfig, FernUser } from "@fern-ui/ui/auth";
 import { verifyFernJWTConfig } from "./auth/FernJWT";
 import { getAuthEdgeConfig } from "./auth/getAuthEdgeConfig";
 import { AuthProps } from "./authProps";
@@ -8,27 +8,43 @@ import { loadWithUrl } from "./loadWithUrl";
 import { pruneWithBasicTokenPublic } from "./withBasicTokenPublic";
 
 export class DocsLoader {
-    static for(xFernHost: string, fern_token: string | undefined): DocsLoader {
-        return new DocsLoader(xFernHost, fern_token);
+    static for(xFernHost: string, fernToken: string | undefined): DocsLoader {
+        return new DocsLoader(xFernHost, fernToken);
     }
 
     private constructor(
         private xFernHost: string,
-        private fern_token: string | undefined,
+        private fernToken: string | undefined,
     ) {}
 
-    private authenticated: boolean = false;
+    private user: FernUser | undefined;
     private auth: AuthEdgeConfig | undefined;
-    public withAuth(auth: AuthEdgeConfig): DocsLoader {
+    public withAuth(auth: AuthEdgeConfig, user: FernUser | undefined): DocsLoader {
         this.auth = auth;
+        this.user = user;
         return this;
     }
 
-    private async loadAuth(): Promise<AuthEdgeConfig | undefined> {
+    private async loadAuth(): Promise<{
+        authConfig: AuthEdgeConfig | undefined;
+        user: FernUser | undefined;
+    }> {
         if (!this.auth) {
             this.auth = await getAuthEdgeConfig(this.xFernHost);
+
+            try {
+                if (this.fernToken) {
+                    this.user = await verifyFernJWTConfig(this.fernToken, this.auth);
+                }
+            } catch (e) {
+                // eslint-disable-next-line no-console
+                console.error(e);
+            }
         }
-        return this.auth;
+        return {
+            authConfig: this.auth,
+            user: this.user,
+        };
     }
 
     private loadForDocsUrlResponse: DocsV2Read.LoadDocsForUrlResponse | undefined;
@@ -36,26 +52,15 @@ export class DocsLoader {
         this.loadForDocsUrlResponse = loadForDocsUrlResponse;
         return this;
     }
+
     private async loadDocs(): Promise<DocsV2Read.LoadDocsForUrlResponse | undefined> {
         if (!this.loadForDocsUrlResponse) {
-            const auth = await this.loadAuth();
-            let authProps: AuthProps | undefined;
-
-            try {
-                if (this.fern_token) {
-                    const user = await verifyFernJWTConfig(this.fern_token, auth);
-                    this.authenticated = true;
-                    authProps = {
-                        user,
-                        token: this.fern_token,
-                    };
-                }
-            } catch (e) {
-                // eslint-disable-next-line no-console
-                console.error(e);
-            }
+            const { user } = await this.loadAuth();
+            const authProps: AuthProps | undefined =
+                user && this.fernToken ? { user, token: this.fernToken } : undefined;
 
             const response = await loadWithUrl(this.xFernHost, authProps);
+
             if (response.ok) {
                 this.loadForDocsUrlResponse = response.body;
             }
@@ -64,7 +69,7 @@ export class DocsLoader {
     }
 
     public async root(): Promise<FernNavigation.RootNode | undefined> {
-        const auth = await this.loadAuth();
+        const { authConfig, user } = await this.loadAuth();
         const docs = await this.loadDocs();
 
         if (!docs) {
@@ -74,10 +79,10 @@ export class DocsLoader {
         let node = FernNavigation.utils.toRootNode(docs);
 
         // If the domain is basic_token_verification, we only want to include slugs that are allowed
-        if (auth?.type === "basic_token_verification" && !this.authenticated) {
+        if (authConfig?.type === "basic_token_verification" && !user) {
             try {
                 // TODO: store this in cache
-                node = pruneWithBasicTokenPublic(auth, node);
+                node = pruneWithBasicTokenPublic(authConfig, node);
             } catch (e) {
                 return undefined;
             }
@@ -86,6 +91,8 @@ export class DocsLoader {
         return node;
     }
 
+    // NOTE: authentication is based on the navigation nodes, so we don't need to check it here,
+    // as long as these pages are NOT shipped to the client-side.
     public async pages(): Promise<Record<FernNavigation.PageId, DocsV1Read.PageContent>> {
         const docs = await this.loadDocs();
         return docs?.definition.pages ?? {};

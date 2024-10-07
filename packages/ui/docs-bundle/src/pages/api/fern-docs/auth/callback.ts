@@ -1,6 +1,7 @@
 import { signFernJWT } from "@/server/auth/FernJWT";
 import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { withSecureCookie } from "@/server/auth/withSecure";
+import { COOKIE_FERN_TOKEN } from "@/server/constants";
 import { getWorkOS, getWorkOSClientId } from "@/server/workos";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { FernUser } from "@fern-ui/ui/auth";
@@ -66,7 +67,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         const token = await signFernJWT(fernUser, user);
 
         const res = NextResponse.redirect(redirectLocation);
-        res.cookies.set("fern_token", token, withSecureCookie());
+        res.cookies.set(COOKIE_FERN_TOKEN, token, withSecureCookie());
         return res;
     } catch (error) {
         // eslint-disable-next-line no-console

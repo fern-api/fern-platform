@@ -1,6 +1,7 @@
 import { verifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { withSecureCookie } from "@/server/auth/withSecure";
+import { COOKIE_FERN_TOKEN } from "@/server/constants";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -20,7 +21,8 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
     const domain = getXFernHostEdge(req);
     const edgeConfig = await getAuthEdgeConfig(domain);
 
-    const token = req.nextUrl.searchParams.get("fern_token");
+    // since we expect the callback to be redirected to, the token will be in the query params
+    const token = req.nextUrl.searchParams.get(COOKIE_FERN_TOKEN);
     const state = req.nextUrl.searchParams.get("state");
     const redirectLocation = state ?? `https://${domain}/`;
 
@@ -32,7 +34,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
         await verifyFernJWTConfig(token, edgeConfig);
 
         const res = NextResponse.redirect(redirectLocation);
-        res.cookies.set("fern_token", token, withSecureCookie());
+        res.cookies.set(COOKIE_FERN_TOKEN, token, withSecureCookie());
         return res;
     } catch (e) {
         // eslint-disable-next-line no-console
