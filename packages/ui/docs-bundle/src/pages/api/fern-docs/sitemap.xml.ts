@@ -16,7 +16,8 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const xFernHost = getXFernHostEdge(req);
 
     // load the root node
-    const root = await DocsLoader.for(xFernHost).root();
+    const fern_token = req.cookies.get("fern_token")?.value;
+    const root = await DocsLoader.for(xFernHost, fern_token).root();
 
     // collect all indexable page slugs
     const slugs = NodeCollector.collect(root).indexablePageSlugs;

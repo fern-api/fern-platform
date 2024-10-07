@@ -24,6 +24,6 @@ export async function getDynamicDocsPageProps(
      * Authenticated user is guaranteed to have a valid token because the middleware
      * would have redirected them to the login page
      */
-    const authProps = await withAuthProps(xFernHost, cookies);
-    return getDocsPageProps(xFernHost, slug, authProps);
+    const authProps = await withAuthProps(xFernHost, cookies.fern_token);
+    return getDocsPageProps(xFernHost, slug, authProps, cookies);
 }

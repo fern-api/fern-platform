@@ -25,7 +25,7 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
 
     const xFernHost = getXFernHostNode(req);
 
-    const loader = DocsLoader.for(xFernHost);
+    const loader = DocsLoader.for(xFernHost, req.cookies.fern_token);
 
     const root = await loader.root();
 

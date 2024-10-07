@@ -17,6 +17,7 @@ import {
 } from "@fern-ui/ui";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { GetServerSidePropsResult } from "next";
+import type { NextApiRequestCookies } from "next/dist/server/api-utils";
 import { ComponentProps } from "react";
 import urlJoin from "url-join";
 import { getAPIKeyInjectionConfigNode } from "./auth/getApiKeyInjectionConfig";
@@ -35,6 +36,7 @@ interface WithInitialProps {
     slug: string[];
     xFernHost: string;
     auth?: AuthProps;
+    cookies?: NextApiRequestCookies;
 }
 
 export async function withInitialProps({
@@ -42,6 +44,7 @@ export async function withInitialProps({
     slug: slugArray,
     xFernHost,
     auth,
+    cookies,
 }: WithInitialProps): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
     if (!docsResponse.ok) {
         return handleLoadDocsError(xFernHost, slugArray, docsResponse.error);
@@ -307,7 +310,7 @@ export async function withInitialProps({
         }
     }
 
-    const apiKeyInjectionConfig = await getAPIKeyInjectionConfigNode(xFernHost, auth?.cookies);
+    const apiKeyInjectionConfig = await getAPIKeyInjectionConfigNode(xFernHost, cookies);
     props.fallback[getApiRoute("/api/fern-docs/auth/api-key-injection")] = apiKeyInjectionConfig;
 
     return {
