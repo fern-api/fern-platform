@@ -1,6 +1,6 @@
-import { RootNode, isPage, utils } from "@fern-api/fdr-sdk/navigation";
+import { getChildren, isPage, utils, type RootNode } from "@fern-api/fdr-sdk/navigation";
 import { matchPath } from "@fern-ui/fern-docs-utils";
-import { AuthEdgeConfigBasicTokenVerification } from "@fern-ui/ui/auth";
+import type { AuthEdgeConfigBasicTokenVerification } from "@fern-ui/ui/auth";
 import { captureMessage } from "@sentry/nextjs";
 
 /**
@@ -30,6 +30,8 @@ export function pruneWithBasicTokenPublic(auth: AuthEdgeConfigBasicTokenVerifica
     const result = utils.pruneNavigationTree(node, (node) => {
         if (isPage(node)) {
             return withBasicTokenPublic(auth, `/${node.slug}`);
+        } else if (getChildren(node).length === 0) {
+            return false;
         }
 
         return true;
