@@ -109,13 +109,19 @@ export async function previewSdk({
     // ====== ACTION COMPLETE ======
 
     // Tell github we're done and deliver the deets
+    const titleLanguage =
+        generatorEntity.generatorLanguage && generatorEntity.generatorLanguage.length > 0
+            ? // Try capitalizing the language to make it look a little nicer
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              generatorEntity.generatorLanguage[0]!.toUpperCase() + generatorEntity.generatorLanguage.slice(1)
+            : "SDK";
     await updateCheck({
         context,
         installationOctokit,
         status: "completed",
         conclusion: failedTasks > 0 ? "failure" : "success",
         output: {
-            title: `🌱 ${generatorEntity.generatorLanguage ?? "SDK"} Preview Checks - ${failedTasks}/${totalTasks} ${failedTasks > 0 ? "❌" : "✅"}`,
+            title: `🌱 ${titleLanguage} Preview Checks - ${failedTasks}/${totalTasks} ${failedTasks > 0 ? "❌" : "✅"}`,
             summary: "",
             text: details,
         },
@@ -133,21 +139,21 @@ async function runScriptAndCollectOutput(
     for (const command of commands) {
         console.log(`[Preview] Running command: ${command} at workingDir: ${workingDir} `);
         // Write the command
+        if (outputs !== "") {
+            outputs += "\n\n\n";
+        }
         outputs += `> $ ${command}\n\n`;
         const out = await runScript({
             commands,
             workingDir,
         });
-        console.log(
-            `[Preview] exit code: ${out.exitCode}, StdOut: ${out.stderr}, StdErr ${out.stdout}, all ${out.all}, full out: ${JSON.stringify(out)}`,
-        );
         if (out.exitCode != 0) {
             didFail = true;
         }
 
         if (out.all != null) {
             // Write the logs
-            outputs += out.all + "\n\n";
+            outputs += out.all;
         }
     }
 
