@@ -1,7 +1,7 @@
 import { checkViewerAllowedEdge } from "@/server/auth/checkViewerAllowed";
 import { loadWithUrl } from "@/server/loadWithUrl";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import { getAuthEdgeConfig, getInkeepSettings } from "@fern-ui/fern-docs-edge";
+import { getAuthEdgeConfig, getInkeepSettings } from "@fern-ui/fern-docs-edge-config";
 import { SearchConfig, getSearchConfig } from "@fern-ui/search-utils";
 import { provideRegistryService } from "@fern-ui/ui";
 import { captureException } from "@sentry/nextjs";

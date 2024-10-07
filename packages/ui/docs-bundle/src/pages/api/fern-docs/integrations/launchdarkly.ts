@@ -1,6 +1,6 @@
 import { verifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import { LaunchDarklyEdgeConfig, getAuthEdgeConfig, getLaunchDarklySettings } from "@fern-ui/fern-docs-edge";
+import { LaunchDarklyEdgeConfig, getAuthEdgeConfig, getLaunchDarklySettings } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_EMAIL, COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { randomUUID } from "crypto";
 import { NextRequest, NextResponse, userAgent } from "next/server";

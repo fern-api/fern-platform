@@ -1,5 +1,5 @@
 import type { FernUser } from "@fern-ui/fern-docs-auth";
-import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { verifyFernJWTConfig } from "./auth/FernJWT";
 
 export interface AuthProps {

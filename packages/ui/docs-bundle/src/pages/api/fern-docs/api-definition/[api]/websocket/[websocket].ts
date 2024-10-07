@@ -1,7 +1,7 @@
 import { ApiDefinitionLoader } from "@/server/ApiDefinitionLoader";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import { getFeatureFlags } from "@fern-ui/fern-docs-edge";
+import { getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
 import { NextApiHandler, NextApiResponse } from "next";
 
 const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ApiDefinition.ApiDefinition>) => {

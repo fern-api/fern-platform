@@ -3,7 +3,7 @@ import { getAPIKeyInjectionConfig } from "@/server/auth/getApiKeyInjectionConfig
 import { withSecureCookie } from "@/server/auth/withSecure";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { APIKeyInjectionConfig, OryAccessTokenSchema } from "@fern-ui/fern-docs-auth";
-import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 import { WebflowClient } from "webflow-api";

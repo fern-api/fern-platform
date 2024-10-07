@@ -1,7 +1,7 @@
 import { verifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { withSecureCookie } from "@/server/auth/withSecure";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 

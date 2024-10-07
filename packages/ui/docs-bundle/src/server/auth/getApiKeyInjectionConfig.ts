@@ -1,5 +1,5 @@
 import type { APIKeyInjectionConfig } from "@fern-ui/fern-docs-auth";
-import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import type { NextApiRequestCookies } from "next/dist/server/api-utils";
 import type { NextRequest } from "next/server";
 import { OAuth2Client } from "./OAuth2Client";

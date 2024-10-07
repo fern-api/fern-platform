@@ -2,7 +2,12 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-ui/core-utils";
 import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { SidebarTab } from "@fern-ui/fdr-utils";
-import { getAuthEdgeConfig, getCustomerAnalytics, getFeatureFlags, getSeoDisabled } from "@fern-ui/fern-docs-edge";
+import {
+    getAuthEdgeConfig,
+    getCustomerAnalytics,
+    getFeatureFlags,
+    getSeoDisabled,
+} from "@fern-ui/fern-docs-edge-config";
 import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
 import {
     DocsPage,

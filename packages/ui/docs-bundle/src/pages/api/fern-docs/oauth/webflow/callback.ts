@@ -1,6 +1,6 @@
 import { withSecureCookie } from "@/server/auth/withSecure";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { NextRequest, NextResponse } from "next/server";
 import { WebflowClient } from "webflow-api";
 

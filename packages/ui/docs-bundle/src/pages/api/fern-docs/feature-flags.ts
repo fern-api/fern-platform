@@ -1,6 +1,6 @@
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import { getFeatureFlags } from "@fern-ui/fern-docs-edge";
-import { FeatureFlags } from "@fern-ui/ui";
+import { getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
+import { FeatureFlags } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
