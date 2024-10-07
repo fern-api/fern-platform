@@ -1,9 +1,9 @@
 import { OAuth2Client } from "@/server/auth/OAuth2Client";
 import { getAPIKeyInjectionConfig } from "@/server/auth/getApiKeyInjectionConfig";
-import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { withSecureCookie } from "@/server/auth/withSecure";
-import { COOKIE_FERN_TOKEN } from "@/server/constants";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge";
+import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { APIKeyInjectionConfig, OryAccessTokenSchema } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { WebflowClient } from "webflow-api";

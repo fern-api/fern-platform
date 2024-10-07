@@ -1,9 +1,9 @@
 import { signFernJWT } from "@/server/auth/FernJWT";
-import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { withSecureCookie } from "@/server/auth/withSecure";
-import { COOKIE_FERN_TOKEN } from "@/server/constants";
 import { getWorkOS, getWorkOSClientId } from "@/server/workos";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge";
+import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { FernUser } from "@fern-ui/ui/auth";
 import { NextRequest, NextResponse } from "next/server";
 

@@ -36,6 +36,7 @@
     "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/fern-docs-utils": "workspace:*",
+    "@fern-ui/fern-docs-edge": "workspace:*",
     "@fern-ui/search-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
     "@sentry/nextjs": "^8.30.0",

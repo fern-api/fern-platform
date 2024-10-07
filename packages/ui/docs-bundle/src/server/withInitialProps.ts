@@ -1,8 +1,8 @@
-import { getFeatureFlags } from "@/pages/api/fern-docs/feature-flags";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-ui/core-utils";
 import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
 import { SidebarTab } from "@fern-ui/fdr-utils";
+import { getAuthEdgeConfig, getCustomerAnalytics, getFeatureFlags, getSeoDisabled } from "@fern-ui/fern-docs-edge";
 import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
 import { getSearchConfig } from "@fern-ui/search-utils";
 import {
@@ -22,10 +22,7 @@ import { ComponentProps } from "react";
 import urlJoin from "url-join";
 import { DocsLoader } from "./DocsLoader";
 import { getAPIKeyInjectionConfigNode } from "./auth/getApiKeyInjectionConfig";
-import { getAuthEdgeConfig } from "./auth/getAuthEdgeConfig";
 import type { AuthProps } from "./authProps";
-import { getSeoDisabled } from "./disabledSeo";
-import { getCustomerAnalytics } from "./getCustomerAnalytics";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";

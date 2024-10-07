@@ -1,8 +1,8 @@
+import { TRACK_LOAD_DOCS_PERFORMANCE } from "@fern-ui/fern-docs-utils";
 import { DocsPage } from "@fern-ui/ui";
 import { track } from "@vercel/analytics/server";
 import { GetServerSidePropsResult } from "next/types";
 import { ComponentProps } from "react";
-import { TRACK_LOAD_DOCS_PERFORMANCE } from "./constants";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 
 export class LoadDocsPerformanceTracker {

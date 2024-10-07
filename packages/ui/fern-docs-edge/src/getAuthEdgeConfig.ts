@@ -1,7 +1,7 @@
 import { AuthEdgeConfig, AuthEdgeConfigSchema } from "@fern-ui/ui/auth";
 import { captureMessage } from "@sentry/nextjs";
 import { get } from "@vercel/edge-config";
-import { withoutStaging } from "../withoutStaging";
+import { withoutStaging } from "../../fern-docs-utils/src/withoutStaging";
 
 const KEY = "authentication";
 

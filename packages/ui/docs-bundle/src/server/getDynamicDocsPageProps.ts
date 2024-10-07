@@ -1,9 +1,9 @@
+import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { type DocsPage } from "@fern-ui/ui";
 import type { NextApiRequestCookies } from "next/dist/server/api-utils";
 import type { GetServerSidePropsResult } from "next/types";
 import type { ComponentProps } from "react";
 import { withAuthProps } from "./authProps";
-import { COOKIE_FERN_TOKEN } from "./constants";
 import { getDocsPageProps } from "./getDocsPageProps";
 
 type GetServerSideDocsPagePropsResult = GetServerSidePropsResult<ComponentProps<typeof DocsPage>>;

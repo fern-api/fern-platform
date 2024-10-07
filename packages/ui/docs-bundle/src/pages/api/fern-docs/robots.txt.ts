@@ -1,5 +1,5 @@
-import { getSeoDisabled } from "@/server/disabledSeo";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getSeoDisabled } from "@fern-ui/fern-docs-edge";
 import { NextRequest, NextResponse } from "next/server";
 import urlJoin from "url-join";
 

@@ -1,4 +1,4 @@
-import { type CustomerAnalytics } from "@fern-ui/ui";
+import type { CustomerAnalytics } from "@fern-ui/ui";
 import { get } from "@vercel/edge-config";
 import urlJoin from "url-join";
 

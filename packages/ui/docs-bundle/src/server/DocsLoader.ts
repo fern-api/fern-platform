@@ -1,8 +1,8 @@
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge";
 import type { AuthEdgeConfig, FernUser } from "@fern-ui/ui/auth";
 import { verifyFernJWTConfig } from "./auth/FernJWT";
-import { getAuthEdgeConfig } from "./auth/getAuthEdgeConfig";
 import { AuthProps } from "./authProps";
 import { loadWithUrl } from "./loadWithUrl";
 import { pruneWithBasicTokenPublic } from "./withBasicTokenPublic";

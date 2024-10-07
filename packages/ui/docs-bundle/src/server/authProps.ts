@@ -1,6 +1,6 @@
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge";
 import type { FernUser } from "@fern-ui/ui/auth";
 import { verifyFernJWTConfig } from "./auth/FernJWT";
-import { getAuthEdgeConfig } from "./auth/getAuthEdgeConfig";
 
 export interface AuthProps {
     token: string;

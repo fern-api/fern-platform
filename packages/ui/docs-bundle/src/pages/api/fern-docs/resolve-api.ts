@@ -3,10 +3,10 @@ import { getXFernHostNode } from "@/server/xfernhost/node";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionHolder } from "@fern-api/fdr-sdk/navigation";
+import { getFeatureFlags } from "@fern-ui/fern-docs-edge";
 import { ApiDefinitionResolver, provideRegistryService, type ResolvedRootPackage } from "@fern-ui/ui";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { NextApiHandler, NextApiResponse } from "next";
-import { getFeatureFlags } from "./feature-flags";
 
 export const dynamic = "force-dynamic";
 

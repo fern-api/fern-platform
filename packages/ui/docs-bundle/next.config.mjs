@@ -54,6 +54,8 @@ const nextConfig = {
         "@fern-ui/components",
         "@fern-ui/core-utils",
         "@fern-ui/fdr-utils",
+        "@fern-ui/fern-docs-utils",
+        "@fern-ui/fern-docs-edge",
         "@fern-ui/loadable",
         "@fern-ui/next-seo",
         "@fern-ui/react-commons",

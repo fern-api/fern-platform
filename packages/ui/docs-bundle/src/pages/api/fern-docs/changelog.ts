@@ -1,10 +1,10 @@
 import { DocsLoader } from "@/server/DocsLoader";
-import { COOKIE_FERN_TOKEN } from "@/server/constants";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever } from "@fern-ui/core-utils";
+import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { getFrontmatter } from "@fern-ui/ui";
 import * as Sentry from "@sentry/nextjs";
 import { Feed, Item } from "feed";
