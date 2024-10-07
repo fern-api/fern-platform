@@ -1,3 +1,5 @@
+import { isCustomDomain, isFern } from "@/server/isCustomDomain";
+import { isDevelopment } from "@/server/isDevelopment";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { FeatureFlags } from "@fern-ui/ui";
 import { getAll } from "@vercel/edge-config";
@@ -96,10 +98,10 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         const grpcEndpoints = config["grpc-endpoints"];
 
         return {
-            isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain) || isApiPlaygroundEnabled,
+            isApiPlaygroundEnabled: isDevelopment(domain) || isApiPlaygroundEnabled,
             isApiScrollingDisabled,
             isWhitelabeled,
-            isSeoDisabled: isSeoDisabledOverrides(domain) || isSeoDisabled,
+            isSeoDisabled: !isCustomDomain(domain) || isSeoDisabled,
             isTocDefaultEnabled,
             isSnippetTemplatesEnabled: isSnippetTemplatesEnabled || isDevelopment(domain),
             isHttpSnippetsEnabled,
@@ -130,10 +132,10 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         // eslint-disable-next-line no-console
         console.error(e);
         return {
-            isApiPlaygroundEnabled: isApiPlaygroundEnabledOverrides(domain),
+            isApiPlaygroundEnabled: isDevelopment(domain),
             isApiScrollingDisabled: false,
             isWhitelabeled: false,
-            isSeoDisabled: isSeoDisabledOverrides(domain),
+            isSeoDisabled: !isCustomDomain(domain),
             isTocDefaultEnabled: false,
             isSnippetTemplatesEnabled: isDevelopment(domain),
             isHttpSnippetsEnabled: false,
@@ -168,49 +170,4 @@ function checkDomainMatchesCustomers(domain: string, customers: readonly string[
         return false;
     }
     return customers.some((customer) => domain.toLowerCase().includes(customer.toLowerCase()));
-}
-
-function isApiPlaygroundEnabledOverrides(domain: string): boolean {
-    if (
-        ["docs.buildwithfern.com", "fern.docs.buildwithfern.com", "fern.docs.dev.buildwithfern.com"].some(
-            (d) => d === domain,
-        )
-    ) {
-        return true;
-    }
-
-    if (process.env.NODE_ENV !== "production") {
-        return true;
-    }
-    return false;
-}
-
-function isSeoDisabledOverrides(domain: string): boolean {
-    if (domain.includes(".docs.staging.buildwithfern.com")) {
-        return true;
-    }
-    return isDevelopment(domain);
-}
-
-function isDevelopment(domain: string): boolean {
-    if (domain.includes(".docs.dev.buildwithfern.com") || domain.includes(".docs.staging.buildwithfern.com")) {
-        return true;
-    }
-
-    if (process.env.NODE_ENV !== "production") {
-        return true;
-    }
-    return false;
-}
-
-function isFern(domain: string): boolean {
-    if (
-        ["docs.buildwithfern.com", "fern.docs.buildwithfern.com", "fern.docs.dev.buildwithfern.com"].some(
-            (d) => d === domain,
-        )
-    ) {
-        return true;
-    }
-
-    return false;
 }

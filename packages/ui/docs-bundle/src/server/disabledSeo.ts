@@ -1,11 +1,8 @@
 import { get } from "@vercel/edge-config";
+import { isCustomDomain } from "./isCustomDomain";
 
 export async function getSeoDisabled(host: string): Promise<boolean> {
-    if (
-        host.endsWith(".docs.dev.buildwithfern.com") ||
-        host.endsWith(".docs.staging.buildwithfern.com") ||
-        host.endsWith(".docs.buildwithfern.com")
-    ) {
+    if (!isCustomDomain(host)) {
         return true;
     }
     const config = (await get<Array<string>>("seo-disabled")) ?? [];

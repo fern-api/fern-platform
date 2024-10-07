@@ -1,12 +1,13 @@
 import { AuthEdgeConfig, AuthEdgeConfigSchema } from "@fern-ui/ui/auth";
 import { captureMessage } from "@sentry/nextjs";
 import { get } from "@vercel/edge-config";
+import { withoutStaging } from "../withoutStaging";
 
 const KEY = "authentication";
 
 export async function getAuthEdgeConfig(currentDomain: string): Promise<AuthEdgeConfig | undefined> {
     const domainToTokenConfigMap = await get<Record<string, any>>(KEY);
-    const toRet = domainToTokenConfigMap?.[currentDomain];
+    const toRet = domainToTokenConfigMap?.[currentDomain] ?? domainToTokenConfigMap?.[withoutStaging(currentDomain)];
 
     if (toRet != null) {
         const config = AuthEdgeConfigSchema.safeParse(toRet);
