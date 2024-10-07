@@ -21,15 +21,19 @@ it("generator version dao not semver", async () => {
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
             scripts: {
                 preInstallScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 installScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 compileScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 testScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
             },
@@ -64,15 +68,19 @@ it("generator version get latest respects semver, not time", async () => {
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
             scripts: {
                 preInstallScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 installScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 compileScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 testScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
             },
@@ -159,15 +167,19 @@ it("generator changelog", async () => {
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
             scripts: {
                 preInstallScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 installScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 compileScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 testScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
             },
@@ -394,15 +406,19 @@ it("generator version happy path update", async () => {
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
             scripts: {
                 preInstallScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 installScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 compileScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 testScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
             },
@@ -491,15 +507,19 @@ it("get generator that works for cli version", async () => {
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
             scripts: {
                 preInstallScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 installScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 compileScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 testScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
             },
@@ -602,15 +622,19 @@ it("get generator retain major version", async () => {
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
             scripts: {
                 preInstallScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 installScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 compileScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 testScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
             },

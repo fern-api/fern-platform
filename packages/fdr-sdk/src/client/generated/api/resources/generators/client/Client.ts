@@ -48,15 +48,19 @@ export class Generators {
      *         dockerImage: "string",
      *         scripts: {
      *             preInstallScript: {
+     *                 requiredFiles: ["string"],
      *                 steps: ["string"]
      *             },
      *             installScript: {
+     *                 requiredFiles: ["string"],
      *                 steps: ["string"]
      *             },
      *             compileScript: {
+     *                 requiredFiles: ["string"],
      *                 steps: ["string"]
      *             },
      *             testScript: {
+     *                 requiredFiles: ["string"],
      *                 steps: ["string"]
      *             }
      *         }

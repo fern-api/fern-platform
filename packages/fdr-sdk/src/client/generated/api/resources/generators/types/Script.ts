@@ -3,6 +3,8 @@
  */
 
 export interface Script {
+    /** Names of files required to run these scripts, for example, `package.json` is required to run `yarn install`. */
+    requiredFiles: string[] | undefined;
     /** Each line of the script should be an entry within the list. These steps should be assumed to run via bash/command line. */
     steps: string[];
 }

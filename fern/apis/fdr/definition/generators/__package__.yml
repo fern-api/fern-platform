@@ -47,6 +47,9 @@ types:
 
   Script:
     properties:
+      requiredFiles:
+        type: optional<list<string>>
+        docs: Names of files required to run these scripts, for example, `package.json` is required to run `yarn install`.
       steps:
         type: list<string>
         docs: Each line of the script should be an entry within the list. These steps should be assumed to run via bash/command line.

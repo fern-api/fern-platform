@@ -36,15 +36,19 @@ it("generator dao", async () => {
         generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
         scripts: {
             preInstallScript: {
+                requiredFiles: [],
                 steps: [],
             },
             installScript: {
+                requiredFiles: [],
                 steps: [],
             },
             compileScript: {
+                requiredFiles: [],
                 steps: [],
             },
             testScript: {
+                requiredFiles: [],
                 steps: [],
             },
         },
@@ -67,15 +71,19 @@ it("generator dao", async () => {
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Typescript,
             scripts: {
                 preInstallScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 installScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 compileScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 testScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
             },
@@ -91,15 +99,19 @@ it("generator dao", async () => {
         generatorLanguage: FdrAPI.generators.GeneratorLanguage.Typescript,
         scripts: {
             preInstallScript: {
+                requiredFiles: [],
                 steps: [],
             },
             installScript: {
+                requiredFiles: [],
                 steps: [],
             },
             compileScript: {
+                requiredFiles: [],
                 steps: [],
             },
             testScript: {
+                requiredFiles: [],
                 steps: [],
             },
         },
@@ -117,15 +129,19 @@ it("generator dao non-unique", async () => {
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
             scripts: {
                 preInstallScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 installScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 compileScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 testScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
             },
@@ -141,15 +157,19 @@ it("generator dao non-unique", async () => {
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
             scripts: {
                 preInstallScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 installScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 compileScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 testScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
             },
@@ -165,15 +185,19 @@ it("generator dao non-unique", async () => {
             generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
             scripts: {
                 preInstallScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 installScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 compileScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
                 testScript: {
+                    requiredFiles: [],
                     steps: [],
                 },
             },
@@ -193,15 +217,19 @@ it("generator dao image non-unique", async () => {
         generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
         scripts: {
             preInstallScript: {
+                requiredFiles: ["package.json"],
                 steps: ["here I am! a step!"],
             },
             installScript: {
+                requiredFiles: [],
                 steps: [],
             },
             compileScript: {
+                requiredFiles: [],
                 steps: [],
             },
             testScript: {
+                requiredFiles: [],
                 steps: [],
             },
         },
@@ -218,17 +246,18 @@ it("generator dao image non-unique", async () => {
                 generatorLanguage: FdrAPI.generators.GeneratorLanguage.Python,
                 scripts: {
                     preInstallScript: {
+                        requiredFiles: [],
                         steps: [],
                     },
                     installScript: {
+                        requiredFiles: [],
                         steps: [],
                     },
                     compileScript: {
+                        requiredFiles: [],
                         steps: [],
                     },
-                    testScript: {
-                        steps: [],
-                    },
+                    testScript: { requiredFiles: [], steps: [] },
                 },
             },
         });
