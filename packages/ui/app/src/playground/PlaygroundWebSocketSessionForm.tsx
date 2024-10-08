@@ -1,4 +1,5 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernCard, FernScrollArea } from "@fern-ui/components";
 import { titleCase } from "@fern-ui/core-utils";
 import cn from "clsx";
@@ -8,7 +9,6 @@ import { PlaygroundWebSocketHandshakeForm } from "./PlaygroundWebSocketHandshake
 import { HorizontalSplitPane } from "./VerticalSplitPane";
 import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
-import { WebSocketContext } from "./types/endpoint-context";
 
 interface PlaygroundWebSocketSessionFormProps {
     context: WebSocketContext;

@@ -1,3 +1,4 @@
+import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { unwrapObjectType, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_ARRAY, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { isEmpty } from "lodash-es";
@@ -6,7 +7,6 @@ import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertiesForm } from "../form/PlaygroundObjectPropertyForm";
 import { PlaygroundTypeReferenceForm } from "../form/PlaygroundTypeReferenceForm";
 import { PlaygroundEndpointRequestFormState, PlaygroundFormStateBody } from "../types";
-import { EndpointContext } from "../types/endpoint-context";
 import { PlaygroundEndpointFormSection } from "./PlaygroundEndpointFormSection";
 import { PlaygroundEndpointMultipartForm } from "./PlaygroundEndpointMultipartForm";
 

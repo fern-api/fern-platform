@@ -47,6 +47,7 @@ export declare namespace DocsContent {
         type: "api-endpoint-page";
         slug: FernNavigation.Slug;
         item: FernNavigation.EndpointPairNode | FernNavigation.NavigationNodeApiLeaf;
+        breadcrumb: readonly FernNavigation.BreadcrumbItem[];
         apiDefinition: ApiDefinition;
         showErrors: boolean;
         neighbors: Neighbors;
@@ -60,6 +61,7 @@ export declare namespace DocsContent {
 
         // TODO: the api reference node is probably duplicated in the initial props
         // so we should deduplicate it to avoid sending it twice
+        breadcrumb: readonly FernNavigation.BreadcrumbItem[]; // this is the breadcrumb up to the api reference node
         apiReferenceNode: FernNavigation.ApiReferenceNode;
         apiDefinition: ApiDefinition;
     }

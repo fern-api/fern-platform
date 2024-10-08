@@ -17,16 +17,15 @@ import { WebhookExample } from "./webhook-examples/WebhookExample";
 
 export declare namespace WebhookContent {
     export interface Props {
-        node: FernNavigation.WebhookNode;
-        webhook: ApiDefinition.WebhookDefinition;
+        context: ApiDefinition.WebhookContext;
         breadcrumb: readonly FernNavigation.BreadcrumbItem[];
         hideBottomSeparator?: boolean;
-        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 }
 
 export const WebhookContent = memo<WebhookContent.Props>((props) => {
-    const { node, webhook, breadcrumb, hideBottomSeparator = false, types } = props;
+    const { context, breadcrumb, hideBottomSeparator = false } = props;
+    const { node, webhook, types } = context;
 
     const ref = useRef<HTMLDivElement>(null);
     useApiPageCenterElement(ref, node.slug);

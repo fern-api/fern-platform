@@ -1,5 +1,5 @@
+import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import { PlaygroundWebSocketRequestFormState } from "../types";
-import { WebSocketContext } from "../types/endpoint-context";
 import { getEmptyValueForObjectProperties, getEmptyValueForType } from "./default-values";
 
 export function getInitialWebSocketRequestFormState(context: WebSocketContext): PlaygroundWebSocketRequestFormState {

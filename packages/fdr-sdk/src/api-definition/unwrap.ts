@@ -209,13 +209,13 @@ export function unwrapObjectType(
             const defaultProperty = isPlainObject(unwrapped.default) ? unwrapped.default[property.key] : undefined;
 
             const valueShape: Latest.TypeReference.Optional =
-                property.valueShape.type === "optional"
-                    ? { ...property.valueShape, default: defaultProperty ?? property.valueShape.default }
+                property.valueShape.type === "alias" && property.valueShape.value.type === "optional"
+                    ? { ...property.valueShape.value, default: defaultProperty ?? property.valueShape.value.default }
                     : { type: "optional", shape: property.valueShape, default: defaultProperty };
 
             return {
                 ...property,
-                valueShape,
+                valueShape: { type: "alias", value: valueShape },
             };
         });
     });
@@ -261,7 +261,10 @@ export function unwrapDiscriminatedUnionVariant(
         properties: [
             {
                 key: union.discriminant,
-                valueShape: { type: "literal", value: { type: "stringLiteral", value: variant.discriminantValue } },
+                valueShape: {
+                    type: "alias",
+                    value: { type: "literal", value: { type: "stringLiteral", value: variant.discriminantValue } },
+                },
 
                 // the description and availability of the discriminant should not be included here
                 // because they are already included in the union variant itself

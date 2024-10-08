@@ -23,7 +23,7 @@ export declare namespace EndpointParameter {
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
         availability: ApiDefinition.Availability | null | undefined;
-        shape: ApiDefinition.TypeReference;
+        shape: ApiDefinition.TypeShape;
         types: Record<string, ApiDefinition.TypeDefinition>;
     }
 

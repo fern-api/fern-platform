@@ -1,3 +1,4 @@
+import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import { WebSocketMessage, buildRequestUrl } from "@fern-api/fdr-sdk/api-definition";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
@@ -8,7 +9,6 @@ import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { PlaygroundEndpointPath } from "./endpoint/PlaygroundEndpointPath";
 import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
-import { WebSocketContext } from "./types/endpoint-context";
 import { buildAuthHeaders } from "./utils";
 import { usePlaygroundBaseUrl, useSelectedEnvironment } from "./utils/select-environment";
 

@@ -23,12 +23,28 @@ export function SingleApiPageContent({ content }: SingleApiPageContentProps): Re
                         node={endpoint}
                         isLastInApi={true}
                         apiDefinition={content.apiDefinition}
+                        breadcrumb={content.breadcrumb}
                     />
                 ),
-                webhook: (webhook) => <Webhook webhook={webhook} isLastInApi={true} types={types} />,
-                websocket: (websocket) => (
-                    <WebSocket api={item.apiDefinitionId} websocket={websocket} isLastInApi={true} types={types} />
+                webhook: (webhook) => (
+                    <Webhook
+                        node={webhook}
+                        isLastInApi={true}
+                        apiDefinition={content.apiDefinition}
+                        breadcrumb={content.breadcrumb}
+                    />
                 ),
+                webSocket: (websocket) => (
+                    <WebSocket
+                        node={websocket}
+                        isLastInApi={true}
+                        apiDefinition={content.apiDefinition}
+                        breadcrumb={content.breadcrumb}
+                    />
+                ),
+
+                // TODO: implement endpoint pair
+                endpointPair: () => null,
             })}
         </FernErrorBoundary>
     );

@@ -1,3 +1,4 @@
+import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import { FernCard } from "@fern-ui/components";
 import isEmpty from "lodash-es/isEmpty";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
@@ -5,7 +6,6 @@ import { Callout } from "../mdx/components/callout";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundObjectPropertiesForm } from "./form/PlaygroundObjectPropertyForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
-import { WebSocketContext } from "./types/endpoint-context";
 
 interface PlaygroundWebSocketHandshakeFormProps {
     context: WebSocketContext;

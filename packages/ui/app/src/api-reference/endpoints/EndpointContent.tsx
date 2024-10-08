@@ -1,4 +1,5 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
 import { useInView } from "framer-motion";
@@ -20,7 +21,6 @@ import {
     useFeatureFlags,
 } from "../../atoms";
 import { useHref } from "../../hooks/useHref";
-import { EndpointContext } from "../../playground/types/endpoint-context";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
 import { EndpointContentHeader } from "./EndpointContentHeader";
@@ -37,6 +37,7 @@ export declare namespace EndpointContent {
         showErrors: boolean;
         context: EndpointContext;
         hideBottomSeparator?: boolean;
+        breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     }
 }
 
@@ -70,8 +71,8 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
 const paddingAtom = atom((get) => (get(MOBILE_SIDEBAR_ENABLED_ATOM) ? 0 : 26));
 
 export const EndpointContent = memo<EndpointContent.Props>((props) => {
-    const { api, showErrors, context, hideBottomSeparator = false } = props;
-    const { node, endpoint, types } = context;
+    const { api, showErrors, context, hideBottomSeparator = false, breadcrumb } = props;
+    const { node, endpoint } = context;
     // const isStream = useAtomValue(FERN_STREAM_ATOM);
     // const endpoint = isStream && endpointProp.stream != null ? endpointProp.stream : endpointProp;
 
@@ -272,7 +273,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
             >
                 <EndpointContentHeader
                     context={context}
-                    breadcrumb={[]}
+                    breadcrumb={breadcrumb}
                     // streamToggle={
                     //     endpointProp.stream != null && (
                     //         <EndpointStreamingEnabledToggle endpoint={endpointProp} container={ref} />
@@ -323,6 +324,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                                 errors={endpoint.errors}
                                 setSelectedError={setSelectedError}
                                 measureHeight={setExampleHeight}
+                                node={node}
                             />
                         )}
                     </aside>

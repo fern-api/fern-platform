@@ -56,3 +56,27 @@ export function createWebSocketContext(
         types: api.auths,
     };
 }
+
+export type WebhookContext = {
+    node: FernNavigation.WebhookNode;
+    webhook: ApiDefinition.WebhookDefinition;
+    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+};
+
+export function createWebhookContext(
+    node: FernNavigation.WebhookNode | undefined,
+    api: ApiDefinition.ApiDefinition | undefined,
+): WebhookContext | undefined {
+    if (!node) {
+        return undefined;
+    }
+    const webhook = api?.webhooks[node.webhookId];
+    if (!webhook) {
+        return undefined;
+    }
+    return {
+        node,
+        webhook,
+        types: api.auths,
+    };
+}

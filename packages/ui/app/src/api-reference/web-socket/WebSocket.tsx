@@ -1,3 +1,4 @@
+import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -6,15 +7,13 @@ import cn from "clsx";
 import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react";
 import { usePlaygroundEnvironment } from "../../atoms";
-import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { FernAnchor } from "../../components/FernAnchor";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { useHref } from "../../hooks/useHref";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import { Markdown } from "../../mdx/Markdown";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
-import { WebSocketContext } from "../../playground/types/endpoint-context";
-import { usePlaygroundBaseUrl, useSelectedEnvironment } from "../../playground/utils/select-environment";
+import { useSelectedEnvironment } from "../../playground/utils/select-environment";
 import { getSlugFromChildren } from "../../util/getSlugFromText";
 import { EndpointAvailabilityTag } from "../endpoints/EndpointAvailabilityTag";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
@@ -26,25 +25,40 @@ import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceD
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebSocketMessage, WebSocketMessages } from "./WebSocketMessages";
 
-export declare namespace WebSocket {
-    export interface Props {
-        context: WebSocketContext;
-        isLastInApi: boolean;
-        api: string;
-    }
+export interface WebSocketProps {
+    node: FernNavigation.WebSocketNode;
+    apiDefinition: ApiDefinition.ApiDefinition;
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+    isLastInApi: boolean;
 }
 
-export const WebSocket: FC<WebSocket.Props> = (props) => {
-    if (useShouldLazyRender(props.context.node.slug)) {
+export const WebSocket: FC<WebSocketProps> = (props) => {
+    const context = useMemo(
+        () => ApiDefinition.createWebSocketContext(props.node, props.apiDefinition),
+        [props.node, props.apiDefinition],
+    );
+
+    if (useShouldLazyRender(props.node.slug)) {
         return null;
     }
 
-    return <WebhookContent {...props} />;
+    if (!context) {
+        // eslint-disable-next-line no-console
+        console.error("Could not create context for websocket", props.node);
+        return null;
+    }
+
+    return <WebhookContent context={context} breadcrumb={props.breadcrumb} isLastInApi={props.isLastInApi} />;
 };
 
-const WebhookContent: FC<WebSocket.Props> = ({ context, isLastInApi }) => {
+interface WebhookContentProps {
+    context: WebSocketContext;
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+    isLastInApi: boolean;
+}
+
+const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, isLastInApi }) => {
     const { channel, node, types } = context;
-    const selectedEnvironmentId = useSelectedEnvironmentId();
     const playgroundEnvironment = usePlaygroundEnvironment();
 
     const ref = useRef<HTMLDivElement>(null);
@@ -59,23 +73,17 @@ const WebhookContent: FC<WebSocket.Props> = ({ context, isLastInApi }) => {
         [channel.messages],
     );
 
-    const publishMessageShape = useMemo((): ApiDefinition.UndiscriminatedUnionType => {
+    const publishMessageShape = useMemo((): ApiDefinition.TypeShape.UndiscriminatedUnion => {
         return {
             type: "undiscriminatedUnion",
             variants: flattenWebSocketShape(publishMessages, types),
-            name: undefined,
-            description: undefined,
-            availability: undefined,
         };
     }, [publishMessages, types]);
 
-    const subscribeMessageShape = useMemo((): ApiDefinition.UndiscriminatedUnionType => {
+    const subscribeMessageShape = useMemo((): ApiDefinition.TypeShape.UndiscriminatedUnion => {
         return {
             type: "undiscriminatedUnion",
             variants: flattenWebSocketShape(subscribeMessages, types),
-            name: undefined,
-            description: undefined,
-            availability: undefined,
         };
     }, [subscribeMessages, types]);
 
@@ -96,7 +104,6 @@ const WebhookContent: FC<WebSocket.Props> = ({ context, isLastInApi }) => {
     }, [example?.messages, channel.messages]);
 
     const selectedEnvironment = useSelectedEnvironment(channel);
-    const playgroundEnvironment = usePlaygroundBaseUrl(channel);
 
     // TODO: combine with auth headers
     const headers = channel.requestHeaders;
@@ -147,7 +154,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ context, isLastInApi }) => {
                                         <CopyToClipboardButton
                                             className="-mr-1"
                                             content={() =>
-                                                `${playgroundEnvironment}${channel.path.map((path) => (path.type === "literal" ? path.value : `:${path.key}`)).join("/")}`
+                                                `${playgroundEnvironment}${ApiDefinition.toColonEndpointPathLiteral(channel.path)}`
                                             }
                                         />
                                     </div>
@@ -320,7 +327,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ context, isLastInApi }) => {
                                                     <tr>
                                                         <td className="text-left align-top">URL</td>
                                                         <td className="text-left align-top">
-                                                            {`${playgroundEnvironment ?? resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl ?? ""}${example?.path ?? stringifyApiDefinition.EndpointPathParts(websocket.path)}`}
+                                                            {`${playgroundEnvironment ?? ""}${example?.path ?? ApiDefinition.toColonEndpointPathLiteral(channel.path)}`}
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -383,19 +390,18 @@ function flattenWebSocketShape(
     subscribeMessages: ApiDefinition.WebSocketMessage[],
     types: Record<string, ApiDefinition.TypeDefinition>,
 ) {
-    return subscribeMessages
-        .map((message) => ({ ...message, body: ApiDefinition.unwrapReference(message.body, types) }))
-        .flatMap((message): ApiDefinition.UndiscriminatedUnionVariant[] => {
-            if (message.body.shape.type === "undiscriminatedUnion") {
-                return message.body.shape.variants;
-            }
-            return [
-                {
-                    description: message.description,
-                    availability: message.availability,
-                    displayName: message.displayName ?? message.type,
-                    shape: message.body.shape,
-                },
-            ];
-        });
+    return subscribeMessages.flatMap((message): ApiDefinition.UndiscriminatedUnionVariant[] => {
+        const unwrapped = ApiDefinition.unwrapReference(message.body, types);
+        if (unwrapped.shape.type === "undiscriminatedUnion") {
+            return unwrapped.shape.variants;
+        }
+        return [
+            {
+                description: message.description,
+                availability: message.availability,
+                displayName: message.displayName ?? message.type,
+                shape: message.body,
+            },
+        ];
+    });
 }

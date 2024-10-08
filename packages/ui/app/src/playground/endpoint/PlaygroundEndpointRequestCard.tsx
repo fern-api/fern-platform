@@ -1,3 +1,4 @@
+import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { CopyToClipboardButton, FernButton, FernButtonGroup, FernCard } from "@fern-ui/components";
 import { useAtom, useSetAtom } from "jotai";
 import { ReactElement } from "react";
@@ -12,7 +13,6 @@ import { useStandardProxyEnvironment } from "../../hooks/useStandardProxyEnviron
 import { PlaygroundRequestPreview } from "../PlaygroundRequestPreview";
 import { PlaygroundCodeSnippetResolverBuilder } from "../code-snippets/resolver";
 import { PlaygroundEndpointRequestFormState } from "../types";
-import { EndpointContext } from "../types/endpoint-context";
 import { usePlaygroundBaseUrl } from "../utils/select-environment";
 
 interface PlaygroundEndpointRequestCardProps {

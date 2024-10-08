@@ -105,7 +105,7 @@ export async function resolveDocsContent({
         if (apiReference.paginated && FernNavigation.isApiLeaf(node)) {
             return resolveApiEndpointPage({
                 node,
-                parent: parents[parents.length - 1],
+                parents,
                 apiDefinitionLoader: loader,
                 neighbors,
                 showErrors: apiReference.showErrors,

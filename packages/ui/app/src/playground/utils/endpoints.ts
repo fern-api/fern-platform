@@ -1,8 +1,8 @@
+import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { ExampleEndpointCall } from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_OBJECT } from "@fern-ui/core-utils";
 import { mapValues } from "lodash-es";
 import { PlaygroundEndpointRequestFormState, PlaygroundFormDataEntryValue } from "../types";
-import { EndpointContext } from "../types/endpoint-context";
 import { getEmptyValueForHttpRequestBody, getEmptyValueForObjectProperties } from "./default-values";
 
 export function getInitialEndpointRequestFormState(

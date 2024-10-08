@@ -2,7 +2,7 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernButtonGroup, FernScrollArea } from "@fern-ui/components";
-import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { EMPTY_ARRAY, EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import { ReactNode, memo, useMemo, useRef, useState } from "react";
 import { usePlaygroundEnvironment } from "../../atoms";
@@ -38,7 +38,7 @@ export declare namespace EndpointContentCodeSnippets {
         hoveredRequestPropertyPath: JsonPropertyPath | undefined;
         hoveredResponsePropertyPath: JsonPropertyPath | undefined;
         showErrors: boolean;
-        errors: ApiDefinition.ErrorResponse[];
+        errors: ApiDefinition.ErrorResponse[] | undefined;
         selectedError: ApiDefinition.ErrorResponse | undefined;
         setSelectedError: (error: ApiDefinition.ErrorResponse | undefined) => void;
         measureHeight: (height: number) => void;
@@ -54,10 +54,10 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     onClickClient,
     requestCodeSnippet,
     requestCurlJson,
-    hoveredRequestPropertyPath = [],
-    hoveredResponsePropertyPath = [],
+    hoveredRequestPropertyPath = EMPTY_ARRAY,
+    hoveredResponsePropertyPath = EMPTY_ARRAY,
     showErrors,
-    errors,
+    errors = EMPTY_ARRAY,
     selectedError,
     setSelectedError,
     measureHeight,

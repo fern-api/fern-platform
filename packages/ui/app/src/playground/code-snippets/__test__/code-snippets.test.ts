@@ -1,8 +1,13 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { EndpointDefinition, EndpointId, EnvironmentId, PropertyKey } from "@fern-api/fdr-sdk/api-definition";
+import {
+    EndpointContext,
+    EndpointDefinition,
+    EndpointId,
+    EnvironmentId,
+    PropertyKey,
+} from "@fern-api/fdr-sdk/api-definition";
 import { ApiDefinitionId, EndpointNode, NodeId, Slug } from "@fern-api/fdr-sdk/navigation";
 import { PlaygroundEndpointRequestFormState } from "../../types";
-import { EndpointContext } from "../../types/endpoint-context";
 import { CurlSnippetBuilder } from "../builders/curl";
 import { PythonRequestSnippetBuilder } from "../builders/python";
 import { TypescriptFetchSnippetBuilder } from "../builders/typescript";

@@ -1,4 +1,5 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import {
     FernButton,
     FernCard,
@@ -34,7 +35,6 @@ import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundEndpointForm } from "./endpoint/PlaygroundEndpointForm";
 import { useOAuthEndpointContext } from "./hooks/useOauthEndpointContext";
 import { PlaygroundAuthState } from "./types";
-import { EndpointContext } from "./types/endpoint-context";
 import { oAuthClientCredentialReferencedEndpointLoginFlow } from "./utils/oauth";
 import { usePlaygroundBaseUrl } from "./utils/select-environment";
 

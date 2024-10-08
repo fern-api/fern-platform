@@ -29,21 +29,33 @@ export async function resolveApiReferencePage({
 
     const nodes: [FernNavigation.NavigationNodeWithMarkdown, readonly FernNavigation.BreadcrumbItem[]][] = [];
 
-    const idx = parents.findIndex((parent) => parent.id === apiReferenceNode.id);
-    if (idx < 0) {
+    const apiReferenceNodeIdx = parents.findIndex((parent) => parent.id === apiReferenceNode.id);
+    if (apiReferenceNodeIdx === -1) {
         // TODO: sentry
         // eslint-disable-next-line no-console
         console.error("Could not find api reference node in parents");
     }
 
-    // get all the parents of the api reference node (excluding the api reference node itself)
-    const apiReferenceNodeParents = idx >= 0 ? parents.slice(0, idx - 1) : [];
+    const sidebarRootNodeIdx = parents.findIndex((parent) => parent.type === "sidebarRoot");
+    if (sidebarRootNodeIdx === -1) {
+        // TODO: sentry
+        // eslint-disable-next-line no-console
+        console.error("Failed to find sidebar root node");
+    }
+
+    // get all the parents of the api reference node (excluding the api reference node itself) up to the sidebar root node
+    const apiReferenceNodeParents = parents.slice(
+        Math.max(0, sidebarRootNodeIdx),
+        Math.max(0, apiReferenceNodeIdx - 1),
+    );
+
+    const breadcrumb = FernNavigation.utils.createBreadcrumb(apiReferenceNodeParents);
 
     FernNavigation.traverseDF(apiReferenceNode, (node, parents) => {
         if (!FernNavigation.hasMarkdown(node)) {
             return;
         }
-        nodes.push([node, FernNavigation.utils.createBreadcrumbs([...apiReferenceNodeParents, ...parents])]);
+        nodes.push([node, [...breadcrumb, ...FernNavigation.utils.createBreadcrumb(parents)]]);
     });
 
     const mdxs = Object.fromEntries(
@@ -63,5 +75,6 @@ export async function resolveApiReferencePage({
         apiReferenceNode,
         apiDefinition,
         mdxs,
+        breadcrumb,
     };
 }

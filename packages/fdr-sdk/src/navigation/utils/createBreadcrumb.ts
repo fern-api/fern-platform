@@ -2,7 +2,7 @@ import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion
 import { noop } from "ts-essentials";
 import { FernNavigation } from "../..";
 
-export function createBreadcrumbs(nodes: readonly FernNavigation.NavigationNode[]): FernNavigation.BreadcrumbItem[] {
+export function createBreadcrumb(nodes: readonly FernNavigation.NavigationNode[]): FernNavigation.BreadcrumbItem[] {
     const breadcrumb: FernNavigation.BreadcrumbItem[] = [];
     nodes.forEach((node) => {
         if (!FernNavigation.hasMetadata(node) || FernNavigation.isLeaf(node)) {

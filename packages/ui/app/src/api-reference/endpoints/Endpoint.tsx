@@ -1,8 +1,7 @@
-import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
+import { createEndpointContext, type ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { memo, useMemo } from "react";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
-import { createEndpointContext } from "../../playground/types/endpoint-context";
 import { EndpointContent } from "./EndpointContent";
 
 export declare namespace Endpoint {
@@ -12,10 +11,18 @@ export declare namespace Endpoint {
         node: FernNavigation.EndpointNode;
         apiDefinition: ApiDefinition;
         isLastInApi: boolean;
+        breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     }
 }
 
-const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({ api, showErrors, node, isLastInApi, apiDefinition }) => {
+const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
+    api,
+    showErrors,
+    node,
+    isLastInApi,
+    apiDefinition,
+    breadcrumb,
+}) => {
     // const [isStream, setStream] = useAtom(FERN_STREAM_ATOM);
     // const content = useDocsContent();
 
@@ -46,7 +53,15 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({ api, showErrors, node, i
         return null;
     }
 
-    return <EndpointContent api={api} showErrors={showErrors} hideBottomSeparator={isLastInApi} context={context} />;
+    return (
+        <EndpointContent
+            breadcrumb={breadcrumb}
+            api={api}
+            showErrors={showErrors}
+            hideBottomSeparator={isLastInApi}
+            context={context}
+        />
+    );
 };
 
 export const Endpoint = memo(UnmemoizedEndpoint);

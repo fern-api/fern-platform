@@ -10,7 +10,7 @@ import { renderDeprecatedTypeShorthand } from "../types/type-shorthand/TypeShort
 
 export declare namespace EndpointResponseSection {
     export interface Props {
-        responseBody: ApiDefinition.HttpResponse;
+        response: ApiDefinition.HttpResponse;
         exampleResponseBody: ApiDefinition.ExampleEndpointResponseWithSchema | undefined;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
@@ -20,7 +20,7 @@ export declare namespace EndpointResponseSection {
 }
 
 export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = ({
-    responseBody,
+    response,
     exampleResponseBody,
     onHoverProperty,
     anchorIdParts,
@@ -34,9 +34,9 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
             <Markdown
                 size="sm"
                 className="!t-muted border-default border-b pb-5 leading-6"
-                mdx={responseBody.description}
+                mdx={response.description}
                 fallback={getResponseSummary({
-                    responseBody,
+                    response,
                     exampleResponseBody,
                     types,
                     isAudioFileDownloadSpanSummary,

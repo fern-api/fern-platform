@@ -1,10 +1,10 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo, useMemo } from "react";
 import { useFeatureFlags } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
-import { EndpointContext } from "../../playground/types/endpoint-context";
 import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
@@ -56,16 +56,26 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
 
     let authHeader: ApiDefinition.ObjectProperty | undefined;
     if (auth && isAuthEnabledInDocs) {
+        const stringShape: ApiDefinition.TypeShape = {
+            type: "alias",
+            value: {
+                type: "primitive",
+                value: {
+                    type: "string",
+                    regex: undefined,
+                    minLength: undefined,
+                    maxLength: undefined,
+                    default: undefined,
+                },
+            },
+        };
         authHeader = visitDiscriminatedUnion(auth)._visit<ApiDefinition.ObjectProperty>({
             basicAuth: () => {
                 return {
                     key: ApiDefinition.PropertyKey("Authorization"),
                     description: "Basic authentication of the form Basic <username:password>.",
                     hidden: false,
-                    valueShape: {
-                        type: "unknown",
-                        displayName: "string",
-                    },
+                    valueShape: stringShape,
                     availability: undefined,
                 };
             },
@@ -74,10 +84,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     key: ApiDefinition.PropertyKey("Authorization"),
                     description: "Bearer authentication of the form Bearer <token>, where token is your auth token.",
                     hidden: false,
-                    valueShape: {
-                        type: "unknown",
-                        displayName: "string",
-                    },
+                    valueShape: stringShape,
                     availability: undefined,
                 };
             },
@@ -87,10 +94,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     description:
                         value.prefix != null ? `Header authentication of the form ${value.prefix} <token>` : undefined,
                     hidden: false,
-                    valueShape: {
-                        type: "unknown",
-                        displayName: "string",
-                    },
+                    valueShape: stringShape,
                     availability: undefined,
                 };
             },
@@ -102,10 +106,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                 key: ApiDefinition.PropertyKey("Authorization"),
                                 description: "OAuth authentication of the form Bearer <token>.",
                                 hidden: false,
-                                valueShape: {
-                                    type: "unknown",
-                                    displayName: "string",
-                                },
+                                valueShape: stringShape,
                                 availability: undefined,
                             }),
                         }),

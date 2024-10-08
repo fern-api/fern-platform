@@ -1,7 +1,7 @@
+import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { memo, type ReactNode } from "react";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
-import { EndpointContext } from "../../playground/types/endpoint-context";
 import { useSelectedEnvironment } from "../../playground/utils/select-environment";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
