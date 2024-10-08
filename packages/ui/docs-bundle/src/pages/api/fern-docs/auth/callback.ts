@@ -4,7 +4,7 @@ import { getWorkOS, getWorkOSClientId } from "@/server/workos";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
-import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
+import { COOKIE_FERN_TOKEN, HEADER_X_FERN_HOST } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
@@ -44,7 +44,14 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             "/api/fern-docs/auth/callback",
             "/api/fern-docs/oauth/ory/callback",
         );
-        // Permanent GET redirect to the Ory callback endpoint
+
+        // Redirect to x-fern-host domain if it exists
+        // this is to ensure proxied origins are used for the redirect
+        if (req.headers.has(HEADER_X_FERN_HOST)) {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            nextUrl.host = req.headers.get(HEADER_X_FERN_HOST)!;
+        }
+
         return NextResponse.redirect(nextUrl);
     }
 
