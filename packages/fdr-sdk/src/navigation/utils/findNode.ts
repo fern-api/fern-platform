@@ -13,7 +13,7 @@ export declare namespace Node {
     interface Found {
         type: "found";
         node: FernNavigation.NavigationNodePage;
-        parents: readonly FernNavigation.NavigationNode[];
+        parents: readonly FernNavigation.NavigationNodeParent[];
         breadcrumb: readonly FernNavigation.BreadcrumbItem[];
         root: FernNavigation.RootNode;
         versions: readonly FernNavigation.VersionNode[];

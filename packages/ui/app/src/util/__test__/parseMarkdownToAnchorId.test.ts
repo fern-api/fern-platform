@@ -1,4 +1,4 @@
-import { parseMarkdownPageToAnchorTag } from "../resolveDocsContent";
+import { parseMarkdownPageToAnchorTag } from "../../resolver/parseMarkdownPageToAnchorTag";
 
 const humanloopMarkdown = [
     "## Update Logs API\n\nWe've introduced the ability to patch Logs for Prompts and Tools. This can come in useful in scenarios where certain characteristics of your Log are delayed that you may want to add later, such as the output, or if you have a process of redacting inputs that takes time.\n\nNote that not all fields support being patched, so start by referring to our [V5 API References](api-reference/prompts). From there, you can submit updates to your previously created logs.\n",
