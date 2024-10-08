@@ -3,8 +3,8 @@ import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "@/server/page
 import { rewritePosthog } from "@/server/rewritePosthog";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import type { FernUser } from "@fern-ui/fern-docs-auth";
-import { getAuthEdgeConfig, getCanonicalHost } from "@fern-ui/fern-docs-edge-config";
-import { COOKIE_FERN_TOKEN, HEADER_X_FERN_HOST } from "@fern-ui/fern-docs-utils";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
+import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
@@ -15,17 +15,9 @@ const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 const CHANGELOG_PATTERN = /\.(rss|atom)$/;
 
 export const middleware: NextMiddleware = async (request) => {
-    let xFernHost = getXFernHostEdge(request);
+    const xFernHost = getXFernHostEdge(request);
     const nextUrl = request.nextUrl.clone();
     const headers = new Headers(request.headers);
-
-    // for legacy docs customers that use subpath routing and don't set x-fern-host,
-    // we use edge config to determine the true canonical host
-    const canonicalHost = await getCanonicalHost(xFernHost);
-    if (canonicalHost !== xFernHost) {
-        xFernHost = canonicalHost;
-        headers.set(HEADER_X_FERN_HOST, xFernHost);
-    }
 
     /**
      * Do not rewrite 404 and 500 pages
