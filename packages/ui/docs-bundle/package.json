@@ -38,7 +38,6 @@
     "@fern-ui/fern-docs-utils": "workspace:*",
     "@fern-ui/search-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
-    "@sentry/nextjs": "^8.30.0",
     "@vercel/analytics": "^1.3.1",
     "@vercel/edge-config": "^1.1.0",
     "@vercel/kv": "^2.0.0",

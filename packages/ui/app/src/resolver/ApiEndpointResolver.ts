@@ -2,7 +2,6 @@ import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { compact, mapValues } from "lodash-es";
-import { captureSentryError } from "../analytics/sentry";
 import { sortKeysByShape } from "../api-reference/examples/sortKeysByShape";
 import type { FeatureFlags } from "../atoms";
 import { MDX_SERIALIZER } from "../mdx/bundler";
@@ -755,15 +754,12 @@ export class ApiEndpointResolver {
         try {
             return this.stripUndefines(sortKeysByShape(value, shape, this.resolvedTypes));
         } catch (e) {
+            // TODO: sentry
             // eslint-disable-next-line no-console
-            console.error("Failed to sort JSON keys by type shape", e);
-
-            captureSentryError(e, {
-                context: "ApiPage",
-                errorSource: "sortKeysByShape",
-                errorDescription:
-                    "Failed to sort and strip undefines from JSON value, indicating a bug in the resolver. This error should be investigated.",
-            });
+            console.error(
+                "Failed to sort and strip undefines from JSON value, indicating a bug in the resolver. This error should be investigated.",
+                e,
+            );
 
             return value;
         }

@@ -1,5 +1,4 @@
 import { forwardRef, useMemo } from "react";
-import { captureSentryError } from "../analytics/sentry";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FernSyntaxHighlighterTokens, ScrollToHandle } from "./FernSyntaxHighlighterTokens";
 import { FernSyntaxHighlighterTokensVirtualized } from "./FernSyntaxHighlighterTokensVirtualized";
@@ -33,17 +32,9 @@ export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighli
         try {
             return highlightTokens(highlighter, code, language);
         } catch (e) {
+            // TODO: sentry
             // eslint-disable-next-line no-console
-            console.error(e);
-            captureSentryError(e, {
-                context: "FernSyntaxHighlighter",
-                errorSource: "highlightTokens",
-                errorDescription: "Error occurred while highlighting tokens",
-                data: {
-                    code,
-                    language,
-                },
-            });
+            console.error("Error occurred while highlighting tokens", e);
             return createRawTokens(code, language);
         }
     }, [code, highlighter, language]);

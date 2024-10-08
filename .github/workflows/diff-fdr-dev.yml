@@ -58,7 +58,7 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         run: |
           pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
-          pnpm --filter "@fern-platform/fdr" sentry:sourcemaps
+          pnpm --filter "@fern-platform/fdr"
 
       - name: 💻 Setup AWS CLI
         uses: aws-actions/configure-aws-credentials@v1

@@ -7,7 +7,6 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import type { PluggableList } from "unified";
-import { captureSentryError } from "../../analytics/sentry";
 import { stringHasMarkdown } from "../common/util";
 import { FernDocsFrontmatter } from "../frontmatter";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
@@ -117,14 +116,9 @@ export async function serializeMdx(
             scope: {},
         };
     } catch (e) {
+        // TODO: sentry
         // eslint-disable-next-line no-console
-        console.error(e);
-
-        captureSentryError(e, {
-            context: "MDX",
-            errorSource: "maybeSerializeMdxContent",
-            errorDescription: "Failed to serialize MDX content",
-        });
+        console.error("Failed to serialize MDX content", e);
 
         return content;
     }

@@ -7,7 +7,6 @@ import { SendSolid } from "iconoir-react";
 import { useSetAtom } from "jotai";
 import { mapValues } from "lodash-es";
 import { ReactElement, useCallback, useState } from "react";
-import { captureSentryError } from "../../analytics/sentry";
 import {
     PLAYGROUND_AUTH_STATE_ATOM,
     PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
@@ -159,22 +158,13 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
                 }
             }
         } catch (e) {
+            // TODO: sentry
             // eslint-disable-next-line no-console
-            console.error(e);
+            console.error(
+                "An unexpected error occurred while sending request to the proxy server. This is likely a bug, rather than a user error.",
+                e,
+            );
             setResponse(failed(e));
-
-            captureSentryError(e, {
-                context: "ApiPlayground",
-                errorSource: "sendRequest",
-                errorDescription:
-                    "An unexpected error occurred while sending request to the proxy server. This is likely a bug, rather than a user error.",
-                data: {
-                    endpointId: endpoint.id,
-                    endpointName: node.title,
-                    method: endpoint.method,
-                    route: `/${node.slug}`,
-                },
-            });
         }
     }, [
         endpoint,

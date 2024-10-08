@@ -1,5 +1,4 @@
 import { isPlainObject } from "@fern-ui/core-utils";
-import { captureException } from "@sentry/nextjs";
 import jsonpath from "jsonpath";
 import { useMemo } from "react";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
@@ -104,7 +103,9 @@ export function useHighlightJsonLines(
         try {
             return getJsonLineNumbers(json, hoveredPropertyPath, jsonStartLine + 1);
         } catch (error) {
-            captureException(error);
+            // TODO: sentry
+            // eslint-disable-next-line no-console
+            console.error("Error thrown while highlighting json lines", error);
             return [];
         }
     }, [hoveredPropertyPath, json, jsonStartLine]);

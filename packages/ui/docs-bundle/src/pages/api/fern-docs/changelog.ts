@@ -6,7 +6,6 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever } from "@fern-ui/core-utils";
 import { getFrontmatter } from "@fern-ui/ui";
-import * as Sentry from "@sentry/nextjs";
 import { Feed, Item } from "feed";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -65,7 +64,7 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
                 } catch (e) {
                     // eslint-disable-next-line no-console
                     console.error(e);
-                    Sentry.captureException(e, { level: "error" });
+                    // TODO: sentry
                 }
             });
         });
@@ -122,7 +121,7 @@ function toFeedItem(
         } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
-            Sentry.captureException(e, { level: "warning" });
+            // TODO: sentry
         }
     }
     return item;

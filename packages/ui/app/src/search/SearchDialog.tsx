@@ -3,7 +3,6 @@ import { useAtomValue, useSetAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { PropsWithChildren, ReactElement, useMemo, useRef } from "react";
 import { Configure, InstantSearch } from "react-instantsearch";
-import { captureSentryError } from "../analytics/sentry";
 import {
     CURRENT_VERSION_ATOM,
     IS_MOBILE_SCREEN_ATOM,
@@ -37,12 +36,11 @@ export const SearchDialog = (): ReactElement | null => {
     const [config] = useSearchConfig();
 
     if (!config.isAvailable) {
-        isSearchDialogOpen &&
-            captureSentryError(new Error("Search dialog config is null"), {
-                context: "SearchDialogOpen",
-                errorSource: "SearchDialog",
-                errorDescription: "Search dialog is null, when attempting to use search.",
-            });
+        if (isSearchDialogOpen) {
+            // TODO: sentry
+            // eslint-disable-next-line no-console
+            console.error("Search dialog is null, when attempting to use search.");
+        }
         return null;
     }
 
