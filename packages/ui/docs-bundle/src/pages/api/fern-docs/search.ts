@@ -4,7 +4,6 @@ import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { getAuthEdgeConfig, getInkeepSettings } from "@fern-ui/fern-docs-edge-config";
 import { SearchConfig, getSearchConfig } from "@fern-ui/search-utils";
 import { provideRegistryService } from "@fern-ui/ui";
-import { captureException } from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
@@ -36,9 +35,9 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Se
         const config = await getSearchConfig(provideRegistryService(), searchInfo, inkeepSettings);
         return NextResponse.json(config, { status: config.isAvailable ? 200 : 503 });
     } catch (e) {
-        const id = captureException(e, { level: "fatal" });
+        // TODO: sentry
         // eslint-disable-next-line no-console
-        console.error(`Error fetching search config for domain ${domain}. Sentry event ID: ${id}`, e);
+        console.error(`Error fetching search config for domain ${domain}.`, e);
         return NextResponse.json({ isAvailable: false }, { status: 500 });
     }
 }

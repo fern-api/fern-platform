@@ -1,6 +1,5 @@
 import { AuthEdgeConfigSchema, type AuthEdgeConfig } from "@fern-ui/fern-docs-auth";
 import { withoutStaging } from "@fern-ui/fern-docs-utils";
-import { captureMessage } from "@sentry/nextjs";
 import { get } from "@vercel/edge-config";
 
 const KEY = "authentication";
@@ -16,8 +15,8 @@ export async function getAuthEdgeConfig(currentDomain: string): Promise<AuthEdge
         // if it's malformed, custom auth for this domain will not work and may leak docs to the public.
         if (!config.success) {
             // eslint-disable-next-line no-console
-            console.error(config.error);
-            captureMessage(`Could not parse AuthEdgeConfigSchema for ${currentDomain}`, "fatal");
+            console.error(`Could not parse AuthEdgeConfigSchema for ${currentDomain}`, config.error);
+            // TODO: sentry
         }
 
         return config.data;
