@@ -4,7 +4,6 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import GithubSlugger from "github-slugger";
 import { reverse } from "lodash-es";
-import { captureSentryError } from "../analytics/sentry";
 import type { FeatureFlags } from "../atoms";
 import { MDX_SERIALIZER } from "../mdx/bundler";
 import { getFrontmatter } from "../mdx/frontmatter";
@@ -36,18 +35,9 @@ async function getSubtitle(
         }
         return undefined;
     } catch (e) {
+        // TODO: sentry
         // eslint-disable-next-line no-console
-        console.error("Error occurred while parsing frontmatter", e);
-        captureSentryError(e, {
-            context: "getStaticProps",
-            errorSource: "getSubtitle",
-            errorDescription: "Error occurred while parsing frontmatter to get the subtitle (aka excerpt)",
-            data: {
-                pageTitle: node.title,
-                pageId,
-                route: `/${node.slug}`,
-            },
-        });
+        console.error("Error occurred while parsing frontmatter to get the subtitle (aka excerpt)", e);
         return undefined;
     }
 }

@@ -1,4 +1,3 @@
-import { captureException } from "@sentry/nextjs";
 import { atom, useAtomValue } from "jotai";
 import { loadable } from "jotai/utils";
 import * as LDClient from "launchdarkly-js-client-sdk";
@@ -35,7 +34,7 @@ const useLaunchDarklyFlag = (flag: string): boolean => {
     const loadableClient = useAtomValue(loadable(ldClientAtom));
     const client = loadableClient.state === "hasData" ? loadableClient.data : undefined;
     if (loadableClient.state === "hasError") {
-        captureException(loadableClient.error);
+        // TODO: sentry
     }
 
     const getFlagEnabled = useCallback(() => {

@@ -2,7 +2,6 @@ import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { FernRegistry } from "../../../../fdr-sdk/src/client/generated";
-import { captureSentryErrorMessage } from "../analytics/sentry";
 import type { FeatureFlags } from "../atoms";
 import { type MDX_SERIALIZER } from "../mdx/bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
@@ -151,9 +150,9 @@ export class ApiDefinitionResolver {
                     },
                     endpointPair: async (endpointPair) => {
                         if (this.featureFlags.isBatchStreamToggleDisabled) {
-                            captureSentryErrorMessage(
-                                "Batch stream toggle is disabled, but an endpoint pair was found",
-                            );
+                            // TODO: sentry
+                            // eslint-disable-next-line no-console
+                            console.error("Batch stream toggle is disabled, but an endpoint pair was found");
                         }
                         const [nonStream, stream] = await Promise.all([
                             this.resolveEndpointDefinitionCached(endpointPair.nonStream),

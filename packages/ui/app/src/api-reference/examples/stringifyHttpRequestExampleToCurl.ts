@@ -1,5 +1,4 @@
 import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { captureSentryError } from "../../analytics/sentry";
 import { HttpRequestExample } from "./HttpRequestExample";
 
 function requiresUrlEncode(str: string): boolean {
@@ -10,15 +9,12 @@ export function stringifyHttpRequestExampleToCurl(request: HttpRequestExample): 
     try {
         return unsafeStringifyHttpRequestExampleToCurl(request);
     } catch (e) {
+        // TODO: sentry
         // eslint-disable-next-line no-console
-        console.error(e);
-
-        captureSentryError(e, {
-            context: "ApiPage",
-            errorSource: "unsafeStringifyHttpRequestExampleToCurl",
-            errorDescription:
-                "Unable to stringify HTTP request example to curl. This is used to generate a curl command for the user to copy and paste into their terminal. When this fails, the user will not be able to see the curl command.",
-        });
+        console.error(
+            "Unable to stringify HTTP request example to curl. This is used to generate a curl command for the user to copy and paste into their terminal. When this fails, the user will not be able to see the curl command.",
+            e,
+        );
 
         return "";
     }

@@ -3,7 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { SearchClient } from "algoliasearch";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
-import { ReactElement, useMemo, useRef } from "react";
+import { ReactElement, ReactNode, useMemo, useRef } from "react";
 import { Configure, InstantSearch, useInstantSearch } from "react-instantsearch";
 import {
     CURRENT_VERSION_ATOM,
@@ -14,6 +14,7 @@ import {
     useIsSearchDialogOpen,
     useSidebarNodes,
 } from "../../atoms";
+import { getFeatureFlagFilters } from "../../util/getFeatureFlagFilters";
 import { SearchHits } from "../SearchHits";
 import { SearchBox } from "./SearchBox";
 import { useAlgoliaSearchClient } from "./useAlgoliaSearchClient";
@@ -27,12 +28,11 @@ export function AlgoliaSearchDialog(): ReactElement | null {
     const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
     const algoliaSearchClient = useAlgoliaSearchClient();
     if (algoliaSearchClient == null || isMobileScreen) {
-        algoliaSearchClient == null &&
-            captureSentryError(new Error("Algolia search client is null"), {
-                context: "AlgoliaSearchClient",
-                errorSource: "AlgoliaSearchDialog",
-                errorDescription: "Algolia search client is null, when attempting to use search.",
-            });
+        if (!isMobileScreen) {
+            // TODO: sentry
+            // eslint-disable-next-line no-console
+            console.error("Algolia search client is null, when attempting to use search.");
+        }
         return null;
     }
     const [searchClient, index] = algoliaSearchClient;
@@ -58,10 +58,6 @@ interface FernInstantSearchProps {
     indexName: string;
     inputRef: React.RefObject<HTMLInputElement>;
 }
-
-import { ReactNode } from "react";
-import { captureSentryError } from "../../analytics/sentry";
-import { getFeatureFlagFilters } from "../../util/getFeatureFlagFilters";
 
 function NoResultsBoundary({ children, fallback }: { children: ReactNode; fallback: ReactNode }) {
     const { results } = useInstantSearch();

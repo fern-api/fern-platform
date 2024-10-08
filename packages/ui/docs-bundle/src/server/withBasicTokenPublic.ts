@@ -1,7 +1,6 @@
 import { getChildren, isLeaf, isPage, utils, type NavigationNode, type RootNode } from "@fern-api/fdr-sdk/navigation";
 import { matchPath } from "@fern-ui/fern-docs-utils";
 import type { AuthEdgeConfigBasicTokenVerification } from "@fern-ui/ui/auth";
-import { captureMessage } from "@sentry/nextjs";
 
 /**
  * @param auth Basic token verification configuration
@@ -48,7 +47,6 @@ export function pruneWithBasicTokenPublic(auth: AuthEdgeConfigBasicTokenVerifica
 
     // TODO: handle this more gracefully
     if (result == null) {
-        captureMessage("Failed to prune navigation tree", "fatal");
         throw new Error("Failed to prune navigation tree");
     }
 

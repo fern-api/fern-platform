@@ -1,6 +1,5 @@
 import camelCase from "lodash-es/camelCase";
 import StyleToObject from "style-to-object";
-import { captureSentryError } from "../analytics/sentry";
 
 export function parseStringStyle(value: unknown): Record<string, string> | undefined {
     if (typeof value !== "string") {
@@ -12,16 +11,9 @@ export function parseStringStyle(value: unknown): Record<string, string> | undef
     try {
         StyleToObject(value, replacer);
     } catch (e) {
+        // TODO: sentry
         // eslint-disable-next-line no-console
-        console.error("Failed to parse style", e);
-
-        captureSentryError(e, {
-            context: "FernSyntaxHighlighter",
-            errorSource: "parseStyle",
-            errorDescription: "Failed to parse style originating from shiki",
-            data: { value },
-        });
-
+        console.error("Failed to parse style originating from shiki", e);
         return undefined;
     }
 
