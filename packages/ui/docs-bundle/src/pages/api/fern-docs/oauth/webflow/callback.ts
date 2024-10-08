@@ -39,7 +39,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
     const config = await getAuthEdgeConfig(domain);
 
-    if (config == null || config.type !== "oauth2" || config.partner === "webflow") {
+    if (config == null || config.type !== "oauth2" || config.partner !== "webflow") {
         // eslint-disable-next-line no-console
         console.log(`Invalid config for domain ${domain}`);
         return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
