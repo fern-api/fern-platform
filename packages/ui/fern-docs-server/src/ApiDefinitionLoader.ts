@@ -15,7 +15,7 @@ import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
 import { DEFAULT_FEATURE_FLAGS } from "@fern-ui/fern-docs-utils";
 import { HTTPSnippet, type TargetId } from "httpsnippet-lite";
 import { UnreachableCaseError } from "ts-essentials";
-import { ApiDefinitionKVCache } from "./ApiDefinitionCache";
+import { ApiDefinitionKVCache } from "./ApiDefinitionKVCache";
 import { getHarRequest } from "./getHarRequest";
 
 interface HTTPSnippetClient {

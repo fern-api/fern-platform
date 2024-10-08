@@ -1,31 +1,22 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { ApiDefinitionLoader } from "@fern-ui/fern-docs-server";
-import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
-import type { MDX_SERIALIZER } from "../mdx/bundler";
-import type { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "./DocsContent";
 
 interface ResolveApiEndpointPageOpts {
     node: FernNavigation.NavigationNodeApiLeaf;
-    parents: readonly FernNavigation.NavigationNodeParent[];
+    parent: FernNavigation.NavigationNodeParent | undefined;
     apiDefinitionLoader: ApiDefinitionLoader;
-    mdxOptions: FernSerializeMdxOptions | undefined;
-    featureFlags: FeatureFlags;
     neighbors: DocsContent.Neighbors;
-    serializeMdx: MDX_SERIALIZER;
-    collector: FernNavigation.NodeCollector;
     showErrors: boolean | undefined;
 }
 
 export async function resolveApiEndpointPage({
     node,
-    parents,
+    parent,
     apiDefinitionLoader,
     neighbors,
     showErrors,
 }: ResolveApiEndpointPageOpts): Promise<DocsContent.ApiEndpointPage | undefined> {
-    const parent = parents[parents.length - 1];
-
     if (parent?.type === "endpointPair") {
         apiDefinitionLoader.withPrune(parent.nonStream);
         apiDefinitionLoader.withPrune(parent.stream);
@@ -36,12 +27,16 @@ export async function resolveApiEndpointPage({
     const apiDefinition = await apiDefinitionLoader.load();
 
     if (!apiDefinition) {
+        // TODO: sentry
+        // eslint-disable-next-line no-console
+        console.error(`Failed to load API definition for ${node.slug}`);
         return;
     }
 
     return {
         type: "api-endpoint-page",
         slug: node.slug,
+        item: parent?.type === "endpointPair" ? parent : node,
         apiDefinition,
         showErrors: showErrors ?? false,
         neighbors,
