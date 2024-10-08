@@ -1,3 +1,4 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
@@ -7,7 +8,6 @@ import { ReactElement, memo, useCallback, useMemo } from "react";
 import { useRouteListener } from "../../../atoms";
 import { Chip } from "../../../components/Chip";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
-import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
 import {
     TypeDefinitionContext,
@@ -23,11 +23,11 @@ import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinition {
     export interface Props {
-        typeShape: ResolvedTypeDefinition;
+        shape: ApiDefinition.TypeShapeOrReference;
         isCollapsible: boolean;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
     }
 }
 
@@ -39,87 +39,90 @@ interface CollapsibleContent {
 }
 
 export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(function InternalTypeDefinition({
-    typeShape,
+    shape,
     isCollapsible,
     anchorIdParts,
     slug,
     types,
 }) {
-    const collapsableContent = useMemo(
-        () =>
-            visitDiscriminatedUnion(typeShape, "type")._visit<CollapsibleContent | undefined>({
-                object: (object) => ({
-                    elements: dereferenceObjectProperties(object, types).map((property) => (
+    const collapsableContent = useMemo(() => {
+        const unwrapped = ApiDefinition.unwrapReference(shape, types);
+        return visitDiscriminatedUnion(unwrapped.shape)._visit<CollapsibleContent | undefined>({
+            object: (object) => {
+                const { properties } = ApiDefinition.unwrapObjectType(object, types);
+                return {
+                    elements: properties.map((property) => (
                         <ObjectProperty
                             key={property.key}
                             property={property}
                             anchorIdParts={[...anchorIdParts, property.key]}
-                            applyErrorStyles={false}
                             slug={slug}
+                            applyErrorStyles
                             types={types}
                         />
                     )),
                     elementNameSingular: "property",
                     elementNamePlural: "properties",
-                }),
-                undiscriminatedUnion: (union) => ({
-                    elements: union.variants.map((variant, variantIdx) => (
-                        <UndiscriminatedUnionVariant
-                            key={variantIdx}
-                            unionVariant={variant}
-                            anchorIdParts={[...anchorIdParts, variant.displayName ?? variantIdx.toString()]}
-                            applyErrorStyles={false}
-                            slug={slug}
-                            idx={variantIdx}
-                            types={types}
-                        />
-                    )),
-                    elementNameSingular: "variant",
-                    elementNamePlural: "variants",
-                    separatorText: "OR",
-                }),
-                discriminatedUnion: (union) => ({
-                    elements: union.variants.map((variant) => (
-                        <DiscriminatedUnionVariant
-                            key={variant.discriminantValue}
-                            discriminant={union.discriminant}
-                            unionVariant={variant}
-                            anchorIdParts={[...anchorIdParts, variant.discriminantValue]}
-                            slug={slug}
-                            types={types}
-                        />
-                    )),
-                    elementNameSingular: "variant",
-                    elementNamePlural: "variants",
-                    separatorText: "OR",
-                }),
-                enum: (enum_) => ({
-                    elements: enum_.values.map((enumValue) => (
-                        <Chip key={enumValue.value} name={enumValue.value} description={enumValue.description} />
-                        // <EnumValue key={enumValue.value} enumValue={enumValue} />
-                    )),
-                    elementNameSingular: "enum value",
-                    elementNamePlural: "enum values",
-                }),
-                literal: (literal) => ({
-                    elements: [
-                        visitDiscriminatedUnion(literal.value, "type")._visit({
-                            stringLiteral: (value) => <Chip key={value.value} name={value.value} />,
-                            booleanLiteral: (value) => (
-                                <Chip key={value.value.toString()} name={value.value.toString()} />
-                            ),
-                            _other: () => <span>{"<unknown>"}</span>,
-                        }),
-                    ],
-                    elementNameSingular: "literal",
-                    elementNamePlural: "literals",
-                }),
-                alias: () => undefined,
-                unknown: () => undefined,
-                _other: () => undefined,
+                };
+            },
+            undiscriminatedUnion: (union) => ({
+                elements: union.variants.map((variant, variantIdx) => (
+                    <UndiscriminatedUnionVariant
+                        key={variantIdx}
+                        unionVariant={variant}
+                        anchorIdParts={[...anchorIdParts, variant.displayName ?? variantIdx.toString()]}
+                        applyErrorStyles={false}
+                        slug={slug}
+                        idx={variantIdx}
+                        types={types}
+                    />
+                )),
+                elementNameSingular: "variant",
+                elementNamePlural: "variants",
+                separatorText: "OR",
             }),
-        [typeShape, types, anchorIdParts, slug],
-    );
+            discriminatedUnion: (union) => ({
+                elements: union.variants.map((variant) => (
+                    <DiscriminatedUnionVariant
+                        key={variant.discriminantValue}
+                        discriminant={union.discriminant}
+                        unionVariant={variant}
+                        anchorIdParts={[...anchorIdParts, variant.discriminantValue]}
+                        slug={slug}
+                        types={types}
+                    />
+                )),
+                elementNameSingular: "variant",
+                elementNamePlural: "variants",
+                separatorText: "OR",
+            }),
+            enum: (enum_) => ({
+                elements: enum_.values.map((enumValue) => (
+                    <Chip key={enumValue.value} name={enumValue.value} description={enumValue.description} />
+                    // <EnumValue key={enumValue.value} enumValue={enumValue} />
+                )),
+                elementNameSingular: "enum value",
+                elementNamePlural: "enum values",
+            }),
+            literal: (literal) => ({
+                elements: [
+                    visitDiscriminatedUnion(literal.value, "type")._visit({
+                        stringLiteral: (value) => <Chip key={value.value} name={value.value} />,
+                        booleanLiteral: (value) => <Chip key={value.value.toString()} name={value.value.toString()} />,
+                        _other: () => <span>{"<unknown>"}</span>,
+                    }),
+                ],
+                elementNameSingular: "literal",
+                elementNamePlural: "literals",
+            }),
+            unknown: () => undefined,
+            _other: () => undefined,
+            primitive: () => undefined,
+            list: () => undefined,
+            set: () => undefined,
+            map: () => undefined,
+        });
+    }, [shape, types, anchorIdParts, slug]);
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
     const { value: isCollapsed, toggleValue: toggleIsCollapsed, setValue: setCollapsed } = useBooleanState(true);

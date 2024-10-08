@@ -1,7 +1,7 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import React, { ReactElement } from "react";
-import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapReference } from "../../../resolver/types";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 import { InternalTypeDefinitionError } from "../type-definition/InternalTypeDefinitionError";
 import { ListTypeContextProvider } from "./ListTypeContextProvider";
@@ -9,72 +9,55 @@ import { MapTypeContextProvider } from "./MapTypeContextProvider";
 
 export declare namespace InternalTypeReferenceDefinitions {
     export interface Props {
-        shape: ResolvedTypeShape;
         applyErrorStyles: boolean;
         isCollapsible: boolean;
         className?: string;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        types: Record<string, ResolvedTypeDefinition>;
+        shape: ApiDefinition.TypeShapeOrReference;
+        types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
         isResponse?: boolean;
     }
 }
 
 // HACHACK: this is a hack to render inlined enums above the description
-export function hasInlineEnum(shape: ResolvedTypeShape, types: Record<string, ResolvedTypeDefinition>): boolean {
-    return visitDiscriminatedUnion(shape, "type")._visit<boolean>({
+export function hasInlineEnum(
+    shape: ApiDefinition.TypeShapeOrReference,
+    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>,
+): boolean {
+    const unwrapped = ApiDefinition.unwrapReference(shape, types);
+    return visitDiscriminatedUnion(unwrapped.shape)._visit<boolean>({
         object: () => false,
         enum: (value) => value.values.length < 6,
         undiscriminatedUnion: () => false,
         discriminatedUnion: () => false,
-        list: (value) => hasInlineEnum(value.shape, types),
-        set: (value) => hasInlineEnum(value.shape, types),
-        optional: (optional) => hasInlineEnum(optional.shape, types),
+        list: (value) => hasInlineEnum(value.itemShape, types),
+        set: (value) => hasInlineEnum(value.itemShape, types),
         map: (map) => hasInlineEnum(map.keyShape, types) || hasInlineEnum(map.valueShape, types),
         primitive: () => false,
         literal: () => true,
         unknown: () => false,
         _other: () => false,
-        reference: (reference) =>
-            hasInlineEnum(
-                types[reference.typeId] ?? {
-                    type: "unknown",
-                    description: undefined,
-                    availability: undefined,
-                },
-                types,
-            ),
-        alias: (alias) => hasInlineEnum(alias.shape, types),
     });
 }
 
 export function hasInternalTypeReference(
-    shape: ResolvedTypeShape,
-    types: Record<string, ResolvedTypeDefinition>,
+    shape: ApiDefinition.TypeShapeOrReference,
+    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>,
 ): boolean {
-    return visitDiscriminatedUnion(shape, "type")._visit<boolean>({
+    const unwrapped = ApiDefinition.unwrapReference(shape, types);
+    return visitDiscriminatedUnion(unwrapped.shape)._visit<boolean>({
         object: () => true,
         enum: () => true,
         undiscriminatedUnion: () => true,
         discriminatedUnion: () => true,
         list: () => true,
         set: () => true,
-        optional: (optional) => hasInternalTypeReference(optional.shape, types),
         map: (map) => hasInternalTypeReference(map.keyShape, types) || hasInternalTypeReference(map.valueShape, types),
         primitive: () => false,
         literal: () => true,
         unknown: () => false,
         _other: () => false,
-        reference: (reference) =>
-            hasInternalTypeReference(
-                types[reference.typeId] ?? {
-                    type: "unknown",
-                    description: undefined,
-                    availability: undefined,
-                },
-                types,
-            ),
-        alias: (alias) => hasInternalTypeReference(alias.shape, types),
     });
 }
 
@@ -88,10 +71,11 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
     types,
 }) => {
     const InternalShapeRenderer = applyErrorStyles ? InternalTypeDefinitionError : InternalTypeDefinition;
-    return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit<ReactElement | null>({
+    const unwrapped = ApiDefinition.unwrapReference(shape, types);
+    return visitDiscriminatedUnion(unwrapped.shape)._visit<ReactElement | null>({
         object: (object) => (
             <InternalShapeRenderer
-                typeShape={object}
+                shape={object}
                 isCollapsible={isCollapsible}
                 anchorIdParts={anchorIdParts}
                 slug={slug}
@@ -100,7 +84,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
         ),
         enum: (enum_) => (
             <InternalShapeRenderer
-                typeShape={enum_}
+                shape={enum_}
                 isCollapsible={isCollapsible}
                 anchorIdParts={anchorIdParts}
                 slug={slug}
@@ -109,7 +93,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
         ),
         undiscriminatedUnion: (undiscriminatedUnion) => (
             <InternalShapeRenderer
-                typeShape={undiscriminatedUnion}
+                shape={undiscriminatedUnion}
                 isCollapsible={isCollapsible}
                 anchorIdParts={anchorIdParts}
                 slug={slug}
@@ -118,7 +102,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
         ),
         discriminatedUnion: (discriminatedUnion) => (
             <InternalShapeRenderer
-                typeShape={discriminatedUnion}
+                shape={discriminatedUnion}
                 isCollapsible={isCollapsible}
                 anchorIdParts={anchorIdParts}
                 slug={slug}
@@ -129,7 +113,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
         list: (list) => (
             <ListTypeContextProvider>
                 <InternalTypeReferenceDefinitions
-                    shape={list.shape}
+                    shape={list.itemShape}
                     isCollapsible={isCollapsible}
                     applyErrorStyles={applyErrorStyles}
                     className={className}
@@ -142,7 +126,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
         set: (set) => (
             <ListTypeContextProvider>
                 <InternalTypeReferenceDefinitions
-                    shape={set.shape}
+                    shape={set.itemShape}
                     isCollapsible={isCollapsible}
                     applyErrorStyles={applyErrorStyles}
                     className={className}
@@ -151,17 +135,6 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                     types={types}
                 />
             </ListTypeContextProvider>
-        ),
-        optional: (optional) => (
-            <InternalTypeReferenceDefinitions
-                shape={optional.shape}
-                isCollapsible={isCollapsible}
-                applyErrorStyles={applyErrorStyles}
-                className={className}
-                anchorIdParts={anchorIdParts}
-                slug={slug}
-                types={types}
-            />
         ),
         map: (map) => (
             <MapTypeContextProvider>
@@ -188,7 +161,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
         primitive: () => null,
         literal: (literal) => (
             <InternalShapeRenderer
-                typeShape={literal}
+                shape={literal}
                 isCollapsible={false}
                 anchorIdParts={anchorIdParts}
                 slug={slug}
@@ -197,16 +170,5 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
         ),
         unknown: () => null,
         _other: () => null,
-        alias: (alias) => (
-            <InternalTypeReferenceDefinitions
-                shape={alias.shape}
-                isCollapsible={isCollapsible}
-                applyErrorStyles={applyErrorStyles}
-                className={className}
-                anchorIdParts={anchorIdParts}
-                slug={slug}
-                types={types}
-            />
-        ),
     });
 };

@@ -1,23 +1,17 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernButtonGroup, FernScrollArea } from "@fern-ui/components";
 import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import { ReactNode, memo, useMemo, useRef, useState } from "react";
-import { useNavigationNodes, usePlaygroundEnvironment } from "../../atoms";
-import { useSelectedEnvironmentId } from "../../atoms/environment";
+import { usePlaygroundEnvironment } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { StatusCodeTag, statusCodeToIntent } from "../../components/StatusCodeTag";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
+import { useSelectedEnvironment } from "../../playground/utils/select-environment";
 import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
-import {
-    ResolvedEndpointDefinition,
-    ResolvedError,
-    ResolvedExampleEndpointCall,
-    ResolvedExampleError,
-    resolveEnvironment,
-    resolveEnvironmentUrlInCodeSnippet,
-} from "../../resolver/types";
+import { resolveEnvironmentUrlInCodeSnippet } from "../../resolver/types";
 import { AudioExample } from "../examples/AudioExample";
 import { CodeSnippetExample, JsonCodeSnippetExample } from "../examples/CodeSnippetExample";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
@@ -33,8 +27,9 @@ import { ErrorExampleSelect } from "./ErrorExampleSelect";
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
         api: string;
-        endpoint: ResolvedEndpointDefinition;
-        example: ResolvedExampleEndpointCall;
+        node: FernNavigation.EndpointNode;
+        endpoint: ApiDefinition.EndpointDefinition;
+        example: ApiDefinition.ExampleEndpointCall;
         clients: CodeExampleGroup[];
         selectedClient: CodeExample;
         onClickClient: (example: CodeExample) => void;
@@ -43,14 +38,15 @@ export declare namespace EndpointContentCodeSnippets {
         hoveredRequestPropertyPath: JsonPropertyPath | undefined;
         hoveredResponsePropertyPath: JsonPropertyPath | undefined;
         showErrors: boolean;
-        errors: ResolvedError[];
-        selectedError: ResolvedError | undefined;
-        setSelectedError: (error: ResolvedError | undefined) => void;
+        errors: ApiDefinition.ErrorResponse[];
+        selectedError: ApiDefinition.ErrorResponse | undefined;
+        setSelectedError: (error: ApiDefinition.ErrorResponse | undefined) => void;
         measureHeight: (height: number) => void;
     }
 }
 
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
+    node,
     endpoint,
     example,
     clients,
@@ -66,10 +62,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     setSelectedError,
     measureHeight,
 }) => {
-    const nodes = useNavigationNodes();
-    const maybeNode = nodes.get(endpoint.nodeId);
-    const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
-
     const ref = useRef<HTMLDivElement>(null);
 
     useResizeObserver(ref, ([entry]) => {
@@ -78,13 +70,11 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
         }
     });
 
-    const [internalSelectedErrorExample, setSelectedErrorExample] = useState<ResolvedExampleError | undefined>(
-        undefined,
-    );
+    const [internalSelectedErrorExample, setSelectedErrorExample] = useState<ApiDefinition.ErrorExample>();
 
     const handleSelectErrorAndExample = (
-        error: ResolvedError | undefined,
-        example: ResolvedExampleError | undefined,
+        error: ApiDefinition.ErrorResponse | undefined,
+        example: ApiDefinition.ErrorExample | undefined,
     ) => {
         setSelectedError(error);
         setSelectedErrorExample(example);
@@ -92,7 +82,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
 
     // if the selected error is not in the list of errors, select the first error
     const selectedErrorExample = useMemo(() => {
-        if (selectedError == null || selectedError.examples.length === 0) {
+        if (selectedError == null || !selectedError.examples || selectedError.examples.length === 0) {
             return undefined;
         } else if (selectedError.examples.findIndex((e) => e === internalSelectedErrorExample) === -1) {
             return selectedError.examples[0];
@@ -127,7 +117,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
         <span className="text-sm t-muted">{successTitle}</span>
     );
 
-    const selectedEnvironmentId = useSelectedEnvironmentId();
+    const selectedEnvironment = useSelectedEnvironment(endpoint);
     const playgroundEnvironment = usePlaygroundEnvironment();
 
     return (
@@ -158,7 +148,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     <EndpointUrlWithOverflow
                         path={endpoint.path}
                         method={endpoint.method}
-                        selectedEnvironment={resolveEnvironment(endpoint, selectedEnvironmentId)}
+                        selectedEnvironment={selectedEnvironment}
                     />
                 }
                 onClick={(e) => {

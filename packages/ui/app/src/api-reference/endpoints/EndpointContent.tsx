@@ -1,3 +1,5 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
 import { useInView } from "framer-motion";
 import { atom, useAtom, useAtomValue } from "jotai";
@@ -12,20 +14,17 @@ import {
     CONTENT_HEIGHT_ATOM,
     CURRENT_NODE_ID_ATOM,
     FERN_LANGUAGE_ATOM,
-    FERN_STREAM_ATOM,
     MOBILE_SIDEBAR_ENABLED_ATOM,
     store,
     useAtomEffect,
     useFeatureFlags,
 } from "../../atoms";
 import { useHref } from "../../hooks/useHref";
-import { ResolvedEndpointDefinition, ResolvedError, ResolvedTypeDefinition } from "../../resolver/types";
+import { EndpointContext } from "../../playground/types/endpoint-context";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
-import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContentHeader } from "./EndpointContentHeader";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
-import { EndpointStreamingEnabledToggle } from "./EndpointStreamingEnabledToggle";
 
 const EndpointContentCodeSnippets = dynamic(
     () => import("./EndpointContentCodeSnippets").then((mod) => mod.EndpointContentCodeSnippets),
@@ -34,11 +33,10 @@ const EndpointContentCodeSnippets = dynamic(
 
 export declare namespace EndpointContent {
     export interface Props {
-        api: string;
+        api: FernNavigation.ApiDefinitionId;
         showErrors: boolean;
-        endpoint: ResolvedEndpointDefinition;
+        context: EndpointContext;
         hideBottomSeparator?: boolean;
-        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -72,17 +70,18 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
 const paddingAtom = atom((get) => (get(MOBILE_SIDEBAR_ENABLED_ATOM) ? 0 : 26));
 
 export const EndpointContent = memo<EndpointContent.Props>((props) => {
-    const { api, showErrors, endpoint: endpointProp, hideBottomSeparator = false, types } = props;
-    const isStream = useAtomValue(FERN_STREAM_ATOM);
-    const endpoint = isStream && endpointProp.stream != null ? endpointProp.stream : endpointProp;
+    const { api, showErrors, context, hideBottomSeparator = false } = props;
+    const { node, endpoint, types } = context;
+    // const isStream = useAtomValue(FERN_STREAM_ATOM);
+    // const endpoint = isStream && endpointProp.stream != null ? endpointProp.stream : endpointProp;
 
     const ref = useRef<HTMLDivElement>(null);
-    useApiPageCenterElement(ref, endpoint.slug);
+    // useApiPageCenterElement(ref, endpoint.slug);
 
     const isInViewport =
         useInView(ref, {
             margin: "100%",
-        }) || store.get(CURRENT_NODE_ID_ATOM) === endpoint.nodeId;
+        }) || store.get(CURRENT_NODE_ID_ATOM) === node.id;
 
     const [hoveredRequestPropertyPath, setHoveredRequestPropertyPath] = useState<JsonPropertyPath | undefined>();
     const [hoveredResponsePropertyPath, setHoveredResponsePropertyPath] = useState<JsonPropertyPath | undefined>();
@@ -99,7 +98,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
         [setHoveredResponsePropertyPath],
     );
 
-    const [selectedError, setSelectedError] = useState<ResolvedError | undefined>();
+    const [selectedError, setSelectedError] = useState<ApiDefinition.ErrorResponse>();
 
     useAtomEffect(
         useCallbackOne(
@@ -107,7 +106,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                 const anchor = get(ANCHOR_ATOM);
                 const statusCodeOrName = maybeGetErrorStatusCodeOrNameFromAnchor(anchor);
                 if (statusCodeOrName != null) {
-                    const error = endpoint.errors.find((e) =>
+                    const error = endpoint.errors?.find((e) =>
                         typeof statusCodeOrName === "number"
                             ? e.statusCode === statusCodeOrName
                             : convertNameToAnchorPart(e.name) === statusCodeOrName,
@@ -124,23 +123,24 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
     const examples = useMemo(() => {
         if (selectedError == null) {
             // Look for success example
-            return endpoint.examples.filter((e) => e.responseStatusCode >= 200 && e.responseStatusCode < 300);
+            return endpoint.examples?.filter((e) => e.responseStatusCode >= 200 && e.responseStatusCode < 300);
         }
-        return endpoint.examples.filter((e) => e.responseStatusCode === selectedError.statusCode);
+        return endpoint.examples?.filter((e) => e.responseStatusCode === selectedError.statusCode);
     }, [endpoint.examples, selectedError]);
 
     // TODO: remove after pinecone demo
     const { grpcEndpoints } = useFeatureFlags();
-    const [contentType, setContentType] = useState<string | undefined>(endpoint.requestBody?.contentType);
+    const [contentType, setContentType] = useState<string | undefined>(endpoint.request?.contentType);
     const clients = useMemo(
         () =>
             generateCodeExamples(
                 examples,
                 grpcEndpoints?.includes(endpoint.id) &&
                     !(
+                        examples != null &&
                         examples.length === 1 &&
-                        examples[0]?.snippets.length === 1 &&
-                        examples[0].snippets[0]?.language === "curl"
+                        examples[0]?.snippets?.["curl"] != null &&
+                        examples[0]?.snippets["curl"].length > 0
                     ),
             ),
         [examples, grpcEndpoints, endpoint.id],
@@ -263,7 +263,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
             className={"fern-endpoint-content"}
             onClick={() => setSelectedError(undefined)}
             ref={ref}
-            id={useHref(endpoint.slug)}
+            id={useHref(node.slug)}
         >
             <div
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
@@ -271,12 +271,13 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                 })}
             >
                 <EndpointContentHeader
-                    endpoint={endpoint}
-                    streamToggle={
-                        endpointProp.stream != null && (
-                            <EndpointStreamingEnabledToggle endpoint={endpointProp} container={ref} />
-                        )
-                    }
+                    context={context}
+                    breadcrumb={[]}
+                    // streamToggle={
+                    //     endpointProp.stream != null && (
+                    //         <EndpointStreamingEnabledToggle endpoint={endpointProp} container={ref} />
+                    //     )
+                    // }
                 />
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <div
@@ -287,7 +288,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                         }}
                     >
                         <EndpointContentLeft
-                            endpoint={endpoint}
+                            context={context}
                             example={selectedClient.exampleCall}
                             showErrors={showErrors}
                             onHoverRequestProperty={onHoverRequestProperty}
@@ -296,7 +297,6 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                             setSelectedError={setSelectedError}
                             contentType={contentType}
                             setContentType={setContentType}
-                            types={types}
                         />
                     </div>
 

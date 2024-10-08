@@ -1,9 +1,9 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import React, { ReactElement, useCallback, useMemo } from "react";
 import { useRouteListener } from "../../../atoms";
-import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
 import {
     TypeDefinitionContext,
@@ -19,11 +19,11 @@ import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinitionError {
     export interface Props {
-        typeShape: ResolvedTypeDefinition;
         isCollapsible: boolean;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        types: Record<string, ResolvedTypeDefinition>;
+        shape: ApiDefinition.TypeShapeOrReference;
+        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 }
 
@@ -35,17 +35,19 @@ interface CollapsibleContent {
 }
 
 export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.Props> = ({
-    typeShape,
+    shape,
     isCollapsible,
     anchorIdParts,
     slug,
     types,
 }) => {
-    const collapsableContent = useMemo(
-        () =>
-            visitDiscriminatedUnion(typeShape, "type")._visit<CollapsibleContent | undefined>({
-                object: (object) => ({
-                    elements: dereferenceObjectProperties(object, types).map((property) => (
+    const collapsableContent = useMemo(() => {
+        const unwrapped = ApiDefinition.unwrapReference(shape, types);
+        return visitDiscriminatedUnion(unwrapped.shape)._visit<CollapsibleContent | undefined>({
+            object: (object) => {
+                const { properties } = ApiDefinition.unwrapObjectType(object, types);
+                return {
+                    elements: properties.map((property) => (
                         <ObjectProperty
                             key={property.key}
                             property={property}
@@ -57,69 +59,69 @@ export const InternalTypeDefinitionError: React.FC<InternalTypeDefinitionError.P
                     )),
                     elementNameSingular: "property",
                     elementNamePlural: "properties",
-                }),
-                undiscriminatedUnion: (union) => ({
-                    elements: union.variants.map((variant, variantIdx) => (
-                        <UndiscriminatedUnionVariant
-                            key={variantIdx}
-                            unionVariant={variant}
-                            anchorIdParts={anchorIdParts}
-                            applyErrorStyles={false}
-                            slug={slug}
-                            idx={variantIdx}
-                            types={types}
-                        />
-                    )),
-                    elementNameSingular: "variant",
-                    elementNamePlural: "variants",
-                    separatorText: "OR",
-                }),
-                discriminatedUnion: (union) => ({
-                    elements: union.variants.map((variant) => (
-                        <DiscriminatedUnionVariant
-                            key={variant.discriminantValue}
-                            discriminant={union.discriminant}
-                            unionVariant={variant}
-                            anchorIdParts={anchorIdParts}
-                            slug={slug}
-                            types={types}
-                        />
-                    )),
-                    elementNameSingular: "variant",
-                    elementNamePlural: "variants",
-                    separatorText: "OR",
-                }),
-                enum: (enum_) => ({
-                    elements: enum_.values.map((enumValue) => (
-                        <EnumValue key={enumValue.value} enumValue={enumValue} />
-                    )),
-                    elementNameSingular: "enum value",
-                    elementNamePlural: "enum values",
-                }),
-                literal: (literal) => ({
-                    elements: [
-                        <EnumValue
-                            key={literal.value.value.toString()}
-                            enumValue={{
-                                value: visitDiscriminatedUnion(literal.value, "type")._visit({
-                                    stringLiteral: (value) => `${value.value}`,
-                                    booleanLiteral: (value) => `${value.value ? "true" : "false"}`,
-                                    _other: () => "<unknown>",
-                                }),
-                                description: undefined,
-                                availability: undefined,
-                            }}
-                        />,
-                    ],
-                    elementNameSingular: "literal",
-                    elementNamePlural: "literals",
-                }),
-                _other: () => undefined,
-                alias: () => undefined,
-                unknown: () => undefined,
+                };
+            },
+            undiscriminatedUnion: (union) => ({
+                elements: union.variants.map((variant, variantIdx) => (
+                    <UndiscriminatedUnionVariant
+                        key={variantIdx}
+                        unionVariant={variant}
+                        anchorIdParts={anchorIdParts}
+                        applyErrorStyles={false}
+                        slug={slug}
+                        idx={variantIdx}
+                        types={types}
+                    />
+                )),
+                elementNameSingular: "variant",
+                elementNamePlural: "variants",
+                separatorText: "OR",
             }),
-        [typeShape, types, anchorIdParts, slug],
-    );
+            discriminatedUnion: (union) => ({
+                elements: union.variants.map((variant) => (
+                    <DiscriminatedUnionVariant
+                        key={variant.discriminantValue}
+                        discriminant={union.discriminant}
+                        unionVariant={variant}
+                        anchorIdParts={anchorIdParts}
+                        slug={slug}
+                        types={types}
+                    />
+                )),
+                elementNameSingular: "variant",
+                elementNamePlural: "variants",
+                separatorText: "OR",
+            }),
+            enum: (enum_) => ({
+                elements: enum_.values.map((enumValue) => <EnumValue key={enumValue.value} enumValue={enumValue} />),
+                elementNameSingular: "enum value",
+                elementNamePlural: "enum values",
+            }),
+            literal: (literal) => ({
+                elements: [
+                    <EnumValue
+                        key={literal.value.value.toString()}
+                        enumValue={{
+                            value: visitDiscriminatedUnion(literal.value, "type")._visit({
+                                stringLiteral: (value) => `${value.value}`,
+                                booleanLiteral: (value) => `${value.value ? "true" : "false"}`,
+                                _other: () => "<unknown>",
+                            }),
+                            description: undefined,
+                            availability: undefined,
+                        }}
+                    />,
+                ],
+                elementNameSingular: "literal",
+                elementNamePlural: "literals",
+            }),
+            primitive: () => undefined,
+            list: () => undefined,
+            set: () => undefined,
+            map: () => undefined,
+            unknown: () => undefined,
+        });
+    }, [shape, types, anchorIdParts, slug]);
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
     const { value: isCollapsed, toggleValue: toggleIsCollapsed, setValue: setCollapsed } = useBooleanState(true);

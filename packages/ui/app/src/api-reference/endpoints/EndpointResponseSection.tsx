@@ -1,22 +1,21 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { UnreachableCaseError } from "ts-essentials";
 import { useFeatureFlags } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { Markdown } from "../../mdx/Markdown";
-import { ResolvedExampleEndpointResponseWithSchema } from "../../resolver/SchemaWithExample";
-import { ResolvedResponseBody, ResolvedTypeDefinition, visitResolvedHttpResponseBodyShape } from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { renderDeprecatedTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace EndpointResponseSection {
     export interface Props {
-        responseBody: ResolvedResponseBody;
-        exampleResponseBody: ResolvedExampleEndpointResponseWithSchema | undefined;
+        responseBody: ApiDefinition.HttpResponse;
+        exampleResponseBody: ApiDefinition.ExampleEndpointResponseWithSchema | undefined;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<string, ApiDefinition.TypeDefinition>;
     }
 }
 
@@ -43,7 +42,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                     isAudioFileDownloadSpanSummary,
                 })}
             />
-            {visitResolvedHttpResponseBodyShape(responseBody.shape, {
+            {visitApiDefinition.HttpResponseBodyShape(responseBody.shape, {
                 fileDownload: () => null,
                 streamingText: () => {
                     // eslint-disable-next-line no-console
@@ -93,17 +92,17 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
 };
 
 function getResponseSummary({
-    responseBody,
+    response,
     exampleResponseBody,
     types,
     isAudioFileDownloadSpanSummary,
 }: {
-    responseBody: ResolvedResponseBody;
-    exampleResponseBody: ResolvedExampleEndpointResponseWithSchema | undefined;
-    types: Record<string, ResolvedTypeDefinition>;
+    response: ApiDefinition.HttpResponse;
+    exampleResponseBody: ApiDefinition.ExampleEndpointResponseWithSchema | undefined;
+    types: Record<string, ApiDefinition.TypeDefinition>;
     isAudioFileDownloadSpanSummary: boolean;
 }) {
-    switch (responseBody.shape.type) {
+    switch (response.body.type) {
         case "fileDownload": {
             if (isAudioFileDownloadSpanSummary) {
                 return (

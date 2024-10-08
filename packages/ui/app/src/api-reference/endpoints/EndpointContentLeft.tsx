@@ -1,18 +1,11 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { useFeatureFlags } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
+import { EndpointContext } from "../../playground/types/endpoint-context";
 import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
-import {
-    ResolvedEndpointDefinition,
-    ResolvedError,
-    ResolvedExampleEndpointCall,
-    ResolvedObjectProperty,
-    ResolvedTypeDefinition,
-    getParameterDescription,
-} from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointError } from "./EndpointError";
@@ -27,16 +20,15 @@ export interface HoveringProps {
 
 export declare namespace EndpointContentLeft {
     export interface Props {
-        endpoint: ResolvedEndpointDefinition;
-        example: ResolvedExampleEndpointCall;
+        context: EndpointContext;
+        example: ApiDefinition.ExampleEndpointCall;
         showErrors: boolean;
         onHoverRequestProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         onHoverResponseProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
-        selectedError: ResolvedError | undefined;
-        setSelectedError: (idx: ResolvedError | undefined) => void;
+        selectedError: ApiDefinition.ErrorResponse | undefined;
+        setSelectedError: (idx: ApiDefinition.ErrorResponse | undefined) => void;
         contentType: string | undefined;
         setContentType: (contentType: string) => void;
-        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -50,7 +42,7 @@ const RESPONSE_BODY = ["response", "body"];
 const RESPONSE_ERROR = ["response", "error"];
 
 const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
-    endpoint,
+    context: { node, endpoint, types, auth, globalHeaders },
     example,
     showErrors,
     onHoverRequestProperty,
@@ -59,16 +51,15 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     setSelectedError,
     // contentType,
     // setContentType,
-    types,
 }) => {
     const { isAuthEnabledInDocs } = useFeatureFlags();
 
-    let authHeaders: ResolvedObjectProperty | undefined;
-    if (endpoint.auth && isAuthEnabledInDocs) {
-        authHeaders = visitDiscriminatedUnion(endpoint.auth, "type")._visit<ResolvedObjectProperty>({
+    let authHeader: ApiDefinition.ObjectProperty | undefined;
+    if (auth && isAuthEnabledInDocs) {
+        authHeader = visitDiscriminatedUnion(auth)._visit<ApiDefinition.ObjectProperty>({
             basicAuth: () => {
                 return {
-                    key: APIV1Read.PropertyKey("Authorization"),
+                    key: ApiDefinition.PropertyKey("Authorization"),
                     description: "Basic authentication of the form Basic <username:password>.",
                     hidden: false,
                     valueShape: {
@@ -80,7 +71,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             },
             bearerAuth: () => {
                 return {
-                    key: APIV1Read.PropertyKey("Authorization"),
+                    key: ApiDefinition.PropertyKey("Authorization"),
                     description: "Bearer authentication of the form Bearer <token>, where token is your auth token.",
                     hidden: false,
                     valueShape: {
@@ -92,7 +83,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             },
             header: (value) => {
                 return {
-                    key: APIV1Read.PropertyKey(value.headerWireValue),
+                    key: ApiDefinition.PropertyKey(value.headerWireValue),
                     description:
                         value.prefix != null ? `Header authentication of the form ${value.prefix} <token>` : undefined,
                     hidden: false,
@@ -108,7 +99,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     clientCredentials: (clientCredentialsValue) =>
                         visitDiscriminatedUnion(clientCredentialsValue.value, "type")._visit({
                             referencedEndpoint: () => ({
-                                key: APIV1Read.PropertyKey("Authorization"),
+                                key: ApiDefinition.PropertyKey("Authorization"),
                                 description: "OAuth authentication of the form Bearer <token>.",
                                 hidden: false,
                                 valueShape: {
@@ -123,17 +114,21 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
         });
     }
 
-    let headers = endpoint.headers.filter((header) => !header.hidden);
+    const headers = useMemo(() => {
+        return [...(authHeader ? [authHeader] : []), ...globalHeaders, ...(endpoint.requestHeaders ?? [])];
+    }, [authHeader, endpoint.requestHeaders, globalHeaders]);
 
-    if (authHeaders) {
-        headers = [authHeaders, ...headers];
-    }
+    // let headers = [...globalHeaders, ...(endpoint.requestHeaders ?? [])];
+
+    // if (authHeaders) {
+    //     headers = [authHeaders, ...headers];
+    // }
 
     return (
         <div className="flex max-w-full flex-1 flex-col gap-12">
             <Markdown className="text-base leading-6" mdx={endpoint.description} />
-            {endpoint.pathParameters.length > 0 && (
-                <EndpointSection title="Path parameters" anchorIdParts={REQUEST_PATH} slug={endpoint.slug}>
+            {endpoint.pathParameters && endpoint.pathParameters.length > 0 && (
+                <EndpointSection title="Path parameters" anchorIdParts={REQUEST_PATH} slug={node.slug}>
                     <div>
                         {endpoint.pathParameters.map((parameter) => (
                             <div key={parameter.key}>
@@ -142,8 +137,11 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     name={parameter.key}
                                     shape={parameter.valueShape}
                                     anchorIdParts={[...REQUEST_PATH, parameter.key]}
-                                    slug={endpoint.slug}
-                                    description={getParameterDescription(parameter, types)}
+                                    slug={node.slug}
+                                    description={parameter.description}
+                                    additionalDescriptions={
+                                        ApiDefinition.unwrapReference(parameter.valueShape, types).descriptions
+                                    }
                                     availability={parameter.availability}
                                     types={types}
                                 />
@@ -153,11 +151,10 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 </EndpointSection>
             )}
             {headers.length > 0 && (
-                <EndpointSection title="Headers" anchorIdParts={REQUEST_HEADER} slug={endpoint.slug}>
+                <EndpointSection title="Headers" anchorIdParts={REQUEST_HEADER} slug={node.slug}>
                     <div>
                         {headers.map((parameter) => {
                             let isAuth = false;
-                            const auth = endpoint.auth;
                             if (
                                 (auth?.type === "header" && parameter.key === auth?.headerWireValue) ||
                                 parameter.key === "Authorization"
@@ -179,8 +176,11 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         name={parameter.key}
                                         shape={parameter.valueShape}
                                         anchorIdParts={[...REQUEST_HEADER, parameter.key]}
-                                        slug={endpoint.slug}
-                                        description={getParameterDescription(parameter, types)}
+                                        slug={node.slug}
+                                        description={parameter.description}
+                                        additionalDescriptions={
+                                            ApiDefinition.unwrapReference(parameter.valueShape, types).descriptions
+                                        }
                                         availability={parameter.availability}
                                         types={types}
                                     />
@@ -190,8 +190,8 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     </div>
                 </EndpointSection>
             )}
-            {endpoint.queryParameters.length > 0 && (
-                <EndpointSection title="Query parameters" anchorIdParts={REQUEST_QUERY} slug={endpoint.slug}>
+            {endpoint.queryParameters && endpoint.queryParameters.length > 0 && (
+                <EndpointSection title="Query parameters" anchorIdParts={REQUEST_QUERY} slug={node.slug}>
                     <div>
                         {endpoint.queryParameters.map((parameter) => (
                             <div key={parameter.key}>
@@ -200,8 +200,11 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     name={parameter.key}
                                     shape={parameter.valueShape}
                                     anchorIdParts={[...REQUEST_QUERY, parameter.key]}
-                                    slug={endpoint.slug}
-                                    description={getParameterDescription(parameter, types)}
+                                    slug={node.slug}
+                                    description={parameter.description}
+                                    additionalDescriptions={
+                                        ApiDefinition.unwrapReference(parameter.valueShape, types).descriptions
+                                    }
                                     availability={parameter.availability}
                                     types={types}
                                 />
@@ -256,36 +259,36 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     </FernCard>
                 </Tabs.Root>
             )} */}
-            {endpoint.requestBody != null && (
+            {endpoint.request && (
                 <EndpointSection
-                    key={endpoint.requestBody.contentType}
+                    key={endpoint.request.contentType}
                     title="Request"
                     anchorIdParts={REQUEST}
-                    slug={endpoint.slug}
+                    slug={node.slug}
                 >
                     <EndpointRequestSection
-                        requestBody={endpoint.requestBody}
+                        request={endpoint.request}
                         onHoverProperty={onHoverRequestProperty}
                         anchorIdParts={REQUEST_BODY}
-                        slug={endpoint.slug}
+                        slug={node.slug}
                         types={types}
                     />
                 </EndpointSection>
             )}
-            {endpoint.responseBody != null && (
-                <EndpointSection title="Response" anchorIdParts={RESPONSE} slug={endpoint.slug}>
+            {endpoint.response && (
+                <EndpointSection title="Response" anchorIdParts={RESPONSE} slug={node.slug}>
                     <EndpointResponseSection
-                        responseBody={endpoint.responseBody}
+                        response={endpoint.response}
                         exampleResponseBody={mergeEndpointSchemaWithExample(endpoint, example).responseBody}
                         onHoverProperty={onHoverResponseProperty}
                         anchorIdParts={RESPONSE_BODY}
-                        slug={endpoint.slug}
+                        slug={node.slug}
                         types={types}
                     />
                 </EndpointSection>
             )}
-            {showErrors && endpoint.errors.length > 0 && (
-                <EndpointSection title="Errors" anchorIdParts={RESPONSE_ERROR} slug={endpoint.slug}>
+            {showErrors && endpoint.errors && endpoint.errors.length > 0 && (
+                <EndpointSection title="Errors" anchorIdParts={RESPONSE_ERROR} slug={node.slug}>
                     <div className="border-default flex flex-col overflow-visible rounded-lg border">
                         {sortBy(
                             endpoint.errors,
@@ -297,7 +300,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                     key={idx}
                                     error={error}
                                     isFirst={idx === 0}
-                                    isLast={idx === endpoint.errors.length - 1}
+                                    isLast={idx === (endpoint.errors?.length ?? 0) - 1}
                                     isSelected={selectedError != null && isErrorEqual(error, selectedError)}
                                     onClick={(event) => {
                                         event.stopPropagation();
@@ -308,7 +311,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         ...RESPONSE_ERROR,
                                         `${convertNameToAnchorPart(error.name) ?? error.statusCode}`,
                                     ]}
-                                    slug={endpoint.slug}
+                                    slug={node.slug}
                                     availability={error.availability}
                                     types={types}
                                 />
@@ -323,7 +326,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
 
 export const EndpointContentLeft = memo(UnmemoizedEndpointContentLeft);
 
-function isErrorEqual(a: ResolvedError, b: ResolvedError): boolean {
+function isErrorEqual(a: ApiDefinition.ErrorResponse, b: ApiDefinition.ErrorResponse): boolean {
     return (
         a.statusCode === b.statusCode &&
         (a.name != null && b.name != null ? a.name === b.name : a.name == null && b.name == null)

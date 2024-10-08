@@ -1,4 +1,4 @@
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { CopyToClipboardButton } from "@fern-ui/components";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
@@ -8,14 +8,12 @@ import { noop } from "ts-essentials";
 import { usePlaygroundEnvironment } from "../../atoms";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
-import { ResolvedEndpointPathParts } from "../../resolver/types";
-import { buildRequestUrl } from "../../resolver/url";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{
-        path: ResolvedEndpointPathParts[];
-        method: APIV1Read.HttpMethod;
-        selectedEnvironment?: APIV1Read.Environment;
+        path: ApiDefinition.PathPart[];
+        method: ApiDefinition.HttpMethod;
+        selectedEnvironment?: ApiDefinition.Environment;
         showEnvironment?: boolean;
         large?: boolean;
         className?: string;
@@ -64,7 +62,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                             key={`part-${i}`}
                             className="whitespace-nowrap text-accent bg-accent-highlight rounded px-1"
                         >
-                            :{pathParameter.key}
+                            :{pathParameter.value}
                         </span>,
                     );
                 },
@@ -82,7 +80,14 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                 <span
                     className={`inline-flex shrink items-baseline ${isHovered ? "hover:bg-tag-default" : ""} py-0.5 px-1 rounded-md cursor-default`}
                 >
-                    <CopyToClipboardButton content={buildRequestUrl(preParsedUrl, path)}>
+                    <CopyToClipboardButton
+                        content={() =>
+                            ApiDefinition.buildRequestUrl({
+                                baseUrl: preParsedUrl,
+                                path,
+                            })
+                        }
+                    >
                         {(onClick) => (
                             <button
                                 onClick={onClick}

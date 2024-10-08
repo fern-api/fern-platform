@@ -37,12 +37,8 @@ const FeedbackPopover = dynamic(
 const DocsMainContentRenderer = memo(({ content }: { content: DocsContent }) => {
     return visitDiscriminatedUnion(content)._visit({
         "custom-markdown-page": (content) => <MdxContent mdx={content.mdx} />,
-        "api-reference-page": (content) => (
-            <ApiReferencePage initialApi={content.apiDefinition} showErrors={content.showErrors} />
-        ),
-        "api-endpoint-page": (content) => (
-            <ApiEndpointPage item={content.item} showErrors={content.showErrors} types={content.types} />
-        ),
+        "api-reference-page": (content) => <ApiReferencePage content={content} />,
+        "api-endpoint-page": (content) => <ApiEndpointPage content={content} />,
         changelog: (content) => <ChangelogPage content={content} />,
         "changelog-entry": (content) => <ChangelogEntryPage content={content} />,
         _other: () => null,

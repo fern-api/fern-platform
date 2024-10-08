@@ -1,16 +1,10 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { Fragment, ReactNode } from "react";
 import { Markdown } from "../../mdx/Markdown";
-import {
-    ResolvedFormDataRequestProperty,
-    ResolvedRequestBody,
-    ResolvedTypeDefinition,
-    unwrapDescription,
-    visitResolvedHttpRequestBodyShape,
-} from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
@@ -22,16 +16,16 @@ import { EndpointParameter, EndpointParameterContent } from "./EndpointParameter
 
 export declare namespace EndpointRequestSection {
     export interface Props {
-        requestBody: ResolvedRequestBody;
+        request: ApiDefinition.HttpRequest;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
     }
 }
 
 export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
-    requestBody,
+    request,
     onHoverProperty,
     anchorIdParts,
     slug,
@@ -42,16 +36,16 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
             <Markdown
                 size="sm"
                 className={cn("t-muted pb-5 leading-6", {
-                    "border-default border-b": requestBody.shape.type !== "formData",
+                    "border-default border-b": request.body.type !== "formData",
                 })}
-                mdx={requestBody.description}
-                fallback={`This endpoint expects ${visitResolvedHttpRequestBodyShape<string>(requestBody.shape, {
+                mdx={request.description}
+                fallback={`This endpoint expects ${visitApiDefinition.HttpRequestBodyShape<string>(requestBody.shape, {
                     formData: (formData) => {
                         const fileArrays = formData.properties.filter(
-                            (p): p is ResolvedFormDataRequestProperty.FileArrayProperty => p.type === "fileArray",
+                            (p): p is ApiDefinition.FormDataRequestProperty.FileArrayProperty => p.type === "fileArray",
                         );
                         const files = formData.properties.filter(
-                            (p): p is ResolvedFormDataRequestProperty.FileProperty => p.type === "file",
+                            (p): p is ApiDefinition.FormDataRequestProperty.FileProperty => p.type === "file",
                         );
                         return `a multipart form${fileArrays.length > 0 || files.length > 1 ? " with multiple files" : files[0] != null ? ` containing ${files[0].isOptional ? "an optional" : "a"} file` : ""}`;
                     },
@@ -59,7 +53,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                     typeShape: (typeShape) => renderDeprecatedTypeShorthand(typeShape, { withArticle: true }, types),
                 })}.`}
             />
-            {visitResolvedHttpRequestBodyShape<ReactNode | null>(requestBody.shape, {
+            {visitApiDefinition.HttpRequestBodyShape<ReactNode | null>(requestBody.shape, {
                 formData: (formData) =>
                     formData.properties.map((p) => (
                         <Fragment key={p.key}>
@@ -118,8 +112,8 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
 };
 
 function getDescription(
-    bodyProperty: ResolvedFormDataRequestProperty.BodyProperty,
-    types: Record<string, ResolvedTypeDefinition>,
+    bodyProperty: ApiDefinition.FormDataRequestProperty.BodyProperty,
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ): FernDocs.MarkdownText | undefined {
     if (bodyProperty.description != null) {
         return bodyProperty.description;

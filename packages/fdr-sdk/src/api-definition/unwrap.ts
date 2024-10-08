@@ -252,7 +252,7 @@ export function unwrapObjectType(
  * The discriminant of a discriminated union is converted to a literal type, *prepended* to the additional properties.
  */
 export function unwrapDiscriminatedUnionVariant(
-    union: Latest.DiscriminatedUnionType,
+    union: Pick<Latest.DiscriminatedUnionType, "discriminant">,
     variant: Latest.DiscriminatedUnionVariant,
     types: Record<string, Latest.TypeDefinition>,
 ): UnwrappedObjectType {

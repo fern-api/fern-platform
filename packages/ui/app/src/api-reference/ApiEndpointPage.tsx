@@ -1,27 +1,38 @@
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useSetAtom } from "jotai";
+import { useEffect } from "react";
 import { ALL_ENVIRONMENTS_ATOM } from "../atoms/environment";
 import { ApiPageContext } from "../contexts/api-page";
-import type { ResolvedApiEndpoint, ResolvedTypeDefinition } from "../resolver/types";
+import { DocsContent } from "../resolver/DocsContent";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { SingleApiPageContent } from "./SingleApiPageContent";
 
 export declare namespace ApiEndpointPage {
     export interface Props {
-        item: ResolvedApiEndpoint;
-        showErrors: boolean;
-        types: Record<string, ResolvedTypeDefinition>;
+        content: DocsContent.ApiEndpointPage;
     }
 }
 
-export const ApiEndpointPage: React.FC<ApiEndpointPage.Props> = ({ item, showErrors, types }) => {
+export const ApiEndpointPage: React.FC<ApiEndpointPage.Props> = ({ content }) => {
     const setEnvironmentIds = useSetAtom(ALL_ENVIRONMENTS_ATOM);
-    if (item.type === "endpoint" || item.type === "websocket") {
-        setEnvironmentIds(item.environments.map((env) => env.id));
-    }
+    useEffect(() => {
+        const ids: FernNavigation.EnvironmentId[] = [];
+        Object.values(content.apiDefinition.endpoints).forEach((endpoint) => {
+            endpoint.environments?.forEach((env) => {
+                ids.push(env.id);
+            });
+        });
+        Object.values(content.apiDefinition.websockets).forEach((endpoint) => {
+            endpoint.environments?.forEach((env) => {
+                ids.push(env.id);
+            });
+        });
+    }, [content.apiDefinition.endpoints, content.apiDefinition.websockets, setEnvironmentIds]);
 
     return (
         <ApiPageContext.Provider value={true}>
-            <SingleApiPageContent item={item} showErrors={showErrors} types={types} />
+            <SingleApiPageContent content={content} />
+            {/* TODO: make this visible only in mobile */}
             {/* <div className="px-4 md:px-6 lg:px-8">
                 <BottomNavigationNeighbors />
             </div> */}

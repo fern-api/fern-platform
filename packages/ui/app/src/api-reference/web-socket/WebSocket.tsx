@@ -1,10 +1,11 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CopyToClipboardButton, FernScrollArea } from "@fern-ui/components";
 import cn from "clsx";
 import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react";
-import { useNavigationNodes, usePlaygroundEnvironment } from "../../atoms";
+import { usePlaygroundEnvironment } from "../../atoms";
 import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { FernAnchor } from "../../components/FernAnchor";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
@@ -12,17 +13,8 @@ import { useHref } from "../../hooks/useHref";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import { Markdown } from "../../mdx/Markdown";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
-import {
-    ResolvedTypeDefinition,
-    ResolvedUndiscriminatedUnionShape,
-    ResolvedUndiscriminatedUnionShapeVariant,
-    ResolvedWebSocketChannel,
-    ResolvedWebSocketMessage,
-    getParameterDescription,
-    resolveEnvironment,
-    stringifyResolvedEndpointPathParts,
-    unwrapReference,
-} from "../../resolver/types";
+import { WebSocketContext } from "../../playground/types/endpoint-context";
+import { usePlaygroundBaseUrl, useSelectedEnvironment } from "../../playground/utils/select-environment";
 import { getSlugFromChildren } from "../../util/getSlugFromText";
 import { EndpointAvailabilityTag } from "../endpoints/EndpointAvailabilityTag";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
@@ -36,41 +28,38 @@ import { WebSocketMessage, WebSocketMessages } from "./WebSocketMessages";
 
 export declare namespace WebSocket {
     export interface Props {
-        websocket: ResolvedWebSocketChannel;
+        context: WebSocketContext;
         isLastInApi: boolean;
         api: string;
-        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
 export const WebSocket: FC<WebSocket.Props> = (props) => {
-    if (useShouldLazyRender(props.websocket.slug)) {
+    if (useShouldLazyRender(props.context.node.slug)) {
         return null;
     }
 
     return <WebhookContent {...props} />;
 };
 
-const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) => {
-    const nodes = useNavigationNodes();
+const WebhookContent: FC<WebSocket.Props> = ({ context, isLastInApi }) => {
+    const { channel, node, types } = context;
     const selectedEnvironmentId = useSelectedEnvironmentId();
-    const maybeNode = nodes.get(websocket.nodeId);
-    const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
     const playgroundEnvironment = usePlaygroundEnvironment();
 
     const ref = useRef<HTMLDivElement>(null);
-    useApiPageCenterElement(ref, websocket.slug);
+    useApiPageCenterElement(ref, node.slug);
 
     const publishMessages = useMemo(
-        () => websocket.messages.filter((message) => message.origin === APIV1Read.WebSocketMessageOrigin.Client),
-        [websocket.messages],
+        () => channel.messages.filter((message) => message.origin === APIV1Read.WebSocketMessageOrigin.Client),
+        [channel.messages],
     );
     const subscribeMessages = useMemo(
-        () => websocket.messages.filter((message) => message.origin === APIV1Read.WebSocketMessageOrigin.Server),
-        [websocket.messages],
+        () => channel.messages.filter((message) => message.origin === APIV1Read.WebSocketMessageOrigin.Server),
+        [channel.messages],
     );
 
-    const publishMessageShape = useMemo((): ResolvedUndiscriminatedUnionShape => {
+    const publishMessageShape = useMemo((): ApiDefinition.UndiscriminatedUnionType => {
         return {
             type: "undiscriminatedUnion",
             variants: flattenWebSocketShape(publishMessages, types),
@@ -80,7 +69,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
         };
     }, [publishMessages, types]);
 
-    const subscribeMessageShape = useMemo((): ResolvedUndiscriminatedUnionShape => {
+    const subscribeMessageShape = useMemo((): ApiDefinition.UndiscriminatedUnionType => {
         return {
             type: "undiscriminatedUnion",
             variants: flattenWebSocketShape(subscribeMessages, types),
@@ -90,12 +79,12 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
         };
     }, [subscribeMessages, types]);
 
-    const example = websocket.examples[0];
+    const example = channel.examples?.[0];
 
     const exampleMessages = useMemo((): WebSocketMessage[] => {
         return (
-            example?.messages.map((message) => {
-                const messageDefinition = websocket.messages.find((m) => m.type === message.type);
+            example?.messages?.map((message) => {
+                const messageDefinition = channel.messages.find((m) => m.type === message.type);
                 return {
                     type: message.type,
                     data: message.body,
@@ -104,24 +93,28 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                 };
             }) ?? []
         );
-    }, [example?.messages, websocket.messages]);
+    }, [example?.messages, channel.messages]);
 
-    const headers = websocket.headers.filter((header) => !header.hidden);
+    const selectedEnvironment = useSelectedEnvironment(channel);
+    const playgroundEnvironment = usePlaygroundBaseUrl(channel);
+
+    // TODO: combine with auth headers
+    const headers = channel.requestHeaders;
 
     return (
-        <div className={"fern-endpoint-content"} ref={ref} id={useHref(websocket.slug)}>
+        <div className={"fern-endpoint-content"} ref={ref} id={useHref(node.slug)}>
             <article
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-20": !isLastInApi,
                 })}
             >
                 <header className="space-y-1 pt-8">
-                    <FernBreadcrumbs breadcrumb={websocket.breadcrumb} />
+                    <FernBreadcrumbs breadcrumb={breadcrumb} />
                     <div>
-                        <h1 className="fern-page-heading">{websocket.title}</h1>
-                        {websocket.availability != null && (
+                        <h1 className="fern-page-heading">{node.title}</h1>
+                        {channel.availability != null && (
                             <span className="inline-block ml-2 align-text-bottom">
-                                <EndpointAvailabilityTag availability={websocket.availability} minimal={true} />
+                                <EndpointAvailabilityTag availability={channel.availability} minimal={true} />
                             </span>
                         )}
                     </div>
@@ -129,7 +122,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <section className="max-w-content-width space-y-12 py-8">
                         <main className="space-y-12">
-                            <Markdown className="mt-4 leading-6" mdx={websocket.description} />
+                            <Markdown className="mt-4 leading-6" mdx={channel.description} />
 
                             <CardedSection
                                 number={1}
@@ -141,30 +134,30 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         </span>
                                     </span>
                                 }
-                                slug={websocket.slug}
+                                slug={node.slug}
                                 headingElement={
                                     <div className="border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 transition-colors">
                                         <EndpointUrlWithOverflow
-                                            path={websocket.path}
+                                            path={channel.path}
                                             method="GET"
-                                            selectedEnvironment={resolveEnvironment(websocket, selectedEnvironmentId)}
+                                            selectedEnvironment={selectedEnvironment}
                                             showEnvironment={true}
                                             className="flex-1"
                                         />
                                         <CopyToClipboardButton
                                             className="-mr-1"
                                             content={() =>
-                                                `${playgroundEnvironment ?? resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl}${websocket.path.map((path) => (path.type === "literal" ? path.value : `:${path.key}`)).join("/")}`
+                                                `${playgroundEnvironment}${channel.path.map((path) => (path.type === "literal" ? path.value : `:${path.key}`)).join("/")}`
                                             }
                                         />
                                     </div>
                                 }
                             >
-                                {headers.length > 0 && (
+                                {headers && headers.length > 0 && (
                                     <EndpointSection
                                         title="Headers"
                                         anchorIdParts={["request", "headers"]}
-                                        slug={websocket.slug}
+                                        slug={node.slug}
                                     >
                                         <div className="flex flex-col">
                                             {headers.map((parameter) => (
@@ -174,8 +167,12 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                                         name={parameter.key}
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "headers", parameter.key]}
-                                                        slug={websocket.slug}
-                                                        description={getParameterDescription(parameter, types)}
+                                                        slug={node.slug}
+                                                        description={parameter.description}
+                                                        additionalDescriptions={
+                                                            ApiDefinition.unwrapReference(parameter.valueShape, types)
+                                                                .descriptions
+                                                        }
                                                         availability={parameter.availability}
                                                         types={types}
                                                     />
@@ -184,22 +181,26 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         </div>
                                     </EndpointSection>
                                 )}
-                                {websocket.pathParameters.length > 0 && (
+                                {channel.pathParameters && channel.pathParameters.length > 0 && (
                                     <EndpointSection
                                         title="Path parameters"
                                         anchorIdParts={["request", "path"]}
-                                        slug={websocket.slug}
+                                        slug={node.slug}
                                     >
                                         <div className="flex flex-col">
-                                            {websocket.pathParameters.map((parameter) => (
+                                            {channel.pathParameters.map((parameter) => (
                                                 <div className="flex flex-col" key={parameter.key}>
                                                     <TypeComponentSeparator />
                                                     <EndpointParameter
                                                         name={parameter.key}
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "path", parameter.key]}
-                                                        slug={websocket.slug}
-                                                        description={getParameterDescription(parameter, types)}
+                                                        slug={node.slug}
+                                                        description={channel.description}
+                                                        additionalDescriptions={
+                                                            ApiDefinition.unwrapReference(parameter.valueShape, types)
+                                                                .descriptions
+                                                        }
                                                         availability={parameter.availability}
                                                         types={types}
                                                     />
@@ -208,22 +209,26 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         </div>
                                     </EndpointSection>
                                 )}
-                                {websocket.queryParameters.length > 0 && (
+                                {channel.queryParameters && channel.queryParameters.length > 0 && (
                                     <EndpointSection
                                         title="Query parameters"
                                         anchorIdParts={["request", "query"]}
-                                        slug={websocket.slug}
+                                        slug={node.slug}
                                     >
                                         <div className="flex flex-col">
-                                            {websocket.queryParameters.map((parameter) => (
+                                            {channel.queryParameters.map((parameter) => (
                                                 <div className="flex flex-col" key={parameter.key}>
                                                     <TypeComponentSeparator />
                                                     <EndpointParameter
                                                         name={parameter.key}
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "query", parameter.key]}
-                                                        slug={websocket.slug}
-                                                        description={getParameterDescription(parameter, types)}
+                                                        slug={node.slug}
+                                                        description={channel.description}
+                                                        additionalDescriptions={
+                                                            ApiDefinition.unwrapReference(parameter.valueShape, types)
+                                                                .descriptions
+                                                        }
                                                         availability={parameter.availability}
                                                         types={types}
                                                     />
@@ -245,7 +250,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         </span>
                                     }
                                     anchorIdParts={["send"]}
-                                    slug={websocket.slug}
+                                    slug={node.slug}
                                     headerType="h2"
                                 >
                                     {/* <Markdown
@@ -260,7 +265,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         shape={publishMessageShape}
                                         isCollapsible={false}
                                         anchorIdParts={["send"]}
-                                        slug={websocket.slug}
+                                        slug={node.slug}
                                         applyErrorStyles={false}
                                         types={types}
                                     />
@@ -277,7 +282,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         </span>
                                     }
                                     anchorIdParts={["receive"]}
-                                    slug={websocket.slug}
+                                    slug={node.slug}
                                     headerType="h2"
                                 >
                                     {/* <Markdown
@@ -292,7 +297,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                         shape={subscribeMessageShape}
                                         isCollapsible={false}
                                         anchorIdParts={["receive"]}
-                                        slug={websocket.slug}
+                                        slug={node.slug}
                                         applyErrorStyles={false}
                                         types={types}
                                     />
@@ -315,7 +320,7 @@ const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) 
                                                     <tr>
                                                         <td className="text-left align-top">URL</td>
                                                         <td className="text-left align-top">
-                                                            {`${playgroundEnvironment ?? resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl ?? ""}${example?.path ?? stringifyResolvedEndpointPathParts(websocket.path)}`}
+                                                            {`${playgroundEnvironment ?? resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl ?? ""}${example?.path ?? stringifyApiDefinition.EndpointPathParts(websocket.path)}`}
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -375,21 +380,21 @@ function CardedSection({
     );
 }
 function flattenWebSocketShape(
-    subscribeMessages: ResolvedWebSocketMessage[],
-    types: Record<string, ResolvedTypeDefinition>,
+    subscribeMessages: ApiDefinition.WebSocketMessage[],
+    types: Record<string, ApiDefinition.TypeDefinition>,
 ) {
     return subscribeMessages
-        .map((message) => ({ ...message, body: unwrapReference(message.body, types) }))
-        .flatMap((message): ResolvedUndiscriminatedUnionShapeVariant[] => {
-            if (message.body.type === "undiscriminatedUnion") {
-                return message.body.variants;
+        .map((message) => ({ ...message, body: ApiDefinition.unwrapReference(message.body, types) }))
+        .flatMap((message): ApiDefinition.UndiscriminatedUnionVariant[] => {
+            if (message.body.shape.type === "undiscriminatedUnion") {
+                return message.body.shape.variants;
             }
             return [
                 {
                     description: message.description,
                     availability: message.availability,
                     displayName: message.displayName ?? message.type,
-                    shape: message.body,
+                    shape: message.body.shape,
                 },
             ];
         });
