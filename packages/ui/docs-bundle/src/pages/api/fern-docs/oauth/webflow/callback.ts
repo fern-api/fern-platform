@@ -26,16 +26,22 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const redirectLocation = state ?? `https://${domain}/`;
 
     if (error != null) {
+        // eslint-disable-next-line no-console
+        console.error(`OAuth2 error: ${error} - ${error_description}`);
         return redirectWithLoginError(redirectLocation, error_description ?? error);
     }
 
     if (typeof code !== "string") {
+        // eslint-disable-next-line no-console
+        console.error("Missing code in query params");
         return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
     }
 
     const config = await getAuthEdgeConfig(domain);
 
-    if (config == null || config.type !== "oauth2" || config.partner === "ory") {
+    if (config == null || config.type !== "oauth2" || config.partner === "webflow") {
+        // eslint-disable-next-line no-console
+        console.log(`Invalid config for domain ${domain}`);
         return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
     }
 
@@ -52,7 +58,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         return res;
     } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        console.error("Error getting access token", error);
         return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
     }
 }
