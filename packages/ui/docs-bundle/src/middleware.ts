@@ -4,7 +4,7 @@ import { rewritePosthog } from "@/server/rewritePosthog";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import type { FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
-import { COOKIE_FERN_TOKEN, HEADER_X_FERN_HOST } from "@fern-ui/fern-docs-utils";
+import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
@@ -27,13 +27,6 @@ export const middleware: NextMiddleware = async (request) => {
         removeTrailingSlash(request.nextUrl.pathname) === "/500"
     ) {
         return NextResponse.next();
-    }
-
-    /**
-     * Add x-fern-host header to the request
-     */
-    if (!headers.has(HEADER_X_FERN_HOST)) {
-        headers.set(HEADER_X_FERN_HOST, xFernHost);
     }
 
     /**
