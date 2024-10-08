@@ -4,11 +4,17 @@ import { LinkPreloadApiRoute } from "../../../components/LinkPreload";
 
 export interface LaunchDarklyProps {
     flag: string;
+    equals?: boolean;
     not?: boolean;
 }
 
-export function LaunchDarkly({ not = false, flag, children }: PropsWithChildren<LaunchDarklyProps>): ReactNode {
-    const show = useLaunchDarklyFlag(flag, not);
+export function LaunchDarkly({
+    equals = true,
+    not = false,
+    flag,
+    children,
+}: PropsWithChildren<LaunchDarklyProps>): ReactNode {
+    const show = useLaunchDarklyFlag(flag, equals, not);
 
     return (
         <>
