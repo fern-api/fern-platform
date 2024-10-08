@@ -11,10 +11,10 @@ export type { ProxyRequest, ProxyResponse, SerializableFile, SerializableFormDat
 export { ApiDefinitionResolver, type ApiDefinitionResolverCache } from "./resolver/ApiDefinitionResolver";
 export { ApiEndpointResolver } from "./resolver/ApiEndpointResolver";
 export { ApiTypeResolver } from "./resolver/ApiTypeResolver";
+export { resolveDocsContent } from "./resolver/resolveDocsContent";
 export * from "./resolver/types";
 export { getBreadcrumbList } from "./seo/getBreadcrumbList";
 export { getSeoProps } from "./seo/getSeoProp";
 export { getRegistryServiceWithToken, provideRegistryService } from "./services/registry";
 export { renderThemeStylesheet } from "./themes/stylesheet/renderThemeStylesheet";
 export { getGitHubInfo, getGitHubRepo } from "./util/github";
-export { resolveDocsContent } from "./util/resolveDocsContent";
