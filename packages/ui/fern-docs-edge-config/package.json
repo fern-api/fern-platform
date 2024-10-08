@@ -38,6 +38,7 @@
     "@fern-ui/fern-docs-utils": "workspace:*",
     "@sentry/nextjs": "^8.30.0",
     "@vercel/edge-config": "^1.1.0",
+    "url-join": "5.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
