@@ -291,6 +291,7 @@ describe("unwrapObjectType", () => {
                     availability: undefined,
                 },
             ],
+            extraProperties: undefined,
         };
 
         expect(unwrapObjectType(shape, {}).properties.map((p) => p.key)).toStrictEqual([
@@ -323,6 +324,7 @@ describe("unwrapObjectType", () => {
                     availability: undefined,
                 },
             ],
+            extraProperties: undefined,
         };
         const types: Record<TypeId, TypeDefinition> = {
             [TypeId("b")]: {
@@ -338,6 +340,7 @@ describe("unwrapObjectType", () => {
                             availability: undefined,
                         },
                     ],
+                    extraProperties: undefined,
                 },
                 description: undefined,
                 availability: undefined,
@@ -355,6 +358,7 @@ describe("unwrapObjectType", () => {
                             availability: undefined,
                         },
                     ],
+                    extraProperties: undefined,
                 },
                 description: undefined,
                 availability: undefined,
@@ -380,6 +384,7 @@ describe("unwrapObjectType", () => {
                     availability: undefined,
                 },
             ],
+            extraProperties: undefined,
         };
         const types: Record<TypeId, TypeDefinition> = {
             [TypeId("b")]: {
@@ -422,6 +427,7 @@ describe("unwrapObjectType", () => {
                             availability: undefined,
                         },
                     ],
+                    extraProperties: undefined,
                 },
                 description: "description-2",
                 availability: undefined,
