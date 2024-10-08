@@ -2,11 +2,9 @@ import { FdrAPI, type DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { SidebarTab } from "@fern-ui/fdr-utils";
-import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
+import { DEFAULT_FEATURE_FLAGS, getRedirectForPath, type FeatureFlags } from "@fern-ui/fern-docs-utils";
 import {
-    DEFAULT_FEATURE_FLAGS,
     DocsPage,
-    FeatureFlags,
     getGitHubInfo,
     getGitHubRepo,
     getSeoProps,

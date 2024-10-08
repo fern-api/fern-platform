@@ -1,5 +1,4 @@
 export { type CustomerAnalytics } from "./analytics/types";
-export { DEFAULT_FEATURE_FLAGS } from "./atoms";
 export type { DocsProps } from "./atoms";
 export * from "./docs/DocsPage";
 export * from "./docs/NextApp";

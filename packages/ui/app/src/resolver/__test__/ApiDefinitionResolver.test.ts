@@ -1,8 +1,8 @@
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { DEFAULT_FEATURE_FLAGS } from "@fern-ui/fern-docs-utils";
 import fs from "fs";
 import path from "path";
-import { DEFAULT_FEATURE_FLAGS } from "../../atoms";
 import { serializeMdx } from "../../mdx/bundlers/next-mdx-remote";
 import { ApiDefinitionResolver } from "../ApiDefinitionResolver";
 import { ResolvedEndpointDefinition } from "../types";

@@ -12,7 +12,8 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
-import { DEFAULT_FEATURE_FLAGS, provideRegistryService } from "@fern-ui/ui";
+import { DEFAULT_FEATURE_FLAGS } from "@fern-ui/fern-docs-utils";
+import { provideRegistryService } from "@fern-ui/ui";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { HTTPSnippet, type TargetId } from "httpsnippet-lite";
 import { UnreachableCaseError } from "ts-essentials";
