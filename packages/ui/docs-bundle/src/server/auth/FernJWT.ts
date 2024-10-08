@@ -1,4 +1,4 @@
-import { FernUserSchema, type AuthEdgeConfig, type FernUser } from "@fern-ui/ui/auth";
+import { FernUserSchema, type AuthEdgeConfig, type FernUser } from "@fern-ui/fern-docs-auth";
 import { SignJWT, jwtVerify } from "jose";
 
 // "user" is reserved for workos

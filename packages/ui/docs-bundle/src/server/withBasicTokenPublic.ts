@@ -1,6 +1,6 @@
 import { getChildren, isLeaf, isPage, utils, type NavigationNode, type RootNode } from "@fern-api/fdr-sdk/navigation";
+import type { AuthEdgeConfigBasicTokenVerification } from "@fern-ui/fern-docs-auth";
 import { matchPath } from "@fern-ui/fern-docs-utils";
-import type { AuthEdgeConfigBasicTokenVerification } from "@fern-ui/ui/auth";
 
 /**
  * @param auth Basic token verification configuration

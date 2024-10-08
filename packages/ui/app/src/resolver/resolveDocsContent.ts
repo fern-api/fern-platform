@@ -1,6 +1,6 @@
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import type { FeatureFlags } from "../atoms";
+import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
 import type { MDX_SERIALIZER } from "../mdx/bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "./DocsContent";

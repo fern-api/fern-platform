@@ -2,7 +2,6 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernScrollArea } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
-
 import { Minus, Xmark } from "iconoir-react";
 import { useSetAtom } from "jotai";
 import { useRouter } from "next/router";

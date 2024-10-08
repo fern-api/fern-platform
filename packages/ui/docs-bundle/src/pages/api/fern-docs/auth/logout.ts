@@ -1,5 +1,5 @@
-import { COOKIE_ACCESS_TOKEN, COOKIE_FERN_TOKEN, COOKIE_REFRESH_TOKEN } from "@/server/constants";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { COOKIE_ACCESS_TOKEN, COOKIE_FERN_TOKEN, COOKIE_REFRESH_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";

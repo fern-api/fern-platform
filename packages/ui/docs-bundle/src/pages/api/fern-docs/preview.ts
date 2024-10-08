@@ -1,5 +1,5 @@
-import { COOKIE_FERN_DOCS_PREVIEW } from "@/server/constants";
 import { notFoundResponse, redirectResponse } from "@/server/serverResponse";
+import { COOKIE_FERN_DOCS_PREVIEW } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";

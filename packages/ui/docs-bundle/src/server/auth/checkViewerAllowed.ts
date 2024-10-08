@@ -1,6 +1,6 @@
-import { AuthEdgeConfig } from "@fern-ui/ui/auth";
+import { AuthEdgeConfig } from "@fern-ui/fern-docs-auth";
+import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import type { NextRequest } from "next/server";
-import { COOKIE_FERN_TOKEN } from "../constants";
 import { withBasicTokenPublic } from "../withBasicTokenPublic";
 import { verifyFernJWT } from "./FernJWT";
 

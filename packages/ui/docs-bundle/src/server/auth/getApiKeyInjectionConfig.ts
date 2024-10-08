@@ -1,8 +1,8 @@
-import type { APIKeyInjectionConfig } from "@fern-ui/ui/auth";
+import type { APIKeyInjectionConfig } from "@fern-ui/fern-docs-auth";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import type { NextApiRequestCookies } from "next/dist/server/api-utils";
 import type { NextRequest } from "next/server";
 import { OAuth2Client } from "./OAuth2Client";
-import { getAuthEdgeConfig } from "./getAuthEdgeConfig";
 
 // TODO: since this is for ORY (rightbrain) only, lets refactor
 export async function getAPIKeyInjectionConfig(

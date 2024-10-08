@@ -1,10 +1,10 @@
 import { signFernJWT } from "@/server/auth/FernJWT";
-import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { withSecureCookie } from "@/server/auth/withSecure";
-import { COOKIE_FERN_TOKEN } from "@/server/constants";
 import { getWorkOS, getWorkOSClientId } from "@/server/workos";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import { FernUser } from "@fern-ui/ui/auth";
+import { FernUser } from "@fern-ui/fern-docs-auth";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
+import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";

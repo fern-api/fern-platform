@@ -31,8 +31,7 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
-    "@fern-ui/core-utils": "workspace:*",
-    "@vercel/edge-config": "^1.1.0"
+    "@fern-ui/core-utils": "workspace:*"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

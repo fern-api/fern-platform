@@ -1,8 +1,8 @@
 import { verifyFernJWTConfig } from "@/server/auth/FernJWT";
-import { getAuthEdgeConfig } from "@/server/auth/getAuthEdgeConfig";
 import { withSecureCookie } from "@/server/auth/withSecure";
-import { COOKIE_FERN_TOKEN } from "@/server/constants";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
+import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";

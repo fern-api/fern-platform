@@ -1,7 +1,7 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import type { FeatureFlags } from "../atoms";
+import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
 import type { MDX_SERIALIZER } from "../mdx/bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import { ApiEndpointResolver } from "./ApiEndpointResolver";

@@ -1,7 +1,7 @@
 import { APIResponse, FdrAPI } from "@fern-api/fdr-sdk/client/types";
+import { withoutStaging } from "@fern-ui/fern-docs-utils";
 import { getRegistryServiceWithToken, provideRegistryService } from "@fern-ui/ui";
 import type { AuthProps } from "./authProps";
-import { withoutStaging } from "./withoutStaging";
 
 export type LoadWithUrlResponse = APIResponse<
     FdrAPI.docs.v2.read.LoadDocsForUrlResponse,

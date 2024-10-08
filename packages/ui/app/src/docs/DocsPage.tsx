@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import { HydrateAtoms, useMessageHandler, useSetJustNavigated, type DocsProps } from "../atoms";
 import { BgImageGradient } from "../components/BgImageGradient";
 import { JavascriptProvider } from "../components/JavascriptProvider";
+import { LinkPreloadApiRoute } from "../components/LinkPreload";
 import { useBeforePopState } from "../hooks/useBeforePopState";
 import { useConsoleMessage } from "../hooks/useConsoleMessage";
 import { useRouteChangeComplete, useRouteChangeStart } from "../hooks/useRouteChanged";
@@ -45,6 +46,8 @@ export function DocsPage(pageProps: DocsProps): ReactElement | null {
 
     return (
         <>
+            <LinkPreloadApiRoute href="/api/fern-docs/search" />
+            <LinkPreloadApiRoute href="/api/fern-docs/auth/api-key-injection" />
             <NextSeo />
             <InitializeTheme />
             <SearchDialog />

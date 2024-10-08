@@ -2,13 +2,13 @@ import { extractBuildId, extractNextDataPathname } from "@/server/extractNextDat
 import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "@/server/pageRoutes";
 import { rewritePosthog } from "@/server/rewritePosthog";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import type { FernUser } from "@fern-ui/ui/auth";
+import type { FernUser } from "@fern-ui/fern-docs-auth";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
+import { COOKIE_FERN_TOKEN, HEADER_X_FERN_HOST } from "@fern-ui/fern-docs-utils";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
 import { verifyFernJWTConfig } from "./server/auth/FernJWT";
-import { getAuthEdgeConfig } from "./server/auth/getAuthEdgeConfig";
-import { COOKIE_FERN_TOKEN, HEADER_X_FERN_HOST } from "./server/constants";
 import { withBasicTokenPublic } from "./server/withBasicTokenPublic";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
