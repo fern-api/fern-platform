@@ -280,6 +280,7 @@ export class ApiDefinitionV1ToLatest {
                 type: "object",
                 extends: value.extends,
                 properties: this.migrateObjectProperties(value.properties),
+                extraProperties: undefined,
             }),
             alias: (value) => ({
                 type: "alias",
@@ -305,6 +306,7 @@ export class ApiDefinitionV1ToLatest {
                     availability: variant.availability,
                     extends: variant.additionalProperties.extends,
                     properties: this.migrateObjectProperties(variant.additionalProperties.properties),
+                    extraProperties: undefined,
                 })),
             }),
         });
@@ -483,6 +485,7 @@ export class ApiDefinitionV1ToLatest {
                     type: "object",
                     extends: value.extends,
                     properties: this.migrateObjectProperties(value.properties),
+                    extraProperties: undefined,
                 }),
                 reference: (value) => ({
                     type: "alias",
@@ -519,6 +522,7 @@ export class ApiDefinitionV1ToLatest {
                     type: "object",
                     extends: value.extends,
                     properties: this.migrateObjectProperties(value.properties),
+                    extraProperties: undefined,
                 }),
                 reference: (value) => ({
                     type: "alias",
