@@ -67,3 +67,8 @@ deployment-url.txt
 
 # next.js analysis
 analyze
+
+
+
+.nx/cache
+.nx/workspace-data

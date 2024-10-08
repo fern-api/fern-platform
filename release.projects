@@ -1,0 +1,5 @@
+{
+  "release": {
+    "projects": ["packages/fdr-sdk", "packages/commons/core-utils"]
+  }
+}

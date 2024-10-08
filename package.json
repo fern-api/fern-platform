@@ -72,6 +72,7 @@
     "jsonc-parser": "~2.2.1",
     "lint-staged": "^13.0.3",
     "lodash-es": "^4.17.21",
+    "nx": "20.0.0",
     "organize-imports-cli": "^0.10.0",
     "playwright": "^1.47.1",
     "prettier": "^3.3.2",
@@ -100,8 +101,10 @@
     }
   },
   "dependencies": {
+    "@nx/js": "^20.0.0",
     "@radix-ui/colors": "^3.0.0",
-    "fern-api": "0.41.16"
+    "fern-api": "0.41.16",
+    "plugin": "link:@nx/playwright/plugin"
   },
   "packageManager": "pnpm@9.4.0",
   "nextBundleAnalysis": {

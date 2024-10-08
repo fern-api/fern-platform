@@ -1,0 +1,52 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "clean": {
+      "dependsOn": [
+        "^clean"
+      ],
+      "cache": true
+    },
+    "compile": {
+      "dependsOn": [
+        "^compile"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ],
+      "cache": true
+    },
+    "test": {
+      "dependsOn": [
+        "^test"
+      ],
+      "cache": true
+    },
+    "lint:eslint": {
+      "dependsOn": [
+        "^lint:eslint"
+      ],
+      "cache": true
+    },
+    "lint:style": {
+      "dependsOn": [
+        "^lint:style"
+      ],
+      "cache": true
+    },
+    "depcheck": {
+      "dependsOn": [
+        "^depcheck"
+      ],
+      "cache": true
+    },
+    "lint": {
+      "dependsOn": [
+        "^lint"
+      ],
+      "cache": true
+    }
+  },
+  "defaultBase": "main",
+  "nxCloudId": "6705b47af06a113ede97b6ee"
+}
