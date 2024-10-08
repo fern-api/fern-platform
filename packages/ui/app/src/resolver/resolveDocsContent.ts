@@ -1,5 +1,7 @@
+import { ApiDefinitionV1ToLatest } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { ApiDefinitionLoader } from "@fern-ui/fern-docs-server";
 import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
 import type { MDX_SERIALIZER } from "../mdx/bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
@@ -12,19 +14,23 @@ import { resolveMarkdownPage } from "./resolveMarkdownPage";
 import { resolveSubtitle } from "./resolveSubtitle";
 
 export async function resolveDocsContent({
+    host,
     found,
     apis,
     pages,
     mdxOptions,
     featureFlags,
     serializeMdx,
+    engine,
 }: {
+    host: string;
     found: FernNavigation.utils.Node.Found;
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
     mdxOptions?: FernSerializeMdxOptions;
     featureFlags: FeatureFlags;
     serializeMdx: MDX_SERIALIZER;
+    engine: string;
 }): Promise<DocsContent | undefined> {
     const neighbors = await getNeighbors(found, pages, serializeMdx);
     const { node, apiReference, parents, breadcrumb, collector } = found;
@@ -61,10 +67,22 @@ export async function resolveDocsContent({
         });
     } else if (apiReference != null) {
         if (apiReference.paginated && FernNavigation.isApiLeaf(node)) {
+            const v1 = apis[apiReference.apiDefinitionId];
+            if (v1 == null) {
+                // eslint-disable-next-line no-console
+                console.error("API definition not found", apiReference.apiDefinitionId);
+                return;
+            }
+            const apiDefinitionLoader = ApiDefinitionLoader.create(host, apiReference.apiDefinitionId)
+                .withMdxBundler(serializeMdx, engine)
+                .withFlags(featureFlags)
+                .withApiDefinition(ApiDefinitionV1ToLatest.from(v1, featureFlags).migrate())
+                .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
+                .withResolveDescriptions();
+
             return resolveApiEndpointPage({
                 node,
-                parents,
-                apis,
+                apiDefinitionLoader,
                 mdxOptions,
                 featureFlags,
                 neighbors,

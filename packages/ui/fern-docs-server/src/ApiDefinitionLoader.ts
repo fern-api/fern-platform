@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import { APIV1Read, FdrClient } from "@fern-api/fdr-sdk";
 import {
     ApiDefinitionId,
     ApiDefinitionV1ToLatest,
@@ -13,8 +13,6 @@ import {
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
 import { DEFAULT_FEATURE_FLAGS } from "@fern-ui/fern-docs-utils";
-import { provideRegistryService } from "@fern-ui/ui";
-import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { HTTPSnippet, type TargetId } from "httpsnippet-lite";
 import { UnreachableCaseError } from "ts-essentials";
 import { ApiDefinitionKVCache } from "./ApiDefinitionCache";
@@ -39,6 +37,12 @@ const CLIENTS: HTTPSnippetClient[] = [
 export class ApiDefinitionLoader {
     public static create = (xFernHost: string, apiDefinitionId: ApiDefinitionId): ApiDefinitionLoader => {
         return new ApiDefinitionLoader(xFernHost, apiDefinitionId);
+    };
+
+    private environment: string | undefined;
+    public withEnvironment = (environment: string | undefined): ApiDefinitionLoader => {
+        this.environment = environment;
+        return this;
     };
 
     private cache: ApiDefinitionKVCache;
@@ -74,6 +78,7 @@ export class ApiDefinitionLoader {
         return this;
     };
 
+    #getClient = () => new FdrClient({ environment: this.environment });
     #getApi = async (): Promise<ApiDefinition | undefined> => {
         if (this.apiDefinition != null) {
             return this.apiDefinition;
@@ -85,7 +90,7 @@ export class ApiDefinitionLoader {
         //     return apiDefinition;
         // }
 
-        const v1 = await provideRegistryService().api.v1.read.getApi(this.apiDefinitionId);
+        const v1 = await this.#getClient().api.v1.read.getApi(this.apiDefinitionId);
         if (!v1.ok) {
             if (v1.error.error === "ApiDoesNotExistError") {
                 return undefined;
@@ -221,14 +226,21 @@ export class ApiDefinitionLoader {
         return { ...example, snippets };
     };
 
-    private resolveDescriptions = async (apiDefinition: ApiDefinition): Promise<ApiDefinition> => {
-        // TODO: pass in other tsx/mdx files to serializeMdx options
-        const engine = this.flags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
-        const serializeMdx = await getMdxBundler(engine);
+    #serializeMdx = async (mdx: string): Promise<FernDocs.MarkdownText> => Promise.resolve(mdx);
+    #engine = "raw";
+    public withMdxBundler = (
+        fn: (mdx: string) => Promise<FernDocs.MarkdownText>,
+        engine: string,
+    ): ApiDefinitionLoader => {
+        this.#serializeMdx = fn;
+        this.#engine = engine;
+        return this;
+    };
 
-        const descriptions = await this.#collectDescriptions(apiDefinition, engine);
-        const resolvedDescriptions = await this.cache.batchResolveDescriptions(descriptions, serializeMdx);
-        const transformed = await this.#transformDescriptions(apiDefinition, resolvedDescriptions, engine);
+    private resolveDescriptions = async (apiDefinition: ApiDefinition): Promise<ApiDefinition> => {
+        const descriptions = await this.#collectDescriptions(apiDefinition);
+        const resolvedDescriptions = await this.cache.batchResolveDescriptions(descriptions, this.#serializeMdx);
+        const transformed = await this.#transformDescriptions(apiDefinition, resolvedDescriptions);
 
         return transformed;
     };
@@ -239,18 +251,15 @@ export class ApiDefinitionLoader {
      * @param apiDefinition The API definition to collect descriptions from
      * @param engine to prefix the key, so that we can differentiate between different serialization engines
      */
-    #collectDescriptions = async (
-        apiDefinition: ApiDefinition,
-        engine: string,
-    ): Promise<Record<string, FernDocs.MarkdownText>> => {
+    #collectDescriptions = async (apiDefinition: ApiDefinition): Promise<Record<string, FernDocs.MarkdownText>> => {
         const descriptions: Record<string, FernDocs.MarkdownText> = {};
         const descriptionCollector = (description: FernDocs.MarkdownText, key: string) => {
-            if (descriptions[`${engine}/${key}`] != null) {
+            if (descriptions[`${this.#engine}/${key}`] != null) {
                 // eslint-disable-next-line no-console
                 console.error(`Duplicate description key: ${key}!`);
                 return description;
             }
-            descriptions[`${engine}/${key}`] = description;
+            descriptions[`${this.#engine}/${key}`] = description;
             return description;
         };
         await Transformer.descriptions(descriptionCollector).apiDefinition(apiDefinition);
@@ -260,10 +269,9 @@ export class ApiDefinitionLoader {
     #transformDescriptions = async (
         apiDefinition: ApiDefinition,
         descriptions: Record<string, FernDocs.MarkdownText>,
-        engine: string,
     ): Promise<ApiDefinition> => {
         const transformer = (description: FernDocs.MarkdownText, key: string) => {
-            return descriptions[`${engine}/${key}`] ?? description;
+            return descriptions[`${this.#engine}/${key}`] ?? description;
         };
 
         return await Transformer.descriptions(transformer).apiDefinition(apiDefinition);

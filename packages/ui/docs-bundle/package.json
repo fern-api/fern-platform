@@ -38,6 +38,7 @@
     "@fern-ui/fern-docs-auth": "workspace:*",
     "@fern-ui/fern-docs-edge-config": "workspace:*",
     "@fern-ui/fern-docs-utils": "workspace:*",
+    "@fern-ui/fern-docs-server": "workspace:*",
     "@fern-ui/search-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
     "@vercel/analytics": "^1.3.1",

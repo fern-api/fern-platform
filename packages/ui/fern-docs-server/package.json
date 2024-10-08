@@ -1,10 +1,10 @@
 {
-  "name": "@fern-ui/fern-docs-edge-config",
+  "name": "@fern-ui/fern-docs-server",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
-    "directory": "packages/ui/fern-docs-edge-config"
+    "directory": "packages/ui/fern-docs-server"
   },
   "private": true,
   "files": [
@@ -34,15 +34,15 @@
     "docs:dev": "pnpm dev"
   },
   "dependencies": {
-    "@fern-ui/fern-docs-auth": "workspace:*",
+    "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-ui/core-utils": "workspace:*",
     "@fern-ui/fern-docs-utils": "workspace:*",
-    "@vercel/edge-config": "^1.1.0",
-    "url-join": "5.0.0",
-    "zod": "^3.23.8"
+    "@vercel/kv": "^2.0.0",
+    "httpsnippet-lite": "^3.0.5",
+    "ts-essentials": "^10.0.1"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
-    "@fern-ui/search-utils": "workspace:*",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",

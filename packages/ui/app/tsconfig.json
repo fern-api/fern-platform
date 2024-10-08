@@ -42,6 +42,9 @@
       "path": "../fern-docs-utils"
     },
     {
+      "path": "../fern-docs-server"
+    },
+    {
       "path": "../components"
     }
   ]
