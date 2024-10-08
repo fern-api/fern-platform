@@ -26,5 +26,5 @@ export async function getDynamicDocsPageProps(
      * would have redirected them to the login page
      */
     const authProps = await withAuthProps(xFernHost, cookies[COOKIE_FERN_TOKEN]);
-    return getDocsPageProps(xFernHost, slug, authProps, cookies);
+    return getDocsPageProps(xFernHost, slug, authProps);
 }
