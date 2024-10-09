@@ -3,11 +3,12 @@ import { getXFernHostNode } from "@/server/xfernhost/node";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
-import { assertNever } from "@fern-api/ui-core-utils";
+import { assertNever, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { getFrontmatter } from "@fern-ui/ui";
 import { Feed, Item } from "feed";
 import { NextApiRequest, NextApiResponse } from "next";
+import urlJoin from "url-join";
 
 export const revalidate = 60 * 60 * 24;
 
@@ -43,7 +44,7 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
         return res.status(404).end();
     }
 
-    const link = `https://${xFernHost}/${node.slug}`;
+    const link = urlJoin(withDefaultProtocol(xFernHost), node.slug);
 
     const feed = new Feed({
         id: link,
@@ -92,7 +93,7 @@ function toFeedItem(
 ): Item {
     const item: Item = {
         title: entry.title,
-        link: `https://${xFernHost}/${entry.slug}`,
+        link: urlJoin(withDefaultProtocol(xFernHost), entry.slug),
         date: new Date(entry.date),
     };
 

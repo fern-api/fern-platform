@@ -1,7 +1,8 @@
 import { signFernJWT } from "@/server/auth/FernJWT";
 import { OAuth2Client } from "@/server/auth/OAuth2Client";
 import { withSecureCookie } from "@/server/auth/withSecure";
-import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getXFernHostEdge, getXFernHostHeaderFallbackOrigin } from "@/server/xfernhost/edge";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { FernUser, OryAccessTokenSchema } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_ACCESS_TOKEN, COOKIE_FERN_TOKEN, COOKIE_REFRESH_TOKEN } from "@fern-ui/fern-docs-utils";
@@ -26,7 +27,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const state = req.nextUrl.searchParams.get("state");
     const error = req.nextUrl.searchParams.get("error");
     const error_description = req.nextUrl.searchParams.get("error_description");
-    const redirectLocation = state ?? `https://${domain}/`;
+    const redirectLocation = state ?? withDefaultProtocol(getXFernHostHeaderFallbackOrigin(req));
 
     if (error != null) {
         // eslint-disable-next-line no-console

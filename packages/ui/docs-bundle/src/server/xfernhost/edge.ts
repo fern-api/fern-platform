@@ -24,3 +24,15 @@ export function getXFernHostEdge(req: NextRequest, useSearchParams = false): str
 
     throw new Error("Could not determine xFernHost from request.");
 }
+
+// use this for testing auth-based redirects on development and preview environments
+export function getXFernHostHeaderFallbackOrigin(req: NextRequest): string {
+    if (
+        process.env.NODE_ENV === "development" ||
+        process.env.VERCEL_ENV === "preview" ||
+        process.env.VERCEL_ENV === "development"
+    ) {
+        return req.nextUrl.host;
+    }
+    return cleanHost(req.headers.get(HEADER_X_FERN_HOST)) ?? req.nextUrl.host;
+}

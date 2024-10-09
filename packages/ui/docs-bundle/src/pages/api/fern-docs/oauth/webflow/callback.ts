@@ -1,5 +1,6 @@
 import { withSecureCookie } from "@/server/auth/withSecure";
-import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getXFernHostEdge, getXFernHostHeaderFallbackOrigin } from "@/server/xfernhost/edge";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { NextRequest, NextResponse } from "next/server";
 import { WebflowClient } from "webflow-api";
@@ -23,7 +24,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const state = req.nextUrl.searchParams.get("state");
     const error = req.nextUrl.searchParams.get("error");
     const error_description = req.nextUrl.searchParams.get("error_description");
-    const redirectLocation = state ?? `https://${domain}/`;
+    const redirectLocation = state ?? withDefaultProtocol(getXFernHostHeaderFallbackOrigin(req));
 
     if (error != null) {
         // eslint-disable-next-line no-console

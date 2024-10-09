@@ -1,6 +1,7 @@
 import { verifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { withSecureCookie } from "@/server/auth/withSecure";
-import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getXFernHostEdge, getXFernHostHeaderFallbackOrigin } from "@/server/xfernhost/edge";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
@@ -24,7 +25,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
     // since we expect the callback to be redirected to, the token will be in the query params
     const token = req.nextUrl.searchParams.get(COOKIE_FERN_TOKEN);
     const state = req.nextUrl.searchParams.get("state");
-    const redirectLocation = state ?? `https://${domain}/`;
+    const redirectLocation = state ?? withDefaultProtocol(getXFernHostHeaderFallbackOrigin(req));
 
     if (edgeConfig?.type !== "basic_token_verification" || token == null) {
         // eslint-disable-next-line no-console

@@ -2,6 +2,7 @@ import { extractBuildId, extractNextDataPathname } from "@/server/extractNextDat
 import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "@/server/pageRoutes";
 import { rewritePosthog } from "@/server/rewritePosthog";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import type { FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
@@ -97,7 +98,7 @@ export const middleware: NextMiddleware = async (request) => {
     if (!isLoggedIn && authConfig?.type === "basic_token_verification") {
         if (!withBasicTokenPublic(authConfig, pathname)) {
             const destination = new URL(authConfig.redirect);
-            destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, pathname));
+            destination.searchParams.set("state", urlJoin(withDefaultProtocol(xFernHost), pathname));
             return NextResponse.redirect(destination);
         }
     }
