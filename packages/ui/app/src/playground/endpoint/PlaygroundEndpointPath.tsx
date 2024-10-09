@@ -63,18 +63,16 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                     )}
                 >
                     <span className="playground-endpoint-baseurl max-sm:hidden">
-                        {environmentIds.length > 1 && (
-                            <MaybeEnvironmentDropdown
-                                environmentId={environmentId}
-                                baseUrl={baseUrl}
-                                environmentFilters={environmentFilters}
-                                small
-                                urlTextStyle="playground-endpoint-baseurl max-sm:hidden"
-                                protocolTextStyle="playground-endpoint-baseurl max-sm:hidden"
-                                editable
-                                isEditingEnvironment={isEditingEnvironment}
-                            />
-                        )}
+                        <MaybeEnvironmentDropdown
+                            environmentId={environmentId}
+                            baseUrl={baseUrl}
+                            environmentFilters={environmentFilters}
+                            small
+                            urlTextStyle="playground-endpoint-baseurl max-sm:hidden"
+                            protocolTextStyle="playground-endpoint-baseurl max-sm:hidden"
+                            editable
+                            isEditingEnvironment={isEditingEnvironment}
+                        />
                     </span>
                     {path.map((part, idx) => {
                         return visitDiscriminatedUnion(part, "type")._visit({
