@@ -56,12 +56,18 @@ jobs:
           NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
         run: |
           git_version="$(scripts/fdr-version.sh)"
-          cd packages/fdr-sdk
+          working_dir=$(pwd)
+          cd packages/commons/core-utils
           mv package.json package.json.tmp
           version_replace="s/0.0.0/${git_version}/"
           cat package.json.tmp| sed "${version_replace}" > package.json
-          rm -rf package.json.tmp
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          npm publish --access public
+          cd $working_dir/packages/fdr-sdk
+          workspace_replace="s/workspace:*/${git_version}/"
+          cat package.json.tmp| sed "${version_replace}" > package.json
+          cat package.json | sed "${workspace_replace}" > package.json
+          rm -rf package.json.tmp
           npm publish --access public
 
       - name: Publish CJS SDK

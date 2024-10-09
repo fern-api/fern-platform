@@ -6,7 +6,6 @@
     "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/commons/core-utils"
   },
-  "private": true,
   "files": [
     "dist"
   ],

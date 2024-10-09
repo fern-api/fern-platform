@@ -42,7 +42,7 @@ const SET_LAUNCH_DARKLY_INFO_ATOM = atom(undefined, async (get, set, info: Launc
 });
 
 // TODO: support non-boolean flags
-export const useLaunchDarklyFlag = (flag: string): boolean => {
+export const useLaunchDarklyFlag = (flag: string, equals = true, not = false): boolean => {
     useInitLaunchDarklyClient();
 
     const client = useAtomValue(LD_CLIENT_ATOM);
@@ -50,11 +50,12 @@ export const useLaunchDarklyFlag = (flag: string): boolean => {
     // TODO: bootstrap the flag value from the server, and/or local storage
     const getFlagEnabled = useCallback(() => {
         if (!client) {
-            return false;
+            return not;
         }
         // force the flag to be a boolean:
-        return !!client.variation(flag, false);
-    }, [client, flag]);
+        const isTrue = client.variation(flag, false) === equals;
+        return not ? !isTrue : isTrue;
+    }, [client, equals, flag, not]);
 
     const [enabled, setEnabled] = useState(getFlagEnabled);
 

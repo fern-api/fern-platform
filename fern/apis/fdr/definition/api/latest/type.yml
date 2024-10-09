@@ -52,6 +52,7 @@ types:
     properties:
       extends: list<rootCommons.TypeId>
       properties: list<ObjectProperty>
+      extraProperties: optional<TypeReference>
 
   ObjectProperty:
     extends:
