@@ -21,4 +21,5 @@ export interface WithNodeMetadata extends FernRegistry.navigation.latest.WithNod
     canonicalSlug: FernRegistry.navigation.latest.Slug | undefined;
     icon: string | undefined;
     hidden: boolean | undefined;
+    authed: boolean | undefined;
 }

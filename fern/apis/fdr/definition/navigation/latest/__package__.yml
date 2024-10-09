@@ -335,6 +335,7 @@ types:
         docs: The slug that should be used in the canonical URL rel. If not provided, the `slug` will be used.
       icon: optional<string>
       hidden: optional<boolean>
+      authed: optional<boolean>
 
   WithPage:
     properties:

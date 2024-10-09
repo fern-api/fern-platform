@@ -20,6 +20,7 @@ exports[`no-version-no-tabs > gets navigation root for /docs 1`] = `
 
 exports[`no-version-no-tabs > gets navigation root for /docs/api/page-6 1`] = `
 {
+  "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": undefined,
   "icon": undefined,
@@ -45,6 +46,7 @@ exports[`no-version-no-tabs > gets navigation root for /docs/api/section-1 1`] =
 
 exports[`no-version-no-tabs > gets navigation root for /docs/api/section-2 1`] = `
 {
+  "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": undefined,
   "icon": undefined,
