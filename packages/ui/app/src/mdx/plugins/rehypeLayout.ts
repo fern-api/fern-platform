@@ -38,7 +38,7 @@ export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => vo
 
         const children = tree.children as ElementContent[];
         const subtitle = matter.subtitle != null ? wrapChildren(parseMarkdown(matter.subtitle)) : undefined;
-        const tableOfContents = (matter["hide-toc"] ?? false) ? undefined : makeToc(tree, matter["force-toc"] ?? false);
+        const tableOfContents = matter["hide-toc"] ?? false ? undefined : makeToc(tree, matter["force-toc"] ?? false);
         const aside = wrapChildren(asideContents);
         switch (matter.layout) {
             case "custom":
