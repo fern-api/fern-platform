@@ -10,7 +10,10 @@ export function getInitialEndpointRequestFormState(
 ): PlaygroundEndpointRequestFormState {
     return {
         type: "endpoint",
-        headers: getEmptyValueForObjectProperties(ctx?.endpoint?.requestHeaders, ctx?.types ?? EMPTY_OBJECT),
+        headers: getEmptyValueForObjectProperties(
+            [...(ctx?.globalHeaders ?? []), ...(ctx?.endpoint?.requestHeaders ?? [])],
+            ctx?.types ?? EMPTY_OBJECT,
+        ),
         pathParameters: getEmptyValueForObjectProperties(ctx?.endpoint?.pathParameters, ctx?.types ?? EMPTY_OBJECT),
         queryParameters: getEmptyValueForObjectProperties(ctx?.endpoint?.queryParameters, ctx?.types ?? EMPTY_OBJECT),
         body: getEmptyValueForHttpRequestBody(ctx?.endpoint?.request?.body, ctx?.types ?? EMPTY_OBJECT),

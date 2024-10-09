@@ -5,7 +5,10 @@ import { getEmptyValueForObjectProperties, getEmptyValueForType } from "./defaul
 export function getInitialWebSocketRequestFormState(context: WebSocketContext): PlaygroundWebSocketRequestFormState {
     return {
         type: "websocket",
-        headers: getEmptyValueForObjectProperties(context.channel.requestHeaders, context.types),
+        headers: getEmptyValueForObjectProperties(
+            [...context.globalHeaders, ...(context.channel.requestHeaders ?? [])],
+            context.types,
+        ),
         pathParameters: getEmptyValueForObjectProperties(context.channel.pathParameters, context.types),
         queryParameters: getEmptyValueForObjectProperties(context.channel.queryParameters, context.types),
         messages: Object.fromEntries(

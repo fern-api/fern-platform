@@ -57,7 +57,7 @@ interface WebhookContentProps {
 }
 
 const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, isLastInApi }) => {
-    const { channel, node, types } = context;
+    const { channel, node, types, globalHeaders } = context;
 
     const ref = useRef<HTMLDivElement>(null);
     useApiPageCenterElement(ref, node.slug);
@@ -103,8 +103,11 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, isLastIn
 
     const [baseUrl, envId] = usePlaygroundBaseUrl(channel);
 
-    // TODO: combine with auth headers
-    const headers = channel.requestHeaders;
+    // TODO: combine with auth headers like in Endpoint.tsx
+    const headers = useMemo(
+        () => [...globalHeaders, ...(channel.requestHeaders ?? [])],
+        [channel.requestHeaders, globalHeaders],
+    );
 
     return (
         <div className={"fern-endpoint-content"} ref={ref} id={useHref(node.slug)}>
