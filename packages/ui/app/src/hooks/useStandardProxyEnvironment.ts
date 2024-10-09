@@ -1,3 +1,4 @@
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { once } from "lodash-es";
 import { useBasePath, useFeatureFlags } from "../atoms";
 import { useApiRoute } from "./useApiRoute";
@@ -12,10 +13,10 @@ export const getAppBuildwithfernCom = once((): string => {
     // see: https://vercel.com/docs/projects/environment-variables/system-environment-variables#framework-environment-variables
     if (process.env.NEXT_PUBLIC_VERCEL_ENV === "preview" || process.env.NEXT_PUBLIC_VERCEL_ENV === "development") {
         // this mimics the behavior of hitting app.buildwithfern.com in a preview environment
-        return `https://${process.env.NEXT_PUBLIC_VERCEL_URL ?? APP_BUILDWITHFERN_COM}`;
+        return withDefaultProtocol(process.env.NEXT_PUBLIC_VERCEL_URL ?? APP_BUILDWITHFERN_COM);
     }
 
-    return `https://${APP_BUILDWITHFERN_COM}`;
+    return withDefaultProtocol(APP_BUILDWITHFERN_COM);
 });
 
 export function useStandardProxyEnvironment(): string {

@@ -1,4 +1,5 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { provideRegistryService } from "@fern-ui/ui";
 import type { Redirect } from "next/types";
@@ -9,7 +10,7 @@ export async function getUnauthenticatedRedirect(xFernHost: string, path: string
     const authorizationUrl = getAuthorizationUrl(
         {
             organization: await maybeGetWorkosOrganization(xFernHost),
-            state: urlJoin(`https://${xFernHost}`, path),
+            state: urlJoin(withDefaultProtocol(xFernHost), path),
         },
         xFernHost,
     );
