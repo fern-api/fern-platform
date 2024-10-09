@@ -13,6 +13,7 @@ export * from "./NavigationNodeWithMetadata";
 export * from "./NavigationNodeWithRedirect";
 export * from "./convertAvailability";
 export * from "./converters/ApiReferenceNavigationConverter";
+export * from "./converters/SlugGenerator";
 export * from "./converters/toRootNode";
 export * from "./followRedirect";
 export * from "./getPageId";
