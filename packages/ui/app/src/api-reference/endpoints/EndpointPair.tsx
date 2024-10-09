@@ -12,9 +12,10 @@ interface EndpointPairProps {
     node: FernNavigation.EndpointPairNode;
     apiDefinition: ApiDefinition;
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+    last?: boolean;
 }
 
-export function EndpointPair({ showErrors, node, apiDefinition, breadcrumb }: EndpointPairProps): ReactElement {
+export function EndpointPair({ showErrors, node, apiDefinition, breadcrumb, last }: EndpointPairProps): ReactElement {
     const isStream = useAtomValue(FERN_STREAM_ATOM);
 
     useAtomEffect(
@@ -40,6 +41,7 @@ export function EndpointPair({ showErrors, node, apiDefinition, breadcrumb }: En
             node={endpointNode}
             apiDefinition={apiDefinition}
             streamToggle={<EndpointStreamingEnabledToggle node={node} />}
+            last={last}
         />
     );
 }

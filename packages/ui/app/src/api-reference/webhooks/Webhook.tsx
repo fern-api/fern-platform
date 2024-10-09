@@ -9,10 +9,11 @@ export declare namespace Webhook {
         node: FernNavigation.WebhookNode;
         apiDefinition: ApiDefinition.ApiDefinition;
         breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+        last?: boolean;
     }
 }
 
-export const Webhook: React.FC<Webhook.Props> = ({ node, apiDefinition, breadcrumb }) => {
+export const Webhook: React.FC<Webhook.Props> = ({ node, apiDefinition, breadcrumb, last }) => {
     const context = useMemo(() => ApiDefinition.createWebhookContext(node, apiDefinition), [node, apiDefinition]);
 
     if (!context) {
@@ -23,7 +24,7 @@ export const Webhook: React.FC<Webhook.Props> = ({ node, apiDefinition, breadcru
 
     return (
         <WebhookContextProvider>
-            <WebhookContent breadcrumb={breadcrumb} context={context} />
+            <WebhookContent breadcrumb={breadcrumb} context={context} last={last} />
         </WebhookContextProvider>
     );
 };

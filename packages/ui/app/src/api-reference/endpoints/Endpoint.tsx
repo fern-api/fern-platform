@@ -10,6 +10,7 @@ export declare namespace Endpoint {
         apiDefinition: ApiDefinition;
         breadcrumb: readonly FernNavigation.BreadcrumbItem[];
         streamToggle?: React.ReactElement;
+        last?: boolean;
     }
 }
 
@@ -19,6 +20,7 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
     apiDefinition,
     breadcrumb,
     streamToggle,
+    last,
 }) => {
     const context = useMemo(() => createEndpointContext(node, apiDefinition), [node, apiDefinition]);
 
@@ -34,6 +36,7 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
             showErrors={showErrors}
             context={context}
             streamToggle={streamToggle}
+            last={last}
         />
     );
 };

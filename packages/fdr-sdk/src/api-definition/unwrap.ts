@@ -70,12 +70,15 @@ export function unwrapReference(
     const descriptions: FernDocs.MarkdownText[] = [];
     const availabilities: Latest.Availability[] = [];
 
+    const visitedTypeIds: Latest.TypeId[] = [];
     let internalTypeRef: TypeShapeOrReference | undefined = typeRef;
     let loop = 0;
     while (internalTypeRef != null) {
         if (loop > LOOP_TOLERANCE) {
             // eslint-disable-next-line no-console
-            console.error("Infinite loop detected while unwrapping type reference. Falling back to unknown type.");
+            console.error(
+                `Infinite loop detected while unwrapping type reference. Falling back to unknown type. path=[${visitedTypeIds.join(", ")}]`,
+            );
             internalTypeRef = undefined;
             break;
         }
@@ -89,10 +92,20 @@ export function unwrapReference(
         } else if (internalTypeRef.type === "alias") {
             internalTypeRef = internalTypeRef.value;
         } else if (internalTypeRef.type === "id") {
+            if (visitedTypeIds.includes(internalTypeRef.id)) {
+                // eslint-disable-next-line no-console
+                console.error(
+                    `Circular reference detected while unwrapping type reference. Falling back to unknown type. path=[${visitedTypeIds.join(", ")}, ${internalTypeRef.id}]`,
+                );
+                internalTypeRef = undefined;
+                break;
+            }
+
             if (internalTypeRef.default != null) {
                 defaults.push({ type: "typeReferenceId", value: internalTypeRef.default });
             }
             const typeDef: Latest.TypeDefinition | undefined = types[internalTypeRef.id];
+            visitedTypeIds.push(internalTypeRef.id);
             if (typeDef != null) {
                 if (typeDef.availability) {
                     availabilities.push(typeDef.availability);

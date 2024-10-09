@@ -3,7 +3,7 @@ import { WRITE_API_DEFINITION_ATOM, useIsReady } from "../atoms";
 import { ApiPageContext } from "../contexts/api-page";
 import { DocsContent } from "../resolver/DocsContent";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
-import { ApiPackageContents } from "./ApiPackageContents";
+import { ApiReferenceContent } from "./ApiReferenceContent";
 
 export declare namespace ApiReferencePage {
     export interface Props {
@@ -19,7 +19,7 @@ export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({ content }) 
 
     return (
         <ApiPageContext.Provider value={true}>
-            <ApiPackageContents
+            <ApiReferenceContent
                 apiDefinition={content.apiDefinition}
                 showErrors={content.apiReferenceNode.showErrors ?? false}
                 node={content.apiReferenceNode}

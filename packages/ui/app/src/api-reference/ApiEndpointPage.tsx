@@ -1,12 +1,15 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
 import { WRITE_API_DEFINITION_ATOM } from "../atoms";
 import { ALL_ENVIRONMENTS_ATOM } from "../atoms/environment";
+import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbors";
+import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { ApiPageContext } from "../contexts/api-page";
 import { DocsContent } from "../resolver/DocsContent";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
-import { SingleApiPageContent } from "./SingleApiPageContent";
+import { ApiPackageContent } from "./ApiPackageContent";
 
 export declare namespace ApiEndpointPage {
     export interface Props {
@@ -36,11 +39,18 @@ export const ApiEndpointPage: React.FC<ApiEndpointPage.Props> = ({ content }) =>
 
     return (
         <ApiPageContext.Provider value={true}>
-            <SingleApiPageContent content={content} />
-            {/* TODO: make this visible only in mobile */}
-            {/* <div className="px-4 md:px-6 lg:px-8">
+            <FernErrorBoundary component="ApiEndpointPage">
+                <ApiPackageContent
+                    node={content.item}
+                    apiDefinition={content.apiDefinition}
+                    breadcrumb={content.breadcrumb}
+                    mdxs={EMPTY_OBJECT}
+                    showErrors={content.showErrors}
+                />
+            </FernErrorBoundary>
+            <div className="px-4 md:px-6 lg:px-8 lg:hidden">
                 <BottomNavigationNeighbors />
-            </div> */}
+            </div>
             <BuiltWithFern className="w-fit mx-auto my-8" />
         </ApiPageContext.Provider>
     );

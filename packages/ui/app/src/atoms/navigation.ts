@@ -106,7 +106,15 @@ export function useNavigationNodes(): FernNavigation.NodeCollector {
 export const CURRENT_NODE_ATOM = atom((get) => {
     const slug = get(SLUG_ATOM);
     const nodeCollector = get(NAVIGATION_NODES_ATOM);
-    return nodeCollector.slugMap.get(slug);
+    const node = nodeCollector.slugMap.get(slug);
+
+    // TODO: move this into a better place
+    // this sets the document title to the current node's title when shallow routing
+    // (this will use the navigation node title rather than the page's actual title)
+    if (node && typeof window !== "undefined") {
+        window.document.title = node.title;
+    }
+    return node;
 });
 CURRENT_NODE_ATOM.debugLabel = "CURRENT_NODE_ATOM";
 

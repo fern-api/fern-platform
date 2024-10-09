@@ -39,6 +39,7 @@ export declare namespace EndpointContent {
         hideBottomSeparator?: boolean;
         breadcrumb: readonly FernNavigation.BreadcrumbItem[];
         streamToggle?: React.ReactElement;
+        last?: boolean;
     }
 }
 
@@ -72,7 +73,7 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
 const paddingAtom = atom((get) => (get(MOBILE_SIDEBAR_ENABLED_ATOM) ? 0 : 26));
 
 export const EndpointContent = memo<EndpointContent.Props>((props) => {
-    const { showErrors, context, breadcrumb } = props;
+    const { showErrors, context, breadcrumb, last = false } = props;
     const { node, endpoint } = context;
     const ref = useRef<HTMLDivElement>(null);
     useApiPageCenterElement(ref, node.slug);
@@ -266,7 +267,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
         >
             <div
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
-                    "border-default border-b mb-px pb-12": true,
+                    "border-default border-b mb-px pb-12": !last,
                 })}
             >
                 <EndpointContentHeader context={context} breadcrumb={breadcrumb} streamToggle={props.streamToggle} />

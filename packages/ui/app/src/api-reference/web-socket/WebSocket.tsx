@@ -27,6 +27,7 @@ export interface WebSocketProps {
     node: FernNavigation.WebSocketNode;
     apiDefinition: ApiDefinition.ApiDefinition;
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+    last?: boolean;
 }
 
 export const WebSocket: FC<WebSocketProps> = (props) => {
@@ -41,15 +42,16 @@ export const WebSocket: FC<WebSocketProps> = (props) => {
         return null;
     }
 
-    return <WebhookContent context={context} breadcrumb={props.breadcrumb} />;
+    return <WebhookContent context={context} breadcrumb={props.breadcrumb} last={props.last} />;
 };
 
 interface WebhookContentProps {
     context: WebSocketContext;
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+    last?: boolean;
 }
 
-const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb }) => {
+const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) => {
     const { channel, node, types, globalHeaders } = context;
 
     const ref = useRef<HTMLDivElement>(null);
@@ -106,7 +108,7 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb }) => {
         <div className="fern-endpoint-content" ref={ref} id={useHref(node.slug)}>
             <article
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
-                    "border-default border-b mb-px pb-20": true,
+                    "border-default border-b mb-px pb-20": !last,
                 })}
             >
                 <header className="space-y-1 pt-8">
