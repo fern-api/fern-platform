@@ -1,7 +1,9 @@
 import { signFernJWT } from "@/server/auth/FernJWT";
 import { withSecureCookie } from "@/server/auth/withSecure";
+import { safeUrl } from "@/server/safeUrl";
 import { getWorkOS, getWorkOSClientId } from "@/server/workos";
-import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getXFernHostEdge, getXFernHostHeaderFallbackOrigin } from "@/server/xfernhost/edge";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_FERN_TOKEN, HEADER_X_FERN_HOST } from "@fern-ui/fern-docs-utils";
@@ -12,6 +14,7 @@ export const runtime = "edge";
 function redirectWithLoginError(location: string, errorMessage: string): NextResponse {
     const url = new URL(location);
     url.searchParams.set("loginError", errorMessage);
+    // TODO: validate allowlist of domains to prevent open redirects
     return NextResponse.redirect(url.toString());
 }
 
@@ -26,7 +29,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const state = req.nextUrl.searchParams.get("state");
     const error = req.nextUrl.searchParams.get("error");
     const error_description = req.nextUrl.searchParams.get("error_description");
-    const redirectLocation = state ?? `https://${domain}/`;
+    const redirectLocation = safeUrl(state) ?? withDefaultProtocol(getXFernHostHeaderFallbackOrigin(req));
 
     if (error != null) {
         return redirectWithLoginError(redirectLocation, error_description ?? error);
@@ -52,6 +55,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             nextUrl.host = req.headers.get(HEADER_X_FERN_HOST)!;
         }
 
+        // TODO: validate allowlist of domains to prevent open redirects
         return NextResponse.redirect(nextUrl);
     }
 
@@ -71,6 +75,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
         const token = await signFernJWT(fernUser, user);
 
+        // TODO: validate allowlist of domains to prevent open redirects
         const res = NextResponse.redirect(redirectLocation);
         res.cookies.set(COOKIE_FERN_TOKEN, token, withSecureCookie());
         return res;

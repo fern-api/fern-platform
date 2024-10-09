@@ -32,6 +32,7 @@ export const AuthEdgeConfigBasicTokenVerificationSchema = z.object({
     secret: z.string(),
     issuer: z.string(),
     redirect: z.string(),
+    logout: z.string().optional(),
 
     allowlist: z
         .array(z.string(), {
