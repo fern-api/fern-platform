@@ -1,8 +1,7 @@
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import type { AuthEdgeConfig, FernUser } from "@fern-ui/fern-docs-auth";
+import type { AuthEdgeConfig } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
-import { verifyFernJWTConfig } from "./auth/FernJWT";
 import { AuthProps, withAuthProps } from "./authProps";
 import { loadWithUrl } from "./loadWithUrl";
 import { pruneWithBasicTokenPublic } from "./withBasicTokenPublic";
@@ -31,31 +30,26 @@ export class DocsLoader {
         return this;
     }
 
-    private user: FernUser | undefined;
     private auth: AuthEdgeConfig | undefined;
-    public withAuth(auth: AuthEdgeConfig | undefined, user: FernUser | undefined): DocsLoader {
+    public withAuth(auth: AuthEdgeConfig | undefined): DocsLoader {
         this.auth = auth;
-        this.user = user;
         return this;
     }
 
-    private async loadAuth(): Promise<AuthProps | undefined> {
+    private async loadAuth(): Promise<[AuthProps | undefined, AuthEdgeConfig | undefined]> {
         if (!this.auth) {
             this.auth = await getAuthEdgeConfig(this.xFernHost);
-
-            try {
-                if (this.fernToken) {
-                    this.user = await verifyFernJWTConfig(this.fernToken, this.auth);
-                }
-            } catch (e) {
-                // eslint-disable-next-line no-console
-                console.error(e);
-            }
         }
         if (!this.auth) {
-            return undefined;
+            return [undefined, undefined];
         }
-        return withAuthProps(this.auth, this.fernToken);
+        try {
+            return [await withAuthProps(this.auth, this.fernToken), this.auth];
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(e);
+            return [undefined, this.auth];
+        }
     }
 
     #loadForDocsUrlResponse: DocsV2Read.LoadDocsForUrlResponse | undefined;
@@ -72,7 +66,7 @@ export class DocsLoader {
 
     private async loadDocs(): Promise<DocsV2Read.LoadDocsForUrlResponse | undefined> {
         if (!this.#loadForDocsUrlResponse) {
-            const authProps = await this.loadAuth();
+            const [authProps] = await this.loadAuth();
 
             const response = await loadWithUrl(this.xFernHost, authProps);
 
@@ -100,17 +94,20 @@ export class DocsLoader {
     }
 
     public async root(): Promise<FernNavigation.RootNode | undefined> {
-        const { authConfig, user } = await this.loadAuth();
+        const [auth, authConfig] = await this.loadAuth();
         let node = await this.unprunedRoot();
 
         // if the user is not authenticated, and the page requires authentication, prune the navigation tree
         // to only show pages that are allowed to be viewed without authentication.
         // note: the middleware will not show this page at all if the user is not authenticated.
-        if (node && authConfig?.type === "basic_token_verification" && !user) {
+        if (node && authConfig?.type === "basic_token_verification" && !auth) {
             try {
                 // TODO: store this in cache
                 node = pruneWithBasicTokenPublic(authConfig, node);
             } catch (e) {
+                // TODO: sentry
+                // eslint-disable-next-line no-console
+                console.error(e);
                 return undefined;
             }
         }
