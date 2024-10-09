@@ -2,7 +2,7 @@ import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { memo, type ReactNode } from "react";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
-import { useSelectedEnvironment } from "../../playground/utils/select-environment";
+import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
@@ -14,7 +14,7 @@ interface EndpointContentHeaderProps {
 
 export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ context, breadcrumb, streamToggle }) => {
     const { endpoint, node } = context;
-    const selectedEnvironment = useSelectedEnvironment(endpoint);
+    const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
     return (
         <header className="space-y-1 pb-2 pt-8">
             <FernBreadcrumbs breadcrumb={breadcrumb} />
@@ -31,9 +31,10 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ context
                 {streamToggle}
             </div>
             <EndpointUrlWithOverflow
+                baseUrl={baseUrl}
+                environmentId={environmentId}
                 path={endpoint.path}
                 method={endpoint.method}
-                selectedEnvironment={selectedEnvironment}
                 showEnvironment
                 large
             />
