@@ -1,7 +1,7 @@
 import { AuthEdgeConfig } from "@fern-ui/fern-docs-auth";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import type { NextRequest } from "next/server";
-import { withBasicTokenPublic } from "../withBasicTokenAnonymous";
+import { withBasicTokenAnonymous } from "../withBasicTokenAnonymous";
 import { verifyFernJWT } from "./FernJWT";
 
 export async function checkViewerAllowedEdge(auth: AuthEdgeConfig | undefined, req: NextRequest): Promise<number> {
@@ -16,7 +16,7 @@ export async function checkViewerAllowedPathname(
     fernToken: string | undefined,
 ): Promise<number> {
     if (auth?.type === "basic_token_verification") {
-        if (withBasicTokenPublic(auth, pathname)) {
+        if (withBasicTokenAnonymous(auth, pathname)) {
             return 200;
         }
 
