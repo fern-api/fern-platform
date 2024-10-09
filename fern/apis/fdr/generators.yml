@@ -48,6 +48,7 @@ groups:
           url: npm.buildwithfern.com
           package-name: "@fern-fern/fdr-cjs-sdk"
         config:
+          useBrandedStringAliases: true
           noSerdeLayer: true
           outputSourceFiles: true
           neverThrowErrors: true

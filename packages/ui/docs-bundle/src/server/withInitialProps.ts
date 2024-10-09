@@ -63,7 +63,7 @@ export async function withInitialProps({
     const authConfig = await getAuthEdgeConfig(xFernHost);
     const loader = DocsLoader.for(xFernHost, auth?.token)
         .withFeatureFlags(featureFlags)
-        .withAuth(authConfig, auth?.user)
+        .withAuth(authConfig)
         .withLoadDocsForUrlResponse(docs);
 
     const root = await loader.root();
