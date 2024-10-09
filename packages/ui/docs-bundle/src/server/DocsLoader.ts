@@ -1,8 +1,7 @@
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import type { AuthEdgeConfig, FernUser } from "@fern-ui/fern-docs-auth";
+import type { AuthEdgeConfig } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
-import { verifyFernJWTConfig } from "./auth/FernJWT";
 import { AuthProps, withAuthProps } from "./authProps";
 import { loadWithUrl } from "./loadWithUrl";
 import { pruneWithBasicTokenPublic } from "./withBasicTokenPublic";
@@ -31,31 +30,26 @@ export class DocsLoader {
         return this;
     }
 
-    private user: FernUser | undefined;
     private auth: AuthEdgeConfig | undefined;
-    public withAuth(auth: AuthEdgeConfig | undefined, user: FernUser | undefined): DocsLoader {
+    public withAuth(auth: AuthEdgeConfig | undefined): DocsLoader {
         this.auth = auth;
-        this.user = user;
         return this;
     }
 
     private async loadAuth(): Promise<[AuthProps | undefined, AuthEdgeConfig | undefined]> {
         if (!this.auth) {
             this.auth = await getAuthEdgeConfig(this.xFernHost);
-
-            try {
-                if (this.fernToken) {
-                    this.user = await verifyFernJWTConfig(this.fernToken, this.auth);
-                }
-            } catch (e) {
-                // eslint-disable-next-line no-console
-                console.error(e);
-            }
         }
         if (!this.auth) {
             return [undefined, undefined];
         }
-        return [await withAuthProps(this.auth, this.fernToken), this.auth];
+        try {
+            return [await withAuthProps(this.auth, this.fernToken), this.auth];
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(e);
+            return [undefined, this.auth];
+        }
     }
 
     #loadForDocsUrlResponse: DocsV2Read.LoadDocsForUrlResponse | undefined;
