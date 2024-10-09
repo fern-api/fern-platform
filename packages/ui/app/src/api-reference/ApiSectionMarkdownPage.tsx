@@ -1,5 +1,5 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
 import { ReactElement, memo, useRef } from "react";
 import { useHref } from "../hooks/useHref";

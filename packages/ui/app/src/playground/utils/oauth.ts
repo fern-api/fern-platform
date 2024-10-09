@@ -1,5 +1,5 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
-import { EndpointDefinition, buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
+import type { APIV1Read } from "@fern-api/fdr-sdk";
+import { buildEndpointUrl, type EndpointDefinition } from "@fern-api/fdr-sdk/api-definition";
 import { unknownToString, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import jsonpath from "jsonpath";
 import { mapValues } from "lodash-es";

@@ -1,6 +1,6 @@
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
+import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import dynamic from "next/dynamic";
 import { memo, useMemo } from "react";

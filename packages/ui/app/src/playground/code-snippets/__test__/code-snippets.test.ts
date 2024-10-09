@@ -1,4 +1,3 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
 import {
     EndpointContext,
     EndpointDefinition,
@@ -47,7 +46,7 @@ describe("PlaygroundCodeSnippetBuilder", () => {
         ],
         pathParameters: [
             {
-                key: APIV1Read.PropertyKey("test"),
+                key: PropertyKey("test"),
                 valueShape: {
                     type: "alias",
                     value: {
