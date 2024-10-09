@@ -1,22 +1,25 @@
-import { PropertyKey, TypeDefinition, TypeId, TypeReference } from "../latest";
+import { PropertyKey, TypeDefinition, TypeId, TypeReference, TypeShape } from "../latest";
 import { TypeShapeOrReference } from "../types";
 import { unwrapObjectType, unwrapReference } from "../unwrap";
 
-const PRIMITIVE_SHAPE: TypeShapeOrReference = {
-    type: "primitive" as const,
+const PRIMITIVE_SHAPE: TypeShape = {
+    type: "alias",
     value: {
-        type: "string",
-        regex: undefined,
-        minLength: undefined,
-        maxLength: undefined,
-        default: undefined,
+        type: "primitive" as const,
+        value: {
+            type: "string",
+            regex: undefined,
+            minLength: undefined,
+            maxLength: undefined,
+            default: undefined,
+        },
     },
 };
 
 describe("unwrapReference", () => {
     it("should noop for a non-reference", () => {
-        expect(unwrapReference(PRIMITIVE_SHAPE, {})).toStrictEqual({
-            shape: PRIMITIVE_SHAPE,
+        expect(unwrapReference(PRIMITIVE_SHAPE["value"], {})).toStrictEqual({
+            shape: PRIMITIVE_SHAPE["value"],
             availability: undefined,
             descriptions: [],
             isOptional: false,
@@ -33,13 +36,13 @@ describe("unwrapReference", () => {
         const types: Record<TypeId, TypeDefinition> = {
             [TypeId("foo")]: {
                 name: "foo",
-                shape: { type: "alias", value: PRIMITIVE_SHAPE },
+                shape: PRIMITIVE_SHAPE,
                 description: undefined,
                 availability: undefined,
             },
         };
         expect(unwrapReference(shape, types)).toStrictEqual({
-            shape: PRIMITIVE_SHAPE,
+            shape: PRIMITIVE_SHAPE["value"],
             availability: undefined,
             descriptions: [],
             isOptional: false,
@@ -78,10 +81,7 @@ describe("unwrapReference", () => {
                     type: "alias",
                     value: {
                         type: "optional",
-                        shape: {
-                            type: "alias",
-                            value: PRIMITIVE_SHAPE,
-                        },
+                        shape: PRIMITIVE_SHAPE,
                         default: undefined,
                     },
                 },
@@ -90,7 +90,7 @@ describe("unwrapReference", () => {
             },
         };
         expect(unwrapReference(shape, types)).toStrictEqual({
-            shape: PRIMITIVE_SHAPE,
+            shape: PRIMITIVE_SHAPE["value"],
             availability: undefined,
             descriptions: [],
             isOptional: true,
@@ -111,10 +111,7 @@ describe("unwrapReference", () => {
                     type: "alias",
                     value: {
                         type: "optional",
-                        shape: {
-                            type: "alias",
-                            value: PRIMITIVE_SHAPE,
-                        },
+                        shape: PRIMITIVE_SHAPE,
                         default: "testing-a",
                     },
                 },
@@ -145,10 +142,7 @@ describe("unwrapReference", () => {
                     type: "alias",
                     value: {
                         type: "optional",
-                        shape: {
-                            type: "alias",
-                            value: PRIMITIVE_SHAPE,
-                        },
+                        shape: PRIMITIVE_SHAPE,
                         default: "testing-a", // this should be ignored
                     },
                 },
@@ -210,13 +204,13 @@ describe("unwrapReference", () => {
             },
             [TypeId("c")]: {
                 name: "c",
-                shape: { type: "alias", value: PRIMITIVE_SHAPE },
+                shape: PRIMITIVE_SHAPE,
                 description: "c",
                 availability: "InDevelopment",
             },
         };
         const unwrapped = unwrapReference(shape, types);
-        expect(unwrapped.shape).toStrictEqual(PRIMITIVE_SHAPE);
+        expect(unwrapped.shape).toStrictEqual(PRIMITIVE_SHAPE["value"]);
         expect(unwrapped.availability).toBe("Deprecated");
         expect(unwrapped.descriptions).toStrictEqual(["a", "b", "c"]);
         expect(unwrapped.isOptional).toBe(true);
@@ -279,10 +273,7 @@ describe("unwrapObjectType", () => {
                         type: "alias",
                         value: {
                             type: "optional",
-                            shape: {
-                                type: "alias",
-                                value: PRIMITIVE_SHAPE,
-                            },
+                            shape: PRIMITIVE_SHAPE,
                             default: undefined,
                         },
                     },
@@ -295,10 +286,7 @@ describe("unwrapObjectType", () => {
                         type: "alias",
                         value: {
                             type: "optional",
-                            shape: {
-                                type: "alias",
-                                value: PRIMITIVE_SHAPE,
-                            },
+                            shape: PRIMITIVE_SHAPE,
                             default: undefined,
                         },
                     },
@@ -307,19 +295,13 @@ describe("unwrapObjectType", () => {
                 },
                 {
                     key: PropertyKey("c"),
-                    valueShape: {
-                        type: "alias",
-                        value: PRIMITIVE_SHAPE,
-                    },
+                    valueShape: PRIMITIVE_SHAPE,
                     description: undefined,
                     availability: undefined,
                 },
                 {
                     key: PropertyKey("b"),
-                    valueShape: {
-                        type: "alias",
-                        value: PRIMITIVE_SHAPE,
-                    },
+                    valueShape: PRIMITIVE_SHAPE,
                     description: undefined,
                     availability: undefined,
                 },
@@ -342,10 +324,7 @@ describe("unwrapObjectType", () => {
             properties: [
                 {
                     key: PropertyKey("a"),
-                    valueShape: {
-                        type: "alias",
-                        value: PRIMITIVE_SHAPE,
-                    },
+                    valueShape: PRIMITIVE_SHAPE,
                     description: undefined,
                     availability: undefined,
                 },
@@ -355,10 +334,7 @@ describe("unwrapObjectType", () => {
                         type: "alias",
                         value: {
                             type: "optional",
-                            shape: {
-                                type: "alias",
-                                value: PRIMITIVE_SHAPE,
-                            },
+                            shape: PRIMITIVE_SHAPE,
                             default: undefined,
                         },
                     },
@@ -377,10 +353,7 @@ describe("unwrapObjectType", () => {
                     properties: [
                         {
                             key: PropertyKey("b"),
-                            valueShape: {
-                                type: "alias",
-                                value: PRIMITIVE_SHAPE,
-                            },
+                            valueShape: PRIMITIVE_SHAPE,
                             description: undefined,
                             availability: undefined,
                         },
@@ -398,10 +371,7 @@ describe("unwrapObjectType", () => {
                     properties: [
                         {
                             key: PropertyKey("c"),
-                            valueShape: {
-                                type: "alias",
-                                value: PRIMITIVE_SHAPE,
-                            },
+                            valueShape: PRIMITIVE_SHAPE,
                             description: undefined,
                             availability: undefined,
                         },
@@ -427,10 +397,7 @@ describe("unwrapObjectType", () => {
             properties: [
                 {
                     key: PropertyKey("a"),
-                    valueShape: {
-                        type: "alias",
-                        value: PRIMITIVE_SHAPE,
-                    },
+                    valueShape: PRIMITIVE_SHAPE,
                     description: undefined,
                     availability: undefined,
                 },
@@ -470,10 +437,7 @@ describe("unwrapObjectType", () => {
                                 type: "alias",
                                 value: {
                                     type: "optional",
-                                    shape: {
-                                        type: "alias",
-                                        value: PRIMITIVE_SHAPE,
-                                    },
+                                    shape: PRIMITIVE_SHAPE,
                                     default: undefined,
                                 },
                             },
@@ -482,10 +446,7 @@ describe("unwrapObjectType", () => {
                         },
                         {
                             key: PropertyKey("c"),
-                            valueShape: {
-                                type: "alias",
-                                value: PRIMITIVE_SHAPE,
-                            },
+                            valueShape: PRIMITIVE_SHAPE,
                             description: undefined,
                             availability: undefined,
                         },
@@ -509,9 +470,12 @@ describe("unwrapObjectType", () => {
             {
                 key: PropertyKey("c"),
                 valueShape: {
-                    type: "optional",
-                    shape: PRIMITIVE_SHAPE,
-                    default: undefined,
+                    type: "alias",
+                    value: {
+                        type: "optional",
+                        shape: PRIMITIVE_SHAPE,
+                        default: undefined,
+                    },
                 },
                 description: undefined,
                 // availability is the least stable of the extended object
@@ -520,9 +484,12 @@ describe("unwrapObjectType", () => {
             {
                 key: PropertyKey("b"),
                 valueShape: {
-                    type: "optional",
-                    shape: PRIMITIVE_SHAPE,
-                    default: undefined,
+                    type: "alias",
+                    value: {
+                        type: "optional",
+                        shape: PRIMITIVE_SHAPE,
+                        default: undefined,
+                    },
                 },
                 description: undefined,
                 // availability is the least stable of the extended object

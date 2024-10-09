@@ -288,9 +288,12 @@ describe("join", () => {
             {
                 key: Latest.PropertyKey("global"),
                 valueShape: {
-                    type: "id",
-                    id: Latest.TypeId("type-4"),
-                    default: undefined,
+                    type: "alias",
+                    value: {
+                        type: "id",
+                        id: Latest.TypeId("type-4"),
+                        default: undefined,
+                    },
                 },
                 description: undefined,
                 availability: undefined,
