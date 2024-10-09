@@ -8,6 +8,7 @@ export const runtime = "edge";
 export default async function handler(req: NextRequest): Promise<NextResponse> {
     const email = req.nextUrl.searchParams.get(COOKIE_EMAIL);
 
+    // TODO: validate allowlist of domains to prevent open redirects
     const res = NextResponse.redirect(withDefaultProtocol(getXFernHostHeaderFallbackOrigin(req)));
 
     if (email) {

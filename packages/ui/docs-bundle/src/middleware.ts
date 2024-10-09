@@ -99,6 +99,7 @@ export const middleware: NextMiddleware = async (request) => {
         if (!withBasicTokenPublic(authConfig, pathname)) {
             const destination = new URL(authConfig.redirect);
             destination.searchParams.set("state", urlJoin(withDefaultProtocol(xFernHost), pathname));
+            // TODO: validate allowlist of domains to prevent open redirects
             return NextResponse.redirect(destination);
         }
     }

@@ -1,3 +1,4 @@
+import { safeUrl } from "@/server/safeUrl";
 import { getXFernHostEdge, getXFernHostHeaderFallbackOrigin } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
@@ -14,7 +15,8 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
     const state = req.nextUrl.searchParams.get("state");
 
-    const redirectLocation = logoutUrl ?? state ?? withDefaultProtocol(getXFernHostHeaderFallbackOrigin(req));
+    const redirectLocation =
+        safeUrl(logoutUrl) ?? safeUrl(state) ?? withDefaultProtocol(getXFernHostHeaderFallbackOrigin(req));
 
     const res = NextResponse.redirect(redirectLocation);
     res.cookies.delete(COOKIE_FERN_TOKEN);
