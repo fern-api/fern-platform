@@ -62,8 +62,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         });
 
         const fernUser: FernUser = {
-            type: "user",
-            partner: "workos",
             name:
                 user.firstName != null && user.lastName != null
                     ? `${user.firstName} ${user.lastName}`

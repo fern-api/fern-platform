@@ -3,7 +3,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { AuthEdgeConfig, FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { verifyFernJWTConfig } from "./auth/FernJWT";
-import { AuthProps } from "./authProps";
+import { AuthProps, withAuthProps } from "./authProps";
 import { loadWithUrl } from "./loadWithUrl";
 import { pruneWithBasicTokenPublic } from "./withBasicTokenPublic";
 
@@ -39,10 +39,7 @@ export class DocsLoader {
         return this;
     }
 
-    private async loadAuth(): Promise<{
-        authConfig: AuthEdgeConfig | undefined;
-        user: FernUser | undefined;
-    }> {
+    private async loadAuth(): Promise<AuthProps | undefined> {
         if (!this.auth) {
             this.auth = await getAuthEdgeConfig(this.xFernHost);
 
@@ -55,10 +52,10 @@ export class DocsLoader {
                 console.error(e);
             }
         }
-        return {
-            authConfig: this.auth,
-            user: this.user,
-        };
+        if (!this.auth) {
+            return undefined;
+        }
+        return withAuthProps(this.auth, this.fernToken);
     }
 
     #loadForDocsUrlResponse: DocsV2Read.LoadDocsForUrlResponse | undefined;
@@ -75,9 +72,7 @@ export class DocsLoader {
 
     private async loadDocs(): Promise<DocsV2Read.LoadDocsForUrlResponse | undefined> {
         if (!this.#loadForDocsUrlResponse) {
-            const { user } = await this.loadAuth();
-            const authProps: AuthProps | undefined =
-                user && this.fernToken ? { user, token: this.fernToken } : undefined;
+            const authProps = await this.loadAuth();
 
             const response = await loadWithUrl(this.xFernHost, authProps);
 

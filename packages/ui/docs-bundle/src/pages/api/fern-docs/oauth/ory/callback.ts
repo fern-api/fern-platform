@@ -53,8 +53,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         const { access_token, refresh_token } = await oauthClient.getToken(code);
         const token = OryAccessTokenSchema.parse(await oauthClient.decode(access_token));
         const fernUser: FernUser = {
-            type: "user",
-            partner: "ory",
             name: token.ext?.name,
             email: token.ext?.email,
         };

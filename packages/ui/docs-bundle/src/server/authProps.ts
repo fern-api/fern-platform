@@ -1,4 +1,4 @@
-import type { FernUser } from "@fern-ui/fern-docs-auth";
+import type { AuthEdgeConfig, FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { verifyFernJWTConfig } from "./auth/FernJWT";
 
@@ -17,11 +17,17 @@ function withPrefix(token: string, partner: AuthPartner): string {
     return `${partner}_${token}`;
 }
 
-export async function withAuthProps(xFernHost: string, fernToken: string | null | undefined): Promise<AuthProps> {
+export async function withAuthProps(
+    xFernHostOrAuthConfig: string | AuthEdgeConfig,
+    fernToken: string | null | undefined,
+): Promise<AuthProps> {
     if (fernToken == null) {
         throw new Error("Missing fern_token cookie");
     }
-    const config = await getAuthEdgeConfig(xFernHost);
+    const config =
+        typeof xFernHostOrAuthConfig === "string"
+            ? await getAuthEdgeConfig(xFernHostOrAuthConfig)
+            : xFernHostOrAuthConfig;
     const partner =
         config?.type === "oauth2" ? config.partner : config?.type === "basic_token_verification" ? "custom" : "workos";
     const user: FernUser = await verifyFernJWTConfig(fernToken, config);
