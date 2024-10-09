@@ -6,14 +6,13 @@ import { CopyToClipboardButton, FernScrollArea } from "@fern-ui/components";
 import cn from "clsx";
 import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react";
-import { usePlaygroundEnvironment } from "../../atoms";
 import { FernAnchor } from "../../components/FernAnchor";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { useHref } from "../../hooks/useHref";
 import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import { Markdown } from "../../mdx/Markdown";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
-import { useSelectedEnvironment } from "../../playground/utils/select-environment";
+import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
 import { getSlugFromChildren } from "../../util/getSlugFromText";
 import { EndpointAvailabilityTag } from "../endpoints/EndpointAvailabilityTag";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
@@ -59,7 +58,6 @@ interface WebhookContentProps {
 
 const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, isLastInApi }) => {
     const { channel, node, types } = context;
-    const playgroundEnvironment = usePlaygroundEnvironment();
 
     const ref = useRef<HTMLDivElement>(null);
     useApiPageCenterElement(ref, node.slug);
@@ -103,7 +101,7 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, isLastIn
         );
     }, [example?.messages, channel.messages]);
 
-    const selectedEnvironment = useSelectedEnvironment(channel);
+    const [baseUrl, envId] = usePlaygroundBaseUrl(channel);
 
     // TODO: combine with auth headers
     const headers = channel.requestHeaders;
@@ -147,14 +145,15 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, isLastIn
                                         <EndpointUrlWithOverflow
                                             path={channel.path}
                                             method="GET"
-                                            selectedEnvironment={selectedEnvironment}
+                                            baseUrl={baseUrl}
+                                            environmentId={envId}
                                             showEnvironment={true}
                                             className="flex-1"
                                         />
                                         <CopyToClipboardButton
                                             className="-mr-1"
                                             content={() =>
-                                                `${playgroundEnvironment}${ApiDefinition.toColonEndpointPathLiteral(channel.path)}`
+                                                `${baseUrl ?? ""}${ApiDefinition.toColonEndpointPathLiteral(channel.path)}`
                                             }
                                         />
                                     </div>
@@ -327,7 +326,7 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, isLastIn
                                                     <tr>
                                                         <td className="text-left align-top">URL</td>
                                                         <td className="text-left align-top">
-                                                            {`${playgroundEnvironment ?? ""}${example?.path ?? ApiDefinition.toColonEndpointPathLiteral(channel.path)}`}
+                                                            {`${baseUrl ?? ""}${example?.path ?? ApiDefinition.toColonEndpointPathLiteral(channel.path)}`}
                                                         </td>
                                                     </tr>
                                                     <tr>

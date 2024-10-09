@@ -102,6 +102,7 @@ export async function resolveDocsContent({
             console.error("API definition not found", apiReference.apiDefinitionId);
             return;
         }
+
         if (apiReference.paginated && FernNavigation.isApiLeaf(node)) {
             return resolveApiEndpointPage({
                 node,

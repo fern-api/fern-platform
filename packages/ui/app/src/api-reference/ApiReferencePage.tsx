@@ -1,33 +1,31 @@
 import { EMPTY_ARRAY } from "@fern-ui/core-utils";
 import { useSetAtom } from "jotai";
-import { useEffect } from "react";
-import { DEPRECATED_APIS_ATOM, useIsReady } from "../atoms";
+import { WRITE_API_DEFINITION_ATOM, useIsReady } from "../atoms";
 import { ApiPageContext } from "../contexts/api-page";
-import type { ResolvedRootPackage } from "../resolver/types";
+import { DocsContent } from "../resolver/DocsContent";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { ApiPackageContents } from "./ApiPackageContents";
 
 export declare namespace ApiReferencePage {
     export interface Props {
-        initialApi: ResolvedRootPackage;
-        showErrors: boolean;
+        content: DocsContent.ApiReferencePage;
     }
 }
 
-export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({ initialApi, showErrors }) => {
+export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({ content }) => {
     const hydrated = useIsReady();
-    const setDefinitions = useSetAtom(DEPRECATED_APIS_ATOM);
-    useEffect(() => {
-        setDefinitions((prev) => ({ ...prev, [initialApi.api]: initialApi }));
-    }, [initialApi, setDefinitions]);
+
+    const set = useSetAtom(WRITE_API_DEFINITION_ATOM);
+    set(content.apiDefinition);
 
     return (
         <ApiPageContext.Provider value={true}>
             <ApiPackageContents
-                api={initialApi.api}
-                types={initialApi.types}
-                showErrors={showErrors}
-                apiDefinition={initialApi}
+                apiDefinition={content.apiDefinition}
+                showErrors={content.apiReferenceNode.showErrors ?? false}
+                node={content.apiReferenceNode}
+                breadcrumb={content.breadcrumb}
+                mdxs={content.mdxs}
                 isLastInParentPackage={true}
                 anchorIdParts={EMPTY_ARRAY}
             />

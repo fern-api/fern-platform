@@ -20,7 +20,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ co
     const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
     const { isFileForgeHackEnabled } = useFeatureFlags();
     const [oAuthValue, setOAuthValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
-    const baseUrl = usePlaygroundBaseUrl(context.endpoint);
+    const [baseUrl] = usePlaygroundBaseUrl(context.endpoint);
 
     const builder = useMemo(
         () => new PlaygroundCodeSnippetResolverBuilder(context, isSnippetTemplatesEnabled, isFileForgeHackEnabled),

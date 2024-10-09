@@ -10,7 +10,7 @@ import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { PlaygroundEndpointPath } from "./endpoint/PlaygroundEndpointPath";
 import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
 import { buildAuthHeaders } from "./utils";
-import { usePlaygroundBaseUrl, useSelectedEnvironment } from "./utils/select-environment";
+import { usePlaygroundBaseUrl } from "./utils/select-environment";
 
 // TODO: decide if this should be an env variable, and if we should move REST proxy to the same (or separate) cloudflare worker
 const WEBSOCKET_PROXY_URI = "wss://websocket.proxy.ferndocs.com/ws";
@@ -42,10 +42,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
 
     const settings = usePlaygroundSettings();
 
-    const baseUrl = usePlaygroundBaseUrl(context.channel);
-
-    // TODO: is this is kind of weird that we're using the selected environment here?
-    const selectedEnvironment = useSelectedEnvironment(context.channel);
+    const [baseUrl, environmentId] = usePlaygroundBaseUrl(context.channel);
 
     const startSession = useCallback(async () => {
         return new Promise<boolean>((resolve) => {
@@ -148,7 +145,8 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
                                   ? socket.current?.close()
                                   : null
                         }
-                        environment={selectedEnvironment}
+                        environmentId={environmentId}
+                        baseUrl={baseUrl}
                         environmentFilters={settings?.environments}
                         path={context.channel.path}
                         queryParameters={context.channel.queryParameters}
@@ -166,6 +164,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
                                 <Wifi className="size-6 rotate-90" />
                             )
                         }
+                        types={context.types}
                     />
                 </div>
                 <div className="flex min-h-0 flex-1 shrink">

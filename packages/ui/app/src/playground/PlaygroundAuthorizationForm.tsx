@@ -1,5 +1,5 @@
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import {
     FernButton,
     FernCard,
@@ -168,7 +168,7 @@ function FoundOAuthReferencedEndpointForm({
     const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
     const proxyEnvironment = useStandardProxyEnvironment();
     const [formState, setFormState] = usePlaygroundEndpointFormState(context);
-    const baseUrl = usePlaygroundBaseUrl(context.endpoint);
+    const [baseUrl] = usePlaygroundBaseUrl(context.endpoint);
 
     const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
 

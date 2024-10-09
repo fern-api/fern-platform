@@ -1,17 +1,13 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { Fragment, ReactNode } from "react";
 import { Markdown } from "../../mdx/Markdown";
+import { renderTypeShorthand } from "../../type-shorthand";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import {
-    renderDeprecatedTypeShorthand,
-    renderDeprecatedTypeShorthandFormDataProperty,
-} from "../types/type-shorthand/TypeShorthand";
 import { EndpointParameter, EndpointParameterContent } from "./EndpointParameter";
 
 export declare namespace EndpointRequestSection {
@@ -39,23 +35,24 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                     "border-default border-b": request.body.type !== "formData",
                 })}
                 mdx={request.description}
-                fallback={`This endpoint expects ${visitApiDefinition.HttpRequestBodyShape<string>(requestBody.shape, {
+                fallback={`This endpoint expects ${visitDiscriminatedUnion(request.body)._visit<string>({
                     formData: (formData) => {
-                        const fileArrays = formData.properties.filter(
-                            (p): p is ApiDefinition.FormDataRequestProperty.FileArrayProperty => p.type === "fileArray",
+                        const fileArrays = formData.fields.filter(
+                            (p): p is ApiDefinition.FormDataField.Files => p.type === "files",
                         );
-                        const files = formData.properties.filter(
-                            (p): p is ApiDefinition.FormDataRequestProperty.FileProperty => p.type === "file",
+                        const files = formData.fields.filter(
+                            (p): p is ApiDefinition.FormDataField.File_ => p.type === "file",
                         );
                         return `a multipart form${fileArrays.length > 0 || files.length > 1 ? " with multiple files" : files[0] != null ? ` containing ${files[0].isOptional ? "an optional" : "a"} file` : ""}`;
                     },
                     bytes: (bytes) => `binary data${bytes.contentType != null ? ` of type ${bytes.contentType}` : ""}`,
-                    typeShape: (typeShape) => renderDeprecatedTypeShorthand(typeShape, { withArticle: true }, types),
+                    object: (obj) => renderTypeShorthand(obj, { withArticle: true }, types),
+                    alias: (alias) => renderTypeShorthand(alias, { withArticle: true }, types),
                 })}.`}
             />
-            {visitApiDefinition.HttpRequestBodyShape<ReactNode | null>(requestBody.shape, {
+            {visitDiscriminatedUnion(request.body)._visit<ReactNode | null>({
                 formData: (formData) =>
-                    formData.properties.map((p) => (
+                    formData.fields.map((p) => (
                         <Fragment key={p.key}>
                             <TypeComponentSeparator />
                             {visitDiscriminatedUnion(p, "type")._visit<ReactNode | null>({
@@ -63,30 +60,35 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                     <EndpointParameterContent
                                         name={file.key}
                                         description={file.description}
-                                        typeShorthand={renderDeprecatedTypeShorthandFormDataProperty(file)}
+                                        typeShorthand={renderTypeShorthandFormDataField(file)}
                                         anchorIdParts={[...anchorIdParts, file.key]}
                                         slug={slug}
                                         availability={file.availability}
+                                        additionalDescriptions={undefined}
                                     />
                                 ),
-                                fileArray: (fileArray) => (
+                                files: (files) => (
                                     <EndpointParameterContent
-                                        name={fileArray.key}
-                                        description={fileArray.description}
-                                        typeShorthand={renderDeprecatedTypeShorthandFormDataProperty(fileArray)}
-                                        anchorIdParts={[...anchorIdParts, fileArray.key]}
+                                        name={files.key}
+                                        description={files.description}
+                                        typeShorthand={renderTypeShorthandFormDataField(files)}
+                                        anchorIdParts={[...anchorIdParts, files.key]}
                                         slug={slug}
-                                        availability={fileArray.availability}
+                                        availability={files.availability}
+                                        additionalDescriptions={undefined}
                                     />
                                 ),
-                                bodyProperty: (bodyProperty) => (
+                                property: (property) => (
                                     <EndpointParameter
-                                        name={bodyProperty.key}
-                                        description={getDescription(bodyProperty, types)}
-                                        shape={bodyProperty.valueShape}
-                                        anchorIdParts={[...anchorIdParts, bodyProperty.key]}
+                                        name={property.key}
+                                        description={property.description}
+                                        additionalDescriptions={
+                                            ApiDefinition.unwrapReference(property.valueShape, types).descriptions
+                                        }
+                                        shape={property.valueShape}
+                                        anchorIdParts={[...anchorIdParts, property.key]}
                                         slug={slug}
-                                        availability={bodyProperty.availability}
+                                        availability={property.availability}
                                         types={types}
                                     />
                                 ),
@@ -95,9 +97,20 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                         </Fragment>
                     )),
                 bytes: () => null,
-                typeShape: (typeShape) => (
+                object: (obj) => (
                     <TypeReferenceDefinitions
-                        shape={typeShape}
+                        shape={obj}
+                        isCollapsible={false}
+                        onHoverProperty={onHoverProperty}
+                        anchorIdParts={anchorIdParts}
+                        slug={slug}
+                        applyErrorStyles={false}
+                        types={types}
+                    />
+                ),
+                alias: (alias) => (
+                    <TypeReferenceDefinitions
+                        shape={alias}
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
@@ -111,13 +124,13 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
     );
 };
 
-function getDescription(
-    bodyProperty: ApiDefinition.FormDataRequestProperty.BodyProperty,
-    types: Record<string, ApiDefinition.TypeDefinition>,
-): FernDocs.MarkdownText | undefined {
-    if (bodyProperty.description != null) {
-        return bodyProperty.description;
-    }
-
-    return unwrapDescription(bodyProperty.valueShape, types);
+function renderTypeShorthandFormDataField(
+    property: Exclude<ApiDefinition.FormDataField, ApiDefinition.FormDataField.Property>,
+): ReactNode {
+    return (
+        <span className="fern-api-property-meta">
+            <span>{property.type}</span>
+            {property.isOptional ? <span>Optional</span> : <span className="t-danger">Required</span>}
+        </span>
+    );
 }

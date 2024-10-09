@@ -1,6 +1,7 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
+import { WRITE_API_DEFINITION_ATOM } from "../atoms";
 import { ALL_ENVIRONMENTS_ATOM } from "../atoms/environment";
 import { ApiPageContext } from "../contexts/api-page";
 import { DocsContent } from "../resolver/DocsContent";
@@ -14,6 +15,9 @@ export declare namespace ApiEndpointPage {
 }
 
 export const ApiEndpointPage: React.FC<ApiEndpointPage.Props> = ({ content }) => {
+    const set = useSetAtom(WRITE_API_DEFINITION_ATOM);
+    set(content.apiDefinition);
+
     const setEnvironmentIds = useSetAtom(ALL_ENVIRONMENTS_ATOM);
     useEffect(() => {
         const ids: FernNavigation.EnvironmentId[] = [];

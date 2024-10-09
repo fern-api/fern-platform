@@ -1,16 +1,12 @@
-import type { FdrAPI } from "@fern-api/fdr-sdk/client/types";
-import { EMPTY_ARRAY } from "@fern-ui/core-utils";
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
+import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import dynamic from "next/dynamic";
 import { memo, useMemo } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import {
-    ResolvedPackageItem,
-    ResolvedTypeDefinition,
-    ResolvedWithApiDefinition,
-    isResolvedSubpackage,
-} from "../resolver/types";
 import { ApiSectionMarkdownPage } from "./ApiSectionMarkdownPage";
-import { ApiSubpackage } from "./subpackages/ApiSubpackage";
+import { EndpointPair } from "./endpoints/EndpointPair";
 
 const Endpoint = dynamic(() => import("./endpoints/Endpoint").then(({ Endpoint }) => Endpoint), { ssr: true });
 const Webhook = dynamic(() => import("./webhooks/Webhook").then(({ Webhook }) => Webhook), { ssr: true });
@@ -18,82 +14,100 @@ const WebSocket = dynamic(() => import("./web-socket/WebSocket").then(({ WebSock
 
 export declare namespace ApiPackageContents {
     export interface Props {
-        api: FdrAPI.ApiDefinitionId;
-        types: Record<string, ResolvedTypeDefinition>;
+        breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+        apiDefinition: ApiDefinition;
+        node: FernNavigation.ApiReferenceNode | FernNavigation.ApiPackageNode;
+        mdxs: Record<FernNavigation.NodeId, FernDocs.MarkdownText>;
         showErrors: boolean;
-        apiDefinition: ResolvedWithApiDefinition;
         isLastInParentPackage: boolean;
         anchorIdParts: readonly string[];
-        breadcrumb?: readonly string[];
     }
 }
 
 const UnmemoizedApiPackageContents: React.FC<ApiPackageContents.Props> = ({
-    api,
-    types,
+    mdxs,
+    breadcrumb,
     showErrors,
     apiDefinition,
+    node,
     isLastInParentPackage,
     anchorIdParts,
-    breadcrumb = EMPTY_ARRAY,
 }) => {
-    const { items } = apiDefinition;
-    const subpackageTitle = isResolvedSubpackage(apiDefinition) ? apiDefinition.title : undefined;
-    const currentBreadcrumbs = useMemo(
-        () => (subpackageTitle != null ? [...breadcrumb, subpackageTitle] : breadcrumb),
-        [breadcrumb, subpackageTitle],
+    const items = useMemo(
+        () =>
+            node.children.filter(
+                (item): item is Exclude<FernNavigation.ApiPackageChild, FernNavigation.LinkNode> =>
+                    item.type !== "link",
+            ),
+        [node.children],
     );
 
     return (
         <>
-            {items.map((item, idx) => (
-                <FernErrorBoundary component="ApiPackageContents" key={item.slug}>
-                    {ResolvedPackageItem.visit(item, {
-                        endpoint: (endpoint) => (
-                            <Endpoint
-                                api={api}
-                                showErrors={showErrors}
-                                endpoint={endpoint}
-                                isLastInApi={isLastInParentPackage && idx === items.length - 1}
-                                types={types}
-                            />
-                        ),
-                        webhook: (webhook) => (
-                            <Webhook
-                                key={webhook.id}
-                                webhook={webhook}
-                                isLastInApi={isLastInParentPackage && idx === items.length - 1}
-                                types={types}
-                            />
-                        ),
-                        websocket: (websocket) => (
-                            <WebSocket
-                                api={api}
-                                websocket={websocket}
-                                isLastInApi={isLastInParentPackage && idx === items.length - 1}
-                                types={types}
-                            />
-                        ),
-                        subpackage: (subpackage) => (
-                            <ApiSubpackage
-                                api={api}
-                                types={types}
-                                showErrors={showErrors}
-                                apiDefinition={subpackage}
-                                isLastInParentPackage={isLastInParentPackage && idx === items.length - 1}
-                                anchorIdParts={anchorIdParts}
-                                breadcrumb={currentBreadcrumbs}
-                            />
-                        ),
-                        page: (page) => (
-                            <ApiSectionMarkdownPage
-                                page={page}
-                                hideBottomSeparator={isLastInParentPackage && idx === items.length - 1}
-                            />
-                        ),
-                    })}
-                </FernErrorBoundary>
-            ))}
+            {FernNavigation.hasMarkdown(node) && (
+                <ApiSectionMarkdownPage node={node} mdxs={mdxs} hideBottomSeparator={false} />
+            )}
+
+            {items.map((item, idx) => {
+                // TODO: memoize breadcrumb?
+                const childBreadcrumb = [...breadcrumb, ...FernNavigation.utils.createBreadcrumb([node])];
+                const isLastInApi = isLastInParentPackage && idx === node.children.length - 1;
+
+                return (
+                    <FernErrorBoundary component="ApiPackageContents" key={item.id}>
+                        {visitDiscriminatedUnion(item)._visit({
+                            endpoint: (endpoint) => (
+                                <Endpoint
+                                    node={endpoint}
+                                    apiDefinition={apiDefinition}
+                                    isLastInApi={isLastInApi}
+                                    showErrors={showErrors}
+                                    breadcrumb={childBreadcrumb}
+                                />
+                            ),
+                            webhook: (webhook) => (
+                                <Webhook
+                                    node={webhook}
+                                    apiDefinition={apiDefinition}
+                                    isLastInApi={isLastInApi}
+                                    breadcrumb={childBreadcrumb}
+                                />
+                            ),
+                            webSocket: (webSocket) => (
+                                <WebSocket
+                                    node={webSocket}
+                                    apiDefinition={apiDefinition}
+                                    isLastInApi={isLastInApi}
+                                    breadcrumb={childBreadcrumb}
+                                />
+                            ),
+                            apiPackage: (pkg) => (
+                                <ApiPackageContents
+                                    mdxs={mdxs}
+                                    apiDefinition={apiDefinition}
+                                    node={pkg}
+                                    showErrors={showErrors}
+                                    breadcrumb={childBreadcrumb}
+                                    isLastInParentPackage={isLastInApi}
+                                    anchorIdParts={anchorIdParts}
+                                />
+                            ),
+                            page: (page) => (
+                                <ApiSectionMarkdownPage node={page} mdxs={mdxs} hideBottomSeparator={isLastInApi} />
+                            ),
+                            endpointPair: (pair) => (
+                                <EndpointPair
+                                    apiDefinition={apiDefinition}
+                                    showErrors={showErrors}
+                                    node={pair}
+                                    breadcrumb={breadcrumb}
+                                    isLastInApi={true}
+                                />
+                            ),
+                        })}
+                    </FernErrorBoundary>
+                );
+            })}
         </>
     );
 };

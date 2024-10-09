@@ -1,11 +1,12 @@
-import {
-    Environment,
+import type {
     EnvironmentId,
     HttpMethod,
     ObjectProperty,
     PathPart,
-    buildRequestUrl,
+    TypeDefinition,
+    TypeId,
 } from "@fern-api/fdr-sdk/api-definition";
+import { buildRequestUrl, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
 import { CopyToClipboardButton, FernButton } from "@fern-ui/components";
 import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
@@ -14,7 +15,6 @@ import cn from "clsx";
 import { Xmark } from "iconoir-react";
 import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment, ReactNode } from "react";
-import { usePlaygroundEnvironment } from "../../atoms";
 import { useAllEnvironmentIds } from "../../atoms/environment";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
@@ -23,7 +23,8 @@ import { PlaygroundRequestFormState } from "../types";
 
 interface PlaygroundEndpointPathProps {
     method: HttpMethod | undefined;
-    environment: Environment | undefined;
+    environmentId: EnvironmentId | undefined;
+    baseUrl: string | undefined;
     environmentFilters: EnvironmentId[] | undefined;
     formState: PlaygroundRequestFormState;
     path: PathPart[];
@@ -31,10 +32,12 @@ interface PlaygroundEndpointPathProps {
     sendRequest: () => void;
     sendRequestButtonLabel?: string;
     sendRequestIcon?: ReactNode;
+    types: Record<TypeId, TypeDefinition>;
 }
 
 export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
-    environment,
+    environmentId,
+    baseUrl,
     environmentFilters,
     method,
     formState,
@@ -43,10 +46,10 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
     sendRequest,
     sendRequestButtonLabel,
     sendRequestIcon,
+    types,
 }) => {
     const environmentIds = useAllEnvironmentIds();
     const isEditingEnvironment = useBooleanState(false);
-    const playgroundEnvironment = usePlaygroundEnvironment();
 
     return (
         <div className="playground-endpoint">
@@ -54,17 +57,16 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                 {method != null && <HttpMethodTag method={method} className="playground-endpoint-method" />}
                 <span
                     className={cn(
-                        environment != null && environmentIds.length > 1
-                            ? "playground-endpoint-url-with-switcher"
-                            : "playground-endpoint-url",
+                        environmentIds.length > 1 ? "playground-endpoint-url-with-switcher" : "playground-endpoint-url",
                         "flex flex-row w-full",
                         "items-baseline",
                     )}
                 >
                     <span className="playground-endpoint-baseurl max-sm:hidden">
-                        {environment != null && (
+                        {environmentIds.length > 1 && (
                             <MaybeEnvironmentDropdown
-                                selectedEnvironment={environment}
+                                environmentId={environmentId}
+                                baseUrl={baseUrl}
                                 environmentFilters={environmentFilters}
                                 small
                                 urlTextStyle="playground-endpoint-baseurl max-sm:hidden"
@@ -101,7 +103,8 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                         queryParameters
                             .filter((queryParameter) => {
                                 const stateValue = formState.queryParameters[queryParameter.key];
-                                if (stateValue == null && queryParameter.valueShape.type === "optional") {
+                                const unwrapped = unwrapReference(queryParameter.valueShape, types);
+                                if (stateValue == null && unwrapped.isOptional) {
                                     return false;
                                 }
                                 return true;
@@ -126,7 +129,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                             path,
                             pathParameters: formState.pathParameters,
                             queryParameters: formState.queryParameters,
-                            baseUrl: playgroundEnvironment ?? environment?.baseUrl,
+                            baseUrl,
                         })
                     }
                 />

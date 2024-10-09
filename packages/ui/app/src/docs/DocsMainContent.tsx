@@ -6,9 +6,10 @@ import { useFeatureFlags, useIsReady } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { DocsContent } from "../resolver/DocsContent";
 
-const MdxContent = dynamic(() => import("../mdx/MdxContent").then(({ MdxContent }) => MdxContent), {
-    ssr: true,
-});
+const CustomMarkdownPage = dynamic(
+    () => import("./CustomMarkdownPage").then(({ CustomMarkdownPage }) => CustomMarkdownPage),
+    { ssr: true },
+);
 
 const ApiReferencePage = dynamic(
     () => import("../api-reference/ApiReferencePage").then(({ ApiReferencePage }) => ApiReferencePage),
@@ -36,7 +37,7 @@ const FeedbackPopover = dynamic(
 
 const DocsMainContentRenderer = memo(({ content }: { content: DocsContent }) => {
     return visitDiscriminatedUnion(content)._visit({
-        "custom-markdown-page": (content) => <MdxContent mdx={content.mdx} />,
+        "custom-markdown-page": (content) => <CustomMarkdownPage content={content} />,
         "api-reference-page": (content) => <ApiReferencePage content={content} />,
         "api-endpoint-page": (content) => <ApiEndpointPage content={content} />,
         changelog: (content) => <ChangelogPage content={content} />,

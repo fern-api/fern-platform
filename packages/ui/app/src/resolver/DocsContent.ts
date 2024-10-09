@@ -57,6 +57,7 @@ export declare namespace DocsContent {
     interface ApiReferencePage {
         type: "api-reference-page";
         slug: FernNavigation.Slug;
+        title?: string;
         mdxs: Record<FernNavigation.NodeId, FernDocs.MarkdownText>;
 
         // TODO: the api reference node is probably duplicated in the initial props

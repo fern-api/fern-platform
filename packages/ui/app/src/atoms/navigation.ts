@@ -70,16 +70,6 @@ SIDEBAR_ROOT_NODE_ATOM.debugLabel = "SIDEBAR_ROOT_NODE_ATOM";
 export const RESOLVED_PATH_ATOM = atom<DocsContent>((get) => get(DOCS_ATOM).content);
 RESOLVED_PATH_ATOM.debugLabel = "RESOLVED_PATH_ATOM";
 
-export const RESOLVED_PATH_SLUG_ATOM = atom((get) => get(RESOLVED_PATH_ATOM).slug);
-
-export const RESOLVED_PATH_TITLE_ATOM = atom((get) => {
-    const content = get(RESOLVED_PATH_ATOM);
-    if (content.type === "api-endpoint-page") {
-        return content.item.title;
-    }
-    return content.title;
-});
-
 export const NEIGHBORS_ATOM = atom((get) => {
     const content = get(RESOLVED_PATH_ATOM);
     if (content.type === "api-reference-page" || content.type === "changelog") {
@@ -93,7 +83,9 @@ export const NEIGHBORS_ATOM = atom((get) => {
 
 export const RESOLVED_API_DEFINITION_ATOM = atom((get) => {
     const content = get(RESOLVED_PATH_ATOM);
-    return content.type === "api-endpoint-page" || content.type === "api-reference-page" ? content.api : undefined;
+    return content.type === "api-endpoint-page" || content.type === "api-reference-page"
+        ? content.apiDefinition
+        : undefined;
 });
 
 export const NAVIGATION_NODES_ATOM = atom<FernNavigation.NodeCollector>((get) => {

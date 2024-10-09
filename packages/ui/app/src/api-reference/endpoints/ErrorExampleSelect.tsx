@@ -11,7 +11,7 @@ export declare namespace ErrorExampleSelect {
     export interface Props {
         selectedError: ApiDefinition.ErrorResponse | undefined;
         selectedErrorExample: ApiDefinition.ErrorExample | undefined;
-        errors: ApiDefinition.ErrorResponse[];
+        errors: readonly ApiDefinition.ErrorResponse[];
         setSelectedErrorAndExample: (
             error: ApiDefinition.ErrorResponse | undefined,
             example: ApiDefinition.ErrorExample | undefined,

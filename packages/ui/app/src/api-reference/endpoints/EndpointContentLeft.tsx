@@ -5,7 +5,6 @@ import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo, useMemo } from "react";
 import { useFeatureFlags } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
-import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { EndpointError } from "./EndpointError";
@@ -280,7 +279,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 <EndpointSection title="Response" anchorIdParts={RESPONSE} slug={node.slug}>
                     <EndpointResponseSection
                         response={endpoint.response}
-                        exampleResponseBody={mergeEndpointSchemaWithExample(endpoint, example).responseBody}
+                        exampleResponseBody={example.responseBody}
                         onHoverProperty={onHoverResponseProperty}
                         anchorIdParts={RESPONSE_BODY}
                         slug={node.slug}

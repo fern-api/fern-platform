@@ -1,15 +1,14 @@
-import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useAtom, useSetAtom } from "jotai";
-import { MutableRefObject, ReactElement } from "react";
+import { ReactElement } from "react";
 import { FERN_STREAM_ATOM, SLUG_ATOM } from "../../atoms";
 import { StreamingEnabledToggle } from "./StreamingEnabledToggle";
 
 export function EndpointStreamingEnabledToggle({
-    endpoint,
-    container,
+    node,
 }: {
-    endpoint: ApiDefinition.EndpointDefinition;
-    container: MutableRefObject<HTMLElement | null>;
+    node: FernNavigation.EndpointPairNode;
+    // container: MutableRefObject<HTMLElement | null>;
 }): ReactElement {
     const [isStream, setIsStream] = useAtom(FERN_STREAM_ATOM);
     const setSlug = useSetAtom(SLUG_ATOM);
@@ -19,13 +18,12 @@ export function EndpointStreamingEnabledToggle({
             value={isStream}
             setValue={(value) => {
                 setIsStream(value);
-                const selectedEndpoint = value && endpoint.stream != null ? endpoint.stream : endpoint;
-                setSlug(selectedEndpoint.slug);
-                setTimeout(() => {
-                    if (container.current != null) {
-                        container.current.scrollIntoView({ behavior: "instant" });
-                    }
-                }, 0);
+                setSlug(value ? node.stream.slug : node.nonStream.slug);
+                // setTimeout(() => {
+                //     if (container.current != null) {
+                //         container.current.scrollIntoView({ behavior: "instant" });
+                //     }
+                // }, 0);
             }}
         />
     );

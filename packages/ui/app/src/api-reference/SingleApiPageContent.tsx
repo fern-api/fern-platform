@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { ReactElement } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import type { DocsContent } from "../resolver/DocsContent";
+import { EndpointPair } from "./endpoints/EndpointPair";
 
 const Endpoint = dynamic(() => import("./endpoints/Endpoint").then(({ Endpoint }) => Endpoint), { ssr: true });
 const Webhook = dynamic(() => import("./webhooks/Webhook").then(({ Webhook }) => Webhook), { ssr: true });
@@ -18,7 +19,6 @@ export function SingleApiPageContent({ content }: SingleApiPageContentProps): Re
             {visitDiscriminatedUnion(content.item)._visit({
                 endpoint: (endpoint) => (
                     <Endpoint
-                        api={endpoint.apiDefinitionId}
                         showErrors={content.showErrors}
                         node={endpoint}
                         isLastInApi={true}
@@ -42,9 +42,15 @@ export function SingleApiPageContent({ content }: SingleApiPageContentProps): Re
                         breadcrumb={content.breadcrumb}
                     />
                 ),
-
-                // TODO: implement endpoint pair
-                endpointPair: () => null,
+                endpointPair: (pair) => (
+                    <EndpointPair
+                        apiDefinition={content.apiDefinition}
+                        showErrors={content.showErrors}
+                        node={pair}
+                        breadcrumb={content.breadcrumb}
+                        isLastInApi={true}
+                    />
+                ),
             })}
         </FernErrorBoundary>
     );

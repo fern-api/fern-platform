@@ -6,38 +6,23 @@ import { EndpointContent } from "./EndpointContent";
 
 export declare namespace Endpoint {
     export interface Props {
-        api: FernNavigation.ApiDefinitionId;
         showErrors: boolean;
         node: FernNavigation.EndpointNode;
         apiDefinition: ApiDefinition;
         isLastInApi: boolean;
         breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+        streamToggle?: React.ReactElement;
     }
 }
 
 const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
-    api,
     showErrors,
     node,
     isLastInApi,
     apiDefinition,
     breadcrumb,
+    streamToggle,
 }) => {
-    // const [isStream, setStream] = useAtom(FERN_STREAM_ATOM);
-    // const content = useDocsContent();
-
-    // const endpointSlug = endpoint.stream != null && isStream ? endpoint.stream.slug : endpoint.slug;
-
-    // useEffect(() => {
-    //     if (endpoint.stream != null) {
-    //         if (endpoint.slug === content.slug) {
-    //             setStream(false);
-    //         } else if (endpoint.stream.slug === content.slug) {
-    //             setStream(true);
-    //         }
-    //     }
-    // }, [endpoint.slug, endpoint.stream, content.slug, setStream]);
-
     const context = useMemo(() => createEndpointContext(node, apiDefinition), [node, apiDefinition]);
 
     // TODO: this is a temporary fix to only SSG the content that is requested by the requested route.
@@ -56,10 +41,10 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
     return (
         <EndpointContent
             breadcrumb={breadcrumb}
-            api={api}
             showErrors={showErrors}
             hideBottomSeparator={isLastInApi}
             context={context}
+            streamToggle={streamToggle}
         />
     );
 };

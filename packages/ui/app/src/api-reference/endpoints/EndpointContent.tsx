@@ -23,6 +23,7 @@ import {
 import { useHref } from "../../hooks/useHref";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
+import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContentHeader } from "./EndpointContentHeader";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
 
@@ -33,11 +34,11 @@ const EndpointContentCodeSnippets = dynamic(
 
 export declare namespace EndpointContent {
     export interface Props {
-        api: FernNavigation.ApiDefinitionId;
         showErrors: boolean;
         context: EndpointContext;
         hideBottomSeparator?: boolean;
         breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+        streamToggle?: React.ReactElement;
     }
 }
 
@@ -71,13 +72,10 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
 const paddingAtom = atom((get) => (get(MOBILE_SIDEBAR_ENABLED_ATOM) ? 0 : 26));
 
 export const EndpointContent = memo<EndpointContent.Props>((props) => {
-    const { api, showErrors, context, hideBottomSeparator = false, breadcrumb } = props;
+    const { showErrors, context, hideBottomSeparator = false, breadcrumb } = props;
     const { node, endpoint } = context;
-    // const isStream = useAtomValue(FERN_STREAM_ATOM);
-    // const endpoint = isStream && endpointProp.stream != null ? endpointProp.stream : endpointProp;
-
     const ref = useRef<HTMLDivElement>(null);
-    // useApiPageCenterElement(ref, endpoint.slug);
+    useApiPageCenterElement(ref, node.slug);
 
     const isInViewport =
         useInView(ref, {
@@ -271,15 +269,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                     "border-default border-b mb-px pb-12": !hideBottomSeparator,
                 })}
             >
-                <EndpointContentHeader
-                    context={context}
-                    breadcrumb={breadcrumb}
-                    // streamToggle={
-                    //     endpointProp.stream != null && (
-                    //         <EndpointStreamingEnabledToggle endpoint={endpointProp} container={ref} />
-                    //     )
-                    // }
-                />
+                <EndpointContentHeader context={context} breadcrumb={breadcrumb} streamToggle={props.streamToggle} />
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <div
                         className="flex min-w-0 max-w-content-width flex-1 flex-col pt-8 md:py-8"
@@ -309,7 +299,6 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                     >
                         {isInViewport && (
                             <EndpointContentCodeSnippets
-                                api={api}
                                 endpoint={endpoint}
                                 example={selectedClient.exampleCall}
                                 clients={clients}

@@ -5,13 +5,10 @@ import { FernButton, FernButtonGroup, FernScrollArea } from "@fern-ui/components
 import { EMPTY_ARRAY, EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import { ReactNode, memo, useMemo, useRef, useState } from "react";
-import { usePlaygroundEnvironment } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { StatusCodeTag, statusCodeToIntent } from "../../components/StatusCodeTag";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
-import { useSelectedEnvironment } from "../../playground/utils/select-environment";
-import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
-import { resolveEnvironmentUrlInCodeSnippet } from "../../resolver/types";
+import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
 import { AudioExample } from "../examples/AudioExample";
 import { CodeSnippetExample, JsonCodeSnippetExample } from "../examples/CodeSnippetExample";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
@@ -26,7 +23,6 @@ import { ErrorExampleSelect } from "./ErrorExampleSelect";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
-        api: string;
         node: FernNavigation.EndpointNode;
         endpoint: ApiDefinition.EndpointDefinition;
         example: ApiDefinition.ExampleEndpointCall;
@@ -90,14 +86,13 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
         return internalSelectedErrorExample;
     }, [internalSelectedErrorExample, selectedError]);
 
-    const exampleWithSchema = useMemo(() => mergeEndpointSchemaWithExample(endpoint, example), [endpoint, example]);
     const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
 
     const successTitle =
-        exampleWithSchema.responseBody != null
-            ? visitDiscriminatedUnion(exampleWithSchema.responseBody, "type")._visit<ReactNode>({
-                  json: (value) => renderResponseTitle(value.statusCode, endpoint.method),
-                  filename: (value) => renderResponseTitle(value.statusCode, endpoint.method),
+        example.responseBody != null
+            ? visitDiscriminatedUnion(example.responseBody)._visit<ReactNode>({
+                  json: () => renderResponseTitle(example.responseStatusCode, endpoint.method),
+                  filename: () => renderResponseTitle(example.responseStatusCode, endpoint.method),
                   stream: () => "Streamed Response",
                   sse: () => "Server-Sent Events",
                   _other: () => "Response",
@@ -117,8 +112,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
         <span className="text-sm t-muted">{successTitle}</span>
     );
 
-    const selectedEnvironment = useSelectedEnvironment(endpoint);
-    const playgroundEnvironment = usePlaygroundEnvironment();
+    const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
 
     return (
         <div className="fern-endpoint-code-snippets" ref={ref}>
@@ -148,7 +142,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     <EndpointUrlWithOverflow
                         path={endpoint.path}
                         method={endpoint.method}
-                        selectedEnvironment={selectedEnvironment}
+                        environmentId={environmentId}
+                        baseUrl={baseUrl}
                     />
                 }
                 onClick={(e) => {
@@ -171,13 +166,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         ) : undefined}
                     </>
                 }
-                code={resolveEnvironmentUrlInCodeSnippet(
-                    endpoint,
-                    requestCodeSnippet,
-                    playgroundEnvironment,
-                    undefined,
-                    true,
-                )}
+                code={resolveEnvironmentUrlInCodeSnippet(endpoint, requestCodeSnippet, baseUrl)}
                 language={selectedClient.language}
                 hoveredPropertyPath={selectedClient.language === "curl" ? hoveredRequestPropertyPath : undefined}
                 json={requestCurlJson}
@@ -196,9 +185,9 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     intent={statusCodeToIntent(selectedError.statusCode)}
                 />
             )}
-            {exampleWithSchema.responseBody != null &&
+            {example.responseBody != null &&
                 selectedError == null &&
-                visitDiscriminatedUnion(exampleWithSchema.responseBody, "type")._visit<ReactNode>({
+                visitDiscriminatedUnion(example.responseBody)._visit<ReactNode>({
                     json: (value) => (
                         <JsonCodeSnippetExample
                             title={errorSelector}
@@ -260,3 +249,12 @@ function renderResponseTitle(statusCode: number, method?: APIV1Read.HttpMethod) 
         </span>
     );
 }
+
+const resolveEnvironmentUrlInCodeSnippet = (
+    endpoint: ApiDefinition.EndpointDefinition,
+    requestCodeSnippet: string,
+    baseUrl: string | undefined,
+): string => {
+    const urlToReplace = endpoint.environments?.find((env) => requestCodeSnippet.includes(env.baseUrl))?.baseUrl;
+    return urlToReplace && baseUrl ? requestCodeSnippet.replace(urlToReplace, baseUrl) : requestCodeSnippet;
+};
