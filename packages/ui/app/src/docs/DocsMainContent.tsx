@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { Fragment, ReactElement, memo } from "react";
 import { useFeatureFlags, useIsReady } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { DocsContent } from "../resolver/DocsContent";
+import type { DocsContent } from "../resolver/DocsContent";
 
 const CustomMarkdownPage = dynamic(
     () => import("./CustomMarkdownPage").then(({ CustomMarkdownPage }) => CustomMarkdownPage),

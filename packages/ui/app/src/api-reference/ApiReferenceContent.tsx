@@ -104,4 +104,4 @@ const UnmemoizedApiReferenceContent: React.FC<ApiReferenceContentProps> = ({
     );
 };
 
-export const ApiReferenceContent = memo(UnmemoizedApiReferenceContent);
+export const ApiReferenceContent = memo(UnmemoizedApiReferenceContent, (prev, next) => prev.node.id === next.node.id);
