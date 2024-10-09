@@ -66,6 +66,7 @@ jobs:
           npm publish --access public
           echo $working_dir/packages/fdr-sdk
           cd $working_dir/packages/fdr-sdk
+          cat package.json
           mv package.json package.json.tmp
           workspace_replace="s/workspace:*/${git_version}/"
           cat package.json.tmp| sed "${version_replace}" > package.json
