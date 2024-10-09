@@ -2,15 +2,18 @@ import type { FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { verifyFernJWTConfig } from "./auth/FernJWT";
 
+export type AuthPartner = "workos" | "ory" | "webflow" | "custom";
+
 export interface AuthProps {
     token: string;
     user: FernUser;
+    partner: AuthPartner;
 }
 
 /**
  * In Venus, workos tokens are prefixed with "workos_" to differentiate them from "fern_" tokens.
  */
-function withPrefix(token: string, partner: FernUser["partner"]): string {
+function withPrefix(token: string, partner: AuthPartner): string {
     return `${partner}_${token}`;
 }
 
@@ -19,12 +22,15 @@ export async function withAuthProps(xFernHost: string, fernToken: string | null 
         throw new Error("Missing fern_token cookie");
     }
     const config = await getAuthEdgeConfig(xFernHost);
+    const partner =
+        config?.type === "oauth2" ? config.partner : config?.type === "basic_token_verification" ? "custom" : "workos";
     const user: FernUser = await verifyFernJWTConfig(fernToken, config);
-    const token = withPrefix(fernToken, user.partner);
+    const token = withPrefix(fernToken, partner);
 
     const authProps: AuthProps = {
         token,
         user,
+        partner,
     };
 
     return authProps;
