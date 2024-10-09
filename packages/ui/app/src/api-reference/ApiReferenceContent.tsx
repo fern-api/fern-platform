@@ -2,9 +2,10 @@ import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { dfs } from "@fern-api/fdr-sdk/traversers";
-import { memo, useEffect, useMemo } from "react";
+import { ReactElement, memo, useEffect, useMemo } from "react";
 import { useIsReady } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
+import { useIsLocalPreview } from "../contexts/local-preview";
 import { scrollToRoute } from "../util/anchor";
 import { ApiPackageContent, ApiPackageContentNode } from "./ApiPackageContent";
 
@@ -104,4 +105,11 @@ const UnmemoizedApiReferenceContent: React.FC<ApiReferenceContentProps> = ({
     );
 };
 
-export const ApiReferenceContent = memo(UnmemoizedApiReferenceContent, (prev, next) => prev.node.id === next.node.id);
+const MemoizedApiReferenceContent = memo(UnmemoizedApiReferenceContent, (prev, next) => prev.node.id === next.node.id);
+
+export function ApiReferenceContent(props: ApiReferenceContentProps): ReactElement {
+    const isLocalPreview = useIsLocalPreview();
+    // do not memoize when in local preview mode to ensure that the page is re-rendered on every change
+    const Component = isLocalPreview ? UnmemoizedApiReferenceContent : MemoizedApiReferenceContent;
+    return <Component {...props} />;
+}

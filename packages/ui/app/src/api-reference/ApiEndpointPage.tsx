@@ -2,7 +2,7 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { WRITE_API_DEFINITION_ATOM, useNavigationNodes } from "../atoms";
+import { useNavigationNodes, useWriteApiDefinitionAtom } from "../atoms";
 import { ALL_ENVIRONMENTS_ATOM } from "../atoms/environment";
 import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbors";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
@@ -18,8 +18,7 @@ export declare namespace ApiEndpointPage {
 }
 
 export const ApiEndpointPage: React.FC<ApiEndpointPage.Props> = ({ content }) => {
-    const set = useSetAtom(WRITE_API_DEFINITION_ATOM);
-    useEffect(() => set(content.apiDefinition), [content.apiDefinition, set]);
+    useWriteApiDefinitionAtom(content.apiDefinition);
 
     // TODO: Why are we doing this here?
     const setEnvironmentIds = useSetAtom(ALL_ENVIRONMENTS_ATOM);

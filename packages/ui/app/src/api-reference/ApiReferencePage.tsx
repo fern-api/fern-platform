@@ -1,6 +1,4 @@
-import { useSetAtom } from "jotai";
-import { useEffect } from "react";
-import { WRITE_API_DEFINITION_ATOM, useIsReady, useNavigationNodes } from "../atoms";
+import { useIsReady, useNavigationNodes, useWriteApiDefinitionAtom } from "../atoms";
 import { ApiPageContext } from "../contexts/api-page";
 import { DocsContent } from "../resolver/DocsContent";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
@@ -15,8 +13,7 @@ export declare namespace ApiReferencePage {
 export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({ content }) => {
     const hydrated = useIsReady();
 
-    const set = useSetAtom(WRITE_API_DEFINITION_ATOM);
-    useEffect(() => set(content.apiDefinition), [content.apiDefinition, set]);
+    useWriteApiDefinitionAtom(content.apiDefinition);
 
     const node = useNavigationNodes().get(content.apiReferenceNodeId);
 

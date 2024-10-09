@@ -1,5 +1,5 @@
 import { APIV1Read } from "../../client";
-import { join } from "../join";
+import { joiner } from "../join";
 import * as Latest from "../latest";
 
 const PRIMITIVE_SHAPE: Latest.TypeReference.Primitive = {
@@ -276,7 +276,7 @@ const api3: Latest.ApiDefinition = {
 
 describe("join", () => {
     it("should prune endpoint1 and its types", () => {
-        const pruned = join(api1, api2, api3);
+        const pruned = joiner()(api1, api2, api3);
 
         expect(Object.keys(pruned.endpoints)).toStrictEqual([endpoint1.id, endpoint2.id]);
         expect(Object.keys(pruned.websockets)).toStrictEqual([websocket1.id]);
