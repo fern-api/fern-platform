@@ -33,7 +33,7 @@
     "@fern-fern/proxy-sdk": "0.0.26",
     "@fern-ui/chatbot": "workspace:*",
     "@fern-ui/components": "workspace:*",
-    "@fern-ui/core-utils": "workspace:*",
+    "@fern-api/ui-core-utils": "workspace:*",
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/fern-docs-auth": "workspace:*",
     "@fern-ui/fern-docs-edge-config": "workspace:*",

@@ -1,5 +1,5 @@
 import { FormDataField, HttpRequestBodyShape } from "@fern-api/fdr-sdk/api-definition";
-import { assertNever, isNonNullish } from "@fern-ui/core-utils";
+import { assertNever, isNonNullish } from "@fern-api/ui-core-utils";
 import { compact } from "lodash-es";
 import { blobToDataURL } from "../fetch-utils/blobToDataURL";
 import { PlaygroundFormStateBody, ProxyRequest, SerializableFile, SerializableFormDataEntryValue } from "../types";

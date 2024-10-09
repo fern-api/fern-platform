@@ -1,5 +1,5 @@
-import titleCase from "@fern-ui/core-utils/titleCase";
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import titleCase from "@fern-api/ui-core-utils/titleCase";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { noop } from "ts-essentials";
 import urljoin from "url-join";
 import { FernNavigation } from "../../../..";

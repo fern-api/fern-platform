@@ -2,7 +2,7 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { EMPTY_ARRAY } from "@fern-ui/core-utils";
+import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import cn from "clsx";
 import { compact } from "lodash-es";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";

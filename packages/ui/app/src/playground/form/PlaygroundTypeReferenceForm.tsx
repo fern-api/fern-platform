@@ -5,8 +5,8 @@ import {
     unwrapObjectType,
     unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { FernInput, FernNumericInput, FernSwitch, FernTextarea } from "@fern-ui/components";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { ReactElement, memo, useCallback } from "react";
 import { useFeatureFlags } from "../../atoms";
 import { WithLabel } from "../WithLabel";

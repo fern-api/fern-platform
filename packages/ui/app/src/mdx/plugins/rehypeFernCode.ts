@@ -1,4 +1,4 @@
-import { unknownToString } from "@fern-ui/core-utils";
+import { unknownToString } from "@fern-api/ui-core-utils";
 import type { Element, Root } from "hast";
 import type { MdxJsxAttribute, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import rangeParser from "parse-numeric-range";

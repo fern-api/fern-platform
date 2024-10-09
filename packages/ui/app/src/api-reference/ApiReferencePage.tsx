@@ -1,4 +1,4 @@
-import { EMPTY_ARRAY } from "@fern-ui/core-utils";
+import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { useSetAtom } from "jotai";
 import { WRITE_API_DEFINITION_ATOM, useIsReady } from "../atoms";
 import { ApiPageContext } from "../contexts/api-page";

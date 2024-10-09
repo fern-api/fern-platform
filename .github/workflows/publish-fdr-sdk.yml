@@ -62,8 +62,10 @@ jobs:
           version_replace="s/0.0.0/${git_version}/"
           cat package.json.tmp| sed "${version_replace}" > package.json
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          rm -rf package.json.tmp
           npm publish --access public
           cd $working_dir/packages/fdr-sdk
+          mv package.json package.json.tmp
           workspace_replace="s/workspace:*/${git_version}/"
           cat package.json.tmp| sed "${version_replace}" > package.json
           cat package.json | sed "${workspace_replace}" > package.json

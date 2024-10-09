@@ -456,7 +456,7 @@ importers:
 
   packages/commons/loadable:
     dependencies:
-      '@fern-ui/core-utils':
+      '@fern-api/ui-core-utils':
         specifier: workspace:*
         version: link:../core-utils
     devDependencies:
@@ -616,7 +616,7 @@ importers:
 
   packages/commons/react/react-commons:
     dependencies:
-      '@fern-ui/core-utils':
+      '@fern-api/ui-core-utils':
         specifier: workspace:*
         version: link:../../core-utils
       fastdom:
@@ -723,7 +723,7 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
-      '@fern-ui/core-utils':
+      '@fern-api/ui-core-utils':
         specifier: workspace:*
         version: link:../core-utils
     devDependencies:
@@ -808,7 +808,7 @@ importers:
 
   packages/fdr-sdk:
     dependencies:
-      '@fern-ui/core-utils':
+      '@fern-api/ui-core-utils':
         specifier: workspace:*
         version: link:../commons/core-utils
       '@ungap/structured-clone':
@@ -912,12 +912,12 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../fdr-sdk
+      '@fern-api/ui-core-utils':
+        specifier: workspace:*
+        version: link:../commons/core-utils
       '@fern-fern/vercel':
         specifier: 0.0.7
         version: 0.0.7
-      '@fern-ui/core-utils':
-        specifier: workspace:*
-        version: link:../commons/core-utils
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.12
@@ -1055,15 +1055,15 @@ importers:
       '@fern-api/template-resolver':
         specifier: workspace:*
         version: link:../../template-resolver
+      '@fern-api/ui-core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
       '@fern-ui/chatbot':
         specifier: workspace:*
         version: link:../chatbot
       '@fern-ui/components':
         specifier: workspace:*
         version: link:../components
-      '@fern-ui/core-utils':
-        specifier: workspace:*
-        version: link:../../commons/core-utils
       '@fern-ui/fdr-utils':
         specifier: workspace:*
         version: link:../../commons/fdr-utils
@@ -1757,6 +1757,9 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
+      '@fern-api/ui-core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
       '@fern-api/venus-api-sdk':
         specifier: ^0.1.0
         version: 0.1.1
@@ -1772,9 +1775,6 @@ importers:
       '@fern-ui/components':
         specifier: workspace:*
         version: link:../components
-      '@fern-ui/core-utils':
-        specifier: workspace:*
-        version: link:../../commons/core-utils
       '@fern-ui/fdr-utils':
         specifier: workspace:*
         version: link:../../commons/fdr-utils
@@ -2185,7 +2185,7 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
-      '@fern-ui/core-utils':
+      '@fern-api/ui-core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-ui/fern-docs-utils':
@@ -2372,12 +2372,12 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
+      '@fern-api/ui-core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
       '@fern-ui/components':
         specifier: workspace:*
         version: link:../components
-      '@fern-ui/core-utils':
-        specifier: workspace:*
-        version: link:../../commons/core-utils
       '@fern-ui/fdr-utils':
         specifier: workspace:*
         version: link:../../commons/fdr-utils
@@ -2515,6 +2515,9 @@ importers:
       '@fern-api/template-resolver':
         specifier: workspace:*
         version: link:../../packages/template-resolver
+      '@fern-api/ui-core-utils':
+        specifier: workspace:*
+        version: link:../../packages/commons/core-utils
       '@fern-api/venus-api-sdk':
         specifier: ^0.6.2-1-gbbd1ac5
         version: 0.6.2-1-gbbd1ac5
@@ -2524,9 +2527,6 @@ importers:
       '@fern-fern/revalidation-sdk':
         specifier: 0.0.9
         version: 0.0.9
-      '@fern-ui/core-utils':
-        specifier: workspace:*
-        version: link:../../packages/commons/core-utils
       '@prisma/client':
         specifier: 5.13.0
         version: 5.13.0(prisma@5.13.0)

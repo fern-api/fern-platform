@@ -1,6 +1,6 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { assertNonNullish, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { assertNonNullish, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import type { LinkTag, MetaTag, NextSeoProps } from "@fern-ui/next-seo";
 import { trim } from "lodash-es";
 import { fromMarkdown } from "mdast-util-from-markdown";

@@ -1,5 +1,5 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import { EMPTY_OBJECT } from "@fern-ui/core-utils";
+import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { atom, useAtomValue } from "jotai";
 import { ReactElement, useMemo } from "react";
 import { useMemoOne } from "use-memo-one";

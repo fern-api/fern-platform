@@ -1,7 +1,7 @@
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
+import { unknownToString } from "@fern-api/ui-core-utils";
 import { FernTooltipProvider } from "@fern-ui/components";
-import { unknownToString } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { SendSolid } from "iconoir-react";

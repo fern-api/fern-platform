@@ -7,8 +7,9 @@ import type {
     TypeId,
 } from "@fern-api/fdr-sdk/api-definition";
 import { buildRequestUrl, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
+import unknownToString from "@fern-api/ui-core-utils/unknownToString";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { CopyToClipboardButton, FernButton } from "@fern-ui/components";
-import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import * as Dialog from "@radix-ui/react-dialog";
 import cn from "clsx";

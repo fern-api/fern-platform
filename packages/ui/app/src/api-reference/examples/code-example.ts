@@ -1,6 +1,6 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import { titleCase } from "@fern-ui/core-utils";
-import { sortBy } from "lodash-es";
+import titleCase from "@fern-api/ui-core-utils/titleCase";
+import sortBy from "lodash-es/sortBy";
 
 export interface CodeExample {
     key: string;

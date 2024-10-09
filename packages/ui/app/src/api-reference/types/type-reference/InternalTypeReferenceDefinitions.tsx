@@ -1,6 +1,6 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import React, { ReactElement } from "react";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 import { InternalTypeDefinitionError } from "../type-definition/InternalTypeDefinitionError";

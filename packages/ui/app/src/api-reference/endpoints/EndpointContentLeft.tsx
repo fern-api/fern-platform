@@ -1,7 +1,9 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
-import { camelCase, sortBy, upperFirst } from "lodash-es";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import camelCase from "lodash-es/camelCase";
+import sortBy from "lodash-es/sortBy";
+import upperFirst from "lodash-es/upperFirst";
 import { memo, useMemo } from "react";
 import { useFeatureFlags } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";

@@ -1,7 +1,7 @@
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { createFetchRequester } from "@algolia/requester-fetch";
 import { Algolia, FdrAPI } from "@fern-api/fdr-sdk/client/types";
-import { assertNonNullish } from "@fern-ui/core-utils";
+import { assertNonNullish } from "@fern-api/ui-core-utils";
 import { getContentForSearchRecord, getSlugForSearchRecord, getTitleForSearchRecord } from "@fern-ui/search-utils";
 import { provideRegistryService } from "@fern-ui/ui";
 import { kv } from "@vercel/kv";

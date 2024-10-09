@@ -1,6 +1,6 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { CopyToClipboardButton } from "@fern-ui/components";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
 import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef, useState } from "react";

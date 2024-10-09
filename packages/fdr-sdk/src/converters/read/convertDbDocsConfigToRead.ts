@@ -1,4 +1,4 @@
-import assertNever from "@fern-ui/core-utils/assertNever";
+import assertNever from "@fern-api/ui-core-utils/assertNever";
 import tinycolor from "tinycolor2";
 import { DocsV1Db, DocsV1Read, visitDbNavigationConfig, visitUnversionedDbNavigationConfig } from "../../client";
 import { visitDbNavigationTab } from "../../client/visitNavigationTab";

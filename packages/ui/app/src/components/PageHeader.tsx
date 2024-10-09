@@ -1,6 +1,6 @@
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import { isPlainObject } from "@fern-ui/core-utils";
+import { isPlainObject } from "@fern-api/ui-core-utils";
 import type { ReactElement, ReactNode } from "react";
 import { Markdown } from "../mdx/Markdown";
 import { FernBreadcrumbs } from "./FernBreadcrumbs";

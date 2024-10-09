@@ -1,4 +1,4 @@
-import { isPlainObject } from "@fern-ui/core-utils";
+import { isPlainObject } from "@fern-api/ui-core-utils";
 import jsonpath from "jsonpath";
 import { useMemo } from "react";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";

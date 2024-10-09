@@ -1,5 +1,5 @@
-import assertNever from "@fern-ui/core-utils/assertNever";
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import assertNever from "@fern-api/ui-core-utils/assertNever";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { FernNavigation } from "../../../..";
 import type { APIV1Read, DocsV1Read } from "../../../../client/types";
 import {

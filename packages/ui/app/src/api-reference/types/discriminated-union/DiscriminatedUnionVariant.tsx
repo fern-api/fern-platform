@@ -1,7 +1,7 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { titleCase } from "@fern-ui/core-utils";
+import titleCase from "@fern-api/ui-core-utils/titleCase";
 import cn from "clsx";
 import { compact } from "lodash-es";
 import { useCallback, useMemo } from "react";

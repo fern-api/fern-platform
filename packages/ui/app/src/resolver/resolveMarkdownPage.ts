@@ -1,7 +1,7 @@
 import { type ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { isNonNullish } from "@fern-ui/core-utils";
+import { isNonNullish } from "@fern-api/ui-core-utils";
 import { ApiDefinitionLoader, type MarkdownLoader } from "@fern-ui/fern-docs-server";
 import type { DocsContent } from "./DocsContent";
 

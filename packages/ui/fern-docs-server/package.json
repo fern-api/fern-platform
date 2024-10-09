@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
-    "@fern-ui/core-utils": "workspace:*",
+    "@fern-api/ui-core-utils": "workspace:*",
     "@fern-ui/fern-docs-utils": "workspace:*",
     "@vercel/kv": "^2.0.0",
     "httpsnippet-lite": "^3.0.5",

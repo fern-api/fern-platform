@@ -1,4 +1,4 @@
-import { unknownToString } from "@fern-ui/core-utils";
+import { unknownToString } from "@fern-api/ui-core-utils";
 import { ResolvedEndpointPathParts } from "./types";
 
 /**

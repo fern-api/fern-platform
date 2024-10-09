@@ -1,5 +1,5 @@
 import { EndpointDefinition, HttpRequestBodyShape, TypeDefinition } from "@fern-api/fdr-sdk/api-definition";
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { ReactElement, useCallback } from "react";
 import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertyForm } from "../form/PlaygroundObjectPropertyForm";

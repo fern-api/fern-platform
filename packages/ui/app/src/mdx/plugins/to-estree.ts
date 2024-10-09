@@ -1,4 +1,4 @@
-import { isPlainObject } from "@fern-ui/core-utils";
+import { isPlainObject } from "@fern-api/ui-core-utils";
 import type { Expression, Program } from "estree";
 import type { ElementContent, Root } from "hast";
 import { toEstree } from "hast-util-to-estree";

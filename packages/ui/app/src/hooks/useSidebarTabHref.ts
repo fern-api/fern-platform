@@ -1,4 +1,4 @@
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { SidebarTab } from "@fern-ui/fdr-utils";
 import { useToHref } from "./useHref";
 
