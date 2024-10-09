@@ -49,13 +49,16 @@ describe("PlaygroundCodeSnippetBuilder", () => {
             {
                 key: APIV1Read.PropertyKey("test"),
                 valueShape: {
-                    type: "primitive",
+                    type: "alias",
                     value: {
-                        type: "string",
-                        regex: undefined,
-                        minLength: undefined,
-                        maxLength: undefined,
-                        default: undefined,
+                        type: "primitive",
+                        value: {
+                            type: "string",
+                            regex: undefined,
+                            minLength: undefined,
+                            maxLength: undefined,
+                            default: undefined,
+                        },
                     },
                 },
                 description: undefined,
@@ -99,6 +102,7 @@ describe("PlaygroundCodeSnippetBuilder", () => {
         endpoint,
         auth: undefined,
         types: {},
+        globalHeaders: [],
     };
 
     it("should render curl", () => {
