@@ -126,7 +126,8 @@ export async function withInitialProps({
         };
     }
 
-    const serializeMdx = await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote");
+    const engine = featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
+    const serializeMdx = await getMdxBundler(engine);
 
     const content = await resolveDocsContent({
         found: node,
@@ -137,6 +138,8 @@ export async function withInitialProps({
             files: docs.definition.jsFiles,
         },
         serializeMdx,
+        host: docs.baseUrl.domain,
+        engine,
     });
 
     if (content == null) {
