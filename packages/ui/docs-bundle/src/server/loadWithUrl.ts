@@ -15,7 +15,7 @@ export type LoadWithUrlResponse = APIResponse<
 export async function loadWithUrl(url: string, auth?: AuthProps): Promise<LoadWithUrlResponse> {
     url = withoutStaging(url);
 
-    if (auth != null && auth.user.partner === "workos") {
+    if (auth != null && auth.partner === "workos") {
         return getRegistryServiceWithToken(auth.token).docs.v2.read.getPrivateDocsForUrl({
             url: FdrAPI.Url(url),
         });
