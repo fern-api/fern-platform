@@ -1,5 +1,5 @@
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
-import { EMPTY_OBJECT } from "@fern-ui/core-utils";
+import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import { ReactElement } from "react";

@@ -1,5 +1,5 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { compact } from "lodash-es";
 import { noop } from "ts-essentials";
 import urljoin from "url-join";

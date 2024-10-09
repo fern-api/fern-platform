@@ -1,4 +1,4 @@
-import { EMPTY_OBJECT } from "@fern-ui/core-utils";
+import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { useMemo } from "react";
 import { CodeExampleClientDropdown } from "../../../api-reference/endpoints/CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "../../../api-reference/endpoints/EndpointUrlWithOverflow";

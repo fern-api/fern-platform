@@ -1,6 +1,6 @@
 import { TypeDefinition, TypeShapeOrReference, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton } from "@fern-ui/components";
-import { isPlainObject, unknownToString } from "@fern-ui/core-utils";
+import { isPlainObject, unknownToString } from "@fern-api/ui-core-utils";
 import { Plus, Xmark } from "iconoir-react";
 import { memo, useCallback, useEffect, useState } from "react";
 import { getEmptyValueForType } from "../utils";

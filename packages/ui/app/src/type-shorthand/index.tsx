@@ -1,5 +1,5 @@
 import { TypeDefinition, TypeShapeOrReference, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
-import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { unknownToString, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { uniq } from "lodash-es";
 import { ReactNode } from "react";
 

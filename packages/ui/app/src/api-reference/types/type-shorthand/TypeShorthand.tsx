@@ -1,5 +1,5 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { uniq } from "lodash-es";
 import { ReactNode } from "react";
 import {

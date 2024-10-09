@@ -1,4 +1,4 @@
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import cn from "clsx";
 import { LongArrowDownLeft } from "iconoir-react";

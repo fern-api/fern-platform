@@ -1,6 +1,6 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernInput, FernScrollArea, FernTooltipProvider } from "@fern-ui/components";
-import { isNonNullish } from "@fern-ui/core-utils";
+import { isNonNullish } from "@fern-api/ui-core-utils";
 import cn, { clsx } from "clsx";
 import { Search, Slash, Xmark } from "iconoir-react";
 import { Fragment, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";

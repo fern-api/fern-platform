@@ -1,4 +1,4 @@
-import { EMPTY_ARRAY } from "@fern-ui/core-utils";
+import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { once } from "../utils";
 import { FernNavigation } from "./..";
 import { pruneVersionNode } from "./utils/pruneVersionNode";

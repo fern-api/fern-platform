@@ -1,5 +1,5 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import clsx from "clsx";
 import dynamic from "next/dynamic";
 import { SidebarApiPackageNode } from "./SidebarApiPackageNode";

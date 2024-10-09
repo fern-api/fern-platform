@@ -9,7 +9,7 @@ import {
     FernTooltip,
     FernTooltipProvider,
 } from "@fern-ui/components";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { HelpCircle, Key, User } from "iconoir-react";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";

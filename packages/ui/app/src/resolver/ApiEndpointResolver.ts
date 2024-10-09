@@ -1,6 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
 import { compact, mapValues } from "lodash-es";
 import { sortKeysByShape } from "../api-reference/examples/sortKeysByShape";

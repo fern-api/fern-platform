@@ -48,7 +48,7 @@ const nextConfig = {
         "@fern-api/template-resolver",
         "@fern-ui/chatbot",
         "@fern-ui/components",
-        "@fern-ui/core-utils",
+        "@fern-api/ui-core-utils",
         "@fern-ui/fdr-utils",
         "@fern-ui/fern-docs-auth",
         "@fern-ui/fern-docs-edge-config",

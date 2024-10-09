@@ -1,5 +1,5 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { camelCase, sortBy, upperFirst } from "lodash-es";
 import { memo } from "react";
 import { useFeatureFlags } from "../../atoms";

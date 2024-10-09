@@ -1,5 +1,5 @@
 import { FernButton, FernInput } from "@fern-ui/components";
-import { PLATFORM } from "@fern-ui/core-utils";
+import { PLATFORM } from "@fern-api/ui-core-utils";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import { Search, Xmark } from "iconoir-react";
 import { atom, useSetAtom } from "jotai";

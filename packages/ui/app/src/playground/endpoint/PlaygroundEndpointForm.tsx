@@ -1,5 +1,5 @@
 import { unwrapObjectType, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
-import { EMPTY_ARRAY, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { EMPTY_ARRAY, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { isEmpty } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";

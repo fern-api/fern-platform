@@ -1,7 +1,7 @@
 import { buildFormData } from "@/server/buildFormData";
 import { resolveSerializableFile } from "@/server/resolveSerializableFile";
 import { FernProxyClient } from "@fern-fern/proxy-sdk";
-import { assertNever } from "@fern-ui/core-utils";
+import { assertNever } from "@fern-api/ui-core-utils";
 import type { ProxyRequest } from "@fern-ui/ui";
 import type { NextApiRequest, NextApiResponse } from "next/types";
 import { type BodyInit } from "node-fetch";

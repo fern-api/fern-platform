@@ -1,6 +1,6 @@
 import { DiscriminatedUnionType, TypeDefinition, unwrapObjectType } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernDropdown, FernSegmentedControl } from "@fern-ui/components";
-import { titleCase } from "@fern-ui/core-utils";
+import { titleCase } from "@fern-api/ui-core-utils";
 import { NavArrowDown } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useMemo } from "react";

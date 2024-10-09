@@ -1,4 +1,4 @@
-import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { isPlainObject, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { keyBy, mapValues } from "lodash-es";
 import {
     ResolvedHttpRequestBodyShape,

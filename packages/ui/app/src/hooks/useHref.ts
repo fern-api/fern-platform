@@ -1,5 +1,5 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { withDefaultProtocol } from "@fern-ui/core-utils";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { Atom, useAtomValue } from "jotai";
 import urlJoin from "url-join";
 import { TRAILING_SLASH_ATOM } from "../atoms";

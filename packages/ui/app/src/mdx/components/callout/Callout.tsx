@@ -1,5 +1,5 @@
 import { RemoteFontAwesomeIcon } from "@fern-ui/components";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import cn from "clsx";
 import { Bell, Check, CheckCircle, InfoCircle, Pin, Rocket, Star, WarningTriangle } from "iconoir-react";
 import { FC, PropsWithChildren, ReactElement, isValidElement } from "react";

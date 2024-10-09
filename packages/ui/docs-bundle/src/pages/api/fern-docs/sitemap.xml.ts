@@ -2,7 +2,7 @@ import { DocsLoader } from "@/server/DocsLoader";
 import { conformTrailingSlash } from "@/server/trailingSlash";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
-import { withDefaultProtocol } from "@fern-ui/core-utils";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 import urljoin from "url-join";

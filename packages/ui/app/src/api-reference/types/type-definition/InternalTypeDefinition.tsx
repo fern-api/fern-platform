@@ -1,6 +1,6 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltipProvider } from "@fern-ui/components";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { ReactElement, memo, useCallback, useMemo } from "react";
