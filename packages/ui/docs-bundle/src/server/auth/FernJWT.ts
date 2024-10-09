@@ -17,7 +17,8 @@ export async function verifyFernJWT(token: string, secret?: string, issuer?: str
     const verified = await jwtVerify(token, getJwtTokenSecret(secret), {
         issuer: issuer ?? "https://buildwithfern.com",
     });
-    return FernUserSchema.parse(verified.payload.fern);
+    // if the token is undefined, FernUser will be an empty object
+    return FernUserSchema.optional().parse(verified.payload.fern) ?? {};
 }
 
 export async function verifyFernJWTConfig(token: string, authConfig: AuthEdgeConfig | undefined): Promise<FernUser> {
