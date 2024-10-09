@@ -48,7 +48,7 @@ export async function resolveApiEndpointPage({
     return {
         type: "api-endpoint-page",
         slug: node.slug,
-        item: parent?.type === "endpointPair" ? parent : node,
+        nodeId: parent?.type === "endpointPair" ? parent.id : node.id,
         apiDefinition,
         showErrors: showErrors ?? false,
         neighbors,

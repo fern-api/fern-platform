@@ -72,7 +72,7 @@ export async function resolveApiReferencePage({
     return {
         type: "api-reference-page",
         slug: node.slug,
-        apiReferenceNode,
+        apiReferenceNodeId: apiReferenceNode.id,
         apiDefinition,
         mdxs,
         breadcrumb,

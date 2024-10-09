@@ -21,6 +21,18 @@ export type ApiPackageContentNode =
     | FernNavigation.ApiReferenceNode
     | Exclude<FernNavigation.ApiPackageChild, FernNavigation.LinkNode>;
 
+export function isApiPackageContentNode(node: FernNavigation.NavigationNode): node is ApiPackageContentNode {
+    return (
+        node.type === "apiReference" ||
+        node.type === "apiPackage" ||
+        node.type === "endpoint" ||
+        node.type === "webhook" ||
+        node.type === "webSocket" ||
+        node.type === "page" ||
+        node.type === "endpointPair"
+    );
+}
+
 interface ApiPackageContentProps {
     node: ApiPackageContentNode;
     apiDefinition: ApiDefinition;

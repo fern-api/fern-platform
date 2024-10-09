@@ -2,14 +2,14 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { WRITE_API_DEFINITION_ATOM } from "../atoms";
+import { WRITE_API_DEFINITION_ATOM, useNavigationNodes } from "../atoms";
 import { ALL_ENVIRONMENTS_ATOM } from "../atoms/environment";
 import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbors";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { ApiPageContext } from "../contexts/api-page";
 import { DocsContent } from "../resolver/DocsContent";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
-import { ApiPackageContent } from "./ApiPackageContent";
+import { ApiPackageContent, isApiPackageContentNode } from "./ApiPackageContent";
 
 export declare namespace ApiEndpointPage {
     export interface Props {
@@ -37,11 +37,19 @@ export const ApiEndpointPage: React.FC<ApiEndpointPage.Props> = ({ content }) =>
         });
     }, [content.apiDefinition.endpoints, content.apiDefinition.websockets, setEnvironmentIds]);
 
+    const node = useNavigationNodes().get(content.nodeId);
+    if (!node || !isApiPackageContentNode(node)) {
+        // TODO: sentry
+        // eslint-disable-next-line no-console
+        console.error("Expected node to be an api reference node");
+        return null;
+    }
+
     return (
         <ApiPageContext.Provider value={true}>
             <FernErrorBoundary component="ApiEndpointPage">
                 <ApiPackageContent
-                    node={content.item}
+                    node={node}
                     apiDefinition={content.apiDefinition}
                     breadcrumb={content.breadcrumb}
                     mdxs={EMPTY_OBJECT}

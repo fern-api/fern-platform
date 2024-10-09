@@ -1,6 +1,6 @@
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { WRITE_API_DEFINITION_ATOM, useIsReady } from "../atoms";
+import { WRITE_API_DEFINITION_ATOM, useIsReady, useNavigationNodes } from "../atoms";
 import { ApiPageContext } from "../contexts/api-page";
 import { DocsContent } from "../resolver/DocsContent";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
@@ -18,12 +18,21 @@ export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({ content }) 
     const set = useSetAtom(WRITE_API_DEFINITION_ATOM);
     useEffect(() => set(content.apiDefinition), [content.apiDefinition, set]);
 
+    const node = useNavigationNodes().get(content.apiReferenceNodeId);
+
+    if (node?.type !== "apiReference") {
+        // TODO: sentry
+        // eslint-disable-next-line no-console
+        console.error("Expected node to be an api reference node");
+        return null;
+    }
+
     return (
         <ApiPageContext.Provider value={true}>
             <ApiReferenceContent
                 apiDefinition={content.apiDefinition}
-                showErrors={content.apiReferenceNode.showErrors ?? false}
-                node={content.apiReferenceNode}
+                showErrors={node.showErrors ?? false}
+                node={node}
                 breadcrumb={content.breadcrumb}
                 mdxs={content.mdxs}
                 slug={content.slug}

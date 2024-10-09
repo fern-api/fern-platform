@@ -43,6 +43,9 @@ export class DocsLoader {
         if (!this.auth) {
             return [undefined, undefined];
         }
+        if (!this.fernToken) {
+            return [undefined, this.auth];
+        }
         try {
             return [await withAuthProps(this.auth, this.fernToken), this.auth];
         } catch (e) {
