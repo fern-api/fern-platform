@@ -3,6 +3,7 @@ import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { titleCase } from "@fern-ui/core-utils";
 import cn from "clsx";
+import { compact } from "lodash-es";
 import { useCallback, useMemo } from "react";
 import { Markdown } from "../../../mdx/Markdown";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
@@ -33,13 +34,14 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
     const { isRootTypeDefinition } = useTypeDefinitionContext();
 
     // TODO: render descriptions
-    const [shape, _descriptions] = useMemo((): [ApiDefinition.TypeShape.Object_, FernDocs.MarkdownText[]] => {
+    const [shape, descriptions] = useMemo((): [ApiDefinition.TypeShape.Object_, FernDocs.MarkdownText[]] => {
         const unwrapped = ApiDefinition.unwrapDiscriminatedUnionVariant({ discriminant }, unionVariant, types);
         return [
             {
                 type: "object",
                 properties: unwrapped.properties,
                 extends: [],
+                extraProperties: undefined,
             },
             unwrapped.descriptions,
         ];
@@ -74,7 +76,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
             )}
             <div className="flex flex-col">
-                <Markdown mdx={unionVariant.description} size="sm" />
+                <Markdown mdx={compact([unionVariant.description, ...descriptions])} size="sm" />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeDefinition
                         shape={shape}
