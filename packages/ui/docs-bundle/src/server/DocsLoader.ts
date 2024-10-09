@@ -12,7 +12,7 @@ interface DocsLoaderFlags {
 }
 
 export class DocsLoader {
-    static for(xFernHost: string, fernToken: string | undefined): DocsLoader {
+    static for(xFernHost: string, fernToken?: string): DocsLoader {
         return new DocsLoader(xFernHost, fernToken);
     }
 
@@ -30,25 +30,29 @@ export class DocsLoader {
         return this;
     }
 
-    private auth: AuthEdgeConfig | undefined;
-    public withAuth(auth: AuthEdgeConfig | undefined): DocsLoader {
-        this.auth = auth;
+    private authConfig: AuthEdgeConfig | undefined;
+    private authProps: AuthProps | undefined;
+    public withAuth(authConfig: AuthEdgeConfig | undefined, authProps?: AuthProps): DocsLoader {
+        this.authConfig = authConfig;
+        if (authProps) {
+            this.authProps = authProps;
+        }
         return this;
     }
 
     private async loadAuth(): Promise<[AuthProps | undefined, AuthEdgeConfig | undefined]> {
-        if (!this.auth) {
-            this.auth = await getAuthEdgeConfig(this.xFernHost);
+        if (!this.authConfig) {
+            this.authConfig = await getAuthEdgeConfig(this.xFernHost);
         }
-        if (!this.auth) {
-            return [undefined, undefined];
+        if (!this.authConfig || !this.fernToken || (this.authProps && this.authConfig)) {
+            return [this.authProps, this.authConfig];
         }
         try {
-            return [await withAuthProps(this.auth, this.fernToken), this.auth];
+            return [await withAuthProps(this.authConfig, this.fernToken), this.authConfig];
         } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
-            return [undefined, this.auth];
+            return [undefined, this.authConfig];
         }
     }
 
