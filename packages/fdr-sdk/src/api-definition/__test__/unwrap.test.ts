@@ -78,7 +78,10 @@ describe("unwrapReference", () => {
                     type: "alias",
                     value: {
                         type: "optional",
-                        shape: PRIMITIVE_SHAPE,
+                        shape: {
+                            type: "alias",
+                            value: PRIMITIVE_SHAPE,
+                        },
                         default: undefined,
                     },
                 },
@@ -108,7 +111,10 @@ describe("unwrapReference", () => {
                     type: "alias",
                     value: {
                         type: "optional",
-                        shape: PRIMITIVE_SHAPE,
+                        shape: {
+                            type: "alias",
+                            value: PRIMITIVE_SHAPE,
+                        },
                         default: "testing-a",
                     },
                 },
@@ -123,9 +129,12 @@ describe("unwrapReference", () => {
         const shape: TypeShapeOrReference = {
             type: "optional",
             shape: {
-                type: "id",
-                id: TypeId("foo"),
-                default: undefined,
+                type: "alias",
+                value: {
+                    type: "id",
+                    id: TypeId("foo"),
+                    default: undefined,
+                },
             },
             default: "testing-b",
         };
@@ -136,7 +145,10 @@ describe("unwrapReference", () => {
                     type: "alias",
                     value: {
                         type: "optional",
-                        shape: PRIMITIVE_SHAPE,
+                        shape: {
+                            type: "alias",
+                            value: PRIMITIVE_SHAPE,
+                        },
                         default: "testing-a", // this should be ignored
                     },
                 },
@@ -186,7 +198,10 @@ describe("unwrapReference", () => {
                     type: "alias",
                     value: {
                         type: "optional",
-                        shape: { type: "id", id: TypeId("c"), default: undefined },
+                        shape: {
+                            type: "alias",
+                            value: { type: "id", id: TypeId("c"), default: undefined },
+                        },
                         default: undefined,
                     },
                 },
@@ -261,9 +276,15 @@ describe("unwrapObjectType", () => {
                 {
                     key: PropertyKey("d"),
                     valueShape: {
-                        type: "optional",
-                        shape: PRIMITIVE_SHAPE,
-                        default: undefined,
+                        type: "alias",
+                        value: {
+                            type: "optional",
+                            shape: {
+                                type: "alias",
+                                value: PRIMITIVE_SHAPE,
+                            },
+                            default: undefined,
+                        },
                     },
                     description: undefined,
                     availability: undefined,
@@ -271,22 +292,34 @@ describe("unwrapObjectType", () => {
                 {
                     key: PropertyKey("a"),
                     valueShape: {
-                        type: "optional",
-                        shape: PRIMITIVE_SHAPE,
-                        default: undefined,
+                        type: "alias",
+                        value: {
+                            type: "optional",
+                            shape: {
+                                type: "alias",
+                                value: PRIMITIVE_SHAPE,
+                            },
+                            default: undefined,
+                        },
                     },
                     description: undefined,
                     availability: undefined,
                 },
                 {
                     key: PropertyKey("c"),
-                    valueShape: PRIMITIVE_SHAPE,
+                    valueShape: {
+                        type: "alias",
+                        value: PRIMITIVE_SHAPE,
+                    },
                     description: undefined,
                     availability: undefined,
                 },
                 {
                     key: PropertyKey("b"),
-                    valueShape: PRIMITIVE_SHAPE,
+                    valueShape: {
+                        type: "alias",
+                        value: PRIMITIVE_SHAPE,
+                    },
                     description: undefined,
                     availability: undefined,
                 },
@@ -309,16 +342,25 @@ describe("unwrapObjectType", () => {
             properties: [
                 {
                     key: PropertyKey("a"),
-                    valueShape: PRIMITIVE_SHAPE,
+                    valueShape: {
+                        type: "alias",
+                        value: PRIMITIVE_SHAPE,
+                    },
                     description: undefined,
                     availability: undefined,
                 },
                 {
                     key: PropertyKey("d"),
                     valueShape: {
-                        type: "optional",
-                        shape: PRIMITIVE_SHAPE,
-                        default: undefined,
+                        type: "alias",
+                        value: {
+                            type: "optional",
+                            shape: {
+                                type: "alias",
+                                value: PRIMITIVE_SHAPE,
+                            },
+                            default: undefined,
+                        },
                     },
                     description: undefined,
                     availability: undefined,
@@ -335,7 +377,10 @@ describe("unwrapObjectType", () => {
                     properties: [
                         {
                             key: PropertyKey("b"),
-                            valueShape: PRIMITIVE_SHAPE,
+                            valueShape: {
+                                type: "alias",
+                                value: PRIMITIVE_SHAPE,
+                            },
                             description: undefined,
                             availability: undefined,
                         },
@@ -353,7 +398,10 @@ describe("unwrapObjectType", () => {
                     properties: [
                         {
                             key: PropertyKey("c"),
-                            valueShape: PRIMITIVE_SHAPE,
+                            valueShape: {
+                                type: "alias",
+                                value: PRIMITIVE_SHAPE,
+                            },
                             description: undefined,
                             availability: undefined,
                         },
@@ -379,7 +427,10 @@ describe("unwrapObjectType", () => {
             properties: [
                 {
                     key: PropertyKey("a"),
-                    valueShape: PRIMITIVE_SHAPE,
+                    valueShape: {
+                        type: "alias",
+                        value: PRIMITIVE_SHAPE,
+                    },
                     description: undefined,
                     availability: undefined,
                 },
@@ -394,9 +445,12 @@ describe("unwrapObjectType", () => {
                     value: {
                         type: "optional",
                         shape: {
-                            type: "id",
-                            id: TypeId("c"),
-                            default: undefined,
+                            type: "alias",
+                            value: {
+                                type: "id",
+                                id: TypeId("c"),
+                                default: undefined,
+                            },
                         },
                         default: undefined,
                     },
@@ -413,16 +467,25 @@ describe("unwrapObjectType", () => {
                         {
                             key: PropertyKey("b"),
                             valueShape: {
-                                type: "optional",
-                                shape: PRIMITIVE_SHAPE,
-                                default: undefined,
+                                type: "alias",
+                                value: {
+                                    type: "optional",
+                                    shape: {
+                                        type: "alias",
+                                        value: PRIMITIVE_SHAPE,
+                                    },
+                                    default: undefined,
+                                },
                             },
                             description: undefined,
                             availability: "Deprecated",
                         },
                         {
                             key: PropertyKey("c"),
-                            valueShape: PRIMITIVE_SHAPE,
+                            valueShape: {
+                                type: "alias",
+                                value: PRIMITIVE_SHAPE,
+                            },
                             description: undefined,
                             availability: undefined,
                         },
