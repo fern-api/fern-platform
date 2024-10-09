@@ -202,6 +202,17 @@ export async function withInitialProps({
         }
     }
 
+    // prune the navigation tree to remove hidden nodes, unless it is the current node
+    const sidebar =
+        node.sidebar != null
+            ? FernNavigation.utils.pruneNavigationTree(node.sidebar, (n) => {
+                  if (FernNavigation.hasMetadata(n) && n.hidden) {
+                      return n.id === node.node.id;
+                  }
+                  return true;
+              })
+            : undefined;
+
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
         layout: docs.definition.config.layout,
@@ -251,7 +262,7 @@ export async function withInitialProps({
             ),
             currentVersionId: node.currentVersion?.versionId,
             versions,
-            sidebar: node.sidebar,
+            sidebar,
             trailingSlash: isTrailingSlashEnabled(),
         },
         featureFlags,

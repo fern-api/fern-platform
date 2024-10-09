@@ -44,6 +44,12 @@ export const AuthEdgeConfigBasicTokenVerificationSchema = z.object({
             description: "List of pages (regexp allowed) that are private and require authentication",
         })
         .optional(),
+    anonymous: z
+        .array(z.string(), {
+            description:
+                "List of pages (regexp allowed) that are public and do not require authentication, but are hidden when the user is authenticated",
+        })
+        .optional(),
 });
 
 export const AuthEdgeConfigSchema = z.union([
