@@ -1,4 +1,3 @@
-import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { useSetAtom } from "jotai";
 import { WRITE_API_DEFINITION_ATOM, useIsReady } from "../atoms";
 import { ApiPageContext } from "../contexts/api-page";
@@ -26,8 +25,6 @@ export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({ content }) 
                 node={content.apiReferenceNode}
                 breadcrumb={content.breadcrumb}
                 mdxs={content.mdxs}
-                isLastInParentPackage={true}
-                anchorIdParts={EMPTY_ARRAY}
             />
 
             {/* anchor links should get additional padding to scroll to on initial load */}

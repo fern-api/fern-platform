@@ -25,6 +25,10 @@
       "types": "./dist/client/types.d.ts",
       "default": "./dist/client/types.js"
     },
+    "./traversers": {
+      "types": "./dist/utils/traversers/index.d.ts",
+      "default": "./dist/utils/traversers/index.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"

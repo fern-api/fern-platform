@@ -19,12 +19,11 @@ export declare namespace WebhookContent {
     export interface Props {
         context: ApiDefinition.WebhookContext;
         breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-        hideBottomSeparator?: boolean;
     }
 }
 
 export const WebhookContent = memo<WebhookContent.Props>((props) => {
-    const { context, breadcrumb, hideBottomSeparator = false } = props;
+    const { context, breadcrumb } = props;
     const { node, webhook, types } = context;
 
     const ref = useRef<HTMLDivElement>(null);
@@ -43,12 +42,12 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
     const webhookExample = example ? <WebhookExample example={example} /> : null;
 
     return (
-        <div className={"fern-endpoint-content"}>
+        <div className="fern-endpoint-content">
             <div
                 className={cn(
                     "scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto md:grid md:grid-cols-2 md:gap-8 lg:gap-12",
                     {
-                        "border-default border-b mb-px pb-20": !hideBottomSeparator,
+                        "border-default border-b mb-px pb-20": true,
                     },
                 )}
                 ref={ref}

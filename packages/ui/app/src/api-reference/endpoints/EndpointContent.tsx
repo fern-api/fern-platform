@@ -72,7 +72,7 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(anchor: string | undefined): nu
 const paddingAtom = atom((get) => (get(MOBILE_SIDEBAR_ENABLED_ATOM) ? 0 : 26));
 
 export const EndpointContent = memo<EndpointContent.Props>((props) => {
-    const { showErrors, context, hideBottomSeparator = false, breadcrumb } = props;
+    const { showErrors, context, breadcrumb } = props;
     const { node, endpoint } = context;
     const ref = useRef<HTMLDivElement>(null);
     useApiPageCenterElement(ref, node.slug);
@@ -259,14 +259,14 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
 
     return (
         <section
-            className={"fern-endpoint-content"}
+            className="fern-endpoint-content"
             onClick={() => setSelectedError(undefined)}
             ref={ref}
             id={useHref(node.slug)}
         >
             <div
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
-                    "border-default border-b mb-px pb-12": !hideBottomSeparator,
+                    "border-default border-b mb-px pb-12": true,
                 })}
             >
                 <EndpointContentHeader context={context} breadcrumb={breadcrumb} streamToggle={props.streamToggle} />

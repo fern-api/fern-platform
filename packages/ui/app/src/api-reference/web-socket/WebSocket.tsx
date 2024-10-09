@@ -9,7 +9,6 @@ import { Children, FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react"
 import { FernAnchor } from "../../components/FernAnchor";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { useHref } from "../../hooks/useHref";
-import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import { Markdown } from "../../mdx/Markdown";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
@@ -28,7 +27,6 @@ export interface WebSocketProps {
     node: FernNavigation.WebSocketNode;
     apiDefinition: ApiDefinition.ApiDefinition;
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-    isLastInApi: boolean;
 }
 
 export const WebSocket: FC<WebSocketProps> = (props) => {
@@ -37,26 +35,21 @@ export const WebSocket: FC<WebSocketProps> = (props) => {
         [props.node, props.apiDefinition],
     );
 
-    if (useShouldLazyRender(props.node.slug)) {
-        return null;
-    }
-
     if (!context) {
         // eslint-disable-next-line no-console
         console.error("Could not create context for websocket", props.node);
         return null;
     }
 
-    return <WebhookContent context={context} breadcrumb={props.breadcrumb} isLastInApi={props.isLastInApi} />;
+    return <WebhookContent context={context} breadcrumb={props.breadcrumb} />;
 };
 
 interface WebhookContentProps {
     context: WebSocketContext;
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-    isLastInApi: boolean;
 }
 
-const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, isLastInApi }) => {
+const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb }) => {
     const { channel, node, types, globalHeaders } = context;
 
     const ref = useRef<HTMLDivElement>(null);
@@ -110,10 +103,10 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, isLastIn
     );
 
     return (
-        <div className={"fern-endpoint-content"} ref={ref} id={useHref(node.slug)}>
+        <div className="fern-endpoint-content" ref={ref} id={useHref(node.slug)}>
             <article
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
-                    "border-default border-b mb-px pb-20": !isLastInApi,
+                    "border-default border-b mb-px pb-20": true,
                 })}
             >
                 <header className="space-y-1 pt-8">

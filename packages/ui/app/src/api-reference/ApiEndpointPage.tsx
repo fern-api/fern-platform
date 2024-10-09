@@ -18,6 +18,7 @@ export const ApiEndpointPage: React.FC<ApiEndpointPage.Props> = ({ content }) =>
     const set = useSetAtom(WRITE_API_DEFINITION_ATOM);
     set(content.apiDefinition);
 
+    // TODO: Why are we doing this here?
     const setEnvironmentIds = useSetAtom(ALL_ENVIRONMENTS_ATOM);
     useEffect(() => {
         const ids: FernNavigation.EnvironmentId[] = [];
