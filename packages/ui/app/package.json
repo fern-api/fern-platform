@@ -77,7 +77,6 @@
     "hast-util-to-jsx-runtime": "^2.3.0",
     "hast-util-to-string": "^3.0.0",
     "hastscript": "^9.0.0",
-    "httpsnippet-lite": "^3.0.5",
     "iconoir-react": "^7.7.0",
     "jose": "^5.2.3",
     "jotai": "^2.8.1",
