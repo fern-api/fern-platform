@@ -1,5 +1,5 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { ReactElement, useMemo } from "react";
 import { SdkCardLayout } from "./SdkCardLayout";
 import { NodeJsLogo } from "./sdk-logos/NodeJsLogo";

@@ -30,7 +30,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-ui/core-utils": "workspace:*"
+    "@fern-api/ui-core-utils": "workspace:*"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

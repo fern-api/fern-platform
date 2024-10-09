@@ -6,8 +6,8 @@ import {
     PathPart,
     buildRequestUrl,
 } from "@fern-api/fdr-sdk/api-definition";
+import { unknownToString, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { CopyToClipboardButton, FernButton } from "@fern-ui/components";
-import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import * as Dialog from "@radix-ui/react-dialog";
 import cn from "clsx";

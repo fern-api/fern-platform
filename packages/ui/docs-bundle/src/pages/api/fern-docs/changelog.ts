@@ -3,7 +3,7 @@ import { getXFernHostNode } from "@/server/xfernhost/node";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
-import { assertNever } from "@fern-ui/core-utils";
+import { assertNever } from "@fern-api/ui-core-utils";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { getFrontmatter } from "@fern-ui/ui";
 import { Feed, Item } from "feed";

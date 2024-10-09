@@ -1,7 +1,7 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { FernCollapse } from "@fern-ui/components";
-import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { MouseEventHandler, memo } from "react";
 import { MdxContent } from "../../mdx/MdxContent";

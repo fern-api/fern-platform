@@ -1,4 +1,4 @@
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import compact from "lodash-es/compact";
 import { noop } from "ts-essentials";
 import urljoin from "url-join";

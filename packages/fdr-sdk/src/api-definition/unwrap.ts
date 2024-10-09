@@ -1,5 +1,5 @@
-import { isPlainObject } from "@fern-ui/core-utils";
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import { isPlainObject } from "@fern-api/ui-core-utils";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import compact from "lodash-es/compact";
 import sortBy from "lodash-es/sortBy";
 import type * as FernDocs from "../docs";

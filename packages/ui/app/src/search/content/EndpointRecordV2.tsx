@@ -1,4 +1,4 @@
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import type { EndpointSearchRecordV2 } from "@fern-ui/search-utils";
 import cn from "clsx";
 import { LongArrowDownLeft } from "iconoir-react";

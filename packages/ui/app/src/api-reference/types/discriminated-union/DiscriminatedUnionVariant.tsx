@@ -1,5 +1,5 @@
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { titleCase } from "@fern-ui/core-utils";
+import { titleCase } from "@fern-api/ui-core-utils";
 import cn from "clsx";
 import { useCallback, useMemo } from "react";
 import { Markdown } from "../../../mdx/Markdown";

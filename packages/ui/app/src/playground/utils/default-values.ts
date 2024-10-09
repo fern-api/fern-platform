@@ -7,7 +7,7 @@ import {
     unwrapObjectType,
     unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { PlaygroundFormStateBody } from "../types";
 
 export function getEmptyValueForObjectProperties(

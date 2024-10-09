@@ -1,7 +1,7 @@
 import { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { assertNever } from "@fern-ui/core-utils";
+import { assertNever } from "@fern-api/ui-core-utils";
 import { sortBy } from "lodash-es";
 import { UnreachableCaseError } from "ts-essentials";
 import { parse } from "url";

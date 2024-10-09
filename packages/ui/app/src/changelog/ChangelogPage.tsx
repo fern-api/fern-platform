@@ -1,6 +1,6 @@
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import { EMPTY_ARRAY } from "@fern-ui/core-utils";
+import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import clsx from "clsx";
 import { atom, useAtomValue } from "jotai";
 import { chunk } from "lodash-es";

@@ -1,4 +1,4 @@
-import isPlainObject from "@fern-ui/core-utils/isPlainObject";
+import isPlainObject from "@fern-api/ui-core-utils/isPlainObject";
 import { DocsV1Db } from "../../../client";
 import { upgradeV1ToV2 } from "./upgradeV1ToV2";
 import { upgradeV2ToV3 } from "./upgradeV2ToV3";

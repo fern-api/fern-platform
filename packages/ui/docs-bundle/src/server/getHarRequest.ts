@@ -6,7 +6,7 @@ import {
     type ExampleEndpointCall,
     type ExampleEndpointRequest,
 } from "@fern-api/fdr-sdk/api-definition";
-import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { unknownToString, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import type { HarRequest } from "httpsnippet-lite";
 
 export function getHarRequest(

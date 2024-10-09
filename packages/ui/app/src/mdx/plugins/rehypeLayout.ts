@@ -1,5 +1,5 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import { EMPTY_ARRAY } from "@fern-ui/core-utils";
+import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import type { ElementContent, Root } from "hast";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
@@ -38,7 +38,7 @@ export function rehypeFernLayout(opt: Options): (tree: Root, vfile: VFile) => vo
 
         const children = tree.children as ElementContent[];
         const subtitle = matter.subtitle != null ? wrapChildren(parseMarkdown(matter.subtitle)) : undefined;
-        const tableOfContents = matter["hide-toc"] ?? false ? undefined : makeToc(tree, matter["force-toc"] ?? false);
+        const tableOfContents = (matter["hide-toc"] ?? false) ? undefined : makeToc(tree, matter["force-toc"] ?? false);
         const aside = wrapChildren(asideContents);
         switch (matter.layout) {
             case "custom":

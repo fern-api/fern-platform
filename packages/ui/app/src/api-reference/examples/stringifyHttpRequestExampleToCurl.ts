@@ -1,4 +1,4 @@
-import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { unknownToString, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { HttpRequestExample } from "./HttpRequestExample";
 
 function requiresUrlEncode(str: string): boolean {

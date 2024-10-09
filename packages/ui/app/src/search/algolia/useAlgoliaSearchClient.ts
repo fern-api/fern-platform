@@ -1,4 +1,4 @@
-import { assertNonNullish } from "@fern-ui/core-utils";
+import { assertNonNullish } from "@fern-api/ui-core-utils";
 import algolia, { SearchClient } from "algoliasearch";
 import { useAtomValue } from "jotai";
 import { useMemo } from "react";

@@ -1,5 +1,5 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { isNonNullish } from "@fern-ui/core-utils";
+import { isNonNullish } from "@fern-api/ui-core-utils";
 import { VersionSwitcherInfo } from "@fern-ui/fdr-utils";
 
 interface WithVersionSwitcherInfoArgs {

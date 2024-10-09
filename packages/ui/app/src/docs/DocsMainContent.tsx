@@ -1,4 +1,4 @@
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import { Fragment, ReactElement, memo } from "react";
