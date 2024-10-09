@@ -64,6 +64,7 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           rm -rf package.json.tmp
           npm publish --access public
+          echo $working_dir/packages/fdr-sdk
           cd $working_dir/packages/fdr-sdk
           mv package.json package.json.tmp
           workspace_replace="s/workspace:*/${git_version}/"
