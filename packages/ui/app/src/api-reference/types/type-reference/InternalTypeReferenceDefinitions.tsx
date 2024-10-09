@@ -1,9 +1,9 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import React, { ReactElement } from "react";
+import React from "react";
+import { UnreachableCaseError } from "ts-essentials";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
-import { InternalTypeDefinitionError } from "../type-definition/InternalTypeDefinitionError";
 import { ListTypeContextProvider } from "./ListTypeContextProvider";
 import { MapTypeContextProvider } from "./MapTypeContextProvider";
 
@@ -70,105 +70,78 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
     slug,
     types,
 }) => {
-    const InternalShapeRenderer = applyErrorStyles ? InternalTypeDefinitionError : InternalTypeDefinition;
     const unwrapped = ApiDefinition.unwrapReference(shape, types);
-    return visitDiscriminatedUnion(unwrapped.shape)._visit<ReactElement | null>({
-        object: (object) => (
-            <InternalShapeRenderer
-                shape={object}
-                isCollapsible={isCollapsible}
-                anchorIdParts={anchorIdParts}
-                slug={slug}
-                types={types}
-            />
-        ),
-        enum: (enum_) => (
-            <InternalShapeRenderer
-                shape={enum_}
-                isCollapsible={isCollapsible}
-                anchorIdParts={anchorIdParts}
-                slug={slug}
-                types={types}
-            />
-        ),
-        undiscriminatedUnion: (undiscriminatedUnion) => (
-            <InternalShapeRenderer
-                shape={undiscriminatedUnion}
-                isCollapsible={isCollapsible}
-                anchorIdParts={anchorIdParts}
-                slug={slug}
-                types={types}
-            />
-        ),
-        discriminatedUnion: (discriminatedUnion) => (
-            <InternalShapeRenderer
-                shape={discriminatedUnion}
-                isCollapsible={isCollapsible}
-                anchorIdParts={anchorIdParts}
-                slug={slug}
-                types={types}
-            />
-        ),
-
-        list: (list) => (
-            <ListTypeContextProvider>
-                <InternalTypeReferenceDefinitions
-                    shape={list.itemShape}
+    switch (unwrapped.shape.type) {
+        case "object":
+        case "enum":
+        case "primitive":
+        case "undiscriminatedUnion": {
+            return (
+                <InternalTypeDefinition
+                    shape={unwrapped.shape}
                     isCollapsible={isCollapsible}
-                    applyErrorStyles={applyErrorStyles}
-                    className={className}
                     anchorIdParts={anchorIdParts}
                     slug={slug}
                     types={types}
                 />
-            </ListTypeContextProvider>
-        ),
-        set: (set) => (
-            <ListTypeContextProvider>
-                <InternalTypeReferenceDefinitions
-                    shape={set.itemShape}
+            );
+        }
+        case "discriminatedUnion": {
+            const union = unwrapped.shape;
+            return (
+                <InternalTypeDefinition
+                    shape={union}
                     isCollapsible={isCollapsible}
-                    applyErrorStyles={applyErrorStyles}
-                    className={className}
                     anchorIdParts={anchorIdParts}
                     slug={slug}
                     types={types}
                 />
-            </ListTypeContextProvider>
-        ),
-        map: (map) => (
-            <MapTypeContextProvider>
-                <InternalTypeReferenceDefinitions
-                    shape={map.keyShape}
-                    isCollapsible={isCollapsible}
-                    applyErrorStyles={applyErrorStyles}
-                    className={className}
-                    anchorIdParts={anchorIdParts}
-                    slug={slug}
-                    types={types}
-                />
-                <InternalTypeReferenceDefinitions
-                    shape={map.valueShape}
-                    isCollapsible={isCollapsible}
-                    applyErrorStyles={applyErrorStyles}
-                    className={className}
-                    anchorIdParts={anchorIdParts}
-                    slug={slug}
-                    types={types}
-                />
-            </MapTypeContextProvider>
-        ),
-        primitive: () => null,
-        literal: (literal) => (
-            <InternalShapeRenderer
-                shape={literal}
-                isCollapsible={false}
-                anchorIdParts={anchorIdParts}
-                slug={slug}
-                types={types}
-            />
-        ),
-        unknown: () => null,
-        _other: () => null,
-    });
+            );
+        }
+        case "list":
+        case "set": {
+            return (
+                <ListTypeContextProvider>
+                    <InternalTypeReferenceDefinitions
+                        shape={unwrapped.shape.itemShape}
+                        isCollapsible={isCollapsible}
+                        applyErrorStyles={applyErrorStyles}
+                        className={className}
+                        anchorIdParts={anchorIdParts}
+                        slug={slug}
+                        types={types}
+                    />
+                </ListTypeContextProvider>
+            );
+        }
+        case "map": {
+            return (
+                <MapTypeContextProvider>
+                    <InternalTypeReferenceDefinitions
+                        shape={unwrapped.shape.keyShape}
+                        isCollapsible={isCollapsible}
+                        applyErrorStyles={applyErrorStyles}
+                        className={className}
+                        anchorIdParts={anchorIdParts}
+                        slug={slug}
+                        types={types}
+                    />
+                    <InternalTypeReferenceDefinitions
+                        shape={unwrapped.shape.valueShape}
+                        isCollapsible={isCollapsible}
+                        applyErrorStyles={applyErrorStyles}
+                        className={className}
+                        anchorIdParts={anchorIdParts}
+                        slug={slug}
+                        types={types}
+                    />
+                </MapTypeContextProvider>
+            );
+        }
+        case "literal":
+        case "unknown":
+            return null;
+        default:
+            throw new UnreachableCaseError(unwrapped.shape);
+    }
 };
