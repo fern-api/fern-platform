@@ -1,3 +1,4 @@
+import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { SidebarTab, VersionSwitcherInfo } from "@fern-ui/fdr-utils";
@@ -81,7 +82,7 @@ export const NEIGHBORS_ATOM = atom((get) => {
     return content.neighbors;
 });
 
-export const RESOLVED_API_DEFINITION_ATOM = atom((get) => {
+export const RESOLVED_API_DEFINITION_ATOM = atom<ApiDefinition | undefined>((get) => {
     const content = get(RESOLVED_PATH_ATOM);
     return content.type === "api-endpoint-page" || content.type === "api-reference-page"
         ? content.apiDefinition
