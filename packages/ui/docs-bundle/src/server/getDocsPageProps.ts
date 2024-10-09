@@ -23,7 +23,7 @@ export async function getDocsPageProps(
         return { notFound: true };
     }
 
-    const performance = LoadDocsPerformanceTracker.init({ host: xFernHost, slug, auth: auth?.user.partner });
+    const performance = LoadDocsPerformanceTracker.init({ host: xFernHost, slug, auth: auth?.partner });
 
     /**
      * Load the docs for the given URL.

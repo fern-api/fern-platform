@@ -1,8 +1,6 @@
 import { z } from "zod";
 
 export const FernUserSchema = z.object({
-    type: z.literal("user"),
-    partner: z.union([z.literal("workos"), z.literal("ory"), z.literal("custom")]),
     name: z.string().optional(),
     email: z.string().optional(),
 });

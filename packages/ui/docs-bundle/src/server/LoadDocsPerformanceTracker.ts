@@ -3,6 +3,7 @@ import { DocsPage } from "@fern-ui/ui";
 import { track } from "@vercel/analytics/server";
 import { GetServerSidePropsResult } from "next/types";
 import { ComponentProps } from "react";
+import { AuthPartner } from "./authProps";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 
 export class LoadDocsPerformanceTracker {
@@ -13,7 +14,7 @@ export class LoadDocsPerformanceTracker {
     }: {
         host: string;
         slug: string[];
-        auth: "workos" | "ory" | "custom" | undefined;
+        auth: AuthPartner | undefined;
     }): LoadDocsPerformanceTracker {
         return new LoadDocsPerformanceTracker(host, slug, auth);
     }
@@ -21,7 +22,7 @@ export class LoadDocsPerformanceTracker {
     private constructor(
         private host: string,
         private slug: string[],
-        private auth: "workos" | "ory" | "custom" | undefined,
+        private auth: AuthPartner | undefined,
     ) {}
 
     private loadDocsDurationMs: number | undefined;
