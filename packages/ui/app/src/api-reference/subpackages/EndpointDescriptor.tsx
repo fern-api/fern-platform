@@ -3,7 +3,6 @@ import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { MouseEventHandler } from "react";
 import { HttpMethodIcon } from "../../components/HttpMethodIcon";
 import { MonospaceText } from "../../components/MonospaceText";
-import { getPathParameterAsString } from "../../util/endpoint";
 
 export declare namespace EndpointDescriptor {
     export interface Props {
@@ -50,3 +49,7 @@ export const EndpointDescriptor: React.FC<EndpointDescriptor.Props> = ({ endpoin
         </button>
     );
 };
+
+function getPathParameterAsString(pathParameterKey: APIV1Read.PropertyKey): string {
+    return `:${pathParameterKey}`;
+}

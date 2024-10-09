@@ -1,16 +1,13 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
-import { atom, useAtomValue } from "jotai";
 import { ReactElement, useMemo } from "react";
-import { useMemoOne } from "use-memo-one";
 import { CodeExampleClientDropdown } from "../../../api-reference/endpoints/CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "../../../api-reference/endpoints/EndpointUrlWithOverflow";
 import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
 import { generateCodeExamples } from "../../../api-reference/examples/code-example";
-import { READ_APIS_ATOM } from "../../../atoms";
 import { usePlaygroundBaseUrl } from "../../../playground/utils/select-environment";
-import { findEndpoint } from "../../../util/processRequestSnippetComponents";
 import { RequestSnippet } from "./types";
+import { useFindEndpoint } from "./useFindEndpoint";
 import { extractEndpointPathAndMethod, useSelectedClient } from "./utils";
 
 export const EndpointRequestSnippet: React.FC<React.PropsWithChildren<RequestSnippet.Props>> = ({
@@ -31,26 +28,7 @@ const EndpointRequestSnippetRenderer: React.FC<React.PropsWithChildren<RequestSn
     path,
     example,
 }) => {
-    const endpoint = useAtomValue(
-        useMemoOne(
-            () =>
-                atom((get) => {
-                    let endpoint: ApiDefinition.EndpointDefinition | undefined;
-                    for (const apiDefinition of Object.values(get(READ_APIS_ATOM))) {
-                        endpoint = findEndpoint({
-                            apiDefinition,
-                            path,
-                            method,
-                        });
-                        if (endpoint) {
-                            break;
-                        }
-                    }
-                    return endpoint;
-                }),
-            [method, path],
-        ),
-    );
+    const endpoint = useFindEndpoint(method, path);
 
     if (endpoint == null) {
         return null;

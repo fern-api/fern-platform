@@ -5,7 +5,6 @@ import { PlaygroundAuthState, PlaygroundEndpointRequestFormState } from "../../t
 export abstract class PlaygroundCodeSnippetBuilder {
     protected url: string;
     constructor(
-        // TODO: make this more generic and easier to test by removing dependency on "ResolvedEndpointDefinition"
         protected context: EndpointContext,
         protected formState: PlaygroundEndpointRequestFormState,
         protected authState: PlaygroundAuthState,
