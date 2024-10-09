@@ -1,6 +1,6 @@
 import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type { NavigationNodeApiLeaf } from "@fern-api/fdr-sdk/navigation";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { useAtomCallback } from "jotai/utils";
 import { preload } from "swr";
 import { useCallbackOne } from "use-memo-one";

@@ -1,5 +1,5 @@
 import type { FdrAPI } from "@fern-api/fdr-sdk/client/types";
-import { EMPTY_ARRAY } from "@fern-ui/core-utils";
+import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import dynamic from "next/dynamic";
 import { memo, useMemo } from "react";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";

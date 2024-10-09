@@ -1,4 +1,4 @@
-import isPlainObject from "@fern-ui/core-utils/isPlainObject";
+import isPlainObject from "@fern-api/ui-core-utils/isPlainObject";
 import fs from "fs";
 import path from "path";
 import { FernNavigation } from "..";

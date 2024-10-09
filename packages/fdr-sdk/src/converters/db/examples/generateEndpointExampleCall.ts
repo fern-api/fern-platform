@@ -1,4 +1,4 @@
-import assertNever from "@fern-ui/core-utils/assertNever";
+import assertNever from "@fern-api/ui-core-utils/assertNever";
 import { APIV1Write } from "../../../client";
 import {
     generateExampleFromTypeReference,

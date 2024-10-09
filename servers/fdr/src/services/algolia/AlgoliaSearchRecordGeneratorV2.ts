@@ -10,7 +10,7 @@ import {
     visitDbNavigationTab,
 } from "@fern-api/fdr-sdk";
 import { EndpointPathPart } from "@fern-api/fdr-sdk/src/client/APIV1Read";
-import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { v4 as uuid } from "uuid";
 import { BreadcrumbsInfo } from "../../api/generated/api";
 import { LOGGER } from "../../app/FdrApplication";

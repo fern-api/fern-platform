@@ -1,4 +1,4 @@
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { FernNavigation } from "../../..";
 import { hasMetadata } from "./NavigationNodeWithMetadata";
 

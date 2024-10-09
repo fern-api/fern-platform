@@ -1,6 +1,6 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import { titleCase } from "@fern-api/ui-core-utils";
 import { FernButton, FernCard, FernScrollArea } from "@fern-ui/components";
-import { titleCase } from "@fern-ui/core-utils";
 import cn from "clsx";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { WebSocketMessage, WebSocketMessages } from "../api-reference/web-socket/WebSocketMessages";

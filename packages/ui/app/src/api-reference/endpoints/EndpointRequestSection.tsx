@@ -1,6 +1,6 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import cn from "clsx";
 import { Fragment, ReactNode } from "react";
 import { Markdown } from "../../mdx/Markdown";

@@ -1,4 +1,4 @@
-import { PLATFORM } from "@fern-ui/core-utils";
+import { PLATFORM } from "@fern-api/ui-core-utils";
 import { useEventCallback, useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 
 export function useSearchTrigger(setOpen: (open: boolean) => void): void {

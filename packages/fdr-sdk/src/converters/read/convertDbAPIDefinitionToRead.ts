@@ -1,4 +1,4 @@
-import assertNever from "@fern-ui/core-utils/assertNever";
+import assertNever from "@fern-api/ui-core-utils/assertNever";
 import { APIV1Db, APIV1Read } from "../../client";
 
 export function convertDbAPIDefinitionsToRead(dbApiDefinitions: Record<string, APIV1Db.DbApiDefinition>) {

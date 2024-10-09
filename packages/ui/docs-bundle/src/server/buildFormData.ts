@@ -1,4 +1,4 @@
-import { assertNever, unknownToString } from "@fern-ui/core-utils";
+import { assertNever, unknownToString } from "@fern-api/ui-core-utils";
 import type { SerializableFormDataEntryValue } from "@fern-ui/ui";
 import FormData from "form-data";
 import { resolveSerializableFile } from "./resolveSerializableFile";

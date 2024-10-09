@@ -1,5 +1,5 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import cn from "clsx";
 import { ReactElement, useCallback } from "react";
 import { Markdown } from "../../../mdx/Markdown";

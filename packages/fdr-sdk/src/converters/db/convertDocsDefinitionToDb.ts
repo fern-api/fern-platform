@@ -1,4 +1,4 @@
-import assertNever from "@fern-ui/core-utils/assertNever";
+import assertNever from "@fern-api/ui-core-utils/assertNever";
 import {
     DocsV1Db,
     DocsV1Read,

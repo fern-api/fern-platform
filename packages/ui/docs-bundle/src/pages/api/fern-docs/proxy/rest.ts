@@ -1,6 +1,6 @@
 import { buildFormData } from "@/server/buildFormData";
 import { resolveSerializableFile } from "@/server/resolveSerializableFile";
-import { assertNever } from "@fern-ui/core-utils";
+import { assertNever } from "@fern-api/ui-core-utils";
 import type { ProxyRequest } from "@fern-ui/ui";
 import { ProxyRequestSchema } from "@fern-ui/ui";
 import type { NextApiRequest, NextApiResponse } from "next/types";

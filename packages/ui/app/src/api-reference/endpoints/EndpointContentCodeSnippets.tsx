@@ -1,7 +1,7 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { FernButton, FernButtonGroup, FernScrollArea } from "@fern-ui/components";
-import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import { ReactNode, memo, useMemo, useRef, useState } from "react";
 import { useNavigationNodes, usePlaygroundEnvironment } from "../../atoms";

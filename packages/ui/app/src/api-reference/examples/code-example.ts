@@ -1,4 +1,4 @@
-import { titleCase } from "@fern-ui/core-utils";
+import { titleCase } from "@fern-api/ui-core-utils";
 import { sortBy } from "lodash-es";
 import { ResolvedExampleEndpointCall } from "../../resolver/types";
 

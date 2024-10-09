@@ -1,6 +1,6 @@
 import { APIV1Read } from "@fern-api/fdr-sdk";
 import { EndpointDefinition, buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
-import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { unknownToString, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import jsonpath from "jsonpath";
 import { mapValues } from "lodash-es";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";

@@ -1,6 +1,6 @@
 import { cleanLanguage } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { unknownToString, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { unknownToString, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { HTTPSnippet, type HarRequest, type TargetId } from "httpsnippet-lite";
 import { noop } from "ts-essentials";
 import { convertEndpointExampleToHttpRequestExample } from "../api-reference/examples/HttpRequestExample";

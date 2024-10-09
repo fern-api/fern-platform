@@ -1,6 +1,6 @@
 import { SearchForFacetValuesResponse, SearchResponse } from "@algolia/client-search";
 import { FdrAPI, FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
-import { assertNever } from "@fern-ui/core-utils";
+import { assertNever } from "@fern-api/ui-core-utils";
 import algoliasearch, { SearchClient } from "algoliasearch";
 import { Rule, RuleArgs, RuleResult } from "../runRules";
 

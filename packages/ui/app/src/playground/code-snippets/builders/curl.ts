@@ -1,5 +1,5 @@
 import { SnippetHttpRequest, SnippetHttpRequestBodyFormValue, convertToCurl } from "@fern-api/fdr-sdk/api-definition";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { isEmpty } from "lodash-es";
 import { convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest } from "../../types";
 import { PlaygroundCodeSnippetBuilder } from "./types";
