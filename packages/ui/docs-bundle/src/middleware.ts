@@ -10,7 +10,7 @@ import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-tr
 import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
 import { verifyFernJWTConfig } from "./server/auth/FernJWT";
-import { withBasicTokenPublic } from "./server/withBasicTokenPublic";
+import { withBasicTokenAnonymous } from "./server/withBasicTokenAnonymous";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 const CHANGELOG_PATTERN = /\.(rss|atom)$/;
@@ -96,7 +96,7 @@ export const middleware: NextMiddleware = async (request) => {
      * redirect to the custom auth provider
      */
     if (!isLoggedIn && authConfig?.type === "basic_token_verification") {
-        if (!withBasicTokenPublic(authConfig, pathname)) {
+        if (!withBasicTokenAnonymous(authConfig, pathname)) {
             const destination = new URL(authConfig.redirect);
             destination.searchParams.set("state", urlJoin(withDefaultProtocol(xFernHost), pathname));
             // TODO: validate allowlist of domains to prevent open redirects

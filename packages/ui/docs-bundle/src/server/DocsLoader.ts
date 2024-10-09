@@ -4,7 +4,7 @@ import type { AuthEdgeConfig } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { AuthProps, withAuthProps } from "./authProps";
 import { loadWithUrl } from "./loadWithUrl";
-import { pruneWithBasicTokenPublic } from "./withBasicTokenPublic";
+import { pruneWithBasicTokenAnonymous, pruneWithBasicTokenAuthed } from "./withBasicTokenAnonymous";
 
 interface DocsLoaderFlags {
     isBatchStreamToggleDisabled: boolean;
@@ -104,10 +104,14 @@ export class DocsLoader {
         // if the user is not authenticated, and the page requires authentication, prune the navigation tree
         // to only show pages that are allowed to be viewed without authentication.
         // note: the middleware will not show this page at all if the user is not authenticated.
-        if (node && authConfig?.type === "basic_token_verification" && !auth) {
+        if (node) {
             try {
-                // TODO: store this in cache
-                node = pruneWithBasicTokenPublic(authConfig, node);
+                if (authConfig?.type === "basic_token_verification") {
+                    // TODO: store this in cache
+                    node = !auth
+                        ? pruneWithBasicTokenAnonymous(authConfig, node)
+                        : pruneWithBasicTokenAuthed(authConfig, node);
+                }
             } catch (e) {
                 // TODO: sentry
                 // eslint-disable-next-line no-console

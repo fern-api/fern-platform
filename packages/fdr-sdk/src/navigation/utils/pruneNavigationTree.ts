@@ -1,38 +1,36 @@
 import structuredClone from "@ungap/structured-clone";
 import { DeepReadonly } from "ts-essentials";
 import { FernNavigation } from "../..";
+import { bfs } from "../../utils/traversers/bfs";
 import { prunetree } from "../../utils/traversers/prunetree";
 import { mutableDeleteChild } from "./deleteChild";
-import { hasChildren } from "./hasChildren";
 import { mutableUpdatePointsTo } from "./updatePointsTo";
 
 /**
  * @param root the root node of the navigation tree
  * @param keep a function that returns true if the node should be kept
+ * @param hide a function that returns true if the node should be hidden
  * @returns a new navigation tree with only the nodes that should be kept
  */
 export function pruneNavigationTree<ROOT extends FernNavigation.NavigationNode>(
     root: DeepReadonly<ROOT>,
-    keep: (node: FernNavigation.NavigationNode) => boolean,
+    keep?: (node: FernNavigation.NavigationNode) => boolean,
+    hide?: (node: FernNavigation.NavigationNodeWithMetadata) => boolean,
 ): ROOT | undefined {
     const clone = structuredClone(root) as ROOT;
-    return mutablePruneNavigationTree(clone, keep);
+    return mutablePruneNavigationTree(clone, keep, hide);
 }
 
 function mutablePruneNavigationTree<ROOT extends FernNavigation.NavigationNode>(
     root: ROOT,
-    keep: (node: FernNavigation.NavigationNode) => boolean,
+    keep: (node: FernNavigation.NavigationNode) => boolean = () => true,
+    hide: (node: FernNavigation.NavigationNodeWithMetadata) => boolean = () => false,
 ): ROOT | undefined {
     const [result] = prunetree(root, {
         predicate: keep,
         getChildren: FernNavigation.getChildren,
         getPointer: (node) => node.id,
         deleter: mutableDeleteChild,
-
-        // after deletion, if the node no longer has any children, we can delete the parent node too
-        // but only if the parent node is NOT a visitable page
-        // shouldDeleteParent: (parent: FernNavigation.NavigationNodeParent) =>
-        //     !hasChildren(parent) && !FernNavigation.isPage(parent),
     });
 
     if (result == null) {
@@ -41,6 +39,17 @@ function mutablePruneNavigationTree<ROOT extends FernNavigation.NavigationNode>(
 
     // since the tree has been pruned, we need to update the pointsTo property
     mutableUpdatePointsTo(result);
+
+    // other operations
+    bfs(
+        result,
+        (node) => {
+            if (FernNavigation.hasMarkdown(node) && hide(node)) {
+                node.hidden = true;
+            }
+        },
+        FernNavigation.getChildren,
+    );
 
     return result;
 }
