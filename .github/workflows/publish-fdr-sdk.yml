@@ -64,14 +64,12 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           rm -rf package.json.tmp
           npm publish --access public
-          echo $working_dir/packages/fdr-sdk
           cd $working_dir/packages/fdr-sdk
-          cat package.json
           mv package.json package.json.tmp
           workspace_replace="s/workspace:*/${git_version}/"
-          cat package.json.tmp| sed "${version_replace}" > package.json
-          cat package.json | sed "${workspace_replace}" > package.json
-          rm -rf package.json.tmp
+          cat package.json.tmp| sed "${version_replace}" > package.json.workspace
+          cat package.json.workspace | sed "${workspace_replace}" > package.json
+          rm -rf package.json.tmp package.json.workspace
           npm publish --access public
 
       - name: Publish CJS SDK
