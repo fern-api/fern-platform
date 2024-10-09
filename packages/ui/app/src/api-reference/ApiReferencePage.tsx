@@ -1,4 +1,5 @@
 import { useSetAtom } from "jotai";
+import { useEffect } from "react";
 import { WRITE_API_DEFINITION_ATOM, useIsReady } from "../atoms";
 import { ApiPageContext } from "../contexts/api-page";
 import { DocsContent } from "../resolver/DocsContent";
@@ -15,7 +16,7 @@ export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({ content }) 
     const hydrated = useIsReady();
 
     const set = useSetAtom(WRITE_API_DEFINITION_ATOM);
-    set(content.apiDefinition);
+    useEffect(() => set(content.apiDefinition), [content.apiDefinition, set]);
 
     return (
         <ApiPageContext.Provider value={true}>
@@ -25,6 +26,7 @@ export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({ content }) 
                 node={content.apiReferenceNode}
                 breadcrumb={content.breadcrumb}
                 mdxs={content.mdxs}
+                slug={content.slug}
             />
 
             {/* anchor links should get additional padding to scroll to on initial load */}

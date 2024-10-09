@@ -2,7 +2,7 @@ import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import dynamic from "next/dynamic";
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { UnreachableCaseError } from "ts-essentials";
 
 // TODO: implemenet suspense so that dynamic imports do not break the page layout on load
@@ -30,14 +30,9 @@ interface ApiPackageContentProps {
     last?: boolean;
 }
 
-export function ApiPackageContent({
-    node,
-    mdxs,
-    apiDefinition,
-    breadcrumb,
-    showErrors,
-    last,
-}: ApiPackageContentProps): ReactNode {
+export function ApiPackageContent(props: ApiPackageContentProps): ReactNode {
+    const { node, mdxs, apiDefinition, breadcrumb, showErrors, last } = props;
+
     switch (node.type) {
         case "apiReference":
         case "apiPackage": {

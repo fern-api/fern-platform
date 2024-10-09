@@ -1,7 +1,7 @@
 import { createEndpointContext, type ApiDefinition, type EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useSetAtom } from "jotai";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import useSWRImmutable from "swr/immutable";
 import { WRITE_API_DEFINITION_ATOM } from "../../atoms";
 import { useApiRoute } from "../../hooks/useApiRoute";
@@ -24,10 +24,11 @@ export function useEndpointContext(node: FernNavigation.EndpointNode | undefined
     const { data: apiDefinition, isLoading } = useSWRImmutable(node != null ? route : null, fetcher);
     const context = useMemo(() => createEndpointContext(node, apiDefinition), [node, apiDefinition]);
     const set = useSetAtom(WRITE_API_DEFINITION_ATOM);
-
-    if (apiDefinition != null) {
-        set(apiDefinition);
-    }
+    useEffect(() => {
+        if (apiDefinition != null) {
+            set(apiDefinition);
+        }
+    }, [apiDefinition, set]);
 
     return { context, isLoading };
 }

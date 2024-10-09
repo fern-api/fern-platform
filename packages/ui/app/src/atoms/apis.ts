@@ -11,14 +11,17 @@ const SETTABLE_APIS_ATOM = atom<Record<ApiDefinition.ApiDefinitionId, ApiDefinit
 SETTABLE_APIS_ATOM.debugLabel = "SETTABLE_APIS_ATOM";
 
 export const WRITE_API_DEFINITION_ATOM = atom(null, (_get, set, apiDefinition: ApiDefinition.ApiDefinition) => {
-    const merge = (prev: ApiDefinition.ApiDefinition | undefined) => {
-        if (prev == null) {
-            return apiDefinition;
-        } else {
-            return join(prev, apiDefinition);
+    set(SETTABLE_APIS_ATOM, (prev) => {
+        const prevDefinition = prev[apiDefinition.id];
+        if (prevDefinition == null) {
+            return { ...prev, [apiDefinition.id]: apiDefinition };
         }
-    };
-    set(SETTABLE_APIS_ATOM, (prev) => ({ ...prev, [apiDefinition.id]: merge(prev[apiDefinition.id]) }));
+        const merged = join(prevDefinition, apiDefinition);
+        if (merged === prevDefinition) {
+            return prev;
+        }
+        return { ...prev, [apiDefinition.id]: merged };
+    });
 });
 
 export const READ_APIS_ATOM = atom((get) => get(SETTABLE_APIS_ATOM));

@@ -2,11 +2,8 @@ import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { dfs } from "@fern-api/fdr-sdk/traversers";
-import { atom, useAtomValue } from "jotai";
-import { freezeAtom } from "jotai/utils";
 import { memo, useEffect, useMemo } from "react";
-import { useMemoOne } from "use-memo-one";
-import { SLUG_ATOM, useIsReady } from "../atoms";
+import { useIsReady } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { scrollToRoute } from "../util/anchor";
 import { ApiPackageContent, ApiPackageContentNode } from "./ApiPackageContent";
@@ -17,6 +14,7 @@ export interface ApiReferenceContentProps {
     node: FernNavigation.ApiReferenceNode;
     mdxs: Record<FernNavigation.NodeId, FernDocs.MarkdownText>;
     showErrors: boolean;
+    slug: FernNavigation.Slug;
 }
 
 const UnmemoizedApiReferenceContent: React.FC<ApiReferenceContentProps> = ({
@@ -25,8 +23,8 @@ const UnmemoizedApiReferenceContent: React.FC<ApiReferenceContentProps> = ({
     showErrors,
     apiDefinition,
     node,
+    slug,
 }) => {
-    const initialSlug = useAtomValue(useMemoOne(() => freezeAtom(atom((get) => get(SLUG_ATOM))), []));
     const isReady = useIsReady();
 
     // when the page is ready, all the other pages will suddenly be rendered
@@ -78,9 +76,9 @@ const UnmemoizedApiReferenceContent: React.FC<ApiReferenceContentProps> = ({
 
     function isLazy(node: ApiPackageContentNode) {
         if (node.type === "endpointPair") {
-            return node.stream.slug !== initialSlug && node.nonStream.slug !== initialSlug;
+            return node.stream.slug !== slug && node.nonStream.slug !== slug;
         }
-        return node.slug !== initialSlug;
+        return node.slug !== slug;
     }
 
     // TODO: this is a temporary fix to only SSG the content that is requested by the requested route.

@@ -75,10 +75,7 @@ export function unwrapReference(
     let loop = 0;
     while (internalTypeRef != null) {
         if (loop > LOOP_TOLERANCE) {
-            // eslint-disable-next-line no-console
-            console.error(
-                `Infinite loop detected while unwrapping type reference. Falling back to unknown type. path=[${visitedTypeIds.join(", ")}]`,
-            );
+            // infinite loop detected
             internalTypeRef = undefined;
             break;
         }
@@ -93,10 +90,8 @@ export function unwrapReference(
             internalTypeRef = internalTypeRef.value;
         } else if (internalTypeRef.type === "id") {
             if (visitedTypeIds.includes(internalTypeRef.id)) {
-                // eslint-disable-next-line no-console
-                console.error(
-                    `Circular reference detected while unwrapping type reference. Falling back to unknown type. path=[${visitedTypeIds.join(", ")}, ${internalTypeRef.id}]`,
-                );
+                visitedTypeIds.push(internalTypeRef.id);
+                // circular reference detected
                 internalTypeRef = undefined;
                 break;
             }
@@ -126,7 +121,9 @@ export function unwrapReference(
     if (internalTypeRef == null) {
         // Note: this should be a fatal error, but we're handling it gracefully for now
         // eslint-disable-next-line no-console
-        console.error("Type reference is invalid. Falling back to unknown type.");
+        console.error(
+            `Type reference is invalid. Falling back to unknown type.${visitedTypeIds.length > 0 ? ` path=[${visitedTypeIds.join(", ")}]` : ""}`,
+        );
     }
 
     const toRet = {
