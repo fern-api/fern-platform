@@ -22,10 +22,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const error_description = req.nextUrl.searchParams.get("error_description");
     const redirectLocation = safeUrl(state) ?? safeUrl(withDefaultProtocol(getHostEdge(req)));
 
-    if (redirectLocation == null) {
-        return new NextResponse(null, { status: 500 });
-    }
-
     if (error != null) {
         // eslint-disable-next-line no-console
         console.error(`OAuth2 error: ${error} - ${error_description}`);
@@ -55,7 +51,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         });
 
         // TODO: validate allowlist of domains to prevent open redirects
-        const res = NextResponse.redirect(redirectLocation);
+        const res = redirectLocation ? NextResponse.redirect(redirectLocation) : NextResponse.next();
         res.cookies.set("access_token", accessToken, withSecureCookie());
         return res;
     } catch (error) {
