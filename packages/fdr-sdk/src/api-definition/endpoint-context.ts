@@ -53,7 +53,7 @@ export function createWebSocketContext(
         channel,
         auth: channel.auth?.map((id) => api.auths[id])[0],
         globalHeaders: api.globalHeaders ?? [],
-        types: api.auths,
+        types: api.types,
     };
 }
 
@@ -77,6 +77,6 @@ export function createWebhookContext(
     return {
         node,
         webhook,
-        types: api.auths,
+        types: api.types,
     };
 }

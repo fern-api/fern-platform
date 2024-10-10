@@ -385,7 +385,7 @@ function CardedSection({
 }
 function flattenWebSocketShape(
     subscribeMessages: ApiDefinition.WebSocketMessage[],
-    types: Record<string, ApiDefinition.TypeDefinition>,
+    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>,
 ) {
     return subscribeMessages.flatMap((message): ApiDefinition.UndiscriminatedUnionVariant[] => {
         const unwrapped = ApiDefinition.unwrapReference(message.body, types);
