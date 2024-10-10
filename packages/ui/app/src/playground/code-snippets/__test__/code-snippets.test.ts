@@ -26,6 +26,8 @@ describe("PlaygroundCodeSnippetBuilder", () => {
         id: NodeId(""),
         apiDefinitionId: ApiDefinitionId(""),
         availability: undefined,
+        authed: undefined,
+        audience: undefined,
     };
 
     const endpoint: EndpointDefinition = {
