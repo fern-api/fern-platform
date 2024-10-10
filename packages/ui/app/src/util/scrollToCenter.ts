@@ -15,7 +15,6 @@ export function scrollToCenter(
         fastdom.clear(stopMeasuring);
         stopMeasuring = fastdom.measure(() => {
             const offsetTop = getOffsetTopRelativeToScrollContainer(target, scrollContainer);
-            console.log(offsetTop, scrollContainer.scrollTop);
 
             // if the target is not a child of the scroll container, bail
             if (offsetTop == null) {
