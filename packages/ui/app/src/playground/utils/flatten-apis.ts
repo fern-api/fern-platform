@@ -20,7 +20,7 @@ export function flattenApiSection(root: FernNavigation.SidebarRootNode | undefin
         return [];
     }
     const result: ApiGroup[] = [];
-    FernNavigation.traverseNavigation(root, (node, _, parents) => {
+    FernNavigation.traverseDF(root, (node, parents) => {
         if (node.type === "changelog") {
             return "skip";
         }
@@ -33,7 +33,7 @@ export function flattenApiSection(root: FernNavigation.SidebarRootNode | undefin
 
             // current node should be included in the breadcrumb
             const breadcrumb = FernNavigation.utils
-                .createBreadcrumbs([...parents, node])
+                .createBreadcrumb([...parents, node])
                 .map((breadcrumb) => breadcrumb.title);
 
             result.push({

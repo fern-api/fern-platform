@@ -1,12 +1,10 @@
+import { OAuth2Client } from "@/server/auth/OAuth2Client";
+import { getAPIKeyInjectionConfig } from "@/server/auth/getApiKeyInjectionConfig";
+import { withSecureCookie } from "@/server/auth/withSecure";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import {
-    APIKeyInjectionConfig,
-    OAuth2Client,
-    OryAccessTokenSchema,
-    getAPIKeyInjectionConfig,
-    getAuthEdgeConfig,
-    withSecureCookie,
-} from "@fern-ui/ui/auth";
+import { APIKeyInjectionConfig, OryAccessTokenSchema } from "@fern-ui/fern-docs-auth";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
+import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 import { WebflowClient } from "webflow-api";
 import type { OauthScope } from "webflow-api/api/types/OAuthScope";
@@ -40,15 +38,15 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
         });
     }
 
-    const fern_token = req.cookies.get("fern_token")?.value;
+    const fernToken = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
 
     const config = await getAPIKeyInjectionConfig(domain, req.cookies);
     const response = NextResponse.json(config);
 
     if (config.enabled && config.authenticated) {
         const expires = config.exp != null ? new Date(config.exp * 1000) : undefined;
-        if (fern_token != null) {
-            response.cookies.set("fern_token", fern_token, withSecureCookie({ expires }));
+        if (fernToken != null) {
+            response.cookies.set(COOKIE_FERN_TOKEN, fernToken, withSecureCookie({ expires }));
         }
 
         let access_token = config.access_token;

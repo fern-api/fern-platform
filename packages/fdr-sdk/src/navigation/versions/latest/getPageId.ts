@@ -1,4 +1,4 @@
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import type { NavigationNodePage, PageId } from ".";
 
 const RETURN_PAGEID = (node: { pageId: PageId }) => node.pageId;
@@ -19,7 +19,7 @@ export function getPageId(node: NavigationNodePage): PageId | undefined {
         endpoint: RETURN_UNDEFINED,
         webSocket: RETURN_UNDEFINED,
         webhook: RETURN_UNDEFINED,
-        changelogYear: RETURN_UNDEFINED,
-        changelogMonth: RETURN_UNDEFINED,
+        // changelogYear: RETURN_UNDEFINED,
+        // changelogMonth: RETURN_UNDEFINED,
     });
 }

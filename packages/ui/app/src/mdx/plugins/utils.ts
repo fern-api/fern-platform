@@ -1,4 +1,4 @@
-import { isPlainObject, unknownToString } from "@fern-ui/core-utils";
+import { isPlainObject, unknownToString } from "@fern-api/ui-core-utils";
 import type { Element, ElementContent, Node, Root, RootContent, Text } from "hast";
 import type {
     MdxJsxAttribute,

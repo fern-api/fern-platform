@@ -10,6 +10,10 @@ export function withDefaultProtocol(endpoint: string, defaultProtocol = "https:/
     const protocolRegex = /^[a-z]+:\/\//i;
 
     if (!protocolRegex.test(endpoint)) {
+        if (endpoint === "localhost" || endpoint.startsWith("localhost:")) {
+            return `http://${endpoint}`;
+        }
+
         return `${defaultProtocol}${endpoint}`;
     }
 

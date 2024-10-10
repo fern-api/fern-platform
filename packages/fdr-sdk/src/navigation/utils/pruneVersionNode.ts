@@ -18,7 +18,7 @@ export function pruneVersionNode<T extends FernNavigation.NavigationNode>(
     if (node == null) {
         return undefined;
     }
-    FernNavigation.traverseNavigation(node, (node) => {
+    FernNavigation.traverseDF(node, (node) => {
         if (FernNavigation.hasMetadata(node)) {
             const newSlug = FernNavigation.toDefaultSlug(node.slug, rootSlug, versionSlug);
             // children of this node was already pruned

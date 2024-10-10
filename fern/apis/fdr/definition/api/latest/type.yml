@@ -52,6 +52,7 @@ types:
     properties:
       extends: list<rootCommons.TypeId>
       properties: list<ObjectProperty>
+      extraProperties: optional<TypeReference>
 
   ObjectProperty:
     extends:
@@ -59,7 +60,7 @@ types:
       - commons.WithAvailability
     properties:
       key: rootCommons.PropertyKey
-      valueShape: TypeReference
+      valueShape: TypeShape
 
   EnumType:
     properties:
@@ -83,7 +84,7 @@ types:
       - commons.WithAvailability
     properties:
       displayName: optional<string>
-      shape: TypeReference
+      shape: TypeShape
 
   DiscriminatedUnionType:
     properties:
@@ -137,18 +138,18 @@ types:
 
   OptionalType:
     properties:
-      shape: TypeReference
+      shape: TypeShape
       default: optional<unknown>
 
   ListType:
     properties:
-      itemShape: TypeReference
+      itemShape: TypeShape
 
   SetType:
     properties:
-      itemShape: TypeReference
+      itemShape: TypeShape
 
   MapType:
     properties:
-      keyShape: TypeReference
-      valueShape: TypeReference
+      keyShape: TypeShape
+      valueShape: TypeShape

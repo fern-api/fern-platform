@@ -6,7 +6,7 @@ import {
     unwrapObjectType,
     unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
-import { isPlainObject, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { isPlainObject, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 
 export function castToRecord(value: unknown): Record<string, unknown> {
     if (!isPlainObject(value)) {
@@ -36,7 +36,7 @@ export function isExpandable(
 }
 
 export function hasRequiredFields(
-    bodyShape: HttpRequestBodyShape | TypeReference,
+    bodyShape: HttpRequestBodyShape | TypeShapeOrReference,
     types: Record<string, TypeDefinition>,
 ): boolean {
     if (bodyShape.type === "formData") {

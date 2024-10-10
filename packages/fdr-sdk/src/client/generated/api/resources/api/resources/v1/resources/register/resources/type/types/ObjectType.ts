@@ -7,4 +7,5 @@ import * as FernRegistry from "../../../../../../../../../index";
 export interface ObjectType {
     extends: FernRegistry.TypeId[];
     properties: FernRegistry.api.v1.register.ObjectProperty[];
+    extraProperties: FernRegistry.api.v1.register.TypeReference | undefined;
 }

@@ -1,10 +1,11 @@
+import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { once } from "../utils";
 import { FernNavigation } from "./..";
 import { pruneVersionNode } from "./utils/pruneVersionNode";
 
 interface NavigationNodeWithMetadataAndParents {
     node: FernNavigation.NavigationNodeWithMetadata;
-    parents: FernNavigation.NavigationNode[];
+    parents: readonly FernNavigation.NavigationNodeParent[];
     next: FernNavigation.NavigationNodeNeighbor | undefined;
     prev: FernNavigation.NavigationNodeNeighbor | undefined;
 }
@@ -14,7 +15,7 @@ const NodeCollectorInstances = new WeakMap<FernNavigation.NavigationNode, NodeCo
 export class NodeCollector {
     private static readonly EMPTY = new NodeCollector(undefined);
     private idToNode = new Map<FernNavigation.NodeId, FernNavigation.NavigationNode>();
-    private idToNodeParents = new Map<FernNavigation.NodeId, FernNavigation.NavigationNode[]>();
+    private idToNodeParents = new Map<FernNavigation.NodeId, readonly FernNavigation.NavigationNodeParent[]>();
     private slugToNode = new Map<FernNavigation.Slug, NavigationNodeWithMetadataAndParents>();
     private orphanedNodes: FernNavigation.NavigationNodeWithMetadata[] = [];
 
@@ -36,7 +37,7 @@ export class NodeCollector {
     #setNode(
         slug: FernNavigation.Slug,
         node: FernNavigation.NavigationNodeWithMetadata,
-        parents: FernNavigation.NavigationNode[],
+        parents: readonly FernNavigation.NavigationNodeParent[],
     ) {
         const toSet = { node, parents, prev: this.#lastNeighboringNode, next: undefined };
         this.slugToNode.set(slug, toSet);
@@ -56,7 +57,7 @@ export class NodeCollector {
         if (rootNode == null) {
             return;
         }
-        FernNavigation.traverseNavigation(rootNode, (node, _index, parents) => {
+        FernNavigation.traverseDF(rootNode, (node, parents) => {
             // if the node is the default version, make a copy of it and "prune" the version slug from all children nodes
             if (node.type === "version") {
                 this.versionNodes.push(node);
@@ -65,7 +66,7 @@ export class NodeCollector {
             if (node.type === "version" && node.default && rootNode.type === "root") {
                 const copy = JSON.parse(JSON.stringify(node)) as FernNavigation.VersionNode;
                 this.defaultVersion = pruneVersionNode(copy, rootNode.slug, node.slug);
-                FernNavigation.traverseNavigation(this.defaultVersion, (node, _index, innerParents) => {
+                FernNavigation.traverseDF(this.defaultVersion, (node, innerParents) => {
                     this.visitNode(node, [...parents, ...innerParents], true);
                 });
             }
@@ -76,7 +77,7 @@ export class NodeCollector {
 
     private visitNode(
         node: FernNavigation.NavigationNode,
-        parents: FernNavigation.NavigationNode[],
+        parents: readonly FernNavigation.NavigationNodeParent[],
         isDefaultVersion = false,
     ): void {
         if (!this.idToNode.has(node.id) || isDefaultVersion) {
@@ -137,8 +138,8 @@ export class NodeCollector {
         return this.idToNode.get(id);
     }
 
-    public getParents(id: FernNavigation.NodeId): FernNavigation.NavigationNode[] {
-        return this.idToNodeParents.get(id) ?? [];
+    public getParents(id: FernNavigation.NodeId): readonly FernNavigation.NavigationNodeParent[] {
+        return this.idToNodeParents.get(id) ?? EMPTY_ARRAY;
     }
 
     public getSlugMapWithParents = (): ReadonlyMap<FernNavigation.Slug, NavigationNodeWithMetadataAndParents> => {

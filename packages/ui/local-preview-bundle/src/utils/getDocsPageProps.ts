@@ -1,12 +1,10 @@
 import { FdrAPI, type DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { SidebarTab } from "@fern-ui/fdr-utils";
-import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
+import { DEFAULT_FEATURE_FLAGS, getRedirectForPath, type FeatureFlags } from "@fern-ui/fern-docs-utils";
 import {
-    DEFAULT_FEATURE_FLAGS,
     DocsPage,
-    FeatureFlags,
     getGitHubInfo,
     getGitHubRepo,
     getSeoProps,
@@ -70,6 +68,8 @@ export async function getDocsPageProps(
             files: docs.definition.jsFiles,
         },
         serializeMdx,
+        host: docs.baseUrl.domain,
+        engine: "next-mdx-remote",
     });
 
     if (content == null) {
@@ -107,6 +107,8 @@ export async function getDocsPageProps(
                 pointsTo,
                 index,
                 availability: version.availability,
+                hidden: version.hidden,
+                authed: version.authed,
             };
         });
 
@@ -140,6 +142,8 @@ export async function getDocsPageProps(
                         index,
                         slug: tab.slug,
                         pointsTo: tab.pointsTo,
+                        hidden: tab.hidden,
+                        authed: tab.authed,
                     }),
                     link: (link) => ({
                         type: "tabLink",
@@ -154,6 +158,8 @@ export async function getDocsPageProps(
                         icon: changelog.icon,
                         index,
                         slug: changelog.slug,
+                        hidden: changelog.hidden,
+                        authed: changelog.authed,
                     }),
                 }),
             ),

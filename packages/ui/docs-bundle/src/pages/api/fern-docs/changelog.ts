@@ -1,15 +1,14 @@
-import { buildUrlFromApiNode } from "@/server/buildUrlFromApi";
-import { loadWithUrl } from "@/server/loadWithUrl";
+import { DocsLoader } from "@/server/DocsLoader";
 import { getXFernHostNode } from "@/server/xfernhost/node";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
-import { assertNever } from "@fern-ui/core-utils";
+import { assertNever, withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { getFrontmatter } from "@fern-ui/ui";
-import { checkViewerAllowedNode } from "@fern-ui/ui/auth";
-import * as Sentry from "@sentry/nextjs";
 import { Feed, Item } from "feed";
 import { NextApiRequest, NextApiResponse } from "next";
+import urlJoin from "url-join";
 
 export const revalidate = 60 * 60 * 24;
 
@@ -27,22 +26,15 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
 
     const xFernHost = getXFernHostNode(req);
 
-    const status = await checkViewerAllowedNode(xFernHost, req);
-    if (status >= 400) {
-        return res.status(status).end();
-    }
+    const fernToken = req.cookies[COOKIE_FERN_TOKEN];
+    const loader = DocsLoader.for(xFernHost, fernToken);
 
-    const headers = new Headers();
-    headers.set("x-fern-host", xFernHost);
+    const root = await loader.root();
 
-    const url = buildUrlFromApiNode(xFernHost, req);
-    const docs = await loadWithUrl(url);
-
-    if (!docs.ok) {
+    if (!root) {
         return res.status(404).end();
     }
 
-    const root = FernNavigation.utils.toRootNode(docs.body);
     const collector = NodeCollector.collect(root);
 
     const slug = FernNavigation.slugjoin(decodeURIComponent(path));
@@ -52,7 +44,7 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
         return res.status(404).end();
     }
 
-    const link = `https://${xFernHost}/${node.slug}`;
+    const link = urlJoin(withDefaultProtocol(xFernHost), node.slug);
 
     const feed = new Feed({
         id: link,
@@ -62,19 +54,24 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
         generator: "buildwithfern.com",
     });
 
+    const pages = await loader.pages();
+    const files = await loader.files();
+
     node.children.forEach((year) => {
         year.children.forEach((month) => {
             month.children.forEach((entry) => {
                 try {
-                    feed.addItem(toFeedItem(entry, xFernHost, docs.body.definition.pages, docs.body.definition.files));
+                    feed.addItem(toFeedItem(entry, xFernHost, pages, files));
                 } catch (e) {
                     // eslint-disable-next-line no-console
                     console.error(e);
-                    Sentry.captureException(e, { level: "error" });
+                    // TODO: sentry
                 }
             });
         });
     });
+
+    const headers = new Headers();
 
     if (format === "json") {
         headers.set("Content-Type", "application/json");
@@ -92,11 +89,11 @@ function toFeedItem(
     entry: FernNavigation.ChangelogEntryNode,
     xFernHost: string,
     pages: Record<DocsV1Read.PageId, DocsV1Read.PageContent>,
-    files: Record<DocsV1Read.FileId, DocsV1Read.Url>,
+    files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Item {
     const item: Item = {
         title: entry.title,
-        link: `https://${xFernHost}/${entry.slug}`,
+        link: urlJoin(withDefaultProtocol(xFernHost), entry.slug),
         date: new Date(entry.date),
     };
 
@@ -125,7 +122,7 @@ function toFeedItem(
         } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
-            Sentry.captureException(e, { level: "warning" });
+            // TODO: sentry
         }
     }
     return item;
@@ -133,7 +130,7 @@ function toFeedItem(
 
 function toUrl(
     idOrUrl: DocsV1Read.FileIdOrUrl | undefined,
-    files: Record<DocsV1Read.FileId, DocsV1Read.Url>,
+    files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): string | undefined {
     if (idOrUrl == null) {
         return undefined;
@@ -141,7 +138,7 @@ function toUrl(
     if (idOrUrl.type === "url") {
         return idOrUrl.value;
     } else if (idOrUrl.type === "fileId") {
-        return files[idOrUrl.value];
+        return files[idOrUrl.value]?.url;
     } else {
         assertNever(idOrUrl);
     }

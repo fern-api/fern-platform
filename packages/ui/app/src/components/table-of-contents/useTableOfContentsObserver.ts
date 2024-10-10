@@ -2,7 +2,6 @@ import fastdom from "fastdom";
 import { useAtomValue } from "jotai";
 import { useEffect, useRef } from "react";
 import { useCallbackOne } from "use-memo-one";
-import { captureSentryError } from "../../analytics/sentry";
 import { SCROLL_BODY_ATOM } from "../../atoms";
 
 function toIdQuerySelector(id: string): string {
@@ -120,7 +119,9 @@ export function useTableOfContentsObserver(ids: string[], setActiveId: (id: stri
                     return prev;
                 }, {});
             } catch (e) {
-                captureSentryError(e, { errorDescription: "Error measuring table of contents" });
+                // TODO: sentry
+                // eslint-disable-next-line no-console
+                console.error("Error measuring table of contents", e);
             }
         });
 

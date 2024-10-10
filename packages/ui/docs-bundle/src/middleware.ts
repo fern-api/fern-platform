@@ -2,10 +2,15 @@ import { extractBuildId, extractNextDataPathname } from "@/server/extractNextDat
 import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "@/server/pageRoutes";
 import { rewritePosthog } from "@/server/rewritePosthog";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import { FernUser, getAuthEdgeConfig, verifyFernJWTConfig } from "@fern-ui/ui/auth";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import type { FernUser } from "@fern-ui/fern-docs-auth";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
+import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { NextRequest, NextResponse, type NextMiddleware } from "next/server";
 import urlJoin from "url-join";
+import { verifyFernJWTConfig } from "./server/auth/FernJWT";
+import { withBasicTokenAnonymous } from "./server/withBasicTokenAnonymous";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 const CHANGELOG_PATTERN = /\.(rss|atom)$/;
@@ -23,13 +28,6 @@ export const middleware: NextMiddleware = async (request) => {
         removeTrailingSlash(request.nextUrl.pathname) === "/500"
     ) {
         return NextResponse.next();
-    }
-
-    /**
-     * Add x-fern-host header to the request
-     */
-    if (!headers.has("x-fern-host")) {
-        headers.set("x-fern-host", xFernHost);
     }
 
     /**
@@ -77,7 +75,7 @@ export const middleware: NextMiddleware = async (request) => {
 
     const pathname = extractNextDataPathname(request.nextUrl.pathname);
 
-    const fernToken = request.cookies.get("fern_token");
+    const fernToken = request.cookies.get(COOKIE_FERN_TOKEN);
     const authConfig = await getAuthEdgeConfig(xFernHost);
     let fernUser: FernUser | undefined;
 
@@ -98,9 +96,12 @@ export const middleware: NextMiddleware = async (request) => {
      * redirect to the custom auth provider
      */
     if (!isLoggedIn && authConfig?.type === "basic_token_verification") {
-        const destination = new URL(authConfig.redirect);
-        destination.searchParams.set("state", urlJoin(`https://${xFernHost}`, pathname));
-        return NextResponse.redirect(destination, { status: 302 });
+        if (withBasicTokenAnonymous(authConfig, pathname)) {
+            const destination = new URL(authConfig.redirect);
+            destination.searchParams.set("state", urlJoin(withDefaultProtocol(xFernHost), pathname));
+            // TODO: validate allowlist of domains to prevent open redirects
+            return NextResponse.redirect(destination);
+        }
     }
 
     /**

@@ -1,6 +1,6 @@
-import { titleCase } from "@fern-ui/core-utils";
-import { sortBy } from "lodash-es";
-import { ResolvedExampleEndpointCall } from "../../resolver/types";
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import titleCase from "@fern-api/ui-core-utils/titleCase";
+import sortBy from "lodash-es/sortBy";
 
 export interface CodeExample {
     key: string;
@@ -10,7 +10,7 @@ export interface CodeExample {
     code: string;
     // hast: Root;
     install: string | null | undefined;
-    exampleCall: ResolvedExampleEndpointCall;
+    exampleCall: ApiDefinition.ExampleEndpointCall;
 }
 
 export interface CodeExampleGroup {
@@ -22,27 +22,32 @@ export interface CodeExampleGroup {
 
 // key is the language
 export function generateCodeExamples(
-    examples: ResolvedExampleEndpointCall[],
+    examples: ApiDefinition.ExampleEndpointCall[] | undefined,
     grpc: boolean = false,
 ): CodeExampleGroup[] {
     const codeExamples = new Map<string, CodeExample[]>();
-    examples.forEach((example, i) => {
-        example.snippets.forEach((snippet, j) => {
-            if (!grpc || snippet.language !== "curl") {
-                codeExamples.set(snippet.language, [
-                    ...(codeExamples.get(snippet.language) ?? []),
-                    {
-                        key: `${snippet.language}-${i}/${j}`,
-                        exampleIndex: i,
-                        language: snippet.language,
-                        name: snippet.name ?? example.name ?? `Example ${i + 1}`,
-                        code: snippet.code,
-                        // hast: snippet.hast,
-                        install: snippet.install,
-                        exampleCall: example,
-                    },
-                ]);
-            }
+    examples?.forEach((example, i) => {
+        if (example.snippets == null) {
+            return;
+        }
+        Object.values(example.snippets).forEach((snippets) => {
+            snippets.forEach((snippet, j) => {
+                if (!grpc || snippet.language !== "curl") {
+                    codeExamples.set(snippet.language, [
+                        ...(codeExamples.get(snippet.language) ?? []),
+                        {
+                            key: `${snippet.language}-${i}/${j}`,
+                            exampleIndex: i,
+                            language: snippet.language,
+                            name: snippet.name ?? example.name ?? `Example ${i + 1}`,
+                            code: snippet.code,
+                            // hast: snippet.hast,
+                            install: snippet.install,
+                            exampleCall: example,
+                        },
+                    ]);
+                }
+            });
         });
     });
 

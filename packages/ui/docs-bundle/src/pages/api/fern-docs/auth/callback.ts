@@ -1,6 +1,12 @@
+import { signFernJWT } from "@/server/auth/FernJWT";
+import { withSecureCookie } from "@/server/auth/withSecure";
+import { safeUrl } from "@/server/safeUrl";
 import { getWorkOS, getWorkOSClientId } from "@/server/workos";
-import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import { FernUser, getAuthEdgeConfig, signFernJWT, withSecureCookie } from "@fern-ui/ui/auth";
+import { getXFernHostEdge, getXFernHostHeaderFallbackOrigin } from "@/server/xfernhost/edge";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { FernUser } from "@fern-ui/fern-docs-auth";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
+import { COOKIE_FERN_TOKEN, HEADER_X_FERN_HOST } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
@@ -8,6 +14,7 @@ export const runtime = "edge";
 function redirectWithLoginError(location: string, errorMessage: string): NextResponse {
     const url = new URL(location);
     url.searchParams.set("loginError", errorMessage);
+    // TODO: validate allowlist of domains to prevent open redirects
     return NextResponse.redirect(url.toString());
 }
 
@@ -22,7 +29,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const state = req.nextUrl.searchParams.get("state");
     const error = req.nextUrl.searchParams.get("error");
     const error_description = req.nextUrl.searchParams.get("error_description");
-    const redirectLocation = state ?? `https://${domain}/`;
+    const redirectLocation = safeUrl(state) ?? withDefaultProtocol(getXFernHostHeaderFallbackOrigin(req));
 
     if (error != null) {
         return redirectWithLoginError(redirectLocation, error_description ?? error);
@@ -40,8 +47,16 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             "/api/fern-docs/auth/callback",
             "/api/fern-docs/oauth/ory/callback",
         );
-        // Permanent GET redirect to the Ory callback endpoint
-        return NextResponse.redirect(nextUrl, { status: 307 });
+
+        // Redirect to x-fern-host domain if it exists
+        // this is to ensure proxied origins are used for the redirect
+        if (req.headers.has(HEADER_X_FERN_HOST)) {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            nextUrl.host = req.headers.get(HEADER_X_FERN_HOST)!;
+        }
+
+        // TODO: validate allowlist of domains to prevent open redirects
+        return NextResponse.redirect(nextUrl);
     }
 
     try {
@@ -51,8 +66,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         });
 
         const fernUser: FernUser = {
-            type: "user",
-            partner: "workos",
             name:
                 user.firstName != null && user.lastName != null
                     ? `${user.firstName} ${user.lastName}`
@@ -62,8 +75,9 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
         const token = await signFernJWT(fernUser, user);
 
+        // TODO: validate allowlist of domains to prevent open redirects
         const res = NextResponse.redirect(redirectLocation);
-        res.cookies.set("fern_token", token, withSecureCookie());
+        res.cookies.set(COOKIE_FERN_TOKEN, token, withSecureCookie());
         return res;
     } catch (error) {
         // eslint-disable-next-line no-console

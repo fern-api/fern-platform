@@ -7,7 +7,7 @@ export declare namespace Markdown {
     export interface Props {
         title?: ReactNode;
 
-        mdx: FernDocs.MarkdownText | undefined;
+        mdx: FernDocs.MarkdownText | FernDocs.MarkdownText[] | undefined;
         className?: string;
         size?: "xs" | "sm" | "lg";
 

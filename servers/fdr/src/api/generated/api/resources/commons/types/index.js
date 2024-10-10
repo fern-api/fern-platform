@@ -14,6 +14,7 @@ export * from "./FileId";
 export * from "./Url";
 export * from "./JqString";
 export * from "./PropertyKey";
+export * from "./AudienceId";
 export * from "./EndpointIdentifier";
 export * from "./EndpointPathLiteral";
 export * from "./HttpMethod";

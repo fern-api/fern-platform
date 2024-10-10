@@ -18,7 +18,7 @@
     "@fern-api/template-resolver": "workspace:*",
     "@fern-api/venus-api-sdk": "^0.6.2-1-gbbd1ac5",
     "@fern-fern/fern-docs-sdk": "0.0.5",
-    "@fern-ui/core-utils": "workspace:*",
+    "@fern-api/ui-core-utils": "workspace:*",
     "@prisma/client": "5.13.0",
     "@sentry/cli": "^2.31.0",
     "@sentry/node": "^7.112.2",

@@ -1,6 +1,6 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import identity from "@fern-ui/core-utils/identity";
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import identity from "@fern-api/ui-core-utils/identity";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { AsyncOrSync } from "ts-essentials";
 import * as Latest from "./latest";
 

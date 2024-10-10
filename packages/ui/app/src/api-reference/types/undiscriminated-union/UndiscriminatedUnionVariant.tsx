@@ -1,14 +1,10 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import cn from "clsx";
 import { ReactElement, useCallback } from "react";
 import { Markdown } from "../../../mdx/Markdown";
-import {
-    ResolvedTypeDefinition,
-    ResolvedTypeShape,
-    ResolvedUndiscriminatedUnionShapeVariant,
-    unwrapReference,
-} from "../../../resolver/types";
+import { renderTypeShorthand } from "../../../type-shorthand";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {
     TypeDefinitionContext,
@@ -16,7 +12,6 @@ import {
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
 import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
-import { renderDeprecatedTypeShorthand } from "../type-shorthand/TypeShorthand";
 
 type IconInfo = {
     content: string;
@@ -24,10 +19,10 @@ type IconInfo = {
 };
 
 function getIconInfoForTypeReference(
-    typeRef: ResolvedTypeShape,
-    types: Record<string, ResolvedTypeDefinition>,
+    typeRef: ApiDefinition.TypeShapeOrReference,
+    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>,
 ): IconInfo | null {
-    return visitDiscriminatedUnion(unwrapReference(typeRef, types), "type")._visit<IconInfo | null>({
+    return visitDiscriminatedUnion(ApiDefinition.unwrapReference(typeRef, types).shape)._visit<IconInfo | null>({
         primitive: (primitive) =>
             visitDiscriminatedUnion(primitive.value, "type")._visit<IconInfo | null>({
                 string: () => ({ content: "abc", size: 6 }),
@@ -49,19 +44,17 @@ function getIconInfoForTypeReference(
         undiscriminatedUnion: () => null,
         discriminatedUnion: () => null,
         enum: () => null,
-        optional: (optional) => getIconInfoForTypeReference(optional.shape, types),
-        list: (list) => getIconInfoForTypeReference(list.shape, types),
-        set: (set) => getIconInfoForTypeReference(set.shape, types),
+        list: (list) => getIconInfoForTypeReference(list.itemShape, types),
+        set: (set) => getIconInfoForTypeReference(set.itemShape, types),
         map: () => ({ content: "{}", size: 9 }),
         unknown: () => ({ content: "{}", size: 6 }),
         _other: () => null,
-        alias: (reference) => getIconInfoForTypeReference(reference.shape, types),
     });
 }
 
 function getIconForTypeReference(
-    typeRef: ResolvedTypeShape,
-    types: Record<string, ResolvedTypeDefinition>,
+    typeRef: ApiDefinition.TypeShapeOrReference,
+    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>,
 ): ReactElement | null {
     const info = getIconInfoForTypeReference(typeRef, types);
     if (info == null) {
@@ -80,12 +73,12 @@ function getIconForTypeReference(
 
 export declare namespace UndiscriminatedUnionVariant {
     export interface Props {
-        unionVariant: ResolvedUndiscriminatedUnionShapeVariant;
+        unionVariant: ApiDefinition.UndiscriminatedUnionVariant;
         anchorIdParts: readonly string[];
         applyErrorStyles: boolean;
         slug: FernNavigation.Slug;
         idx: number;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
     }
 }
 
@@ -119,11 +112,7 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                         <span className="t-default font-mono text-sm">{unionVariant.displayName}</span>
                     )}
                     <span className="t-muted inline-flex items-baseline gap-2 text-xs">
-                        {renderDeprecatedTypeShorthand(
-                            unionVariant.shape,
-                            { nullable: contextValue.isResponse },
-                            types,
-                        )}
+                        {renderTypeShorthand(unionVariant.shape, { nullable: contextValue.isResponse }, types)}
                     </span>
                     {unionVariant.availability != null && (
                         <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />

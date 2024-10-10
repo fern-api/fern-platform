@@ -1,22 +1,25 @@
-import { PropertyKey, TypeDefinition, TypeId, TypeReference } from "../latest";
+import { PropertyKey, TypeDefinition, TypeId, TypeReference, TypeShape } from "../latest";
 import { TypeShapeOrReference } from "../types";
 import { unwrapObjectType, unwrapReference } from "../unwrap";
 
-const PRIMITIVE_SHAPE: TypeShapeOrReference = {
-    type: "primitive" as const,
+const PRIMITIVE_SHAPE: TypeShape = {
+    type: "alias",
     value: {
-        type: "string",
-        regex: undefined,
-        minLength: undefined,
-        maxLength: undefined,
-        default: undefined,
+        type: "primitive" as const,
+        value: {
+            type: "string",
+            regex: undefined,
+            minLength: undefined,
+            maxLength: undefined,
+            default: undefined,
+        },
     },
 };
 
 describe("unwrapReference", () => {
     it("should noop for a non-reference", () => {
-        expect(unwrapReference(PRIMITIVE_SHAPE, {})).toStrictEqual({
-            shape: PRIMITIVE_SHAPE,
+        expect(unwrapReference(PRIMITIVE_SHAPE["value"], {})).toStrictEqual({
+            shape: PRIMITIVE_SHAPE["value"],
             availability: undefined,
             descriptions: [],
             isOptional: false,
@@ -33,13 +36,13 @@ describe("unwrapReference", () => {
         const types: Record<TypeId, TypeDefinition> = {
             [TypeId("foo")]: {
                 name: "foo",
-                shape: { type: "alias", value: PRIMITIVE_SHAPE },
+                shape: PRIMITIVE_SHAPE,
                 description: undefined,
                 availability: undefined,
             },
         };
         expect(unwrapReference(shape, types)).toStrictEqual({
-            shape: PRIMITIVE_SHAPE,
+            shape: PRIMITIVE_SHAPE["value"],
             availability: undefined,
             descriptions: [],
             isOptional: false,
@@ -87,7 +90,7 @@ describe("unwrapReference", () => {
             },
         };
         expect(unwrapReference(shape, types)).toStrictEqual({
-            shape: PRIMITIVE_SHAPE,
+            shape: PRIMITIVE_SHAPE["value"],
             availability: undefined,
             descriptions: [],
             isOptional: true,
@@ -123,9 +126,12 @@ describe("unwrapReference", () => {
         const shape: TypeShapeOrReference = {
             type: "optional",
             shape: {
-                type: "id",
-                id: TypeId("foo"),
-                default: undefined,
+                type: "alias",
+                value: {
+                    type: "id",
+                    id: TypeId("foo"),
+                    default: undefined,
+                },
             },
             default: "testing-b",
         };
@@ -186,7 +192,10 @@ describe("unwrapReference", () => {
                     type: "alias",
                     value: {
                         type: "optional",
-                        shape: { type: "id", id: TypeId("c"), default: undefined },
+                        shape: {
+                            type: "alias",
+                            value: { type: "id", id: TypeId("c"), default: undefined },
+                        },
                         default: undefined,
                     },
                 },
@@ -195,13 +204,13 @@ describe("unwrapReference", () => {
             },
             [TypeId("c")]: {
                 name: "c",
-                shape: { type: "alias", value: PRIMITIVE_SHAPE },
+                shape: PRIMITIVE_SHAPE,
                 description: "c",
                 availability: "InDevelopment",
             },
         };
         const unwrapped = unwrapReference(shape, types);
-        expect(unwrapped.shape).toStrictEqual(PRIMITIVE_SHAPE);
+        expect(unwrapped.shape).toStrictEqual(PRIMITIVE_SHAPE["value"]);
         expect(unwrapped.availability).toBe("Deprecated");
         expect(unwrapped.descriptions).toStrictEqual(["a", "b", "c"]);
         expect(unwrapped.isOptional).toBe(true);
@@ -261,9 +270,12 @@ describe("unwrapObjectType", () => {
                 {
                     key: PropertyKey("d"),
                     valueShape: {
-                        type: "optional",
-                        shape: PRIMITIVE_SHAPE,
-                        default: undefined,
+                        type: "alias",
+                        value: {
+                            type: "optional",
+                            shape: PRIMITIVE_SHAPE,
+                            default: undefined,
+                        },
                     },
                     description: undefined,
                     availability: undefined,
@@ -271,9 +283,12 @@ describe("unwrapObjectType", () => {
                 {
                     key: PropertyKey("a"),
                     valueShape: {
-                        type: "optional",
-                        shape: PRIMITIVE_SHAPE,
-                        default: undefined,
+                        type: "alias",
+                        value: {
+                            type: "optional",
+                            shape: PRIMITIVE_SHAPE,
+                            default: undefined,
+                        },
                     },
                     description: undefined,
                     availability: undefined,
@@ -291,6 +306,7 @@ describe("unwrapObjectType", () => {
                     availability: undefined,
                 },
             ],
+            extraProperties: undefined,
         };
 
         expect(unwrapObjectType(shape, {}).properties.map((p) => p.key)).toStrictEqual([
@@ -315,14 +331,18 @@ describe("unwrapObjectType", () => {
                 {
                     key: PropertyKey("d"),
                     valueShape: {
-                        type: "optional",
-                        shape: PRIMITIVE_SHAPE,
-                        default: undefined,
+                        type: "alias",
+                        value: {
+                            type: "optional",
+                            shape: PRIMITIVE_SHAPE,
+                            default: undefined,
+                        },
                     },
                     description: undefined,
                     availability: undefined,
                 },
             ],
+            extraProperties: undefined,
         };
         const types: Record<TypeId, TypeDefinition> = {
             [TypeId("b")]: {
@@ -338,6 +358,7 @@ describe("unwrapObjectType", () => {
                             availability: undefined,
                         },
                     ],
+                    extraProperties: undefined,
                 },
                 description: undefined,
                 availability: undefined,
@@ -355,6 +376,7 @@ describe("unwrapObjectType", () => {
                             availability: undefined,
                         },
                     ],
+                    extraProperties: undefined,
                 },
                 description: undefined,
                 availability: undefined,
@@ -380,6 +402,7 @@ describe("unwrapObjectType", () => {
                     availability: undefined,
                 },
             ],
+            extraProperties: undefined,
         };
         const types: Record<TypeId, TypeDefinition> = {
             [TypeId("b")]: {
@@ -389,9 +412,12 @@ describe("unwrapObjectType", () => {
                     value: {
                         type: "optional",
                         shape: {
-                            type: "id",
-                            id: TypeId("c"),
-                            default: undefined,
+                            type: "alias",
+                            value: {
+                                type: "id",
+                                id: TypeId("c"),
+                                default: undefined,
+                            },
                         },
                         default: undefined,
                     },
@@ -408,9 +434,12 @@ describe("unwrapObjectType", () => {
                         {
                             key: PropertyKey("b"),
                             valueShape: {
-                                type: "optional",
-                                shape: PRIMITIVE_SHAPE,
-                                default: undefined,
+                                type: "alias",
+                                value: {
+                                    type: "optional",
+                                    shape: PRIMITIVE_SHAPE,
+                                    default: undefined,
+                                },
                             },
                             description: undefined,
                             availability: "Deprecated",
@@ -422,6 +451,7 @@ describe("unwrapObjectType", () => {
                             availability: undefined,
                         },
                     ],
+                    extraProperties: undefined,
                 },
                 description: "description-2",
                 availability: undefined,
@@ -440,9 +470,12 @@ describe("unwrapObjectType", () => {
             {
                 key: PropertyKey("c"),
                 valueShape: {
-                    type: "optional",
-                    shape: PRIMITIVE_SHAPE,
-                    default: undefined,
+                    type: "alias",
+                    value: {
+                        type: "optional",
+                        shape: PRIMITIVE_SHAPE,
+                        default: undefined,
+                    },
                 },
                 description: undefined,
                 // availability is the least stable of the extended object
@@ -451,9 +484,12 @@ describe("unwrapObjectType", () => {
             {
                 key: PropertyKey("b"),
                 valueShape: {
-                    type: "optional",
-                    shape: PRIMITIVE_SHAPE,
-                    default: undefined,
+                    type: "alias",
+                    value: {
+                        type: "optional",
+                        shape: PRIMITIVE_SHAPE,
+                        default: undefined,
+                    },
                 },
                 description: undefined,
                 // availability is the least stable of the extended object

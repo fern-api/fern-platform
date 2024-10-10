@@ -1,5 +1,5 @@
+import type { APIKeyInjectionConfig } from "@fern-ui/fern-docs-auth";
 import useSWR from "swr";
-import { APIKeyInjectionConfig } from "../auth";
 import { useApiRoute } from "../hooks/useApiRoute";
 
 const DEFAULT = { enabled: false as const };

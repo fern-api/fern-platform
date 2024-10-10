@@ -22,5 +22,17 @@ export interface WithNodeMetadata extends FernRegistry.navigation.latest.WithNod
     /** The slug that should be used in the canonical URL rel. If not provided, the `slug` will be used. */
     canonicalSlug: FernRegistry.navigation.latest.Slug | undefined;
     icon: string | undefined;
+    /** If true, this node will not be displayed in the sidebar, and noindex will be considered true. */
     hidden: boolean | undefined;
+    /**
+     * If true, this node is only visible to authenticated users.
+     * If false, this node is only visible to all users (including anonymous).
+     */
+    authed: boolean | undefined;
+    /**
+     * The audience(s) that this node is intended for. If not provided, the node is intended for all audiences.
+     * If provided, the node is only intended for the specified audience(s). OR logic is used for multiple audiences on a single node.
+     * AND logic is used when evaluating audiences up the tree.
+     */
+    audience: FernRegistry.AudienceId[] | undefined;
 }

@@ -1,6 +1,11 @@
+import {
+    EndpointContext,
+    WebSocketContext,
+    createEndpointContext,
+    createWebSocketContext,
+} from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useEventCallback } from "@fern-ui/react-commons";
-import { captureMessage } from "@sentry/nextjs";
 import { WritableAtom, atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { atomFamily, atomWithStorage, useAtomCallback } from "jotai/utils";
 import { Dispatch, SetStateAction, useEffect } from "react";
@@ -22,12 +27,6 @@ import {
     type PlaygroundRequestFormState,
     type PlaygroundWebSocketRequestFormState,
 } from "../playground/types";
-import {
-    EndpointContext,
-    WebSocketContext,
-    createEndpointContext,
-    createWebSocketContext,
-} from "../playground/types/endpoint-context";
 import {
     getInitialEndpointRequestFormState,
     getInitialEndpointRequestFormStateWithExample,
@@ -270,7 +269,9 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
                     const context = createEndpointContext(node, definition);
 
                     if (context == null) {
-                        captureMessage("Could not find endpoint for API playground selection state", "fatal");
+                        // TODO: sentry
+                        // eslint-disable-next-line no-console
+                        console.error("Could not find endpoint for API playground selection state");
                         return;
                     }
 
@@ -282,7 +283,9 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
                     const context = createWebSocketContext(node, definition);
 
                     if (context == null) {
-                        captureMessage("Could not find websocket for API playground selection state", "fatal");
+                        // TODO: sentry
+                        // eslint-disable-next-line no-console
+                        console.error("Could not find websocket for API playground selection state");
                         playgroundFormStateFamily.remove(node.id);
                         return;
                     }

@@ -1,13 +1,13 @@
+import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
+import { unknownToString } from "@fern-api/ui-core-utils";
 import { FernTooltipProvider } from "@fern-ui/components";
-import { unknownToString } from "@fern-ui/core-utils";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { SendSolid } from "iconoir-react";
 import { useSetAtom } from "jotai";
 import { mapValues } from "lodash-es";
 import { ReactElement, useCallback, useState } from "react";
-import { captureSentryError } from "../../analytics/sentry";
 import {
     PLAYGROUND_AUTH_STATE_ATOM,
     PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
@@ -24,7 +24,6 @@ import { executeProxyFile } from "../fetch-utils/executeProxyFile";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
 import type { GrpcProxyRequest, ProxyRequest } from "../types";
-import { EndpointContext } from "../types/endpoint-context";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import {
     buildAuthHeaders,
@@ -32,7 +31,7 @@ import {
     getInitialEndpointRequestFormStateWithExample,
     serializeFormStateBody,
 } from "../utils";
-import { usePlaygroundBaseUrl, useSelectedEnvironment } from "../utils/select-environment";
+import { usePlaygroundBaseUrl } from "../utils/select-environment";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 
@@ -56,8 +55,7 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
     const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
     const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
     const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
-    const baseUrl = usePlaygroundBaseUrl(endpoint);
-    const selectedEnvironment = useSelectedEnvironment(endpoint);
+    const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
 
     // TODO: remove potentially
     // const grpcClient = useMemo(() => {
@@ -159,22 +157,13 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
                 }
             }
         } catch (e) {
+            // TODO: sentry
             // eslint-disable-next-line no-console
-            console.error(e);
+            console.error(
+                "An unexpected error occurred while sending request to the proxy server. This is likely a bug, rather than a user error.",
+                e,
+            );
             setResponse(failed(e));
-
-            captureSentryError(e, {
-                context: "ApiPlayground",
-                errorSource: "sendRequest",
-                errorDescription:
-                    "An unexpected error occurred while sending request to the proxy server. This is likely a bug, rather than a user error.",
-                data: {
-                    endpointId: endpoint.id,
-                    endpointName: node.title,
-                    method: endpoint.method,
-                    route: `/${node.slug}`,
-                },
-            });
         }
     }, [
         endpoint,
@@ -261,11 +250,13 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
                         formState={formState}
                         // TODO: Remove this after pinecone demo, this is a temporary flag
                         sendRequest={grpcEndpoints?.includes(endpoint.id) ? sendGrpcRequest : sendRequest}
-                        environment={selectedEnvironment}
+                        environmentId={environmentId}
+                        baseUrl={baseUrl}
                         environmentFilters={settings?.environments}
                         path={endpoint.path}
                         queryParameters={endpoint.queryParameters}
                         sendRequestIcon={<SendSolid className="transition-transform group-hover:translate-x-0.5" />}
+                        types={context.types}
                     />
                 </div>
                 <div className="flex min-h-0 flex-1 shrink">

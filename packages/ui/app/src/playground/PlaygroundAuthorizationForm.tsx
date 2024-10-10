@@ -1,4 +1,6 @@
+import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import {
     FernButton,
     FernCard,
@@ -9,7 +11,6 @@ import {
     FernTooltip,
     FernTooltipProvider,
 } from "@fern-ui/components";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { HelpCircle, Key, User } from "iconoir-react";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -34,7 +35,6 @@ import { PasswordInputGroup } from "./PasswordInputGroup";
 import { PlaygroundEndpointForm } from "./endpoint/PlaygroundEndpointForm";
 import { useOAuthEndpointContext } from "./hooks/useOauthEndpointContext";
 import { PlaygroundAuthState } from "./types";
-import { EndpointContext } from "./types/endpoint-context";
 import { oAuthClientCredentialReferencedEndpointLoginFlow } from "./utils/oauth";
 import { usePlaygroundBaseUrl } from "./utils/select-environment";
 
@@ -168,7 +168,7 @@ function FoundOAuthReferencedEndpointForm({
     const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
     const proxyEnvironment = useStandardProxyEnvironment();
     const [formState, setFormState] = usePlaygroundEndpointFormState(context);
-    const baseUrl = usePlaygroundBaseUrl(context.endpoint);
+    const [baseUrl] = usePlaygroundBaseUrl(context.endpoint);
 
     const [displayFailedLogin, setDisplayFailedLogin] = useState(false);
 

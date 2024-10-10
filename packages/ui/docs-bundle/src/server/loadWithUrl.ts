@@ -1,4 +1,5 @@
 import { APIResponse, FdrAPI } from "@fern-api/fdr-sdk/client/types";
+import { withoutStaging } from "@fern-ui/fern-docs-utils";
 import { getRegistryServiceWithToken, provideRegistryService } from "@fern-ui/ui";
 import type { AuthProps } from "./authProps";
 
@@ -12,11 +13,9 @@ export type LoadWithUrlResponse = APIResponse<
  * - Otherwise, we can use the getDocsForUrl endpoint (including custom auth).
  */
 export async function loadWithUrl(url: string, auth?: AuthProps): Promise<LoadWithUrlResponse> {
-    if (url.includes(".docs.staging.buildwithfern.com")) {
-        url = url.replace(".docs.staging.", ".docs.");
-    }
+    url = withoutStaging(url);
 
-    if (auth != null && auth.user.partner === "workos") {
+    if (auth != null && auth.partner === "workos") {
         return getRegistryServiceWithToken(auth.token).docs.v2.read.getPrivateDocsForUrl({
             url: FdrAPI.Url(url),
         });

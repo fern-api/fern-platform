@@ -5,7 +5,6 @@ import { memoize } from "lodash-es";
 import { Router, useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
-import { captureSentryError, captureSentryErrorMessage } from "../analytics/sentry";
 import { useIsLocalPreview } from "../contexts/local-preview";
 
 export declare interface FernErrorBoundaryProps {
@@ -37,15 +36,13 @@ export function FernErrorTag({
 }): ReactElement | null {
     const isLocalPreview = useIsLocalPreview();
     useEffect(() => {
+        // TODO: sentry
         // eslint-disable-next-line no-console
-        console.error(error);
-        captureSentryError(error, {
-            context: component,
-            errorSource: "FernErrorTag",
-            errorDescription:
-                errorDescription ??
+        console.error(
+            errorDescription ??
                 "An unknown UI error occurred. This could be a critical user-facing error that should be investigated.",
-        });
+            error,
+        );
     }, [component, error, errorDescription]);
 
     // if local preview, always show the error tag for markdown errors
@@ -99,8 +96,9 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
 
     useEffect(() => {
         if (refreshOnError) {
+            // TODO: sentry
             // eslint-disable-next-line no-console
-            captureSentryErrorMessage("Fern Docs crashed. Reloading the page might fix the issue.");
+            console.error("Fern Docs crashed. Reloading the page might fix the issue.");
             router.reload();
         }
     }, [refreshOnError, router]);

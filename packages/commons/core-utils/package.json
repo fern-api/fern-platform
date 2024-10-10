@@ -1,12 +1,11 @@
 {
-  "name": "@fern-ui/core-utils",
+  "name": "@fern-api/ui-core-utils",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/commons/core-utils"
   },
-  "private": true,
   "files": [
     "dist"
   ],

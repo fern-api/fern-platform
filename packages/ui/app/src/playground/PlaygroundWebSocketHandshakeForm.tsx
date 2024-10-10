@@ -1,3 +1,4 @@
+import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import { FernCard } from "@fern-ui/components";
 import isEmpty from "lodash-es/isEmpty";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
@@ -5,7 +6,6 @@ import { Callout } from "../mdx/components/callout";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundObjectPropertiesForm } from "./form/PlaygroundObjectPropertyForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
-import { WebSocketContext } from "./types/endpoint-context";
 
 interface PlaygroundWebSocketHandshakeFormProps {
     context: WebSocketContext;
@@ -62,7 +62,9 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
         return null;
     }
 
-    const { auth, channel, types } = context;
+    const { auth, channel, types, globalHeaders } = context;
+
+    const headers = [...globalHeaders, ...(channel.requestHeaders ?? [])];
 
     return (
         <>
@@ -75,7 +77,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
             {auth != null && <PlaygroundAuthorizationFormCard auth={auth} disabled={disabled} />}
 
             <div className="col-span-2 space-y-8">
-                {channel.requestHeaders && channel.requestHeaders.length > 0 && (
+                {headers.length > 0 && (
                     <div>
                         <div className="mb-4 px-4">
                             <h5 className="t-muted m-0">Headers</h5>
@@ -83,7 +85,8 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                         <FernCard className="rounded-xl p-4 shadow-sm">
                             <PlaygroundObjectPropertiesForm
                                 id="header"
-                                properties={channel.requestHeaders}
+                                properties={headers}
+                                extraProperties={undefined}
                                 onChange={setHeaders}
                                 value={formState?.headers}
                                 types={types}
@@ -102,6 +105,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                             <PlaygroundObjectPropertiesForm
                                 id="path"
                                 properties={channel.pathParameters}
+                                extraProperties={undefined}
                                 onChange={setPathParameters}
                                 value={formState?.pathParameters}
                                 types={types}
@@ -120,6 +124,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                             <PlaygroundObjectPropertiesForm
                                 id="query"
                                 properties={channel.queryParameters}
+                                extraProperties={undefined}
                                 onChange={setQueryParameters}
                                 value={formState?.queryParameters}
                                 types={types}

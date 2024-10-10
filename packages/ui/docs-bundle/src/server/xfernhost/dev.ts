@@ -1,4 +1,4 @@
-import { withDefaultProtocol } from "@fern-ui/core-utils";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 
 /**
  * Note: NEXT_PUBLIC_DOCS_DOMAIN is used for local development only.

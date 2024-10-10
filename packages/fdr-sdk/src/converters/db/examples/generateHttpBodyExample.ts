@@ -1,4 +1,4 @@
-import assertNever from "@fern-ui/core-utils/assertNever";
+import assertNever from "@fern-api/ui-core-utils/assertNever";
 import { APIV1Write } from "../../../client";
 
 export type ResolveTypeById = (typeId: APIV1Write.TypeId) => APIV1Write.TypeDefinition;

@@ -1,5 +1,5 @@
-import { unknownToString } from "@fern-ui/core-utils";
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import { unknownToString } from "@fern-api/ui-core-utils";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { SnippetHttpRequest } from "./SnippetHttpRequest";
 
 function requiresUrlEncode(str: string): boolean {

@@ -7,7 +7,7 @@
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../fdr-sdk"
+      "path": "../../fdr-sdk/tsconfig.build.json"
     }
   ]
 }

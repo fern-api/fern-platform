@@ -1,4 +1,4 @@
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernNavigation } from "../..";
 
@@ -30,6 +30,8 @@ export class FernNavigationV1ToLatest {
             canonicalSlug: undefined,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
+            audience: undefined,
         };
 
         return latest;
@@ -96,8 +98,10 @@ export class FernNavigationV1ToLatest {
             canonicalSlug: undefined,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
             id: FernNavigation.NodeId(node.id),
             pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
+            audience: undefined,
         };
         return latest;
     };
@@ -118,9 +122,11 @@ export class FernNavigationV1ToLatest {
             canonicalSlug,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
             id: FernNavigation.NodeId(node.id),
             pageId: FernNavigation.PageId(node.pageId),
             noindex: node.noindex,
+            audience: undefined,
         };
         return latest;
     };
@@ -155,8 +161,10 @@ export class FernNavigationV1ToLatest {
             canonicalSlug: undefined,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
             id: FernNavigation.NodeId(node.id),
             pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
+            audience: undefined,
         };
         return latest;
     };
@@ -248,6 +256,7 @@ export class FernNavigationV1ToLatest {
             canonicalSlug: undefined,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
             pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
             default: node.default,
             productId: FernNavigation.ProductId(node.productId),
@@ -256,6 +265,7 @@ export class FernNavigationV1ToLatest {
                 versioned: (value) => this.versioned(value, [...parents, node]),
             }),
             subtitle: node.subtitle,
+            audience: undefined,
         };
         return latest;
     };
@@ -307,8 +317,10 @@ export class FernNavigationV1ToLatest {
             canonicalSlug,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
             pageId: FernNavigation.PageId(node.pageId),
             noindex: node.noindex,
+            audience: undefined,
         };
         return latest;
     };
@@ -335,10 +347,12 @@ export class FernNavigationV1ToLatest {
             canonicalSlug,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
             pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
             collapsed: node.collapsed,
             overviewPageId,
             noindex: node.noindex,
+            audience: undefined,
         };
         return latest;
     };
@@ -369,12 +383,14 @@ export class FernNavigationV1ToLatest {
             canonicalSlug,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
             id: FernNavigation.NodeId(node.id),
             overviewPageId,
             noindex: node.noindex,
             apiDefinitionId: node.apiDefinitionId,
             availability: this.#availability(node.availability),
             pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
+            audience: undefined,
         };
         return latest;
     };
@@ -401,8 +417,10 @@ export class FernNavigationV1ToLatest {
             canonicalSlug,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
             overviewPageId,
             noindex: node.noindex,
+            audience: undefined,
         };
         return latest;
     };
@@ -420,7 +438,9 @@ export class FernNavigationV1ToLatest {
             canonicalSlug: undefined,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
             year: node.year,
+            audience: undefined,
         };
         return latest;
     };
@@ -438,7 +458,9 @@ export class FernNavigationV1ToLatest {
             canonicalSlug: undefined,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
             month: node.month,
+            audience: undefined,
         };
         return latest;
     };
@@ -460,9 +482,11 @@ export class FernNavigationV1ToLatest {
             canonicalSlug,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
             date: node.date,
             pageId: FernNavigation.PageId(node.pageId),
             noindex: node.noindex,
+            audience: undefined,
         };
         return latest;
     };
@@ -489,12 +513,14 @@ export class FernNavigationV1ToLatest {
             canonicalSlug,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
             pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
             playground: node.playground,
             overviewPageId,
             noindex: node.noindex,
             apiDefinitionId: node.apiDefinitionId,
             availability: this.#availability(node.availability),
+            audience: undefined,
         };
         return latest;
     };
@@ -519,12 +545,14 @@ export class FernNavigationV1ToLatest {
             canonicalSlug,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
             playground: node.playground,
             apiDefinitionId: node.apiDefinitionId,
             availability: this.#availability(node.availability),
             method: node.method,
             endpointId: node.endpointId,
             isResponseStream: node.isResponseStream,
+            audience: undefined,
         };
         return latest;
     };
@@ -562,10 +590,12 @@ export class FernNavigationV1ToLatest {
             canonicalSlug,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
             playground: node.playground,
             apiDefinitionId: node.apiDefinitionId,
             availability: this.#availability(node.availability),
             webSocketId: node.webSocketId,
+            audience: undefined,
         };
         return latest;
     };
@@ -590,10 +620,12 @@ export class FernNavigationV1ToLatest {
             canonicalSlug,
             icon: node.icon,
             hidden: node.hidden,
+            authed: undefined,
             apiDefinitionId: node.apiDefinitionId,
             availability: this.#availability(node.availability),
             method: node.method,
             webhookId: node.webhookId,
+            audience: undefined,
         };
         return latest;
     };

@@ -1,124 +1,42 @@
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltipProvider } from "@fern-ui/components";
-import { visitDiscriminatedUnion } from "@fern-ui/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
-import { ReactElement, memo, useCallback, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { useRouteListener } from "../../../atoms";
-import { Chip } from "../../../components/Chip";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
-import { ResolvedTypeDefinition, dereferenceObjectProperties } from "../../../resolver/types";
 import { getAnchorId } from "../../../util/anchor";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
-import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant";
-import { ObjectProperty } from "../object/ObjectProperty";
-import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant";
 import { EnumTypeDefinition } from "./EnumTypeDefinition";
 import { FernCollapseWithButton } from "./FernCollapseWithButton";
 import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
+import { createCollapsibleContent } from "./createCollapsibleContent";
 
 export declare namespace InternalTypeDefinition {
     export interface Props {
-        typeShape: ResolvedTypeDefinition;
+        shape: ApiDefinition.TypeShapeOrReference;
         isCollapsible: boolean;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        types: Record<string, ResolvedTypeDefinition>;
+        types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
     }
 }
 
-interface CollapsibleContent {
-    elements: ReactElement[];
-    elementNameSingular: string;
-    elementNamePlural: string;
-    separatorText?: string;
-}
-
 export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(function InternalTypeDefinition({
-    typeShape,
+    shape,
     isCollapsible,
     anchorIdParts,
     slug,
     types,
 }) {
     const collapsableContent = useMemo(
-        () =>
-            visitDiscriminatedUnion(typeShape, "type")._visit<CollapsibleContent | undefined>({
-                object: (object) => ({
-                    elements: dereferenceObjectProperties(object, types).map((property) => (
-                        <ObjectProperty
-                            key={property.key}
-                            property={property}
-                            anchorIdParts={[...anchorIdParts, property.key]}
-                            applyErrorStyles={false}
-                            slug={slug}
-                            types={types}
-                        />
-                    )),
-                    elementNameSingular: "property",
-                    elementNamePlural: "properties",
-                }),
-                undiscriminatedUnion: (union) => ({
-                    elements: union.variants.map((variant, variantIdx) => (
-                        <UndiscriminatedUnionVariant
-                            key={variantIdx}
-                            unionVariant={variant}
-                            anchorIdParts={[...anchorIdParts, variant.displayName ?? variantIdx.toString()]}
-                            applyErrorStyles={false}
-                            slug={slug}
-                            idx={variantIdx}
-                            types={types}
-                        />
-                    )),
-                    elementNameSingular: "variant",
-                    elementNamePlural: "variants",
-                    separatorText: "OR",
-                }),
-                discriminatedUnion: (union) => ({
-                    elements: union.variants.map((variant) => (
-                        <DiscriminatedUnionVariant
-                            key={variant.discriminantValue}
-                            discriminant={union.discriminant}
-                            unionVariant={variant}
-                            anchorIdParts={[...anchorIdParts, variant.discriminantValue]}
-                            slug={slug}
-                            types={types}
-                        />
-                    )),
-                    elementNameSingular: "variant",
-                    elementNamePlural: "variants",
-                    separatorText: "OR",
-                }),
-                enum: (enum_) => ({
-                    elements: enum_.values.map((enumValue) => (
-                        <Chip key={enumValue.value} name={enumValue.value} description={enumValue.description} />
-                        // <EnumValue key={enumValue.value} enumValue={enumValue} />
-                    )),
-                    elementNameSingular: "enum value",
-                    elementNamePlural: "enum values",
-                }),
-                literal: (literal) => ({
-                    elements: [
-                        visitDiscriminatedUnion(literal.value, "type")._visit({
-                            stringLiteral: (value) => <Chip key={value.value} name={value.value} />,
-                            booleanLiteral: (value) => (
-                                <Chip key={value.value.toString()} name={value.value.toString()} />
-                            ),
-                            _other: () => <span>{"<unknown>"}</span>,
-                        }),
-                    ],
-                    elementNameSingular: "literal",
-                    elementNamePlural: "literals",
-                }),
-                alias: () => undefined,
-                unknown: () => undefined,
-                _other: () => undefined,
-            }),
-        [typeShape, types, anchorIdParts, slug],
+        () => createCollapsibleContent(shape, types, anchorIdParts, slug),
+        [shape, types, anchorIdParts, slug],
     );
 
     const anchorIdSoFar = getAnchorId(anchorIdParts);
@@ -148,9 +66,9 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
 
     if (!isCollapsible) {
         // TODO: (rohin) Refactor this
-        if (collapsableContent.elementNameSingular === "literal") {
-            return null;
-        }
+        // if (collapsableContent.elementNameSingular === "literal") {
+        //     return null;
+        // }
         return (
             <FernErrorBoundary component="InternalTypeDefinition">
                 <FernTooltipProvider>

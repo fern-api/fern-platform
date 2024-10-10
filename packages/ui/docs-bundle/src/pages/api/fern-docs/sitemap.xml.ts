@@ -1,10 +1,9 @@
-import { buildUrlFromApiEdge } from "@/server/buildUrlFromApi";
-import { loadWithUrl } from "@/server/loadWithUrl";
+import { DocsLoader } from "@/server/DocsLoader";
 import { conformTrailingSlash } from "@/server/trailingSlash";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
-import { checkViewerAllowedEdge } from "@fern-ui/ui/auth";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 import urljoin from "url-join";
 
@@ -17,27 +16,20 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     }
     const xFernHost = getXFernHostEdge(req);
 
-    const status = await checkViewerAllowedEdge(xFernHost, req);
-    if (status >= 400) {
-        return NextResponse.next({ status });
-    }
+    // load the root node
+    const fernToken = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
+    const root = await DocsLoader.for(xFernHost, fernToken).root();
+
+    // collect all indexable page slugs
+    const slugs = NodeCollector.collect(root).indexablePageSlugs;
+
+    // convert slugs to full urls
+    const urls = slugs.map((slug) => conformTrailingSlash(urljoin(withDefaultProtocol(xFernHost), slug)));
+
+    // generate sitemap xml
+    const sitemap = getSitemapXml(urls);
 
     const headers = new Headers();
-    headers.set("x-fern-host", xFernHost);
-
-    const url = buildUrlFromApiEdge(xFernHost, req);
-    const docs = await loadWithUrl(url);
-
-    if (!docs.ok) {
-        return new NextResponse(null, { status: 404 });
-    }
-
-    const node = FernNavigation.utils.toRootNode(docs.body);
-    const collector = NodeCollector.collect(node);
-    const urls = collector.indexablePageSlugs.map((slug) => urljoin(xFernHost, slug));
-
-    const sitemap = getSitemapXml(urls.map((url) => conformTrailingSlash(`https://${url}`)));
-
     headers.set("Content-Type", "text/xml");
 
     return new NextResponse(sitemap, { headers });

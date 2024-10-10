@@ -8,7 +8,7 @@
     }
   },
   "exclude": ["node_modules"],
-  "include": ["./src/**/*", ".next/types/**/*.ts", "__mocks__", "instrumentation.ts", "sentry.*.config.ts"],
+  "include": ["./src/**/*", ".next/types/**/*.ts", "__mocks__"],
   "references": [
     {
       "path": "../../commons/core-utils"
@@ -20,7 +20,19 @@
       "path": "../../commons/search-utils"
     },
     {
-      "path": "../../fdr-sdk"
+      "path": "../fern-docs-auth"
+    },
+    {
+      "path": "../fern-docs-edge-config"
+    },
+    {
+      "path": "../fern-docs-utils"
+    },
+    {
+      "path": "../fern-docs-server"
+    },
+    {
+      "path": "../../fdr-sdk/tsconfig.build.json"
     },
     {
       "path": "../app/tsconfig.build.json"

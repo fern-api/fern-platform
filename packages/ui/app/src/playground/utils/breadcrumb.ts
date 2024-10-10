@@ -21,7 +21,7 @@ interface BreadcrumbSlicerOpts<T> {
 }
 
 /**
- * assumes that elements are ordered via in-order traversal of a navigation tree.
+ * assumes that elements are ordered via pre-order traversal of a navigation tree.
  *
  * if the breadcrumbs of the list looks like this:
  * [a, b]

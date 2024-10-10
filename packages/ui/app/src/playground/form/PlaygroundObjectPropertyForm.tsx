@@ -1,4 +1,11 @@
-import { ObjectProperty, TypeDefinition, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
+import {
+    ObjectProperty,
+    PropertyKey,
+    TypeDefinition,
+    TypeId,
+    TypeReference,
+    unwrapReference,
+} from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernDropdown } from "@fern-ui/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
@@ -19,7 +26,7 @@ interface PlaygroundObjectPropertyFormProps {
     onChange: (key: string, value: unknown) => void;
     value: unknown;
     expandByDefault?: boolean;
-    types: Record<string, TypeDefinition>;
+    types: Record<TypeId, TypeDefinition>;
     disabled?: boolean;
 }
 
@@ -75,6 +82,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
 interface PlaygroundObjectPropertiesFormProps {
     id: string;
     properties: readonly ObjectProperty[];
+    extraProperties: TypeReference | undefined;
     onChange: (value: unknown) => void;
     value: unknown;
     indent?: boolean;
@@ -83,7 +91,8 @@ interface PlaygroundObjectPropertiesFormProps {
 }
 
 export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFormProps>((props) => {
-    const { id, properties, onChange, value, indent = false, types, disabled } = props;
+    const { id, properties, onChange, value, indent = false, types, disabled, extraProperties } = props;
+
     const onChangeObjectProperty = useCallback(
         (key: string, newValue: unknown) => {
             onChange((oldValue: unknown) => {
@@ -101,16 +110,53 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
         },
         [onChange],
     );
+
+    const [additionalProperties, setAdditionalProperties] = useState<unknown>({});
+
+    const onChangeAdditionalObjectProperty = useCallback(
+        (key: string, newValue: unknown) => {
+            onChange((oldValue: unknown) => {
+                const oldObject = castToRecord(oldValue);
+                const val = castToRecord(newValue);
+
+                if (newValue === undefined) {
+                    return Object.fromEntries(
+                        Object.entries(oldObject).filter(
+                            ([k]) => !Object.keys(castToRecord(additionalProperties)).includes(k),
+                        ),
+                    );
+                } else {
+                    if (
+                        JSON.stringify(Object.keys(castToRecord(additionalProperties))) !==
+                        JSON.stringify(Object.keys(val))
+                    ) {
+                        setAdditionalProperties(newValue);
+                    }
+
+                    return {
+                        ...Object.fromEntries(
+                            Object.entries(oldObject).filter(
+                                ([k]) => !Object.keys(castToRecord(additionalProperties)).includes(k),
+                            ),
+                        ),
+                        ...newValue,
+                    };
+                }
+            });
+        },
+        [onChange, additionalProperties],
+    );
+
     const shownProperties = useMemo(() => {
         return properties.filter((property) =>
-            shouldShowProperty(property.valueShape, castToRecord(value)[property.key]),
+            shouldShowProperty(property.valueShape, types, castToRecord(value)[property.key]),
         );
-    }, [properties, value]);
+    }, [properties, types, value]);
     const hiddenProperties = useMemo(() => {
         return properties.filter(
-            (property) => !shouldShowProperty(property.valueShape, castToRecord(value)[property.key]),
+            (property) => !shouldShowProperty(property.valueShape, types, castToRecord(value)[property.key]),
         );
-    }, [properties, value]);
+    }, [properties, types, value]);
 
     const hiddenPropertiesOptions = useMemo(() => {
         const options = hiddenProperties.map(
@@ -207,12 +253,78 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                     />
                 </FernDropdown>
             )}
+
+            {extraProperties != null && (
+                <div className={cn("flex-1 shrink min-w-0 mt-8")}>
+                    <PlaygroundObjectPropertyForm
+                        id={"extraProperties"}
+                        property={{
+                            key: PropertyKey("Optional Extra Properties"),
+                            valueShape: {
+                                type: "alias",
+                                value: {
+                                    type: "optional",
+                                    shape: {
+                                        type: "alias",
+                                        value: {
+                                            type: "map",
+                                            keyShape: {
+                                                type: "alias",
+                                                value: {
+                                                    type: "primitive",
+                                                    value: {
+                                                        type: "string",
+                                                        regex: undefined,
+                                                        minLength: undefined,
+                                                        maxLength: undefined,
+                                                        default: undefined,
+                                                    },
+                                                },
+                                            },
+                                            valueShape: {
+                                                type: "alias",
+                                                value: {
+                                                    type: "primitive",
+                                                    value: {
+                                                        type: "string",
+                                                        regex: undefined,
+                                                        minLength: undefined,
+                                                        maxLength: undefined,
+                                                        default: undefined,
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                    default: undefined,
+                                },
+                            },
+                            description: undefined,
+                            availability: undefined,
+                        }}
+                        onChange={onChangeAdditionalObjectProperty}
+                        value={Object.keys(castToRecord(value)).reduce((acc: Record<string, unknown>, key) => {
+                            if (!properties.some((p) => p.key === key)) {
+                                acc[key] = castToRecord(value)[key];
+                            }
+                            return acc;
+                        }, {})}
+                        types={types}
+                        disabled={disabled}
+                    />
+                </div>
+            )}
         </div>
     );
 });
 
 PlaygroundObjectPropertiesForm.displayName = "PlaygroundObjectPropertiesForm";
 
-function shouldShowProperty(shape: ObjectProperty["valueShape"], value: unknown): boolean {
-    return shape.type !== "optional" || value !== undefined;
+function shouldShowProperty(
+    shape: ObjectProperty["valueShape"],
+    types: Record<TypeId, TypeDefinition>,
+    value: unknown,
+): boolean {
+    const unwrapped = unwrapReference(shape, types);
+    return !unwrapped.isOptional || value !== undefined;
 }

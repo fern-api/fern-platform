@@ -1,9 +1,9 @@
+import { checkViewerAllowedEdge } from "@/server/auth/checkViewerAllowed";
 import { loadWithUrl } from "@/server/loadWithUrl";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getAuthEdgeConfig, getInkeepSettings } from "@fern-ui/fern-docs-edge-config";
 import { SearchConfig, getSearchConfig } from "@fern-ui/search-utils";
 import { provideRegistryService } from "@fern-ui/ui";
-import { checkViewerAllowedEdge } from "@fern-ui/ui/auth";
-import * as Sentry from "@sentry/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
@@ -14,9 +14,10 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Se
     }
 
     const domain = getXFernHostEdge(req);
+    const auth = await getAuthEdgeConfig(domain);
 
     try {
-        const status = await checkViewerAllowedEdge(domain, req);
+        const status = await checkViewerAllowedEdge(auth, req);
         if (status >= 400) {
             return NextResponse.json({ isAvailable: false }, { status });
         }
@@ -29,13 +30,14 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Se
             return NextResponse.json({ isAvailable: false }, { status: 503 });
         }
 
+        const inkeepSettings = await getInkeepSettings(domain);
         const searchInfo = docs.body.definition.search;
-        const config = await getSearchConfig(provideRegistryService(), domain, searchInfo);
+        const config = await getSearchConfig(provideRegistryService(), searchInfo, inkeepSettings);
         return NextResponse.json(config, { status: config.isAvailable ? 200 : 503 });
     } catch (e) {
-        const id = Sentry.captureException(e, { level: "fatal" });
+        // TODO: sentry
         // eslint-disable-next-line no-console
-        console.error(`Error fetching search config for domain ${domain}. Sentry event ID: ${id}`, e);
+        console.error(`Error fetching search config for domain ${domain}.`, e);
         return NextResponse.json({ isAvailable: false }, { status: 500 });
     }
 }

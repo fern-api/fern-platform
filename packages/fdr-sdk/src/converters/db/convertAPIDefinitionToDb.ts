@@ -1,5 +1,5 @@
-import assertNever from "@fern-ui/core-utils/assertNever";
-import titleCase from "@fern-ui/core-utils/titleCase";
+import assertNever from "@fern-api/ui-core-utils/assertNever";
+import titleCase from "@fern-api/ui-core-utils/titleCase";
 import isEqual from "fast-deep-equal";
 import { APIV1Db, APIV1Read, APIV1Write, FdrAPI } from "../../client";
 import { kebabCase } from "../../utils";
@@ -569,6 +569,7 @@ function transformShape({ writeShape }: { writeShape: APIV1Write.TypeShape }): F
                 type: "object",
                 extends: writeShape.extends,
                 properties: writeShape.properties.map((property) => transformProperty({ writeShape: property })),
+                extraProperties: writeShape.extraProperties,
             };
         case "alias":
             return {
@@ -644,6 +645,7 @@ function transformDiscriminatedVariant({
             properties: writeShape.additionalProperties.properties.map((property) =>
                 transformProperty({ writeShape: property }),
             ),
+            extraProperties: writeShape.additionalProperties.extraProperties,
         },
     };
 }

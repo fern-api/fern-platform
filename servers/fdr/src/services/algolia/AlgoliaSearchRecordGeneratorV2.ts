@@ -10,7 +10,7 @@ import {
     visitDbNavigationTab,
 } from "@fern-api/fdr-sdk";
 import { EndpointPathPart } from "@fern-api/fdr-sdk/src/client/APIV1Read";
-import { titleCase, visitDiscriminatedUnion } from "@fern-ui/core-utils";
+import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { v4 as uuid } from "uuid";
 import { BreadcrumbsInfo } from "../../api/generated/api";
 import { LOGGER } from "../../app/FdrApplication";
@@ -467,7 +467,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                   } satisfies Algolia.AlgoliaRecordVersionV3)
                 : undefined;
 
-        FernNavigation.V1.traverseNavigation(root, (node, _index, parents) => {
+        FernNavigation.V1.traverseDF(root, (node, parents) => {
             if (!FernNavigation.V1.hasMetadata(node)) {
                 return;
             }
@@ -1359,7 +1359,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
             slug: part.urlSlug,
         }));
 
-        FernNavigation.V1.traverseNavigation(root, (node, _index, parents) => {
+        FernNavigation.V1.traverseDF(root, (node) => {
             if (!FernNavigation.V1.hasMetadata(node)) {
                 return;
             }
@@ -1449,7 +1449,7 @@ function toBreadcrumbs(
         title: string;
         slug: string;
     }[],
-    parents: FernNavigation.V1.NavigationNode[],
+    parents: readonly FernNavigation.V1.NavigationNode[],
 ): BreadcrumbsInfo[] {
     return [
         ...breadcrumbs,

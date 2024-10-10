@@ -1,30 +1,34 @@
-import { getFeatureFlags } from "@/pages/api/fern-docs/feature-flags";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { SidebarTab } from "@fern-ui/fdr-utils";
+import {
+    getAuthEdgeConfig,
+    getCustomerAnalytics,
+    getFeatureFlags,
+    getSeoDisabled,
+} from "@fern-ui/fern-docs-edge-config";
 import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
-import { getSearchConfig } from "@fern-ui/search-utils";
 import {
     DocsPage,
     getApiRouteSupplier,
     getGitHubInfo,
     getGitHubRepo,
     getSeoProps,
-    provideRegistryService,
     renderThemeStylesheet,
     resolveDocsContent,
 } from "@fern-ui/ui";
-import { getAPIKeyInjectionConfigNode } from "@fern-ui/ui/auth";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
 import urlJoin from "url-join";
+import { DocsLoader } from "./DocsLoader";
 import type { AuthProps } from "./authProps";
-import { getSeoDisabled } from "./disabledSeo";
-import { getCustomerAnalytics } from "./getCustomerAnalytics";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";
+import { pruneNavigationPredicate, withPrunedSidebar } from "./withPrunedSidebar";
+import { withVersionSwitcherInfo } from "./withVersionSwitcherInfo";
 
 interface WithInitialProps {
     docs: LoadWithUrlResponse;
@@ -56,11 +60,19 @@ export async function withInitialProps({
     }
 
     const featureFlags = await getFeatureFlags(xFernHost);
-    const root = FernNavigation.utils.toRootNode(
-        docs,
-        featureFlags.isBatchStreamToggleDisabled,
-        featureFlags.isApiScrollingDisabled,
-    );
+
+    const authConfig = await getAuthEdgeConfig(xFernHost);
+    const loader = DocsLoader.for(xFernHost)
+        .withFeatureFlags(featureFlags)
+        .withAuth(authConfig, auth)
+        .withLoadDocsForUrlResponse(docs);
+
+    const root = await loader.root();
+
+    // this should not happen, but if it does, we should return a 404
+    if (root == null) {
+        return { notFound: true };
+    }
 
     // if the root has a slug and the current slug is empty, redirect to the root slug, rather than 404
     if (root.slug.length > 0 && slug.length === 0) {
@@ -75,6 +87,18 @@ export async function withInitialProps({
     const node = FernNavigation.utils.findNode(root, slug);
 
     if (node.type === "notFound") {
+        // this is a special case where the user is not authenticated, and the page requires authentication,
+        // but the user is trying to access a page that is not found. in this case, we should redirect to the auth page.
+        if (authConfig?.type === "basic_token_verification" && auth == null) {
+            const original = await loader.unprunedRoot();
+            if (original) {
+                const node = FernNavigation.utils.findNode(original, slug);
+                if (node.type !== "notFound") {
+                    return { redirect: { destination: authConfig.redirect, permanent: false } };
+                }
+            }
+        }
+
         // TODO: returning "notFound: true" here will render vercel's default 404 page
         // this is better than following redirects, since it will signal a proper 404 status code.
         // however, we should consider rendering a custom 404 page in the future using the customer's branding.
@@ -103,7 +127,8 @@ export async function withInitialProps({
         };
     }
 
-    const serializeMdx = await getMdxBundler(featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote");
+    const engine = featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
+    const serializeMdx = await getMdxBundler(engine);
 
     const content = await resolveDocsContent({
         found: node,
@@ -114,11 +139,18 @@ export async function withInitialProps({
             files: docs.definition.jsFiles,
         },
         serializeMdx,
+        host: docs.baseUrl.domain,
+        engine,
     });
 
     if (content == null) {
         return { notFound: true };
     }
+
+    const getApiRoute = getApiRouteSupplier({
+        basepath: docs.baseUrl.basePath,
+        includeTrailingSlash: isTrailingSlashEnabled(),
+    });
 
     const colors = {
         light:
@@ -135,26 +167,90 @@ export async function withInitialProps({
                   : undefined,
     };
 
-    const versions = node.versions
-        .filter((version) => !version.hidden)
-        .map((version, index) => {
-            // if the same page exists in multiple versions, return the full slug of that page, otherwise default to version's landing page (pointsTo)
-            const expectedSlug = FernNavigation.slugjoin(version.slug, node.unversionedSlug);
-            const pointsTo = node.collector.slugMap.has(expectedSlug) ? expectedSlug : version.pointsTo;
-
-            return {
-                title: version.title,
-                id: version.versionId,
-                slug: version.slug,
-                pointsTo,
-                index,
-                availability: version.availability,
-            };
-        });
-
     const logoHref =
         docs.definition.config.logoHref ??
         (node.landingPage?.slug != null && !node.landingPage.hidden ? `/${node.landingPage.slug}` : undefined);
+
+    const navbarLinks = docs.definition.config.navbarLinks ?? [];
+
+    // TODO: This is a hack to add a login/logout button to the navbar. This should be done in a more generic way.
+    if (authConfig?.type === "basic_token_verification") {
+        if (auth == null) {
+            const redirect = new URL(withDefaultProtocol(authConfig.redirect));
+            redirect.searchParams.set("state", urlJoin(withDefaultProtocol(xFernHost), slug));
+
+            navbarLinks.push({
+                type: "outlined",
+                text: "Login",
+                url: FernNavigation.Url(redirect.toString()),
+                icon: undefined,
+                rightIcon: undefined,
+                rounded: false,
+            });
+        } else {
+            navbarLinks.push({
+                type: "outlined",
+                text: "Logout",
+                url: FernNavigation.Url(getApiRoute("/api/fern-docs/auth/logout")),
+                icon: undefined,
+                rightIcon: undefined,
+                rounded: false,
+            });
+        }
+    }
+
+    const pruneOpts = {
+        node: node.node,
+        isAuthenticated: auth != null,
+        isAuthenticatedPagesDiscoverable: featureFlags.isAuthenticatedPagesDiscoverable,
+    };
+
+    const currentVersionId = node.currentVersion?.versionId;
+    const versions = withVersionSwitcherInfo({
+        node: node.node,
+        parents: node.parents,
+        versions: node.versions.filter(
+            (version) => pruneNavigationPredicate(version, pruneOpts) || version.versionId === currentVersionId,
+        ),
+        slugMap: node.collector.slugMap,
+    });
+
+    const sidebar = withPrunedSidebar(node.sidebar, pruneOpts);
+
+    const filteredTabs = node.tabs.filter((tab) => pruneNavigationPredicate(tab, pruneOpts) || tab === node.currentTab);
+
+    const tabs = filteredTabs.map((tab, index) =>
+        visitDiscriminatedUnion(tab)._visit<SidebarTab>({
+            tab: (tab) => ({
+                type: "tabGroup",
+                title: tab.title,
+                icon: tab.icon,
+                index,
+                slug: tab.slug,
+                pointsTo: tab.pointsTo,
+                hidden: tab.hidden,
+                authed: tab.authed,
+            }),
+            link: (link) => ({
+                type: "tabLink",
+                title: link.title,
+                icon: link.icon,
+                index,
+                url: link.url,
+            }),
+            changelog: (changelog) => ({
+                type: "tabChangelog",
+                title: changelog.title,
+                icon: changelog.icon,
+                index,
+                slug: changelog.slug,
+                hidden: changelog.hidden,
+                authed: changelog.authed,
+            }),
+        }),
+    );
+
+    const currentTabIndex = node.currentTab == null ? undefined : filteredTabs.indexOf(node.currentTab);
 
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
@@ -163,7 +259,7 @@ export async function withInitialProps({
         favicon: docs.definition.config.favicon,
         colors,
         js: docs.definition.config.js,
-        navbarLinks: docs.definition.config.navbarLinks ?? [],
+        navbarLinks,
         logoHeight: docs.definition.config.logoHeight,
         logoHref: logoHref != null ? FernNavigation.Url(logoHref) : undefined,
         files: docs.definition.filesV2,
@@ -176,36 +272,11 @@ export async function withInitialProps({
                   }
                 : undefined,
         navigation: {
-            currentTabIndex: node.currentTab == null ? undefined : node.tabs.indexOf(node.currentTab),
-            tabs: node.tabs.map((tab, index) =>
-                visitDiscriminatedUnion(tab)._visit<SidebarTab>({
-                    tab: (tab) => ({
-                        type: "tabGroup",
-                        title: tab.title,
-                        icon: tab.icon,
-                        index,
-                        slug: tab.slug,
-                        pointsTo: tab.pointsTo,
-                    }),
-                    link: (link) => ({
-                        type: "tabLink",
-                        title: link.title,
-                        icon: link.icon,
-                        index,
-                        url: link.url,
-                    }),
-                    changelog: (changelog) => ({
-                        type: "tabChangelog",
-                        title: changelog.title,
-                        icon: changelog.icon,
-                        index,
-                        slug: changelog.slug,
-                    }),
-                }),
-            ),
-            currentVersionId: node.currentVersion?.versionId,
+            currentTabIndex,
+            tabs,
+            currentVersionId,
             versions,
-            sidebar: node.sidebar,
+            sidebar,
             trailingSlash: isTrailingSlashEnabled(),
         },
         featureFlags,
@@ -237,17 +308,6 @@ export async function withInitialProps({
         ),
     };
 
-    const getApiRoute = getApiRouteSupplier({
-        basepath: docs.baseUrl.basePath,
-        includeTrailingSlash: isTrailingSlashEnabled(),
-    });
-
-    props.fallback[getApiRoute("/api/fern-docs/search")] = await getSearchConfig(
-        provideRegistryService(),
-        xFernHost,
-        docs.definition.search,
-    );
-
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
     const githubNavbarLink = docsConfig.navbarLinks?.find((link) => link.type === "github");
     if (githubNavbarLink) {
@@ -259,9 +319,6 @@ export async function withInitialProps({
             }
         }
     }
-
-    const apiKeyInjectionConfig = await getAPIKeyInjectionConfigNode(xFernHost, auth?.cookies);
-    props.fallback[getApiRoute("/api/fern-docs/auth/api-key-injection")] = apiKeyInjectionConfig;
 
     return {
         props: JSON.parse(JSON.stringify(props)), // remove all undefineds

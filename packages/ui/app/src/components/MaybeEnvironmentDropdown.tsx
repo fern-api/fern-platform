@@ -11,7 +11,8 @@ import { PLAYGROUND_ENVIRONMENT_ATOM } from "../atoms";
 import { ALL_ENVIRONMENTS_ATOM, SELECTED_ENVIRONMENT_ATOM } from "../atoms/environment";
 
 interface MaybeEnvironmentDropdownProps {
-    selectedEnvironment: APIV1Read.Environment | undefined;
+    baseUrl?: string;
+    environmentId: APIV1Read.EnvironmentId | undefined;
     urlTextStyle?: string;
     protocolTextStyle?: string;
     small?: boolean;
@@ -21,7 +22,8 @@ interface MaybeEnvironmentDropdownProps {
 }
 
 export function MaybeEnvironmentDropdown({
-    selectedEnvironment,
+    baseUrl,
+    environmentId,
     urlTextStyle,
     protocolTextStyle,
     small,
@@ -39,19 +41,22 @@ export function MaybeEnvironmentDropdown({
         ? environmentFilters.filter((environmentFilter) => allEnvironmentIds.includes(environmentFilter))
         : allEnvironmentIds;
 
-    if (environmentFilters && selectedEnvironment && !environmentFilters.includes(selectedEnvironment.id)) {
-        setSelectedEnvironmentId(environmentIds[0]);
-    }
+    useEffect(() => {
+        if (environmentFilters && environmentId && !environmentFilters.includes(environmentId)) {
+            setSelectedEnvironmentId(environmentId);
+        }
+    }, [environmentFilters, environmentId, setSelectedEnvironmentId]);
 
-    const preParsedUrl = playgroundEnvironment ?? selectedEnvironment?.baseUrl;
+    const preParsedUrl = playgroundEnvironment ?? baseUrl;
     const url = preParsedUrl && parse(preParsedUrl);
 
+    // TODO: clean up this component
     useEffect(() => {
         if (url && url.host && url.host !== "" && url.protocol && url.protocol !== "") {
             setInputValue(preParsedUrl);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [playgroundEnvironment, selectedEnvironment]);
+    }, [playgroundEnvironment]);
 
     const isValidInput =
         inputValue != null && inputValue !== "" && parse(inputValue).host != null && parse(inputValue).protocol != null;
@@ -147,7 +152,7 @@ export function MaybeEnvironmentDropdown({
                                     setPlaygroundEnvironment(undefined);
                                     setSelectedEnvironmentId(value);
                                 }}
-                                value={selectedEnvironmentId ?? selectedEnvironment?.id}
+                                value={selectedEnvironmentId ?? environmentId}
                             >
                                 <FernButton
                                     className="py-0 px-1 h-auto"

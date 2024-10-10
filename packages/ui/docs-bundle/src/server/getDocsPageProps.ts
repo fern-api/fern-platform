@@ -1,5 +1,5 @@
-import { type DocsPage } from "@fern-ui/ui";
-import type { FernUser } from "@fern-ui/ui/auth";
+import type { FernUser } from "@fern-ui/fern-docs-auth";
+import type { DocsPage } from "@fern-ui/ui";
 import type { GetServerSidePropsResult } from "next";
 import type { ComponentProps } from "react";
 import { LoadDocsPerformanceTracker } from "./LoadDocsPerformanceTracker";
@@ -23,7 +23,7 @@ export async function getDocsPageProps(
         return { notFound: true };
     }
 
-    const performance = LoadDocsPerformanceTracker.init({ host: xFernHost, slug, auth: auth?.user.partner });
+    const performance = LoadDocsPerformanceTracker.init({ host: xFernHost, slug, auth: auth?.partner });
 
     /**
      * Load the docs for the given URL.

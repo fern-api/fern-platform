@@ -1,5 +1,6 @@
-import { getSeoDisabled } from "@/server/disabledSeo";
 import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { getSeoDisabled } from "@fern-ui/fern-docs-edge-config";
 import { NextRequest, NextResponse } from "next/server";
 import urlJoin from "url-join";
 
@@ -8,7 +9,7 @@ export const runtime = "edge";
 export default async function GET(req: NextRequest): Promise<NextResponse> {
     const xFernHost = getXFernHostEdge(req);
     const basePath = req.nextUrl.pathname.split("/robots.txt")[0] || "";
-    const sitemap = urlJoin(`https://${xFernHost}`, basePath, "/sitemap.xml");
+    const sitemap = urlJoin(withDefaultProtocol(xFernHost), basePath, "/sitemap.xml");
 
     if (await getSeoDisabled(xFernHost)) {
         return new NextResponse(`User-Agent: *\nDisallow: /\nSitemap: ${sitemap}`, { status: 200 });

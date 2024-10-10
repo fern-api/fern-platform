@@ -1,31 +1,42 @@
-import { getAuthEdgeConfig, verifyFernJWTConfig, type FernUser } from "@fern-ui/ui/auth";
-import type { NextApiRequestCookies } from "next/dist/server/api-utils";
+import type { AuthEdgeConfig, FernUser } from "@fern-ui/fern-docs-auth";
+import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
+import { verifyFernJWTConfig } from "./auth/FernJWT";
+
+export type AuthPartner = "workos" | "ory" | "webflow" | "custom";
 
 export interface AuthProps {
     token: string;
     user: FernUser;
-    cookies: NextApiRequestCookies;
+    partner: AuthPartner;
 }
 
 /**
  * In Venus, workos tokens are prefixed with "workos_" to differentiate them from "fern_" tokens.
  */
-function withPrefix(token: string, partner: FernUser["partner"]): string {
+function withPrefix(token: string, partner: AuthPartner): string {
     return `${partner}_${token}`;
 }
 
-export async function withAuthProps(xFernHost: string, cookies: NextApiRequestCookies): Promise<AuthProps> {
-    if (cookies.fern_token == null) {
+export async function withAuthProps(
+    xFernHostOrAuthConfig: string | AuthEdgeConfig,
+    fernToken: string | null | undefined,
+): Promise<AuthProps> {
+    if (fernToken == null) {
         throw new Error("Missing fern_token cookie");
     }
-    const config = await getAuthEdgeConfig(xFernHost);
-    const user: FernUser = await verifyFernJWTConfig(cookies.fern_token, config);
-    const token = withPrefix(cookies.fern_token, user.partner);
+    const config =
+        typeof xFernHostOrAuthConfig === "string"
+            ? await getAuthEdgeConfig(xFernHostOrAuthConfig)
+            : xFernHostOrAuthConfig;
+    const partner =
+        config?.type === "oauth2" ? config.partner : config?.type === "basic_token_verification" ? "custom" : "workos";
+    const user: FernUser = await verifyFernJWTConfig(fernToken, config);
+    const token = withPrefix(fernToken, partner);
 
     const authProps: AuthProps = {
         token,
         user,
-        cookies,
+        partner,
     };
 
     return authProps;

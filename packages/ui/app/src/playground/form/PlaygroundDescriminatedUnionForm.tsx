@@ -1,6 +1,6 @@
 import { DiscriminatedUnionType, TypeDefinition, unwrapObjectType } from "@fern-api/fdr-sdk/api-definition";
+import { titleCase } from "@fern-api/ui-core-utils";
 import { FernButton, FernDropdown, FernSegmentedControl } from "@fern-ui/components";
-import { titleCase } from "@fern-ui/core-utils";
 import { NavArrowDown } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useMemo } from "react";
@@ -103,6 +103,7 @@ export const PlaygroundDiscriminatedUnionForm = memo<PlaygroundDiscriminatedUnio
                 <div className="border-l border-border-default-soft pl-4">
                     <PlaygroundObjectPropertiesForm
                         properties={properties}
+                        extraProperties={undefined}
                         value={value}
                         onChange={onChange}
                         id={id}

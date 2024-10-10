@@ -3,7 +3,15 @@ import { Router } from "next/router";
 import type { PostHog } from "posthog-js";
 import { useEffect } from "react";
 import { useApiRoute } from "../hooks/useApiRoute";
-import { safeCall } from "./sentry";
+
+export function safeCall(action: () => void): void {
+    try {
+        return action();
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+    }
+}
 
 /**
  * Posthog natively allows us to define additional capture objects with distinct configs on the global instance,

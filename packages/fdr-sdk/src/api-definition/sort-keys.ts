@@ -1,5 +1,5 @@
-import isPlainObject from "@fern-ui/core-utils/isPlainObject";
-import visitDiscriminatedUnion from "@fern-ui/core-utils/visitDiscriminatedUnion";
+import isPlainObject from "@fern-api/ui-core-utils/isPlainObject";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import difference from "lodash-es/difference";
 import keyBy from "lodash-es/keyBy";
 import mapValues from "lodash-es/mapValues";

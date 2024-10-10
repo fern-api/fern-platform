@@ -1,41 +1,9 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { DEFAULT_FEATURE_FLAGS } from "@fern-ui/fern-docs-utils";
 import { atomWithReducer, useHydrateAtoms } from "jotai/utils";
 import type { PropsWithChildren, ReactNode } from "react";
-import type { DocsProps, FeatureFlags } from "./types";
-
-export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
-    isApiPlaygroundEnabled: false,
-    isApiScrollingDisabled: false,
-    isWhitelabeled: false,
-    isSeoDisabled: false,
-    isTocDefaultEnabled: false,
-    isSnippetTemplatesEnabled: false,
-    isHttpSnippetsEnabled: false,
-    isInlineFeedbackEnabled: false,
-    isDarkCodeEnabled: false,
-    proxyShouldUseAppBuildwithfernCom: false,
-    isImageZoomDisabled: false,
-    useJavaScriptAsTypeScript: false,
-    alwaysEnableJavaScriptFetch: false,
-    scrollInContainerEnabled: false,
-    useMdxBundler: false,
-    isBatchStreamToggleDisabled: false,
-    isAuthEnabledInDocs: false,
-    isAiChatbotEnabledInPreview: false,
-    isAudioFileDownloadSpanSummary: false,
-    isDocsLogoTextEnabled: false,
-    isAudioExampleInternal: false,
-    usesApplicationJsonInFormDataValue: false,
-    isBinaryOctetStreamAudioPlayer: false,
-    hasVoiceIdPlaygroundForm: false,
-    isCohereTheme: false,
-    isFileForgeHackEnabled: false,
-    is404PageHidden: false,
-    isNewSearchExperienceEnabled: false,
-    // TODO: remove this after pinecone demo, this is a temporary flag
-    grpcEndpoints: [],
-};
+import type { DocsProps } from "./types";
 
 export const EMPTY_ANALYTICS_CONFIG: DocsV1Read.AnalyticsConfig = {
     segment: undefined,
@@ -85,7 +53,6 @@ export const EMPTY_DOCS_STATE: DocsProps = {
     content: {
         type: "custom-markdown-page",
         slug: FernNavigation.Slug(""),
-        title: "",
         mdx: "",
         neighbors: { prev: null, next: null },
         apis: {},
