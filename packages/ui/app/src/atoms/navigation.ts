@@ -1,3 +1,4 @@
+import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { SidebarTab, VersionSwitcherInfo } from "@fern-ui/fdr-utils";
@@ -70,16 +71,6 @@ SIDEBAR_ROOT_NODE_ATOM.debugLabel = "SIDEBAR_ROOT_NODE_ATOM";
 export const RESOLVED_PATH_ATOM = atom<DocsContent>((get) => get(DOCS_ATOM).content);
 RESOLVED_PATH_ATOM.debugLabel = "RESOLVED_PATH_ATOM";
 
-export const RESOLVED_PATH_SLUG_ATOM = atom((get) => get(RESOLVED_PATH_ATOM).slug);
-
-export const RESOLVED_PATH_TITLE_ATOM = atom((get) => {
-    const content = get(RESOLVED_PATH_ATOM);
-    if (content.type === "api-endpoint-page") {
-        return content.item.title;
-    }
-    return content.title;
-});
-
 export const NEIGHBORS_ATOM = atom((get) => {
     const content = get(RESOLVED_PATH_ATOM);
     if (content.type === "api-reference-page" || content.type === "changelog") {
@@ -91,9 +82,11 @@ export const NEIGHBORS_ATOM = atom((get) => {
     return content.neighbors;
 });
 
-export const RESOLVED_API_DEFINITION_ATOM = atom((get) => {
+export const RESOLVED_API_DEFINITION_ATOM = atom<ApiDefinition | undefined>((get) => {
     const content = get(RESOLVED_PATH_ATOM);
-    return content.type === "api-endpoint-page" || content.type === "api-reference-page" ? content.api : undefined;
+    return content.type === "api-endpoint-page" || content.type === "api-reference-page"
+        ? content.apiDefinition
+        : undefined;
 });
 
 export const NAVIGATION_NODES_ATOM = atom<FernNavigation.NodeCollector>((get) => {
@@ -113,7 +106,15 @@ export function useNavigationNodes(): FernNavigation.NodeCollector {
 export const CURRENT_NODE_ATOM = atom((get) => {
     const slug = get(SLUG_ATOM);
     const nodeCollector = get(NAVIGATION_NODES_ATOM);
-    return nodeCollector.slugMap.get(slug);
+    const node = nodeCollector.slugMap.get(slug);
+
+    // TODO: move this into a better place
+    // this sets the document title to the current node's title when shallow routing
+    // (this will use the navigation node title rather than the page's actual title)
+    if (node && typeof window !== "undefined") {
+        window.document.title = node.title;
+    }
+    return node;
 });
 CURRENT_NODE_ATOM.debugLabel = "CURRENT_NODE_ATOM";
 

@@ -2,6 +2,7 @@ import {
     ObjectProperty,
     PropertyKey,
     TypeDefinition,
+    TypeId,
     TypeReference,
     unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
@@ -25,7 +26,7 @@ interface PlaygroundObjectPropertyFormProps {
     onChange: (key: string, value: unknown) => void;
     value: unknown;
     expandByDefault?: boolean;
-    types: Record<string, TypeDefinition>;
+    types: Record<TypeId, TypeDefinition>;
     disabled?: boolean;
 }
 
@@ -148,14 +149,14 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
 
     const shownProperties = useMemo(() => {
         return properties.filter((property) =>
-            shouldShowProperty(property.valueShape, castToRecord(value)[property.key]),
+            shouldShowProperty(property.valueShape, types, castToRecord(value)[property.key]),
         );
-    }, [properties, value]);
+    }, [properties, types, value]);
     const hiddenProperties = useMemo(() => {
         return properties.filter(
-            (property) => !shouldShowProperty(property.valueShape, castToRecord(value)[property.key]),
+            (property) => !shouldShowProperty(property.valueShape, types, castToRecord(value)[property.key]),
         );
-    }, [properties, value]);
+    }, [properties, types, value]);
 
     const hiddenPropertiesOptions = useMemo(() => {
         const options = hiddenProperties.map(
@@ -260,31 +261,43 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                         property={{
                             key: PropertyKey("Optional Extra Properties"),
                             valueShape: {
-                                type: "optional",
-                                shape: {
-                                    type: "map",
-                                    keyShape: {
-                                        type: "primitive",
+                                type: "alias",
+                                value: {
+                                    type: "optional",
+                                    shape: {
+                                        type: "alias",
                                         value: {
-                                            type: "string",
-                                            regex: undefined,
-                                            minLength: undefined,
-                                            maxLength: undefined,
-                                            default: undefined,
+                                            type: "map",
+                                            keyShape: {
+                                                type: "alias",
+                                                value: {
+                                                    type: "primitive",
+                                                    value: {
+                                                        type: "string",
+                                                        regex: undefined,
+                                                        minLength: undefined,
+                                                        maxLength: undefined,
+                                                        default: undefined,
+                                                    },
+                                                },
+                                            },
+                                            valueShape: {
+                                                type: "alias",
+                                                value: {
+                                                    type: "primitive",
+                                                    value: {
+                                                        type: "string",
+                                                        regex: undefined,
+                                                        minLength: undefined,
+                                                        maxLength: undefined,
+                                                        default: undefined,
+                                                    },
+                                                },
+                                            },
                                         },
                                     },
-                                    valueShape: {
-                                        type: "primitive",
-                                        value: {
-                                            type: "string",
-                                            regex: undefined,
-                                            minLength: undefined,
-                                            maxLength: undefined,
-                                            default: undefined,
-                                        },
-                                    },
+                                    default: undefined,
                                 },
-                                default: undefined,
                             },
                             description: undefined,
                             availability: undefined,
@@ -307,6 +320,11 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
 
 PlaygroundObjectPropertiesForm.displayName = "PlaygroundObjectPropertiesForm";
 
-function shouldShowProperty(shape: ObjectProperty["valueShape"], value: unknown): boolean {
-    return shape.type !== "optional" || value !== undefined;
+function shouldShowProperty(
+    shape: ObjectProperty["valueShape"],
+    types: Record<TypeId, TypeDefinition>,
+    value: unknown,
+): boolean {
+    const unwrapped = unwrapReference(shape, types);
+    return !unwrapped.isOptional || value !== undefined;
 }

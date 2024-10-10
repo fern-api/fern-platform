@@ -1,8 +1,8 @@
+import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { Loadable } from "@fern-ui/loadable";
 import { Dispatch, ReactElement, SetStateAction, useDeferredValue } from "react";
 import { PlaygroundAuthorizationFormCard } from "../PlaygroundAuthorizationForm";
 import { PlaygroundEndpointRequestFormState } from "../types";
-import { EndpointContext } from "../types/endpoint-context";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import { PlaygroundEndpointContentLayout } from "./PlaygroundEndpointContentLayout";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";

@@ -1,59 +1,61 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import { join } from "@fern-api/fdr-sdk/api-definition";
+import { joiner } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { atom, useAtomValue } from "jotai";
+import { atom, useAtomValue, useSetAtom } from "jotai";
 import { atomFamily } from "jotai/utils";
-import { mapValues } from "lodash-es";
+import { useEffect } from "react";
 import { useMemoOne } from "use-memo-one";
-import { flattenRootPackage, type FlattenedRootPackage, type ResolvedRootPackage } from "../resolver/types";
+import { useIsLocalPreview } from "../contexts/local-preview";
 import { FEATURE_FLAGS_ATOM } from "./flags";
 import { RESOLVED_API_DEFINITION_ATOM, RESOLVED_PATH_ATOM } from "./navigation";
 
 const SETTABLE_APIS_ATOM = atom<Record<ApiDefinition.ApiDefinitionId, ApiDefinition.ApiDefinition>>({});
 SETTABLE_APIS_ATOM.debugLabel = "SETTABLE_APIS_ATOM";
 
-export const WRITE_API_DEFINITION_ATOM = atom(null, (_get, set, apiDefinition: ApiDefinition.ApiDefinition) => {
-    const merge = (prev: ApiDefinition.ApiDefinition | undefined) => {
-        if (prev == null) {
-            return apiDefinition;
-        } else {
-            return join(prev, apiDefinition);
+export const WRITE_API_DEFINITION_ATOM = atom(
+    null,
+    (_get, set, apiDefinition: ApiDefinition.ApiDefinition, force?: boolean) => {
+        set(SETTABLE_APIS_ATOM, (prev) => {
+            const prevDefinition = prev[apiDefinition.id];
+            if (prevDefinition == null) {
+                return { ...prev, [apiDefinition.id]: apiDefinition };
+            }
+            const merged = joiner(force)(prevDefinition, apiDefinition);
+            if (merged === prevDefinition) {
+                return prev;
+            }
+            return { ...prev, [apiDefinition.id]: merged };
+        });
+    },
+);
+
+export function useWriteApiDefinitionAtom(api: ApiDefinition.ApiDefinition | undefined): void {
+    const isLocalPreview = useIsLocalPreview();
+    const set = useSetAtom(WRITE_API_DEFINITION_ATOM);
+    useEffect(() => {
+        if (api != null) {
+            set(api, isLocalPreview);
         }
-    };
-    set(SETTABLE_APIS_ATOM, (prev) => ({ ...prev, [apiDefinition.id]: merge(prev[apiDefinition.id]) }));
-});
+    }, [api, set, isLocalPreview]);
+}
+
+export function useWriteApiDefinitionsAtom(
+    apis: Record<ApiDefinition.ApiDefinitionId, ApiDefinition.ApiDefinition>,
+): void {
+    const isLocalPreview = useIsLocalPreview();
+    const set = useSetAtom(WRITE_API_DEFINITION_ATOM);
+    useEffect(() => {
+        Object.values(apis).forEach((api) => {
+            set(api, isLocalPreview);
+        });
+    }, [apis, set]);
+}
+
+export const READ_APIS_ATOM = atom((get) => get(SETTABLE_APIS_ATOM));
 
 export const getApiDefinitionAtom = atomFamily((apiDefinitionId: ApiDefinition.ApiDefinitionId | undefined) =>
     atom((get) => (apiDefinitionId != null ? get(SETTABLE_APIS_ATOM)[apiDefinitionId] : undefined)),
 );
-
-/**
- * @deprecated
- */
-export const DEPRECATED_APIS_ATOM = atom<Record<string, ResolvedRootPackage>>({});
-DEPRECATED_APIS_ATOM.debugLabel = "DEPRECATED_APIS_ATOM";
-
-/**
- * @deprecated
- */
-export const DEPRECATED_FLATTENED_APIS_ATOM = atom((get) => {
-    return mapValues(get(DEPRECATED_APIS_ATOM), flattenRootPackage);
-});
-DEPRECATED_FLATTENED_APIS_ATOM.debugLabel = "DEPRECATED_FLATTENED_APIS_ATOM";
-
-/**
- * @deprecated
- */
-export function useDeprecatedFlattenedApis(): Record<string, FlattenedRootPackage> {
-    return useAtomValue(DEPRECATED_FLATTENED_APIS_ATOM);
-}
-
-/**
- * @deprecated
- */
-export function useDeprecatedFlattenedApi(apiId: string): FlattenedRootPackage | undefined {
-    return useAtomValue(useMemoOne(() => atom((get) => get(DEPRECATED_FLATTENED_APIS_ATOM)[apiId]), [apiId]));
-}
 
 const IS_API_REFERENCE_PAGINATED = atom<boolean>((get) => {
     const content = get(RESOLVED_PATH_ATOM);
@@ -74,7 +76,7 @@ export function useIsApiReferenceShallowLink(node: FernNavigation.WithApiDefinit
                 atom((get) => {
                     const isPaginated = get(IS_API_REFERENCE_PAGINATED);
                     const resolvedApi = get(RESOLVED_API_DEFINITION_ATOM);
-                    return !isPaginated && resolvedApi === node.apiDefinitionId;
+                    return !isPaginated && resolvedApi?.id === node.apiDefinitionId;
                 }),
             [node.apiDefinitionId],
         ),

@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { decodeJwt } from "jose";
 import { noop } from "ts-essentials";
@@ -10,7 +10,7 @@ import {
 import { obfuscateSecret } from "./obfuscate-secret";
 
 export function buildAuthHeaders(
-    auth: APIV1Read.ApiAuth | undefined,
+    auth: ApiDefinition.AuthScheme | undefined,
     authState: PlaygroundAuthState,
     { redacted }: { redacted: boolean },
     oAuthClientCredentialReferencedEndpointLoginFlowProps?: Omit<
