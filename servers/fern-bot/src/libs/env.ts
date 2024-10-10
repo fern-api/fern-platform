@@ -19,6 +19,10 @@ export interface Env {
     CUSTOMER_PULLS_SLACK_CHANNEL: string;
     FERNIE_SLACK_APP_TOKEN: string;
     FERN_TOKEN: string;
+    VENUS_AUTH0_DOMAIN: string;
+    VENUS_CLIENT_ID: string;
+    VENUS_CLIENT_SECRET: string;
+    VENUS_AUDIENCE: string;
 }
 
 export function evaluateEnv(): Env {
@@ -44,5 +48,9 @@ export function evaluateEnv(): Env {
         CUSTOMER_ALERTS_SLACK_CHANNEL: process?.env.CUSTOMER_ALERTS_SLACK_CHANNEL!,
         CUSTOMER_PULLS_SLACK_CHANNEL: process?.env.CUSTOMER_PULLS_SLACK_CHANNEL!,
         FERN_TOKEN: process?.env.FERN_TOKEN!,
+        VENUS_AUTH0_DOMAIN: process?.env.VENUS_AUTH0_DOMAIN!,
+        VENUS_CLIENT_ID: process?.env.VENUS_CLIENT_ID!,
+        VENUS_CLIENT_SECRET: process?.env.VENUS_CLIENT_SECRET!,
+        VENUS_AUDIENCE: process?.env.VENUS_AUDIENCE!,
     };
 }

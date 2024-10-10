@@ -10,10 +10,17 @@ export async function execFernCli(
     command: string,
     cwd?: string,
     pipeYes: boolean = false,
+    tokenGetter?: () => Promise<string>,
 ): Promise<execa.ExecaChildProcess<string>> {
     console.log(`[Fern CLI] Running command on fern CLI: ${command}`);
     const commandParts = command.split(" ");
     try {
+        if (tokenGetter != null) {
+            console.log("Token getter provided, calling and setting `FERN_TOKEN` envvar");
+            const token = await tokenGetter();
+            process.env["FERN_TOKEN"] = token;
+        }
+
         // Running the commands on Lambdas is a bit odd...specifically you can only write to tmp on a lambda
         // so here we make sure the CLI is bundled via the `external` block in serverless.yml
         // and then execute the command directly via node_modules, with the home and cache set to /tmp.

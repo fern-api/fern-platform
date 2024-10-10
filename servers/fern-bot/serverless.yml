@@ -36,6 +36,11 @@ provider:
     APP_ID: ${env:GITHUB_APP_ID, 'placeholder'}
     WEBHOOK_SECRET: ${env:GITHUB_APP_WEBHOOK_SECRET, 'placeholder'}
     WEBHOOK_PROXY_URL: ${env:GITHUB_APP_WEBHOOK_PROXY_URL, 'placeholder'}
+    # For fern-bot Auth0 M2M authentication
+    VENUS_AUTH0_DOMAIN: ${env:GITHUB_APP_VENUS_AUTH0_DOMAIN, 'placeholder'}
+    VENUS_CLIENT_ID: ${env:GITHUB_APP_VENUS_CLIENT_ID, 'placeholder'}
+    VENUS_CLIENT_SECRET: ${env:GITHUB_APP_VENUS_CLIENT_SECRET, 'placeholder'}
+    VENUS_AUDIENCE: ${env:GITHUB_APP_VENUS_AUDIENCE, 'placeholder'}
 
   # Roles for the lambda functions
   iam:

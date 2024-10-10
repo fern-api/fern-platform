@@ -5,6 +5,7 @@ import { EmitterWebhookEvent } from "@octokit/webhooks";
 import { markCheckInProgress, updateCheck, RunId } from "./utilities";
 import { Octokit } from "octokit";
 import { runScript } from "@libs/execaUtils";
+import { Auth0 } from "@libs/auth0";
 
 // We want to:
 //  1. Update the status to in_progress
@@ -21,6 +22,7 @@ export async function previewSdk({
     fernBotLoginId,
     runId,
     fdrUrl,
+    auth0Client,
 }: {
     context: EmitterWebhookEvent<"check_run">;
     installationOctokit: Octokit;
@@ -28,6 +30,7 @@ export async function previewSdk({
     fernBotLoginId: string;
     runId: RunId;
     fdrUrl: string;
+    auth0Client: Auth0;
 }): Promise<void> {
     // Tell github we're working on this now
     await markCheckInProgress({ context, installationOctokit });
@@ -44,7 +47,7 @@ export async function previewSdk({
     if (apiName != null) {
         previewCommand += ` --api ${apiName}`;
     }
-    await execFernCli(previewCommand, fullRepoPath, true);
+    await execFernCli(previewCommand, fullRepoPath, true, auth0Client.token);
     // Kick off the checks + compile a summary
     const generatorEntity = await fdrClient.generators.getGeneratorByImage({ dockerImage: generatorDockerImage });
     if (generatorEntity == null || generatorEntity.scripts == null) {

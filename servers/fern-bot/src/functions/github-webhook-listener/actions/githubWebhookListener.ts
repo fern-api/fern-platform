@@ -5,17 +5,17 @@ import { initiatePreviewRuns } from "./initiatePreviewRuns";
 import { Probot } from "probot";
 import { setupGithubApp } from "@libs/github";
 import { App } from "octokit";
+import { Auth0 } from "@libs/auth0";
 
 export async function actionWebhook(app: Probot, env: Env): Promise<void> {
     app.log.info("Listening for webhooks");
 
     const githubApp: App = setupGithubApp(env);
-    app.webhooks.on("pull_request.closed", (_) => {
-        app.log.info("PR Closed");
-    });
-
-    app.webhooks.on("pull_request.opened", (_) => {
-        app.log.info("PR Opened");
+    const auth0Client: Auth0 = new Auth0({
+        domain: env.VENUS_AUTH0_DOMAIN,
+        clientId: env.VENUS_CLIENT_ID,
+        clientSecret: env.VENUS_CLIENT_SECRET,
+        audience: env.VENUS_AUDIENCE,
     });
 
     // Adding checks for preview as outlined in
@@ -73,6 +73,7 @@ export async function actionWebhook(app: Probot, env: Env): Promise<void> {
                         fernBotLoginId: env.GITHUB_APP_LOGIN_ID,
                         runId,
                         fdrUrl: env.DEFAULT_FDR_ORIGIN,
+                        auth0Client,
                     });
                     break;
                 default:
