@@ -113,7 +113,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
                     {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                 </span>
             </FernAnchor>
-            <Markdown mdx={compact([description, ...additionalDescriptions])} className="!t-muted" size="sm" />
+            <Markdown mdx={compact([description, ...additionalDescriptions])[0]} className="!t-muted" size="sm" />
             {children}
         </div>
     );

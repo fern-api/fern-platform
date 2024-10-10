@@ -75,7 +75,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
             )}
             <div className="flex flex-col">
-                <Markdown mdx={compact([unionVariant.description, ...descriptions])} size="sm" />
+                <Markdown mdx={compact([unionVariant.description, ...descriptions])[0]} size="sm" />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeDefinition
                         shape={shape}
