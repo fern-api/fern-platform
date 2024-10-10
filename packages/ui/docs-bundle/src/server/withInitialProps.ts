@@ -202,15 +202,33 @@ export async function withInitialProps({
         }
     }
 
-    // prune the navigation tree to remove hidden nodes, unless it is the current node
     const sidebar =
         node.sidebar != null
-            ? FernNavigation.utils.pruneNavigationTree(node.sidebar, (n) => {
-                  if (FernNavigation.hasMetadata(n) && n.hidden) {
-                      return n.id === node.node.id;
-                  }
-                  return true;
-              })
+            ? FernNavigation.Pruner.from(node.sidebar)
+                  .keep((n) => {
+                      // prune hidden nodes, unless it is the current node
+                      if (FernNavigation.hasMetadata(n) && n.hidden) {
+                          return n.id === node.node.id;
+                      }
+
+                      // prune authenticated pages
+                      if (
+                          FernNavigation.hasMetadata(n) &&
+                          n.authed &&
+                          auth == null &&
+                          !featureFlags.isUnathenticatedPagesDiscoverable
+                      ) {
+                          return false;
+                      }
+
+                      // prune nodes that are not pages and have no children (avoid pruning links)
+                      if (!FernNavigation.isPage(n) && !FernNavigation.isLeaf(n)) {
+                          return FernNavigation.getChildren(n).length > 0;
+                      }
+
+                      return true;
+                  })
+                  .get()
             : undefined;
 
     const props: ComponentProps<typeof DocsPage> = {

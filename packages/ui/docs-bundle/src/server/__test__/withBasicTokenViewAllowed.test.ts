@@ -3,29 +3,29 @@ import { withBasicTokenAnonymous, withBasicTokenAnonymousCheck } from "../withBa
 
 describe("withBasicTokenAnonymous", () => {
     it("should deny the request if the allowlist is empty", () => {
-        expect(withBasicTokenAnonymous({}, "/public")).toBe(false);
-        expect(withBasicTokenAnonymous({ allowlist: [] }, "/public")).toBe(false);
+        expect(withBasicTokenAnonymous({}, "/public")).toBe(true);
+        expect(withBasicTokenAnonymous({ allowlist: [] }, "/public")).toBe(true);
     });
 
     it("should allow the request to pass through if the path is in the allowlist", () => {
-        expect(withBasicTokenAnonymous({ allowlist: ["/public"] }, "/public")).toBe(true);
+        expect(withBasicTokenAnonymous({ allowlist: ["/public"] }, "/public")).toBe(false);
     });
 
     it("should allow the request to pass through if the path matches a regex in the allowlist", () => {
-        expect(withBasicTokenAnonymous({ allowlist: ["/public/(.*)"] }, "/public/123")).toBe(true);
+        expect(withBasicTokenAnonymous({ allowlist: ["/public/(.*)"] }, "/public/123")).toBe(false);
     });
 
     it("should allow the request to pass through if the path matches a path expression in the allowlist", () => {
-        expect(withBasicTokenAnonymous({ allowlist: ["/public/:id"] }, "/public/123")).toBe(true);
+        expect(withBasicTokenAnonymous({ allowlist: ["/public/:id"] }, "/public/123")).toBe(false);
     });
 
     it("should not allow the request to pass through if the path is not in the allowlist", () => {
-        expect(withBasicTokenAnonymous({ allowlist: ["/public", "/public/:id"] }, "/private")).toBe(false);
-        expect(withBasicTokenAnonymous({ allowlist: ["/public", "/public/:id"] }, "/private/123")).toBe(false);
+        expect(withBasicTokenAnonymous({ allowlist: ["/public", "/public/:id"] }, "/private")).toBe(true);
+        expect(withBasicTokenAnonymous({ allowlist: ["/public", "/public/:id"] }, "/private/123")).toBe(true);
     });
 
     it("shouuld respect denylist before allowlist", () => {
-        expect(withBasicTokenAnonymous({ allowlist: ["/public"], denylist: ["/public"] }, "/public")).toBe(false);
+        expect(withBasicTokenAnonymous({ allowlist: ["/public"], denylist: ["/public"] }, "/public")).toBe(true);
     });
 
     it("should never deny external links", () => {
@@ -37,7 +37,7 @@ describe("withBasicTokenAnonymous", () => {
                 icon: undefined,
                 id: NodeId("1"),
             }),
-        ).toBe(true);
+        ).toBe(false);
     });
 
     it("should prune childless non-leaf nodes", () => {
@@ -52,11 +52,12 @@ describe("withBasicTokenAnonymous", () => {
                 canonicalSlug: undefined,
                 icon: undefined,
                 hidden: undefined,
+                authed: undefined,
                 overviewPageId: undefined,
                 noindex: undefined,
                 pointsTo: undefined,
             }),
-        ).toBe(false);
+        ).toBe(true);
     });
 
     it("should not prune childless non-leaf nodes that have content", () => {
@@ -71,10 +72,11 @@ describe("withBasicTokenAnonymous", () => {
                 canonicalSlug: undefined,
                 icon: undefined,
                 hidden: undefined,
+                authed: undefined,
                 overviewPageId: PageId("1.mdx"),
                 noindex: undefined,
                 pointsTo: undefined,
             }),
-        ).toBe(true);
+        ).toBe(false);
     });
 });

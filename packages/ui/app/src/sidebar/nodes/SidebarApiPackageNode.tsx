@@ -51,6 +51,7 @@ export function SidebarApiPackageNode({
                 slug={node.slug}
                 depth={Math.max(depth - 1, 0)}
                 title={node.title}
+                authed={node.authed}
                 selected={selected}
                 icon={node.icon}
                 hidden={node.hidden}
@@ -93,6 +94,7 @@ export function SidebarApiPackageNode({
                 toggleExpand={handleToggleExpand}
                 showIndicator={showIndicator}
                 hidden={node.hidden}
+                authed={node.authed}
                 slug={node.overviewPageId != null ? node.slug : undefined}
                 selected={selected}
                 shallow={shallow}

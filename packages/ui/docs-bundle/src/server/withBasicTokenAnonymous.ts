@@ -1,11 +1,11 @@
-import { getChildren, isLeaf, isPage, utils, type NavigationNode, type RootNode } from "@fern-api/fdr-sdk/navigation";
+import { Pruner, isPage, type NavigationNode, type RootNode } from "@fern-api/fdr-sdk/navigation";
 import type { AuthEdgeConfigBasicTokenVerification } from "@fern-ui/fern-docs-auth";
 import { matchPath } from "@fern-ui/fern-docs-utils";
 
 /**
  * @param auth Basic token verification configuration
  * @param pathname pathname of the request to check
- * @returns true if the request is allowed to pass through, false otherwise
+ * @returns true if the request should should be marked as authed
  */
 export function withBasicTokenAnonymous(
     auth: Pick<AuthEdgeConfigBasicTokenVerification, "allowlist" | "denylist" | "anonymous">,
@@ -13,7 +13,7 @@ export function withBasicTokenAnonymous(
 ): boolean {
     // if the path is in the denylist, deny the request
     if (auth.denylist?.find((path) => matchPath(path, pathname))) {
-        return false;
+        return true;
     }
 
     // if the path is in the allowlist, allow the request to pass through
@@ -21,11 +21,11 @@ export function withBasicTokenAnonymous(
         auth.allowlist?.find((path) => matchPath(path, pathname)) ||
         auth.anonymous?.find((path) => matchPath(path, pathname))
     ) {
-        return true;
+        return false;
     }
 
     // if the path is not in the allowlist, deny the request
-    return false;
+    return true;
 }
 
 /**
@@ -37,16 +37,17 @@ export function withBasicTokenAnonymousCheck(
     return (node: NavigationNode) => {
         if (isPage(node)) {
             return withBasicTokenAnonymous(auth, `/${node.slug}`);
-        } else if (!isLeaf(node) && getChildren(node).length === 0) {
-            return false;
         }
 
-        return true;
+        return false;
     };
 }
 
 export function pruneWithBasicTokenAnonymous(auth: AuthEdgeConfigBasicTokenVerification, node: RootNode): RootNode {
-    const result = utils.pruneNavigationTree(node, withBasicTokenAnonymousCheck(auth));
+    const result = Pruner.from(node)
+        // mark nodes that are authed
+        .authed(withBasicTokenAnonymousCheck(auth))
+        .get();
 
     // TODO: handle this more gracefully
     if (result == null) {
@@ -57,13 +58,10 @@ export function pruneWithBasicTokenAnonymous(auth: AuthEdgeConfigBasicTokenVerif
 }
 
 export function pruneWithBasicTokenAuthed(auth: AuthEdgeConfigBasicTokenVerification, node: RootNode): RootNode {
-    const result = utils.pruneNavigationTree(
-        node,
-        // do not delete any nodes
-        () => true,
-        // hide nodes that are in the anonymous list
-        (n) => auth.anonymous?.find((path) => matchPath(path, `/${n.slug}`)) != null,
-    );
+    const result = Pruner.from(node)
+        // hide nodes that are not authed
+        .hide((n) => auth.anonymous?.find((path) => matchPath(path, `/${n.slug}`)) != null)
+        .get();
 
     if (result == null) {
         throw new Error("Failed to prune navigation tree");

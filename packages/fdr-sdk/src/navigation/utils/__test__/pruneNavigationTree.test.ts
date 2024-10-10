@@ -1,5 +1,5 @@
 import { FernNavigation } from "../../..";
-import { pruneNavigationTree } from "../pruneNavigationTree";
+import { Pruner } from "../pruneNavigationTree";
 
 describe("pruneNavigationTree", () => {
     it("should not prune the tree if keep returns true for all nodes", () => {
@@ -32,7 +32,9 @@ describe("pruneNavigationTree", () => {
             pointsTo: undefined,
         };
 
-        const result = pruneNavigationTree(root, () => true);
+        const result = Pruner.from(root)
+            .keep(() => true)
+            .get();
 
         // structuredClone should duplicate the object
         expect(result === root).toBe(false);
@@ -97,7 +99,9 @@ describe("pruneNavigationTree", () => {
             pointsTo: FernNavigation.Slug("root/page"),
         };
 
-        const result = pruneNavigationTree(root, (node) => node.id !== FernNavigation.NodeId("page"));
+        const result = Pruner.from(root)
+            .keep((node) => node.id !== FernNavigation.NodeId("page"))
+            .get();
 
         expect(result).toBeUndefined();
     });
@@ -132,7 +136,9 @@ describe("pruneNavigationTree", () => {
             pointsTo: undefined,
         };
 
-        const result = pruneNavigationTree(root, (node) => node.id !== "root");
+        const result = Pruner.from(root)
+            .keep((node) => node.id !== "root")
+            .get();
 
         // structuredClone should duplicate the object
         expect(result === root).toBe(false);
@@ -197,7 +203,9 @@ describe("pruneNavigationTree", () => {
             pointsTo: undefined,
         };
 
-        const result = pruneNavigationTree(root, (node) => node.id !== "page");
+        const result = Pruner.from(root)
+            .keep((node) => node.id !== "page")
+            .get();
 
         // structuredClone should duplicate the object
         expect(result === root).toBe(false);
@@ -249,7 +257,9 @@ describe("pruneNavigationTree", () => {
             pointsTo: undefined,
         };
 
-        const result = pruneNavigationTree(root, (node) => node.id !== "root");
+        const result = Pruner.from(root)
+            .keep((node) => node.id !== "root")
+            .get();
 
         // structuredClone should duplicate the object
         expect(result === root).toBe(false);
@@ -342,7 +352,9 @@ describe("pruneNavigationTree", () => {
             pointsTo: undefined,
         };
 
-        const result = pruneNavigationTree(root, (node) => node.id !== "page1");
+        const result = Pruner.from(root)
+            .keep((node) => node.id !== "page1")
+            .get();
 
         // structuredClone should duplicate the object
         expect(result === root).toBe(false);
