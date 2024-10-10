@@ -13,7 +13,7 @@ service:
   endpoints:
     getOrganization:
       method: GET
-      path: /{domain}/organization
+      path: /load/{domain}/organization
       path-parameters:
         domain: string
       response: rootCommons.OrgId
@@ -23,7 +23,7 @@ service:
 
     getNavigation:
       method: GET
-      path: /{domain}/instance/{id}/navigation
+      path: /load/{domain}/instance/{id}/navigation
       path-parameters:
         domain: string
         id: DocsInstanceId
@@ -34,7 +34,7 @@ service:
 
     getConfig:
       method: GET
-      path: /{domain}/instance/{id}/config
+      path: /load/{domain}/instance/{id}/config
       path-parameters:
         domain: string
         id: DocsInstanceId
@@ -43,9 +43,9 @@ service:
         - rootCommons.UnauthorizedError
         - rootCommons.NotFoundError
 
-    getPages:
+    getFileMetadata:
       method: POST
-      path: /{domain}/instance/{id}/pages
+      path: /load/{domain}/instance/{id}/files
       path-parameters:
         domain: string
         id: DocsInstanceId
@@ -53,24 +53,8 @@ service:
         name: BulkGetPagesRequest
         body:
           properties:
-            pages: list<rootCommons.PageId>
-      response: map<rootCommons.PageId, PageContent>
-      errors:
-        - rootCommons.UnauthorizedError
-        - rootCommons.NotFoundError
-
-    getFiles:
-      method: POST
-      path: /{domain}/instance/{id}/files
-      path-parameters:
-        domain: string
-        id: DocsInstanceId
-      request:
-        name: BulkGetFilesRequest
-        body:
-          properties:
-            files: list<rootCommons.FileId>
-      response: map<rootCommons.FileId, FileMetadata>
+            filepaths: list<FilePath>
+      response: map<FilePath, FileMetadata>
       errors:
         - rootCommons.UnauthorizedError
         - rootCommons.NotFoundError
@@ -81,20 +65,10 @@ service:
       path-parameters:
         organization: rootCommons.OrgId
       request:
-        name: StartDocsPreviewRequest
-        body:
-          properties:
-            filepaths: list<string>
-      response:
-        name: StartDocsPreviewResponse
-        body:
-          properties:
-            docsRegistrationId: v1DocsWrite.DocsRegistrationId
-            uploadUrl: rootCommons.Url
-            previewUrl: rootCommons.Url
+        body: StartDocsRegisterRequest
+      response: StartDocsRegisterResponse
       errors:
         - rootCommons.UnauthorizedError
-        - rootCommons.UnavailableError
 
     startDocsRegister:
       method: POST
@@ -103,29 +77,16 @@ service:
         organization: rootCommons.OrgId
         domain: string
       request:
-        name: StartDocsRegisterRequest
-        body:
-          properties:
-            aliases: list<string>
-            filepaths: list<string>
-            # authConfig: optional<rootCommons.AuthConfig>
-            # filepaths: list<string>
-            # images: optional<list<string>>
-      response:
-        name: StartDocsRegisterResponse
-        body:
-          properties:
-            docsRegistrationId: v1DocsWrite.DocsRegistrationId
-            uploadUrl: rootCommons.Url
+        body: StartDocsRegisterRequest
+      response: StartDocsRegisterResponse
       errors:
         - rootCommons.UnauthorizedError
-        - rootCommons.UnavailableError
 
     putDocsMetadata:
       method: PUT
       path: /register/{organization}/job/{docsRegistrationId}/metadata
       path-parameters:
-        domain: string
+        organization: rootCommons.OrgId
         docsRegistrationId: v1DocsWrite.DocsRegistrationId
       request:
         name: PutDocsMetadata
@@ -133,47 +94,76 @@ service:
           properties:
             config: DocsConfig
             navigation: navigation.RootNode
+            files: map<FilePath, FileMetadata>
       errors:
         - rootCommons.UnauthorizedError
-        - rootCommons.UnavailableError
 
-    putDocsPages:
-      method: PUT
-      path:
+    startDocsRevalidation:
+      method: POST
+      path: /register/{organization}/job/{docsRegistrationId}/revalidate
+      path-parameters:
+        organization: rootCommons.OrgId
+        docsRegistrationId: v1DocsWrite.DocsRegistrationId
+      errors:
+        - rootCommons.UnauthorizedError
+
+    getDocsRevalidationStatus:
+      method: GET
+      path: /register/{organization}/job/{docsRegistrationId}/status
+      path-parameters:
+        organization: rootCommons.OrgId
+        docsRegistrationId: v1DocsWrite.DocsRegistrationId
+      response: DocsRegisterStatus
+      errors:
+        - rootCommons.UnauthorizedError
 
 types:
+  FilePath: string
+
+  AuthConfig:
+    properties:
+      enableAnonymousAccess: boolean
+      enableSso: optional<boolean>
+      audience: optional<optional<rootCommons.AudienceId>>
+
   DocsInstanceId:
     discriminated: false
     union:
       - rootCommons.DocsConfigId
       - literal<"latest">
 
+  File:
+    properties:
+      url: rootCommons.Url # s3 blob url
+      metadata: optional<FileMetadata>
+
   FileMetadata:
     union:
-      url: UrlFile
-      image: ImageFile
+      image: ImageMetadata
+      markdown: MarkdownMetadata
 
-  UrlFile:
+  ImageMetadata:
     properties:
-      url: rootCommons.Url
-
-  ImageFile:
-    properties:
-      url: rootCommons.Url
       width: double
       height: double
       blurDataUrl: optional<string>
       alt: optional<string>
 
-  PageContent:
+  MarkdownMetadata:
     properties:
-      markdown: string
       editThisPageUrl: optional<rootCommons.Url>
+      markdown:
+        type: optional<string>
+        availability: deprecated
+        docs: This type is deprecated, and will be removed in a future version.
 
   DocsConfig:
     properties:
       id: rootCommons.DocsConfigId
       updatedAt: datetime
+
+      domain: string
+      basePath: optional<string>
 
       title: optional<string>
       defaultLanguage: optional<v1Commons.ProgrammingLanguage>
@@ -186,7 +176,7 @@ types:
       # logo
       logoHeight: optional<double>
       logoHref: optional<rootCommons.Url>
-      favicon: optional<rootCommons.FileId>
+      favicon: optional<FilePath>
 
       # seo
       metadata: optional<v1Commons.MetadataConfig>
@@ -210,9 +200,9 @@ types:
       playground: optional<v1Commons.PlaygroundConfig>
 
       # files
-      files: optional<list<rootCommons.FileId>>
-      markdownPageIds: optional<list<rootCommons.PageId>>
-      mdxBundlerFileIds: optional<list<rootCommons.PageId>>
+      files: optional<list<FilePath>>
+      markdownFiles: optional<list<FilePath>>
+      mdxBundlerFile: optional<list<FilePath>>
 
   ColorsConfig:
     properties:
@@ -221,8 +211,8 @@ types:
 
   ThemeConfig:
     properties:
-      logo: optional<rootCommons.FileId>
-      backgroundImage: optional<rootCommons.FileId>
+      logo: optional<FilePath>
+      backgroundImage: optional<FilePath>
       accentPrimary: rootCommons.RgbaColor
       background: Background
       border: optional<rootCommons.RgbaColor>
@@ -235,6 +225,42 @@ types:
       solid: rootCommons.RgbaColor
       gradient: {}
 
-  GetSearchKeyResponse:
+  StartDocsRegisterRequest:
     properties:
-      key: string
+      auth: AuthConfig
+      basePath: optional<string>
+      publicFiles: list<FilePath>
+      privateFiles: list<FilePath>
+
+  StartDocsRegisterResponse:
+    properties:
+      domain: string
+      basePath: optional<string>
+      docsRegistrationId: v1DocsWrite.DocsRegistrationId
+      uploadUrls: map<FilePath, rootCommons.Url>
+
+  DocsRegisterStatus:
+    union:
+      notStarted: DocsRegisterStatusNotStarted
+      inProgress: DocsRegisterStatusInProgress
+      completed: DocsRegisterStatusCompleted
+      failed: DocsRegisterStatusFailed
+
+  DocsRegisterStatusNotStarted:
+    docs: The docs register has not started.
+    properties: {}
+
+  DocsRegisterStatusInProgress:
+    docs: The docs register is in progress.
+    properties:
+      total: integer
+      completed: integer
+
+  DocsRegisterStatusCompleted:
+    docs: The docs register completed.
+    properties: {}
+
+  DocsRegisterStatusFailed:
+    docs: The docs register failed.
+    properties:
+      error: string
