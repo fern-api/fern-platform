@@ -51,6 +51,13 @@ function getOffsetTopRelativeToScrollContainer(targetElement: HTMLElement, scrol
     while (currentElement && currentElement !== scrollContainer) {
         offsetTop += currentElement.offsetTop;
         currentElement = currentElement.offsetParent as HTMLElement | null;
+        if (!currentElement) {
+            // if the offset parent is null, we've accidentally reached the root element
+            return undefined;
+        } else if (!scrollContainer.contains(currentElement)) {
+            // if the offset parent jumps beyond the scroll container, bail
+            break;
+        }
     }
 
     return offsetTop;
