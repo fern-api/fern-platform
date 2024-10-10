@@ -5,6 +5,6 @@
 import * as FernRegistry from "../../../../../../../index";
 
 export interface OptionalType {
-    shape: FernRegistry.api.latest.TypeShape;
+    shape: FernRegistry.api.latest.TypeReference;
     default: unknown | undefined;
 }

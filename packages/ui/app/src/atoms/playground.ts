@@ -1,9 +1,3 @@
-import {
-    EndpointContext,
-    WebSocketContext,
-    createEndpointContext,
-    createWebSocketContext,
-} from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { WritableAtom, atom, useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -27,6 +21,12 @@ import {
     type PlaygroundRequestFormState,
     type PlaygroundWebSocketRequestFormState,
 } from "../playground/types";
+import {
+    EndpointContext,
+    WebSocketContext,
+    createEndpointContext,
+    createWebSocketContext,
+} from "../playground/types/endpoint-context";
 import {
     getInitialEndpointRequestFormState,
     getInitialEndpointRequestFormStateWithExample,

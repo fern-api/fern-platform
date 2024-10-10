@@ -1,38 +1,35 @@
-import { useIsReady, useNavigationNodes, useWriteApiDefinitionAtom } from "../atoms";
+import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
+import { useSetAtom } from "jotai";
+import { useEffect } from "react";
+import { DEPRECATED_APIS_ATOM, useIsReady } from "../atoms";
 import { ApiPageContext } from "../contexts/api-page";
-import { DocsContent } from "../resolver/DocsContent";
+import type { ResolvedRootPackage } from "../resolver/types";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
-import { ApiReferenceContent } from "./ApiReferenceContent";
+import { ApiPackageContents } from "./ApiPackageContents";
 
 export declare namespace ApiReferencePage {
     export interface Props {
-        content: DocsContent.ApiReferencePage;
+        initialApi: ResolvedRootPackage;
+        showErrors: boolean;
     }
 }
 
-export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({ content }) => {
+export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({ initialApi, showErrors }) => {
     const hydrated = useIsReady();
-
-    useWriteApiDefinitionAtom(content.apiDefinition);
-
-    const node = useNavigationNodes().get(content.apiReferenceNodeId);
-
-    if (node?.type !== "apiReference") {
-        // TODO: sentry
-        // eslint-disable-next-line no-console
-        console.error("Expected node to be an api reference node");
-        return null;
-    }
+    const setDefinitions = useSetAtom(DEPRECATED_APIS_ATOM);
+    useEffect(() => {
+        setDefinitions((prev) => ({ ...prev, [initialApi.api]: initialApi }));
+    }, [initialApi, setDefinitions]);
 
     return (
         <ApiPageContext.Provider value={true}>
-            <ApiReferenceContent
-                apiDefinition={content.apiDefinition}
-                showErrors={node.showErrors ?? false}
-                node={node}
-                breadcrumb={content.breadcrumb}
-                mdxs={content.mdxs}
-                slug={content.slug}
+            <ApiPackageContents
+                api={initialApi.api}
+                types={initialApi.types}
+                showErrors={showErrors}
+                apiDefinition={initialApi}
+                isLastInParentPackage={true}
+                anchorIdParts={EMPTY_ARRAY}
             />
 
             {/* anchor links should get additional padding to scroll to on initial load */}

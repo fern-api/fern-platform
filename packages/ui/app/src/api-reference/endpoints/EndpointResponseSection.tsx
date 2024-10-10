@@ -1,24 +1,27 @@
-import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { UnreachableCaseError } from "ts-essentials";
 import { useFeatureFlags } from "../../atoms";
+import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { Markdown } from "../../mdx/Markdown";
-import { renderTypeShorthand } from "../../type-shorthand";
+import { ResolvedExampleEndpointResponseWithSchema } from "../../resolver/SchemaWithExample";
+import { ResolvedResponseBody, ResolvedTypeDefinition, visitResolvedHttpResponseBodyShape } from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
+import { renderDeprecatedTypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace EndpointResponseSection {
     export interface Props {
-        response: ApiDefinition.HttpResponse;
-        exampleResponseBody: ApiDefinition.ExampleEndpointResponse | undefined;
+        responseBody: ResolvedResponseBody;
+        exampleResponseBody: ResolvedExampleEndpointResponseWithSchema | undefined;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
 export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = ({
-    response,
+    responseBody,
     exampleResponseBody,
     onHoverProperty,
     anchorIdParts,
@@ -32,85 +35,75 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
             <Markdown
                 size="sm"
                 className="!t-muted border-default border-b pb-5 leading-6"
-                mdx={response.description}
+                mdx={responseBody.description}
                 fallback={getResponseSummary({
-                    response,
+                    responseBody,
                     exampleResponseBody,
                     types,
                     isAudioFileDownloadSpanSummary,
                 })}
             />
-            <EndpointResponseSectionContent
-                body={response.body}
-                onHoverProperty={onHoverProperty}
-                anchorIdParts={anchorIdParts}
-                slug={slug}
-                types={types}
-            />
+            {visitResolvedHttpResponseBodyShape(responseBody.shape, {
+                fileDownload: () => null,
+                streamingText: () => {
+                    // eslint-disable-next-line no-console
+                    console.error(
+                        "Generated API Reference contains a deprecated streamingText shape. Please upgrade Fern CLI and regenerate the API Reference.",
+                    );
+                    return (
+                        <FernErrorTag component="EndpointResponseSection" error="Stream condition cannot be rendered" />
+                    );
+                },
+                streamCondition: () => {
+                    // eslint-disable-next-line no-console
+                    console.error(
+                        "Generated API Reference contains a deprecated streamCondition shape. Please upgrade Fern CLI and regenerate the API Reference.",
+                    );
+                    return (
+                        <FernErrorTag component="EndpointResponseSection" error="Stream condition cannot be rendered" />
+                    );
+                },
+                stream: (stream) => (
+                    <TypeReferenceDefinitions
+                        shape={stream.value}
+                        isCollapsible={false}
+                        onHoverProperty={onHoverProperty}
+                        anchorIdParts={anchorIdParts}
+                        slug={slug}
+                        applyErrorStyles={false}
+                        types={types}
+                        isResponse={true}
+                    />
+                ),
+                typeShape: (typeShape) => (
+                    <TypeReferenceDefinitions
+                        shape={typeShape}
+                        isCollapsible={false}
+                        onHoverProperty={onHoverProperty}
+                        anchorIdParts={anchorIdParts}
+                        slug={slug}
+                        applyErrorStyles={false}
+                        types={types}
+                        isResponse={true}
+                    />
+                ),
+            })}
         </div>
     );
 };
 
-interface EndpointResponseSectionContentProps {
-    body: ApiDefinition.HttpResponseBodyShape;
-    onHoverProperty: ((path: JsonPropertyPath, opts: { isHovering: boolean }) => void) | undefined;
-    anchorIdParts: readonly string[];
-    slug: FernNavigation.Slug;
-    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
-}
-
-function EndpointResponseSectionContent({
-    body,
-    onHoverProperty,
-    anchorIdParts,
-    slug,
-    types,
-}: EndpointResponseSectionContentProps) {
-    switch (body.type) {
-        case "fileDownload":
-        case "streamingText":
-            return null;
-        case "stream":
-            return (
-                <TypeReferenceDefinitions
-                    shape={body.shape}
-                    isCollapsible={false}
-                    onHoverProperty={onHoverProperty}
-                    anchorIdParts={anchorIdParts}
-                    slug={slug}
-                    applyErrorStyles={false}
-                    types={types}
-                    isResponse={true}
-                />
-            );
-        default:
-            return (
-                <TypeReferenceDefinitions
-                    shape={body}
-                    isCollapsible={false}
-                    onHoverProperty={onHoverProperty}
-                    anchorIdParts={anchorIdParts}
-                    slug={slug}
-                    applyErrorStyles={false}
-                    types={types}
-                    isResponse={true}
-                />
-            );
-    }
-}
-
 function getResponseSummary({
-    response,
+    responseBody,
     exampleResponseBody,
     types,
     isAudioFileDownloadSpanSummary,
 }: {
-    response: ApiDefinition.HttpResponse;
-    exampleResponseBody: ApiDefinition.ExampleEndpointResponse | undefined;
-    types: Record<string, ApiDefinition.TypeDefinition>;
+    responseBody: ResolvedResponseBody;
+    exampleResponseBody: ResolvedExampleEndpointResponseWithSchema | undefined;
+    types: Record<string, ResolvedTypeDefinition>;
     isAudioFileDownloadSpanSummary: boolean;
 }) {
-    switch (response.body.type) {
+    switch (responseBody.shape.type) {
         case "fileDownload": {
             if (isAudioFileDownloadSpanSummary) {
                 return (
@@ -123,9 +116,25 @@ function getResponseSummary({
         }
         case "streamingText":
             return "This endpoint sends text responses over a long-lived HTTP connection.";
+        case "streamCondition":
+            return "This endpoint returns a stream.";
         case "stream":
-            return `This endpoint returns a stream of ${exampleResponseBody?.type === "sse" ? "server sent events" : renderTypeShorthand(response.body.shape, { withArticle: false }, types)}.`;
+            return `This endpoint returns a stream of ${exampleResponseBody?.type === "sse" ? "server sent events" : renderDeprecatedTypeShorthand(responseBody.shape.value, { withArticle: false }, types)}.`;
+        case "alias":
+        case "discriminatedUnion":
+        case "enum":
+        case "primitive":
+        case "optional":
+        case "map":
+        case "list":
+        case "literal":
+        case "object":
+        case "reference":
+        case "set":
+        case "unknown":
+        case "undiscriminatedUnion":
+            return `This endpoint returns ${renderDeprecatedTypeShorthand(responseBody.shape, { withArticle: true }, types)}.`;
         default:
-            return `This endpoint returns ${renderTypeShorthand(response.body, { withArticle: true }, types)}.`;
+            throw new UnreachableCaseError(responseBody.shape);
     }
 }

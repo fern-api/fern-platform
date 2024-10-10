@@ -53,6 +53,7 @@ export const EMPTY_DOCS_STATE: DocsProps = {
     content: {
         type: "custom-markdown-page",
         slug: FernNavigation.Slug(""),
+        title: "",
         mdx: "",
         neighbors: { prev: null, next: null },
         apis: {},

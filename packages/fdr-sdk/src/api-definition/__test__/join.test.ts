@@ -1,5 +1,5 @@
 import { APIV1Read } from "../../client";
-import { joiner } from "../join";
+import { join } from "../join";
 import * as Latest from "../latest";
 
 const PRIMITIVE_SHAPE: Latest.TypeReference.Primitive = {
@@ -30,12 +30,9 @@ const endpoint1: Latest.EndpointDefinition = {
         {
             key: Latest.PropertyKey("query"),
             valueShape: {
-                type: "alias",
-                value: {
-                    type: "id",
-                    id: Latest.TypeId("type-1"),
-                    default: undefined,
-                },
+                type: "id",
+                id: Latest.TypeId("type-1"),
+                default: undefined,
             },
             description: undefined,
             availability: undefined,
@@ -71,12 +68,9 @@ const endpoint2: Latest.EndpointDefinition = {
         {
             key: Latest.PropertyKey("header"),
             valueShape: {
-                type: "alias",
-                value: {
-                    type: "id",
-                    id: Latest.TypeId("type-2"),
-                    default: undefined,
-                },
+                type: "id",
+                id: Latest.TypeId("type-2"),
+                default: undefined,
             },
             description: undefined,
             availability: undefined,
@@ -110,12 +104,9 @@ const websocket1: Latest.WebSocketChannel = {
                     type: "optional",
                     default: undefined,
                     shape: {
-                        type: "alias",
-                        value: {
-                            type: "id",
-                            id: Latest.TypeId("type-3"),
-                            default: undefined,
-                        },
+                        type: "id",
+                        id: Latest.TypeId("type-3"),
+                        default: undefined,
                     },
                 },
             },
@@ -199,12 +190,9 @@ const api1: Latest.ApiDefinition = {
         {
             key: Latest.PropertyKey("global"),
             valueShape: {
-                type: "alias",
-                value: {
-                    type: "id",
-                    id: Latest.TypeId("type-4"),
-                    default: undefined,
-                },
+                type: "id",
+                id: Latest.TypeId("type-4"),
+                default: undefined,
             },
             description: undefined,
             availability: undefined,
@@ -231,12 +219,9 @@ const api2: Latest.ApiDefinition = {
         {
             key: Latest.PropertyKey("global"),
             valueShape: {
-                type: "alias",
-                value: {
-                    type: "id",
-                    id: Latest.TypeId("type-4"),
-                    default: undefined,
-                },
+                type: "id",
+                id: Latest.TypeId("type-4"),
+                default: undefined,
             },
             description: undefined,
             availability: undefined,
@@ -261,12 +246,9 @@ const api3: Latest.ApiDefinition = {
         {
             key: Latest.PropertyKey("global"),
             valueShape: {
-                type: "alias",
-                value: {
-                    type: "id",
-                    id: Latest.TypeId("type-4"),
-                    default: undefined,
-                },
+                type: "id",
+                id: Latest.TypeId("type-4"),
+                default: undefined,
             },
             description: undefined,
             availability: undefined,
@@ -276,7 +258,7 @@ const api3: Latest.ApiDefinition = {
 
 describe("join", () => {
     it("should prune endpoint1 and its types", () => {
-        const pruned = joiner()(api1, api2, api3);
+        const pruned = join(api1, api2, api3);
 
         expect(Object.keys(pruned.endpoints)).toStrictEqual([endpoint1.id, endpoint2.id]);
         expect(Object.keys(pruned.websockets)).toStrictEqual([websocket1.id]);
@@ -288,12 +270,9 @@ describe("join", () => {
             {
                 key: Latest.PropertyKey("global"),
                 valueShape: {
-                    type: "alias",
-                    value: {
-                        type: "id",
-                        id: Latest.TypeId("type-4"),
-                        default: undefined,
-                    },
+                    type: "id",
+                    id: Latest.TypeId("type-4"),
+                    default: undefined,
                 },
                 description: undefined,
                 availability: undefined,

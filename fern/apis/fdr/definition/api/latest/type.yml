@@ -60,7 +60,7 @@ types:
       - commons.WithAvailability
     properties:
       key: rootCommons.PropertyKey
-      valueShape: TypeShape
+      valueShape: TypeReference
 
   EnumType:
     properties:
@@ -84,7 +84,7 @@ types:
       - commons.WithAvailability
     properties:
       displayName: optional<string>
-      shape: TypeShape
+      shape: TypeReference
 
   DiscriminatedUnionType:
     properties:
@@ -138,18 +138,18 @@ types:
 
   OptionalType:
     properties:
-      shape: TypeShape
+      shape: TypeReference
       default: optional<unknown>
 
   ListType:
     properties:
-      itemShape: TypeShape
+      itemShape: TypeReference
 
   SetType:
     properties:
-      itemShape: TypeShape
+      itemShape: TypeReference
 
   MapType:
     properties:
-      keyShape: TypeShape
-      valueShape: TypeShape
+      keyShape: TypeReference
+      valueShape: TypeReference

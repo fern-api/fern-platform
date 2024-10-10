@@ -1,4 +1,3 @@
-import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
 import { unknownToString } from "@fern-api/ui-core-utils";
 import { FernTooltipProvider } from "@fern-ui/components";
@@ -24,6 +23,7 @@ import { executeProxyFile } from "../fetch-utils/executeProxyFile";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
 import type { GrpcProxyRequest, ProxyRequest } from "../types";
+import { EndpointContext } from "../types/endpoint-context";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import {
     buildAuthHeaders,
@@ -31,7 +31,7 @@ import {
     getInitialEndpointRequestFormStateWithExample,
     serializeFormStateBody,
 } from "../utils";
-import { usePlaygroundBaseUrl } from "../utils/select-environment";
+import { usePlaygroundBaseUrl, useSelectedEnvironment } from "../utils/select-environment";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 
@@ -55,7 +55,8 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
     const proxyBasePath = proxyShouldUseAppBuildwithfernCom ? getAppBuildwithfernCom() : basePath;
     const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
     const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
-    const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
+    const baseUrl = usePlaygroundBaseUrl(endpoint);
+    const selectedEnvironment = useSelectedEnvironment(endpoint);
 
     // TODO: remove potentially
     // const grpcClient = useMemo(() => {
@@ -250,13 +251,11 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
                         formState={formState}
                         // TODO: Remove this after pinecone demo, this is a temporary flag
                         sendRequest={grpcEndpoints?.includes(endpoint.id) ? sendGrpcRequest : sendRequest}
-                        environmentId={environmentId}
-                        baseUrl={baseUrl}
+                        environment={selectedEnvironment}
                         environmentFilters={settings?.environments}
                         path={endpoint.path}
                         queryParameters={endpoint.queryParameters}
                         sendRequestIcon={<SendSolid className="transition-transform group-hover:translate-x-0.5" />}
-                        types={context.types}
                     />
                 </div>
                 <div className="flex min-h-0 flex-1 shrink">

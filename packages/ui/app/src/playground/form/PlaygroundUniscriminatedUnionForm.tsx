@@ -3,7 +3,6 @@ import { FernButton, FernDropdown, FernSegmentedControl } from "@fern-ui/compone
 import { NavArrowDown } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useMemo, useState } from "react";
-import { renderTypeShorthand } from "../../type-shorthand";
 import { getEmptyValueForType, matchesTypeReference } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 
@@ -44,15 +43,35 @@ export const PlaygroundUniscriminatedUnionForm = memo<PlaygroundUniscriminatedUn
     const options = useMemo(
         () =>
             undiscriminatedUnion.variants.map((variant, idx): FernDropdown.Option => {
+                let labelFallback: string;
+                switch (variant.shape.type) {
+                    case "literal":
+                        labelFallback =
+                            variant.shape.value.type === "booleanLiteral"
+                                ? variant.shape.value.value
+                                    ? "true"
+                                    : "false"
+                                : variant.shape.value.value;
+                        break;
+                    case "primitive":
+                        labelFallback = variant.shape.value.type;
+                        break;
+                    case "optional":
+                        labelFallback = variant.shape.shape.type;
+                        break;
+                    default:
+                        labelFallback = variant.shape.type;
+                        break;
+                }
                 return {
                     type: "value",
-                    label: variant.displayName ?? renderTypeShorthand(variant.shape, {}, types),
+                    label: variant.displayName ?? labelFallback,
                     value: idx.toString(),
                     // todo: handle availability
                     tooltip: variant.description != null ? <Markdown size="xs" mdx={variant.description} /> : undefined,
                 };
             }),
-        [types, undiscriminatedUnion.variants],
+        [undiscriminatedUnion.variants],
     );
 
     const selectedOption = options

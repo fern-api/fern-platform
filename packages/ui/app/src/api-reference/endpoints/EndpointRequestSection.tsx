@@ -1,27 +1,37 @@
-import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import cn from "clsx";
 import { Fragment, ReactNode } from "react";
 import { Markdown } from "../../mdx/Markdown";
-import { renderTypeShorthand } from "../../type-shorthand";
+import {
+    ResolvedFormDataRequestProperty,
+    ResolvedRequestBody,
+    ResolvedTypeDefinition,
+    unwrapDescription,
+    visitResolvedHttpRequestBodyShape,
+} from "../../resolver/types";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
+import {
+    renderDeprecatedTypeShorthand,
+    renderDeprecatedTypeShorthandFormDataProperty,
+} from "../types/type-shorthand/TypeShorthand";
 import { EndpointParameter, EndpointParameterContent } from "./EndpointParameter";
 
 export declare namespace EndpointRequestSection {
     export interface Props {
-        request: ApiDefinition.HttpRequest;
+        requestBody: ResolvedRequestBody;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
 export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
-    request,
+    requestBody,
     onHoverProperty,
     anchorIdParts,
     slug,
@@ -32,27 +42,26 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
             <Markdown
                 size="sm"
                 className={cn("t-muted pb-5 leading-6", {
-                    "border-default border-b": request.body.type !== "formData",
+                    "border-default border-b": requestBody.shape.type !== "formData",
                 })}
-                mdx={request.description}
-                fallback={`This endpoint expects ${visitDiscriminatedUnion(request.body)._visit<string>({
+                mdx={requestBody.description}
+                fallback={`This endpoint expects ${visitResolvedHttpRequestBodyShape<string>(requestBody.shape, {
                     formData: (formData) => {
-                        const fileArrays = formData.fields.filter(
-                            (p): p is ApiDefinition.FormDataField.Files => p.type === "files",
+                        const fileArrays = formData.properties.filter(
+                            (p): p is ResolvedFormDataRequestProperty.FileArrayProperty => p.type === "fileArray",
                         );
-                        const files = formData.fields.filter(
-                            (p): p is ApiDefinition.FormDataField.File_ => p.type === "file",
+                        const files = formData.properties.filter(
+                            (p): p is ResolvedFormDataRequestProperty.FileProperty => p.type === "file",
                         );
                         return `a multipart form${fileArrays.length > 0 || files.length > 1 ? " with multiple files" : files[0] != null ? ` containing ${files[0].isOptional ? "an optional" : "a"} file` : ""}`;
                     },
                     bytes: (bytes) => `binary data${bytes.contentType != null ? ` of type ${bytes.contentType}` : ""}`,
-                    object: (obj) => renderTypeShorthand(obj, { withArticle: true }, types),
-                    alias: (alias) => renderTypeShorthand(alias, { withArticle: true }, types),
+                    typeShape: (typeShape) => renderDeprecatedTypeShorthand(typeShape, { withArticle: true }, types),
                 })}.`}
             />
-            {visitDiscriminatedUnion(request.body)._visit<ReactNode | null>({
+            {visitResolvedHttpRequestBodyShape<ReactNode | null>(requestBody.shape, {
                 formData: (formData) =>
-                    formData.fields.map((p) => (
+                    formData.properties.map((p) => (
                         <Fragment key={p.key}>
                             <TypeComponentSeparator />
                             {visitDiscriminatedUnion(p, "type")._visit<ReactNode | null>({
@@ -60,35 +69,30 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                                     <EndpointParameterContent
                                         name={file.key}
                                         description={file.description}
-                                        typeShorthand={renderTypeShorthandFormDataField(file)}
+                                        typeShorthand={renderDeprecatedTypeShorthandFormDataProperty(file)}
                                         anchorIdParts={[...anchorIdParts, file.key]}
                                         slug={slug}
                                         availability={file.availability}
-                                        additionalDescriptions={undefined}
                                     />
                                 ),
-                                files: (files) => (
+                                fileArray: (fileArray) => (
                                     <EndpointParameterContent
-                                        name={files.key}
-                                        description={files.description}
-                                        typeShorthand={renderTypeShorthandFormDataField(files)}
-                                        anchorIdParts={[...anchorIdParts, files.key]}
+                                        name={fileArray.key}
+                                        description={fileArray.description}
+                                        typeShorthand={renderDeprecatedTypeShorthandFormDataProperty(fileArray)}
+                                        anchorIdParts={[...anchorIdParts, fileArray.key]}
                                         slug={slug}
-                                        availability={files.availability}
-                                        additionalDescriptions={undefined}
+                                        availability={fileArray.availability}
                                     />
                                 ),
-                                property: (property) => (
+                                bodyProperty: (bodyProperty) => (
                                     <EndpointParameter
-                                        name={property.key}
-                                        description={property.description}
-                                        additionalDescriptions={
-                                            ApiDefinition.unwrapReference(property.valueShape, types).descriptions
-                                        }
-                                        shape={property.valueShape}
-                                        anchorIdParts={[...anchorIdParts, property.key]}
+                                        name={bodyProperty.key}
+                                        description={getDescription(bodyProperty, types)}
+                                        shape={bodyProperty.valueShape}
+                                        anchorIdParts={[...anchorIdParts, bodyProperty.key]}
                                         slug={slug}
-                                        availability={property.availability}
+                                        availability={bodyProperty.availability}
                                         types={types}
                                     />
                                 ),
@@ -97,20 +101,9 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                         </Fragment>
                     )),
                 bytes: () => null,
-                object: (obj) => (
+                typeShape: (typeShape) => (
                     <TypeReferenceDefinitions
-                        shape={obj}
-                        isCollapsible={false}
-                        onHoverProperty={onHoverProperty}
-                        anchorIdParts={anchorIdParts}
-                        slug={slug}
-                        applyErrorStyles={false}
-                        types={types}
-                    />
-                ),
-                alias: (alias) => (
-                    <TypeReferenceDefinitions
-                        shape={alias}
+                        shape={typeShape}
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
                         anchorIdParts={anchorIdParts}
@@ -124,13 +117,13 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
     );
 };
 
-function renderTypeShorthandFormDataField(
-    property: Exclude<ApiDefinition.FormDataField, ApiDefinition.FormDataField.Property>,
-): ReactNode {
-    return (
-        <span className="fern-api-property-meta">
-            <span>{property.type}</span>
-            {property.isOptional ? <span>Optional</span> : <span className="t-danger">Required</span>}
-        </span>
-    );
+function getDescription(
+    bodyProperty: ResolvedFormDataRequestProperty.BodyProperty,
+    types: Record<string, ResolvedTypeDefinition>,
+): FernDocs.MarkdownText | undefined {
+    if (bodyProperty.description != null) {
+        return bodyProperty.description;
+    }
+
+    return unwrapDescription(bodyProperty.valueShape, types);
 }

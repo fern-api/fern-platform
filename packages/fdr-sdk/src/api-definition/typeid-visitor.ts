@@ -8,16 +8,16 @@ export class ApiTypeIdVisitor {
         visit: (typeId: Latest.TypeId) => void,
     ): void {
         endpoint.pathParameters?.forEach((pathParameter) => {
-            ApiTypeIdVisitor.visitTypeShape(pathParameter.valueShape, visit);
+            ApiTypeIdVisitor.visitTypeReference(pathParameter.valueShape, visit);
         });
         endpoint.queryParameters?.forEach((queryParameter) => {
-            ApiTypeIdVisitor.visitTypeShape(queryParameter.valueShape, visit);
+            ApiTypeIdVisitor.visitTypeReference(queryParameter.valueShape, visit);
         });
         endpoint.requestHeaders?.forEach((header) => {
-            ApiTypeIdVisitor.visitTypeShape(header.valueShape, visit);
+            ApiTypeIdVisitor.visitTypeReference(header.valueShape, visit);
         });
         endpoint.responseHeaders?.forEach((header) => {
-            ApiTypeIdVisitor.visitTypeShape(header.valueShape, visit);
+            ApiTypeIdVisitor.visitTypeReference(header.valueShape, visit);
         });
         if (endpoint.request?.body != null) {
             ApiTypeIdVisitor.visitHttpRequestBodyShape(endpoint.request.body, visit);
@@ -38,13 +38,13 @@ export class ApiTypeIdVisitor {
         visit: (typeId: Latest.TypeId) => void,
     ): void {
         channel.requestHeaders?.forEach((header) => {
-            ApiTypeIdVisitor.visitTypeShape(header.valueShape, visit);
+            ApiTypeIdVisitor.visitTypeReference(header.valueShape, visit);
         });
         channel.pathParameters?.forEach((pathParameter) => {
-            ApiTypeIdVisitor.visitTypeShape(pathParameter.valueShape, visit);
+            ApiTypeIdVisitor.visitTypeReference(pathParameter.valueShape, visit);
         });
         channel.queryParameters?.forEach((queryParameter) => {
-            ApiTypeIdVisitor.visitTypeShape(queryParameter.valueShape, visit);
+            ApiTypeIdVisitor.visitTypeReference(queryParameter.valueShape, visit);
         });
         channel.messages.forEach((message) => {
             ApiTypeIdVisitor.visitTypeShape(message.body, visit);
@@ -56,7 +56,7 @@ export class ApiTypeIdVisitor {
         visit: (typeId: Latest.TypeId) => void,
     ): void {
         webhook.headers?.forEach((header) => {
-            ApiTypeIdVisitor.visitTypeShape(header.valueShape, visit);
+            ApiTypeIdVisitor.visitTypeReference(header.valueShape, visit);
         });
         if (webhook.payload) {
             ApiTypeIdVisitor.visitTypeShape(webhook.payload.shape, visit);
@@ -96,7 +96,7 @@ export class ApiTypeIdVisitor {
             visitDiscriminatedUnion(field)._visit({
                 file: noop,
                 files: noop,
-                property: (property) => ApiTypeIdVisitor.visitTypeShape(property.valueShape, visit),
+                property: (property) => ApiTypeIdVisitor.visitTypeReference(property.valueShape, visit),
             }),
         );
     }
@@ -114,7 +114,7 @@ export class ApiTypeIdVisitor {
             alias: (value) => ApiTypeIdVisitor.visitTypeReference(value.value, visit),
             enum: noop,
             undiscriminatedUnion: (value) =>
-                value.variants.forEach((variant) => ApiTypeIdVisitor.visitTypeShape(variant.shape, visit)),
+                value.variants.forEach((variant) => ApiTypeIdVisitor.visitTypeReference(variant.shape, visit)),
             discriminatedUnion: (value) =>
                 value.variants.forEach((variant) => ApiTypeIdVisitor.visitObjectType(variant, visit)),
         });
@@ -123,7 +123,7 @@ export class ApiTypeIdVisitor {
     public static visitObjectType(typeShape: Latest.ObjectType, visit: (typeId: Latest.TypeId) => void): void {
         typeShape.extends.forEach(visit);
         typeShape.properties.forEach((property) => {
-            ApiTypeIdVisitor.visitTypeShape(property.valueShape, visit);
+            ApiTypeIdVisitor.visitTypeReference(property.valueShape, visit);
         });
     }
 
@@ -134,12 +134,12 @@ export class ApiTypeIdVisitor {
         return visitDiscriminatedUnion(typeReference)._visit({
             id: (value) => visit(value.id),
             primitive: noop,
-            optional: (value) => ApiTypeIdVisitor.visitTypeShape(value.shape, visit),
-            list: (value) => ApiTypeIdVisitor.visitTypeShape(value.itemShape, visit),
-            set: (value) => ApiTypeIdVisitor.visitTypeShape(value.itemShape, visit),
+            optional: (value) => ApiTypeIdVisitor.visitTypeReference(value.shape, visit),
+            list: (value) => ApiTypeIdVisitor.visitTypeReference(value.itemShape, visit),
+            set: (value) => ApiTypeIdVisitor.visitTypeReference(value.itemShape, visit),
             map: (value) => {
-                ApiTypeIdVisitor.visitTypeShape(value.keyShape, visit);
-                ApiTypeIdVisitor.visitTypeShape(value.valueShape, visit);
+                ApiTypeIdVisitor.visitTypeReference(value.keyShape, visit);
+                ApiTypeIdVisitor.visitTypeReference(value.valueShape, visit);
             },
             literal: noop,
             unknown: noop,

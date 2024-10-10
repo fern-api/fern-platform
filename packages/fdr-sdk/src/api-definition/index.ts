@@ -1,4 +1,3 @@
-export * from "./endpoint-context";
 export * from "./endpoint-path-literal";
 export * from "./join";
 export * from "./lang";

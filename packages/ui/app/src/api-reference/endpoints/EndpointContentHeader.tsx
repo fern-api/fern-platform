@@ -1,26 +1,23 @@
-import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { memo, type ReactNode } from "react";
+import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
-import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
+import { ResolvedEndpointDefinition, resolveEnvironment } from "../../resolver/types";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 interface EndpointContentHeaderProps {
-    context: EndpointContext;
-    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+    endpoint: ResolvedEndpointDefinition;
     streamToggle?: ReactNode;
 }
 
-export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ context, breadcrumb, streamToggle }) => {
-    const { endpoint, node } = context;
-    const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
+export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ endpoint, streamToggle }) => {
+    const selectedEnvironmentId = useSelectedEnvironmentId();
     return (
         <header className="space-y-1 pb-2 pt-8">
-            <FernBreadcrumbs breadcrumb={breadcrumb} />
+            <FernBreadcrumbs breadcrumb={endpoint.breadcrumb} />
             <div className="flex items-center justify-between">
                 <span>
-                    <h1 className="fern-page-heading">{node.title}</h1>
+                    <h1 className="fern-page-heading">{endpoint.title}</h1>
                     {endpoint.availability != null && (
                         <span className="inline-block ml-2 align-text-bottom">
                             <EndpointAvailabilityTag availability={endpoint.availability} minimal={true} />
@@ -31,10 +28,9 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ context
                 {streamToggle}
             </div>
             <EndpointUrlWithOverflow
-                baseUrl={baseUrl}
-                environmentId={environmentId}
                 path={endpoint.path}
                 method={endpoint.method}
+                selectedEnvironment={resolveEnvironment(endpoint, selectedEnvironmentId)}
                 showEnvironment
                 large
             />

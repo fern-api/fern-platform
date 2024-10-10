@@ -1,21 +1,21 @@
-import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { memo } from "react";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
+import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../../resolver/types";
 import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
 import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider";
 import { InternalTypeReferenceDefinitions } from "./InternalTypeReferenceDefinitions";
 
 export declare namespace TypeReferenceDefinitions {
     export interface Props {
+        shape: ResolvedTypeShape;
         applyErrorStyles: boolean;
         isCollapsible: boolean;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         anchorIdParts: readonly string[];
         className?: string;
         slug: FernNavigation.Slug;
-        shape: ApiDefinition.TypeShapeOrReference;
-        types: Record<string, ApiDefinition.TypeDefinition>;
+        types: Record<string, ResolvedTypeDefinition>;
         isResponse?: boolean;
     }
 }

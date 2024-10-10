@@ -1,8 +1,10 @@
 import { useMemo } from "react";
 import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
 import { generateCodeExamples } from "../../../api-reference/examples/code-example";
+import { useDocsContent } from "../../../atoms";
+import { ResolvedEndpointDefinition } from "../../../resolver/types";
+import { findEndpoint } from "../../../util/processRequestSnippetComponents";
 import { RequestSnippet } from "./types";
-import { useFindEndpoint } from "./useFindEndpoint";
 import { extractEndpointPathAndMethod, useSelectedClient } from "./utils";
 
 export const EndpointResponseSnippet: React.FC<React.PropsWithChildren<RequestSnippet.Props>> = ({
@@ -23,7 +25,25 @@ const EndpointResponseSnippetInternal: React.FC<React.PropsWithChildren<RequestS
     method,
     example,
 }) => {
-    const endpoint = useFindEndpoint(method, path);
+    const content = useDocsContent();
+
+    const endpoint = useMemo(() => {
+        if (content.type !== "custom-markdown-page") {
+            return;
+        }
+        let endpoint: ResolvedEndpointDefinition | undefined;
+        for (const api of Object.values(content.apis)) {
+            endpoint = findEndpoint({
+                api,
+                path,
+                method,
+            });
+            if (endpoint) {
+                break;
+            }
+        }
+        return endpoint;
+    }, [method, path, content]);
 
     const clients = useMemo(() => generateCodeExamples(endpoint?.examples ?? []), [endpoint?.examples]);
     const [selectedClient] = useSelectedClient(clients, example);

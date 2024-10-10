@@ -1,50 +1,45 @@
-// import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import cn from "clsx";
-import { compact } from "lodash-es";
 import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
 import { useIsApiReferencePaginated, useRouteListener } from "../../atoms";
 import { FernAnchor } from "../../components/FernAnchor";
 import { useHref } from "../../hooks/useHref";
 import { Markdown } from "../../mdx/Markdown";
-import { renderTypeShorthandRoot } from "../../type-shorthand";
+import { ResolvedTypeDefinition, ResolvedTypeShape } from "../../resolver/types";
 import { getAnchorId } from "../../util/anchor";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
+import { renderDeprecatedTypeShorthandRoot } from "../types/type-shorthand/TypeShorthand";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
 export declare namespace EndpointParameter {
     export interface Props {
         name: string;
         description: FernDocs.MarkdownText | undefined;
-        additionalDescriptions: FernDocs.MarkdownText[] | undefined;
+        shape: ResolvedTypeShape;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        availability: ApiDefinition.Availability | null | undefined;
-        shape: ApiDefinition.TypeShape;
-        types: Record<string, ApiDefinition.TypeDefinition>;
+        availability: APIV1Read.Availability | null | undefined;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 
     export interface ContentProps {
         name: string;
         description: FernDocs.MarkdownText | undefined;
-        additionalDescriptions: FernDocs.MarkdownText[] | undefined;
         typeShorthand: ReactNode;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        availability: ApiDefinition.Availability | null | undefined;
+        availability: APIV1Read.Availability | null | undefined;
     }
 }
 
 export const EndpointParameter = memo<EndpointParameter.Props>(
-    ({ name, description, additionalDescriptions, anchorIdParts, slug, shape, availability, types }) => (
+    ({ name, description, anchorIdParts, slug, shape, availability, types }) => (
         <EndpointParameterContent
             name={name}
             description={description}
-            additionalDescriptions={additionalDescriptions}
-            typeShorthand={renderTypeShorthandRoot(shape, types, false)}
+            typeShorthand={renderDeprecatedTypeShorthandRoot(shape, types, false)}
             anchorIdParts={anchorIdParts}
             slug={slug}
             availability={availability}
@@ -63,7 +58,6 @@ export const EndpointParameter = memo<EndpointParameter.Props>(
     (prev, next) =>
         prev.name === next.name &&
         prev.description === next.description &&
-        prev.additionalDescriptions === next.additionalDescriptions &&
         prev.slug === next.slug &&
         prev.availability === next.availability &&
         prev.shape === next.shape &&
@@ -78,7 +72,6 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
     slug,
     availability,
     description,
-    additionalDescriptions = EMPTY_ARRAY,
     typeShorthand,
     children,
 }) => {
@@ -113,7 +106,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
                     {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                 </span>
             </FernAnchor>
-            <Markdown mdx={compact([description, ...additionalDescriptions])} className="!t-muted" size="sm" />
+            <Markdown mdx={description} className="!t-muted" size="sm" />
             {children}
         </div>
     );

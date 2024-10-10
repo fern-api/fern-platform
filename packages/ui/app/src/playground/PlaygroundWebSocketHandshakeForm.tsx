@@ -1,4 +1,3 @@
-import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import { FernCard } from "@fern-ui/components";
 import isEmpty from "lodash-es/isEmpty";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
@@ -6,6 +5,7 @@ import { Callout } from "../mdx/components/callout";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
 import { PlaygroundObjectPropertiesForm } from "./form/PlaygroundObjectPropertyForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
+import { WebSocketContext } from "./types/endpoint-context";
 
 interface PlaygroundWebSocketHandshakeFormProps {
     context: WebSocketContext;
@@ -62,9 +62,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
         return null;
     }
 
-    const { auth, channel, types, globalHeaders } = context;
-
-    const headers = [...globalHeaders, ...(channel.requestHeaders ?? [])];
+    const { auth, channel, types } = context;
 
     return (
         <>
@@ -77,7 +75,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
             {auth != null && <PlaygroundAuthorizationFormCard auth={auth} disabled={disabled} />}
 
             <div className="col-span-2 space-y-8">
-                {headers.length > 0 && (
+                {channel.requestHeaders && channel.requestHeaders.length > 0 && (
                     <div>
                         <div className="mb-4 px-4">
                             <h5 className="t-muted m-0">Headers</h5>
@@ -85,7 +83,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                         <FernCard className="rounded-xl p-4 shadow-sm">
                             <PlaygroundObjectPropertiesForm
                                 id="header"
-                                properties={headers}
+                                properties={channel.requestHeaders}
                                 onChange={setHeaders}
                                 value={formState?.headers}
                                 types={types}

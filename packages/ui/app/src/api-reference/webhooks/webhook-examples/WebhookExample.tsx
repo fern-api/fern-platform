@@ -1,7 +1,7 @@
-import type { APIV1Read } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
+import { ResolvedExampleWebhookPayload } from "../../../resolver/types";
 import { useWebhookContext } from "../webhook-context/useWebhookContext";
 
 const CodeSnippetExample = dynamic(
@@ -11,7 +11,7 @@ const CodeSnippetExample = dynamic(
 
 export declare namespace WebhookExample {
     export interface Props {
-        example: APIV1Read.ExampleWebhookPayload;
+        example: ResolvedExampleWebhookPayload;
     }
 }
 

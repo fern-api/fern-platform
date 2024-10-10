@@ -30,12 +30,9 @@ const endpoint1: Latest.EndpointDefinition = {
         {
             key: Latest.PropertyKey("query"),
             valueShape: {
-                type: "alias",
-                value: {
-                    type: "id",
-                    id: Latest.TypeId("type-1"),
-                    default: undefined,
-                },
+                type: "id",
+                id: Latest.TypeId("type-1"),
+                default: undefined,
             },
             description: undefined,
             availability: undefined,
@@ -71,12 +68,9 @@ const endpoint2: Latest.EndpointDefinition = {
         {
             key: Latest.PropertyKey("header"),
             valueShape: {
-                type: "alias",
-                value: {
-                    type: "id",
-                    id: Latest.TypeId("type-2"),
-                    default: undefined,
-                },
+                type: "id",
+                id: Latest.TypeId("type-2"),
+                default: undefined,
             },
             description: undefined,
             availability: undefined,
@@ -110,12 +104,9 @@ const websocket1: Latest.WebSocketChannel = {
                     type: "optional",
                     default: undefined,
                     shape: {
-                        type: "alias",
-                        value: {
-                            type: "id",
-                            id: Latest.TypeId("type-3"),
-                            default: undefined,
-                        },
+                        type: "id",
+                        id: Latest.TypeId("type-3"),
+                        default: undefined,
                     },
                 },
             },
@@ -206,12 +197,9 @@ const api: Latest.ApiDefinition = {
         {
             key: Latest.PropertyKey("global"),
             valueShape: {
-                type: "alias",
-                value: {
-                    type: "id",
-                    id: Latest.TypeId("type-4"),
-                    default: undefined,
-                },
+                type: "id",
+                id: Latest.TypeId("type-4"),
+                default: undefined,
             },
             description: undefined,
             availability: undefined,

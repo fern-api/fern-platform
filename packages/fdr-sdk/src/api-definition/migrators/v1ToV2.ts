@@ -234,10 +234,7 @@ export class ApiDefinitionV1ToLatest {
         }
         return v1.map((parameter) => ({
             key: V2.PropertyKey(parameter.key),
-            valueShape: {
-                type: "alias",
-                value: this.migrateTypeReference(parameter.type),
-            },
+            valueShape: this.migrateTypeReference(parameter.type),
             description: parameter.description,
             availability: parameter.availability,
         }));
@@ -247,14 +244,8 @@ export class ApiDefinitionV1ToLatest {
         return visitDiscriminatedUnion(typeRef)._visit<V2.TypeReference>({
             map: (value) => ({
                 type: "map",
-                keyShape: {
-                    type: "alias",
-                    value: this.migrateTypeReference(value.keyType),
-                },
-                valueShape: {
-                    type: "alias",
-                    value: this.migrateTypeReference(value.valueType),
-                },
+                keyShape: this.migrateTypeReference(value.keyType),
+                valueShape: this.migrateTypeReference(value.valueType),
             }),
             id: (value) => ({
                 type: "id",
@@ -264,25 +255,16 @@ export class ApiDefinitionV1ToLatest {
             primitive: (value) => value,
             optional: (value) => ({
                 type: "optional",
-                shape: {
-                    type: "alias",
-                    value: this.migrateTypeReference(value.itemType),
-                },
+                shape: this.migrateTypeReference(value.itemType),
                 default: value.defaultValue,
             }),
             list: (value) => ({
                 type: "list",
-                itemShape: {
-                    type: "alias",
-                    value: this.migrateTypeReference(value.itemType),
-                },
+                itemShape: this.migrateTypeReference(value.itemType),
             }),
             set: (value) => ({
                 type: "set",
-                itemShape: {
-                    type: "alias",
-                    value: this.migrateTypeReference(value.itemType),
-                },
+                itemShape: this.migrateTypeReference(value.itemType),
             }),
             literal: (value) => value,
             unknown: () => ({
@@ -310,10 +292,7 @@ export class ApiDefinitionV1ToLatest {
                 type: "undiscriminatedUnion",
                 variants: value.variants.map((variant) => ({
                     displayName: variant.displayName,
-                    shape: {
-                        type: "alias",
-                        value: this.migrateTypeReference(variant.type),
-                    },
+                    shape: this.migrateTypeReference(variant.type),
                     description: variant.description,
                     availability: variant.availability,
                 })),
@@ -337,10 +316,7 @@ export class ApiDefinitionV1ToLatest {
     migrateObjectProperties = (properties: APIV1Read.ObjectProperty[]): V2.ObjectProperty[] => {
         return properties.map((value) => ({
             key: V2.PropertyKey(value.key),
-            valueShape: {
-                type: "alias",
-                value: this.migrateTypeReference(value.valueType),
-            },
+            valueShape: this.migrateTypeReference(value.valueType),
             description: value.description,
             availability: value.availability,
         }));
@@ -602,10 +578,7 @@ export class ApiDefinitionV1ToLatest {
                     contentType: bodyProp.contentType,
                     description: bodyProp.description,
                     availability: bodyProp.availability,
-                    valueShape: {
-                        type: "alias",
-                        value: this.migrateTypeReference(bodyProp.valueType),
-                    },
+                    valueShape: this.migrateTypeReference(bodyProp.valueType),
                 }),
             }),
         );

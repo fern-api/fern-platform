@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`stringifyHttpRequestExampleToCurl > should render basic authorization 1`] = `
+"curl https://api.example.com/api \\
+     -u "<username>:<password>""
+`;
+
+exports[`stringifyHttpRequestExampleToCurl > should render bearer authorization 1`] = `
+"curl https://api.example.com/api \\
+     -H "Authorization: Bearer <token>""
+`;
+
+exports[`stringifyHttpRequestExampleToCurl > should render bearer authorization with custom token name 1`] = `
+"curl https://api.example.com/api \\
+     -H "Authorization: Bearer <MY_TOKEN>""
+`;
+
+exports[`stringifyHttpRequestExampleToCurl > should render header authorization 1`] = `
+"curl https://api.example.com/api \\
+     -H "Authorization: <Authorization>""
+`;
+
+exports[`stringifyHttpRequestExampleToCurl > should render header authorization with prefix 1`] = `
+"curl https://api.example.com/api \\
+     -H "Authorization: Token <Authorization>""
+`;
+
+exports[`stringifyHttpRequestExampleToCurl > should render header authorization with prefix and name override 1`] = `
+"curl https://api.example.com/api \\
+     -H "Authorization: Token <TOKEN>""
+`;

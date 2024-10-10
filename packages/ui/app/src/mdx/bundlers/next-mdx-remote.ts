@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import type { PluggableList } from "unified";
+import { stringHasMarkdown } from "../common/util";
 import { FernDocsFrontmatter } from "../frontmatter";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
@@ -96,9 +97,9 @@ export async function serializeMdx(
         return undefined;
     }
 
-    // if (options?.frontmatterDefaults == null && !stringHasMarkdown(content)) {
-    //     return content;
-    // }
+    if (options?.frontmatterDefaults == null && !stringHasMarkdown(content)) {
+        return content;
+    }
 
     content = replaceBrokenBrTags(content);
 

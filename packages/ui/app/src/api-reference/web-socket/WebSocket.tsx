@@ -1,17 +1,28 @@
-import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
-import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CopyToClipboardButton, FernScrollArea } from "@fern-ui/components";
 import cn from "clsx";
 import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react";
+import { useNavigationNodes, usePlaygroundEnvironment } from "../../atoms";
+import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { FernAnchor } from "../../components/FernAnchor";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { useHref } from "../../hooks/useHref";
+import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
 import { Markdown } from "../../mdx/Markdown";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
-import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
+import {
+    ResolvedTypeDefinition,
+    ResolvedUndiscriminatedUnionShape,
+    ResolvedUndiscriminatedUnionShapeVariant,
+    ResolvedWebSocketChannel,
+    ResolvedWebSocketMessage,
+    getParameterDescription,
+    resolveEnvironment,
+    stringifyResolvedEndpointPathParts,
+    unwrapReference,
+} from "../../resolver/types";
 import { getSlugFromChildren } from "../../util/getSlugFromText";
 import { EndpointAvailabilityTag } from "../endpoints/EndpointAvailabilityTag";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
@@ -23,69 +34,68 @@ import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceD
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebSocketMessage, WebSocketMessages } from "./WebSocketMessages";
 
-export interface WebSocketProps {
-    node: FernNavigation.WebSocketNode;
-    apiDefinition: ApiDefinition.ApiDefinition;
-    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-    last?: boolean;
+export declare namespace WebSocket {
+    export interface Props {
+        websocket: ResolvedWebSocketChannel;
+        isLastInApi: boolean;
+        api: string;
+        types: Record<string, ResolvedTypeDefinition>;
+    }
 }
 
-export const WebSocket: FC<WebSocketProps> = (props) => {
-    const context = useMemo(
-        () => ApiDefinition.createWebSocketContext(props.node, props.apiDefinition),
-        [props.node, props.apiDefinition],
-    );
-
-    if (!context) {
-        // eslint-disable-next-line no-console
-        console.error("Could not create context for websocket", props.node);
+export const WebSocket: FC<WebSocket.Props> = (props) => {
+    if (useShouldLazyRender(props.websocket.slug)) {
         return null;
     }
 
-    return <WebhookContent context={context} breadcrumb={props.breadcrumb} last={props.last} />;
+    return <WebhookContent {...props} />;
 };
 
-interface WebhookContentProps {
-    context: WebSocketContext;
-    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-    last?: boolean;
-}
-
-const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) => {
-    const { channel, node, types, globalHeaders } = context;
+const WebhookContent: FC<WebSocket.Props> = ({ websocket, isLastInApi, types }) => {
+    const nodes = useNavigationNodes();
+    const selectedEnvironmentId = useSelectedEnvironmentId();
+    const maybeNode = nodes.get(websocket.nodeId);
+    const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
+    const playgroundEnvironment = usePlaygroundEnvironment();
 
     const ref = useRef<HTMLDivElement>(null);
-    useApiPageCenterElement(ref, node.slug);
+    useApiPageCenterElement(ref, websocket.slug);
 
     const publishMessages = useMemo(
-        () => channel.messages.filter((message) => message.origin === APIV1Read.WebSocketMessageOrigin.Client),
-        [channel.messages],
+        () => websocket.messages.filter((message) => message.origin === APIV1Read.WebSocketMessageOrigin.Client),
+        [websocket.messages],
     );
     const subscribeMessages = useMemo(
-        () => channel.messages.filter((message) => message.origin === APIV1Read.WebSocketMessageOrigin.Server),
-        [channel.messages],
+        () => websocket.messages.filter((message) => message.origin === APIV1Read.WebSocketMessageOrigin.Server),
+        [websocket.messages],
     );
 
-    const publishMessageShape = useMemo((): ApiDefinition.TypeShape.UndiscriminatedUnion => {
+    const publishMessageShape = useMemo((): ResolvedUndiscriminatedUnionShape => {
         return {
             type: "undiscriminatedUnion",
             variants: flattenWebSocketShape(publishMessages, types),
+            name: undefined,
+            description: undefined,
+            availability: undefined,
         };
     }, [publishMessages, types]);
 
-    const subscribeMessageShape = useMemo((): ApiDefinition.TypeShape.UndiscriminatedUnion => {
+    const subscribeMessageShape = useMemo((): ResolvedUndiscriminatedUnionShape => {
         return {
             type: "undiscriminatedUnion",
             variants: flattenWebSocketShape(subscribeMessages, types),
+            name: undefined,
+            description: undefined,
+            availability: undefined,
         };
     }, [subscribeMessages, types]);
 
-    const example = channel.examples?.[0];
+    const example = websocket.examples[0];
 
     const exampleMessages = useMemo((): WebSocketMessage[] => {
         return (
-            example?.messages?.map((message) => {
-                const messageDefinition = channel.messages.find((m) => m.type === message.type);
+            example?.messages.map((message) => {
+                const messageDefinition = websocket.messages.find((m) => m.type === message.type);
                 return {
                     type: message.type,
                     data: message.body,
@@ -94,30 +104,24 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                 };
             }) ?? []
         );
-    }, [example?.messages, channel.messages]);
+    }, [example?.messages, websocket.messages]);
 
-    const [baseUrl, envId] = usePlaygroundBaseUrl(channel);
-
-    // TODO: combine with auth headers like in Endpoint.tsx
-    const headers = useMemo(
-        () => [...globalHeaders, ...(channel.requestHeaders ?? [])],
-        [channel.requestHeaders, globalHeaders],
-    );
+    const headers = websocket.headers.filter((header) => !header.hidden);
 
     return (
-        <div className="fern-endpoint-content" ref={ref} id={useHref(node.slug)}>
+        <div className={"fern-endpoint-content"} ref={ref} id={useHref(websocket.slug)}>
             <article
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
-                    "border-default border-b mb-px pb-20": !last,
+                    "border-default border-b mb-px pb-20": !isLastInApi,
                 })}
             >
                 <header className="space-y-1 pt-8">
-                    <FernBreadcrumbs breadcrumb={breadcrumb} />
+                    <FernBreadcrumbs breadcrumb={websocket.breadcrumb} />
                     <div>
-                        <h1 className="fern-page-heading">{node.title}</h1>
-                        {channel.availability != null && (
+                        <h1 className="fern-page-heading">{websocket.title}</h1>
+                        {websocket.availability != null && (
                             <span className="inline-block ml-2 align-text-bottom">
-                                <EndpointAvailabilityTag availability={channel.availability} minimal={true} />
+                                <EndpointAvailabilityTag availability={websocket.availability} minimal={true} />
                             </span>
                         )}
                     </div>
@@ -125,7 +129,7 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <section className="max-w-content-width space-y-12 py-8">
                         <main className="space-y-12">
-                            <Markdown className="mt-4 leading-6" mdx={channel.description} />
+                            <Markdown className="mt-4 leading-6" mdx={websocket.description} />
 
                             <CardedSection
                                 number={1}
@@ -137,31 +141,30 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                         </span>
                                     </span>
                                 }
-                                slug={node.slug}
+                                slug={websocket.slug}
                                 headingElement={
                                     <div className="border-default -mx-2 flex items-center justify-between rounded-xl border px-2 py-1 transition-colors">
                                         <EndpointUrlWithOverflow
-                                            path={channel.path}
+                                            path={websocket.path}
                                             method="GET"
-                                            baseUrl={baseUrl}
-                                            environmentId={envId}
+                                            selectedEnvironment={resolveEnvironment(websocket, selectedEnvironmentId)}
                                             showEnvironment={true}
                                             className="flex-1"
                                         />
                                         <CopyToClipboardButton
                                             className="-mr-1"
                                             content={() =>
-                                                `${baseUrl ?? ""}${ApiDefinition.toColonEndpointPathLiteral(channel.path)}`
+                                                `${playgroundEnvironment ?? resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl}${websocket.path.map((path) => (path.type === "literal" ? path.value : `:${path.key}`)).join("/")}`
                                             }
                                         />
                                     </div>
                                 }
                             >
-                                {headers && headers.length > 0 && (
+                                {headers.length > 0 && (
                                     <EndpointSection
                                         title="Headers"
                                         anchorIdParts={["request", "headers"]}
-                                        slug={node.slug}
+                                        slug={websocket.slug}
                                     >
                                         <div className="flex flex-col">
                                             {headers.map((parameter) => (
@@ -171,12 +174,8 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                                         name={parameter.key}
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "headers", parameter.key]}
-                                                        slug={node.slug}
-                                                        description={parameter.description}
-                                                        additionalDescriptions={
-                                                            ApiDefinition.unwrapReference(parameter.valueShape, types)
-                                                                .descriptions
-                                                        }
+                                                        slug={websocket.slug}
+                                                        description={getParameterDescription(parameter, types)}
                                                         availability={parameter.availability}
                                                         types={types}
                                                     />
@@ -185,26 +184,22 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                         </div>
                                     </EndpointSection>
                                 )}
-                                {channel.pathParameters && channel.pathParameters.length > 0 && (
+                                {websocket.pathParameters.length > 0 && (
                                     <EndpointSection
                                         title="Path parameters"
                                         anchorIdParts={["request", "path"]}
-                                        slug={node.slug}
+                                        slug={websocket.slug}
                                     >
                                         <div className="flex flex-col">
-                                            {channel.pathParameters.map((parameter) => (
+                                            {websocket.pathParameters.map((parameter) => (
                                                 <div className="flex flex-col" key={parameter.key}>
                                                     <TypeComponentSeparator />
                                                     <EndpointParameter
                                                         name={parameter.key}
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "path", parameter.key]}
-                                                        slug={node.slug}
-                                                        description={channel.description}
-                                                        additionalDescriptions={
-                                                            ApiDefinition.unwrapReference(parameter.valueShape, types)
-                                                                .descriptions
-                                                        }
+                                                        slug={websocket.slug}
+                                                        description={getParameterDescription(parameter, types)}
                                                         availability={parameter.availability}
                                                         types={types}
                                                     />
@@ -213,26 +208,22 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                         </div>
                                     </EndpointSection>
                                 )}
-                                {channel.queryParameters && channel.queryParameters.length > 0 && (
+                                {websocket.queryParameters.length > 0 && (
                                     <EndpointSection
                                         title="Query parameters"
                                         anchorIdParts={["request", "query"]}
-                                        slug={node.slug}
+                                        slug={websocket.slug}
                                     >
                                         <div className="flex flex-col">
-                                            {channel.queryParameters.map((parameter) => (
+                                            {websocket.queryParameters.map((parameter) => (
                                                 <div className="flex flex-col" key={parameter.key}>
                                                     <TypeComponentSeparator />
                                                     <EndpointParameter
                                                         name={parameter.key}
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "query", parameter.key]}
-                                                        slug={node.slug}
-                                                        description={channel.description}
-                                                        additionalDescriptions={
-                                                            ApiDefinition.unwrapReference(parameter.valueShape, types)
-                                                                .descriptions
-                                                        }
+                                                        slug={websocket.slug}
+                                                        description={getParameterDescription(parameter, types)}
                                                         availability={parameter.availability}
                                                         types={types}
                                                     />
@@ -254,7 +245,7 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                         </span>
                                     }
                                     anchorIdParts={["send"]}
-                                    slug={node.slug}
+                                    slug={websocket.slug}
                                     headerType="h2"
                                 >
                                     {/* <Markdown
@@ -269,7 +260,7 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                         shape={publishMessageShape}
                                         isCollapsible={false}
                                         anchorIdParts={["send"]}
-                                        slug={node.slug}
+                                        slug={websocket.slug}
                                         applyErrorStyles={false}
                                         types={types}
                                     />
@@ -286,7 +277,7 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                         </span>
                                     }
                                     anchorIdParts={["receive"]}
-                                    slug={node.slug}
+                                    slug={websocket.slug}
                                     headerType="h2"
                                 >
                                     {/* <Markdown
@@ -301,7 +292,7 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                         shape={subscribeMessageShape}
                                         isCollapsible={false}
                                         anchorIdParts={["receive"]}
-                                        slug={node.slug}
+                                        slug={websocket.slug}
                                         applyErrorStyles={false}
                                         types={types}
                                     />
@@ -324,7 +315,7 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                                     <tr>
                                                         <td className="text-left align-top">URL</td>
                                                         <td className="text-left align-top">
-                                                            {`${baseUrl ?? ""}${example?.path ?? ApiDefinition.toColonEndpointPathLiteral(channel.path)}`}
+                                                            {`${playgroundEnvironment ?? resolveEnvironment(websocket, selectedEnvironmentId)?.baseUrl ?? ""}${example?.path ?? stringifyResolvedEndpointPathParts(websocket.path)}`}
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -384,21 +375,22 @@ function CardedSection({
     );
 }
 function flattenWebSocketShape(
-    subscribeMessages: ApiDefinition.WebSocketMessage[],
-    types: Record<string, ApiDefinition.TypeDefinition>,
+    subscribeMessages: ResolvedWebSocketMessage[],
+    types: Record<string, ResolvedTypeDefinition>,
 ) {
-    return subscribeMessages.flatMap((message): ApiDefinition.UndiscriminatedUnionVariant[] => {
-        const unwrapped = ApiDefinition.unwrapReference(message.body, types);
-        if (unwrapped.shape.type === "undiscriminatedUnion") {
-            return unwrapped.shape.variants;
-        }
-        return [
-            {
-                description: message.description,
-                availability: message.availability,
-                displayName: message.displayName ?? message.type,
-                shape: message.body,
-            },
-        ];
-    });
+    return subscribeMessages
+        .map((message) => ({ ...message, body: unwrapReference(message.body, types) }))
+        .flatMap((message): ResolvedUndiscriminatedUnionShapeVariant[] => {
+            if (message.body.type === "undiscriminatedUnion") {
+                return message.body.variants;
+            }
+            return [
+                {
+                    description: message.description,
+                    availability: message.availability,
+                    displayName: message.displayName ?? message.type,
+                    shape: message.body,
+                },
+            ];
+        });
 }

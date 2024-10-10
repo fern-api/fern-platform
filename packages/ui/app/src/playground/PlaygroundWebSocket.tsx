@@ -1,4 +1,3 @@
-import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import { WebSocketMessage, buildRequestUrl } from "@fern-api/fdr-sdk/api-definition";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
@@ -9,8 +8,9 @@ import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { PlaygroundEndpointPath } from "./endpoint/PlaygroundEndpointPath";
 import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
+import { WebSocketContext } from "./types/endpoint-context";
 import { buildAuthHeaders } from "./utils";
-import { usePlaygroundBaseUrl } from "./utils/select-environment";
+import { usePlaygroundBaseUrl, useSelectedEnvironment } from "./utils/select-environment";
 
 // TODO: decide if this should be an env variable, and if we should move REST proxy to the same (or separate) cloudflare worker
 const WEBSOCKET_PROXY_URI = "wss://websocket.proxy.ferndocs.com/ws";
@@ -42,7 +42,10 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
 
     const settings = usePlaygroundSettings();
 
-    const [baseUrl, environmentId] = usePlaygroundBaseUrl(context.channel);
+    const baseUrl = usePlaygroundBaseUrl(context.channel);
+
+    // TODO: is this is kind of weird that we're using the selected environment here?
+    const selectedEnvironment = useSelectedEnvironment(context.channel);
 
     const startSession = useCallback(async () => {
         return new Promise<boolean>((resolve) => {
@@ -145,8 +148,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
                                   ? socket.current?.close()
                                   : null
                         }
-                        environmentId={environmentId}
-                        baseUrl={baseUrl}
+                        environment={selectedEnvironment}
                         environmentFilters={settings?.environments}
                         path={context.channel.path}
                         queryParameters={context.channel.queryParameters}
@@ -164,7 +166,6 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
                                 <Wifi className="size-6 rotate-90" />
                             )
                         }
-                        types={context.types}
                     />
                 </div>
                 <div className="flex min-h-0 flex-1 shrink">

@@ -29,9 +29,6 @@
       "path": "../fern-docs-utils"
     },
     {
-      "path": "../fern-docs-server"
-    },
-    {
       "path": "../../fdr-sdk/tsconfig.build.json"
     },
     {

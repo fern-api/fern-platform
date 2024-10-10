@@ -1,4 +1,4 @@
-import { EndpointDefinition, Environment, EnvironmentId, WebSocketChannel } from "@fern-api/fdr-sdk/api-definition";
+import { EndpointDefinition, Environment, WebSocketChannel } from "@fern-api/fdr-sdk/api-definition";
 import { useAtomValue } from "jotai";
 import { usePlaygroundEnvironment } from "../../atoms";
 import { SELECTED_ENVIRONMENT_ATOM } from "../../atoms/environment";
@@ -19,10 +19,8 @@ export function useSelectedEnvironment(endpoint: WebSocketChannel | EndpointDefi
     return selectEnvironment(endpoint, selectedEnvironmentId);
 }
 
-export function usePlaygroundBaseUrl(
-    endpoint: WebSocketChannel | EndpointDefinition,
-): [baseUrl: string | undefined, environmentId: EnvironmentId | undefined] {
+export function usePlaygroundBaseUrl(endpoint: WebSocketChannel | EndpointDefinition): string | undefined {
     const environment = useSelectedEnvironment(endpoint);
     const playgroundBaseUrl = usePlaygroundEnvironment();
-    return [playgroundBaseUrl ?? environment?.baseUrl, environment?.id];
+    return playgroundBaseUrl ?? environment?.baseUrl;
 }

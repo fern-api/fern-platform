@@ -45,7 +45,7 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
             availability={property.availability}
             description={property.description}
             renderInline={renderInline}
-            isRequired={!unwrapped.isOptional}
+            isRequired={property.valueShape.type !== "optional"}
             isList={unwrapped.shape.type === "list"}
             isBoolean={unwrapped.shape.type === "primitive" && unwrapped.shape.value.type === "boolean"}
             typeShorthand={renderTypeShorthand(unwrapped.shape, undefined, types)}

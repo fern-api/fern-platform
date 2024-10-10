@@ -5,7 +5,7 @@ import { isSidebarRootNode } from "../versions/latest/isSidebarRootNode";
 import { isTabbedNode } from "../versions/latest/isTabbedNode";
 import { isUnversionedNode } from "../versions/latest/isUnversionedNode";
 import { isVersionNode } from "../versions/latest/isVersionNode";
-import { createBreadcrumb } from "./createBreadcrumb";
+import { createBreadcrumbs } from "./createBreadcrumbs";
 
 export type Node = Node.Found | Node.Redirect | Node.NotFound;
 
@@ -101,7 +101,7 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
         return {
             type: "found",
             node: found.node,
-            breadcrumb: createBreadcrumb(found.parents),
+            breadcrumb: createBreadcrumbs(found.parents),
             parents: found.parents,
             root,
             versions, // this is used to render the version switcher

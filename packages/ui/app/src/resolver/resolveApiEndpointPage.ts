@@ -1,57 +1,78 @@
+import type { APIV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import type { ApiDefinitionLoader } from "@fern-ui/fern-docs-server";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
+import type { MDX_SERIALIZER } from "../mdx/bundler";
+import type { FernSerializeMdxOptions } from "../mdx/types";
+import { ApiEndpointResolver } from "./ApiEndpointResolver";
+import { ApiTypeResolver } from "./ApiTypeResolver";
 import type { DocsContent } from "./DocsContent";
+import { ResolvedApiEndpoint } from "./types";
 
 interface ResolveApiEndpointPageOpts {
     node: FernNavigation.NavigationNodeApiLeaf;
     parents: readonly FernNavigation.NavigationNodeParent[];
-    apiDefinitionLoader: ApiDefinitionLoader;
+    apis: Record<string, APIV1Read.ApiDefinition>;
+    mdxOptions: FernSerializeMdxOptions | undefined;
+    featureFlags: FeatureFlags;
     neighbors: DocsContent.Neighbors;
+    serializeMdx: MDX_SERIALIZER;
+    collector: FernNavigation.NodeCollector;
     showErrors: boolean | undefined;
 }
 
 export async function resolveApiEndpointPage({
     node,
     parents,
-    apiDefinitionLoader,
+    apis,
+    mdxOptions,
+    featureFlags,
     neighbors,
+    serializeMdx,
+    collector,
     showErrors,
 }: ResolveApiEndpointPageOpts): Promise<DocsContent.ApiEndpointPage | undefined> {
-    const parent = parents[parents.length - 1];
-
-    if (parent?.type === "endpointPair") {
-        apiDefinitionLoader.withPrune(parent.nonStream);
-        apiDefinitionLoader.withPrune(parent.stream);
-    } else {
-        apiDefinitionLoader.withPrune(node);
-    }
-
-    const apiDefinition = await apiDefinitionLoader.load();
-
-    if (!apiDefinition) {
-        // TODO: sentry
-        // eslint-disable-next-line no-console
-        console.error(`Failed to load API definition for ${node.slug}`);
+    let api = apis[node.apiDefinitionId];
+    if (api == null) {
         return;
     }
-
-    const sidebarRootNodeIdx = parents.findIndex((p) => p.type === "sidebarRoot");
-    if (sidebarRootNodeIdx === -1) {
-        // TODO: sentry
-        // eslint-disable-next-line no-console
-        console.error("Failed to find sidebar root node");
-    }
-    const breadcrumb = FernNavigation.utils.createBreadcrumb(
-        sidebarRootNodeIdx >= 0 ? parents.slice(sidebarRootNodeIdx) : parents,
+    const pruner = new FernNavigation.ApiDefinitionPruner(api);
+    const parent = parents[parents.length - 1];
+    api = pruner.prune(parent?.type === "endpointPair" ? parent : node);
+    const holder = FernNavigation.ApiDefinitionHolder.create(api);
+    const typeResolver = new ApiTypeResolver(node.apiDefinitionId, api.types, mdxOptions, serializeMdx);
+    const resolvedTypes = await typeResolver.resolve();
+    const defResolver = new ApiEndpointResolver(
+        collector,
+        holder,
+        typeResolver,
+        resolvedTypes,
+        featureFlags,
+        mdxOptions,
+        serializeMdx,
     );
-
     return {
         type: "api-endpoint-page",
         slug: node.slug,
-        nodeId: parent?.type === "endpointPair" ? parent.id : node.id,
-        apiDefinition,
+        api: node.apiDefinitionId,
+        auth: api.auth,
+        types: resolvedTypes,
+        item: await visitDiscriminatedUnion(node)._visit<Promise<ResolvedApiEndpoint>>({
+            endpoint: async (endpoint) => {
+                if (parent?.type === "endpointPair") {
+                    const [stream, nonStream] = await Promise.all([
+                        defResolver.resolveEndpointDefinition(parent.stream),
+                        defResolver.resolveEndpointDefinition(parent.nonStream),
+                    ]);
+                    nonStream.stream = stream;
+                    return nonStream;
+                }
+                return defResolver.resolveEndpointDefinition(endpoint);
+            },
+            webSocket: (webSocket) => defResolver.resolveWebsocketChannel(webSocket),
+            webhook: (webhook) => defResolver.resolveWebhookDefinition(webhook),
+        }),
         showErrors: showErrors ?? false,
         neighbors,
-        breadcrumb,
     };
 }

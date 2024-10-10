@@ -83,7 +83,7 @@ class ApiDefinitionPruner {
     private pruneTypes(partiallyPrunedApi: Latest.ApiDefinition): Record<string, Latest.TypeDefinition> {
         let typeIds = new Set<Latest.TypeId>();
         partiallyPrunedApi.globalHeaders?.forEach((header) => {
-            ApiTypeIdVisitor.visitTypeShape(header.valueShape, (typeId) => typeIds.add(typeId));
+            ApiTypeIdVisitor.visitTypeReference(header.valueShape, (typeId) => typeIds.add(typeId));
         });
 
         for (const endpoint of Object.values(partiallyPrunedApi.endpoints)) {
