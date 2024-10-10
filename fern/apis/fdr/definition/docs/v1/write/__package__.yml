@@ -143,12 +143,12 @@ types:
     properties:
       logo: optional<rootCommons.FileId>
       backgroundImage: optional<rootCommons.FileId>
-      accentPrimary: commons.RgbaColor
-      background: optional<commons.RgbaColor>
-      border: optional<commons.RgbaColor>
-      sidebarBackground: optional<commons.RgbaColor>
-      headerBackground: optional<commons.RgbaColor>
-      cardBackground: optional<commons.RgbaColor>
+      accentPrimary: rootCommons.RgbaColor
+      background: optional<rootCommons.RgbaColor>
+      border: optional<rootCommons.RgbaColor>
+      sidebarBackground: optional<rootCommons.RgbaColor>
+      headerBackground: optional<rootCommons.RgbaColor>
+      cardBackground: optional<rootCommons.RgbaColor>
 
   DarkAndLightModeConfig:
     properties:

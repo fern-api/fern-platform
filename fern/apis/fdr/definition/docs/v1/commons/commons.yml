@@ -9,13 +9,6 @@ types:
       fileId: rootCommons.FileId
       url: rootCommons.Url
 
-  RgbaColor:
-    properties:
-      r: integer
-      g: integer
-      b: integer
-      a: optional<double>
-
   # Docs layout config
 
   ProgrammingLanguage:
@@ -344,7 +337,7 @@ types:
   ColorsConfig:
     availability: deprecated
     properties:
-      accentPrimary: optional<RgbaColor>
+      accentPrimary: optional<rootCommons.RgbaColor>
 
   ColorsConfigV2:
     availability: deprecated
@@ -361,13 +354,13 @@ types:
   ColorUnthemedConfig:
     availability: deprecated
     properties:
-      color: optional<RgbaColor>
+      color: optional<rootCommons.RgbaColor>
 
   ColorThemedConfig:
     availability: deprecated
     properties:
-      dark: optional<RgbaColor>
-      light: optional<RgbaColor>
+      dark: optional<rootCommons.RgbaColor>
+      light: optional<rootCommons.RgbaColor>
 
   DocsTypographyConfig:
     availability: deprecated

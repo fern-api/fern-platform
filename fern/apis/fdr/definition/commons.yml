@@ -81,6 +81,13 @@ types:
       - Deprecated
       - Beta
 
+  RgbaColor:
+    properties:
+      r: integer
+      g: integer
+      b: integer
+      a: optional<double>
+
 errors:
   BadRequestError:
     status-code: 400

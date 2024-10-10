@@ -1,0 +1,163 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  rootCommons: ../../commons.yml
+  navigation: ../../navigation/latest/__package__.yml
+  algolia: ../../algolia.yml
+  v1Commons: ../v1/commons/commons.yml
+
+service:
+  base-path: /v3/registry/docs
+  auth: true
+  endpoints:
+    getOrganization:
+      method: GET
+      path: /{domain}/organization
+      path-parameters:
+        domain: string
+      response: rootCommons.OrgId
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+
+    getNavigation:
+      method: GET
+      path: /{domain}/instance/{id}/navigation
+      path-parameters:
+        domain: string
+        id: DocsInstanceId
+      response: navigation.RootNode
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+
+    getConfig:
+      method: GET
+      path: /{domain}/instance/{id}/config
+      path-parameters:
+        domain: string
+        id: DocsInstanceId
+      response: DocsConfig
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+
+    getPages:
+      method: POST
+      path: /{domain}/instance/{id}/pages
+      path-parameters:
+        domain: string
+        id: DocsInstanceId
+      request:
+        name: BulkGetPagesRequest
+        body:
+          properties:
+            pages: list<rootCommons.PageId>
+      response: map<rootCommons.PageId, DocsPage>
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+
+    getFiles:
+      method: POST
+      path: /{domain}/instance/{id}/files
+      path-parameters:
+        domain: string
+        id: DocsInstanceId
+      request:
+        name: BulkGetFilesRequest
+        body:
+          properties:
+            files: list<rootCommons.FileId>
+      response: map<rootCommons.FileId, FileMetadata>
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+
+types:
+  DocsInstanceId:
+    discriminated: false
+    union:
+      - rootCommons.DocsConfigId
+      - literal<"latest">
+
+  FileMetadata:
+    union:
+      url: UrlFile
+      image: ImageFile
+
+  UrlFile:
+    properties:
+      url: rootCommons.Url
+
+  ImageFile:
+    properties:
+      url: rootCommons.Url
+      width: double
+      height: double
+      blurDataUrl: optional<string>
+      alt: optional<string>
+
+  DocsConfig:
+    properties:
+      id: rootCommons.DocsConfigId
+      updatedAt: timestamp
+
+      title: optional<string>
+      defaultLanguage: optional<v1Commons.ProgrammingLanguage>
+      announcement: optional<v1Commons.AnnouncementConfig>
+
+      # navigation
+      navbarLinks: optional<list<v1Commons.NavbarLink>>
+      footerLinks: optional<list<v1Commons.FooterLink>>
+
+      # logo
+      logoHeight: optional<Height>
+      logoHref: optional<rootCommons.Url>
+      favicon: optional<rootCommons.FileId>
+
+      # seo
+      metadata: optional<v1Commons.MetadataConfig>
+      redirects: optional<list<v1Commons.RedirectConfig>>
+
+      # styles
+      colors: optional<ColorsConfig>
+      fonts: optional<v1Commons.DocsTypographyConfigV2>
+      layout: optional<v1Commons.DocsLayoutConfig>
+
+      # integrations
+      analytics: optional<v1Commons.AnalyticsConfig>
+      integrations: optional<v1Commons.IntegrationsConfig>
+      search: optional<algolia.SingleAlgoliaIndexInfo>
+
+      # css and js
+      css: optional<v1Commons.CssConfig>
+      js: optional<v1Commons.JsConfig>
+
+      # playground
+      playground: optional<v1Commons.PlaygroundConfig>
+
+      # files
+      files: optional<list<rootCommons.FileId>>
+      markdownPageIds: optional<list<rootCommons.PageId>>
+      mdxBundlerFileIds: optional<list<rootCommons.PageId>>
+
+  ColorsConfig:
+    properties:
+      dark: optional<ThemeConfig>
+      light: optional<ThemeConfig>
+
+  ThemeConfig:
+    properties:
+      logo: optional<rootCommons.FileId>
+      backgroundImage: optional<rootCommons.FileId>
+      accentPrimary: rootCommons.RgbaColor
+      background: Background
+      border: optional<rootCommons.RgbaColor>
+      sidebarBackground: optional<rootCommons.RgbaColor>
+      headerBackground: optional<rootCommons.RgbaColor>
+      cardBackground: optional<rootCommons.RgbaColor>
+
+  GetSearchKeyResponse:
+    properties:
+      key: string

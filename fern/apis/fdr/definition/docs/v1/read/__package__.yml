@@ -149,12 +149,12 @@ types:
     properties:
       logo: optional<rootCommons.FileId>
       backgroundImage: optional<rootCommons.FileId>
-      accentPrimary: commons.RgbaColor
+      accentPrimary: rootCommons.RgbaColor
       background: Background
-      border: optional<commons.RgbaColor>
-      sidebarBackground: optional<commons.RgbaColor>
-      headerBackground: optional<commons.RgbaColor>
-      cardBackground: optional<commons.RgbaColor>
+      border: optional<rootCommons.RgbaColor>
+      sidebarBackground: optional<rootCommons.RgbaColor>
+      headerBackground: optional<rootCommons.RgbaColor>
+      cardBackground: optional<rootCommons.RgbaColor>
 
   DarkAndLightModeConfig:
     properties:
@@ -163,7 +163,7 @@ types:
 
   Background:
     union:
-      solid: commons.RgbaColor
+      solid: rootCommons.RgbaColor
       gradient: {}
 
   NavigationConfig:
