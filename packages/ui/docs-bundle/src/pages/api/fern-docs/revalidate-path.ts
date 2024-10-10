@@ -1,5 +1,5 @@
 import { Revalidator } from "@/server/revalidator";
-import { getXFernHostNode } from "@/server/xfernhost/node";
+import { getDocsDomainNode } from "@/server/xfernhost/node";
 import { FernDocs } from "@fern-fern/fern-docs-sdk";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
@@ -11,7 +11,7 @@ const handler: NextApiHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<FernDocs.RevalidationResult>,
 ): Promise<unknown> => {
-    const xFernHost = getXFernHostNode(req, true);
+    const xFernHost = getDocsDomainNode(req, true);
     const revalidate = new Revalidator(res, xFernHost);
 
     const path = req.query.path;

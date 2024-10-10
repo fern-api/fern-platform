@@ -30,6 +30,7 @@ provider:
     CUSTOMER_PULLS_SLACK_CHANNEL: ${env:CUSTOMER_PULLS_SLACK_CHANNEL, 'placeholder'}
     REPO_TO_RUN_ON: ${env:REPO_TO_RUN_ON, 'OMIT'}
     FERN_TOKEN: ${env:FERN_TOKEN, 'OMIT'}
+    ENVIRONMENT: ${opt:stage}
 
   # Roles for the lambda functions
   iam:

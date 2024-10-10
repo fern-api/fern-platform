@@ -1,4 +1,5 @@
 import { getDynamicDocsPageProps } from "@/server/getDynamicDocsPageProps";
+import { getHostNodeStatic } from "@/server/xfernhost/node";
 import { DocsPage } from "@fern-ui/ui";
 import { GetServerSideProps } from "next";
 
@@ -9,8 +10,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, query, 
         res.statusCode = 500;
     }
 
-    const xFernHost = params.host as string;
+    const domain = params.domain as string;
+    const host = getHostNodeStatic() ?? domain;
     const slugArray = params.slug == null ? [] : Array.isArray(params.slug) ? params.slug : [params.slug];
 
-    return getDynamicDocsPageProps(xFernHost, slugArray, req.cookies);
+    return getDynamicDocsPageProps(domain, host, slugArray, req.cookies);
 };

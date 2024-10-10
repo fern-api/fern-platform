@@ -1,4 +1,4 @@
-import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { createFetchRequester } from "@algolia/requester-fetch";
 import { Algolia, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { assertNonNullish } from "@fern-api/ui-core-utils";
@@ -63,7 +63,7 @@ export default async function handler(req: NextRequest): Promise<Response> {
         return new Response(null, { status: 405 });
     }
 
-    const docsUrl = getXFernHostEdge(req);
+    const docsUrl = getDocsDomainEdge(req);
 
     // HACK: only allow requests from cohere
     if (!docsUrl.includes("cohere")) {

@@ -48,7 +48,7 @@ export function useWriteApiDefinitionsAtom(
         Object.values(apis).forEach((api) => {
             set(api, isLocalPreview);
         });
-    }, [apis, set]);
+    }, [apis, isLocalPreview, set]);
 }
 
 export const READ_APIS_ATOM = atom((get) => get(SETTABLE_APIS_ATOM));
