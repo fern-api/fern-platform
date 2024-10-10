@@ -40,7 +40,7 @@ describe("withBasicTokenAnonymous", () => {
         ).toBe(false);
     });
 
-    it("should prune childless non-leaf nodes", () => {
+    it("should ignore childless non-leaf nodes", () => {
         expect(
             withBasicTokenAnonymousCheck({ allowlist: ["/public"] })({
                 type: "section",
