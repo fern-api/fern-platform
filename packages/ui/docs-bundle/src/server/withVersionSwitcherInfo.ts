@@ -66,7 +66,9 @@ export function withVersionSwitcherInfo({
                     pointsTo: node.slug,
                     index,
                     availability: version.availability,
-                };
+                    hidden: version.hidden,
+                    authed: version.authed,
+                } satisfies VersionSwitcherInfo;
             }
 
             const expectedSlugs = unversionedSlugs.map((slug) => FernNavigation.slugjoin(version.slug, slug));
@@ -105,7 +107,9 @@ export function withVersionSwitcherInfo({
                 pointsTo,
                 index,
                 availability: version.availability,
-            };
+                hidden: version.hidden,
+                authed: version.authed,
+            } satisfies VersionSwitcherInfo;
         });
 }
 
