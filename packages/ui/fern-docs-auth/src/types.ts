@@ -3,6 +3,12 @@ import { z } from "zod";
 export const FernUserSchema = z.object({
     name: z.string().optional(),
     email: z.string().optional(),
+    audience: z
+        .union([z.string(), z.array(z.string())], {
+            description:
+                "The audience of the token (can be a string or an array of strings) which limits what content users can access",
+        })
+        .optional(),
 });
 
 export type FernUser = z.infer<typeof FernUserSchema>;

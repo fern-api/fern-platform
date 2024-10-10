@@ -3,6 +3,7 @@ import type { MDXComponents } from "mdx/types";
 import dynamic from "next/dynamic";
 import { ComponentProps, PropsWithChildren, ReactElement } from "react";
 import { FernErrorBoundaryProps, FernErrorTag } from "../../components/FernErrorBoundary";
+import { Audience } from "./Audience";
 import { AccordionGroup } from "./accordion";
 import { Availability } from "./availability";
 import { Badge } from "./badge";
@@ -39,6 +40,7 @@ const LaunchDarkly = dynamic(() => import("./launchdarkly/LaunchDarkly").then((m
 
 const FERN_COMPONENTS = {
     AccordionGroup,
+    Audience,
     Availability,
     Badge,
     Bleed,
