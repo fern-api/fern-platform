@@ -248,7 +248,12 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
 
     private async cacheResponse({ url, value }: { url: URL; value: CachedDocsResponse }): Promise<void> {
         if (this.redisDocsCache) {
-            await this.redisDocsCache.set({ url, value });
+            try {
+                await this.redisDocsCache.set({ url, value });
+            } catch (e) {
+                console.error("failed cache replaceDocsForInstanceId", new Error().stack, JSON.stringify(value).length);
+                throw e;
+            }
         }
         this.localDocsCache.set({ url, value });
     }

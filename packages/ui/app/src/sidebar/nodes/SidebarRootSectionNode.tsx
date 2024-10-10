@@ -1,8 +1,8 @@
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
-import { useIsChildSelected, useIsSelectedSidebarNode } from "../../atoms";
-import { SidebarSlugLink } from "../SidebarLink";
+import { useIsChildSelected } from "../../atoms";
 import { SidebarNavigationChild } from "./SidebarNavigationChild";
+import { SidebarPageNode } from "./SidebarPageNode";
 import { SidebarRootHeading } from "./SidebarRootHeading";
 
 interface SidebarRootSectionNodeProps {
@@ -11,34 +11,14 @@ interface SidebarRootSectionNodeProps {
 }
 
 export function SidebarRootSectionNode({ node, className }: SidebarRootSectionNodeProps): React.ReactElement | null {
-    const selected = useIsSelectedSidebarNode(node.id);
     const childSelected = useIsChildSelected(node.id);
 
-    if (node.children.length === 0) {
-        if (node.overviewPageId == null) {
-            return null;
-        }
-
-        if (node.hidden && !selected) {
-            return null;
-        }
-
-        return (
-            <SidebarSlugLink
-                nodeId={node.id}
-                linkClassName="font-semibold !text-text-default"
-                className={className}
-                slug={node.slug}
-                title={node.title}
-                selected={selected}
-                icon={node.icon}
-                hidden={node.hidden}
-                authed={node.authed}
-            />
-        );
+    // If the node has no children, it is a page node.
+    if (node.children.length === 0 && FernNavigation.hasMarkdown(node)) {
+        return <SidebarPageNode node={node} depth={0} className={className} />;
     }
 
-    if (node.hidden && !childSelected) {
+    if (node.children.length === 0 || (node.hidden && !childSelected)) {
         return null;
     }
 
