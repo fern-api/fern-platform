@@ -202,50 +202,52 @@ export async function withInitialProps({
         isAuthenticatedPagesDiscoverable: featureFlags.isAuthenticatedPagesDiscoverable,
     };
 
+    const currentVersionId = node.currentVersion?.versionId;
     const versions = withVersionSwitcherInfo({
         node: node.node,
         parents: node.parents,
-        versions: node.versions.filter((version) => pruneNavigationPredicate(version, pruneOpts)),
+        versions: node.versions.filter(
+            (version) => pruneNavigationPredicate(version, pruneOpts) || version.versionId === currentVersionId,
+        ),
         slugMap: node.collector.slugMap,
     });
 
     const sidebar = withPrunedSidebar(node.sidebar, pruneOpts);
 
-    const tabs = node.tabs
-        .filter((tab) => pruneNavigationPredicate(tab, pruneOpts))
-        .map((tab, index) =>
-            visitDiscriminatedUnion(tab)._visit<SidebarTab>({
-                tab: (tab) => ({
-                    type: "tabGroup",
-                    title: tab.title,
-                    icon: tab.icon,
-                    index,
-                    slug: tab.slug,
-                    pointsTo: tab.pointsTo,
-                    hidden: tab.hidden,
-                    authed: tab.authed,
-                }),
-                link: (link) => ({
-                    type: "tabLink",
-                    title: link.title,
-                    icon: link.icon,
-                    index,
-                    url: link.url,
-                }),
-                changelog: (changelog) => ({
-                    type: "tabChangelog",
-                    title: changelog.title,
-                    icon: changelog.icon,
-                    index,
-                    slug: changelog.slug,
-                    hidden: changelog.hidden,
-                    authed: changelog.authed,
-                }),
-            }),
-        );
+    const filteredTabs = node.tabs.filter((tab) => pruneNavigationPredicate(tab, pruneOpts) || tab === node.currentTab);
 
-    const currentTabIndex = node.currentTab == null ? undefined : node.tabs.indexOf(node.currentTab);
-    const currentVersionId = node.currentVersion?.versionId;
+    const tabs = filteredTabs.map((tab, index) =>
+        visitDiscriminatedUnion(tab)._visit<SidebarTab>({
+            tab: (tab) => ({
+                type: "tabGroup",
+                title: tab.title,
+                icon: tab.icon,
+                index,
+                slug: tab.slug,
+                pointsTo: tab.pointsTo,
+                hidden: tab.hidden,
+                authed: tab.authed,
+            }),
+            link: (link) => ({
+                type: "tabLink",
+                title: link.title,
+                icon: link.icon,
+                index,
+                url: link.url,
+            }),
+            changelog: (changelog) => ({
+                type: "tabChangelog",
+                title: changelog.title,
+                icon: changelog.icon,
+                index,
+                slug: changelog.slug,
+                hidden: changelog.hidden,
+                authed: changelog.authed,
+            }),
+        }),
+    );
+
+    const currentTabIndex = node.currentTab == null ? undefined : filteredTabs.indexOf(node.currentTab);
 
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
