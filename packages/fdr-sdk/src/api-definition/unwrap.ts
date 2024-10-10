@@ -18,6 +18,7 @@ export type UnwrappedReference = {
 
 export type UnwrappedObjectType = {
     properties: Latest.ObjectProperty[];
+    extraProperties: Latest.TypeReference | undefined;
     descriptions: FernDocs.MarkdownText[];
 };
 
@@ -169,6 +170,7 @@ export function unwrapObjectType(
     types: Record<string, Latest.TypeDefinition>,
 ): UnwrappedObjectType {
     const directProperties = object.properties;
+    const extraProperties = object.extraProperties;
     const descriptions: FernDocs.MarkdownText[] = [];
     const extendedProperties = object.extends.flatMap((typeId): Latest.ObjectProperty[] => {
         const typeDef = types[typeId];
@@ -230,7 +232,7 @@ export function unwrapObjectType(
             (property) => unwrapReference(property.valueShape, types)?.isOptional,
             (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
         );
-        return { properties, descriptions };
+        return { properties, extraProperties, descriptions };
     }
     const propertyKeys = new Set(object.properties.map((property) => property.key));
     const filteredExtendedProperties = extendedProperties.filter(
@@ -245,7 +247,7 @@ export function unwrapObjectType(
         (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
         (property) => property.key,
     );
-    return { properties, descriptions };
+    return { properties, extraProperties, descriptions };
 }
 
 /**
@@ -270,6 +272,7 @@ export function unwrapDiscriminatedUnionVariant(
             },
             ...properties,
         ],
+        extraProperties: undefined,
         descriptions,
     };
 }

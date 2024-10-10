@@ -1,6 +1,8 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { Plus } from "iconoir-react";
 import React, { ReactElement } from "react";
+import { Markdown } from "../../../mdx/Markdown";
 import { ResolvedTypeDefinition, ResolvedTypeShape, unwrapReference } from "../../../resolver/types";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 import { InternalTypeDefinitionError } from "../type-definition/InternalTypeDefinitionError";
@@ -35,15 +37,16 @@ export function hasInlineEnum(shape: ResolvedTypeShape, types: Record<string, Re
         literal: () => true,
         unknown: () => false,
         _other: () => false,
-        reference: (reference) =>
-            hasInlineEnum(
+        reference: (reference) => {
+            return hasInlineEnum(
                 types[reference.typeId] ?? {
                     type: "unknown",
                     description: undefined,
                     availability: undefined,
                 },
                 types,
-            ),
+            );
+        },
         alias: (alias) => hasInlineEnum(alias.shape, types),
     });
 }
@@ -90,13 +93,21 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
     const InternalShapeRenderer = applyErrorStyles ? InternalTypeDefinitionError : InternalTypeDefinition;
     return visitDiscriminatedUnion(unwrapReference(shape, types), "type")._visit<ReactElement | null>({
         object: (object) => (
-            <InternalShapeRenderer
-                typeShape={object}
-                isCollapsible={isCollapsible}
-                anchorIdParts={anchorIdParts}
-                slug={slug}
-                types={types}
-            />
+            <div>
+                <InternalShapeRenderer
+                    typeShape={object}
+                    isCollapsible={isCollapsible}
+                    anchorIdParts={anchorIdParts}
+                    slug={slug}
+                    types={types}
+                />
+                {object.extraProperties != null && (
+                    <div className="flex pt-2">
+                        <Plus />
+                        <Markdown mdx="Optional Additional Properties" className="!t-muted" size="sm" />
+                    </div>
+                )}
+            </div>
         ),
         enum: (enum_) => (
             <InternalShapeRenderer
