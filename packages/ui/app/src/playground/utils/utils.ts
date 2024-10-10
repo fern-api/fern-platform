@@ -36,7 +36,7 @@ export function isExpandable(
 }
 
 export function hasRequiredFields(
-    bodyShape: HttpRequestBodyShape | TypeShapeOrReference,
+    bodyShape: HttpRequestBodyShape | TypeReference,
     types: Record<string, TypeDefinition>,
 ): boolean {
     if (bodyShape.type === "formData") {

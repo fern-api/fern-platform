@@ -1,11 +1,13 @@
-import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import titleCase from "@fern-api/ui-core-utils/titleCase";
+import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { titleCase } from "@fern-api/ui-core-utils";
 import cn from "clsx";
-import { compact } from "lodash-es";
 import { useCallback, useMemo } from "react";
 import { Markdown } from "../../../mdx/Markdown";
+import {
+    ResolvedDiscriminatedUnionShapeVariant,
+    ResolvedTypeDefinition,
+    dereferenceObjectProperties,
+} from "../../../resolver/types";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {
     TypeDefinitionContext,
@@ -16,11 +18,11 @@ import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinitio
 
 export declare namespace DiscriminatedUnionVariant {
     export interface Props {
-        discriminant: ApiDefinition.PropertyKey;
-        unionVariant: ApiDefinition.DiscriminatedUnionVariant;
+        discriminant: string;
+        unionVariant: ResolvedDiscriminatedUnionShapeVariant;
         anchorIdParts: readonly string[];
         slug: FernNavigation.Slug;
-        types: Record<string, ApiDefinition.TypeDefinition>;
+        types: Record<string, ResolvedTypeDefinition>;
     }
 }
 
@@ -33,17 +35,32 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
 
-    const [shape, descriptions] = useMemo((): [ApiDefinition.TypeShape.Object_, FernDocs.MarkdownText[]] => {
-        const unwrapped = ApiDefinition.unwrapDiscriminatedUnionVariant({ discriminant }, unionVariant, types);
-        return [
-            {
-                type: "object",
-                properties: unwrapped.properties,
-                extends: [],
-                extraProperties: undefined,
-            },
-            unwrapped.descriptions,
-        ];
+    const shape = useMemo((): ResolvedTypeDefinition => {
+        return {
+            type: "object",
+            properties: [
+                {
+                    key: APIV1Read.PropertyKey(discriminant),
+                    valueShape: {
+                        type: "literal",
+                        value: {
+                            type: "stringLiteral",
+                            value: unionVariant.discriminantValue,
+                        },
+                        description: undefined,
+                        availability: undefined,
+                    },
+                    description: undefined,
+                    availability: undefined,
+                    hidden: false,
+                },
+                ...dereferenceObjectProperties(unionVariant, types),
+            ],
+            name: undefined,
+            description: undefined,
+            availability: undefined,
+            extends: [],
+        };
     }, [discriminant, types, unionVariant]);
 
     const contextValue = useTypeDefinitionContext();
@@ -75,10 +92,10 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
             )}
             <div className="flex flex-col">
-                <Markdown mdx={compact([unionVariant.description, ...descriptions])} size="sm" />
+                <Markdown mdx={unionVariant.description} size="sm" />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeDefinition
-                        shape={shape}
+                        typeShape={shape}
                         isCollapsible={true}
                         anchorIdParts={anchorIdParts}
                         slug={slug}

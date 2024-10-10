@@ -1,4 +1,3 @@
-import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { CopyToClipboardButton, FernButton, FernButtonGroup, FernCard } from "@fern-ui/components";
 import { useAtom, useSetAtom } from "jotai";
 import { ReactElement } from "react";
@@ -13,6 +12,7 @@ import { useStandardProxyEnvironment } from "../../hooks/useStandardProxyEnviron
 import { PlaygroundRequestPreview } from "../PlaygroundRequestPreview";
 import { PlaygroundCodeSnippetResolverBuilder } from "../code-snippets/resolver";
 import { PlaygroundEndpointRequestFormState } from "../types";
+import { EndpointContext } from "../types/endpoint-context";
 import { usePlaygroundBaseUrl } from "../utils/select-environment";
 
 interface PlaygroundEndpointRequestCardProps {
@@ -28,7 +28,7 @@ export function PlaygroundEndpointRequestCard({
     const [requestType, setRequestType] = useAtom(PLAYGROUND_REQUEST_TYPE_ATOM);
     const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
     const proxyEnvironment = useStandardProxyEnvironment();
-    const [baseUrl] = usePlaygroundBaseUrl(context.endpoint);
+    const baseUrl = usePlaygroundBaseUrl(context.endpoint);
     return (
         <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
             <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">

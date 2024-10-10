@@ -1,14 +1,23 @@
-import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { EMPTY_ARRAY, EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { FernButton, FernButtonGroup, FernScrollArea } from "@fern-ui/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import { ReactNode, memo, useMemo, useRef, useState } from "react";
+import { useNavigationNodes, usePlaygroundEnvironment } from "../../atoms";
+import { useSelectedEnvironmentId } from "../../atoms/environment";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { StatusCodeTag, statusCodeToIntent } from "../../components/StatusCodeTag";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
-import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
+import { mergeEndpointSchemaWithExample } from "../../resolver/SchemaWithExample";
+import {
+    ResolvedEndpointDefinition,
+    ResolvedError,
+    ResolvedExampleEndpointCall,
+    ResolvedExampleError,
+    resolveEnvironment,
+    resolveEnvironmentUrlInCodeSnippet,
+} from "../../resolver/types";
 import { AudioExample } from "../examples/AudioExample";
 import { CodeSnippetExample, JsonCodeSnippetExample } from "../examples/CodeSnippetExample";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
@@ -23,9 +32,9 @@ import { ErrorExampleSelect } from "./ErrorExampleSelect";
 
 export declare namespace EndpointContentCodeSnippets {
     export interface Props {
-        node: FernNavigation.EndpointNode;
-        endpoint: ApiDefinition.EndpointDefinition;
-        example: ApiDefinition.ExampleEndpointCall;
+        api: string;
+        endpoint: ResolvedEndpointDefinition;
+        example: ResolvedExampleEndpointCall;
         clients: CodeExampleGroup[];
         selectedClient: CodeExample;
         onClickClient: (example: CodeExample) => void;
@@ -34,15 +43,14 @@ export declare namespace EndpointContentCodeSnippets {
         hoveredRequestPropertyPath: JsonPropertyPath | undefined;
         hoveredResponsePropertyPath: JsonPropertyPath | undefined;
         showErrors: boolean;
-        errors: ApiDefinition.ErrorResponse[] | undefined;
-        selectedError: ApiDefinition.ErrorResponse | undefined;
-        setSelectedError: (error: ApiDefinition.ErrorResponse | undefined) => void;
+        errors: ResolvedError[];
+        selectedError: ResolvedError | undefined;
+        setSelectedError: (error: ResolvedError | undefined) => void;
         measureHeight: (height: number) => void;
     }
 }
 
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
-    node,
     endpoint,
     example,
     clients,
@@ -50,14 +58,18 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
     onClickClient,
     requestCodeSnippet,
     requestCurlJson,
-    hoveredRequestPropertyPath = EMPTY_ARRAY,
-    hoveredResponsePropertyPath = EMPTY_ARRAY,
+    hoveredRequestPropertyPath = [],
+    hoveredResponsePropertyPath = [],
     showErrors,
-    errors = EMPTY_ARRAY,
+    errors,
     selectedError,
     setSelectedError,
     measureHeight,
 }) => {
+    const nodes = useNavigationNodes();
+    const maybeNode = nodes.get(endpoint.nodeId);
+    const node = maybeNode != null && FernNavigation.isApiLeaf(maybeNode) ? maybeNode : undefined;
+
     const ref = useRef<HTMLDivElement>(null);
 
     useResizeObserver(ref, ([entry]) => {
@@ -66,11 +78,13 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
         }
     });
 
-    const [internalSelectedErrorExample, setSelectedErrorExample] = useState<ApiDefinition.ErrorExample>();
+    const [internalSelectedErrorExample, setSelectedErrorExample] = useState<ResolvedExampleError | undefined>(
+        undefined,
+    );
 
     const handleSelectErrorAndExample = (
-        error: ApiDefinition.ErrorResponse | undefined,
-        example: ApiDefinition.ErrorExample | undefined,
+        error: ResolvedError | undefined,
+        example: ResolvedExampleError | undefined,
     ) => {
         setSelectedError(error);
         setSelectedErrorExample(example);
@@ -78,7 +92,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
 
     // if the selected error is not in the list of errors, select the first error
     const selectedErrorExample = useMemo(() => {
-        if (selectedError == null || !selectedError.examples || selectedError.examples.length === 0) {
+        if (selectedError == null || selectedError.examples.length === 0) {
             return undefined;
         } else if (selectedError.examples.findIndex((e) => e === internalSelectedErrorExample) === -1) {
             return selectedError.examples[0];
@@ -86,13 +100,14 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
         return internalSelectedErrorExample;
     }, [internalSelectedErrorExample, selectedError]);
 
+    const exampleWithSchema = useMemo(() => mergeEndpointSchemaWithExample(endpoint, example), [endpoint, example]);
     const selectedClientGroup = clients.find((client) => client.language === selectedClient.language);
 
     const successTitle =
-        example.responseBody != null
-            ? visitDiscriminatedUnion(example.responseBody)._visit<ReactNode>({
-                  json: () => renderResponseTitle(example.responseStatusCode, endpoint.method),
-                  filename: () => renderResponseTitle(example.responseStatusCode, endpoint.method),
+        exampleWithSchema.responseBody != null
+            ? visitDiscriminatedUnion(exampleWithSchema.responseBody, "type")._visit<ReactNode>({
+                  json: (value) => renderResponseTitle(value.statusCode, endpoint.method),
+                  filename: (value) => renderResponseTitle(value.statusCode, endpoint.method),
                   stream: () => "Streamed Response",
                   sse: () => "Server-Sent Events",
                   _other: () => "Response",
@@ -112,7 +127,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
         <span className="text-sm t-muted">{successTitle}</span>
     );
 
-    const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
+    const selectedEnvironmentId = useSelectedEnvironmentId();
+    const playgroundEnvironment = usePlaygroundEnvironment();
 
     return (
         <div className="fern-endpoint-code-snippets" ref={ref}>
@@ -142,8 +158,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     <EndpointUrlWithOverflow
                         path={endpoint.path}
                         method={endpoint.method}
-                        environmentId={environmentId}
-                        baseUrl={baseUrl}
+                        selectedEnvironment={resolveEnvironment(endpoint, selectedEnvironmentId)}
                     />
                 }
                 onClick={(e) => {
@@ -166,7 +181,13 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         ) : undefined}
                     </>
                 }
-                code={resolveEnvironmentUrlInCodeSnippet(endpoint, requestCodeSnippet, baseUrl)}
+                code={resolveEnvironmentUrlInCodeSnippet(
+                    endpoint,
+                    requestCodeSnippet,
+                    playgroundEnvironment,
+                    undefined,
+                    true,
+                )}
                 language={selectedClient.language}
                 hoveredPropertyPath={selectedClient.language === "curl" ? hoveredRequestPropertyPath : undefined}
                 json={requestCurlJson}
@@ -185,9 +206,9 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     intent={statusCodeToIntent(selectedError.statusCode)}
                 />
             )}
-            {example.responseBody != null &&
+            {exampleWithSchema.responseBody != null &&
                 selectedError == null &&
-                visitDiscriminatedUnion(example.responseBody)._visit<ReactNode>({
+                visitDiscriminatedUnion(exampleWithSchema.responseBody, "type")._visit<ReactNode>({
                     json: (value) => (
                         <JsonCodeSnippetExample
                             title={errorSelector}
@@ -249,12 +270,3 @@ function renderResponseTitle(statusCode: number, method?: APIV1Read.HttpMethod) 
         </span>
     );
 }
-
-const resolveEnvironmentUrlInCodeSnippet = (
-    endpoint: ApiDefinition.EndpointDefinition,
-    requestCodeSnippet: string,
-    baseUrl: string | undefined,
-): string => {
-    const urlToReplace = endpoint.environments?.find((env) => requestCodeSnippet.includes(env.baseUrl))?.baseUrl;
-    return urlToReplace && baseUrl ? requestCodeSnippet.replace(urlToReplace, baseUrl) : requestCodeSnippet;
-};

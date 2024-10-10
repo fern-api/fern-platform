@@ -1,9 +1,6 @@
-import { ApiDefinitionV1ToLatest } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { ApiDefinitionLoader, MarkdownLoader } from "@fern-ui/fern-docs-server";
 import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
-import { mapValues } from "lodash-es";
 import type { MDX_SERIALIZER } from "../mdx/bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "./DocsContent";
@@ -15,58 +12,22 @@ import { resolveMarkdownPage } from "./resolveMarkdownPage";
 import { resolveSubtitle } from "./resolveSubtitle";
 
 export async function resolveDocsContent({
-    host,
     found,
     apis,
     pages,
     mdxOptions,
     featureFlags,
     serializeMdx,
-    engine,
 }: {
-    host: string;
     found: FernNavigation.utils.Node.Found;
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
     mdxOptions?: FernSerializeMdxOptions;
     featureFlags: FeatureFlags;
     serializeMdx: MDX_SERIALIZER;
-    engine: string;
 }): Promise<DocsContent | undefined> {
     const neighbors = await getNeighbors(found, pages, serializeMdx);
-    const { node, apiReference, parents, breadcrumb } = found;
-
-    const markdownLoader = MarkdownLoader.create(host)
-        .withPages(pages)
-        .withMdxBundler(
-            (
-                mdx: string,
-                pageId: FernNavigation.PageId,
-                title: string | undefined,
-                breadcrumb: FernNavigation.BreadcrumbItem[],
-                editThisPageUrl: FernNavigation.Url | undefined,
-            ) =>
-                serializeMdx(mdx, {
-                    ...mdxOptions,
-                    filename: pageId,
-                    frontmatterDefaults: {
-                        title,
-                        breadcrumb,
-                        "edit-this-page-url": editThisPageUrl,
-                        "force-toc": featureFlags.isTocDefaultEnabled,
-                    },
-                }),
-            engine,
-        );
-
-    const apiLoaders = mapValues(apis, (api) => {
-        return ApiDefinitionLoader.create(host, api.id)
-            .withMdxBundler(serializeMdx, engine)
-            .withFlags(featureFlags)
-            .withApiDefinition(ApiDefinitionV1ToLatest.from(api, featureFlags).migrate())
-            .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
-            .withResolveDescriptions();
-    });
+    const { node, apiReference, parents, breadcrumb, collector } = found;
 
     if (node.type === "changelog") {
         return resolveChangelogPage({
@@ -91,51 +52,51 @@ export async function resolveDocsContent({
         return resolveMarkdownPage({
             node,
             found,
-            apiLoaders,
+            apis,
+            pages,
+            mdxOptions,
+            featureFlags,
+            serializeMdx,
             neighbors,
-            markdownLoader,
         });
     } else if (apiReference != null) {
-        const loader = apiLoaders[apiReference.apiDefinitionId];
-        if (loader == null) {
-            // eslint-disable-next-line no-console
-            console.error("API definition not found", apiReference.apiDefinitionId);
-            return;
-        }
-
         if (apiReference.paginated && FernNavigation.isApiLeaf(node)) {
             return resolveApiEndpointPage({
                 node,
                 parents,
-                apiDefinitionLoader: loader,
+                apis,
+                mdxOptions,
+                featureFlags,
                 neighbors,
+                serializeMdx,
+                collector,
                 showErrors: apiReference.showErrors,
             });
         }
 
         return resolveApiReferencePage({
             node,
-            apiDefinitionLoader: loader,
-            apiReferenceNode: apiReference,
+            apis,
+            apiReference,
             parents,
-            markdownLoader,
+            pages,
+            mdxOptions,
+            featureFlags,
+            serializeMdx,
+            collector,
         });
-    } else if (FernNavigation.hasMarkdown(node)) {
+    } else {
         return resolveMarkdownPage({
             node,
             found,
-            apiLoaders,
+            apis,
+            pages,
+            mdxOptions,
+            featureFlags,
+            serializeMdx,
             neighbors,
-            markdownLoader,
         });
     }
-
-    /**
-     * This should never happen, but if it does, we should log it and return undefined
-     */
-    // eslint-disable-next-line no-console
-    console.error(`Failed to resolve content for ${node.slug}`);
-    return undefined;
 }
 
 async function getNeighbor(

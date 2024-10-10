@@ -4,7 +4,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
-    "directory": "packages/ui/fern-docs-edge-config"
+    "directory": "packages/commons/fdr-utils"
   },
   "private": true,
   "files": [

@@ -390,17 +390,11 @@
           {
             "key": "limit",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
-                    }
-                  }
+              "type": "optional",
+              "shape": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
                 }
               }
             },
@@ -409,16 +403,10 @@
           {
             "key": "status",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_transcripts:TranscriptStatus"
-                  }
-                }
+              "type": "optional",
+              "shape": {
+                "type": "id",
+                "id": "type_transcripts:TranscriptStatus"
               }
             },
             "description": "Filter by transcript status"
@@ -426,17 +414,11 @@
           {
             "key": "created_on",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
+              "type": "optional",
+              "shape": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             },
@@ -445,17 +427,11 @@
           {
             "key": "before_id",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
+              "type": "optional",
+              "shape": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             },
@@ -464,17 +440,11 @@
           {
             "key": "after_id",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
+              "type": "optional",
+              "shape": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             },
@@ -483,17 +453,11 @@
           {
             "key": "throttled_only",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean"
-                    }
-                  }
+              "type": "optional",
+              "shape": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
                 }
               }
             },
@@ -864,12 +828,9 @@
               {
                 "key": "audio_url",
                 "valueShape": {
-                  "type": "alias",
+                  "type": "primitive",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
+                    "type": "string"
                   }
                 },
                 "description": "The URL of the audio or video file to transcribe."
@@ -1981,12 +1942,9 @@
           {
             "key": "transcript_id",
             "valueShape": {
-              "type": "alias",
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "ID of the transcript"
@@ -3014,12 +2972,9 @@
           {
             "key": "transcript_id",
             "valueShape": {
-              "type": "alias",
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "ID of the transcript"
@@ -4055,12 +4010,9 @@
           {
             "key": "transcript_id",
             "valueShape": {
-              "type": "alias",
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "ID of the transcript"
@@ -4068,11 +4020,8 @@
           {
             "key": "subtitle_format",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_transcripts:SubtitleFormat"
-              }
+              "type": "id",
+              "id": "type_transcripts:SubtitleFormat"
             },
             "description": "The format of the captions"
           }
@@ -4081,17 +4030,11 @@
           {
             "key": "chars_per_caption",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
-                    }
-                  }
+              "type": "optional",
+              "shape": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
                 }
               }
             },
@@ -4431,12 +4374,9 @@
           {
             "key": "transcript_id",
             "valueShape": {
-              "type": "alias",
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "ID of the transcript"
@@ -4849,12 +4789,9 @@
           {
             "key": "transcript_id",
             "valueShape": {
-              "type": "alias",
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "ID of the transcript"
@@ -5249,12 +5186,9 @@
           {
             "key": "transcript_id",
             "valueShape": {
-              "type": "alias",
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "ID of the transcript"
@@ -5264,17 +5198,11 @@
           {
             "key": "words",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
+              "type": "optional",
+              "shape": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             },
@@ -5637,12 +5565,9 @@
           {
             "key": "transcript_id",
             "valueShape": {
-              "type": "alias",
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "ID of the transcript"
@@ -5973,12 +5898,9 @@
               {
                 "key": "prompt",
                 "valueShape": {
-                  "type": "alias",
+                  "type": "primitive",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
+                    "type": "string"
                   }
                 },
                 "description": "Your text to prompt the model to produce a desired output, including any context you want to pass into the model."
@@ -6350,17 +6272,11 @@
               {
                 "key": "answer_format",
                 "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
+                  "type": "optional",
+                  "shape": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
                     }
                   }
                 },
@@ -6718,16 +6634,10 @@
               {
                 "key": "questions",
                 "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_lemur:LemurQuestion"
-                      }
-                    }
+                  "type": "list",
+                  "itemShape": {
+                    "type": "id",
+                    "id": "type_lemur:LemurQuestion"
                   }
                 },
                 "description": "A list of questions to ask"
@@ -7152,18 +7062,12 @@
               {
                 "key": "answer_format",
                 "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "default": "Bullet Points"
-                        }
-                      }
+                  "type": "optional",
+                  "shape": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "default": "Bullet Points"
                     }
                   }
                 },
@@ -7519,12 +7423,9 @@
           {
             "key": "request_id",
             "valueShape": {
-              "type": "alias",
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             },
             "description": "The ID of the LeMUR request whose data you want to delete. This would be found in the response of the original request."
@@ -7854,13 +7755,10 @@
               {
                 "key": "expires_in",
                 "valueShape": {
-                  "type": "alias",
+                  "type": "primitive",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer",
-                      "minimum": 60
-                    }
+                    "type": "integer",
+                    "minimum": 60
                   }
                 },
                 "description": "The amount of time until the token expires in seconds"
@@ -8238,17 +8136,11 @@
           {
             "key": "sample_rate",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
-                    }
-                  }
+              "type": "optional",
+              "shape": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
                 }
               }
             },
@@ -8257,17 +8149,11 @@
           {
             "key": "word_boost",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
+              "type": "optional",
+              "shape": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             },
@@ -8276,16 +8162,10 @@
           {
             "key": "encoding",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_streaming:Streaming"
-                  }
-                }
+              "type": "optional",
+              "shape": {
+                "type": "id",
+                "id": "type_streaming:Streaming"
               }
             },
             "description": "The encoding of the audio data"
@@ -8293,17 +8173,11 @@
           {
             "key": "token",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
+              "type": "optional",
+              "shape": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             },
@@ -8312,17 +8186,11 @@
           {
             "key": "disable_partial_transcripts",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean"
-                    }
-                  }
+              "type": "optional",
+              "shape": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
                 }
               }
             },
@@ -8331,17 +8199,11 @@
           {
             "key": "enable_extra_session_information",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean"
-                    }
-                  }
+              "type": "optional",
+              "shape": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
                 }
               }
             },
@@ -8352,17 +8214,11 @@
           {
             "key": "Authentication",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
+              "type": "optional",
+              "shape": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             }
@@ -8447,12 +8303,9 @@
             {
               "key": "upload_url",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "A URL that points to your audio file, accessible only by AssemblyAI's servers"
@@ -8470,12 +8323,9 @@
             {
               "key": "transcript_id",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The ID of the transcript"
@@ -8483,11 +8333,8 @@
             {
               "key": "status",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_transcripts:TranscriptReadyStatus"
-                }
+                "type": "id",
+                "id": "type_transcripts:TranscriptReadyStatus"
               },
               "description": "The status of the transcript. Either completed or error."
             }
@@ -8503,23 +8350,17 @@
             {
               "key": "status",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_transcripts:RedactedAudioStatus"
-                }
+                "type": "id",
+                "id": "type_transcripts:RedactedAudioStatus"
               },
               "description": "The status of the redacted audio"
             },
             {
               "key": "redacted_audio_url",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The URL of the redacted audio file"
@@ -8565,12 +8406,9 @@
             {
               "key": "id",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The ID of the transcript"
@@ -8578,12 +8416,9 @@
             {
               "key": "total_count",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The total count of all matched instances. For e.g., word 1 matched 2 times, and word 2 matched 3 times, `total_count` will equal 5."
@@ -8591,16 +8426,10 @@
             {
               "key": "matches",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:WordSearchMatch"
-                    }
-                  }
+                "type": "list",
+                "itemShape": {
+                  "type": "id",
+                  "id": "type_transcripts:WordSearchMatch"
                 }
               },
               "description": "The matches of the search"
@@ -8617,12 +8446,9 @@
             {
               "key": "text",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The matched word"
@@ -8630,12 +8456,9 @@
             {
               "key": "count",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The total amount of times the word is in the transcript"
@@ -8643,16 +8466,10 @@
             {
               "key": "timestamps",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:WordSearchTimestamp"
-                    }
-                  }
+                "type": "list",
+                "itemShape": {
+                  "type": "id",
+                  "id": "type_transcripts:WordSearchTimestamp"
                 }
               },
               "description": "An array of timestamps"
@@ -8660,17 +8477,11 @@
             {
               "key": "indexes",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "integer"
-                      }
-                    }
+                "type": "list",
+                "itemShape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
                   }
                 }
               },
@@ -8687,12 +8498,9 @@
           "value": {
             "type": "list",
             "itemShape": {
-              "type": "alias",
+              "type": "primitive",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
-                }
+                "type": "integer"
               }
             }
           }
@@ -8708,12 +8516,9 @@
             {
               "key": "start",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The start time in milliseconds"
@@ -8721,12 +8526,9 @@
             {
               "key": "end",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The end time in milliseconds"
@@ -8744,33 +8546,21 @@
             {
               "key": "language_code",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:TranscriptLanguageCode"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_transcripts:TranscriptLanguageCode"
                 }
               }
             },
             {
               "key": "punctuate",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -8779,17 +8569,11 @@
             {
               "key": "format_text",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -8798,17 +8582,11 @@
             {
               "key": "dual_channel",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -8817,33 +8595,21 @@
             {
               "key": "speech_model",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:SpeechModel"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_transcripts:SpeechModel"
                 }
               }
             },
             {
               "key": "webhook_url",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -8852,17 +8618,11 @@
             {
               "key": "webhook_auth_header_name",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -8871,17 +8631,11 @@
             {
               "key": "webhook_auth_header_value",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -8890,17 +8644,11 @@
             {
               "key": "auto_highlights",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -8909,17 +8657,11 @@
             {
               "key": "audio_start_from",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "integer"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
                   }
                 }
               },
@@ -8928,17 +8670,11 @@
             {
               "key": "audio_end_at",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "integer"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
                   }
                 }
               },
@@ -8947,22 +8683,13 @@
             {
               "key": "word_boost",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "primitive",
                     "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
+                      "type": "string"
                     }
                   }
                 }
@@ -8972,16 +8699,10 @@
             {
               "key": "boost_param",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:TranscriptBoostParam"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_transcripts:TranscriptBoostParam"
                 }
               },
               "description": "The word boost parameter value"
@@ -8989,17 +8710,11 @@
             {
               "key": "filter_profanity",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -9008,17 +8723,11 @@
             {
               "key": "redact_pii",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -9027,17 +8736,11 @@
             {
               "key": "redact_pii_audio",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -9046,16 +8749,10 @@
             {
               "key": "redact_pii_audio_quality",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:RedactPiiAudioQuality"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_transcripts:RedactPiiAudioQuality"
                 }
               },
               "description": "Controls the filetype of the audio created by redact_pii_audio. Currently supports mp3 (default) and wav. See [PII redaction](https://www.assemblyai.com/docs/models/pii-redaction) for more details."
@@ -9063,21 +8760,12 @@
             {
               "key": "redact_pii_policies",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_transcripts:PiiPolicy"
-                        }
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "id",
+                    "id": "type_transcripts:PiiPolicy"
                   }
                 }
               },
@@ -9086,33 +8774,21 @@
             {
               "key": "redact_pii_sub",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:SubstitutionPolicy"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_transcripts:SubstitutionPolicy"
                 }
               }
             },
             {
               "key": "speaker_labels",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -9121,17 +8797,11 @@
             {
               "key": "speakers_expected",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "integer"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
                   }
                 }
               },
@@ -9140,17 +8810,11 @@
             {
               "key": "content_safety",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -9159,17 +8823,11 @@
             {
               "key": "content_safety_confidence",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "integer"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
                   }
                 }
               },
@@ -9178,17 +8836,11 @@
             {
               "key": "iab_categories",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -9197,17 +8849,11 @@
             {
               "key": "language_detection",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -9216,21 +8862,12 @@
             {
               "key": "custom_spelling",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_transcripts:TranscriptCustomSpelling"
-                        }
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "id",
+                    "id": "type_transcripts:TranscriptCustomSpelling"
                   }
                 }
               },
@@ -9239,17 +8876,11 @@
             {
               "key": "disfluencies",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -9258,17 +8889,11 @@
             {
               "key": "sentiment_analysis",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -9277,17 +8902,11 @@
             {
               "key": "auto_chapters",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -9296,17 +8915,11 @@
             {
               "key": "entity_detection",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -9315,17 +8928,11 @@
             {
               "key": "speech_threshold",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
                   }
                 }
               },
@@ -9334,17 +8941,11 @@
             {
               "key": "summarization",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -9353,16 +8954,10 @@
             {
               "key": "summary_model",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:SummaryModel"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_transcripts:SummaryModel"
                 }
               },
               "description": "The model to summarize the transcript"
@@ -9370,16 +8965,10 @@
             {
               "key": "summary_type",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:SummaryType"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_transcripts:SummaryType"
                 }
               },
               "description": "The type of summary"
@@ -9387,17 +8976,11 @@
             {
               "key": "custom_topics",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -9406,22 +8989,13 @@
             {
               "key": "topics",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "primitive",
                     "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
+                      "type": "string"
                     }
                   }
                 }
@@ -9501,17 +9075,11 @@
             {
               "key": "from",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "list",
+                "itemShape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -9520,12 +9088,9 @@
             {
               "key": "to",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "Word or phrase to replace with"
@@ -9542,14 +9107,11 @@
             {
               "key": "confidence",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "minimum": 0,
-                    "maximum": 1
-                  }
+                  "type": "double",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               },
               "description": "The confidence score for the transcript of this utterance"
@@ -9557,12 +9119,9 @@
             {
               "key": "start",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The starting time, in milliseconds, of the utterance in the audio file"
@@ -9570,12 +9129,9 @@
             {
               "key": "end",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The ending time, in milliseconds, of the utterance in the audio file"
@@ -9583,12 +9139,9 @@
             {
               "key": "text",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The text for this utterance"
@@ -9596,16 +9149,10 @@
             {
               "key": "words",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:TranscriptWord"
-                    }
-                  }
+                "type": "list",
+                "itemShape": {
+                  "type": "id",
+                  "id": "type_transcripts:TranscriptWord"
                 }
               },
               "description": "The words in the utterance."
@@ -9613,12 +9160,9 @@
             {
               "key": "speaker",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The speaker of this utterance, where each speaker is assigned a sequential capital letter - e.g. \"A\" for Speaker A, \"B\" for Speaker B, etc."
@@ -10231,12 +9775,9 @@
             {
               "key": "id",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The unique identifier of your transcript"
@@ -10244,12 +9785,9 @@
             {
               "key": "language_model",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The language model that was used for the transcript"
@@ -10257,12 +9795,9 @@
             {
               "key": "acoustic_model",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The acoustic model that was used for the transcript"
@@ -10270,27 +9805,18 @@
             {
               "key": "status",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_transcripts:TranscriptStatus"
-                }
+                "type": "id",
+                "id": "type_transcripts:TranscriptStatus"
               },
               "description": "The status of your transcript. Possible values are queued, processing, completed, or error."
             },
             {
               "key": "language_code",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:TranscriptLanguageCode"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_transcripts:TranscriptLanguageCode"
                 }
               },
               "description": "The language of your audio file.\nPossible values are found in [Supported Languages](https://www.assemblyai.com/docs/concepts/supported-languages).\nThe default value is 'en_us'."
@@ -10298,12 +9824,9 @@
             {
               "key": "audio_url",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The URL of the media that was transcribed"
@@ -10311,17 +9834,11 @@
             {
               "key": "text",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -10330,21 +9847,12 @@
             {
               "key": "words",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_transcripts:TranscriptWord"
-                        }
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "id",
+                    "id": "type_transcripts:TranscriptWord"
                   }
                 }
               },
@@ -10353,21 +9861,12 @@
             {
               "key": "utterances",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_transcripts:TranscriptUtterance"
-                        }
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "id",
+                    "id": "type_transcripts:TranscriptUtterance"
                   }
                 }
               },
@@ -10376,19 +9875,13 @@
             {
               "key": "confidence",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "minimum": 0,
-                        "maximum": 1
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double",
+                    "minimum": 0,
+                    "maximum": 1
                   }
                 }
               },
@@ -10397,17 +9890,11 @@
             {
               "key": "audio_duration",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
                   }
                 }
               },
@@ -10416,17 +9903,11 @@
             {
               "key": "punctuate",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -10435,17 +9916,11 @@
             {
               "key": "format_text",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -10454,17 +9929,11 @@
             {
               "key": "dual_channel",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -10473,33 +9942,21 @@
             {
               "key": "speech_model",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:SpeechModel"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_transcripts:SpeechModel"
                 }
               }
             },
             {
               "key": "webhook_url",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -10508,17 +9965,11 @@
             {
               "key": "webhook_status_code",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "integer"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
                   }
                 }
               },
@@ -10527,12 +9978,9 @@
             {
               "key": "webhook_auth",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "boolean"
-                  }
+                  "type": "boolean"
                 }
               },
               "description": "Whether webhook authentication details were provided"
@@ -10540,17 +9988,11 @@
             {
               "key": "webhook_auth_header_name",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -10559,17 +10001,11 @@
             {
               "key": "speed_boost",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -10578,12 +10014,9 @@
             {
               "key": "auto_highlights",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "boolean"
-                  }
+                  "type": "boolean"
                 }
               },
               "description": "Whether Key Phrases is enabled, either true or false"
@@ -10591,33 +10024,21 @@
             {
               "key": "auto_highlights_result",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:AutoHighlightsResult"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_transcripts:AutoHighlightsResult"
                 }
               }
             },
             {
               "key": "audio_start_from",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "integer"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
                   }
                 }
               },
@@ -10626,17 +10047,11 @@
             {
               "key": "audio_end_at",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "integer"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
                   }
                 }
               },
@@ -10645,22 +10060,13 @@
             {
               "key": "word_boost",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "primitive",
                     "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
+                      "type": "string"
                     }
                   }
                 }
@@ -10670,17 +10076,11 @@
             {
               "key": "boost_param",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -10689,17 +10089,11 @@
             {
               "key": "filter_profanity",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -10708,12 +10102,9 @@
             {
               "key": "redact_pii",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "boolean"
-                  }
+                  "type": "boolean"
                 }
               },
               "description": "Whether [PII Redaction](https://www.assemblyai.com/docs/models/pii-redaction) is enabled, either true or false"
@@ -10721,17 +10112,11 @@
             {
               "key": "redact_pii_audio",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -10740,37 +10125,22 @@
             {
               "key": "redact_pii_audio_quality",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:RedactPiiAudioQuality"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_transcripts:RedactPiiAudioQuality"
                 }
               }
             },
             {
               "key": "redact_pii_policies",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_transcripts:PiiPolicy"
-                        }
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "id",
+                    "id": "type_transcripts:PiiPolicy"
                   }
                 }
               },
@@ -10779,16 +10149,10 @@
             {
               "key": "redact_pii_sub",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:SubstitutionPolicy"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_transcripts:SubstitutionPolicy"
                 }
               },
               "description": "The replacement logic for detected PII, can be \"entity_type\" or \"hash\". See [PII redaction](https://www.assemblyai.com/docs/models/pii-redaction) for more details."
@@ -10796,17 +10160,11 @@
             {
               "key": "speaker_labels",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -10815,17 +10173,11 @@
             {
               "key": "speakers_expected",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "integer"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
                   }
                 }
               },
@@ -10834,17 +10186,11 @@
             {
               "key": "content_safety",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -10853,33 +10199,21 @@
             {
               "key": "content_safety_labels",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:ContentSafetyLabelsResult"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_transcripts:ContentSafetyLabelsResult"
                 }
               }
             },
             {
               "key": "iab_categories",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -10888,33 +10222,21 @@
             {
               "key": "iab_categories_result",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:TopicDetectionModelResult"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_transcripts:TopicDetectionModelResult"
                 }
               }
             },
             {
               "key": "language_detection",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -10923,21 +10245,12 @@
             {
               "key": "custom_spelling",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_transcripts:TranscriptCustomSpelling"
-                        }
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "id",
+                    "id": "type_transcripts:TranscriptCustomSpelling"
                   }
                 }
               },
@@ -10946,17 +10259,11 @@
             {
               "key": "auto_chapters",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -10965,21 +10272,12 @@
             {
               "key": "chapters",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_transcripts:Chapter"
-                        }
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "id",
+                    "id": "type_transcripts:Chapter"
                   }
                 }
               },
@@ -10988,12 +10286,9 @@
             {
               "key": "summarization",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "boolean"
-                  }
+                  "type": "boolean"
                 }
               },
               "description": "Whether [Summarization](https://www.assemblyai.com/docs/models/summarization) is enabled, either true or false"
@@ -11001,17 +10296,11 @@
             {
               "key": "summary_type",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -11020,17 +10309,11 @@
             {
               "key": "summary_model",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -11039,17 +10322,11 @@
             {
               "key": "summary",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -11058,17 +10335,11 @@
             {
               "key": "custom_topics",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -11077,22 +10348,13 @@
             {
               "key": "topics",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "primitive",
                     "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
+                      "type": "string"
                     }
                   }
                 }
@@ -11102,17 +10364,11 @@
             {
               "key": "disfluencies",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -11121,17 +10377,11 @@
             {
               "key": "sentiment_analysis",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -11140,21 +10390,12 @@
             {
               "key": "sentiment_analysis_results",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_transcripts:SentimentAnalysisResult"
-                        }
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "id",
+                    "id": "type_transcripts:SentimentAnalysisResult"
                   }
                 }
               },
@@ -11163,17 +10404,11 @@
             {
               "key": "entity_detection",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -11182,21 +10417,12 @@
             {
               "key": "entities",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_transcripts:Entity"
-                        }
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "id",
+                    "id": "type_transcripts:Entity"
                   }
                 }
               },
@@ -11205,17 +10431,11 @@
             {
               "key": "speech_threshold",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
                   }
                 }
               },
@@ -11224,17 +10444,11 @@
             {
               "key": "throttled",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
                   }
                 }
               },
@@ -11243,17 +10457,11 @@
             {
               "key": "error",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -11272,27 +10480,18 @@
             {
               "key": "status",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_transcripts:AudioIntelligenceModelStatus"
-                }
+                "type": "id",
+                "id": "type_transcripts:AudioIntelligenceModelStatus"
               },
               "description": "The status of the Topic Detection model. Either success, or unavailable in the rare case that the model failed."
             },
             {
               "key": "results",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:TopicDetectionResult"
-                    }
-                  }
+                "type": "list",
+                "itemShape": {
+                  "type": "id",
+                  "id": "type_transcripts:TopicDetectionResult"
                 }
               },
               "description": "An array of results for the Topic Detection model"
@@ -11300,26 +10499,17 @@
             {
               "key": "summary",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "map",
-                  "keyShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double"
-                      }
-                    }
+                "type": "map",
+                "keyShape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueShape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
                   }
                 }
               },
@@ -11338,53 +10528,35 @@
             {
               "key": "status",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_transcripts:AudioIntelligenceModelStatus"
-                }
+                "type": "id",
+                "id": "type_transcripts:AudioIntelligenceModelStatus"
               },
               "description": "The status of the Content Moderation model. Either success, or unavailable in the rare case that the model failed."
             },
             {
               "key": "results",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:ContentSafetyLabelResult"
-                    }
-                  }
+                "type": "list",
+                "itemShape": {
+                  "type": "id",
+                  "id": "type_transcripts:ContentSafetyLabelResult"
                 }
               }
             },
             {
               "key": "summary",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "map",
-                  "keyShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double"
-                      }
-                    }
+                "type": "map",
+                "keyShape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueShape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
                   }
                 }
               },
@@ -11393,25 +10565,16 @@
             {
               "key": "severity_score_summary",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "map",
-                  "keyShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:SeverityScoreSummary"
-                    }
+                "type": "map",
+                "keyShape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
+                },
+                "valueShape": {
+                  "type": "id",
+                  "id": "type_transcripts:SeverityScoreSummary"
                 }
               },
               "description": "A summary of the Content Moderation severity results for the entire audio file"
@@ -11429,12 +10592,9 @@
             {
               "key": "gist",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "An ultra-short summary (just a few words) of the content spoken in the chapter"
@@ -11442,12 +10602,9 @@
             {
               "key": "headline",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "A single sentence summary of the content spoken during the chapter"
@@ -11455,12 +10612,9 @@
             {
               "key": "summary",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "A one paragraph summary of the content spoken during the chapter"
@@ -11468,12 +10622,9 @@
             {
               "key": "start",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The starting time, in milliseconds, for the chapter"
@@ -11481,12 +10632,9 @@
             {
               "key": "end",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The starting time, in milliseconds, for the chapter"
@@ -11504,23 +10652,17 @@
             {
               "key": "entity_type",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_transcripts:EntityType"
-                }
+                "type": "id",
+                "id": "type_transcripts:EntityType"
               },
               "description": "The type of entity for the detected entity"
             },
             {
               "key": "text",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The text for the detected entity"
@@ -11528,12 +10670,9 @@
             {
               "key": "start",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The starting time, in milliseconds, at which the detected entity appears in the audio file"
@@ -11541,12 +10680,9 @@
             {
               "key": "end",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The ending time, in milliseconds, for the detected entity in the audio file"
@@ -11749,12 +10885,9 @@
             {
               "key": "text",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The transcript of the sentence"
@@ -11762,12 +10895,9 @@
             {
               "key": "start",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The starting time, in milliseconds, of the sentence"
@@ -11775,12 +10905,9 @@
             {
               "key": "end",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The ending time, in milliseconds, of the sentence"
@@ -11788,25 +10915,19 @@
             {
               "key": "sentiment",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_transcripts:Sentiment"
-                }
+                "type": "id",
+                "id": "type_transcripts:Sentiment"
               },
               "description": "The detected sentiment for the sentence, one of POSITIVE, NEUTRAL, NEGATIVE"
             },
             {
               "key": "confidence",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "minimum": 0,
-                    "maximum": 1
-                  }
+                  "type": "double",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               },
               "description": "The confidence score for the detected sentiment of the sentence, from 0 to 1"
@@ -11814,17 +10935,11 @@
             {
               "key": "speaker",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -11859,14 +10974,11 @@
             {
               "key": "relevance",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "minimum": 0,
-                    "maximum": 1
-                  }
+                  "type": "double",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               },
               "description": "How relevant the detected topic is of a detected topic"
@@ -11874,12 +10986,9 @@
             {
               "key": "label",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The IAB taxonomical label for the label of the detected topic, where > denotes supertopic/subtopic relationship"
@@ -11897,12 +11006,9 @@
             {
               "key": "text",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The text in the transcript in which a detected topic occurs"
@@ -11910,21 +11016,12 @@
             {
               "key": "labels",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_transcripts:TopicDetectionResultLabelsItem"
-                        }
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "id",
+                    "id": "type_transcripts:TopicDetectionResultLabelsItem"
                   }
                 }
               }
@@ -11932,16 +11029,10 @@
             {
               "key": "timestamp",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:Timestamp"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_transcripts:Timestamp"
                 }
               }
             }
@@ -11957,12 +11048,9 @@
             {
               "key": "label",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The label of the sensitive topic"
@@ -11970,14 +11058,11 @@
             {
               "key": "confidence",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "minimum": 0,
-                    "maximum": 1
-                  }
+                  "type": "double",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               },
               "description": "The confidence score for the topic being discussed, from 0 to 1"
@@ -11985,14 +11070,11 @@
             {
               "key": "severity",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "minimum": 0,
-                    "maximum": 1
-                  }
+                  "type": "double",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               },
               "description": "How severely the topic is discussed in the section, from 0 to 1"
@@ -12009,12 +11091,9 @@
             {
               "key": "text",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The transcript of the section flagged by the Content Moderation model"
@@ -12022,16 +11101,10 @@
             {
               "key": "labels",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:ContentSafetyLabel"
-                    }
-                  }
+                "type": "list",
+                "itemShape": {
+                  "type": "id",
+                  "id": "type_transcripts:ContentSafetyLabel"
                 }
               },
               "description": "An array of safety labels, one per sensitive topic that was detected in the section"
@@ -12039,12 +11112,9 @@
             {
               "key": "sentences_idx_start",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The sentence index at which the section begins"
@@ -12052,12 +11122,9 @@
             {
               "key": "sentences_idx_end",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The sentence index at which the section ends"
@@ -12065,11 +11132,8 @@
             {
               "key": "timestamp",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_transcripts:Timestamp"
-                }
+                "type": "id",
+                "id": "type_transcripts:Timestamp"
               },
               "description": "Timestamp information for the section"
             }
@@ -12085,42 +11149,33 @@
             {
               "key": "low",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "minimum": 0,
-                    "maximum": 1
-                  }
+                  "type": "double",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               }
             },
             {
               "key": "medium",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "minimum": 0,
-                    "maximum": 1
-                  }
+                  "type": "double",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               }
             },
             {
               "key": "high",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "minimum": 0,
-                    "maximum": 1
-                  }
+                  "type": "double",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               }
             }
@@ -12137,27 +11192,18 @@
             {
               "key": "status",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_transcripts:AudioIntelligenceModelStatus"
-                }
+                "type": "id",
+                "id": "type_transcripts:AudioIntelligenceModelStatus"
               },
               "description": "The status of the Key Phrases model. Either success, or unavailable in the rare case that the model failed."
             },
             {
               "key": "results",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:AutoHighlightResult"
-                    }
-                  }
+                "type": "list",
+                "itemShape": {
+                  "type": "id",
+                  "id": "type_transcripts:AutoHighlightResult"
                 }
               },
               "description": "A temporally-sequential array of Key Phrases"
@@ -12174,12 +11220,9 @@
             {
               "key": "count",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The total number of times the key phrase appears in the audio file"
@@ -12187,12 +11230,9 @@
             {
               "key": "rank",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double"
-                  }
+                  "type": "double"
                 }
               },
               "description": "The total relevancy to the overall audio file of this key phrase - a greater number means more relevant"
@@ -12200,12 +11240,9 @@
             {
               "key": "text",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The text itself of the key phrase"
@@ -12213,16 +11250,10 @@
             {
               "key": "timestamps",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:Timestamp"
-                    }
-                  }
+                "type": "list",
+                "itemShape": {
+                  "type": "id",
+                  "id": "type_transcripts:Timestamp"
                 }
               },
               "description": "The timestamp of the of the key phrase"
@@ -12239,67 +11270,49 @@
             {
               "key": "confidence",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "minimum": 0,
-                    "maximum": 1
-                  }
+                  "type": "double",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               }
             },
             {
               "key": "start",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               }
             },
             {
               "key": "end",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               }
             },
             {
               "key": "text",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               }
             },
             {
               "key": "speaker",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -12317,83 +11330,59 @@
             {
               "key": "text",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               }
             },
             {
               "key": "start",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               }
             },
             {
               "key": "end",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               }
             },
             {
               "key": "confidence",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "minimum": 0,
-                    "maximum": 1
-                  }
+                  "type": "double",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               }
             },
             {
               "key": "words",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:TranscriptWord"
-                    }
-                  }
+                "type": "list",
+                "itemShape": {
+                  "type": "id",
+                  "id": "type_transcripts:TranscriptWord"
                 }
               }
             },
             {
               "key": "speaker",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -12411,54 +11400,39 @@
             {
               "key": "id",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               }
             },
             {
               "key": "confidence",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "minimum": 0,
-                    "maximum": 1
-                  }
+                  "type": "double",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               }
             },
             {
               "key": "audio_duration",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double"
-                  }
+                  "type": "double"
                 }
               }
             },
             {
               "key": "sentences",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:TranscriptSentence"
-                    }
-                  }
+                "type": "list",
+                "itemShape": {
+                  "type": "id",
+                  "id": "type_transcripts:TranscriptSentence"
                 }
               }
             }
@@ -12474,83 +11448,59 @@
             {
               "key": "text",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               }
             },
             {
               "key": "start",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               }
             },
             {
               "key": "end",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               }
             },
             {
               "key": "confidence",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "minimum": 0,
-                    "maximum": 1
-                  }
+                  "type": "double",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               }
             },
             {
               "key": "words",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:TranscriptWord"
-                    }
-                  }
+                "type": "list",
+                "itemShape": {
+                  "type": "id",
+                  "id": "type_transcripts:TranscriptWord"
                 }
               }
             },
             {
               "key": "speaker",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -12568,54 +11518,39 @@
             {
               "key": "id",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               }
             },
             {
               "key": "confidence",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "minimum": 0,
-                    "maximum": 1
-                  }
+                  "type": "double",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               }
             },
             {
               "key": "audio_duration",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double"
-                  }
+                  "type": "double"
                 }
               }
             },
             {
               "key": "paragraphs",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:TranscriptParagraph"
-                    }
-                  }
+                "type": "list",
+                "itemShape": {
+                  "type": "id",
+                  "id": "type_transcripts:TranscriptParagraph"
                 }
               }
             }
@@ -12632,12 +11567,9 @@
             {
               "key": "limit",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The number of results this page is limited to"
@@ -12645,12 +11577,9 @@
             {
               "key": "result_count",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "The actual number of results in the page"
@@ -12658,12 +11587,9 @@
             {
               "key": "current_url",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The URL used to retrieve the current page of transcripts"
@@ -12671,17 +11597,11 @@
             {
               "key": "prev_url",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -12690,17 +11610,11 @@
             {
               "key": "next_url",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -12718,87 +11632,63 @@
             {
               "key": "id",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               }
             },
             {
               "key": "resource_url",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               }
             },
             {
               "key": "status",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_transcripts:TranscriptStatus"
-                }
+                "type": "id",
+                "id": "type_transcripts:TranscriptStatus"
               }
             },
             {
               "key": "created",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "datetime"
-                  }
+                  "type": "datetime"
                 }
               }
             },
             {
               "key": "completed",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "datetime"
-                  }
+                  "type": "datetime"
                 }
               }
             },
             {
               "key": "audio_url",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               }
             },
             {
               "key": "error",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -12817,26 +11707,17 @@
             {
               "key": "page_details",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_transcripts:PageDetails"
-                }
+                "type": "id",
+                "id": "type_transcripts:PageDetails"
               }
             },
             {
               "key": "transcripts",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_transcripts:TranscriptListItem"
-                    }
-                  }
+                "type": "list",
+                "itemShape": {
+                  "type": "id",
+                  "id": "type_transcripts:TranscriptListItem"
                 }
               }
             }
@@ -12867,11 +11748,8 @@
             {
               "key": "message_type",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:MessageType"
-                }
+                "type": "id",
+                "id": "type_realtime:MessageType"
               },
               "description": "Describes the type of the message"
             }
@@ -12886,61 +11764,43 @@
             {
               "displayName": "Session Begins",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:SessionBegins"
-                }
+                "type": "id",
+                "id": "type_realtime:SessionBegins"
               }
             },
             {
               "displayName": "Partial Transcript",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:PartialTranscript"
-                }
+                "type": "id",
+                "id": "type_realtime:PartialTranscript"
               }
             },
             {
               "displayName": "Final Transcript",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:FinalTranscript"
-                }
+                "type": "id",
+                "id": "type_realtime:FinalTranscript"
               }
             },
             {
               "displayName": "Session Information",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:SessionInformation"
-                }
+                "type": "id",
+                "id": "type_realtime:SessionInformation"
               }
             },
             {
               "displayName": "Session Terminated",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:SessionTerminated"
-                }
+                "type": "id",
+                "id": "type_realtime:SessionTerminated"
               }
             },
             {
               "displayName": "Realtime Error",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:RealtimeError"
-                }
+                "type": "id",
+                "id": "type_realtime:RealtimeError"
               }
             }
           ]
@@ -12955,12 +11815,9 @@
             {
               "key": "error",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               }
             }
@@ -13012,21 +11869,15 @@
             {
               "displayName": "Partial Transcript",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:PartialTranscript"
-                }
+                "type": "id",
+                "id": "type_realtime:PartialTranscript"
               }
             },
             {
               "displayName": "Final Transcript",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:FinalTranscript"
-                }
+                "type": "id",
+                "id": "type_realtime:FinalTranscript"
               }
             }
           ]
@@ -13041,13 +11892,10 @@
             {
               "key": "message_type",
               "valueShape": {
-                "type": "alias",
+                "type": "literal",
                 "value": {
-                  "type": "literal",
-                  "value": {
-                    "type": "stringLiteral",
-                    "value": "SessionBegins"
-                  }
+                  "type": "stringLiteral",
+                  "value": "SessionBegins"
                 }
               },
               "description": "Describes the type of the message"
@@ -13055,12 +11903,9 @@
             {
               "key": "session_id",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "Unique identifier for the established session"
@@ -13068,12 +11913,9 @@
             {
               "key": "expires_at",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "datetime"
-                  }
+                  "type": "datetime"
                 }
               },
               "description": "Timestamp when this session will expire"
@@ -13091,13 +11933,10 @@
             {
               "key": "message_type",
               "valueShape": {
-                "type": "alias",
+                "type": "literal",
                 "value": {
-                  "type": "literal",
-                  "value": {
-                    "type": "stringLiteral",
-                    "value": "SessionInformation"
-                  }
+                  "type": "stringLiteral",
+                  "value": "SessionInformation"
                 }
               },
               "description": "Describes the type of the message"
@@ -13105,12 +11944,9 @@
             {
               "key": "audio_duration_seconds",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double"
-                  }
+                  "type": "double"
                 }
               },
               "description": "The total duration of the audio in seconds"
@@ -13127,13 +11963,10 @@
             {
               "key": "message_type",
               "valueShape": {
-                "type": "alias",
+                "type": "literal",
                 "value": {
-                  "type": "literal",
-                  "value": {
-                    "type": "stringLiteral",
-                    "value": "SessionTerminated"
-                  }
+                  "type": "stringLiteral",
+                  "value": "SessionTerminated"
                 }
               },
               "description": "Describes the type of the message"
@@ -13150,12 +11983,9 @@
             {
               "key": "audio_start",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "Start time of audio sample relative to session start, in milliseconds"
@@ -13163,12 +11993,9 @@
             {
               "key": "audio_end",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "End time of audio sample relative to session start, in milliseconds"
@@ -13176,14 +12003,11 @@
             {
               "key": "confidence",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "minimum": 0,
-                    "maximum": 1
-                  }
+                  "type": "double",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               },
               "description": "The confidence score of the entire transcription, between 0 and 1"
@@ -13191,12 +12015,9 @@
             {
               "key": "text",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The partial transcript for your audio"
@@ -13204,16 +12025,10 @@
             {
               "key": "words",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_realtime:Word"
-                    }
-                  }
+                "type": "list",
+                "itemShape": {
+                  "type": "id",
+                  "id": "type_realtime:Word"
                 }
               },
               "description": "An array of objects, with the information for each word in the transcription text.\nIncludes the start and end time of the word in milliseconds, the confidence score of the word, and the text, which is the word itself."
@@ -13221,12 +12036,9 @@
             {
               "key": "created",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "datetime"
-                  }
+                  "type": "datetime"
                 }
               },
               "description": "The timestamp for the partial transcript"
@@ -13245,13 +12057,10 @@
             {
               "key": "message_type",
               "valueShape": {
-                "type": "alias",
+                "type": "literal",
                 "value": {
-                  "type": "literal",
-                  "value": {
-                    "type": "stringLiteral",
-                    "value": "PartialTranscript"
-                  }
+                  "type": "stringLiteral",
+                  "value": "PartialTranscript"
                 }
               },
               "description": "Describes the type of message"
@@ -13270,13 +12079,10 @@
             {
               "key": "message_type",
               "valueShape": {
-                "type": "alias",
+                "type": "literal",
                 "value": {
-                  "type": "literal",
-                  "value": {
-                    "type": "stringLiteral",
-                    "value": "FinalTranscript"
-                  }
+                  "type": "stringLiteral",
+                  "value": "FinalTranscript"
                 }
               },
               "description": "Describes the type of message"
@@ -13284,12 +12090,9 @@
             {
               "key": "punctuated",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "boolean"
-                  }
+                  "type": "boolean"
                 }
               },
               "description": "Whether the text is punctuated and cased"
@@ -13297,12 +12100,9 @@
             {
               "key": "text_formatted",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "boolean"
-                  }
+                  "type": "boolean"
                 }
               },
               "description": "Whether the text is formatted, for example Dollar -> $"
@@ -13319,12 +12119,9 @@
             {
               "key": "start",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "Start time of the word in milliseconds"
@@ -13332,12 +12129,9 @@
             {
               "key": "end",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer"
-                  }
+                  "type": "integer"
                 }
               },
               "description": "End time of the word in milliseconds"
@@ -13345,14 +12139,11 @@
             {
               "key": "confidence",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "minimum": 0,
-                    "maximum": 1
-                  }
+                  "type": "double",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               },
               "description": "Confidence score of the word"
@@ -13360,12 +12151,9 @@
             {
               "key": "text",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The word itself"
@@ -13396,12 +12184,9 @@
             {
               "key": "force_end_utterance",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "boolean"
-                  }
+                  "type": "boolean"
                 }
               },
               "description": "A boolean value to communicate that you wish to force the end of the utterance"
@@ -13419,14 +12204,11 @@
             {
               "key": "end_utterance_silence_threshold",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "maximum": 20000
-                  }
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 20000
                 }
               },
               "description": "The duration threshold in milliseconds"
@@ -13443,12 +12225,9 @@
             {
               "key": "terminate_session",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "boolean"
-                  }
+                  "type": "boolean"
                 }
               },
               "description": "Set to true to end your streaming session forever"
@@ -13482,12 +12261,9 @@
             {
               "key": "token",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The temporary authentication token for Streaming Speech-to-Text"
@@ -13504,12 +12280,9 @@
             {
               "key": "request_id",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The ID of the deletion request of the LeMUR request"
@@ -13517,12 +12290,9 @@
             {
               "key": "request_id_to_purge",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The ID of the LeMUR request to purge the data for"
@@ -13530,12 +12300,9 @@
             {
               "key": "deleted",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "boolean"
-                  }
+                  "type": "boolean"
                 }
               },
               "description": "Whether the request data was deleted"
@@ -13552,12 +12319,9 @@
             {
               "key": "request_id",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The ID of the LeMUR request"
@@ -13576,12 +12340,9 @@
             {
               "key": "response",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The response generated by LeMUR"
@@ -13600,16 +12361,10 @@
             {
               "key": "response",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "list",
-                  "itemShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_lemur:LemurQuestionAnswer"
-                    }
-                  }
+                "type": "list",
+                "itemShape": {
+                  "type": "id",
+                  "id": "type_lemur:LemurQuestionAnswer"
                 }
               },
               "description": "The answers generated by LeMUR and their questions"
@@ -13627,12 +12382,9 @@
             {
               "key": "question",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The question for LeMUR to answer"
@@ -13640,12 +12392,9 @@
             {
               "key": "answer",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The answer generated by LeMUR"
@@ -13664,12 +12413,9 @@
             {
               "key": "response",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The response generated by LeMUR"
@@ -13688,12 +12434,9 @@
             {
               "key": "response",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The response generated by LeMUR."
@@ -13709,35 +12452,23 @@
           "variants": [
             {
               "shape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               }
             },
             {
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "map",
-                  "keyShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "unknown"
-                    }
+                "type": "map",
+                "keyShape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
+                },
+                "valueShape": {
+                  "type": "unknown"
                 }
               }
             }
@@ -13753,22 +12484,13 @@
             {
               "key": "transcript_ids",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "primitive",
                     "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
+                      "type": "string"
                     }
                   }
                 }
@@ -13778,17 +12500,11 @@
             {
               "key": "input_text",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -13797,16 +12513,10 @@
             {
               "key": "context",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_lemur:LemurBaseParamsContext"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_lemur:LemurBaseParamsContext"
                 }
               },
               "description": "Context to provide the model. This can be a string or a free-form JSON value."
@@ -13814,16 +12524,10 @@
             {
               "key": "final_model",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_lemur:LemurModel"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_lemur:LemurModel"
                 }
               },
               "description": "The model that is used for the final prompt after compression is performed.\nDefaults to \"default\"."
@@ -13831,17 +12535,11 @@
             {
               "key": "max_output_size",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "integer"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
                   }
                 }
               },
@@ -13850,17 +12548,11 @@
             {
               "key": "temperature",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
                   }
                 }
               },
@@ -13877,35 +12569,23 @@
           "variants": [
             {
               "shape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               }
             },
             {
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "map",
-                  "keyShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "unknown"
-                    }
+                "type": "map",
+                "keyShape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
+                },
+                "valueShape": {
+                  "type": "unknown"
                 }
               }
             }
@@ -13921,12 +12601,9 @@
             {
               "key": "question",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "The question you wish to ask. For more complex questions use default model."
@@ -13934,16 +12611,10 @@
             {
               "key": "context",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_lemur:LemurQuestionContext"
-                    }
-                  }
+                "type": "optional",
+                "shape": {
+                  "type": "id",
+                  "id": "type_lemur:LemurQuestionContext"
                 }
               },
               "description": "Any context about the transcripts you wish to provide. This can be a string or any object."
@@ -13951,17 +12622,11 @@
             {
               "key": "answer_format",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               },
@@ -13970,22 +12635,13 @@
             {
               "key": "answer_options",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
+                "type": "optional",
+                "shape": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "primitive",
                     "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
+                      "type": "string"
                     }
                   }
                 }
@@ -14046,61 +12702,43 @@
             {
               "displayName": "Session Begins",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:SessionBegins"
-                }
+                "type": "id",
+                "id": "type_realtime:SessionBegins"
               }
             },
             {
               "displayName": "Partial Transcript",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:PartialTranscript"
-                }
+                "type": "id",
+                "id": "type_realtime:PartialTranscript"
               }
             },
             {
               "displayName": "Final Transcript",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:FinalTranscript"
-                }
+                "type": "id",
+                "id": "type_realtime:FinalTranscript"
               }
             },
             {
               "displayName": "Session Information",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:SessionInformation"
-                }
+                "type": "id",
+                "id": "type_realtime:SessionInformation"
               }
             },
             {
               "displayName": "Session Terminated",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:SessionTerminated"
-                }
+                "type": "id",
+                "id": "type_realtime:SessionTerminated"
               }
             },
             {
               "displayName": "Realtime Error",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:RealtimeError"
-                }
+                "type": "id",
+                "id": "type_realtime:RealtimeError"
               }
             }
           ]
@@ -14115,41 +12753,29 @@
             {
               "displayName": "Audio Data",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:AudioData"
-                }
+                "type": "id",
+                "id": "type_realtime:AudioData"
               }
             },
             {
               "displayName": "Terminate Session",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:TerminateSession"
-                }
+                "type": "id",
+                "id": "type_realtime:TerminateSession"
               }
             },
             {
               "displayName": "Force End Utterance",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:ForceEndUtterance"
-                }
+                "type": "id",
+                "id": "type_realtime:ForceEndUtterance"
               }
             },
             {
               "displayName": "Configure End Utterance Silence Threshold",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_realtime:ConfigureEndUtteranceSilenceThreshold"
-                }
+                "type": "id",
+                "id": "type_realtime:ConfigureEndUtteranceSilenceThreshold"
               }
             }
           ]
@@ -14164,12 +12790,9 @@
             {
               "key": "error",
               "valueShape": {
-                "type": "alias",
+                "type": "primitive",
                 "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                  "type": "string"
                 }
               },
               "description": "Error message"
@@ -14177,18 +12800,12 @@
             {
               "key": "status",
               "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "optional",
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "literal",
-                      "value": {
-                        "type": "stringLiteral",
-                        "value": "error"
-                      }
-                    }
+                "type": "optional",
+                "shape": {
+                  "type": "literal",
+                  "value": {
+                    "type": "stringLiteral",
+                    "value": "error"
                   }
                 }
               }

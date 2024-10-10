@@ -1,9 +1,9 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
 import { WebSocketMessage } from "../api-reference/web-socket/WebSocketMessages";
 import { PlaygroundWebSocketSessionForm } from "./PlaygroundWebSocketSessionForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
+import { WebSocketContext } from "./types/endpoint-context";
 
 interface PlaygroundWebSocketContentProps {
     context: WebSocketContext;

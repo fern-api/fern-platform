@@ -5,5 +5,5 @@
 import * as FernRegistry from "../../../../../../../index";
 
 export interface SetType {
-    itemShape: FernRegistry.api.latest.TypeShape;
+    itemShape: FernRegistry.api.latest.TypeReference;
 }

@@ -5,6 +5,6 @@
 import * as FernRegistry from "../../../../../../../index";
 
 export interface MapType {
-    keyShape: FernRegistry.api.latest.TypeShape;
-    valueShape: FernRegistry.api.latest.TypeShape;
+    keyShape: FernRegistry.api.latest.TypeReference;
+    valueShape: FernRegistry.api.latest.TypeReference;
 }

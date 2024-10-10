@@ -3,5 +3,5 @@
  */
 import * as FernRegistry from "../../../../../../../index";
 export interface ListType {
-    itemShape: FernRegistry.api.latest.TypeShape;
+    itemShape: FernRegistry.api.latest.TypeReference;
 }

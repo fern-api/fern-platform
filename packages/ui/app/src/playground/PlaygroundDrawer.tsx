@@ -1,4 +1,4 @@
-import { NodeId } from "@fern-api/fdr-sdk/navigation";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton } from "@fern-ui/components";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
@@ -85,7 +85,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
         group: undefined,
     };
 
-    const setFormState = useSetAtom(usePlaygroundFormStateAtom(selectionState?.id ?? NodeId("")));
+    const setFormState = useSetAtom(usePlaygroundFormStateAtom(selectionState?.id ?? FernNavigation.NodeId("")));
 
     const renderMobileHeader = () => (
         <div className="grid h-10 grid-cols-2 gap-2 px-4">

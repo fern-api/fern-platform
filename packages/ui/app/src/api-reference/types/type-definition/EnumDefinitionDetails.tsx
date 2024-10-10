@@ -1,12 +1,14 @@
 import { Empty } from "@fern-ui/components";
 import { ReactElement, useEffect, useState } from "react";
 
-export interface EnumDefinitionDetailsProps {
-    elements: ReactElement[];
-    searchInput: string;
+export declare namespace TypeDefinitionDetails {
+    export interface Props {
+        elements: ReactElement[];
+        searchInput: string;
+    }
 }
 
-export const EnumDefinitionDetails = ({ elements, searchInput }: EnumDefinitionDetailsProps): ReactElement => {
+export const EnumDefinitionDetails = ({ elements, searchInput }: TypeDefinitionDetails.Props): ReactElement => {
     const [filteredElements, setFilteredElements] = useState<ReactElement[]>([]);
 
     useEffect(() => {

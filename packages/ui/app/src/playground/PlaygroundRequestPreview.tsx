@@ -1,4 +1,3 @@
-import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { useAtom, useAtomValue } from "jotai";
 import { FC, useMemo } from "react";
 import { PLAYGROUND_AUTH_STATE_ATOM, PLAYGROUND_AUTH_STATE_OAUTH_ATOM, useFeatureFlags } from "../atoms";
@@ -7,6 +6,7 @@ import { FernSyntaxHighlighter } from "../syntax-highlighting/FernSyntaxHighligh
 import { PlaygroundCodeSnippetResolverBuilder } from "./code-snippets/resolver";
 import { useSnippet } from "./code-snippets/useSnippet";
 import { PlaygroundEndpointRequestFormState } from "./types";
+import { EndpointContext } from "./types/endpoint-context";
 import { usePlaygroundBaseUrl } from "./utils/select-environment";
 
 interface PlaygroundRequestPreviewProps {
@@ -20,7 +20,7 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ co
     const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
     const { isFileForgeHackEnabled } = useFeatureFlags();
     const [oAuthValue, setOAuthValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
-    const [baseUrl] = usePlaygroundBaseUrl(context.endpoint);
+    const baseUrl = usePlaygroundBaseUrl(context.endpoint);
 
     const builder = useMemo(
         () => new PlaygroundCodeSnippetResolverBuilder(context, isSnippetTemplatesEnabled, isFileForgeHackEnabled),
