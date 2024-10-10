@@ -48,7 +48,7 @@ export class DocsLoader {
             return [this.authProps, this.authConfig];
         }
         if (!this.fernToken) {
-            return [undefined, this.auth];
+            return [undefined, this.authConfig];
         }
         try {
             return [await withAuthProps(this.authConfig, this.fernToken), this.authConfig];
