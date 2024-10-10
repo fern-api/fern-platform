@@ -216,7 +216,7 @@ export async function withInitialProps({
                           FernNavigation.hasMetadata(n) &&
                           n.authed &&
                           auth == null &&
-                          !featureFlags.isUnathenticatedPagesDiscoverable
+                          !featureFlags.isAuthenticatedPagesDiscoverable
                       ) {
                           return false;
                       }

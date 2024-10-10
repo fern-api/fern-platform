@@ -88,7 +88,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         const isFileForgeHackEnabled = checkDomainMatchesCustomers(domain, config["file-forge-hack-enabled"]);
         const is404PageHidden = checkDomainMatchesCustomers(domain, config["hide-404-page"]);
         const isNewSearchExperienceEnabled = checkDomainMatchesCustomers(domain, config["new-search-experience"]);
-        const isUnathenticatedPagesDiscoverable = checkDomainMatchesCustomers(
+        const isAuthenticatedPagesDiscoverable = checkDomainMatchesCustomers(
             domain,
             config["authenticated-pages-discoverable"],
         );
@@ -123,7 +123,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isFileForgeHackEnabled,
             is404PageHidden,
             isNewSearchExperienceEnabled,
-            isUnathenticatedPagesDiscoverable,
+            isAuthenticatedPagesDiscoverable,
             grpcEndpoints,
         };
     } catch (e) {
@@ -158,7 +158,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             isFileForgeHackEnabled: false,
             is404PageHidden: false,
             isNewSearchExperienceEnabled: false,
-            isUnathenticatedPagesDiscoverable: false,
+            isAuthenticatedPagesDiscoverable: false,
             grpcEndpoints: [],
         };
     }

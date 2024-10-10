@@ -27,7 +27,7 @@ export interface FeatureFlags {
     isFileForgeHackEnabled: boolean;
     is404PageHidden: boolean;
     isNewSearchExperienceEnabled: boolean;
-    isUnathenticatedPagesDiscoverable: boolean;
+    isAuthenticatedPagesDiscoverable: boolean;
     // TODO: remove this after pinecone demo, this is a temporary flag
     grpcEndpoints: readonly string[];
 }
@@ -61,7 +61,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     isFileForgeHackEnabled: false,
     is404PageHidden: false,
     isNewSearchExperienceEnabled: false,
-    isUnathenticatedPagesDiscoverable: false,
+    isAuthenticatedPagesDiscoverable: false,
     // TODO: remove this after pinecone demo, this is a temporary flag
     grpcEndpoints: [],
 };
