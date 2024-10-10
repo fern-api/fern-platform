@@ -9,9 +9,13 @@ imports:
 
 service:
   base-path: /v3/registry/docs
+  # all of these endpoints now require auth:
+  # - the fern token is scoped to a particular organization, unless the token belongs to an admin user.
+  # - the workos_ token is scoped to a particular organization, and can only be used for SSO users.
   auth: true
   endpoints:
     getOrganization:
+      docs: Get the organization ID for this domain
       method: GET
       path: /load/{domain}/organization
       path-parameters:
@@ -22,42 +26,44 @@ service:
         - rootCommons.NotFoundError
 
     getNavigation:
+      docs: Get the navigation hierarchy for this instance of the docs
       method: GET
       path: /load/{domain}/instance/{id}/navigation
       path-parameters:
         domain: string
-        id: DocsInstanceId
+        id: DocsInstanceId # if "latest" is specified, the latest instance is returned
       response: navigation.RootNode
       errors:
         - rootCommons.UnauthorizedError
         - rootCommons.NotFoundError
 
     getConfig:
+      docs: Get the config for this instance of the docs
       method: GET
       path: /load/{domain}/instance/{id}/config
       path-parameters:
         domain: string
-        id: DocsInstanceId
+        id: DocsInstanceId # if "latest" is specified, the latest instance is returned
       response: DocsConfig
       errors:
         - rootCommons.UnauthorizedError
         - rootCommons.NotFoundError
 
-    getFileMetadata:
+    getFilesMetadata:
+      docs: Get the metadata for the files in this instance of the docs
       method: POST
       path: /load/{domain}/instance/{id}/files
       path-parameters:
         domain: string
-        id: DocsInstanceId
+        id: DocsInstanceId # if "latest" is specified, the latest instance is returned
       request:
-        name: BulkGetPagesRequest
+        name: GetFilesMetadataRequest
         body:
           properties:
-            filepaths: list<FilePath>
+            files: list<FilePath>
       response: map<FilePath, FileMetadata>
       errors:
         - rootCommons.UnauthorizedError
-        - rootCommons.NotFoundError
 
     startDocsPreview:
       method: POST
@@ -65,7 +71,7 @@ service:
       path-parameters:
         organization: rootCommons.OrgId
       request:
-        body: StartDocsRegisterRequest
+        body: StartDocsPreviewRequest
       response: StartDocsRegisterResponse
       errors:
         - rootCommons.UnauthorizedError
@@ -81,8 +87,9 @@ service:
       response: StartDocsRegisterResponse
       errors:
         - rootCommons.UnauthorizedError
+        - rootCommons.BadRequestError
 
-    putDocsMetadata:
+    finishDocsRegister:
       method: PUT
       path: /register/{organization}/job/{docsRegistrationId}/metadata
       path-parameters:
@@ -95,21 +102,26 @@ service:
             config: DocsConfig
             navigation: navigation.RootNode
             files: map<FilePath, FileMetadata>
+      response: FinishDocsRegisterResponse
       errors:
         - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+        - rootCommons.BadRequestError
 
     startDocsRevalidation:
       method: POST
-      path: /register/{organization}/job/{docsRegistrationId}/revalidate
+      path: /revalidate/{domain}
       path-parameters:
         organization: rootCommons.OrgId
         docsRegistrationId: v1DocsWrite.DocsRegistrationId
       errors:
         - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+        - rootCommons.BadRequestError
 
     getDocsRevalidationStatus:
       method: GET
-      path: /register/{organization}/job/{docsRegistrationId}/status
+      path: /revalidate/{domain}/status
       path-parameters:
         organization: rootCommons.OrgId
         docsRegistrationId: v1DocsWrite.DocsRegistrationId
@@ -225,12 +237,22 @@ types:
       solid: rootCommons.RgbaColor
       gradient: {}
 
+  StartDocsPreviewRequest:
+    properties:
+      auth: AuthConfig
+      basePath: optional<string>
+      publicFiles: list<FilePath>
+      privateFiles: list<FilePath>
+
   StartDocsRegisterRequest:
     properties:
       auth: AuthConfig
       basePath: optional<string>
       publicFiles: list<FilePath>
       privateFiles: list<FilePath>
+      aliases:
+        type: map<string, AuthConfig>
+        docs: A map of domain aliases to auth configs.
 
   StartDocsRegisterResponse:
     properties:
@@ -238,6 +260,12 @@ types:
       basePath: optional<string>
       docsRegistrationId: v1DocsWrite.DocsRegistrationId
       uploadUrls: map<FilePath, rootCommons.Url>
+
+  FinishDocsRegisterResponse:
+    properties:
+      id: rootCommons.DocsConfigId
+      domain: string
+      basePath: optional<string>
 
   DocsRegisterStatus:
     union:
