@@ -1,6 +1,7 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { kv } from "@vercel/kv";
+import { MarkdownKVCache } from "./MarkdownKVCache";
 
 const DEPLOYMENT_ID = process.env.VERCEL_DEPLOYMENT_ID ?? "development";
 const PREFIX = `docs:${DEPLOYMENT_ID}`;
@@ -19,10 +20,13 @@ export class ApiDefinitionKVCache {
         }
     }
 
+    private markdownCache: MarkdownKVCache;
     private constructor(
         private domain: string,
         private api: string,
-    ) {}
+    ) {
+        this.markdownCache = MarkdownKVCache.getInstance(domain);
+    }
 
     private createKey(key: string): string {
         return `${PREFIX}:${this.domain}:${this.api}:${key}`;
@@ -50,53 +54,21 @@ export class ApiDefinitionKVCache {
     }
 
     private async getResolvedDescription(key: string): Promise<FernDocs.MarkdownText | null> {
-        try {
-            return kv.get<FernDocs.MarkdownText>(this.createKey(key));
-        } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error(e);
-            return null;
-        }
+        return this.markdownCache.getMarkdownText(`${this.api}:${key}`);
     }
 
     private async mgetResolvedDescriptions(keys: string[]): Promise<Record<string, FernDocs.MarkdownText>> {
-        const toRet: Record<string, FernDocs.MarkdownText> = {};
-        try {
-            const response = await kv.mget<(FernDocs.MarkdownText | null)[]>(keys.map((key) => this.createKey(key)));
-            keys.map((key, index) => [key, response[index] ?? null] as const).forEach(([key, value]) => {
-                if (value != null) {
-                    toRet[key] = value;
-                }
-            });
-        } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error(e);
-        }
-        return toRet;
+        return this.markdownCache.mgetMarkdownText(keys.map((key) => `${this.api}:${key}`));
     }
 
     private async setResolvedDescription(description: FernDocs.MarkdownText, key: string): Promise<void> {
-        try {
-            await kv.set(this.createKey(key), description);
-        } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error(e);
-        }
+        await this.markdownCache.setMarkdownText(`${this.api}:${key}`, description);
     }
 
-    // TODO: validate that mset records is <1MB or else this will throw!
     private async msetResolvedDescriptions(records: Record<string, FernDocs.MarkdownText>): Promise<void> {
-        try {
-            const entries = Object.entries(records).map(([key, value]) => [this.createKey(key), value] as const);
-            const batches = [];
-            while (entries.length > 0) {
-                batches.push(entries.splice(0, 100));
-            }
-            await Promise.all(batches.map((batch) => kv.mset(Object.fromEntries(batch))));
-        } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error(e);
-        }
+        await this.markdownCache.msetMarkdownText(
+            Object.fromEntries(Object.entries(records).map(([key, value]) => [`${this.api}:${key}`, value])),
+        );
     }
 
     public async resolveDescription(

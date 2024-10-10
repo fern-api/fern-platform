@@ -1,15 +1,13 @@
+import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
-import { useMemo } from "react";
+import { ReactElement, useMemo } from "react";
 import { CodeExampleClientDropdown } from "../../../api-reference/endpoints/CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "../../../api-reference/endpoints/EndpointUrlWithOverflow";
 import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
 import { generateCodeExamples } from "../../../api-reference/examples/code-example";
-import { useDocsContent } from "../../../atoms";
-import { useSelectedEnvironmentId } from "../../../atoms/environment";
-import { ApiReferenceButton } from "../../../components/ApiReferenceButton";
-import { ResolvedEndpointDefinition, resolveEnvironment } from "../../../resolver/types";
-import { findEndpoint } from "../../../util/processRequestSnippetComponents";
+import { usePlaygroundBaseUrl } from "../../../playground/utils/select-environment";
 import { RequestSnippet } from "./types";
+import { useFindEndpoint } from "./useFindEndpoint";
 import { extractEndpointPathAndMethod, useSelectedClient } from "./utils";
 
 export const EndpointRequestSnippet: React.FC<React.PropsWithChildren<RequestSnippet.Props>> = ({
@@ -22,39 +20,35 @@ export const EndpointRequestSnippet: React.FC<React.PropsWithChildren<RequestSni
         return null;
     }
 
-    return <EndpointRequestSnippetInternal method={method} path={path} example={example} />;
+    return <EndpointRequestSnippetRenderer method={method} path={path} example={example} />;
 };
 
-const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSnippet.InternalProps>> = ({
+const EndpointRequestSnippetRenderer: React.FC<React.PropsWithChildren<RequestSnippet.InternalProps>> = ({
     method,
     path,
     example,
 }) => {
-    const content = useDocsContent();
-    const selectedEnvironmentId = useSelectedEnvironmentId();
+    const endpoint = useFindEndpoint(method, path);
 
-    const endpoint = useMemo(() => {
-        if (content.type !== "custom-markdown-page") {
-            return;
-        }
-        let endpoint: ResolvedEndpointDefinition | undefined;
-        for (const api of Object.values(content.apis)) {
-            endpoint = findEndpoint({
-                api,
-                path,
-                method,
-            });
-            if (endpoint) {
-                break;
-            }
-        }
-        return endpoint;
-    }, [method, path, content]);
+    if (endpoint == null) {
+        return null;
+    }
 
-    const clients = useMemo(() => generateCodeExamples(endpoint?.examples ?? []), [endpoint?.examples]);
+    return <EndpointRequestSnippetInternal endpoint={endpoint} example={example} />;
+};
+
+export function EndpointRequestSnippetInternal({
+    endpoint,
+    example,
+}: {
+    endpoint: ApiDefinition.EndpointDefinition;
+    example: string | undefined;
+}): ReactElement | null {
+    const clients = useMemo(() => generateCodeExamples(endpoint.examples), [endpoint.examples]);
     const [selectedClient, setSelectedClient] = useSelectedClient(clients, example);
+    const [baseUrl, selectedEnvironmentId] = usePlaygroundBaseUrl(endpoint);
 
-    if (endpoint == null || selectedClient == null) {
+    if (selectedClient == null) {
         return null;
     }
 
@@ -64,8 +58,9 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
                 title={
                     <EndpointUrlWithOverflow
                         path={endpoint.path}
-                        method={method}
-                        selectedEnvironment={resolveEnvironment(endpoint, selectedEnvironmentId)}
+                        method={endpoint.method}
+                        environmentId={selectedEnvironmentId}
+                        baseUrl={baseUrl}
                     />
                 }
                 actions={
@@ -77,7 +72,8 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
                                 selectedClient={selectedClient}
                             />
                         )}
-                        <ApiReferenceButton slug={endpoint.slug} />
+                        {/* TODO: Restore this button */}
+                        {/* <ApiReferenceButton slug={endpoint.slug} /> */}
                     </>
                 }
                 code={selectedClient.code}
@@ -87,4 +83,4 @@ const EndpointRequestSnippetInternal: React.FC<React.PropsWithChildren<RequestSn
             />
         </div>
     );
-};
+}

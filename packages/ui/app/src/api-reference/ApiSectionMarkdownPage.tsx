@@ -1,50 +1,50 @@
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
 import { ReactElement, memo, useRef } from "react";
 import { useHref } from "../hooks/useHref";
-import { useShouldLazyRender } from "../hooks/useShouldLazyRender";
 import { Markdown } from "../mdx/Markdown";
-import { ResolvedPageMetadata } from "../resolver/types";
 import { useApiPageCenterElement } from "./useApiPageCenterElement";
 
-interface ApiSectionMarkdownPageProps {
-    page: ResolvedPageMetadata;
-    hideBottomSeparator: boolean;
+interface ApiSectionMarkdownContentProps {
+    node: FernNavigation.NavigationNodeWithMarkdown;
+    mdx: FernDocs.MarkdownText;
+    last?: boolean;
 }
 
-const ApiSectionMarkdownContent = ({ page, hideBottomSeparator }: ApiSectionMarkdownPageProps) => {
+function ApiSectionMarkdownContent({ node, mdx, last = false }: ApiSectionMarkdownContentProps) {
     const ref = useRef<HTMLDivElement>(null);
-    useApiPageCenterElement(ref, page.slug);
+    useApiPageCenterElement(ref, node.slug);
 
     return (
-        <div
-            className={clsx("scroll-mt-content", {
-                "border-default border-b mb-px": !hideBottomSeparator,
-            })}
-            ref={ref}
-            id={useHref(page.slug)}
-        >
-            <Markdown mdx={page.markdown} />
+        <div className={clsx("scroll-mt-content")} ref={ref} id={useHref(node.slug)}>
+            <Markdown mdx={mdx} />
+
+            {/* TODO: the following ensures that the bottom line matches the rest of the api reference, but this isn't very graceful */}
+            <div className="fern-endpoint-content">
+                <div className={clsx({ "border-default border-b mb-px": !last })} />
+            </div>
         </div>
     );
-};
+}
 
-export const ApiSectionMarkdownPage = memo(
-    ({
-        page,
-        hideBottomSeparator,
-    }: {
-        page: ResolvedPageMetadata;
-        hideBottomSeparator: boolean;
-    }): ReactElement | null => {
-        // TODO: this is a temporary fix to only SSG the content that is requested by the requested route.
-        // - webcrawlers will accurately determine the canonical URL (right now every page "returns" the same full-length content)
-        // - this allows us to render the static page before hydrating, preventing layout-shift caused by the navigation context.
-        if (useShouldLazyRender(page.slug)) {
-            return null;
-        }
+interface ApiSectionMarkdownPageProps {
+    node: FernNavigation.NavigationNodeWithMarkdown;
+    mdxs: Record<string, FernDocs.MarkdownText>;
+    last?: boolean;
+}
 
-        return <ApiSectionMarkdownContent page={page} hideBottomSeparator={hideBottomSeparator} />;
-    },
-);
+export const ApiSectionMarkdownPage = memo(({ node, mdxs, last }: ApiSectionMarkdownPageProps): ReactElement | null => {
+    const mdx = mdxs[node.id];
+
+    if (!mdx) {
+        // TODO: sentry
+        // eslint-disable-next-line no-console
+        console.error(`No markdown content found for node ${node.id}`);
+        return null;
+    }
+
+    return <ApiSectionMarkdownContent node={node} mdx={mdx} last={last} />;
+});
 
 ApiSectionMarkdownPage.displayName = "ApiSectionMarkdownPage";

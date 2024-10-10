@@ -8,5 +8,5 @@ export interface UndiscriminatedUnionVariant
     extends FernRegistry.api.latest.WithDescription,
         FernRegistry.api.latest.WithAvailability {
     displayName: string | undefined;
-    shape: FernRegistry.api.latest.TypeReference;
+    shape: FernRegistry.api.latest.TypeShape;
 }

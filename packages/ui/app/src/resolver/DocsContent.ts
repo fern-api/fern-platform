@@ -1,7 +1,6 @@
-import type { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import type { ResolvedApiEndpoint, ResolvedRootPackage, ResolvedTypeDefinition } from "./types";
 
 export declare namespace DocsContent {
     export interface Neighbor {
@@ -38,32 +37,34 @@ export declare namespace DocsContent {
     interface CustomMarkdownPage {
         type: "custom-markdown-page";
         slug: FernNavigation.Slug;
-        title: string;
         mdx: FernDocs.MarkdownText;
         neighbors: Neighbors;
         // TODO: downselect apis to only the fields we need
-        apis: Record<string, ResolvedRootPackage>;
+        apis: Record<FernNavigation.ApiDefinitionId, ApiDefinition>;
     }
 
     interface ApiEndpointPage {
         type: "api-endpoint-page";
         slug: FernNavigation.Slug;
-        api: FdrAPI.ApiDefinitionId;
-        auth: APIV1Read.ApiAuth | undefined;
-        types: Record<string, ResolvedTypeDefinition>;
-        item: ResolvedApiEndpoint;
+        nodeId: FernNavigation.NodeId;
+        breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+        apiDefinition: ApiDefinition;
         showErrors: boolean;
         neighbors: Neighbors;
     }
 
+    // TODO: it's a bit excessive to resolve and send all the pages here rather than simply stream them
     interface ApiReferencePage {
         type: "api-reference-page";
-        title: string;
         slug: FernNavigation.Slug;
-        api: string;
-        paginated: boolean;
-        apiDefinition: ResolvedRootPackage;
-        showErrors: boolean;
+        title?: string;
+        mdxs: Record<FernNavigation.NodeId, FernDocs.MarkdownText>;
+
+        // TODO: the api reference node is probably duplicated in the initial props
+        // so we should deduplicate it to avoid sending it twice
+        breadcrumb: readonly FernNavigation.BreadcrumbItem[]; // this is the breadcrumb up to the api reference node
+        apiReferenceNodeId: FernNavigation.NodeId;
+        apiDefinition: ApiDefinition;
     }
 }
 

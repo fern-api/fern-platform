@@ -12,6 +12,9 @@
       "outputs": ["dist/**"],
       "dependsOn": ["^compile"]
     },
+    "check-types": {
+      "dependsOn": ["^compile"]
+    },
     "lint": {},
     "lint:eslint": {},
     "lint:style": {},

@@ -1,10 +1,10 @@
+import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { toCurlyBraceEndpointPathLiteral } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { UnreachableCaseError } from "ts-essentials";
 import { provideRegistryService } from "../../services/registry";
 import { PlaygroundAuthState, PlaygroundEndpointRequestFormState } from "../types";
-import { EndpointContext } from "../types/endpoint-context";
 import { buildAuthHeaders, convertToCustomSnippetPayload } from "../utils";
 import { CurlSnippetBuilder } from "./builders/curl";
 import { PythonRequestSnippetBuilder } from "./builders/python";

@@ -1,0 +1,55 @@
+{
+  "name": "@fern-ui/fern-docs-server",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/ui/fern-docs-server"
+  },
+  "private": true,
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
+    "test": "vitest --run --passWithNoTests --globals",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
+    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
+    "lint:style:fix": "pnpm lint:style --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "organize-imports": "organize-imports-cli tsconfig.json",
+    "depcheck": "depcheck",
+    "dev": "tsc --watch",
+    "docs:dev": "pnpm dev"
+  },
+  "dependencies": {
+    "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-api/ui-core-utils": "workspace:*",
+    "@fern-ui/fern-docs-utils": "workspace:*",
+    "@vercel/kv": "^2.0.0",
+    "httpsnippet-lite": "^3.0.5",
+    "ts-essentials": "^10.0.1"
+  },
+  "devDependencies": {
+    "@fern-platform/configs": "workspace:*",
+    "@types/node": "^18.7.18",
+    "depcheck": "^1.4.3",
+    "eslint": "^8.56.0",
+    "organize-imports-cli": "^0.10.0",
+    "prettier": "^3.3.2",
+    "stylelint": "^16.1.0",
+    "typescript": "5.4.3",
+    "vitest": "^1.5.0"
+  }
+}
