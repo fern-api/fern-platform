@@ -75,6 +75,7 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
       "availability": undefined,
       "description": undefined,
       "extends": [],
+      "extraProperties": undefined,
       "name": "Merchant",
       "properties": [
         {
@@ -104,6 +105,7 @@ exports[`resolveApiDefinition > should finish resolving 1`] = `
       "availability": undefined,
       "description": undefined,
       "extends": [],
+      "extraProperties": undefined,
       "name": "Offer",
       "properties": [
         {
@@ -183,6 +185,7 @@ exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`]
           "availability": undefined,
           "description": undefined,
           "extends": [],
+          "extraProperties": undefined,
           "name": undefined,
           "properties": [
             {
@@ -400,6 +403,7 @@ exports[`resolveApiDefinition > should resolve authed and unauthed endpoints 1`]
       "availability": undefined,
       "description": undefined,
       "extends": [],
+      "extraProperties": undefined,
       "name": "AuthResponse",
       "properties": [
         {

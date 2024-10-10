@@ -50,6 +50,7 @@ groups:
         config:
           useBrandedStringAliases: true
           noSerdeLayer: true
+          noOptionalProperties: true
           outputSourceFiles: true
           neverThrowErrors: true
           timeoutInSeconds: infinity

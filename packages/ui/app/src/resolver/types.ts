@@ -625,6 +625,7 @@ export interface ResolvedObjectShape extends WithMetadata {
     type: "object";
     extends: string[];
     properties: ResolvedObjectProperty[];
+    extraProperties: ResolvedTypeShape | undefined;
 }
 
 /**

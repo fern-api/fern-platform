@@ -41,19 +41,23 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
         onChange(undefined);
     }, [onChange]);
     return visitDiscriminatedUnion(unwrapReference(shape, types).shape)._visit<ReactElement | null>({
-        object: (object) => (
-            <WithLabel property={property} value={value} onRemove={onRemove} types={types}>
-                <PlaygroundObjectPropertiesForm
-                    properties={unwrapObjectType(object, types).properties}
-                    onChange={onChange}
-                    value={value}
-                    indent={indent}
-                    id={id}
-                    types={types}
-                    disabled={disabled}
-                />
-            </WithLabel>
-        ),
+        object: (object) => {
+            const unwrappedObjectType = unwrapObjectType(object, types);
+            return (
+                <WithLabel property={property} value={value} onRemove={onRemove} types={types}>
+                    <PlaygroundObjectPropertiesForm
+                        properties={unwrappedObjectType.properties}
+                        extraProperties={unwrappedObjectType.extraProperties}
+                        onChange={onChange}
+                        value={value}
+                        indent={indent}
+                        id={id}
+                        types={types}
+                        disabled={disabled}
+                    />
+                </WithLabel>
+            );
+        },
         enum: ({ values }) => (
             <WithLabel property={property} value={value} onRemove={onRemove} types={types}>
                 <PlaygroundEnumForm enumValues={values} onChange={onChange} value={value} id={id} disabled={disabled} />

@@ -514,6 +514,9 @@ export class ApiEndpointResolver {
                 name: undefined,
                 extends: object.extends,
                 properties: await this.typeResolver.resolveObjectProperties(object),
+                extraProperties: object.extraProperties
+                    ? await this.typeResolver.resolveTypeReference(object.extraProperties)
+                    : undefined,
                 description: undefined,
                 availability: undefined,
             }),
@@ -534,6 +537,9 @@ export class ApiEndpointResolver {
                 name: undefined,
                 extends: object.extends,
                 properties: await this.typeResolver.resolveObjectProperties(object),
+                extraProperties: object.extraProperties
+                    ? await this.typeResolver.resolveTypeReference(object.extraProperties)
+                    : undefined,
                 description: undefined,
                 availability: undefined,
             }),
@@ -618,6 +624,9 @@ export class ApiEndpointResolver {
                     name: undefined,
                     extends: object.extends,
                     properties: await this.typeResolver.resolveObjectProperties(object),
+                    extraProperties: object.extraProperties
+                        ? await this.typeResolver.resolveTypeReference(object.extraProperties)
+                        : undefined,
                     description: undefined,
                     availability: undefined,
                 }),
@@ -639,6 +648,9 @@ export class ApiEndpointResolver {
                             name: undefined,
                             extends: stream.shape.extends,
                             properties: await this.typeResolver.resolveObjectProperties(stream.shape),
+                            extraProperties: stream.shape.extraProperties
+                                ? await this.typeResolver.resolveTypeReference(stream.shape.extraProperties)
+                                : undefined,
                             description: undefined,
                             availability: undefined,
                         },

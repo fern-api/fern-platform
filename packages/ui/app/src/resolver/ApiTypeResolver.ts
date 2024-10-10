@@ -1,5 +1,5 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { once } from "lodash-es";
 import { MDX_SERIALIZER } from "../mdx/bundler";
@@ -74,6 +74,9 @@ export class ApiTypeResolver {
                 name,
                 extends: object.extends,
                 properties: await this.resolveObjectProperties(object),
+                extraProperties: object.extraProperties
+                    ? await this.resolveTypeReference(object.extraProperties)
+                    : undefined,
                 description: await this.serializeMdx(description, {
                     files: this.mdxOptions?.files,
                 }),
