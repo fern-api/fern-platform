@@ -25,6 +25,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
             name: "Movie",
             shape: {
                 type: "object",
+                extraProperties: undefined,
                 extends: [],
                 properties: [
                     {
@@ -75,6 +76,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
             name: "DetailedMovieReview",
             shape: {
                 type: "object",
+                extraProperties: undefined,
                 extends: [],
                 properties: [
                     {
@@ -130,6 +132,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
             name: "AgressiveMovieReview",
             shape: {
                 type: "object",
+                extraProperties: undefined,
                 extends: [],
                 properties: [
                     {
@@ -244,6 +247,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
             name: "CreateMovieRequest",
             shape: {
                 type: "object",
+                extraProperties: undefined,
                 extends: [],
                 properties: [
                     {
