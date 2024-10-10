@@ -1,6 +1,6 @@
 import { checkViewerAllowedEdge } from "@/server/auth/checkViewerAllowed";
 import { loadWithUrl } from "@/server/loadWithUrl";
-import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { getAuthEdgeConfig, getInkeepSettings } from "@fern-ui/fern-docs-edge-config";
 import { SearchConfig, getSearchConfig } from "@fern-ui/search-utils";
 import { provideRegistryService } from "@fern-ui/ui";
@@ -13,7 +13,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Se
         return NextResponse.json({ isAvailable: false }, { status: 405 });
     }
 
-    const domain = getXFernHostEdge(req);
+    const domain = getDocsDomainEdge(req);
     const auth = await getAuthEdgeConfig(domain);
 
     try {
