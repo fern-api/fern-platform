@@ -645,7 +645,7 @@ function transformDiscriminatedVariant({
             properties: writeShape.additionalProperties.properties.map((property) =>
                 transformProperty({ writeShape: property }),
             ),
-            extraProperties: undefined,
+            extraProperties: writeShape.additionalProperties.extraProperties,
         },
     };
 }
