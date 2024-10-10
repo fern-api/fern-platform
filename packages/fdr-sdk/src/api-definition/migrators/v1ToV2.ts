@@ -280,7 +280,8 @@ export class ApiDefinitionV1ToLatest {
                 type: "object",
                 extends: value.extends,
                 properties: this.migrateObjectProperties(value.properties),
-                extraProperties: undefined,
+                extraProperties:
+                    value.extraProperties != null ? this.migrateTypeReference(value.extraProperties) : undefined,
             }),
             alias: (value) => ({
                 type: "alias",

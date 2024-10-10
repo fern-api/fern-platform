@@ -569,6 +569,7 @@ function transformShape({ writeShape }: { writeShape: APIV1Write.TypeShape }): F
                 type: "object",
                 extends: writeShape.extends,
                 properties: writeShape.properties.map((property) => transformProperty({ writeShape: property })),
+                extraProperties: writeShape.extraProperties,
             };
         case "alias":
             return {
@@ -644,6 +645,7 @@ function transformDiscriminatedVariant({
             properties: writeShape.additionalProperties.properties.map((property) =>
                 transformProperty({ writeShape: property }),
             ),
+            extraProperties: undefined,
         },
     };
 }
