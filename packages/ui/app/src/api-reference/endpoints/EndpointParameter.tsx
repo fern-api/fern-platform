@@ -5,7 +5,8 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import cn from "clsx";
 import { compact } from "lodash-es";
-import { FC, PropsWithChildren, ReactNode, memo, useRef, useState } from "react";
+import { FC, PropsWithChildren, ReactNode, memo, useEffect, useRef, useState } from "react";
+import { capturePosthogEvent } from "../../analytics/posthog";
 import { useIsApiReferencePaginated, useRouteListener } from "../../atoms";
 import { FernAnchor } from "../../components/FernAnchor";
 import { useHref } from "../../hooks/useHref";
@@ -98,6 +99,21 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
     });
 
     const href = useHref(slug, anchorId);
+    const descriptions = compact([description, ...additionalDescriptions]);
+
+    useEffect(() => {
+        if (descriptions.length > 0) {
+            capturePosthogEvent("api_reference_multiple_descriptions", {
+                name,
+                slug,
+                anchorIdParts,
+                count: descriptions.length,
+                descriptions,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [descriptions]);
+
     return (
         <div
             ref={ref}
@@ -113,7 +129,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
                     {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                 </span>
             </FernAnchor>
-            <Markdown mdx={compact([description, ...additionalDescriptions])[0]} className="!t-muted" size="sm" />
+            <Markdown mdx={descriptions[0]} className="!t-muted" size="sm" />
             {children}
         </div>
     );
