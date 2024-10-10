@@ -15,6 +15,7 @@ export function scrollToCenter(
         fastdom.clear(stopMeasuring);
         stopMeasuring = fastdom.measure(() => {
             const offsetTop = getOffsetTopRelativeToScrollContainer(target, scrollContainer);
+            console.log(offsetTop, scrollContainer.scrollTop);
 
             // if the target is not a child of the scroll container, bail
             if (offsetTop == null) {
@@ -51,6 +52,13 @@ function getOffsetTopRelativeToScrollContainer(targetElement: HTMLElement, scrol
     while (currentElement && currentElement !== scrollContainer) {
         offsetTop += currentElement.offsetTop;
         currentElement = currentElement.offsetParent as HTMLElement | null;
+        if (!currentElement) {
+            // if the offset parent is null, we've accidentally reached the root element
+            return undefined;
+        } else if (!scrollContainer.contains(currentElement)) {
+            // if the offset parent jumps beyond the scroll container, bail
+            break;
+        }
     }
 
     return offsetTop;
