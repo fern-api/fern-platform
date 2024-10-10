@@ -38,7 +38,7 @@ export default class RedisDocsDefinitionStore {
     }
 
     public async set({ url, value }: { url: URL; value: CachedDocsResponse }): Promise<void> {
-        await this.client.set(url.hostname, JSON.stringify(value));
+        await this.client.set(url.hostname, JSON.stringify(value), "EX", 60 * 60 * 24 * 7);
     }
 
     public async delete({ url }: { url: URL }): Promise<void> {
