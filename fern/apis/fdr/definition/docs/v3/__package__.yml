@@ -1,0 +1,266 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  rootCommons: ../../commons.yml
+  navigation: ../../navigation/latest/__package__.yml
+  algolia: ../../algolia.yml
+  v1Commons: ../v1/commons/commons.yml
+  v1DocsWrite: ../v1/write/__package__.yml
+
+service:
+  base-path: /v3/registry/docs
+  auth: true
+  endpoints:
+    getOrganization:
+      method: GET
+      path: /load/{domain}/organization
+      path-parameters:
+        domain: string
+      response: rootCommons.OrgId
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+
+    getNavigation:
+      method: GET
+      path: /load/{domain}/instance/{id}/navigation
+      path-parameters:
+        domain: string
+        id: DocsInstanceId
+      response: navigation.RootNode
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+
+    getConfig:
+      method: GET
+      path: /load/{domain}/instance/{id}/config
+      path-parameters:
+        domain: string
+        id: DocsInstanceId
+      response: DocsConfig
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+
+    getFileMetadata:
+      method: POST
+      path: /load/{domain}/instance/{id}/files
+      path-parameters:
+        domain: string
+        id: DocsInstanceId
+      request:
+        name: BulkGetPagesRequest
+        body:
+          properties:
+            filepaths: list<FilePath>
+      response: map<FilePath, FileMetadata>
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+
+    startDocsPreview:
+      method: POST
+      path: /register/{organization}/preview
+      path-parameters:
+        organization: rootCommons.OrgId
+      request:
+        body: StartDocsRegisterRequest
+      response: StartDocsRegisterResponse
+      errors:
+        - rootCommons.UnauthorizedError
+
+    startDocsRegister:
+      method: POST
+      path: /register/{organization}/init/{domain}
+      path-parameters:
+        organization: rootCommons.OrgId
+        domain: string
+      request:
+        body: StartDocsRegisterRequest
+      response: StartDocsRegisterResponse
+      errors:
+        - rootCommons.UnauthorizedError
+
+    putDocsMetadata:
+      method: PUT
+      path: /register/{organization}/job/{docsRegistrationId}/metadata
+      path-parameters:
+        organization: rootCommons.OrgId
+        docsRegistrationId: v1DocsWrite.DocsRegistrationId
+      request:
+        name: PutDocsMetadata
+        body:
+          properties:
+            config: DocsConfig
+            navigation: navigation.RootNode
+            files: map<FilePath, FileMetadata>
+      errors:
+        - rootCommons.UnauthorizedError
+
+    startDocsRevalidation:
+      method: POST
+      path: /register/{organization}/job/{docsRegistrationId}/revalidate
+      path-parameters:
+        organization: rootCommons.OrgId
+        docsRegistrationId: v1DocsWrite.DocsRegistrationId
+      errors:
+        - rootCommons.UnauthorizedError
+
+    getDocsRevalidationStatus:
+      method: GET
+      path: /register/{organization}/job/{docsRegistrationId}/status
+      path-parameters:
+        organization: rootCommons.OrgId
+        docsRegistrationId: v1DocsWrite.DocsRegistrationId
+      response: DocsRegisterStatus
+      errors:
+        - rootCommons.UnauthorizedError
+
+types:
+  FilePath: string
+
+  AuthConfig:
+    properties:
+      enableAnonymousAccess: boolean
+      enableSso: optional<boolean>
+      audience: optional<optional<rootCommons.AudienceId>>
+
+  DocsInstanceId:
+    discriminated: false
+    union:
+      - rootCommons.DocsConfigId
+      - literal<"latest">
+
+  File:
+    properties:
+      url: rootCommons.Url # s3 blob url
+      metadata: optional<FileMetadata>
+
+  FileMetadata:
+    union:
+      image: ImageMetadata
+      markdown: MarkdownMetadata
+
+  ImageMetadata:
+    properties:
+      width: double
+      height: double
+      blurDataUrl: optional<string>
+      alt: optional<string>
+
+  MarkdownMetadata:
+    properties:
+      editThisPageUrl: optional<rootCommons.Url>
+      markdown:
+        type: optional<string>
+        availability: deprecated
+        docs: This type is deprecated, and will be removed in a future version.
+
+  DocsConfig:
+    properties:
+      id: rootCommons.DocsConfigId
+      updatedAt: datetime
+
+      domain: string
+      basePath: optional<string>
+
+      title: optional<string>
+      defaultLanguage: optional<v1Commons.ProgrammingLanguage>
+      announcement: optional<v1Commons.AnnouncementConfig>
+
+      # navigation
+      navbarLinks: optional<list<v1Commons.NavbarLink>>
+      footerLinks: optional<list<v1Commons.FooterLink>>
+
+      # logo
+      logoHeight: optional<double>
+      logoHref: optional<rootCommons.Url>
+      favicon: optional<FilePath>
+
+      # seo
+      metadata: optional<v1Commons.MetadataConfig>
+      redirects: optional<list<v1Commons.RedirectConfig>>
+
+      # styles
+      colors: optional<ColorsConfig>
+      fonts: optional<v1Commons.DocsTypographyConfigV2>
+      layout: optional<v1Commons.DocsLayoutConfig>
+
+      # integrations
+      analytics: optional<v1Commons.AnalyticsConfig>
+      integrations: optional<v1Commons.IntegrationsConfig>
+      search: optional<algolia.SingleAlgoliaIndexInfo>
+
+      # css and js
+      css: optional<v1Commons.CssConfig>
+      js: optional<v1Commons.JsConfig>
+
+      # playground
+      playground: optional<v1Commons.PlaygroundConfig>
+
+      # files
+      files: optional<list<FilePath>>
+      markdownFiles: optional<list<FilePath>>
+      mdxBundlerFile: optional<list<FilePath>>
+
+  ColorsConfig:
+    properties:
+      dark: optional<ThemeConfig>
+      light: optional<ThemeConfig>
+
+  ThemeConfig:
+    properties:
+      logo: optional<FilePath>
+      backgroundImage: optional<FilePath>
+      accentPrimary: rootCommons.RgbaColor
+      background: Background
+      border: optional<rootCommons.RgbaColor>
+      sidebarBackground: optional<rootCommons.RgbaColor>
+      headerBackground: optional<rootCommons.RgbaColor>
+      cardBackground: optional<rootCommons.RgbaColor>
+
+  Background:
+    union:
+      solid: rootCommons.RgbaColor
+      gradient: {}
+
+  StartDocsRegisterRequest:
+    properties:
+      auth: AuthConfig
+      basePath: optional<string>
+      publicFiles: list<FilePath>
+      privateFiles: list<FilePath>
+
+  StartDocsRegisterResponse:
+    properties:
+      domain: string
+      basePath: optional<string>
+      docsRegistrationId: v1DocsWrite.DocsRegistrationId
+      uploadUrls: map<FilePath, rootCommons.Url>
+
+  DocsRegisterStatus:
+    union:
+      notStarted: DocsRegisterStatusNotStarted
+      inProgress: DocsRegisterStatusInProgress
+      completed: DocsRegisterStatusCompleted
+      failed: DocsRegisterStatusFailed
+
+  DocsRegisterStatusNotStarted:
+    docs: The docs register has not started.
+    properties: {}
+
+  DocsRegisterStatusInProgress:
+    docs: The docs register is in progress.
+    properties:
+      total: integer
+      completed: integer
+
+  DocsRegisterStatusCompleted:
+    docs: The docs register completed.
+    properties: {}
+
+  DocsRegisterStatusFailed:
+    docs: The docs register failed.
+    properties:
+      error: string
