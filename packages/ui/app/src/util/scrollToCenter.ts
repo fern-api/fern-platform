@@ -38,16 +38,19 @@ export function scrollToCenter(
 }
 
 function getOffsetTopRelativeToScrollContainer(targetElement: HTMLElement, scrollContainer: HTMLElement) {
+    if (targetElement === scrollContainer) {
+        return 0;
+    }
+
+    if (!scrollContainer.contains(targetElement)) {
+        return undefined;
+    }
+
     let offsetTop = 0;
     let currentElement: HTMLElement | null = targetElement;
     while (currentElement && currentElement !== scrollContainer) {
         offsetTop += currentElement.offsetTop;
         currentElement = currentElement.offsetParent as HTMLElement | null;
-    }
-
-    // if the target is not a child of the scroll container, return undefined
-    if (currentElement == null) {
-        return undefined;
     }
 
     return offsetTop;
