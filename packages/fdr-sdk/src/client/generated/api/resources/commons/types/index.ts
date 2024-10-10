@@ -19,3 +19,4 @@ export * from "./EndpointIdentifier";
 export * from "./EndpointPathLiteral";
 export * from "./HttpMethod";
 export * from "./Availability";
+export * from "./RgbaColor";

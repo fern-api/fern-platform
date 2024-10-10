@@ -15,6 +15,7 @@ import { ReadService as docs_v1_read_RootService } from "./api/resources/docs/re
 import { WriteService as docs_v1_write_RootService } from "./api/resources/docs/resources/v1/resources/write/service/WriteService";
 import { ReadService as docs_v2_read_RootService } from "./api/resources/docs/resources/v2/resources/read/service/ReadService";
 import { WriteService as docs_v2_write_RootService } from "./api/resources/docs/resources/v2/resources/write/service/WriteService";
+import { V3Service as docs_v3_RootService } from "./api/resources/docs/resources/v3/service/V3Service";
 import { GeneratorsService as generators_RootService } from "./api/resources/generators/service/GeneratorsService";
 import { CliService as generators_CliService } from "./api/resources/generators/resources/cli/service/CliService";
 import { VersionsService as generators_VersionsService } from "./api/resources/generators/resources/versions/service/VersionsService";
@@ -53,6 +54,9 @@ export declare function register(expressApp: express.Express | express.Router, s
             write: {
                 _root: docs_v2_write_RootService;
             };
+        };
+        v3: {
+            _root: docs_v3_RootService;
         };
     };
     generators: {

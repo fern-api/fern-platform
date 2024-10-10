@@ -8,6 +8,7 @@ export function register(expressApp, services) {
     expressApp.use("/registry/docs", services.docs.v1.write._root.toRouter());
     expressApp.use("/v2/registry/docs", services.docs.v2.read._root.toRouter());
     expressApp.use("/v2/registry/docs", services.docs.v2.write._root.toRouter());
+    expressApp.use("/v3/registry/docs", services.docs.v3._root.toRouter());
     expressApp.use("/generators", services.generators._root.toRouter());
     expressApp.use("/registry", services.diff.toRouter());
     expressApp.use("/docs-cache", services.docsCache.toRouter());

@@ -4,7 +4,7 @@
 import * as FernRegistry from "../../../../../../../index";
 export declare type Background = FernRegistry.docs.v1.read.Background.Solid | FernRegistry.docs.v1.read.Background.Gradient;
 export declare namespace Background {
-    interface Solid extends FernRegistry.docs.v1.commons.RgbaColor {
+    interface Solid extends FernRegistry.RgbaColor {
         type: "solid";
     }
     interface Gradient {

@@ -9,6 +9,8 @@ imports:
 
 service:
   base-path: /v3/registry/docs
+  headers:
+    x-fern-cli-version: optional<string>
   # all of these endpoints now require auth:
   # - the fern token is scoped to a particular organization, unless the token belongs to an admin user.
   # - the workos_ token is scoped to a particular organization, and can only be used for SSO users.
@@ -20,6 +22,8 @@ service:
       path: /load/{domain}/organization
       path-parameters:
         domain: string
+      request:
+        name: GetOrganizationRequest
       response: rootCommons.OrgId
       errors:
         - rootCommons.UnauthorizedError
@@ -32,6 +36,8 @@ service:
       path-parameters:
         domain: string
         id: DocsInstanceId # if "latest" is specified, the latest instance is returned
+      request:
+        name: GetNavigationRequest
       response: navigation.RootNode
       errors:
         - rootCommons.UnauthorizedError
@@ -44,6 +50,8 @@ service:
       path-parameters:
         domain: string
         id: DocsInstanceId # if "latest" is specified, the latest instance is returned
+      request:
+        name: GetConfigRequest
       response: DocsConfig
       errors:
         - rootCommons.UnauthorizedError
@@ -71,7 +79,13 @@ service:
       path-parameters:
         organization: rootCommons.OrgId
       request:
-        body: StartDocsPreviewRequest
+        name: StartDocsPreviewRequest
+        body:
+          properties:
+            auth: AuthConfig
+            basePath: optional<string>
+            publicFiles: list<FilePath>
+            privateFiles: list<FilePath>
       response: StartDocsRegisterResponse
       errors:
         - rootCommons.UnauthorizedError
@@ -83,7 +97,16 @@ service:
         organization: rootCommons.OrgId
         domain: string
       request:
-        body: StartDocsRegisterRequest
+        name: StartDocsRegisterRequest
+        body:
+          properties:
+            auth: AuthConfig
+            basePath: optional<string>
+            publicFiles: list<FilePath>
+            privateFiles: list<FilePath>
+            aliases:
+              type: map<string, AuthConfig>
+              docs: A map of domain aliases to auth configs.
       response: StartDocsRegisterResponse
       errors:
         - rootCommons.UnauthorizedError
@@ -112,8 +135,9 @@ service:
       method: POST
       path: /revalidate/{domain}
       path-parameters:
-        organization: rootCommons.OrgId
-        docsRegistrationId: v1DocsWrite.DocsRegistrationId
+        domain: string
+      request:
+        name: StartDocsRevalidationRequest
       errors:
         - rootCommons.UnauthorizedError
         - rootCommons.NotFoundError
@@ -123,8 +147,9 @@ service:
       method: GET
       path: /revalidate/{domain}/status
       path-parameters:
-        organization: rootCommons.OrgId
-        docsRegistrationId: v1DocsWrite.DocsRegistrationId
+        domain: string
+      request:
+        name: GetDocsRevalidationStatusRequest
       response: DocsRegisterStatus
       errors:
         - rootCommons.UnauthorizedError
@@ -236,23 +261,6 @@ types:
     union:
       solid: rootCommons.RgbaColor
       gradient: {}
-
-  StartDocsPreviewRequest:
-    properties:
-      auth: AuthConfig
-      basePath: optional<string>
-      publicFiles: list<FilePath>
-      privateFiles: list<FilePath>
-
-  StartDocsRegisterRequest:
-    properties:
-      auth: AuthConfig
-      basePath: optional<string>
-      publicFiles: list<FilePath>
-      privateFiles: list<FilePath>
-      aliases:
-        type: map<string, AuthConfig>
-        docs: A map of domain aliases to auth configs.
 
   StartDocsRegisterResponse:
     properties:
