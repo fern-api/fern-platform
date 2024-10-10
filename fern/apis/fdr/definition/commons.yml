@@ -105,6 +105,10 @@ errors:
     status-code: 403
     type: string
 
+  NotFoundError:
+    status-code: 404
+    type: string
+
   InternalError:
     status-code: 500
     type: string

@@ -5,6 +5,7 @@ imports:
   navigation: ../../navigation/latest/__package__.yml
   algolia: ../../algolia.yml
   v1Commons: ../v1/commons/commons.yml
+  v1DocsWrite: ../v1/write/__package__.yml
 
 service:
   base-path: /v3/registry/docs
@@ -53,7 +54,7 @@ service:
         body:
           properties:
             pages: list<rootCommons.PageId>
-      response: map<rootCommons.PageId, DocsPage>
+      response: map<rootCommons.PageId, PageContent>
       errors:
         - rootCommons.UnauthorizedError
         - rootCommons.NotFoundError
@@ -73,6 +74,72 @@ service:
       errors:
         - rootCommons.UnauthorizedError
         - rootCommons.NotFoundError
+
+    startDocsPreview:
+      method: POST
+      path: /register/{organization}/preview
+      path-parameters:
+        organization: rootCommons.OrgId
+      request:
+        name: StartDocsPreviewRequest
+        body:
+          properties:
+            filepaths: list<string>
+      response:
+        name: StartDocsPreviewResponse
+        body:
+          properties:
+            docsRegistrationId: v1DocsWrite.DocsRegistrationId
+            uploadUrl: rootCommons.Url
+            previewUrl: rootCommons.Url
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.UnavailableError
+
+    startDocsRegister:
+      method: POST
+      path: /register/{organization}/init/{domain}
+      path-parameters:
+        organization: rootCommons.OrgId
+        domain: string
+      request:
+        name: StartDocsRegisterRequest
+        body:
+          properties:
+            aliases: list<string>
+            filepaths: list<string>
+            # authConfig: optional<rootCommons.AuthConfig>
+            # filepaths: list<string>
+            # images: optional<list<string>>
+      response:
+        name: StartDocsRegisterResponse
+        body:
+          properties:
+            docsRegistrationId: v1DocsWrite.DocsRegistrationId
+            uploadUrl: rootCommons.Url
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.UnavailableError
+
+    putDocsMetadata:
+      method: PUT
+      path: /register/{organization}/job/{docsRegistrationId}/metadata
+      path-parameters:
+        domain: string
+        docsRegistrationId: v1DocsWrite.DocsRegistrationId
+      request:
+        name: PutDocsMetadata
+        body:
+          properties:
+            config: DocsConfig
+            navigation: navigation.RootNode
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.UnavailableError
+
+    putDocsPages:
+      method: PUT
+      path:
 
 types:
   DocsInstanceId:
@@ -98,10 +165,15 @@ types:
       blurDataUrl: optional<string>
       alt: optional<string>
 
+  PageContent:
+    properties:
+      markdown: string
+      editThisPageUrl: optional<rootCommons.Url>
+
   DocsConfig:
     properties:
       id: rootCommons.DocsConfigId
-      updatedAt: timestamp
+      updatedAt: datetime
 
       title: optional<string>
       defaultLanguage: optional<v1Commons.ProgrammingLanguage>
@@ -112,7 +184,7 @@ types:
       footerLinks: optional<list<v1Commons.FooterLink>>
 
       # logo
-      logoHeight: optional<Height>
+      logoHeight: optional<double>
       logoHref: optional<rootCommons.Url>
       favicon: optional<rootCommons.FileId>
 
@@ -157,6 +229,11 @@ types:
       sidebarBackground: optional<rootCommons.RgbaColor>
       headerBackground: optional<rootCommons.RgbaColor>
       cardBackground: optional<rootCommons.RgbaColor>
+
+  Background:
+    union:
+      solid: rootCommons.RgbaColor
+      gradient: {}
 
   GetSearchKeyResponse:
     properties:
