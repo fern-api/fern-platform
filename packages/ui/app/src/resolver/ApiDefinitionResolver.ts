@@ -180,6 +180,7 @@ export class ApiDefinitionResolver {
                 id: node.id,
                 hidden: node.hidden,
                 canonicalSlug: node.canonicalSlug,
+                authed: node.authed,
                 icon: node.icon,
                 noindex: node.noindex,
                 pageId: node.overviewPageId,
