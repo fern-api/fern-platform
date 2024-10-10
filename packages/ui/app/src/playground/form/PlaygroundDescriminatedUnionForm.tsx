@@ -103,6 +103,7 @@ export const PlaygroundDiscriminatedUnionForm = memo<PlaygroundDiscriminatedUnio
                 <div className="border-l border-border-default-soft pl-4">
                     <PlaygroundObjectPropertiesForm
                         properties={properties}
+                        extraProperties={undefined}
                         value={value}
                         onChange={onChange}
                         id={id}
