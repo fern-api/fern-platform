@@ -1,11 +1,11 @@
-import { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
+import type { ApiDefinition, WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
+import { createWebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useSetAtom } from "jotai";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import useSWRImmutable from "swr/immutable";
 import { WRITE_API_DEFINITION_ATOM } from "../../atoms";
 import { useApiRoute } from "../../hooks/useApiRoute";
-import { WebSocketContext, createWebSocketContext } from "../types/endpoint-context";
 
 interface LoadableWebSocketContext {
     context: WebSocketContext | undefined;
@@ -26,9 +26,11 @@ export function useWebSocketContext(node: FernNavigation.WebSocketNode): Loadabl
     const context = useMemo(() => createWebSocketContext(node, apiDefinition), [node, apiDefinition]);
 
     const set = useSetAtom(WRITE_API_DEFINITION_ATOM);
-    if (apiDefinition != null) {
-        set(apiDefinition);
-    }
+    useEffect(() => {
+        if (apiDefinition != null) {
+            set(apiDefinition);
+        }
+    }, [apiDefinition, set]);
 
     return { context, isLoading };
 }

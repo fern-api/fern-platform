@@ -27,6 +27,11 @@ type InternalDefaultValue =
     | { type: "typeReferenceId"; value: Latest.TypeReferenceIdDefault };
 
 /**
+ * Cache for unwrapped references. Perform the unwrapping only once.
+ */
+const UnwrapReferenceCache = new WeakMap<TypeShapeOrReference, UnwrappedReference>();
+
+/**
  * A TypeShape or TypeReference might be an alias or reference to another type.
  * This function unwraps the reference, including any optional wrappers, to get the actual shape.
  *
@@ -56,39 +61,53 @@ export function unwrapReference(
         return undefined;
     }
 
+    const cached = UnwrapReferenceCache.get(typeRef);
+    if (cached != null) {
+        return cached;
+    }
+
     let isOptional = false;
     const defaults: InternalDefaultValue[] = [];
     const descriptions: FernDocs.MarkdownText[] = [];
     const availabilities: Latest.Availability[] = [];
 
+    const visitedTypeIds: Latest.TypeId[] = [];
+    let internalTypeRef: TypeShapeOrReference | undefined = typeRef;
     let loop = 0;
-    while (typeRef != null) {
+    while (internalTypeRef != null) {
         if (loop > LOOP_TOLERANCE) {
-            // eslint-disable-next-line no-console
-            console.error("Infinite loop detected while unwrapping type reference. Falling back to unknown type.");
-            typeRef = undefined;
+            // infinite loop detected
+            internalTypeRef = undefined;
             break;
         }
 
-        if (typeRef.type === "optional") {
+        if (internalTypeRef.type === "optional") {
             isOptional = true;
-            if (typeRef.default != null) {
-                defaults.push({ type: "unknown", value: typeRef.default });
+            if (internalTypeRef.default != null) {
+                defaults.push({ type: "unknown", value: internalTypeRef.default });
             }
-            typeRef = typeRef.shape;
-        } else if (typeRef.type === "alias") {
-            typeRef = typeRef.value;
-        } else if (typeRef.type === "id") {
-            if (typeRef.default != null) {
-                defaults.push({ type: "typeReferenceId", value: typeRef.default });
+            internalTypeRef = internalTypeRef.shape;
+        } else if (internalTypeRef.type === "alias") {
+            internalTypeRef = internalTypeRef.value;
+        } else if (internalTypeRef.type === "id") {
+            if (visitedTypeIds.includes(internalTypeRef.id)) {
+                visitedTypeIds.push(internalTypeRef.id);
+                // circular reference detected
+                internalTypeRef = undefined;
+                break;
             }
-            const typeDef: Latest.TypeDefinition | undefined = types[typeRef.id];
+
+            if (internalTypeRef.default != null) {
+                defaults.push({ type: "typeReferenceId", value: internalTypeRef.default });
+            }
+            const typeDef: Latest.TypeDefinition | undefined = types[internalTypeRef.id];
+            visitedTypeIds.push(internalTypeRef.id);
             if (typeDef != null) {
                 if (typeDef.availability) {
                     availabilities.push(typeDef.availability);
                 }
 
-                typeRef = typeDef.shape;
+                internalTypeRef = typeDef.shape;
                 if (typeDef.description != null) {
                     descriptions.push(typeDef.description);
                 }
@@ -100,19 +119,25 @@ export function unwrapReference(
         loop++;
     }
 
-    if (typeRef == null) {
+    if (internalTypeRef == null) {
         // Note: this should be a fatal error, but we're handling it gracefully for now
         // eslint-disable-next-line no-console
-        console.error("Type reference is invalid. Falling back to unknown type.");
+        console.error(
+            `Type reference is invalid. Falling back to unknown type.${visitedTypeIds.length > 0 ? ` path=[${visitedTypeIds.join(", ")}]` : ""}`,
+        );
     }
 
-    return {
-        shape: typeRef ?? { type: "unknown", displayName: undefined },
+    const toRet = {
+        shape: internalTypeRef ?? { type: "unknown", displayName: undefined },
         availability: coalesceAvailability(availabilities),
         isOptional,
-        default: selectDefaultValue(typeRef, defaults),
+        default: selectDefaultValue(internalTypeRef, defaults),
         descriptions,
     };
+
+    UnwrapReferenceCache.set(typeRef, toRet);
+
+    return toRet;
 }
 
 function selectDefaultValue(
@@ -156,6 +181,8 @@ function selectDefaultValue(
     }
 }
 
+const UnwrapObjectTypeCache = new WeakMap<Latest.ObjectType, UnwrappedObjectType>();
+
 /**
  * Dereferences extended objects and returns all properties of the object.
  * If an object extends another object, the properties of the extended object will be sorted alphabetically.
@@ -169,6 +196,11 @@ export function unwrapObjectType(
     object: Latest.ObjectType,
     types: Record<string, Latest.TypeDefinition>,
 ): UnwrappedObjectType {
+    const cached = UnwrapObjectTypeCache.get(object);
+    if (cached != null) {
+        return cached;
+    }
+
     const directProperties = object.properties;
     const extraProperties = object.extraProperties;
     const descriptions: FernDocs.MarkdownText[] = [];
@@ -211,13 +243,13 @@ export function unwrapObjectType(
             const defaultProperty = isPlainObject(unwrapped.default) ? unwrapped.default[property.key] : undefined;
 
             const valueShape: Latest.TypeReference.Optional =
-                property.valueShape.type === "optional"
-                    ? { ...property.valueShape, default: defaultProperty ?? property.valueShape.default }
+                property.valueShape.type === "alias" && property.valueShape.value.type === "optional"
+                    ? { ...property.valueShape.value, default: defaultProperty ?? property.valueShape.value.default }
                     : { type: "optional", shape: property.valueShape, default: defaultProperty };
 
             return {
                 ...property,
-                valueShape,
+                valueShape: { type: "alias", value: valueShape },
             };
         });
     });
@@ -232,7 +264,9 @@ export function unwrapObjectType(
             (property) => unwrapReference(property.valueShape, types)?.isOptional,
             (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
         );
-        return { properties, extraProperties, descriptions };
+        const toRet = { properties, descriptions, extraProperties };
+        UnwrapObjectTypeCache.set(object, toRet);
+        return toRet;
     }
     const propertyKeys = new Set(object.properties.map((property) => property.key));
     const filteredExtendedProperties = extendedProperties.filter(
@@ -247,23 +281,28 @@ export function unwrapObjectType(
         (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
         (property) => property.key,
     );
-    return { properties, extraProperties, descriptions };
+    const toRet = { properties, descriptions, extraProperties };
+    UnwrapObjectTypeCache.set(object, toRet);
+    return toRet;
 }
 
 /**
  * The discriminant of a discriminated union is converted to a literal type, *prepended* to the additional properties.
  */
 export function unwrapDiscriminatedUnionVariant(
-    union: Latest.DiscriminatedUnionType,
+    union: Pick<Latest.DiscriminatedUnionType, "discriminant">,
     variant: Latest.DiscriminatedUnionVariant,
     types: Record<string, Latest.TypeDefinition>,
 ): UnwrappedObjectType {
-    const { properties, descriptions } = unwrapObjectType(variant, types);
+    const { properties, descriptions } = unwrapObjectType(variant, types); // this is already cached
     return {
         properties: [
             {
                 key: union.discriminant,
-                valueShape: { type: "literal", value: { type: "stringLiteral", value: variant.discriminantValue } },
+                valueShape: {
+                    type: "alias",
+                    value: { type: "literal", value: { type: "stringLiteral", value: variant.discriminantValue } },
+                },
 
                 // the description and availability of the discriminant should not be included here
                 // because they are already included in the union variant itself

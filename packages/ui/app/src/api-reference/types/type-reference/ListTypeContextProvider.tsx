@@ -10,12 +10,7 @@ export const ListTypeContextProvider: React.FC<PropsWithChildren> = ({ children 
     const newContextValue = useCallback(
         (): TypeDefinitionContextValue => ({
             ...contextValue,
-            jsonPropertyPath: [
-                ...contextValue.jsonPropertyPath,
-                {
-                    type: "listItem",
-                },
-            ],
+            jsonPropertyPath: [...contextValue.jsonPropertyPath, { type: "listItem" }],
         }),
         [contextValue],
     );

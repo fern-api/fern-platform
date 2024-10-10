@@ -21,6 +21,8 @@ describe("getSeoProps", () => {
                     icon: undefined,
                     hidden: false,
                     noindex: undefined,
+                    authed: undefined,
+                    audience: undefined,
                 },
                 parents: [],
                 currentVersion: undefined,

@@ -68,6 +68,8 @@ export async function getDocsPageProps(
             files: docs.definition.jsFiles,
         },
         serializeMdx,
+        host: docs.baseUrl.domain,
+        engine: "next-mdx-remote",
     });
 
     if (content == null) {

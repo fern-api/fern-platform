@@ -1,25 +1,30 @@
-import { useShouldLazyRender } from "../../hooks/useShouldLazyRender";
-import { ResolvedTypeDefinition, ResolvedWebhookDefinition } from "../../resolver/types";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { useMemo } from "react";
 import { WebhookContent } from "./WebhookContent";
 import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider";
 
 export declare namespace Webhook {
     export interface Props {
-        webhook: ResolvedWebhookDefinition;
-        isLastInApi: boolean;
-        types: Record<string, ResolvedTypeDefinition>;
+        node: FernNavigation.WebhookNode;
+        apiDefinition: ApiDefinition.ApiDefinition;
+        breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+        last?: boolean;
     }
 }
 
-export const Webhook: React.FC<Webhook.Props> = ({ webhook, isLastInApi, types }) => {
-    // TODO: merge this with the Endpoint component
-    if (useShouldLazyRender(webhook.slug)) {
+export const Webhook: React.FC<Webhook.Props> = ({ node, apiDefinition, breadcrumb, last }) => {
+    const context = useMemo(() => ApiDefinition.createWebhookContext(node, apiDefinition), [node, apiDefinition]);
+
+    if (!context) {
+        // eslint-disable-next-line no-console
+        console.error("Could not create context for webhook", node);
         return null;
     }
 
     return (
         <WebhookContextProvider>
-            <WebhookContent webhook={webhook} hideBottomSeparator={isLastInApi} types={types} />
+            <WebhookContent breadcrumb={breadcrumb} context={context} last={last} />
         </WebhookContextProvider>
     );
 };
