@@ -1,6 +1,6 @@
 import { FernButton } from "@fern-ui/components";
 import { getVersionAvailabilityLabel } from "@fern-ui/fdr-utils";
-import { NavArrowDown } from "iconoir-react";
+import { Lock, NavArrowDown } from "iconoir-react";
 import { useAtomValue } from "jotai";
 import { CURRENT_VERSION_ID_ATOM, VERSIONS_ATOM } from "../atoms";
 import { FernLinkDropdown } from "../components/FernLinkDropdown";
@@ -25,13 +25,15 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
         <div className="flex max-w-32">
             <FernLinkDropdown
                 value={currentVersionId}
-                options={versions.map(({ id, title, availability, slug, pointsTo }) => ({
+                options={versions.map(({ id, title, availability, slug, pointsTo, hidden, authed }) => ({
                     type: "value",
                     label: title,
                     helperText: availability != null ? getVersionAvailabilityLabel(availability) : undefined,
                     value: id,
                     disabled: availability == null,
                     href: toHref(pointsTo ?? slug),
+                    icon: authed ? <Lock className="size-4 self-center text-faded" /> : undefined,
+                    className: hidden ? "opacity-50" : undefined,
                 }))}
                 contentProps={{
                     "data-testid": "version-dropdown-content",
