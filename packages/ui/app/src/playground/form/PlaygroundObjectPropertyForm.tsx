@@ -1,4 +1,4 @@
-import { ObjectProperty, TypeDefinition, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
+import { ObjectProperty, TypeDefinition, TypeId, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernDropdown } from "@fern-ui/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
@@ -19,7 +19,7 @@ interface PlaygroundObjectPropertyFormProps {
     onChange: (key: string, value: unknown) => void;
     value: unknown;
     expandByDefault?: boolean;
-    types: Record<string, TypeDefinition>;
+    types: Record<TypeId, TypeDefinition>;
     disabled?: boolean;
 }
 
@@ -103,14 +103,14 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
     );
     const shownProperties = useMemo(() => {
         return properties.filter((property) =>
-            shouldShowProperty(property.valueShape, castToRecord(value)[property.key]),
+            shouldShowProperty(property.valueShape, types, castToRecord(value)[property.key]),
         );
-    }, [properties, value]);
+    }, [properties, types, value]);
     const hiddenProperties = useMemo(() => {
         return properties.filter(
-            (property) => !shouldShowProperty(property.valueShape, castToRecord(value)[property.key]),
+            (property) => !shouldShowProperty(property.valueShape, types, castToRecord(value)[property.key]),
         );
-    }, [properties, value]);
+    }, [properties, types, value]);
 
     const hiddenPropertiesOptions = useMemo(() => {
         const options = hiddenProperties.map(
@@ -213,6 +213,11 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
 
 PlaygroundObjectPropertiesForm.displayName = "PlaygroundObjectPropertiesForm";
 
-function shouldShowProperty(shape: ObjectProperty["valueShape"], value: unknown): boolean {
-    return shape.type !== "optional" || value !== undefined;
+function shouldShowProperty(
+    shape: ObjectProperty["valueShape"],
+    types: Record<TypeId, TypeDefinition>,
+    value: unknown,
+): boolean {
+    const unwrapped = unwrapReference(shape, types);
+    return !unwrapped.isOptional || value !== undefined;
 }

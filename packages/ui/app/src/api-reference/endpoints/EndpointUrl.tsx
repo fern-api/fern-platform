@@ -1,21 +1,19 @@
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { CopyToClipboardButton } from "@fern-ui/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
 import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { noop } from "ts-essentials";
-import { usePlaygroundEnvironment } from "../../atoms";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
-import { ResolvedEndpointPathParts } from "../../resolver/types";
-import { buildRequestUrl } from "../../resolver/url";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{
-        path: ResolvedEndpointPathParts[];
-        method: APIV1Read.HttpMethod;
-        selectedEnvironment?: APIV1Read.Environment;
+        path: ApiDefinition.PathPart[];
+        method: ApiDefinition.HttpMethod;
+        baseUrl?: string;
+        environmentId?: ApiDefinition.EnvironmentId;
         showEnvironment?: boolean;
         large?: boolean;
         className?: string;
@@ -24,7 +22,7 @@ export declare namespace EndpointUrl {
 
 // TODO: this component needs a refresh
 export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<EndpointUrl.Props>>(function EndpointUrl(
-    { path, method, selectedEnvironment, large, className, showEnvironment },
+    { path, method, baseUrl, environmentId, large, className, showEnvironment },
     parentRef,
 ) {
     const ref = useRef<HTMLDivElement>(null);
@@ -32,10 +30,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     useImperativeHandle(parentRef, () => ref.current!);
 
     const [isHovered, setIsHovered] = useState(false);
-    const playgroundEnvironment = usePlaygroundEnvironment();
     const isEditingEnvironment = useBooleanState(false);
-
-    const preParsedUrl = playgroundEnvironment ?? selectedEnvironment?.baseUrl;
 
     const pathParts = useMemo(() => {
         const elements: (ReactElement | null)[] = [];
@@ -64,7 +59,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                             key={`part-${i}`}
                             className="whitespace-nowrap text-accent bg-accent-highlight rounded px-1"
                         >
-                            :{pathParameter.key}
+                            :{pathParameter.value}
                         </span>,
                     );
                 },
@@ -82,7 +77,14 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                 <span
                     className={`inline-flex shrink items-baseline ${isHovered ? "hover:bg-tag-default" : ""} py-0.5 px-1 rounded-md cursor-default`}
                 >
-                    <CopyToClipboardButton content={buildRequestUrl(preParsedUrl, path)}>
+                    <CopyToClipboardButton
+                        content={() =>
+                            ApiDefinition.buildRequestUrl({
+                                baseUrl,
+                                path,
+                            })
+                        }
+                    >
                         {(onClick) => (
                             <button
                                 onClick={onClick}
@@ -98,7 +100,8 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                                     {showEnvironment && (
                                         <span className="whitespace-nowrap max-sm:hidden">
                                             <MaybeEnvironmentDropdown
-                                                selectedEnvironment={selectedEnvironment}
+                                                baseUrl={baseUrl}
+                                                environmentId={environmentId}
                                                 urlTextStyle="t-muted"
                                                 protocolTextStyle="text-faded"
                                                 isEditingEnvironment={isEditingEnvironment}

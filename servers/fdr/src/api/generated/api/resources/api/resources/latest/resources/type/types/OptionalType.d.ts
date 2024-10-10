@@ -3,6 +3,6 @@
  */
 import * as FernRegistry from "../../../../../../../index";
 export interface OptionalType {
-    shape: FernRegistry.api.latest.TypeReference;
+    shape: FernRegistry.api.latest.TypeShape;
     default: unknown | undefined;
 }

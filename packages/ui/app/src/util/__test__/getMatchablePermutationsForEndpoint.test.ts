@@ -1,33 +1,24 @@
-import { ResolvedEndpointDefinition } from "../../resolver/types";
+import { EndpointDefinition, EnvironmentId, PathPart, PropertyKey } from "@fern-api/fdr-sdk/api-definition";
 import { getMatchablePermutationsForEndpoint } from "../processRequestSnippetComponents";
 
-function literal(value: string) {
+function literal(value: string): PathPart.Literal {
     return {
         type: "literal" as const,
         value,
     };
 }
-function pathParameter(key: string) {
+function pathParameter(key: string): PathPart.PathParameter {
     return {
         type: "pathParameter" as const,
-        key,
-        valueShape: {
-            type: "primitive" as const,
-            value: { type: "string" as const },
-            description: undefined,
-            availability: undefined,
-        },
-        hidden: false,
-        description: undefined,
-        availability: undefined,
+        value: PropertyKey(key),
     };
 }
 
 describe("getAllMatchablePathsForEndpoint", () => {
     it("should return all permutations for an endpoint", () => {
-        const endpoint: Pick<ResolvedEndpointDefinition, "path" | "environments"> = {
-            path: [literal("api"), pathParameter("id")],
-            environments: [{ id: "1", baseUrl: "https://api.example.com" }],
+        const endpoint: Pick<EndpointDefinition, "path" | "environments"> = {
+            path: [literal("/api/"), pathParameter("id")],
+            environments: [{ id: EnvironmentId("1"), baseUrl: "https://api.example.com" }],
         };
         const result = getMatchablePermutationsForEndpoint(endpoint);
         expect(result).toEqual(
@@ -36,9 +27,9 @@ describe("getAllMatchablePathsForEndpoint", () => {
     });
 
     it("should return all permutations for an endpoint with a base path", () => {
-        const endpoint: Pick<ResolvedEndpointDefinition, "path" | "environments"> = {
-            path: [literal("api"), pathParameter("id")],
-            environments: [{ id: "1", baseUrl: "https://api.example.com/v1" }],
+        const endpoint: Pick<EndpointDefinition, "path" | "environments"> = {
+            path: [literal("/api/"), pathParameter("id")],
+            environments: [{ id: EnvironmentId("1"), baseUrl: "https://api.example.com/v1" }],
         };
         const result = getMatchablePermutationsForEndpoint(endpoint);
         expect(result).toEqual(
@@ -55,9 +46,9 @@ describe("getAllMatchablePathsForEndpoint", () => {
 
     // tests urljoin works
     it("should return all permutations for an endpoint with a base path 2", () => {
-        const endpoint: Pick<ResolvedEndpointDefinition, "path" | "environments"> = {
+        const endpoint: Pick<EndpointDefinition, "path" | "environments"> = {
             path: [literal("/api/"), pathParameter("id")],
-            environments: [{ id: "1", baseUrl: "https://api.example.com/v1/" }],
+            environments: [{ id: EnvironmentId("1"), baseUrl: "https://api.example.com/v1/" }],
         };
         const result = getMatchablePermutationsForEndpoint(endpoint);
         expect(result).toEqual(

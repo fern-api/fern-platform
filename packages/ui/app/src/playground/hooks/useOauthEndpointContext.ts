@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk";
+import type { APIV1Read } from "@fern-api/fdr-sdk";
 import { EndpointNode } from "@fern-api/fdr-sdk/navigation";
 import { atom, useAtomValue } from "jotai";
 import { useMemoOne } from "use-memo-one";

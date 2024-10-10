@@ -20,6 +20,7 @@ title: Overriden Title
             icon: undefined,
             hidden: false,
             noindex: undefined,
+            canonicalSlug: undefined,
         };
         const parents: FernNavigation.NavigationNode[] = [
             {
@@ -34,13 +35,14 @@ title: Overriden Title
                 children: [node],
                 overviewPageId: undefined,
                 pointsTo: undefined,
+                canonicalSlug: undefined,
             },
         ];
         expect(
             getBreadcrumbList(
                 "buildwithfern.com",
                 {
-                    [node.pageId]: { markdown },
+                    [node.pageId]: { markdown, editThisPageUrl: undefined },
                 },
                 parents,
                 node,
