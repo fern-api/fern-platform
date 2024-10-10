@@ -86,6 +86,7 @@ exports[`uploadcare > gets navigation root for /docs/file-management 1`] = `
 
 exports[`uploadcare > gets navigation root for /docs/file-management/overview 1`] = `
 {
+  "audience": undefined,
   "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": undefined,
@@ -119,6 +120,7 @@ exports[`uploadcare > gets navigation root for /docs/introduction 1`] = `
 
 exports[`uploadcare > gets navigation root for /docs/introduction/intro 1`] = `
 {
+  "audience": undefined,
   "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": undefined,

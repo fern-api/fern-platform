@@ -117,6 +117,7 @@ exports[`hume > gets navigation root for /reference/expression-measurement-api/s
 
 exports[`hume > gets navigation root for /support 1`] = `
 {
+  "audience": undefined,
   "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": false,

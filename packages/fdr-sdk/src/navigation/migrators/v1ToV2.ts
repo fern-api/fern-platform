@@ -31,6 +31,7 @@ export class FernNavigationV1ToLatest {
             icon: node.icon,
             hidden: node.hidden,
             authed: undefined,
+            audience: undefined,
         };
 
         return latest;
@@ -100,6 +101,7 @@ export class FernNavigationV1ToLatest {
             authed: undefined,
             id: FernNavigation.NodeId(node.id),
             pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
+            audience: undefined,
         };
         return latest;
     };
@@ -124,6 +126,7 @@ export class FernNavigationV1ToLatest {
             id: FernNavigation.NodeId(node.id),
             pageId: FernNavigation.PageId(node.pageId),
             noindex: node.noindex,
+            audience: undefined,
         };
         return latest;
     };
@@ -161,6 +164,7 @@ export class FernNavigationV1ToLatest {
             authed: undefined,
             id: FernNavigation.NodeId(node.id),
             pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
+            audience: undefined,
         };
         return latest;
     };
@@ -261,6 +265,7 @@ export class FernNavigationV1ToLatest {
                 versioned: (value) => this.versioned(value, [...parents, node]),
             }),
             subtitle: node.subtitle,
+            audience: undefined,
         };
         return latest;
     };
@@ -315,6 +320,7 @@ export class FernNavigationV1ToLatest {
             authed: undefined,
             pageId: FernNavigation.PageId(node.pageId),
             noindex: node.noindex,
+            audience: undefined,
         };
         return latest;
     };
@@ -346,6 +352,7 @@ export class FernNavigationV1ToLatest {
             collapsed: node.collapsed,
             overviewPageId,
             noindex: node.noindex,
+            audience: undefined,
         };
         return latest;
     };
@@ -383,6 +390,7 @@ export class FernNavigationV1ToLatest {
             apiDefinitionId: node.apiDefinitionId,
             availability: this.#availability(node.availability),
             pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
+            audience: undefined,
         };
         return latest;
     };
@@ -412,6 +420,7 @@ export class FernNavigationV1ToLatest {
             authed: undefined,
             overviewPageId,
             noindex: node.noindex,
+            audience: undefined,
         };
         return latest;
     };
@@ -431,6 +440,7 @@ export class FernNavigationV1ToLatest {
             hidden: node.hidden,
             authed: undefined,
             year: node.year,
+            audience: undefined,
         };
         return latest;
     };
@@ -450,6 +460,7 @@ export class FernNavigationV1ToLatest {
             hidden: node.hidden,
             authed: undefined,
             month: node.month,
+            audience: undefined,
         };
         return latest;
     };
@@ -475,6 +486,7 @@ export class FernNavigationV1ToLatest {
             date: node.date,
             pageId: FernNavigation.PageId(node.pageId),
             noindex: node.noindex,
+            audience: undefined,
         };
         return latest;
     };
@@ -508,6 +520,7 @@ export class FernNavigationV1ToLatest {
             noindex: node.noindex,
             apiDefinitionId: node.apiDefinitionId,
             availability: this.#availability(node.availability),
+            audience: undefined,
         };
         return latest;
     };
@@ -539,6 +552,7 @@ export class FernNavigationV1ToLatest {
             method: node.method,
             endpointId: node.endpointId,
             isResponseStream: node.isResponseStream,
+            audience: undefined,
         };
         return latest;
     };
@@ -581,6 +595,7 @@ export class FernNavigationV1ToLatest {
             apiDefinitionId: node.apiDefinitionId,
             availability: this.#availability(node.availability),
             webSocketId: node.webSocketId,
+            audience: undefined,
         };
         return latest;
     };
@@ -610,6 +625,7 @@ export class FernNavigationV1ToLatest {
             availability: this.#availability(node.availability),
             method: node.method,
             webhookId: node.webhookId,
+            audience: undefined,
         };
         return latest;
     };

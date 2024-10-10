@@ -67,6 +67,7 @@ exports[`yes-version-no-tabs > gets navigation root for /docs/api/version-1 3`] 
 
 exports[`yes-version-no-tabs > gets navigation root for /docs/api/version-1/page-5 1`] = `
 {
+  "audience": undefined,
   "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": undefined,
@@ -93,6 +94,7 @@ exports[`yes-version-no-tabs > gets navigation root for /docs/api/version-1/sect
 
 exports[`yes-version-no-tabs > gets navigation root for /docs/api/version-1/version-1 1`] = `
 {
+  "audience": undefined,
   "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": undefined,
@@ -119,6 +121,7 @@ exports[`yes-version-no-tabs > gets navigation root for /docs/api/version-2 1`] 
 
 exports[`yes-version-no-tabs > gets navigation root for /docs/api/version-2/version-1 1`] = `
 {
+  "audience": undefined,
   "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": undefined,
