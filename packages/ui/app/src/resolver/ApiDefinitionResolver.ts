@@ -186,6 +186,7 @@ export class ApiDefinitionResolver {
                 pageId: node.overviewPageId,
                 title: node.title,
                 slug: node.slug,
+                audience: node.audience,
             });
             if (resolvedOverviewPage != null) {
                 items.unshift(resolvedOverviewPage);
