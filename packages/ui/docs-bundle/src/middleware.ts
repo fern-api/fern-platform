@@ -1,7 +1,7 @@
 import { extractBuildId, extractNextDataPathname } from "@/server/extractNextDataPathname";
 import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "@/server/pageRoutes";
 import { rewritePosthog } from "@/server/rewritePosthog";
-import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import type { FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
@@ -16,7 +16,7 @@ const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 const CHANGELOG_PATTERN = /\.(rss|atom)$/;
 
 export const middleware: NextMiddleware = async (request) => {
-    const xFernHost = getXFernHostEdge(request);
+    const xFernHost = getDocsDomainEdge(request);
     const nextUrl = request.nextUrl.clone();
     const headers = new Headers(request.headers);
 
@@ -138,7 +138,7 @@ export const middleware: NextMiddleware = async (request) => {
     }
 
     /**
-     * Rewrite all other requests to /static/[host]/[[...slug]] or /dynamic/[host]/[[...slug]]
+     * Rewrite all other requests to /static/[domain]/[[...slug]] or /dynamic/[domain]/[[...slug]]
      */
 
     nextUrl.pathname = getPageRoute(!isDynamic, xFernHost, pathname);

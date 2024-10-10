@@ -3,7 +3,7 @@ import Error, { ErrorProps } from "next/error";
 import { ReactElement } from "react";
 
 export function parseResolvedUrl(resolvedUrl: string): string {
-    // if resolvedUrl is `/static/[host]/[...slug]` or `/dynamic/[host]/[..slug]` then return '/[...slug]`
+    // if resolvedUrl is `/static/[domain]/[...slug]` or `/dynamic/[domain]/[..slug]` then return '/[...slug]`
     const match = resolvedUrl.match(/\/(static|dynamic)\/[^/]+(.*)/);
     return match?.[2] ?? resolvedUrl;
 }

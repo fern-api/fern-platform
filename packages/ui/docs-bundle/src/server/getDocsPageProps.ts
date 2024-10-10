@@ -15,25 +15,28 @@ export interface User {
 }
 
 export async function getDocsPageProps(
-    xFernHost: string | undefined,
+    domain: string | undefined,
+    host: string,
     slug: string[],
     auth?: AuthProps,
 ): Promise<SSGDocsPageProps> {
-    if (xFernHost == null || Array.isArray(xFernHost)) {
+    if (domain == null || Array.isArray(domain)) {
         return { notFound: true };
     }
 
-    const performance = LoadDocsPerformanceTracker.init({ host: xFernHost, slug, auth: auth?.partner });
+    const performance = LoadDocsPerformanceTracker.init({ domain, slug, auth: auth?.partner });
 
     /**
      * Load the docs for the given URL.
      */
-    const docs = await performance.trackLoadDocsPromise(loadWithUrl(xFernHost, auth));
+    const docs = await performance.trackLoadDocsPromise(loadWithUrl(domain, auth));
 
     /**
      * Convert the docs into initial props for the page.
      */
-    const initialProps = await performance.trackInitialPropsPromise(withInitialProps({ docs, slug, xFernHost, auth }));
+    const initialProps = await performance.trackInitialPropsPromise(
+        withInitialProps({ docs, slug, domain, host, auth }),
+    );
 
     /**
      * Send performance data to Vercel Analytics.

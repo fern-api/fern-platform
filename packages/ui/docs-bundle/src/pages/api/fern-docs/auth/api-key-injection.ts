@@ -1,7 +1,7 @@
 import { OAuth2Client } from "@/server/auth/OAuth2Client";
 import { getAPIKeyInjectionConfig } from "@/server/auth/getApiKeyInjectionConfig";
 import { withSecureCookie } from "@/server/auth/withSecure";
-import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { APIKeyInjectionConfig, OryAccessTokenSchema } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
@@ -12,7 +12,7 @@ import type { OauthScope } from "webflow-api/api/types/OAuthScope";
 export const runtime = "edge";
 
 export default async function handler(req: NextRequest): Promise<NextResponse<APIKeyInjectionConfig>> {
-    const domain = getXFernHostEdge(req);
+    const domain = getDocsDomainEdge(req);
     const edgeConfig = await getAuthEdgeConfig(domain);
 
     // assume that if the edge config is set for webflow, api key injection is always enabled

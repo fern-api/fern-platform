@@ -181,7 +181,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         e.stopPropagation();
                     }}
                     hoveredPropertyPath={hoveredResponsePropertyPath}
-                    json={selectedErrorExample?.responseBody ?? EMPTY_OBJECT}
+                    json={selectedErrorExample?.responseBody.value ?? EMPTY_OBJECT}
                     intent={statusCodeToIntent(selectedError.statusCode)}
                 />
             )}

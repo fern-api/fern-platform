@@ -1,5 +1,5 @@
 import { verifyFernJWTConfig } from "@/server/auth/FernJWT";
-import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { LaunchDarklyEdgeConfig, getAuthEdgeConfig, getLaunchDarklySettings } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_EMAIL, COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { randomUUID } from "crypto";
@@ -24,7 +24,7 @@ interface LaunchDarklyInfo {
 }
 
 export default async function handler(req: NextRequest): Promise<NextResponse<LaunchDarklyInfo | undefined>> {
-    const domain = getXFernHostEdge(req);
+    const domain = getDocsDomainEdge(req);
 
     const config = await safeGetLaunchDarklySettings(domain);
     const clientSideId = config?.["client-side-id"];
@@ -68,7 +68,7 @@ async function getUserContext(req: NextRequest): Promise<LaunchDarklyInfo["user"
 
     if (fernToken) {
         try {
-            const user = await verifyFernJWTConfig(fernToken, await getAuthEdgeConfig(getXFernHostEdge(req)));
+            const user = await verifyFernJWTConfig(fernToken, await getAuthEdgeConfig(getDocsDomainEdge(req)));
             const key = (await hashString(user.email)) ?? randomUUID();
             return { key: `fern-docs-user-${key}`, email: user.email, name: user.name };
         } catch (e) {
