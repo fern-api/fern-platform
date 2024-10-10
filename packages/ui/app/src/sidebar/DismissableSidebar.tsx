@@ -28,7 +28,7 @@ export function DismissableSidebar({ className }: { className?: string }): React
                 set(DESKTOP_SIDEBAR_OPEN_ATOM, (prev) => {
                     if (event.clientX < 20) {
                         return true;
-                    } else if (prev && event.target instanceof HTMLElement) {
+                    } else if (prev && event.target instanceof Node) {
                         return sidebarRef.current?.contains(event.target) ?? false;
                     } else {
                         return false;

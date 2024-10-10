@@ -14,18 +14,44 @@ export function scrollToCenter(
     setTimeout(() => {
         fastdom.clear(stopMeasuring);
         stopMeasuring = fastdom.measure(() => {
+            const offsetTop = getOffsetTopRelativeToScrollContainer(target, scrollContainer);
+
+            // if the target is not a child of the scroll container, bail
+            if (offsetTop == null) {
+                return;
+            }
+
             // if the target is already in view, don't scroll
             if (
-                target.offsetTop >= scrollContainer.scrollTop &&
-                target.offsetTop + target.clientHeight <= scrollContainer.scrollTop + scrollContainer.clientHeight
+                offsetTop >= scrollContainer.scrollTop &&
+                offsetTop + target.clientHeight <= scrollContainer.scrollTop + scrollContainer.clientHeight
             ) {
                 return;
             }
             // if the target is outside of the scroll container, scroll to it (centered)
             scrollContainer.scrollTo({
-                top: target.offsetTop - scrollContainer.clientHeight / 3,
+                top: offsetTop - scrollContainer.clientHeight / 3,
                 behavior: smooth ? "smooth" : "auto",
             });
         });
     }, 0);
+}
+
+function getOffsetTopRelativeToScrollContainer(targetElement: HTMLElement, scrollContainer: HTMLElement) {
+    if (targetElement === scrollContainer) {
+        return 0;
+    }
+
+    if (!scrollContainer.contains(targetElement)) {
+        return undefined;
+    }
+
+    let offsetTop = 0;
+    let currentElement: HTMLElement | null = targetElement;
+    while (currentElement && currentElement !== scrollContainer) {
+        offsetTop += currentElement.offsetTop;
+        currentElement = currentElement.offsetParent as HTMLElement | null;
+    }
+
+    return offsetTop;
 }
