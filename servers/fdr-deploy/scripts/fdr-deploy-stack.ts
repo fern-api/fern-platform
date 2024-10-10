@@ -44,6 +44,7 @@ interface FdrStackOptions {
     cpu: number;
     memory: number;
     cacheName: string;
+    cacheNodeType: string;
 }
 
 export class FdrDeployStack extends Stack {
@@ -165,7 +166,7 @@ export class FdrDeployStack extends Stack {
             numCacheShards: 1,
             numCacheReplicasPerShard: 0,
             clusterMode: "enabled",
-            cacheNodeType: "cache.r7g.xlarge",
+            cacheNodeType: options.cacheNodeType,
             envType: environmentType,
             env: props?.env,
             ingressSecurityGroup: fdrSg,
