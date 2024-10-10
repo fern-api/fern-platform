@@ -157,6 +157,7 @@ exports[`primer > gets navigation root for /docs/api/introduction/getting-starte
 exports[`primer > gets navigation root for /docs/api/v2.1/api-reference/client-session-api/retrieve-client-side-token 1`] = `
 {
   "apiDefinitionId": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
+  "audience": undefined,
   "authed": undefined,
   "availability": undefined,
   "canonicalSlug": "docs/api/v2.3/api-reference/client-session-api/retrieve-client-side-token",
