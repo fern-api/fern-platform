@@ -96,7 +96,7 @@ export const middleware: NextMiddleware = async (request) => {
      * redirect to the custom auth provider
      */
     if (!isLoggedIn && authConfig?.type === "basic_token_verification") {
-        if (!withBasicTokenAnonymous(authConfig, pathname)) {
+        if (withBasicTokenAnonymous(authConfig, pathname)) {
             const destination = new URL(authConfig.redirect);
             destination.searchParams.set("state", urlJoin(withDefaultProtocol(xFernHost), pathname));
             // TODO: validate allowlist of domains to prevent open redirects

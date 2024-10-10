@@ -180,11 +180,13 @@ export class ApiDefinitionResolver {
                 id: node.id,
                 hidden: node.hidden,
                 canonicalSlug: node.canonicalSlug,
+                authed: node.authed,
                 icon: node.icon,
                 noindex: node.noindex,
                 pageId: node.overviewPageId,
                 title: node.title,
                 slug: node.slug,
+                audience: node.audience,
             });
             if (resolvedOverviewPage != null) {
                 items.unshift(resolvedOverviewPage);

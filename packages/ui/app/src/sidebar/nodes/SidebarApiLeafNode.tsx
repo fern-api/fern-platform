@@ -35,6 +35,7 @@ export function SidebarApiLeafNode({ node, depth, shallow }: SidebarApiLeafNodeP
             title={node.title}
             depth={Math.max(0, depth - 1)}
             hidden={node.hidden}
+            authed={node.authed}
             icon={renderRightElement()}
             selected={selected}
             shallow={shallow}

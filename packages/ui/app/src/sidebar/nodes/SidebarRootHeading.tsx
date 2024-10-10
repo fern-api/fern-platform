@@ -31,6 +31,7 @@ export function SidebarRootHeading({ node, className, shallow }: SidebarRootHead
             className={className}
             title={node.title}
             hidden={node.hidden}
+            authed={node.authed}
             slug={node.slug}
             selected={selected}
             shallow={shallow}

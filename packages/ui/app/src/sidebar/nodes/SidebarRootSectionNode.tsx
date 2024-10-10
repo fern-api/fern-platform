@@ -33,6 +33,7 @@ export function SidebarRootSectionNode({ node, className }: SidebarRootSectionNo
                 selected={selected}
                 icon={node.icon}
                 hidden={node.hidden}
+                authed={node.authed}
             />
         );
     }

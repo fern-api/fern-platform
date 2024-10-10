@@ -1,7 +1,7 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import cn, { clsx } from "clsx";
-import { NavArrowDown } from "iconoir-react";
+import { Lock, NavArrowDown } from "iconoir-react";
 import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
 import {
@@ -42,6 +42,7 @@ interface SidebarSlugLinkProps {
     rightElement?: ReactNode;
     tooltipContent?: ReactNode;
     hidden?: boolean;
+    authed?: boolean;
     as?: keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
 }
 
@@ -76,6 +77,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
         target,
         rel,
         hidden,
+        authed,
         as = "span",
     } = props;
 
@@ -119,6 +121,14 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
     };
 
     const withTooltip = (content: ReactNode) => {
+        if (authed) {
+            return (
+                <FernTooltip content="You must be logged in to view this page" side="right">
+                    {content}
+                </FernTooltip>
+            );
+        }
+
         if (tooltipContent == null) {
             return content;
         }
@@ -172,7 +182,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
                                 </span>
                             )}
                             {createElement(as, { className: "fern-sidebar-link-text" }, title)}
-                            {rightElement}
+                            {authed ? <Lock className="size-4 self-center text-faded" /> : rightElement}
                         </span>
                         {expandButton}
                     </>,
