@@ -37,16 +37,15 @@ export function hasInlineEnum(shape: ResolvedTypeShape, types: Record<string, Re
         literal: () => true,
         unknown: () => false,
         _other: () => false,
-        reference: (reference) => {
-            return hasInlineEnum(
+        reference: (reference) =>
+            hasInlineEnum(
                 types[reference.typeId] ?? {
                     type: "unknown",
                     description: undefined,
                     availability: undefined,
                 },
                 types,
-            );
-        },
+            ),
         alias: (alias) => hasInlineEnum(alias.shape, types),
     });
 }
