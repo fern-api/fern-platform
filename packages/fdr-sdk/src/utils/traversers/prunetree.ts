@@ -6,7 +6,7 @@ interface PruneTreeOptions<NODE, PARENT extends NODE = NODE, POINTER = NODE> {
      * @param node the node to check
      * @returns **false** if the node SHOULD be deleted
      */
-    predicate: (node: NODE) => boolean;
+    predicate: (node: NODE, parents: readonly PARENT[]) => boolean;
     getChildren: (node: PARENT) => readonly NODE[];
 
     /**
@@ -53,7 +53,7 @@ export function prunetree<NODE, ROOT extends NODE = NODE, PARENT extends NODE = 
         }
 
         // continue traversal if the node is not to be deleted
-        if (predicate(node)) {
+        if (predicate(node, parents)) {
             return;
         }
         const ancestors = [...parents];
