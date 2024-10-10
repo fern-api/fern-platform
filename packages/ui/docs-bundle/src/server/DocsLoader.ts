@@ -113,7 +113,7 @@ export class DocsLoader {
                     // TODO: store this in cache
                     node = !auth
                         ? pruneWithBasicTokenAnonymous(authConfig, node)
-                        : pruneWithBasicTokenAuthed(authConfig, node);
+                        : pruneWithBasicTokenAuthed(authConfig, node, toAudience(auth.user.audience));
                 }
             } catch (e) {
                 // TODO: sentry
@@ -137,4 +137,11 @@ export class DocsLoader {
         const docs = await this.loadDocs();
         return docs?.definition.filesV2 ?? {};
     }
+}
+
+function toAudience(audience: string | string[] | undefined): string[] {
+    if (typeof audience === "string") {
+        return [audience];
+    }
+    return audience ?? [];
 }

@@ -62,6 +62,7 @@ export function SidebarSectionNode({ node, className, depth }: SidebarSectionNod
                 toggleExpand={handleToggleExpand}
                 showIndicator={showIndicator}
                 hidden={node.hidden}
+                authed={node.authed}
                 slug={node.overviewPageId != null ? node.slug : undefined}
                 selected={selected}
             />

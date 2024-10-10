@@ -106,6 +106,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                     <PlaygroundObjectPropertiesForm
                         id="header"
                         properties={headers}
+                        extraProperties={undefined}
                         onChange={setHeaders}
                         value={headers}
                         types={types}
@@ -118,6 +119,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                     <PlaygroundObjectPropertiesForm
                         id="path"
                         properties={endpoint.pathParameters ?? EMPTY_ARRAY}
+                        extraProperties={undefined}
                         onChange={setPathParameters}
                         value={formState?.pathParameters}
                         types={types}
@@ -130,6 +132,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                     <PlaygroundObjectPropertiesForm
                         id="query"
                         properties={endpoint.queryParameters ?? EMPTY_ARRAY}
+                        extraProperties={undefined}
                         onChange={setQueryParameters}
                         value={formState?.queryParameters}
                         types={types}
@@ -166,26 +169,32 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                             />
                         </PlaygroundEndpointFormSection>
                     ),
-                    object: (value) => (
-                        <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Body Parameters">
-                            <PlaygroundObjectPropertiesForm
-                                id="body"
-                                properties={unwrapObjectType(value, types).properties}
-                                onChange={setBodyJson}
-                                value={formState?.body?.value}
-                                types={types}
-                            />
-                        </PlaygroundEndpointFormSection>
-                    ),
+                    object: (value) => {
+                        const unwrappedObjectType = unwrapObjectType(value, types);
+                        return (
+                            <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Body Parameters">
+                                <PlaygroundObjectPropertiesForm
+                                    id="body"
+                                    properties={unwrappedObjectType.properties}
+                                    extraProperties={unwrappedObjectType.extraProperties}
+                                    onChange={setBodyJson}
+                                    value={formState?.body?.value}
+                                    types={types}
+                                />
+                            </PlaygroundEndpointFormSection>
+                        );
+                    },
                     alias: (alias) => {
                         const { shape, isOptional } = unwrapReference(alias.value, types);
 
                         if (shape.type === "object" && !isOptional) {
+                            const unwrappedObjectType = unwrapObjectType(shape, types);
                             return (
                                 <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Body Parameters">
                                     <PlaygroundObjectPropertiesForm
                                         id="body"
-                                        properties={unwrapObjectType(shape, types).properties}
+                                        properties={unwrappedObjectType.properties}
+                                        extraProperties={unwrappedObjectType.extraProperties}
                                         onChange={setBodyJson}
                                         value={formState?.body?.value}
                                         types={types}

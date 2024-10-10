@@ -28,6 +28,7 @@ export function SidebarChangelogNode({ node, depth, className }: SidebarChangelo
             icon={node.icon ?? <Calendar className="size-4" />}
             tooltipContent={renderChangelogTooltip(node)}
             hidden={node.hidden}
+            authed={node.authed}
         />
     );
 }

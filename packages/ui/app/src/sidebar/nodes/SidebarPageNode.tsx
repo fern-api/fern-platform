@@ -26,6 +26,7 @@ export function SidebarPageNode({ node, depth, className, shallow }: SidebarPage
             selected={selected}
             icon={node.icon}
             hidden={node.hidden}
+            authed={node.authed}
             shallow={shallow}
         />
     );

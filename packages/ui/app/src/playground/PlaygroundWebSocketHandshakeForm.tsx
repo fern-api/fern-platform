@@ -86,6 +86,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                             <PlaygroundObjectPropertiesForm
                                 id="header"
                                 properties={headers}
+                                extraProperties={undefined}
                                 onChange={setHeaders}
                                 value={formState?.headers}
                                 types={types}
@@ -104,6 +105,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                             <PlaygroundObjectPropertiesForm
                                 id="path"
                                 properties={channel.pathParameters}
+                                extraProperties={undefined}
                                 onChange={setPathParameters}
                                 value={formState?.pathParameters}
                                 types={types}
@@ -122,6 +124,7 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
                             <PlaygroundObjectPropertiesForm
                                 id="query"
                                 properties={channel.queryParameters}
+                                extraProperties={undefined}
                                 onChange={setQueryParameters}
                                 value={formState?.queryParameters}
                                 types={types}

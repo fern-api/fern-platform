@@ -4,6 +4,5 @@ export * from "./createBreadcrumb";
 export * from "./findNode";
 export * from "./getApiReferenceId";
 export * from "./getNoIndexFromFrontmatter";
-export * from "./pruneNavigationTree";
 export * from "./toRootNode";
 export * from "./toUnversionedSlug";

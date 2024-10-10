@@ -107,6 +107,8 @@ export async function getDocsPageProps(
                 pointsTo,
                 index,
                 availability: version.availability,
+                hidden: version.hidden,
+                authed: version.authed,
             };
         });
 
@@ -140,6 +142,8 @@ export async function getDocsPageProps(
                         index,
                         slug: tab.slug,
                         pointsTo: tab.pointsTo,
+                        hidden: tab.hidden,
+                        authed: tab.authed,
                     }),
                     link: (link) => ({
                         type: "tabLink",
@@ -154,6 +158,8 @@ export async function getDocsPageProps(
                         icon: changelog.icon,
                         index,
                         slug: changelog.slug,
+                        hidden: changelog.hidden,
+                        authed: changelog.authed,
                     }),
                 }),
             ),

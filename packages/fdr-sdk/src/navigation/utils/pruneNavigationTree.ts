@@ -1,55 +1,71 @@
 import structuredClone from "@ungap/structured-clone";
-import { DeepReadonly } from "ts-essentials";
 import { FernNavigation } from "../..";
-import { bfs } from "../../utils/traversers/bfs";
 import { prunetree } from "../../utils/traversers/prunetree";
 import { mutableDeleteChild } from "./deleteChild";
 import { mutableUpdatePointsTo } from "./updatePointsTo";
 
-/**
- * @param root the root node of the navigation tree
- * @param keep a function that returns true if the node should be kept
- * @param hide a function that returns true if the node should be hidden
- * @returns a new navigation tree with only the nodes that should be kept
- */
-export function pruneNavigationTree<ROOT extends FernNavigation.NavigationNode>(
-    root: DeepReadonly<ROOT>,
-    keep?: (node: FernNavigation.NavigationNode) => boolean,
-    hide?: (node: FernNavigation.NavigationNodeWithMetadata) => boolean,
-): ROOT | undefined {
-    const clone = structuredClone(root) as ROOT;
-    return mutablePruneNavigationTree(clone, keep, hide);
-}
+type Predicate<T extends FernNavigation.NavigationNode = FernNavigation.NavigationNode> = (
+    node: T,
+    parents: readonly FernNavigation.NavigationNodeParent[],
+) => boolean;
 
-function mutablePruneNavigationTree<ROOT extends FernNavigation.NavigationNode>(
-    root: ROOT,
-    keep: (node: FernNavigation.NavigationNode) => boolean = () => true,
-    hide: (node: FernNavigation.NavigationNodeWithMetadata) => boolean = () => false,
-): ROOT | undefined {
-    const [result] = prunetree(root, {
-        predicate: keep,
-        getChildren: FernNavigation.getChildren,
-        getPointer: (node) => node.id,
-        deleter: mutableDeleteChild,
-    });
-
-    if (result == null) {
-        return undefined;
+export class Pruner<ROOT extends FernNavigation.NavigationNode> {
+    public static from<ROOT extends FernNavigation.NavigationNode>(tree: ROOT): Pruner<ROOT> {
+        return new Pruner(tree);
     }
 
-    // since the tree has been pruned, we need to update the pointsTo property
-    mutableUpdatePointsTo(result);
+    private tree: ROOT | undefined;
+    private constructor(tree: ROOT) {
+        this.tree = structuredClone(tree) as ROOT;
+    }
 
-    // other operations
-    bfs(
-        result,
-        (node) => {
-            if (FernNavigation.hasMarkdown(node) && hide(node)) {
-                node.hidden = true;
+    public keep(predicate: Predicate): this {
+        if (this.tree == null) {
+            return this;
+        }
+        const [result] = prunetree(this.tree, {
+            predicate,
+            getChildren: FernNavigation.getChildren,
+            getPointer: (node) => node.id,
+            deleter: mutableDeleteChild,
+        });
+        this.tree = result;
+        return this;
+    }
+
+    public remove(predicate: Predicate): this {
+        return this.keep((node, parents) => !predicate(node, parents));
+    }
+
+    public hide(predicate: Predicate<FernNavigation.NavigationNodeWithMetadata>): this {
+        if (this.tree == null) {
+            return this;
+        }
+        FernNavigation.traverseBF(this.tree, (node, parents) => {
+            if (FernNavigation.hasMetadata(node)) {
+                node.hidden = predicate(node, parents) ? true : undefined;
             }
-        },
-        FernNavigation.getChildren,
-    );
+        });
+        return this;
+    }
 
-    return result;
+    public authed(predicate: Predicate<FernNavigation.NavigationNodeWithMetadata>): this {
+        if (this.tree == null) {
+            return this;
+        }
+        FernNavigation.traverseBF(this.tree, (node, parents) => {
+            if (FernNavigation.hasMetadata(node)) {
+                node.authed = predicate(node, parents) ? true : undefined;
+            }
+        });
+        return this;
+    }
+
+    public get(): ROOT | undefined {
+        if (this.tree == null) {
+            return undefined;
+        }
+        mutableUpdatePointsTo(this.tree);
+        return this.tree;
+    }
 }

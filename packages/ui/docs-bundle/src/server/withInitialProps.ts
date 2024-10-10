@@ -27,6 +27,7 @@ import type { AuthProps } from "./authProps";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";
+import { pruneNavigationPredicate, withPrunedSidebar } from "./withPrunedSidebar";
 import { withVersionSwitcherInfo } from "./withVersionSwitcherInfo";
 
 interface WithInitialProps {
@@ -166,13 +167,6 @@ export async function withInitialProps({
                   : undefined,
     };
 
-    const versions = withVersionSwitcherInfo({
-        node: node.node,
-        parents: node.parents,
-        versions: node.versions,
-        slugMap: node.collector.slugMap,
-    });
-
     const logoHref =
         docs.definition.config.logoHref ??
         (node.landingPage?.slug != null && !node.landingPage.hidden ? `/${node.landingPage.slug}` : undefined);
@@ -205,16 +199,58 @@ export async function withInitialProps({
         }
     }
 
-    // prune the navigation tree to remove hidden nodes, unless it is the current node
-    const sidebar =
-        node.sidebar != null
-            ? FernNavigation.utils.pruneNavigationTree(node.sidebar, (n) => {
-                  if (FernNavigation.hasMetadata(n) && n.hidden) {
-                      return n.id === node.node.id;
-                  }
-                  return true;
-              })
-            : undefined;
+    const pruneOpts = {
+        node: node.node,
+        isAuthenticated: auth != null,
+        isAuthenticatedPagesDiscoverable: featureFlags.isAuthenticatedPagesDiscoverable,
+    };
+
+    const currentVersionId = node.currentVersion?.versionId;
+    const versions = withVersionSwitcherInfo({
+        node: node.node,
+        parents: node.parents,
+        versions: node.versions.filter(
+            (version) => pruneNavigationPredicate(version, pruneOpts) || version.versionId === currentVersionId,
+        ),
+        slugMap: node.collector.slugMap,
+    });
+
+    const sidebar = withPrunedSidebar(node.sidebar, pruneOpts);
+
+    const filteredTabs = node.tabs.filter((tab) => pruneNavigationPredicate(tab, pruneOpts) || tab === node.currentTab);
+
+    const tabs = filteredTabs.map((tab, index) =>
+        visitDiscriminatedUnion(tab)._visit<SidebarTab>({
+            tab: (tab) => ({
+                type: "tabGroup",
+                title: tab.title,
+                icon: tab.icon,
+                index,
+                slug: tab.slug,
+                pointsTo: tab.pointsTo,
+                hidden: tab.hidden,
+                authed: tab.authed,
+            }),
+            link: (link) => ({
+                type: "tabLink",
+                title: link.title,
+                icon: link.icon,
+                index,
+                url: link.url,
+            }),
+            changelog: (changelog) => ({
+                type: "tabChangelog",
+                title: changelog.title,
+                icon: changelog.icon,
+                index,
+                slug: changelog.slug,
+                hidden: changelog.hidden,
+                authed: changelog.authed,
+            }),
+        }),
+    );
+
+    const currentTabIndex = node.currentTab == null ? undefined : filteredTabs.indexOf(node.currentTab);
 
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
@@ -236,34 +272,9 @@ export async function withInitialProps({
                   }
                 : undefined,
         navigation: {
-            currentTabIndex: node.currentTab == null ? undefined : node.tabs.indexOf(node.currentTab),
-            tabs: node.tabs.map((tab, index) =>
-                visitDiscriminatedUnion(tab)._visit<SidebarTab>({
-                    tab: (tab) => ({
-                        type: "tabGroup",
-                        title: tab.title,
-                        icon: tab.icon,
-                        index,
-                        slug: tab.slug,
-                        pointsTo: tab.pointsTo,
-                    }),
-                    link: (link) => ({
-                        type: "tabLink",
-                        title: link.title,
-                        icon: link.icon,
-                        index,
-                        url: link.url,
-                    }),
-                    changelog: (changelog) => ({
-                        type: "tabChangelog",
-                        title: changelog.title,
-                        icon: changelog.icon,
-                        index,
-                        slug: changelog.slug,
-                    }),
-                }),
-            ),
-            currentVersionId: node.currentVersion?.versionId,
+            currentTabIndex,
+            tabs,
+            currentVersionId,
             versions,
             sidebar,
             trailingSlash: isTrailingSlashEnabled(),

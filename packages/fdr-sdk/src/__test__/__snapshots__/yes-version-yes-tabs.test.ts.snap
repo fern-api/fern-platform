@@ -70,6 +70,8 @@ exports[`yes-version-yes-tabs > gets navigation root for /docs/api/version-1 1`]
 
 exports[`yes-version-yes-tabs > gets navigation root for /docs/api/version-1/section-2 1`] = `
 {
+  "audience": undefined,
+  "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": undefined,
   "icon": undefined,

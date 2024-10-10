@@ -18,6 +18,7 @@ export type UnwrappedReference = {
 
 export type UnwrappedObjectType = {
     properties: Latest.ObjectProperty[];
+    extraProperties: Latest.TypeReference | undefined;
     descriptions: FernDocs.MarkdownText[];
 };
 
@@ -201,6 +202,7 @@ export function unwrapObjectType(
     }
 
     const directProperties = object.properties;
+    const extraProperties = object.extraProperties;
     const descriptions: FernDocs.MarkdownText[] = [];
     const extendedProperties = object.extends.flatMap((typeId): Latest.ObjectProperty[] => {
         const typeDef = types[typeId];
@@ -262,7 +264,7 @@ export function unwrapObjectType(
             (property) => unwrapReference(property.valueShape, types)?.isOptional,
             (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
         );
-        const toRet = { properties, descriptions };
+        const toRet = { properties, descriptions, extraProperties };
         UnwrapObjectTypeCache.set(object, toRet);
         return toRet;
     }
@@ -279,7 +281,7 @@ export function unwrapObjectType(
         (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
         (property) => property.key,
     );
-    const toRet = { properties, descriptions };
+    const toRet = { properties, descriptions, extraProperties };
     UnwrapObjectTypeCache.set(object, toRet);
     return toRet;
 }
@@ -309,6 +311,7 @@ export function unwrapDiscriminatedUnionVariant(
             },
             ...properties,
         ],
+        extraProperties: undefined,
         descriptions,
     };
 }

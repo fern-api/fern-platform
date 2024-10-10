@@ -13,6 +13,8 @@ export interface VersionSwitcherInfo {
     index: number;
     availability: FernNavigation.Availability | undefined;
     pointsTo: FernNavigation.Slug | undefined;
+    hidden: boolean | undefined;
+    authed: boolean | undefined;
 }
 
 interface SidebarTabGroup {
@@ -22,6 +24,8 @@ interface SidebarTabGroup {
     index: number;
     slug: FernNavigation.Slug;
     pointsTo: FernNavigation.Slug | undefined;
+    hidden: boolean | undefined;
+    authed: boolean | undefined;
 }
 
 interface SidebarTabLink {
@@ -38,6 +42,8 @@ interface SidebarTabChangelog {
     icon: string | undefined;
     index: number;
     slug: FernNavigation.Slug;
+    hidden: boolean | undefined;
+    authed: boolean | undefined;
 }
 
 export type SidebarTab = SidebarTabGroup | SidebarTabLink | SidebarTabChangelog;

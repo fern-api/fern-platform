@@ -40,7 +40,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 type: "object",
                 properties: unwrapped.properties,
                 extends: [],
-                extraProperties: undefined,
+                extraProperties: unwrapped.extraProperties,
             },
             unwrapped.descriptions,
         ];
