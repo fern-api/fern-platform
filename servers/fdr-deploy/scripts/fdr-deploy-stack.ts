@@ -165,7 +165,7 @@ export class FdrDeployStack extends Stack {
             numCacheShards: 1,
             numCacheReplicasPerShard: 0,
             clusterMode: "enabled",
-            cacheNodeType: "cache.r7g.large",
+            cacheNodeType: "cache.r7g.xlarge",
             envType: environmentType,
             env: props?.env,
             ingressSecurityGroup: fdrSg,
