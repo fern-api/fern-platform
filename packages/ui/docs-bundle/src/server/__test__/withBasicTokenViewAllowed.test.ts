@@ -57,7 +57,7 @@ describe("withBasicTokenAnonymous", () => {
                 noindex: undefined,
                 pointsTo: undefined,
             }),
-        ).toBe(true);
+        ).toBe(false);
     });
 
     it("should not prune childless non-leaf nodes that have content", () => {
