@@ -677,9 +677,9 @@ class ApiDefinitionTransformationContext {
         for (const environment of environments) {
             const entry = this.uniqueBaseUrls[environment.id];
             if (entry != null) {
-                entry.add(this.getHost(environment.baseUrl));
+                entry.add(this.getHostEdge(environment.baseUrl));
             } else {
-                this.uniqueBaseUrls[environment.id] = new Set([this.getHost(environment.baseUrl)]);
+                this.uniqueBaseUrls[environment.id] = new Set([this.getHostEdge(environment.baseUrl)]);
             }
         }
     }
@@ -693,7 +693,7 @@ class ApiDefinitionTransformationContext {
         return false;
     }
 
-    private getHost(url: string) {
+    private getHostEdge(url: string) {
         const parsedBaseUrl = new URL(url);
         return parsedBaseUrl.host;
     }

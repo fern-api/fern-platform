@@ -9,7 +9,8 @@ import { getDocsPageProps } from "./getDocsPageProps";
 type GetServerSideDocsPagePropsResult = GetServerSidePropsResult<ComponentProps<typeof DocsPage>>;
 
 export async function getDynamicDocsPageProps(
-    xFernHost: string,
+    domain: string,
+    host: string,
     slug: string[],
     cookies: NextApiRequestCookies,
 ): Promise<GetServerSideDocsPagePropsResult> {
@@ -17,7 +18,7 @@ export async function getDynamicDocsPageProps(
 
     try {
         if (cookies[COOKIE_FERN_TOKEN]) {
-            authProps = await withAuthProps(xFernHost, cookies[COOKIE_FERN_TOKEN]);
+            authProps = await withAuthProps(domain, cookies[COOKIE_FERN_TOKEN]);
         }
     } catch (e) {
         // eslint-disable-next-line no-console
@@ -28,5 +29,5 @@ export async function getDynamicDocsPageProps(
      * Authenticated user is guaranteed to have a valid token because the middleware
      * would have redirected them to the login page
      */
-    return getDocsPageProps(xFernHost, slug, authProps);
+    return getDocsPageProps(domain, host, slug, authProps);
 }

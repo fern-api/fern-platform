@@ -1,6 +1,6 @@
 import { DocsLoader } from "@/server/DocsLoader";
 import { conformTrailingSlash } from "@/server/trailingSlash";
-import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
@@ -14,7 +14,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     if (req.method !== "GET") {
         return new NextResponse(null, { status: 405 });
     }
-    const xFernHost = getXFernHostEdge(req);
+    const xFernHost = getDocsDomainEdge(req);
 
     // load the root node
     const fernToken = req.cookies.get(COOKIE_FERN_TOKEN)?.value;

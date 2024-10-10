@@ -33,18 +33,26 @@ import { withVersionSwitcherInfo } from "./withVersionSwitcherInfo";
 interface WithInitialProps {
     docs: LoadWithUrlResponse;
     slug: string[];
-    xFernHost: string;
+    /**
+     * Docs domain
+     */
+    domain: string;
+    /**
+     * Hostname of this request (i.e. localhost, or preview URL, otherwise the docs domain in production)
+     */
+    host: string;
     auth?: AuthProps;
 }
 
 export async function withInitialProps({
     docs: docsResponse,
     slug: slugArray,
-    xFernHost,
+    domain,
+    host,
     auth,
 }: WithInitialProps): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
     if (!docsResponse.ok) {
-        return handleLoadDocsError(xFernHost, slugArray, docsResponse.error);
+        return handleLoadDocsError(domain, slugArray, docsResponse.error);
     }
 
     const docs = docsResponse.body;
@@ -59,10 +67,10 @@ export async function withInitialProps({
         return redirect;
     }
 
-    const featureFlags = await getFeatureFlags(xFernHost);
+    const featureFlags = await getFeatureFlags(domain);
 
-    const authConfig = await getAuthEdgeConfig(xFernHost);
-    const loader = DocsLoader.for(xFernHost)
+    const authConfig = await getAuthEdgeConfig(domain);
+    const loader = DocsLoader.for(domain)
         .withFeatureFlags(featureFlags)
         .withAuth(authConfig, auth)
         .withLoadDocsForUrlResponse(docs);
@@ -177,7 +185,7 @@ export async function withInitialProps({
     if (authConfig?.type === "basic_token_verification") {
         if (auth == null) {
             const redirect = new URL(withDefaultProtocol(authConfig.redirect));
-            redirect.searchParams.set("state", urlJoin(withDefaultProtocol(xFernHost), slug));
+            redirect.searchParams.set("state", urlJoin(withDefaultProtocol(host), slug));
 
             navbarLinks.push({
                 type: "outlined",
@@ -188,10 +196,13 @@ export async function withInitialProps({
                 rounded: false,
             });
         } else {
+            const logout = new URL(getApiRoute("/api/fern-docs/auth/logout"), withDefaultProtocol(host));
+            logout.searchParams.set("state", urlJoin(withDefaultProtocol(host), slug));
+
             navbarLinks.push({
                 type: "outlined",
                 text: "Logout",
-                url: FernNavigation.Url(getApiRoute("/api/fern-docs/auth/logout")),
+                url: FernNavigation.Url(logout.toString()),
                 icon: undefined,
                 rightIcon: undefined,
                 rounded: false,
@@ -288,7 +299,7 @@ export async function withInitialProps({
             docs.definition.filesV2,
             docs.definition.apis,
             node,
-            await getSeoDisabled(xFernHost),
+            await getSeoDisabled(domain),
             isTrailingSlashEnabled(),
         ),
         user: auth?.user,

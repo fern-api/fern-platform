@@ -1,6 +1,6 @@
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 
-export function safeUrl(url: string | null | undefined): string | undefined {
+export function safeUrl(url: string | null | undefined): URL | undefined {
     if (url == null) {
         return undefined;
     }
@@ -8,8 +8,7 @@ export function safeUrl(url: string | null | undefined): string | undefined {
     url = withDefaultProtocol(url);
 
     try {
-        new URL(url);
-        return url;
+        return new URL(url);
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
