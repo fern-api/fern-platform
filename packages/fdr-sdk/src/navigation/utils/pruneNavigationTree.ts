@@ -1,9 +1,13 @@
 import structuredClone from "@ungap/structured-clone";
 import { FernNavigation } from "../..";
-import { bfs } from "../../utils/traversers/bfs";
 import { prunetree } from "../../utils/traversers/prunetree";
 import { mutableDeleteChild } from "./deleteChild";
 import { mutableUpdatePointsTo } from "./updatePointsTo";
+
+type Predicate<T extends FernNavigation.NavigationNode = FernNavigation.NavigationNode> = (
+    node: T,
+    parents: readonly FernNavigation.NavigationNodeParent[],
+) => boolean;
 
 export class Pruner<ROOT extends FernNavigation.NavigationNode> {
     public static from<ROOT extends FernNavigation.NavigationNode>(tree: ROOT): Pruner<ROOT> {
@@ -15,7 +19,7 @@ export class Pruner<ROOT extends FernNavigation.NavigationNode> {
         this.tree = structuredClone(tree) as ROOT;
     }
 
-    public keep(predicate: (node: FernNavigation.NavigationNode) => boolean): this {
+    public keep(predicate: Predicate): this {
         if (this.tree == null) {
             return this;
         }
@@ -29,35 +33,31 @@ export class Pruner<ROOT extends FernNavigation.NavigationNode> {
         return this;
     }
 
-    public hide(predicate: (node: FernNavigation.NavigationNodeWithMetadata) => boolean): this {
+    public remove(predicate: Predicate): this {
+        return this.keep((node, parents) => !predicate(node, parents));
+    }
+
+    public hide(predicate: Predicate<FernNavigation.NavigationNodeWithMetadata>): this {
         if (this.tree == null) {
             return this;
         }
-        bfs(
-            this.tree,
-            (node) => {
-                if (FernNavigation.hasMarkdown(node) && predicate(node)) {
-                    node.hidden = true;
-                }
-            },
-            FernNavigation.getChildren,
-        );
+        FernNavigation.traverseBF(this.tree, (node, parents) => {
+            if (FernNavigation.hasMetadata(node)) {
+                node.hidden = predicate(node, parents) ? true : undefined;
+            }
+        });
         return this;
     }
 
-    public authed(predicate: (node: FernNavigation.NavigationNodeWithMetadata) => boolean): this {
+    public authed(predicate: Predicate<FernNavigation.NavigationNodeWithMetadata>): this {
         if (this.tree == null) {
             return this;
         }
-        bfs(
-            this.tree,
-            (node) => {
-                if (FernNavigation.hasMarkdown(node) && predicate(node)) {
-                    node.authed = true;
-                }
-            },
-            FernNavigation.getChildren,
-        );
+        FernNavigation.traverseBF(this.tree, (node, parents) => {
+            if (FernNavigation.hasMetadata(node)) {
+                node.authed = predicate(node, parents) ? true : undefined;
+            }
+        });
         return this;
     }
 

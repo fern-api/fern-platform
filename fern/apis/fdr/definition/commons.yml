@@ -43,6 +43,8 @@ types:
 
   PropertyKey: string
 
+  AudienceId: string
+
   EndpointIdentifier:
     properties:
       path: EndpointPathLiteral

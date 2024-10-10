@@ -20,6 +20,7 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
+                    audience: undefined,
                 },
             ],
             collapsed: undefined,
@@ -30,6 +31,7 @@ describe("pruneNavigationTree", () => {
             overviewPageId: undefined,
             noindex: undefined,
             pointsTo: undefined,
+            audience: undefined,
         };
 
         const result = Pruner.from(root)
@@ -56,6 +58,7 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
+                    audience: undefined,
                 },
             ],
             collapsed: undefined,
@@ -66,6 +69,7 @@ describe("pruneNavigationTree", () => {
             overviewPageId: undefined,
             noindex: undefined,
             pointsTo: FernNavigation.Slug("root/page"),
+            audience: undefined,
         });
     });
 
@@ -87,6 +91,7 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
+                    audience: undefined,
                 },
             ],
             collapsed: undefined,
@@ -97,6 +102,7 @@ describe("pruneNavigationTree", () => {
             overviewPageId: undefined,
             noindex: undefined,
             pointsTo: FernNavigation.Slug("root/page"),
+            audience: undefined,
         };
 
         const result = Pruner.from(root)
@@ -125,6 +131,7 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
+                    audience: undefined,
                 },
             ],
             collapsed: undefined,
@@ -134,6 +141,7 @@ describe("pruneNavigationTree", () => {
             authed: undefined,
             noindex: undefined,
             pointsTo: undefined,
+            audience: undefined,
         };
 
         const result = Pruner.from(root)
@@ -161,6 +169,7 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
+                    audience: undefined,
                 },
             ],
             collapsed: undefined,
@@ -170,6 +179,7 @@ describe("pruneNavigationTree", () => {
             authed: undefined,
             noindex: undefined,
             pointsTo: FernNavigation.Slug("root/page"),
+            audience: undefined,
         });
     });
 
@@ -192,6 +202,7 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
+                    audience: undefined,
                 },
             ],
             collapsed: undefined,
@@ -201,6 +212,7 @@ describe("pruneNavigationTree", () => {
             authed: undefined,
             noindex: undefined,
             pointsTo: undefined,
+            audience: undefined,
         };
 
         const result = Pruner.from(root)
@@ -224,6 +236,7 @@ describe("pruneNavigationTree", () => {
             authed: undefined,
             noindex: undefined,
             pointsTo: undefined,
+            audience: undefined,
         });
     });
 
@@ -246,6 +259,7 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
+                    audience: undefined,
                 },
             ],
             collapsed: undefined,
@@ -255,6 +269,7 @@ describe("pruneNavigationTree", () => {
             authed: undefined,
             noindex: undefined,
             pointsTo: undefined,
+            audience: undefined,
         };
 
         const result = Pruner.from(root)
@@ -282,6 +297,7 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
+                    audience: undefined,
                 },
             ],
             collapsed: undefined,
@@ -291,6 +307,7 @@ describe("pruneNavigationTree", () => {
             authed: undefined,
             noindex: undefined,
             pointsTo: FernNavigation.Slug("root/page"),
+            audience: undefined,
         });
     });
 
@@ -320,6 +337,7 @@ describe("pruneNavigationTree", () => {
                             hidden: undefined,
                             authed: undefined,
                             noindex: undefined,
+                            audience: undefined,
                         },
                     ],
                     collapsed: undefined,
@@ -329,6 +347,7 @@ describe("pruneNavigationTree", () => {
                     authed: undefined,
                     noindex: undefined,
                     pointsTo: undefined,
+                    audience: undefined,
                 },
                 {
                     type: "page",
@@ -341,6 +360,7 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
+                    audience: undefined,
                 },
             ],
             collapsed: undefined,
@@ -350,6 +370,7 @@ describe("pruneNavigationTree", () => {
             authed: undefined,
             noindex: undefined,
             pointsTo: undefined,
+            audience: undefined,
         };
 
         const result = Pruner.from(root)
@@ -377,6 +398,7 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
+                    audience: undefined,
                 },
             ],
             collapsed: undefined,
@@ -385,6 +407,7 @@ describe("pruneNavigationTree", () => {
             hidden: undefined,
             authed: undefined,
             noindex: undefined,
+            audience: undefined,
 
             // NOTE: points to is updated!
             pointsTo: "root/page",
