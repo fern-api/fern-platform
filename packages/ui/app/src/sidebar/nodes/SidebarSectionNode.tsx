@@ -1,4 +1,4 @@
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useCallback } from "react";
 import {
     useIsChildSelected,
@@ -28,24 +28,11 @@ export function SidebarSectionNode({ node, className, depth }: SidebarSectionNod
         [depth],
     );
 
-    if (node.children.length === 0) {
-        if (node.overviewPageId != null) {
-            return (
-                <SidebarPageNode
-                    node={{
-                        ...node,
-                        type: "page",
-                        pageId: node.overviewPageId,
-                    }}
-                    depth={depth}
-                    className={className}
-                />
-            );
-        }
-        return null;
+    if (node.children.length === 0 && FernNavigation.hasMarkdown(node)) {
+        return <SidebarPageNode node={node} depth={depth} className={className} />;
     }
 
-    if (node.hidden && !childSelected) {
+    if (node.children.length === 0 || (node.hidden && !childSelected)) {
         return null;
     }
 
