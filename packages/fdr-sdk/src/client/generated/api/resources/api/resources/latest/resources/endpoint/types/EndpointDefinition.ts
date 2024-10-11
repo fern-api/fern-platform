@@ -15,7 +15,7 @@ export interface EndpointDefinition
     defaultEnvironment: FernRegistry.EnvironmentId | undefined;
     environments: FernRegistry.api.latest.Environment[] | undefined;
     pathParameters: FernRegistry.api.latest.ObjectProperty[] | undefined;
-    queryParameters: FernRegistry.api.latest.ObjectProperty[] | undefined;
+    queryParameters: FernRegistry.api.latest.QueryParameter[] | undefined;
     requestHeaders: FernRegistry.api.latest.ObjectProperty[] | undefined;
     responseHeaders: FernRegistry.api.latest.ObjectProperty[] | undefined;
     request: FernRegistry.api.latest.HttpRequest | undefined;

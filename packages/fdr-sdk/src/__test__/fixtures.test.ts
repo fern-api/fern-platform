@@ -11,24 +11,27 @@ import { readFixture } from "./readFixtures";
 
 const fixturesDir = path.join(__dirname, "fixtures");
 
-function testNavigationConfigConverter(fixtureName: string): void {
+async function testNavigationConfigConverter(fixtureName: string): Promise<void> {
     const fixture = readFixture(fixtureName);
     const v1 = FernNavigation.V1.toRootNode(fixture);
     const latest = FernNavigationV1ToLatest.create().root(v1);
 
-    const v2Apis = Object.values(fixture.definition.apis).map((api) =>
-        ApiDefinitionV1ToLatest.from(api, {
-            useJavaScriptAsTypeScript: false,
-            alwaysEnableJavaScriptFetch: false,
-            usesApplicationJsonInFormDataValue: false,
-        }).migrate(),
+    const v2Apis = await Promise.all(
+        Object.values(fixture.definition.apis).map(
+            async (api) =>
+                await ApiDefinitionV1ToLatest.from(api, {
+                    useJavaScriptAsTypeScript: false,
+                    alwaysEnableJavaScriptFetch: false,
+                    usesApplicationJsonInFormDataValue: false,
+                }).migrate(),
+        ),
     );
 
     // eslint-disable-next-line vitest/valid-title
     describe(fixtureName, () => {
         const collector = new NodeCollector(latest);
 
-        it("gets all urls from docs config", () => {
+        it("gets all urls from docs config", async () => {
             expect(JSON.stringify(sortObject(latest), undefined, 2)).toMatchFileSnapshot(
                 `output/${fixtureName}/node.json`,
             );
@@ -98,6 +101,7 @@ function testNavigationConfigConverter(fixtureName: string): void {
                 const node = collector.slugMap.get(slug)!;
                 expect(node).toBeDefined();
                 if (!FernNavigation.isPage(node)) {
+                    // eslint-disable-next-line no-console
                     console.log(node);
                 }
                 expect(FernNavigation.isPage(node), `${slug} is a page`).toBe(true);

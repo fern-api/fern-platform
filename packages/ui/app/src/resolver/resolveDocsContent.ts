@@ -59,11 +59,11 @@ export async function resolveDocsContent({
             engine,
         );
 
-    const apiLoaders = mapValues(apis, (api) => {
+    const apiLoaders = mapValues(apis, async (api) => {
         return ApiDefinitionLoader.create(host, api.id)
             .withMdxBundler(serializeMdx, engine)
             .withFlags(featureFlags)
-            .withApiDefinition(ApiDefinitionV1ToLatest.from(api, featureFlags).migrate())
+            .withApiDefinition(await ApiDefinitionV1ToLatest.from(api, featureFlags).migrate())
             .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
             .withResolveDescriptions();
     });
@@ -107,7 +107,7 @@ export async function resolveDocsContent({
             return resolveApiEndpointPage({
                 node,
                 parents,
-                apiDefinitionLoader: loader,
+                apiDefinitionLoader: await loader,
                 neighbors,
                 showErrors: apiReference.showErrors,
             });
@@ -115,7 +115,7 @@ export async function resolveDocsContent({
 
         return resolveApiReferencePage({
             node,
-            apiDefinitionLoader: loader,
+            apiDefinitionLoader: await loader,
             apiReferenceNode: apiReference,
             parents,
             markdownLoader,

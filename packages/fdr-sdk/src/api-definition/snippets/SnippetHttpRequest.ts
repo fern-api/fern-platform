@@ -43,7 +43,8 @@ export type SnippetHttpRequestBody =
 export interface SnippetHttpRequest {
     method: string;
     url: string;
-    searchParams: Record<string, unknown>;
+    queryParameters: Record<string, unknown>;
+    queryParametersEncoding: Record<string, Latest.QueryParameterArrayEncoding>;
     headers: Record<string, unknown>;
     basicAuth?: {
         username: string;
@@ -107,7 +108,10 @@ export function toSnippetHttpRequest(
     return {
         method: endpoint.method,
         url,
-        searchParams: example.queryParameters ?? {},
+        queryParameters: example.queryParameters ?? {},
+        queryParametersEncoding: Object.fromEntries(
+            (endpoint.queryParameters ?? []).map((param) => [param.key, param.arrayEncoding ?? "exploded"]),
+        ),
         headers: JSON.parse(JSON.stringify(headers)),
         basicAuth,
         body:

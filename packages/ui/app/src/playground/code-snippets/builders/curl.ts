@@ -12,12 +12,17 @@ export class CurlSnippetBuilder extends PlaygroundCodeSnippetBuilder {
         return this;
     }
 
-    public override build(): string {
-        return convertToCurl(
+    public override async build(): Promise<string> {
+        return await convertToCurl(
             {
                 method: this.context.endpoint.method,
                 url: this.url,
-                searchParams: this.formState.queryParameters,
+                queryParameters: this.formState.queryParameters,
+                queryParametersEncoding: Object.fromEntries(
+                    (this.context.endpoint.queryParameters ?? []).map((parameter) => {
+                        return [parameter.key, parameter.arrayEncoding ?? "exploded"];
+                    }),
+                ),
                 headers: this.formState.headers,
                 basicAuth: this.context.auth?.type === "basicAuth" ? this.authState.basicAuth : undefined,
                 body: this.#convertFormStateToBody(),

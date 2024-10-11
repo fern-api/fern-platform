@@ -29,6 +29,7 @@ const endpoint1: Latest.EndpointDefinition = {
     queryParameters: [
         {
             key: Latest.PropertyKey("query"),
+            arrayEncoding: "exploded",
             valueShape: {
                 type: "alias",
                 value: {

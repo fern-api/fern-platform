@@ -3,6 +3,7 @@ export * from "./EndpointPath";
 export * from "./EndpointPathPart";
 export * from "./PathParameter";
 export * from "./QueryParameter";
+export * from "./QueryParameterArrayEncoding";
 export * from "./Header";
 export * from "./HttpRequest";
 export * from "./HttpRequestBodyShape";

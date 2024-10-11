@@ -1,5 +1,6 @@
 import { unknownToString } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
+import { QueryParameterArrayEncoding } from "../latest";
 import { SnippetHttpRequest } from "./SnippetHttpRequest";
 
 function requiresUrlEncode(str: string): boolean {
@@ -10,9 +11,9 @@ interface Flags {
     usesApplicationJsonInFormDataValue: boolean;
 }
 
-export function convertToCurl(request: SnippetHttpRequest, opts: Flags): string {
+export async function convertToCurl(request: SnippetHttpRequest, opts: Flags): Promise<string> {
     try {
-        return unsafeStringifyHttpRequestExampleToCurl(request, opts);
+        return await unsafeStringifyHttpRequestExampleToCurl(request, opts);
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
@@ -21,11 +22,13 @@ export function convertToCurl(request: SnippetHttpRequest, opts: Flags): string 
     }
 }
 
-function unsafeStringifyHttpRequestExampleToCurl(
-    { method, url, searchParams, headers, basicAuth, body }: SnippetHttpRequest,
+async function unsafeStringifyHttpRequestExampleToCurl(
+    { method, url, queryParameters, queryParametersEncoding, headers, basicAuth, body }: SnippetHttpRequest,
     { usesApplicationJsonInFormDataValue }: Flags,
-): string {
-    const queryParams = toUrlEncoded(searchParams)
+): Promise<string> {
+    const urlEncodedQueryParams = await toUrlEncoded({ queryParameters, queryParametersEncoding });
+
+    const queryParams = Object.entries(urlEncodedQueryParams)
         .map(([key, value]) => `${key}=${encodeURIComponent(unknownToString(value))}`)
         .join("&");
     const httpRequest =
@@ -44,7 +47,7 @@ function unsafeStringifyHttpRequestExampleToCurl(
     // GET requests don't have a body, so `--data-urlencode` is used to pass query parameters
     const urlQueriesGetString =
         method === "GET"
-            ? toUrlEncoded(searchParams)
+            ? Object.entries(urlEncodedQueryParams)
                   .map(
                       ([key, value]) =>
                           ` \\\n     ${requiresUrlEncode(value) ? "--data-urlencode" : "-d"} ${key.includes("[") ? `"${key}"` : key}=${value.includes(" ") ? `"${value}"` : value}`,
@@ -104,11 +107,25 @@ function unsafeStringifyHttpRequestExampleToCurl(
     return `curl ${httpRequest}${headersString}${basicAuthString}${urlQueriesGetString}${bodyDataString}`;
 }
 
-function toUrlEncoded(urlQueries: Record<string, unknown>): Array<[string, string]> {
-    return Object.entries(urlQueries).flatMap(([key, value]): [string, string][] => {
-        if (Array.isArray(value)) {
-            return value.map((v) => [`${key}[]`, unknownToString(v)]);
-        }
-        return [[key, unknownToString(value)]];
-    });
+async function toUrlEncoded({
+    queryParameters,
+    queryParametersEncoding,
+}: {
+    queryParameters: Record<string, unknown>;
+    queryParametersEncoding: Record<string, QueryParameterArrayEncoding>;
+}): Promise<Record<string, string>> {
+    return Object.fromEntries(
+        await Promise.all(
+            Object.entries(queryParameters).flatMap(async ([key, value]): Promise<[string, string][]> => {
+                // Dynamically import the qs library
+                const qs = await import("qs");
+
+                const queryParamValue = qs.stringify(value, {
+                    arrayFormat: queryParametersEncoding[key] === "comma" ? "comma" : "repeat",
+                });
+
+                return [[key, queryParamValue]];
+            }),
+        ),
+    );
 }

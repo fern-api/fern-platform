@@ -46,6 +46,9 @@ import * as FernRegistry from "../../../../../../../../index";
  *                                 type: {
  *                                     type: "id"
  *                                 },
+ *                                 arrayEncoding: {
+ *                                     "key": "value"
+ *                                 },
  *                                 description: {
  *                                     "key": "value"
  *                                 },
@@ -275,6 +278,9 @@ import * as FernRegistry from "../../../../../../../../index";
  *                                     key: "string",
  *                                     type: {
  *                                         type: "id"
+ *                                     },
+ *                                     arrayEncoding: {
+ *                                         "key": "value"
  *                                     },
  *                                     description: {
  *                                         "key": "value"

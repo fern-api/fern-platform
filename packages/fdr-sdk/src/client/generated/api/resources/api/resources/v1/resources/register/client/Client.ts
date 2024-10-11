@@ -71,6 +71,9 @@ export class Register {
      *                                 type: {
      *                                     type: "id"
      *                                 },
+     *                                 arrayEncoding: {
+     *                                     "key": "value"
+     *                                 },
      *                                 description: {
      *                                     "key": "value"
      *                                 },
@@ -300,6 +303,9 @@ export class Register {
      *                                     key: "string",
      *                                     type: {
      *                                         type: "id"
+     *                                     },
+     *                                     arrayEncoding: {
+     *                                         "key": "value"
      *                                     },
      *                                     description: {
      *                                         "key": "value"

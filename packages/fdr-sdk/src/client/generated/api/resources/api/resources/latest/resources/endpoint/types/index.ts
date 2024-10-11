@@ -3,6 +3,8 @@ export * from "./ExampleEndpointRequest";
 export * from "./ExampleEndpointResponse";
 export * from "./ExampleErrorResponse";
 export * from "./EndpointDefinition";
+export * from "./QueryParameter";
+export * from "./QueryParameterArrayEncoding";
 export * from "./EndpointSnippetTemplates";
 export * from "./HttpRequest";
 export * from "./HttpRequestBodyShape";

@@ -5,7 +5,8 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "lib": ["DOM", "ESNext"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": ["vitest/globals"]
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules"],

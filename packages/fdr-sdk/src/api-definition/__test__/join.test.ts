@@ -37,6 +37,7 @@ const endpoint1: Latest.EndpointDefinition = {
                     default: undefined,
                 },
             },
+            arrayEncoding: "comma",
             description: undefined,
             availability: undefined,
         },

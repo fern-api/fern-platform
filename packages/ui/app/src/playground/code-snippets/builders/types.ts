@@ -19,5 +19,5 @@ export abstract class PlaygroundCodeSnippetBuilder {
         });
     }
 
-    public abstract build(): string;
+    public abstract build(): string | Promise<string>;
 }

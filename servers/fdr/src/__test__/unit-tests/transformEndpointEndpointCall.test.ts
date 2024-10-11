@@ -41,6 +41,7 @@ describe("transformEndpointEndpointCall", () => {
             queryParameters: [
                 {
                     key: "queryParam",
+                    arrayEncoding: "exploded",
                     type: {
                         type: "primitive",
                         value: { type: "integer", minimum: undefined, maximum: undefined, default: undefined },

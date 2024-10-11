@@ -72,7 +72,7 @@ export class ApiDefinitionV1ToLatest {
     private webhooks: Record<V2.WebhookId, V2.WebhookDefinition> = {};
     private subpackages: Record<V2.SubpackageId, V2.SubpackageMetadata> = {};
     private types: Record<string, V2.TypeDefinition> = {};
-    public migrate = (): V2.ApiDefinition => {
+    public migrate = async (): Promise<V2.ApiDefinition> => {
         Object.entries(this.v1.types).forEach(([id, type]) => {
             this.types[V2.TypeId(id)] = {
                 name: type.name,
@@ -82,21 +82,25 @@ export class ApiDefinitionV1ToLatest {
             };
         });
 
-        [this.v1.rootPackage, ...Object.values(this.v1.subpackages)].forEach((pkg) => {
-            const [subpackageId, namespace] = this.collectNamespace(pkg, this.v1.subpackages);
-            pkg.endpoints.forEach((endpoint) => {
-                const id = ApiDefinitionV1ToLatest.createEndpointId(endpoint, subpackageId);
-                this.endpoints[id] = this.migrateEndpoint(id, endpoint, namespace);
-            });
-            pkg.websockets.forEach((webSocket) => {
-                const id = ApiDefinitionV1ToLatest.createWebSocketId(webSocket, subpackageId);
-                this.websockets[id] = this.migrateWebSocket(id, webSocket, namespace);
-            });
-            pkg.webhooks.forEach((webhook) => {
-                const id = ApiDefinitionV1ToLatest.createWebhookId(webhook, subpackageId);
-                this.webhooks[id] = this.migrateWebhook(id, webhook, namespace);
-            });
-        });
+        await Promise.all(
+            [this.v1.rootPackage, ...Object.values(this.v1.subpackages)].map(async (pkg) => {
+                const [subpackageId, namespace] = this.collectNamespace(pkg, this.v1.subpackages);
+                await Promise.all(
+                    pkg.endpoints.map(async (endpoint) => {
+                        const id = ApiDefinitionV1ToLatest.createEndpointId(endpoint, subpackageId);
+                        this.endpoints[id] = await this.migrateEndpoint(id, endpoint, namespace);
+                    }),
+                );
+                pkg.websockets.forEach((webSocket) => {
+                    const id = ApiDefinitionV1ToLatest.createWebSocketId(webSocket, subpackageId);
+                    this.websockets[id] = this.migrateWebSocket(id, webSocket, namespace);
+                });
+                pkg.webhooks.forEach((webhook) => {
+                    const id = ApiDefinitionV1ToLatest.createWebhookId(webhook, subpackageId);
+                    this.webhooks[id] = this.migrateWebhook(id, webhook, namespace);
+                });
+            }),
+        );
 
         Object.values(this.v1.subpackages).forEach((subpackage) => {
             this.subpackages[subpackage.subpackageId] = this.migrateSubpackage(subpackage);
@@ -142,11 +146,11 @@ export class ApiDefinitionV1ToLatest {
         return [pkg.subpackageId, namespace];
     };
 
-    migrateEndpoint = (
+    migrateEndpoint = async (
         id: V2.EndpointId,
         v1: APIV1Read.EndpointDefinition,
         namespace: V2.SubpackageId[],
-    ): V2.EndpointDefinition => {
+    ): Promise<V2.EndpointDefinition> => {
         const toRet: V2.EndpointDefinition = {
             id,
             namespace,
@@ -158,7 +162,7 @@ export class ApiDefinitionV1ToLatest {
             defaultEnvironment: v1.defaultEnvironment,
             environments: v1.environments,
             pathParameters: this.migrateParameters(v1.path.pathParameters),
-            queryParameters: this.migrateParameters(v1.queryParameters),
+            queryParameters: this.migrateQueryParameters(v1.queryParameters),
             requestHeaders: this.migrateParameters(v1.headers),
             responseHeaders: undefined,
             request: this.migrateHttpRequest(v1.request),
@@ -168,7 +172,7 @@ export class ApiDefinitionV1ToLatest {
             snippetTemplates: v1.snippetTemplates,
         };
 
-        toRet.examples = this.migrateHttpExamples(v1.examples, toRet);
+        toRet.examples = await this.migrateHttpExamples(v1.examples, toRet);
 
         return toRet;
     };
@@ -227,7 +231,7 @@ export class ApiDefinitionV1ToLatest {
     };
 
     migrateParameters = (
-        v1: APIV1Read.PathParameter[] | APIV1Read.QueryParameter[] | APIV1Read.Header[] | undefined,
+        v1: APIV1Read.PathParameter[] | APIV1Read.Header[] | undefined,
     ): V2.ObjectProperty[] | undefined => {
         if (v1 == null || v1.length === 0) {
             return undefined;
@@ -238,6 +242,22 @@ export class ApiDefinitionV1ToLatest {
                 type: "alias",
                 value: this.migrateTypeReference(parameter.type),
             },
+            description: parameter.description,
+            availability: parameter.availability,
+        }));
+    };
+
+    migrateQueryParameters = (v1: APIV1Read.QueryParameter[] | undefined): V2.QueryParameter[] | undefined => {
+        if (v1 == null || v1.length === 0) {
+            return undefined;
+        }
+        return v1.map((parameter) => ({
+            key: V2.PropertyKey(parameter.key),
+            valueShape: {
+                type: "alias",
+                value: this.migrateTypeReference(parameter.type),
+            },
+            arrayEncoding: parameter.arrayEncoding,
             description: parameter.description,
             availability: parameter.availability,
         }));
@@ -397,77 +417,79 @@ export class ApiDefinitionV1ToLatest {
         }));
     };
 
-    migrateHttpExamples = (
+    migrateHttpExamples = async (
         examples: APIV1Read.ExampleEndpointCall[],
         endpoint: V2.EndpointDefinition,
-    ): V2.ExampleEndpointCall[] | undefined => {
+    ): Promise<Promise<V2.ExampleEndpointCall[]> | undefined> => {
         if (examples.length === 0) {
             return undefined;
         }
-        return examples.map((example): V2.ExampleEndpointCall => {
-            const toRet: V2.ExampleEndpointCall = {
-                path: example.path,
-                responseStatusCode: example.responseStatusCode,
-                name: example.name,
-                description: example.description,
-                pathParameters: example.pathParameters,
-                queryParameters: example.queryParameters,
-                headers: example.headers,
-                requestBody: example.requestBodyV3,
-                responseBody: example.responseBodyV3,
-                snippets: undefined,
-            };
+        return await Promise.all(
+            examples.map(async (example): Promise<V2.ExampleEndpointCall> => {
+                const toRet: V2.ExampleEndpointCall = {
+                    path: example.path,
+                    responseStatusCode: example.responseStatusCode,
+                    name: example.name,
+                    description: example.description,
+                    pathParameters: example.pathParameters,
+                    queryParameters: example.queryParameters,
+                    headers: example.headers,
+                    requestBody: example.requestBodyV3,
+                    responseBody: example.responseBodyV3,
+                    snippets: undefined,
+                };
 
-            if (example.requestBodyV3) {
-                toRet.requestBody = visitDiscriminatedUnion(
-                    example.requestBodyV3,
-                )._visit<APIV1Read.ExampleEndpointRequest>({
-                    bytes: (value) => value,
-                    json: (value) => ({
-                        type: "json",
-                        value: sortKeysByShape(value.value, endpoint.request?.body, this.types),
-                    }),
-                    form: (value) => ({
-                        type: "form",
-                        value: mapValues(value.value, (formValue, key): APIV1Read.FormValue => {
-                            if (formValue.type === "json") {
-                                const shape =
-                                    endpoint.request?.body.type === "formData"
-                                        ? endpoint.request.body.fields.find(
-                                              (field): field is V2.FormDataField.Property =>
-                                                  field.key === key && field.type === "property",
-                                          )?.valueShape
-                                        : undefined;
-                                return {
-                                    type: "json",
-                                    value: sortKeysByShape(formValue.value, shape, this.types),
-                                };
-                            } else {
-                                return formValue;
-                            }
+                if (example.requestBodyV3) {
+                    toRet.requestBody = visitDiscriminatedUnion(
+                        example.requestBodyV3,
+                    )._visit<APIV1Read.ExampleEndpointRequest>({
+                        bytes: (value) => value,
+                        json: (value) => ({
+                            type: "json",
+                            value: sortKeysByShape(value.value, endpoint.request?.body, this.types),
                         }),
-                    }),
-                });
-            }
+                        form: (value) => ({
+                            type: "form",
+                            value: mapValues(value.value, (formValue, key): APIV1Read.FormValue => {
+                                if (formValue.type === "json") {
+                                    const shape =
+                                        endpoint.request?.body.type === "formData"
+                                            ? endpoint.request.body.fields.find(
+                                                  (field): field is V2.FormDataField.Property =>
+                                                      field.key === key && field.type === "property",
+                                              )?.valueShape
+                                            : undefined;
+                                    return {
+                                        type: "json",
+                                        value: sortKeysByShape(formValue.value, shape, this.types),
+                                    };
+                                } else {
+                                    return formValue;
+                                }
+                            }),
+                        }),
+                    });
+                }
 
-            if (toRet.responseBody) {
-                toRet.responseBody.value = sortKeysByShape(
-                    toRet.responseBody.value,
-                    endpoint.response?.body,
-                    this.types,
+                if (toRet.responseBody) {
+                    toRet.responseBody.value = sortKeysByShape(
+                        toRet.responseBody.value,
+                        endpoint.response?.body,
+                        this.types,
+                    );
+                }
+
+                toRet.snippets = await this.migrateEndpointSnippets(
+                    endpoint,
+                    toRet,
+                    example.codeSamples,
+                    example.codeExamples,
+                    this.flags,
                 );
-            }
 
-            toRet.snippets = this.migrateEndpointSnippets(
-                endpoint,
-                toRet,
-                example.codeSamples,
-                example.codeExamples,
-                this.flags,
-            );
-
-            return toRet;
-        });
+                return toRet;
+            }),
+        );
     };
 
     migrateHttpErrors = (errors: APIV1Read.ErrorDeclarationV2[] | undefined): V2.ErrorResponse[] | undefined => {
@@ -611,13 +633,13 @@ export class ApiDefinitionV1ToLatest {
         );
     };
 
-    migrateEndpointSnippets(
+    async migrateEndpointSnippets(
         endpoint: V2.EndpointDefinition,
         example: V2.ExampleEndpointCall,
         codeSamples: APIV1Read.CustomCodeSample[],
         codeExamples: APIV1Read.CodeExamples,
         flags: Flags,
-    ): Record<string, V2.CodeSnippet[]> {
+    ): Promise<Record<string, V2.CodeSnippet[]>> {
         const toRet: Record<string, V2.CodeSnippet[]> = {};
         function push(language: string, snippet: V2.CodeSnippet) {
             (toRet[language] ??= []).push(snippet);
@@ -641,7 +663,7 @@ export class ApiDefinitionV1ToLatest {
         });
 
         if (!userProvidedLanguages.has(SupportedLanguage.Curl)) {
-            const code = convertToCurl(toSnippetHttpRequest(endpoint, example, this.auth), flags);
+            const code = await convertToCurl(toSnippetHttpRequest(endpoint, example, this.auth), flags);
             push(SupportedLanguage.Curl, {
                 language: SupportedLanguage.Curl,
                 code,

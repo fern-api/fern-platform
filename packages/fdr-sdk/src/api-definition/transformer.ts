@@ -273,9 +273,12 @@ export class Transformer {
             ) ?? [],
         );
         const queryParametersPromise = Promise.all(
-            endpoint.queryParameters?.map((param) =>
-                this.visitor.ObjectProperty(param, `${parentKey}/query/${param.key}`),
-            ) ?? [],
+            endpoint.queryParameters?.map(async (param): Promise<Latest.QueryParameter> => {
+                return {
+                    ...(await this.visitor.ObjectProperty(param, `${parentKey}/query/${param.key}`)),
+                    arrayEncoding: param.arrayEncoding,
+                };
+            }) ?? [],
         );
         const requestHeadersPromise = Promise.all(
             endpoint.requestHeaders?.map((param) =>

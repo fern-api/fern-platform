@@ -64,12 +64,12 @@ export class PlaygroundCodeSnippetResolver {
     private typescriptSdkResolver: SnippetTemplateResolver | undefined;
     private pythonRequestsResolver: SnippetTemplateResolver | undefined;
 
-    public resolve(
+    public async resolve(
         lang: "curl" | "python" | "typescript" | "javascript",
         apiDefinition?: APIV1Read.ApiDefinition,
-    ): string {
+    ): Promise<string> {
         if (lang === "curl") {
-            return this.toCurl();
+            return await this.toCurl();
         } else if (lang === "typescript" || lang === "javascript") {
             return this.toTypescriptSdkSnippet(apiDefinition) ?? this.toTypescriptFetch();
         } else if (lang === "python") {
@@ -156,9 +156,9 @@ export class PlaygroundCodeSnippetResolver {
         }
     }
 
-    public toCurl(): string {
+    public async toCurl(): Promise<string> {
         const formState = { ...this.formState, headers: this.headers };
-        return new CurlSnippetBuilder(this.context, formState, this.authState, this.baseUrl)
+        return await new CurlSnippetBuilder(this.context, formState, this.authState, this.baseUrl)
             .setFileForgeHackEnabled(this.isFileForgeHackEnabled)
             .build();
     }

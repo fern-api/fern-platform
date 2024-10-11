@@ -8,7 +8,7 @@ import type { DocsContent } from "./DocsContent";
 interface ResolveMarkdownPageOptions {
     node: FernNavigation.NavigationNodeWithMarkdown;
     found: FernNavigation.utils.Node.Found;
-    apiLoaders: Record<FernNavigation.ApiDefinitionId, ApiDefinitionLoader>;
+    apiLoaders: Record<FernNavigation.ApiDefinitionId, Promise<ApiDefinitionLoader>>;
     neighbors: DocsContent.Neighbors;
     markdownLoader: MarkdownLoader;
 }
@@ -54,7 +54,7 @@ export async function resolveMarkdownPage({
                             console.error("API definition not found", id);
                             return;
                         }
-                        const apiDefinition = await loader.load();
+                        const apiDefinition = await (await loader).load();
 
                         if (apiDefinition == null) {
                             // eslint-disable-next-line no-console
