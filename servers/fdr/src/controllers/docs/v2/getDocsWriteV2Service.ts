@@ -161,7 +161,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     return Object.entries(apiDefinition.subpackages).flatMap(([id, subpackage]) => {
                         return subpackage.endpoints.map(async (endpoint) => {
                             return await fetch(
-                                `https://${docsRegistrationInfo.fernUrl.getFullUrl()}/api/fern-docs/api-definition/${apiDefinition.id}/endpoint/${endpoint.id}`,
+                                `https://${docsRegistrationInfo.fernUrl.getFullUrl()}/api/fern-docs/api-definition/${apiDefinition.id}/endpoint/${endpoint.originalEndpointId}`,
                             );
                         });
                     });
