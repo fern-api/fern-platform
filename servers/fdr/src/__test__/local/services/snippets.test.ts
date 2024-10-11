@@ -117,6 +117,7 @@ it("get snippets", async () => {
                         },
                     ],
                 },
+                root: undefined,
                 typography: {
                     headingsFont: {
                         name: "Syne",
@@ -279,6 +280,7 @@ it("get Go snippets", async () => {
                     ],
                     landingPage: undefined,
                 },
+                root: undefined,
                 typography: {
                     headingsFont: {
                         name: "Syne",
@@ -438,6 +440,7 @@ it("get Ruby snippets", async () => {
                     ],
                     landingPage: undefined,
                 },
+                root: undefined,
                 typography: {
                     headingsFont: {
                         name: "Syne",
