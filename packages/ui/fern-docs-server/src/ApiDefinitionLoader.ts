@@ -238,9 +238,9 @@ export class ApiDefinitionLoader {
     };
 
     private resolveDescriptions = async (apiDefinition: ApiDefinition): Promise<ApiDefinition> => {
-        const descriptions = await this.#collectDescriptions(apiDefinition);
+        const descriptions = this.#collectDescriptions(apiDefinition);
         const resolvedDescriptions = await this.cache.batchResolveDescriptions(descriptions, this.#serializeMdx);
-        const transformed = await this.#transformDescriptions(apiDefinition, resolvedDescriptions);
+        const transformed = this.#transformDescriptions(apiDefinition, resolvedDescriptions);
 
         return transformed;
     };
@@ -251,7 +251,7 @@ export class ApiDefinitionLoader {
      * @param apiDefinition The API definition to collect descriptions from
      * @param engine to prefix the key, so that we can differentiate between different serialization engines
      */
-    #collectDescriptions = async (apiDefinition: ApiDefinition): Promise<Record<string, FernDocs.MarkdownText>> => {
+    #collectDescriptions = (apiDefinition: ApiDefinition): Record<string, FernDocs.MarkdownText> => {
         const descriptions: Record<string, FernDocs.MarkdownText> = {};
         const descriptionCollector = (description: FernDocs.MarkdownText, key: string) => {
             if (descriptions[`${this.#engine}/${key}`] != null) {
@@ -262,19 +262,19 @@ export class ApiDefinitionLoader {
             descriptions[`${this.#engine}/${key}`] = description;
             return description;
         };
-        await Transformer.descriptions(descriptionCollector).apiDefinition(apiDefinition);
+        Transformer.descriptions(descriptionCollector).apiDefinition(apiDefinition);
         return descriptions;
     };
 
-    #transformDescriptions = async (
+    #transformDescriptions = (
         apiDefinition: ApiDefinition,
         descriptions: Record<string, FernDocs.MarkdownText>,
-    ): Promise<ApiDefinition> => {
+    ): ApiDefinition => {
         const transformer = (description: FernDocs.MarkdownText, key: string) => {
             return descriptions[`${this.#engine}/${key}`] ?? description;
         };
 
-        return await Transformer.descriptions(transformer).apiDefinition(apiDefinition);
+        return Transformer.descriptions(transformer).apiDefinition(apiDefinition);
     };
 }
 
