@@ -6,6 +6,7 @@ imports:
   apiReadV1Endpoint: ../../../api/v1/read/endpoint.yml
   docsReadV1: ../read/__package__.yml
   commons: ../commons/commons.yml
+  navigationV1: ../../../navigation/v1/__package__.yml
 
 types:
   DocsDefinitionDb:
@@ -52,7 +53,10 @@ types:
       announcement: optional<commons.AnnouncementConfig>
 
       # navigation
-      navigation: NavigationConfig
+      navigation:
+        type: optional<NavigationConfig>
+        availability: deprecated
+      root: optional<navigationV1.RootNode>
       navbarLinks: optional<list<commons.NavbarLink>>
       footerLinks: optional<list<commons.FooterLink>>
 

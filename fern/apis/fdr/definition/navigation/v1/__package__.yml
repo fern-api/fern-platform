@@ -321,6 +321,8 @@ types:
       slug: Slug
       icon: optional<string>
       hidden: optional<boolean>
+      authed: optional<boolean>
+      audience: optional<list<commons.AudienceId>>
 
   WithPage:
     properties:

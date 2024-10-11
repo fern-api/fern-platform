@@ -86,6 +86,10 @@ describe("generateAlgoliaSearchRecordsForDocs", () => {
                 const navigationConfig = docsDefinition.config.navigation;
                 const generator = new AlgoliaSearchRecordGeneratorV2({ docsDefinition, apiDefinitionsById });
 
+                if (navigationConfig == null) {
+                    throw new Error("Navigation config is required for this test");
+                }
+
                 visitDbNavigationConfig(navigationConfig, {
                     versioned: (config) => {
                         config.versions.forEach((v) => {
@@ -150,6 +154,7 @@ describe("generateIndexSegmentsForDefinition", () => {
                             },
                         ],
                     },
+                    root: undefined,
                     title: undefined,
                     defaultLanguage: undefined,
                     announcement: undefined,
