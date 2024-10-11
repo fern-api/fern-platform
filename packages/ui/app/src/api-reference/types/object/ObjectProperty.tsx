@@ -2,7 +2,8 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
 import { compact } from "lodash-es";
-import { forwardRef, memo, useCallback, useMemo, useRef, useState } from "react";
+import { forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { capturePosthogEvent } from "../../../analytics/posthog";
 import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
 import { FernAnchor } from "../../../components/FernAnchor";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
@@ -106,6 +107,19 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
         return compact([property.description, ...unwrapped.descriptions]);
     }, [property.description, property.valueShape, types]);
 
+    useEffect(() => {
+        if (descriptions.length > 0) {
+            capturePosthogEvent("api_reference_multiple_descriptions", {
+                name: property.key,
+                slug,
+                anchorIdParts,
+                count: descriptions.length,
+                descriptions,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [descriptions]);
+
     return (
         <div
             ref={ref}
@@ -144,7 +158,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                     </TypeDefinitionContext.Provider>
                 </FernErrorBoundary>
             )}
-            <Markdown mdx={descriptions} size="sm" />
+            <Markdown mdx={descriptions[0]} size="sm" />
             {hasInternalTypeReference(property.valueShape, types) && !hasInlineEnum(property.valueShape, types) && (
                 <FernErrorBoundary component="ObjectProperty">
                     <TypeDefinitionContext.Provider value={newContextValue}>

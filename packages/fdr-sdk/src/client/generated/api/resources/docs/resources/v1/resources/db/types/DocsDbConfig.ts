@@ -8,7 +8,8 @@ export interface DocsDbConfig {
     title: string | undefined;
     defaultLanguage: FernRegistry.docs.v1.commons.ProgrammingLanguage | undefined;
     announcement: FernRegistry.docs.v1.commons.AnnouncementConfig | undefined;
-    navigation: FernRegistry.docs.v1.db.NavigationConfig;
+    navigation: FernRegistry.docs.v1.db.NavigationConfig | undefined;
+    root: FernRegistry.navigation.v1.RootNode | undefined;
     navbarLinks: FernRegistry.docs.v1.commons.NavbarLink[] | undefined;
     footerLinks: FernRegistry.docs.v1.commons.FooterLink[] | undefined;
     logoHeight: FernRegistry.docs.v1.read.Height | undefined;

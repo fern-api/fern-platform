@@ -105,6 +105,8 @@ export class ApiReferenceNavigationConverter {
                 availability: undefined,
                 pointsTo,
                 playground: undefined,
+                authed: undefined,
+                audience: undefined,
             };
         });
     }
@@ -140,6 +142,8 @@ export class ApiReferenceNavigationConverter {
                 availability: FernNavigation.V1.convertAvailability(endpoint.availability),
                 isResponseStream: endpoint.response?.type.type === "stream",
                 playground: undefined,
+                authed: undefined,
+                audience: undefined,
             };
         });
     }
@@ -160,6 +164,8 @@ export class ApiReferenceNavigationConverter {
             apiDefinitionId: this.apiDefinitionId,
             availability: FernNavigation.V1.convertAvailability(webSocket.availability),
             playground: undefined,
+            authed: undefined,
+            audience: undefined,
         }));
     }
 
@@ -179,6 +185,8 @@ export class ApiReferenceNavigationConverter {
             method: webhook.method,
             apiDefinitionId: this.apiDefinitionId,
             availability: undefined,
+            authed: undefined,
+            audience: undefined,
         }));
     }
 
@@ -257,6 +265,8 @@ export class ApiReferenceNavigationConverter {
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo,
                     playground: undefined,
+                    authed: undefined,
+                    audience: undefined,
                 };
             });
             if (child != null) {
@@ -326,6 +336,8 @@ export class ApiReferenceNavigationConverter {
                                 slug: parentSlug.apply(page).get(),
                                 icon: page.icon,
                                 hidden: page.hidden,
+                                authed: undefined,
+                                audience: undefined,
                             };
                         }),
                     );
@@ -396,6 +408,8 @@ export class ApiReferenceNavigationConverter {
                             apiDefinitionId: this.apiDefinitionId,
                             pointsTo: FernNavigation.V1.followRedirects(convertedItems),
                             playground: undefined,
+                            authed: undefined,
+                            audience: undefined,
                         });
                     });
                 },
