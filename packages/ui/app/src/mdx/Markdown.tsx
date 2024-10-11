@@ -21,7 +21,10 @@ export declare namespace Markdown {
 
 export const Markdown = memo<Markdown.Props>(({ title, mdx, className, size, fallback }) => {
     // If the MDX is empty, return null
-    if (!fallback && (mdx == null || (typeof mdx === "string" && mdx.trim().length === 0))) {
+    if (
+        !fallback &&
+        (mdx == null || (typeof mdx === "string" ? mdx.trim().length === 0 : mdx.code.trim().length === 0))
+    ) {
         return null;
     }
 
