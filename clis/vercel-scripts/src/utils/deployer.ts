@@ -74,8 +74,16 @@ export class VercelDeployer {
         });
     }
 
-    private async deploy(project: { id: string; name: string }): Promise<Vercel.GetDeploymentResponse> {
-        let command = `pnpx vercel deploy --yes --prebuilt --token=${this.token} --archive=tgz`;
+    private async deploy(
+        project: { id: string; name: string },
+        opts?: { prebuilt?: boolean },
+    ): Promise<Vercel.GetDeploymentResponse> {
+        let command = `pnpx vercel deploy --yes --token=${this.token} --archive=tgz`;
+
+        if (opts?.prebuilt) {
+            command += " --prebuilt";
+        }
+
         if (this.environment === "production") {
             command += " --prod --skip-domain";
         }
@@ -121,13 +129,13 @@ export class VercelDeployer {
 
         this.pull(prj);
 
-        this.build(prj);
-
         if (skipDeploy) {
+            // build-only
+            this.build(prj);
             return;
         }
 
-        const deployment = await this.deploy(prj);
+        const deployment = await this.deploy(prj, { prebuilt: false });
 
         await this.promote(deployment);
 
