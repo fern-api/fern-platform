@@ -1,9 +1,9 @@
 import execa from "execa";
+import { readFile, readdir } from "fs/promises";
+import yaml from "js-yaml";
+import path from "path";
 import tmp from "tmp-promise";
 import { doesPathExist } from "./fs";
-
-import { readFile } from "fs/promises";
-import yaml from "js-yaml";
 
 export async function execFernCli(
     command: string,
@@ -66,4 +66,25 @@ export async function getGenerators(fullRepoPath: string): Promise<GeneratorList
     const data = await readFile(outputPath, "utf-8");
 
     return yaml.load(data) as GeneratorList;
+}
+
+// Searches for a `fern.config.json` files within the repo, and returns the paths to them
+export async function findFernWorkspaces(fullRepoPath: string): Promise<string[]> {
+    async function searchDirectory(dir: string): Promise<string[]> {
+        const entries = await readdir(dir, { withFileTypes: true });
+        const results: string[] = [];
+
+        for (const entry of entries) {
+            const fullPath = path.join(dir, entry.name);
+            if (entry.isDirectory()) {
+                results.push(...(await searchDirectory(fullPath)));
+            } else if (entry.name === "fern.config.json") {
+                results.push(path.dirname(fullPath));
+            }
+        }
+
+        return results;
+    }
+
+    return searchDirectory(fullRepoPath);
 }
