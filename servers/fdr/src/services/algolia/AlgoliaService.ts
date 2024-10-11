@@ -11,7 +11,7 @@ export interface AlgoliaService {
     generateSearchRecords(params: {
         url: string;
         docsDefinition: DocsV1Db.DocsDefinitionDb;
-        apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>;
+        apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>;
         configSegmentTuples: ConfigSegmentTuple[];
     }): Promise<AlgoliaSearchRecord[]>;
 
@@ -48,7 +48,7 @@ export class AlgoliaServiceImpl implements AlgoliaService {
     }: {
         url: string;
         docsDefinition: DocsV1Db.DocsDefinitionDb;
-        apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>;
+        apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>;
         configSegmentTuples: ConfigSegmentTuple[];
     }) {
         return configSegmentTuples.flatMap(([config, indexSegment]) => {
