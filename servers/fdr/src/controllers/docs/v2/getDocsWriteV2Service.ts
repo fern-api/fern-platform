@@ -1,4 +1,5 @@
 import { APIV1Db, convertDocsDefinitionToDb, DocsV1Db, DocsV1Write, FdrAPI } from "@fern-api/fdr-sdk";
+import { isNonNullish } from "@fern-api/ui-core-utils";
 import { AuthType } from "@prisma/client";
 import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
@@ -147,14 +148,24 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     files: docsRegistrationInfo.s3FileInfos,
                 });
 
-                const apiDefinitionsById = await (async () => {
-                    const apiIdDefinitionTuples = await Promise.all(
-                        dbDocsDefinition.referencedApis.map(
-                            async (id) => [id, await app.services.db.getApiDefinition(id)] as const,
-                        ),
-                    );
-                    return new Map(apiIdDefinitionTuples) as Map<string, APIV1Db.DbApiDefinition>;
-                })();
+                const apiDefinitions = (
+                    await Promise.all(
+                        dbDocsDefinition.referencedApis.map(async (id) => await app.services.db.getApiDefinition(id)),
+                    )
+                ).filter(isNonNullish);
+                const apiDefinitionsById = Object.fromEntries(
+                    apiDefinitions.map((definition) => [definition.id, definition]),
+                );
+
+                const warmEndpointCachePromises = apiDefinitions.flatMap((apiDefinition) => {
+                    return Object.entries(apiDefinition.subpackages).flatMap(([id, subpackage]) => {
+                        return subpackage.endpoints.map(async (endpoint) => {
+                            return await fetch(
+                                `${docsRegistrationInfo.fernUrl.getFullUrl()}/api/fern-docs/api-definition/${apiDefinition.id}/endpoint/${endpoint.id}`,
+                            );
+                        });
+                    });
+                });
 
                 const indexSegments = await uploadToAlgoliaForRegistration(
                     app,
@@ -175,19 +186,30 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                  */
                 const urls = [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls];
 
-                await Promise.all(
-                    urls.map(async (baseUrl) => {
-                        const results = await app.services.revalidator.revalidate({ baseUrl, app });
-                        if (results.failed.length === 0 && !results.revalidationFailed) {
-                            app.logger.info(`Successfully revalidated ${results.successful.length} paths.`);
-                        } else {
-                            await app.services.slack.notifyFailedToRevalidatePaths({
-                                domain: baseUrl.getFullUrl(),
-                                paths: results,
-                            });
-                        }
-                    }),
-                );
+                try {
+                    await Promise.all(
+                        urls.map(async (baseUrl) => {
+                            const results = await app.services.revalidator.revalidate({ baseUrl, app });
+                            if (results.failed.length === 0 && !results.revalidationFailed) {
+                                app.logger.info(`Successfully revalidated ${results.successful.length} paths.`);
+                            } else {
+                                await app.services.slack.notifyFailedToRevalidatePaths({
+                                    domain: baseUrl.getFullUrl(),
+                                    paths: results,
+                                });
+                            }
+                        }),
+                    );
+                } catch (e) {
+                    app.logger.error(`Error while trying to revalidate docs for ${docsRegistrationInfo.fernUrl}`, e);
+                    await app.services.slack.notifyFailedToRegisterDocs({
+                        domain: docsRegistrationInfo.fernUrl.getFullUrl(),
+                        err: e,
+                    });
+                    throw e;
+                }
+
+                await Promise.all(warmEndpointCachePromises);
 
                 return res.send();
             } catch (e) {
@@ -212,14 +234,16 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 throw new ReindexNotAllowedError();
             }
 
-            const apiDefinitionsById = await (async () => {
-                const apiIdDefinitionTuples = await Promise.all(
+            const apiDefinitions = (
+                await Promise.all(
                     response.docsDefinition.referencedApis.map(
-                        async (id) => [id, await app.services.db.getApiDefinition(id)] as const,
+                        async (id) => await app.services.db.getApiDefinition(id),
                     ),
-                );
-                return new Map(apiIdDefinitionTuples) as Map<string, APIV1Db.DbApiDefinition>;
-            })();
+                )
+            ).filter(isNonNullish);
+            const apiDefinitionsById = Object.fromEntries(
+                apiDefinitions.map((definition) => [definition.id, definition]),
+            );
 
             // step 2. create new index segments in algolia
             const indexSegments = await uploadToAlgolia(
@@ -245,7 +269,7 @@ async function uploadToAlgoliaForRegistration(
     app: FdrApplication,
     docsRegistrationInfo: DocsRegistrationInfo,
     dbDocsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb>,
-    apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>,
+    apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>,
 ): Promise<IndexSegment[]> {
     // TODO: make sure to store private docs index into user-restricted algolia index
     // see https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/
@@ -265,7 +289,7 @@ async function uploadToAlgolia(
     app: FdrApplication,
     url: ParsedBaseUrl,
     dbDocsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb>,
-    apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>,
+    apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>,
 ): Promise<IndexSegment[]> {
     app.logger.debug(`[${url.getFullUrl()}] Generating new index segments`);
     const generateNewIndexSegmentsResult = app.services.algoliaIndexSegmentManager.generateIndexSegmentsForDefinition({
