@@ -100,47 +100,10 @@ export class Write {
      *                 },
      *                 navigation: {
      *                     tabs: [{
-     *                             title: "string",
-     *                             items: [{
-     *                                     "key": "value"
-     *                                 }],
-     *                             skipUrlSlug: {
-     *                                 "key": "value"
-     *                             },
-     *                             icon: {
-     *                                 "key": "value"
-     *                             },
-     *                             hidden: {
-     *                                 "key": "value"
-     *                             },
-     *                             urlSlugOverride: {
-     *                                 "key": "value"
-     *                             },
-     *                             fullSlug: {
-     *                                 "key": "value"
-     *                             }
+     *                             "key": "value"
      *                         }],
      *                     tabsV2: [{
-     *                             type: "group",
-     *                             title: "string",
-     *                             items: [{
-     *                                     "key": "value"
-     *                                 }],
-     *                             skipUrlSlug: {
-     *                                 "key": "value"
-     *                             },
-     *                             icon: {
-     *                                 "key": "value"
-     *                             },
-     *                             hidden: {
-     *                                 "key": "value"
-     *                             },
-     *                             urlSlugOverride: {
-     *                                 "key": "value"
-     *                             },
-     *                             fullSlug: {
-     *                                 "key": "value"
-     *                             }
+     *                             "key": "value"
      *                         }],
      *                     landingPage: {
      *                         id: FernRegistry.PageId("string"),
@@ -157,6 +120,68 @@ export class Write {
      *                         fullSlug: {
      *                             "key": "value"
      *                         }
+     *                     }
+     *                 },
+     *                 root: {
+     *                     type: "root",
+     *                     version: "v1",
+     *                     child: {
+     *                         type: "versioned",
+     *                         children: [{
+     *                                 type: "version",
+     *                                 default: true,
+     *                                 versionId: FernRegistry.VersionId("string"),
+     *                                 child: {
+     *                                     type: "tabbed",
+     *                                     children: [{
+     *                                             "key": "value"
+     *                                         }],
+     *                                     id: FernRegistry.navigation.v1.NodeId("string")
+     *                                 },
+     *                                 availability: {
+     *                                     "key": "value"
+     *                                 },
+     *                                 landingPage: {
+     *                                     "key": "value"
+     *                                 },
+     *                                 title: "string",
+     *                                 slug: FernRegistry.navigation.v1.Slug("string"),
+     *                                 icon: {
+     *                                     "key": "value"
+     *                                 },
+     *                                 hidden: {
+     *                                     "key": "value"
+     *                                 },
+     *                                 authed: {
+     *                                     "key": "value"
+     *                                 },
+     *                                 audience: {
+     *                                     "key": "value"
+     *                                 },
+     *                                 id: FernRegistry.navigation.v1.NodeId("string"),
+     *                                 pointsTo: {
+     *                                     "key": "value"
+     *                                 }
+     *                             }],
+     *                         id: FernRegistry.navigation.v1.NodeId("string")
+     *                     },
+     *                     title: "string",
+     *                     slug: FernRegistry.navigation.v1.Slug("string"),
+     *                     icon: {
+     *                         "key": "value"
+     *                     },
+     *                     hidden: {
+     *                         "key": "value"
+     *                     },
+     *                     authed: {
+     *                         "key": "value"
+     *                     },
+     *                     audience: {
+     *                         "key": "value"
+     *                     },
+     *                     id: FernRegistry.navigation.v1.NodeId("string"),
+     *                     pointsTo: {
+     *                         "key": "value"
      *                     }
      *                 },
      *                 navbarLinks: [{

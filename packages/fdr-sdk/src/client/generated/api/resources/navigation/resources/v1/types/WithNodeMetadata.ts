@@ -9,4 +9,6 @@ export interface WithNodeMetadata extends FernRegistry.navigation.v1.WithNodeId 
     slug: FernRegistry.navigation.v1.Slug;
     icon: string | undefined;
     hidden: boolean | undefined;
+    authed: boolean | undefined;
+    audience: FernRegistry.AudienceId[] | undefined;
 }
