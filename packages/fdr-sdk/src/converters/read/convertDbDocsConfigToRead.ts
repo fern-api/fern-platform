@@ -7,7 +7,8 @@ import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } f
 
 export function convertDbDocsConfigToRead({ dbShape }: { dbShape: DocsV1Db.DocsDbConfig }): DocsV1Read.DocsConfig {
     return {
-        navigation: transformNavigationConfigToRead(dbShape.navigation),
+        navigation: dbShape.navigation != null ? transformNavigationConfigToRead(dbShape.navigation) : undefined,
+        root: dbShape.root,
         logoHeight: dbShape.logoHeight,
         logoHref: dbShape.logoHref,
         colorsV3: dbShape.colorsV3 ?? getColorsV3(dbShape),
