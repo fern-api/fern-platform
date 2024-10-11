@@ -211,7 +211,7 @@ function getSearchInfoFromDocs({
     docsDbDefinition: DocsV1Db.DocsDefinitionDb;
     app: FdrApplication;
 }): Algolia.SearchInfo {
-    if (indexSegmentIds == null) {
+    if (indexSegmentIds == null || docsDbDefinition.config.navigation == null) {
         return { type: "legacyMultiAlgoliaIndex", algoliaIndex };
     }
     return visitDbNavigationConfig<Algolia.SearchInfo>(docsDbDefinition.config.navigation, {

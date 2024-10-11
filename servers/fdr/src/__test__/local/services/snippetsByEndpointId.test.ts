@@ -111,6 +111,7 @@ it("Load snippets by endpoint id", async () => {
                         } satisfies DocsV1Write.NavigationItem,
                     ],
                 },
+                root: undefined,
                 title: undefined,
                 defaultLanguage: undefined,
                 announcement: undefined,

@@ -11,6 +11,7 @@ export const WRITE_DOCS_REGISTER_DEFINITION: DocsV1Write.DocsDefinition = {
             items: [],
             landingPage: undefined,
         },
+        root: undefined,
         typography: {
             headingsFont: {
                 name: "Syne",
