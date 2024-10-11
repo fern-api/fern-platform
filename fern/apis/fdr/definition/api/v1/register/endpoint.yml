@@ -61,6 +61,12 @@ types:
     properties:
       key: string
       type: type.TypeReference
+      arrayEncoding: optional<QueryParameterArrayEncoding>
+
+  QueryParameterArrayEncoding:
+    enum:
+      - comma
+      - exploded
 
   Header:
     extends:

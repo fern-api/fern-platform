@@ -28,7 +28,7 @@ types:
       defaultEnvironment: optional<rootCommons.EnvironmentId>
       environments: optional<list<commons.Environment>>
       pathParameters: optional<list<type.ObjectProperty>>
-      queryParameters: optional<list<type.ObjectProperty>>
+      queryParameters: optional<list<QueryParameter>>
       requestHeaders: optional<list<type.ObjectProperty>>
       responseHeaders: optional<list<type.ObjectProperty>> # this is not being used currently
       request: optional<HttpRequest>
@@ -36,6 +36,21 @@ types:
       errors: optional<list<ErrorResponse>>
       examples: optional<list<ExampleEndpointCall>>
       snippetTemplates: optional<EndpointSnippetTemplates>
+
+  QueryParameter:
+    union:
+      commaSeparated:
+        type: type.ObjectProperty
+        docs: An array of query parameters that are serialized as a comma delimited list
+      exploded:
+        type: type.ObjectProperty
+        docs: An array of query parameters that are sent as individual params in the URL
+      deepObject:
+        type: type.ObjectProperty
+        docs: A query parameter that is an object with properties and serialized as `a[key1]=value1`
+      basic:
+        type: type.ObjectProperty
+        docs: A basic primitive query parameter
 
   EndpointSnippetTemplates:
     properties:
