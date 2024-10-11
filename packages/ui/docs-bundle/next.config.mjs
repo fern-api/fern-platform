@@ -74,6 +74,8 @@ const nextConfig = {
         externalMiddlewareRewritesResolve: true,
     },
 
+    deploymentId: process.env.VERCEL_DEPLOYMENT_ID,
+
     /**
      * This is required for posthog. See https://posthog.com/docs/advanced/proxy/nextjs-middleware
      */
