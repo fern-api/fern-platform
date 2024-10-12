@@ -30,7 +30,6 @@
     "docs:dev": "turbo docs:dev",
     "docs:build": "turbo docs:build",
     "docs:start": "turbo docs:start",
-    "docs:e2e": "vitest --run test/docs-e2e/**/* --globals",
     "fdr:generate": "pnpm fern generate --api fdr --local && pnpm turbo --filter=@fern-api/fdr-sdk compile"
   },
   "devDependencies": {

@@ -1,50 +1,42 @@
-name: Playwright Tests
-on: pull_request
+name: Playwright
 
 env:
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: "buildwithfern"
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-  WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
-  WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
-  # HUME_API_KEY: ${{ secrets.HUME_API_KEY }}
+  PLAYWRIGHT_JSON_OUTPUT_NAME: results.json
+
+on:
+  workflow_call:
+    inputs:
+      deployment_url:
+        type: string
+        description: "The URL of the deployment to test"
+        required: true
 
 jobs:
-  test:
-    timeout-minutes: 10
+  ete:
     runs-on: ubuntu-latest
     permissions: write-all # required for the playwright-report-summary action
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
+      - uses: ./.github/actions/install
 
-      - name: Compile and build
-        run: pnpm turbo compile codegen build
-        env:
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
-          WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
+      - name: Install Fern CLI (used for docs e2e)
+        run: pnpm i -g fern-api@latest
 
-      - name: Build next bundle
-        run: cd packages/ui/local-preview-bundle; pnpm turbo build
+      - name: Fetch domains
+        run: pnpm vercel-scripts domains.txt ${{ inputs.deployment_url }} --token=$VERCEL_TOKEN
+
+      - run: pnpm build
 
       - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
-
-      - name: Install fern-dev API
-        env:
-          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
-          FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
-        run: |
-          npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
-          npm install -g @fern-api/fern-api-dev
+        run: pnpm exec playwright install --with-deps --browser=chromium
 
       - name: Run Playwright tests
-        run: PLAYWRIGHT_JSON_OUTPUT_NAME=results.json pnpm exec playwright test playwright/fixtures --reporter json
+        run: pnpm exec playwright test playwright --workers 1 --reporter json
 
       - uses: daun/playwright-report-summary@v3
         if: always()
         with:
-          report-file: results.json
+          report-file: $PLAYWRIGHT_JSON_OUTPUT_NAME

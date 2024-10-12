@@ -30,7 +30,7 @@ jobs:
 
   deploy:
     needs: ignore
-    if: needs.ignore.outputs.continue == 1
+    if: needs.ignore.outputs.continue == 1 || contains(github.event.head_commit.message, 'playwright/')
     runs-on: ubuntu-latest
     environment:
       name: Preview - app.buildwithfern.com
@@ -140,17 +140,6 @@ jobs:
       - ignore
       - deploy # only runs on fern-prod
     if: always()
-    runs-on: ubuntu-latest
-    permissions: write-all # required for the playwright-report-summary action
-    steps:
-      # if the job is ignored, skip the ETE test and exit 0 so that the this job can be used for merge protection
-      - uses: actions/checkout@v4
-        if: needs.deploy.outputs.deployment_url
-
-      - name: Run E2E tests
-        uses: ./.github/actions/ete-docs-bundle
-        if: needs.deploy.outputs.deployment_url
-        with:
-          deployment_url: ${{ needs.deploy.outputs.deployment_url }}
-          token: ${{ secrets.VERCEL_TOKEN }}
-          fern_token: ${{ secrets.FERN_TOKEN }}
+    uses: ./.github/workflows/playwright.yml
+    with:
+      deployment_url: ${{ needs.deploy.outputs.deployment_url }}
