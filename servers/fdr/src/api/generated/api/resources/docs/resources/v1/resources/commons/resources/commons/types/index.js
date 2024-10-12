@@ -1,5 +1,4 @@
 export * from "./FileIdOrUrl";
-export * from "./RgbaColor";
 export * from "./ProgrammingLanguage";
 export * from "./AnnouncementConfig";
 export * from "./AnalyticsConfig";

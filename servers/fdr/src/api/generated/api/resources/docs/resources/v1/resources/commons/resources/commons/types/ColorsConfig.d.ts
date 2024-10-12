@@ -3,5 +3,5 @@
  */
 import * as FernRegistry from "../../../../../../../../../index";
 export interface ColorsConfig {
-    accentPrimary: FernRegistry.docs.v1.commons.RgbaColor | undefined;
+    accentPrimary: FernRegistry.RgbaColor | undefined;
 }

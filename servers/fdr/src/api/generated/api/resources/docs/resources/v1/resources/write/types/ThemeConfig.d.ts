@@ -5,10 +5,10 @@ import * as FernRegistry from "../../../../../../../index";
 export interface ThemeConfig {
     logo: FernRegistry.FileId | undefined;
     backgroundImage: FernRegistry.FileId | undefined;
-    accentPrimary: FernRegistry.docs.v1.commons.RgbaColor;
-    background: FernRegistry.docs.v1.commons.RgbaColor | undefined;
-    border: FernRegistry.docs.v1.commons.RgbaColor | undefined;
-    sidebarBackground: FernRegistry.docs.v1.commons.RgbaColor | undefined;
-    headerBackground: FernRegistry.docs.v1.commons.RgbaColor | undefined;
-    cardBackground: FernRegistry.docs.v1.commons.RgbaColor | undefined;
+    accentPrimary: FernRegistry.RgbaColor;
+    background: FernRegistry.RgbaColor | undefined;
+    border: FernRegistry.RgbaColor | undefined;
+    sidebarBackground: FernRegistry.RgbaColor | undefined;
+    headerBackground: FernRegistry.RgbaColor | undefined;
+    cardBackground: FernRegistry.RgbaColor | undefined;
 }

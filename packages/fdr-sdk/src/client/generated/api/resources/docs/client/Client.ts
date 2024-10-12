@@ -6,6 +6,7 @@ import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import { V1 } from "../resources/v1/client/Client";
 import { V2 } from "../resources/v2/client/Client";
+import { V3 } from "../resources/v3/client/Client";
 
 export declare namespace Docs {
     interface Options {
@@ -36,5 +37,11 @@ export class Docs {
 
     public get v2(): V2 {
         return (this._v2 ??= new V2(this._options));
+    }
+
+    protected _v3: V3 | undefined;
+
+    public get v3(): V3 {
+        return (this._v3 ??= new V3(this._options));
     }
 }

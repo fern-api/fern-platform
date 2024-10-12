@@ -1,0 +1,302 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  rootCommons: ../../commons.yml
+  navigation: ../../navigation/latest/__package__.yml
+  algolia: ../../algolia.yml
+  v1Commons: ../v1/commons/commons.yml
+  v1DocsWrite: ../v1/write/__package__.yml
+
+service:
+  base-path: /v3/registry/docs
+  headers:
+    x-fern-cli-version: optional<string>
+  # all of these endpoints now require auth:
+  # - the fern token is scoped to a particular organization, unless the token belongs to an admin user.
+  # - the workos_ token is scoped to a particular organization, and can only be used for SSO users.
+  auth: true
+  endpoints:
+    getOrganization:
+      docs: Get the organization ID for this domain
+      method: GET
+      path: /load/{domain}/organization
+      path-parameters:
+        domain: string
+      request:
+        name: GetOrganizationRequest
+      response: rootCommons.OrgId
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+
+    getNavigation:
+      docs: Get the navigation hierarchy for this instance of the docs
+      method: GET
+      path: /load/{domain}/instance/{id}/navigation
+      path-parameters:
+        domain: string
+        id: DocsInstanceId # if "latest" is specified, the latest instance is returned
+      request:
+        name: GetNavigationRequest
+      response: navigation.RootNode
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+
+    getConfig:
+      docs: Get the config for this instance of the docs
+      method: GET
+      path: /load/{domain}/instance/{id}/config
+      path-parameters:
+        domain: string
+        id: DocsInstanceId # if "latest" is specified, the latest instance is returned
+      request:
+        name: GetConfigRequest
+      response: DocsConfig
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+
+    getFilesMetadata:
+      docs: Get the metadata for the files in this instance of the docs
+      method: POST
+      path: /load/{domain}/instance/{id}/files
+      path-parameters:
+        domain: string
+        id: DocsInstanceId # if "latest" is specified, the latest instance is returned
+      request:
+        name: GetFilesMetadataRequest
+        body:
+          properties:
+            files: list<FilePath>
+      response: map<FilePath, FileMetadata>
+      errors:
+        - rootCommons.UnauthorizedError
+
+    startDocsPreview:
+      method: POST
+      path: /register/{organization}/preview
+      path-parameters:
+        organization: rootCommons.OrgId
+      request:
+        name: StartDocsPreviewRequest
+        body:
+          properties:
+            auth: AuthConfig
+            basePath: optional<string>
+            publicFiles: list<FilePath>
+            privateFiles: list<FilePath>
+      response: StartDocsRegisterResponse
+      errors:
+        - rootCommons.UnauthorizedError
+
+    startDocsRegister:
+      method: POST
+      path: /register/{organization}/init/{domain}
+      path-parameters:
+        organization: rootCommons.OrgId
+        domain: string
+      request:
+        name: StartDocsRegisterRequest
+        body:
+          properties:
+            auth: AuthConfig
+            basePath: optional<string>
+            publicFiles: list<FilePath>
+            privateFiles: list<FilePath>
+            aliases:
+              type: map<string, AuthConfig>
+              docs: A map of domain aliases to auth configs.
+      response: StartDocsRegisterResponse
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.BadRequestError
+
+    finishDocsRegister:
+      method: PUT
+      path: /register/{organization}/job/{docsRegistrationId}/metadata
+      path-parameters:
+        organization: rootCommons.OrgId
+        docsRegistrationId: v1DocsWrite.DocsRegistrationId
+      request:
+        name: PutDocsMetadata
+        body:
+          properties:
+            config: DocsConfig
+            navigation: navigation.RootNode
+            files: map<FilePath, FileMetadata>
+      response: FinishDocsRegisterResponse
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+        - rootCommons.BadRequestError
+
+    startDocsRevalidation:
+      method: POST
+      path: /revalidate/{domain}
+      path-parameters:
+        domain: string
+      request:
+        name: StartDocsRevalidationRequest
+      errors:
+        - rootCommons.UnauthorizedError
+        - rootCommons.NotFoundError
+        - rootCommons.BadRequestError
+
+    getDocsRevalidationStatus:
+      method: GET
+      path: /revalidate/{domain}/status
+      path-parameters:
+        domain: string
+      request:
+        name: GetDocsRevalidationStatusRequest
+      response: DocsRegisterStatus
+      errors:
+        - rootCommons.UnauthorizedError
+
+types:
+  FilePath: string
+
+  AuthConfig:
+    properties:
+      enableAnonymousAccess: boolean
+      enableSso: optional<boolean>
+      audience: optional<optional<rootCommons.AudienceId>>
+
+  DocsInstanceId:
+    discriminated: false
+    union:
+      - rootCommons.DocsConfigId
+      - literal<"latest">
+
+  File:
+    properties:
+      url: rootCommons.Url # s3 blob url
+      metadata: optional<FileMetadata>
+
+  FileMetadata:
+    union:
+      image: ImageMetadata
+      markdown: MarkdownMetadata
+
+  ImageMetadata:
+    properties:
+      width: double
+      height: double
+      blurDataUrl: optional<string>
+      alt: optional<string>
+
+  MarkdownMetadata:
+    properties:
+      editThisPageUrl: optional<rootCommons.Url>
+      markdown:
+        type: optional<string>
+        availability: deprecated
+        docs: This type is deprecated, and will be removed in a future version.
+
+  DocsConfig:
+    properties:
+      id: rootCommons.DocsConfigId
+      updatedAt: datetime
+
+      domain: string
+      basePath: optional<string>
+
+      title: optional<string>
+      defaultLanguage: optional<v1Commons.ProgrammingLanguage>
+      announcement: optional<v1Commons.AnnouncementConfig>
+
+      # navigation
+      navbarLinks: optional<list<v1Commons.NavbarLink>>
+      footerLinks: optional<list<v1Commons.FooterLink>>
+
+      # logo
+      logoHeight: optional<double>
+      logoHref: optional<rootCommons.Url>
+      favicon: optional<FilePath>
+
+      # seo
+      metadata: optional<v1Commons.MetadataConfig>
+      redirects: optional<list<v1Commons.RedirectConfig>>
+
+      # styles
+      colors: optional<ColorsConfig>
+      fonts: optional<v1Commons.DocsTypographyConfigV2>
+      layout: optional<v1Commons.DocsLayoutConfig>
+
+      # integrations
+      analytics: optional<v1Commons.AnalyticsConfig>
+      integrations: optional<v1Commons.IntegrationsConfig>
+      search: optional<algolia.SingleAlgoliaIndexInfo>
+
+      # css and js
+      css: optional<v1Commons.CssConfig>
+      js: optional<v1Commons.JsConfig>
+
+      # playground
+      playground: optional<v1Commons.PlaygroundConfig>
+
+      # files
+      files: optional<list<FilePath>>
+      markdownFiles: optional<list<FilePath>>
+      mdxBundlerFile: optional<list<FilePath>>
+
+  ColorsConfig:
+    properties:
+      dark: optional<ThemeConfig>
+      light: optional<ThemeConfig>
+
+  ThemeConfig:
+    properties:
+      logo: optional<FilePath>
+      backgroundImage: optional<FilePath>
+      accentPrimary: rootCommons.RgbaColor
+      background: Background
+      border: optional<rootCommons.RgbaColor>
+      sidebarBackground: optional<rootCommons.RgbaColor>
+      headerBackground: optional<rootCommons.RgbaColor>
+      cardBackground: optional<rootCommons.RgbaColor>
+
+  Background:
+    union:
+      solid: rootCommons.RgbaColor
+      gradient: {}
+
+  StartDocsRegisterResponse:
+    properties:
+      domain: string
+      basePath: optional<string>
+      docsRegistrationId: v1DocsWrite.DocsRegistrationId
+      uploadUrls: map<FilePath, rootCommons.Url>
+
+  FinishDocsRegisterResponse:
+    properties:
+      id: rootCommons.DocsConfigId
+      domain: string
+      basePath: optional<string>
+
+  DocsRegisterStatus:
+    union:
+      notStarted: DocsRegisterStatusNotStarted
+      inProgress: DocsRegisterStatusInProgress
+      completed: DocsRegisterStatusCompleted
+      failed: DocsRegisterStatusFailed
+
+  DocsRegisterStatusNotStarted:
+    docs: The docs register has not started.
+    properties: {}
+
+  DocsRegisterStatusInProgress:
+    docs: The docs register is in progress.
+    properties:
+      total: integer
+      completed: integer
+
+  DocsRegisterStatusCompleted:
+    docs: The docs register completed.
+    properties: {}
+
+  DocsRegisterStatusFailed:
+    docs: The docs register failed.
+    properties:
+      error: string

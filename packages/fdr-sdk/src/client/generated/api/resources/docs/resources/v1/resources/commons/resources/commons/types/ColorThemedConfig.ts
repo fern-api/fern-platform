@@ -5,6 +5,6 @@
 import * as FernRegistry from "../../../../../../../../../index";
 
 export interface ColorThemedConfig {
-    dark: FernRegistry.docs.v1.commons.RgbaColor | undefined;
-    light: FernRegistry.docs.v1.commons.RgbaColor | undefined;
+    dark: FernRegistry.RgbaColor | undefined;
+    light: FernRegistry.RgbaColor | undefined;
 }
