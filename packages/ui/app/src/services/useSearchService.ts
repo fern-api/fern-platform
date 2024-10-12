@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import type { SearchConfig } from "@fern-ui/search-utils";
-import { noop } from "ts-essentials";
 import { useIsLocalPreview } from "../contexts/local-preview";
 import { useApiRouteSWR } from "../hooks/useApiRouteSWR";
 
@@ -23,11 +22,11 @@ export declare namespace SearchService {
 
 export type SearchService = SearchService.Available | SearchService.Unavailable;
 
-export function useSearchConfig(): [SearchConfig, refresh: () => void] {
+export function useSearchConfig(): SearchConfig {
     const isLocalPreview = useIsLocalPreview();
 
     if (isLocalPreview) {
-        return [{ isAvailable: false }, noop];
+        return { isAvailable: false };
     }
 
     const { data } = useApiRouteSWR<SearchConfig>("/api/fern-docs/search", {
@@ -35,5 +34,5 @@ export function useSearchConfig(): [SearchConfig, refresh: () => void] {
         revalidateOnFocus: false,
     });
 
-    return [data ?? { isAvailable: false }, noop];
+    return data ?? { isAvailable: false };
 }

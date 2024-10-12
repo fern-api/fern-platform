@@ -3,26 +3,22 @@ import useSWRImmutable from "swr/immutable";
 import { withSkewProtection } from "../util/withSkewProtection";
 import { FernDocsApiRoute, useApiRoute } from "./useApiRoute";
 
-export function useApiRouteSWR<T>(
-    route: FernDocsApiRoute,
-    options?: SWRConfiguration<T, Error, Fetcher<T>> & { disabled?: boolean },
-): SWRResponse<T> {
-    const key = useApiRoute(route);
-    return useSWR(
-        options?.disabled ? null : key,
-        (url): Promise<T> => fetch(url, { headers: withSkewProtection() }).then((r) => r.json()),
-        options,
-    );
+interface Options<T> extends SWRConfiguration<T, Error, Fetcher<T>> {
+    disabled?: boolean;
+    request?: RequestInit;
 }
 
-export function useApiRouteSWRImmutable<T>(
-    route: FernDocsApiRoute,
-    options?: SWRConfiguration<T, Error, Fetcher<T>> & { disabled?: boolean },
-): SWRResponse<T> {
+function createFetcher<T>(init?: RequestInit): (url: string) => Promise<T> {
+    return (url: string): Promise<T> =>
+        fetch(url, { ...init, headers: withSkewProtection(init?.headers) }).then((r) => r.json());
+}
+
+export function useApiRouteSWR<T>(route: FernDocsApiRoute, options?: Options<T>): SWRResponse<T> {
     const key = useApiRoute(route);
-    return useSWRImmutable(
-        options?.disabled ? null : key,
-        (url): Promise<T> => fetch(url, { headers: withSkewProtection() }).then((r) => r.json()),
-        options,
-    );
+    return useSWR(options?.disabled ? null : key, createFetcher(options?.request), options);
+}
+
+export function useApiRouteSWRImmutable<T>(route: FernDocsApiRoute, options?: Options<T>): SWRResponse<T> {
+    const key = useApiRoute(route);
+    return useSWRImmutable(options?.disabled ? null : key, createFetcher(options?.request), options);
 }
