@@ -46,10 +46,11 @@ runs:
         fi
 
         if [ ! -f last-deploy.txt ]; then
-          echo "continue=1" >> $GITHUB_OUTPUT
-          exit 0
+          FALLBACK="main"
+        else
+          FALLBACK=$(cat last-deploy.txt)
         fi
 
         set +e
-        pnpx turbo-ignore ${{ inputs.package }} --fallback=$(cat last-deploy.txt)
+        pnpx turbo-ignore ${{ inputs.package }} --fallback=$FALLBACK
         echo "continue=$?" >> $GITHUB_OUTPUT
