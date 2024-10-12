@@ -147,7 +147,7 @@ const nextConfig = {
 function withVercelEnv(config) {
     return {
         ...config,
-        deploymentId: process.env.VERCEL_DEPLOYMENT_ID, // skew protection
+        deploymentId: process.env.VERCEL_DEPLOYMENT_ID ?? "dpl_development", // skew protection
         productionBrowserSourceMaps: process.env.VERCEL_ENV === "preview",
     };
 }

@@ -1,6 +1,6 @@
 import { OpenNewWindow } from "iconoir-react";
 import { atom, useAtomValue } from "jotai";
-import Link from "next/link";
+import Link, { LinkProps } from "next/link";
 import { ReactElement, forwardRef, useEffect, useState, type ComponentProps } from "react";
 import { format, parse, resolve, type UrlObject } from "url";
 import { useMemoOne } from "use-memo-one";
@@ -90,6 +90,12 @@ const FernExternalLink = forwardRef<HTMLAnchorElement, FernExternalLinkProps>(
 );
 
 FernExternalLink.displayName = "FernExternalLink";
+
+const LinkWith404Fallback = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
+    return <Link ref={ref} {...props} />;
+});
+
+LinkWith404Fallback.displayName = "LinkWith404Fallback";
 
 export function toUrlObject(url: string | UrlObject): UrlObject {
     if (url == null) {

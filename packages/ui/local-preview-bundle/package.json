@@ -43,7 +43,7 @@
     "cssnano": "^6.0.3",
     "jsonpath": "^1.1.1",
     "lodash-es": "^4.17.21",
-    "next": "npm:@fern-api/next@14.2.9-fork.0",
+    "next": "npm:@fern-api/next@14.2.9-fork.1",
     "node-fetch": "2.7.0",
     "postcss-import": "^16.0.1",
     "react": "^18.2.0",
