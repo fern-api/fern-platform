@@ -75,6 +75,21 @@ export const middleware: NextMiddleware = async (request) => {
 
     const pathname = extractNextDataPathname(request.nextUrl.pathname);
 
+    /**
+     * attempt to rewrite /404 and /_error data routes to the correct destination,
+     * otherwise nextjs will match to `__next_data_catchall`.
+     *
+     * this is important for `hardNavigate404` to work, because it relies on knowing that the destination is /404.json
+     */
+    if ((pathname === "/404" || pathname === "/_error") && request.nextUrl.pathname.includes("/_next/data/")) {
+        const buildId = getBuildId(request);
+        nextUrl.pathname = `/_next/data/${buildId}${pathname}.json`;
+        if (nextUrl.pathname === request.nextUrl.pathname) {
+            return NextResponse.next({ request: { headers } });
+        }
+        return NextResponse.rewrite(nextUrl, { request: { headers } });
+    }
+
     const fernToken = request.cookies.get(COOKIE_FERN_TOKEN);
     const authConfig = await getAuthEdgeConfig(xFernHost);
     let fernUser: FernUser | undefined;
@@ -159,7 +174,7 @@ export const config = {
          * - _next/image (image optimization files)
          * - favicon.ico (favicon file)
          */
-        "/((?!api/fern-docs|_next/static|_next/image|_next/data/:buildId/404.json|_next/data/:buildId/500.json|_vercel|favicon.ico).*)",
+        "/((?!api/fern-docs|_next/static|_next/image|_vercel|favicon.ico).*)",
     ],
 };
 
