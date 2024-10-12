@@ -26,7 +26,7 @@ jobs:
         run: pnpm i -g fern-api@latest
 
       - name: Fetch domains
-        run: pnpm vercel-scripts domains.txt ${{ inputs.deployment_url }} --token=$VERCEL_TOKEN
+        run: pnpm vercel-scripts domains.txt ${{ inputs.deployment_url }}
 
       - run: pnpm build
 
