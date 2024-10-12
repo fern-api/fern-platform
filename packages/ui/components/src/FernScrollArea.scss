@@ -15,7 +15,9 @@
 
         > div {
             display: block !important;
-            width: fit-content;
+            // TODO: this seems to be causing a bug where the scroll area always shrinks the content
+            // but i'm not sure why this was introduced in the first place.
+            // width: fit-content;
             flex-grow: 1;
         }
 

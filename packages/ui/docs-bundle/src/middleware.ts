@@ -18,76 +18,70 @@ const CHANGELOG_PATTERN = /\.(rss|atom)$/;
 export const middleware: NextMiddleware = async (request) => {
     const xFernHost = getDocsDomainEdge(request);
     const nextUrl = request.nextUrl.clone();
-    const headers = new Headers(request.headers);
+
+    let pathname = extractNextDataPathname(removeTrailingSlash(request.nextUrl.pathname));
 
     /**
-     * Do not rewrite 404 and 500 pages
+     * Correctly handle 404 and 500 pages
+     * so that nextjs doesn't incorrectly match this request to __next_data_catchall
      */
-    if (
-        removeTrailingSlash(request.nextUrl.pathname) === "/404" ||
-        removeTrailingSlash(request.nextUrl.pathname) === "/500"
-    ) {
-        return NextResponse.next();
+    if (pathname === "/404" || pathname === "/500" || pathname === "/_error") {
+        const headers = new Headers(request.headers);
+
+        if (request.headers.get("referer")?.includes("/_next/data/")) {
+            headers.set("x-nextjs-data", "1");
+        }
+
+        if (pathname === request.nextUrl.pathname) {
+            return NextResponse.next({ request: { headers } });
+        }
+        nextUrl.pathname = pathname;
+        const response = NextResponse.rewrite(nextUrl, { request: { headers } });
+        response.headers.set("x-matched-path", pathname);
+        return response;
     }
 
     /**
      * Rewrite robots.txt
      */
-    if (nextUrl.pathname.endsWith("/robots.txt")) {
+    if (pathname.endsWith("/robots.txt")) {
         nextUrl.pathname = "/api/fern-docs/robots.txt";
-        return NextResponse.rewrite(nextUrl, { request: { headers } });
+        return NextResponse.rewrite(nextUrl);
     }
 
     /**
      * Rewrite sitemap.xml
      */
-    if (nextUrl.pathname.endsWith("/sitemap.xml")) {
+    if (pathname.endsWith("/sitemap.xml")) {
         nextUrl.pathname = "/api/fern-docs/sitemap.xml";
-        return NextResponse.rewrite(nextUrl, { request: { headers } });
+        return NextResponse.rewrite(nextUrl);
     }
 
     /**
      * Rewrite Posthog analytics ingestion
      */
-    if (nextUrl.pathname.includes("/api/fern-docs/analytics/posthog")) {
+    if (pathname.includes("/api/fern-docs/analytics/posthog")) {
         return rewritePosthog(request);
     }
 
     /**
      * Rewrite API routes to /api/fern-docs
      */
-    if (nextUrl.pathname.match(API_FERN_DOCS_PATTERN)) {
+    if (pathname.match(API_FERN_DOCS_PATTERN)) {
         nextUrl.pathname = request.nextUrl.pathname.replace(API_FERN_DOCS_PATTERN, "/api/fern-docs/");
-        return NextResponse.rewrite(nextUrl, { request: { headers } });
+        return NextResponse.rewrite(nextUrl);
     }
 
     /**
      * Rewrite changelog rss and atom feeds
      */
-    const changelogFormat = request.nextUrl.pathname.match(CHANGELOG_PATTERN)?.[1];
+    const changelogFormat = pathname.match(CHANGELOG_PATTERN)?.[1];
     if (changelogFormat != null) {
-        const pathname = request.nextUrl.pathname.replace(new RegExp(`.${changelogFormat}$`), "");
+        pathname = pathname.replace(new RegExp(`.${changelogFormat}$`), "");
         nextUrl.pathname = "/api/fern-docs/changelog";
         nextUrl.searchParams.set("format", changelogFormat);
         nextUrl.searchParams.set("path", pathname);
-        return NextResponse.rewrite(nextUrl, { request: { headers } });
-    }
-
-    const pathname = extractNextDataPathname(request.nextUrl.pathname);
-
-    /**
-     * attempt to rewrite /404 and /_error data routes to the correct destination,
-     * otherwise nextjs will match to `__next_data_catchall`.
-     *
-     * this is important for `hardNavigate404` to work, because it relies on knowing that the destination is /404.json
-     */
-    if ((pathname === "/404" || pathname === "/_error") && request.nextUrl.pathname.includes("/_next/data/")) {
-        const buildId = getBuildId(request);
-        nextUrl.pathname = `/_next/data/${buildId}${pathname}.json`;
-        if (nextUrl.pathname === request.nextUrl.pathname) {
-            return NextResponse.next({ request: { headers } });
-        }
-        return NextResponse.rewrite(nextUrl, { request: { headers } });
+        return NextResponse.rewrite(nextUrl);
     }
 
     const fernToken = request.cookies.get(COOKIE_FERN_TOKEN);
@@ -142,7 +136,7 @@ export const middleware: NextMiddleware = async (request) => {
 
         nextUrl.pathname = getPageRoutePath(!isDynamic, buildId, xFernHost, pathname);
 
-        const response = NextResponse.rewrite(nextUrl, { request: { headers } });
+        const response = NextResponse.rewrite(nextUrl);
 
         /**
          * Add x-matched-path header to the response to help with debugging
@@ -157,7 +151,7 @@ export const middleware: NextMiddleware = async (request) => {
      */
 
     nextUrl.pathname = getPageRoute(!isDynamic, xFernHost, pathname);
-    return NextResponse.rewrite(nextUrl, { request: { headers } });
+    return NextResponse.rewrite(nextUrl);
 };
 
 export const config = {

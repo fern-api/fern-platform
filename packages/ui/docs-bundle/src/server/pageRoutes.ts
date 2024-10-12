@@ -13,13 +13,5 @@ export function getPageRouteMatch(ssg: boolean, buildId: string): string {
 
 export function getPageRoutePath(ssg: boolean, buildId: string, domain: string, pathname: string): string {
     const dataRoute = getAssetPathFromRoute(removeTrailingSlash(pathname), ".json");
-
-    /**
-     * Special case for 404 and 500 pages
-     */
-    if (dataRoute === "/404.json" || dataRoute === "/500.json") {
-        return `/_next/data/${buildId}${dataRoute}`;
-    }
-
     return `/_next/data/${buildId}/${ssg ? "static" : "dynamic"}/${domain}${dataRoute}`;
 }

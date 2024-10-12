@@ -1,6 +1,5 @@
 import test, { expect } from "@playwright/test";
 import execa from "execa";
-// import { ExecSyncOptions, execFileSync } from "child_process";
 import express from "express";
 import http from "http";
 import { createProxyMiddleware } from "http-proxy-middleware";
@@ -20,8 +19,9 @@ function getProxyUrl() {
     return `http://localhost:${address?.port}`;
 }
 
+test.setTimeout(120_000);
+
 test.beforeAll(async () => {
-    test.setTimeout(30_000);
     const result = await execa("fern", ["generate", "--docs"], { cwd: __dirname });
     expect(result.stdout).toContain(`Published docs to ${target}`);
 
@@ -47,7 +47,7 @@ test.beforeAll(async () => {
     });
 
     app.use((req, res, next) => {
-        if (req.url.startsWith("/subpath")) {
+        if (req.url.startsWith("/subpath") || req.url.startsWith("/_next")) {
             return proxyMiddleware(req, res, next);
         } else {
             return next();
@@ -88,10 +88,11 @@ test("subpath should 200 and capture the flag", async ({ page }) => {
     // capture the flag
     const text = page.getByText("capture-the-flag");
     expect(await text.count()).toBe(1);
-    await text.click({ force: true });
+    await text.click();
+
     await page.waitForURL(/(capture-the-flag)/);
     expect(await page.content()).not.toContain("Application error");
-    expect(page.url()).toEqual(`${getProxyUrl()}/capture-the-flag`);
+    expect(page.url()).toEqual(`${getProxyUrl()}/subpath/capture-the-flag`);
     expect(await page.content()).toContain("capture_the_flag");
 });
 

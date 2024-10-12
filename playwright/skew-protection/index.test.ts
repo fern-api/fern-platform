@@ -7,13 +7,7 @@ test("should contain ?dpl= or x-deployment-id header on all scripts and prefetch
     page,
     context,
 }) => {
-    await context.addCookies([
-        {
-            name: "_fern_docs_preview",
-            url: origin,
-            value: "buildwithfern.com",
-        },
-    ]);
+    await context.addCookies([{ name: "_fern_docs_preview", url: origin, value: "buildwithfern.com" }]);
 
     await page.goto(`${origin}/learn/home`);
 
