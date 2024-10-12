@@ -1,8 +1,8 @@
 import { chromium, Request } from "playwright";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { getDeploymentOrigin } from "../../utils/deployment-url";
 
-const origin = process.env.DEPLOYMENT_URL ?? "app-staging.buildwithfern.com";
-const protocol = origin.startsWith("localhost") ? "http" : "https";
+const origin = getDeploymentOrigin();
 
 describe("skew-protection", () => {
     let browser: Awaited<ReturnType<typeof chromium.launch>>;
@@ -38,7 +38,7 @@ describe("skew-protection", () => {
             requests.push(request);
         });
 
-        await page.goto(`${protocol}://${origin}/learn/home`);
+        await page.goto(`${origin}/learn/home`);
 
         const scripts = await page.locator("script").all();
         expect(scripts.length).toBeGreaterThan(0);
