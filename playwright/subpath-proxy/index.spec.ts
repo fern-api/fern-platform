@@ -1,20 +1,29 @@
 import test, { expect } from "@playwright/test";
-import { ExecSyncOptions, execFileSync } from "child_process";
+import execa from "execa";
+// import { ExecSyncOptions, execFileSync } from "child_process";
 import express from "express";
+import http from "http";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import { getPreviewDeploymentUrl } from "../utils";
-
 const origin = getPreviewDeploymentUrl();
 
 const target = "https://test-nginx-proxy.docs.buildwithfern.com/subpath";
-const proxy = "http://localhost:5050/subpath";
 
-const server = express();
+const app = express();
+let server: http.Server;
+
+function getProxyUrl() {
+    const address = server.address();
+    if (typeof address === "string") {
+        return `http://${address}`;
+    }
+    return `http://localhost:${address?.port}`;
+}
 
 test.beforeAll(async () => {
-    test.setTimeout(10_000);
-    const result = exec("fern generate --docs", { cwd: __dirname });
-    expect(result).toContain(`Published docs to ${target}`);
+    test.setTimeout(30_000);
+    const result = await execa("fern", ["generate", "--docs"], { cwd: __dirname });
+    expect(result.stdout).toContain(`Published docs to ${target}`);
 
     const headers: Record<string, string> = {
         "x-fern-host": new URL(target).hostname,
@@ -33,11 +42,11 @@ test.beforeAll(async () => {
     });
 
     // redirect to /subpath/capture-the-flag
-    server.use("/subpath/test-capture-the-flag", (_req, res) => {
+    app.use("/subpath/test-capture-the-flag", (_req, res) => {
         res.redirect(302, "/subpath/capture-the-flag");
     });
 
-    server.use((req, res, next) => {
+    app.use((req, res, next) => {
         if (req.url.startsWith("/subpath")) {
             return proxyMiddleware(req, res, next);
         } else {
@@ -45,18 +54,22 @@ test.beforeAll(async () => {
         }
     });
 
-    server.use((_req, res) => {
+    app.use((_req, res) => {
         res.status(404).send("PROXY_NOT_FOUND_ERROR");
     });
 
-    server.listen(5050, () => {
+    server = app.listen(0, () => {
         // eslint-disable-next-line no-console
-        console.log(`Proxy server listening on ${proxy}`);
+        console.log(`Proxy app listening on ${getProxyUrl()}`);
     });
 });
 
+test.afterAll(async () => {
+    server?.close();
+});
+
 test("home page 404", async ({ page }) => {
-    const response = await page.goto("http://localhost:5050");
+    const response = await page.goto(new URL("/", getProxyUrl()).toString());
     expect(response).toBeDefined();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const definedResponse = response!;
@@ -65,7 +78,7 @@ test("home page 404", async ({ page }) => {
 });
 
 test("subpath should 200 and capture the flag", async ({ page }) => {
-    const response = await page.goto("http://localhost:5050/subpath");
+    const response = await page.goto(new URL("/subpath", getProxyUrl()).toString());
     expect(response).toBeDefined();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const definedResponse = response!;
@@ -78,12 +91,12 @@ test("subpath should 200 and capture the flag", async ({ page }) => {
     await text.click({ force: true });
     await page.waitForURL(/(capture-the-flag)/);
     expect(await page.content()).not.toContain("Application error");
-    expect(page.url()).toEqual(`${proxy}/capture-the-flag`);
+    expect(page.url()).toEqual(`${getProxyUrl()}/capture-the-flag`);
     expect(await page.content()).toContain("capture_the_flag");
 });
 
 test("subpath/test-capture-the-flag should redirect to subpath/capture-the-flag", async ({ page }) => {
-    const response = await page.goto("http://localhost:5050/subpath/test-capture-the-flag");
+    const response = await page.goto(new URL("/subpath/test-capture-the-flag", getProxyUrl()).toString());
     expect(response).toBeDefined();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const definedResponse = response!;
@@ -92,7 +105,7 @@ test("subpath/test-capture-the-flag should redirect to subpath/capture-the-flag"
 });
 
 test("subpath/test-3 should be 404", async ({ page }) => {
-    const response = await page.goto("http://localhost:5050/subpath/test-3");
+    const response = await page.goto(new URL("/subpath/test-3", getProxyUrl()).toString());
     expect(response).toBeDefined();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const definedResponse = response!;
@@ -100,7 +113,7 @@ test("subpath/test-3 should be 404", async ({ page }) => {
 });
 
 test("sitemap.xml should match snapshot", async ({ page }) => {
-    const response = await page.goto("http://localhost:5050/subpath/sitemap.xml");
+    const response = await page.goto(new URL("/subpath/sitemap.xml", getProxyUrl()).toString());
     expect(response).toBeDefined();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const definedResponse = response!;
@@ -110,7 +123,7 @@ test("sitemap.xml should match snapshot", async ({ page }) => {
 
 test("revalidate-all/v3 all should work", async ({ page }) => {
     test.setTimeout(10_000);
-    const response = await page.goto("http://localhost:5050/subpath/api/fern-docs/revalidate-all/v3", {
+    const response = await page.goto(new URL("/subpath/api/fern-docs/revalidate-all/v3", getProxyUrl()).toString(), {
         timeout: 10_000,
     });
     expect(response).toBeDefined();
@@ -126,7 +139,7 @@ test("revalidate-all/v3 all should work", async ({ page }) => {
 
 test("revalidate-all/v3 should work with trailing slash", async ({ page }) => {
     test.setTimeout(10_000);
-    const response = await page.goto("http://localhost:5050/subpath/api/fern-docs/revalidate-all/v3/", {
+    const response = await page.goto(new URL("/subpath/api/fern-docs/revalidate-all/v3/", getProxyUrl()).toString(), {
         timeout: 10_000,
     });
     expect(response).toBeDefined();
@@ -142,7 +155,7 @@ test("revalidate-all/v3 should work with trailing slash", async ({ page }) => {
 
 test("revalidate-all/v4 should work", async ({ page }) => {
     test.setTimeout(10_000);
-    const response = await page.goto("http://localhost:5050/subpath/api/fern-docs/revalidate-all/v4", {
+    const response = await page.goto(new URL("/subpath/api/fern-docs/revalidate-all/v4", getProxyUrl()).toString(), {
         timeout: 10_000,
     });
     expect(response).toBeDefined();
@@ -159,7 +172,7 @@ test("revalidate-all/v4 should work", async ({ page }) => {
 
 test("revalidate-all/v4 should work with trailing slash", async ({ page }) => {
     test.setTimeout(10_000);
-    const response = await page.goto("http://localhost:5050/subpath/api/fern-docs/revalidate-all/v4/", {
+    const response = await page.goto(new URL("/subpath/api/fern-docs/revalidate-all/v4/", getProxyUrl()).toString(), {
         timeout: 10_000,
     });
     expect(response).toBeDefined();
@@ -173,23 +186,3 @@ test("revalidate-all/v4 should work with trailing slash", async ({ page }) => {
     expect(results.results).toHaveLength(2);
     expect((results.results as object[]).map((r) => "success" in r && r.success)).toEqual([true, true]);
 });
-
-function exec(command: string | string[], opts?: ExecSyncOptions): string {
-    const cmd = (Array.isArray(command) ? command : command.split(" ")).filter((c) => c.trim().length > 0);
-
-    if (!cmd[0]) {
-        throw new Error("Empty command");
-    }
-
-    try {
-        return String(
-            execFileSync(cmd[0], cmd.slice(1), {
-                stdio: ["inherit", "pipe", "pipe"],
-                ...opts,
-                env: { ...process.env, ...opts?.env },
-            }),
-        );
-    } catch (e) {
-        throw String(e);
-    }
-}
