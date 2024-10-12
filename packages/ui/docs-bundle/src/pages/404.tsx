@@ -1,6 +1,6 @@
+import { capturePosthogEvent } from "@fern-ui/ui";
 import Error from "next/error";
 import { ReactElement, useEffect } from "react";
-import { capturePosthogEvent } from "../../../app/src/analytics/posthog";
 
 /**
  * This is required for Next.js to generate `_next/static/chunks/pages/404.js`
