@@ -30,7 +30,7 @@ jobs:
 
   deploy:
     needs: ignore
-    if: needs.ignore.outputs.continue == 1 || contains(github.event.head_commit.message, 'playwright/')
+    if: needs.ignore.outputs.continue == 1 || contains(github.event.head_commit.message, 'playwright/') || contains(github.event.head_commit.message, '.github/workflows/deploy-docs-bundle-preview') || contains(github.event.head_commit.message, '.github/workflows/playwright')
     runs-on: ubuntu-latest
     environment:
       name: Preview - app.buildwithfern.com
