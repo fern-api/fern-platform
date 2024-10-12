@@ -31,7 +31,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const colors = useColors();
     const openSearchDialog = useOpenSearchDialog();
     const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
-    const searchConfig = useSearchConfig();
+    const searchService = useSearchConfig();
     const showSearchBar = useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "HEADER";
 
     const navbarLinksSection = (
