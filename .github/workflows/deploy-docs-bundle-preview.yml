@@ -63,6 +63,26 @@ jobs:
           filePath: preview.txt
           comment_tag: pr_preview
 
+  analyze:
+    needs: ignore
+    if: needs.ignore.outputs.continue == 1
+    runs-on: ubuntu-latest
+    permissions: write-all # required for the pr-preview comment
+    steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # used for turbo-ignore
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
+
+      - uses: ./.github/actions/install
+
+      - name: Build
+        id: deploy
+        run: pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --skip-deploy=true
+        env:
+          ANALYZE: 1
+
       - name: Analyze bundle
         if: steps.deploy.outputs.deployment_url
         run: pnpm --package=nextjs-bundle-analysis dlx report

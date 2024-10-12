@@ -164,7 +164,7 @@ export default (phase) => {
     }
 
     const withBundleAnalyzer = NextBundleAnalyzer({
-        enabled: true,
+        enabled: process.env.ANALYZE === "1",
     });
 
     return withBundleAnalyzer(withVercelEnv(nextConfig));
