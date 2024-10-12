@@ -157,19 +157,34 @@ export class ApiDefinitionLoader {
     };
 
     private resolveHttpCodeSnippets = async (apiDefinition: ApiDefinition): Promise<ApiDefinition> => {
-        return await Transformer.with({
-            EndpointDefinition: async (endpoint) => {
-                if (!endpoint.examples || endpoint.examples.length === 0) {
-                    return endpoint;
-                }
-
-                const examples = await Promise.all(
-                    endpoint.examples.map((example) => this.resolveExample(apiDefinition, endpoint, example)),
-                );
-
-                return { ...endpoint, examples };
+        // Collect all endpoints first, so that we can resolve descriptions in a single batch
+        const collected: EndpointDefinition[] = [];
+        Transformer.with({
+            EndpointDefinition: (endpoint) => {
+                collected.push(endpoint);
+                return endpoint;
             },
         }).apiDefinition(apiDefinition);
+
+        // Resolve example code snippets in parallel
+        const result = Object.fromEntries(
+            await Promise.all(
+                collected.map(async (endpoint) => {
+                    if (endpoint.examples == null || endpoint.examples.length === 0) {
+                        return [endpoint.id, endpoint] as const;
+                    }
+
+                    const examples = await Promise.all(
+                        endpoint.examples.map((example) => this.resolveExample(apiDefinition, endpoint, example)),
+                    );
+
+                    return [endpoint.id, { ...endpoint, examples }] as const;
+                }),
+            ),
+        );
+
+        // reduce the api definition with newly resolved examples
+        return { ...apiDefinition, endpoints: { ...apiDefinition.endpoints, ...result } };
     };
 
     private resolveExample = async (
