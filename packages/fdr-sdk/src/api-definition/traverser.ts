@@ -1,22 +1,75 @@
-import { MarkdownText } from "../docs";
-import { TypeId } from "../navigation";
+import type { MarkdownText } from "../docs";
+import type { Availability, TypeId } from "../navigation";
+import { coalesceAvailability } from "./availability";
 import { LARGE_LOOP_TOLERANCE } from "./const";
-import { TypeDefinition } from "./latest";
-import { TypeShapeOrReference } from "./types";
-import { unwrapDiscriminatedUnionVariant, unwrapObjectType, unwrapReference } from "./unwrap";
+import type { ObjectProperty, TypeDefinition } from "./latest";
+import type { TypeShapeOrReference } from "./types";
+import { unwrapObjectType, unwrapReference } from "./unwrap";
 
-export function traverseTypeDefinition(
+/**
+ * A path through the type tree, used to identify a type definition.
+ *
+ * i.e. it may be represented as a jq:
+ *
+ * - a.b.c.d
+ * - a[].b.c
+ * - a.b[key].c
+ *
+ * We collect the true shape of the path here so that the frontend can determine how to render it.
+ */
+export type KeyPathItem =
+    | { type: "objectProperty"; key: string }
+    | { type: "undiscriminatedUnionVariant"; displayName: string | undefined }
+    | {
+          type: "discriminatedUnionVariant";
+          discriminant: string;
+          discriminantDisplayName: string | undefined;
+          discriminantValue: string;
+      }
+    | { type: "list" | "set" | "mapValue" | "extra" }
+    | { type: "enumValue"; value: string };
+
+interface TypeDefinitionTreeItem {
+    /**
+     * The path to the type definition
+     */
+    path: KeyPathItem[];
+    descriptions: MarkdownText[];
+    availability: Availability | undefined;
+}
+
+interface CollectTypeDefinitionTreeOptions {
+    path?: KeyPathItem[];
+    availability?: Availability;
+    maxDepth?: number;
+}
+
+/**
+ * This function is intended to be used to generate a tree of all type definitions, and is intended to be used
+ * for indexing the type tree and their descriptions into algolia.
+ */
+export function collectTypeDefinitionTree(
     type: TypeShapeOrReference,
     types: Record<TypeId, TypeDefinition>,
-    visitor: (parts: string[], descriptions: MarkdownText[]) => void,
-    maxDepth = 5,
-): void {
+    { availability: rootAvailability, maxDepth = 5, path: rootpath = [] }: CollectTypeDefinitionTreeOptions = {},
+): TypeDefinitionTreeItem[] {
+    const toRet: TypeDefinitionTreeItem[] = [];
+
     const stack: {
         type: TypeShapeOrReference;
-        parts: string[];
+        path: KeyPathItem[];
         descriptions: MarkdownText[];
+        availability: Availability | undefined;
         visitedTypeIds: Set<TypeId>;
-    }[] = [{ type, parts: [], descriptions: [], visitedTypeIds: new Set() }];
+    }[] = [
+        {
+            type,
+            path: rootpath,
+            availability: rootAvailability,
+            descriptions: [],
+            visitedTypeIds: new Set(),
+        },
+    ];
 
     let loop = 0;
     while (stack.length > 0) {
@@ -26,14 +79,24 @@ export function traverseTypeDefinition(
             break;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const { type: last, parts: parentParts, descriptions, visitedTypeIds: parentVisitedTypeIds } = stack.pop()!;
+        const {
+            type: last,
+            path: parentpath,
+            descriptions: parentDescriptions,
+            visitedTypeIds: parentVisitedTypeIds,
+            availability: parentAvailability,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        } = stack.pop()!;
 
-        if (parentParts.length > maxDepth) {
+        if (parentpath.length > maxDepth) {
             continue;
         }
 
         const unwrapped = unwrapReference(last, types);
+
+        // the child's availability must be the least stable availability of the parent and the child
+        const availability = coalesceAvailability([parentAvailability, unwrapped.availability]);
+        const descriptions = [...parentDescriptions, ...unwrapped.descriptions];
 
         // check if this reference has been unwrapped already by its parents
         let circularReferenceDetected = false;
@@ -51,97 +114,115 @@ export function traverseTypeDefinition(
 
         if (unwrapped.shape.type === "object") {
             const obj = unwrapObjectType(unwrapped.shape, types);
-
-            visitor(parentParts, [...descriptions, ...unwrapped.descriptions, ...obj.descriptions]);
+            descriptions.push(...obj.descriptions);
 
             obj.visitedTypeIds.forEach((typeId) => visitedTypeIds.add(typeId));
 
             obj.properties.forEach((property) => {
                 stack.push({
                     type: property.valueShape,
-                    parts: [...parentParts, property.key],
+                    path: [...parentpath, { type: "objectProperty", key: property.key }],
                     descriptions: property.description ? [property.description] : [],
                     visitedTypeIds,
+                    availability,
                 });
             });
 
             if (obj.extraProperties) {
                 stack.push({
                     type: obj.extraProperties,
-                    parts: [...parentParts, "extra"],
+                    path: [...parentpath, { type: "extra" }],
                     descriptions: [],
                     visitedTypeIds,
+                    availability,
                 });
             }
-        } else if (unwrapped.shape.type === "undiscriminatedUnion") {
-            visitor(parentParts, [...descriptions, ...unwrapped.descriptions]);
+        }
 
+        toRet.push({
+            path: parentpath,
+            descriptions,
+            availability,
+        });
+
+        if (unwrapped.shape.type === "undiscriminatedUnion") {
             unwrapped.shape.variants.forEach((variant) => {
-                const parts = [...parentParts];
-                if (variant.displayName) {
-                    parts.push(variant.displayName);
-                }
-
                 stack.push({
                     type: variant.shape,
-                    parts,
+                    path: [...parentpath, { type: "undiscriminatedUnionVariant", displayName: variant.displayName }],
                     descriptions: variant.description ? [variant.description] : [],
                     visitedTypeIds,
+                    availability: coalesceAvailability([availability, variant.availability]),
                 });
             });
         } else if (unwrapped.shape.type === "discriminatedUnion") {
-            visitor(parentParts, [...descriptions, ...unwrapped.descriptions]);
-
             const discriminant = unwrapped.shape.discriminant;
 
             unwrapped.shape.variants.forEach((variant) => {
-                const parts = [...parentParts, variant.discriminantValue];
-                const obj = unwrapDiscriminatedUnionVariant({ discriminant }, variant, types);
-                visitor(parts, [...descriptions, ...unwrapped.descriptions, ...obj.descriptions]);
-                obj.visitedTypeIds.forEach((typeId) => visitedTypeIds.add(typeId));
-
-                obj.properties.forEach((property) => {
-                    stack.push({
-                        type: property.valueShape,
-                        parts: [...parentParts, property.key],
-                        descriptions: property.description ? [property.description] : [],
-                        visitedTypeIds,
-                    });
+                const path: KeyPathItem[] = [
+                    ...parentpath,
+                    {
+                        type: "discriminatedUnionVariant",
+                        discriminant,
+                        discriminantDisplayName: variant.displayName,
+                        discriminantValue: variant.discriminantValue,
+                    },
+                ];
+                stack.push({
+                    type: { ...variant, type: "object" },
+                    path,
+                    descriptions: variant.description ? [variant.description] : [],
+                    visitedTypeIds,
+                    availability: coalesceAvailability([availability, variant.availability]),
                 });
-
-                if (obj.extraProperties) {
-                    stack.push({
-                        type: obj.extraProperties,
-                        parts: [...parentParts, "extra"],
-                        descriptions: [],
-                        visitedTypeIds,
-                    });
-                }
             });
         } else if (unwrapped.shape.type === "list" || unwrapped.shape.type === "set") {
             stack.push({
                 type: unwrapped.shape.itemShape,
-                parts: parentParts,
+                path: [...parentpath, { type: unwrapped.shape.type }],
                 descriptions,
                 visitedTypeIds,
+                availability,
             });
         } else if (unwrapped.shape.type === "map") {
             stack.push({
-                type: unwrapped.shape.keyShape,
-                parts: [...parentParts, "key"],
-                descriptions,
-                visitedTypeIds,
-            });
-            stack.push({
                 type: unwrapped.shape.valueShape,
-                parts: [...parentParts, "value"],
-                descriptions,
+                path: [...parentpath, { type: "mapValue" }],
+                // we don't need to add the descriptions of the key shape here, but the descriptions from the key are appended here:
+                descriptions: [...descriptions, ...unwrapReference(unwrapped.shape.keyShape, types).descriptions],
                 visitedTypeIds,
+                availability,
             });
         } else if (unwrapped.shape.type === "enum") {
             unwrapped.shape.values.forEach((value) => {
-                visitor([...parentParts, value.value], value.description ? [value.description] : []);
+                toRet.push({
+                    path: [...parentpath, { type: "enumValue", value: value.value }],
+                    descriptions: value.description ? [value.description] : [],
+                    availability,
+                });
             });
         }
     }
+
+    return toRet;
+}
+
+export function collectTypeDefinitionTreeForObjectProperty(
+    property: ObjectProperty,
+    types: Record<TypeId, TypeDefinition>,
+    rootPath: KeyPathItem[] = [],
+    maxDepth = 5,
+): TypeDefinitionTreeItem[] {
+    return [
+        {
+            path: [...rootPath, { type: "objectProperty", key: property.key }],
+            descriptions: property.description ? [property.description] : [],
+            availability: property.availability,
+        },
+        ...collectTypeDefinitionTree(property.valueShape, types, {
+            maxDepth,
+            availability: property.availability,
+            path: [...rootPath, { type: "objectProperty", key: property.key }],
+        }),
+    ];
 }
