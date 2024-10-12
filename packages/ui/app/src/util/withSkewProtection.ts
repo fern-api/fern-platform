@@ -1,10 +1,12 @@
 const deploymentId = process.env.NEXT_DEPLOYMENT_ID;
-export function withSkewProtection(headers?: HeadersInit): HeadersInit | undefined {
+export function withSkewProtection(url: string): string {
     if (!deploymentId) {
-        return headers;
+        return url;
     }
 
-    const h = new Headers(headers);
-    h.set("x-deployment-id", deploymentId);
-    return h;
+    if (url.includes("?")) {
+        return `${url}&dpl=${deploymentId}`;
+    } else {
+        return `${url}?dpl=${deploymentId}`;
+    }
 }

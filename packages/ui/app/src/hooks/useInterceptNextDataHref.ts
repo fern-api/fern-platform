@@ -8,6 +8,7 @@ import { parseRelativeUrl } from "next/dist/shared/lib/router/utils/parse-relati
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { Router } from "next/router";
 import { useEffect } from "react";
+import { withSkewProtection } from "../util/withSkewProtection";
 
 /**
  * This function is adapted from https://github.com/vercel/next.js/blob/canary/packages/next/src/client/page-loader.ts
@@ -25,7 +26,7 @@ function createPageLoaderGetDataHref(basePath: string | undefined): PageLoader["
 
         const getHrefForSlug = (path: string) => {
             const dataRoute = getAssetPathFromRoute(removeTrailingSlash(addLocale(path, locale)), ".json");
-            return addPathPrefix(`/_next/data/${buildId}${dataRoute}${withDeploymentId(search)}`, basePath);
+            return addPathPrefix(`/_next/data/${buildId}${dataRoute}${withSkewProtection(search)}`, basePath);
         };
 
         const toRet = getHrefForSlug(
@@ -38,19 +39,6 @@ function createPageLoaderGetDataHref(basePath: string | undefined): PageLoader["
 
         return toRet;
     };
-}
-
-function withDeploymentId(search: string): string {
-    const deploymentId = process.env.NEXT_DEPLOYMENT_ID;
-    if (!deploymentId) {
-        return search;
-    }
-
-    if (search.length > 0) {
-        return `${search}&dpl=${deploymentId}`;
-    } else {
-        return `?dpl=${deploymentId}`;
-    }
 }
 
 // hack for basepath: https://github.com/vercel/next.js/discussions/25681#discussioncomment-2026813

@@ -9,8 +9,7 @@ interface Options<T> extends SWRConfiguration<T, Error, Fetcher<T>> {
 }
 
 function createFetcher<T>(init?: RequestInit): (url: string) => Promise<T> {
-    return (url: string): Promise<T> =>
-        fetch(url, { ...init, headers: withSkewProtection(init?.headers) }).then((r) => r.json());
+    return (url: string): Promise<T> => fetch(withSkewProtection(url), init).then((r) => r.json());
 }
 
 export function useApiRouteSWR<T>(route: FernDocsApiRoute, options?: Options<T>): SWRResponse<T> {
