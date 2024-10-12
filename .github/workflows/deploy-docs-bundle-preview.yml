@@ -63,12 +63,30 @@ jobs:
           filePath: preview.txt
           comment_tag: pr_preview
 
+  analyze:
+    needs: ignore
+    if: needs.ignore.outputs.continue == 1
+    runs-on: ubuntu-latest
+    permissions: write-all # required for the pr-preview comment
+    steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # used for turbo-ignore
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
+
+      - uses: ./.github/actions/install
+
+      - name: Build
+        id: deploy
+        run: pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --skip-deploy=true
+        env:
+          ANALYZE: 1
+
       - name: Analyze bundle
-        if: steps.deploy.outputs.deployment_url
         run: pnpm --package=nextjs-bundle-analysis dlx report
 
       - name: Upload analysis
-        if: steps.deploy.outputs.deployment_url
         uses: actions/upload-artifact@v4
         with:
           name: analyze
@@ -76,7 +94,7 @@ jobs:
 
       - name: Download base branch bundle stats
         uses: dawidd6/action-download-artifact@v2
-        if: steps.deploy.outputs.deployment_url && success() && github.event.number
+        if: success() && github.event.number
         with:
           workflow: nextjs_bundle_analysis.yml
           branch: ${{ github.event.pull_request.base.ref }}
@@ -84,11 +102,11 @@ jobs:
 
       # https://infrequently.org/2021/03/the-performance-inequality-gap/
       - name: Compare with base branch bundle
-        if: steps.deploy.outputs.deployment_url && success() && github.event.number
+        if: success() && github.event.number
         run: ls -laR packages/ui/docs-bundle/.next/analyze/base && pnpm --package=nextjs-bundle-analysis dlx compare
 
       - name: Comment PR Bundle Analysis
-        if: steps.deploy.outputs.deployment_url && github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@v2
         with:
           filePath: packages/ui/docs-bundle/.next/analyze/__bundle_analysis_comment.txt

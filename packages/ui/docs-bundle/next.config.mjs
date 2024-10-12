@@ -3,7 +3,6 @@ import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
 import process from "node:process";
 
 const cdnUri = process.env.NEXT_PUBLIC_CDN_URI != null ? new URL("/", process.env.NEXT_PUBLIC_CDN_URI) : undefined;
-const isPreview = process.env.VERCEL_ENV === "preview";
 const isTrailingSlashEnabled = process.env.TRAILING_SLASH === "1" || process.env.NEXT_PUBLIC_TRAILING_SLASH === "1";
 
 const DOCS_FILES_ALLOWLIST = [
@@ -32,7 +31,6 @@ const DOCS_FILES_ALLOWLIST = [
 /** @type {import("next").NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    productionBrowserSourceMaps: isPreview,
     trailingSlash: isTrailingSlashEnabled,
     transpilePackages: [
         "next-mdx-remote",
@@ -146,6 +144,14 @@ const nextConfig = {
     },
 };
 
+function withVercelEnv(config) {
+    return {
+        ...config,
+        deploymentId: process.env.VERCEL_DEPLOYMENT_ID, // skew protection
+        productionBrowserSourceMaps: process.env.VERCEL_ENV === "preview",
+    };
+}
+
 /** @type {import("next").NextConfig} */
 export default (phase) => {
     const isDev = phase === PHASE_DEVELOPMENT_SERVER;
@@ -154,12 +160,12 @@ export default (phase) => {
      * Do not enable sentry or bundle analysis for local development.
      */
     if (isDev) {
-        return nextConfig;
+        return withVercelEnv(nextConfig);
     }
 
     const withBundleAnalyzer = NextBundleAnalyzer({
-        enabled: isPreview,
+        enabled: process.env.ANALYZE === "1",
     });
 
-    return withBundleAnalyzer(nextConfig);
+    return withBundleAnalyzer(withVercelEnv(nextConfig));
 };

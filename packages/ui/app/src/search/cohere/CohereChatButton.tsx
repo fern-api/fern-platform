@@ -9,7 +9,7 @@ import { useSearchConfig } from "../../services/useSearchService";
 import { CohereChatbotModal } from "./CohereChatbotModal";
 
 export function CohereChatButton(): ReactElement | null {
-    const [config] = useSearchConfig();
+    const config = useSearchConfig();
     const [enabled, setEnabled] = useAtom(COHERE_ASK_AI);
 
     // Close the dialog when the route changes
