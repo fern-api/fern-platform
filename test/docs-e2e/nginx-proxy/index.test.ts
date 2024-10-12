@@ -3,11 +3,9 @@ import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import { chromium } from "playwright";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { getDeploymentOrigin } from "../../utils/deployment-url";
 
-let origin = process.env.DEPLOYMENT_URL ?? "https://app-staging.buildwithfern.com";
-if (!origin.startsWith("http")) {
-    origin = `https://${origin}`;
-}
+const origin = getDeploymentOrigin();
 
 const target = "https://test-nginx-proxy.docs.buildwithfern.com/subpath";
 const proxy = "http://localhost:5050/subpath";

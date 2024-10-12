@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
-    "next": "npm:@fern-api/next@14.2.9-fork.0",
+    "next": "npm:@fern-api/next@14.2.9-fork.1",
     "path-to-regexp": "6.3.0",
     "url-join": "5.0.0"
   },

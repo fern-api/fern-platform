@@ -5,11 +5,15 @@ import { FernDocsApiRoute, useApiRoute } from "./useApiRoute";
 
 interface Options<T> extends SWRConfiguration<T, Error, Fetcher<T>> {
     disabled?: boolean;
-    request?: RequestInit;
+    request?: RequestInit & { headers?: Record<string, string> };
 }
 
-function createFetcher<T>(init?: RequestInit): (url: string) => Promise<T> {
-    return (url: string): Promise<T> => fetch(withSkewProtection(url), init).then((r) => r.json());
+function createFetcher<T>(init?: RequestInit & { headers?: Record<string, string> }): (url: string) => Promise<T> {
+    return async (url: string): Promise<T> => {
+        const request = { ...init, headers: withSkewProtection(init?.headers) };
+        const r = await fetch(url, request);
+        return await r.json();
+    };
 }
 
 export function useApiRouteSWR<T>(route: FernDocsApiRoute, options?: Options<T>): SWRResponse<T> {
