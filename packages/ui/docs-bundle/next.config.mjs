@@ -59,6 +59,7 @@ const nextConfig = {
     ],
     experimental: {
         scrollRestoration: true,
+        hardNavigate404: true,
         optimizePackageImports: ["@fern-ui/ui"],
 
         /**
