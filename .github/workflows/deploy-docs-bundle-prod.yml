@@ -75,6 +75,7 @@ jobs:
       - promote
     if: needs.deploy_app_buildwithfern_com.outputs.deployment_url
     uses: ./.github/workflows/playwright.yml
+    permissions: write-all
     with:
       deployment_url: ${{ needs.deploy_app_buildwithfern_com.outputs.deployment_url }}
 

@@ -141,5 +141,6 @@ jobs:
       - deploy # only runs on fern-prod
     if: always()
     uses: ./.github/workflows/playwright.yml
+    permissions: write-all
     with:
       deployment_url: ${{ needs.deploy.outputs.deployment_url }}
