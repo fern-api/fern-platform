@@ -9,7 +9,7 @@ export function traverseTypeDefinition(
     type: TypeShapeOrReference,
     types: Record<TypeId, TypeDefinition>,
     visitor: (parts: string[], descriptions: MarkdownText[]) => void,
-    maxDepth = 10,
+    maxDepth = 5,
 ): void {
     const stack: {
         type: TypeShapeOrReference;
