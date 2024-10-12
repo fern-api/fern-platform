@@ -5,7 +5,6 @@ import clsx from "clsx";
 import { Check, NavArrowDown, NavArrowUp } from "iconoir-react";
 import { FC, Fragment, PropsWithChildren, forwardRef } from "react";
 import { StatusCodeTag, statusCodeToIntent } from "../../components/StatusCodeTag";
-import { getMessageForStatus } from "../utils/getMessageForStatus";
 
 export declare namespace ErrorExampleSelect {
     export interface Props {
@@ -46,8 +45,8 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
         if (selectedError != null) {
             const content = `${
                 selectedError.examples && selectedError.examples.length > 1
-                    ? `${selectedError.name ?? getMessageForStatus(selectedError.statusCode)} Example ${selectedExampleIndex + 1}`
-                    : selectedError.name ?? getMessageForStatus(selectedError.statusCode)
+                    ? `${selectedError.name} Example ${selectedExampleIndex + 1}`
+                    : selectedError.name
             }`;
             return (
                 <span className={clsx("inline-flex gap-2 items-center")}>
@@ -102,8 +101,8 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                                                 <span className={`text-intent-${statusCodeToIntent(error.statusCode)}`}>
                                                     {example.name ??
                                                         (error.examples && error.examples.length > 1
-                                                            ? `${error.name ?? getMessageForStatus(error.statusCode)} Example ${j + 1}`
-                                                            : error.name ?? getMessageForStatus(error.statusCode))}
+                                                            ? `${error.name} Example ${j + 1}`
+                                                            : error.name)}
                                                 </span>
                                             </span>
                                         </FernSelectItem>
@@ -118,7 +117,9 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                                                     <StatusCodeTag statusCode={error.statusCode} />
                                                     <span
                                                         className={`text-intent-${statusCodeToIntent(error.statusCode)}`}
-                                                    >{`${error.name ?? getMessageForStatus(error.statusCode)}`}</span>
+                                                    >
+                                                        {error.name}
+                                                    </span>
                                                 </span>
                                             </FernSelectItem>
                                         ))}
