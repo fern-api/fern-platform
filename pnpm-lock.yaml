@@ -494,8 +494,8 @@ importers:
         specifier: workspace:*
         version: link:../../fdr-sdk
       next:
-        specifier: npm:@fern-api/next@14.2.9-fork.1
-        version: '@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        specifier: npm:@fern-api/next@14.2.9-fork.2
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -1090,7 +1090,7 @@ importers:
         version: 0.2.288(@internationalized/date@3.5.4)(@types/react@18.3.1)(jsdom@24.0.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.3)
       '@next/third-parties':
         specifier: 14.2.9
-        version: 14.2.9(@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)
+        version: 14.2.9(@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)
       '@radix-ui/colors':
         specifier: ^3.0.0
         version: 3.0.0
@@ -1215,8 +1215,8 @@ importers:
         specifier: ^2.30.1
         version: 2.30.1
       next:
-        specifier: npm:@fern-api/next@14.2.9-fork.1
-        version: '@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        specifier: npm:@fern-api/next@14.2.9-fork.2
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       next-mdx-remote:
         specifier: ^5.0.0
         version: 5.0.0(@types/react@18.3.1)(react@18.3.1)
@@ -1337,7 +1337,7 @@ importers:
         version: 8.1.0-alpha.6(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@storybook/nextjs':
         specifier: 8.1.0-alpha.6
-        version: 8.1.0-alpha.6(@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(esbuild@0.20.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(type-fest@4.21.0)(typescript@5.4.3)(webpack-hot-middleware@2.26.1)(webpack@5.91.0(@swc/core@1.5.7)(esbuild@0.20.2))
+        version: 8.1.0-alpha.6(@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(esbuild@0.20.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(type-fest@4.21.0)(typescript@5.4.3)(webpack-hot-middleware@2.26.1)(webpack@5.91.0(@swc/core@1.5.7)(esbuild@0.20.2))
       '@storybook/react':
         specifier: 8.1.0-alpha.6
         version: 8.1.0-alpha.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.3)
@@ -1424,7 +1424,7 @@ importers:
         version: 24.0.0
       next-router-mock:
         specifier: ^0.9.13
-        version: 0.9.13(@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)
+        version: 0.9.13(@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -1795,7 +1795,7 @@ importers:
         version: link:../app
       '@vercel/analytics':
         specifier: ^1.3.1
-        version: 1.3.1(@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)
+        version: 1.3.1(@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)
       '@vercel/kv':
         specifier: ^2.0.0
         version: 2.0.0
@@ -1827,8 +1827,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       next:
-        specifier: npm:@fern-api/next@14.2.9-fork.1
-        version: '@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        specifier: npm:@fern-api/next@14.2.9-fork.2
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       node-fetch:
         specifier: 2.7.0
         version: 2.7.0
@@ -2229,8 +2229,8 @@ importers:
         specifier: workspace:*
         version: link:../../fdr-sdk
       next:
-        specifier: npm:@fern-api/next@14.2.9-fork.1
-        version: '@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        specifier: npm:@fern-api/next@14.2.9-fork.2
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       path-to-regexp:
         specifier: 6.3.0
         version: 6.3.0
@@ -2340,8 +2340,8 @@ importers:
         specifier: ^8.56.0
         version: 8.57.0
       next:
-        specifier: npm:@fern-api/next@14.2.9-fork.1
-        version: '@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        specifier: npm:@fern-api/next@14.2.9-fork.2
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -2391,8 +2391,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       next:
-        specifier: npm:@fern-api/next@14.2.9-fork.1
-        version: '@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        specifier: npm:@fern-api/next@14.2.9-fork.2
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       node-fetch:
         specifier: 2.7.0
         version: 2.7.0
@@ -4162,8 +4162,8 @@ packages:
   '@fern-api/fs-utils@0.15.0-rc63':
     resolution: {integrity: sha512-lDbmFyGs9phjI0ewoijwYLB7dkEc59Gt/tg2l2um5E1Xmgfnt5EKFXNywnmDIXN1xb8aYhmo+N9ZKJje6/a+iw==}
 
-  '@fern-api/next@14.2.9-fork.1':
-    resolution: {integrity: sha512-hhEXyXUiuoXt7OoR6nr/oKmhs39UMsFuJSGmPnoohDhiyn1SUp7ptzODRFZ0jLVl6PNQvs1j3pxtZuJHGSvXJA==}
+  '@fern-api/next@14.2.9-fork.2':
+    resolution: {integrity: sha512-6Xg8PDelm0aFqkIttXzyM2aQLDkp1EiKMISc5DmHQ7yTMJOVEmeJNMeuBCeNNWnZee+gRQUO7NVhwLXbwTiK4A==}
     engines: {node: '>=18.17.0'}
     hasBin: true
     peerDependencies:
@@ -18454,7 +18454,7 @@ snapshots:
       json-stream-stringify: 3.1.4
       tmp-promise: 3.0.3
 
-  '@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)':
+  '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)':
     dependencies:
       '@next/env': 14.2.9
       '@swc/helpers': 0.5.5
@@ -19272,9 +19272,9 @@ snapshots:
   '@next/swc-win32-x64-msvc@14.2.9':
     optional: true
 
-  '@next/third-parties@14.2.9(@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)':
+  '@next/third-parties@14.2.9(@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)':
     dependencies:
-      next: '@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       react: 18.3.1
       third-party-capital: 1.0.20
 
@@ -22303,7 +22303,7 @@ snapshots:
 
   '@storybook/manager@8.1.1': {}
 
-  '@storybook/nextjs@8.1.0-alpha.6(@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(esbuild@0.20.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(type-fest@4.21.0)(typescript@5.4.3)(webpack-hot-middleware@2.26.1)(webpack@5.91.0(@swc/core@1.5.7)(esbuild@0.20.2))':
+  '@storybook/nextjs@8.1.0-alpha.6(@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(esbuild@0.20.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(type-fest@4.21.0)(typescript@5.4.3)(webpack-hot-middleware@2.26.1)(webpack@5.91.0(@swc/core@1.5.7)(esbuild@0.20.2))':
     dependencies:
       '@babel/core': 7.24.5
       '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.24.5)
@@ -22336,7 +22336,7 @@ snapshots:
       fs-extra: 11.2.0
       image-size: 1.1.1
       loader-utils: 3.2.1
-      next: '@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       node-polyfill-webpack-plugin: 2.0.1(webpack@5.91.0(@swc/core@1.5.7)(esbuild@0.20.2))
       pnp-webpack-plugin: 1.7.0(typescript@5.4.3)
       postcss: 8.4.31
@@ -23707,11 +23707,11 @@ snapshots:
     dependencies:
       crypto-js: 4.2.0
 
-  '@vercel/analytics@1.3.1(@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)':
+  '@vercel/analytics@1.3.1(@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)':
     dependencies:
       server-only: 0.0.1
     optionalDependencies:
-      next: '@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       react: 18.3.1
 
   '@vercel/edge-config-fs@0.1.0': {}
@@ -30881,9 +30881,9 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  next-router-mock@0.9.13(@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1):
+  next-router-mock@0.9.13(@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1):
     dependencies:
-      next: '@fern-api/next@14.2.9-fork.1(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       react: 18.3.1
 
   next-tick@1.1.0: {}
