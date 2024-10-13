@@ -99,8 +99,8 @@ jobs:
       - name: Upload analysis
         uses: actions/upload-artifact@v4
         with:
-          name: analyze
-          path: packages/ui/docs-bundle/.next/analyze/
+          name: bundle
+          path: packages/ui/docs-bundle/.next/analyze/__bundle_analysis.json
 
       - name: Download base branch bundle stats
         uses: dawidd6/action-download-artifact@v6
