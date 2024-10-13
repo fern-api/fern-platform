@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import { generateAlgoliaRecords } from "../records/generateAlgoliaRecords.js";
 
-const fixturesDir = path.join(__dirname, "../../../../../../fdr-sdk/src/__test__/fixtures");
+const fixturesDir = path.join(__dirname, "../../../../../fdr-sdk/src/__test__/fixtures");
 
 function readFixture(fixture: string) {
     const fixturePath = path.join(fixturesDir, `${fixture}.json`);

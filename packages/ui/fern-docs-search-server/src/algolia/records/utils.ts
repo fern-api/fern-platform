@@ -57,7 +57,7 @@ export function toBreadcrumbs(
 ): Algolia.BreadcrumbsV2 {
     const records = [...record.breadcrumbs, { title: record.title, slug: record.slug }];
 
-    const parts = [`${record.slug}#`];
+    let slug = `${record.slug}#`;
 
     // don't include the last part of the path
     path.forEach((item) => {
@@ -65,17 +65,20 @@ export function toBreadcrumbs(
         switch (item.type) {
             case "discriminatedUnionVariant": {
                 // TODO: don't use the display name for discriminated unions (but this must mirror the frontend)
-                parts.push(encodeURIComponent(title));
-                records.push({ title, slug: parts.join(".") });
+                slug += encodeURIComponent(title);
+                records.push({ title, slug });
+                slug += ".";
                 break;
             }
             case "enumValue":
-                parts.push(item.value);
-                records.push({ title, slug: parts.join(".") });
+                slug += encodeURIComponent(item.value);
+                records.push({ title, slug });
+                slug += ".";
                 break;
             case "extra":
-                parts.push("extra");
-                records.push({ title, slug: parts.join(".") });
+                slug += "extra";
+                records.push({ title, slug });
+                slug += ".";
                 break;
             case "list":
             case "set":
@@ -83,19 +86,21 @@ export function toBreadcrumbs(
                 // the frontend currently doesn't append anything for lists or sets (will this cause collisions?)
                 break;
             case "meta":
-                parts.push(item.value);
+                slug += encodeURIComponent(item.value);
                 if (item.displayName) {
-                    records.push({ title: item.displayName, slug: parts.join(".") });
+                    records.push({ title: item.displayName, slug });
                 }
+                slug += ".";
                 break;
             case "objectProperty":
-                parts.push(item.key);
-                records.push({ title, slug: parts.join(".") });
+                slug += encodeURIComponent(item.key);
+                records.push({ title, slug });
+                slug += ".";
                 break;
             case "undiscriminatedUnionVariant":
-                parts.push(encodeURIComponent(item.displayName ?? item.idx.toString()));
+                slug += encodeURIComponent(item.displayName ?? item.idx.toString());
                 if (item.displayName) {
-                    records.push({ title, slug: parts.join(".") });
+                    records.push({ title, slug });
                 }
                 break;
             default:
