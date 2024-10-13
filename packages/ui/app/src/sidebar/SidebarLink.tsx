@@ -1,8 +1,8 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import cn, { clsx } from "clsx";
+import { range } from "es-toolkit/math";
 import { Lock, NavArrowDown } from "iconoir-react";
-import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
 import {
     HTMLAttributeAnchorTarget,

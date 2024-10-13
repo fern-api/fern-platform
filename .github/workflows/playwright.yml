@@ -35,8 +35,6 @@ jobs:
       - name: Fetch domains
         run: pnpm vercel-scripts domains.txt app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
 
-      - run: pnpm build
-
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
 

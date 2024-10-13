@@ -1,5 +1,5 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import { once } from "lodash-es";
+import { once } from "es-toolkit/function";
 import { MDX_SERIALIZER } from "../bundler";
 
 const BUNDLERS: Record<FernDocs.MdxEngine, () => Promise<MDX_SERIALIZER>> = {

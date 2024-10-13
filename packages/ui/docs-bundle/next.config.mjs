@@ -35,7 +35,7 @@ const nextConfig = {
     transpilePackages: [
         "next-mdx-remote",
         "esbuild",
-        "lodash-es",
+        "es-toolkit",
 
         /**
          * Monorepo packages that are not transpiled by default.
@@ -44,12 +44,13 @@ const nextConfig = {
          */
         "@fern-api/fdr-sdk",
         "@fern-api/template-resolver",
+        "@fern-api/ui-core-utils",
         "@fern-ui/chatbot",
         "@fern-ui/components",
-        "@fern-api/ui-core-utils",
         "@fern-ui/fdr-utils",
         "@fern-ui/fern-docs-auth",
         "@fern-ui/fern-docs-edge-config",
+        "@fern-ui/fern-docs-mdx",
         "@fern-ui/fern-docs-utils",
         "@fern-ui/loadable",
         "@fern-ui/next-seo",

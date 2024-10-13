@@ -9,7 +9,7 @@
     "test": "CI=true turbo test",
     "test:update": "CI=true turbo test -- -u",
     "playwright:test": "pnpm exec playwright test",
-    "playwright:build": "turbo --filter='playwright-*' build",
+    "playwright:build": "turbo --filter='playwright-*' --filter='@fern-ui/local-preview-bundle' build",
     "clean": "turbo clean",
     "codegen": "turbo codegen",
     "compile": "turbo compile",
@@ -46,7 +46,6 @@
     "@types/http-proxy": "^1.17.15",
     "@types/is-ci": "^3.0.4",
     "@types/js-yaml": "^4.0.9",
-    "@types/lodash-es": "4.17.12",
     "@types/node": "^18.7.18",
     "@typescript-eslint/eslint-plugin": "7.3.1",
     "@typescript-eslint/parser": "7.3.1",
@@ -72,7 +71,6 @@
     "js-yaml": "^4.1.0",
     "jsonc-parser": "~2.2.1",
     "lint-staged": "^13.0.3",
-    "lodash-es": "^4.17.21",
     "organize-imports-cli": "^0.10.0",
     "playwright": "^1.47.1",
     "prettier": "^3.3.2",
@@ -106,6 +104,10 @@
     "get-port": "^7.1.0"
   },
   "packageManager": "pnpm@9.4.0",
+  "engines": {
+    "node": ">=18.18.0",
+    "pnpm": "9.4.0"
+  },
   "nextBundleAnalysis": {
     "buildOutputDirectory": "packages/ui/docs-bundle/.next",
     "budget": 358400,

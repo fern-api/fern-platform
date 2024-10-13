@@ -9,6 +9,6 @@ export interface ErrorResponse
         FernRegistry.api.latest.WithAvailability {
     shape: FernRegistry.api.latest.TypeShape | undefined;
     statusCode: number;
-    name: string | undefined;
+    name: string;
     examples: FernRegistry.api.latest.ErrorExample[] | undefined;
 }

@@ -18,13 +18,27 @@ const PRIMITIVE_SHAPE: TypeShape = {
 
 describe("unwrapReference", () => {
     it("should noop for a non-reference", () => {
-        expect(unwrapReference(PRIMITIVE_SHAPE["value"], {})).toStrictEqual({
-            shape: PRIMITIVE_SHAPE["value"],
-            availability: undefined,
-            descriptions: [],
-            isOptional: false,
-            default: undefined,
-        });
+        expect(unwrapReference(PRIMITIVE_SHAPE["value"], {})).toMatchInlineSnapshot(
+            `
+          {
+            "availability": undefined,
+            "default": undefined,
+            "descriptions": [],
+            "isOptional": false,
+            "shape": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+            "visitedTypeIds": Set {},
+          }
+        `,
+        );
     });
 
     it("should unwrap a reference", () => {
@@ -41,13 +55,29 @@ describe("unwrapReference", () => {
                 availability: undefined,
             },
         };
-        expect(unwrapReference(shape, types)).toStrictEqual({
-            shape: PRIMITIVE_SHAPE["value"],
-            availability: undefined,
-            descriptions: [],
-            isOptional: false,
-            default: undefined,
-        });
+        expect(unwrapReference(shape, types)).toMatchInlineSnapshot(
+            `
+          {
+            "availability": undefined,
+            "default": undefined,
+            "descriptions": [],
+            "isOptional": false,
+            "shape": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+            "visitedTypeIds": Set {
+              "foo",
+            },
+          }
+        `,
+        );
     });
 
     it("should unwrap to unknown", () => {
@@ -56,16 +86,21 @@ describe("unwrapReference", () => {
             id: TypeId("foo"),
             default: undefined,
         };
-        expect(unwrapReference(shape, {})).toStrictEqual({
-            shape: {
-                type: "unknown",
-                displayName: undefined,
+        expect(unwrapReference(shape, {})).toMatchInlineSnapshot(`
+          {
+            "availability": undefined,
+            "default": undefined,
+            "descriptions": [],
+            "isOptional": false,
+            "shape": {
+              "displayName": undefined,
+              "type": "unknown",
             },
-            availability: undefined,
-            descriptions: [],
-            isOptional: false,
-            default: undefined,
-        });
+            "visitedTypeIds": Set {
+              "foo",
+            },
+          }
+        `);
     });
 
     it("should unwrap optionals", () => {
@@ -89,13 +124,29 @@ describe("unwrapReference", () => {
                 availability: undefined,
             },
         };
-        expect(unwrapReference(shape, types)).toStrictEqual({
-            shape: PRIMITIVE_SHAPE["value"],
-            availability: undefined,
-            descriptions: [],
-            isOptional: true,
-            default: undefined,
-        });
+        expect(unwrapReference(shape, types)).toMatchInlineSnapshot(
+            `
+          {
+            "availability": undefined,
+            "default": undefined,
+            "descriptions": [],
+            "isOptional": true,
+            "shape": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+            "visitedTypeIds": Set {
+              "foo",
+            },
+          }
+        `,
+        );
     });
 
     it("should unwrap optionals with defaults", () => {
@@ -499,5 +550,30 @@ describe("unwrapObjectType", () => {
         ]);
 
         expect(unwrapped.descriptions).toStrictEqual(["description-1", "description-2"]);
+    });
+
+    it("should gracefully handle circular reference", () => {
+        const unwrapped = unwrapObjectType(
+            {
+                extends: [TypeId("id")],
+                properties: [],
+                extraProperties: undefined,
+            },
+            {
+                [TypeId("id")]: {
+                    name: "test",
+                    shape: {
+                        type: "object",
+                        extends: [TypeId("id")],
+                        properties: [],
+                        extraProperties: undefined,
+                    },
+                    description: undefined,
+                    availability: undefined,
+                },
+            },
+        );
+
+        expect(unwrapped.properties.length).toBe(0);
     });
 });

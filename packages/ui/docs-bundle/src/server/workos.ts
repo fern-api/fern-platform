@@ -1,5 +1,5 @@
-import { once } from "@fern-api/fdr-sdk";
 import WorkOS, { AuthorizationURLOptions } from "@workos-inc/node";
+import { once } from "es-toolkit/function";
 
 export const getWorkOS = once(() => new WorkOS(getWorkOSApiKey()));
 

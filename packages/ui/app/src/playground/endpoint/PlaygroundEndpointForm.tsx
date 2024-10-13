@@ -1,7 +1,6 @@
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { unwrapObjectType, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_ARRAY, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { isEmpty } from "lodash-es";
 import { Dispatch, FC, SetStateAction, useCallback, useMemo } from "react";
 import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertiesForm } from "../form/PlaygroundObjectPropertyForm";
@@ -101,7 +100,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
 
     return (
         <>
-            {!isEmpty(headers) && (
+            {headers != null && headers.length > 0 && (
                 <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Headers">
                     <PlaygroundObjectPropertiesForm
                         id="header"
@@ -114,7 +113,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 </PlaygroundEndpointFormSection>
             )}
 
-            {!isEmpty(endpoint.pathParameters) && (
+            {endpoint.pathParameters != null && endpoint.pathParameters.length > 0 && (
                 <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Path Parameters">
                     <PlaygroundObjectPropertiesForm
                         id="path"
@@ -127,7 +126,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 </PlaygroundEndpointFormSection>
             )}
 
-            {!isEmpty(endpoint.queryParameters) && (
+            {endpoint.queryParameters != null && endpoint.queryParameters.length > 0 && (
                 <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Query Parameters">
                     <PlaygroundObjectPropertiesForm
                         id="query"

@@ -79,7 +79,7 @@ function testNavigationConfigConverter(fixtureName: string): void {
                 for (const api of Object.values(v2Apis)) {
                     const keys: string[] = [];
 
-                    await ApiDefinition.Transformer.keys((key) => keys.push(key)).apiDefinition(api);
+                    ApiDefinition.Transformer.keys((key) => keys.push(key)).apiDefinition(api);
 
                     expect(JSON.stringify(keys, undefined, 2)).toMatchFileSnapshot(
                         `output/${fixtureName}/apiDefinitionKeys-${api.id}.json`,

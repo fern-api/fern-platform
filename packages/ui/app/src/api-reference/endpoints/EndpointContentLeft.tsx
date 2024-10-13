@@ -1,9 +1,8 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import camelCase from "lodash-es/camelCase";
-import sortBy from "lodash-es/sortBy";
-import upperFirst from "lodash-es/upperFirst";
+import { sortBy } from "es-toolkit/array";
+import { camelCase, upperFirst } from "es-toolkit/string";
 import { memo, useMemo } from "react";
 import { useFeatureFlags } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
@@ -292,11 +291,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             {showErrors && endpoint.errors && endpoint.errors.length > 0 && (
                 <EndpointSection title="Errors" anchorIdParts={RESPONSE_ERROR} slug={node.slug}>
                     <div className="border-default flex flex-col overflow-visible rounded-lg border">
-                        {sortBy(
-                            endpoint.errors,
-                            (e) => e.statusCode,
-                            (e) => e.name,
-                        ).map((error, idx) => {
+                        {sortBy(endpoint.errors, [(e) => e.statusCode, (e) => e.name]).map((error, idx) => {
                             return (
                                 <EndpointError
                                     key={idx}

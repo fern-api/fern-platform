@@ -4,7 +4,6 @@ export type { DocsProps } from "./atoms";
 export * from "./docs/DocsPage";
 export * from "./docs/NextApp";
 export { getApiRouteSupplier } from "./hooks/useApiRoute";
-export { getFrontmatter } from "./mdx/frontmatter";
 export * from "./mdx/types";
 export { Stream } from "./playground/Stream";
 export { ProxyRequestSchema } from "./playground/types";

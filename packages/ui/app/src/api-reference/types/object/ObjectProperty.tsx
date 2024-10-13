@@ -1,7 +1,7 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
-import { compact } from "lodash-es";
+import { compact } from "es-toolkit/array";
 import { forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { capturePosthogEvent } from "../../../analytics/posthog";
 import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";

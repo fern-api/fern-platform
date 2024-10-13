@@ -4,9 +4,9 @@ import { unknownToString } from "@fern-api/ui-core-utils";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { useEventCallback } from "@fern-ui/react-commons";
+import { mapValues } from "es-toolkit/object";
 import { SendSolid } from "iconoir-react";
 import { useSetAtom } from "jotai";
-import { mapValues } from "lodash-es";
 import { ReactElement, useCallback, useState } from "react";
 import {
     PLAYGROUND_AUTH_STATE_ATOM,
