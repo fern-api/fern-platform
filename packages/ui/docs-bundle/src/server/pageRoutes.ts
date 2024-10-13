@@ -12,6 +12,10 @@ export function getPageRouteMatch(ssg: boolean, buildId: string): string {
 }
 
 export function getPageRoutePath(ssg: boolean, buildId: string, domain: string, pathname: string): string {
+    pathname = removeTrailingSlash(pathname);
+    if (pathname.length === 0 || pathname === "/") {
+        pathname = "/index";
+    }
     return getNextDataRoutePath(buildId, `/${ssg ? "static" : "dynamic"}/${domain}${removeTrailingSlash(pathname)}`);
 }
 

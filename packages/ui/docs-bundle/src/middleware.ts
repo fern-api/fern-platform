@@ -1,5 +1,5 @@
 import { extractBuildId, extractNextDataPathname } from "@/server/extractNextDataPathname";
-import { getNextDataRoutePath, getPageRoute, getPageRouteMatch, getPageRoutePath } from "@/server/pageRoutes";
+import { getNextDataRoutePath, getPageRoute, getPageRoutePath } from "@/server/pageRoutes";
 import { rewritePosthog } from "@/server/rewritePosthog";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
@@ -28,22 +28,16 @@ export const middleware: NextMiddleware = async (request) => {
     if (pathname === "/404" || pathname === "/500" || pathname === "/_error") {
         const headers = new Headers(request.headers);
 
-        if (
-            request.headers.get("referer")?.includes("/_next/data/") ||
-            request.nextUrl.pathname.includes("/_next/data/")
-        ) {
+        if (request.nextUrl.pathname.includes("/_next/data/")) {
             headers.set("x-nextjs-data", "1");
         }
 
-        if (pathname !== request.nextUrl.pathname && headers.get("x-nextjs-data") === "1") {
-            pathname = getNextDataRoutePath(getBuildId(request), pathname);
+        if (request.nextUrl.pathname.startsWith("/_next/data/")) {
+            nextUrl.pathname = getNextDataRoutePath(getBuildId(request), pathname);
+        } else {
+            nextUrl.pathname = pathname;
         }
 
-        if (pathname === request.nextUrl.pathname) {
-            return NextResponse.next({ request: { headers } });
-        }
-
-        nextUrl.pathname = pathname;
         const response = NextResponse.rewrite(nextUrl, { request: { headers } });
         response.headers.set("x-matched-path", pathname);
         return response;
@@ -142,14 +136,26 @@ export const middleware: NextMiddleware = async (request) => {
     if (request.nextUrl.pathname.includes("/_next/data/")) {
         const buildId = getBuildId(request);
 
-        nextUrl.pathname = getPageRoutePath(!isDynamic, buildId, xFernHost, pathname);
+        const headers = new Headers(request.headers);
+        headers.set("x-nextjs-data", "1");
 
-        const response = NextResponse.rewrite(nextUrl);
+        // NOTE: skipMiddlewareUrlNormalize=true must be set for this to work
+        // if the request is not in the /_next/data/... path, we need to rewrite to the full /_next/data/... path
+        if (!request.nextUrl.pathname.startsWith("/_next/data/")) {
+            nextUrl.pathname = getPageRoutePath(!isDynamic, buildId, xFernHost, pathname);
+        }
+
+        // if the request is on the right path, we need to rewrite to the normalized data url, otherwise we'll end up with a double rewrite
+        else {
+            nextUrl.pathname = getPageRoute(!isDynamic, xFernHost, pathname);
+        }
+
+        const response = NextResponse.rewrite(nextUrl, { request: { headers } });
 
         /**
          * Add x-matched-path header so the client can detect original path (despite a forward-proxy nextjs middleware rewriting to it)
          */
-        response.headers.set("x-matched-path", getPageRouteMatch(!isDynamic, buildId));
+        response.headers.set("x-matched-path", getPageRoutePath(!isDynamic, buildId, xFernHost, pathname));
 
         return response;
     }
