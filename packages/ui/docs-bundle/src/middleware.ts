@@ -40,7 +40,7 @@ export const middleware: NextMiddleware = async (request) => {
         }
 
         if (headers.get("x-nextjs-data")) {
-            nextUrl.pathname = getNextDataRoutePath(pathname, getBuildId(request));
+            nextUrl.pathname = getNextDataRoutePath(getBuildId(request), pathname);
         } else {
             nextUrl.pathname = pathname;
         }
