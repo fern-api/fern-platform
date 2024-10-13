@@ -1,23 +1,29 @@
-name: Playwright
-
-env:
-  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-  PLAYWRIGHT_JSON_OUTPUT_NAME: results.json
+name: Playwright E2E
 
 on:
+  workflow_dispatch:
+    inputs:
+      deployment_url:
+        type: string
+        description: "The URL of the deployment to test"
+        required: true
   workflow_call:
     inputs:
       deployment_url:
         type: string
         description: "The URL of the deployment to test"
         required: true
+    secrets:
+      VERCEL_TOKEN:
+        required: true
+      FERN_TOKEN:
+        required: true
 
 jobs:
-  ete:
+  playwright:
     runs-on: ubuntu-latest
     permissions: write-all # required for the playwright-report-summary action
-    if: inputs.deployment_url
+    if: inputs.deployment_url != ''
     steps:
       - uses: actions/checkout@v4
 
@@ -27,17 +33,24 @@ jobs:
         run: pnpm i -g fern-api@latest
 
       - name: Fetch domains
-        run: pnpm vercel-scripts domains.txt ${{ inputs.deployment_url }}
+        run: pnpm vercel-scripts domains.txt app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
 
       - run: pnpm build
 
       - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps --browser=chromium
+        run: pnpm exec playwright install --with-deps
+
+      - name: Build Playwright Test Fixtures
+        run: pnpm playwright:build
 
       - name: Run Playwright tests
-        run: pnpm exec playwright test playwright --workers 1 --reporter json
+        run: pnpm exec playwright test playwright --workers 6 --reporter json
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: results.json
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          DEPLOYMENT_URL: ${{ inputs.deployment_url }}
 
       - uses: daun/playwright-report-summary@v3
         if: always()
         with:
-          report-file: $PLAYWRIGHT_JSON_OUTPUT_NAME
+          report-file: results.json

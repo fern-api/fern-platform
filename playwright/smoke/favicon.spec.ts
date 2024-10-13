@@ -1,6 +1,6 @@
 import test, { expect } from "@playwright/test";
-import { getPlaywrightTestUrls } from "../test-runner";
-import { addPreviewCookie, generatePreviewContext } from "../utils";
+import { getPlaywrightTestUrls } from "../utils/test-runner";
+import { addPreviewCookie, generatePreviewContext } from "../utils/utils";
 
 const faviconUrls = getPlaywrightTestUrls("favicon");
 faviconUrls.map(generatePreviewContext).forEach((testUrl) => {

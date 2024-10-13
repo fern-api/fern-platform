@@ -1,6 +1,6 @@
 import { FernDocsClient } from "@fern-fern/fern-docs-sdk";
 import { Vercel, VercelClient } from "@fern-fern/vercel";
-import { logCommand } from "./exec.js";
+import { logCommand } from "./loggingExeca.js";
 
 const BANNED_DOMAINS = ["vercel.app", "buildwithfern.com", "ferndocs.com"];
 
@@ -9,6 +9,9 @@ export class FernDocsRevalidator {
     private project: string;
     private teamId: string;
     constructor({ token, project, teamId }: { token: string; project: string; teamId: string }) {
+        if (!token) {
+            throw new Error("VERCEL_TOKEN is required");
+        }
         this.vercel = new VercelClient({ token });
         this.project = project;
         this.teamId = teamId;

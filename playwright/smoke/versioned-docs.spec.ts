@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { addPreviewCookie, generatePreviewContext } from "../utils";
+import { addPreviewCookie, generatePreviewContext } from "../utils/utils";
 
 /**
  * This test will run on a sample of urls from customer docs using versions.

@@ -1,5 +1,5 @@
 import { Vercel } from "@fern-fern/vercel";
-import { logCommand } from "./exec.js";
+import { logCommand } from "./loggingExeca.js";
 
 export async function requestPromote(token: string, deployment: Vercel.GetDeploymentResponse): Promise<void> {
     logCommand(`[Production] Promote ${deployment.url}`);

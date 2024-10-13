@@ -3,12 +3,15 @@ import * as fs from "fs";
 import * as yaml from "js-yaml";
 
 export function getPlaywrightTestUrls(type: string): string[] {
-    const playwrightConfig = yaml.load(fs.readFileSync("playwright/inclusions.yml", "utf-8"));
+    const playwrightConfig = yaml.load(fs.readFileSync("playwright/inclusions.yml", "utf-8")) as Record<
+        string,
+        unknown
+    >;
 
     if (!(type in playwrightConfig)) {
         throw new Error(`Test type ${type} not found in playwright/inclusions.yml`);
     }
-    const testInclusions = new Set<string>(playwrightConfig[type]);
+    const testInclusions = new Set<string>(playwrightConfig[type] as string[]);
 
     const testUrls: string[] = fs
         .readFileSync("domains.txt", "utf-8")
@@ -28,7 +31,7 @@ function sleep(ms: number): Promise<void> {
 }
 
 export async function runFixture<T>(fixturePath: string, port: string, test: () => Promise<T>): Promise<T> {
-    const l = spawn("playwright/run-fixture.sh", [fixturePath, port]);
+    const l = spawn("playwright/utils/run-fixture.sh", [fixturePath, port]);
     l.stdout.pipe(process.stdout);
     l.stderr.pipe(process.stderr);
     await sleep(7500);

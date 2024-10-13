@@ -73,6 +73,8 @@ const nextConfig = {
         externalMiddlewareRewritesResolve: true,
     },
 
+    skipMiddlewareUrlNormalize: true,
+
     /**
      * This is required for posthog. See https://posthog.com/docs/advanced/proxy/nextjs-middleware
      */

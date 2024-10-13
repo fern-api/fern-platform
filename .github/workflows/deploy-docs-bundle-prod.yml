@@ -77,7 +77,10 @@ jobs:
     uses: ./.github/workflows/playwright.yml
     permissions: write-all
     with:
-      deployment_url: ${{ needs.deploy_app_buildwithfern_com.outputs.deployment_url }}
+      deployment_url: ${{ needs.deploy_app_buildwithfern_com.outputs.deployment_url || '' }}
+    secrets:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
   rollback:
     needs: ete

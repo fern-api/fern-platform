@@ -11,7 +11,14 @@ export function getPageRouteMatch(ssg: boolean, buildId: string): string {
     return `/_next/data/${buildId}/${ssg ? "static" : "dynamic"}/[domain]/[[...slug]].json`;
 }
 
-export function getPageRoutePath(ssg: boolean, buildId: string, domain: string, pathname: string): string {
-    const dataRoute = getAssetPathFromRoute(removeTrailingSlash(pathname), ".json");
-    return `/_next/data/${buildId}/${ssg ? "static" : "dynamic"}/${domain}${dataRoute}`;
+export function getNextDataPageRoute(ssg: boolean, buildId: string, domain: string, pathname: string): string {
+    pathname = removeTrailingSlash(pathname);
+    if (pathname.length === 0 || pathname === "/") {
+        pathname = "/index";
+    }
+    return getNextDataRoutePath(buildId, `/${ssg ? "static" : "dynamic"}/${domain}${removeTrailingSlash(pathname)}`);
+}
+
+export function getNextDataRoutePath(buildId: string, pathname: string): string {
+    return `/_next/data/${buildId}${getAssetPathFromRoute(removeTrailingSlash(pathname), ".json")}`;
 }
