@@ -75,7 +75,7 @@ jobs:
 
   analyze:
     needs: ignore
-    if: needs.ignore.outputs.continue == 1 || contains(github.event.head_commit.message, 'playwright/') || contains(github.event.head_commit.message, '.github/workflows/')
+    if: needs.ignore.outputs.continue == 1 || needs.ignore.outputs.check_changes == 1
     runs-on: ubuntu-latest
     permissions: write-all # required for the pr-preview comment
     steps:
@@ -124,7 +124,7 @@ jobs:
 
   deploy-dev:
     needs: ignore
-    if: needs.ignore.outputs.continue == 1
+    if: needs.ignore.outputs.continue == 1 || needs.ignore.outputs.check_changes == 1
     runs-on: ubuntu-latest
     environment:
       name: Preview - app-dev.buildwithfern.com
