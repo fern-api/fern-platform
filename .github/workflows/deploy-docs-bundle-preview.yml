@@ -154,3 +154,6 @@ jobs:
     permissions: write-all
     with:
       deployment_url: ${{ needs.deploy.outputs.deployment_url || '' }}
+    secrets:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
