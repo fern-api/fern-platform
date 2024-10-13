@@ -1,9 +1,9 @@
 import { extractBuildId, extractNextDataPathname } from "@/server/extractNextDataPathname";
-import { getNextDataRoutePath, getPageRoute, getPageRoutePath } from "@/server/pageRoutes";
+import { getNextDataPageRoute, getPageRoute } from "@/server/pageRoutes";
 import { rewritePosthog } from "@/server/rewritePosthog";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import type { FernUser } from "@fern-ui/fern-docs-auth";
+import type { AuthEdgeConfig, FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
@@ -17,7 +17,11 @@ const CHANGELOG_PATTERN = /\.(rss|atom)$/;
 
 export const middleware: NextMiddleware = async (request) => {
     const xFernHost = getDocsDomainEdge(request);
-    const nextUrl = request.nextUrl.clone();
+    const search = request.nextUrl.search;
+
+    const withPathname = (pathname: string): string => {
+        return `${request.nextUrl.origin}${pathname}${search}`;
+    };
 
     let pathname = extractNextDataPathname(removeTrailingSlash(request.nextUrl.pathname));
 
@@ -28,17 +32,17 @@ export const middleware: NextMiddleware = async (request) => {
     if (pathname === "/404" || pathname === "/500" || pathname === "/_error") {
         const headers = new Headers(request.headers);
 
-        if (request.nextUrl.pathname.includes("/_next/data/")) {
-            headers.set("x-nextjs-data", "1");
+        if (request.nextUrl.pathname.includes("/_next/data/") && pathname === "/404") {
+            // This is a hack to mock the 404 data page, since nextjs isn't playing nice with our middleware
+            return NextResponse.json({}, { status: 404 });
         }
 
-        if (request.nextUrl.pathname.startsWith("/_next/data/")) {
-            nextUrl.pathname = getNextDataRoutePath(getBuildId(request), pathname);
-        } else {
-            nextUrl.pathname = pathname;
+        let response = NextResponse.rewrite(withPathname(pathname), { request: { headers } });
+
+        if (pathname === request.nextUrl.pathname) {
+            response = NextResponse.next({ request: { headers } });
         }
 
-        const response = NextResponse.rewrite(nextUrl, { request: { headers } });
         response.headers.set("x-matched-path", pathname);
         return response;
     }
@@ -47,16 +51,16 @@ export const middleware: NextMiddleware = async (request) => {
      * Rewrite robots.txt
      */
     if (pathname.endsWith("/robots.txt")) {
-        nextUrl.pathname = "/api/fern-docs/robots.txt";
-        return NextResponse.rewrite(nextUrl);
+        pathname = "/api/fern-docs/robots.txt";
+        return NextResponse.rewrite(withPathname(pathname));
     }
 
     /**
      * Rewrite sitemap.xml
      */
     if (pathname.endsWith("/sitemap.xml")) {
-        nextUrl.pathname = "/api/fern-docs/sitemap.xml";
-        return NextResponse.rewrite(nextUrl);
+        pathname = "/api/fern-docs/sitemap.xml";
+        return NextResponse.rewrite(withPathname(pathname));
     }
 
     /**
@@ -70,8 +74,8 @@ export const middleware: NextMiddleware = async (request) => {
      * Rewrite API routes to /api/fern-docs
      */
     if (pathname.match(API_FERN_DOCS_PATTERN)) {
-        nextUrl.pathname = request.nextUrl.pathname.replace(API_FERN_DOCS_PATTERN, "/api/fern-docs/");
-        return NextResponse.rewrite(nextUrl);
+        pathname = request.nextUrl.pathname.replace(API_FERN_DOCS_PATTERN, "/api/fern-docs/");
+        return NextResponse.rewrite(withPathname(pathname));
     }
 
     /**
@@ -80,14 +84,22 @@ export const middleware: NextMiddleware = async (request) => {
     const changelogFormat = pathname.match(CHANGELOG_PATTERN)?.[1];
     if (changelogFormat != null) {
         pathname = pathname.replace(new RegExp(`.${changelogFormat}$`), "");
-        nextUrl.pathname = "/api/fern-docs/changelog";
-        nextUrl.searchParams.set("format", changelogFormat);
-        nextUrl.searchParams.set("path", pathname);
-        return NextResponse.rewrite(nextUrl);
+        const url = new URL("/api/fern-docs/changelog", request.nextUrl.origin);
+        url.searchParams.set("format", changelogFormat);
+        url.searchParams.set("path", pathname);
+        return NextResponse.rewrite(String(url));
     }
 
     const fernToken = request.cookies.get(COOKIE_FERN_TOKEN);
-    const authConfig = await getAuthEdgeConfig(xFernHost);
+    let authConfig: AuthEdgeConfig | undefined;
+
+    try {
+        authConfig = await getAuthEdgeConfig(xFernHost);
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error("Failed to get auth config", e);
+    }
+
     let fernUser: FernUser | undefined;
 
     // TODO: check if the site is SSO protected, and if so, redirect to the SSO provider
@@ -139,23 +151,26 @@ export const middleware: NextMiddleware = async (request) => {
         const headers = new Headers(request.headers);
         headers.set("x-nextjs-data", "1");
 
+        const rewrittenPathname = pathname;
+
+        pathname = getPageRoute(!isDynamic, xFernHost, rewrittenPathname);
+
         // NOTE: skipMiddlewareUrlNormalize=true must be set for this to work
         // if the request is not in the /_next/data/... path, we need to rewrite to the full /_next/data/... path
-        if (!request.nextUrl.pathname.startsWith("/_next/data/")) {
-            nextUrl.pathname = getPageRoutePath(!isDynamic, buildId, xFernHost, pathname);
+        if (!request.nextUrl.pathname.startsWith("/_next/data/") && process.env.NODE_ENV === "development") {
+            pathname = getNextDataPageRoute(!isDynamic, buildId, xFernHost, rewrittenPathname);
         }
 
-        // if the request is on the right path, we need to rewrite to the normalized data url, otherwise we'll end up with a double rewrite
-        else {
-            nextUrl.pathname = getPageRoute(!isDynamic, xFernHost, pathname);
-        }
+        let response = NextResponse.rewrite(withPathname(pathname), { request: { headers } });
 
-        const response = NextResponse.rewrite(nextUrl, { request: { headers } });
+        if (pathname === request.nextUrl.pathname) {
+            response = NextResponse.next({ request: { headers } });
+        }
 
         /**
          * Add x-matched-path header so the client can detect original path (despite a forward-proxy nextjs middleware rewriting to it)
          */
-        response.headers.set("x-matched-path", getPageRoutePath(!isDynamic, buildId, xFernHost, pathname));
+        response.headers.set("x-matched-path", getNextDataPageRoute(!isDynamic, buildId, xFernHost, rewrittenPathname));
 
         return response;
     }
@@ -164,8 +179,8 @@ export const middleware: NextMiddleware = async (request) => {
      * Rewrite all other requests to /static/[domain]/[[...slug]] or /dynamic/[domain]/[[...slug]]
      */
 
-    nextUrl.pathname = getPageRoute(!isDynamic, xFernHost, pathname);
-    return NextResponse.rewrite(nextUrl);
+    pathname = getPageRoute(!isDynamic, xFernHost, pathname);
+    return NextResponse.rewrite(withPathname(pathname));
 };
 
 export const config = {
