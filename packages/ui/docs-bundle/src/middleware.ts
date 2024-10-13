@@ -39,9 +39,10 @@ export const middleware: NextMiddleware = async (request) => {
             return NextResponse.next({ request: { headers } });
         }
 
-        nextUrl.pathname = pathname;
-        if (headers.get("x-nextjs-data") || request.nextUrl.pathname.includes("/_next/data/")) {
-            nextUrl.pathname = getNextDataRoutePath(nextUrl.pathname, getBuildId(request));
+        if (headers.get("x-nextjs-data")) {
+            nextUrl.pathname = getNextDataRoutePath(pathname, getBuildId(request));
+        } else {
+            nextUrl.pathname = pathname;
         }
         const response = NextResponse.rewrite(nextUrl, { request: { headers } });
         response.headers.set("x-matched-path", pathname);
