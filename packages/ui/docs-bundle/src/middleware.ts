@@ -1,5 +1,5 @@
 import { extractBuildId, extractNextDataPathname } from "@/server/extractNextDataPathname";
-import { getPageRoute, getPageRouteMatch, getPageRoutePath } from "@/server/pageRoutes";
+import { getNextDataRoutePath, getPageRoute, getPageRouteMatch, getPageRoutePath } from "@/server/pageRoutes";
 import { rewritePosthog } from "@/server/rewritePosthog";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
@@ -40,6 +40,9 @@ export const middleware: NextMiddleware = async (request) => {
         }
 
         nextUrl.pathname = pathname;
+        if (headers.get("x-nextjs-data") || request.nextUrl.pathname.includes("/_next/data/")) {
+            nextUrl.pathname = getNextDataRoutePath(nextUrl.pathname, getBuildId(request));
+        }
         const response = NextResponse.rewrite(nextUrl, { request: { headers } });
         response.headers.set("x-matched-path", pathname);
         return response;
@@ -143,7 +146,7 @@ export const middleware: NextMiddleware = async (request) => {
         const response = NextResponse.rewrite(nextUrl);
 
         /**
-         * Add x-matched-path header to the response to help with debugging
+         * Add x-matched-path header so the client can detect original path (despite a forward-proxy nextjs middleware rewriting to it)
          */
         response.headers.set("x-matched-path", getPageRouteMatch(!isDynamic, buildId));
 
