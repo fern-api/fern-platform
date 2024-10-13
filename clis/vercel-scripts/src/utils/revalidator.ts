@@ -9,6 +9,9 @@ export class FernDocsRevalidator {
     private project: string;
     private teamId: string;
     constructor({ token, project, teamId }: { token: string; project: string; teamId: string }) {
+        if (!token) {
+            throw new Error("VERCEL_TOKEN is required");
+        }
         this.vercel = new VercelClient({ token });
         this.project = project;
         this.teamId = teamId;
