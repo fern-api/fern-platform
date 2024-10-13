@@ -9,7 +9,7 @@
     "test": "CI=true turbo test",
     "test:update": "CI=true turbo test -- -u",
     "playwright:test": "pnpm exec playwright test",
-    "playwright:build": "turbo --filter='playwright-*' build",
+    "playwright:build": "turbo --filter='playwright-*' --filter='@fern-ui/local-preview-bundle' build",
     "clean": "turbo clean",
     "codegen": "turbo codegen",
     "compile": "turbo compile",
