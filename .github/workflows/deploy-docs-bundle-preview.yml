@@ -16,10 +16,18 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       continue: ${{ steps.ignore.outputs.continue }}
+      check_changes: ${{ steps.check_changes.outputs.continue }}
     steps:
       - uses: actions/checkout@v4
+      - name: Check for changes in playwright or github actions
+        id: check_changes
+        run: |
+          if git diff --name-only HEAD~1 -- playwright/ .github/workflows/; then
+            echo "continue=1" >> $GITHUB_OUTPUT
+          fi
       - name: Ignore unchanged files
         id: ignore
+        if: steps.check_changes.outputs.continue != 1
         uses: ./.github/actions/turbo-ignore
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
@@ -30,7 +38,7 @@ jobs:
 
   deploy:
     needs: ignore
-    if: needs.ignore.outputs.continue == 1 || contains(github.event.head_commit.message, 'playwright/') || contains(github.event.head_commit.message, '.github/workflows/deploy-docs-bundle-preview') || contains(github.event.head_commit.message, '.github/workflows/playwright')
+    if: needs.ignore.outputs.continue == 1 || needs.ignore.outputs.check_changes == 1
     runs-on: ubuntu-latest
     environment:
       name: Preview - app.buildwithfern.com
@@ -65,7 +73,7 @@ jobs:
 
   analyze:
     needs: ignore
-    if: needs.ignore.outputs.continue == 1
+    if: needs.ignore.outputs.continue == 1 || contains(github.event.head_commit.message, 'playwright/') || contains(github.event.head_commit.message, '.github/workflows/')
     runs-on: ubuntu-latest
     permissions: write-all # required for the pr-preview comment
     steps:
@@ -139,8 +147,8 @@ jobs:
     needs:
       - ignore
       - deploy # only runs on fern-prod
-    if: always()
+    if: always() && (needs.deploy.result == 'success' || needs.deploy.result == 'skipped')
     uses: ./.github/workflows/playwright.yml
     permissions: write-all
     with:
-      deployment_url: ${{ needs.deploy.outputs.deployment_url }}
+      deployment_url: ${{ needs.deploy.outputs.deployment_url || '' }}
