@@ -19,6 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all # required for the playwright-report-summary action
     if: inputs.deployment_url != ''
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -28,7 +31,7 @@ jobs:
         run: pnpm i -g fern-api@latest
 
       - name: Fetch domains
-        run: pnpm vercel-scripts domains.txt app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
+        run: pnpm vercel-scripts domains.txt app.buildwithfern.com
 
       - run: pnpm build
 
@@ -38,7 +41,6 @@ jobs:
       - name: Run Playwright tests
         run: pnpm exec playwright test playwright --workers 1 --reporter json
         env:
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           PLAYWRIGHT_JSON_OUTPUT_NAME: results.json
 
       - uses: daun/playwright-report-summary@v3
