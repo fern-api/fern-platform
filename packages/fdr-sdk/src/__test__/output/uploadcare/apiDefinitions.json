@@ -57,6 +57,7 @@
         },
         "errors": [
           {
+            "name": "Not Found",
             "statusCode": 404,
             "shape": {
               "type": "alias",
@@ -186,6 +187,7 @@
         },
         "errors": [
           {
+            "name": "Not Found",
             "statusCode": 404,
             "shape": {
               "type": "alias",
@@ -791,6 +793,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -800,6 +803,7 @@
             }
           },
           {
+            "name": "Forbidden",
             "statusCode": 403,
             "shape": {
               "type": "alias",
@@ -809,6 +813,7 @@
             }
           },
           {
+            "name": "Payload Too Large",
             "statusCode": 413,
             "shape": {
               "type": "alias",
@@ -818,6 +823,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -1186,6 +1192,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -1195,6 +1202,7 @@
             }
           },
           {
+            "name": "Forbidden",
             "statusCode": 403,
             "shape": {
               "type": "alias",
@@ -1204,6 +1212,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -1503,6 +1512,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -1512,6 +1522,7 @@
             }
           },
           {
+            "name": "Forbidden",
             "statusCode": 403,
             "shape": {
               "type": "alias",
@@ -1521,6 +1532,7 @@
             }
           },
           {
+            "name": "Not Found",
             "statusCode": 404,
             "shape": {
               "type": "alias",
@@ -1968,6 +1980,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -1977,6 +1990,7 @@
             }
           },
           {
+            "name": "Forbidden",
             "statusCode": 403,
             "shape": {
               "type": "alias",
@@ -1986,6 +2000,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -2207,6 +2222,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -2370,6 +2386,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -2379,6 +2396,7 @@
             }
           },
           {
+            "name": "Forbidden",
             "statusCode": 403,
             "shape": {
               "type": "alias",
@@ -2388,6 +2406,7 @@
             }
           },
           {
+            "name": "Not Found",
             "statusCode": 404,
             "shape": {
               "type": "alias",
@@ -2740,6 +2759,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -2749,6 +2769,7 @@
             }
           },
           {
+            "name": "Forbidden",
             "statusCode": 403,
             "shape": {
               "type": "alias",
@@ -3023,6 +3044,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -3032,6 +3054,7 @@
             }
           },
           {
+            "name": "Forbidden",
             "statusCode": 403,
             "shape": {
               "type": "alias",
@@ -3041,6 +3064,7 @@
             }
           },
           {
+            "name": "Not Found",
             "statusCode": 404,
             "shape": {
               "type": "alias",
@@ -6186,6 +6210,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -6195,6 +6220,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -6482,6 +6508,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -6491,6 +6518,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -6500,6 +6528,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -6899,6 +6928,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -6908,6 +6938,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -6917,6 +6948,7 @@
             }
           },
           {
+            "name": "Not Found",
             "statusCode": 404,
             "shape": {
               "type": "alias",
@@ -6926,6 +6958,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -7337,6 +7370,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -7346,6 +7380,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -7355,6 +7390,7 @@
             }
           },
           {
+            "name": "Not Found",
             "statusCode": 404,
             "shape": {
               "type": "alias",
@@ -7364,6 +7400,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -7737,6 +7774,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -7746,6 +7784,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -7755,6 +7794,7 @@
             }
           },
           {
+            "name": "Not Found",
             "statusCode": 404,
             "shape": {
               "type": "alias",
@@ -7764,6 +7804,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -8123,6 +8164,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -8132,6 +8174,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -8141,6 +8184,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -8542,6 +8586,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -8551,6 +8596,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -8560,6 +8606,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -9013,6 +9060,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -9022,6 +9070,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -9031,6 +9080,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -9340,6 +9390,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -9349,6 +9400,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -9358,6 +9410,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -9599,6 +9652,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -9608,6 +9662,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -9617,6 +9672,7 @@
             }
           },
           {
+            "name": "Conflict",
             "statusCode": 409,
             "shape": {
               "type": "alias",
@@ -9626,6 +9682,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -9876,6 +9933,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -9885,6 +9943,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -10070,6 +10129,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -10079,6 +10139,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -10088,6 +10149,7 @@
             }
           },
           {
+            "name": "Conflict",
             "statusCode": 409,
             "shape": {
               "type": "alias",
@@ -10097,6 +10159,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -10339,6 +10402,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -10348,6 +10412,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -10542,6 +10607,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -10551,6 +10617,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -10560,6 +10627,7 @@
             }
           },
           {
+            "name": "Conflict",
             "statusCode": 409,
             "shape": {
               "type": "alias",
@@ -10569,6 +10637,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -10830,6 +10899,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -10839,6 +10909,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -11049,6 +11120,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -11058,6 +11130,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -11067,6 +11140,7 @@
             }
           },
           {
+            "name": "Conflict",
             "statusCode": 409,
             "shape": {
               "type": "alias",
@@ -11076,6 +11150,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -11332,6 +11407,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -11341,6 +11417,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -11547,6 +11624,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -11556,6 +11634,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -11780,6 +11859,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -11789,6 +11869,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -12003,6 +12084,7 @@
         ],
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -12012,6 +12094,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -12237,6 +12320,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -12246,6 +12330,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -12255,6 +12340,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -12487,6 +12573,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -12496,6 +12583,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -12505,6 +12593,7 @@
             }
           },
           {
+            "name": "Not Found",
             "statusCode": 404,
             "shape": {
               "type": "alias",
@@ -12514,6 +12603,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -12755,6 +12845,7 @@
         ],
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -12764,6 +12855,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -12773,6 +12865,7 @@
             }
           },
           {
+            "name": "Not Found",
             "statusCode": 404,
             "shape": {
               "type": "alias",
@@ -12782,6 +12875,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -12999,6 +13093,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -13008,6 +13103,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -13017,6 +13113,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -13212,6 +13309,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -13221,6 +13319,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -13230,6 +13329,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -13429,6 +13529,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -13438,6 +13539,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -13447,6 +13549,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -13663,6 +13766,7 @@
         },
         "errors": [
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -13672,6 +13776,7 @@
             }
           },
           {
+            "name": "Not Found",
             "statusCode": 404,
             "shape": {
               "type": "alias",
@@ -13681,6 +13786,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -13876,6 +13982,7 @@
         ],
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -13885,6 +13992,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -13894,6 +14002,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -14096,6 +14205,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -14105,6 +14215,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -14114,6 +14225,7 @@
             }
           },
           {
+            "name": "Not Found",
             "statusCode": 404,
             "shape": {
               "type": "alias",
@@ -14123,6 +14235,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -14132,6 +14245,7 @@
             }
           },
           {
+            "name": "Service Unavailable",
             "statusCode": 503,
             "shape": {
               "type": "alias",
@@ -14415,6 +14529,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -14424,6 +14539,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -14634,6 +14750,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -14643,6 +14760,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -14652,6 +14770,7 @@
             }
           },
           {
+            "name": "Not Found",
             "statusCode": 404,
             "shape": {
               "type": "alias",
@@ -14661,6 +14780,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -14670,6 +14790,7 @@
             }
           },
           {
+            "name": "Service Unavailable",
             "statusCode": 503,
             "shape": {
               "type": "alias",
@@ -14974,6 +15095,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -14983,6 +15105,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -15194,6 +15317,7 @@
         },
         "errors": [
           {
+            "name": "Bad Request",
             "statusCode": 400,
             "shape": {
               "type": "alias",
@@ -15203,6 +15327,7 @@
             }
           },
           {
+            "name": "Unauthorized",
             "statusCode": 401,
             "shape": {
               "type": "alias",
@@ -15212,6 +15337,7 @@
             }
           },
           {
+            "name": "Not Found",
             "statusCode": 404,
             "shape": {
               "type": "alias",
@@ -15221,6 +15347,7 @@
             }
           },
           {
+            "name": "Too Many Requests",
             "statusCode": 429,
             "shape": {
               "type": "alias",
@@ -15230,6 +15357,7 @@
             }
           },
           {
+            "name": "Service Unavailable",
             "statusCode": 503,
             "shape": {
               "type": "alias",
