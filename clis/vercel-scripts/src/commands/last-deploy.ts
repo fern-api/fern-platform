@@ -39,7 +39,7 @@ export async function getLastDeployCommand({
     if (sha) {
         // eslint-disable-next-line no-console
         console.log(`Last deploy ref: ${sha} (${ref ?? branch})`, deployments[0]);
-        writefs(output, sha);
+        await writefs(output, sha);
     } else {
         // eslint-disable-next-line no-console
         console.error(
