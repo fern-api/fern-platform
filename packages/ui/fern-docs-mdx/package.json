@@ -35,11 +35,16 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
+    "@types/hast": "^3.0.4",
+    "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
     "mdast-util-from-markdown": "^2.0.0",
     "mdast-util-mdx": "^3.0.0",
+    "mdast-util-to-hast": "^13.1.0",
+    "mdast-util-to-string": "^4.0.0",
     "micromark-extension-mdx": "^2.1.0",
-    "pnpm": "^9.12.1"
+    "pnpm": "^9.12.1",
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

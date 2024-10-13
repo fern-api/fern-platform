@@ -1,4 +1,5 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
+import { customHeadingHandler } from "@fern-ui/fern-docs-mdx";
 import type { Options } from "@mdx-js/esbuild";
 import { mapKeys } from "es-toolkit/object";
 import { bundleMDX } from "mdx-bundler";
@@ -14,7 +15,6 @@ import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
 import { mergeMatter, rehypeFernLayout } from "../plugins/rehypeLayout";
 import { rehypeSqueezeParagraphs } from "../plugins/rehypeSqueezeParagraphs";
-import { customHeadingHandler } from "../plugins/remarkRehypeHandlers";
 import { remarkSqueezeParagraphs } from "../plugins/remarkSqueezeParagraphs";
 import type { FernSerializeMdxOptions } from "../types";
 import { replaceBrokenBrTags } from "./replaceBrokenBrTags";

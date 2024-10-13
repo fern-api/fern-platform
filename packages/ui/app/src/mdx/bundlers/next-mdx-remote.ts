@@ -1,4 +1,5 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
+import { customHeadingHandler } from "@fern-ui/fern-docs-mdx";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
@@ -12,7 +13,6 @@ import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
 import { rehypeFernLayout } from "../plugins/rehypeLayout";
 import { rehypeSanitizeJSX } from "../plugins/rehypeSanitizeJSX";
 import { rehypeSqueezeParagraphs } from "../plugins/rehypeSqueezeParagraphs";
-import { customHeadingHandler } from "../plugins/remarkRehypeHandlers";
 import { remarkSqueezeParagraphs } from "../plugins/remarkSqueezeParagraphs";
 import type { FernSerializeMdxOptions } from "../types";
 import { replaceBrokenBrTags } from "./replaceBrokenBrTags";
