@@ -40,6 +40,9 @@ jobs:
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
 
+      - name: Build Playwright Test Fixtures
+        run: pnpm playwright:build
+
       - name: Run Playwright tests
         run: pnpm exec playwright test playwright --workers 6 --reporter json
         env:

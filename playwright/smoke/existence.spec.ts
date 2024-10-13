@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { getPlaywrightTestUrls } from "../test-runner";
-import { addPreviewCookie, generatePreviewContext } from "../utils";
+import { getPlaywrightTestUrls } from "../utils/test-runner";
+import { addPreviewCookie, generatePreviewContext } from "../utils/utils";
 
 const existenceUrls = getPlaywrightTestUrls("existence");
 existenceUrls.map(generatePreviewContext).forEach((preview) => {

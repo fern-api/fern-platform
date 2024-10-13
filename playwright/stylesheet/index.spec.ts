@@ -1,5 +1,5 @@
 import test, { expect } from "@playwright/test";
-import { runFixture } from "../test-runner";
+import { runFixture } from "../utils/test-runner";
 
 const port = "6983";
 test("Check CSS variable values", async ({ page }) => {
