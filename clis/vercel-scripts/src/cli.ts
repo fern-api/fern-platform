@@ -130,6 +130,10 @@ void yargs(hideBin(process.argv))
                 default: "domains.txt",
             }),
         async ({ deploymentUrl, token, teamId, output }) => {
+            if (!token) {
+                throw new Error("VERCEL_TOKEN is required");
+            }
+
             const deployment = await new VercelClient({ token }).deployments.getDeployment(
                 cleanDeploymentId(deploymentUrl),
                 { teamId, withGitRepoInfo: "false" },
