@@ -12,6 +12,9 @@ export function getPageRouteMatch(ssg: boolean, buildId: string): string {
 }
 
 export function getPageRoutePath(ssg: boolean, buildId: string, domain: string, pathname: string): string {
-    const dataRoute = getAssetPathFromRoute(removeTrailingSlash(pathname), ".json");
-    return `/_next/data/${buildId}/${ssg ? "static" : "dynamic"}/${domain}${dataRoute}`;
+    return getNextDataRoutePath(buildId, `/${ssg ? "static" : "dynamic"}/${domain}${removeTrailingSlash(pathname)}`);
+}
+
+export function getNextDataRoutePath(buildId: string, pathname: string): string {
+    return `/_next/data/${buildId}${getAssetPathFromRoute(removeTrailingSlash(pathname), ".json")}`;
 }

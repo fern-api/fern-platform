@@ -28,13 +28,17 @@ export const middleware: NextMiddleware = async (request) => {
     if (pathname === "/404" || pathname === "/500" || pathname === "/_error") {
         const headers = new Headers(request.headers);
 
-        if (request.headers.get("referer")?.includes("/_next/data/")) {
+        if (
+            request.headers.get("referer")?.includes("/_next/data/") ||
+            request.nextUrl.pathname.includes("/_next/data/")
+        ) {
             headers.set("x-nextjs-data", "1");
         }
 
         if (pathname === request.nextUrl.pathname) {
             return NextResponse.next({ request: { headers } });
         }
+
         nextUrl.pathname = pathname;
         const response = NextResponse.rewrite(nextUrl, { request: { headers } });
         response.headers.set("x-matched-path", pathname);

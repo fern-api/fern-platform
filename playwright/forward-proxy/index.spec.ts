@@ -77,6 +77,7 @@ test("home page 404", async ({ page }) => {
     expect(await definedResponse.text()).toBe("PROXY_NOT_FOUND_ERROR");
 });
 
+// pnpm exec playwright test forward-proxy -g "subpath should 200 and capture the flag" --headed
 test("subpath should 200 and capture the flag", async ({ page }) => {
     const response = await page.goto(new URL("/subpath", getProxyUrl()).toString());
     expect(response).toBeDefined();
@@ -87,6 +88,7 @@ test("subpath should 200 and capture the flag", async ({ page }) => {
 
     // capture the flag
     const text = page.getByText("capture-the-flag");
+    await page.pause();
     expect(await text.count()).toBe(1);
     await text.click();
 
