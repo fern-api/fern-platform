@@ -1,5 +1,5 @@
-import algolia from "algoliasearch";
-import { once } from "../once";
+import { once } from "@fern-api/ui-core-utils";
+import { algoliasearch } from "algoliasearch";
 
 function algoliaAppId(): string {
     const algoliaAppId = process.env.ALGOLIA_APP_ID;
@@ -17,6 +17,14 @@ export function algoliaApiKey(): string {
     return algoliaApiKey;
 }
 
+export function algoliaSearchIndex(): string {
+    const algoliaSearchIndex = process.env.ALGOLIA_SEARCH_INDEX;
+    if (algoliaSearchIndex == null) {
+        throw new Error("ALGOLIA_SEARCH_INDEX must be set");
+    }
+    return algoliaSearchIndex;
+}
+
 export const provideAlgoliaClient = once(() => {
-    return algolia(algoliaAppId(), algoliaApiKey());
+    return algoliasearch(algoliaAppId(), algoliaApiKey());
 });

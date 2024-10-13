@@ -1,0 +1,21 @@
+{
+  "extends": "@fern-platform/configs/tsconfig/library.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "moduleResolution": "Node",
+    "types": ["node"]
+  },
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../fdr-sdk/tsconfig.build.json"
+    },
+    {
+      "path": "../../commons/core-utils"
+    },
+    {
+      "path": "../app"
+    }
+  ]
+}

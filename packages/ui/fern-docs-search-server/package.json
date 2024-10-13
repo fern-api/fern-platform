@@ -1,48 +1,19 @@
 {
-  "name": "@fern-api/ui-core-utils",
+  "name": "@fern-ui/fern-docs-search-server",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
-    "directory": "packages/commons/core-utils"
+    "directory": "packages/ui/fern-docs-search-server"
   },
+  "private": true,
   "files": [
     "dist"
   ],
   "type": "module",
-  "source": "src/index.ts",
-  "main": "dist/index.js",
   "exports": {
-    "./assertNever": {
-      "types": "./src/assertNever.ts",
-      "default": "./dist/assertNever.js"
-    },
-    "./titleCase": {
-      "types": "./src/titleCase.ts",
-      "default": "./dist/titleCase.js"
-    },
-    "./unknownToString": {
-      "types": "./src/unknownToString.ts",
-      "default": "./dist/unknownToString.js"
-    },
-    "./visitDiscriminatedUnion": {
-      "types": "./src/visitDiscriminatedUnion.ts",
-      "default": "./dist/visitDiscriminatedUnion.js"
-    },
-    "./isPlainObject": {
-      "types": "./src/objects/isPlainObject.ts",
-      "default": "./dist/objects/isPlainObject.js"
-    },
-    "./identity": {
-      "types": "./src/identity.ts",
-      "default": "./dist/identity.js"
-    },
-    "./once": {
-      "types": "./src/once.ts",
-      "default": "./dist/once.js"
-    },
     ".": {
-      "types": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
   },
@@ -58,24 +29,31 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "depcheck": "depcheck",
+    "dev": "tsc --watch",
+    "docs:dev": "pnpm dev"
   },
   "dependencies": {
-    "strip-ansi": "^7.1.0",
-    "title": "^3.5.3",
-    "ua-parser-js": "^1.0.35"
+    "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-api/ui-core-utils": "workspace:*",
+    "@fern-ui/ui": "workspace:*",
+    "algoliasearch": "^5.8.1",
+    "github-slugger": "^2.0.0",
+    "i": "^0.3.7",
+    "mdast-util-to-string": "^4.0.0",
+    "pnpm": "^9.12.1",
+    "ts-essentials": "^10.0.1",
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@types/node": "^18.7.18",
-    "@types/title": "^3.4.3",
-    "@types/ua-parser-js": "^0.7.39",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
-    "vitest": "^1.5.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.3.2",
     "stylelint": "^16.1.0",
-    "typescript": "5.4.3"
+    "typescript": "5.4.3",
+    "vitest": "^1.5.0"
   }
 }

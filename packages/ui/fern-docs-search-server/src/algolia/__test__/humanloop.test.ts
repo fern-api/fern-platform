@@ -1,10 +1,8 @@
-import { Algolia, DocsV2Read } from "@fern-api/fdr-sdk";
-import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { Algolia, ApiDefinition, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import fs from "fs";
 import { mapValues } from "lodash-es";
 import path from "path";
-import { generateAlgoliaRecords } from "../generateRecords";
+import { generateAlgoliaRecords } from "../records";
 
 const fixturesDir = path.join(__dirname, "../../../../../../fdr-sdk/src/__test__/fixtures");
 
