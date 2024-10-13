@@ -19,6 +19,8 @@ jobs:
       check_changes: ${{ steps.check_changes.outputs.continue }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # used for turbo-ignore
       - name: Check for changes in playwright or github actions
         id: check_changes
         run: |
@@ -101,10 +103,10 @@ jobs:
           path: packages/ui/docs-bundle/.next/analyze/
 
       - name: Download base branch bundle stats
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v6
         if: success() && github.event.number
         with:
-          name: analyze
+          workflow: deploy-docs-bundle-preview.yml
           branch: ${{ github.event.pull_request.base.ref }}
           path: packages/ui/docs-bundle/.next/analyze/base
 
