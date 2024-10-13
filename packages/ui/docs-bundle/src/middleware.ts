@@ -45,7 +45,7 @@ export const middleware: NextMiddleware = async (request) => {
             nextUrl.pathname = pathname;
         }
         const response = NextResponse.rewrite(nextUrl, { request: { headers } });
-        response.headers.set("x-matched-path", pathname);
+        response.headers.set("x-matched-path", nextUrl.pathname);
         return response;
     }
 

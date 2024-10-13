@@ -31,12 +31,12 @@ export async function deployCommand({
         teamName,
         teamId,
         environment,
-        cwd: cwd(),
+        cwd: await cwd(),
     });
 
     const result = await cli.buildAndDeployToVercel(project, { skipDeploy });
 
     if (result) {
-        writefs(output, `https://${result.url}`);
+        await writefs(output, `https://${result.url}`);
     }
 }

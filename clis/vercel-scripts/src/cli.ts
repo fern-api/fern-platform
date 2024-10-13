@@ -115,7 +115,7 @@ void yargs(hideBin(process.argv))
 
             const urls = await revalidator.getPreviewUrls(deploymentUrl);
 
-            writefs(output, `## PR Preview\n\n${urls.map((d) => `- [ ] [${d.name}](${d.url})`).join("\n")}`);
+            await writefs(output, `## PR Preview\n\n${urls.map((d) => `- [ ] [${d.name}](${d.url})`).join("\n")}`);
 
             process.exit(0);
         },
@@ -147,7 +147,7 @@ void yargs(hideBin(process.argv))
 
             const urls = await revalidator.getDomains();
 
-            writefs(output, urls.join("\n"));
+            await writefs(output, urls.join("\n"));
 
             process.exit(0);
         },
