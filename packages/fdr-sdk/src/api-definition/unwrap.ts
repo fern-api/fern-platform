@@ -1,7 +1,6 @@
 import { isPlainObject } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
-import compact from "lodash-es/compact";
-import sortBy from "lodash-es/sortBy";
+import { compact, sortBy } from "es-toolkit/array";
 import * as FernDocs from "../docs";
 import { AvailabilityOrder, coalesceAvailability } from "./availability";
 import { LOOP_TOLERANCE } from "./const";
@@ -283,8 +282,10 @@ export function unwrapObjectType(
         // however, we do NOT sort the properties by key because the initial order of properties may be significant
         const properties = sortBy(
             [...directProperties],
-            (property) => unwrapReference(property.valueShape, types)?.isOptional,
-            (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
+            [
+                (property) => unwrapReference(property.valueShape, types)?.isOptional,
+                (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
+            ],
         );
         const toRet = { properties, descriptions, extraProperties, visitedTypeIds };
         UnwrapObjectTypeCache.set(object, toRet);
@@ -299,9 +300,11 @@ export function unwrapObjectType(
     // since there are extended properties, the initial order of properties are not significant, and we should sort by key
     const properties = sortBy(
         [...directProperties, ...filteredExtendedProperties],
-        (property) => unwrapReference(property.valueShape, types)?.isOptional,
-        (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
-        (property) => property.key,
+        [
+            (property) => unwrapReference(property.valueShape, types)?.isOptional,
+            (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
+            (property) => property.key,
+        ],
     );
     const toRet = { properties, descriptions, extraProperties, visitedTypeIds };
     UnwrapObjectTypeCache.set(object, toRet);

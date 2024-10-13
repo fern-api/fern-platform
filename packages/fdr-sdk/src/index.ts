@@ -3,5 +3,3 @@ export * from "./client";
 export * from "./converters";
 export * as FernDocs from "./docs";
 export * as FernNavigation from "./navigation";
-export { kebabCase } from "./utils/lodash";
-export { default as once } from "./utils/lodash/once";

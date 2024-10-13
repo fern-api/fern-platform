@@ -1,5 +1,5 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { sortBy } from "lodash-es";
+import { sortBy } from "es-toolkit/array";
 
 export function getAllObjectProperties(
     object: APIV1Read.ObjectType,
@@ -21,7 +21,7 @@ export function getAllObjectProperties(
     const filteredExtendedProperties = extendedProperties.filter(
         (extendedProperty) => !propertyKeys.has(extendedProperty.key),
     );
-    return sortBy([...object.properties, ...filteredExtendedProperties], (property) => property.key);
+    return sortBy([...object.properties, ...filteredExtendedProperties], [(property) => property.key]);
 }
 
 function resolveTypeByIdRecursive(

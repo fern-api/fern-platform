@@ -1,6 +1,6 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type { Options } from "@mdx-js/esbuild";
-import { mapKeys } from "lodash-es";
+import { mapKeys } from "es-toolkit/object";
 import { bundleMDX } from "mdx-bundler";
 import path, { dirname } from "path";
 import rehypeKatex from "rehype-katex";

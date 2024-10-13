@@ -37,7 +37,7 @@ const nextConfig = {
     transpilePackages: [
         "next-mdx-remote",
         "esbuild",
-        "lodash-es",
+        "es-toolkit",
 
         /**
          * Monorepo packages that are not transpiled by default.

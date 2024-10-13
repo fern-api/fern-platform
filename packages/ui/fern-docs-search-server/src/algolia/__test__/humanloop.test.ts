@@ -1,6 +1,6 @@
 import { Algolia, ApiDefinition, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { mapValues } from "es-toolkit/object";
 import fs from "fs";
-import { mapValues } from "lodash-es";
 import path from "path";
 import { generateAlgoliaRecords } from "../records/generateAlgoliaRecords.js";
 

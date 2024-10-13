@@ -1,7 +1,7 @@
 import clsx from "clsx";
+import { last } from "es-toolkit/array";
 import type { Root } from "hast";
 import { h } from "hastscript";
-import { last } from "lodash-es";
 import { ReactElement } from "react";
 import Markdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";

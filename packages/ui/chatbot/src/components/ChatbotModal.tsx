@@ -1,6 +1,6 @@
 import { FernScrollArea } from "@fern-ui/components";
 import clsx from "clsx";
-import { throttle } from "lodash-es";
+import { throttle } from "es-toolkit/function";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import type { Components } from "react-markdown";
 import { v4 } from "uuid";

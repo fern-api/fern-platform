@@ -1,5 +1,5 @@
-import once from "@fern-api/ui-core-utils/once";
 import { algoliasearch } from "algoliasearch";
+import { once } from "es-toolkit/function";
 
 function algoliaAppId(): string {
     const algoliaAppId = process.env.ALGOLIA_APP_ID;

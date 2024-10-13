@@ -1,6 +1,6 @@
-import { titleCase } from "@fern-api/ui-core-utils";
+import titleCase from "@fern-api/ui-core-utils/titleCase";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
-import mapValues from "lodash-es/mapValues";
+import { mapValues } from "es-toolkit/object";
 import { APIV1Read } from "../../client";
 import { SupportedLanguage } from "../../client/generated/api/resources/api/resources/v1/resources/read/resources/endpoint/types/SupportedLanguage";
 import { ROOT_PACKAGE_ID } from "../../navigation/consts";

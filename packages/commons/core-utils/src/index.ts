@@ -12,7 +12,6 @@ export { entries, type Entries } from "./objects/entries";
 export { isPlainObject } from "./objects/isPlainObject";
 export { keys } from "./objects/keys";
 export { values, type Values } from "./objects/values";
-export { default as once } from "./once";
 export { PLATFORM, type Platform } from "./platform";
 export { titleCase } from "./titleCase";
 export type { Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types";

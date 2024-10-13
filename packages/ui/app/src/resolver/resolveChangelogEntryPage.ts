@@ -1,7 +1,6 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { getFrontmatter } from "@fern-ui/fern-docs-mdx";
-import { reverse } from "lodash-es";
 import type { MDX_SERIALIZER } from "../mdx/bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "./DocsContent";
@@ -25,7 +24,7 @@ export async function resolveChangelogEntryPage({
     mdxOptions,
     neighbors,
 }: ResolveChangelogEntryPageOptions): Promise<DocsContent.ChangelogEntryPage | undefined> {
-    const changelogNode = reverse(parents).find((n): n is FernNavigation.ChangelogNode => n.type === "changelog");
+    const changelogNode = [...parents].reverse().find((n): n is FernNavigation.ChangelogNode => n.type === "changelog");
     if (changelogNode == null) {
         throw new Error("Changelog node not found");
     }

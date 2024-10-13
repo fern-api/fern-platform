@@ -3,7 +3,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { assertNonNullish, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { getFrontmatter } from "@fern-ui/fern-docs-mdx";
 import type { LinkTag, MetaTag, NextSeoProps } from "@fern-ui/next-seo";
-import { trim } from "lodash-es";
+import { trim } from "es-toolkit/string";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toHast } from "mdast-util-to-hast";
 import { visit } from "unist-util-visit";

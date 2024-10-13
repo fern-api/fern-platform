@@ -37,10 +37,6 @@
       "types": "./src/identity.ts",
       "default": "./dist/identity.js"
     },
-    "./once": {
-      "types": "./src/once.ts",
-      "default": "./dist/once.js"
-    },
     ".": {
       "types": "./src/index.ts",
       "default": "./dist/index.js"
