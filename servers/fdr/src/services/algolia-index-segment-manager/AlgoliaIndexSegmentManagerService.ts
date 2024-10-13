@@ -64,6 +64,14 @@ export class AlgoliaIndexSegmentManagerServiceImpl implements AlgoliaIndexSegmen
     }): GenerateNewIndexSegmentsResult {
         const navigationConfig = dbDocsDefinition.config.navigation;
 
+        // TODO: handle root
+        if (navigationConfig == null) {
+            return {
+                type: "versioned",
+                configSegmentTuples: [],
+            };
+        }
+
         return visitDbNavigationConfig<GenerateNewIndexSegmentsResult>(navigationConfig, {
             versioned: (config) => {
                 const configSegmentTuples = config.versions.map((v) => {

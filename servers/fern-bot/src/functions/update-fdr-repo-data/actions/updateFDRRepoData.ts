@@ -1,14 +1,13 @@
 import { FernRegistryClient } from "@fern-fern/generators-sdk";
+import { PullRequestReviewer, PullRequestState } from "@fern-fern/generators-sdk/api";
 import { Env } from "@libs/env";
-import { setupGithubApp } from "@libs/github";
-import { App, Octokit } from "octokit";
-import { readFile } from "fs/promises";
-import { Repository, PullRequest } from "@libs/github";
-import tmp from "tmp-promise";
-import { cleanFernStdout, execFernCli, getGenerators, NO_API_FALLBACK_KEY } from "@libs/fern";
+import { NO_API_FALLBACK_KEY, cleanFernStdout, execFernCli, findFernWorkspaces, getGenerators } from "@libs/fern";
+import { PullRequest, Repository, setupGithubApp } from "@libs/github";
 import { cloneRepo, configureGit } from "@libs/github/utilities";
 import { RepoData } from "@libs/schemas";
-import { PullRequestReviewer, PullRequestState } from "@fern-fern/generators-sdk/api";
+import { readFile } from "fs/promises";
+import { App, Octokit } from "octokit";
+import tmp from "tmp-promise";
 
 // Note given we're making requests to FDR, this could take time, so we're parallelizing this function with a Map step in
 // the step function, as we do for all the other actions.
@@ -48,78 +47,83 @@ async function updateRepoDb(
     console.log(`Cloning repo: ${repository.clone_url} to ${fullRepoPath}`);
     await cloneRepo(git, repository, octokit, fernBotLoginName, fernBotLoginId);
 
-    try {
-        // Try this to see if it's a fern config repo, there are probably better ways to do this
-        const generatorsList = await getGenerators(fullRepoPath);
-        const organizationId = cleanFernStdout((await execFernCli("organization", fullRepoPath)).stdout);
+    const fernWorkspaces = await findFernWorkspaces(fullRepoPath);
+    for (const fernWorkspacePath of fernWorkspaces) {
+        try {
+            // Try this to see if it's a fern config repo, there are probably better ways to do this
+            const generatorsList = await getGenerators(fernWorkspacePath);
+            const organizationId = cleanFernStdout((await execFernCli("organization", fernWorkspacePath)).stdout);
 
-        // Update config repo in FDR
-        const upsertResponse = await client.git.upsertRepository({
-            type: "config",
-            id: {
-                type: "github",
-                id: repository.id.toString(),
-            },
-            name: repository.name,
-            owner: repository.owner.login,
-            fullName: repository.full_name,
-            url: repository.html_url,
-            repositoryOwnerOrganizationId: organizationId,
-            // TODO(FER-2517): actually track and action checks
-            defaultBranchChecks: [],
-        });
+            // Update config repo in FDR
+            const upsertResponse = await client.git.upsertRepository({
+                type: "config",
+                id: {
+                    type: "github",
+                    id: repository.id.toString(),
+                },
+                name: repository.name,
+                owner: repository.owner.login,
+                fullName: repository.full_name,
+                url: repository.html_url,
+                repositoryOwnerOrganizationId: organizationId,
+                // TODO(FER-2517): actually track and action checks
+                defaultBranchChecks: [],
+            });
 
-        if (!upsertResponse.ok) {
-            console.log(`Failed to upsert configuration repo, bailing out: ${JSON.stringify(upsertResponse.error)}`);
-            return;
-        }
-        await getAndUpsertPulls(client, octokit, repository);
+            if (!upsertResponse.ok) {
+                console.log(
+                    `Failed to upsert configuration repo, bailing out: ${JSON.stringify(upsertResponse.error)}`,
+                );
+                return;
+            }
+            await getAndUpsertPulls(client, octokit, repository);
 
-        for (const [apiName, api] of Object.entries(generatorsList)) {
-            for (const [groupName, group] of Object.entries(api)) {
-                for (const generator of group) {
-                    const tmpDir = await tmp.dir();
-                    const repoJsonFileName = `${tmpDir.path}/${repository.id.toString()}.json`;
-                    let command = `generator get --repository --language --generator ${generator} --group ${groupName} -o ${repoJsonFileName}`;
-                    if (apiName !== NO_API_FALLBACK_KEY) {
-                        command += ` --api ${apiName}`;
-                    }
+            for (const [apiName, api] of Object.entries(generatorsList)) {
+                for (const [groupName, group] of Object.entries(api)) {
+                    for (const generator of group) {
+                        const tmpDir = await tmp.dir();
+                        const repoJsonFileName = `${tmpDir.path}/${repository.id.toString()}.json`;
+                        let command = `generator get --repository --language --generator ${generator} --group ${groupName} -o ${repoJsonFileName}`;
+                        if (apiName !== NO_API_FALLBACK_KEY) {
+                            command += ` --api ${apiName}`;
+                        }
 
-                    await execFernCli(command, fullRepoPath);
-                    const maybeRepo = await readFile(repoJsonFileName, "utf8");
-                    if (maybeRepo?.length > 0) {
-                        // Of the form { repository: string, language: string }
-                        const generatorsYmlRepo = JSON.parse(maybeRepo);
-                        if ("repository" in generatorsYmlRepo && generatorsYmlRepo.repository.length > 0) {
-                            const octokitRepo = await getRepository(app, generatorsYmlRepo.repository);
-                            if (octokitRepo) {
-                                await client.git.upsertRepository({
-                                    type: "sdk",
-                                    sdkLanguage: generatorsYmlRepo.language,
-                                    id: {
-                                        type: "github",
-                                        id: octokitRepo.id.toString(),
-                                    },
-                                    name: octokitRepo.name,
-                                    owner: octokitRepo.owner.login,
-                                    fullName: octokitRepo.full_name,
-                                    url: octokitRepo.url,
-                                    repositoryOwnerOrganizationId: organizationId,
-                                    // TODO(FER-2517): actually track and action checks
-                                    defaultBranchChecks: [],
-                                });
+                        await execFernCli(command, fernWorkspacePath);
+                        const maybeRepo = await readFile(repoJsonFileName, "utf8");
+                        if (maybeRepo?.length > 0) {
+                            // Of the form { repository: string, language: string }
+                            const generatorsYmlRepo = JSON.parse(maybeRepo);
+                            if ("repository" in generatorsYmlRepo && generatorsYmlRepo.repository.length > 0) {
+                                const octokitRepo = await getRepository(app, generatorsYmlRepo.repository);
+                                if (octokitRepo) {
+                                    await client.git.upsertRepository({
+                                        type: "sdk",
+                                        sdkLanguage: generatorsYmlRepo.language,
+                                        id: {
+                                            type: "github",
+                                            id: octokitRepo.id.toString(),
+                                        },
+                                        name: octokitRepo.name,
+                                        owner: octokitRepo.owner.login,
+                                        fullName: octokitRepo.full_name,
+                                        url: octokitRepo.url,
+                                        repositoryOwnerOrganizationId: organizationId,
+                                        // TODO(FER-2517): actually track and action checks
+                                        defaultBranchChecks: [],
+                                    });
 
-                                await getAndUpsertPulls(client, octokit, octokitRepo);
+                                    await getAndUpsertPulls(client, octokit, octokitRepo);
+                                }
                             }
                         }
                     }
                 }
             }
+        } catch (e) {
+            console.log(
+                `Found a repo that was not a Fern config repo, or not a high enough version, skipping...: ${(e as Error).message}`,
+            );
         }
-    } catch (e) {
-        console.log(
-            `Found a repo that was not a Fern config repo, or not a high enough version, skipping...: ${(e as Error).message}`,
-        );
     }
 }
 

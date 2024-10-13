@@ -16,10 +16,20 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       continue: ${{ steps.ignore.outputs.continue }}
+      check_changes: ${{ steps.check_changes.outputs.continue }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # used for turbo-ignore
+      - name: Check for changes in playwright or github actions
+        id: check_changes
+        run: |
+          if git diff --name-only HEAD~1 -- playwright/ .github/workflows/; then
+            echo "continue=1" >> $GITHUB_OUTPUT
+          fi
       - name: Ignore unchanged files
         id: ignore
+        if: steps.check_changes.outputs.continue != 1
         uses: ./.github/actions/turbo-ignore
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
@@ -30,7 +40,7 @@ jobs:
 
   deploy:
     needs: ignore
-    if: needs.ignore.outputs.continue == 1
+    if: needs.ignore.outputs.continue == 1 || needs.ignore.outputs.check_changes == 1
     runs-on: ubuntu-latest
     environment:
       name: Preview - app.buildwithfern.com
@@ -63,32 +73,50 @@ jobs:
           filePath: preview.txt
           comment_tag: pr_preview
 
+  analyze:
+    needs: ignore
+    if: needs.ignore.outputs.continue == 1 || needs.ignore.outputs.check_changes == 1
+    runs-on: ubuntu-latest
+    permissions: write-all # required for the pr-preview comment
+    steps:
+      # set the ref to a specific branch so that the deployment is scoped to that branch (instead of a headless ref)
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # used for turbo-ignore
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
+
+      - uses: ./.github/actions/install
+
+      - name: Build
+        id: deploy
+        run: pnpm vercel-scripts deploy app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }} --skip-deploy=true
+        env:
+          ANALYZE: 1
+
       - name: Analyze bundle
-        if: steps.deploy.outputs.deployment_url
         run: pnpm --package=nextjs-bundle-analysis dlx report
 
       - name: Upload analysis
-        if: steps.deploy.outputs.deployment_url
         uses: actions/upload-artifact@v4
         with:
           name: analyze
           path: packages/ui/docs-bundle/.next/analyze/
 
       - name: Download base branch bundle stats
-        uses: dawidd6/action-download-artifact@v2
-        if: steps.deploy.outputs.deployment_url && success() && github.event.number
+        uses: dawidd6/action-download-artifact@v6
+        if: success() && github.event.number
         with:
-          workflow: nextjs_bundle_analysis.yml
+          workflow: deploy-docs-bundle-preview.yml
           branch: ${{ github.event.pull_request.base.ref }}
           path: packages/ui/docs-bundle/.next/analyze/base
 
       # https://infrequently.org/2021/03/the-performance-inequality-gap/
       - name: Compare with base branch bundle
-        if: steps.deploy.outputs.deployment_url && success() && github.event.number
+        if: success() && github.event.number
         run: ls -laR packages/ui/docs-bundle/.next/analyze/base && pnpm --package=nextjs-bundle-analysis dlx compare
 
       - name: Comment PR Bundle Analysis
-        if: steps.deploy.outputs.deployment_url && github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@v2
         with:
           filePath: packages/ui/docs-bundle/.next/analyze/__bundle_analysis_comment.txt
@@ -96,7 +124,7 @@ jobs:
 
   deploy-dev:
     needs: ignore
-    if: needs.ignore.outputs.continue == 1
+    if: needs.ignore.outputs.continue == 1 || needs.ignore.outputs.check_changes == 1
     runs-on: ubuntu-latest
     environment:
       name: Preview - app-dev.buildwithfern.com
@@ -121,18 +149,11 @@ jobs:
     needs:
       - ignore
       - deploy # only runs on fern-prod
-    if: always()
-    runs-on: ubuntu-latest
-    permissions: write-all # required for the playwright-report-summary action
-    steps:
-      # if the job is ignored, skip the ETE test and exit 0 so that the this job can be used for merge protection
-      - uses: actions/checkout@v4
-        if: needs.deploy.outputs.deployment_url
-
-      - name: Run E2E tests
-        uses: ./.github/actions/ete-docs-bundle
-        if: needs.deploy.outputs.deployment_url
-        with:
-          deployment_url: ${{ needs.deploy.outputs.deployment_url }}
-          token: ${{ secrets.VERCEL_TOKEN }}
-          fern_token: ${{ secrets.FERN_TOKEN }}
+    if: always() && (needs.deploy.result == 'success' || needs.deploy.result == 'skipped')
+    uses: ./.github/workflows/playwright.yml
+    permissions: write-all
+    with:
+      deployment_url: ${{ needs.deploy.outputs.deployment_url || '' }}
+    secrets:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      FERN_TOKEN: ${{ secrets.FERN_TOKEN }}

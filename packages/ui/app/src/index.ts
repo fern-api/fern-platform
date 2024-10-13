@@ -1,3 +1,4 @@
+export { capturePosthogEvent } from "./analytics/posthog";
 export { type CustomerAnalytics } from "./analytics/types";
 export type { DocsProps } from "./atoms";
 export * from "./docs/DocsPage";

@@ -3,7 +3,7 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
 import { ReactElement, memo, useRef } from "react";
 import { useHref } from "../hooks/useHref";
-import { Markdown } from "../mdx/Markdown";
+import { MdxContent } from "../mdx/MdxContent";
 import { useApiPageCenterElement } from "./useApiPageCenterElement";
 
 interface ApiSectionMarkdownContentProps {
@@ -18,7 +18,7 @@ function ApiSectionMarkdownContent({ node, mdx, last = false }: ApiSectionMarkdo
 
     return (
         <div className={clsx("scroll-mt-content")} ref={ref} id={useHref(node.slug)}>
-            <Markdown mdx={mdx} />
+            <MdxContent mdx={mdx} />
 
             {/* TODO: the following ensures that the bottom line matches the rest of the api reference, but this isn't very graceful */}
             <div className="fern-endpoint-content">

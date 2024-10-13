@@ -7,7 +7,7 @@ import { useSearchConfig } from "../../services/useSearchService";
 
 export function useAlgoliaSearchClient(): [SearchClient, index: string] | undefined {
     const currentVersionId = useAtomValue(CURRENT_VERSION_ID_ATOM);
-    const [searchConfig] = useSearchConfig();
+    const searchConfig = useSearchConfig();
 
     return useMemo(() => {
         if (!searchConfig.isAvailable) {

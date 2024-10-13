@@ -20,6 +20,7 @@ const HEALTHCHECK_DOCS_RESPONSE: CachedDocsResponse = {
                     items: [],
                     landingPage: undefined,
                 },
+                root: undefined,
                 title: undefined,
                 defaultLanguage: undefined,
                 announcement: undefined,

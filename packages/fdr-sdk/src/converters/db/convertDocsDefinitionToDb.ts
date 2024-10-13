@@ -37,7 +37,9 @@ export function convertDocsDefinitionToDb({
     writeShape: DocsV1Write.DocsDefinition;
     files: Record<DocsV1Write.FilePath, S3FileInfo>;
 }): ConvertedDocsDefinition {
-    const navigationConfig: DocsV1Db.NavigationConfig = transformNavigationConfigForDb(writeShape.config.navigation);
+    const navigationConfig: DocsV1Db.NavigationConfig | undefined = writeShape.config.navigation
+        ? transformNavigationConfigForDb(writeShape.config.navigation)
+        : undefined;
     const transformedFiles: Record<DocsV1Write.FileId, DocsV1Db.DbFileInfoV2> = {};
     Object.entries(files).forEach(([, s3FileInfo]) => {
         transformedFiles[s3FileInfo.presignedUrl.fileId] =
@@ -79,10 +81,11 @@ export function convertDocsDefinitionToDb({
 
     return {
         type: "v3",
-        referencedApis: getReferencedApiDefinitionIds(navigationConfig),
+        referencedApis: navigationConfig != null ? getReferencedApiDefinitionIds(navigationConfig) : [],
         files: transformedFiles,
         config: {
             navigation: navigationConfig,
+            root: writeShape.config.root,
             logo,
             logoV2,
             logoHeight: writeShape.config.logoHeight,

@@ -22,7 +22,7 @@ import type { AlgoliaSearchRecord, IndexSegment } from "./types";
 
 interface AlgoliaSearchRecordGeneratorConfig {
     docsDefinition: DocsV1Db.DocsDefinitionDb;
-    apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>;
+    apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>;
 }
 
 export class AlgoliaSearchRecordGenerator {
@@ -140,7 +140,7 @@ export class AlgoliaSearchRecordGenerator {
             const records: AlgoliaSearchRecord[] = [];
             const api = item;
             const apiId = api.api;
-            const apiDef = this.config.apiDefinitionsById.get(apiId);
+            const apiDef = this.config.apiDefinitionsById[apiId];
             if (apiDef != null) {
                 records.push(
                     ...this.generateAlgoliaSearchRecordsForApiDefinition(
@@ -232,7 +232,7 @@ export class AlgoliaSearchRecordGenerator {
         root: FernNavigation.V1.ApiReferenceNode,
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
-        const api = this.config.apiDefinitionsById.get(root.apiDefinitionId);
+        const api = this.config.apiDefinitionsById[root.apiDefinitionId];
         if (api == null) {
             LOGGER.error("Failed to find API definition for API reference node. id=", root.apiDefinitionId);
         }

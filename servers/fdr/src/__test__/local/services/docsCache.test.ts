@@ -9,6 +9,7 @@ export const WRITE_DOCS_REGISTER_DEFINITION: DocsV1Write.DocsDefinition = {
             items: [],
             landingPage: undefined,
         },
+        root: undefined,
         title: undefined,
         defaultLanguage: undefined,
         announcement: undefined,
