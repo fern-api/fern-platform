@@ -45,6 +45,7 @@ jobs:
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: results.json
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          DEPLOYMENT_URL: ${{ inputs.deployment_url }}
 
       - uses: daun/playwright-report-summary@v3
         if: always()
