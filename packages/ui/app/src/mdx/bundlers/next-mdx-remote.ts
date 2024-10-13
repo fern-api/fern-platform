@@ -7,7 +7,6 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import type { PluggableList } from "unified";
-import { FernDocsFrontmatter } from "../frontmatter";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
 import { rehypeFernLayout } from "../plugins/rehypeLayout";
@@ -103,7 +102,7 @@ export async function serializeMdx(
     content = replaceBrokenBrTags(content);
 
     try {
-        const result = await serialize<Record<string, unknown>, FernDocsFrontmatter>(content, {
+        const result = await serialize<Record<string, unknown>, FernDocs.Frontmatter>(content, {
             scope: {},
             mdxOptions: withDefaultMdxOptions(options),
             parseFrontmatter: true,

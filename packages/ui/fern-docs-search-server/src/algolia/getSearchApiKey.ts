@@ -1,4 +1,4 @@
-import { algoliaApiKey, algoliaSearchIndex, provideAlgoliaClient } from "./service";
+import { algoliaApiKey, algoliaSearchIndex, provideAlgoliaClient } from "./service.js";
 
 export async function getSearchApiKey(indexSegmentId: string): Promise<string | undefined> {
     return provideAlgoliaClient().generateSecuredApiKey({

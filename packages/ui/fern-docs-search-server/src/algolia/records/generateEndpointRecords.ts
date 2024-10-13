@@ -1,23 +1,21 @@
 import { Algolia, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
-import { GenerateAlgoliaRecordsFlags } from "./types";
-import { convertNameToAnchorPart, toBreadcrumbs, toDescription } from "./utils";
+import { convertNameToAnchorPart, toBreadcrumbs, toDescription } from "./utils.js";
 
-export function generateEndpointRecords(
-    indexSegmentId: Algolia.IndexSegmentId,
-    node: FernNavigation.EndpointNode,
-    breadcrumb: readonly FernNavigation.BreadcrumbItem[],
-    apiDefinition: ApiDefinition.ApiDefinition,
-    version: Algolia.AlgoliaRecordVersionV3 | undefined,
-    { isFieldRecordsEnabled }: GenerateAlgoliaRecordsFlags,
-): (Algolia.AlgoliaRecord.EndpointV4 | Algolia.AlgoliaRecord.EndpointFieldV1)[] {
-    const endpoint = apiDefinition.endpoints[node.endpointId];
+interface GenerateEndpointRecordsOptions {
+    indexSegmentId: Algolia.IndexSegmentId;
+    node: FernNavigation.EndpointNode;
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+    endpoint: ApiDefinition.EndpointDefinition;
+    version: Algolia.AlgoliaRecordVersionV3 | undefined;
+}
 
-    if (endpoint == null) {
-        // eslint-disable-next-line no-console
-        console.error(`Endpoint node ${node.slug} has no endpoint ${node.endpointId}`);
-        return [];
-    }
-
+export function generateEndpointRecord({
+    indexSegmentId,
+    node,
+    breadcrumb,
+    endpoint,
+    version,
+}: GenerateEndpointRecordsOptions): Algolia.AlgoliaRecord.EndpointV4 {
     const endpointRecord: Algolia.AlgoliaRecord.EndpointV4 = {
         type: "endpoint-v4",
         method: endpoint.method,
@@ -38,10 +36,20 @@ export function generateEndpointRecords(
         indexSegmentId,
     };
 
-    if (!isFieldRecordsEnabled) {
-        return [endpointRecord];
-    }
+    return endpointRecord;
+}
 
+interface GenerateEndpointFieldRecordsOptions {
+    endpointRecord: Algolia.AlgoliaRecord.EndpointV4;
+    endpoint: ApiDefinition.EndpointDefinition;
+    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+}
+
+export function generateEndpointFieldRecords({
+    endpointRecord,
+    endpoint,
+    types,
+}: GenerateEndpointFieldRecordsOptions): Algolia.AlgoliaRecord.EndpointFieldV1[] {
     const fieldRecords: Algolia.AlgoliaRecord.EndpointFieldV1[] = [];
 
     function push(items: ApiDefinition.TypeDefinitionTreeItem[]) {
@@ -68,7 +76,7 @@ export function generateEndpointRecords(
 
     endpoint.requestHeaders?.forEach((property) => {
         push(
-            ApiDefinition.collectTypeDefinitionTreeForObjectProperty(property, apiDefinition.types, [
+            ApiDefinition.collectTypeDefinitionTreeForObjectProperty(property, types, [
                 { type: "meta", value: "request", displayName: "Request" },
                 { type: "meta", value: "header", displayName: "Headers" },
             ]),
@@ -77,7 +85,7 @@ export function generateEndpointRecords(
 
     endpoint.queryParameters?.forEach((property) => {
         push(
-            ApiDefinition.collectTypeDefinitionTreeForObjectProperty(property, apiDefinition.types, [
+            ApiDefinition.collectTypeDefinitionTreeForObjectProperty(property, types, [
                 { type: "meta", value: "request", displayName: "Request" },
                 { type: "meta", value: "query", displayName: "Query Parameters" },
             ]),
@@ -86,7 +94,7 @@ export function generateEndpointRecords(
 
     endpoint.pathParameters?.forEach((property) => {
         push(
-            ApiDefinition.collectTypeDefinitionTreeForObjectProperty(property, apiDefinition.types, [
+            ApiDefinition.collectTypeDefinitionTreeForObjectProperty(property, types, [
                 { type: "meta", value: "request", displayName: "Request" },
                 { type: "meta", value: "path", displayName: "Path Parameters" },
             ]),
@@ -98,7 +106,7 @@ export function generateEndpointRecords(
             case "object":
             case "alias":
                 push(
-                    ApiDefinition.collectTypeDefinitionTree(endpoint.request.body, apiDefinition.types, {
+                    ApiDefinition.collectTypeDefinitionTree(endpoint.request.body, types, {
                         path: [
                             { type: "meta", value: "request", displayName: "Request" },
                             { type: "meta", value: "body", displayName: undefined },
@@ -115,7 +123,7 @@ export function generateEndpointRecords(
 
     endpoint.responseHeaders?.forEach((property) => {
         push(
-            ApiDefinition.collectTypeDefinitionTreeForObjectProperty(property, apiDefinition.types, [
+            ApiDefinition.collectTypeDefinitionTreeForObjectProperty(property, types, [
                 { type: "meta", value: "response", displayName: "Response" },
                 { type: "meta", value: "header", displayName: "Headers" },
             ]),
@@ -127,7 +135,7 @@ export function generateEndpointRecords(
             case "alias":
             case "object":
                 push(
-                    ApiDefinition.collectTypeDefinitionTree(endpoint.response.body, apiDefinition.types, {
+                    ApiDefinition.collectTypeDefinitionTree(endpoint.response.body, types, {
                         path: [
                             { type: "meta", value: "response", displayName: "Response" },
                             { type: "meta", value: "body", displayName: undefined },
@@ -137,7 +145,7 @@ export function generateEndpointRecords(
                 break;
             case "stream":
                 push(
-                    ApiDefinition.collectTypeDefinitionTree(endpoint.response.body.shape, apiDefinition.types, {
+                    ApiDefinition.collectTypeDefinitionTree(endpoint.response.body.shape, types, {
                         path: [
                             { type: "meta", value: "response", displayName: "Response" },
                             { type: "meta", value: "body", displayName: undefined },
@@ -174,7 +182,7 @@ export function generateEndpointRecords(
             }
 
             push(
-                ApiDefinition.collectTypeDefinitionTree(error.shape, apiDefinition.types, {
+                ApiDefinition.collectTypeDefinitionTree(error.shape, types, {
                     path: [
                         { type: "meta", value: "response", displayName: "Response" },
                         { type: "meta", value: "error", displayName: "Errors" },
@@ -189,5 +197,5 @@ export function generateEndpointRecords(
         }
     });
 
-    return [endpointRecord, ...fieldRecords];
+    return fieldRecords;
 }

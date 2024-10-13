@@ -24,7 +24,7 @@
     "lint": "pnpm lint:eslint && pnpm lint:style"
   },
   "dependencies": {
-    "@algolia/requester-fetch": "^4.24.0",
+    "@algolia/requester-fetch": "^5.8.1",
     "@aws-sdk/client-s3": "^3.335.0",
     "@aws-sdk/s3-request-presigner": "^3.574.0",
     "@fern-api/fdr-sdk": "workspace:*",
@@ -37,6 +37,7 @@
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/fern-docs-auth": "workspace:*",
     "@fern-ui/fern-docs-edge-config": "workspace:*",
+    "@fern-ui/fern-docs-mdx": "workspace:*",
     "@fern-ui/fern-docs-server": "workspace:*",
     "@fern-ui/fern-docs-utils": "workspace:*",
     "@fern-ui/search-utils": "workspace:*",
@@ -44,7 +45,7 @@
     "@vercel/analytics": "^1.3.1",
     "@vercel/kv": "^2.0.0",
     "@workos-inc/node": "^6.1.0",
-    "algoliasearch": "^4.24.0",
+    "algoliasearch": "^5.8.1",
     "cohere-ai": "^7.9.5",
     "cssnano": "^6.0.3",
     "esbuild": "0.20.2",

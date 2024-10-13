@@ -1,4 +1,4 @@
-import { once } from "@fern-api/ui-core-utils";
+import once from "@fern-api/ui-core-utils/once";
 import { algoliasearch } from "algoliasearch";
 
 function algoliaAppId(): string {

@@ -1,4 +1,5 @@
-import { FdrClient, once } from "@fern-api/fdr-sdk";
+import { FdrClient } from "@fern-api/fdr-sdk/client";
+import once from "@fern-api/ui-core-utils/once";
 
 function getEnvironment() {
     return process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com";

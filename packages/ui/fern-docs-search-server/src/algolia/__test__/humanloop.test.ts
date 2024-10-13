@@ -2,7 +2,7 @@ import { Algolia, ApiDefinition, DocsV2Read, FernNavigation } from "@fern-api/fd
 import fs from "fs";
 import { mapValues } from "lodash-es";
 import path from "path";
-import { generateAlgoliaRecords } from "../records";
+import { generateAlgoliaRecords } from "../records/generateAlgoliaRecords.js";
 
 const fixturesDir = path.join(__dirname, "../../../../../../fdr-sdk/src/__test__/fixtures");
 
@@ -32,7 +32,13 @@ describe("humanloop", () => {
 
         const pages = mapValues(fixture.definition.pages, (page) => page.markdown);
 
-        const records = generateAlgoliaRecords(Algolia.IndexSegmentId("0"), root, pages, apis, true);
+        const records = generateAlgoliaRecords({
+            indexSegmentId: Algolia.IndexSegmentId("0"),
+            nodes: root,
+            pages,
+            apis,
+            isFieldRecordsEnabled: true,
+        });
 
         expect(records).toMatchSnapshot();
     });

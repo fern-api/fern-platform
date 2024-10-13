@@ -1,23 +1,21 @@
 import { Algolia, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
-import { GenerateAlgoliaRecordsFlags } from "./types";
-import { toBreadcrumbs, toDescription } from "./utils";
+import { toBreadcrumbs, toDescription } from "./utils.js";
 
-export function generateWebhookRecords(
-    indexSegmentId: Algolia.IndexSegmentId,
-    node: FernNavigation.WebhookNode,
-    breadcrumb: readonly FernNavigation.BreadcrumbItem[],
-    apiDefinition: ApiDefinition.ApiDefinition,
-    version: Algolia.AlgoliaRecordVersionV3 | undefined,
-    { isFieldRecordsEnabled }: GenerateAlgoliaRecordsFlags,
-): (Algolia.AlgoliaRecord.WebhookV4 | Algolia.AlgoliaRecord.WebhookFieldV1)[] {
-    const webhook = apiDefinition.webhooks[node.webhookId];
+interface GenerateWebhookRecordsOptions {
+    indexSegmentId: Algolia.IndexSegmentId;
+    node: FernNavigation.WebhookNode;
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+    webhook: ApiDefinition.WebhookDefinition;
+    version: Algolia.AlgoliaRecordVersionV3 | undefined;
+}
 
-    if (webhook == null) {
-        // eslint-disable-next-line no-console
-        console.error(`Webhook node ${node.slug} has no webhook ${node.webhookId}`);
-        return [];
-    }
-
+export function generateWebhookRecord({
+    indexSegmentId,
+    node,
+    breadcrumb,
+    webhook,
+    version,
+}: GenerateWebhookRecordsOptions): Algolia.AlgoliaRecord.WebhookV4 {
     const webhookRecord: Algolia.AlgoliaRecord.WebhookV4 = {
         type: "webhook-v4",
         method: webhook.method,
@@ -33,10 +31,20 @@ export function generateWebhookRecords(
         indexSegmentId,
     };
 
-    if (!isFieldRecordsEnabled) {
-        return [webhookRecord];
-    }
+    return webhookRecord;
+}
 
+interface GenerateWebhookFieldRecordsOptions {
+    webhookRecord: Algolia.AlgoliaRecord.WebhookV4;
+    webhook: ApiDefinition.WebhookDefinition;
+    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+}
+
+export function generateWebhookFieldRecords({
+    webhookRecord,
+    webhook,
+    types,
+}: GenerateWebhookFieldRecordsOptions): Algolia.AlgoliaRecord.WebhookFieldV1[] {
     const fieldRecords: Algolia.AlgoliaRecord.WebhookFieldV1[] = [];
 
     function push(items: ApiDefinition.TypeDefinitionTreeItem[]) {
@@ -62,7 +70,7 @@ export function generateWebhookRecords(
 
     webhook.headers?.forEach((property) => {
         push(
-            ApiDefinition.collectTypeDefinitionTreeForObjectProperty(property, apiDefinition.types, [
+            ApiDefinition.collectTypeDefinitionTreeForObjectProperty(property, types, [
                 { type: "meta", value: "payload", displayName: "Payload" },
                 { type: "meta", value: "header", displayName: "Headers" },
             ]),
@@ -71,7 +79,7 @@ export function generateWebhookRecords(
 
     if (webhook.payload) {
         push(
-            ApiDefinition.collectTypeDefinitionTree(webhook.payload.shape, apiDefinition.types, {
+            ApiDefinition.collectTypeDefinitionTree(webhook.payload.shape, types, {
                 path: [
                     { type: "meta", value: "payload", displayName: "Payload" },
                     { type: "meta", value: "body", displayName: undefined },
@@ -80,5 +88,5 @@ export function generateWebhookRecords(
         );
     }
 
-    return [webhookRecord, ...fieldRecords];
+    return fieldRecords;
 }

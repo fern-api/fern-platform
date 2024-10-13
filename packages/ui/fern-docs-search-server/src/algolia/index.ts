@@ -1,2 +1,2 @@
-export * from "./getSearchApiKey";
-export * from "./records";
+export * from "./getSearchApiKey.js";
+export * from "./records/index.js";

@@ -1,21 +1,27 @@
 import { Algolia, FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { getFrontmatter } from "@fern-ui/ui";
+import { getFrontmatter, getPosition, parseMarkdownToTree } from "@fern-ui/fern-docs-mdx";
 import GithubSlugger from "github-slugger";
 import { toString } from "mdast-util-to-string";
 import { visit } from "unist-util-visit";
-import { parseMarkdownToTree } from "../../markdown/parse";
-import { getPosition } from "../../markdown/position";
 
 const slugger = new GithubSlugger();
 
-export function generateMarkdownRecords(
-    indexSegmentId: Algolia.IndexSegmentId,
-    breadcrumb: readonly FernNavigation.BreadcrumbItem[],
-    node: FernNavigation.NavigationNodeWithMarkdown,
-    version: Algolia.AlgoliaRecordVersionV3 | undefined,
-    markdown: string,
-): Algolia.AlgoliaRecord.PageV4[] {
+interface GenerateMarkdownRecordsOptions {
+    indexSegmentId: Algolia.IndexSegmentId;
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+    node: FernNavigation.NavigationNodeWithMarkdown;
+    version: Algolia.AlgoliaRecordVersionV3 | undefined;
+    markdown: string;
+}
+
+export function generateMarkdownRecords({
+    indexSegmentId,
+    breadcrumb,
+    node,
+    version,
+    markdown,
+}: GenerateMarkdownRecordsOptions): Algolia.AlgoliaRecord.PageV4[] {
     const { data, content } = getFrontmatter(markdown);
     const lines = content.split("\n");
     const tree = parseMarkdownToTree(content);

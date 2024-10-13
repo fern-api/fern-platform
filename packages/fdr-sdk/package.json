@@ -21,6 +21,10 @@
       "types": "./dist/docs/index.d.ts",
       "default": "./dist/docs/index.js"
     },
+    "./client": {
+      "types": "./dist/client/FdrClient.d.ts",
+      "default": "./dist/client/FdrClient.js"
+    },
     "./client/types": {
       "types": "./dist/client/types.d.ts",
       "default": "./dist/client/types.js"

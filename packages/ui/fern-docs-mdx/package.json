@@ -1,10 +1,10 @@
 {
-  "name": "@fern-ui/fern-docs-search-server",
+  "name": "@fern-ui/fern-docs-mdx",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
-    "directory": "packages/ui/fern-docs-search-server"
+    "directory": "packages/ui/fern-docs-mdx"
   },
   "private": true,
   "files": [
@@ -35,20 +35,15 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
-    "@fern-api/ui-core-utils": "workspace:*",
-    "@fern-ui/fern-docs-mdx": "workspace:*",
-    "lodash-es": "^4.17.21",
-    "algoliasearch": "^5.8.1",
-    "github-slugger": "^2.0.0",
-    "i": "^0.3.7",
-    "mdast-util-to-string": "^4.0.0",
-    "pnpm": "^9.12.1",
-    "ts-essentials": "^10.0.1",
-    "unist-util-visit": "^5.0.0"
+    "gray-matter": "^4.0.3",
+    "mdast-util-from-markdown": "^2.0.0",
+    "mdast-util-mdx": "^3.0.0",
+    "micromark-extension-mdx": "^2.1.0",
+    "pnpm": "^9.12.1"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
-    "@types/lodash-es": "^4.17.7",
+    "@types/mdast": "^4.0.3",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",

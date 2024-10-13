@@ -1,7 +1,7 @@
 import { Algolia, ApiDefinition, FernDocs } from "@fern-api/fdr-sdk";
 import { isNonNullish, titleCase } from "@fern-api/ui-core-utils";
-import camelCase from "lodash-es/camelCase";
-import upperFirst from "lodash-es/upperFirst";
+import camelCase from "lodash-es/camelCase.js";
+import upperFirst from "lodash-es/upperFirst.js";
 import { UnreachableCaseError } from "ts-essentials";
 
 export function convertNameToAnchorPart(name: string | null | undefined): string | undefined {

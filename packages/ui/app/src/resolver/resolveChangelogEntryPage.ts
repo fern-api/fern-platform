@@ -1,8 +1,8 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { getFrontmatter } from "@fern-ui/fern-docs-mdx";
 import { reverse } from "lodash-es";
 import type { MDX_SERIALIZER } from "../mdx/bundler";
-import { getFrontmatter } from "../mdx/frontmatter";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "./DocsContent";
 

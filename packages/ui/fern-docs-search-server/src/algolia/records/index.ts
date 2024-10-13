@@ -1,1 +1,1 @@
-export * from "./generateAlgoliaRecords";
+export * from "./generateAlgoliaRecords.js";
