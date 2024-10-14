@@ -38,7 +38,8 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({ co
         <FernSyntaxHighlighter
             className="relative min-h-0 flex-1 shrink"
             language={requestType === "curl" ? "bash" : requestType}
-            code={code}
+            // TODO: handle loading and error states
+            code={code.value ?? ""}
             fontSize="sm"
             id={context.endpoint.id}
         />
