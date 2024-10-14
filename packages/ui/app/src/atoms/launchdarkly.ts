@@ -1,8 +1,7 @@
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import * as LDClient from "launchdarkly-js-client-sdk";
 import { useCallback, useEffect, useState } from "react";
-import useSWR from "swr";
-import { useApiRoute } from "../hooks/useApiRoute";
+import { useApiRouteSWR } from "../hooks/useApiRouteSWR";
 
 // NOTE do not export this file in any index.ts file so that it can be properly tree-shaken
 // otherwise we risk importing launchdarkly-js-client-sdk in all of our bundles
@@ -85,9 +84,8 @@ export const useLaunchDarklyFlag = (flag: string, equals = true, not = false): b
 
 // since useSWR is cached globally, we can use this hook in multiple components without worrying about multiple requests
 function useInitLaunchDarklyClient() {
-    const route = useApiRoute("/api/fern-docs/integrations/launchdarkly");
     const setInfo = useSetAtom(SET_LAUNCH_DARKLY_INFO_ATOM);
-    useSWR(route, (key): Promise<LaunchDarklyInfo> => fetch(key).then((res) => res.json()), {
+    useApiRouteSWR<LaunchDarklyInfo>("/api/fern-docs/integrations/launchdarkly", {
         onSuccess(data) {
             void setInfo(data);
         },

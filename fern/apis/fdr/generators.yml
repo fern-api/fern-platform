@@ -157,7 +157,7 @@ groups:
       - fiddle
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.10.1
+        version: 0.10.0
         output:
           location: maven
           url: maven.buildwithfern.com

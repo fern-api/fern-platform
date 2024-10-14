@@ -2,7 +2,7 @@ import { Getter, useAtomValue } from "jotai";
 import urlJoin from "url-join";
 import { BASEPATH_ATOM, TRAILING_SLASH_ATOM } from "../atoms";
 
-type FernDocsApiRoute = `/api/fern-docs/${string}`;
+export type FernDocsApiRoute = `/api/fern-docs/${string}`;
 
 interface Options {
     includeTrailingSlash?: boolean;

@@ -101,7 +101,7 @@ types:
     properties:
       shape: optional<type.TypeShape>
       statusCode: integer
-      name: optional<string>
+      name: string
       examples: optional<list<ErrorExample>>
 
   ExampleEndpointCall:

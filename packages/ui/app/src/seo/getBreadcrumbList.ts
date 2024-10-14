@@ -2,9 +2,9 @@ import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { getFrontmatter } from "@fern-ui/fern-docs-mdx";
 import { JsonLd } from "@fern-ui/next-seo";
 import urljoin from "url-join";
-import { getFrontmatter } from "../mdx/frontmatter";
 
 function toUrl(domain: string, slug: FernNavigation.Slug): string {
     return urljoin(withDefaultProtocol(domain), slug);

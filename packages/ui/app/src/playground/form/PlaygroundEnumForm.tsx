@@ -1,7 +1,7 @@
 import { EnumValue } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernDropdown } from "@fern-ui/components";
+import { sortBy } from "es-toolkit/array";
 import { NavArrowDown } from "iconoir-react";
-import { sortBy } from "lodash-es";
 import dynamic from "next/dynamic";
 import { memo, useMemo } from "react";
 
@@ -20,7 +20,7 @@ export const PlaygroundEnumForm = memo<PlaygroundEnumFormProps>((props) => {
     const { enumValues, onChange, value, id, onFocus, disabled } = props;
     const options = useMemo(
         () =>
-            sortBy(enumValues, "value").map(
+            sortBy(enumValues, ["value"]).map(
                 (enumValue): FernDropdown.Option => ({
                     type: "value",
                     label: enumValue.value,

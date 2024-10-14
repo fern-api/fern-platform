@@ -1,5 +1,6 @@
+import titleCase from "@fern-api/ui-core-utils/titleCase";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
-import mapValues from "lodash-es/mapValues";
+import { mapValues } from "es-toolkit/object";
 import { APIV1Read } from "../../client";
 import { SupportedLanguage } from "../../client/generated/api/resources/api/resources/v1/resources/read/resources/endpoint/types/SupportedLanguage";
 import { ROOT_PACKAGE_ID } from "../../navigation/consts";
@@ -9,6 +10,7 @@ import * as V2 from "../latest";
 import { toSnippetHttpRequest } from "../snippets/SnippetHttpRequest";
 import { convertToCurl } from "../snippets/curl";
 import { sortKeysByShape } from "../sort-keys";
+import { getMessageForStatus } from "../status-message";
 
 interface Flags {
     /**
@@ -502,7 +504,7 @@ export class ApiDefinitionV1ToLatest {
             return {
                 description: value.description,
                 availability: value.availability,
-                name: value.name,
+                name: (value.name != null ? titleCase(value.name) : undefined) ?? getMessageForStatus(value.statusCode),
                 statusCode: value.statusCode,
                 shape,
                 examples: value.examples?.map(

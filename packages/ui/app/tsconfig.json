@@ -45,6 +45,9 @@
       "path": "../fern-docs-server"
     },
     {
+      "path": "../fern-docs-mdx"
+    },
+    {
       "path": "../components"
     }
   ]

@@ -1,7 +1,7 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { FernCollapse } from "@fern-ui/components";
 import cn from "clsx";
 import { MouseEventHandler, memo } from "react";
@@ -9,7 +9,6 @@ import { MdxContent } from "../../mdx/MdxContent";
 import { renderTypeShorthand } from "../../type-shorthand";
 import { type JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { getErrorNameForStatus } from "../utils/getErrorNameForStatus";
 import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
 export declare namespace EndpointError {
@@ -58,9 +57,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
         >
             <div className="flex items-baseline space-x-2">
                 <div className="rounded-lg bg-tag-danger px-2 py-1 text-xs text-intent-danger">{error.statusCode}</div>
-                <div className="t-muted text-xs">
-                    {error.name != null ? titleCase(error.name) : getErrorNameForStatus(error.statusCode)}
-                </div>
+                <div className="t-muted text-xs">{error.name}</div>
                 {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
             </div>
 

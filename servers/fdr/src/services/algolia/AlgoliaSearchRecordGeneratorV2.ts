@@ -6,11 +6,11 @@ import {
     FdrAPI,
     FernNavigation,
     convertDbAPIDefinitionToRead,
-    kebabCase,
     visitDbNavigationTab,
 } from "@fern-api/fdr-sdk";
 import { EndpointPathPart } from "@fern-api/fdr-sdk/src/client/APIV1Read";
 import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { kebabCase } from "lodash-es";
 import { v4 as uuid } from "uuid";
 import { BreadcrumbsInfo } from "../../api/generated/api";
 import { LOGGER } from "../../app/FdrApplication";

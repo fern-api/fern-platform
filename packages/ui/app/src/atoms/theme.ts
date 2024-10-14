@@ -1,7 +1,7 @@
 import { ColorsConfig } from "@fern-ui/fdr-utils";
+import { isEqual } from "es-toolkit/predicate";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { atomWithRefresh, selectAtom } from "jotai/utils";
-import { isEqual } from "lodash-es";
 import { noop } from "ts-essentials";
 import { useCallbackOne } from "use-memo-one";
 import { z } from "zod";

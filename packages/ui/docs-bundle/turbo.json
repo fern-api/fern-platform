@@ -3,7 +3,8 @@
   "extends": ["//"],
   "tasks": {
     "docs:build": {
-      "outputs": [".next/**"],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "dependsOn": ["^build", "^compile"]
     },
     "docs:dev": {

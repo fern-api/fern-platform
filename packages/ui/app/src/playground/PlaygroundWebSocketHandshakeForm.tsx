@@ -1,6 +1,5 @@
 import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import { FernCard } from "@fern-ui/components";
-import isEmpty from "lodash-es/isEmpty";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { Callout } from "../mdx/components/callout";
 import { PlaygroundAuthorizationFormCard } from "./PlaygroundAuthorizationForm";
@@ -54,10 +53,10 @@ export const PlaygroundWebSocketHandshakeForm: FC<PlaygroundWebSocketHandshakeFo
 
     if (
         error == null &&
-        isEmpty(context.auth) &&
-        isEmpty(context.channel.requestHeaders) &&
-        isEmpty(context.channel.pathParameters) &&
-        isEmpty(context.channel.queryParameters)
+        context.auth == null &&
+        (context.channel.requestHeaders == null || context.channel.requestHeaders.length === 0) &&
+        (context.channel.pathParameters == null || context.channel.pathParameters.length === 0) &&
+        (context.channel.queryParameters == null || context.channel.queryParameters.length === 0)
     ) {
         return null;
     }

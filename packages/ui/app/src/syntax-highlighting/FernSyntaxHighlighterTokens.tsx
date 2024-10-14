@@ -1,7 +1,7 @@
 import { FernScrollArea } from "@fern-ui/components";
 import cn from "clsx";
+import { isEqual } from "es-toolkit/predicate";
 import type { Element } from "hast";
-import { isEqual } from "lodash-es";
 import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
 import { visit } from "unist-util-visit";
 import { HastToJSX } from "../mdx/common/HastToJsx";

@@ -1,6 +1,6 @@
+import { mapValues } from "es-toolkit/object";
 import { FernNavigation } from "../../../..";
 import { APIV1Read, type DocsV2Read } from "../../../../client/types";
-import { mapValues } from "../../../../utils";
 import { getFrontmatter } from "../../../utils/getFrontmatter";
 import { getNoIndexFromFrontmatter } from "../../../utils/getNoIndexFromFrontmatter";
 import { NavigationConfigConverter } from "./NavigationConfigConverter";

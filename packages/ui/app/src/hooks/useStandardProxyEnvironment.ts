@@ -1,5 +1,5 @@
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { once } from "lodash-es";
+import { once } from "es-toolkit/function";
 import { useBasePath, useFeatureFlags } from "../atoms";
 import { useApiRoute } from "./useApiRoute";
 

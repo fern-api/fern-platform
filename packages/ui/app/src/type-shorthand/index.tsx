@@ -1,6 +1,6 @@
 import { TypeDefinition, TypeShapeOrReference, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
 import { unknownToString, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { uniq } from "lodash-es";
+import { uniq } from "es-toolkit/array";
 import { ReactNode } from "react";
 
 export interface TypeShorthandOptions {

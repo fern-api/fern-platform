@@ -1,4 +1,5 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
+import { customHeadingHandler } from "@fern-ui/fern-docs-mdx";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
@@ -7,13 +8,11 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import type { PluggableList } from "unified";
-import { FernDocsFrontmatter } from "../frontmatter";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
 import { rehypeFernLayout } from "../plugins/rehypeLayout";
 import { rehypeSanitizeJSX } from "../plugins/rehypeSanitizeJSX";
 import { rehypeSqueezeParagraphs } from "../plugins/rehypeSqueezeParagraphs";
-import { customHeadingHandler } from "../plugins/remarkRehypeHandlers";
 import { remarkSqueezeParagraphs } from "../plugins/remarkSqueezeParagraphs";
 import type { FernSerializeMdxOptions } from "../types";
 import { replaceBrokenBrTags } from "./replaceBrokenBrTags";
@@ -103,7 +102,7 @@ export async function serializeMdx(
     content = replaceBrokenBrTags(content);
 
     try {
-        const result = await serialize<Record<string, unknown>, FernDocsFrontmatter>(content, {
+        const result = await serialize<Record<string, unknown>, FernDocs.Frontmatter>(content, {
             scope: {},
             mdxOptions: withDefaultMdxOptions(options),
             parseFrontmatter: true,

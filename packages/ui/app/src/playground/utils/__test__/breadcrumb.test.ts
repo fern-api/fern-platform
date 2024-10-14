@@ -1,4 +1,4 @@
-import { identity } from "lodash-es";
+import identity from "@fern-api/ui-core-utils/identity";
 import { arraylcd, createBreadcrumbSlicer } from "../breadcrumb";
 
 const trimBreadcrumb = createBreadcrumbSlicer<string[]>({

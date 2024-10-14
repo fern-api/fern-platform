@@ -8,7 +8,8 @@
     "preinstall": "npx only-allow pnpm",
     "test": "CI=true turbo test",
     "test:update": "CI=true turbo test -- -u",
-    "test:playwright": "pnpm exec playwright test",
+    "playwright:test": "pnpm exec playwright test",
+    "playwright:build": "turbo --filter='playwright-*' --filter='@fern-ui/local-preview-bundle' build",
     "clean": "turbo clean",
     "codegen": "turbo codegen",
     "compile": "turbo compile",
@@ -20,8 +21,8 @@
     "lint:eslint:fix": "turbo lint:eslint:fix",
     "lint:style": "turbo lint:style",
     "lint:style:fix": "turbo lint:style:fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
+    "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore --ignore-path .gitignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore --ignore-path .gitignore \"**\"",
     "publish": "pnpm -r --filter=!private --parallel exec -- npm publish --access public",
     "vercel-scripts": "pnpm --filter=@fern-platform/vercel-scripts vercel-scripts",
     "check-docs-release-blockers": "pnpm tsx packages/scripts/src/cli.ts -- fern-scripts check-docs-release-blockers",
@@ -30,7 +31,6 @@
     "docs:dev": "turbo docs:dev",
     "docs:build": "turbo docs:build",
     "docs:start": "turbo docs:start",
-    "docs:e2e": "vitest --run test/docs-e2e/**/* --globals",
     "fdr:generate": "pnpm fern generate --api fdr --local && pnpm turbo --filter=@fern-api/fdr-sdk compile"
   },
   "devDependencies": {
@@ -45,7 +45,7 @@
     "@types/express": "^4.17.13",
     "@types/http-proxy": "^1.17.15",
     "@types/is-ci": "^3.0.4",
-    "@types/lodash-es": "4.17.12",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^18.7.18",
     "@typescript-eslint/eslint-plugin": "7.3.1",
     "@typescript-eslint/parser": "7.3.1",
@@ -71,7 +71,6 @@
     "js-yaml": "^4.1.0",
     "jsonc-parser": "~2.2.1",
     "lint-staged": "^13.0.3",
-    "lodash-es": "^4.17.21",
     "organize-imports-cli": "^0.10.0",
     "playwright": "^1.47.1",
     "prettier": "^3.3.2",
@@ -101,9 +100,14 @@
   },
   "dependencies": {
     "@radix-ui/colors": "^3.0.0",
-    "fern-api": "0.41.16"
+    "fern-api": "0.41.16",
+    "get-port": "^7.1.0"
   },
   "packageManager": "pnpm@9.4.0",
+  "engines": {
+    "node": ">=18.18.0",
+    "pnpm": "9.4.0"
+  },
   "nextBundleAnalysis": {
     "buildOutputDirectory": "packages/ui/docs-bundle/.next",
     "budget": 358400,
