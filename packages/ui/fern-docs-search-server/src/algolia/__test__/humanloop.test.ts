@@ -19,10 +19,10 @@ describe("humanloop", () => {
 
         const apis = Object.fromEntries(
             await Promise.all(
-                Object.values(fixture.definition.apis).map((api) => {
+                Object.values(fixture.definition.apis).map(async (api) => {
                     return [
                         api.id,
-                        ApiDefinition.ApiDefinitionV1ToLatest.from(api, {
+                        await ApiDefinition.ApiDefinitionV1ToLatest.from(api, {
                             useJavaScriptAsTypeScript: false,
                             alwaysEnableJavaScriptFetch: false,
                             usesApplicationJsonInFormDataValue: false,
