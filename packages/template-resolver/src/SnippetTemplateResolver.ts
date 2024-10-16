@@ -1,4 +1,4 @@
-import type { FdrClient } from "@fern-api/fdr-sdk";
+import { FdrClient } from "@fern-api/fdr-sdk";
 import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { ObjectFlattener } from "./ResolutionUtilities";
 import { UnionMatcher } from "./UnionResolver";
@@ -63,16 +63,16 @@ export class SnippetTemplateResolver {
     private maybeObjectFlattener: ObjectFlattener | undefined;
     private maybeApiDefinitionId: FdrAPI.ApiDefinitionId | undefined;
     private apiDefinitionHasBeenRequested: boolean;
-    private provideFdrClient: (() => FdrClient) | undefined;
+    private fdrClient: (() => FdrClient) | undefined;
 
     constructor({
         payload,
         endpointSnippetTemplate,
-        provideFdrClient,
+        fdrClient,
     }: {
         payload: FdrAPI.CustomSnippetPayload;
         endpointSnippetTemplate: FdrAPI.EndpointSnippetTemplate;
-        provideFdrClient?: () => FdrClient;
+        fdrClient?: () => FdrClient;
     }) {
         this.payload = payload;
         this.endpointSnippetTemplate = endpointSnippetTemplate;
@@ -82,7 +82,7 @@ export class SnippetTemplateResolver {
         // If we have already attempted to get the API definition
         // We only do this to be able to delay requesting the definition unless we really need to (ie if there's a union template)
         this.apiDefinitionHasBeenRequested = false;
-        this.provideFdrClient = provideFdrClient;
+        this.fdrClient = fdrClient;
     }
 
     private accessParameterPayloadByPath(
@@ -141,9 +141,9 @@ export class SnippetTemplateResolver {
         }
 
         // If we were not provided an API definition, try to get it from FDR
-        if (this.maybeApiDefinitionId != null && !this.apiDefinitionHasBeenRequested && this.provideFdrClient != null) {
+        if (this.maybeApiDefinitionId != null && !this.apiDefinitionHasBeenRequested) {
             this.apiDefinitionHasBeenRequested = true;
-            const fdr = this.provideFdrClient();
+            const fdr = this.fdrClient != null ? this.fdrClient() : new FdrClient();
             const apiDefinitionResponse = await fdr.api.v1.read.getApi(this.maybeApiDefinitionId);
             if (apiDefinitionResponse.ok) {
                 // Cache the result for the next request
