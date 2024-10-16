@@ -57,7 +57,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
         >
             <div className="flex items-baseline space-x-2">
                 <div className="rounded-lg bg-tag-danger px-2 py-1 text-xs text-intent-danger">{error.statusCode}</div>
-                <div className="t-muted text-xs">{error.name}</div>
+                <div className="t-muted text-xs text-left">{error.name}</div>
                 {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
             </div>
 
