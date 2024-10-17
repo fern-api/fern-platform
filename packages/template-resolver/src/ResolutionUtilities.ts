@@ -1,4 +1,4 @@
-import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { APIV1Read } from "@fern-api/fdr-sdk";
 
 export class ObjectFlattener {
     private flattenedObjects: Map<APIV1Read.TypeId, APIV1Read.ObjectProperty[]> = new Map<

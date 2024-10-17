@@ -25,6 +25,9 @@ jobs:
 
       - name: 📥 Install
         uses: ./.github/actions/install
+    
+      - name: 🧪 Build and test
+        run: pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
 
       - name: 🧪 Build CJS and test
         run: pnpm --filter=${{ env.PACKAGE_NAME }} compile:cjs
