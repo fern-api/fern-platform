@@ -1,4 +1,4 @@
-import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
+import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 
 export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
     id: FdrAPI.ApiDefinitionId("api_imdb"),

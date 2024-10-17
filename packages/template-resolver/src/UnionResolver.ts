@@ -1,4 +1,4 @@
-import type { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
+import type { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { ObjectFlattener } from "./ResolutionUtilities";
 import { accessByPathNonNull } from "./accessByPath";
 import { isPlainObject } from "./isPlainObject";
