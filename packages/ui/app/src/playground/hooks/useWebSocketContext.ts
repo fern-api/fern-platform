@@ -1,10 +1,10 @@
-import type { ApiDefinition, WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
+import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import { createWebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useSetAtom } from "jotai";
 import { useEffect, useMemo } from "react";
 import { WRITE_API_DEFINITION_ATOM } from "../../atoms";
-import { useApiRouteSWRImmutable } from "../../hooks/useApiRouteSWR";
+import { useApiDefinitionSWR } from "../../hooks/useApiRouteSWR";
 
 interface LoadableWebSocketContext {
     context: WebSocketContext | undefined;
@@ -16,10 +16,9 @@ interface LoadableWebSocketContext {
  * It should be refactored to store the resulting endpoint in a global state, so that it can be shared between components.
  */
 export function useWebSocketContext(node: FernNavigation.WebSocketNode): LoadableWebSocketContext {
-    const { data: apiDefinition, isLoading } = useApiRouteSWRImmutable<ApiDefinition>(
-        `/api/fern-docs/api-definition/${encodeURIComponent(node.apiDefinitionId)}/websocket/${encodeURIComponent(node.webSocketId)}`,
-        { disabled: node == null },
-    );
+    const { data: apiDefinition, isLoading } = useApiDefinitionSWR(node.apiDefinitionId, node.id, "websocket", {
+        disabled: node == null,
+    });
     const context = useMemo(() => createWebSocketContext(node, apiDefinition), [node, apiDefinition]);
 
     const set = useSetAtom(WRITE_API_DEFINITION_ATOM);
