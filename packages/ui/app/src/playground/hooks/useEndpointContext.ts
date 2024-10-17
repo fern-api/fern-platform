@@ -14,9 +14,14 @@ interface LoadableEndpointContext {
  * It should be refactored to store the resulting endpoint in a global state, so that it can be shared between components.
  */
 export function useEndpointContext(node: FernNavigation.EndpointNode | undefined): LoadableEndpointContext {
-    const { data: apiDefinition, isLoading } = useApiDefinitionSWR(node?.apiDefinitionId, node?.id, "endpoint", {
-        disabled: node == null,
-    });
+    const { data: apiDefinition, isLoading } = useApiDefinitionSWR(
+        node?.apiDefinitionId,
+        node?.endpointId,
+        "endpoint",
+        {
+            disabled: node == null,
+        },
+    );
     const context = useMemo(() => createEndpointContext(node, apiDefinition), [node, apiDefinition]);
     useWriteApiDefinitionAtom(apiDefinition);
 

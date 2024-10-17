@@ -16,9 +16,14 @@ interface LoadableWebSocketContext {
  * It should be refactored to store the resulting endpoint in a global state, so that it can be shared between components.
  */
 export function useWebSocketContext(node: FernNavigation.WebSocketNode): LoadableWebSocketContext {
-    const { data: apiDefinition, isLoading } = useApiDefinitionSWR(node.apiDefinitionId, node.id, "websocket", {
-        disabled: node == null,
-    });
+    const { data: apiDefinition, isLoading } = useApiDefinitionSWR(
+        node.apiDefinitionId,
+        node.webSocketId,
+        "websocket",
+        {
+            disabled: node == null,
+        },
+    );
     const context = useMemo(() => createWebSocketContext(node, apiDefinition), [node, apiDefinition]);
 
     const set = useSetAtom(WRITE_API_DEFINITION_ATOM);
