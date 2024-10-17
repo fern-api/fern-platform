@@ -1,8 +1,11 @@
+interface Writer {
+    write: (data: string) => void;
+}
+
 export interface CommandProps {
     argv: string[];
-    stdout: WritableStreamDefaultWriter<string>;
-    stderr: WritableStreamDefaultWriter<string>;
-    stdin: ReadableStreamDefaultReader<string>;
+    stdout: Writer;
+    stderr: Writer;
     env: Map<string, string>;
 }
 

@@ -1,14 +1,31 @@
+import { openapiAtom, store } from "../../atoms";
 import { CommandHandler, CommandProps } from "../types";
 import { callInstall } from "./install";
 
 export const call: CommandHandler = async (props: CommandProps) => {
     const args = props.argv.slice(1);
 
-    if (args[0] === "install") {
-        return callInstall(props);
+    const command = args[0];
+
+    if (command === "install") {
+        return callInstall(props, args[1]);
     }
 
-    props.stderr.write(`fern-shell: call: command not found: ${args[0]}\n`);
+    const specs = store.get(openapiAtom);
 
-    return 0;
+    const spec = command ? specs[command] : undefined;
+
+    if (spec) {
+        props.stdout.write(`${JSON.stringify(spec, null, 2)}\n`);
+        return 0;
+    }
+
+    if (command && !spec) {
+        props.stderr.write(`Unknown subcommand: ${command}\n`);
+    }
+
+    const options = Object.keys(specs);
+    props.stderr.write(`options: ${["install", ...options].join(", ")}\r\n`);
+
+    return 1;
 };

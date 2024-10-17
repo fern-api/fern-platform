@@ -3,4 +3,4 @@ import type { OpenAPI3 } from "openapi-typescript";
 
 export const store = createStore();
 
-export const openapiAtom = atom<OpenAPI3 | undefined>(undefined);
+export const openapiAtom = atom<Record<string, OpenAPI3>>({});

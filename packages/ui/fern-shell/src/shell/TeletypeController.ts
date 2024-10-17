@@ -136,6 +136,7 @@ export class TeletypeController implements ITerminalAddon {
                     try {
                         await fn(inputBuffer);
                     } catch (e) {
+                        console.error("Error running command:", e);
                         break;
                     }
                 }
@@ -221,7 +222,7 @@ export class TeletypeController implements ITerminalAddon {
                 if (remainderOfString.trim().length === 0) {
                     nextCursorX = this.inputBuffer.length;
                 } else if (remainderOfString.startsWith(" ")) {
-                    const nextNonSpaceIndex = remainderOfString.indexOf(remainderOfString.trimStart()[0]);
+                    const nextNonSpaceIndex = remainderOfString.indexOf(remainderOfString.trimStart()[0]!);
                     nextCursorX = this.cursorX + nextNonSpaceIndex;
                 } else {
                     const nextSpaceIndex = remainderOfString.indexOf(" ");
@@ -230,7 +231,7 @@ export class TeletypeController implements ITerminalAddon {
                     } else {
                         const nextNonSpaceIndex = remainderOfString
                             .slice(nextSpaceIndex)
-                            .indexOf(remainderOfString.slice(nextSpaceIndex).trim()[0]);
+                            .indexOf(remainderOfString.slice(nextSpaceIndex).trim()[0]!);
                         nextCursorX = this.cursorX + nextSpaceIndex + nextNonSpaceIndex;
                     }
                 }

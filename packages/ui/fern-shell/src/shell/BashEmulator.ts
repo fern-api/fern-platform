@@ -55,132 +55,39 @@ export class BashEmulator implements ITerminalAddon {
     env = new Map<string, string>([["?", "0"]]);
 
     async #handleCarriageReturn(input: string): Promise<void> {
-        const pipes = splitPipes(parseArgv(input));
-        const stdouts: ReadableStream<string>[] = [];
-        const exits: Promise<number>[] = [];
-        for (let i = 0; i < pipes.length; i++) {
-            const argv = pipes[i];
-            const command = argv[0];
-            if (command != null && command.length > 0) {
-                const [exitPromise, stdout] = this.#handleRunCommand(
-                    command,
-                    argv,
-                    i > 0 ? stdouts[i - 1] : undefined,
-                    i === pipes.length - 1,
-                );
-                stdouts.push(stdout);
-
-                exits.push(exitPromise);
-            } else {
-                exits.push(Promise.resolve(0));
-            }
+        const argv = parseArgv(input);
+        const command = argv[0];
+        if (!command) {
+            this.env.set("?", "0");
+            return;
         }
-
-        await Promise.all(stdouts.map((stdout) => stdout.getReader().closed));
-
-        const results = await Promise.all(exits);
-        const exitCode = results.reduce((acc, curr) => (curr === 0 ? acc : curr), 0);
+        const exitCode = await this.#handleRunCommand(command, argv);
         this.env.set("?", String(exitCode));
     }
 
-    #handleRunCommand(
-        command: string,
-        argv: string[],
-        stdin?: ReadableStream<string>,
-        writeToTerminal: boolean = false,
-    ): [exit: Promise<number>, stdout: ReadableStream<string>] {
+    async #handleRunCommand(command: string, argv: string[]): Promise<number> {
         const fn = this.#commands.get(command);
 
-        const stdout = new TransformStream<string, string>({
-            transform: (chunk, controller) => {
-                console.log("stdout chunk:", chunk);
-                if (writeToTerminal) {
-                    this.#terminal?.write(chunk.replace(/(?<!\r)\n/g, "\r\n"));
-                }
-                controller.enqueue(chunk);
-            },
-            flush: (controller) => {
-                console.log("Flushing stdout stream");
-                controller.terminate(); // Ensure the stream is properly terminated
-            },
-        });
-
-        const stderr = new WritableStream<string>({
-            write: (chunk) => {
-                console.log("stderr chunk:", chunk);
-                if (writeToTerminal) {
-                    this.#terminal?.write(chunk.replace(/(?<!\r)\n/g, "\r\n"));
-                }
-            },
-        });
-
-        stdin ??= new ReadableStream<string>({
-            start(controller) {
-                controller.close();
-            },
-        });
-
-        const stderrWriter = stderr.getWriter();
         if (!fn) {
-            stderrWriter
-                .write(`${command}: command not found\r\n`)
-                .then(() => {
-                    stderrWriter.close();
-                    stdout.writable.close();
-                    stdin.cancel();
-                })
-                .finally(() => {
-                    stderrWriter.releaseLock();
-                });
-            return [Promise.resolve(127), stdout.readable];
+            this.#terminal?.write(`${command}: command not found\r\n`);
+            return 127;
         }
 
-        const stdoutWriter = stdout.writable.getWriter();
-        const stdinReader = stdin.getReader();
+        const writer = {
+            write: (data: string) => {
+                this.#terminal?.write(data.replace(/(?<!\r)\n/g, "\r\n"));
+            },
+        };
 
-        return [
-            fn({
-                argv,
-                stdout: stdoutWriter,
-                stderr: stderrWriter,
-                stdin: stdinReader,
-                env: this.env,
-            })
-                .then((exit) => {
-                    stdoutWriter.close();
-                    stderrWriter.close();
-                    stdin.cancel();
-                    return exit;
-                })
-                .catch((error) => {
-                    console.error("Command execution error:", error);
-                    stdoutWriter.abort(error);
-                    stderrWriter.abort(error);
-                    stdin.cancel();
-                    return 1; // Non-zero exit code on error
-                })
-                .finally(() => {
-                    stdoutWriter.releaseLock();
-                    stderrWriter.releaseLock();
-                    stdinReader.releaseLock();
-                    console.log("Released all stream locks.");
-                }),
-            stdout.readable,
-        ];
+        console.log("Running command:", command, argv);
+        return fn({
+            argv,
+            stdout: writer,
+            stderr: writer,
+            env: this.env,
+        }).catch((error) => {
+            console.error("Command execution error:", error);
+            return 1; // Non-zero exit code on error
+        });
     }
-}
-
-function splitPipes(argv: string[]): string[][] {
-    const pipes: string[][] = [];
-    let current: string[] = [];
-    for (const arg of argv) {
-        if (arg === "|") {
-            pipes.push(current);
-            current = [];
-        } else {
-            current.push(arg);
-        }
-    }
-    pipes.push(current);
-    return pipes.filter((pipe) => pipe.length > 0);
 }
