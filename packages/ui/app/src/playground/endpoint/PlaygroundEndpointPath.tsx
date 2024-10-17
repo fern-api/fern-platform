@@ -1,4 +1,5 @@
 import type {
+    Environment,
     EnvironmentId,
     HttpMethod,
     ObjectProperty,
@@ -27,7 +28,7 @@ interface PlaygroundEndpointPathProps {
     method: HttpMethod | undefined;
     environmentId: EnvironmentId | undefined;
     baseUrl: string | undefined;
-    environmentFilters: EnvironmentId[] | undefined;
+    options: Environment[] | undefined;
     formState: PlaygroundRequestFormState;
     path: PathPart[];
     queryParameters: ObjectProperty[] | undefined;
@@ -40,7 +41,7 @@ interface PlaygroundEndpointPathProps {
 export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
     environmentId,
     baseUrl,
-    environmentFilters,
+    options,
     method,
     formState,
     path,
@@ -68,7 +69,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                         <MaybeEnvironmentDropdown
                             environmentId={environmentId}
                             baseUrl={baseUrl}
-                            environmentFilters={environmentFilters}
+                            options={options}
                             small
                             urlTextStyle="playground-endpoint-baseurl max-sm:hidden"
                             protocolTextStyle="playground-endpoint-baseurl max-sm:hidden"
