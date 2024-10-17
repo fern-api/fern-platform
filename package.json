@@ -106,7 +106,7 @@
   "packageManager": "pnpm@9.4.0",
   "engines": {
     "node": ">=18.18.0",
-    "pnpm": "9.4.0"
+    "pnpm": "^9.4.0"
   },
   "nextBundleAnalysis": {
     "buildOutputDirectory": "packages/ui/docs-bundle/.next",
