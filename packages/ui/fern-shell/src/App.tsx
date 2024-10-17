@@ -1,10 +1,11 @@
 import "@xterm/xterm/css/xterm.css";
 import { useEffect, useRef } from "react";
-import { FernShell } from "./fernshell";
+import { FernShell } from "./shell/FernShell";
 
 function App() {
     const ref = useRef<HTMLDivElement>(null);
-    const terminal = useRef(
+
+    const shell = useRef(
         new FernShell({
             cursorBlink: true,
             cursorStyle: "block",
@@ -18,8 +19,12 @@ function App() {
             return;
         }
 
-        const term = terminal.current;
-        void term.init(ref.current).then(() => term.focus());
+        const currentShell = shell.current;
+        void currentShell.open(ref.current).then(() => currentShell.terminal.focus());
+
+        return () => {
+            currentShell.dispose();
+        };
     }, []);
 
     return <div id="xterminal" ref={ref} />;
