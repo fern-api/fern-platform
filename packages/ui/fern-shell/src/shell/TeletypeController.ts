@@ -108,6 +108,8 @@ export class TeletypeController implements ITerminalAddon {
         }
         this.lock();
         const inputBuffer = this.inputBuffer;
+        this.history?.push(inputBuffer);
+        this.history?.rewind();
         this.clear();
         new Promise<void>((resolve, reject) => {
             if (!this.terminal) {
@@ -143,9 +145,7 @@ export class TeletypeController implements ITerminalAddon {
             const historyEntry = this.history?.prev();
             if (historyEntry) {
                 this.inputBuffer = historyEntry.command;
-                this.terminal?.write(
-                    ansi.cursorLeft + ansi.cursorForward(this.prompt.length + 2 + historyEntry.command.length),
-                );
+                this.terminal?.write(ansi.eraseLine + ansi.cursorTo(0) + this.#prompt + historyEntry.command);
             } else {
                 this.terminal?.write(ansi.cursorLeft + ansi.cursorForward(this.prompt.length + 2));
             }
@@ -157,9 +157,7 @@ export class TeletypeController implements ITerminalAddon {
             const historyEntry = this.history?.next();
             if (historyEntry) {
                 this.inputBuffer = historyEntry.command;
-                this.terminal?.write(
-                    ansi.cursorLeft + ansi.cursorForward(this.prompt.length + 2 + historyEntry.command.length),
-                );
+                this.terminal?.write(ansi.eraseLine + ansi.cursorTo(0) + this.#prompt + historyEntry.command);
             } else {
                 this.terminal?.write(
                     ansi.cursorLeft + ansi.cursorForward(this.prompt.length + 2 + this.inputBuffer.length),
