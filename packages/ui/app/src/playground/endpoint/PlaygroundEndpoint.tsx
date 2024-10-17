@@ -252,7 +252,15 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
                         sendRequest={grpcEndpoints?.includes(endpoint.id) ? sendGrpcRequest : sendRequest}
                         environmentId={environmentId}
                         baseUrl={baseUrl}
-                        environmentFilters={settings?.environments}
+                        // TODO: this is a temporary fix to show all environments in the playground, unless filtered in the settings
+                        // this is so that the playground can be specifically disabled for certain environments
+                        options={
+                            settings?.environments
+                                ? endpoint.environments?.filter(
+                                      (env) => settings.environments?.includes(env.id) ?? true,
+                                  )
+                                : endpoint.environments
+                        }
                         path={endpoint.path}
                         queryParameters={endpoint.queryParameters}
                         sendRequestIcon={<SendSolid className="transition-transform group-hover:translate-x-0.5" />}

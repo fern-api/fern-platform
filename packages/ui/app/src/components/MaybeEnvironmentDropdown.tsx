@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import { ReactElement, useEffect, useState } from "react";
 import { parse } from "url";
 import { PLAYGROUND_ENVIRONMENT_ATOM } from "../atoms";
-import { ALL_ENVIRONMENTS_ATOM, SELECTED_ENVIRONMENT_ATOM } from "../atoms/environment";
+import { SELECTED_ENVIRONMENT_ATOM } from "../atoms/environment";
 
 interface MaybeEnvironmentDropdownProps {
     baseUrl?: string;
@@ -14,7 +14,8 @@ interface MaybeEnvironmentDropdownProps {
     urlTextStyle?: string;
     protocolTextStyle?: string;
     small?: boolean;
-    environmentFilters?: APIV1Read.EnvironmentId[];
+    // environmentFilters?: APIV1Read.EnvironmentId[];
+    options?: APIV1Read.Environment[];
     editable?: boolean;
     isEditingEnvironment: useBooleanState.Return;
 }
@@ -25,27 +26,30 @@ export function MaybeEnvironmentDropdown({
     urlTextStyle,
     protocolTextStyle,
     small,
-    environmentFilters,
+    options,
     editable,
     isEditingEnvironment,
 }: MaybeEnvironmentDropdownProps): ReactElement | null {
-    const [allEnvironmentIds] = useAtom(ALL_ENVIRONMENTS_ATOM);
+    // const [allEnvironmentIds] = useAtom(ALL_ENVIRONMENTS_ATOM);
     const [selectedEnvironmentId, setSelectedEnvironmentId] = useAtom(SELECTED_ENVIRONMENT_ATOM);
     const [playgroundEnvironment, setPlaygroundEnvironment] = useAtom(PLAYGROUND_ENVIRONMENT_ATOM);
     const [inputValue, setInputValue] = useState<string | undefined>(undefined);
     const [initialState, setInitialState] = useState<string | undefined>(undefined);
 
-    const environmentIds = environmentFilters
-        ? environmentFilters.filter((environmentFilter) => allEnvironmentIds.includes(environmentFilter))
-        : allEnvironmentIds;
+    const selectedEnvironment = options?.find((option) => option.id === selectedEnvironmentId) ?? options?.[0];
 
-    useEffect(() => {
-        if (environmentFilters && environmentId && !environmentFilters.includes(environmentId)) {
-            setSelectedEnvironmentId(environmentId);
-        }
-    }, [environmentFilters, environmentId, setSelectedEnvironmentId]);
+    // const environmentIds = environmentFilters
+    //     ? environmentFilters.filter((environmentFilter) => allEnvironmentIds.includes(environmentFilter))
+    //     : allEnvironmentIds;
 
-    const preParsedUrl = playgroundEnvironment ?? baseUrl;
+    // useEffect(() => {
+    //     if (environmentFilters && environmentId && !environmentFilters.includes(environmentId)) {
+    //         setSelectedEnvironmentId(environmentId);
+    //     }
+    // }, [environmentFilters, environmentId, setSelectedEnvironmentId]);
+
+    // TODO: revisit the order of precedence for the baseUrl... this is a temporary fix
+    const preParsedUrl = playgroundEnvironment ?? selectedEnvironment?.baseUrl ?? baseUrl;
     const url = preParsedUrl && parse(preParsedUrl);
 
     // TODO: clean up this component
@@ -126,19 +130,19 @@ export function MaybeEnvironmentDropdown({
             ) : (
                 <>
                     <span className="max-sm:hidden">
-                        {environmentIds && environmentIds.length > 1 ? (
+                        {options && options.length > 1 ? (
                             <FernDropdown
                                 key="selectedEnvironment-selector"
-                                options={environmentIds.map((env) => ({
-                                    value: env,
-                                    label: env,
+                                options={options.map((env) => ({
+                                    value: env.id,
+                                    label: env.id,
                                     type: "value",
                                 }))}
                                 onValueChange={(value) => {
                                     setPlaygroundEnvironment(undefined);
                                     setSelectedEnvironmentId(value);
                                 }}
-                                value={selectedEnvironmentId ?? environmentId}
+                                value={selectedEnvironment?.id ?? environmentId}
                             >
                                 <FernButton
                                     className="py-0 px-1 h-auto"
