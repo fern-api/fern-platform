@@ -18,9 +18,7 @@ export function useEndpointContext(node: FernNavigation.EndpointNode | undefined
         node?.apiDefinitionId,
         node?.endpointId,
         "endpoint",
-        {
-            disabled: node == null,
-        },
+        { disabled: node == null },
     );
     const context = useMemo(() => createEndpointContext(node, apiDefinition), [node, apiDefinition]);
     useWriteApiDefinitionAtom(apiDefinition);

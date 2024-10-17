@@ -37,15 +37,13 @@ export function useApiDefinitionSWR(
     options?: Options<ApiDefinition.ApiDefinition>,
 ): SWRResponse<ApiDefinition.ApiDefinition> {
     const route = useApiRoute("/api/fern-docs/api-definition");
+    const searchParams = new URLSearchParams();
+    searchParams.set("api", api ?? "");
+    searchParams.set(type, endpointId ?? "");
+    const url = `${route}?${searchParams.toString()}`;
     return useSWRImmutable(
-        options?.disabled || api == null || endpointId == null ? null : [route, api, endpointId, type],
-        (): Promise<ApiDefinition.ApiDefinition> => {
-            return createFetcher<ApiDefinition.ApiDefinition>({
-                ...options?.request,
-                method: "POST",
-                body: JSON.stringify({ api, [type]: endpointId }),
-            })(route);
-        },
+        options?.disabled || api == null || endpointId == null ? null : url,
+        createFetcher<ApiDefinition.ApiDefinition>(options?.request),
         options,
     );
 }

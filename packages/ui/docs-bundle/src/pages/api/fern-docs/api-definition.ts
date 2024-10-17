@@ -18,21 +18,12 @@ const resolveApiHandler: NextApiHandler = async (
     res: NextApiResponse<ApiDefinition.ApiDefinition>,
 ) => {
     const xFernHost = getDocsDomainNode(req);
-    if (req.method !== "POST") {
+    if (req.method !== "GET") {
         res.status(400).end();
         return;
     }
 
-    const body = schema.safeParse(req.body);
-
-    if (!body.success) {
-        // eslint-disable-next-line no-console
-        console.error(body.error);
-        res.status(400).end();
-        return;
-    }
-
-    const { api, endpoint, websocket, webhook } = body.data;
+    const { api, endpoint, websocket, webhook } = schema.parse(req.query);
 
     const flags = await getFeatureFlags(xFernHost);
 

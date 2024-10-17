@@ -14,12 +14,12 @@ export function usePreloadApiLeaf(): (node: NavigationNodeApiLeaf) => Promise<Ap
         useCallbackOne(async (get, set, node: NavigationNodeApiLeaf) => {
             const route = selectApiRoute(
                 get,
-                `/api/fern-docs/api-definition/${encodeURIComponent(node.apiDefinitionId)}/${visitDiscriminatedUnion(
+                `/api/fern-docs/api-definition?api=${encodeURIComponent(node.apiDefinitionId)}&${visitDiscriminatedUnion(
                     node,
                 )._visit({
-                    endpoint: (node) => `endpoint/${encodeURIComponent(node.endpointId)}`,
-                    webSocket: (node) => `websocket/${encodeURIComponent(node.webSocketId)}`,
-                    webhook: (node) => `webhook/${encodeURIComponent(node.webhookId)}`,
+                    endpoint: (node) => `endpoint=${encodeURIComponent(node.endpointId)}`,
+                    webSocket: (node) => `websocket=${encodeURIComponent(node.webSocketId)}`,
+                    webhook: (node) => `webhook=${encodeURIComponent(node.webhookId)}`,
                 })}`,
             );
             const apiDefinition = await preload(route, fetcher);
