@@ -177,7 +177,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
             return null;
         }
         return {
-            apiDefinitionId: undefined,
+            apiDefinitionId: FdrAPI.ApiDefinitionId(snippetTemplate.apiDefinitionId),
             additionalTemplates: undefined,
             endpointId: {
                 path: FdrAPI.EndpointPathLiteral(snippetTemplate.endpointPath),
