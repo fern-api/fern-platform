@@ -1,13 +1,13 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 
-export const CHAT_COMPLETION_SNIPPET: FdrAPI.EndpointSnippetTemplate = {
+export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
     sdk: {
         type: "typescript",
         package: "cohere-ai",
         version: "7.10.3",
     },
     endpointId: {
-        path: FdrAPI.EndpointPathLiteral("/chat"),
+        path: FernRegistry.EndpointPathLiteral("/chat"),
         method: "POST",
         identifierOverride: "endpoint_.chat_stream",
     },
@@ -1523,14 +1523,14 @@ export const CHAT_COMPLETION_SNIPPET: FdrAPI.EndpointSnippetTemplate = {
     additionalTemplates: undefined,
 };
 
-export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FdrAPI.EndpointSnippetTemplate = {
+export const CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION: FernRegistry.EndpointSnippetTemplate = {
     sdk: {
         type: "typescript",
         package: "cohere-ai",
         version: "7.10.3",
     },
     endpointId: {
-        path: FdrAPI.EndpointPathLiteral("/chat"),
+        path: FernRegistry.EndpointPathLiteral("/chat"),
         method: "POST",
         identifierOverride: "endpoint_.chat_stream",
     },

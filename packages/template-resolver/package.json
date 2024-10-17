@@ -28,8 +28,8 @@
     "test": "vitest --run --passWithNoTests"
   },
   "dependencies": {
-    "prettier": "^3.3.2",
-    "@fern-api/fdr-sdk": "workspace:*"
+    "@fern-fern/fdr-cjs-sdk": "0.116.5-873e41db0",
+    "prettier": "^3.3.2"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
