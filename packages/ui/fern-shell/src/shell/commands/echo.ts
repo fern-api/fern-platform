@@ -11,8 +11,8 @@ export const echo: CommandHandler = (props: CommandProps) => {
                 return arg;
             })
             .join(" ");
-        await props.stdout.write(out);
-        await props.stderr.write("\r\n");
+        props.stdout.write(out);
+        props.stderr.write("\r\n");
         resolve(0);
     });
 };

@@ -1,3 +1,4 @@
+import { call } from "./call";
 import { clear } from "./clear";
 import { echo } from "./echo";
 import { export_ } from "./export";
@@ -9,4 +10,5 @@ export const routes: Record<string, CommandHandler> = {
     echo,
     export: export_,
     jq,
+    call,
 };
