@@ -30,6 +30,9 @@ jobs:
           WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
           WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
 
+      - name: Compile Template Resolver
+        run: pnpm --filter=@fern-api/template-resolver compile:cjs
+
       - name: Check dependencies
         run: pnpm depcheck
 

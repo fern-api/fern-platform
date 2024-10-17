@@ -127,7 +127,7 @@ groups:
           package-name: "@fern-api/sdk"
           token: ${NPM_TOKEN}
         github:
-          repository: fern-api/fern-typescript
+          repository: fern-api/typescript-sdk
           mode: pull-request
           license: MIT
         config:
