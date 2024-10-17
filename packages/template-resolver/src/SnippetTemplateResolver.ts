@@ -1,8 +1,8 @@
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { ObjectFlattener } from "./ResolutionUtilities";
 import { UnionMatcher } from "./UnionResolver";
 import { accessByPathNonNull } from "./accessByPath";
 import { isPlainObject } from "./isPlainObject";
-import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 
 interface V1Snippet {
     imports: string[];
@@ -62,16 +62,16 @@ export class SnippetTemplateResolver {
     private maybeObjectFlattener: ObjectFlattener | undefined;
     private maybeApiDefinitionId: FernRegistry.ApiDefinitionId | undefined;
     private apiDefinitionHasBeenRequested: boolean;
-    private provideFdrClient: (() => FernRegistryCli) | undefined;
+    private apiDefinitionGetter: ((id: string) => Promise<FernRegistry.api.v1.read.ApiDefinition>) | undefined;
 
     constructor({
         payload,
         endpointSnippetTemplate,
-        provideFdrClient,
+        apiDefinitionGetter,
     }: {
         payload: FernRegistry.CustomSnippetPayload;
         endpointSnippetTemplate: FernRegistry.EndpointSnippetTemplate;
-        provideFdrClient?: () => FdrClient;
+        apiDefinitionGetter?: (id: string) => Promise<FernRegistry.api.v1.read.ApiDefinition>;
     }) {
         this.payload = payload;
         this.endpointSnippetTemplate = endpointSnippetTemplate;
@@ -81,7 +81,7 @@ export class SnippetTemplateResolver {
         // If we have already attempted to get the API definition
         // We only do this to be able to delay requesting the definition unless we really need to (ie if there's a union template)
         this.apiDefinitionHasBeenRequested = false;
-        this.provideFdrClient = provideFdrClient;
+        this.apiDefinitionGetter = apiDefinitionGetter;
     }
 
     private accessParameterPayloadByPath(
@@ -140,14 +140,17 @@ export class SnippetTemplateResolver {
         }
 
         // If we were not provided an API definition, try to get it from FDR
-        if (this.maybeApiDefinitionId != null && !this.apiDefinitionHasBeenRequested && this.provideFdrClient != null) {
+        if (
+            this.maybeApiDefinitionId != null &&
+            !this.apiDefinitionHasBeenRequested &&
+            this.apiDefinitionGetter != null
+        ) {
             this.apiDefinitionHasBeenRequested = true;
-            const fdr = this.provideFdrClient();
-            const apiDefinitionResponse = await fdr.api.v1.read.getApi(this.maybeApiDefinitionId);
-            if (apiDefinitionResponse.ok) {
-                // Cache the result for the next request
-                this.maybeApiDefinition = apiDefinitionResponse.body;
-                return this.maybeApiDefinition;
+            if (this.maybeApiDefinitionId != null) {
+                try {
+                    const apiDefinitionResponse = await this.apiDefinitionGetter(this.maybeApiDefinitionId);
+                    this.maybeApiDefinition = apiDefinitionResponse;
+                } catch (err) {}
             }
         }
 
@@ -416,7 +419,10 @@ ${endpointSnippet?.invocation}
 `;
     }
 
-    private resolveSnippetV1TemplateToSnippet(sdk: FernRegistry.Sdk, template: FernRegistry.SnippetTemplate): FernRegistry.Snippet {
+    private resolveSnippetV1TemplateToSnippet(
+        sdk: FernRegistry.Sdk,
+        template: FernRegistry.SnippetTemplate,
+    ): FernRegistry.Snippet {
         const snippet = this.resolveSnippetV1TemplateString(template);
 
         switch (sdk.type) {
@@ -460,7 +466,9 @@ ${endpointSnippet?.invocation}
         }
     }
 
-    public async resolveWithFormatting(apiDefinition?: FernRegistry.api.v1.read.ApiDefinition): Promise<FernRegistry.Snippet> {
+    public async resolveWithFormatting(
+        apiDefinition?: FernRegistry.api.v1.read.ApiDefinition,
+    ): Promise<FernRegistry.Snippet> {
         const { formatSnippet } = await import("./formatSnippet");
         apiDefinition = apiDefinition ?? (await this.getApiDefinition());
         return formatSnippet(this.resolve(apiDefinition));

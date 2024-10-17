@@ -319,13 +319,7 @@ export class UnionMatcher {
         }
     }
 
-    private scoreType({
-        typeId,
-        payloadOverride,
-    }: {
-        typeId: FernRegistry.api.v1.read.TypeId;
-        payloadOverride?: unknown;
-    }): number {
+    private scoreType({ typeId, payloadOverride }: { typeId: FernRegistry.TypeId; payloadOverride?: unknown }): number {
         const maybeType = this.apiDefinition.types[typeId];
         if (maybeType == null) {
             // If the type doesn't even exist, it shouldn't be an option. We only
