@@ -23,6 +23,24 @@ export class TeletypeController implements ITerminalAddon {
         });
     }
 
+    mounted = false;
+    mount() {
+        if (this.mounted) {
+            throw new Error("TeletypeController already mounted");
+        }
+        if (!this.terminal || !this.terminal.textarea) {
+            return;
+        }
+        const textarea = this.terminal.textarea;
+        this.mounted = true;
+        textarea.addEventListener("paste", this.#handlePaste.bind(this));
+        this.disposables.add({
+            dispose: () => {
+                textarea.removeEventListener("paste", this.#handlePaste.bind(this));
+            },
+        });
+    }
+
     dispose(): void {
         this.disposables.forEach((d) => d.dispose());
         this.#carriageReturnHandlers.clear();
@@ -67,13 +85,10 @@ export class TeletypeController implements ITerminalAddon {
         this.clear();
         return new Promise<void>((resolve) => {
             if (!this.locked && this.terminal) {
-                this.terminal.write(this.#prompt, () => {
-                    this.unlock();
-                    resolve();
-                });
-            } else {
-                resolve();
+                this.terminal.write(this.#prompt);
+                this.unlock();
             }
+            resolve();
         });
     }
 
@@ -258,6 +273,14 @@ export class TeletypeController implements ITerminalAddon {
         }
     }
 
+    #handlePaste(e: ClipboardEvent) {
+        if (!e.clipboardData || e.target !== this.terminal?.textarea) {
+            return;
+        }
+
+        this.write(e.clipboardData.getData("text/plain"));
+    }
+
     #handleBackspace(e: KeyboardEvent) {
         if (this.cursorX <= 0) {
             return;
@@ -270,6 +293,21 @@ export class TeletypeController implements ITerminalAddon {
             }
             return;
         }
+
+        if (e.altKey) {
+            // move to the beginning of the last word
+            const nextX = this.inputBuffer.slice(0, this.cursorX).trimEnd().lastIndexOf(" ") + 1;
+            this.inputBuffer = this.inputBuffer.slice(0, nextX) + this.inputBuffer.slice(this.cursorX);
+            this.terminal?.write(
+                ansi.eraseLine +
+                    ansi.cursorTo(0) +
+                    this.#prompt +
+                    this.inputBuffer +
+                    ansi.cursorTo(nextX + this.#prompt.length),
+            );
+            return;
+        }
+
         const nextCursorX = this.cursorX - 1;
         this.inputBuffer = this.inputBuffer.slice(0, nextCursorX) + this.inputBuffer.slice(this.cursorX);
         if (!this.locked && this.terminal) {

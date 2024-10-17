@@ -1,11 +1,8 @@
-export interface Writer {
-    write: (chunk: string | Uint8Array) => Promise<void>;
-}
-
 export interface CommandProps {
     argv: string[];
-    stdout: Writer;
-    stderr: Writer;
+    stdout: WritableStreamDefaultWriter<string>;
+    stderr: WritableStreamDefaultWriter<string>;
+    stdin: ReadableStreamDefaultReader<string>;
     env: Map<string, string>;
 }
 

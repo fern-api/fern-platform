@@ -1,3 +1,4 @@
+import { ClipboardAddon } from "@xterm/addon-clipboard";
 import { FitAddon } from "@xterm/addon-fit";
 import { WebLinksAddon } from "@xterm/addon-web-links";
 import { IDisposable, ITerminalInitOnlyOptions, ITerminalOptions, Terminal } from "@xterm/xterm";
@@ -8,7 +9,6 @@ export class FernShell implements IDisposable {
     #resizeObserver: ResizeObserver;
     #fitAddon: FitAddon;
     #bash: BashEmulator;
-    // #history = new ShellHistory(100);
 
     constructor(options?: ITerminalOptions & ITerminalInitOnlyOptions) {
         this.terminal = new Terminal(options);
@@ -17,6 +17,9 @@ export class FernShell implements IDisposable {
 
         this.#fitAddon = new FitAddon();
         this.terminal.loadAddon(this.#fitAddon);
+
+        const clipboardAddon = new ClipboardAddon();
+        this.terminal.loadAddon(clipboardAddon);
 
         this.#resizeObserver = new ResizeObserver(() => {
             this.#fitAddon.fit();
@@ -48,6 +51,8 @@ export class FernShell implements IDisposable {
             // webgl loading failed for some reason, attach with DOM renderer
             this.terminal.open(container);
         }
+
+        this.#bash.mount();
 
         // fit is called within a setTimeout, cols and rows need this.
         setTimeout(async () => {
