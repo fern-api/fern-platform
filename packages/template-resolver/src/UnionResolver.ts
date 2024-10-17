@@ -1,11 +1,11 @@
-import type { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { ObjectFlattener } from "./ResolutionUtilities";
 import { accessByPathNonNull } from "./accessByPath";
 import { isPlainObject } from "./isPlainObject";
 
 export class UnionMatcher {
     constructor(
-        private readonly apiDefinition: APIV1Read.ApiDefinition,
+        private readonly apiDefinition: FernRegistry.api.v1.read.ApiDefinition,
         private readonly objectFlattener: ObjectFlattener,
     ) {}
 
@@ -16,7 +16,7 @@ export class UnionMatcher {
         primitive,
         payloadOverride,
     }: {
-        primitive: APIV1Read.PrimitiveType;
+        primitive: FernRegistry.api.v1.read.PrimitiveType;
         payloadOverride: unknown;
     }): number {
         if (payloadOverride == null) {
@@ -73,7 +73,7 @@ export class UnionMatcher {
         typeReference,
         payloadOverride,
     }: {
-        typeReference: APIV1Read.TypeReference;
+        typeReference: FernRegistry.api.v1.read.TypeReference;
         payloadOverride: unknown;
     }): number {
         // If the payload is not present (e.g. you got a null), then any template works
@@ -182,7 +182,7 @@ export class UnionMatcher {
         values,
         payloadOverride,
     }: {
-        values: APIV1Read.EnumValue[];
+        values: FernRegistry.api.v1.read.EnumValue[];
         payloadOverride: unknown;
     }): number {
         if (typeof payloadOverride !== "string") {
@@ -202,7 +202,7 @@ export class UnionMatcher {
         variants,
         payloadOverride,
     }: {
-        variants: APIV1Read.UndiscriminatedUnionVariant[];
+        variants: FernRegistry.api.v1.read.UndiscriminatedUnionVariant[];
         payloadOverride: unknown;
     }): number {
         return Math.max(
@@ -219,7 +219,7 @@ export class UnionMatcher {
         object,
         payloadOverride,
     }: {
-        object: APIV1Read.ObjectType;
+        object: FernRegistry.api.v1.read.ObjectType;
         payloadOverride: unknown;
     }): number {
         // If the payload is not present (e.g. you got a null), then any template works
@@ -258,7 +258,7 @@ export class UnionMatcher {
         union,
         payloadOverride,
     }: {
-        union: APIV1Read.DiscriminatedUnionType;
+        union: FernRegistry.api.v1.read.DiscriminatedUnionType;
         payloadOverride: unknown;
     }): number {
         // If the payload is not an object, then it should not be a discriminated union type
@@ -297,7 +297,7 @@ export class UnionMatcher {
         typeShape,
         payloadOverride,
     }: {
-        typeShape: APIV1Read.TypeShape;
+        typeShape: FernRegistry.api.v1.read.TypeShape;
         payloadOverride?: unknown;
     }): number {
         // If the payload is not present (e.g. you got a null), then any template works
@@ -319,7 +319,13 @@ export class UnionMatcher {
         }
     }
 
-    private scoreType({ typeId, payloadOverride }: { typeId: APIV1Read.TypeId; payloadOverride?: unknown }): number {
+    private scoreType({
+        typeId,
+        payloadOverride,
+    }: {
+        typeId: FernRegistry.api.v1.read.TypeId;
+        payloadOverride?: unknown;
+    }): number {
         const maybeType = this.apiDefinition.types[typeId];
         if (maybeType == null) {
             // If the type doesn't even exist, it shouldn't be an option. We only
@@ -334,9 +340,9 @@ export class UnionMatcher {
         members,
         payloadOverride,
     }: {
-        members: FdrAPI.UnionTemplateMember[];
+        members: FernRegistry.UnionTemplateMember[];
         payloadOverride?: unknown;
-    }): FdrAPI.Template | undefined {
+    }): FernRegistry.Template | undefined {
         if (members.length > 0) {
             // Score each template against the payload
             const scoredTemplates = members.map((member) => ({

@@ -1,9 +1,8 @@
-import type { FdrClient } from "@fern-api/fdr-sdk";
-import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
 import { ObjectFlattener } from "./ResolutionUtilities";
 import { UnionMatcher } from "./UnionResolver";
 import { accessByPathNonNull } from "./accessByPath";
 import { isPlainObject } from "./isPlainObject";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 
 interface V1Snippet {
     imports: string[];
@@ -18,7 +17,7 @@ class DefaultedV1Snippet {
         imports,
         invocation,
     }: {
-        template: FdrAPI.Template;
+        template: FernRegistry.Template;
         imports?: string[];
         isRequired?: boolean;
         invocation?: string;
@@ -57,21 +56,21 @@ class DefaultedV1Snippet {
 const TemplateSentinel = "$FERN_INPUT";
 
 export class SnippetTemplateResolver {
-    private payload: FdrAPI.CustomSnippetPayload;
-    private endpointSnippetTemplate: FdrAPI.EndpointSnippetTemplate;
-    private maybeApiDefinition: APIV1Read.ApiDefinition | undefined;
+    private payload: FernRegistry.CustomSnippetPayload;
+    private endpointSnippetTemplate: FernRegistry.EndpointSnippetTemplate;
+    private maybeApiDefinition: FernRegistry.api.v1.read.ApiDefinition | undefined;
     private maybeObjectFlattener: ObjectFlattener | undefined;
-    private maybeApiDefinitionId: FdrAPI.ApiDefinitionId | undefined;
+    private maybeApiDefinitionId: FernRegistry.ApiDefinitionId | undefined;
     private apiDefinitionHasBeenRequested: boolean;
-    private provideFdrClient: (() => FdrClient) | undefined;
+    private provideFdrClient: (() => FernRegistryCli) | undefined;
 
     constructor({
         payload,
         endpointSnippetTemplate,
         provideFdrClient,
     }: {
-        payload: FdrAPI.CustomSnippetPayload;
-        endpointSnippetTemplate: FdrAPI.EndpointSnippetTemplate;
+        payload: FernRegistry.CustomSnippetPayload;
+        endpointSnippetTemplate: FernRegistry.EndpointSnippetTemplate;
         provideFdrClient?: () => FdrClient;
     }) {
         this.payload = payload;
@@ -86,7 +85,7 @@ export class SnippetTemplateResolver {
     }
 
     private accessParameterPayloadByPath(
-        parameterPayloads?: FdrAPI.ParameterPayload[],
+        parameterPayloads?: FernRegistry.ParameterPayload[],
         locationPath?: string,
     ): unknown | undefined {
         const splitPath = locationPath?.split(".") ?? [];
@@ -102,7 +101,7 @@ export class SnippetTemplateResolver {
         return undefined;
     }
 
-    private accessAuthPayloadByPath(authPayload?: FdrAPI.AuthPayload, locationPath?: string): unknown {
+    private accessAuthPayloadByPath(authPayload?: FernRegistry.AuthPayload, locationPath?: string): unknown {
         if (authPayload != null) {
             return accessByPathNonNull(authPayload, locationPath);
         }
@@ -111,7 +110,7 @@ export class SnippetTemplateResolver {
         return `YOUR_${(maybePayloadName ?? "variable").toUpperCase()}`;
     }
 
-    private getPayloadValue(location: FdrAPI.PayloadInput, payloadOverride?: unknown): unknown | undefined {
+    private getPayloadValue(location: FernRegistry.PayloadInput, payloadOverride?: unknown): unknown | undefined {
         if (location.location === "RELATIVE" && payloadOverride != null) {
             return accessByPathNonNull(payloadOverride, location.path);
         }
@@ -135,7 +134,7 @@ export class SnippetTemplateResolver {
         }
     }
 
-    private async getApiDefinition(): Promise<APIV1Read.ApiDefinition | undefined> {
+    private async getApiDefinition(): Promise<FernRegistry.api.v1.read.ApiDefinition | undefined> {
         if (this.maybeApiDefinition != null) {
             return this.maybeApiDefinition;
         }
@@ -155,7 +154,7 @@ export class SnippetTemplateResolver {
         return;
     }
 
-    private getObjectFlattener(apiDefinition: APIV1Read.ApiDefinition): ObjectFlattener {
+    private getObjectFlattener(apiDefinition: FernRegistry.api.v1.read.ApiDefinition): ObjectFlattener {
         if (this.maybeObjectFlattener != null) {
             return this.maybeObjectFlattener;
         }
@@ -169,7 +168,7 @@ export class SnippetTemplateResolver {
         payloadOverride,
         isRequired,
     }: {
-        template: FdrAPI.Template;
+        template: FernRegistry.Template;
         payloadOverride?: unknown;
         isRequired?: boolean;
     }): DefaultedV1Snippet {
@@ -309,7 +308,7 @@ export class SnippetTemplateResolver {
 
                 const maybeUnionValue = this.getPayloadValue(
                     // Defaults to relative since the python generator didn't specify this on historical templates
-                    template.templateInput ?? { location: FdrAPI.PayloadLocation.Relative, path: undefined },
+                    template.templateInput ?? { location: FernRegistry.PayloadLocation.Relative, path: undefined },
                     payloadOverride,
                 );
                 if (maybeUnionValue == null || !isPlainObject(maybeUnionValue) || !(discriminator in maybeUnionValue)) {
@@ -353,7 +352,7 @@ export class SnippetTemplateResolver {
 
                 const maybeUnionValue = this.getPayloadValue(
                     // Defaults to relative since the python generator didn't specify this on historical templates
-                    template.templateInput ?? { location: FdrAPI.PayloadLocation.Relative, path: undefined },
+                    template.templateInput ?? { location: FernRegistry.PayloadLocation.Relative, path: undefined },
                     payloadOverride,
                 );
 
@@ -387,7 +386,7 @@ export class SnippetTemplateResolver {
         }
     }
 
-    private resolveSnippetV1TemplateString(template: FdrAPI.SnippetTemplate): string {
+    private resolveSnippetV1TemplateString(template: FernRegistry.SnippetTemplate): string {
         const clientSnippet =
             typeof template.clientInstantiation === "string"
                 ? template.clientInstantiation
@@ -417,7 +416,7 @@ ${endpointSnippet?.invocation}
 `;
     }
 
-    private resolveSnippetV1TemplateToSnippet(sdk: FdrAPI.Sdk, template: FdrAPI.SnippetTemplate): FdrAPI.Snippet {
+    private resolveSnippetV1TemplateToSnippet(sdk: FernRegistry.Sdk, template: FernRegistry.SnippetTemplate): FernRegistry.Snippet {
         const snippet = this.resolveSnippetV1TemplateString(template);
 
         switch (sdk.type) {
@@ -448,11 +447,11 @@ ${endpointSnippet?.invocation}
         }
     }
 
-    public resolve(apiDefinition?: APIV1Read.ApiDefinition): FdrAPI.Snippet {
+    public resolve(apiDefinition?: FernRegistry.api.v1.read.ApiDefinition): FernRegistry.Snippet {
         this.maybeApiDefinition = apiDefinition;
 
-        const sdk: FdrAPI.Sdk = this.endpointSnippetTemplate.sdk;
-        const template: FdrAPI.VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
+        const sdk: FernRegistry.Sdk = this.endpointSnippetTemplate.sdk;
+        const template: FernRegistry.VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
         switch (template.type) {
             case "v1":
                 return this.resolveSnippetV1TemplateToSnippet(sdk, template);
@@ -461,19 +460,19 @@ ${endpointSnippet?.invocation}
         }
     }
 
-    public async resolveWithFormatting(apiDefinition?: APIV1Read.ApiDefinition): Promise<FdrAPI.Snippet> {
+    public async resolveWithFormatting(apiDefinition?: FernRegistry.api.v1.read.ApiDefinition): Promise<FernRegistry.Snippet> {
         const { formatSnippet } = await import("./formatSnippet");
         apiDefinition = apiDefinition ?? (await this.getApiDefinition());
         return formatSnippet(this.resolve(apiDefinition));
     }
 
-    public async getApiDefinitionAndResolve(): Promise<FdrAPI.Snippet> {
+    public async getApiDefinitionAndResolve(): Promise<FernRegistry.Snippet> {
         const apiDefinition = await this.getApiDefinition();
         return this.resolve(apiDefinition);
     }
 
     public resolveAdditionalTemplate(key: string): string | undefined {
-        const template: FdrAPI.VersionedSnippetTemplate | undefined =
+        const template: FernRegistry.VersionedSnippetTemplate | undefined =
             this.endpointSnippetTemplate.additionalTemplates != null
                 ? this.endpointSnippetTemplate.additionalTemplates[key]
                 : undefined;
