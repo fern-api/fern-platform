@@ -1,13 +1,14 @@
-import { ITerminalAddon, Terminal } from "@xterm/xterm";
+import { IDisposable, ITerminalAddon, Terminal } from "@xterm/xterm";
+import chalk from "chalk";
 import { TeletypeController } from "./TeletypeController";
 import { routes } from "./commands/routes";
-import { CommandProps } from "./commands/types";
+import { CommandHandler } from "./commands/types";
 import { parseArgv } from "./parseArgv";
 
 export class BashEmulator implements ITerminalAddon {
     #terminal?: Terminal;
-    #commands = new Map<string, (props: CommandProps) => Promise<number>>();
-    #completions = new Map<string, (argv: string[]) => Promise<string[]>>();
+    #commands = new Map<string, CommandHandler>();
+    #disposeables = new Set<IDisposable>();
     tty?: TeletypeController;
 
     constructor() {}
@@ -29,27 +30,26 @@ export class BashEmulator implements ITerminalAddon {
         this.tty?.dispose();
         this.tty = undefined;
         this.#commands.clear();
-        this.#completions.clear();
+        this.#disposeables.forEach((disposable) => disposable.dispose());
+        this.#disposeables.clear();
     }
 
     mount() {
         this.tty?.mount();
     }
 
-    addCommand(command: string, fn: (props: CommandProps) => Promise<number>): void {
-        this.#commands.set(command, fn);
+    addCommand(command: string, handler: CommandHandler): void {
+        this.#commands.set(command, handler);
+        if (handler.completions) {
+            const disposable = this.tty?.onTab(handler.completions);
+            if (disposable) {
+                this.#disposeables.add(disposable);
+            }
+        }
     }
 
     removeCommand(command: string): void {
         this.#commands.delete(command);
-    }
-
-    addCompletion(command: string, fn: (argv: string[]) => Promise<string[]>): void {
-        this.#completions.set(command, fn);
-    }
-
-    removeCompletion(command: string): void {
-        this.#completions.delete(command);
     }
 
     env = new Map<string, string>([["?", "0"]]);
@@ -69,25 +69,33 @@ export class BashEmulator implements ITerminalAddon {
         const fn = this.#commands.get(command);
 
         if (!fn) {
-            this.#terminal?.write(`${command}: command not found\r\n`);
+            this.#terminal?.write(chalk.gray(`command not found: ${command} \r\n`));
             return 127;
         }
 
-        const writer = {
+        const stdoutWriter = {
             write: (data: string) => {
                 this.#terminal?.write(data.replace(/(?<!\r)\n/g, "\r\n"));
             },
         };
 
+        const stderrWriter = {
+            write: (data: string) => {
+                this.#terminal?.write(chalk.gray(data.replace(/(?<!\r)\n/g, "\r\n")));
+            },
+        };
+
         console.log("Running command:", command, argv);
-        return fn({
-            argv,
-            stdout: writer,
-            stderr: writer,
-            env: this.env,
-        }).catch((error) => {
-            console.error("Command execution error:", error);
-            return 1; // Non-zero exit code on error
-        });
+        return fn
+            .handler({
+                argv,
+                stdout: stdoutWriter,
+                stderr: stderrWriter,
+                env: this.env,
+            })
+            .catch((error) => {
+                console.error("Command execution error:", error);
+                return 1; // Non-zero exit code on error
+            });
     }
 }

@@ -1,7 +1,7 @@
 import { CommandHandler, CommandProps } from "./types";
 
-export const echo: CommandHandler = (props: CommandProps) => {
-    return new Promise(async (resolve) => {
+export const echo: CommandHandler = {
+    handler: async (props: CommandProps) => {
         const out = props.argv
             .slice(1)
             .map((arg) => {
@@ -13,6 +13,6 @@ export const echo: CommandHandler = (props: CommandProps) => {
             .join(" ");
         props.stdout.write(out);
         props.stderr.write("\r\n");
-        resolve(0);
-    });
+        return 0;
+    },
 };

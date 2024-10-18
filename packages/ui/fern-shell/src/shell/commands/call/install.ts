@@ -1,7 +1,7 @@
 import { openapiAtom, store } from "../../atoms";
 import { CommandProps } from "../types";
 
-const options: Record<string, string> = {
+export const options: Record<string, string> = {
     vercel: "https://openapi.vercel.sh/",
     square: "https://raw.githubusercontent.com/square/connect-api-specification/refs/heads/master/api.json",
     petstore: "https://petstore3.swagger.io/api/v3/openapi.json",
@@ -10,7 +10,7 @@ const options: Record<string, string> = {
 
 export const callInstall = async (props: CommandProps, key?: string) => {
     if (!key) {
-        props.stdout.write("Available APIs:\n");
+        props.stderr.write("Available APIs:\n");
         props.stdout.write(Object.keys(options).join("\n") + "\n");
         return 0;
     }

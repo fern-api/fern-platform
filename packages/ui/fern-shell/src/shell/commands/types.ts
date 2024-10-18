@@ -10,5 +10,6 @@ export interface CommandProps {
 }
 
 export interface CommandHandler {
-    (props: CommandProps): Promise<number>;
+    handler: (props: CommandProps) => Promise<number>;
+    completions?: (argv: string[]) => Promise<string[]>;
 }
