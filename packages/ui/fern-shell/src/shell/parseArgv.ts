@@ -5,7 +5,7 @@ export function parseArgv(value: string): string[] {
     // [^\s'"]+ or Match if not a space ' or "
     // (['"])([^\5]*?)\5 or Match "quoted text" without quotes
     // `\3` and `\5` are a backreference to the quote style (' or ") captured
-    const myRegexp = /([^\s'"]([^\s'"]*(['"])([^\3]*?)\3)+[^\s'"]*)|[^\s'"]+|(['"])([^\5]*?)\5/gi;
+    const myRegexp = /([^\s'"]([^\s'"]*(['"])([^\x03]*?)\3)+[^\s'"]*)|[^\s'"]+|(['"])([^\x05]*?)\5/gi;
     const myString = value;
     const myArray = [];
     // if (env) {
