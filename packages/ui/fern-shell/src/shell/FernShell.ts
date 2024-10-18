@@ -4,6 +4,20 @@ import { WebLinksAddon } from "@xterm/addon-web-links";
 import { IDisposable, ITerminalInitOnlyOptions, ITerminalOptions, Terminal } from "@xterm/xterm";
 import { BashEmulator } from "./BashEmulator";
 
+const LOGO = `
+           .       :+#%*          =#%@@@@@@+                                             
+         :%@*:    *@@@@*         +@@@@@%%%%=                                             
+         +@@@@*  .@@@@%.         #@@@#                                                   
+   .     .%@@@@: :@#+-       +%%%@@@@@%%#%=  :+#@@@@@#*-    #%%*.+#%%%: #%%#-*%@@@%#=    
+  *@%#+:   -%@@.=%=..        #@@@@@@@@@@@@+ #@@@%#**%@@@#.  @@@@@@@@%+  @@@@@@@%@@@@@%.  
+  +@@@@@*    @@@@@@@@@%=.        #@@@# .   %@@@=     =@@@%  @@@@%:.     @@@@%:   -@@@@*  
+   =%@@@@=  +@@#+=+#@@@@#.       #@@@#    :@@@@%%@@@%%@@@@- @@@@=       @@@@=     #@@@#  
+     .-*@*:%@+       ..          #@@@#    :@@@@#######****: @@@@=       @@@@=     #@@@#  
+        +@@@+=*%%%#+.            #@@@#     #@@@+     -====  @@@@=       @@@@=     #@@@#  
+        *@@@@@@@@@@@@%=          #@@@#      *@@@@%#%@@@@@-  @@@@=       @@@@+     #@@@#  
+        %@%:  :+%%@%#+.          +###+       :+#%@@@@%*-    ####-       ####-     +###+
+`;
+
 export class FernShell implements IDisposable {
     terminal: Terminal;
     #resizeObserver: ResizeObserver;
@@ -59,6 +73,7 @@ export class FernShell implements IDisposable {
             this.fit();
         }, 0);
 
+        this.terminal.write(LOGO.split("\n").join("\r\n"));
         this.terminal.write(
             "\r\n\r\nWelcome to the Fern Shell!\r\n\r\nFern Shell is a browser-based shell with the Fern CLI pre-installed.\r\n\r\n",
         );

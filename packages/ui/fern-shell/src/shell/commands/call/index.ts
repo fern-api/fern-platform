@@ -1,6 +1,7 @@
 import { openapiAtom, store } from "../../atoms";
 import { CommandHandler, CommandProps } from "../types";
 import { callInstall, options } from "./install";
+import { runCall } from "./runner";
 
 export const call: CommandHandler = {
     handler: async (props: CommandProps) => {
@@ -17,6 +18,10 @@ export const call: CommandHandler = {
         const spec = command ? specs[command] : undefined;
 
         if (spec) {
+            if (args.length > 1) {
+                return runCall(props, spec, args.slice(1));
+            }
+
             props.stdout.write(`${JSON.stringify(spec, null, 2)}\n`);
             return 0;
         }
