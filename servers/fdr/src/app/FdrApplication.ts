@@ -63,6 +63,10 @@ export class FdrApplication {
         });
         const prisma = new PrismaClient({
             log: ["info", "warn", "error"],
+            transactionOptions: {
+                timeout: 15000,
+                maxWait: 15000,
+            },
         });
 
         this.services = {
