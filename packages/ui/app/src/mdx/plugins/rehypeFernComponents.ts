@@ -1,10 +1,10 @@
+import { isMdxJsxAttribute, isMdxJsxFlowElement, toAttribute } from "@fern-ui/fern-docs-mdx";
 import GithubSlugger from "github-slugger";
 import type { Doctype, Element, ElementContent, Root } from "hast";
 import { toString } from "hast-util-to-string";
+import { h } from "hastscript";
 import type { MdxJsxAttributeValueExpression, MdxJsxFlowElementHast, MdxJsxTextElementHast } from "mdast-util-mdx-jsx";
 import { CONTINUE, visit, type BuildVisitor, type VisitorResult } from "unist-util-visit";
-import { wrapChildren } from "./to-estree";
-import { isMdxJsxAttribute, isMdxJsxFlowElement, toAttribute } from "./utils";
 
 // TODO: combine this with rehype-slug so that we don't have to maintain two slugger instances
 const slugger = new GithubSlugger();
@@ -295,7 +295,12 @@ function collectProps(child: MdxJsxFlowElementHast) {
     });
 
     if (child.children.length > 0) {
-        props.children = wrapChildren(child.children);
+        props.children = {
+            type: "mdxJsxFlowElement",
+            name: "Fragment",
+            attributes: [],
+            children: child.children.map((child) => (child.type === "text" ? h("p", {}, child.value) : child)),
+        };
     }
 
     return props;

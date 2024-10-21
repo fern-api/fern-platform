@@ -1,11 +1,11 @@
 import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { dfs } from "@fern-api/fdr-sdk/traversers";
 import { ReactElement, memo, useEffect, useMemo } from "react";
 import { useIsReady } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { useIsLocalPreview } from "../contexts/local-preview";
+import { DocsContent } from "../resolver/DocsContent";
 import { scrollToRoute } from "../util/anchor";
 import { ApiPackageContent, ApiPackageContentNode } from "./ApiPackageContent";
 
@@ -13,7 +13,7 @@ export interface ApiReferenceContentProps {
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     apiDefinition: ApiDefinition;
     node: FernNavigation.ApiReferenceNode;
-    mdxs: Record<FernNavigation.NodeId, FernDocs.MarkdownText>;
+    mdxs: Record<FernNavigation.NodeId, Omit<DocsContent.MarkdownPage, "type" | "apis">>;
     showErrors: boolean;
     slug: FernNavigation.Slug;
 }

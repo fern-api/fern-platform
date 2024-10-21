@@ -12,6 +12,10 @@
   ],
   "type": "module",
   "exports": {
+    "./plugins": {
+      "types": "./dist/plugins/index.d.ts",
+      "default": "./dist/plugins/index.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
@@ -35,20 +39,36 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-api/ui-core-utils": "workspace:*",
+    "@types/estree": "^1.0.5",
     "@types/hast": "^3.0.4",
+    "@types/mdast": "^4.0.3",
+    "@types/unist": "^3.0.3",
+    "acorn": "^8.13.0",
+    "acorn-jsx": "^5.3.2",
+    "collapse-white-space": "^2.1.0",
+    "estree-util-value-to-estree": "^3.1.2",
+    "estree-walker": "^3.0.3",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
+    "hast-util-heading-rank": "^3.0.0",
+    "hast-util-to-string": "^3.0.0",
     "mdast-util-from-markdown": "^2.0.0",
     "mdast-util-mdx": "^3.0.0",
+    "mdast-util-mdx-jsx": "^3.1.0",
+    "mdast-util-mdxjs-esm": "^2.0.1",
     "mdast-util-to-hast": "^13.1.0",
+    "mdast-util-to-markdown": "^2.1.0",
     "mdast-util-to-string": "^4.0.0",
-    "micromark-extension-mdx": "^2.1.0",
+    "micromark-extension-mdxjs": "^3.0.0",
+    "micromark-util-events-to-acorn": "^2.0.2",
     "pnpm": "^9.12.1",
+    "rehype-slug": "^6.0.0",
+    "ts-essentials": "^10.0.1",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
-    "@types/mdast": "^4.0.3",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",

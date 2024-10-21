@@ -1,6 +1,7 @@
 import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import type { TableOfContentsItem } from "@fern-ui/fern-docs-mdx";
 
 export declare namespace DocsContent {
     export interface Neighbor {
@@ -34,11 +35,17 @@ export declare namespace DocsContent {
         changelogSlug: FernNavigation.Slug;
     }
 
-    interface CustomMarkdownPage {
-        type: "custom-markdown-page";
+    interface MarkdownPage {
+        type: "markdown-page";
         slug: FernNavigation.Slug;
-        mdx: FernDocs.MarkdownText;
+        title: FernDocs.MarkdownText;
+        subtitle: FernDocs.MarkdownText | undefined;
+        content: FernDocs.MarkdownText;
+        breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+        tableOfContents: TableOfContentsItem[];
         neighbors: Neighbors;
+        hasAside: boolean;
+        jsxElements: string[];
         // TODO: downselect apis to only the fields we need
         apis: Record<FernNavigation.ApiDefinitionId, ApiDefinition>;
     }
@@ -58,7 +65,7 @@ export declare namespace DocsContent {
         type: "api-reference-page";
         slug: FernNavigation.Slug;
         title?: string;
-        mdxs: Record<FernNavigation.NodeId, FernDocs.MarkdownText>;
+        mdxs: Record<FernNavigation.NodeId, Omit<MarkdownPage, "type" | "apis">>;
 
         // TODO: the api reference node is probably duplicated in the initial props
         // so we should deduplicate it to avoid sending it twice
@@ -69,7 +76,7 @@ export declare namespace DocsContent {
 }
 
 export type DocsContent =
-    | DocsContent.CustomMarkdownPage
+    | DocsContent.MarkdownPage
     | DocsContent.ApiEndpointPage
     | DocsContent.ApiReferencePage
     | DocsContent.ChangelogPage
