@@ -108,7 +108,6 @@
     "remark-smartypants": "^2.1.0",
     "selection-popover": "^0.3.0",
     "shiki": "^1.6.0",
-    "style-to-object": "^1.0.5",
     "swr": "^2.2.5",
     "tinycolor2": "^1.6.0",
     "unified": "^11.0.4",
