@@ -15,7 +15,6 @@ import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TitledExample } from "../examples/TitledExample";
 import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
-import { getMessageForStatus } from "../utils/getMessageForStatus";
 import { WebSocketMessages } from "../web-socket/WebSocketMessages";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
@@ -181,7 +180,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         e.stopPropagation();
                     }}
                     hoveredPropertyPath={hoveredResponsePropertyPath}
-                    json={selectedErrorExample?.responseBody ?? EMPTY_OBJECT}
+                    json={selectedErrorExample?.responseBody.value ?? EMPTY_OBJECT}
                     intent={statusCodeToIntent(selectedError.statusCode)}
                 />
             )}
@@ -245,7 +244,7 @@ function renderResponseTitle(statusCode: number, method?: APIV1Read.HttpMethod) 
     return (
         <span className="inline-flex items-center gap-2">
             <StatusCodeTag statusCode={statusCode} />
-            <span>{getMessageForStatus(statusCode, method)}</span>
+            <span>{ApiDefinition.getMessageForStatus(statusCode, method)}</span>
         </span>
     );
 }

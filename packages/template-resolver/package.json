@@ -28,13 +28,12 @@
     "test": "vitest --run --passWithNoTests"
   },
   "dependencies": {
-    "prettier": "^3.3.2",
-    "@fern-api/fdr-sdk": "workspace:*"
+    "@fern-fern/fdr-cjs-sdk": "0.116.5-873e41db0",
+    "prettier": "^3.3.2"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@types/jest": "^29.0.3",
-    "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

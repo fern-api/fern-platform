@@ -1,8 +1,8 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-ui/components";
 import cn, { clsx } from "clsx";
+import { range } from "es-toolkit/math";
 import { Lock, NavArrowDown } from "iconoir-react";
-import { range } from "lodash-es";
 import { Url } from "next/dist/shared/lib/router/router";
 import {
     HTMLAttributeAnchorTarget,
@@ -18,6 +18,7 @@ import {
     useImperativeHandle,
     useRef,
 } from "react";
+import { useCallbackOne } from "use-memo-one";
 import { IS_READY_ATOM, SIDEBAR_SCROLL_CONTAINER_ATOM, useAtomEffect, useCloseMobileSidebar } from "../atoms";
 import { FernLink } from "../components/FernLink";
 import { useHref } from "../hooks/useHref";
@@ -205,10 +206,10 @@ export const SidebarSlugLink = forwardRef<HTMLDivElement, PropsWithChildren<Side
         const closeMobileSidebar = useCloseMobileSidebar();
 
         useAtomEffect(
-            useCallback(
+            useCallbackOne(
                 (get) => {
                     if (props.selected) {
-                        scrollToCenter(get(SIDEBAR_SCROLL_CONTAINER_ATOM), ref.current, !get(IS_READY_ATOM));
+                        scrollToCenter(get.peek(SIDEBAR_SCROLL_CONTAINER_ATOM), ref.current, get.peek(IS_READY_ATOM));
                     }
                 },
                 [props.selected],

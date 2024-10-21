@@ -1,4 +1,5 @@
 import type {
+    Environment,
     EnvironmentId,
     HttpMethod,
     ObjectProperty,
@@ -13,8 +14,9 @@ import { CopyToClipboardButton, FernButton } from "@fern-ui/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 import * as Dialog from "@radix-ui/react-dialog";
 import cn from "clsx";
+import { omitBy } from "es-toolkit/object";
+import { isUndefined } from "es-toolkit/predicate";
 import { Xmark } from "iconoir-react";
-import { isUndefined, omitBy } from "lodash-es";
 import { FC, Fragment, ReactNode } from "react";
 import { useAllEnvironmentIds } from "../../atoms/environment";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
@@ -26,7 +28,7 @@ interface PlaygroundEndpointPathProps {
     method: HttpMethod | undefined;
     environmentId: EnvironmentId | undefined;
     baseUrl: string | undefined;
-    environmentFilters: EnvironmentId[] | undefined;
+    options: Environment[] | undefined;
     formState: PlaygroundRequestFormState;
     path: PathPart[];
     queryParameters: ObjectProperty[] | undefined;
@@ -39,7 +41,7 @@ interface PlaygroundEndpointPathProps {
 export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
     environmentId,
     baseUrl,
-    environmentFilters,
+    options,
     method,
     formState,
     path,
@@ -67,7 +69,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                         <MaybeEnvironmentDropdown
                             environmentId={environmentId}
                             baseUrl={baseUrl}
-                            environmentFilters={environmentFilters}
+                            options={options}
                             small
                             urlTextStyle="playground-endpoint-baseurl max-sm:hidden"
                             protocolTextStyle="playground-endpoint-baseurl max-sm:hidden"

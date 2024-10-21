@@ -7,6 +7,12 @@
  * In both cases, we want to extract `/learn/home`
  */
 export function extractNextDataPathname(pathname: string): string {
+    if (pathname.includes("/404.json")) {
+        return "/404";
+    } else if (pathname.includes("/_error.json")) {
+        return "/_error";
+    }
+
     return (
         removeIndex(
             pathname.match(/\/_next\/data\/.*\/_next\/data\/[^/]*(\/.*)\.json.json/)?.[1] ??

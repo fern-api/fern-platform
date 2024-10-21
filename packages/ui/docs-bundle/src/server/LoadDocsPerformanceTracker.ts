@@ -8,15 +8,15 @@ import type { LoadWithUrlResponse } from "./loadWithUrl";
 
 export class LoadDocsPerformanceTracker {
     static init({
-        host,
+        domain,
         slug,
         auth,
     }: {
-        host: string;
+        domain: string;
         slug: string[];
         auth: AuthPartner | undefined;
     }): LoadDocsPerformanceTracker {
-        return new LoadDocsPerformanceTracker(host, slug, auth);
+        return new LoadDocsPerformanceTracker(domain, slug, auth);
     }
 
     private constructor(

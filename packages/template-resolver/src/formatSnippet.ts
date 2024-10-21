@@ -1,9 +1,9 @@
-import type { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import parserBabel from "prettier/plugins/babel";
 import * as prettierPluginEstree from "prettier/plugins/estree";
 import * as prettier from "prettier/standalone";
 
-export async function formatSnippet(snippet: FdrAPI.Snippet): Promise<FdrAPI.Snippet> {
+export async function formatSnippet(snippet: FernRegistry.Snippet): Promise<FernRegistry.Snippet> {
     switch (snippet.type) {
         case "typescript": {
             const client = await prettier.format(snippet.client, {

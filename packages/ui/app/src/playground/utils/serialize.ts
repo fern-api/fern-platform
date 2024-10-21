@@ -1,6 +1,6 @@
 import { FormDataField, HttpRequestBodyShape } from "@fern-api/fdr-sdk/api-definition";
 import { assertNever, isNonNullish } from "@fern-api/ui-core-utils";
-import { compact } from "lodash-es";
+import { compact, flatten } from "es-toolkit/array";
 import { blobToDataURL } from "../fetch-utils/blobToDataURL";
 import { PlaygroundFormStateBody, ProxyRequest, SerializableFile, SerializableFormDataEntryValue } from "../types";
 
@@ -53,7 +53,7 @@ export async function serializeFormStateBody(
                             // this is a hack to allow the API Playground to send JSON blobs in form data
                             // revert this once we have a better solution
                             contentType:
-                                compact(property?.contentType)[0] ??
+                                compact(flatten([property?.contentType]))[0] ??
                                 (usesApplicationJsonInFormDataValue ? "application/json" : undefined),
                         };
                         break;

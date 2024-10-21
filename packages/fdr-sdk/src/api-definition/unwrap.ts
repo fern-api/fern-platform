@@ -1,8 +1,7 @@
 import { isPlainObject } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
-import compact from "lodash-es/compact";
-import sortBy from "lodash-es/sortBy";
-import type * as FernDocs from "../docs";
+import { compact, sortBy } from "es-toolkit/array";
+import * as FernDocs from "../docs";
 import { AvailabilityOrder, coalesceAvailability } from "./availability";
 import { LOOP_TOLERANCE } from "./const";
 import * as Latest from "./latest";
@@ -12,6 +11,7 @@ export type UnwrappedReference = {
     shape: DereferencedNonOptionalTypeShapeOrReference;
     availability: Latest.Availability | undefined;
     descriptions: FernDocs.MarkdownText[];
+    visitedTypeIds: Set<Latest.TypeId>;
     isOptional: boolean;
     default?: unknown;
 };
@@ -20,6 +20,7 @@ export type UnwrappedObjectType = {
     properties: Latest.ObjectProperty[];
     extraProperties: Latest.TypeReference | undefined;
     descriptions: FernDocs.MarkdownText[];
+    visitedTypeIds: Set<Latest.TypeId>;
 };
 
 type InternalDefaultValue =
@@ -71,9 +72,10 @@ export function unwrapReference(
     const descriptions: FernDocs.MarkdownText[] = [];
     const availabilities: Latest.Availability[] = [];
 
-    const visitedTypeIds: Latest.TypeId[] = [];
+    const visitedTypeIds = new Set<Latest.TypeId>();
     let internalTypeRef: TypeShapeOrReference | undefined = typeRef;
     let loop = 0;
+    let circularReference = false;
     while (internalTypeRef != null) {
         if (loop > LOOP_TOLERANCE) {
             // infinite loop detected
@@ -90,10 +92,10 @@ export function unwrapReference(
         } else if (internalTypeRef.type === "alias") {
             internalTypeRef = internalTypeRef.value;
         } else if (internalTypeRef.type === "id") {
-            if (visitedTypeIds.includes(internalTypeRef.id)) {
-                visitedTypeIds.push(internalTypeRef.id);
+            if (visitedTypeIds.has(internalTypeRef.id)) {
                 // circular reference detected
                 internalTypeRef = undefined;
+                circularReference = true;
                 break;
             }
 
@@ -101,13 +103,13 @@ export function unwrapReference(
                 defaults.push({ type: "typeReferenceId", value: internalTypeRef.default });
             }
             const typeDef: Latest.TypeDefinition | undefined = types[internalTypeRef.id];
-            visitedTypeIds.push(internalTypeRef.id);
+            visitedTypeIds.add(internalTypeRef.id);
+            internalTypeRef = typeDef?.shape;
             if (typeDef != null) {
                 if (typeDef.availability) {
                     availabilities.push(typeDef.availability);
                 }
 
-                internalTypeRef = typeDef.shape;
                 if (typeDef.description != null) {
                     descriptions.push(typeDef.description);
                 }
@@ -121,15 +123,23 @@ export function unwrapReference(
 
     if (internalTypeRef == null) {
         // Note: this should be a fatal error, but we're handling it gracefully for now
-        // eslint-disable-next-line no-console
-        console.error(
-            `Type reference is invalid. Falling back to unknown type.${visitedTypeIds.length > 0 ? ` path=[${visitedTypeIds.join(", ")}]` : ""}`,
-        );
+        if (circularReference) {
+            // eslint-disable-next-line no-console
+            console.error(
+                `Circular reference detected. Falling back to unknown type. types=[${[...visitedTypeIds].join(", ")}]`,
+            );
+        } else {
+            // eslint-disable-next-line no-console
+            console.error(
+                `Type reference is invalid. Falling back to unknown type. types=[${[...visitedTypeIds].join(", ")}]`,
+            );
+        }
     }
 
     const toRet = {
         shape: internalTypeRef ?? { type: "unknown", displayName: undefined },
         availability: coalesceAvailability(availabilities),
+        visitedTypeIds,
         isOptional,
         default: selectDefaultValue(internalTypeRef, defaults),
         descriptions,
@@ -194,7 +204,8 @@ const UnwrapObjectTypeCache = new WeakMap<Latest.ObjectType, UnwrappedObjectType
  */
 export function unwrapObjectType(
     object: Latest.ObjectType,
-    types: Record<string, Latest.TypeDefinition>,
+    types: Record<Latest.TypeId, Latest.TypeDefinition>,
+    parentVisitedTypeIds?: Set<Latest.TypeId>,
 ): UnwrappedObjectType {
     const cached = UnwrapObjectTypeCache.get(object);
     if (cached != null) {
@@ -204,14 +215,23 @@ export function unwrapObjectType(
     const directProperties = object.properties;
     const extraProperties = object.extraProperties;
     const descriptions: FernDocs.MarkdownText[] = [];
+    const visitedTypeIds = new Set<Latest.TypeId>();
     const extendedProperties = object.extends.flatMap((typeId): Latest.ObjectProperty[] => {
+        if (parentVisitedTypeIds?.has(typeId)) {
+            // eslint-disable-next-line no-console
+            console.error(`Circular reference detected. Cannot extend type=${typeId}`);
+            return [];
+        }
+
         const typeDef = types[typeId];
+        visitedTypeIds.add(typeId);
         if (typeDef?.description) {
             descriptions.push(typeDef.description);
         }
 
         const unwrapped = unwrapReference(typeDef?.shape, types);
         unwrapped?.descriptions.forEach((description) => descriptions.push(description));
+        unwrapped?.visitedTypeIds.forEach((typeId) => visitedTypeIds.add(typeId));
 
         // TODO: should we be able to extend discriminated and undiscriminated unions?
         if (unwrapped?.shape.type !== "object") {
@@ -219,7 +239,8 @@ export function unwrapObjectType(
             console.error("Object extends non-object", typeId);
             return [];
         }
-        const extended = unwrapObjectType(unwrapped.shape, types);
+        const extended = unwrapObjectType(unwrapped.shape, types, visitedTypeIds);
+        extended.visitedTypeIds.forEach((typeId) => visitedTypeIds.add(typeId));
 
         // merge the availability of the extended object with the availability of the properties
         extended.properties = extended.properties.map((property) => {
@@ -261,10 +282,12 @@ export function unwrapObjectType(
         // however, we do NOT sort the properties by key because the initial order of properties may be significant
         const properties = sortBy(
             [...directProperties],
-            (property) => unwrapReference(property.valueShape, types)?.isOptional,
-            (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
+            [
+                (property) => unwrapReference(property.valueShape, types)?.isOptional,
+                (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
+            ],
         );
-        const toRet = { properties, descriptions, extraProperties };
+        const toRet = { properties, descriptions, extraProperties, visitedTypeIds };
         UnwrapObjectTypeCache.set(object, toRet);
         return toRet;
     }
@@ -277,11 +300,13 @@ export function unwrapObjectType(
     // since there are extended properties, the initial order of properties are not significant, and we should sort by key
     const properties = sortBy(
         [...directProperties, ...filteredExtendedProperties],
-        (property) => unwrapReference(property.valueShape, types)?.isOptional,
-        (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
-        (property) => property.key,
+        [
+            (property) => unwrapReference(property.valueShape, types)?.isOptional,
+            (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
+            (property) => property.key,
+        ],
     );
-    const toRet = { properties, descriptions, extraProperties };
+    const toRet = { properties, descriptions, extraProperties, visitedTypeIds };
     UnwrapObjectTypeCache.set(object, toRet);
     return toRet;
 }
@@ -294,7 +319,7 @@ export function unwrapDiscriminatedUnionVariant(
     variant: Latest.DiscriminatedUnionVariant,
     types: Record<string, Latest.TypeDefinition>,
 ): UnwrappedObjectType {
-    const { properties, descriptions } = unwrapObjectType(variant, types); // this is already cached
+    const { properties, descriptions, visitedTypeIds } = unwrapObjectType(variant, types); // this is already cached
     return {
         properties: [
             {
@@ -313,6 +338,7 @@ export function unwrapDiscriminatedUnionVariant(
         ],
         extraProperties: undefined,
         descriptions,
+        visitedTypeIds,
     };
 }
 

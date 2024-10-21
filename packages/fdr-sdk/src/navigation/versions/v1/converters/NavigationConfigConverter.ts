@@ -1,12 +1,12 @@
 import assertNever from "@fern-api/ui-core-utils/assertNever";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
+import { kebabCase } from "es-toolkit/string";
 import { FernNavigation } from "../../../..";
 import type { APIV1Read, DocsV1Read } from "../../../../client/types";
 import {
     visitReadNavigationConfig,
     visitUnversionedReadNavigationConfig,
 } from "../../../../client/visitReadNavigationConfig";
-import { kebabCase } from "../../../../utils";
 import { ApiReferenceNavigationConverter } from "./ApiReferenceNavigationConverter";
 import { ChangelogNavigationConverter } from "./ChangelogConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
@@ -76,6 +76,8 @@ export class NavigationConfigConverter {
                 hidden: false,
                 icon: undefined,
                 pointsTo,
+                authed: undefined,
+                audience: undefined,
             };
 
             // tag all children of hidden nodes as hidden
@@ -116,6 +118,8 @@ export class NavigationConfigConverter {
                         availability: FernNavigation.V1.convertAvailability(version.availability),
                         pointsTo,
                         landingPage: child.landingPage,
+                        authed: undefined,
+                        audience: undefined,
                     };
                 });
             });
@@ -156,6 +160,8 @@ export class NavigationConfigConverter {
                                     hidden: tab.hidden,
                                     child,
                                     pointsTo,
+                                    authed: undefined,
+                                    audience: undefined,
                                 };
                             });
                         } else if (tab.type === "link") {
@@ -209,8 +215,12 @@ export class NavigationConfigConverter {
                         icon: unversioned.landingPage.icon,
                         hidden: unversioned.landingPage.hidden,
                         noindex: this.noindexMap[pageId],
+                        authed: undefined,
+                        audience: undefined,
                     };
                 }),
+                authed: undefined,
+                audience: undefined,
             };
         });
     }
@@ -265,6 +275,8 @@ export class NavigationConfigConverter {
                         icon: page.icon,
                         hidden: page.hidden,
                         noindex: this.noindexMap[pageId],
+                        authed: undefined,
+                        audience: undefined,
                     };
                 }),
             link: (link) =>
@@ -302,6 +314,8 @@ export class NavigationConfigConverter {
                         slug: slug.get(),
                         children,
                         pointsTo,
+                        authed: undefined,
+                        audience: undefined,
                     };
                 }),
             api: (apiSection) => {

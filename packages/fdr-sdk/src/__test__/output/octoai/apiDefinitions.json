@@ -4628,6 +4628,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -4923,6 +4924,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -5500,6 +5502,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -6233,6 +6236,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -6985,6 +6989,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -8612,6 +8617,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -8891,6 +8897,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -9219,6 +9226,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -9573,6 +9581,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -10536,6 +10545,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -10823,6 +10833,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -11057,6 +11068,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -11444,6 +11456,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -11862,6 +11875,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -13461,6 +13475,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -15060,6 +15075,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -16659,6 +16675,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -18258,6 +18275,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -20108,6 +20126,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -21083,6 +21102,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -21095,6 +21115,7 @@
           },
           {
             "description": "Internal Server Error",
+            "name": "Internal Server Error",
             "statusCode": 500,
             "shape": {
               "type": "alias",
@@ -22950,6 +22971,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -22962,6 +22984,7 @@
           },
           {
             "description": "Internal Server Error",
+            "name": "Internal Server Error",
             "statusCode": 500,
             "shape": {
               "type": "alias",
@@ -24769,6 +24792,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -24781,6 +24805,7 @@
           },
           {
             "description": "Internal Server Error",
+            "name": "Internal Server Error",
             "statusCode": 500,
             "shape": {
               "type": "alias",
@@ -26087,6 +26112,7 @@
         "errors": [
           {
             "description": "Validation Error",
+            "name": "Unprocessable Entity",
             "statusCode": 422,
             "shape": {
               "type": "alias",
@@ -26099,6 +26125,7 @@
           },
           {
             "description": "Internal Server Error",
+            "name": "Internal Server Error",
             "statusCode": 500,
             "shape": {
               "type": "alias",

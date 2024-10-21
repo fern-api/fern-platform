@@ -1,10 +1,8 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { Plus } from "iconoir-react";
 import React from "react";
 import { UnreachableCaseError } from "ts-essentials";
-import { Markdown } from "../../../mdx/Markdown";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 import { ListTypeContextProvider } from "./ListTypeContextProvider";
 import { MapTypeContextProvider } from "./MapTypeContextProvider";
@@ -78,19 +76,13 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
             if (unwrapped.shape.extraProperties != null) {
                 // TODO: (rohin) Refactor this
                 return (
-                    <div>
-                        <InternalTypeDefinition
-                            shape={unwrapped.shape}
-                            isCollapsible={isCollapsible}
-                            anchorIdParts={anchorIdParts}
-                            slug={slug}
-                            types={types}
-                        />
-                        <div className="flex pt-2">
-                            <Plus />
-                            <Markdown mdx="Optional Additional Properties" className="!t-muted" size="sm" />
-                        </div>
-                    </div>
+                    <InternalTypeDefinition
+                        shape={unwrapped.shape}
+                        isCollapsible={isCollapsible}
+                        anchorIdParts={anchorIdParts}
+                        slug={slug}
+                        types={types}
+                    />
                 );
             }
             return (

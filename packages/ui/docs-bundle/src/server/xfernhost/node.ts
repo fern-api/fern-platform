@@ -6,7 +6,7 @@ import { cleanHost } from "./util";
 /**
  * Note: x-fern-host is always appended to the request header by cloudfront for all *.docs.buildwithfern.com requests.
  */
-export function getXFernHostNode(req: NextApiRequest, useSearchParams = false): string {
+export function getDocsDomainNode(req: NextApiRequest, useSearchParams = false): string {
     const hosts = [
         useSearchParams ? req.query["host"] : undefined,
         getNextPublicDocsDomain(),
@@ -26,5 +26,20 @@ export function getXFernHostNode(req: NextApiRequest, useSearchParams = false): 
         }
     }
 
-    throw new Error("Could not determine xFernHost from request.");
+    // eslint-disable-next-line no-console
+    console.error("Could not determine xFernHost from request. Returning buildwithfern.com.");
+    return "buildwithfern.com";
+}
+
+// attempts to construct the host from environment variables, when the req object is not available
+export function getHostNodeStatic(): string | undefined {
+    if (process.env.NODE_ENV === "development") {
+        return `${process.env.HOST || "localhost"}:${process.env.PORT || 3000}`;
+    }
+
+    if (process.env.VERCEL_ENV === "preview" || process.env.VERCEL_ENV === "development") {
+        return process.env.VERCEL_URL;
+    }
+
+    return undefined;
 }

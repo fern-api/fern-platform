@@ -88,7 +88,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
     const setFormState = useSetAtom(usePlaygroundFormStateAtom(selectionState?.id ?? NodeId("")));
 
     const renderMobileHeader = () => (
-        <div className="grid h-10 grid-cols-2 gap-2 px-4">
+        <div className="flex w-full justify-between h-10 px-4">
             <div className="flex items-center">
                 <span className="inline-flex items-center gap-2 text-sm font-semibold">
                     <span className="t-accent">API Playground</span>

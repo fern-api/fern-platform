@@ -19,6 +19,7 @@ export interface Env {
     CUSTOMER_PULLS_SLACK_CHANNEL: string;
     FERNIE_SLACK_APP_TOKEN: string;
     FERN_TOKEN: string;
+    ENVIRONMENT: string;
 }
 
 export function evaluateEnv(): Env {
@@ -44,5 +45,6 @@ export function evaluateEnv(): Env {
         CUSTOMER_ALERTS_SLACK_CHANNEL: process?.env.CUSTOMER_ALERTS_SLACK_CHANNEL!,
         CUSTOMER_PULLS_SLACK_CHANNEL: process?.env.CUSTOMER_PULLS_SLACK_CHANNEL!,
         FERN_TOKEN: process?.env.FERN_TOKEN!,
+        ENVIRONMENT: process?.env.ENVIRONMENT!,
     };
 }

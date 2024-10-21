@@ -1,11 +1,11 @@
 import { DocsLoader } from "@/server/DocsLoader";
-import { getXFernHostNode } from "@/server/xfernhost/node";
+import { getDocsDomainNode } from "@/server/xfernhost/node";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever, withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { getFrontmatter } from "@fern-ui/fern-docs-mdx";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
-import { getFrontmatter } from "@fern-ui/ui";
 import { Feed, Item } from "feed";
 import { NextApiRequest, NextApiResponse } from "next";
 import urlJoin from "url-join";
@@ -24,7 +24,7 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
         return res.status(400).end();
     }
 
-    const xFernHost = getXFernHostNode(req);
+    const xFernHost = getDocsDomainNode(req);
 
     const fernToken = req.cookies[COOKIE_FERN_TOKEN];
     const loader = DocsLoader.for(xFernHost, fernToken);

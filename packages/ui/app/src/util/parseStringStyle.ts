@@ -1,4 +1,4 @@
-import camelCase from "lodash-es/camelCase";
+import { camelCase } from "es-toolkit/string";
 import StyleToObject from "style-to-object";
 
 export function parseStringStyle(value: unknown): Record<string, string> | undefined {

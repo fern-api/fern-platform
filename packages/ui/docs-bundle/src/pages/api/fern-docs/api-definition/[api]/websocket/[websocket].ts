@@ -1,4 +1,4 @@
-import { getXFernHostNode } from "@/server/xfernhost/node";
+import { getDocsDomainNode } from "@/server/xfernhost/node";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
 import { ApiDefinitionLoader } from "@fern-ui/fern-docs-server";
@@ -6,7 +6,7 @@ import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { NextApiHandler, NextApiResponse } from "next";
 
 const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ApiDefinition.ApiDefinition>) => {
-    const xFernHost = getXFernHostNode(req);
+    const xFernHost = getDocsDomainNode(req);
     const { api, websocket } = req.query;
     if (req.method !== "GET" || typeof api !== "string" || typeof websocket !== "string") {
         res.status(400).end();

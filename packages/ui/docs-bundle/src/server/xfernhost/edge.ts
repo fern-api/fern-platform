@@ -6,7 +6,7 @@ import { cleanHost } from "./util";
 /**
  * Note: x-fern-host is always appended to the request header by cloudfront for all *.docs.buildwithfern.com requests.
  */
-export function getXFernHostEdge(req: NextRequest, useSearchParams = false): string {
+export function getDocsDomainEdge(req: NextRequest, useSearchParams = false): string {
     const hosts = [
         useSearchParams ? req.nextUrl.searchParams.get("host") : undefined,
         getNextPublicDocsDomain(),
@@ -22,11 +22,13 @@ export function getXFernHostEdge(req: NextRequest, useSearchParams = false): str
         }
     }
 
-    throw new Error("Could not determine xFernHost from request.");
+    // eslint-disable-next-line no-console
+    console.error("Could not determine xFernHost from request. Returning buildwithfern.com.");
+    return "buildwithfern.com";
 }
 
 // use this for testing auth-based redirects on development and preview environments
-export function getXFernHostHeaderFallbackOrigin(req: NextRequest): string {
+export function getHostEdge(req: NextRequest): string {
     if (
         process.env.NODE_ENV === "development" ||
         process.env.VERCEL_ENV === "preview" ||
@@ -34,5 +36,5 @@ export function getXFernHostHeaderFallbackOrigin(req: NextRequest): string {
     ) {
         return req.nextUrl.host;
     }
-    return cleanHost(req.headers.get(HEADER_X_FERN_HOST)) ?? req.nextUrl.host;
+    return getDocsDomainEdge(req);
 }

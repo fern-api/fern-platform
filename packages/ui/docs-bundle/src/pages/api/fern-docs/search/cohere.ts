@@ -1,11 +1,11 @@
-import { getXFernHostEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { createFetchRequester } from "@algolia/requester-fetch";
 import { Algolia, FdrAPI } from "@fern-api/fdr-sdk/client/types";
 import { assertNonNullish } from "@fern-api/ui-core-utils";
 import { getContentForSearchRecord, getSlugForSearchRecord, getTitleForSearchRecord } from "@fern-ui/search-utils";
 import { provideRegistryService } from "@fern-ui/ui";
 import { kv } from "@vercel/kv";
-import algoliasearch from "algoliasearch";
+import { algoliasearch } from "algoliasearch";
 import { Cohere, CohereClient } from "cohere-ai";
 import { ChatMessage } from "cohere-ai/api";
 import { NextRequest } from "next/server";
@@ -63,7 +63,7 @@ export default async function handler(req: NextRequest): Promise<Response> {
         return new Response(null, { status: 405 });
     }
 
-    const docsUrl = getXFernHostEdge(req);
+    const docsUrl = getDocsDomainEdge(req);
 
     // HACK: only allow requests from cohere
     if (!docsUrl.includes("cohere")) {
@@ -132,7 +132,8 @@ export default async function handler(req: NextRequest): Promise<Response> {
     // create clients
     const index = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, searchApiKey.body.searchApiKey, {
         requester: createFetchRequester(),
-    }).initIndex(process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX);
+    });
+
     const cohere = new CohereClient({ token: process.env.COHERE_API_KEY });
 
     // construct search query
@@ -144,7 +145,13 @@ export default async function handler(req: NextRequest): Promise<Response> {
     });
 
     // execute search
-    const { hits } = await index.search<Algolia.AlgoliaRecord>(query.text, { hitsPerPage: 10 });
+    const { hits } = await index.searchSingleIndex<Algolia.AlgoliaRecord>({
+        indexName: process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX,
+        searchParams: {
+            query: query.text,
+            hitsPerPage: 20,
+        },
+    });
 
     // convert search results to cohere documents
     const documents: Record<string, string>[] = hits

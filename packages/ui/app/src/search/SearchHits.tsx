@@ -129,8 +129,8 @@ export const SearchHits: React.FC = () => {
         setExpandPages(false);
     }, [hits]);
     useEffect(() => {
-        const { endpointHits, pageHits } = filterHits(hits);
-        setOrderedHits([...expandHits(expandEndpoints, endpointHits), ...expandHits(expandPages, pageHits)]);
+        const { pageHits, endpointHits } = filterHits(hits);
+        setOrderedHits([...expandHits(expandPages, pageHits), ...expandHits(expandEndpoints, endpointHits)]);
     }, [hits, expandEndpoints, expandPages]);
 
     const hoveredSearchHit = useMemo(() => {
@@ -259,23 +259,23 @@ export const SearchHits: React.FC = () => {
                     onMouseEnter={() => setHoveredSearchHitId(COHERE_AI_HIT_ID)}
                 />
             )}
-            {endpointHits.length > 0 && (
-                <SearchSection
-                    title="Endpoints"
-                    hits={endpointHits}
-                    expanded={expandEndpoints}
-                    setExpanded={setExpandEndpoints}
-                    refs={refs}
-                    hoveredSearchHitId={hoveredSearchHitId}
-                    setHoveredSearchHitId={setHoveredSearchHitId}
-                />
-            )}
             {pageHits.length > 0 && (
                 <SearchSection
                     title="Pages"
                     hits={pageHits}
                     expanded={expandPages}
                     setExpanded={setExpandPages}
+                    refs={refs}
+                    hoveredSearchHitId={hoveredSearchHitId}
+                    setHoveredSearchHitId={setHoveredSearchHitId}
+                />
+            )}
+            {endpointHits.length > 0 && (
+                <SearchSection
+                    title="Endpoints"
+                    hits={endpointHits}
+                    expanded={expandEndpoints}
+                    setExpanded={setExpandEndpoints}
                     refs={refs}
                     hoveredSearchHitId={hoveredSearchHitId}
                     setHoveredSearchHitId={setHoveredSearchHitId}
@@ -318,21 +318,21 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
                     isHovered={true}
                 />
             )}
+            {pageHits.length > 0 && (
+                <MobileSearchSection
+                    title="Pages"
+                    hits={pageHits}
+                    expanded={expandPages}
+                    setExpanded={setExpandPages}
+                    refs={refs}
+                />
+            )}
             {endpointHits.length > 0 && (
                 <MobileSearchSection
                     title="Endpoints"
                     hits={endpointHits}
                     expanded={expandEndpoints}
                     setExpanded={setExpandEndpoints}
-                    refs={refs}
-                />
-            )}
-            {pageHits.length > 0 && (
-                <MobileSearchSection
-                    title="Fields"
-                    hits={pageHits}
-                    expanded={expandPages}
-                    setExpanded={setExpandPages}
                     refs={refs}
                 />
             )}
@@ -358,8 +358,8 @@ function filterHits(hits: SearchRecord[]) {
         pages: new Set(["page", "page-v2", "page-v3", "page-v4", "markdown-section-v1"]),
     };
 
-    const endpointHits = hits.filter((hit) => hitTypeMap["endpoints"].has(hit.type));
     const pageHits = hits.filter((hit) => hitTypeMap["pages"].has(hit.type));
+    const endpointHits = hits.filter((hit) => hitTypeMap["endpoints"].has(hit.type));
 
-    return { endpointHits, pageHits };
+    return { pageHits, endpointHits };
 }

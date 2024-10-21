@@ -78,13 +78,17 @@ describe("generateAlgoliaSearchRecordsForDocs", () => {
                         return [id, convertAPIDefinitionToDb(apiDef, id, EMPTY_SNIPPET_HOLDER)] as const;
                     });
 
-                    return new Map(apiIdDefinitionTuples);
+                    return Object.fromEntries(apiIdDefinitionTuples);
                 };
 
                 const apiDefinitionsById = preloadApiDefinitions();
                 const recordsWithoutIds: Omit<AlgoliaSearchRecord, "objectID">[] = [];
                 const navigationConfig = docsDefinition.config.navigation;
                 const generator = new AlgoliaSearchRecordGeneratorV2({ docsDefinition, apiDefinitionsById });
+
+                if (navigationConfig == null) {
+                    throw new Error("Navigation config is required for this test");
+                }
 
                 visitDbNavigationConfig(navigationConfig, {
                     versioned: (config) => {
@@ -150,6 +154,7 @@ describe("generateIndexSegmentsForDefinition", () => {
                             },
                         ],
                     },
+                    root: undefined,
                     title: undefined,
                     defaultLanguage: undefined,
                     announcement: undefined,

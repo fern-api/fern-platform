@@ -1,5 +1,4 @@
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { isEmpty } from "lodash-es";
 import { buildPath, indentAfter } from "./common";
 import { PlaygroundCodeSnippetBuilder } from "./types";
 
@@ -9,7 +8,7 @@ export class TypescriptFetchSnippetBuilder extends PlaygroundCodeSnippetBuilder 
         return `// ${this.context.node.title} (${this.context.endpoint.method} ${buildPath(this.context.endpoint.path)})
 const response = await fetch("${this.url}", {
   method: "${this.context.endpoint.method}",
-  headers: ${indentAfter(JSON.stringify(this.formState.headers, undefined, 2), 2, 0)},${!isEmpty(body) ? `\n  body: ${body},` : ""}
+  headers: ${indentAfter(JSON.stringify(this.formState.headers, undefined, 2), 2, 0)},${body != null && body.length > 0 ? `\n  body: ${body},` : ""}
 });
 
 const body = await response.json();

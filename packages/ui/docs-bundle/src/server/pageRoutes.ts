@@ -2,24 +2,23 @@ import getAssetPathFromRoute from "next/dist/shared/lib/router/utils/get-asset-p
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import urlJoin from "url-join";
 
-export function getPageRoute(ssg: boolean, host: string, pathname: string): string {
+export function getPageRoute(ssg: boolean, domain: string, pathname: string): string {
     const prefix = ssg ? "static" : "dynamic";
-    return urlJoin("/", prefix, host, pathname);
+    return urlJoin("/", prefix, domain, pathname);
 }
 
 export function getPageRouteMatch(ssg: boolean, buildId: string): string {
-    return `/_next/data/${buildId}/${ssg ? "static" : "dynamic"}/[host]/[[...slug]].json`;
+    return `/_next/data/${buildId}/${ssg ? "static" : "dynamic"}/[domain]/[[...slug]].json`;
 }
 
-export function getPageRoutePath(ssg: boolean, buildId: string, host: string, pathname: string): string {
-    const dataRoute = getAssetPathFromRoute(removeTrailingSlash(pathname), ".json");
-
-    /**
-     * Special case for 404 and 500 pages
-     */
-    if (dataRoute === "/404.json" || dataRoute === "/500.json") {
-        return `/_next/data/${buildId}${dataRoute}`;
+export function getNextDataPageRoute(ssg: boolean, buildId: string, domain: string, pathname: string): string {
+    pathname = removeTrailingSlash(pathname);
+    if (pathname.length === 0 || pathname === "/") {
+        pathname = "/index";
     }
+    return getNextDataRoutePath(buildId, `/${ssg ? "static" : "dynamic"}/${domain}${removeTrailingSlash(pathname)}`);
+}
 
-    return `/_next/data/${buildId}/${ssg ? "static" : "dynamic"}/${host}${dataRoute}`;
+export function getNextDataRoutePath(buildId: string, pathname: string): string {
+    return `/_next/data/${buildId}${getAssetPathFromRoute(removeTrailingSlash(pathname), ".json")}`;
 }

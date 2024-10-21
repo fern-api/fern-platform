@@ -72,20 +72,24 @@ jobs:
   ete:
     needs:
       - deploy_app_buildwithfern_com # only the app.buildwithfern.com deployment is an E2E candidate but ideally all deployments should be tested
-      - deploy_app_ferndocs_com
-      - deploy_app-slash_ferndocs_com
       - promote
     if: needs.deploy_app_buildwithfern_com.outputs.deployment_url
+    uses: ./.github/workflows/playwright.yml
+    permissions: write-all
+    with:
+      deployment_url: ${{ needs.deploy_app_buildwithfern_com.outputs.deployment_url || '' }}
+    secrets:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+
+  rollback:
+    needs: ete
+    if: failure()
     runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/ete-docs-bundle
-        with:
-          deployment_url: ${{ needs.deploy_app_buildwithfern_com.outputs.deployment_url }}
-          token: ${{ secrets.VERCEL_TOKEN }}
-          fern_token: ${{ secrets.FERN_TOKEN }}
       - name: Rollback on failure # remove this step once we switch back to pre-promotion testing
-        if: failure()
         run: |
           echo "E2E tests failed. Rolling back deployment"
           pnpm vercel-scripts rollback app.buildwithfern.com --token ${{ secrets.VERCEL_TOKEN }}

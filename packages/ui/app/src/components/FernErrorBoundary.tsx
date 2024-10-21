@@ -1,7 +1,7 @@
 import { FernButton } from "@fern-ui/components";
 import clsx from "clsx";
+import { memoize } from "es-toolkit/function";
 import { RefreshDouble, WarningTriangle } from "iconoir-react";
-import { memoize } from "lodash-es";
 import { Router, useRouter } from "next/router";
 import React, { PropsWithChildren, ReactElement, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";

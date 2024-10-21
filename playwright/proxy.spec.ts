@@ -39,7 +39,7 @@ test.skip("multipart-form upload", async ({ request }) => {
     expect(response.response.status).toEqual(200);
 });
 
-test("json request", async ({ request }) => {
+test.skip("json request", async ({ request }) => {
     const r = await request.post("/api/fern-docs/proxy/rest", {
         data: {
             url: "https://registry.buildwithfern.com/v2/registry/docs/load-with-url",

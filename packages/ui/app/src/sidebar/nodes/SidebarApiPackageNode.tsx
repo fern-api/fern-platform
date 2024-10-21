@@ -1,4 +1,4 @@
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useCallback } from "react";
 import {
     useIsApiReferenceShallowLink,
@@ -10,6 +10,8 @@ import {
 import { CollapsibleSidebarGroup } from "../CollapsibleSidebarGroup";
 import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
+import { SidebarGroupApiReferenceNode } from "./SidebarGroupApiReferenceNode";
+import { SidebarPageNode } from "./SidebarPageNode";
 
 export interface SidebarApiPackageNodeProps {
     node: FernNavigation.ApiReferenceNode | FernNavigation.ApiPackageNode;
@@ -35,45 +37,16 @@ export function SidebarApiPackageNode({
         [depth, shallow],
     );
 
-    if (node.children.length === 0) {
-        if (node.overviewPageId == null) {
-            return null;
-        }
-
-        if (node.hidden && !selected) {
-            return null;
-        }
-
-        return (
-            <SidebarSlugLink
-                nodeId={node.id}
-                className={className}
-                slug={node.slug}
-                depth={Math.max(depth - 1, 0)}
-                title={node.title}
-                authed={node.authed}
-                selected={selected}
-                icon={node.icon}
-                hidden={node.hidden}
-                shallow={shallow}
-            />
-        );
+    if (node.children.length === 0 && FernNavigation.hasMarkdown(node)) {
+        return <SidebarPageNode node={node} depth={depth} className={className} shallow={shallow} />;
     }
 
-    if (node.hidden && !childSelected) {
+    if (node.children.length === 0 || (node.hidden && !childSelected)) {
         return null;
     }
 
     if (node.type === "apiReference" && node.hideTitle) {
-        return (
-            <ul className="fern-sidebar-group">
-                {node.children.map((child) => (
-                    <li key={child.id}>
-                        <SidebarApiPackageChild node={child} depth={depth} shallow={shallow} />
-                    </li>
-                ))}
-            </ul>
-        );
+        return <SidebarGroupApiReferenceNode node={node} depth={depth} />;
     }
 
     const showIndicator = childSelected && !expanded;

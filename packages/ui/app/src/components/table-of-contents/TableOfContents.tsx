@@ -106,7 +106,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ta
             )}
             {tableOfContents.length > 0 && (
                 <ul
-                    className={clsx("toc-root", className)}
+                    className={clsx("toc-root not-prose", className)}
                     style={{ ...style, "--height": `${liHeight}px`, "--top": `${offsetTop}px` } as CSSProperties}
                 >
                     {flattenTableOfContents(tableOfContents)}

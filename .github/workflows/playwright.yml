@@ -1,48 +1,52 @@
-name: Playwright Tests
-on: pull_request
+name: Playwright E2E
 
-env:
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: "buildwithfern"
-  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-  WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
-  WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
-  # HUME_API_KEY: ${{ secrets.HUME_API_KEY }}
+on:
+  workflow_dispatch:
+    inputs:
+      deployment_url:
+        type: string
+        description: "The URL of the deployment to test"
+        required: true
+  workflow_call:
+    inputs:
+      deployment_url:
+        type: string
+        description: "The URL of the deployment to test"
+        required: true
+    secrets:
+      VERCEL_TOKEN:
+        required: true
+      FERN_TOKEN:
+        required: true
 
 jobs:
-  test:
-    timeout-minutes: 10
+  playwright:
     runs-on: ubuntu-latest
     permissions: write-all # required for the playwright-report-summary action
+    if: inputs.deployment_url != ''
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
+      - uses: ./.github/actions/install
 
-      - name: Compile and build
-        run: pnpm turbo compile codegen build
-        env:
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          WORKOS_API_KEY: ${{ secrets.WORKOS_API_KEY }}
-          WORKOS_CLIENT_ID: ${{ secrets.WORKOS_CLIENT_ID }}
+      - name: Install Fern CLI (used for docs e2e)
+        run: pnpm i -g fern-api@latest
 
-      - name: Build next bundle
-        run: cd packages/ui/local-preview-bundle; pnpm turbo build
+      - name: Fetch domains
+        run: pnpm vercel-scripts domains.txt app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
 
-      - name: Install fern-dev API
-        env:
-          NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
-          FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
-        run: |
-          npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
-          npm install -g @fern-api/fern-api-dev
+      - name: Build Playwright Test Fixtures
+        run: pnpm playwright:build
 
       - name: Run Playwright tests
-        run: PLAYWRIGHT_JSON_OUTPUT_NAME=results.json pnpm exec playwright test playwright/fixtures --reporter json
+        run: pnpm exec playwright test playwright --workers 6 --reporter json
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: results.json
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          DEPLOYMENT_URL: ${{ inputs.deployment_url }}
 
       - uses: daun/playwright-report-summary@v3
         if: always()

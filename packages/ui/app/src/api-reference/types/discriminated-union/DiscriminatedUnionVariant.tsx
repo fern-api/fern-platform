@@ -3,8 +3,9 @@ import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import titleCase from "@fern-api/ui-core-utils/titleCase";
 import cn from "clsx";
-import { compact } from "lodash-es";
-import { useCallback, useMemo } from "react";
+import { compact } from "es-toolkit/array";
+import { useCallback, useEffect, useMemo } from "react";
+import { capturePosthogEvent } from "../../../analytics/posthog";
 import { Markdown } from "../../../mdx/Markdown";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {
@@ -33,7 +34,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
 
-    const [shape, descriptions] = useMemo((): [ApiDefinition.TypeShape.Object_, FernDocs.MarkdownText[]] => {
+    const [shape, additionalDescriptions] = useMemo((): [ApiDefinition.TypeShape.Object_, FernDocs.MarkdownText[]] => {
         const unwrapped = ApiDefinition.unwrapDiscriminatedUnionVariant({ discriminant }, unionVariant, types);
         return [
             {
@@ -62,6 +63,22 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
         [contextValue, discriminant, unionVariant.discriminantValue],
     );
 
+    const descriptions = compact([unionVariant.description, ...additionalDescriptions]);
+
+    useEffect(() => {
+        if (descriptions.length > 0) {
+            capturePosthogEvent("api_reference_multiple_descriptions", {
+                slug,
+                anchorIdParts,
+                discriminant,
+                discriminantValue: unionVariant.discriminantValue,
+                count: descriptions.length,
+                descriptions,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [descriptions]);
+
     return (
         <div
             className={cn("flex flex-col py-3 gap-2", {
@@ -75,7 +92,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
                 <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
             )}
             <div className="flex flex-col">
-                <Markdown mdx={compact([unionVariant.description, ...descriptions])} size="sm" />
+                <Markdown mdx={descriptions[0]} size="sm" />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeDefinition
                         shape={shape}

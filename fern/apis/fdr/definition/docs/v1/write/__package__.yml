@@ -3,7 +3,7 @@
 imports:
   rootCommons: ../../../commons.yml
   commons: ../commons/commons.yml
-  navigation: ../../../navigation/v1/__package__.yml
+  navigationV1: ../../../navigation/v1/__package__.yml
   apiCommonsV1: ../../../api/v1/commons.yml
 
 service:
@@ -87,7 +87,10 @@ types:
       announcement: optional<commons.AnnouncementConfig>
 
       # navigation
-      navigation: NavigationConfig
+      navigation:
+        type: optional<NavigationConfig>
+        availability: deprecated
+      root: optional<navigationV1.RootNode>
       navbarLinks: optional<list<commons.NavbarLink>>
       footerLinks: optional<list<commons.FooterLink>>
 
@@ -277,7 +280,7 @@ types:
 
   ApiSectionV2:
     properties:
-      node: navigation.ApiReferenceNode
+      node: navigationV1.ApiReferenceNode
 
   ApiNavigationConfigRoot:
     availability: deprecated
@@ -331,7 +334,7 @@ types:
 
   ChangelogSectionV3:
     properties:
-      node: navigation.ChangelogNode
+      node: navigationV1.ChangelogNode
 
   ChangelogItem:
     properties:

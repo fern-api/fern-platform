@@ -1,8 +1,8 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { getFrontmatter } from "@fern-ui/fern-docs-mdx";
 import type { MDX_SERIALIZER } from "../mdx/bundler";
-import { getFrontmatter } from "../mdx/frontmatter";
 
 export async function resolveSubtitle(
     node: FernNavigation.NavigationNodeNeighbor,

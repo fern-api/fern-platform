@@ -1,6 +1,5 @@
 import { SnippetHttpRequest, SnippetHttpRequestBodyFormValue, convertToCurl } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { isEmpty } from "lodash-es";
 import { convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest } from "../../types";
 import { PlaygroundCodeSnippetBuilder } from "./types";
 
@@ -40,7 +39,7 @@ export class CurlSnippetBuilder extends PlaygroundCodeSnippetBuilder {
                         newValue[key] = convertedV;
                     }
                 }
-                if (isEmpty(newValue)) {
+                if (Object.keys(newValue).length === 0) {
                     return undefined;
                 }
                 return { type: "form", value: newValue };

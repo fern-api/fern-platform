@@ -5,7 +5,7 @@ import process from "node:process";
 const nextConfig = {
     transpilePackages: [
         "next-mdx-remote",
-        "lodash-es",
+        "es-toolkit",
 
         /**
          * Monorepo packages that are not transpiled by default.

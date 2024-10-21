@@ -3,13 +3,20 @@ import { useIsSelectedSidebarNode } from "../../atoms";
 import { SidebarSlugLink } from "../SidebarLink";
 
 interface SidebarPageNodeProps {
-    node: FernNavigation.PageNode;
+    node: FernNavigation.NavigationNodeWithMarkdown;
     depth: number;
     className?: string;
+    linkClassName?: string;
     shallow?: boolean;
 }
 
-export function SidebarPageNode({ node, depth, className, shallow }: SidebarPageNodeProps): React.ReactElement | null {
+export function SidebarPageNode({
+    node,
+    depth,
+    className,
+    linkClassName,
+    shallow,
+}: SidebarPageNodeProps): React.ReactElement | null {
     const selected = useIsSelectedSidebarNode(node.id);
 
     if (node.hidden && !selected) {
@@ -20,6 +27,7 @@ export function SidebarPageNode({ node, depth, className, shallow }: SidebarPage
         <SidebarSlugLink
             nodeId={node.id}
             className={className}
+            linkClassName={linkClassName}
             slug={node.slug}
             depth={Math.max(depth - 1, 0)}
             title={node.title}

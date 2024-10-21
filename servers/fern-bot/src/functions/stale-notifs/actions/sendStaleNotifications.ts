@@ -31,7 +31,7 @@ export async function sendStaleNotificationsInternal(env: Env): Promise<void> {
     const orgPullMap = new Map<string, PullRequest[]>();
     let staleBotPRsFound = false;
     for await (const pull of botPulls) {
-        if (EXCLUDE_ORGS.has(pull.repositoryOwner)) {
+        if (env.ENVIRONMENT !== "development" && EXCLUDE_ORGS.has(pull.repositoryOwner)) {
             continue;
         }
 
@@ -82,7 +82,7 @@ export async function sendStaleNotificationsInternal(env: Env): Promise<void> {
     // Notify on any PRs opened by us to CUSTOMER_PULLS_SLACK_CHANNEL
     let numStaleTeamPulls = 0;
     for await (const pull of teamPulls) {
-        if (EXCLUDE_ORGS.has(pull.repositoryOwner)) {
+        if (env.ENVIRONMENT !== "development" && EXCLUDE_ORGS.has(pull.repositoryOwner)) {
             continue;
         }
         if (pull.createdAt < new Date(Date.now() - STALE_IN_MS)) {

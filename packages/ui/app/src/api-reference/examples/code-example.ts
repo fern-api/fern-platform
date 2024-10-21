@@ -1,6 +1,6 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import titleCase from "@fern-api/ui-core-utils/titleCase";
-import sortBy from "lodash-es/sortBy";
+import { sortBy } from "es-toolkit/array";
 
 export interface CodeExample {
     key: string;
@@ -75,7 +75,7 @@ export function generateCodeExamples(
                 icon: getIconForClient(language),
                 examples,
             })),
-            "language",
+            ["language"],
         ),
     ]);
 }

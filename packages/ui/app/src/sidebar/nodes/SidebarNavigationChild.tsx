@@ -1,7 +1,7 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import clsx from "clsx";
 import dynamic from "next/dynamic";
+import { UnreachableCaseError } from "ts-essentials";
 import { SidebarApiPackageNode } from "./SidebarApiPackageNode";
 import { SidebarLinkNode } from "./SidebarLinkNode";
 import { SidebarPageNode } from "./SidebarPageNode";
@@ -19,17 +19,24 @@ interface SidebarNavigationChildProps {
 }
 
 export function SidebarNavigationChild({ node, depth, root }: SidebarNavigationChildProps): React.ReactElement {
-    return visitDiscriminatedUnion(node)._visit({
-        apiReference: (apiRef) => <SidebarApiPackageNode node={apiRef} depth={depth} />,
-        section: (section) => (
-            <SidebarSectionNode
-                node={section}
-                depth={depth}
-                className={clsx({ "font-semibold !text-text-default": root })}
-            />
-        ),
-        page: (page) => <SidebarPageNode node={page} depth={depth} />,
-        link: (link) => <SidebarLinkNode node={link} depth={depth} />,
-        changelog: (changelog) => <SidebarChangelogNode node={changelog} depth={depth} />,
-    });
+    switch (node.type) {
+        case "apiReference":
+            return <SidebarApiPackageNode node={node} depth={depth} />;
+        case "section":
+            return (
+                <SidebarSectionNode
+                    node={node}
+                    depth={depth}
+                    className={clsx({ "font-semibold !text-text-default": root })}
+                />
+            );
+        case "page":
+            return <SidebarPageNode node={node} depth={depth} />;
+        case "link":
+            return <SidebarLinkNode node={node} depth={depth} />;
+        case "changelog":
+            return <SidebarChangelogNode node={node} depth={depth} />;
+        default:
+            throw new UnreachableCaseError(node);
+    }
 }

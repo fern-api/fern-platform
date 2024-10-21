@@ -1,3 +1,4 @@
+import { APIV1Read } from "@fern-api/fdr-sdk";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { CopyToClipboardButton } from "@fern-ui/components";
@@ -14,6 +15,7 @@ export declare namespace EndpointUrl {
         method: ApiDefinition.HttpMethod;
         baseUrl?: string;
         environmentId?: ApiDefinition.EnvironmentId;
+        options?: APIV1Read.Environment[];
         showEnvironment?: boolean;
         large?: boolean;
         className?: string;
@@ -22,7 +24,7 @@ export declare namespace EndpointUrl {
 
 // TODO: this component needs a refresh
 export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<EndpointUrl.Props>>(function EndpointUrl(
-    { path, method, baseUrl, environmentId, large, className, showEnvironment },
+    { path, method, baseUrl, environmentId, large, className, showEnvironment, options },
     parentRef,
 ) {
     const ref = useRef<HTMLDivElement>(null);
@@ -102,6 +104,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                                             <MaybeEnvironmentDropdown
                                                 baseUrl={baseUrl}
                                                 environmentId={environmentId}
+                                                options={options}
                                                 urlTextStyle="t-muted"
                                                 protocolTextStyle="text-faded"
                                                 isEditingEnvironment={isEditingEnvironment}

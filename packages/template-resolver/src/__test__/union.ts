@@ -1,13 +1,13 @@
-import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 
-export const UNIONS_SNIPPET: FdrAPI.EndpointSnippetTemplate = {
+export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
     sdk: {
         type: "typescript",
         package: "unions",
         version: "7.10.3",
     },
     endpointId: {
-        path: FdrAPI.EndpointPathLiteral("/"),
+        path: FernRegistry.EndpointPathLiteral("/"),
         method: "POST",
         identifierOverride: "endpoint_.create_movie",
     },
@@ -95,7 +95,7 @@ export const UNIONS_SNIPPET: FdrAPI.EndpointSnippetTemplate = {
                                         {
                                             type: {
                                                 type: "id",
-                                                value: APIV1Read.TypeId("type_imdb:DetailedMovieReview"),
+                                                value: FernRegistry.TypeId("type_imdb:DetailedMovieReview"),
                                                 default: undefined,
                                             },
                                             template: {
@@ -162,7 +162,7 @@ export const UNIONS_SNIPPET: FdrAPI.EndpointSnippetTemplate = {
                                         {
                                             type: {
                                                 type: "id",
-                                                value: APIV1Read.TypeId("type_imdb:AgressiveMovieReview"),
+                                                value: FernRegistry.TypeId("type_imdb:AgressiveMovieReview"),
                                                 default: undefined,
                                             },
                                             template: {

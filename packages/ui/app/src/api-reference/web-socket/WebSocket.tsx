@@ -200,7 +200,7 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                                         shape={parameter.valueShape}
                                                         anchorIdParts={["request", "path", parameter.key]}
                                                         slug={node.slug}
-                                                        description={channel.description}
+                                                        description={parameter.description}
                                                         additionalDescriptions={
                                                             ApiDefinition.unwrapReference(parameter.valueShape, types)
                                                                 .descriptions
@@ -220,24 +220,28 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                         slug={node.slug}
                                     >
                                         <div className="flex flex-col">
-                                            {channel.queryParameters.map((parameter) => (
-                                                <div className="flex flex-col" key={parameter.key}>
-                                                    <TypeComponentSeparator />
-                                                    <EndpointParameter
-                                                        name={parameter.key}
-                                                        shape={parameter.valueShape}
-                                                        anchorIdParts={["request", "query", parameter.key]}
-                                                        slug={node.slug}
-                                                        description={channel.description}
-                                                        additionalDescriptions={
-                                                            ApiDefinition.unwrapReference(parameter.valueShape, types)
-                                                                .descriptions
-                                                        }
-                                                        availability={parameter.availability}
-                                                        types={types}
-                                                    />
-                                                </div>
-                                            ))}
+                                            {channel.queryParameters.map((parameter) => {
+                                                return (
+                                                    <div className="flex flex-col" key={parameter.key}>
+                                                        <TypeComponentSeparator />
+                                                        <EndpointParameter
+                                                            name={parameter.key}
+                                                            shape={parameter.valueShape}
+                                                            anchorIdParts={["request", "query", parameter.key]}
+                                                            slug={node.slug}
+                                                            description={parameter.description}
+                                                            additionalDescriptions={
+                                                                ApiDefinition.unwrapReference(
+                                                                    parameter.valueShape,
+                                                                    types,
+                                                                ).descriptions
+                                                            }
+                                                            availability={parameter.availability}
+                                                            types={types}
+                                                        />
+                                                    </div>
+                                                );
+                                            })}
                                         </div>
                                     </EndpointSection>
                                 )}
@@ -385,7 +389,7 @@ function CardedSection({
 }
 function flattenWebSocketShape(
     subscribeMessages: ApiDefinition.WebSocketMessage[],
-    types: Record<string, ApiDefinition.TypeDefinition>,
+    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>,
 ) {
     return subscribeMessages.flatMap((message): ApiDefinition.UndiscriminatedUnionVariant[] => {
         const unwrapped = ApiDefinition.unwrapReference(message.body, types);

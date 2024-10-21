@@ -147,7 +147,15 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
                         }
                         environmentId={environmentId}
                         baseUrl={baseUrl}
-                        environmentFilters={settings?.environments}
+                        // TODO: this is a temporary fix to show all environments in the playground, unless filtered in the settings
+                        // this is so that the playground can be specifically disabled for certain environments
+                        options={
+                            settings?.environments
+                                ? context.channel.environments?.filter(
+                                      (env) => settings.environments?.includes(env.id) ?? true,
+                                  )
+                                : context.channel.environments
+                        }
                         path={context.channel.path}
                         queryParameters={context.channel.queryParameters}
                         sendRequestButtonLabel={

@@ -1,6 +1,6 @@
+import { mapValues } from "es-toolkit/object";
 import { FernNavigation } from "../../../..";
 import { APIV1Read, type DocsV2Read } from "../../../../client/types";
-import { mapValues } from "../../../../utils";
 import { getFrontmatter } from "../../../utils/getFrontmatter";
 import { getNoIndexFromFrontmatter } from "../../../utils/getNoIndexFromFrontmatter";
 import { NavigationConfigConverter } from "./NavigationConfigConverter";
@@ -30,17 +30,47 @@ export function toRootNode(
             fullSlugMap[FernNavigation.V1.PageId(pageId)] = fullSlug;
         }
     });
-    return NavigationConfigConverter.convert(
-        response.definition.config.title,
-        response.definition.config.navigation,
-        fullSlugMap,
-        noindexMap,
-        hackReorderApis(response.definition.apis, response.baseUrl.domain),
-        response.baseUrl.basePath,
-        isLexicographicSortEnabled(response.baseUrl.domain),
-        disableEndpointPairs,
-        paginated,
-    );
+
+    if (response.definition.config.root) {
+        return response.definition.config.root;
+    } else if (response.definition.config.navigation) {
+        return NavigationConfigConverter.convert(
+            response.definition.config.title,
+            response.definition.config.navigation,
+            fullSlugMap,
+            noindexMap,
+            hackReorderApis(response.definition.apis, response.baseUrl.domain),
+            response.baseUrl.basePath,
+            isLexicographicSortEnabled(response.baseUrl.domain),
+            disableEndpointPairs,
+            paginated,
+        );
+    } else {
+        // eslint-disable-next-line no-console
+        console.error("No root node found");
+        return {
+            type: "root",
+            version: "v1",
+            child: {
+                type: "unversioned",
+                id: FernNavigation.V1.NodeId("root-unversioned"),
+                child: {
+                    type: "sidebarRoot",
+                    id: FernNavigation.V1.NodeId("root-sidebar"),
+                    children: [],
+                },
+                landingPage: undefined,
+            },
+            title: response.definition.config.title ?? "",
+            slug: FernNavigation.V1.Slug(""),
+            icon: undefined,
+            hidden: undefined,
+            authed: undefined,
+            audience: undefined,
+            id: FernNavigation.V1.NodeId("root"),
+            pointsTo: undefined,
+        };
+    }
 }
 
 function isLexicographicSortEnabled(domain: string): boolean {

@@ -34,6 +34,7 @@ async function main() {
                         memory: 1024,
                         cpu: 512,
                         cacheName: "FernDocsCache3",
+                        cacheNodeType: "cache.r7g.large",
                     },
                     {
                         env: { account: "985111089818", region: "us-east-1" },
@@ -54,7 +55,8 @@ async function main() {
                         memory: 4096,
                         redisClusteringModeEnabled: true,
                         cpu: 2048,
-                        cacheName: "FernDocsCache5",
+                        cacheName: "FernDocsCache6",
+                        cacheNodeType: "cache.r7g.xlarge",
                     },
                     {
                         env: { account: "985111089818", region: "us-east-1" },

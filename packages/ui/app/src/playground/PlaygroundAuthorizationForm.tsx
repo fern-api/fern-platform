@@ -14,7 +14,6 @@ import {
 import { useBooleanState } from "@fern-ui/react-commons";
 import { HelpCircle, Key, User } from "iconoir-react";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
-import { isEmpty } from "lodash-es";
 import { useRouter } from "next/router";
 import { FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
 import urlJoin from "url-join";
@@ -579,6 +578,10 @@ export function PlaygroundAuthorizationFormCard({
             </FernCollapse>
         </div>
     );
+}
+
+function isEmpty(str: string | undefined): boolean {
+    return str == null || str.trim().length === 0;
 }
 
 function isAuthed(auth: APIV1Read.ApiAuth, authState: PlaygroundAuthState): boolean {

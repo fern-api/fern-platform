@@ -33,7 +33,7 @@ export const SearchDialog = (): ReactElement | null => {
     const isSearchDialogOpen = useIsSearchDialogOpen();
     const { isAiChatbotEnabledInPreview } = useFeatureFlags();
 
-    const [config] = useSearchConfig();
+    const config = useSearchConfig();
 
     if (!config.isAvailable) {
         if (isSearchDialogOpen) {
@@ -73,7 +73,7 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
         [activeVersion, sidebar],
     );
 
-    const [searchConfig] = useSearchConfig();
+    const searchConfig = useSearchConfig();
     const algoliaSearchClient = useAlgoliaSearchClient();
     const inputRef = useRef<HTMLInputElement>(null);
     const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);

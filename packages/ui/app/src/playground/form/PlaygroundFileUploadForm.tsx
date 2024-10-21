@@ -1,7 +1,7 @@
 import { FernButton, FernButtonGroup, FernCard } from "@fern-ui/components";
 import cn from "clsx";
+import { uniqBy } from "es-toolkit/array";
 import { Page, PagePlusIn, Xmark } from "iconoir-react";
-import { uniqBy } from "lodash-es";
 import numeral from "numeral";
 import { ChangeEvent, DragEventHandler, memo, useEffect, useRef, useState } from "react";
 import { WithLabelInternal } from "../WithLabel";
