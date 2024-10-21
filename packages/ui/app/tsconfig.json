@@ -6,11 +6,7 @@
     "outDir": "./dist",
     "rootDir": "./src"
   },
-  "include": [
-    "./src/**/*",
-    "../fern-docs-mdx/src/plugins/rehypeSqueezeParagraphs.ts",
-    "../fern-docs-mdx/src/plugins/remark-squeeze-paragraphs.ts"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
       "path": "../../commons/core-utils"
