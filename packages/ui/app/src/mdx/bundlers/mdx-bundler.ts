@@ -3,6 +3,7 @@ import { customHeadingHandler, sanitizeBreaks, sanitizeMdxExpression, toTree } f
 import {
     rehypeAcornErrorBoundary,
     rehypeExtractAsides,
+    rehypeMdxClassStyle,
     rehypeSqueezeParagraphs,
     remarkSanitizeAcorn,
     remarkSqueezeParagraphs,
@@ -95,6 +96,7 @@ export async function serializeMdx(
 
                 const rehypePlugins: PluggableList = [
                     rehypeSqueezeParagraphs,
+                    rehypeMdxClassStyle,
                     rehypeAcornErrorBoundary,
                     rehypeSlug,
                     rehypeKatex,

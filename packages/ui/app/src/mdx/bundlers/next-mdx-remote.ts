@@ -3,6 +3,7 @@ import { customHeadingHandler, sanitizeBreaks, sanitizeMdxExpression, toTree } f
 import {
     rehypeAcornErrorBoundary,
     rehypeExtractAsides,
+    rehypeMdxClassStyle,
     rehypeSqueezeParagraphs,
     remarkSanitizeAcorn,
     remarkSqueezeParagraphs,
@@ -45,6 +46,7 @@ function withDefaultMdxOptions({ options = {} }: FernSerializeMdxOptions = {}): 
 
     const rehypePlugins: PluggableList = [
         rehypeSqueezeParagraphs,
+        rehypeMdxClassStyle,
         rehypeAcornErrorBoundary,
         rehypeSlug,
         rehypeKatex,
