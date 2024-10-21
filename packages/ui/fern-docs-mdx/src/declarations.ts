@@ -8,6 +8,11 @@ interface EsastData extends UnistData {
      * Registered by `@mdx-js/mdx/lib/types.d.ts`.
      */
     _mdxExplicitJsx?: boolean | null | undefined;
+
+    /**
+     * Whether a node should be skipped from the sanitization process.
+     */
+    _mdxSkipSanitization?: boolean | null | undefined;
 }
 
 interface EsastCommentData extends EsastData {

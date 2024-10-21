@@ -87,7 +87,7 @@ const INTERNAL_COMPONENTS = {
     ReferenceLayoutAside,
 
     // error boundary
-    MdxErrorBoundary: (props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error">>): ReactElement => (
+    MdxErrorBoundary: (props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error" | "fallback">>): ReactElement => (
         <FernErrorTag component="MdxErrorBoundary" {...props} />
     ),
 };

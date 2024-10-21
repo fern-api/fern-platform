@@ -1,6 +1,12 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import { customHeadingHandler } from "@fern-ui/fern-docs-mdx";
-import { rehypeExtractAsides } from "@fern-ui/fern-docs-mdx/plugins";
+import { customHeadingHandler, sanitizeAcorn, sanitizeBreaks } from "@fern-ui/fern-docs-mdx";
+import {
+    rehypeAcornErrorBoundary,
+    rehypeExtractAsides,
+    rehypeSqueezeParagraphs,
+    remarkSanitizeAcorn,
+    remarkSqueezeParagraphs,
+} from "@fern-ui/fern-docs-mdx/plugins";
 import type { Options } from "@mdx-js/esbuild";
 import { mapKeys } from "es-toolkit/object";
 import { bundleMDX } from "mdx-bundler";
@@ -14,10 +20,7 @@ import remarkSmartypants from "remark-smartypants";
 import { PluggableList } from "unified";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
-import { rehypeSqueezeParagraphs } from "../plugins/rehypeSqueezeParagraphs";
-import { remarkSqueezeParagraphs } from "../plugins/remarkSqueezeParagraphs";
 import type { FernSerializeMdxOptions } from "../types";
-import { replaceBrokenBrTags } from "./replaceBrokenBrTags";
 
 /**
  * Should only be invoked server-side.
@@ -35,7 +38,8 @@ export async function serializeMdx(
         return undefined;
     }
 
-    content = replaceBrokenBrTags(content);
+    content = sanitizeBreaks(content);
+    content = sanitizeAcorn(content);
 
     if (process.platform === "win32") {
         process.env.ESBUILD_BINARY_PATH = path.join(process.cwd(), "node_modules", "esbuild", "esbuild.exe");
@@ -76,6 +80,7 @@ export async function serializeMdx(
 
                 const remarkPlugins: PluggableList = [
                     remarkSqueezeParagraphs,
+                    remarkSanitizeAcorn,
                     remarkGfm,
                     remarkSmartypants,
                     remarkMath,
@@ -90,6 +95,7 @@ export async function serializeMdx(
 
                 const rehypePlugins: PluggableList = [
                     rehypeSqueezeParagraphs,
+                    rehypeAcornErrorBoundary,
                     rehypeSlug,
                     rehypeKatex,
                     rehypeFernCode,

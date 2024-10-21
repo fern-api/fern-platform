@@ -1,29 +1,76 @@
-import { Parser } from "acorn";
-import acornJsx from "acorn-jsx";
-import { Program } from "estree";
+import type { Program } from "estree";
 import { walk } from "estree-walker";
-import { Root } from "mdast";
-import { fromMarkdown } from "mdast-util-from-markdown";
+import type { Root } from "mdast";
 import { visit } from "unist-util-visit";
-import { getPosition } from "../position.js";
 
 interface Options {
+    /**
+     * This is the global scope of identifiers that are allowed to be consumed by acorn.
+     */
     allowedIdentifiers?: string[];
 }
 
-const ALLOWED_OBJECTS: string[] = ["Math", "Date", "RegExp", "JSON", "Set", "Map"];
+/**
+ * Not allowed: Promise, crypto, etc.
+ *
+ * Note: `props` will be used by @mdx-js/esbuild
+ */
+const ALLOWED_GLOBAL_IDENTIFIERS: string[] = ["Math", "Date", "RegExp", "JSON", "Set", "Map", "URL", "props"];
 
-// makes a best effort to strip away any acorn expressions that are not valid
-export function remarkSanitizeAcorn({ allowedIdentifiers = [] }: Options = {}): (tree: Root) => undefined {
+/**
+ * This plugin makes a best effort to strip away any acorn expressions that are not valid.
+ *
+ * - some global elements are allowed, such as Math, Date, JSON, etc.
+ * - await expressions are not allowed, and will be escaped.
+ */
+export function remarkSanitizeAcorn({ allowedIdentifiers = [] }: Options = {}): (tree: Root) => void {
     return (tree) => {
-        const allowedIdentifiersSet = new Set([...ALLOWED_OBJECTS, ...allowedIdentifiers]);
+        const allowedIdentifiersSet = new Set([...ALLOWED_GLOBAL_IDENTIFIERS, ...allowedIdentifiers]);
+
+        // add identifiers from ESM to the allowed identifiers set
+        // i.e. `export const foo = 1;` should avoid escaping `foo`.
+        visit(tree, (node, index, parent) => {
+            if (node.type === "mdxjsEsm") {
+                const { identifiers, isAwaited } = collectIdentifiers(node.data?.estree);
+                if (isAwaited && parent && index != null) {
+                    // escape the expression if it contains identifiers that are not allowed:
+                    parent.children[index] = {
+                        type: "text",
+                        value: `{${node.value}}`,
+                    };
+                    return "skip";
+                }
+                identifiers.forEach((id) => allowedIdentifiersSet.add(id));
+            }
+            return;
+        });
+
+        // HACK: attempt to extract identifiers that are in-use via JSX attributes.
+        // if any identifiers are present in JSX attributes, add them to the allowed identifiers set
+        // so that they're not escaped within acorns.
+        visit(tree, (node) => {
+            if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
+                if (node.name) {
+                    allowedIdentifiersSet.add(node.name);
+                }
+
+                node.attributes.forEach((attr) => {
+                    if (attr.type === "mdxJsxAttribute" && attr.value && typeof attr.value !== "string") {
+                        const { identifiers } = collectIdentifiers(attr.value.data?.estree);
+                        identifiers.forEach((id) => allowedIdentifiersSet.add(id));
+                    }
+                });
+            }
+        });
 
         visit(tree, (node, index, parent) => {
-            if (node.type === "mdxTextExpression") {
-                const identifiers = collectIdentifiers(node.data?.estree);
-                if (identifiers.every((identifier) => allowedIdentifiersSet.has(identifier))) {
+            if (node.type === "mdxTextExpression" || node.type === "mdxFlowExpression") {
+                const { identifiers, isAwaited } = collectIdentifiers(node.data?.estree);
+                if (identifiers.every((identifier) => allowedIdentifiersSet.has(identifier)) && !isAwaited) {
+                    // continue if all identifiers are allowed and the expression is not awaited.
                     return;
                 } else if (parent && index != null) {
+                    // escape the expression if it contains identifiers that are not allowed:
                     parent.children[index] = {
                         type: "text",
                         value: `{${node.value}}`,
@@ -32,144 +79,46 @@ export function remarkSanitizeAcorn({ allowedIdentifiers = [] }: Options = {}): 
                 }
             }
 
-            // add identifiers from ESM to the allowed identifiers set
-            // i.e. `export const foo = 1;` should avoid escaping `foo` in future acorns.
-            if (node.type === "mdxjsEsm") {
-                const identifiers = collectIdentifiers(node.data?.estree);
-                identifiers.forEach((id) => allowedIdentifiersSet.add(id));
-                return;
-            }
-
-            // if any identifiers are present in JSX attributes, add them to the allowed identifiers set
-            // so that they're not escaped in future acorns.
-            if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
-                node.attributes.forEach((attr) => {
-                    if (attr.type === "mdxJsxAttribute" && attr.value && typeof attr.value !== "string") {
-                        const identifiers = collectIdentifiers(attr.value.data?.estree);
-                        identifiers.forEach((id) => allowedIdentifiersSet.add(id));
-                    }
-                });
-            }
-
             return;
         });
     };
 }
 
-function collectIdentifiers(estree: Program | null | undefined): string[] {
+function collectIdentifiers(estree: Program | null | undefined): { identifiers: string[]; isAwaited: boolean } {
+    let isAwaited = false;
+
     if (!estree) {
-        return [];
+        return { identifiers: [], isAwaited };
     }
 
     const identifiers = new Set<string>();
 
+    // collect identifiers that can cause acorn evaluation to fail
     walk(estree, {
         enter(node) {
-            if (node.type === "MemberExpression" && node.object.type === "Identifier") {
-                identifiers.add(node.object.name);
-                this.skip();
+            if (node.type === "AwaitExpression") {
+                isAwaited = true;
+            }
+
+            if (node.data?._mdxSkipSanitization) {
                 return;
             }
 
-            if (node.type === "Identifier") {
+            if (node.type === "Property") {
+                (node.key.data ??= {})._mdxSkipSanitization = true;
+                return;
+            }
+
+            if (node.type === "MemberExpression") {
+                (node.property.data ??= {})._mdxSkipSanitization = true;
+                return;
+            }
+
+            if (node.type === "Identifier" || node.type === "JSXIdentifier") {
                 identifiers.add(node.name);
             }
         },
     });
 
-    return Array.from(identifiers);
-}
-
-export function preSanitizeAcorn(content: string): string {
-    const parser = Parser.extend(acornJsx());
-
-    // don't parse mdx in here
-    const noFrillsMdast = fromMarkdown(content);
-    const lines = content.split("\n");
-
-    let offset = 0;
-
-    visit(noFrillsMdast, (node) => {
-        // avoid sanitizing code blocks
-        if (node.type === "code" || node.type === "inlineCode") {
-            return "skip";
-        }
-
-        if (!node.position) {
-            return;
-        }
-
-        const { start } = getPosition(lines, node.position);
-
-        const braceStack: ["{" | "<", number][] = [];
-        let popStack: ["{" | "<", number][] = [];
-
-        while (start + offset < content.length) {
-            const char = content[start + offset];
-
-            // special case to skip over export statements
-            if (content.slice(start + offset, "export ".length) === "export ") {
-                const nextNewline = content.indexOf("\n", start + offset);
-
-                if (nextNewline === -1) {
-                    break;
-                }
-
-                offset = nextNewline - start;
-                continue;
-            }
-
-            if (char === "{" || char === "<") {
-                braceStack.push([char, start + offset]);
-            } else if (char === "}" || char === ">") {
-                if (braceStack.length > 0) {
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    const [brace, index] = braceStack.pop()!;
-
-                    // if we're closing a JSX tag that is invalid, we need to escape all of the opening braces contained buy it
-                    if (brace === "<") {
-                        popStack.forEach(([brace, index]) => {
-                            content = content.slice(0, index) + `\\${brace}` + content.slice(index + 1);
-                        });
-                    }
-
-                    if (braceStack.length === 0) {
-                        const expression = content.slice(index + 1, start + offset);
-
-                        // // skip spread operator
-                        // if (expression.trim().startsWith("...")) {
-                        //     offset++;
-                        //     continue;
-                        // }
-
-                        // test if expression is a valid acorn expression, otherwise escape it
-                        try {
-                            parser.parse(expression, { ecmaVersion: 2024, sourceType: "module", locations: true });
-                        } catch (e) {
-                            content = content.slice(0, index) + `\\${brace}` + content.slice(index + 1);
-                            offset++;
-                        }
-
-                        popStack = [];
-                    } else {
-                        popStack.push([brace, index]);
-                    }
-                } else {
-                    // Unmatched closing brace, does not need to be escaped
-                }
-            }
-            offset++;
-        }
-
-        // If there are any unmatched opening braces left, escape them
-        while (braceStack.length > 0) {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const [brace, index] = braceStack.pop()!;
-            content = content.slice(0, index) + `\\${brace}` + content.slice(index + 1);
-        }
-
-        return;
-    });
-
-    return content;
+    return { identifiers: Array.from(identifiers), isAwaited };
 }

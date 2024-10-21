@@ -16,12 +16,6 @@ import { visit } from "unist-util-visit";
  *   Transform.
  */
 export function remarkMarkAndUnravel(): (tree: Root) => void {
-    /**
-     * @param {Root} tree
-     *   Tree.
-     * @returns {undefined}
-     *   Nothing.
-     */
     return (tree) => {
         visit(tree, (node, index, parent) => {
             let offset = -1;

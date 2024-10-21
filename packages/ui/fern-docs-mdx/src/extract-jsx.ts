@@ -59,6 +59,7 @@ export function extractJsx(tree: HastRoot | MdastRoot): {
             walkEstree(node.data.estree);
         }
     });
+
     return {
         jsxElements: Array.from(jsxElements)
             // filter out esm elements

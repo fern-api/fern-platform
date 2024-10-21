@@ -1,11 +1,9 @@
 import { mdastToMarkdown, toTree } from "../../parse.js";
-import { preSanitizeAcorn, remarkSanitizeAcorn } from "../remark-sanitize-acorn.js";
+import { sanitizeAcorn } from "../../sanitize/sanitize-acorn.js";
+import { remarkSanitizeAcorn } from "../remark-sanitize-acorn.js";
 
 function sanitizeAcorns(content: string, allowedIdentifiers: string[] = []) {
-    const sanitized = preSanitizeAcorn(content);
-    console.log("BEFORE", content);
-    console.log("AFTER", sanitized);
-    const tree = toTree(sanitized);
+    const tree = toTree(sanitizeAcorn(content));
     remarkSanitizeAcorn({ allowedIdentifiers })(tree.mdast);
     return mdastToMarkdown(tree.mdast);
 }
@@ -28,14 +26,23 @@ describe("remarkSanitizeAcorn", () => {
         expect(result).toBe("# hi {foo}\n");
     });
 
-    // this is currently not supported because <div style={{ color: foo }} /> would be escaped
-    it.skip("should escape identifiers with multiple braces", () => {
+    it("should escape identifiers with multiple braces", () => {
         // while foo and bar are allowed, the inner braces are not
         const result = sanitizeAcorns("# hi {foo {bar}}", ["foo", "bar"]);
         expect(result).toBe("# hi \\{foo \\{bar}}\n");
     });
 
-    it("should not fail on multiple end braces", () => {
+    it("should escape identifiers with multiple nested braces", () => {
+        const result2 = sanitizeAcorns("# hi {foo {bar} {baz}}", ["foo", "baz"]);
+        expect(result2).toBe("# hi \\{foo \\{bar} \\{baz}}\n");
+    });
+
+    it("should not escape objects in JSX attributes", () => {
+        const reactStyles = sanitizeAcorns("<div style={{ color: foo }} />");
+        expect(reactStyles).toBe("<div style={{ color: foo }} />\n");
+    });
+
+    it("should not escape, nor fail, on multiple end braces", () => {
         const result = sanitizeAcorns("}}");
         expect(result).toBe("}}\n");
     });
@@ -77,34 +84,52 @@ describe("remarkSanitizeAcorn", () => {
 
         const result4 = sanitizeAcorns("# hi {new Promise((resolve) => setTimeout(resolve, 1))}");
         expect(result4).toBe("# hi \\{new Promise((resolve) => setTimeout(resolve, 1))}\n");
+    });
 
+    it("should escape await expressions", () => {
         const result5 = sanitizeAcorns("# hi {await something()}");
+        expect(result5).toBe("# hi \\{await something()}\n");
+    });
+
+    it("should escape await expressions even when the function is allowed", () => {
+        const result5 = sanitizeAcorns("# hi {await something()}", ["something"]);
         expect(result5).toBe("# hi \\{await something()}\n");
     });
 
     it("should not escape ESM identifiers", () => {
         const result = sanitizeAcorns("export const foo = 1;\n\n# hi {foo}");
         expect(result).toBe("export const foo = 1;\n\n# hi {foo}\n");
+    });
 
+    it("should continue to escape identifiers that are not allowed by esm", () => {
         const result2 = sanitizeAcorns("export const foo = 1;\n\n# hi {foo} {bar}");
         expect(result2).toBe("export const foo = 1;\n\n# hi {foo} \\{bar}\n");
+    });
 
+    it("should not escape identifiers from esmjs, even when used in an expression", () => {
         const result3 = sanitizeAcorns("export const foo = 1;\n\n# hi {foo + 1}");
         expect(result3).toBe("export const foo = 1;\n\n# hi {foo + 1}\n");
     });
 
+    it("should escape identifiers that are not allowed by esm, even when used in an expression", () => {
+        const result3 = sanitizeAcorns("export const foo = 1;\n\n# hi {foo + 1 + bar}");
+        expect(result3).toBe("export const foo = 1;\n\n# hi \\{foo + 1 + bar}\n");
+    });
+
     it("should never escape JSX", () => {
-        const result = sanitizeAcorns("<div {...props}>hi</div>");
+        const result = sanitizeAcorns("<div {...otherProps}>hi</div>");
         expect(result).toMatchInlineSnapshot(`
-          "<div {...props}>
+          "<div {...otherProps}>
             hi
           </div>
           "
         `);
+    });
 
-        const result2 = sanitizeAcorns("<div {...props}>hi {foo}</div>", ["foo"]);
+    it("should escape identifiers inside JSX children", () => {
+        const result2 = sanitizeAcorns("<div {...otherProps}>hi {foo}</div>", ["foo"]);
         expect(result2).toMatchInlineSnapshot(`
-          "<div {...props}>
+          "<div {...otherProps}>
             hi 
 
             {foo}
@@ -112,16 +137,18 @@ describe("remarkSanitizeAcorn", () => {
           "
         `);
 
-        const result3 = sanitizeAcorns("<div {...props}>hi {foo + 1}</div>");
+        const result3 = sanitizeAcorns("<div {...otherProps}>hi {foo + 1}</div>");
         expect(result3).toMatchInlineSnapshot(`
-          "<div {...props}>
+          "<div {...otherProps}>
             hi 
 
             \\{foo + 1}
           </div>
           "
         `);
+    });
 
+    it("should not escape identifiers that had been used in JSX attributes", () => {
         const result4 = sanitizeAcorns("<div prop={foo}>hi {foo + 1}</div>");
         expect(result4).toMatchInlineSnapshot(`
           "<div prop={foo}>
@@ -141,19 +168,12 @@ describe("remarkSanitizeAcorn", () => {
           </div>
           "
         `);
+    });
 
+    it("should escape JSX inside expressions, if any identifiers are not allowed", () => {
         const result6 = sanitizeAcorns("{<div style={{ color: foo }} />}");
         expect(result6).toMatchInlineSnapshot(`
-          "{<div style={{ color: foo }} />}
-          "
-        `);
-
-        // {foo} is not escaped later because it was already escaped by the JSX attribute
-        const result7 = sanitizeAcorns("{<div style={{ color: foo }} />} {foo + 1}");
-        expect(result7).toMatchInlineSnapshot(`
-          "{<div style={{ color: foo }} />}
-
-          {foo + 1}
+          "\\{<div style={{ color: foo }} />}
           "
         `);
 
@@ -162,7 +182,7 @@ describe("remarkSanitizeAcorn", () => {
 
             ### Step 1
 
-            {foo && <MyComponent />}
+            \\{foo && <MyComponent />}
 
             </Steps>
         `);
@@ -170,7 +190,7 @@ describe("remarkSanitizeAcorn", () => {
           "<Steps>
             ### Step 1
 
-            {foo && <MyComponent />}
+            \\{foo && <MyComponent />}
           </Steps>
           "
         `);
@@ -187,22 +207,22 @@ describe("remarkSanitizeAcorn", () => {
     });
 
     it("should not escape spread operator", () => {
-        const result = sanitizeAcorns("import props from './props';\nexport const foo = { ...props };");
+        const result = sanitizeAcorns("import props from './props';\nexport const foo = { ...otherProps };");
         expect(result).toMatchInlineSnapshot(`
           "import props from './props';
-          export const foo = { ...props };
+          export const foo = { ...otherProps };
           "
         `);
 
-        const result2 = sanitizeAcorns("export const foo = { ...props };");
+        const result2 = sanitizeAcorns("export const foo = { ...otherProps };");
         expect(result2).toMatchInlineSnapshot(`
-          "export const foo = { ...props };
+          "export const foo = { ...otherProps };
           "
         `);
 
-        const result3 = sanitizeAcorns("export const foo = { ...props, ...props2 };");
+        const result3 = sanitizeAcorns("export const foo = { ...otherProps, ...otherProps2 };");
         expect(result3).toMatchInlineSnapshot(`
-          "export const foo = { ...props, ...props2 };
+          "export const foo = { ...otherProps, ...otherProps2 };
           "
         `);
     });
@@ -214,9 +234,9 @@ describe("remarkSanitizeAcorn", () => {
 
     it("should escape improper spread operator", () => {
         // export should work OK
-        const result = sanitizeAcorns("export const foo = {...props,n}");
+        const result = sanitizeAcorns("export const foo = {...otherProps,n}");
         expect(result).toMatchInlineSnapshot(`
-          "export const foo = {...props,n}
+          "export const foo = {...otherProps,n}
           "
         `);
 
@@ -226,5 +246,67 @@ describe("remarkSanitizeAcorn", () => {
           "\\<a \\{...b,c} d>
           "
         `);
+    });
+
+    it("should ignore code blocks", () => {
+        const result = sanitizeAcorns("```js\n{foo}\n```");
+        expect(result).toBe("```js\n{foo}\n```\n");
+
+        const result2 = sanitizeAcorns("```js\n{foo}\n```\n\n# hi {foo}");
+        expect(result2).toBe("```js\n{foo}\n```\n\n# hi \\{foo}\n");
+
+        const result3 = sanitizeAcorns(
+            "<CodeBlock>\n```\n const props = { foo: 1 };\n\n <{...anything} />\n```\n</CodeBlock>\n\n# hi {foo}",
+        );
+        expect(result3).toMatchInlineSnapshot(`
+          "<CodeBlock>
+            \`\`\`
+             const props = { foo: 1 };
+
+             <{...anything} />
+            \`\`\`
+          </CodeBlock>
+
+          # hi \\{foo}
+          "
+        `);
+    });
+
+    it("should allow regex literals", () => {
+        const result = sanitizeAcorns("# hi {/foo/}");
+        expect(result).toBe("# hi {/foo/}\n");
+    });
+
+    it("should allow JSON literals", () => {
+        const result = sanitizeAcorns("# hi {JSON.stringify({foo: 1})}");
+        expect(result).toBe("# hi {JSON.stringify({foo: 1})}\n");
+    });
+
+    it("should allow deeply nested identifiers", () => {
+        const result = sanitizeAcorns("# hi {foo.bar.baz}", ["foo"]);
+        expect(result).toBe("# hi {foo.bar.baz}\n");
+    });
+
+    it("should not escape props", () => {
+        const result = sanitizeAcorns("<div {...props} />");
+        expect(result).toBe("<div {...props} />\n");
+
+        const result2 = sanitizeAcorns("{props.title}");
+        expect(result2).toBe("{props.title}\n");
+    });
+
+    it("should escape crypto", () => {
+        const result = sanitizeAcorns("# hi {crypto.randomUUID()}");
+        expect(result).toBe("# hi \\{crypto.randomUUID()}\n");
+    });
+
+    it("should not escape URL", () => {
+        const result = sanitizeAcorns("# hi {new URL('https://example.com')}");
+        expect(result).toBe("# hi {new URL('https://example.com')}\n");
+    });
+
+    it("should escape awaited esm", () => {
+        const result = sanitizeAcorns("export const foo = await something();");
+        expect(result).toBe("\\{export const foo = await something();}\n");
     });
 });

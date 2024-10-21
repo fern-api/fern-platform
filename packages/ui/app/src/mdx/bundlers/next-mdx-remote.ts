@@ -1,6 +1,12 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import { customHeadingHandler } from "@fern-ui/fern-docs-mdx";
-import { rehypeExtractAsides } from "@fern-ui/fern-docs-mdx/plugins";
+import { customHeadingHandler, sanitizeAcorn, sanitizeBreaks } from "@fern-ui/fern-docs-mdx";
+import {
+    rehypeAcornErrorBoundary,
+    rehypeExtractAsides,
+    rehypeSqueezeParagraphs,
+    remarkSanitizeAcorn,
+    remarkSqueezeParagraphs,
+} from "@fern-ui/fern-docs-mdx/plugins";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
@@ -11,10 +17,7 @@ import remarkSmartypants from "remark-smartypants";
 import type { PluggableList } from "unified";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
-import { rehypeSqueezeParagraphs } from "../plugins/rehypeSqueezeParagraphs";
-import { remarkSqueezeParagraphs } from "../plugins/remarkSqueezeParagraphs";
 import type { FernSerializeMdxOptions } from "../types";
-import { replaceBrokenBrTags } from "./replaceBrokenBrTags";
 
 type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 
@@ -29,6 +32,7 @@ function withDefaultMdxOptions({ options = {} }: FernSerializeMdxOptions = {}): 
 
     const remarkPlugins: PluggableList = [
         remarkSqueezeParagraphs,
+        remarkSanitizeAcorn,
         remarkGfm,
         remarkSmartypants,
         remarkMath,
@@ -41,6 +45,7 @@ function withDefaultMdxOptions({ options = {} }: FernSerializeMdxOptions = {}): 
 
     const rehypePlugins: PluggableList = [
         rehypeSqueezeParagraphs,
+        rehypeAcornErrorBoundary,
         rehypeSlug,
         rehypeKatex,
         rehypeFernCode,
@@ -93,7 +98,8 @@ export async function serializeMdx(
     //     return content;
     // }
 
-    content = replaceBrokenBrTags(content);
+    content = sanitizeBreaks(content);
+    content = sanitizeAcorn(content);
 
     try {
         const result = await serialize<Record<string, unknown>, FernDocs.Frontmatter>(content, {
