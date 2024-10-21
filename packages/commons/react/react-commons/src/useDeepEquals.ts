@@ -1,4 +1,4 @@
-import { isEqual } from "lodash-es";
+import { isEqual } from "es-toolkit/predicate";
 import * as React from "react";
 
 type UseEffectParams = Parameters<typeof React.useEffect>;

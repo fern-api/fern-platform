@@ -61,6 +61,7 @@ export function EndpointRequestSnippetInternal({
                         method={endpoint.method}
                         environmentId={selectedEnvironmentId}
                         baseUrl={baseUrl}
+                        options={endpoint.environments}
                     />
                 }
                 actions={

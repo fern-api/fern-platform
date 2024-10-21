@@ -1,10 +1,9 @@
-// import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import cn from "clsx";
-import { compact } from "lodash-es";
+import { compact } from "es-toolkit/array";
 import { FC, PropsWithChildren, ReactNode, memo, useEffect, useRef, useState } from "react";
 import { capturePosthogEvent } from "../../analytics/posthog";
 import { useIsApiReferencePaginated, useRouteListener } from "../../atoms";

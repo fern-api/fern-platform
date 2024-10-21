@@ -26,7 +26,9 @@ export function getDocsDomainNode(req: NextApiRequest, useSearchParams = false):
         }
     }
 
-    throw new Error("Could not determine xFernHost from request.");
+    // eslint-disable-next-line no-console
+    console.error("Could not determine xFernHost from request. Returning buildwithfern.com.");
+    return "buildwithfern.com";
 }
 
 // attempts to construct the host from environment variables, when the req object is not available

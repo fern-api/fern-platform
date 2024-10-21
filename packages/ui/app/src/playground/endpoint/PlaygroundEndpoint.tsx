@@ -4,9 +4,9 @@ import { unknownToString } from "@fern-api/ui-core-utils";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { useEventCallback } from "@fern-ui/react-commons";
+import { mapValues } from "es-toolkit/object";
 import { SendSolid } from "iconoir-react";
 import { useSetAtom } from "jotai";
-import { mapValues } from "lodash-es";
 import { ReactElement, useCallback, useState } from "react";
 import {
     PLAYGROUND_AUTH_STATE_ATOM,
@@ -252,7 +252,15 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
                         sendRequest={grpcEndpoints?.includes(endpoint.id) ? sendGrpcRequest : sendRequest}
                         environmentId={environmentId}
                         baseUrl={baseUrl}
-                        environmentFilters={settings?.environments}
+                        // TODO: this is a temporary fix to show all environments in the playground, unless filtered in the settings
+                        // this is so that the playground can be specifically disabled for certain environments
+                        options={
+                            settings?.environments
+                                ? endpoint.environments?.filter(
+                                      (env) => settings.environments?.includes(env.id) ?? true,
+                                  )
+                                : endpoint.environments
+                        }
                         path={endpoint.path}
                         queryParameters={endpoint.queryParameters}
                         sendRequestIcon={<SendSolid className="transition-transform group-hover:translate-x-0.5" />}

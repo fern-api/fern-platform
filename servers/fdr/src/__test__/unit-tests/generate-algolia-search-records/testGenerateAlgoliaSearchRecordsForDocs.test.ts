@@ -78,7 +78,7 @@ describe("generateAlgoliaSearchRecordsForDocs", () => {
                         return [id, convertAPIDefinitionToDb(apiDef, id, EMPTY_SNIPPET_HOLDER)] as const;
                     });
 
-                    return new Map(apiIdDefinitionTuples);
+                    return Object.fromEntries(apiIdDefinitionTuples);
                 };
 
                 const apiDefinitionsById = preloadApiDefinitions();

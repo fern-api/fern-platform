@@ -22,7 +22,9 @@ export function getDocsDomainEdge(req: NextRequest, useSearchParams = false): st
         }
     }
 
-    throw new Error("Could not determine xFernHost from request.");
+    // eslint-disable-next-line no-console
+    console.error("Could not determine xFernHost from request. Returning buildwithfern.com.");
+    return "buildwithfern.com";
 }
 
 // use this for testing auth-based redirects on development and preview environments

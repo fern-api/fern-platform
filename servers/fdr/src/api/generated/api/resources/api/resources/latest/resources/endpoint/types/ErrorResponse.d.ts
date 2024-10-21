@@ -5,6 +5,6 @@ import * as FernRegistry from "../../../../../../../index";
 export interface ErrorResponse extends FernRegistry.api.latest.WithDescription, FernRegistry.api.latest.WithAvailability {
     shape: FernRegistry.api.latest.TypeShape | undefined;
     statusCode: number;
-    name: string | undefined;
+    name: string;
     examples: FernRegistry.api.latest.ErrorExample[] | undefined;
 }

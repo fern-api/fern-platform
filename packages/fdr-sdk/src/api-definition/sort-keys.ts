@@ -1,8 +1,7 @@
 import isPlainObject from "@fern-api/ui-core-utils/isPlainObject";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
-import difference from "lodash-es/difference";
-import keyBy from "lodash-es/keyBy";
-import mapValues from "lodash-es/mapValues";
+import { difference, keyBy } from "es-toolkit/array";
+import { mapValues } from "es-toolkit/object";
 import type * as Latest from "./latest";
 import { TypeShapeOrReference } from "./types";
 import { unwrapDiscriminatedUnionVariant, unwrapObjectType } from "./unwrap";

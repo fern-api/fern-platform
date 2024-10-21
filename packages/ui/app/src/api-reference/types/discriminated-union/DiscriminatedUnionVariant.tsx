@@ -3,7 +3,7 @@ import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import titleCase from "@fern-api/ui-core-utils/titleCase";
 import cn from "clsx";
-import { compact } from "lodash-es";
+import { compact } from "es-toolkit/array";
 import { useCallback, useEffect, useMemo } from "react";
 import { capturePosthogEvent } from "../../../analytics/posthog";
 import { Markdown } from "../../../mdx/Markdown";

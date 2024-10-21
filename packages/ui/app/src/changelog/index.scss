@@ -3,7 +3,7 @@
         @apply flex justify-between px-4 md:px-6 lg:px-8;
 
         > main {
-            @apply mx-auto max-w-screen-lg break-words;
+            @apply mx-auto max-w-screen-lg w-full break-words;
         }
     }
 

@@ -1,6 +1,6 @@
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { toCurlyBraceEndpointPathLiteral } from "@fern-api/fdr-sdk/api-definition";
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
+import { FdrAPI, type APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { UnreachableCaseError } from "ts-essentials";
 import { provideRegistryService } from "../../services/registry";
@@ -128,7 +128,13 @@ export class PlaygroundCodeSnippetResolver {
                         apiDefinitionId: undefined,
                         additionalTemplates: undefined,
                     },
-                    provideFdrClient: provideRegistryService,
+                    apiDefinitionGetter: async (id) => {
+                        const response = await provideRegistryService().api.v1.read.getApi(FdrAPI.ApiDefinitionId(id));
+                        if (response.ok) {
+                            return response.body;
+                        }
+                        throw new Error(JSON.stringify(response.error.error));
+                    },
                 });
             }
 
@@ -150,7 +156,13 @@ export class PlaygroundCodeSnippetResolver {
                         apiDefinitionId: undefined,
                         additionalTemplates: undefined,
                     },
-                    provideFdrClient: provideRegistryService,
+                    apiDefinitionGetter: async (id) => {
+                        const response = await provideRegistryService().api.v1.read.getApi(FdrAPI.ApiDefinitionId(id));
+                        if (response.ok) {
+                            return response.body;
+                        }
+                        throw new Error(JSON.stringify(response.error.error));
+                    },
                 });
             }
         }

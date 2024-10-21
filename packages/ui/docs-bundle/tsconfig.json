@@ -32,6 +32,9 @@
       "path": "../fern-docs-server"
     },
     {
+      "path": "../fern-docs-mdx"
+    },
+    {
       "path": "../../fdr-sdk/tsconfig.build.json"
     },
     {

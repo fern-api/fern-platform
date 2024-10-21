@@ -25,7 +25,7 @@ export class MockAlgoliaService implements AlgoliaService {
 
     async generateSearchRecords(_: {
         docsDefinition: DocsV1Db.DocsDefinitionDb;
-        apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>;
+        apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>;
         configSegmentTuples: ConfigSegmentTuple[];
     }): Promise<AlgoliaSearchRecord[]> {
         return [];

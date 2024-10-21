@@ -16,7 +16,7 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function 
     hideKeyboardShortcutHint,
 }) {
     const openSearchDialog = useOpenSearchDialog();
-    const [searchService] = useSearchConfig();
+    const searchService = useSearchConfig();
 
     return (
         <button

@@ -1,9 +1,9 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import cn from "clsx";
+import { isEqual } from "es-toolkit/predicate";
 import { ArrowRight, Search } from "iconoir-react";
 import { useAtomValue } from "jotai";
-import { isEqual } from "lodash-es";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
 import { NAVBAR_LINKS_ATOM, SEARCHBAR_PLACEMENT_ATOM, useColors, useOpenSearchDialog } from "../atoms";
 import { FernLinkButton } from "../components/FernLinkButton";
@@ -31,7 +31,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     const colors = useColors();
     const openSearchDialog = useOpenSearchDialog();
     const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
-    const [searchService] = useSearchConfig();
+    const searchService = useSearchConfig();
     const showSearchBar = useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "HEADER";
 
     const navbarLinksSection = (

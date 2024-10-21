@@ -1,53 +1,46 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import identity from "@fern-api/ui-core-utils/identity";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
-import { AsyncOrSync } from "ts-essentials";
 import * as Latest from "./latest";
 
 /**
  * Visitor for API definitions.
- * This is used to traverse the API definition and apply async functions to each node.
+ * This is used to traverse the API definition and apply functions to each node.
  */
 export interface ApiDefinitionVisitor {
     // endpoints
-    EndpointDefinition(endpoint: Latest.EndpointDefinition, key: string): AsyncOrSync<Latest.EndpointDefinition>;
-    HttpRequest(request: Latest.HttpRequest, key: string): AsyncOrSync<Latest.HttpRequest>;
-    HttpResponse(response: Latest.HttpResponse, key: string): AsyncOrSync<Latest.HttpResponse>;
-    ErrorResponse(error: Latest.ErrorResponse, key: string): AsyncOrSync<Latest.ErrorResponse>;
-    ExampleEndpointCall(example: Latest.ExampleEndpointCall, key: string): AsyncOrSync<Latest.ExampleEndpointCall>;
-    CodeSnippet(snippet: Latest.CodeSnippet, key: string): AsyncOrSync<Latest.CodeSnippet>;
-    ErrorExample(error: Latest.ErrorExample, key: string): AsyncOrSync<Latest.ErrorExample>;
+    EndpointDefinition(endpoint: Latest.EndpointDefinition, key: string): Latest.EndpointDefinition;
+    HttpRequest(request: Latest.HttpRequest, key: string): Latest.HttpRequest;
+    HttpResponse(response: Latest.HttpResponse, key: string): Latest.HttpResponse;
+    ErrorResponse(error: Latest.ErrorResponse, key: string): Latest.ErrorResponse;
+    ExampleEndpointCall(example: Latest.ExampleEndpointCall, key: string): Latest.ExampleEndpointCall;
+    CodeSnippet(snippet: Latest.CodeSnippet, key: string): Latest.CodeSnippet;
+    ErrorExample(error: Latest.ErrorExample, key: string): Latest.ErrorExample;
 
     // webhooks
-    WebhookDefinition(webhook: Latest.WebhookDefinition, key: string): AsyncOrSync<Latest.WebhookDefinition>;
-    WebhookPayload(payload: Latest.WebhookPayload, key: string): AsyncOrSync<Latest.WebhookPayload>;
+    WebhookDefinition(webhook: Latest.WebhookDefinition, key: string): Latest.WebhookDefinition;
+    WebhookPayload(payload: Latest.WebhookPayload, key: string): Latest.WebhookPayload;
 
     // websockets
-    WebSocketChannel(channel: Latest.WebSocketChannel, key: string): AsyncOrSync<Latest.WebSocketChannel>;
-    WebSocketMessage(message: Latest.WebSocketMessage, key: string): AsyncOrSync<Latest.WebSocketMessage>;
-    ExampleWebSocketSession(
-        session: Latest.ExampleWebSocketSession,
-        key: string,
-    ): AsyncOrSync<Latest.ExampleWebSocketSession>;
+    WebSocketChannel(channel: Latest.WebSocketChannel, key: string): Latest.WebSocketChannel;
+    WebSocketMessage(message: Latest.WebSocketMessage, key: string): Latest.WebSocketMessage;
+    ExampleWebSocketSession(session: Latest.ExampleWebSocketSession, key: string): Latest.ExampleWebSocketSession;
 
     // types
-    TypeDefinition(type: Latest.TypeDefinition, key: string): AsyncOrSync<Latest.TypeDefinition>;
-    TypeShape(shape: Latest.TypeShape, key: string): AsyncOrSync<Latest.TypeShape>;
-    ObjectType(property: Latest.ObjectType, key: string): AsyncOrSync<Latest.ObjectType>;
-    ObjectProperty(property: Latest.ObjectProperty, key: string): AsyncOrSync<Latest.ObjectProperty>;
-    EnumValue(value: Latest.EnumValue, key: string): AsyncOrSync<Latest.EnumValue>;
+    TypeDefinition(type: Latest.TypeDefinition, key: string): Latest.TypeDefinition;
+    TypeShape(shape: Latest.TypeShape, key: string): Latest.TypeShape;
+    ObjectType(property: Latest.ObjectType, key: string): Latest.ObjectType;
+    ObjectProperty(property: Latest.ObjectProperty, key: string): Latest.ObjectProperty;
+    EnumValue(value: Latest.EnumValue, key: string): Latest.EnumValue;
     UndiscriminatedUnionVariant(
         variant: Latest.UndiscriminatedUnionVariant,
         key: string,
-    ): AsyncOrSync<Latest.UndiscriminatedUnionVariant>;
-    DiscriminatedUnionVariant(
-        variant: Latest.DiscriminatedUnionVariant,
-        key: string,
-    ): AsyncOrSync<Latest.DiscriminatedUnionVariant>;
-    FormDataRequest(request: Latest.FormDataRequest, key: string): AsyncOrSync<Latest.FormDataRequest>;
-    FormDataField(field: Latest.FormDataField, key: string): AsyncOrSync<Latest.FormDataField>;
-    FormDataFile(file: Latest.FormDataFile, key: string): AsyncOrSync<Latest.FormDataFile>;
-    FormDataFiles(files: Latest.FormDataFiles, key: string): AsyncOrSync<Latest.FormDataFiles>;
+    ): Latest.UndiscriminatedUnionVariant;
+    DiscriminatedUnionVariant(variant: Latest.DiscriminatedUnionVariant, key: string): Latest.DiscriminatedUnionVariant;
+    FormDataRequest(request: Latest.FormDataRequest, key: string): Latest.FormDataRequest;
+    FormDataField(field: Latest.FormDataField, key: string): Latest.FormDataField;
+    FormDataFile(file: Latest.FormDataFile, key: string): Latest.FormDataFile;
+    FormDataFiles(files: Latest.FormDataFiles, key: string): Latest.FormDataFiles;
 }
 
 export class Transformer {
@@ -80,14 +73,11 @@ export class Transformer {
     }
 
     public static descriptions(
-        transformer: (description: FernDocs.MarkdownText, key: string) => AsyncOrSync<FernDocs.MarkdownText>,
+        transformer: (description: FernDocs.MarkdownText, key: string) => FernDocs.MarkdownText,
     ): Transformer {
-        async function internalTransformer<T extends Latest.WithDescription>(
-            withDescription: T,
-            key: string,
-        ): Promise<T> {
+        function internalTransformer<T extends Latest.WithDescription>(withDescription: T, key: string): T {
             const description =
-                withDescription.description != null ? await transformer(withDescription.description, key) : undefined;
+                withDescription.description != null ? transformer(withDescription.description, key) : undefined;
             return { ...withDescription, description };
         }
 
@@ -165,48 +155,31 @@ export class Transformer {
      * @param visitor the visitor to apply to the API definition
      * @returns the API definition with the visitor transformations applied
      */
-    apiDefinition = async (api: Latest.ApiDefinition): Promise<Latest.ApiDefinition> => {
-        const endpointsPromise = Promise.all(
-            Object.entries(api.endpoints).map(async ([id, endpoint]) => [
-                id,
-                await this.visitor.EndpointDefinition(endpoint, `${api.id}/endpoint/${id}`),
-            ]),
-        );
+    apiDefinition = (api: Latest.ApiDefinition): Latest.ApiDefinition => {
+        const endpoints = Object.entries(api.endpoints).map(([id, endpoint]) => [
+            id,
+            this.visitor.EndpointDefinition(endpoint, `${api.id}/endpoint/${id}`),
+        ]);
 
-        const websocketsPromise = Promise.all(
-            Object.entries(api.websockets).map(async ([id, websocket]) => [
-                id,
-                await this.visitor.WebSocketChannel(websocket, `${api.id}/websocket/${id}`),
-            ]),
-        );
+        const websockets = Object.entries(api.websockets).map(([id, websocket]) => [
+            id,
+            this.visitor.WebSocketChannel(websocket, `${api.id}/websocket/${id}`),
+        ]);
 
-        const webhooksPromise = Promise.all(
-            Object.entries(api.webhooks).map(async ([id, webhook]) => [
-                id,
-                await this.visitor.WebhookDefinition(webhook, `${api.id}/webhoook/${id}`),
-            ]),
-        );
+        const webhooks = Object.entries(api.webhooks).map(([id, webhook]) => [
+            id,
+            this.visitor.WebhookDefinition(webhook, `${api.id}/webhoook/${id}`),
+        ]);
 
-        const typesPromise = Promise.all(
-            Object.entries(api.types).map(async ([id, type]) => [
-                id,
-                await this.visitor.TypeDefinition(type, `${api.id}/type-definition/${id}`),
-            ]),
-        );
+        const types = Object.entries(api.types).map(([id, type]) => [
+            id,
+            this.visitor.TypeDefinition(type, `${api.id}/type-definition/${id}`),
+        ]);
 
-        const globalHeadersPromise = Promise.all(
+        const globalHeaders =
             api.globalHeaders?.map((header) =>
                 this.visitor.ObjectProperty(header, `${api.id}/global-headers/${header.key}`),
-            ) ?? [],
-        );
-
-        const [endpoints, websockets, webhooks, types, globalHeaders] = await Promise.all([
-            endpointsPromise,
-            websocketsPromise,
-            webhooksPromise,
-            typesPromise,
-            globalHeadersPromise,
-        ]);
+            ) ?? [];
 
         return {
             id: api.id,
@@ -239,82 +212,58 @@ export class Transformer {
              * The following types have nested types that need to be visited.
              */
 
-            EndpointDefinition: async (endpoint, key) =>
-                visitor.EndpointDefinition(await this.endpoint(endpoint, key), key),
-            HttpRequest: async (request, key) => visitor.HttpRequest(await this.httpRequest(request, key), key),
-            HttpResponse: async (response, key) => visitor.HttpResponse(await this.httpResponse(response, key), key),
-            ErrorResponse: async (error, key) => visitor.ErrorResponse(await this.errorResponse(error, key), key),
-            ExampleEndpointCall: async (example, key) =>
-                visitor.ExampleEndpointCall(await this.exampleEndpointCall(example, key), key),
-            WebhookDefinition: async (webhook, key) =>
-                visitor.WebhookDefinition(await this.webhookDefinition(webhook, key), key),
-            WebhookPayload: async (payload, key) =>
-                visitor.WebhookPayload(await this.webhookPayload(payload, key), key),
-            WebSocketChannel: async (channel, key) =>
-                visitor.WebSocketChannel(await this.webSocketChannel(channel, key), key),
-            WebSocketMessage: async (message, key) =>
-                visitor.WebSocketMessage(await this.webSocketMessage(message, key), key),
-            TypeDefinition: async (type, key) => visitor.TypeDefinition(await this.typeDefinition(type, key), key),
-            TypeShape: async (shape, key) => visitor.TypeShape(await this.typeShape(shape, key), key),
-            ObjectType: async (type, key) => visitor.ObjectType(await this.objectType(type, key), key),
-            DiscriminatedUnionVariant: async (variant, key) =>
-                visitor.DiscriminatedUnionVariant(await this.objectType(variant, key), key),
-            FormDataRequest: async (request, key) =>
-                visitor.FormDataRequest(await this.formDataRequest(request, key), key),
-            FormDataField: async (field, key) => visitor.FormDataField(await this.formDataField(field, key), key),
+            EndpointDefinition: (endpoint, key) => visitor.EndpointDefinition(this.endpoint(endpoint, key), key),
+            HttpRequest: (request, key) => visitor.HttpRequest(this.httpRequest(request, key), key),
+            HttpResponse: (response, key) => visitor.HttpResponse(this.httpResponse(response, key), key),
+            ErrorResponse: (error, key) => visitor.ErrorResponse(this.errorResponse(error, key), key),
+            ExampleEndpointCall: (example, key) =>
+                visitor.ExampleEndpointCall(this.exampleEndpointCall(example, key), key),
+            WebhookDefinition: (webhook, key) => visitor.WebhookDefinition(this.webhookDefinition(webhook, key), key),
+            WebhookPayload: (payload, key) => visitor.WebhookPayload(this.webhookPayload(payload, key), key),
+            WebSocketChannel: (channel, key) => visitor.WebSocketChannel(this.webSocketChannel(channel, key), key),
+            WebSocketMessage: (message, key) => visitor.WebSocketMessage(this.webSocketMessage(message, key), key),
+            TypeDefinition: (type, key) => visitor.TypeDefinition(this.typeDefinition(type, key), key),
+            TypeShape: (shape, key) => visitor.TypeShape(this.typeShape(shape, key), key),
+            ObjectType: (type, key) => visitor.ObjectType(this.objectType(type, key), key),
+            DiscriminatedUnionVariant: (variant, key) =>
+                visitor.DiscriminatedUnionVariant(this.objectType(variant, key), key),
+            FormDataRequest: (request, key) => visitor.FormDataRequest(this.formDataRequest(request, key), key),
+            FormDataField: (field, key) => visitor.FormDataField(this.formDataField(field, key), key),
         };
         return innerVisitor;
     };
 
-    endpoint = async (endpoint: Latest.EndpointDefinition, parentKey: string): Promise<Latest.EndpointDefinition> => {
-        const pathParametersPromise = Promise.all(
+    endpoint = (endpoint: Latest.EndpointDefinition, parentKey: string): Latest.EndpointDefinition => {
+        const pathParameters =
             endpoint.pathParameters?.map((param) =>
                 this.visitor.ObjectProperty(param, `${parentKey}/path/${param.key}`),
-            ) ?? [],
-        );
-        const queryParametersPromise = Promise.all(
+            ) ?? [];
+        const queryParameters =
             endpoint.queryParameters?.map((param) =>
                 this.visitor.ObjectProperty(param, `${parentKey}/query/${param.key}`),
-            ) ?? [],
-        );
-        const requestHeadersPromise = Promise.all(
+            ) ?? [];
+        const requestHeaders =
             endpoint.requestHeaders?.map((param) =>
                 this.visitor.ObjectProperty(param, `${parentKey}/requestHeader/${param.key}`),
-            ) ?? [],
-        );
-        const responseHeadersPromise = Promise.all(
+            ) ?? [];
+        const responseHeaders =
             endpoint.responseHeaders?.map((param) =>
                 this.visitor.ObjectProperty(param, `${parentKey}/responseHeader/${param.key}`),
-            ) ?? [],
-        );
-        const requestPromise = endpoint.request
+            ) ?? [];
+        const request = endpoint.request
             ? this.visitor.HttpRequest(endpoint.request, `${parentKey}/request`)
             : undefined;
-        const responsePromise = endpoint.response
+        const response = endpoint.response
             ? this.visitor.HttpResponse(endpoint.response, `${parentKey}/response`)
             : undefined;
-        const errorsPromise = Promise.all(
+        const errors =
             endpoint.errors?.map((error, i) =>
                 this.visitor.ErrorResponse(error, `${parentKey}/error/${i}/${error.statusCode}`),
-            ) ?? [],
-        );
-        const examplePromise = Promise.all(
+            ) ?? [];
+        const examples =
             endpoint.examples?.map((example, i) =>
                 this.visitor.ExampleEndpointCall(example, `${parentKey}/example/${i}`),
-            ) ?? [],
-        );
-
-        const [pathParameters, queryParameters, requestHeaders, responseHeaders, request, response, errors, examples] =
-            await Promise.all([
-                pathParametersPromise,
-                queryParametersPromise,
-                requestHeadersPromise,
-                responseHeadersPromise,
-                requestPromise,
-                responsePromise,
-                errorsPromise,
-                examplePromise,
-            ]);
+            ) ?? [];
 
         return {
             ...endpoint,
@@ -329,85 +278,76 @@ export class Transformer {
         };
     };
 
-    httpRequest = async (request: Latest.HttpRequest, parentKey: string): Promise<Latest.HttpRequest> => {
-        const bodyPromise = visitDiscriminatedUnion(request.body)._visit<AsyncOrSync<Latest.HttpRequestBodyShape>>({
-            object: async (value) => ({ ...value, ...(await this.visitor.ObjectType(value, `${parentKey}/object`)) }),
+    httpRequest = (request: Latest.HttpRequest, parentKey: string): Latest.HttpRequest => {
+        const body = visitDiscriminatedUnion(request.body)._visit<Latest.HttpRequestBodyShape>({
+            object: (value) => ({ ...value, ...this.visitor.ObjectType(value, `${parentKey}/object`) }),
             alias: identity,
             bytes: identity,
-            formData: async (value) => ({
+            formData: (value) => ({
                 ...value,
-                ...(await this.visitor.FormDataRequest(value, `${parentKey}/formdata`)),
+                ...this.visitor.FormDataRequest(value, `${parentKey}/formdata`),
             }),
         });
-        return { ...request, body: await bodyPromise };
+        return { ...request, body };
     };
 
-    formDataField = async (field: Latest.FormDataField, parentKey: string): Promise<Latest.FormDataField> => {
-        return visitDiscriminatedUnion(field)._visit<Promise<Latest.FormDataField>>({
-            file: async (value) => ({
+    formDataField = (field: Latest.FormDataField, parentKey: string): Latest.FormDataField => {
+        return visitDiscriminatedUnion(field)._visit<Latest.FormDataField>({
+            file: (value) => ({
                 ...value,
-                ...(await this.visitor.FormDataFile(value, `${parentKey}/file/${value.key}`)),
+                ...this.visitor.FormDataFile(value, `${parentKey}/file/${value.key}`),
             }),
-            files: async (value) => ({
+            files: (value) => ({
                 ...value,
-                ...(await this.visitor.FormDataFiles(value, `${parentKey}/files/${value.key}`)),
+                ...this.visitor.FormDataFiles(value, `${parentKey}/files/${value.key}`),
             }),
-            property: async (value) => ({
+            property: (value) => ({
                 ...value,
-                ...(await this.visitor.ObjectProperty(value, `${parentKey}/property/${value.key}`)),
+                ...this.visitor.ObjectProperty(value, `${parentKey}/property/${value.key}`),
             }),
         });
     };
 
-    httpResponse = async (response: Latest.HttpResponse, parentKey: string): Promise<Latest.HttpResponse> => {
-        const bodyPromise = visitDiscriminatedUnion(response.body)._visit<AsyncOrSync<Latest.HttpResponseBodyShape>>({
-            object: async (value) => ({ ...value, ...(await this.visitor.ObjectType(value, `${parentKey}/object`)) }),
+    httpResponse = (response: Latest.HttpResponse, parentKey: string): Latest.HttpResponse => {
+        const body = visitDiscriminatedUnion(response.body)._visit<Latest.HttpResponseBodyShape>({
+            object: (value) => ({ ...value, ...this.visitor.ObjectType(value, `${parentKey}/object`) }),
             alias: identity,
             fileDownload: identity,
             streamingText: identity,
-            stream: async (value) => ({
+            stream: (value) => ({
                 ...value,
-                shape: await this.visitor.TypeShape(value.shape, `${parentKey}/stream/shape`),
+                shape: this.visitor.TypeShape(value.shape, `${parentKey}/stream/shape`),
             }),
         });
-        return { ...response, body: await bodyPromise };
+        return { ...response, body };
     };
 
-    objectType = async <T extends Latest.ObjectType>(type: T, parentKey: string): Promise<T> => {
-        const properties = await Promise.all(
-            type.properties.map((prop) => this.visitor.ObjectProperty(prop, `${parentKey}/property/${prop.key}`)),
+    objectType = <T extends Latest.ObjectType>(type: T, parentKey: string): T => {
+        const properties = type.properties.map((prop) =>
+            this.visitor.ObjectProperty(prop, `${parentKey}/property/${prop.key}`),
         );
         return { ...type, properties };
     };
 
-    errorResponse = async (error: Latest.ErrorResponse, parentKey: string): Promise<Latest.ErrorResponse> => {
-        const shapePromise = error.shape ? this.visitor.TypeShape(error.shape, `${parentKey}/error/shape`) : undefined;
-        const examplesPromise = Promise.all(
-            error.examples?.map((example, i) => this.visitor.ErrorExample(example, `${parentKey}/example/${i}`)) ?? [],
-        );
-        const [shape, examples] = await Promise.all([shapePromise, examplesPromise]);
+    errorResponse = (error: Latest.ErrorResponse, parentKey: string): Latest.ErrorResponse => {
+        const shape = error.shape ? this.visitor.TypeShape(error.shape, `${parentKey}/error/shape`) : undefined;
+        const examples =
+            error.examples?.map((example, i) => this.visitor.ErrorExample(example, `${parentKey}/example/${i}`)) ?? [];
         return { ...error, shape, examples: examples.length > 0 ? examples : undefined };
     };
 
-    exampleEndpointCall = async (
-        example: Latest.ExampleEndpointCall,
-        parentKey: string,
-    ): Promise<Latest.ExampleEndpointCall> => {
-        const snippetsEntries = (
-            await Promise.all(
-                Object.entries(example.snippets ?? {}).map(
-                    async ([language, snippets]) =>
-                        [
-                            language,
-                            await Promise.all(
-                                snippets.map((snippet, i) =>
-                                    this.visitor.CodeSnippet(snippet, `${parentKey}/snippet/${language}/${i}`),
-                                ),
-                            ),
-                        ] as const,
-                ),
+    exampleEndpointCall = (example: Latest.ExampleEndpointCall, parentKey: string): Latest.ExampleEndpointCall => {
+        const snippetsEntries = Object.entries(example.snippets ?? {})
+            .map(
+                ([language, snippets]) =>
+                    [
+                        language,
+                        snippets.map((snippet, i) =>
+                            this.visitor.CodeSnippet(snippet, `${parentKey}/snippet/${language}/${i}`),
+                        ),
+                    ] as const,
             )
-        ).filter(([, snippets]) => snippets.length > 0);
+            .filter(([, snippets]) => snippets.length > 0);
 
         const snippets = Object.fromEntries(snippetsEntries);
         return {
@@ -416,18 +356,13 @@ export class Transformer {
         };
     };
 
-    webhookDefinition = async (
-        webhook: Latest.WebhookDefinition,
-        parentKey: string,
-    ): Promise<Latest.WebhookDefinition> => {
-        const payloadPromise =
+    webhookDefinition = (webhook: Latest.WebhookDefinition, parentKey: string): Latest.WebhookDefinition => {
+        const payload =
             webhook.payload != null ? this.visitor.WebhookPayload(webhook.payload, `${parentKey}/payload`) : undefined;
-        const headersPromise = Promise.all(
+        const headers =
             webhook.headers?.map((header) =>
                 this.visitor.ObjectProperty(header, `${parentKey}/header/${header.key}`),
-            ) ?? [],
-        );
-        const [payload, headers] = await Promise.all([payloadPromise, headersPromise]);
+            ) ?? [];
         return {
             ...webhook,
             payload,
@@ -435,47 +370,31 @@ export class Transformer {
         };
     };
 
-    webhookPayload = async (payload: Latest.WebhookPayload, parentKey: string): Promise<Latest.WebhookPayload> => {
-        const bodyPromise = this.visitor.TypeShape(payload.shape, `${parentKey}/shape`);
-        return { ...payload, shape: await bodyPromise };
+    webhookPayload = (payload: Latest.WebhookPayload, parentKey: string): Latest.WebhookPayload => {
+        const shape = this.visitor.TypeShape(payload.shape, `${parentKey}/shape`);
+        return { ...payload, shape };
     };
 
-    webSocketChannel = async (
-        channel: Latest.WebSocketChannel,
-        parentKey: string,
-    ): Promise<Latest.WebSocketChannel> => {
-        const pathParametersPromise = Promise.all(
+    webSocketChannel = (channel: Latest.WebSocketChannel, parentKey: string): Latest.WebSocketChannel => {
+        const pathParameters =
             channel.pathParameters?.map((param) =>
                 this.visitor.ObjectProperty(param, `${parentKey}/path/${param.key}`),
-            ) ?? [],
-        );
-        const queryParametersPromise = Promise.all(
+            ) ?? [];
+        const queryParameters =
             channel.queryParameters?.map((param) =>
                 this.visitor.ObjectProperty(param, `${parentKey}/query/${param.key}`),
-            ) ?? [],
-        );
-        const requestHeadersPromise = Promise.all(
+            ) ?? [];
+        const requestHeaders =
             channel.requestHeaders?.map((param) =>
                 this.visitor.ObjectProperty(param, `${parentKey}/requestHeader/${param.key}`),
-            ) ?? [],
+            ) ?? [];
+        const messages = channel.messages.map((message) =>
+            this.visitor.WebSocketMessage(message, `${parentKey}/message/${message.origin}/${message.type}`),
         );
-        const messagesPromise = Promise.all(
-            channel.messages.map((message) =>
-                this.visitor.WebSocketMessage(message, `${parentKey}/message/${message.origin}/${message.type}`),
-            ),
-        );
-        const examplesPromise = Promise.all(
+        const examples =
             channel.examples?.map((example, i) =>
                 this.visitor.ExampleWebSocketSession(example, `${parentKey}/example/${i}`),
-            ) ?? [],
-        );
-        const [pathParameters, queryParameters, requestHeaders, messages, examples] = await Promise.all([
-            pathParametersPromise,
-            queryParametersPromise,
-            requestHeadersPromise,
-            messagesPromise,
-            examplesPromise,
-        ]);
+            ) ?? [];
         return {
             ...channel,
             pathParameters: pathParameters.length > 0 ? pathParameters : undefined,
@@ -486,70 +405,53 @@ export class Transformer {
         };
     };
 
-    webSocketMessage = async (
-        message: Latest.WebSocketMessage,
-        parentKey: string,
-    ): Promise<Latest.WebSocketMessage> => {
-        const bodyPromise = this.visitor.TypeShape(message.body, `${parentKey}/body`);
-        return {
-            ...message,
-            body: await bodyPromise,
-        };
+    webSocketMessage = (message: Latest.WebSocketMessage, parentKey: string): Latest.WebSocketMessage => {
+        const body = this.visitor.TypeShape(message.body, `${parentKey}/body`);
+        return { ...message, body };
     };
 
-    typeShape = async (shape: Latest.TypeShape, parentKey: string): Promise<Latest.TypeShape> => {
-        return await visitDiscriminatedUnion(shape)._visit<AsyncOrSync<Latest.TypeShape>>({
-            object: async (value) => ({
+    typeShape = (shape: Latest.TypeShape, parentKey: string): Latest.TypeShape => {
+        return visitDiscriminatedUnion(shape)._visit<Latest.TypeShape>({
+            object: (value) => ({
                 ...value,
-                ...(await this.visitor.ObjectType(value, `${parentKey}/object`)),
+                ...this.visitor.ObjectType(value, `${parentKey}/object`),
             }),
             alias: identity,
-            enum: async (value) => ({
+            enum: (value) => ({
                 ...value,
-                values: await Promise.all(
-                    value.values.map((enumValue) =>
-                        this.visitor.EnumValue(enumValue, `${parentKey}/enum/value/${enumValue.value}`),
-                    ),
+                values: value.values.map((enumValue) =>
+                    this.visitor.EnumValue(enumValue, `${parentKey}/enum/value/${enumValue.value}`),
                 ),
             }),
-            undiscriminatedUnion: async (value) => ({
+            undiscriminatedUnion: (value) => ({
                 ...value,
-                variants: await Promise.all(
-                    value.variants.map((variant, i) =>
-                        this.visitor.UndiscriminatedUnionVariant(
-                            variant,
-                            `${parentKey}/undiscriminatedUnion/variant/${i}`,
-                        ),
-                    ),
+                variants: value.variants.map((variant, i) =>
+                    this.visitor.UndiscriminatedUnionVariant(variant, `${parentKey}/undiscriminatedUnion/variant/${i}`),
                 ),
             }),
-            discriminatedUnion: async (value) => ({
+            discriminatedUnion: (value) => ({
                 ...value,
-                variants: await Promise.all(
-                    value.variants.map((variant) =>
-                        this.visitor.DiscriminatedUnionVariant(
-                            variant,
-                            `${parentKey}/discriminatedUnion/variant/${variant.discriminantValue}`,
-                        ),
+                variants: value.variants.map((variant) =>
+                    this.visitor.DiscriminatedUnionVariant(
+                        variant,
+                        `${parentKey}/discriminatedUnion/variant/${variant.discriminantValue}`,
                     ),
                 ),
             }),
         });
     };
 
-    formDataRequest = async (request: Latest.FormDataRequest, parentKey: string): Promise<Latest.FormDataRequest> => {
+    formDataRequest = (request: Latest.FormDataRequest, parentKey: string): Latest.FormDataRequest => {
         return {
             ...request,
-            fields: await Promise.all(
-                request.fields.map((field) => this.visitor.FormDataField(field, `${parentKey}/field/${field.key}`)),
-            ),
+            fields: request.fields.map((field) => this.visitor.FormDataField(field, `${parentKey}/field/${field.key}`)),
         };
     };
 
-    typeDefinition = async (type: Latest.TypeDefinition, parentKey: string): Promise<Latest.TypeDefinition> => {
+    typeDefinition = (type: Latest.TypeDefinition, parentKey: string): Latest.TypeDefinition => {
         return {
             ...type,
-            shape: await this.visitor.TypeShape(type.shape, `${parentKey}/shape`),
+            shape: this.visitor.TypeShape(type.shape, `${parentKey}/shape`),
         };
     };
 }

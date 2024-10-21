@@ -157,19 +157,34 @@ export class ApiDefinitionLoader {
     };
 
     private resolveHttpCodeSnippets = async (apiDefinition: ApiDefinition): Promise<ApiDefinition> => {
-        return await Transformer.with({
-            EndpointDefinition: async (endpoint) => {
-                if (!endpoint.examples || endpoint.examples.length === 0) {
-                    return endpoint;
-                }
-
-                const examples = await Promise.all(
-                    endpoint.examples.map((example) => this.resolveExample(apiDefinition, endpoint, example)),
-                );
-
-                return { ...endpoint, examples };
+        // Collect all endpoints first, so that we can resolve descriptions in a single batch
+        const collected: EndpointDefinition[] = [];
+        Transformer.with({
+            EndpointDefinition: (endpoint) => {
+                collected.push(endpoint);
+                return endpoint;
             },
         }).apiDefinition(apiDefinition);
+
+        // Resolve example code snippets in parallel
+        const result = Object.fromEntries(
+            await Promise.all(
+                collected.map(async (endpoint) => {
+                    if (endpoint.examples == null || endpoint.examples.length === 0) {
+                        return [endpoint.id, endpoint] as const;
+                    }
+
+                    const examples = await Promise.all(
+                        endpoint.examples.map((example) => this.resolveExample(apiDefinition, endpoint, example)),
+                    );
+
+                    return [endpoint.id, { ...endpoint, examples }] as const;
+                }),
+            ),
+        );
+
+        // reduce the api definition with newly resolved examples
+        return { ...apiDefinition, endpoints: { ...apiDefinition.endpoints, ...result } };
     };
 
     private resolveExample = async (
@@ -238,9 +253,9 @@ export class ApiDefinitionLoader {
     };
 
     private resolveDescriptions = async (apiDefinition: ApiDefinition): Promise<ApiDefinition> => {
-        const descriptions = await this.#collectDescriptions(apiDefinition);
+        const descriptions = this.#collectDescriptions(apiDefinition);
         const resolvedDescriptions = await this.cache.batchResolveDescriptions(descriptions, this.#serializeMdx);
-        const transformed = await this.#transformDescriptions(apiDefinition, resolvedDescriptions);
+        const transformed = this.#transformDescriptions(apiDefinition, resolvedDescriptions);
 
         return transformed;
     };
@@ -251,7 +266,7 @@ export class ApiDefinitionLoader {
      * @param apiDefinition The API definition to collect descriptions from
      * @param engine to prefix the key, so that we can differentiate between different serialization engines
      */
-    #collectDescriptions = async (apiDefinition: ApiDefinition): Promise<Record<string, FernDocs.MarkdownText>> => {
+    #collectDescriptions = (apiDefinition: ApiDefinition): Record<string, FernDocs.MarkdownText> => {
         const descriptions: Record<string, FernDocs.MarkdownText> = {};
         const descriptionCollector = (description: FernDocs.MarkdownText, key: string) => {
             if (descriptions[`${this.#engine}/${key}`] != null) {
@@ -262,19 +277,19 @@ export class ApiDefinitionLoader {
             descriptions[`${this.#engine}/${key}`] = description;
             return description;
         };
-        await Transformer.descriptions(descriptionCollector).apiDefinition(apiDefinition);
+        Transformer.descriptions(descriptionCollector).apiDefinition(apiDefinition);
         return descriptions;
     };
 
-    #transformDescriptions = async (
+    #transformDescriptions = (
         apiDefinition: ApiDefinition,
         descriptions: Record<string, FernDocs.MarkdownText>,
-    ): Promise<ApiDefinition> => {
+    ): ApiDefinition => {
         const transformer = (description: FernDocs.MarkdownText, key: string) => {
             return descriptions[`${this.#engine}/${key}`] ?? description;
         };
 
-        return await Transformer.descriptions(transformer).apiDefinition(apiDefinition);
+        return Transformer.descriptions(transformer).apiDefinition(apiDefinition);
     };
 }
 

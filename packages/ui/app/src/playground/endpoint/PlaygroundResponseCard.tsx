@@ -8,8 +8,8 @@ import {
 } from "@fern-ui/components";
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
 import clsx from "clsx";
+import { round } from "es-toolkit/math";
 import { Download } from "iconoir-react";
-import { isEmpty, round } from "lodash-es";
 import { ReactElement } from "react";
 import { useFeatureFlags } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
@@ -45,11 +45,15 @@ export function PlaygroundResponseCard({ response, sendRequest }: PlaygroundResp
                         <span className={"flex h-5 items-center rounded-md bg-tag-default px-1.5 py-1 font-mono"}>
                             time: {round(response.value.time, 2)}ms
                         </span>
-                        {response.value.type === "json" && !isEmpty(response.value.size) && (
-                            <span className={"flex h-5 items-center rounded-md bg-tag-default px-1.5 py-1 font-mono"}>
-                                size: {response.value.size}b
-                            </span>
-                        )}
+                        {response.value.type === "json" &&
+                            response.value.size != null &&
+                            response.value.size.trim().length > 0 && (
+                                <span
+                                    className={"flex h-5 items-center rounded-md bg-tag-default px-1.5 py-1 font-mono"}
+                                >
+                                    size: {response.value.size}b
+                                </span>
+                            )}
                     </div>
                 )}
 

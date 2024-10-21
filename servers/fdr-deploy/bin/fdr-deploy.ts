@@ -55,7 +55,7 @@ async function main() {
                         memory: 4096,
                         redisClusteringModeEnabled: true,
                         cpu: 2048,
-                        cacheName: "FernDocsCache5",
+                        cacheName: "FernDocsCache6",
                         cacheNodeType: "cache.r7g.xlarge",
                     },
                     {
