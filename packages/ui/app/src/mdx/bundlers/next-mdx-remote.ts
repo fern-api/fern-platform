@@ -1,5 +1,5 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import { customHeadingHandler, sanitizeAcorn, sanitizeBreaks } from "@fern-ui/fern-docs-mdx";
+import { customHeadingHandler, sanitizeBreaks, sanitizeMdxExpression } from "@fern-ui/fern-docs-mdx";
 import {
     rehypeAcornErrorBoundary,
     rehypeExtractAsides,
@@ -99,7 +99,7 @@ export async function serializeMdx(
     // }
 
     content = sanitizeBreaks(content);
-    content = sanitizeAcorn(content);
+    content = sanitizeMdxExpression(content);
 
     try {
         const result = await serialize<Record<string, unknown>, FernDocs.Frontmatter>(content, {

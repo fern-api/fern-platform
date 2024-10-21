@@ -1,9 +1,9 @@
 import { mdastToMarkdown, toTree } from "../../parse.js";
-import { sanitizeAcorn } from "../../sanitize/sanitize-acorn.js";
+import { sanitizeMdxExpression } from "../../sanitize/sanitize-mdx-expression.js";
 import { remarkSanitizeAcorn } from "../remark-sanitize-acorn.js";
 
 function sanitizeAcorns(content: string, allowedIdentifiers: string[] = []) {
-    const tree = toTree(sanitizeAcorn(content));
+    const tree = toTree(sanitizeMdxExpression(content));
     remarkSanitizeAcorn({ allowedIdentifiers })(tree.mdast);
     return mdastToMarkdown(tree.mdast);
 }

@@ -1,5 +1,5 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import { customHeadingHandler, sanitizeAcorn, sanitizeBreaks } from "@fern-ui/fern-docs-mdx";
+import { customHeadingHandler, sanitizeBreaks, sanitizeMdxExpression } from "@fern-ui/fern-docs-mdx";
 import {
     rehypeAcornErrorBoundary,
     rehypeExtractAsides,
@@ -39,7 +39,7 @@ export async function serializeMdx(
     }
 
     content = sanitizeBreaks(content);
-    content = sanitizeAcorn(content);
+    content = sanitizeMdxExpression(content);
 
     if (process.platform === "win32") {
         process.env.ESBUILD_BINARY_PATH = path.join(process.cwd(), "node_modules", "esbuild", "esbuild.exe");
