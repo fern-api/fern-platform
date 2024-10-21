@@ -12,18 +12,10 @@ export interface LayoutEvaluatorProps {
     content: FernDocs.MarkdownText;
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     tableOfContents: TableOfContentsItem[];
-    jsxElements: string[];
     hasAside: boolean;
 }
 
-export function LayoutEvaluator({
-    title,
-    subtitle,
-    content,
-    jsxElements,
-    hasAside,
-    ...props
-}: LayoutEvaluatorProps): ReactElement {
+export function LayoutEvaluator({ title, subtitle, content, hasAside, ...props }: LayoutEvaluatorProps): ReactElement {
     return (
         <LayoutEvaluatorContent
             {...props}
@@ -32,7 +24,7 @@ export function LayoutEvaluator({
             frontmatter={typeof content === "string" ? EMPTY_FRONTMATTER : content.frontmatter}
             hasAside={hasAside}
         >
-            <MdxContent mdx={content} jsxElements={jsxElements} />
+            <MdxContent mdx={content} />
         </LayoutEvaluatorContent>
     );
 }
