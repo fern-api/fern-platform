@@ -59,6 +59,7 @@ export const EMPTY_DOCS_STATE: DocsProps = {
         tableOfContents: [],
         content: "",
         neighbors: { prev: null, next: null },
+        hasAside: false,
         apis: {},
     },
     featureFlags: DEFAULT_FEATURE_FLAGS,

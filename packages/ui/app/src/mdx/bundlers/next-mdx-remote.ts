@@ -1,5 +1,5 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import { customHeadingHandler, sanitizeBreaks, sanitizeMdxExpression } from "@fern-ui/fern-docs-mdx";
+import { customHeadingHandler, sanitizeBreaks, sanitizeMdxExpression, toTree } from "@fern-ui/fern-docs-mdx";
 import {
     rehypeAcornErrorBoundary,
     rehypeExtractAsides,
@@ -107,11 +107,16 @@ export async function serializeMdx(
             mdxOptions: withDefaultMdxOptions(options),
             parseFrontmatter: true,
         });
+
+        // TODO: this is doing duplicate work; figure out how to combine it with the compiler above.
+        const { jsxElements } = toTree(content);
+
         return {
             engine: "next-mdx-remote",
             code: result.compiledSource,
             frontmatter: result.frontmatter,
             scope: {},
+            jsxRefs: jsxElements,
         };
     } catch (e) {
         // TODO: sentry

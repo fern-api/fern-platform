@@ -7,7 +7,6 @@ import { FrontmatterContextProvider } from "../contexts/frontmatter";
 export declare namespace MdxContent {
     export interface Props {
         mdx: FernDocs.MarkdownText | FernDocs.MarkdownText[] | undefined;
-        jsxElements?: string[];
         fallback?: React.ReactNode;
     }
 }
@@ -38,7 +37,7 @@ function isMdxEmpty(mdx: FernDocs.MarkdownText | FernDocs.MarkdownText[] | undef
     return mdx.code.trim().length === 0;
 }
 
-export const MdxContent = memo<MdxContent.Props>(function MdxContent({ mdx, fallback, jsxElements }) {
+export const MdxContent = memo<MdxContent.Props>(function MdxContent({ mdx, fallback }) {
     if (isMdxEmpty(mdx) || mdx == null) {
         return fallback;
     }
@@ -62,7 +61,7 @@ export const MdxContent = memo<MdxContent.Props>(function MdxContent({ mdx, fall
     return (
         <FernErrorBoundary component="MdxContent">
             <FrontmatterContextProvider value={mdx.frontmatter}>
-                <MdxComponent {...mdx} jsxElements={jsxElements} />
+                <MdxComponent {...mdx} />
             </FrontmatterContextProvider>
         </FernErrorBoundary>
     );

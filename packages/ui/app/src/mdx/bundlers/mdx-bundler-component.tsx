@@ -3,10 +3,7 @@ import { getMDXComponent } from "mdx-bundler/client";
 import { ReactElement, useMemo } from "react";
 import { createMdxComponents } from "../components";
 
-export const MdxBundlerComponent = ({
-    code,
-    jsxElements,
-}: Exclude<FernDocs.MarkdownText, string> & { jsxElements?: string[] }): ReactElement => {
+export const MdxBundlerComponent = ({ code, jsxRefs }: Exclude<FernDocs.MarkdownText, string>): ReactElement => {
     const Component = useMemo(() => getMDXComponent(code), [code]);
-    return <Component components={createMdxComponents(jsxElements ?? [])} />;
+    return <Component components={createMdxComponents(jsxRefs ?? [])} />;
 };

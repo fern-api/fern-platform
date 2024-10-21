@@ -128,8 +128,9 @@ export async function resolveMarkdownPageWithoutApiRefs({
         subtitleRaw != null ? markdownLoader.serializeWithCache(subtitleRaw, pageId, "subtitle") : undefined,
     ]);
 
-    const { hast, jsxElements } = toTree(getFrontmatter(markdown).content);
-
+    // TODO: this is doing duplicate work; figure out how to combine it with the compiler above.
+    // or at least parallelize it.
+    const { hast } = toTree(getFrontmatter(markdown).content);
     const tableOfContents = makeToc(hast, frontmatter?.["force-toc"]);
 
     return {
@@ -141,6 +142,5 @@ export async function resolveMarkdownPageWithoutApiRefs({
         breadcrumb,
         neighbors,
         hasAside,
-        jsxElements,
     };
 }

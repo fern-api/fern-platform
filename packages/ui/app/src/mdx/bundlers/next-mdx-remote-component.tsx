@@ -6,14 +6,14 @@ import { createMdxComponents } from "../components";
 export const NextMdxRemoteComponent = ({
     code,
     frontmatter,
-    jsxElements,
-}: Exclude<FernDocs.MarkdownText, string> & { jsxElements?: string[] }): ReactElement => {
+    jsxRefs,
+}: Exclude<FernDocs.MarkdownText, string>): ReactElement => {
     return (
         <MDXRemote
             scope={{}}
             frontmatter={frontmatter}
             compiledSource={code}
-            components={createMdxComponents(jsxElements ?? [])}
+            components={createMdxComponents(jsxRefs ?? [])}
         />
     );
 };

@@ -45,7 +45,6 @@ export declare namespace DocsContent {
         tableOfContents: TableOfContentsItem[];
         neighbors: Neighbors;
         hasAside: boolean;
-        jsxElements: string[];
         // TODO: downselect apis to only the fields we need
         apis: Record<FernNavigation.ApiDefinitionId, ApiDefinition>;
     }
