@@ -1,4 +1,4 @@
-import { Root } from "hast";
+import type { Root } from "hast";
 import { visit } from "unist-util-visit";
 import { parseStringStyle } from "../hast-utils/parse-string-style.js";
 import { isMdxJsxFlowElement, toAttribute } from "../utils.js";
