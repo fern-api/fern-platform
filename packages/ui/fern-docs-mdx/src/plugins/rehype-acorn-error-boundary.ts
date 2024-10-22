@@ -5,7 +5,7 @@ import { toAttribute } from "../utils.js";
 /**
  * This is an additional safeguard to ensure that any acorn expressions that are not valid does not throw an error in the final output.
  *
- * Requirement: `MdxErrorBoundary` is globally available with `fallback` string property
+ * Requirement: `FernErrorBoundary` is globally available with `fallback` string property
  */
 export function rehypeAcornErrorBoundary(): (tree: Root) => void {
     return (root) => {
@@ -16,7 +16,7 @@ export function rehypeAcornErrorBoundary(): (tree: Root) => void {
             if (node.type === "mdxFlowExpression" || node.type === "mdxTextExpression") {
                 parent.children[index] = {
                     type: "mdxJsxFlowElement",
-                    name: "MdxErrorBoundary",
+                    name: "FernErrorBoundary",
                     children: [node],
                     attributes: [toAttribute("fallback", `{${node.value}}`)],
                 };
