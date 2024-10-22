@@ -1,12 +1,12 @@
 import type { Root } from "hast";
 import { visit } from "unist-util-visit";
 import { parseStringStyle } from "../hast-utils/parse-string-style.js";
-import { isMdxJsxFlowElement, toAttribute } from "../utils.js";
+import { isMdxElementHast, toAttribute } from "../hast-utils/utils.js";
 
 export function rehypeMdxClassStyle(): (root: Root) => void {
     return (root) => {
         visit(root, (node) => {
-            if (isMdxJsxFlowElement(node)) {
+            if (isMdxElementHast(node)) {
                 node.attributes = node.attributes.map((attr) => {
                     if (attr.type === "mdxJsxAttribute") {
                         // convert class to className

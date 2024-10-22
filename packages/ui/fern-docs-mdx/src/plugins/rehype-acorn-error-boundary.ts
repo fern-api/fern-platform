@@ -1,6 +1,6 @@
 import type { Root } from "hast";
 import { visit } from "unist-util-visit";
-import { toAttribute } from "../utils.js";
+import { toAttribute } from "../hast-utils/utils.js";
 
 /**
  * This is an additional safeguard to ensure that any acorn expressions that are not valid does not throw an error in the final output.

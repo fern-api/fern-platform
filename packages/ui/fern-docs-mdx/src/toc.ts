@@ -3,7 +3,10 @@ import type { Doctype, ElementContent, Root } from "hast";
 import { headingRank } from "hast-util-heading-rank";
 import { toString } from "hast-util-to-string";
 import { SKIP, visit, type BuildVisitor } from "unist-util-visit";
-import { getBooleanValue, isElement, isMdxJsxAttribute, isMdxJsxFlowElement } from "./utils.js";
+import { hastGetBooleanValue } from "./hast-utils/hast-get-boolean-value.js";
+import { isHastElement } from "./hast-utils/is-hast-element.js";
+import { isMdxElementHast } from "./mdx-utils/is-mdx-element.js";
+import { isMdxJsxAttribute } from "./mdx-utils/is-mdx-jsx-attr.js";
 
 interface FoundHeading {
     depth: number;
@@ -33,9 +36,9 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
 
     const visitor: Visitor = (node) => {
         // if the node is a <Steps toc={false}>, skip traversing its children
-        if (isMdxJsxFlowElement(node) && node.name === "StepGroup") {
+        if (isMdxElementHast(node) && node.name === "StepGroup") {
             const isTocEnabled =
-                getBooleanValue(
+                hastGetBooleanValue(
                     node.attributes.find((attr) => isMdxJsxAttribute(attr) && attr.name === "toc")?.value,
                 ) ?? isTocDefaultEnabled;
 
@@ -60,7 +63,7 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
 
         // parse markdown headings
         const rank = headingRank(node);
-        if (isElement(node) && rank != null) {
+        if (isHastElement(node) && rank != null) {
             const id = node.properties.id;
             if (id == null || typeof id !== "string") {
                 return;
@@ -72,11 +75,7 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
         }
 
         // parse mdx-jsx headings i.e. `<h1 id="my-id">My Title</h1>`
-        if (
-            isMdxJsxFlowElement(node) &&
-            node.name != null &&
-            ["h1", "h2", "h3", "h4", "h5", "h6"].includes(node.name)
-        ) {
+        if (isMdxElementHast(node) && node.name != null && ["h1", "h2", "h3", "h4", "h5", "h6"].includes(node.name)) {
             const id = node.attributes.find((attr) => attr.type === "mdxJsxAttribute" && attr.name === "id")?.value;
             if (id == null || typeof id !== "string") {
                 return;
@@ -88,11 +87,11 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
             headings.push({ depth, id, title });
         }
 
-        if (isMdxJsxFlowElement(node) && node.name === "TabGroup") {
+        if (isMdxElementHast(node) && node.name === "TabGroup") {
             const attributes = node.attributes.filter(isMdxJsxAttribute);
             const itemsAttr = attributes.find((attr) => attr.name === "tabs");
             const tocAttr = attributes.find((attr) => attr.name === "toc");
-            const isParentTocEnabled = getBooleanValue(tocAttr?.value) ?? isTocDefaultEnabled;
+            const isParentTocEnabled = hastGetBooleanValue(tocAttr?.value) ?? isTocDefaultEnabled;
             if (itemsAttr?.value == null || typeof itemsAttr.value === "string") {
                 return;
             }
@@ -112,11 +111,11 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
             }
         }
 
-        if (isMdxJsxFlowElement(node) && node.name === "AccordionGroup") {
+        if (isMdxElementHast(node) && node.name === "AccordionGroup") {
             const attributes = node.attributes.filter(isMdxJsxAttribute);
             const itemsAttr = attributes.find((attr) => attr.name === "items");
             const tocAttr = attributes.find((attr) => attr.name === "toc");
-            const isParentTocEnabled = getBooleanValue(tocAttr?.value) ?? isTocDefaultEnabled;
+            const isParentTocEnabled = hastGetBooleanValue(tocAttr?.value) ?? isTocDefaultEnabled;
 
             if (itemsAttr?.value == null || typeof itemsAttr.value === "string") {
                 return;

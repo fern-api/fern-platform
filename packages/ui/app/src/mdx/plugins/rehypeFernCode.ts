@@ -1,7 +1,13 @@
 import { unknownToString } from "@fern-api/ui-core-utils";
-import { isElement, isMdxJsxFlowElement, isText, toAttribute } from "@fern-ui/fern-docs-mdx";
+import {
+    isHastElement,
+    isHastText,
+    isMdxElementHast,
+    unknownToMdxJsxAttribute,
+    type MdxElementHast,
+} from "@fern-ui/fern-docs-mdx";
 import type { Element, Root } from "hast";
-import type { MdxJsxAttribute, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
+import type { MdxJsxAttribute } from "mdast-util-mdx-jsx";
 import rangeParser from "parse-numeric-range";
 import { visit } from "unist-util-visit";
 import type { FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
@@ -23,18 +29,18 @@ export function rehypeFernCode(): (tree: Root) => void {
                 return;
             }
 
-            if (isMdxJsxFlowElement(node) && (node.name === "CodeBlocks" || node.name === "CodeGroup")) {
+            if (isMdxElementHast(node) && (node.name === "CodeBlocks" || node.name === "CodeGroup")) {
                 const codeBlockItems = visitCodeBlockNodes(node);
                 parent?.children.splice(index, 1, {
                     type: "mdxJsxFlowElement",
                     name: "CodeBlocks",
-                    attributes: [toAttribute("items", codeBlockItems)],
+                    attributes: [unknownToMdxJsxAttribute("items", codeBlockItems)],
                     children: [],
                 });
                 return "skip";
             }
 
-            if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {
+            if (isMdxElementHast(node) && node.name === "CodeBlock") {
                 const codeBlockItems = visitCodeBlockNodes(node);
                 if (codeBlockItems.length === 0) {
                     parent?.children.splice(index, 1);
@@ -46,14 +52,16 @@ export function rehypeFernCode(): (tree: Root) => void {
                     parent?.children.splice(index, 1, {
                         type: "mdxJsxFlowElement",
                         name: "CodeBlock",
-                        attributes: Object.entries(codeBlockItems[0]).map(([key, value]) => toAttribute(key, value)),
+                        attributes: Object.entries(codeBlockItems[0]).map(([key, value]) =>
+                            unknownToMdxJsxAttribute(key, value),
+                        ),
                         children: [],
                     });
                 } else {
                     parent?.children.splice(index, 1, {
                         type: "mdxJsxFlowElement",
                         name: "CodeBlocks",
-                        attributes: [toAttribute("items", codeBlockItems)],
+                        attributes: [unknownToMdxJsxAttribute("items", codeBlockItems)],
                         children: [],
                     });
                 }
@@ -61,9 +69,9 @@ export function rehypeFernCode(): (tree: Root) => void {
             }
 
             // neither CodeBlocks nor CodeBlock were matched, so we need to check for raw code blocks
-            if (isElement(node) && isBlockCode(node) && node.data?.visited !== true) {
+            if (isHastElement(node) && isBlockCode(node) && node.data?.visited !== true) {
                 node.data = { visited: true, ...node.data };
-                const head = node.children.filter(isElement).find((child) => child.tagName === "code");
+                const head = node.children.filter(isHastElement).find((child) => child.tagName === "code");
                 if (head != null) {
                     const code = getCode(head);
 
@@ -85,8 +93,10 @@ export function rehypeFernCode(): (tree: Root) => void {
                         parent?.children.splice(index, 1, {
                             type: "mdxJsxFlowElement",
                             name: "CodeBlock",
-                            // attributes: [toAttribute("tokens", JSON.stringify(highlighted), valueToEstree(highlighted))],
-                            attributes: Object.entries(props).map(([key, value]) => toAttribute(key, value)),
+                            // attributes: [unknownToMdxJsxAttribute("tokens", JSON.stringify(highlighted), valueToEstree(highlighted))],
+                            attributes: Object.entries(props).map(([key, value]) =>
+                                unknownToMdxJsxAttribute(key, value),
+                            ),
                             children: [],
                         });
                     } else {
@@ -94,7 +104,7 @@ export function rehypeFernCode(): (tree: Root) => void {
                         parent?.children.splice(index, 1, {
                             type: "mdxJsxFlowElement",
                             name: "CodeBlocks",
-                            attributes: [toAttribute("items", itemsProps)],
+                            attributes: [unknownToMdxJsxAttribute("items", itemsProps)],
                             children: [],
                         });
                     }
@@ -116,10 +126,10 @@ interface CodeBlockItem {
     wordWrap: boolean | undefined;
 }
 
-function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
+function visitCodeBlockNodes(nodeToVisit: MdxElementHast) {
     const codeBlockItems: CodeBlockItem[] = [];
     visit(nodeToVisit, (node) => {
-        if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {
+        if (isMdxElementHast(node) && node.name === "CodeBlock") {
             const jsxAttributes = node.attributes.filter(
                 (attr) => attr.type === "mdxJsxAttribute",
             ) as MdxJsxAttribute[];
@@ -151,7 +161,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
             return "skip";
         }
 
-        if (isElement(node) && node.tagName === "code" && node.data?.visited !== true) {
+        if (isHastElement(node) && node.tagName === "code" && node.data?.visited !== true) {
             node.data = { visited: true, ...node.data };
             const code = getCode(node);
             const meta = parseBlockMetaString(node, "plaintext");
@@ -173,7 +183,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
 }
 
 function getCode(node: Element): string | undefined {
-    const code = node.children.find(isText)?.value;
+    const code = node.children.find(isHastText)?.value;
 
     if (code == null || code.length === 0) {
         return;
@@ -186,7 +196,7 @@ export function isBlockCode(element: Element): element is Element {
         element.tagName === "pre" &&
         Array.isArray(element.children) &&
         element.children.length === 1 &&
-        isElement(element.children[0]) &&
+        isHastElement(element.children[0]) &&
         element.children[0].tagName === "code"
     );
 }
