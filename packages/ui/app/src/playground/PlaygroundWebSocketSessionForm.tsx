@@ -130,8 +130,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                         </div>
                     </div>
                     <FernScrollArea rootClassName="flex-1 rounded-b-[inherit]">
-                        {/* TODO(rohin): Implement Pagination here */}
-                        <WebSocketMessages messages={messages.slice(-25)} />
+                        <WebSocketMessages messages={messages} />
                     </FernScrollArea>
                 </FernCard>
             </div>
