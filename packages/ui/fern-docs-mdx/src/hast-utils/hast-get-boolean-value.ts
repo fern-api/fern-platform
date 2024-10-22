@@ -1,17 +1,21 @@
-import type { MdxJsxAttributeValueExpression } from "mdast-util-mdx-jsx";
+import type { MdxJsxAttribute } from "mdast-util-mdx-jsx";
+import { isMdxJsxAttributeValueExpression } from "../mdx-utils/is-mdx-jsx-attr.js";
 
-export function hastGetBooleanValue(
-    value: string | MdxJsxAttributeValueExpression | null | undefined,
-): boolean | undefined {
-    if (value == null) {
-        return undefined;
-    }
-
-    if (typeof value === "string") {
-        return value === "true" ? true : value === "false" ? false : undefined;
-    }
-
-    if (value.type === "mdxJsxAttributeValueExpression") {
+/**
+ * Converts a string or mdx jsx attribute value expression into a boolean (true/false) or undefined.
+ *
+ * `<Element foo={true} />` or `<Element foo={false} />`
+ *
+ * this will NOT work for expressions like:
+ *
+ * ```mdx
+ * export const myBooleanVar = true; // or false
+ *
+ * <Element foo={myBooleanVar} />
+ * ```
+ */
+export function hastGetBooleanValue(value: MdxJsxAttribute["value"]): boolean | undefined {
+    if (isMdxJsxAttributeValueExpression(value)) {
         return value.value === "true" ? true : value.value === "false" ? false : undefined;
     }
 

@@ -1,4 +1,3 @@
-export * from "./hast-children-to-attr.js";
 export * from "./hast-get-boolean-value.js";
 export * from "./hast-mdx-to-props.js";
 export * from "./is-hast-element.js";

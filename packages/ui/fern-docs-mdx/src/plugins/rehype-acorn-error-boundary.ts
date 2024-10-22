@@ -1,6 +1,6 @@
 import type { Root } from "hast";
 import { visit } from "unist-util-visit";
-import { toAttribute } from "../hast-utils/utils.js";
+import { unknownToMdxJsxAttribute } from "../mdx-utils/unknown-to-mdx-jsx-attr.js";
 
 /**
  * This is an additional safeguard to ensure that any acorn expressions that are not valid does not throw an error in the final output.
@@ -18,7 +18,7 @@ export function rehypeAcornErrorBoundary(): (tree: Root) => void {
                     type: "mdxJsxFlowElement",
                     name: "FernErrorBoundary",
                     children: [node],
-                    attributes: [toAttribute("fallback", `{${node.value}}`)],
+                    attributes: [unknownToMdxJsxAttribute("fallback", `{${node.value}}`)],
                 };
                 return "skip";
             }

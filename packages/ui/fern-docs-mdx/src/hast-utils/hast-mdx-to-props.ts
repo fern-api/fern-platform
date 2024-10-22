@@ -1,7 +1,8 @@
+import { ElementContent } from "hast";
+import { toEstree } from "hast-util-to-estree";
 import { h } from "hastscript";
-import { MdxJsxAttribute, MdxJsxExpressionAttribute } from "mdast-util-mdx-jsx";
+import { MdxJsxAttribute, MdxJsxAttributeValueExpression, MdxJsxExpressionAttribute } from "mdast-util-mdx-jsx";
 import { MdxElementHast } from "../declarations.js";
-import { hastChildrenToAttributeValueExpression } from "./hast-children-to-attr.js";
 
 interface MdxJsxElementAttributes {
     /**
@@ -36,4 +37,19 @@ export function hastMdxElementToProps(element: MdxElementHast): MdxJsxElementAtt
     }
 
     return { props, expressions };
+}
+
+function hastChildrenToAttributeValueExpression(children: ElementContent[]): MdxJsxAttributeValueExpression {
+    return {
+        type: "mdxJsxAttributeValueExpression",
+        value: "__children__",
+        data: {
+            estree: toEstree({
+                type: "mdxJsxFlowElement",
+                name: null,
+                attributes: [],
+                children,
+            }),
+        },
+    };
 }

@@ -92,6 +92,7 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
             const itemsAttr = attributes.find((attr) => attr.name === "tabs");
             const tocAttr = attributes.find((attr) => attr.name === "toc");
             const isParentTocEnabled = hastGetBooleanValue(tocAttr?.value) ?? isTocDefaultEnabled;
+
             if (itemsAttr?.value == null || typeof itemsAttr.value === "string") {
                 return;
             }

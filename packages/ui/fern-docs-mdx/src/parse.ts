@@ -5,7 +5,6 @@ import rehypeSlug from "rehype-slug";
 import { customHeadingHandler } from "./handlers/custom-headings.js";
 import { mdastFromMarkdown } from "./mdast-utils/mdast-from-markdown.js";
 import { extractJsx } from "./mdx-utils/extract-jsx.js";
-import { rehypeExtractAsides } from "./plugins/rehype-extract-asides.js";
 import { remarkMarkAndUnravel } from "./plugins/remark-mark-and-unravel.js";
 import { remarkSanitizeAcorn } from "./plugins/remark-sanitize-acorn.js";
 import { sanitizeBreaks } from "./sanitize/sanitize-breaks.js";
@@ -61,9 +60,6 @@ export function toTree(
 
     // add ids to headings
     rehypeSlug()(hast);
-
-    // extract asides and insert them into the root hast tree
-    rehypeExtractAsides()(hast);
 
     return {
         mdast,
