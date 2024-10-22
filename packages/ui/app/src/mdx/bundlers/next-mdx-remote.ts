@@ -1,5 +1,13 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import { customHeadingHandler } from "@fern-ui/fern-docs-mdx";
+import { customHeadingHandler, sanitizeBreaks, sanitizeMdxExpression, toTree } from "@fern-ui/fern-docs-mdx";
+import {
+    rehypeAcornErrorBoundary,
+    rehypeExtractAsides,
+    rehypeMdxClassStyle,
+    rehypeSqueezeParagraphs,
+    remarkSanitizeAcorn,
+    remarkSqueezeParagraphs,
+} from "@fern-ui/fern-docs-mdx/plugins";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
@@ -10,20 +18,11 @@ import remarkSmartypants from "remark-smartypants";
 import type { PluggableList } from "unified";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
-import { rehypeFernLayout } from "../plugins/rehypeLayout";
-import { rehypeSanitizeJSX } from "../plugins/rehypeSanitizeJSX";
-import { rehypeSqueezeParagraphs } from "../plugins/rehypeSqueezeParagraphs";
-import { remarkSqueezeParagraphs } from "../plugins/remarkSqueezeParagraphs";
 import type { FernSerializeMdxOptions } from "../types";
-import { replaceBrokenBrTags } from "./replaceBrokenBrTags";
 
 type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 
-function withDefaultMdxOptions({
-    frontmatterDefaults,
-    showError = process.env.NODE_ENV === "development",
-    options = {},
-}: FernSerializeMdxOptions = {}): SerializeOptions["mdxOptions"] {
+function withDefaultMdxOptions({ options = {} }: FernSerializeMdxOptions = {}): SerializeOptions["mdxOptions"] {
     const remarkRehypeOptions = {
         ...options.remarkRehypeOptions,
         handlers: {
@@ -34,6 +33,7 @@ function withDefaultMdxOptions({
 
     const remarkPlugins: PluggableList = [
         remarkSqueezeParagraphs,
+        remarkSanitizeAcorn,
         remarkGfm,
         remarkSmartypants,
         remarkMath,
@@ -46,10 +46,14 @@ function withDefaultMdxOptions({
 
     const rehypePlugins: PluggableList = [
         rehypeSqueezeParagraphs,
+        rehypeMdxClassStyle,
+        rehypeAcornErrorBoundary,
         rehypeSlug,
         rehypeKatex,
         rehypeFernCode,
         rehypeFernComponents,
+        // always extract asides at the end
+        rehypeExtractAsides,
     ];
 
     if (options.rehypePlugins != null) {
@@ -57,12 +61,9 @@ function withDefaultMdxOptions({
     }
 
     // right now, only pages use frontmatterDefaults, so when null, it is implicit that we're serializing a description.
-    if (frontmatterDefaults != null) {
-        rehypePlugins.push([rehypeFernLayout, { matter: frontmatterDefaults }]);
-    }
-
-    // Always sanitize JSX at the end.
-    rehypePlugins.push([rehypeSanitizeJSX, { showError }]);
+    // if (frontmatterDefaults != null) {
+    //     rehypePlugins.push([rehypeFernLayout, { matter: frontmatterDefaults }]);
+    // }
 
     return {
         /**
@@ -99,7 +100,8 @@ export async function serializeMdx(
     //     return content;
     // }
 
-    content = replaceBrokenBrTags(content);
+    content = sanitizeBreaks(content);
+    content = sanitizeMdxExpression(content);
 
     try {
         const result = await serialize<Record<string, unknown>, FernDocs.Frontmatter>(content, {
@@ -107,11 +109,16 @@ export async function serializeMdx(
             mdxOptions: withDefaultMdxOptions(options),
             parseFrontmatter: true,
         });
+
+        // TODO: this is doing duplicate work; figure out how to combine it with the compiler above.
+        const { jsxElements } = toTree(content);
+
         return {
             engine: "next-mdx-remote",
             code: result.compiledSource,
             frontmatter: result.frontmatter,
             scope: {},
+            jsxRefs: jsxElements,
         };
     } catch (e) {
         // TODO: sentry

@@ -340,8 +340,8 @@ export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
         return true;
     }
 
-    if (content.type === "custom-markdown-page" && typeof content.mdx !== "string") {
-        const layout = content.mdx.frontmatter.layout;
+    if (content.type === "markdown-page" && typeof content.content !== "string") {
+        const layout = content.content.frontmatter.layout;
 
         if (layout === "page" || layout === "custom") {
             return true;

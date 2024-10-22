@@ -1,8 +1,4 @@
 @layer components {
-    .fern-prose {
-        @apply prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 break-words;
-    }
-
     .fern-search-bar {
         @apply cursor-pointer;
         @apply text-sm border-default flex items-center rounded-lg border-none px-2.5 py-2 t-muted;

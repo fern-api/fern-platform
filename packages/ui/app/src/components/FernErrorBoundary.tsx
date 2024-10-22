@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { memoize } from "es-toolkit/function";
 import { RefreshDouble, WarningTriangle } from "iconoir-react";
 import { Router, useRouter } from "next/router";
-import React, { PropsWithChildren, ReactElement, useEffect } from "react";
+import React, { PropsWithChildren, ReactElement, ReactNode, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { useIsLocalPreview } from "../contexts/local-preview";
 
@@ -15,6 +15,7 @@ export declare interface FernErrorBoundaryProps {
     reset?: () => void;
     refreshOnError?: boolean;
     showError?: boolean;
+    fallback?: ReactNode;
 }
 
 export function FernErrorTag({
@@ -25,6 +26,7 @@ export function FernErrorTag({
     showError,
     reset,
     resetErrorBoundary,
+    fallback,
 }: {
     component: string; // component displayName where the error occurred
     error: unknown;
@@ -33,6 +35,7 @@ export function FernErrorTag({
     showError?: boolean;
     reset?: () => void;
     resetErrorBoundary?: () => void;
+    fallback?: ReactNode;
 }): ReactElement | null {
     const isLocalPreview = useIsLocalPreview();
     useEffect(() => {
@@ -49,6 +52,10 @@ export function FernErrorTag({
     const showMarkdownError = isLocalPreview && component === "MdxErrorBoundary";
 
     if (showError || showMarkdownError) {
+        if (fallback != null) {
+            return <>{fallback}</>;
+        }
+
         return (
             <div className={clsx(className ?? "my-4")}>
                 <span className="t-danger inline-flex items-center gap-2 rounded-full bg-tag-danger px-2">
@@ -91,6 +98,7 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
     reset,
     refreshOnError,
     showError,
+    fallback,
 }) => {
     const router = useRouter();
 
@@ -123,6 +131,7 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
             showError={showError}
             reset={reset}
             resetErrorBoundary={resetErrorBoundary}
+            fallback={fallback}
         />
     );
 };

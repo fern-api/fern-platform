@@ -1,11 +1,11 @@
 import { FernScrollArea } from "@fern-ui/components";
+import { parseStringStyle } from "@fern-ui/fern-docs-mdx";
 import cn from "clsx";
 import { isEqual } from "es-toolkit/predicate";
 import type { Element } from "hast";
 import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
 import { visit } from "unist-util-visit";
 import { HastToJSX } from "../mdx/common/HastToJsx";
-import { parseStringStyle } from "../util/parseStringStyle";
 import { HighlightedTokens } from "./fernShiki";
 import { flattenHighlightLines, getMaxHeight, type HighlightLine } from "./utils";
 
