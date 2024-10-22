@@ -2,9 +2,9 @@ import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import type { MDXComponents } from "mdx/types";
 import dynamic from "next/dynamic";
 import { ComponentProps, PropsWithChildren, ReactElement } from "react";
-import { FernErrorBoundaryProps, FernErrorTag } from "../../components/FernErrorBoundary";
-import { Audience } from "./Audience";
+import { FernErrorBoundary, FernErrorBoundaryProps, FernErrorTag } from "../../components/FernErrorBoundary";
 import { AccordionGroup } from "./accordion";
+import { Audience } from "./audience";
 import { Availability } from "./availability";
 import { Badge } from "./badge";
 import { Bleed } from "./bleed";
@@ -29,8 +29,8 @@ import { Frame } from "./frame";
 import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
 import { Table } from "./html-table";
 import { IFrame } from "./iframe";
-import { CustomLayout, GuideLayout, OverviewLayout, PageLayout, ReferenceLayout } from "./layout";
 import { ParamField } from "./mintlify";
+import { ReferenceLayoutAside, ReferenceLayoutMain } from "./reference-layout";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
 import { Step, StepGroup } from "./steps";
 import { TabGroup } from "./tabs";
@@ -83,16 +83,12 @@ const FERN_COMPONENTS = {
 
 // internal-use only
 const INTERNAL_COMPONENTS = {
-    // layout components
-    CustomLayout,
-    GuideLayout,
-    OverviewLayout,
-    PageLayout,
-    ReferenceLayout,
+    ReferenceLayoutMain,
+    ReferenceLayoutAside,
 
     // error boundary
-    MdxErrorBoundary: (props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error">>): ReactElement => (
-        <FernErrorTag component="MdxErrorBoundary" {...props} />
+    FernErrorBoundary: (props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error" | "fallback">>): ReactElement => (
+        <FernErrorBoundary {...props} />
     ),
 };
 
@@ -135,3 +131,20 @@ export const MDX_COMPONENTS = {
     ...HTML_COMPONENTS,
     ...ALIASED_HTML_COMPONENTS,
 };
+
+export function createMdxComponents(jsxElements: string[]): MDXComponents {
+    return {
+        // spread in jsx elements that may be unsupported
+        ...jsxElements.reduce(
+            (acc, jsxElement) => {
+                acc[jsxElement] = () => (
+                    <FernErrorTag component={jsxElement} error={`Unsupported JSX tag: <${jsxElement} />`} />
+                );
+                return acc;
+            },
+            {} as Record<string, () => ReactElement>,
+        ),
+        // then, spread in the supported components
+        ...MDX_COMPONENTS,
+    };
+}

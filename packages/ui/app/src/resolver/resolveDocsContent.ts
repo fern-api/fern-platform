@@ -39,22 +39,10 @@ export async function resolveDocsContent({
     const markdownLoader = MarkdownLoader.create(host)
         .withPages(pages)
         .withMdxBundler(
-            (
-                mdx: string,
-                pageId: FernNavigation.PageId,
-                title: string | undefined,
-                breadcrumb: FernNavigation.BreadcrumbItem[],
-                editThisPageUrl: FernNavigation.Url | undefined,
-            ) =>
+            (mdx: string, pageId: FernNavigation.PageId | undefined) =>
                 serializeMdx(mdx, {
                     ...mdxOptions,
                     filename: pageId,
-                    frontmatterDefaults: {
-                        title,
-                        breadcrumb,
-                        "edit-this-page-url": editThisPageUrl,
-                        "force-toc": featureFlags.isTocDefaultEnabled,
-                    },
                 }),
             engine,
         );
