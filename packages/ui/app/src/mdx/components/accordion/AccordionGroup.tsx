@@ -8,8 +8,14 @@ import { ANCHOR_ATOM } from "../../../atoms";
 export interface AccordionItemProps {
     title: string;
     id: string;
-    toc?: boolean;
+    toc?: TocObject;
     children: ReactNode;
+}
+
+interface TocObject {
+    type: string;
+    value: string;
+    data: object;
 }
 
 export interface AccordionGroupProps {

@@ -20,7 +20,7 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
 
     const visitor: Visitor = (node) => {
         // if the node is a <Steps toc={false}>, skip traversing its children
-        if (isMdxJsxFlowElement(node) && node.name === "Steps") {
+        if (isMdxJsxFlowElement(node) && node.name === "StepGroup") {
             const isTocEnabled =
                 getBooleanValue(
                     node.attributes.find((attr) => isMdxJsxAttribute(attr) && attr.name === "toc")?.value,
@@ -87,7 +87,7 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
             try {
                 const items = JSON.parse(itemsAttr.value.value) as AccordionItemProps[];
                 items.forEach((item) => {
-                    const isTocEnabled = item.toc ?? isParentTocEnabled;
+                    const isTocEnabled = getBooleanValue(item.toc?.value) ?? isParentTocEnabled;
                     if (item.title.trim().length === 0 || !isTocEnabled) {
                         return;
                     }
@@ -112,7 +112,8 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
             try {
                 const items = JSON.parse(itemsAttr.value.value) as AccordionItemProps[];
                 items.forEach((item) => {
-                    const isTocEnabled = item.toc ?? isParentTocEnabled;
+                    const isTocEnabled = getBooleanValue(item.toc?.value) ?? isParentTocEnabled;
+                    console.log(isTocEnabled);
                     if (item.title.trim().length === 0 || !isTocEnabled) {
                         return;
                     }
