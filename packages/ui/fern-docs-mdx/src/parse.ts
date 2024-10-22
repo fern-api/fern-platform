@@ -11,6 +11,9 @@ import { extractJsx } from "./extract-jsx.js";
 import { customHeadingHandler } from "./handlers/custom-headings.js";
 import { rehypeExtractAsides } from "./plugins/rehype-extract-asides.js";
 import { remarkMarkAndUnravel } from "./plugins/remark-mark-and-unravel.js";
+import { remarkSanitizeAcorn } from "./plugins/remark-sanitize-acorn.js";
+import { sanitizeBreaks } from "./sanitize/sanitize-breaks.js";
+import { sanitizeMdxExpression } from "./sanitize/sanitize-mdx-expression.js";
 
 const MDX_NODE_TYPES = [
     "mdxFlowExpression",
@@ -39,20 +42,26 @@ export function mdastToMarkdown(mdast: MdastRoot): string {
     });
 }
 
+interface ToTreeOptions {
+    type?: "mdx" | "md";
+    allowedIdentifiers?: string[];
+    sanitize?: boolean;
+}
+
 /**
  * This is essentially a condensed version of https://github.com/mdx-js/mdx/blob/eee85d54152499c526cf8c06076be5b563037ff8/packages/mdx/lib/core.js#L163
  * minus converting to JS string. This is a bit of a hack to extract the ToC, Aside elements, and a list of JSX elements being used in the markdown.
  */
 export function toTree(
     content: string,
-    type: "mdx" | "md" = "mdx",
+    { type = "mdx", allowedIdentifiers = [], sanitize = true }: ToTreeOptions = {},
 ): {
     mdast: MdastRoot;
     hast: HastRoot;
     jsxElements: string[];
     esmElements: string[];
 } {
-    const mdast = markdownToMdast(content, type);
+    const mdast = markdownToMdast(sanitize ? sanitizeMdxExpression(sanitizeBreaks(content)) : content, type);
 
     // this is forked from mdxjs, but we need to run it before we convert to hast
     // so that we can correctly identify explicit JSX nodes
@@ -68,6 +77,11 @@ export function toTree(
 
     // add ids to headings
     rehypeSlug()(hast);
+
+    if (sanitize) {
+        // sanitize the acorn expressions
+        remarkSanitizeAcorn({ allowedIdentifiers })(mdast);
+    }
 
     // extract asides and insert them into the root hast tree
     rehypeExtractAsides()(hast);
