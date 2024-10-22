@@ -1,9 +1,9 @@
 import {
-    hastMdxElementToProps,
-    isMdxElementHast,
+    hastMdxJsxElementHastToProps,
     isMdxJsxAttribute,
+    isMdxJsxElementHast,
     unknownToMdxJsxAttribute,
-    type MdxElementHast,
+    type MdxJsxElementHast,
 } from "@fern-ui/fern-docs-mdx";
 import GithubSlugger from "github-slugger";
 import type { Doctype, Element, ElementContent, Root } from "hast";
@@ -14,7 +14,7 @@ import { CONTINUE, visit, type BuildVisitor, type VisitorResult } from "unist-ut
 // TODO: combine this with rehype-slug so that we don't have to maintain two slugger instances
 const slugger = new GithubSlugger();
 
-type Visitor = BuildVisitor<Root | Doctype | ElementContent, Root | Element | MdxElementHast | undefined>;
+type Visitor = BuildVisitor<Root | Doctype | ElementContent, Root | Element | MdxJsxElementHast | undefined>;
 
 export function rehypeFernComponents(): (tree: Root) => void {
     return function (tree: Root): void {
@@ -22,7 +22,7 @@ export function rehypeFernComponents(): (tree: Root) => void {
 
         // convert img to Image
         visit(tree, (node) => {
-            if (isMdxElementHast(node)) {
+            if (isMdxJsxElementHast(node)) {
                 if (node.name === "img") {
                     node.name = "Image";
                 } else if (node.name === "iframe") {
@@ -48,13 +48,13 @@ export function rehypeFernComponents(): (tree: Root) => void {
         let request: { path: string; method: string; example: string } | undefined;
 
         visit(tree, (node) => {
-            if (isMdxElementHast(node)) {
+            if (isMdxJsxElementHast(node)) {
                 const isRequestSnippet = node.name === "EndpointRequestSnippet";
                 const isResponseSnippet = node.name === "EndpointResponseSnippet";
 
                 // check that the current node is a request or response snippet
                 if (isRequestSnippet || isResponseSnippet) {
-                    const { props } = hastMdxElementToProps(node);
+                    const { props } = hastMdxJsxElementHastToProps(node);
 
                     if (isRequestSnippet) {
                         if (
@@ -100,7 +100,7 @@ export function rehypeFernComponents(): (tree: Root) => void {
                 return;
             }
 
-            if (isMdxElementHast(node) && node.name != null) {
+            if (isMdxJsxElementHast(node) && node.name != null) {
                 if (node.name === "Steps" || node.name === "StepGroup") {
                     return transformSteps(node, index, parent, visitor);
                 } else if (node.name === "Tabs" || node.name === "TabGroup") {
@@ -120,12 +120,12 @@ export function rehypeFernComponents(): (tree: Root) => void {
 }
 
 function transformTabs(
-    node: MdxElementHast,
+    node: MdxJsxElementHast,
     index: number,
-    parent: Root | Element | MdxElementHast,
+    parent: Root | Element | MdxJsxElementHast,
     visitor: Visitor,
 ): VisitorResult {
-    const tabs = node.children.filter(isMdxElementHast).filter((child) => child.name === "Tab");
+    const tabs = node.children.filter(isMdxJsxElementHast).filter((child) => child.name === "Tab");
 
     tabs.forEach((tab, i) => {
         const title = getTitle(tab) ?? `Untitled ${i + 1}`;
@@ -139,7 +139,7 @@ function transformTabs(
         attributes: [
             unknownToMdxJsxAttribute(
                 "tabs",
-                tabs.map((tab) => hastMdxElementToProps(tab).props),
+                tabs.map((tab) => hastMdxJsxElementHastToProps(tab).props),
             ),
             ...node.attributes,
         ],
@@ -151,16 +151,16 @@ function transformTabs(
 }
 
 function transformTabItem(
-    node: MdxElementHast,
+    node: MdxJsxElementHast,
     index: number,
-    parent: Root | Element | MdxElementHast,
+    parent: Root | Element | MdxJsxElementHast,
     visitor: Visitor,
 ): VisitorResult {
     const title = getTitle(node) ?? "Untitled";
     applyGeneratedId(node, title);
     visit(node, visitor);
 
-    const { props } = hastMdxElementToProps(node);
+    const { props } = hastMdxJsxElementHastToProps(node);
     const tabs = [props];
 
     const child = {
@@ -175,12 +175,12 @@ function transformTabItem(
 }
 
 function transformAccordionGroup(
-    node: MdxElementHast,
+    node: MdxJsxElementHast,
     index: number,
-    parent: Root | Element | MdxElementHast,
+    parent: Root | Element | MdxJsxElementHast,
     visitor: Visitor,
 ): VisitorResult {
-    const items = node.children.filter(isMdxElementHast).filter((child) => child.name === "Accordion");
+    const items = node.children.filter(isMdxJsxElementHast).filter((child) => child.name === "Accordion");
 
     items.forEach((tab, index) => {
         const title = getTitle(tab) ?? `Untitled ${index + 1}`;
@@ -194,7 +194,7 @@ function transformAccordionGroup(
         attributes: [
             unknownToMdxJsxAttribute(
                 "items",
-                items.map((item) => hastMdxElementToProps(item).props),
+                items.map((item) => hastMdxJsxElementHastToProps(item).props),
             ),
             ...node.attributes,
         ],
@@ -206,7 +206,7 @@ function transformAccordionGroup(
 
 // TODO: handle lone <Step> component
 function transformSteps(
-    node: MdxElementHast,
+    node: MdxJsxElementHast,
     index: number,
     parent: Root | Element | MdxJsxFlowElementHast,
     visitor: Visitor,
@@ -274,16 +274,16 @@ function transformSteps(
 }
 
 function transformAccordion(
-    node: MdxElementHast,
+    node: MdxJsxElementHast,
     index: number,
-    parent: Root | Element | MdxElementHast,
+    parent: Root | Element | MdxJsxElementHast,
     visitor: Visitor,
 ): VisitorResult {
     const title = getTitle(node) ?? "Untitled";
     applyGeneratedId(node, title);
     visit(node, visitor);
 
-    const { props } = hastMdxElementToProps(node);
+    const { props } = hastMdxJsxElementHastToProps(node);
 
     const items = [props];
 
@@ -298,13 +298,13 @@ function transformAccordion(
     return index + 1;
 }
 
-function getTitle(node: MdxElementHast): string | undefined {
+function getTitle(node: MdxJsxElementHast): string | undefined {
     const title = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "title")?.value;
     // TODO: handle expression attributes
     return typeof title === "string" ? title : undefined;
 }
 
-function applyGeneratedId(node: MdxElementHast, title: string): void {
+function applyGeneratedId(node: MdxJsxElementHast, title: string): void {
     const id = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "id");
     if (id == null) {
         const slug = slugger.slug(title);

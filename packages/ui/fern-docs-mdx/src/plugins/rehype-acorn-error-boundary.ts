@@ -2,12 +2,18 @@ import type { Root } from "hast";
 import { visit } from "unist-util-visit";
 import { unknownToMdxJsxAttribute } from "../mdx-utils/unknown-to-mdx-jsx-attr.js";
 
+interface AcornErrorBoundaryOptions {
+    errorBoundaryComponentName?: string;
+}
+
 /**
  * This is an additional safeguard to ensure that any acorn expressions that are not valid does not throw an error in the final output.
  *
  * Requirement: `FernErrorBoundary` is globally available with `fallback` string property
  */
-export function rehypeAcornErrorBoundary(): (tree: Root) => void {
+export function rehypeAcornErrorBoundary({
+    errorBoundaryComponentName = "FernErrorBoundary",
+}: AcornErrorBoundaryOptions = {}): (tree: Root) => void {
     return (root) => {
         visit(root, (node, index, parent) => {
             if (index == null || parent == null) {
@@ -16,7 +22,7 @@ export function rehypeAcornErrorBoundary(): (tree: Root) => void {
             if (node.type === "mdxFlowExpression" || node.type === "mdxTextExpression") {
                 parent.children[index] = {
                     type: "mdxJsxFlowElement",
-                    name: "FernErrorBoundary",
+                    name: errorBoundaryComponentName,
                     children: [node],
                     attributes: [unknownToMdxJsxAttribute("fallback", `{${node.value}}`)],
                 };

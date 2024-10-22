@@ -2,9 +2,9 @@ import { unknownToString } from "@fern-api/ui-core-utils";
 import {
     isHastElement,
     isHastText,
-    isMdxElementHast,
+    isMdxJsxElementHast,
     unknownToMdxJsxAttribute,
-    type MdxElementHast,
+    type MdxJsxElementHast,
 } from "@fern-ui/fern-docs-mdx";
 import type { Element, Root } from "hast";
 import type { MdxJsxAttribute } from "mdast-util-mdx-jsx";
@@ -29,7 +29,7 @@ export function rehypeFernCode(): (tree: Root) => void {
                 return;
             }
 
-            if (isMdxElementHast(node) && (node.name === "CodeBlocks" || node.name === "CodeGroup")) {
+            if (isMdxJsxElementHast(node) && (node.name === "CodeBlocks" || node.name === "CodeGroup")) {
                 const codeBlockItems = visitCodeBlockNodes(node);
                 parent?.children.splice(index, 1, {
                     type: "mdxJsxFlowElement",
@@ -40,7 +40,7 @@ export function rehypeFernCode(): (tree: Root) => void {
                 return "skip";
             }
 
-            if (isMdxElementHast(node) && node.name === "CodeBlock") {
+            if (isMdxJsxElementHast(node) && node.name === "CodeBlock") {
                 const codeBlockItems = visitCodeBlockNodes(node);
                 if (codeBlockItems.length === 0) {
                     parent?.children.splice(index, 1);
@@ -126,10 +126,10 @@ interface CodeBlockItem {
     wordWrap: boolean | undefined;
 }
 
-function visitCodeBlockNodes(nodeToVisit: MdxElementHast) {
+function visitCodeBlockNodes(nodeToVisit: MdxJsxElementHast) {
     const codeBlockItems: CodeBlockItem[] = [];
     visit(nodeToVisit, (node) => {
-        if (isMdxElementHast(node) && node.name === "CodeBlock") {
+        if (isMdxJsxElementHast(node) && node.name === "CodeBlock") {
             const jsxAttributes = node.attributes.filter(
                 (attr) => attr.type === "mdxJsxAttribute",
             ) as MdxJsxAttribute[];

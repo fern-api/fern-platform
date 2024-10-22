@@ -1,7 +1,7 @@
 import type { Root } from "hast";
 import { visit } from "unist-util-visit";
 import { parseStringStyle } from "../hast-utils/parse-string-style.js";
-import { isMdxElementHast } from "../mdx-utils/is-mdx-element.js";
+import { isMdxJsxElementHast } from "../mdx-utils/is-mdx-element.js";
 import { unknownToMdxJsxAttribute } from "../mdx-utils/unknown-to-mdx-jsx-attr.js";
 
 /**
@@ -14,7 +14,7 @@ import { unknownToMdxJsxAttribute } from "../mdx-utils/unknown-to-mdx-jsx-attr.j
 export function rehypeMdxClassStyle(): (root: Root) => void {
     return (root) => {
         visit(root, (node) => {
-            if (isMdxElementHast(node)) {
+            if (isMdxJsxElementHast(node)) {
                 node.attributes = node.attributes.map((attr) => {
                     if (attr.type === "mdxJsxAttribute") {
                         // convert class to className

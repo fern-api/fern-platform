@@ -1,9 +1,9 @@
 import { h } from "hastscript";
-import { hastMdxElementToProps } from "../hast-utils/hast-mdx-to-props.js";
+import { hastMdxJsxElementHastToProps } from "../hast-utils/hast-mdx-to-props.js";
 import { unknownToMdxJsxAttributeValue } from "../mdx-utils/unknown-to-mdx-jsx-attr.js";
 
 describe("hast-mdx-to-attr", () => {
-    const { props } = hastMdxElementToProps({
+    const { props } = hastMdxJsxElementHastToProps({
         type: "mdxJsxTextElement",
         name: "Testing",
         attributes: [{ type: "mdxJsxAttribute", name: "test", value: "test" }],

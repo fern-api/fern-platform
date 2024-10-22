@@ -1,6 +1,9 @@
 import type { Root } from "mdast";
 import { visit } from "unist-util-visit";
 
+/**
+ * Removes empty paragraphs
+ */
 export function remarkSqueezeParagraphs(): (tree: Root) => void {
     return function (tree: Root): void {
         visit(tree, (node, index, parent) => {

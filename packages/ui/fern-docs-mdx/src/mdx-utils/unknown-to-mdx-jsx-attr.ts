@@ -7,10 +7,12 @@ export function unknownToMdxJsxAttributeValue(value: unknown): MdxJsxAttribute["
         return value;
     }
 
+    // if the value is already an expression, return it
     if (isMdxJsxAttributeValueExpression(value)) {
         return value;
     }
 
+    // generate a new expression program
     return {
         type: "mdxJsxAttributeValueExpression",
         value: "__expression__",

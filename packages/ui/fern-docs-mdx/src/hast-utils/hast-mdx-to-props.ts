@@ -2,9 +2,9 @@ import { ElementContent } from "hast";
 import { toEstree } from "hast-util-to-estree";
 import { h } from "hastscript";
 import { MdxJsxAttribute, MdxJsxAttributeValueExpression, MdxJsxExpressionAttribute } from "mdast-util-mdx-jsx";
-import { MdxElementHast } from "../declarations.js";
+import { MdxJsxElementHast } from "../declarations.js";
 
-interface MdxJsxElementAttributes {
+interface MdxJsxElementHastAttributes {
     /**
      * named props
      */
@@ -16,7 +16,7 @@ interface MdxJsxElementAttributes {
     expressions: MdxJsxExpressionAttribute["value"][];
 }
 
-export function hastMdxElementToProps(element: MdxElementHast): MdxJsxElementAttributes {
+export function hastMdxJsxElementHastToProps(element: MdxJsxElementHast): MdxJsxElementHastAttributes {
     const props: Record<string, MdxJsxAttribute["value"]> = {};
     const expressions: MdxJsxExpressionAttribute["value"][] = [];
 
