@@ -2,7 +2,7 @@ import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import type { MDXComponents } from "mdx/types";
 import dynamic from "next/dynamic";
 import { ComponentProps, PropsWithChildren, ReactElement } from "react";
-import { FernErrorBoundaryProps, FernErrorTag } from "../../components/FernErrorBoundary";
+import { FernErrorBoundary, FernErrorBoundaryProps, FernErrorTag } from "../../components/FernErrorBoundary";
 import { AccordionGroup } from "./accordion";
 import { Audience } from "./audience";
 import { Availability } from "./availability";
@@ -87,8 +87,8 @@ const INTERNAL_COMPONENTS = {
     ReferenceLayoutAside,
 
     // error boundary
-    MdxErrorBoundary: (props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error" | "fallback">>): ReactElement => (
-        <FernErrorTag component="MdxErrorBoundary" {...props} />
+    FernErrorBoundary: (props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error" | "fallback">>): ReactElement => (
+        <FernErrorBoundary {...props} />
     ),
 };
 

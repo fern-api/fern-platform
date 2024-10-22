@@ -31,7 +31,7 @@ export function remarkSanitizeAcorn({ allowedIdentifiers = [] }: Options = {}): 
         // i.e. `export const foo = 1;` should avoid escaping `foo`.
         visit(tree, (node, index, parent) => {
             if (node.type === "mdxjsEsm") {
-                const { identifiers, isAwaited } = collectIdentifiers(node.data?.estree);
+                const { identifiers, jsxIdentifiers, isAwaited } = collectIdentifiers(node.data?.estree);
                 if (isAwaited && parent && index != null) {
                     // escape the expression if it contains identifiers that are not allowed:
                     parent.children[index] = {
@@ -41,6 +41,7 @@ export function remarkSanitizeAcorn({ allowedIdentifiers = [] }: Options = {}): 
                     return "skip";
                 }
                 identifiers.forEach((id) => allowedIdentifiersSet.add(id));
+                jsxIdentifiers.forEach((id) => allowedIdentifiersSet.add(id));
             }
             return;
         });
@@ -56,8 +57,9 @@ export function remarkSanitizeAcorn({ allowedIdentifiers = [] }: Options = {}): 
 
                 node.attributes.forEach((attr) => {
                     if (attr.type === "mdxJsxAttribute" && attr.value && typeof attr.value !== "string") {
-                        const { identifiers } = collectIdentifiers(attr.value.data?.estree);
+                        const { identifiers, jsxIdentifiers } = collectIdentifiers(attr.value.data?.estree);
                         identifiers.forEach((id) => allowedIdentifiersSet.add(id));
+                        jsxIdentifiers.forEach((id) => allowedIdentifiersSet.add(id));
                     }
                 });
             }
@@ -84,23 +86,38 @@ export function remarkSanitizeAcorn({ allowedIdentifiers = [] }: Options = {}): 
     };
 }
 
-function collectIdentifiers(estree: Program | null | undefined): { identifiers: string[]; isAwaited: boolean } {
-    let isAwaited = false;
-
+function collectIdentifiers(estree: Program | null | undefined): {
+    identifiers: string[];
+    jsxIdentifiers: string[];
+    isAwaited: boolean;
+} {
     if (!estree) {
-        return { identifiers: [], isAwaited };
+        return { identifiers: [], jsxIdentifiers: [], isAwaited: false };
     }
 
+    let isAwaited = false;
     const identifiers = new Set<string>();
+    const jsxIdentifiers = new Set<string>();
 
-    // collect identifiers that can cause acorn evaluation to fail
     walk(estree, {
         enter(node) {
             if (node.type === "AwaitExpression") {
                 isAwaited = true;
+                this.skip();
+                return;
             }
+        },
+    });
 
+    if (isAwaited) {
+        return { identifiers: [], jsxIdentifiers: [], isAwaited };
+    }
+
+    // collect identifiers that can cause acorn evaluation to fail
+    walk(estree, {
+        enter(node) {
             if (node.data?._mdxSkipSanitization) {
+                this.skip();
                 return;
             }
 
@@ -114,11 +131,22 @@ function collectIdentifiers(estree: Program | null | undefined): { identifiers: 
                 return;
             }
 
-            if (node.type === "Identifier" || node.type === "JSXIdentifier") {
+            // ignore contents of arrow functions (we only care about global identifiers)
+            if (node.type === "ArrowFunctionExpression") {
+                this.skip();
+                return;
+            }
+
+            // TODO: should we really be collecting all identifiers?
+            if (node.type === "Identifier") {
                 identifiers.add(node.name);
+            }
+
+            if (node.type === "JSXIdentifier") {
+                jsxIdentifiers.add(node.name);
             }
         },
     });
 
-    return { identifiers: Array.from(identifiers), isAwaited };
+    return { identifiers: Array.from(identifiers), jsxIdentifiers: Array.from(jsxIdentifiers), isAwaited };
 }
