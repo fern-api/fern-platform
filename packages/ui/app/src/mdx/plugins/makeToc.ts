@@ -20,7 +20,7 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
 
     const visitor: Visitor = (node) => {
         // if the node is a <Steps toc={false}>, skip traversing its children
-        if (isMdxJsxFlowElement(node) && node.name === "Steps") {
+        if (isMdxJsxFlowElement(node) && node.name === "StepGroup") {
             const isTocEnabled =
                 getBooleanValue(
                     node.attributes.find((attr) => isMdxJsxAttribute(attr) && attr.name === "toc")?.value,
