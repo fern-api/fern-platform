@@ -113,7 +113,6 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
                 const items = JSON.parse(itemsAttr.value.value) as AccordionItemProps[];
                 items.forEach((item) => {
                     const isTocEnabled = getBooleanValue(item.toc?.value) ?? isParentTocEnabled;
-                    console.log(isTocEnabled);
                     if (item.title.trim().length === 0 || !isTocEnabled) {
                         return;
                     }
