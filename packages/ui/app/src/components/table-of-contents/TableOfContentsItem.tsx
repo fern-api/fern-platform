@@ -2,12 +2,6 @@ import clsx from "clsx";
 import { memo, ReactElement, useEffect, useRef } from "react";
 import { FernLink } from "../FernLink";
 
-export interface TableOfContentsItem {
-    simpleString: string;
-    anchorString: string;
-    children: TableOfContentsItem[];
-}
-
 export interface TableOfContentsItemProps {
     text: string;
     anchorString: string;

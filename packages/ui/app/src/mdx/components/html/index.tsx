@@ -73,7 +73,9 @@ function isImgElement(element: ReactElement): element is ReactElement<ImgProps> 
 
 export const Image: FC<ImgProps> = ({ src, width: w, height: h, noZoom, enableZoom, style, ...rest }) => {
     const files = useAtomValue(FILES_ATOM);
-    const { "no-image-zoom": noImageZoom } = useFrontmatter();
+    const { "no-image-zoom": noImageZoomFrontmatterOpt, layout } = useFrontmatter();
+    const isImageZoomDisabled =
+        useFeatureFlags().isImageZoomDisabled ?? noImageZoomFrontmatterOpt ?? layout === "custom";
 
     const fernImageSrc = useMemo((): DocsV1Read.File_ | undefined => {
         if (src == null) {
@@ -106,9 +108,7 @@ export const Image: FC<ImgProps> = ({ src, width: w, height: h, noZoom, enableZo
         />
     );
 
-    const { isImageZoomDisabled } = useFeatureFlags();
-
-    if (isImageZoomDisabled || noImageZoom ? !enableZoom : noZoom) {
+    if (isImageZoomDisabled ? !enableZoom : noZoom) {
         return fernImage;
     }
 

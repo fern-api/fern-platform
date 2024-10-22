@@ -3,9 +3,7 @@ import type { Doctype, ElementContent, Root } from "hast";
 import { headingRank } from "hast-util-heading-rank";
 import { toString } from "hast-util-to-string";
 import { SKIP, visit, type BuildVisitor } from "unist-util-visit";
-import type { TableOfContentsItem } from "../../components/table-of-contents/TableOfContentsItem";
-import type { AccordionItemProps } from "../components/accordion";
-import { getBooleanValue, isElement, isMdxJsxAttribute, isMdxJsxFlowElement } from "./utils";
+import { getBooleanValue, isElement, isMdxJsxAttribute, isMdxJsxFlowElement } from "./utils.js";
 
 interface FoundHeading {
     depth: number;
@@ -15,12 +13,27 @@ interface FoundHeading {
 
 type Visitor = BuildVisitor<Root | Doctype | ElementContent>;
 
+interface AccordionItemProps {
+    title: string;
+    id: string;
+    toc?: boolean;
+    // children: ReactNode;
+}
+
+export interface TableOfContentsItem {
+    simpleString: string;
+    anchorString: string;
+    children: TableOfContentsItem[];
+}
+
+// TODO: a lot of this logic is duplicated in split-into-sections.ts, consider merging
+// TODO: add tests for this function
 export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContentsItem[] {
     const headings: FoundHeading[] = [];
 
     const visitor: Visitor = (node) => {
         // if the node is a <Steps toc={false}>, skip traversing its children
-        if (isMdxJsxFlowElement(node) && node.name === "Steps") {
+        if (isMdxJsxFlowElement(node) && node.name === "StepGroup") {
             const isTocEnabled =
                 getBooleanValue(
                     node.attributes.find((attr) => isMdxJsxAttribute(attr) && attr.name === "toc")?.value,
@@ -131,14 +144,6 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
 
     const minDepth = Math.min(...headings.map((heading) => heading.depth));
     return makeTree(headings, minDepth);
-
-    // const tableOfContents: ElementContent = {
-    //     type: "mdxJsxFlowElement",
-    //     name: "TableOfContents",
-    //     attributes: [toAttribute("tableOfContents", makeTree(headings, minDepth))],
-    //     children: [],
-    // };
-    // return tableOfContents;
 }
 
 function makeTree(headings: FoundHeading[], depth: number = 1): TableOfContentsItem[] {
