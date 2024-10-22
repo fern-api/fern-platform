@@ -9,6 +9,7 @@ import SemVer from "semver";
 import { CleanOptions, SimpleGit } from "simple-git";
 
 const PR_BODY_LIMIT = 65000;
+const MOCK_SERVER_FERN_DIRECTORY = ".mock";
 
 async function getGeneratorChangelog(
     fdrUrl: string,
@@ -151,6 +152,13 @@ export async function updateVersionInternal(
             console.error(
                 "Could not determine the repo owner, continuing to upgrade CLI, but will fail generator upgrades.",
             );
+        }
+
+        // We skip the mock server as that's not a real Fern workspace
+        // we'll upgrade the CLI within the proper Fern config repo, so this is skippable
+        if (fernWorkspacePath.endsWith(MOCK_SERVER_FERN_DIRECTORY)) {
+            console.log(`Found ${MOCK_SERVER_FERN_DIRECTORY} Fern workspace, skipping.`);
+            continue;
         }
 
         await handleSingleUpgrade({

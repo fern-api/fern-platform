@@ -26,7 +26,7 @@ groups:
           useBrandedStringAliases: true
 
       - name: fernapi/fern-python-sdk
-        version: 2.9.9
+        version: 4.2.8
         output:
           location: pypi
           url: pypi.buildwithfern.com
