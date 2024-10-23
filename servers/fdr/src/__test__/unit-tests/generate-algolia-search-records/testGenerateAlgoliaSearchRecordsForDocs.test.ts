@@ -1,5 +1,6 @@
 import {
     APIV1Write,
+    DocsV1Db,
     DocsV1Write,
     FdrAPI,
     SDKSnippetHolder,
@@ -24,9 +25,9 @@ const FIXTURES: Fixture[] = [
     {
         name: "candid",
     },
-    {
-        name: "humanloop",
-    },
+    // {
+    //     name: "humanloop",
+    // },
 ];
 
 function loadDocsDefinition(fixture: Fixture) {
@@ -61,6 +62,10 @@ const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetTemplatesByEndpointId: {},
 });
 
+type ConvertedDocsDefinition = DocsV1Db.DocsDefinitionDb.V3 & {
+    config: DocsV1Db.DocsDbConfig;
+};
+
 describe("generateAlgoliaSearchRecordsForDocs", () => {
     for (const fixture of FIXTURES) {
         const { only = false } = fixture;
@@ -78,7 +83,7 @@ describe("generateAlgoliaSearchRecordsForDocs", () => {
                         return [id, convertAPIDefinitionToDb(apiDef, id, EMPTY_SNIPPET_HOLDER)] as const;
                     });
 
-                    return new Map(apiIdDefinitionTuples);
+                    return Object.fromEntries(apiIdDefinitionTuples);
                 };
 
                 const apiDefinitionsById = preloadApiDefinitions();

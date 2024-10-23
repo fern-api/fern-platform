@@ -17,7 +17,7 @@ const useInkeepSettings = ():
       }
     | undefined => {
     const theme = useTheme();
-    const [searchConfig] = useSearchConfig();
+    const searchConfig = useSearchConfig();
 
     if (!searchConfig.isAvailable || searchConfig.inkeep == null) {
         return;

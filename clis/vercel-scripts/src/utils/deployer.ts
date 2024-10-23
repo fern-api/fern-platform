@@ -3,7 +3,7 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import { UnreachableCaseError } from "ts-essentials";
 import { cleanDeploymentId } from "./clean-id.js";
-import { exec, logCommand } from "./exec.js";
+import { loggingExeca } from "./loggingExeca.js";
 import { requestPromote } from "./promoter.js";
 
 export class VercelDeployer {
@@ -55,35 +55,51 @@ export class VercelDeployer {
         };
     }
 
-    private pull(project: { id: string; name: string }): void {
-        exec(
-            `[${this.environmentName}] Pull ${project.name} from Vercel (${project.id})`,
-            `pnpx vercel pull --yes --environment=${this.environment} --token=${this.token}`,
-            { env: this.env(project.id), cwd: this.cwd },
-        );
-    }
-
-    private build(project: { id: string; name: string }): void {
-        let command = `pnpx vercel build --yes --token=${this.token} --debug`;
-        if (this.environment === "production") {
-            command += " --prod";
-        }
-        exec(`[${this.environmentName}] Build bundle for ${project.name}`, command, {
+    private async pull(project: { id: string; name: string }): Promise<void> {
+        const args = ["vercel", "pull", "--yes", `--environment=${this.environment}`, `--token=${this.token}`];
+        await loggingExeca(`[${this.environmentName}] Pull ${project.name} from Vercel (${project.id})`, "pnpx", args, {
             env: this.env(project.id),
             cwd: this.cwd,
         });
     }
 
-    private async deploy(project: { id: string; name: string }): Promise<Vercel.GetDeploymentResponse> {
-        let command = `pnpx vercel deploy --yes --prebuilt --token=${this.token} --archive=tgz`;
+    private async build(project: { id: string; name: string }): Promise<void> {
+        // let command = `pnpx vercel build --yes --token=${this.token} --debug`;
+        const args = ["vercel", "build", "--yes", `--token=${this.token}`, "--debug"];
         if (this.environment === "production") {
-            command += " --prod --skip-domain";
+            args.push("--prod");
         }
-        const deploymentUrl = exec(`[${this.environmentName}] Deploy bundle for ${project.name} to Vercel`, command, {
-            stdio: "pipe",
+        await loggingExeca(`[${this.environmentName}] Build bundle for ${project.name}`, "pnpx", args, {
             env: this.env(project.id),
             cwd: this.cwd,
-        }).trim();
+        });
+    }
+
+    private async deploy(
+        project: { id: string; name: string },
+        opts?: { prebuilt?: boolean },
+    ): Promise<Vercel.GetDeploymentResponse> {
+        // let command = `pnpx vercel deploy --yes --token=${this.token} --archive=tgz`;
+        const args = ["vercel", "deploy", "--yes", `--token=${this.token}`, "--archive=tgz"];
+
+        if (opts?.prebuilt) {
+            args.push("--prebuilt");
+        }
+
+        if (this.environment === "production") {
+            args.push("--prod", "--skip-domain");
+        }
+        const result = await loggingExeca(
+            `[${this.environmentName}] Deploy bundle for ${project.name} to Vercel`,
+            "pnpx",
+            args,
+            {
+                env: this.env(project.id),
+                cwd: this.cwd,
+            },
+        );
+
+        const deploymentUrl = String(result.stdout).trim();
 
         if (!deploymentUrl) {
             throw new Error("Deployment failed: no deployment URL returned");
@@ -91,11 +107,11 @@ export class VercelDeployer {
 
         const deployment = await this.vercel.deployments.getDeployment(cleanDeploymentId(deploymentUrl));
 
-        logCommand(`[${this.environmentName}] Deployment URL: https://${deployment.url}`);
+        // logCommand(`[${this.environmentName}] Deployment URL: https://${deployment.url}`);
 
-        if ("inspectorUrl" in deployment) {
-            logCommand(`[${this.environmentName}] Inspector URL: ${deployment.inspectorUrl}`);
-        }
+        // if ("inspectorUrl" in deployment) {
+        //     logCommand(`[${this.environmentName}] Inspector URL: ${deployment.inspectorUrl}`);
+        // }
 
         // eslint-disable-next-line no-console
         console.log("Deployment Source:", deployment.source);
@@ -119,15 +135,15 @@ export class VercelDeployer {
     ): Promise<Vercel.GetDeploymentResponse | undefined> {
         const prj = await this.vercel.projects.getProject(project, { teamId: this.teamId });
 
-        this.pull(prj);
-
-        this.build(prj);
+        await this.pull(prj);
 
         if (skipDeploy) {
+            // build-only
+            await this.build(prj);
             return;
         }
 
-        const deployment = await this.deploy(prj);
+        const deployment = await this.deploy(prj, { prebuilt: false });
 
         await this.promote(deployment);
 

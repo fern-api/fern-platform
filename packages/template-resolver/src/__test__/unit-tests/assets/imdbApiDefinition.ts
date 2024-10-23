@@ -1,9 +1,9 @@
-import { APIV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 
-export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
-    id: FdrAPI.ApiDefinitionId("api_imdb"),
+export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
+    id: FernRegistry.ApiDefinitionId("api_imdb"),
     types: {
-        [APIV1Read.TypeId("type_imdb:MovieId")]: {
+        [FernRegistry.TypeId("type_imdb:MovieId")]: {
             description: "The unique identifier for a Movie in the database",
             name: "MovieId",
             shape: {
@@ -21,7 +21,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
             },
             availability: undefined,
         },
-        [APIV1Read.TypeId("type_imdb:Movie")]: {
+        [FernRegistry.TypeId("type_imdb:Movie")]: {
             name: "Movie",
             shape: {
                 type: "object",
@@ -29,17 +29,17 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                 extends: [],
                 properties: [
                     {
-                        key: APIV1Read.PropertyKey("id"),
+                        key: FernRegistry.PropertyKey("id"),
                         valueType: {
                             type: "id",
-                            value: APIV1Read.TypeId("type_imdb:MovieId"),
+                            value: FernRegistry.TypeId("type_imdb:MovieId"),
                             default: undefined,
                         },
                         availability: undefined,
                         description: undefined,
                     },
                     {
-                        key: APIV1Read.PropertyKey("title"),
+                        key: FernRegistry.PropertyKey("title"),
                         valueType: {
                             type: "primitive",
                             value: {
@@ -55,7 +55,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                     },
                     {
                         description: "The rating scale out of ten stars",
-                        key: APIV1Read.PropertyKey("rating"),
+                        key: FernRegistry.PropertyKey("rating"),
                         valueType: {
                             type: "primitive",
                             value: {
@@ -72,7 +72,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
             availability: undefined,
             description: undefined,
         },
-        [APIV1Read.TypeId("type_imdb:DetailedMovieReview")]: {
+        [FernRegistry.TypeId("type_imdb:DetailedMovieReview")]: {
             name: "DetailedMovieReview",
             shape: {
                 type: "object",
@@ -80,7 +80,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                 extends: [],
                 properties: [
                     {
-                        key: APIV1Read.PropertyKey("summary"),
+                        key: FernRegistry.PropertyKey("summary"),
                         valueType: {
                             type: "primitive",
                             value: {
@@ -95,7 +95,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                         description: undefined,
                     },
                     {
-                        key: APIV1Read.PropertyKey("notes"),
+                        key: FernRegistry.PropertyKey("notes"),
                         valueType: {
                             type: "primitive",
                             value: {
@@ -110,7 +110,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                         description: undefined,
                     },
                     {
-                        key: APIV1Read.PropertyKey("stars"),
+                        key: FernRegistry.PropertyKey("stars"),
                         valueType: {
                             type: "primitive",
                             value: {
@@ -128,7 +128,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
             availability: undefined,
             description: undefined,
         },
-        [APIV1Read.TypeId("type_imdb:AgressiveMovieReview")]: {
+        [FernRegistry.TypeId("type_imdb:AgressiveMovieReview")]: {
             name: "AgressiveMovieReview",
             shape: {
                 type: "object",
@@ -136,7 +136,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                 extends: [],
                 properties: [
                     {
-                        key: APIV1Read.PropertyKey("reallyAngrySummary"),
+                        key: FernRegistry.PropertyKey("reallyAngrySummary"),
                         valueType: {
                             type: "primitive",
                             value: {
@@ -151,7 +151,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                         description: undefined,
                     },
                     {
-                        key: APIV1Read.PropertyKey("notes"),
+                        key: FernRegistry.PropertyKey("notes"),
                         valueType: {
                             type: "primitive",
                             value: {
@@ -166,7 +166,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                         description: undefined,
                     },
                     {
-                        key: APIV1Read.PropertyKey("stars"),
+                        key: FernRegistry.PropertyKey("stars"),
                         valueType: {
                             type: "primitive",
                             value: {
@@ -184,7 +184,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
             availability: undefined,
             description: undefined,
         },
-        [APIV1Read.TypeId("type_imdb:MovieReview")]: {
+        [FernRegistry.TypeId("type_imdb:MovieReview")]: {
             name: "MovieReview",
             shape: {
                 type: "undiscriminatedUnion",
@@ -221,7 +221,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                     {
                         type: {
                             type: "id",
-                            value: APIV1Read.TypeId("type_imdb:DetailedMovieReview"),
+                            value: FernRegistry.TypeId("type_imdb:DetailedMovieReview"),
                             default: undefined,
                         },
                         availability: undefined,
@@ -231,7 +231,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                     {
                         type: {
                             type: "id",
-                            value: APIV1Read.TypeId("type_imdb:AgressiveMovieReview"),
+                            value: FernRegistry.TypeId("type_imdb:AgressiveMovieReview"),
                             default: undefined,
                         },
                         availability: undefined,
@@ -243,7 +243,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
             availability: undefined,
             description: undefined,
         },
-        [APIV1Read.TypeId("type_imdb:CreateMovieRequest")]: {
+        [FernRegistry.TypeId("type_imdb:CreateMovieRequest")]: {
             name: "CreateMovieRequest",
             shape: {
                 type: "object",
@@ -251,7 +251,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                 extends: [],
                 properties: [
                     {
-                        key: APIV1Read.PropertyKey("title"),
+                        key: FernRegistry.PropertyKey("title"),
                         valueType: {
                             type: "primitive",
                             value: {
@@ -266,7 +266,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                         description: undefined,
                     },
                     {
-                        key: APIV1Read.PropertyKey("rating"),
+                        key: FernRegistry.PropertyKey("rating"),
                         valueType: {
                             type: "primitive",
                             value: {
@@ -280,10 +280,10 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                         description: undefined,
                     },
                     {
-                        key: APIV1Read.PropertyKey("review"),
+                        key: FernRegistry.PropertyKey("review"),
                         valueType: {
                             type: "id",
-                            value: APIV1Read.TypeId("type_imdb:MovieReview"),
+                            value: FernRegistry.TypeId("type_imdb:MovieReview"),
                             default: undefined,
                         },
                         availability: undefined,
@@ -296,8 +296,8 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
         },
     },
     subpackages: {
-        [APIV1Read.SubpackageId("subpackage_imdb")]: {
-            subpackageId: APIV1Read.SubpackageId("subpackage_imdb"),
+        [FernRegistry.api.v1.SubpackageId("subpackage_imdb")]: {
+            subpackageId: FernRegistry.api.v1.SubpackageId("subpackage_imdb"),
             name: "imdb",
             urlSlug: "imdb",
             endpoints: [
@@ -308,7 +308,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                     authed: false,
                     description: "Add a movie to the database",
                     method: "POST",
-                    id: FdrAPI.EndpointId("createMovie"),
+                    id: FernRegistry.EndpointId("createMovie"),
                     originalEndpointId: "endpoint_imdb.createMovie",
                     name: "Create Movie",
                     path: {
@@ -332,7 +332,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                             type: "reference",
                             value: {
                                 type: "id",
-                                value: APIV1Read.TypeId("type_imdb:CreateMovieRequest"),
+                                value: FernRegistry.TypeId("type_imdb:CreateMovieRequest"),
                                 default: undefined,
                             },
                         },
@@ -343,7 +343,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
                             type: "reference",
                             value: {
                                 type: "id",
-                                value: APIV1Read.TypeId("type_imdb:MovieId"),
+                                value: FernRegistry.TypeId("type_imdb:MovieId"),
                                 default: undefined,
                             },
                         },
@@ -362,12 +362,12 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
             webhooks: [],
             websockets: [],
             types: [
-                APIV1Read.TypeId("type_imdb:MovieId"),
-                APIV1Read.TypeId("type_imdb:Movie"),
-                APIV1Read.TypeId("type_imdb:DetailedMovieReview"),
-                APIV1Read.TypeId("type_imdb:AgressiveMovieReview"),
-                APIV1Read.TypeId("type_imdb:MovieReview"),
-                APIV1Read.TypeId("type_imdb:CreateMovieRequest"),
+                FernRegistry.TypeId("type_imdb:MovieId"),
+                FernRegistry.TypeId("type_imdb:Movie"),
+                FernRegistry.TypeId("type_imdb:DetailedMovieReview"),
+                FernRegistry.TypeId("type_imdb:AgressiveMovieReview"),
+                FernRegistry.TypeId("type_imdb:MovieReview"),
+                FernRegistry.TypeId("type_imdb:CreateMovieRequest"),
             ],
             subpackages: [],
             parent: undefined,
@@ -381,7 +381,7 @@ export const IMDB_API_DEFINITION: APIV1Read.ApiDefinition = {
         webhooks: [],
         websockets: [],
         types: [],
-        subpackages: [APIV1Read.SubpackageId("subpackage_imdb")],
+        subpackages: [FernRegistry.api.v1.SubpackageId("subpackage_imdb")],
         pointsTo: undefined,
     },
     globalHeaders: [],

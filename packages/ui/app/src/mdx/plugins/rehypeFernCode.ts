@@ -1,11 +1,11 @@
 import { unknownToString } from "@fern-api/ui-core-utils";
+import { isElement, isMdxJsxFlowElement, isText, toAttribute } from "@fern-ui/fern-docs-mdx";
 import type { Element, Root } from "hast";
 import type { MdxJsxAttribute, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import rangeParser from "parse-numeric-range";
 import { visit } from "unist-util-visit";
 import type { FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
 import type { CodeGroup } from "../components/code";
-import { isElement, isMdxJsxFlowElement, isText, toAttribute } from "./utils";
 
 declare module "hast" {
     interface ElementData {
@@ -106,8 +106,18 @@ export function rehypeFernCode(): (tree: Root) => void {
     };
 }
 
+interface CodeBlockItem {
+    code: string;
+    language: string;
+    highlightLines: number[];
+    highlightStyle: "focus" | "highlight";
+    maxLines: number | undefined;
+    title: string | undefined;
+    wordWrap: boolean | undefined;
+}
+
 function visitCodeBlockNodes(nodeToVisit: MdxJsxFlowElementHast) {
-    const codeBlockItems: CodeGroup.Item[] = [];
+    const codeBlockItems: CodeBlockItem[] = [];
     visit(nodeToVisit, (node) => {
         if (isMdxJsxFlowElement(node) && node.name === "CodeBlock") {
             const jsxAttributes = node.attributes.filter(

@@ -3,7 +3,7 @@ import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionLoader, MarkdownLoader } from "@fern-ui/fern-docs-server";
 import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
-import { mapValues } from "lodash-es";
+import { mapValues } from "es-toolkit/object";
 import type { MDX_SERIALIZER } from "../mdx/bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "./DocsContent";
@@ -39,22 +39,10 @@ export async function resolveDocsContent({
     const markdownLoader = MarkdownLoader.create(host)
         .withPages(pages)
         .withMdxBundler(
-            (
-                mdx: string,
-                pageId: FernNavigation.PageId,
-                title: string | undefined,
-                breadcrumb: FernNavigation.BreadcrumbItem[],
-                editThisPageUrl: FernNavigation.Url | undefined,
-            ) =>
+            (mdx: string, pageId: FernNavigation.PageId | undefined) =>
                 serializeMdx(mdx, {
                     ...mdxOptions,
                     filename: pageId,
-                    frontmatterDefaults: {
-                        title,
-                        breadcrumb,
-                        "edit-this-page-url": editThisPageUrl,
-                        "force-toc": featureFlags.isTocDefaultEnabled,
-                    },
                 }),
             engine,
         );

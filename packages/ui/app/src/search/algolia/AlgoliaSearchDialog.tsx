@@ -1,6 +1,6 @@
 import { createSearchPlaceholderWithVersion } from "@fern-ui/search-utils";
 import * as Dialog from "@radix-ui/react-dialog";
-import { SearchClient } from "algoliasearch";
+import type { LiteClient as SearchClient } from "algoliasearch/lite";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ReactElement, ReactNode, useMemo, useRef } from "react";

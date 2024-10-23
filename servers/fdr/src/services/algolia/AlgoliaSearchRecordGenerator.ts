@@ -22,7 +22,7 @@ import type { AlgoliaSearchRecord, IndexSegment } from "./types";
 
 interface AlgoliaSearchRecordGeneratorConfig {
     docsDefinition: DocsV1Db.DocsDefinitionDb;
-    apiDefinitionsById: Map<string, APIV1Db.DbApiDefinition>;
+    apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>;
 }
 
 export class AlgoliaSearchRecordGenerator {
@@ -63,32 +63,33 @@ export class AlgoliaSearchRecordGenerator {
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
         const records =
-            config.tabsV2?.flatMap((tab) => {
-                switch (tab.type) {
-                    case "group":
-                        return tab.items.flatMap((item) =>
-                            this.generateAlgoliaSearchRecordsForNavigationItem(
-                                item,
+            (config.tabsV2 &&
+                config.tabsV2?.flatMap((tab) => {
+                    switch (tab.type) {
+                        case "group":
+                            return tab.items.flatMap((item) =>
+                                this.generateAlgoliaSearchRecordsForNavigationItem(
+                                    item,
+                                    context.withPathPart({
+                                        name: tab.title,
+                                        urlSlug: tab.urlSlug,
+                                        skipUrlSlug: tab.skipUrlSlug,
+                                    }),
+                                ),
+                            );
+                        case "changelog":
+                            return this.generateAlgoliaSearchRecordsForChangelogSection(
+                                tab,
                                 context.withPathPart({
-                                    name: tab.title,
+                                    name: tab.title ?? "Changelog",
                                     urlSlug: tab.urlSlug,
-                                    skipUrlSlug: tab.skipUrlSlug,
+                                    skipUrlSlug: undefined,
                                 }),
-                            ),
-                        );
-                    case "changelog":
-                        return this.generateAlgoliaSearchRecordsForChangelogSection(
-                            tab,
-                            context.withPathPart({
-                                name: tab.title ?? "Changelog",
-                                urlSlug: tab.urlSlug,
-                                skipUrlSlug: undefined,
-                            }),
-                        );
-                    default:
-                        return [];
-                }
-            }) ??
+                            );
+                        default:
+                            return [];
+                    }
+                })) ??
             config.tabs?.map((tab) =>
                 visitDbNavigationTab(tab, {
                     group: (group) => {
@@ -140,7 +141,7 @@ export class AlgoliaSearchRecordGenerator {
             const records: AlgoliaSearchRecord[] = [];
             const api = item;
             const apiId = api.api;
-            const apiDef = this.config.apiDefinitionsById.get(apiId);
+            const apiDef = this.config.apiDefinitionsById[apiId];
             if (apiDef != null) {
                 records.push(
                     ...this.generateAlgoliaSearchRecordsForApiDefinition(
@@ -232,7 +233,7 @@ export class AlgoliaSearchRecordGenerator {
         root: FernNavigation.V1.ApiReferenceNode,
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
-        const api = this.config.apiDefinitionsById.get(root.apiDefinitionId);
+        const api = this.config.apiDefinitionsById[root.apiDefinitionId];
         if (api == null) {
             LOGGER.error("Failed to find API definition for API reference node. id=", root.apiDefinitionId);
         }

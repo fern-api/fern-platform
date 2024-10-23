@@ -127,7 +127,7 @@ groups:
           package-name: "@fern-api/sdk"
           token: ${NPM_TOKEN}
         github:
-          repository: fern-api/fern-typescript
+          repository: fern-api/typescript-sdk
           mode: pull-request
           license: MIT
         config:
@@ -157,7 +157,7 @@ groups:
       - fiddle
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.10.1
+        version: 0.10.0
         output:
           location: maven
           url: maven.buildwithfern.com

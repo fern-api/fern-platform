@@ -1,9 +1,9 @@
 import { FernButton } from "@fern-ui/components";
 import clsx from "clsx";
+import { memoize } from "es-toolkit/function";
 import { RefreshDouble, WarningTriangle } from "iconoir-react";
-import { memoize } from "lodash-es";
 import { Router, useRouter } from "next/router";
-import React, { PropsWithChildren, ReactElement, useEffect } from "react";
+import React, { PropsWithChildren, ReactElement, ReactNode, useEffect } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { useIsLocalPreview } from "../contexts/local-preview";
 
@@ -15,6 +15,7 @@ export declare interface FernErrorBoundaryProps {
     reset?: () => void;
     refreshOnError?: boolean;
     showError?: boolean;
+    fallback?: ReactNode;
 }
 
 export function FernErrorTag({
@@ -25,6 +26,7 @@ export function FernErrorTag({
     showError,
     reset,
     resetErrorBoundary,
+    fallback,
 }: {
     component: string; // component displayName where the error occurred
     error: unknown;
@@ -33,22 +35,27 @@ export function FernErrorTag({
     showError?: boolean;
     reset?: () => void;
     resetErrorBoundary?: () => void;
+    fallback?: ReactNode;
 }): ReactElement | null {
     const isLocalPreview = useIsLocalPreview();
     useEffect(() => {
-        // TODO: sentry
-        // eslint-disable-next-line no-console
-        console.error(
-            errorDescription ??
-                "An unknown UI error occurred. This could be a critical user-facing error that should be investigated.",
-            error,
-        );
+        if (error) {
+            // TODO: sentry
+            // eslint-disable-next-line no-console
+            console.error(
+                errorDescription ??
+                    "An unknown UI error occurred. This could be a critical user-facing error that should be investigated.",
+                error,
+            );
+        }
     }, [component, error, errorDescription]);
 
-    // if local preview, always show the error tag for markdown errors
-    const showMarkdownError = isLocalPreview && component === "MdxErrorBoundary";
+    if (fallback != null) {
+        return <>{fallback}</>;
+    }
 
-    if (showError || showMarkdownError) {
+    // if local preview, always show the error tag for markdown errors
+    if (showError || isLocalPreview) {
         return (
             <div className={clsx(className ?? "my-4")}>
                 <span className="t-danger inline-flex items-center gap-2 rounded-full bg-tag-danger px-2">
@@ -91,6 +98,7 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
     reset,
     refreshOnError,
     showError,
+    fallback,
 }) => {
     const router = useRouter();
 
@@ -123,6 +131,7 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
             showError={showError}
             reset={reset}
             resetErrorBoundary={resetErrorBoundary}
+            fallback={fallback}
         />
     );
 };

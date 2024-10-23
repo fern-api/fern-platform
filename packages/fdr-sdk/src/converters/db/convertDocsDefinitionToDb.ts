@@ -1,4 +1,5 @@
 import assertNever from "@fern-api/ui-core-utils/assertNever";
+import { kebabCase } from "es-toolkit/string";
 import {
     DocsV1Db,
     DocsV1Read,
@@ -10,7 +11,6 @@ import {
     visitWriteNavigationConfig,
 } from "../../client";
 import { isNavigationTabLink } from "../../client/visitNavigationTab";
-import { kebabCase } from "../../utils";
 import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
 
 export interface S3FileInfo {
@@ -151,7 +151,7 @@ function transformUnversionedNavigationConfigForDb(
     return visitUnversionedWriteNavigationConfig<DocsV1Db.UnversionedNavigationConfig>(writeShape, {
         untabbed: (config) => {
             return {
-                items: config.items.map(transformNavigationItemForDb),
+                items: config.items?.map(transformNavigationItemForDb),
                 // landing page's slug should be "" because it's the root
                 landingPage: transformPageNavigationItemForDb(config.landingPage, ""),
             };
@@ -172,8 +172,8 @@ export function transformNavigationTabForDb(writeShape: DocsV1Write.NavigationTa
     }
     return {
         ...writeShape,
-        items: writeShape.items.map(transformNavigationItemForDb),
-        urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
+        items: writeShape.items?.map(transformNavigationItemForDb),
+        urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title ?? ""),
     };
 }
 
@@ -280,14 +280,9 @@ export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationI
 
 export function getReferencedApiDefinitionIds(navigationConfig: DocsV1Db.NavigationConfig): FdrAPI.ApiDefinitionId[] {
     return visitDbNavigationConfig(navigationConfig, {
-        unversioned: (config) => {
-            return getReferencedApiDefinitionIdsForUnversionedReadConfig(config);
-        },
-        versioned: (config) => {
-            return config.versions.flatMap((version) =>
-                getReferencedApiDefinitionIdsForUnversionedReadConfig(version.config),
-            );
-        },
+        unversioned: (config) => getReferencedApiDefinitionIdsForUnversionedReadConfig(config),
+        versioned: (config) =>
+            config.versions.flatMap((version) => getReferencedApiDefinitionIdsForUnversionedReadConfig(version.config)),
     });
 }
 
@@ -302,12 +297,16 @@ function getReferencedApiDefinitionIdsForUnversionedReadConfig(
                 if (isNavigationTabLink(tab)) {
                     return;
                 } else {
-                    toRet.push(...tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
+                    if (tab.items) {
+                        toRet.push(...tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
+                    }
                 }
             });
             config.tabsV2?.forEach((tab) => {
                 if (tab.type === "group") {
-                    toRet.push(...tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
+                    if (tab.items) {
+                        toRet.push(...tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
+                    }
                 }
             });
             return toRet;

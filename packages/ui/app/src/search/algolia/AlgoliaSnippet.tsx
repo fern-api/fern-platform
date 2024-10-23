@@ -46,7 +46,7 @@ export const AlgoliaSnippet: React.FC<AlgoliaSnippetProps> = ({ hit }) => {
                         snippet = `<code>${snippet}</code>`;
                     }
 
-                    const removeOutsideGuards = snippet?.match(/\| (.*) \|/);
+                    const removeOutsideGuards = snippet.match(/\| (.*) \|/);
                     if (removeOutsideGuards && removeOutsideGuards?.length > 1) {
                         snippet = removeOutsideGuards[1];
                     }

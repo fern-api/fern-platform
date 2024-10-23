@@ -54,6 +54,9 @@ function ifCustomer(posthog: PostHog, run: (hog: PostHogWithCustomer) => void): 
 
 export async function initializePosthog(api_host: string, customerConfig?: DocsV1Read.PostHogConfig): Promise<void> {
     const apiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY?.trim() ?? "";
+    /**
+     * TODO: refactor this to use the posthog react provider
+     */
     const posthog = (await import("posthog-js")).default;
 
     if (posthog.__loaded) {

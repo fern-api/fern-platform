@@ -6,11 +6,11 @@ import {
     FdrAPI,
     FernNavigation,
     convertDbAPIDefinitionToRead,
-    kebabCase,
     visitDbNavigationTab,
 } from "@fern-api/fdr-sdk";
 import { EndpointPathPart } from "@fern-api/fdr-sdk/src/client/APIV1Read";
 import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { kebabCase } from "es-toolkit/string";
 import { v4 as uuid } from "uuid";
 import { BreadcrumbsInfo } from "../../api/generated/api";
 import { LOGGER } from "../../app/FdrApplication";
@@ -54,7 +54,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
         const records: AlgoliaSearchRecord[] = [];
         const api = item;
         const apiId = api.api;
-        const apiDef = this.config.apiDefinitionsById.get(apiId);
+        const apiDef = this.config.apiDefinitionsById[apiId];
         if (apiDef != null) {
             records.push(
                 ...this.generateAlgoliaSearchRecordsForApiDefinition(
@@ -224,16 +224,17 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
             config.tabs?.map((tab) =>
                 visitDbNavigationTab(tab, {
                     group: (group) => {
-                        const tabRecords = group.items.map((item) =>
-                            this.generateAlgoliaSearchRecordsForNavigationItem(
-                                item,
-                                context.withPathPart({
-                                    name: tab.title,
-                                    urlSlug: group.urlSlug,
-                                    skipUrlSlug: undefined,
-                                }),
-                            ),
-                        );
+                        const tabRecords =
+                            group.items?.map((item) =>
+                                this.generateAlgoliaSearchRecordsForNavigationItem(
+                                    item,
+                                    context.withPathPart({
+                                        name: tab.title,
+                                        urlSlug: group.urlSlug,
+                                        skipUrlSlug: undefined,
+                                    }),
+                                ),
+                            ) ?? [];
                         return tabRecords.flat(1);
                     },
                     link: () => [],
@@ -444,7 +445,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
         root: FernNavigation.V1.ApiReferenceNode,
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
-        const api = this.config.apiDefinitionsById.get(root.apiDefinitionId);
+        const api = this.config.apiDefinitionsById[root.apiDefinitionId];
         if (api == null) {
             LOGGER.error("Failed to find API definition for API reference node. id=", root.apiDefinitionId);
         }
@@ -924,6 +925,350 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
         return records;
     }
 
+    private collectReferencedTypeReferenceToContentV2(
+        id: APIV1Read.TypeReference.Id,
+        object: APIV1Read.TypeShape.Object_,
+        fields: AlgoliaSearchRecord[],
+        typeReferenceWithMetadata: TypeReferenceWithMetadata,
+        baseSlug: string,
+        additionalProperties: any,
+        types: Record<string, APIV1Read.TypeDefinition>,
+        visitedNodes: Set<string>,
+        undiscriminatedUnionVariants: Set<string>,
+        depth: number,
+    ) {
+        const referenceLeaves: TypeReferenceWithMetadata[] = [];
+        object.properties.forEach((property) => {
+            const slug = FernNavigation.V1.Slug(`${baseSlug}.${encodeURI(property.key)}`);
+            // If we see and object shape for a property, we need to recursively collect the underlying referenced types.
+            // If we see a reference or a container type, we will add it to the referenceLeaves to be processed in the next iteration.
+            switch (property.valueType.type) {
+                // here we check for reference types to process in the next iteration
+                case "id":
+                    referenceLeaves.push({
+                        reference: property.valueType,
+                        anchorIdParts: [...typeReferenceWithMetadata.anchorIdParts, property.key],
+                        breadcrumbs: [
+                            ...typeReferenceWithMetadata.breadcrumbs,
+                            {
+                                title: property.key,
+                                slug: `${baseSlug}.${encodeURI(property.key)}`,
+                            },
+                        ],
+                        slugPrefix: slug,
+                        version: typeReferenceWithMetadata.version,
+                        indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                        method: typeReferenceWithMetadata.method,
+                        endpointPath: typeReferenceWithMetadata.endpointPath,
+                        isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                        propertyKey: property.key,
+                        type: typeReferenceWithMetadata.type,
+                    });
+                    break;
+                // here we check for container types to process in the next iteration
+                case "optional":
+                case "map":
+                case "list":
+                case "set":
+                    referenceLeaves.push({
+                        reference: property.valueType,
+                        anchorIdParts: [...typeReferenceWithMetadata.anchorIdParts],
+                        breadcrumbs: [...typeReferenceWithMetadata.breadcrumbs],
+                        slugPrefix: slug,
+                        version: typeReferenceWithMetadata.version,
+                        indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                        method: typeReferenceWithMetadata.method,
+                        endpointPath: typeReferenceWithMetadata.endpointPath,
+                        isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                        propertyKey: property.key,
+                        type: typeReferenceWithMetadata.type,
+                    });
+                    break;
+                // If we see the property is a primitive or literal, we add it to our collection of algolia records.
+                case "primitive":
+                case "literal":
+                case "unknown":
+                    fields.push({
+                        objectID: uuid(),
+                        title: property.key,
+                        description: property.description,
+                        availability: property.availability,
+                        breadcrumbs: typeReferenceWithMetadata.breadcrumbs.concat({
+                            title: property.key,
+                            slug,
+                        }),
+                        slug,
+                        version: typeReferenceWithMetadata.version,
+                        indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                        extends: object.extends,
+                        ...additionalProperties,
+                    });
+                    break;
+                default: {
+                    assertNever(property.valueType);
+                }
+            }
+        });
+        // If we see an extension on the object, we need to process the internal types.
+        object.extends.forEach((extend) => {
+            referenceLeaves.push({
+                reference: { type: "id", value: extend, default: undefined },
+                anchorIdParts: typeReferenceWithMetadata.anchorIdParts,
+                breadcrumbs: typeReferenceWithMetadata.breadcrumbs,
+                slugPrefix: baseSlug,
+                version: typeReferenceWithMetadata.version,
+                indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                method: typeReferenceWithMetadata.method,
+                endpointPath: typeReferenceWithMetadata.endpointPath,
+                isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                propertyKey: undefined,
+                type: typeReferenceWithMetadata.type,
+            });
+        });
+
+        fields.push(
+            ...this.collectReferencedTypesToContentV2(
+                referenceLeaves,
+                types,
+                new Set(visitedNodes).add(id.value),
+                undiscriminatedUnionVariants,
+                depth + 1,
+            ),
+        );
+    }
+
+    collectReferencedUndiscriminatedUnionToContentV2(
+        undiscriminatedUnion: APIV1Read.TypeShape.UndiscriminatedUnion,
+        fields: AlgoliaSearchRecord[],
+        typeReferenceWithMetadata: TypeReferenceWithMetadata,
+        baseSlug: string,
+        additionalProperties: any,
+        types: Record<string, APIV1Read.TypeDefinition>,
+        visitedNodes: Set<string>,
+        undiscriminatedUnionVariants: Set<string>,
+        depth: number,
+    ) {
+        const referenceLeaves: TypeReferenceWithMetadata[] = [];
+        const newVariantSet = new Set(undiscriminatedUnionVariants);
+        undiscriminatedUnion.variants.forEach((variant, idx) => {
+            const title =
+                variant.displayName ??
+                (variant.type.type === "id" ? titleCase(types[variant.type.value]?.name ?? "") : "");
+            if (!undiscriminatedUnionVariants.has(title) || title == "") {
+                newVariantSet.add(title);
+                const slug = title != "" ? FernNavigation.V1.Slug(`${baseSlug}.${encodeURI(title)}`) : baseSlug;
+                const anchorIdParts =
+                    title != ""
+                        ? [...typeReferenceWithMetadata.anchorIdParts, title]
+                        : typeReferenceWithMetadata.anchorIdParts;
+                const breadcrumbs =
+                    title != ""
+                        ? [...typeReferenceWithMetadata.breadcrumbs, { title, slug }]
+                        : typeReferenceWithMetadata.breadcrumbs;
+                // For undiscriminated unions, we need to check if there are any nested types that need to be processed.
+                switch (variant.type.type) {
+                    case "id":
+                        referenceLeaves.push({
+                            reference: variant.type,
+                            anchorIdParts,
+                            breadcrumbs,
+                            slugPrefix: title != "" ? slug : baseSlug,
+                            version: typeReferenceWithMetadata.version,
+                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                            method: typeReferenceWithMetadata.method,
+                            endpointPath: typeReferenceWithMetadata.endpointPath,
+                            isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                            propertyKey: undefined,
+                            type: typeReferenceWithMetadata.type,
+                        });
+                        break;
+                    // here we check for container types to process in the next iteration
+                    case "optional":
+                        referenceLeaves.push({
+                            reference: variant.type,
+                            anchorIdParts,
+                            breadcrumbs,
+                            slugPrefix: slug,
+                            version: typeReferenceWithMetadata.version,
+                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                            method: typeReferenceWithMetadata.method,
+                            endpointPath: typeReferenceWithMetadata.endpointPath,
+                            isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                            propertyKey: undefined,
+                            type: typeReferenceWithMetadata.type,
+                        });
+                        break;
+                    case "map":
+                    case "list":
+                    case "set": {
+                        const lastBreadcrumb = breadcrumbs.pop();
+                        const newSlug = `${slug}.${idx}`;
+                        if (lastBreadcrumb != null) {
+                            lastBreadcrumb.slug = newSlug;
+                            breadcrumbs.push(lastBreadcrumb);
+                        }
+                        referenceLeaves.push({
+                            reference: variant.type,
+                            anchorIdParts,
+                            breadcrumbs,
+                            slugPrefix: newSlug,
+                            version: typeReferenceWithMetadata.version,
+                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                            method: typeReferenceWithMetadata.method,
+                            endpointPath: typeReferenceWithMetadata.endpointPath,
+                            isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                            propertyKey: undefined,
+                            type: typeReferenceWithMetadata.type,
+                        });
+                        break;
+                    }
+                    // If we see the variant is a primitive or literal, we add it to our collection of algolia records.
+                    case "primitive":
+                    case "literal":
+                    case "unknown":
+                        fields.push({
+                            objectID: uuid(),
+                            title,
+                            description: variant.description,
+                            availability: variant.availability,
+                            breadcrumbs: [
+                                ...typeReferenceWithMetadata.breadcrumbs,
+                                {
+                                    title,
+                                    slug,
+                                },
+                            ],
+                            slug,
+                            version: typeReferenceWithMetadata.version,
+                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                            extends: undefined,
+                            ...additionalProperties,
+                        });
+                        break;
+                    default:
+                        assertNever(variant.type);
+                }
+            }
+        });
+        fields.push(
+            ...this.collectReferencedTypesToContentV2(referenceLeaves, types, visitedNodes, newVariantSet, depth + 1),
+        );
+    }
+
+    private collectReferencedDiscriminatedUnionToContentV2(
+        discriminatedUnion: APIV1Read.TypeShape.DiscriminatedUnion,
+        fields: AlgoliaSearchRecord[],
+        typeReferenceWithMetadata: TypeReferenceWithMetadata,
+        baseSlug: string,
+        additionalProperties: any,
+        types: Record<string, APIV1Read.TypeDefinition>,
+        visitedNodes: Set<string>,
+        undiscriminatedUnionVariants: Set<string>,
+        depth: number,
+    ) {
+        const referenceLeaves: TypeReferenceWithMetadata[] = [];
+        discriminatedUnion.variants.forEach((variant) => {
+            const title = variant.displayName ?? titleCase(variant.discriminantValue);
+            const slug = FernNavigation.V1.Slug(`${baseSlug}.${encodeURI(title)}`);
+
+            // additional properties on the variant are the object shapes themselves,
+            // so we check for extension types here.
+            variant.additionalProperties.extends.forEach((extend) => {
+                referenceLeaves.push({
+                    reference: { type: "id", value: extend, default: undefined },
+                    anchorIdParts: typeReferenceWithMetadata.anchorIdParts,
+                    breadcrumbs: [...typeReferenceWithMetadata.breadcrumbs, { title, slug }],
+                    slugPrefix: `${baseSlug}.${encodeURI(title)}`,
+                    version: typeReferenceWithMetadata.version,
+                    indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                    method: typeReferenceWithMetadata.method,
+                    endpointPath: typeReferenceWithMetadata.endpointPath,
+                    isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                    propertyKey: undefined,
+                    type: typeReferenceWithMetadata.type,
+                });
+            });
+            variant.additionalProperties.properties.forEach((property) => {
+                // Here we check for references or container types to process in the next iteration.
+                switch (property.valueType.type) {
+                    case "id":
+                        referenceLeaves.push({
+                            reference: property.valueType,
+                            anchorIdParts: [...typeReferenceWithMetadata.anchorIdParts, title, property.key],
+                            breadcrumbs: [
+                                ...typeReferenceWithMetadata.breadcrumbs,
+                                { title, slug },
+                                {
+                                    title: property.key,
+                                    slug: `${baseSlug}.${encodeURI(title)}.${encodeURI(property.key)}`,
+                                },
+                            ],
+                            slugPrefix: `${baseSlug}.${encodeURI(title)}.${encodeURI(property.key)}`,
+                            version: typeReferenceWithMetadata.version,
+                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                            method: typeReferenceWithMetadata.method,
+                            endpointPath: typeReferenceWithMetadata.endpointPath,
+                            isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                            propertyKey: property.key,
+                            type: typeReferenceWithMetadata.type,
+                        });
+                        break;
+                    // here we check for container types to process in the next iteration
+                    case "optional":
+                    case "map":
+                    case "list":
+                    case "set":
+                        referenceLeaves.push({
+                            reference: property.valueType,
+                            anchorIdParts: [...typeReferenceWithMetadata.anchorIdParts, title],
+                            breadcrumbs: [...typeReferenceWithMetadata.breadcrumbs, { title, slug }],
+                            slugPrefix: `${baseSlug}.${encodeURI(title)}`,
+                            version: typeReferenceWithMetadata.version,
+                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                            method: typeReferenceWithMetadata.method,
+                            endpointPath: typeReferenceWithMetadata.endpointPath,
+                            isResponseStream: typeReferenceWithMetadata.isResponseStream,
+                            propertyKey: property.key,
+                            type: typeReferenceWithMetadata.type,
+                        });
+                        break;
+                    // otherwise we check for primitive or literal types to add to our collection of algolia records.
+                    case "primitive":
+                    case "literal":
+                    case "unknown":
+                        fields.push({
+                            objectID: uuid(),
+                            title: property.key,
+                            description: property.description,
+                            availability: property.availability,
+                            breadcrumbs: typeReferenceWithMetadata.breadcrumbs.concat({
+                                title: property.key,
+                                slug,
+                            }),
+                            slug,
+                            version: typeReferenceWithMetadata.version,
+                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
+                            extends: variant.additionalProperties.extends,
+                            ...additionalProperties,
+                        });
+                        break;
+                    default:
+                        assertNever(property.valueType);
+                }
+            });
+        });
+
+        fields.push(
+            ...this.collectReferencedTypesToContentV2(
+                referenceLeaves,
+                types,
+                visitedNodes,
+                undiscriminatedUnionVariants,
+                depth + 1,
+            ),
+        );
+    }
+
     // The idea behind this function is to collect the smallest subset of records that capture all type information.
     //
     // To do this, we descend the type tree and resolve the leaf nodes and map them to records that have built up breadcrumbs,
@@ -932,6 +1277,8 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
         typeReferencesWithMetadata: TypeReferenceWithMetadata[],
         types: Record<string, APIV1Read.TypeDefinition>,
         visitedNodes: Set<string> = new Set(),
+        undiscriminatedUnionVariants: Set<string> = new Set(),
+        depth: number = 0,
     ): AlgoliaSearchRecord[] {
         const fields: AlgoliaSearchRecord[] = [];
 
@@ -970,85 +1317,17 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                         if (type != null) {
                             visitDiscriminatedUnion(type.shape)._visit({
                                 object: (object) => {
-                                    const referenceLeaves: TypeReferenceWithMetadata[] = [];
-                                    object.properties.forEach((property) => {
-                                        const slug = FernNavigation.V1.Slug(`${baseSlug}.${encodeURI(property.key)}`);
-                                        // If we see and object shape for a property, we need to recursively collect the underlying referenced types.
-                                        // If we see a reference or a container type, we will add it to the referenceLeaves to be processed in the next iteration.
-                                        if (
-                                            property.valueType.type === "id" ||
-                                            property.valueType.type === "optional" ||
-                                            property.valueType.type === "map" ||
-                                            property.valueType.type === "list" ||
-                                            property.valueType.type === "set"
-                                        ) {
-                                            referenceLeaves.push({
-                                                reference: property.valueType,
-                                                anchorIdParts: [
-                                                    ...typeReferenceWithMetadata.anchorIdParts,
-                                                    property.key,
-                                                ],
-                                                breadcrumbs: [
-                                                    ...typeReferenceWithMetadata.breadcrumbs,
-                                                    {
-                                                        title: property.key,
-                                                        slug: `${baseSlug}.${encodeURI(property.key)}`,
-                                                    },
-                                                ],
-                                                slugPrefix: slug,
-                                                version: typeReferenceWithMetadata.version,
-                                                indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                                method: typeReferenceWithMetadata.method,
-                                                endpointPath: typeReferenceWithMetadata.endpointPath,
-                                                isResponseStream: typeReferenceWithMetadata.isResponseStream,
-                                                propertyKey: property.key,
-                                                type: typeReferenceWithMetadata.type,
-                                            });
-                                            // If we see a primitive or literal property, we add it to our collection of algolia records.
-                                        } else if (
-                                            property.valueType.type === "primitive" ||
-                                            property.valueType.type === "literal"
-                                        ) {
-                                            fields.push({
-                                                objectID: uuid(),
-                                                title: property.key,
-                                                description: property.description,
-                                                availability: property.availability,
-                                                breadcrumbs: typeReferenceWithMetadata.breadcrumbs.concat({
-                                                    title: property.key,
-                                                    slug,
-                                                }),
-                                                slug,
-                                                version: typeReferenceWithMetadata.version,
-                                                indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                                extends: object.extends,
-                                                ...additionalProperties,
-                                            });
-                                        }
-                                    });
-                                    // If we see an extension on the object, we need to process the internal types.
-                                    object.extends.forEach((extend) => {
-                                        referenceLeaves.push({
-                                            reference: { type: "id", value: extend, default: undefined },
-                                            anchorIdParts: typeReferenceWithMetadata.anchorIdParts,
-                                            breadcrumbs: typeReferenceWithMetadata.breadcrumbs,
-                                            slugPrefix: baseSlug,
-                                            version: typeReferenceWithMetadata.version,
-                                            indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                            method: typeReferenceWithMetadata.method,
-                                            endpointPath: typeReferenceWithMetadata.endpointPath,
-                                            isResponseStream: typeReferenceWithMetadata.isResponseStream,
-                                            propertyKey: undefined,
-                                            type: typeReferenceWithMetadata.type,
-                                        });
-                                    });
-
-                                    fields.push(
-                                        ...this.collectReferencedTypesToContentV2(
-                                            referenceLeaves,
-                                            types,
-                                            new Set(visitedNodes).add(id.value),
-                                        ),
+                                    this.collectReferencedTypeReferenceToContentV2(
+                                        id,
+                                        object,
+                                        fields,
+                                        typeReferenceWithMetadata,
+                                        baseSlug,
+                                        additionalProperties,
+                                        types,
+                                        visitedNodes,
+                                        undiscriminatedUnionVariants,
+                                        depth,
                                     );
                                 },
                                 alias: () => undefined,
@@ -1078,156 +1357,29 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                                     });
                                 },
                                 undiscriminatedUnion: (undiscriminatedUnion) => {
-                                    const referenceLeaves: TypeReferenceWithMetadata[] = [];
-                                    undiscriminatedUnion.variants.forEach((variant) => {
-                                        const title =
-                                            variant.displayName != null
-                                                ? variant.displayName
-                                                : variant.type.type === "id"
-                                                  ? variant.type.value
-                                                  : "";
-                                        const slug = FernNavigation.V1.Slug(
-                                            `${baseSlug}.${encodeURI(variant.displayName ?? "")}`,
-                                        );
-                                        // For undiscriminated unions, we need to check if there are any nested types that need to be processed.
-                                        if (
-                                            variant.type.type === "id" ||
-                                            variant.type.type === "optional" ||
-                                            variant.type.type === "map" ||
-                                            variant.type.type === "list" ||
-                                            variant.type.type === "set"
-                                        ) {
-                                            referenceLeaves.push({
-                                                reference: variant.type,
-                                                anchorIdParts: [...typeReferenceWithMetadata.anchorIdParts, title],
-                                                breadcrumbs: [
-                                                    ...typeReferenceWithMetadata.breadcrumbs,
-                                                    { title, slug: `${baseSlug}.${encodeURI(title)}` },
-                                                ],
-                                                slugPrefix: slug,
-                                                version: typeReferenceWithMetadata.version,
-                                                indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                                method: typeReferenceWithMetadata.method,
-                                                endpointPath: typeReferenceWithMetadata.endpointPath,
-                                                isResponseStream: typeReferenceWithMetadata.isResponseStream,
-                                                propertyKey: undefined,
-                                                type: typeReferenceWithMetadata.type,
-                                            });
-                                            // If we see the variant is a primitive or literal, we add it to our collection of algolia records.
-                                        } else if (
-                                            variant.type.type === "primitive" ||
-                                            variant.type.type === "literal"
-                                        ) {
-                                            fields.push({
-                                                objectID: uuid(),
-                                                title,
-                                                description: variant.description,
-                                                availability: variant.availability,
-                                                breadcrumbs: [
-                                                    ...typeReferenceWithMetadata.breadcrumbs,
-                                                    {
-                                                        title,
-                                                        slug,
-                                                    },
-                                                ],
-                                                slug,
-                                                version: typeReferenceWithMetadata.version,
-                                                indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                                extends: undefined,
-                                                ...additionalProperties,
-                                            });
-                                        }
-                                    });
-
-                                    fields.push(
-                                        ...this.collectReferencedTypesToContentV2(referenceLeaves, types, visitedNodes),
+                                    this.collectReferencedUndiscriminatedUnionToContentV2(
+                                        undiscriminatedUnion,
+                                        fields,
+                                        typeReferenceWithMetadata,
+                                        baseSlug,
+                                        additionalProperties,
+                                        types,
+                                        visitedNodes,
+                                        undiscriminatedUnionVariants,
+                                        depth,
                                     );
                                 },
                                 discriminatedUnion: (discriminatedUnion) => {
-                                    const referenceLeaves: TypeReferenceWithMetadata[] = [];
-                                    discriminatedUnion.variants.forEach((variant) => {
-                                        const title = variant.displayName ?? titleCase(variant.discriminantValue);
-                                        const slug = FernNavigation.V1.Slug(`${baseSlug}.${encodeURI(title)}`);
-
-                                        // additional properties on the variant are the object shapes themselves,
-                                        // so we check for extension types here.
-                                        variant.additionalProperties.extends.forEach((extend) => {
-                                            referenceLeaves.push({
-                                                reference: { type: "id", value: extend, default: undefined },
-                                                anchorIdParts: typeReferenceWithMetadata.anchorIdParts,
-                                                breadcrumbs: [
-                                                    ...typeReferenceWithMetadata.breadcrumbs,
-                                                    { title, slug },
-                                                ],
-                                                slugPrefix: `${baseSlug}.${encodeURI(title)}`,
-                                                version: typeReferenceWithMetadata.version,
-                                                indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                                method: typeReferenceWithMetadata.method,
-                                                endpointPath: typeReferenceWithMetadata.endpointPath,
-                                                isResponseStream: typeReferenceWithMetadata.isResponseStream,
-                                                propertyKey: undefined,
-                                                type: typeReferenceWithMetadata.type,
-                                            });
-                                        });
-                                        variant.additionalProperties.properties.forEach((property) => {
-                                            // here we check for references or container types to process in the next iteration.
-                                            if (
-                                                property.valueType.type === "id" ||
-                                                property.valueType.type === "optional" ||
-                                                property.valueType.type === "map" ||
-                                                property.valueType.type === "list" ||
-                                                property.valueType.type === "set"
-                                            ) {
-                                                referenceLeaves.push({
-                                                    reference: property.valueType,
-                                                    anchorIdParts: [
-                                                        ...typeReferenceWithMetadata.anchorIdParts,
-                                                        title,
-                                                        property.key,
-                                                    ],
-                                                    breadcrumbs: [
-                                                        ...typeReferenceWithMetadata.breadcrumbs,
-                                                        { title, slug },
-                                                        {
-                                                            title: property.key,
-                                                            slug: `${baseSlug}.${encodeURI(title)}.${encodeURI(property.key)}`,
-                                                        },
-                                                    ],
-                                                    slugPrefix: `${baseSlug}.${encodeURI(title)}.${encodeURI(property.key)}`,
-                                                    version: typeReferenceWithMetadata.version,
-                                                    indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                                    method: typeReferenceWithMetadata.method,
-                                                    endpointPath: typeReferenceWithMetadata.endpointPath,
-                                                    isResponseStream: typeReferenceWithMetadata.isResponseStream,
-                                                    propertyKey: property.key,
-                                                    type: typeReferenceWithMetadata.type,
-                                                });
-                                                // otherwise we check for primitive or literal types to add to our collection of algolia records.
-                                            } else if (
-                                                property.valueType.type === "primitive" ||
-                                                property.valueType.type === "literal"
-                                            ) {
-                                                fields.push({
-                                                    objectID: uuid(),
-                                                    title: property.key,
-                                                    description: property.description,
-                                                    availability: property.availability,
-                                                    breadcrumbs: typeReferenceWithMetadata.breadcrumbs.concat({
-                                                        title: property.key,
-                                                        slug,
-                                                    }),
-                                                    slug,
-                                                    version: typeReferenceWithMetadata.version,
-                                                    indexSegmentId: typeReferenceWithMetadata.indexSegmentId,
-                                                    extends: variant.additionalProperties.extends,
-                                                    ...additionalProperties,
-                                                });
-                                            }
-                                        });
-                                    });
-
-                                    fields.push(
-                                        ...this.collectReferencedTypesToContentV2(referenceLeaves, types, visitedNodes),
+                                    this.collectReferencedDiscriminatedUnionToContentV2(
+                                        discriminatedUnion,
+                                        fields,
+                                        typeReferenceWithMetadata,
+                                        baseSlug,
+                                        additionalProperties,
+                                        types,
+                                        visitedNodes,
+                                        undiscriminatedUnionVariants,
+                                        depth,
                                     );
                                 },
                             });
@@ -1273,10 +1425,13 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                             ],
                             types,
                             visitedNodes,
+                            undiscriminatedUnionVariants,
+                            depth + 1,
                         ),
                     );
                 },
                 list: (list) => {
+                    // Append index here
                     // Here, we want to unwrap the container type while preserving the parent breadcrumbs
                     fields.push(
                         ...this.collectReferencedTypesToContentV2(
@@ -1288,6 +1443,8 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                             ],
                             types,
                             visitedNodes,
+                            undiscriminatedUnionVariants,
+                            depth + 1,
                         ),
                     );
                 },
@@ -1303,6 +1460,8 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                             ],
                             types,
                             visitedNodes,
+                            undiscriminatedUnionVariants,
+                            depth + 1,
                         ),
                     );
                 },
@@ -1318,6 +1477,8 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                             ],
                             types,
                             visitedNodes,
+                            undiscriminatedUnionVariants,
+                            depth + 1,
                         ),
                     );
                     fields.push(
@@ -1330,6 +1491,8 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                             ],
                             types,
                             visitedNodes,
+                            undiscriminatedUnionVariants,
+                            depth + 1,
                         ),
                     );
                 },

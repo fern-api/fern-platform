@@ -1,7 +1,7 @@
 import { createOrUpdatePullRequest, getOrUpdateBranch } from "@fern-api/github";
 import { FernRegistryClient } from "@fern-fern/generators-sdk";
 import { ChangelogResponse } from "@fern-fern/generators-sdk/api/resources/generators";
-import { execFernCli, getGenerators, NO_API_FALLBACK_KEY } from "@libs/fern";
+import { NO_API_FALLBACK_KEY, execFernCli, findFernWorkspaces, getGenerators } from "@libs/fern";
 import { DEFAULT_REMOTE_NAME, cloneRepo, configureGit, type Repository } from "@libs/github/utilities";
 import { GeneratorMessageMetadata, SlackService } from "@libs/slack/SlackService";
 import { Octokit } from "octokit";
@@ -9,6 +9,7 @@ import SemVer from "semver";
 import { CleanOptions, SimpleGit } from "simple-git";
 
 const PR_BODY_LIMIT = 65000;
+const MOCK_SERVER_FERN_DIRECTORY = ".mock";
 
 async function getGeneratorChangelog(
     fdrUrl: string,
@@ -138,102 +139,114 @@ export async function updateVersionInternal(
 
     const slackClient = new SlackService(slackToken, slackChannel);
 
-    let maybeOrganization: string | undefined;
-    try {
-        maybeOrganization = cleanStdout((await execFernCli("organization", fullRepoPath)).stdout);
-        console.log(`Found organization ID: ${maybeOrganization}`);
-    } catch (error) {
-        console.error(
-            "Could not determine the repo owner, continuing to upgrade CLI, but will fail generator upgrades.",
-        );
-    }
-
-    await handleSingleUpgrade({
-        octokit,
-        repository,
-        git,
-        branchName: "fern/update/cli",
-        prTitle: "Upgrade Fern CLI",
-        upgradeAction: async () => {
-            // Here we have to pipe yes to get through interactive prompts in the CLI
-            const response = await execFernCli("upgrade", fullRepoPath, true);
-            console.log(response.stdout);
-            console.log(response.stderr);
-        },
-        getPRBody: async (fromVersion, toVersion) => {
-            return formatChangelogResponses(fromVersion, await getCliChangelog(fdrUrl, fromVersion, toVersion));
-        },
-        getEntityVersion: async () => {
-            return cleanStdout((await execFernCli("--version", fullRepoPath)).stdout);
-        },
-        slackClient,
-        maybeOrganization,
-    });
-
     const client = new FernRegistryClient({ environment: fdrUrl });
-    // Pull a branch of fern/update/<generator>/<api>:<group>
-    // as well as fern/update/cli
-    const generatorsList = await getGenerators(fullRepoPath);
-    for (const [apiName, api] of Object.entries(generatorsList)) {
-        for (const [groupName, group] of Object.entries(api)) {
-            for (const generator of group) {
-                const generatorName = cleanStdout(generator);
-                const branchName = "fern/update/";
-                let additionalName = groupName;
-                if (apiName !== NO_API_FALLBACK_KEY) {
-                    additionalName = `${apiName}/${groupName}`;
-                }
-                additionalName = `${generatorName.replace("fernapi/", "")}@${additionalName}`;
 
-                const generatorResponse = await client.generators.getGeneratorByImage({ dockerImage: generator });
-                if (!generatorResponse.ok || generatorResponse.body == null) {
-                    throw new Error(`Generator ${generator} not found`);
-                }
-                const generatorEntity = generatorResponse.body;
+    const fernWorkspaces = await findFernWorkspaces(fullRepoPath);
+    console.log(`Found ${fernWorkspaces.length} fern workspaces: ${fernWorkspaces.join(", ")}`);
+    for (const fernWorkspacePath of fernWorkspaces) {
+        let maybeOrganization: string | undefined;
+        try {
+            maybeOrganization = cleanStdout((await execFernCli("organization", fullRepoPath)).stdout);
+            console.log(`Found organization ID: ${maybeOrganization}`);
+        } catch (error) {
+            console.error(
+                "Could not determine the repo owner, continuing to upgrade CLI, but will fail generator upgrades.",
+            );
+        }
 
-                // We could collect the promises here and await them at the end, but there aren't many you'd parallelize,
-                // and I think you'd outweigh that benefit by having to make several clones to manage the branches in isolation.
-                await handleSingleUpgrade({
-                    octokit,
-                    repository,
-                    git,
-                    branchName: `${branchName}${additionalName}`,
-                    prTitle: `Upgrade Fern ${generatorEntity.displayName} Generator: (\`${groupName}\`)`,
-                    upgradeAction: async ({ includeMajor }: { includeMajor?: boolean }) => {
-                        let command = `generator upgrade --generator ${generatorName} --group ${groupName}`;
-                        if (apiName !== NO_API_FALLBACK_KEY) {
-                            command += ` --api ${apiName}`;
-                        }
-                        if (includeMajor) {
-                            command += " --include-major";
-                        }
-                        const response = await execFernCli(command, fullRepoPath);
-                        console.log(response.stdout);
-                        console.log(response.stderr);
-                    },
-                    getPRBody: async (fromVersion, toVersion) => {
-                        return formatChangelogResponses(
-                            fromVersion,
-                            await getGeneratorChangelog(fdrUrl, generatorEntity.id, fromVersion, toVersion),
-                        );
-                    },
-                    getEntityVersion: async () => {
-                        let command = `generator get --version --generator ${generatorName} --group ${groupName}`;
-                        if (apiName !== NO_API_FALLBACK_KEY) {
-                            command += ` --api ${apiName}`;
-                        }
-                        return cleanStdout((await execFernCli(command, fullRepoPath)).stdout);
-                    },
-                    maybeGetGeneratorMetadata: async () => {
-                        return {
-                            group: groupName,
-                            generatorName,
-                            apiName: apiName !== NO_API_FALLBACK_KEY ? apiName : undefined,
-                        };
-                    },
-                    slackClient,
-                    maybeOrganization,
-                });
+        // We skip the mock server as that's not a real Fern workspace
+        // we'll upgrade the CLI within the proper Fern config repo, so this is skippable
+        if (fernWorkspacePath.endsWith(MOCK_SERVER_FERN_DIRECTORY)) {
+            console.log(`Found ${MOCK_SERVER_FERN_DIRECTORY} Fern workspace, skipping.`);
+            continue;
+        }
+
+        await handleSingleUpgrade({
+            octokit,
+            repository,
+            git,
+            branchName: "fern/update/cli",
+            prTitle: "Upgrade Fern CLI",
+            upgradeAction: async () => {
+                // Here we have to pipe yes to get through interactive prompts in the CLI
+                const response = await execFernCli("upgrade", fernWorkspacePath, true);
+                console.log(response.stdout);
+                console.log(response.stderr);
+            },
+            getPRBody: async (fromVersion, toVersion) => {
+                return formatChangelogResponses(fromVersion, await getCliChangelog(fdrUrl, fromVersion, toVersion));
+            },
+            getEntityVersion: async () => {
+                return cleanStdout((await execFernCli("--version", fernWorkspacePath)).stdout);
+            },
+            slackClient,
+            maybeOrganization,
+        });
+
+        // Pull a branch of fern/update/<generator>/<api>:<group>
+        // as well as fern/update/cli
+        const generatorsList = await getGenerators(fernWorkspacePath);
+        for (const [apiName, api] of Object.entries(generatorsList)) {
+            for (const [groupName, group] of Object.entries(api)) {
+                for (const generator of group) {
+                    const generatorName = cleanStdout(generator);
+                    const branchName = "fern/update/";
+                    let additionalName = groupName;
+                    if (apiName !== NO_API_FALLBACK_KEY) {
+                        additionalName = `${apiName}/${groupName}`;
+                    }
+                    additionalName = `${generatorName.replace("fernapi/", "")}@${additionalName}`;
+
+                    const generatorResponse = await client.generators.getGeneratorByImage({ dockerImage: generator });
+                    if (!generatorResponse.ok || generatorResponse.body == null) {
+                        throw new Error(`Generator ${generator} not found`);
+                    }
+                    const generatorEntity = generatorResponse.body;
+
+                    // We could collect the promises here and await them at the end, but there aren't many you'd parallelize,
+                    // and I think you'd outweigh that benefit by having to make several clones to manage the branches in isolation.
+                    await handleSingleUpgrade({
+                        octokit,
+                        repository,
+                        git,
+                        branchName: `${branchName}${additionalName}`,
+                        prTitle: `Upgrade Fern ${generatorEntity.displayName} Generator: (\`${groupName}\`)`,
+                        upgradeAction: async ({ includeMajor }: { includeMajor?: boolean }) => {
+                            let command = `generator upgrade --generator ${generatorName} --group ${groupName}`;
+                            if (apiName !== NO_API_FALLBACK_KEY) {
+                                command += ` --api ${apiName}`;
+                            }
+                            if (includeMajor) {
+                                command += " --include-major";
+                            }
+                            const response = await execFernCli(command, fernWorkspacePath);
+                            console.log(response.stdout);
+                            console.log(response.stderr);
+                        },
+                        getPRBody: async (fromVersion, toVersion) => {
+                            return formatChangelogResponses(
+                                fromVersion,
+                                await getGeneratorChangelog(fdrUrl, generatorEntity.id, fromVersion, toVersion),
+                            );
+                        },
+                        getEntityVersion: async () => {
+                            let command = `generator get --version --generator ${generatorName} --group ${groupName}`;
+                            if (apiName !== NO_API_FALLBACK_KEY) {
+                                command += ` --api ${apiName}`;
+                            }
+                            return cleanStdout((await execFernCli(command, fernWorkspacePath)).stdout);
+                        },
+                        maybeGetGeneratorMetadata: async () => {
+                            return {
+                                group: groupName,
+                                generatorName,
+                                apiName: apiName !== NO_API_FALLBACK_KEY ? apiName : undefined,
+                            };
+                        },
+                        slackClient,
+                        maybeOrganization,
+                    });
+                }
             }
         }
     }

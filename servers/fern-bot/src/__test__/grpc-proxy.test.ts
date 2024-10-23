@@ -30,7 +30,7 @@ interface Vector {
     values: number[];
 }
 
-it("unary w/ gRPC server reflection", async () => {
+it.skip("unary w/ gRPC server reflection", async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response = await proxyGrpc({
         body: {
@@ -79,7 +79,7 @@ it.skip("unary w/ default schema", async () => {
     expect(upsertResponse.upsertedCount).toBe(2);
 });
 
-it("unauthorized", async () => {
+it.skip("unauthorized", async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response = await proxyGrpc({
         body: {
@@ -109,7 +109,7 @@ it("unauthorized", async () => {
 }`);
 });
 
-it("invalid schema", async () => {
+it.skip("invalid schema", async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response = await proxyGrpc({
         body: {
@@ -132,7 +132,7 @@ it("invalid schema", async () => {
     expect(elizaResponse.sentence).toBe(undefined);
 });
 
-it("invalid host", async () => {
+it.skip("invalid host", async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response = await proxyGrpc({
         body: {

@@ -1,3 +1,4 @@
+import type { TableOfContentsItem as TableOfContentsItemType } from "@fern-ui/fern-docs-mdx";
 import { clsx } from "clsx";
 import fastdom from "fastdom";
 import { CSSProperties, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
@@ -10,7 +11,7 @@ export declare namespace TableOfContents {
     export interface Props {
         className?: string;
         style?: CSSProperties;
-        tableOfContents: TableOfContentsItem[];
+        tableOfContents: TableOfContentsItemType[];
     }
 }
 
@@ -19,7 +20,7 @@ let anchorJustSetTimeout: number;
 
 export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, tableOfContents, style }) => {
     const allAnchors = useMemo(() => {
-        const flatten = (items: TableOfContentsItem[]): string[] =>
+        const flatten = (items: TableOfContentsItemType[]): string[] =>
             items.flatMap((item) => [item.anchorString, ...flatten(item.children)]);
         return flatten(tableOfContents);
     }, [tableOfContents]);
@@ -79,7 +80,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ta
         });
     }, []);
 
-    const flattenTableOfContents = (items: TableOfContentsItem[], depth = 0): ReactNode => {
+    const flattenTableOfContents = (items: TableOfContentsItemType[], depth = 0): ReactNode => {
         return items.flatMap(({ simpleString: text, anchorString, children }) => {
             if (text.length === 0) {
                 // don't render empty headings
@@ -106,7 +107,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ className, ta
             )}
             {tableOfContents.length > 0 && (
                 <ul
-                    className={clsx("toc-root", className)}
+                    className={clsx("toc-root not-prose", className)}
                     style={{ ...style, "--height": `${liHeight}px`, "--top": `${offsetTop}px` } as CSSProperties}
                 >
                     {flattenTableOfContents(tableOfContents)}

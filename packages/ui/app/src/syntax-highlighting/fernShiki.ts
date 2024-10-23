@@ -1,6 +1,6 @@
+import { memoize } from "es-toolkit/function";
 import type { Root } from "hast";
 import { h } from "hastscript";
-import memoize from "lodash-es/memoize";
 import { useCallback, useEffect, useState } from "react";
 import {
     bundledLanguages,

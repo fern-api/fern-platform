@@ -1,7 +1,6 @@
-import { SearchForFacetValuesResponse, SearchResponse } from "@algolia/client-search";
 import { FdrAPI, FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
 import { assertNever } from "@fern-api/ui-core-utils";
-import algoliasearch, { SearchClient } from "algoliasearch";
+import { SearchClient, SearchForFacetValuesResponse, SearchResponse, algoliasearch } from "algoliasearch";
 import { Rule, RuleArgs, RuleResult } from "../runRules";
 
 export class SearchSlugsCorrectRule implements Rule {
@@ -163,9 +162,10 @@ function getSlugFromAlgoliaRecord(algoliaRecord: FdrAPI.AlgoliaRecord): string {
         case "webhook-v4":
         case "websocket-v4":
         case "markdown-section-v1":
+        case "endpoint-field-v1":
+        case "websocket-field-v1":
+        case "webhook-field-v1":
             return algoliaRecord.slug;
-        case "field-v1":
-            return algoliaRecord.value.slug;
         default:
             assertNever(algoliaRecord);
     }

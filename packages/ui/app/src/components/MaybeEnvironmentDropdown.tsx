@@ -1,14 +1,12 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernDropdown, FernInput } from "@fern-ui/components";
 import { useBooleanState } from "@fern-ui/react-commons";
-import { DismissableLayer } from "@radix-ui/react-dismissable-layer";
-import { FocusScope } from "@radix-ui/react-focus-scope";
 import cn from "clsx";
 import { useAtom } from "jotai";
 import { ReactElement, useEffect, useState } from "react";
 import { parse } from "url";
 import { PLAYGROUND_ENVIRONMENT_ATOM } from "../atoms";
-import { ALL_ENVIRONMENTS_ATOM, SELECTED_ENVIRONMENT_ATOM } from "../atoms/environment";
+import { SELECTED_ENVIRONMENT_ATOM } from "../atoms/environment";
 
 interface MaybeEnvironmentDropdownProps {
     baseUrl?: string;
@@ -16,7 +14,8 @@ interface MaybeEnvironmentDropdownProps {
     urlTextStyle?: string;
     protocolTextStyle?: string;
     small?: boolean;
-    environmentFilters?: APIV1Read.EnvironmentId[];
+    // environmentFilters?: APIV1Read.EnvironmentId[];
+    options?: APIV1Read.Environment[];
     editable?: boolean;
     isEditingEnvironment: useBooleanState.Return;
 }
@@ -27,27 +26,30 @@ export function MaybeEnvironmentDropdown({
     urlTextStyle,
     protocolTextStyle,
     small,
-    environmentFilters,
+    options,
     editable,
     isEditingEnvironment,
 }: MaybeEnvironmentDropdownProps): ReactElement | null {
-    const [allEnvironmentIds] = useAtom(ALL_ENVIRONMENTS_ATOM);
+    // const [allEnvironmentIds] = useAtom(ALL_ENVIRONMENTS_ATOM);
     const [selectedEnvironmentId, setSelectedEnvironmentId] = useAtom(SELECTED_ENVIRONMENT_ATOM);
     const [playgroundEnvironment, setPlaygroundEnvironment] = useAtom(PLAYGROUND_ENVIRONMENT_ATOM);
     const [inputValue, setInputValue] = useState<string | undefined>(undefined);
     const [initialState, setInitialState] = useState<string | undefined>(undefined);
 
-    const environmentIds = environmentFilters
-        ? environmentFilters.filter((environmentFilter) => allEnvironmentIds.includes(environmentFilter))
-        : allEnvironmentIds;
+    const selectedEnvironment = options?.find((option) => option.id === selectedEnvironmentId) ?? options?.[0];
 
-    useEffect(() => {
-        if (environmentFilters && environmentId && !environmentFilters.includes(environmentId)) {
-            setSelectedEnvironmentId(environmentId);
-        }
-    }, [environmentFilters, environmentId, setSelectedEnvironmentId]);
+    // const environmentIds = environmentFilters
+    //     ? environmentFilters.filter((environmentFilter) => allEnvironmentIds.includes(environmentFilter))
+    //     : allEnvironmentIds;
 
-    const preParsedUrl = playgroundEnvironment ?? baseUrl;
+    // useEffect(() => {
+    //     if (environmentFilters && environmentId && !environmentFilters.includes(environmentId)) {
+    //         setSelectedEnvironmentId(environmentId);
+    //     }
+    // }, [environmentFilters, environmentId, setSelectedEnvironmentId]);
+
+    // TODO: revisit the order of precedence for the baseUrl... this is a temporary fix
+    const preParsedUrl = playgroundEnvironment ?? selectedEnvironment?.baseUrl ?? baseUrl;
     const url = preParsedUrl && parse(preParsedUrl);
 
     // TODO: clean up this component
@@ -72,87 +74,75 @@ export function MaybeEnvironmentDropdown({
         <>
             {isEditingEnvironment.value ? (
                 <span key="url" className="inline-flex whitespace-nowrap max-sm:hidden font-mono">
-                    <DismissableLayer
-                        onEscapeKeyDown={(e) => {
-                            setInputValue(initialState);
-                            setPlaygroundEnvironment(initialState);
-                            isEditingEnvironment.setFalse();
+                    <FernInput
+                        autoFocus={isEditingEnvironment.value}
+                        size={inputValue?.length ?? 0}
+                        placeholder={inputValue}
+                        value={inputValue}
+                        onClick={(e) => {
                             e.stopPropagation();
-                            e.preventDefault();
                         }}
-                    >
-                        <FocusScope trapped>
-                            <FernInput
-                                autoFocus={isEditingEnvironment.value}
-                                size={inputValue?.length ?? 0}
-                                placeholder={inputValue}
-                                value={inputValue}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                }}
-                                onBlur={(e) => {
-                                    if (isValidInput) {
-                                        if (playgroundEnvironment) {
-                                            setInputValue(playgroundEnvironment);
-                                        }
-                                        isEditingEnvironment.setFalse();
-                                    } else {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        setInputValue(initialState);
-                                        setPlaygroundEnvironment(initialState);
-                                        isEditingEnvironment.setFalse();
-                                    }
-                                }}
-                                onValueChange={(value) => {
-                                    if (
-                                        value === "" ||
-                                        value == null ||
-                                        parse(value).host == null ||
-                                        parse(value).protocol == null
-                                    ) {
-                                        setInputValue(value);
-                                    } else {
-                                        setInputValue(value);
-                                        setPlaygroundEnvironment(value);
-                                    }
-                                }}
-                                onKeyDownCapture={(e) => {
-                                    if (e.key === "Enter" && isValidInput) {
-                                        if (playgroundEnvironment) {
-                                            setInputValue(playgroundEnvironment);
-                                        }
-                                        isEditingEnvironment.setFalse();
-                                    }
-                                }}
-                                className={cn("p-0", isValidInput ? "" : "error", "h-auto", "flex flex-col")}
-                                inputClassName={cn(
-                                    "px-1",
-                                    "py-0.5",
-                                    "h-auto",
-                                    "font-mono",
-                                    small ? "text-xs" : "text-sm",
-                                )}
-                            />
-                        </FocusScope>
-                    </DismissableLayer>
+                        onBlur={(e) => {
+                            if (isValidInput) {
+                                if (playgroundEnvironment) {
+                                    setInputValue(playgroundEnvironment);
+                                }
+                                isEditingEnvironment.setFalse();
+                            } else {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setInputValue(initialState);
+                                setPlaygroundEnvironment(initialState);
+                                isEditingEnvironment.setFalse();
+                            }
+                        }}
+                        onValueChange={(value) => {
+                            if (
+                                value === "" ||
+                                value == null ||
+                                parse(value).host == null ||
+                                parse(value).protocol == null
+                            ) {
+                                setInputValue(value);
+                            } else {
+                                setInputValue(value);
+                                setPlaygroundEnvironment(value);
+                            }
+                        }}
+                        onKeyDownCapture={(e) => {
+                            if (e.key === "Enter" && isValidInput) {
+                                if (playgroundEnvironment) {
+                                    setInputValue(playgroundEnvironment);
+                                }
+                                isEditingEnvironment.setFalse();
+                            } else if (e.key === "Escape") {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setInputValue(initialState);
+                                setPlaygroundEnvironment(initialState);
+                                isEditingEnvironment.setFalse();
+                            }
+                        }}
+                        className={cn("p-0", isValidInput ? "" : "error", "h-auto", "flex flex-col")}
+                        inputClassName={cn("px-1", "py-0.5", "h-auto", "font-mono", small ? "text-xs" : "text-sm")}
+                    />
                 </span>
             ) : (
                 <>
                     <span className="max-sm:hidden">
-                        {environmentIds && environmentIds.length > 1 ? (
+                        {options && options.length > 1 ? (
                             <FernDropdown
                                 key="selectedEnvironment-selector"
-                                options={environmentIds.map((env) => ({
-                                    value: env,
-                                    label: env,
+                                options={options.map((env) => ({
+                                    value: env.id,
+                                    label: env.id,
                                     type: "value",
                                 }))}
                                 onValueChange={(value) => {
                                     setPlaygroundEnvironment(undefined);
                                     setSelectedEnvironmentId(value);
                                 }}
-                                value={selectedEnvironmentId ?? environmentId}
+                                value={selectedEnvironment?.id ?? environmentId}
                             >
                                 <FernButton
                                     className="py-0 px-1 h-auto"
@@ -167,21 +157,14 @@ export function MaybeEnvironmentDropdown({
                                     size={small ? "small" : "normal"}
                                     variant="outlined"
                                     mono={true}
-                                    onPointerMoveCapture={(e) => {
-                                        e.stopPropagation();
-                                    }}
-                                    onDoubleClickCapture={(e) => {
-                                        e.stopPropagation();
-                                        return editable
+                                    onDoubleClick={
+                                        editable
                                             ? () => {
                                                   setInitialState(inputValue);
                                                   isEditingEnvironment.setTrue();
                                               }
-                                            : undefined;
-                                    }}
-                                    onClickCapture={(e) => {
-                                        e.stopPropagation();
-                                    }}
+                                            : () => undefined
+                                    }
                                 />
                             </FernDropdown>
                         ) : (
@@ -194,9 +177,6 @@ export function MaybeEnvironmentDropdown({
                                             small ? "text-xs" : "text-sm",
                                             "hover:shadow-lg",
                                         )}
-                                        onClickCapture={(e) => {
-                                            e.stopPropagation();
-                                        }}
                                         onDoubleClick={
                                             editable
                                                 ? () => {

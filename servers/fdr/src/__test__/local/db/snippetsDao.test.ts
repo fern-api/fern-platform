@@ -443,7 +443,9 @@ it("snippets template", async () => {
 
     expect(response).not.toEqual(null);
     expect(response).toEqual({
-        endpointId: { path: FdrAPI.EndpointPathLiteral("/users/v1"), method: "GET" },
+        additionalTemplates: undefined,
+        apiDefinitionId: FdrAPI.ApiDefinitionId("...."),
+        endpointId: { identifierOverride: undefined, path: FdrAPI.EndpointPathLiteral("/users/v1"), method: "GET" },
         sdk: { type: "python", package: "acme", version: "0.0.1" },
         snippetTemplate: {
             type: "v1",

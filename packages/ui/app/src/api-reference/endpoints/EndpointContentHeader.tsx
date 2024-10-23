@@ -35,6 +35,7 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ context
                 environmentId={environmentId}
                 path={endpoint.path}
                 method={endpoint.method}
+                options={endpoint.environments}
                 showEnvironment
                 large
             />
