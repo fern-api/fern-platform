@@ -14,6 +14,18 @@ import { additionalLanguages } from "./syntaxes";
 
 let highlighter: Highlighter;
 
+const DEFAULT = Symbol("DEFAULT");
+
+const THEMES: Record<"light" | "dark", Record<string | typeof DEFAULT, BundledTheme>> = {
+    light: {
+        [DEFAULT]: "min-light",
+        diff: "github-light", // `min-light` does not work well for diff
+    },
+    dark: {
+        [DEFAULT]: "material-theme-darker",
+    },
+};
+
 // only call this once per language
 export const getHighlighterInstance: (language: string) => Promise<Highlighter> = memoize(
     async (language: string): Promise<Highlighter> => {
@@ -28,7 +40,11 @@ export const getHighlighterInstance: (language: string) => Promise<Highlighter> 
             highlighter = await getSingletonHighlighter();
         }
 
-        await highlighter.loadTheme(LIGHT_THEME, DARK_THEME);
+        // load the themes used by the current language
+        await highlighter.loadTheme(
+            THEMES.light[lang] ?? THEMES.light[DEFAULT],
+            THEMES.dark[lang] ?? THEMES.dark[DEFAULT],
+        );
 
         if (!highlighter.getLoadedLanguages().includes(lang)) {
             try {
@@ -61,8 +77,8 @@ export function highlightTokens(highlighter: Highlighter, code: string, rawLang:
     const hast = highlighter.codeToHast(code, {
         lang,
         themes: {
-            light: LIGHT_THEME,
-            dark: DARK_THEME,
+            light: THEMES.light[lang] ?? THEMES.light[DEFAULT],
+            dark: THEMES.dark[lang] ?? THEMES.dark[DEFAULT],
         },
     }) as Root;
     return { code, lang, hast };
@@ -75,9 +91,6 @@ export function trimCode(code: string): string {
     }
     return code.replace(/^\n+|\n+$/g, "");
 }
-
-export const LIGHT_THEME: BundledTheme = "min-light";
-export const DARK_THEME: BundledTheme = "material-theme-darker";
 
 export function parseLang(lang: string): string {
     lang = lang.trim();
