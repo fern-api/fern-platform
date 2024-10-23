@@ -1,12 +1,8 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { assertNonNullish, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { getFrontmatter } from "@fern-ui/fern-docs-mdx";
+import { getFrontmatter, markdownToString } from "@fern-ui/fern-docs-mdx";
 import type { LinkTag, MetaTag, NextSeoProps } from "@fern-ui/next-seo";
-import { trim } from "es-toolkit/string";
-import { fromMarkdown } from "mdast-util-from-markdown";
-import { toHast } from "mdast-util-to-hast";
-import { visit } from "unist-util-visit";
 import { getToHref } from "../hooks/useHref";
 import { getFontExtension } from "../themes/stylesheet/getFontVariables";
 import { getBreadcrumbList } from "./getBreadcrumbList";
@@ -118,8 +114,8 @@ export function getSeoProps(
             }
         }
 
-        seo.title = stripMarkdown(frontmatter.headline ?? extractHeadline(content) ?? frontmatter.title);
-        seo.description = stripMarkdown(frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt);
+        seo.title = markdownToString(frontmatter.headline ?? extractHeadline(content) ?? frontmatter.title);
+        seo.description = markdownToString(frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt);
     }
 
     if (FernNavigation.isApiLeaf(node) && apis[node.apiDefinitionId] != null) {
@@ -298,24 +294,6 @@ function getPreloadedFont(
         type: `font/${fontExtension}`,
         crossOrigin: "anonymous",
     };
-}
-
-export function stripMarkdown(markdown: string | undefined): string | undefined {
-    if (markdown == null) {
-        return undefined;
-    }
-    try {
-        const tree = toHast(fromMarkdown(markdown));
-
-        let toRet = "";
-        visit(tree, "text", (node) => {
-            toRet += node.value + " ";
-        });
-
-        return trim(toRet);
-    } catch (e) {
-        return markdown;
-    }
 }
 
 // TODO: make this more robust and well-tested i.e. title over multiple lines
