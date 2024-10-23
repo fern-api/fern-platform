@@ -1,12 +1,15 @@
+import { extractElementsFromRootContentHast } from "@fern-ui/fern-docs-mdx";
 import type { ElementContent, Root } from "hast";
 import { visit } from "unist-util-visit";
-import { extractElementsFromRootContentHast } from "../hast-utils/root-content.js";
 
 interface Options {
     mainElementName?: string;
     asideElementName?: string;
 }
 
+/**
+ * Extracts all the children of an <Aside> tag and replaces it with a new <Main> and <Aside> tag
+ */
 export function rehypeExtractAsides({
     mainElementName = "ReferenceLayoutMain",
     asideElementName = "ReferenceLayoutAside",

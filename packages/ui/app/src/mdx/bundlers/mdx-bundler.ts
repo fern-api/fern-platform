@@ -2,7 +2,6 @@ import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { customHeadingHandler, sanitizeBreaks, sanitizeMdxExpression, toTree } from "@fern-ui/fern-docs-mdx";
 import {
     rehypeAcornErrorBoundary,
-    rehypeExtractAsides,
     rehypeMdxClassStyle,
     rehypeSqueezeParagraphs,
     remarkSanitizeAcorn,
@@ -19,6 +18,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import { PluggableList } from "unified";
+import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
 import type { FernSerializeMdxOptions } from "../types";

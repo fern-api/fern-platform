@@ -1,12 +1,20 @@
 import type { Root } from "hast";
 import { visit } from "unist-util-visit";
 import { parseStringStyle } from "../hast-utils/parse-string-style.js";
-import { isMdxJsxFlowElement, toAttribute } from "../utils.js";
+import { isMdxJsxElementHast } from "../mdx-utils/is-mdx-element.js";
+import { unknownToMdxJsxAttribute } from "../mdx-utils/unknown-to-mdx-jsx-attr.js";
 
+/**
+ * Handles cases where customer is migrating from md w/ html to mdx w/ jsx
+ *
+ * <div style="height: 100px;" /> -> <div style={{ height: "100px" }} />
+ *
+ * <div class="classname" /> -> <div className="classname" />
+ */
 export function rehypeMdxClassStyle(): (root: Root) => void {
     return (root) => {
         visit(root, (node) => {
-            if (isMdxJsxFlowElement(node)) {
+            if (isMdxJsxElementHast(node)) {
                 node.attributes = node.attributes.map((attr) => {
                     if (attr.type === "mdxJsxAttribute") {
                         // convert class to className
@@ -17,7 +25,7 @@ export function rehypeMdxClassStyle(): (root: Root) => void {
                         // if the style attribute is a string, convert it to an object
                         if (attr.name === "style") {
                             if (typeof attr.value === "string") {
-                                return toAttribute("style", parseStringStyle(attr.value));
+                                return unknownToMdxJsxAttribute("style", parseStringStyle(attr.value));
                             }
                         }
                     }

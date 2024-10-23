@@ -1184,15 +1184,6 @@ importers:
       launchdarkly-js-client-sdk:
         specifier: ^3.4.0
         version: 3.4.0
-      mdast-util-from-markdown:
-        specifier: ^2.0.0
-        version: 2.0.0
-      mdast-util-mdx-jsx:
-        specifier: ^3.1.0
-        version: 3.1.2
-      mdast-util-to-hast:
-        specifier: ^13.1.0
-        version: 13.1.0
       mdx-bundler:
         specifier: ^10.0.2
         version: 10.0.2(esbuild@0.20.2)
@@ -2185,9 +2176,15 @@ importers:
       hast-util-heading-rank:
         specifier: ^3.0.0
         version: 3.0.0
+      hast-util-to-estree:
+        specifier: ^3.1.0
+        version: 3.1.0
       hast-util-to-string:
         specifier: ^3.0.0
         version: 3.0.0
+      hastscript:
+        specifier: ^9.0.0
+        version: 9.0.0
       mdast-util-from-markdown:
         specifier: ^2.0.0
         version: 2.0.0
@@ -16181,6 +16178,9 @@ packages:
   vfile@6.0.1:
     resolution: {integrity: sha512-1bYqc7pt6NIADBJ98UiG0Bn/CHIVOoZ/IyEkqIruLg0mE1BKzkOXY2D6CSqQIcKqgadppE5lrxgWXJmXd7zZJw==}
 
+  vfile@6.0.3:
+    resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
+
   vite-node@1.6.0:
     resolution: {integrity: sha512-de6HJgzC+TFzOu0NTC4RAIsyf/DY/ibWDYQUcuEA84EMHhcefTUGkjFHKKEJhQN4A+6I0u++kr3l36ZF2d7XRw==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -28130,7 +28130,7 @@ snapshots:
   estree-util-visit@2.0.0:
     dependencies:
       '@types/estree-jsx': 1.0.5
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
 
   estree-walker@2.0.2: {}
 
@@ -30911,7 +30911,7 @@ snapshots:
       trim-lines: 3.0.1
       unist-util-position: 5.0.0
       unist-util-visit: 5.0.0
-      vfile: 6.0.1
+      vfile: 6.0.3
 
   mdast-util-to-markdown@2.1.0:
     dependencies:
@@ -35218,13 +35218,13 @@ snapshots:
 
   unified@11.0.4:
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
       bail: 2.0.2
       devlop: 1.1.0
       extend: 3.0.2
       is-plain-obj: 4.1.0
       trough: 2.2.0
-      vfile: 6.0.1
+      vfile: 6.0.3
 
   unique-string@2.0.0:
     dependencies:
@@ -35506,8 +35506,13 @@ snapshots:
 
   vfile@6.0.1:
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 3.0.3
       unist-util-stringify-position: 4.0.0
+      vfile-message: 4.0.2
+
+  vfile@6.0.3:
+    dependencies:
+      '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
   vite-node@1.6.0(@types/node@18.19.33)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0):
