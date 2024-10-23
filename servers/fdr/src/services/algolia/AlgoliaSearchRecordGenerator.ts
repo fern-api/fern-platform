@@ -63,33 +63,32 @@ export class AlgoliaSearchRecordGenerator {
         context: NavigationContext,
     ): AlgoliaSearchRecord[] {
         const records =
-            (config.tabsV2 &&
-                config.tabsV2?.flatMap((tab) => {
-                    switch (tab.type) {
-                        case "group":
-                            return tab.items.flatMap((item) =>
-                                this.generateAlgoliaSearchRecordsForNavigationItem(
-                                    item,
-                                    context.withPathPart({
-                                        name: tab.title,
-                                        urlSlug: tab.urlSlug,
-                                        skipUrlSlug: tab.skipUrlSlug,
-                                    }),
-                                ),
-                            );
-                        case "changelog":
-                            return this.generateAlgoliaSearchRecordsForChangelogSection(
-                                tab,
+            config.tabsV2?.flatMap((tab) => {
+                switch (tab.type) {
+                    case "group":
+                        return tab.items.flatMap((item) =>
+                            this.generateAlgoliaSearchRecordsForNavigationItem(
+                                item,
                                 context.withPathPart({
-                                    name: tab.title ?? "Changelog",
+                                    name: tab.title,
                                     urlSlug: tab.urlSlug,
-                                    skipUrlSlug: undefined,
+                                    skipUrlSlug: tab.skipUrlSlug,
                                 }),
-                            );
-                        default:
-                            return [];
-                    }
-                })) ??
+                            ),
+                        );
+                    case "changelog":
+                        return this.generateAlgoliaSearchRecordsForChangelogSection(
+                            tab,
+                            context.withPathPart({
+                                name: tab.title ?? "Changelog",
+                                urlSlug: tab.urlSlug,
+                                skipUrlSlug: undefined,
+                            }),
+                        );
+                    default:
+                        return [];
+                }
+            }) ??
             config.tabs?.map((tab) =>
                 visitDbNavigationTab(tab, {
                     group: (group) => {

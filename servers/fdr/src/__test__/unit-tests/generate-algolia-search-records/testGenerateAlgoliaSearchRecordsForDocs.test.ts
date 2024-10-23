@@ -1,6 +1,5 @@
 import {
     APIV1Write,
-    DocsV1Db,
     DocsV1Write,
     FdrAPI,
     SDKSnippetHolder,
@@ -61,10 +60,6 @@ const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkIdAndEndpointId: {},
     snippetTemplatesByEndpointId: {},
 });
-
-type ConvertedDocsDefinition = DocsV1Db.DocsDefinitionDb.V3 & {
-    config: DocsV1Db.DocsDbConfig;
-};
 
 describe("generateAlgoliaSearchRecordsForDocs", () => {
     for (const fixture of FIXTURES) {
