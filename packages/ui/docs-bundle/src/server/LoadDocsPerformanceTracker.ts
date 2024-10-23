@@ -4,7 +4,7 @@ import { DocsPage } from "@fern-ui/ui";
 import { track } from "@vercel/analytics/server";
 import { GetServerSidePropsResult } from "next/types";
 import { ComponentProps } from "react";
-import { AuthPartner } from "./authProps";
+import { AuthPartner } from "./auth/getAuthState";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 
 export class LoadDocsPerformanceTracker {
