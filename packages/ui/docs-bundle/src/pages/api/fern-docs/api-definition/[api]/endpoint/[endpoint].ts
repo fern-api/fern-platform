@@ -12,6 +12,9 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ApiDe
         return;
     }
 
+    // TODO: this auth needs to be more granular: the user should only have access to this api definition if
+    // - the api definition belongs to this org
+    // - the user has view access to the the api definition based on their audience
     const authState = await getAuthStateNode(req);
 
     if (!authState.isLoggedIn && authState.status >= 400) {
