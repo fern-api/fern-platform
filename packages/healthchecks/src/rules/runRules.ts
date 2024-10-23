@@ -24,7 +24,7 @@ function getAllRules(): Rule[] {
     return [new AllPagesLoadRule(), new SearchSlugsCorrectRule()];
 }
 
-const FDR_CLIENT = new FdrClient({ environment: "https://registry.buildwithfern.com" });
+const FDR_CLIENT = new FdrClient({ environment: "https://registry.buildwithfern.com", token: process.env.FERN_TOKEN });
 
 export async function runRules({ url }: { url: string }): Promise<RuleResult[]> {
     const rules = getAllRules();

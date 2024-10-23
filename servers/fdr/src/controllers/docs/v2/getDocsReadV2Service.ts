@@ -9,19 +9,28 @@ const DOCS_CONFIG_ID_CACHE = new Cache<DocsV2Read.GetDocsConfigByIdResponse>(100
 export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
     return new DocsV2ReadService({
         getDocsForUrl: async (req, res) => {
+            await this.app.services.auth.checkUserBelongsToOrg({
+                authHeader: req.headers.authorization,
+                orgId: "fern",
+            });
             const parsedUrl = ParsedBaseUrl.parse(req.body.url);
             const response = await app.docsDefinitionCache.getDocsForUrl({ url: parsedUrl.toURL() });
             return res.send(response);
         },
         getPrivateDocsForUrl: async (req, res) => {
-            const parsedUrl = ParsedBaseUrl.parse(req.body.url);
-            const response = await app.docsDefinitionCache.getDocsForUrl({
-                url: parsedUrl.toURL(),
-                authorization: req.headers.authorization,
+            await this.app.services.auth.checkUserBelongsToOrg({
+                authHeader: req.headers.authorization,
+                orgId: "fern",
             });
+            const parsedUrl = ParsedBaseUrl.parse(req.body.url);
+            const response = await app.docsDefinitionCache.getDocsForUrl({ url: parsedUrl.toURL() });
             return res.send(response);
         },
         getOrganizationForUrl: async (req, res) => {
+            await this.app.services.auth.checkUserBelongsToOrg({
+                authHeader: req.headers.authorization,
+                orgId: "fern",
+            });
             const parsedUrl = ParsedBaseUrl.parse(req.body.url);
             const orgId = await app.docsDefinitionCache.getOrganizationForUrl(parsedUrl.toURL());
             if (orgId == null) {
@@ -30,6 +39,10 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
             return res.send(orgId);
         },
         getDocsConfigById: async (req, res) => {
+            await this.app.services.auth.checkUserBelongsToOrg({
+                authHeader: req.headers.authorization,
+                orgId: "fern",
+            });
             let docsConfig: DocsV2Read.GetDocsConfigByIdResponse | undefined = DOCS_CONFIG_ID_CACHE.get(
                 req.params.docsConfigId,
             );
@@ -53,6 +66,10 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
             return res.send(docsConfig);
         },
         getSearchApiKeyForIndexSegment: async (req, res) => {
+            await this.app.services.auth.checkUserBelongsToOrg({
+                authHeader: req.headers.authorization,
+                orgId: "fern",
+            });
             const { indexSegmentId } = req.body;
             const cachedKey = app.services.algoliaIndexSegmentManager.getSearchApiKeyForIndexSegment(indexSegmentId);
             if (cachedKey != null) {

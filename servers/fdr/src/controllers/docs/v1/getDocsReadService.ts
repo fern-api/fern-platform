@@ -22,10 +22,18 @@ import { readBuffer } from "../../../util";
 export function getDocsReadService(app: FdrApplication): DocsV1ReadService {
     return new DocsV1ReadService({
         getDocsForDomainLegacy: async (req, res) => {
+            await this.app.services.auth.checkUserBelongsToOrg({
+                authHeader: req.headers.authorization,
+                orgId: "fern",
+            });
             const definition = await getDocsForDomain({ app, domain: req.params.domain });
             return res.send(definition.response);
         },
         getDocsForDomain: async (req, res) => {
+            await this.app.services.auth.checkUserBelongsToOrg({
+                authHeader: req.headers.authorization,
+                orgId: "fern",
+            });
             const definition = await getDocsForDomain({ app, domain: req.body.domain });
             return res.send(definition.response);
         },

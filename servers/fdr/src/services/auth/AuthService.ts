@@ -74,6 +74,7 @@ export class AuthServiceImpl implements AuthService {
         };
     }
 
+    // TODO: cache this so we don't make a round-trip to venus for every request
     async checkUserBelongsToOrg({
         authHeader,
         orgId,

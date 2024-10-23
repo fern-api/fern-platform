@@ -6,6 +6,10 @@ import type { FdrApplication } from "../../app";
 export function getReadApiService(app: FdrApplication): APIV1ReadService {
     return new APIV1ReadService({
         getApi: async (req, res) => {
+            await app.services.auth.checkUserBelongsToOrg({
+                authHeader: req.headers.authorization,
+                orgId: "fern",
+            });
             const dbApiDefinition = await app.dao.apis().loadAPIDefinition(req.params.apiDefinitionId);
             if (dbApiDefinition == null) {
                 throw new ApiDoesNotExistError();
