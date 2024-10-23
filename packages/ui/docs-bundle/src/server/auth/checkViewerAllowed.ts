@@ -15,6 +15,22 @@ export async function checkViewerAllowedPathname(
     pathname: string,
     fernToken: string | undefined,
 ): Promise<number> {
+    if (auth?.type === "sso") {
+        const partner = auth.partner;
+        if (partner !== "workos") {
+            // eslint-disable-next-line no-console
+            console.error("Unsupported SSO provider:", partner);
+            return 500;
+        }
+
+        if (fernToken == null) {
+            return 401;
+        }
+
+        // TODO: implement workos auth
+        return 403;
+    }
+
     if (auth?.type === "basic_token_verification") {
         if (withBasicTokenAnonymous(auth, pathname)) {
             return 200;
@@ -23,8 +39,10 @@ export async function checkViewerAllowedPathname(
         if (fernToken == null) {
             return 401;
         } else {
-            const verified = await verifyFernJWT(fernToken, auth.secret, auth.issuer);
-            if (!verified) {
+            try {
+                await verifyFernJWT(fernToken, auth.secret, auth.issuer);
+            } catch (_e) {
+                // user is not authorized
                 return 403;
             }
         }
