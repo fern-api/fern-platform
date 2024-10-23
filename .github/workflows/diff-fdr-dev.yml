@@ -57,7 +57,6 @@ jobs:
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         run: |
-          # pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
           pnpm build --filter=${{ env.PACKAGE_NAME }}
           pnpm test --filter=${{ env.PACKAGE_NAME }}
           pnpm --filter "@fern-platform/fdr" sentry:sourcemaps
