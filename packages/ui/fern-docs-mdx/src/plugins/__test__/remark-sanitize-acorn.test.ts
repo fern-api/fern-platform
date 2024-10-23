@@ -1,4 +1,5 @@
-import { mdastToMarkdown, toTree } from "../../parse.js";
+import { mdastToMarkdown } from "../../mdast-utils/mdast-to-markdown.js";
+import { toTree } from "../../parse.js";
 
 function sanitizeAcorns(content: string, allowedIdentifiers: string[] = []) {
     return mdastToMarkdown(toTree(content, { allowedIdentifiers }).mdast);
