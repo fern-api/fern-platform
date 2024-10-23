@@ -26,22 +26,11 @@ export class MarkdownLoader {
         return this;
     }
 
-    #serializeMdx = async (
-        mdx: string,
-        _pageId: FernNavigation.PageId,
-        _title: string | undefined,
-        _breadcrumb: FernNavigation.BreadcrumbItem[],
-        _editThisPageUrl: FernNavigation.Url | undefined,
-    ): Promise<FernDocs.MarkdownText> => Promise.resolve(mdx);
+    #serializeMdx = async (mdx: string, _pageId: FernNavigation.PageId | undefined): Promise<FernDocs.MarkdownText> =>
+        Promise.resolve(mdx);
     #engine = "raw";
     public withMdxBundler = (
-        fn: (
-            mdx: string,
-            pageId: FernNavigation.PageId,
-            title: string | undefined,
-            breadcrumb: FernNavigation.BreadcrumbItem[],
-            editThisPageUrl: FernNavigation.Url | undefined,
-        ) => Promise<FernDocs.MarkdownText>,
+        fn: (mdx: string, pageId: FernNavigation.PageId | undefined) => Promise<FernDocs.MarkdownText>,
         engine: string,
     ): MarkdownLoader => {
         this.#serializeMdx = fn;
@@ -49,20 +38,13 @@ export class MarkdownLoader {
         return this;
     };
 
-    public async load(
-        node: FernNavigation.NavigationNodeWithMarkdown,
-        breadcrumb: readonly FernNavigation.BreadcrumbItem[],
-    ): Promise<FernDocs.MarkdownText | undefined> {
-        const pageId = FernNavigation.getPageId(node);
+    public async serializeWithCache(
+        mdx: string,
+        pageId: FernNavigation.PageId | undefined,
+        key: string,
+    ): Promise<FernDocs.MarkdownText> {
+        const cacheKey = `${this.instanceId}:${this.#engine}:${pageId}:${key}`;
 
-        if (!pageId) {
-            return;
-        }
-
-        const cacheKey = `${this.instanceId}:${this.#engine}:${node.id}`;
-
-        // instanceId is required to load from cache because the instanceId is used to invalidate the cache
-        // when a new version of the docs is deployed
         if (this.instanceId) {
             const cached = await this.cache.getMarkdownText(cacheKey);
             if (cached) {
@@ -70,23 +52,45 @@ export class MarkdownLoader {
             }
         }
 
-        const page = this.pages[pageId];
-        if (!page) {
-            return;
-        }
-
-        const serialized = await this.#serializeMdx(
-            page.markdown,
-            pageId,
-            node.title,
-            [...(breadcrumb ?? [])],
-            page.editThisPageUrl,
-        );
+        const serialized = await this.#serializeMdx(mdx, pageId);
 
         if (this.instanceId) {
             await this.cache.setMarkdownText(cacheKey, serialized);
         }
 
         return serialized;
+    }
+
+    public getEditThisPageUrl(node: FernNavigation.NavigationNodeWithMarkdown): FernNavigation.Url | undefined {
+        const pageId = FernNavigation.getPageId(node);
+        if (!pageId) {
+            return;
+        }
+
+        const page = this.pages[pageId];
+        if (!page) {
+            return;
+        }
+
+        return page.editThisPageUrl;
+    }
+
+    public getRawMarkdown(
+        node: FernNavigation.NavigationNodeWithMarkdown,
+    ): { pageId: FernNavigation.PageId; markdown: string } | undefined {
+        const pageId = FernNavigation.getPageId(node);
+        if (!pageId) {
+            return;
+        }
+
+        const page = this.pages[pageId];
+        if (!page) {
+            return;
+        }
+
+        return {
+            pageId,
+            markdown: page.markdown,
+        };
     }
 }

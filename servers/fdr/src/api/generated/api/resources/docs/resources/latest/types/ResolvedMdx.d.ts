@@ -7,4 +7,5 @@ export interface ResolvedMdx {
     code: string;
     frontmatter: FernRegistry.docs.latest.Frontmatter;
     scope: Record<string, unknown>;
+    jsxRefs: string[] | undefined;
 }

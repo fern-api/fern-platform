@@ -4,7 +4,6 @@ import type { Options } from "@mdx-js/esbuild";
 export type FernSerializeMdxOptions = {
     parseFrontmatter?: boolean; // default: true
     filename?: string;
-    frontmatterDefaults?: Partial<FernDocs.Frontmatter>;
     showError?: boolean;
     options?: Options;
 
