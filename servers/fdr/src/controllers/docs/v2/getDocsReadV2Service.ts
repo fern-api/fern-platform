@@ -12,7 +12,7 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
         getDocsForUrl: async (req, res) => {
             try {
                 // if the auth header belongs to fern, return the docs definition
-                await this.app.services.auth.checkUserBelongsToOrg({
+                await app.services.auth.checkUserBelongsToOrg({
                     authHeader: req.headers.authorization,
                     orgId: "fern",
                 });
@@ -37,7 +37,7 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
         },
         getPrivateDocsForUrl: async (req, res) => {
             // TODO: start deleting this deprecated endpoint
-            await this.app.services.auth.checkUserBelongsToOrg({
+            await app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,
                 orgId: "fern",
             });
@@ -46,7 +46,7 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
             return res.send(response);
         },
         getOrganizationForUrl: async (req, res) => {
-            await this.app.services.auth.checkUserBelongsToOrg({
+            await app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,
                 orgId: "fern",
             });
@@ -60,7 +60,7 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
         getDocsConfigById: async (req, res) => {
             try {
                 // if the auth header belongs to fern, return the docs definition
-                await this.app.services.auth.checkUserBelongsToOrg({
+                await app.services.auth.checkUserBelongsToOrg({
                     authHeader: req.headers.authorization,
                     orgId: "fern",
                 });
@@ -103,7 +103,7 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
         },
         // TODO: deprecate this:
         getSearchApiKeyForIndexSegment: async (req, res) => {
-            await this.app.services.auth.checkUserBelongsToOrg({
+            await app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,
                 orgId: "fern",
             });
