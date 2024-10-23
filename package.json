@@ -63,7 +63,7 @@
     "eslint-plugin-tailwindcss": "^3.13.1",
     "eslint-plugin-vitest": "^0.3.26",
     "execa": "^5.1.1",
-    "express": "^4.18.1",
+    "express": "^4.20.0",
     "http-proxy-middleware": "^3.0.2",
     "husky": "^8.0.1",
     "immer": "^9.0.15",
