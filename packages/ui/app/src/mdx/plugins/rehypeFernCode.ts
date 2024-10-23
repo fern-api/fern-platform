@@ -4,10 +4,10 @@ import {
     isHastText,
     isMdxJsxElementHast,
     unknownToMdxJsxAttribute,
+    type MdxJsxAttribute,
     type MdxJsxElementHast,
 } from "@fern-ui/fern-docs-mdx";
 import type { Element, Root } from "hast";
-import type { MdxJsxAttribute } from "mdast-util-mdx-jsx";
 import rangeParser from "parse-numeric-range";
 import { visit } from "unist-util-visit";
 import type { FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";

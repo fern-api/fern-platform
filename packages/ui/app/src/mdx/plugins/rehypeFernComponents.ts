@@ -8,7 +8,6 @@ import {
 import GithubSlugger from "github-slugger";
 import type { Doctype, Element, ElementContent, Root } from "hast";
 import { toString } from "hast-util-to-string";
-import type { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import { CONTINUE, visit, type BuildVisitor, type VisitorResult } from "unist-util-visit";
 
 // TODO: combine this with rehype-slug so that we don't have to maintain two slugger instances
@@ -208,10 +207,10 @@ function transformAccordionGroup(
 function transformSteps(
     node: MdxJsxElementHast,
     index: number,
-    parent: Root | Element | MdxJsxFlowElementHast,
+    parent: Root | Element | MdxJsxElementHast,
     visitor: Visitor,
 ): VisitorResult {
-    const children: MdxJsxFlowElementHast[] = [];
+    const children: MdxJsxElementHast[] = [];
 
     node.children.forEach((child) => {
         if (child.type === "mdxJsxFlowElement" && child.name === "Step") {

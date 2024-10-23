@@ -19,7 +19,7 @@ const MDX_NODE_TYPES = [
 ] as const;
 
 interface ToTreeOptions {
-    type?: "mdx" | "md";
+    format?: "mdx" | "md";
     allowedIdentifiers?: string[];
     sanitize?: boolean;
 }
@@ -30,7 +30,7 @@ interface ToTreeOptions {
  */
 export function toTree(
     content: string,
-    { type = "mdx", allowedIdentifiers = [], sanitize = true }: ToTreeOptions = {},
+    { format = "mdx", allowedIdentifiers = [], sanitize = true }: ToTreeOptions = {},
 ): {
     mdast: MdastRoot;
     hast: HastRoot;
@@ -39,7 +39,7 @@ export function toTree(
 } {
     content = sanitize ? sanitizeMdxExpression(sanitizeBreaks(content)) : content;
 
-    const mdast = mdastFromMarkdown(content, type);
+    const mdast = mdastFromMarkdown(content, format);
 
     // this is forked from mdxjs, but we need to run it before we convert to hast
     // so that we can correctly identify explicit JSX nodes

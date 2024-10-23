@@ -1,8 +1,8 @@
-import { ElementContent } from "hast";
+import type { ElementContent } from "hast";
 import { toEstree } from "hast-util-to-estree";
 import { h } from "hastscript";
-import { MdxJsxAttribute, MdxJsxAttributeValueExpression, MdxJsxExpressionAttribute } from "mdast-util-mdx-jsx";
-import { MdxJsxElementHast } from "../declarations.js";
+import type { MdxJsxAttribute, MdxJsxAttributeValueExpression, MdxJsxExpressionAttribute } from "mdast-util-mdx";
+import type { MdxJsxElementHast } from "../declarations.js";
 
 interface MdxJsxElementHastAttributes {
     /**

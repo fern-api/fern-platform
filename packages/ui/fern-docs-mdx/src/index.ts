@@ -1,3 +1,4 @@
+export type { MdxJsxAttribute } from "mdast-util-mdx";
 export * from "./declarations.js";
 export * from "./frontmatter.js";
 export * from "./handlers/index.js";
