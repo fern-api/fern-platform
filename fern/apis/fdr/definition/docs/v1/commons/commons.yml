@@ -332,6 +332,7 @@ types:
   PlaygroundConfig:
     properties:
       oauth: optional<boolean>
+      websocket-sample: optional<boolean>
 
   # Deprecated
 

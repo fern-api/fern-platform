@@ -363,7 +363,8 @@ export class Write {
      *                         }]
      *                 },
      *                 playground: {
-     *                     oauth: true
+     *                     oauth: true,
+     *                     websocket-sample: true
      *                 },
      *                 backgroundImage: FernRegistry.FileId("string"),
      *                 logoV2: {

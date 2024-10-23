@@ -10,6 +10,7 @@ import { WritableAtom, atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { atomFamily, atomWithStorage, useAtomCallback } from "jotai/utils";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useCallbackOne } from "use-memo-one";
+import { DOCS_ATOM } from "../atoms";
 import { selectHref } from "../hooks/useHref";
 import { usePreloadApiLeaf } from "../playground/hooks/usePreloadApiLeaf";
 import {
@@ -39,6 +40,12 @@ import { LOCATION_ATOM } from "./location";
 import { NAVIGATION_NODES_ATOM } from "./navigation";
 import { atomWithStorageValidation } from "./utils/atomWithStorageValidation";
 import { IS_MOBILE_SCREEN_ATOM } from "./viewport";
+
+const PLAYGROUND_CONFIG_ATOM = atom((get) => get(DOCS_ATOM).playground);
+
+export const useWebsocketSample = (): boolean | undefined => {
+    return useAtomValue(PLAYGROUND_CONFIG_ATOM)?.["websocket-sample"];
+};
 
 const PLAYGROUND_IS_OPEN_ATOM = atom(false);
 PLAYGROUND_IS_OPEN_ATOM.debugLabel = "PLAYGROUND_IS_OPEN_ATOM";

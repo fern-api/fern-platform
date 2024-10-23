@@ -3,4 +3,5 @@
  */
 export interface PlaygroundConfig {
     oauth: boolean | undefined;
+    "websocket-sample": boolean | undefined;
 }

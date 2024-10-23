@@ -4,7 +4,7 @@ import { FernTooltipProvider } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
 import { Wifi, WifiOff } from "iconoir-react";
 import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react";
-import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState } from "../atoms";
+import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState, useWebsocketSample } from "../atoms";
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { PlaygroundEndpointPath } from "./endpoint/PlaygroundEndpointPath";
@@ -22,9 +22,10 @@ interface PlaygroundWebSocketProps {
 
 export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): ReactElement => {
     const [formState, setFormState] = usePlaygroundWebsocketFormState(context);
+    const websocketSample = useWebsocketSample();
 
     const [connectedState, setConnectedState] = useState<"opening" | "opened" | "closed">("closed");
-    const { messages, pushMessage, clearMessages } = useWebsocketMessages(context.node.id);
+    const { pushMessage, clearMessages } = useWebsocketMessages(context.node.id);
     const [error, setError] = useState<string | null>(null);
     const [activeSessionMessageCount, setActiveSessionMessageCount] = useState(0);
 
@@ -44,7 +45,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
 
     // when we get to 20 messages, close the socket
     useEffect(() => {
-        if (activeSessionMessageCount >= SUBSCRIBED_MESSAGES_PER_PUBLISH) {
+        if (websocketSample && activeSessionMessageCount >= SUBSCRIBED_MESSAGES_PER_PUBLISH) {
             socket.current?.close();
             setConnectedState("closed");
             pushMessage({
@@ -54,7 +55,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
                 displayName: undefined,
             });
         }
-    }, [activeSessionMessageCount, pushMessage]);
+    }, [activeSessionMessageCount, pushMessage, websocketSample]);
 
     const settings = usePlaygroundSettings();
 
@@ -199,7 +200,6 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
                         context={context}
                         formState={formState}
                         setFormState={setFormState}
-                        messages={messages}
                         sendMessage={handleSendMessage}
                         startSesssion={startSession}
                         clearMessages={clearMessages}

@@ -317,6 +317,7 @@ export async function withInitialProps({
             docs.definition.filesV2,
             node.tabs.length > 0,
         ),
+        playground: docs.definition.config.playground,
     };
 
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
