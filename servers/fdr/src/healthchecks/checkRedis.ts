@@ -38,7 +38,6 @@ const HEALTHCHECK_DOCS_RESPONSE: CachedDocsResponse = {
                 integrations: undefined,
                 css: undefined,
                 js: undefined,
-                playground: undefined,
             },
             files: {},
             filesV2: {},

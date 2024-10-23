@@ -284,9 +284,6 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             "key": "value"
  *                         }]
  *                 },
- *                 playground: {
- *                     oauth: true
- *                 },
  *                 backgroundImage: FernRegistry.FileId("string"),
  *                 logoV2: {
  *                     dark: FernRegistry.FileId("string"),
