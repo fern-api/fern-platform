@@ -432,7 +432,7 @@ describe("fernShiki", () => {
                                 },
                               ],
                               "properties": {
-                                "style": "color:#D73A49;--shiki-dark:#F97583",
+                                "style": "color:#D32F2F;--shiki-dark:#C792EA",
                               },
                               "tagName": "span",
                               "type": "element",
@@ -445,7 +445,7 @@ describe("fernShiki", () => {
                                 },
                               ],
                               "properties": {
-                                "style": "color:#005CC5;--shiki-dark:#79B8FF",
+                                "style": "color:#1976D2;--shiki-dark:#EEFFFF",
                               },
                               "tagName": "span",
                               "type": "element",
@@ -458,7 +458,7 @@ describe("fernShiki", () => {
                                 },
                               ],
                               "properties": {
-                                "style": "color:#D73A49;--shiki-dark:#F97583",
+                                "style": "color:#D32F2F;--shiki-dark:#89DDFF",
                               },
                               "tagName": "span",
                               "type": "element",
@@ -471,7 +471,7 @@ describe("fernShiki", () => {
                                 },
                               ],
                               "properties": {
-                                "style": "color:#005CC5;--shiki-dark:#79B8FF",
+                                "style": "color:#1976D2;--shiki-dark:#F78C6C",
                               },
                               "tagName": "span",
                               "type": "element",
@@ -490,8 +490,8 @@ describe("fernShiki", () => {
                     },
                   ],
                   "properties": {
-                    "class": "shiki shiki-themes github-light github-dark",
-                    "style": "background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8",
+                    "class": "shiki shiki-themes min-light material-theme-darker",
+                    "style": "background-color:#ffffff;--shiki-dark-bg:#212121;color:#24292eff;--shiki-dark:#EEFFFF",
                     "tabindex": "0",
                   },
                   "tagName": "pre",
