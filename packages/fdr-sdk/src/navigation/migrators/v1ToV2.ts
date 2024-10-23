@@ -531,10 +531,7 @@ export class FernNavigationV1ToLatest {
     ): FernNavigation.EndpointNode => {
         const slug = FernNavigation.Slug(node.slug);
         const canonicalSlug = this.#getAndSetCanonicalSlug(
-            [
-                `:api:${node.apiDefinitionId}:endpoint:${node.endpointId}`,
-                this.#createTitleDisambiguationKey(node, parents),
-            ],
+            [`:api:endpoint:${node.method}:${node.endpointId}`, this.#createTitleDisambiguationKey(node, parents)],
             slug,
         );
         const latest: FernNavigation.EndpointNode = {
@@ -576,10 +573,7 @@ export class FernNavigationV1ToLatest {
     ): FernNavigation.WebSocketNode => {
         const slug = FernNavigation.Slug(node.slug);
         const canonicalSlug = this.#getAndSetCanonicalSlug(
-            [
-                `:api:${node.apiDefinitionId}:websocket:${node.webSocketId}`,
-                this.#createTitleDisambiguationKey(node, parents),
-            ],
+            [`:api:websocket:${node.webSocketId}`, this.#createTitleDisambiguationKey(node, parents)],
             slug,
         );
         const latest: FernNavigation.WebSocketNode = {
@@ -606,10 +600,7 @@ export class FernNavigationV1ToLatest {
     ): FernNavigation.WebhookNode => {
         const slug = FernNavigation.Slug(node.slug);
         const canonicalSlug = this.#getAndSetCanonicalSlug(
-            [
-                `:api:${node.apiDefinitionId}:webhook:${node.webhookId}`,
-                this.#createTitleDisambiguationKey(node, parents),
-            ],
+            [`:api:webhook:${node.method}:${node.webhookId}`, this.#createTitleDisambiguationKey(node, parents)],
             slug,
         );
         const latest: FernNavigation.WebhookNode = {
@@ -714,6 +705,6 @@ export class FernNavigationV1ToLatest {
         const unversionedParentTitles = unversionedParents
             .filter(FernNavigation.V1.hasMetadata)
             .map((parent) => parent.title);
-        return [...unversionedParentTitles, node.title].join(":");
+        return [...unversionedParentTitles, node.title].join("###");
     };
 }
