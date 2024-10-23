@@ -4,7 +4,7 @@ import { FernTooltipProvider } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
 import { Wifi, WifiOff } from "iconoir-react";
 import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react";
-import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState, useWebsocketSample } from "../atoms";
+import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState } from "../atoms";
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 import { PlaygroundEndpointPath } from "./endpoint/PlaygroundEndpointPath";
@@ -14,7 +14,6 @@ import { usePlaygroundBaseUrl } from "./utils/select-environment";
 
 // TODO: decide if this should be an env variable, and if we should move REST proxy to the same (or separate) cloudflare worker
 const WEBSOCKET_PROXY_URI = "wss://websocket.proxy.ferndocs.com/ws";
-const SUBSCRIBED_MESSAGES_PER_PUBLISH = 17;
 
 interface PlaygroundWebSocketProps {
     context: WebSocketContext;
@@ -22,7 +21,7 @@ interface PlaygroundWebSocketProps {
 
 export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): ReactElement => {
     const [formState, setFormState] = usePlaygroundWebsocketFormState(context);
-    const websocketSample = useWebsocketSample();
+    const websocketMessageLimit = usePlaygroundSettings(context.node.id)?.["limit-websocket-messages-per-connection"];
 
     const [connectedState, setConnectedState] = useState<"opening" | "opened" | "closed">("closed");
     const { pushMessage, clearMessages } = useWebsocketMessages(context.node.id);
@@ -45,7 +44,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
 
     // when we get to 20 messages, close the socket
     useEffect(() => {
-        if (websocketSample && activeSessionMessageCount >= SUBSCRIBED_MESSAGES_PER_PUBLISH) {
+        if (websocketMessageLimit && activeSessionMessageCount >= websocketMessageLimit) {
             socket.current?.close();
             setConnectedState("closed");
             pushMessage({
@@ -55,7 +54,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
                 displayName: undefined,
             });
         }
-    }, [activeSessionMessageCount, pushMessage, websocketSample]);
+    }, [activeSessionMessageCount, pushMessage, websocketMessageLimit]);
 
     const settings = usePlaygroundSettings();
 
@@ -97,7 +96,10 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
                 if (data.type === "handshake" && data.status === "connected") {
                     setConnectedState("opened");
                     resolve(true);
-                } else if (data.type === "data" && activeSessionMessageCount < SUBSCRIBED_MESSAGES_PER_PUBLISH) {
+                } else if (
+                    data.type === "data" &&
+                    (!websocketMessageLimit || activeSessionMessageCount < websocketMessageLimit)
+                ) {
                     pushMessage({
                         type: "received",
                         data: typeof data.data === "string" ? JSON.parse(data.data) : data.data,

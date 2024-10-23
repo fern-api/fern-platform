@@ -47,5 +47,4 @@ export interface DocsProps {
     user: FernUser | undefined;
     defaultLang: DocsV1Read.ProgrammingLanguage;
     stylesheet: string;
-    playground: DocsV1Read.PlaygroundConfig | undefined;
 }
