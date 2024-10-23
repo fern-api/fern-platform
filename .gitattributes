@@ -1,2 +1,1 @@
 **/generated/** linguist-generated=true
-servers/fdr/src/__test__/unit-tests/generate-algolia-search-records/__snapshots__/testGenerateAlgoliaSearchRecordsForDocs.test.ts.snap filter=lfs diff=lfs merge=lfs -text
