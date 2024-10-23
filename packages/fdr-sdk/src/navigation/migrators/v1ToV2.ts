@@ -673,6 +673,7 @@ export class FernNavigationV1ToLatest {
 
     #canonicalSlugs = new Map<string, FernNavigation.Slug>();
 
+    // TODO: canonical url logic should account for auth rules + audiences, since we should always prefer the publicly available url over the private one (for SEO)
     #getAndSetCanonicalSlug = (
         keyOrKeys: string | string[],
         slug: FernNavigation.Slug,
