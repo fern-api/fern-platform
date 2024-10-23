@@ -1,0 +1,240 @@
+---
+title: Empathic Voice Interface FAQ
+---
+
+We’ve compiled a list of frequently asked questions from our developer community. If your question isn't listed, we invite you to join the discussion on our [Discord](https://discord.com/invite/WPRSugvAm6).
+
+<AccordionGroup>
+
+<Accordion title="What language model does EVI use?">
+  Our API is based on our own empathic LLM (eLLM) and can blend in responses
+  from an external LLM API. Please visit our [configuration guide](docs/empathic-voice-interface-evi/configuration#default-configuration-options) for up-to-date information
+  on Hume's default configuration options.
+</Accordion>
+
+<Accordion title="How can I use my own API key for the LLM provider?">
+  When sending messages through EVI's WebSocket, you can specify your own
+  `language_model_api_key` in the `SessionSettings` message. Please visit our API
+  reference for more information
+  [here.](/reference/empathic-voice-interface-evi/chat/chat#send.Session%20Settings.language_model_api_key)
+</Accordion>
+
+<Accordion title="Do supplemental LLMs affect EVI’s pricing?">
+  We cover the cost of the supplemental LLMs while we make optimizations that
+  will make language generation much cheaper for our customers. This means that
+  these expenses are not included in EVI’s
+  [pricing](https://platform.hume.ai/pricing), ensuring consistent rates whether
+  you use open-source, closed-source, or custom language models with EVI.
+</Accordion>
+
+<Accordion title="What do EVI's expression labels and measures mean?">
+
+  These outputs reflect our prosody model's confidence that the speaker is expressing the label in their tone of voice and language.
+  Our prosody model is derived from extensive perceptual studies of emotional expressions with millions of participants.
+  The model is trained to pick up on vocal modulations and patterns in language that people reliably interpret as expressing specific emotions.
+  Importantly, the labels do not imply that the person is _experiencing_ the emotions.
+
+  1. **Expression labels**: These categories (like "amusement") represent categories of emotional expression that most people perceive in vocal and linguistic patterns.
+    They are not based on explicit definitions of emotions, but rather common interpretations of expressive cues.
+
+  2. **Expression measures**: These numbers indicate the model's confidence that a given expression would be interpreted as belonging to a specific category by human observers.
+    They represent the _likelihood_ of a particular interpretation of expressions, not the presence or intensity of a specific emotion.
+
+  For more details, see our [prosody model documentation](/docs/resources/science#speech-prosody) and the foundational research by [Cowen and Keltner (2017)](https://www.pnas.org/doi/epdf/10.1073/pnas.1702247114).
+
+</Accordion>
+
+<Accordion title="Why is prosody (tone-of-voice) measured at the sentence level?">
+  At the word-level, prosody measurements are highly dependent on context. Our
+  internal testing shows that they are more stable at the sentence level.
+</Accordion>
+
+<Accordion title="Is EVI multilingual?">
+  Today we only support English, however we do have plans to support other
+  languages very soon. Join the conversation on
+  [Discord](https://link.hume.ai/discord) to tell us what languages you want EVI
+  to speak.
+</Accordion>
+
+<Accordion title="Are there plans to add more voices?">
+  EVI currently supports 8 base voices - Ito, Kora, Dacher, Aura, Finn, Whimsy, Stella, and Sunny -
+  with plans to introduce more in the future. In the meantime, you can craft your own unique voice
+  by adjusting the attributes of any base option.
+
+  Visit the [playground](https://platform.hume.ai/evi/playground) to try out the base voices and experiment with voice modulation, and
+  learn more about voice customization in our detailed [guide](/docs/empathic-voice-interface-evi/voices).
+  
+  If you are interested in creating a custom voice for your use case, please [submit a sales inquiry](https://21079251.hs-sites.com/hume-ai-sales-partnerships-form).
+  Our team can train custom TTS models for enterprise customers.
+</Accordion>
+
+<Accordion title="How does Hume’s eLLM work?">
+  Our empathic large language model (eLLM) is a multimodal language model that
+  takes into account both expression measures and language. The eLLM generates a
+  language response and guides text-to-speech (TTS) prosody.
+</Accordion>
+
+<Accordion title="Why is EVI so much faster than other LLMs?">
+  Hume's eLLM is not contingent on other LLMs and is therefore able to generate
+  an initial response much faster than existing LLM services. However, Hume’s
+  Empathic Voice Interface (EVI) is able to integrate other frontier LLMs into
+  its longer responses which are configurable by developers.
+</Accordion>
+
+<Accordion title="Which supplemental LLM for EVI has the lowest latency?">
+
+  The landscape of large language models (LLMs) and their providers is constantly evolving,
+  affecting which supplemental LLM is fastest with EVI. 
+  
+  The key factor influencing perceived latency using EVI is the time to first token (TTFT), with lower TTFT being 
+  better. The model and provider combination with the smallest TTFT will be the fastest.
+
+  <Callout intent="info">
+    [Artificial Analysis](https://artificialanalysis.ai/faq) offers a useful [dashboard](https://artificialanalysis.ai/models#latency) for comparing 
+    model and provider latencies.
+  </Callout>
+    
+  Notably, there's a tradeoff between speed and quality. Larger, slower models are easier to prompt. We 
+  recommend testing various supplemental LLM options when implementing EVI.
+</Accordion>
+
+<Accordion title="Does EVI support TTS?">
+  Hume has trained our own expressive text-to-speech (TTS) model that allows it
+  to generate speech with more prosody and expressive nuance than other models.
+  TTS is specifically designed for use within an EVI chat session, allowing EVI
+  to generate speech from a given text input. We do not have a dedicated endpoint for TTS.
+
+To perform TTS within an EVI chat session, you can follow the steps below:
+  1. **Establish initial connection**: Make the initial [handshake request](/reference/empathic-voice-interface-evi/chat/chat)
+    to establish the WebSocket connection.
+
+  2. **Send text for synthesis**: Send an [Assistant Input](/reference/empathic-voice-interface-evi/chat/chat#send.Assistant%20Input.type)
+    message with the text you want to synthesize into speech:
+    <CodeBlock title="assistant_input">
+        ```json
+      {
+        "type": "assistant_input",
+        "text": "Text to be synthesized."
+      }
+        ```
+    </CodeBlock>
+
+  3. **Receive synthesized speech**: After sending an `assistant_input` message,
+    you will receive an [Assistant Message](/reference/empathic-voice-interface-evi/chat/chat#receive.Assistant%20Message.type)
+    and [Audio Output](/reference/empathic-voice-interface-evi/chat/chat#receive.Audio%20Output.type) for each sentence of the provided text.
+
+        The `assistant_message` contains the text and expression measurement predictions, while the
+        `audio_output` message contains the synthesized, emotional audio. See the sample messages below:
+          <CodeBlock title="assistant_message">
+            ```json
+            {
+              "type": "assistant_message",
+              "id": "g8ee90fa2c1648f3a32qrea6d179ee44",
+              "message": {
+                "role": "assistant",
+                "content": "Text to be synthesized."
+              },
+              "models": {
+                "prosody": {
+                  "scores": {
+                    "Admiration": 0.0309600830078125,
+                    "Adoration": 0.0018177032470703125
+                    // ... additional scores
+                  }
+                }
+              },
+              "from_text": true
+            }
+            ```
+          </CodeBlock>
+          <CodeBlock title="audio_output">
+            ```json
+            {
+              "type": "audio_output",
+              "id": "g8ee90fa2c1648f3a32qrea6d179ee44",
+              "data": "<base64 encoded audio>"
+            }
+            ```
+          </CodeBlock>
+
+    4. **End of Response**: Once all the text has been synthesized into speech, you will receive
+    an [Assistant End](/reference/empathic-voice-interface-evi/chat/chat#receive.Assistant%20End.type)
+    message indicating the end of the response:
+    <CodeBlock title="assistant_end">
+          ```json
+      {
+        "type": "assistant_end"
+      }
+          ```
+    </CodeBlock>
+
+    Before implementing this in code, you can test it out by going to our [Portal](https://platform.hume.ai/evi/playground).
+    Start a call in the EVI Playground, then send an Assistant Message with the text you want to synthesize.
+</Accordion>
+
+<Accordion title='Is it possible to pause EVI responses within a chat?'>
+  Yes. During a chat with EVI, you can pause responses by sending a
+  [pause_assistant_message](/reference/empathic-voice-interface-evi/chat/chat#send.Pause%20Assistant%20Message.type). This will prevent EVI from sending Assistant messages until receiving a [resume_assistant_message](/reference/empathic-voice-interface-evi/chat/chat#send.Resume%20Assistant%20Message.type).
+
+While paused,
+
+- EVI stops generating and sending new responses. 
+- [Tool use](/docs/empathic-voice-interface-evi/tool-use) is disabled, so EVI responses pertaining to tool use are also disabled.
+- Messages and audio that were queued before the `pause_assistant_message` will still be sent.
+- EVI continues to "listen" and process user input - transcriptions of user audio are saved, and will all be sent to the LLM as User messages when EVI is resumed.
+
+<Callout intent="info">
+  The following message types will not be received while EVI is paused: [assistant_message](/reference/empathic-voice-interface-evi/chat/chat#receive.Assistant%20Message.type),
+  [audio_output](/reference/empathic-voice-interface-evi/chat/chat#receive.Audio%20Output.type), [tool_call_message](/reference/empathic-voice-interface-evi/chat/chat#receive.Tool%20Call%20Message.type),
+  [tool_response_message](/reference/empathic-voice-interface-evi/chat/chat#receive.Tool%20Response%20Message.type), and [tool_error_message](/reference/empathic-voice-interface-evi/chat/chat#receive.Tool%20Error%20Message.type).
+</Callout>
+
+Upon resuming with a [resume_assistant_message](/reference/empathic-voice-interface-evi/chat/chat#send.Resume%20Assistant%20Message.type), EVI will generate a response that considers all user input received during the pause.
+
+Pausing EVI’s responses is different from muting user input. When user input is muted, EVI does not "hear" any of the user's audio and cannot respond to it. When paused, EVI does "hear" user audio input and can respond when resumed.
+
+When resumed, EVI's response may address multiple points or questions in the user's input. However, without being prompted to always respond to _all_ user input, EVI will tend to respond to the latest user input. For instance, if the user asks two questions while EVI is paused, EVI typically responds to the second question and not the first.
+
+Charges will continue to accrue while EVI is paused. If you wish to completely pause both input and output you should instead disconnect and [resume](/docs/empathic-voice-interface-evi/faq#does-evi-support-resuming-chats) the chat when ready.
+
+For instance, a developer might create a button that allows users to pause EVI responses while they are brainstorming or reflecting but don't want EVI to respond. Then, when the user is done, they can resume to hear EVI's response.
+
+</Accordion>
+
+<Accordion title='Does EVI support resuming chats?'>
+  With EVI, you can easily preserve context when reconnecting or continue a
+  chat right where you left off. See steps below for how to resume a chat:
+
+1. **Establish initial connection**: Make the initial [handshake request](/reference/empathic-voice-interface-evi/chat/chat)
+   to establish the WebSocket connection. Upon successful connection, you will
+   receive a [ChatMetadata](/reference/empathic-voice-interface-evi/chat/chat#receive.Chat%20Metadata.chat_group_id) message:
+
+  <CodeBlock title="chat_metadata">
+    ```json
+    {
+      "type": "chat_metadata",
+      "chat_group_id": "8859a139-d98a-4e2f-af54-9dd66d8c96e1",
+      "chat_id": "2c3a8636-2dde-47f1-8f9e-cea27791fd2e"
+    }
+    ```
+  </CodeBlock>
+
+2. **Store the chat_group_id**: Save the `chat_group_id` from the `ChatMetadata` message for future use.
+
+3. **Resume chat**: To resume a chat, include the stored `chat_group_id` in the `resumed_chat_group_id`
+   query parameter of subsequent handshake requests.
+
+   For example: `wss://api.hume.ai/v0/evi/chat?access_token={accessToken}&resumed_chat_group_id={chatGroupId}`
+
+  <Callout intent='warning'>
+    When resuming a chat, you can specify a different EVI configuration than the one used in the previous session. 
+    However, changing the system prompt or supplemental LLM may result in unexpected behavior from EVI.
+
+    Additionally, if [data retention is disabled](/docs/resources/privacy#zero-data-retention-and-data-usage-options), 
+    the ability to resume chats will not be supported.
+  </Callout>
+</Accordion>
+
+</AccordionGroup>
+
+---

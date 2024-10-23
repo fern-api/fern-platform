@@ -1,7 +1,8 @@
 import { readFileSync, readdirSync } from "fs";
 import path from "path";
 import { getFrontmatter } from "../frontmatter.js";
-import { mdastToMarkdown, toTree } from "../parse.js";
+import { mdastToMarkdown } from "../mdast-utils/mdast-to-markdown.js";
+import { toTree } from "../parse.js";
 
 describe("Sanitize fixtures", () => {
     const fixtures = readdirSync(path.join(__dirname, "fixtures"));
@@ -11,7 +12,11 @@ describe("Sanitize fixtures", () => {
             const fixturePath = path.join(__dirname, "fixtures", fixture);
             const fixtureContents = readFileSync(fixturePath, "utf-8");
             const input = getFrontmatter(fixtureContents).content;
-            const output = mdastToMarkdown(toTree(input).mdast);
+            const mdast = toTree(input).mdast;
+            expect(JSON.stringify(mdast, null, 2)).toMatchFileSnapshot(
+                path.join(__dirname, "__snapshots__", fixture + ".mdast.json"),
+            );
+            const output = mdastToMarkdown(mdast);
             expect(output).toMatchFileSnapshot(path.join(__dirname, "__snapshots__", fixture));
         });
     }
