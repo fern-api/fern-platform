@@ -328,11 +328,6 @@ types:
       - fallback
       - optional
 
-  # Playground
-  PlaygroundConfig:
-    properties:
-      oauth: optional<boolean>
-
   # Deprecated
 
   ThemedFileId:
