@@ -1,4 +1,4 @@
-import { getDocsDomainNode } from "@/server/xfernhost/node";
+import { getAuthStateNode } from "@/server/auth/getAuthState";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
 import { ApiDefinitionLoader } from "@fern-ui/fern-docs-server";
@@ -6,21 +6,26 @@ import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { NextApiHandler, NextApiResponse } from "next";
 
 const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ApiDefinition.ApiDefinition>) => {
-    const xFernHost = getDocsDomainNode(req);
     const { api, webhook } = req.query;
     if (req.method !== "GET" || typeof api !== "string" || typeof webhook !== "string") {
         res.status(400).end();
         return;
     }
 
-    const flags = await getFeatureFlags(xFernHost);
+    const authState = await getAuthStateNode(req);
+
+    if (!authState.isLoggedIn && authState.status >= 400) {
+        return res.status(authState.status).end();
+    }
+
+    const flags = await getFeatureFlags(authState.xFernHost);
 
     // TODO: pass in other tsx/mdx files to serializeMdx options
     const engine = flags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
     const serializeMdx = await getMdxBundler(engine);
 
     // TODO: authenticate the request in FDR
-    const apiDefinition = await ApiDefinitionLoader.create(xFernHost, ApiDefinition.ApiDefinitionId(api))
+    const apiDefinition = await ApiDefinitionLoader.create(authState.xFernHost, ApiDefinition.ApiDefinitionId(api))
         .withFlags(flags)
         .withMdxBundler(serializeMdx, engine)
         .withPrune({ type: "webhook", webhookId: ApiDefinition.WebhookId(webhook) })

@@ -100,13 +100,9 @@ export class DocsLoader {
             try {
                 if (authConfig?.type === "basic_token_verification") {
                     // TODO: store this in cache
-                    root = !auth
+                    root = !auth.isLoggedIn
                         ? pruneWithBasicTokenAnonymous(authConfig, root)
-                        : pruneWithBasicTokenAuthed(
-                              authConfig,
-                              root,
-                              toAudience(auth.isLoggedIn ? auth.user.audience : undefined),
-                          );
+                        : pruneWithBasicTokenAuthed(authConfig, root, toAudience(auth.user.audience));
                 }
             } catch (e) {
                 // TODO: sentry

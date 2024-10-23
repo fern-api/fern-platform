@@ -7,6 +7,7 @@ export const config = {
     maxDuration: 300,
 };
 
+// TODO: gate this using a fern token
 const handler: NextApiHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<FernDocs.RevalidationResult>,

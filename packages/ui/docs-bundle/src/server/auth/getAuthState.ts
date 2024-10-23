@@ -2,10 +2,12 @@ import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig, FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
+import { NextApiRequest } from "next";
 import type { NextRequest } from "next/server";
 import urlJoin from "url-join";
 import { withBasicTokenAnonymous } from "../withBasicTokenAnonymous";
 import { getDocsDomainEdge } from "../xfernhost/edge";
+import { getDocsDomainNode } from "../xfernhost/node";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 
 export type AuthPartner = "workos" | "ory" | "webflow" | "custom";
@@ -31,6 +33,12 @@ export async function getAuthStateEdge(request: NextRequest): Promise<AuthState>
     const xFernHost = getDocsDomainEdge(request);
     const fernToken = request.cookies.get(COOKIE_FERN_TOKEN)?.value;
     return getAuthState(xFernHost, fernToken, request.nextUrl.pathname);
+}
+
+export async function getAuthStateNode(request: NextApiRequest): Promise<AuthState> {
+    const xFernHost = getDocsDomainNode(request);
+    const fernToken = request.cookies[COOKIE_FERN_TOKEN];
+    return getAuthState(xFernHost, fernToken, request.url ? new URL(request.url).pathname : undefined);
 }
 
 /**

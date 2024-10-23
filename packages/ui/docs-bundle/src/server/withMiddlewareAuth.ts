@@ -5,6 +5,7 @@ import { getAuthStateEdge } from "./auth/getAuthState";
 export async function withMiddlewareAuth(
     request: NextRequest,
     next: (isLoggedIn: boolean, user: FernUser | undefined) => NextResponse,
+    notAllowed?: (status: number, authorizationUrl?: string) => NextResponse,
 ): Promise<NextResponse> {
     const res = await getAuthStateEdge(request);
 
@@ -14,6 +15,10 @@ export async function withMiddlewareAuth(
 
     if (res.status === 200) {
         return next(false, undefined);
+    }
+
+    if (notAllowed != null) {
+        return notAllowed(res.status, res.authorizationUrl);
     }
 
     if (res.authorizationUrl) {
