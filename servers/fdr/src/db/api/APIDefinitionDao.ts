@@ -48,6 +48,7 @@ export class APIDefinitionDaoImpl implements APIDefinitionDao {
                 },
             },
             select: {
+                apiDefinitionId: true,
                 definition: true,
             },
         });
