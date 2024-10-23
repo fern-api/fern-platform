@@ -76,8 +76,8 @@ export function trimCode(code: string): string {
     return code.replace(/^\n+|\n+$/g, "");
 }
 
-export const LIGHT_THEME: BundledTheme = "min-light";
-export const DARK_THEME: BundledTheme = "material-theme-darker";
+export const LIGHT_THEME: BundledTheme = "github-light";
+export const DARK_THEME: BundledTheme = "github-dark";
 
 export function parseLang(lang: string): string {
     lang = lang.trim();
