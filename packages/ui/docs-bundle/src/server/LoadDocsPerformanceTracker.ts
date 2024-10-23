@@ -1,3 +1,4 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { TRACK_LOAD_DOCS_PERFORMANCE } from "@fern-ui/fern-docs-utils";
 import { DocsPage } from "@fern-ui/ui";
 import { track } from "@vercel/analytics/server";
@@ -13,7 +14,7 @@ export class LoadDocsPerformanceTracker {
         auth,
     }: {
         domain: string;
-        slug: string[];
+        slug: FernNavigation.Slug;
         auth: AuthPartner | undefined;
     }): LoadDocsPerformanceTracker {
         return new LoadDocsPerformanceTracker(domain, slug, auth);
@@ -21,7 +22,7 @@ export class LoadDocsPerformanceTracker {
 
     private constructor(
         private host: string,
-        private slug: string[],
+        private slug: FernNavigation.Slug,
         private auth: AuthPartner | undefined,
     ) {}
 
@@ -48,7 +49,7 @@ export class LoadDocsPerformanceTracker {
     async track(): Promise<void> {
         return track(TRACK_LOAD_DOCS_PERFORMANCE, {
             host: this.host,
-            slug: this.slug.join("/"),
+            slug: this.slug,
             auth: this.auth ?? null,
             loadDocsDurationMs: this.loadDocsDurationMs ?? null,
             initialPropsDurationMs: this.initialPropsDurationMs ?? null,

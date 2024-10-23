@@ -11,6 +11,6 @@ export type LoadWithUrlResponse = APIResponse<
  * - If the token is a WorkOS token, we need to use the getPrivateDocsForUrl endpoint.
  * - Otherwise, we can use the getDocsForUrl endpoint (including custom auth).
  */
-export async function loadWithUrl(url: string): Promise<LoadWithUrlResponse> {
+export function loadWithUrl(url: string): Promise<LoadWithUrlResponse> {
     return provideRegistryService().docs.v2.read.getDocsForUrl({ url: FdrAPI.Url(withoutStaging(url)) });
 }

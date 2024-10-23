@@ -2,7 +2,7 @@ import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { AuthEdgeConfig } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
-import { AuthProps, withAuthProps } from "./authProps";
+import { getAuthState, type AuthState } from "./auth/getAuthState";
 import { loadWithUrl } from "./loadWithUrl";
 import { pruneWithBasicTokenAnonymous, pruneWithBasicTokenAuthed } from "./withBasicTokenAnonymous";
 
@@ -31,32 +31,23 @@ export class DocsLoader {
     }
 
     private authConfig: AuthEdgeConfig | undefined;
-    private authProps: AuthProps | undefined;
-    public withAuth(authConfig: AuthEdgeConfig | undefined, authProps?: AuthProps): DocsLoader {
+    private authState: AuthState | undefined;
+    public withAuth(authConfig: AuthEdgeConfig | undefined, authState?: AuthState): DocsLoader {
         this.authConfig = authConfig;
-        if (authProps) {
-            this.authProps = authProps;
+        if (authState) {
+            this.authState = authState;
         }
         return this;
     }
 
-    private async loadAuth(): Promise<[AuthProps | undefined, AuthEdgeConfig | undefined]> {
+    private async loadAuth(): Promise<[AuthState, AuthEdgeConfig | undefined]> {
         if (!this.authConfig) {
             this.authConfig = await getAuthEdgeConfig(this.xFernHost);
         }
-        if (!this.authConfig || !this.fernToken || (this.authProps && this.authConfig)) {
-            return [this.authProps, this.authConfig];
+        if (this.authState) {
+            return [this.authState, this.authConfig];
         }
-        if (!this.fernToken) {
-            return [undefined, this.authConfig];
-        }
-        try {
-            return [await withAuthProps(this.authConfig, this.fernToken), this.authConfig];
-        } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error(e);
-            return [undefined, this.authConfig];
-        }
+        return [await getAuthState(this.xFernHost, this.fernToken, undefined, this.authConfig), this.authConfig];
     }
 
     #loadForDocsUrlResponse: DocsV2Read.LoadDocsForUrlResponse | undefined;
@@ -73,9 +64,7 @@ export class DocsLoader {
 
     private async loadDocs(): Promise<DocsV2Read.LoadDocsForUrlResponse | undefined> {
         if (!this.#loadForDocsUrlResponse) {
-            const [authProps] = await this.loadAuth();
-
-            const response = await loadWithUrl(this.xFernHost, authProps);
+            const response = await loadWithUrl(this.xFernHost);
 
             if (response.ok) {
                 this.#loadForDocsUrlResponse = response.body;
@@ -102,18 +91,22 @@ export class DocsLoader {
 
     public async root(): Promise<FernNavigation.RootNode | undefined> {
         const [auth, authConfig] = await this.loadAuth();
-        let node = await this.unprunedRoot();
+        let root = await this.unprunedRoot();
 
         // if the user is not authenticated, and the page requires authentication, prune the navigation tree
         // to only show pages that are allowed to be viewed without authentication.
         // note: the middleware will not show this page at all if the user is not authenticated.
-        if (node) {
+        if (root) {
             try {
                 if (authConfig?.type === "basic_token_verification") {
                     // TODO: store this in cache
-                    node = !auth
-                        ? pruneWithBasicTokenAnonymous(authConfig, node)
-                        : pruneWithBasicTokenAuthed(authConfig, node, toAudience(auth.user.audience));
+                    root = !auth
+                        ? pruneWithBasicTokenAnonymous(authConfig, root)
+                        : pruneWithBasicTokenAuthed(
+                              authConfig,
+                              root,
+                              toAudience(auth.isLoggedIn ? auth.user.audience : undefined),
+                          );
                 }
             } catch (e) {
                 // TODO: sentry
@@ -123,7 +116,7 @@ export class DocsLoader {
             }
         }
 
-        return node;
+        return root;
     }
 
     // NOTE: authentication is based on the navigation nodes, so we don't need to check it here,
