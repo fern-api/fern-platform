@@ -1,6 +1,7 @@
 import { convertDbAPIDefinitionsToRead, convertDbDocsConfigToRead } from "@fern-api/fdr-sdk";
 import { Cache } from "../../../Cache";
 import { DocsV2Read, DocsV2ReadService } from "../../../api";
+import { UserNotInOrgError } from "../../../api/generated/api";
 import type { FdrApplication } from "../../../app";
 import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
 
@@ -9,15 +10,33 @@ const DOCS_CONFIG_ID_CACHE = new Cache<DocsV2Read.GetDocsConfigByIdResponse>(100
 export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
     return new DocsV2ReadService({
         getDocsForUrl: async (req, res) => {
-            await this.app.services.auth.checkUserBelongsToOrg({
-                authHeader: req.headers.authorization,
-                orgId: "fern",
-            });
+            try {
+                // if the auth header belongs to fern, return the docs definition
+                await this.app.services.auth.checkUserBelongsToOrg({
+                    authHeader: req.headers.authorization,
+                    orgId: "fern",
+                });
+            } catch (e) {
+                // if the auth header does not belong to fern, check the org id for the docs url, and check if the user belongs to that org
+                if (e instanceof UserNotInOrgError) {
+                    const parsedUrl = ParsedBaseUrl.parse(req.body.url);
+                    const orgId = await app.dao.docsV2().getOrgIdForDocsUrl(parsedUrl.toURL());
+                    if (orgId == null) {
+                        throw new DocsV2Read.DomainNotRegisteredError();
+                    }
+                    await app.services.auth.checkUserBelongsToOrg({
+                        authHeader: req.headers.authorization,
+                        orgId,
+                    });
+                }
+                throw e;
+            }
             const parsedUrl = ParsedBaseUrl.parse(req.body.url);
             const response = await app.docsDefinitionCache.getDocsForUrl({ url: parsedUrl.toURL() });
             return res.send(response);
         },
         getPrivateDocsForUrl: async (req, res) => {
+            // TODO: start deleting this deprecated endpoint
             await this.app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,
                 orgId: "fern",
@@ -32,17 +51,34 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
                 orgId: "fern",
             });
             const parsedUrl = ParsedBaseUrl.parse(req.body.url);
-            const orgId = await app.docsDefinitionCache.getOrganizationForUrl(parsedUrl.toURL());
+            const orgId = await app.dao.docsV2().getOrgIdForDocsUrl(parsedUrl.toURL());
             if (orgId == null) {
                 throw new DocsV2Read.DomainNotRegisteredError();
             }
             return res.send(orgId);
         },
         getDocsConfigById: async (req, res) => {
-            await this.app.services.auth.checkUserBelongsToOrg({
-                authHeader: req.headers.authorization,
-                orgId: "fern",
-            });
+            try {
+                // if the auth header belongs to fern, return the docs definition
+                await this.app.services.auth.checkUserBelongsToOrg({
+                    authHeader: req.headers.authorization,
+                    orgId: "fern",
+                });
+            } catch (e) {
+                // if the auth header does not belong to fern, check the org id for the docs url, and check if the user belongs to that org
+                if (e instanceof UserNotInOrgError) {
+                    const orgId = await app.dao.docsV2().getOrgIdForDocsConfigInstanceId(req.params.docsConfigId);
+                    if (orgId == null) {
+                        throw new DocsV2Read.DomainNotRegisteredError();
+                    }
+                    await app.services.auth.checkUserBelongsToOrg({
+                        authHeader: req.headers.authorization,
+                        orgId,
+                    });
+                }
+                throw e;
+            }
+
             let docsConfig: DocsV2Read.GetDocsConfigByIdResponse | undefined = DOCS_CONFIG_ID_CACHE.get(
                 req.params.docsConfigId,
             );
@@ -65,6 +101,7 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
             }
             return res.send(docsConfig);
         },
+        // TODO: deprecate this:
         getSearchApiKeyForIndexSegment: async (req, res) => {
             await this.app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,

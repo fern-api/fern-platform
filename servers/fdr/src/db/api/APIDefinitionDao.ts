@@ -3,6 +3,8 @@ import { PrismaClient } from "@prisma/client";
 import { readBuffer } from "../../util";
 
 export interface APIDefinitionDao {
+    getOrgIdForApiDefinition(apiDefinitionId: string): Promise<string | undefined>;
+
     loadAPIDefinition(apiDefinitionId: string): Promise<APIV1Db.DbApiDefinition | undefined>;
 
     loadAPIDefinitions(apiDefinitionIds: string[]): Promise<Record<string, APIV1Db.DbApiDefinition>>;
@@ -11,10 +13,25 @@ export interface APIDefinitionDao {
 export class APIDefinitionDaoImpl implements APIDefinitionDao {
     constructor(private readonly prisma: PrismaClient) {}
 
+    public async getOrgIdForApiDefinition(apiDefinitionId: string): Promise<string | undefined> {
+        const apiDefinition = await this.prisma.apiDefinitionsV2.findFirst({
+            where: {
+                apiDefinitionId,
+            },
+            select: {
+                orgId: true,
+            },
+        });
+        return apiDefinition?.orgId;
+    }
+
     public async loadAPIDefinition(apiDefinitionId: string): Promise<APIV1Db.DbApiDefinition | undefined> {
         const apiDefinition = await this.prisma.apiDefinitionsV2.findFirst({
             where: {
                 apiDefinitionId,
+            },
+            select: {
+                definition: true,
             },
         });
         if (apiDefinition == null) {
@@ -29,6 +46,9 @@ export class APIDefinitionDaoImpl implements APIDefinitionDao {
                 apiDefinitionId: {
                     in: Array.from(apiDefinitionIds),
                 },
+            },
+            select: {
+                definition: true,
             },
         });
         return Object.fromEntries(

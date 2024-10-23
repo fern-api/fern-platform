@@ -22,6 +22,7 @@ import { readBuffer } from "../../../util";
 export function getDocsReadService(app: FdrApplication): DocsV1ReadService {
     return new DocsV1ReadService({
         getDocsForDomainLegacy: async (req, res) => {
+            // TODO: start deleting this deprecated endpoint
             await this.app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,
                 orgId: "fern",
@@ -30,6 +31,7 @@ export function getDocsReadService(app: FdrApplication): DocsV1ReadService {
             return res.send(definition.response);
         },
         getDocsForDomain: async (req, res) => {
+            // TODO: start deleting this deprecated endpoint
             await this.app.services.auth.checkUserBelongsToOrg({
                 authHeader: req.headers.authorization,
                 orgId: "fern",

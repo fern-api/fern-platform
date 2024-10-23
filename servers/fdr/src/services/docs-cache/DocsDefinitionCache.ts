@@ -1,4 +1,4 @@
-import { DocsV1Db, DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { DocsV1Db, DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import { AuthType } from "@prisma/client";
 import { DomainNotRegisteredError } from "../../api/generated/api/resources/docs/resources/v2/resources/read";
 import { FdrApplication } from "../../app";
@@ -14,8 +14,6 @@ const DOCS_DOMAIN_REGX = /^([^.\s]+)/;
 
 export interface DocsDefinitionCache {
     getDocsForUrl(request: { url: URL }): Promise<DocsV2Read.LoadDocsForUrlResponse>;
-
-    getOrganizationForUrl(url: URL): Promise<FdrAPI.OrgId | undefined>;
 
     storeDocsForUrl({
         docsRegistrationInfo,
@@ -151,13 +149,6 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         }
 
         return dbResponse.response;
-    }
-
-    public async getOrganizationForUrl(url: URL): Promise<FdrAPI.OrgId | undefined> {
-        // TODO: cache this
-        const dbDocs = await this.dao.docsV2().loadDocsForURL(url);
-
-        return dbDocs?.orgId;
     }
 
     public async storeDocsForUrl({
