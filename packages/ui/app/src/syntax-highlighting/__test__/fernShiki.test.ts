@@ -48,11 +48,24 @@ describe("fernShiki", () => {
                               "children": [
                                 {
                                   "type": "text",
-                                  "value": "*** file1.txt   Thu Jan 11 08:52:37 2018                                                                                                         ",
+                                  "value": "***",
                                 },
                               ],
                               "properties": {
-                                "style": "color:#B31D28;--shiki-dark:#FDAEB7",
+                                "style": "color:#B31D28;--shiki-dark:#89DDFF",
+                              },
+                              "tagName": "span",
+                              "type": "element",
+                            },
+                            {
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "value": " file1.txt   Thu Jan 11 08:52:37 2018                                                                                                         ",
+                                },
+                              ],
+                              "properties": {
+                                "style": "color:#B31D28;--shiki-dark:#EEFFFF",
                               },
                               "tagName": "span",
                               "type": "element",
@@ -75,11 +88,24 @@ describe("fernShiki", () => {
                               "children": [
                                 {
                                   "type": "text",
-                                  "value": "--- file2.txt   Thu Jan 11 08:53:01 2018                                                                                                         ",
+                                  "value": "---",
                                 },
                               ],
                               "properties": {
-                                "style": "color:#B31D28;--shiki-dark:#FDAEB7",
+                                "style": "color:#B31D28;--shiki-dark:#89DDFF",
+                              },
+                              "tagName": "span",
+                              "type": "element",
+                            },
+                            {
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "value": " file2.txt   Thu Jan 11 08:53:01 2018                                                                                                         ",
+                                },
+                              ],
+                              "properties": {
+                                "style": "color:#B31D28;--shiki-dark:#EEFFFF",
                               },
                               "tagName": "span",
                               "type": "element",
@@ -106,7 +132,7 @@ describe("fernShiki", () => {
                                 },
                               ],
                               "properties": {
-                                "style": "color:#24292E;--shiki-dark:#E1E4E8",
+                                "style": "color:#24292E;--shiki-dark:#EEFFFF",
                               },
                               "tagName": "span",
                               "type": "element",
@@ -129,146 +155,24 @@ describe("fernShiki", () => {
                               "children": [
                                 {
                                   "type": "text",
-                                  "value": "*** 1,4 ****                                                                                                                                     ",
+                                  "value": "***",
                                 },
                               ],
                               "properties": {
-                                "style": "color:#B31D28;--shiki-dark:#FDAEB7",
+                                "style": "color:#B31D28;--shiki-dark:#89DDFF",
                               },
                               "tagName": "span",
                               "type": "element",
                             },
-                          ],
-                          "properties": {
-                            "class": "line",
-                          },
-                          "tagName": "span",
-                          "type": "element",
-                        },
-                        {
-                          "type": "text",
-                          "value": "
-          ",
-                        },
-                        {
-                          "children": [
                             {
                               "children": [
                                 {
                                   "type": "text",
-                                  "value": "  cat                                                                                                                                            ",
+                                  "value": " 1,4 ****                                                                                                                                     ",
                                 },
                               ],
                               "properties": {
-                                "style": "color:#24292E;--shiki-dark:#E1E4E8",
-                              },
-                              "tagName": "span",
-                              "type": "element",
-                            },
-                          ],
-                          "properties": {
-                            "class": "line",
-                          },
-                          "tagName": "span",
-                          "type": "element",
-                        },
-                        {
-                          "type": "text",
-                          "value": "
-          ",
-                        },
-                        {
-                          "children": [
-                            {
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "value": "- mv                                                                                                                                             ",
-                                },
-                              ],
-                              "properties": {
-                                "style": "color:#B31D28;--shiki-dark:#FDAEB7",
-                              },
-                              "tagName": "span",
-                              "type": "element",
-                            },
-                          ],
-                          "properties": {
-                            "class": "line",
-                          },
-                          "tagName": "span",
-                          "type": "element",
-                        },
-                        {
-                          "type": "text",
-                          "value": "
-          ",
-                        },
-                        {
-                          "children": [
-                            {
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "value": "- comm                                                                                                                                           ",
-                                },
-                              ],
-                              "properties": {
-                                "style": "color:#B31D28;--shiki-dark:#FDAEB7",
-                              },
-                              "tagName": "span",
-                              "type": "element",
-                            },
-                          ],
-                          "properties": {
-                            "class": "line",
-                          },
-                          "tagName": "span",
-                          "type": "element",
-                        },
-                        {
-                          "type": "text",
-                          "value": "
-          ",
-                        },
-                        {
-                          "children": [
-                            {
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "value": "  cp                                                                                                                                             ",
-                                },
-                              ],
-                              "properties": {
-                                "style": "color:#24292E;--shiki-dark:#E1E4E8",
-                              },
-                              "tagName": "span",
-                              "type": "element",
-                            },
-                          ],
-                          "properties": {
-                            "class": "line",
-                          },
-                          "tagName": "span",
-                          "type": "element",
-                        },
-                        {
-                          "type": "text",
-                          "value": "
-          ",
-                        },
-                        {
-                          "children": [
-                            {
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "value": "--- 1,4 ----                                                                                                                                     ",
-                                },
-                              ],
-                              "properties": {
-                                "style": "color:#B31D28;--shiki-dark:#FDAEB7",
+                                "style": "color:#B31D28;--shiki-dark:#EEFFFF",
                               },
                               "tagName": "span",
                               "type": "element",
@@ -295,7 +199,87 @@ describe("fernShiki", () => {
                                 },
                               ],
                               "properties": {
-                                "style": "color:#24292E;--shiki-dark:#E1E4E8",
+                                "style": "color:#24292E;--shiki-dark:#EEFFFF",
+                              },
+                              "tagName": "span",
+                              "type": "element",
+                            },
+                          ],
+                          "properties": {
+                            "class": "line",
+                          },
+                          "tagName": "span",
+                          "type": "element",
+                        },
+                        {
+                          "type": "text",
+                          "value": "
+          ",
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "value": "-",
+                                },
+                              ],
+                              "properties": {
+                                "style": "color:#B31D28;--shiki-dark:#89DDFF",
+                              },
+                              "tagName": "span",
+                              "type": "element",
+                            },
+                            {
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "value": " mv                                                                                                                                             ",
+                                },
+                              ],
+                              "properties": {
+                                "style": "color:#B31D28;--shiki-dark:#F07178",
+                              },
+                              "tagName": "span",
+                              "type": "element",
+                            },
+                          ],
+                          "properties": {
+                            "class": "line",
+                          },
+                          "tagName": "span",
+                          "type": "element",
+                        },
+                        {
+                          "type": "text",
+                          "value": "
+          ",
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "value": "-",
+                                },
+                              ],
+                              "properties": {
+                                "style": "color:#B31D28;--shiki-dark:#89DDFF",
+                              },
+                              "tagName": "span",
+                              "type": "element",
+                            },
+                            {
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "value": " comm                                                                                                                                           ",
+                                },
+                              ],
+                              "properties": {
+                                "style": "color:#B31D28;--shiki-dark:#F07178",
                               },
                               "tagName": "span",
                               "type": "element",
@@ -322,7 +306,7 @@ describe("fernShiki", () => {
                                 },
                               ],
                               "properties": {
-                                "style": "color:#24292E;--shiki-dark:#E1E4E8",
+                                "style": "color:#24292E;--shiki-dark:#EEFFFF",
                               },
                               "tagName": "span",
                               "type": "element",
@@ -345,11 +329,24 @@ describe("fernShiki", () => {
                               "children": [
                                 {
                                   "type": "text",
-                                  "value": "+ diff                                                                                                                                           ",
+                                  "value": "---",
                                 },
                               ],
                               "properties": {
-                                "style": "color:#22863A;--shiki-dark:#85E89D",
+                                "style": "color:#B31D28;--shiki-dark:#89DDFF",
+                              },
+                              "tagName": "span",
+                              "type": "element",
+                            },
+                            {
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "value": " 1,4 ----                                                                                                                                     ",
+                                },
+                              ],
+                              "properties": {
+                                "style": "color:#B31D28;--shiki-dark:#EEFFFF",
                               },
                               "tagName": "span",
                               "type": "element",
@@ -372,11 +369,118 @@ describe("fernShiki", () => {
                               "children": [
                                 {
                                   "type": "text",
-                                  "value": "+ comm",
+                                  "value": "  cat                                                                                                                                            ",
                                 },
                               ],
                               "properties": {
-                                "style": "color:#22863A;--shiki-dark:#85E89D",
+                                "style": "color:#24292E;--shiki-dark:#EEFFFF",
+                              },
+                              "tagName": "span",
+                              "type": "element",
+                            },
+                          ],
+                          "properties": {
+                            "class": "line",
+                          },
+                          "tagName": "span",
+                          "type": "element",
+                        },
+                        {
+                          "type": "text",
+                          "value": "
+          ",
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "value": "  cp                                                                                                                                             ",
+                                },
+                              ],
+                              "properties": {
+                                "style": "color:#24292E;--shiki-dark:#EEFFFF",
+                              },
+                              "tagName": "span",
+                              "type": "element",
+                            },
+                          ],
+                          "properties": {
+                            "class": "line",
+                          },
+                          "tagName": "span",
+                          "type": "element",
+                        },
+                        {
+                          "type": "text",
+                          "value": "
+          ",
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "value": "+",
+                                },
+                              ],
+                              "properties": {
+                                "style": "color:#22863A;--shiki-dark:#89DDFF",
+                              },
+                              "tagName": "span",
+                              "type": "element",
+                            },
+                            {
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "value": " diff                                                                                                                                           ",
+                                },
+                              ],
+                              "properties": {
+                                "style": "color:#22863A;--shiki-dark:#C3E88D",
+                              },
+                              "tagName": "span",
+                              "type": "element",
+                            },
+                          ],
+                          "properties": {
+                            "class": "line",
+                          },
+                          "tagName": "span",
+                          "type": "element",
+                        },
+                        {
+                          "type": "text",
+                          "value": "
+          ",
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "value": "+",
+                                },
+                              ],
+                              "properties": {
+                                "style": "color:#22863A;--shiki-dark:#89DDFF",
+                              },
+                              "tagName": "span",
+                              "type": "element",
+                            },
+                            {
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "value": " comm",
+                                },
+                              ],
+                              "properties": {
+                                "style": "color:#22863A;--shiki-dark:#C3E88D",
                               },
                               "tagName": "span",
                               "type": "element",
@@ -395,8 +499,8 @@ describe("fernShiki", () => {
                     },
                   ],
                   "properties": {
-                    "class": "shiki shiki-themes github-light github-dark",
-                    "style": "background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8",
+                    "class": "shiki shiki-themes github-light material-theme-darker",
+                    "style": "background-color:#fff;--shiki-dark-bg:#212121;color:#24292e;--shiki-dark:#EEFFFF",
                     "tabindex": "0",
                   },
                   "tagName": "pre",

@@ -16,15 +16,13 @@ let highlighter: Highlighter;
 
 const DEFAULT = Symbol("DEFAULT");
 
-// override the default themes for specific languages, where the default theme does not work well
 const THEMES: Record<"light" | "dark", Record<string | typeof DEFAULT, BundledTheme>> = {
     light: {
         [DEFAULT]: "min-light",
-        diff: "github-light",
+        diff: "github-light", // `min-light` does not work well for diff
     },
     dark: {
         [DEFAULT]: "material-theme-darker",
-        diff: "github-dark",
     },
 };
 
