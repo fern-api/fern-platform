@@ -49,3 +49,4 @@ jobs:
 
       - name: Run ete test
         run: pnpm --filter=@fern-platform/fdr test:ete
+        timeout-minutes: 30
