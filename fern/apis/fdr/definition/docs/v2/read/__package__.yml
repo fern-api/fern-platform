@@ -7,7 +7,7 @@ imports:
 
 service:
   base-path: /v2/registry/docs
-  auth: false
+  auth: true
   audiences:
     - read
   endpoints:
@@ -37,6 +37,7 @@ service:
         - rootCommons.UnauthorizedError
 
     getPrivateDocsForUrl:
+      availability: deprecated
       method: POST
       auth: true
       path: /private/load-with-url
@@ -52,7 +53,6 @@ service:
 
     listAllDocsUrls:
       method: GET
-      auth: true
       path: /urls/list
       request:
         name: ListAllDocsUrlsRequest

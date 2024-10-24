@@ -11,6 +11,6 @@ export type { ProxyRequest, ProxyResponse, SerializableFile, SerializableFormDat
 export { resolveDocsContent } from "./resolver/resolveDocsContent";
 export { getBreadcrumbList } from "./seo/getBreadcrumbList";
 export { getSeoProps } from "./seo/getSeoProp";
-export { getRegistryServiceWithToken, provideRegistryService } from "./services/registry";
+export { provideRegistryService } from "./services/registry";
 export { renderThemeStylesheet } from "./themes/stylesheet/renderThemeStylesheet";
 export { getGitHubInfo, getGitHubRepo } from "./util/github";
