@@ -83,6 +83,9 @@ types:
       css: optional<commons.CssConfig>
       js: optional<commons.JsConfig>
 
+      # playground
+      playground: optional<commons.PlaygroundConfig>
+
       # deprecated
       logo:
         type: optional<rootCommons.FileId>

@@ -37,6 +37,7 @@ export class DefinitionObjectFactory {
                 integrations: undefined,
                 css: undefined,
                 js: undefined,
+                playground: undefined,
             },
             search: {
                 type: "singleAlgoliaIndex",

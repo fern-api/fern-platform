@@ -23,6 +23,7 @@ export interface DocsDbConfig {
     integrations: FernRegistry.docs.v1.commons.IntegrationsConfig | undefined;
     css: FernRegistry.docs.v1.commons.CssConfig | undefined;
     js: FernRegistry.docs.v1.commons.JsConfig | undefined;
+    playground: FernRegistry.docs.v1.commons.PlaygroundConfig | undefined;
     logo: FernRegistry.FileId | undefined;
     logoV2: FernRegistry.docs.v1.commons.ThemedFileId | undefined;
     colors: FernRegistry.docs.v1.commons.ColorsConfig | undefined;

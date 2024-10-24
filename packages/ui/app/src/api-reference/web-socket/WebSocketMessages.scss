@@ -4,8 +4,7 @@
         @apply sticky top-0 z-10 backdrop-blur;
 
         .fern-web-socket-client,
-        .fern-web-socket-server,
-        .fern-web-socket-end-sample {
+        .fern-web-socket-server {
             @apply inline-block shrink-0 rounded-full p-0.5;
         }
 
@@ -15,10 +14,6 @@
 
         .fern-web-socket-server {
             @apply t-accent-aaa bg-tag-primary;
-        }
-
-        .fern-web-socket-end-sample {
-            @apply t-danger bg-tag-danger;
         }
 
         .fern-web-socket-type {
