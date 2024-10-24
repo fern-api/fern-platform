@@ -9,6 +9,7 @@ import {
     visitDbNavigationTab,
     visitUnversionedDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
+import { Frontmatter } from "@fern-api/fdr-sdk/src/docs";
 import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import grayMatter from "gray-matter";
 import { noop } from "lodash-es";
@@ -19,7 +20,6 @@ import { compact } from "../../util/object";
 import { NavigationContext } from "./NavigationContext";
 import { ReferencedTypes, getAllReferencedTypes } from "./getAllReferencedTypes";
 import type { AlgoliaSearchRecord, IndexSegment } from "./types";
-import { Frontmatter } from "@fern-api/fdr-sdk/src/docs";
 
 interface AlgoliaSearchRecordGeneratorConfig {
     docsDefinition: DocsV1Db.DocsDefinitionDb;
@@ -1017,8 +1017,8 @@ export function getFrontmatter(content: string): {
 } {
     try {
         const gm = grayMatter(content);
-        return { frontmatter: gm.data, content: gm.content };
+        return { frontmatter: gm.data as Frontmatter, content: gm.content };
     } catch (e) {
-        return { frontmatter: {}, content };
+        return { frontmatter: {} as Frontmatter, content };
     }
 }
