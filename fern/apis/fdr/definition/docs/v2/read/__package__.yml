@@ -91,7 +91,7 @@ service:
             indexSegmentId: string
       response: GetSearchApiKeyForIndexSegmentResponse
       errors:
-        - IndexSegmentNotFoundError
+        - IndexSegmentNotFoundError 
 
 types:
   GetDocsConfigByIdResponse:

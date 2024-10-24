@@ -66,10 +66,24 @@ export interface DocsV2Dao {
         customOnly?: boolean;
         domainSuffix: string;
     }): Promise<DocsV2Read.ListAllDocsUrlsResponse>;
+
+    transferDomainOwner({ domain, toOrgId }: { domain: string; toOrgId: string }): Promise<void>;
 }
 
 export class DocsV2DaoImpl implements DocsV2Dao {
     constructor(private readonly prisma: PrismaClient) {}
+
+    public async transferDomainOwner({ domain, toOrgId }: { domain: string; toOrgId: string }): Promise<void> {
+        await this.prisma.docsV2.updateMany({
+            where: {
+                domain,
+            },
+            data: {
+                orgID: toOrgId,
+            },
+        });
+    }
+
     public async checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<boolean> {
         const matchedDomains = await this.prisma.docsV2.findMany({
             select: {
