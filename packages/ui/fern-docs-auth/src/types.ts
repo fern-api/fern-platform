@@ -4,7 +4,7 @@ export const FernUserSchema = z.object({
     name: z.string().optional(),
     email: z.string().optional(),
     roles: z
-        .union([z.string(), z.array(z.string())])
+        .array(z.string())
         .describe(
             "The roles of the token (can be a string or an array of strings) which limits what content users can access",
         )
