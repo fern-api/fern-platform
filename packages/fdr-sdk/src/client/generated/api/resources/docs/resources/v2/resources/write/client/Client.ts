@@ -257,10 +257,13 @@ export class Write {
      *                                 authed: {
      *                                     "key": "value"
      *                                 },
-     *                                 audience: {
+     *                                 id: FernRegistry.navigation.v1.NodeId("string"),
+     *                                 viewers: {
      *                                     "key": "value"
      *                                 },
-     *                                 id: FernRegistry.navigation.v1.NodeId("string"),
+     *                                 orphaned: {
+     *                                     "key": "value"
+     *                                 },
      *                                 pointsTo: {
      *                                     "key": "value"
      *                                 }
@@ -278,10 +281,13 @@ export class Write {
      *                     authed: {
      *                         "key": "value"
      *                     },
-     *                     audience: {
+     *                     id: FernRegistry.navigation.v1.NodeId("string"),
+     *                     viewers: {
      *                         "key": "value"
      *                     },
-     *                     id: FernRegistry.navigation.v1.NodeId("string"),
+     *                     orphaned: {
+     *                         "key": "value"
+     *                     },
      *                     pointsTo: {
      *                         "key": "value"
      *                     }

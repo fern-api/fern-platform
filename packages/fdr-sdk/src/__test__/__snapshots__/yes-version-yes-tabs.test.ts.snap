@@ -70,17 +70,18 @@ exports[`yes-version-yes-tabs > gets navigation root for /docs/api/version-1 1`]
 
 exports[`yes-version-yes-tabs > gets navigation root for /docs/api/version-1/section-2 1`] = `
 {
-  "audience": undefined,
   "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": undefined,
   "icon": undefined,
   "id": "root..version-1.uv.tab-1.tab-1.section-2.page-3",
   "noindex": undefined,
+  "orphaned": undefined,
   "pageId": "page-3.md",
   "slug": "docs/api/version-1/section-2",
   "title": "Page 3",
   "type": "page",
+  "viewers": undefined,
 }
 `;
 
