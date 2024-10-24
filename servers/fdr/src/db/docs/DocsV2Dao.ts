@@ -38,6 +38,10 @@ export interface DocsV2Dao {
 
     loadDocsForURL(url: URL): Promise<LoadDocsDefinitionByUrlResponse | undefined>;
 
+    getOrgIdForDocsUrl(url: URL): Promise<FdrAPI.OrgId | undefined>;
+
+    getOrgIdForDocsConfigInstanceId(docsConfigInstanceId: string): Promise<FdrAPI.OrgId | undefined>;
+
     loadDocsConfigByInstanceId(docsConfigInstanceId: string): Promise<LoadDocsConfigResponse | undefined>;
 
     storeDocsDefinition({
@@ -66,10 +70,24 @@ export interface DocsV2Dao {
         customOnly?: boolean;
         domainSuffix: string;
     }): Promise<DocsV2Read.ListAllDocsUrlsResponse>;
+
+    transferDomainOwner({ domain, toOrgId }: { domain: string; toOrgId: string }): Promise<void>;
 }
 
 export class DocsV2DaoImpl implements DocsV2Dao {
     constructor(private readonly prisma: PrismaClient) {}
+
+    public async transferDomainOwner({ domain, toOrgId }: { domain: string; toOrgId: string }): Promise<void> {
+        await this.prisma.docsV2.updateMany({
+            where: {
+                domain,
+            },
+            data: {
+                orgID: toOrgId,
+            },
+        });
+    }
+
     public async checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<boolean> {
         const matchedDomains = await this.prisma.docsV2.findMany({
             select: {
@@ -113,6 +131,30 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             hasPublicS3Assets: docsDomain.hasPublicS3Assets,
             isPreview: docsDomain.isPreview,
         };
+    }
+
+    public async getOrgIdForDocsUrl(url: URL): Promise<FdrAPI.OrgId | undefined> {
+        const docsDomain = await this.prisma.docsV2.findFirst({
+            where: {
+                domain: url.hostname,
+            },
+            select: {
+                orgID: true,
+            },
+        });
+        return docsDomain?.orgID != null ? FdrAPI.OrgId(docsDomain.orgID) : undefined;
+    }
+
+    public async getOrgIdForDocsConfigInstanceId(docsConfigInstanceId: string): Promise<FdrAPI.OrgId | undefined> {
+        const instance = await this.prisma.docsV2.findFirst({
+            where: {
+                docsConfigInstanceId,
+            },
+            select: {
+                orgID: true,
+            },
+        });
+        return instance?.orgID != null ? FdrAPI.OrgId(instance.orgID) : undefined;
     }
 
     public async loadDocsConfigByInstanceId(docsConfigInstanceId: string): Promise<LoadDocsConfigResponse | undefined> {

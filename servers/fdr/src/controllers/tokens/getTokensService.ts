@@ -14,7 +14,7 @@ export function getTokensService(app: FdrApplication): TokensService {
             }
             const token = getTokenFromAuthHeader(authorization);
             const venus = new FernVenusApiClient({
-                environment: this.config.venusUrl,
+                environment: app.config.venusUrl,
                 token,
             });
             const response = await venus.registry.generateRegistryTokens({

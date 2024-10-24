@@ -1,6 +1,5 @@
-import { DocsV1Db, DocsV1Read, DocsV2Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { DocsV1Db, DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import { AuthType } from "@prisma/client";
-import { InternalError, UnauthorizedError } from "../../api/generated/api";
 import { DomainNotRegisteredError } from "../../api/generated/api/resources/docs/resources/v2/resources/read";
 import { FdrApplication } from "../../app";
 import { getDocsDefinition, getDocsForDomain } from "../../controllers/docs/v1/getDocsReadService";
@@ -14,9 +13,7 @@ import RedisDocsDefinitionStore from "./RedisDocsDefinitionStore";
 const DOCS_DOMAIN_REGX = /^([^.\s]+)/;
 
 export interface DocsDefinitionCache {
-    getDocsForUrl(request: { url: URL; authorization?: string }): Promise<DocsV2Read.LoadDocsForUrlResponse>;
-
-    getOrganizationForUrl(url: URL): Promise<FdrAPI.OrgId | undefined>;
+    getDocsForUrl(request: { url: URL }): Promise<DocsV2Read.LoadDocsForUrlResponse>;
 
     storeDocsForUrl({
         docsRegistrationInfo,
@@ -109,19 +106,10 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
         this.localDocsCache.delete({ url });
     }
 
-    public async getDocsForUrl({
-        url,
-        authorization,
-    }: {
-        url: URL;
-        authorization: string | undefined;
-    }): Promise<DocsV2Read.LoadDocsForUrlResponse> {
+    public async getDocsForUrl({ url }: { url: URL }): Promise<DocsV2Read.LoadDocsForUrlResponse> {
         const cachedResponse = await this.getDocsForUrlFromCache({ url });
         if (cachedResponse != null) {
             this.app.logger.info(`Cache HIT for ${url}`);
-            if (cachedResponse.isPrivate) {
-                await this.checkUserBelongsToOrg(url, authorization);
-            }
             const filesV2: Record<string, DocsV1Read.File_> = Object.fromEntries(
                 await Promise.all(
                     Object.entries(cachedResponse.dbFiles).map(async ([fileId, dbFileInfo]) => {
@@ -160,32 +148,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             await this.cacheResponse({ url, value: dbResponse });
         }
 
-        if (dbResponse.isPrivate) {
-            await this.checkUserBelongsToOrg(url, authorization);
-        }
-
         return dbResponse.response;
-    }
-
-    private async checkUserBelongsToOrg(url: URL, authorization: string | undefined): Promise<void> {
-        if (authorization == null) {
-            throw new UnauthorizedError("Authorization header is required");
-        }
-        const orgId = await this.getOrganizationForUrl(url);
-        if (orgId == null) {
-            throw new InternalError("Cannot find organization for URL");
-        }
-        await this.app.services.auth.checkUserBelongsToOrg({
-            authHeader: authorization,
-            orgId,
-        });
-    }
-
-    public async getOrganizationForUrl(url: URL): Promise<FdrAPI.OrgId | undefined> {
-        // TODO: cache this
-        const dbDocs = await this.dao.docsV2().loadDocsForURL(url);
-
-        return dbDocs?.orgId;
     }
 
     public async storeDocsForUrl({

@@ -87,6 +87,21 @@ service:
       errors:
         - DocsNotFoundError
         - ReindexNotAllowedError
+
+    transferOwnershipOfDomain:
+      auth: true
+      method: POST
+      path: /transfer-ownership
+      request:
+        name: TransferDomainOwnershipRequest
+        body:
+          properties:
+            domain: string
+            toOrgId: string
+      errors:
+        - DocsNotFoundError
+        - rootCommons.UnauthorizedError
+
 types:
   ImageFilePath:
     properties:
