@@ -21,7 +21,8 @@ import { TitledExample } from "../examples/TitledExample";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
-import { WebSocketMessage, WebSocketMessages } from "./WebSocketMessages";
+import { WebSocketMessage } from "./WebSocketMessages";
+import { WebSocketMessagesVirtualized } from "./WebSocketMessagesVirtualized";
 
 export interface WebSocketProps {
     node: FernNavigation.WebSocketNode;
@@ -347,7 +348,7 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                 {exampleMessages.length > 0 && (
                                     <TitledExample title={"Messages"} className="min-h-0 shrink">
                                         <FernScrollArea className="rounded-b-[inherit]">
-                                            <WebSocketMessages messages={exampleMessages} />
+                                            <WebSocketMessagesVirtualized messages={exampleMessages} />
                                         </FernScrollArea>
                                     </TitledExample>
                                 )}

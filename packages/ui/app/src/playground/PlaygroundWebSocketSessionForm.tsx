@@ -4,7 +4,7 @@ import titleCase from "@fern-api/ui-core-utils/titleCase";
 import { FernButton, FernCard, FernScrollArea } from "@fern-ui/components";
 import cn from "clsx";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
-import { WebSocketMessages } from "../api-reference/web-socket/WebSocketMessages";
+import { WebSocketMessagesVirtualized } from "../api-reference/web-socket/WebSocketMessagesVirtualized";
 import { PlaygroundWebSocketHandshakeForm } from "./PlaygroundWebSocketHandshakeForm";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
 import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
@@ -131,7 +131,7 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                         </div>
                     </div>
                     <FernScrollArea rootClassName="flex-1 rounded-b-[inherit]">
-                        <WebSocketMessages messages={messages} />
+                        <WebSocketMessagesVirtualized messages={messages} />
                     </FernScrollArea>
                 </FernCard>
             </div>
