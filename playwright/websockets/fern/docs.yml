@@ -1,5 +1,5 @@
 instances:
-  - url: test-websocket.docs.buildwithfern.com
+  - url: test-websocket-reference.docs.buildwithfern.com
 
 navigation:
   - api: Websocket API
