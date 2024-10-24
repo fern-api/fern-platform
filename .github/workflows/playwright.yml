@@ -21,7 +21,7 @@ on:
 
 jobs:
   playwright:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     permissions: write-all # required for the playwright-report-summary action
     if: inputs.deployment_url != ''
     steps:
