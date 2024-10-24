@@ -30,6 +30,7 @@ export async function withResolvedDocsContent({
         return undefined;
     }
 
+    // pruning is especially relevant here! If the API reference is long-scrolling, we need to guarantee that the user is authed otherwise the node should not exist.
     const apiReference = withPrunedNavigation(found.apiReference, {
         visibleNodeIds: [found.node.id],
         authed: authState.authed,
