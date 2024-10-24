@@ -3,8 +3,8 @@
 @import "tailwindcss/utilities";
 @import "./rmiz";
 @import "./base";
-@import "@fern-ui/components/src/index.scss";
-@import "@fern-ui/chatbot/src/index.scss";
+@import "@fern-ui/components/src/index";
+@import "@fern-ui/chatbot/src/index";
 @import "./components";
 @import "../syntax-highlighting/FernSyntaxHighlighter";
 @import "../api-reference";
