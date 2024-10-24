@@ -1,0 +1,7 @@
+name: api
+error-discrimination:
+  strategy: status-code
+display-name: Websocket API
+environments:
+  Default: https://test-websocket-reference.docs.buildwithfern.com/
+default-environment: Default

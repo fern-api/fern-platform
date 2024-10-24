@@ -8,13 +8,13 @@ import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighl
 
 export interface WebSocketMessage {
     type: string | undefined;
-    origin: APIV1Read.WebSocketMessageOrigin | undefined;
+    origin: APIV1Read.WebSocketMessageOrigin | "endSample" | undefined;
     displayName: string | undefined;
     data: unknown | undefined;
     // shape: APIV1Read.WebSocketMessageBodyShape;
 }
 
-interface WebSocketMessagesProps {
+export interface WebSocketMessagesProps {
     messages: WebSocketMessage[];
     // types: Record<string, ResolvedTypeDefinition>;
 }

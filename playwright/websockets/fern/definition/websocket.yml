@@ -1,0 +1,38 @@
+channel:
+  path: /websocket
+  auth: false
+  query-parameters:
+    api_key: optional<string>
+  messages:
+    subscribe:
+      origin: server
+      body: SubscribeEvent
+    publish:
+      origin: client
+      body: PublishEvent
+  examples:
+    - messages:
+        - type: publish
+          body:
+            type: publish_event
+        - type: subscribe
+          body:
+            # type: assistant_end
+            type: subscribe_event
+types:
+  SubscribeEvent:
+    properties:
+      type: literal<"subscribe_event">
+    # discriminated: false
+    # union:
+    #   - root.AssistantEnd
+    # source:
+    #   openapi: assistant-asyncapi.json
+  PublishEvent:
+    properties:
+      type: literal<"publish_event">
+    # discriminated: false
+    # union:
+    #   - root.AudioInput
+    # source:
+    #   openapi: assistant-asyncapi.json
