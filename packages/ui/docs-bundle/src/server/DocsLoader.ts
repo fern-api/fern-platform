@@ -90,7 +90,7 @@ export class DocsLoader {
     }
 
     public async root(): Promise<FernNavigation.RootNode | undefined> {
-        const [auth, authConfig] = await this.loadAuth();
+        const [authState, authConfig] = await this.loadAuth();
         let root = await this.unprunedRoot();
 
         // if the user is not authenticated, and the page requires authentication, prune the navigation tree
@@ -100,9 +100,9 @@ export class DocsLoader {
             try {
                 if (authConfig?.type === "basic_token_verification") {
                     // TODO: store this in cache
-                    root = !auth.isLoggedIn
-                        ? pruneWithBasicTokenAnonymous(authConfig, root)
-                        : pruneWithBasicTokenAuthed(authConfig, root, toAudience(auth.user.audience));
+                    root = authState.authed
+                        ? pruneWithBasicTokenAuthed(authConfig, root, toAudience(authState.user.audience))
+                        : pruneWithBasicTokenAnonymous(authConfig, root);
                 }
             } catch (e) {
                 // TODO: sentry

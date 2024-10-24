@@ -77,7 +77,7 @@ export const middleware: NextMiddleware = async (request) => {
         return NextResponse.rewrite(String(url));
     }
 
-    return withMiddlewareAuth(request, withMiddlewareRewrite(request, pathname));
+    return withMiddlewareAuth(request, pathname, withMiddlewareRewrite(request, pathname));
 };
 
 export const config = {

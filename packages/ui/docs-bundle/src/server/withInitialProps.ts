@@ -300,7 +300,7 @@ export async function withInitialProps({
             await getSeoDisabled(domain),
             isTrailingSlashEnabled(),
         ),
-        user: auth?.isLoggedIn ? auth.user : undefined,
+        user: auth?.authed ? auth.user : undefined,
         fallback: {},
         // eslint-disable-next-line deprecation/deprecation
         analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),

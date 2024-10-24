@@ -1,45 +1,59 @@
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig, FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
-import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
-import { NextApiRequest } from "next";
-import type { NextRequest } from "next/server";
 import urlJoin from "url-join";
 import { withBasicTokenAnonymous } from "../withBasicTokenAnonymous";
-import { getDocsDomainEdge } from "../xfernhost/edge";
-import { getDocsDomainNode } from "../xfernhost/node";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 
 export type AuthPartner = "workos" | "ory" | "webflow" | "custom";
 
 interface NotLoggedIn {
-    xFernHost: string;
-    isLoggedIn: false;
-    authorizationUrl?: string;
-    status: 200 | 401 | 403 | 500;
+    /**
+     * discriminant
+     */
+    authed: false;
+    /**
+     * x-fern-host
+     */
+    host: string;
+    /**
+     * If true, the request is allowed to pass through without authentication
+     * Otherwise, the request must be redirected to the authorizationUrl, or return a 401
+     */
+    ok: boolean;
+    /**
+     * The url to redirect to for authentication, containing the state parameter and redirect url
+     */
+    authorizationUrl: string | undefined;
+    /**
+     * The auth partner that is used for authentication (e.g. workos, custom)
+     */
     partner: AuthPartner | undefined;
 }
 
 interface IsLoggedIn {
-    xFernHost: string;
-    isLoggedIn: true;
+    /**
+     * discriminant
+     */
+    authed: true;
+    /**
+     * x-fern-host
+     */
+    host: string;
+    /**
+     * If true, the request is allowed to pass through because the user is logged in
+     * Otherwise, the request is not allowed for the current user and returns a 403
+     */
+    ok: boolean;
+
+    /**
+     * The user payload from the Fern JWT, and the AuthPartner are both guaranteed to be present if the user is logged in
+     */
     user: FernUser;
     partner: AuthPartner;
 }
 
 export type AuthState = NotLoggedIn | IsLoggedIn;
-
-export async function getAuthStateEdge(request: NextRequest): Promise<AuthState> {
-    const xFernHost = getDocsDomainEdge(request);
-    const fernToken = request.cookies.get(COOKIE_FERN_TOKEN)?.value;
-    return getAuthState(xFernHost, fernToken, request.nextUrl.pathname);
-}
-
-export async function getAuthStateNode(request: NextApiRequest): Promise<AuthState> {
-    const xFernHost = getDocsDomainNode(request);
-    const fernToken = request.cookies[COOKIE_FERN_TOKEN];
-    return getAuthState(xFernHost, fernToken, request.url ? new URL(request.url).pathname : undefined);
-}
 
 /**
  * Check if the user is logged in and the session is valid for the current docs.
@@ -51,18 +65,18 @@ export async function getAuthStateNode(request: NextApiRequest): Promise<AuthSta
  * @param next - the function to call if the user is logged in and the session is valid for the current pathname
  */
 export async function getAuthState(
-    xFernHost: string,
+    host: string,
     fernToken: string | undefined,
     pathname?: string,
     authConfig?: AuthEdgeConfig,
 ): Promise<AuthState> {
     // don't fetch auth config in dev (for now)
-    authConfig ??= process.env.NODE_ENV === "development" ? undefined : await getAuthEdgeConfig(xFernHost);
+    authConfig ??= process.env.NODE_ENV === "development" ? undefined : await getAuthEdgeConfig(host);
 
     // if the auth type is neither sso nor basic_token_verification, allow the request to pass through
     // we're currently assuming that all oauth2 integrations are meant for API Playground. This may change.
     if (!authConfig || (authConfig.type !== "sso" && authConfig.type !== "basic_token_verification")) {
-        return { xFernHost, isLoggedIn: false, status: 200, partner: authConfig?.partner };
+        return { host, authed: false, ok: true, authorizationUrl: undefined, partner: authConfig?.partner };
     }
 
     const user = await safeVerifyFernJWTConfig(fernToken, authConfig);
@@ -70,14 +84,17 @@ export async function getAuthState(
     // check if the request is allowed to pass through without authentication
     if (authConfig.type === "basic_token_verification") {
         if (user) {
-            return { xFernHost, isLoggedIn: true, user, partner: "custom" };
+            // TODO: right now it's not possible to compare the user's audience with the audience required for the current pathname
+            // because this function must be run in the middleware handler, which does not have access to the navigation node structure
+            // so today we're assuming that getServerSideProps will return a 404 for specific pages (when it should certainly be a 403)
+            return { host, authed: true, ok: true, user, partner: "custom" };
         } else {
             const isAuthRequired = pathname ? withBasicTokenAnonymous(authConfig, pathname) : true;
             return {
-                xFernHost,
-                isLoggedIn: false,
-                status: isAuthRequired ? 403 : 200,
-                authorizationUrl: getAuthorizationUrl(authConfig, xFernHost, pathname),
+                host,
+                authed: false,
+                ok: !isAuthRequired,
+                authorizationUrl: getAuthorizationUrl(authConfig, host, pathname),
                 partner: "custom",
             };
         }
@@ -85,11 +102,12 @@ export async function getAuthState(
 
     // TODO: implement workos auth
     if (authConfig.type === "sso") {
-        return { xFernHost, isLoggedIn: false, status: 401, partner: authConfig.partner };
+        return user
+            ? { host, authed: true, ok: true, user, partner: authConfig.partner }
+            : { host, authed: false, ok: false, authorizationUrl: undefined, partner: authConfig.partner };
     }
 
-    // if the auth type is not supported, return a 500
-    return { xFernHost, isLoggedIn: false, status: 500, partner: undefined };
+    return { host, authed: false, ok: false, authorizationUrl: undefined, partner: undefined };
 }
 
 function getAuthorizationUrl(authConfig: AuthEdgeConfig, xFernHost: string, pathname?: string): string | undefined {
@@ -103,6 +121,10 @@ function getAuthorizationUrl(authConfig: AuthEdgeConfig, xFernHost: string, path
         // however, we should not break existing customers who are consuming the state as a `return_to` param in their auth flows.
         destination.searchParams.set("state", urlJoin(withDefaultProtocol(xFernHost), pathname));
         return destination.toString();
+    } else if (authConfig.type === "sso" && authConfig.partner === "workos") {
+        // TODO: implement workos auth redirect url
+        return undefined;
     }
+
     return undefined;
 }

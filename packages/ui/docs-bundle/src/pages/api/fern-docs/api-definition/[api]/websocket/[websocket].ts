@@ -1,4 +1,4 @@
-import { getAuthStateNode } from "@/server/auth/getAuthState";
+import { getAuthStateNode } from "@/server/auth/getAuthStateNode";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
 import { ApiDefinitionLoader } from "@fern-ui/fern-docs-server";
@@ -17,18 +17,18 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ApiDe
     // - the user has view access to the the api definition based on their audience
     const authState = await getAuthStateNode(req);
 
-    if (!authState.isLoggedIn && authState.status >= 400) {
-        return res.status(authState.status).end();
+    if (!authState.ok) {
+        return res.status(authState.authed ? 403 : 401).end();
     }
 
-    const flags = await getFeatureFlags(authState.xFernHost);
+    const flags = await getFeatureFlags(authState.host);
 
     // TODO: pass in other tsx/mdx files to serializeMdx options
     const engine = flags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
     const serializeMdx = await getMdxBundler(engine);
 
     // TODO: authenticate the request in FDR
-    const apiDefinition = await ApiDefinitionLoader.create(authState.xFernHost, ApiDefinition.ApiDefinitionId(api))
+    const apiDefinition = await ApiDefinitionLoader.create(authState.host, ApiDefinition.ApiDefinitionId(api))
         .withFlags(flags)
         .withMdxBundler(serializeMdx, engine)
         .withPrune({ type: "webSocket", webSocketId: ApiDefinition.WebSocketId(websocket) })
