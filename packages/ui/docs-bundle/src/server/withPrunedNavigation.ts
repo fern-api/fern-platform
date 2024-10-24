@@ -18,7 +18,7 @@ interface WithPrunedSidebarOpts {
 }
 
 /**
- * Note: at the stage of calling this function, the audiences should already been evaluated.
+ * Note: at the stage of calling this function, the RBAC should already been evaluated (and nodes are completely filtered out that are not visible to the current user).
  * @returns true if the node should be included, false otherwise
  */
 export function pruneNavigationPredicate(

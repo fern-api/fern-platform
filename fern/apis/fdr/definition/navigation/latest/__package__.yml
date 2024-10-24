@@ -314,8 +314,17 @@ types:
         type: NodeId
         docs: A unique, stable identifier for this node.
 
+  WithPermissions:
+    properties:
+      viewers: optional<list<commons.RoleId>>
+      orphaned:
+        type: optional<boolean>
+        docs: If true, ignore the parents permissions
+
   WithNodeMetadata:
-    extends: WithNodeId
+    extends:
+      - WithNodeId
+      - WithPermissions
     properties:
       title:
         type: string
@@ -342,13 +351,6 @@ types:
         docs: |
           If true, this node is only visible to authenticated users.
           If false, this node is only visible to all users (including anonymous).
-      audience:
-        type: optional<list<commons.AudienceId>>
-        availability: in-development
-        docs: |
-          The audience(s) that this node is intended for. If not provided, the node is intended for all audiences.
-          If provided, the node is only intended for the specified audience(s). OR logic is used for multiple audiences on a single node.
-          AND logic is used when evaluating audiences up the tree.
 
   WithPage:
     properties:

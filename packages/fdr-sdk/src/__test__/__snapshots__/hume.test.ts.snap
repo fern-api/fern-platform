@@ -117,17 +117,18 @@ exports[`hume > gets navigation root for /reference/expression-measurement-api/s
 
 exports[`hume > gets navigation root for /support 1`] = `
 {
-  "audience": undefined,
   "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": false,
   "icon": undefined,
   "id": "root.uv.docs.docs.introduction.support",
   "noindex": undefined,
+  "orphaned": undefined,
   "pageId": "docs/pages/documentation/introduction/support.mdx",
   "slug": "support",
   "title": "Support",
   "type": "page",
+  "viewers": undefined,
 }
 `;
 

@@ -861,17 +861,18 @@ exports[`polytomic > gets navigation root for /2023-04-25/not-found 1`] = `
 
 exports[`polytomic > gets navigation root for /2024-02-08/guides/introduction 1`] = `
 {
-  "audience": undefined,
   "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": false,
   "icon": undefined,
   "id": "root..2024-02-08.uv.guides.guides.getting-started.introduction",
   "noindex": undefined,
+  "orphaned": undefined,
   "pageId": "docs/2024-02-08/pages/getting-started/introduction.mdx",
   "slug": "2024-02-08/guides/introduction",
   "title": "Introduction",
   "type": "page",
+  "viewers": undefined,
 }
 `;
 
