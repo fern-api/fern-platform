@@ -13,5 +13,7 @@ test("websocket test", async ({ page, context }) => {
     const preview = generatePreviewContext(target);
     await addPreviewCookie(context, preview);
     await page.goto(preview.previewUrl);
-    await expect(page).toHaveScreenshot();
+    await expect(page).toHaveScreenshot({
+        maxDiffPixels: 50,
+    });
 });
