@@ -2,7 +2,7 @@ import { RemoteFontAwesomeIcon } from "@fern-ui/components";
 import type { MDXComponents } from "mdx/types";
 import dynamic from "next/dynamic";
 import { ComponentProps, PropsWithChildren, ReactElement } from "react";
-import { FernErrorBoundaryProps, FernErrorTag } from "../../components/FernErrorBoundary";
+import { FernErrorBoundary, FernErrorBoundaryProps, FernErrorTag } from "../../components/FernErrorBoundary";
 import { AccordionGroup } from "./accordion";
 import { Audience } from "./audience";
 import { Availability } from "./availability";
@@ -29,6 +29,7 @@ import { Frame } from "./frame";
 import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
 import { Table } from "./html-table";
 import { IFrame } from "./iframe";
+import { Mermaid } from "./mermaid";
 import { ParamField } from "./mintlify";
 import { ReferenceLayoutAside, ReferenceLayoutMain } from "./reference-layout";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
@@ -59,6 +60,7 @@ const FERN_COMPONENTS = {
     Frame,
     Icon: RemoteFontAwesomeIcon,
     LaunchDarkly,
+    Mermaid,
     ParamField,
     Step,
     StepGroup,
@@ -87,8 +89,8 @@ const INTERNAL_COMPONENTS = {
     ReferenceLayoutAside,
 
     // error boundary
-    MdxErrorBoundary: (props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error" | "fallback">>): ReactElement => (
-        <FernErrorTag component="MdxErrorBoundary" {...props} />
+    FernErrorBoundary: (props: PropsWithChildren<Pick<FernErrorBoundaryProps, "error" | "fallback">>): ReactElement => (
+        <FernErrorBoundary {...props} />
     ),
 };
 

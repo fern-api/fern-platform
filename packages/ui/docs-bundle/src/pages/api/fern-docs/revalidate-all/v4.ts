@@ -13,6 +13,7 @@ export const config = {
 const MAX_BATCH_SIZE = 100;
 const DEFAULT_BATCH_SIZE = 10;
 
+// TODO: gate this using a fern token
 const handler: NextApiHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<FernDocs.RevalidateAllV4Response>,

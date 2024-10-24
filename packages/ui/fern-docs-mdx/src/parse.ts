@@ -1,16 +1,14 @@
 import type { Root as HastRoot } from "hast";
 import type { Root as MdastRoot } from "mdast";
-import { fromMarkdown } from "mdast-util-from-markdown";
-import { mdxFromMarkdown, mdxToMarkdown } from "mdast-util-mdx";
 import { toHast } from "mdast-util-to-hast";
-import { toMarkdown } from "mdast-util-to-markdown";
-import { mdxjs } from "micromark-extension-mdxjs";
 import rehypeSlug from "rehype-slug";
-import { UnreachableCaseError } from "ts-essentials";
-import { extractJsx } from "./extract-jsx.js";
 import { customHeadingHandler } from "./handlers/custom-headings.js";
-import { rehypeExtractAsides } from "./plugins/rehype-extract-asides.js";
+import { mdastFromMarkdown } from "./mdast-utils/mdast-from-markdown.js";
+import { extractJsx } from "./mdx-utils/extract-jsx.js";
 import { remarkMarkAndUnravel } from "./plugins/remark-mark-and-unravel.js";
+import { remarkSanitizeAcorn } from "./plugins/remark-sanitize-acorn.js";
+import { sanitizeBreaks } from "./sanitize/sanitize-breaks.js";
+import { sanitizeMdxExpression } from "./sanitize/sanitize-mdx-expression.js";
 
 const MDX_NODE_TYPES = [
     "mdxFlowExpression",
@@ -20,23 +18,10 @@ const MDX_NODE_TYPES = [
     "mdxjsEsm",
 ] as const;
 
-export function markdownToMdast(content: string, type: "mdx" | "md" = "mdx"): MdastRoot {
-    if (type === "md") {
-        return fromMarkdown(content);
-    } else if (type === "mdx") {
-        return fromMarkdown(content, {
-            extensions: [mdxjs()],
-            mdastExtensions: [mdxFromMarkdown()],
-        });
-    } else {
-        throw new UnreachableCaseError(type);
-    }
-}
-
-export function mdastToMarkdown(mdast: MdastRoot): string {
-    return toMarkdown(mdast, {
-        extensions: [mdxToMarkdown()],
-    });
+interface ToTreeOptions {
+    format?: "mdx" | "md";
+    allowedIdentifiers?: string[];
+    sanitize?: boolean;
 }
 
 /**
@@ -45,18 +30,25 @@ export function mdastToMarkdown(mdast: MdastRoot): string {
  */
 export function toTree(
     content: string,
-    type: "mdx" | "md" = "mdx",
+    { format = "mdx", allowedIdentifiers = [], sanitize = true }: ToTreeOptions = {},
 ): {
     mdast: MdastRoot;
     hast: HastRoot;
     jsxElements: string[];
     esmElements: string[];
 } {
-    const mdast = markdownToMdast(content, type);
+    content = sanitize ? sanitizeMdxExpression(sanitizeBreaks(content)) : content;
+
+    const mdast = mdastFromMarkdown(content, format);
 
     // this is forked from mdxjs, but we need to run it before we convert to hast
     // so that we can correctly identify explicit JSX nodes
     remarkMarkAndUnravel()(mdast);
+
+    if (sanitize) {
+        // sanitize the acorn expressions
+        remarkSanitizeAcorn({ allowedIdentifiers })(mdast);
+    }
 
     const hast = toHast(mdast, {
         handlers: {
@@ -68,9 +60,6 @@ export function toTree(
 
     // add ids to headings
     rehypeSlug()(hast);
-
-    // extract asides and insert them into the root hast tree
-    rehypeExtractAsides()(hast);
 
     return {
         mdast,

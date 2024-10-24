@@ -13,6 +13,7 @@ env:
   VERCEL_ORG_ID: team_6FKOM5nw037hv8g2mTk3gaH7
   VERCEL_PROJECT_ID: prj_QX3venU6jwRUmdt8ArfL8AU5r1d4
   ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 
 jobs:
   run:

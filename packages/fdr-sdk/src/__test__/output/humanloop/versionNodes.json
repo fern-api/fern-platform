@@ -3610,6 +3610,7 @@
                       },
                       {
                         "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                        "canonicalSlug": "docs/v5/api-reference/evaluations/list",
                         "endpointId": "endpoint_evaluations.list",
                         "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluations.list",
                         "isResponseStream": false,
@@ -3630,6 +3631,7 @@
                     "children": [
                       {
                         "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                        "canonicalSlug": "docs/v5/api-reference/evaluators/list",
                         "endpointId": "endpoint_evaluators.list",
                         "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_evaluators.list",
                         "isResponseStream": false,
@@ -3754,6 +3756,7 @@
                       },
                       {
                         "apiDefinitionId": "8099ff24-8ade-48d5-a54a-8d2d1831d806",
+                        "canonicalSlug": "docs/v5/api-reference/logs/get",
                         "endpointId": "endpoint_logs.get",
                         "id": "8099ff24-8ade-48d5-a54a-8d2d1831d806:endpoint_logs.get",
                         "isResponseStream": false,

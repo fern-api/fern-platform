@@ -1,5 +1,5 @@
 import { VFileMessage } from "vfile-message";
-import { markdownToMdast } from "../parse.js";
+import { mdastFromMarkdown } from "../mdast-utils/mdast-from-markdown.js";
 import { getStart, isPoint } from "../position.js";
 
 /**
@@ -23,7 +23,7 @@ export function sanitizeMdxExpression(content: string): string {
         }
 
         try {
-            markdownToMdast(content, "mdx");
+            mdastFromMarkdown(content, "mdx");
             break;
         } catch (e) {
             if (e instanceof VFileMessage) {
@@ -34,6 +34,11 @@ export function sanitizeMdxExpression(content: string): string {
                 // - jsx:   https://github.com/micromark/micromark-extension-mdx-jsx?tab=readme-ov-file#errors
 
                 if (e.ruleId === "unexpected-eof" || e.ruleId === "unexpected-character" || e.ruleId === "acorn") {
+                    if (e.line) {
+                        // eslint-disable-next-line no-console
+                        console.debug(content.split("\n")[e.line - 1]);
+                    }
+
                     const [newContent, handled] = handleUnexpectedEOF(content, e);
                     if (handled) {
                         content = newContent;
@@ -72,6 +77,11 @@ export function sanitizeMdxExpression(content: string): string {
                 throw e;
             }
         }
+    }
+
+    if (errors.length > 0) {
+        // eslint-disable-next-line no-console
+        console.debug("Sanitized errors:", errors);
     }
 
     return content;
