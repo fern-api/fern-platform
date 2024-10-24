@@ -1,9 +1,10 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { FernUser } from "@fern-ui/fern-docs-auth";
 import type { DocsPage } from "@fern-ui/ui";
 import type { GetServerSidePropsResult } from "next";
 import type { ComponentProps } from "react";
 import { LoadDocsPerformanceTracker } from "./LoadDocsPerformanceTracker";
-import type { AuthProps } from "./authProps";
+import type { AuthState } from "./auth/getAuthState";
 import { loadWithUrl } from "./loadWithUrl";
 import { withInitialProps } from "./withInitialProps";
 
@@ -17,8 +18,8 @@ export interface User {
 export async function getDocsPageProps(
     domain: string | undefined,
     host: string,
-    slug: string[],
-    auth?: AuthProps,
+    slug: FernNavigation.Slug,
+    auth?: AuthState,
 ): Promise<SSGDocsPageProps> {
     if (domain == null || Array.isArray(domain)) {
         return { notFound: true };
@@ -29,7 +30,7 @@ export async function getDocsPageProps(
     /**
      * Load the docs for the given URL.
      */
-    const docs = await performance.trackLoadDocsPromise(loadWithUrl(domain, auth));
+    const docs = await performance.trackLoadDocsPromise(loadWithUrl(domain));
 
     /**
      * Convert the docs into initial props for the page.

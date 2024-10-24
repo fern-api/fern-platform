@@ -10,7 +10,7 @@ imports:
 
 service:
   base-path: /registry/docs
-  auth: false
+  auth: true
   audiences:
     - read
   endpoints:

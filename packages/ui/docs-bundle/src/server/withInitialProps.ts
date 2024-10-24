@@ -23,7 +23,7 @@ import { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
 import urlJoin from "url-join";
 import { DocsLoader } from "./DocsLoader";
-import type { AuthProps } from "./authProps";
+import type { AuthState } from "./auth/getAuthState";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";
@@ -32,7 +32,7 @@ import { withVersionSwitcherInfo } from "./withVersionSwitcherInfo";
 
 interface WithInitialProps {
     docs: LoadWithUrlResponse;
-    slug: string[];
+    slug: FernNavigation.Slug;
     /**
      * Docs domain
      */
@@ -41,25 +41,23 @@ interface WithInitialProps {
      * Hostname of this request (i.e. localhost, or preview URL, otherwise the docs domain in production)
      */
     host: string;
-    auth?: AuthProps;
+    auth?: AuthState;
 }
 
 export async function withInitialProps({
     docs: docsResponse,
-    slug: slugArray,
+    slug,
     domain,
     host,
     auth,
 }: WithInitialProps): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
     if (!docsResponse.ok) {
-        return handleLoadDocsError(domain, slugArray, docsResponse.error);
+        return handleLoadDocsError(domain, slug, docsResponse.error);
     }
 
     const docs = docsResponse.body;
     const docsDefinition = docs.definition;
     const docsConfig = docsDefinition.config;
-
-    const slug = FernNavigation.slugjoin(...slugArray);
 
     const redirect = getRedirectForPath(urlJoin("/", slug), docs.baseUrl, docsConfig.redirects);
 
@@ -302,7 +300,7 @@ export async function withInitialProps({
             await getSeoDisabled(domain),
             isTrailingSlashEnabled(),
         ),
-        user: auth?.user,
+        user: auth?.authed ? auth.user : undefined,
         fallback: {},
         // eslint-disable-next-line deprecation/deprecation
         analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
