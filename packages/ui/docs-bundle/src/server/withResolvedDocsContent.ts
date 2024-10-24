@@ -49,8 +49,9 @@ export async function withResolvedDocsContent({
 
         breadcrumb: found.breadcrumb,
 
-        prev: found.prev,
-        next: found.next,
+        // strip away authed neighbors unless they are explicitly discoverable
+        prev: featureFlags.isAuthenticatedPagesDiscoverable ? found.prev : found.prev?.authed ? undefined : found.prev,
+        next: featureFlags.isAuthenticatedPagesDiscoverable ? found.next : found.next?.authed ? undefined : found.next,
 
         apis: definition.apis,
         pages: definition.pages,
