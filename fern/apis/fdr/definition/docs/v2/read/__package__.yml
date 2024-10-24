@@ -101,6 +101,7 @@ types:
 
   LoadDocsForUrlResponse:
     properties:
+      orgId: rootCommons.OrgId
       baseUrl: BaseUrl
       definition: v1DocsRead.DocsDefinition
       lightModeEnabled: boolean
