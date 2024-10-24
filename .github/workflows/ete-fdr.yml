@@ -48,4 +48,4 @@ jobs:
           docker-compose --version
 
       - name: Run ete test
-        run: pnpm --filter=@fern-platform/fdr test:ete
+        run: pnpm --filter=@fern-platform/fdr test:ete 999999
