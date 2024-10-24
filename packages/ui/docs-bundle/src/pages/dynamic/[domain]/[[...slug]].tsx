@@ -1,5 +1,5 @@
 import { getDynamicDocsPageProps } from "@/server/getDynamicDocsPageProps";
-import { getHostNodeStatic } from "@/server/xfernhost/node";
+import { getHostNode } from "@/server/xfernhost/node";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { DocsPage } from "@fern-ui/ui";
 import { GetServerSideProps } from "next";
@@ -12,7 +12,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, query, 
     }
 
     const domain = params.domain as string;
-    const host = getHostNodeStatic() ?? domain;
+    const host = getHostNode(req) ?? domain;
     const slug = FernNavigation.slugjoin(params.slug);
 
     return getDynamicDocsPageProps(domain, host, slug, req.cookies);

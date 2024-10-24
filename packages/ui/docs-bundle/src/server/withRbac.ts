@@ -10,6 +10,7 @@ import {
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import type { AuthEdgeConfigBasicTokenVerification } from "@fern-ui/fern-docs-auth";
 import { EVERYONE_ROLE, matchPath } from "@fern-ui/fern-docs-utils";
+import { addLeadingSlash } from "./addLeadingSlash";
 
 interface AuthRulesPathName {
     /**
@@ -61,7 +62,7 @@ export function withBasicTokenAnonymousCheck(
         }
 
         if (isPage(node)) {
-            return withBasicTokenAnonymous(auth, `/${node.slug}`);
+            return withBasicTokenAnonymous(auth, addLeadingSlash(node.slug));
         }
 
         return false;
@@ -101,7 +102,7 @@ export function pruneWithBasicTokenAuthed(auth: AuthRulesPathName, node: RootNod
         // apply rbac
         .keep(rbacViewPredicate(roles, true))
         // hide nodes that are not authed
-        .hide((n) => node.hidden || auth.anonymous?.find((path) => matchPath(path, `/${n.slug}`)) != null)
+        .hide((n) => node.hidden || auth.anonymous?.find((path) => matchPath(path, addLeadingSlash(n.slug))) != null)
         // mark all nodes as unauthed since we are currently authenticated
         .authed(() => false)
         .get();

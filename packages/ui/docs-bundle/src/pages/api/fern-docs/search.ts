@@ -18,13 +18,13 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Se
         return NextResponse.json({ isAvailable: false }, { status: authState.authed ? 403 : 401 });
     }
 
-    const docs = await loadWithUrl(authState.host);
+    const docs = await loadWithUrl(authState.domain);
 
     if (!docs.ok) {
         return NextResponse.json({ isAvailable: false }, { status: 503 });
     }
 
-    const inkeepSettings = await getInkeepSettings(authState.host);
+    const inkeepSettings = await getInkeepSettings(authState.domain);
     const searchInfo = docs.body.definition.search;
     const config = await getSearchConfig(provideRegistryService(), searchInfo, inkeepSettings);
     return NextResponse.json(config, { status: config.isAvailable ? 200 : 503 });

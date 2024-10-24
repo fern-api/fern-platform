@@ -11,7 +11,7 @@ export function useOAuthEndpointContext(
     /**
      * The assumption here is that the referenced endpoint, which should represent an OAuth getToken endpoint, exists within the playground API groups.
      * The playground API groups is derived from the sidebar root node, which itself is a truncated version of the full navigation tree.
-     * If the referenced endpoint is filtered away for some reason, i.e. using audiences, then the endpoint context will not be created.
+     * If the referenced endpoint is filtered away for some reason, i.e. using RBAC, then the endpoint context will not be created.
      */
     const endpointNodeAtom = useMemoOne(
         () =>

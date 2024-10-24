@@ -182,7 +182,8 @@ export class NodeCollector {
         return Array.from(
             new Set(
                 [...this.slugToNode.values()]
-                    .filter(({ node }) => FernNavigation.isPage(node) && !node.hidden)
+                    .filter(({ node }) => FernNavigation.isPage(node))
+                    .filter(({ node }) => !node.hidden && !node.authed)
                     .filter(({ node }) => (FernNavigation.hasMarkdown(node) ? !node.noindex : true))
                     .map(({ node }) => node.canonicalSlug ?? node.slug),
             ),

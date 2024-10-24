@@ -7,8 +7,9 @@ import { ApiDefinitionLoader, type MarkdownLoader } from "@fern-ui/fern-docs-ser
 import type { DocsContent } from "./DocsContent";
 
 interface ResolveMarkdownPageOptions {
+    version: FernNavigation.VersionNode | FernNavigation.RootNode;
     node: FernNavigation.NavigationNodeWithMarkdown;
-    found: FernNavigation.utils.Node.Found;
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     apiLoaders: Record<FernNavigation.ApiDefinitionId, ApiDefinitionLoader>;
     neighbors: DocsContent.Neighbors;
     markdownLoader: MarkdownLoader;
@@ -25,14 +26,15 @@ function shouldFetchApiRef(markdown: FernDocs.MarkdownText): boolean {
 
 export async function resolveMarkdownPage({
     node,
-    found,
+    version,
+    breadcrumb,
     apiLoaders,
     neighbors,
     markdownLoader,
 }: ResolveMarkdownPageOptions): Promise<DocsContent.MarkdownPage | undefined> {
     const markdownPageWithoutApiRefs = await resolveMarkdownPageWithoutApiRefs({
         node,
-        breadcrumb: found.breadcrumb,
+        breadcrumb,
         neighbors,
         markdownLoader,
     });
@@ -45,7 +47,7 @@ export async function resolveMarkdownPage({
 
     const apiDefinitionIds = new Set<FernNavigation.ApiDefinitionId>();
     if (shouldFetchApiRef(markdownPageWithoutApiRefs.content)) {
-        FernNavigation.utils.collectApiReferences(found.currentVersion ?? found.root).forEach((apiRef) => {
+        FernNavigation.utils.collectApiReferences(version).forEach((apiRef) => {
             apiDefinitionIds.add(apiRef.apiDefinitionId);
         });
     }

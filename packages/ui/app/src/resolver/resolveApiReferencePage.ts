@@ -18,7 +18,16 @@ export async function resolveApiReferencePage({
     apiDefinitionLoader,
     markdownLoader,
 }: ResolveApiReferencePageOpts): Promise<DocsContent.ApiReferencePage | undefined> {
-    const apiDefinition = await apiDefinitionLoader.load();
+    const loader = apiDefinitionLoader.clone();
+
+    // prune the api definition loader to include only the nodes that are visible to the current user.
+    FernNavigation.traverseDF(apiReferenceNode, (node) => {
+        if (FernNavigation.isApiLeaf(node)) {
+            loader.withPrune(node);
+        }
+    });
+
+    const apiDefinition = await loader.load();
 
     if (!apiDefinition) {
         // TODO: sentry

@@ -21,14 +21,14 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ApiDe
         return res.status(authState.authed ? 403 : 401).end();
     }
 
-    const flags = await getFeatureFlags(authState.host);
+    const flags = await getFeatureFlags(authState.domain);
 
     // TODO: pass in other tsx/mdx files to serializeMdx options
     const engine = flags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
     const serializeMdx = await getMdxBundler(engine);
 
     // TODO: authenticate the request in FDR
-    const apiDefinition = await ApiDefinitionLoader.create(authState.host, ApiDefinition.ApiDefinitionId(api))
+    const apiDefinition = await ApiDefinitionLoader.create(authState.domain, ApiDefinition.ApiDefinitionId(api))
         .withFlags(flags)
         .withMdxBundler(serializeMdx, engine)
         .withPrune({ type: "webhook", webhookId: ApiDefinition.WebhookId(webhook) })

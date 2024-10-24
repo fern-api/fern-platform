@@ -1,6 +1,6 @@
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextApiRequest } from "next";
-import { getDocsDomainNode } from "../xfernhost/node";
+import { getDocsDomainNode, getHostNode } from "../xfernhost/node";
 import { AuthState, getAuthState } from "./getAuthState";
 
 /**
@@ -8,7 +8,8 @@ import { AuthState, getAuthState } from "./getAuthState";
  * @param pathname - the pathname to check the auth config against.
  */
 export async function getAuthStateNode(request: NextApiRequest, pathname?: string): Promise<AuthState> {
-    const xFernHost = getDocsDomainNode(request);
-    const fernToken = request.cookies[COOKIE_FERN_TOKEN];
-    return getAuthState(xFernHost, fernToken, pathname);
+    const domain = getDocsDomainNode(request);
+    const host = getHostNode(request) ?? domain;
+    const fern_token = request.cookies[COOKIE_FERN_TOKEN];
+    return getAuthState(domain, host, fern_token, pathname);
 }
