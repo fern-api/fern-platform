@@ -1,4 +1,4 @@
-import { getAuthStateEdge } from "@/server/auth/getAuthState";
+import { getAuthStateEdge } from "@/server/auth/getAuthStateEdge";
 import { loadWithUrl } from "@/server/loadWithUrl";
 import { getInkeepSettings } from "@fern-ui/fern-docs-edge-config";
 import { SearchConfig, getSearchConfig } from "@fern-ui/search-utils";
@@ -12,19 +12,19 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Se
         return NextResponse.json({ isAvailable: false }, { status: 405 });
     }
 
-    const authState = await getAuthStateEdge(req);
+    const authState = await getAuthStateEdge(req, req.nextUrl.pathname);
 
-    if (!authState.isLoggedIn && authState.status >= 400) {
-        return NextResponse.json({ isAvailable: false }, { status: authState.status });
+    if (!authState.ok) {
+        return NextResponse.json({ isAvailable: false }, { status: authState.authed ? 403 : 401 });
     }
 
-    const docs = await loadWithUrl(authState.xFernHost);
+    const docs = await loadWithUrl(authState.host);
 
     if (!docs.ok) {
         return NextResponse.json({ isAvailable: false }, { status: 503 });
     }
 
-    const inkeepSettings = await getInkeepSettings(authState.xFernHost);
+    const inkeepSettings = await getInkeepSettings(authState.host);
     const searchInfo = docs.body.definition.search;
     const config = await getSearchConfig(provideRegistryService(), searchInfo, inkeepSettings);
     return NextResponse.json(config, { status: config.isAvailable ? 200 : 503 });
