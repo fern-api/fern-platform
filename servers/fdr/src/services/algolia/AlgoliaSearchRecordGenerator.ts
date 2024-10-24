@@ -19,6 +19,7 @@ import { compact } from "../../util/object";
 import { NavigationContext } from "./NavigationContext";
 import { ReferencedTypes, getAllReferencedTypes } from "./getAllReferencedTypes";
 import type { AlgoliaSearchRecord, IndexSegment } from "./types";
+import { Frontmatter } from "@fern-api/fdr-sdk/src/docs";
 
 interface AlgoliaSearchRecordGeneratorConfig {
     docsDefinition: DocsV1Db.DocsDefinitionDb;
@@ -1008,10 +1009,6 @@ function getSubpackagesMap({
             return [id, subpackage];
         }),
     );
-}
-
-interface Frontmatter {
-    title?: string; // overrides sidebar title
 }
 
 export function getFrontmatter(content: string): {

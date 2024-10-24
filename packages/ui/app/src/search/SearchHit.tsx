@@ -2,9 +2,16 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
 import cn from "clsx";
+import { useAtomValue } from "jotai";
 import Link from "next/link";
 import { ReactElement, useMemo } from "react";
-import { useBasePath, useCloseMobileSidebar, useCloseSearchDialog } from "../atoms";
+import {
+    CURRENT_VERSION_ATOM,
+    VERSIONS_ATOM,
+    useBasePath,
+    useCloseMobileSidebar,
+    useCloseSearchDialog,
+} from "../atoms";
 import { useHref } from "../hooks/useHref";
 import { EndpointRecord } from "./content/EndpointRecord";
 import { EndpointRecordV2 } from "./content/EndpointRecordV2";
@@ -37,8 +44,10 @@ export const SearchHit: React.FC<SearchHit.Props> = ({
     const basePath = useBasePath();
     const closeMobileSidebar = useCloseMobileSidebar();
     const closeSearchDialog = useCloseSearchDialog();
+    const defaultVersion = useAtomValue(VERSIONS_ATOM)?.[0]?.slug;
+    const versionSlug = useAtomValue(CURRENT_VERSION_ATOM)?.slug;
 
-    const slug = FernNavigation.Slug(getSlugForSearchRecord(hit, basePath));
+    const slug = FernNavigation.Slug(getSlugForSearchRecord(hit, basePath, versionSlug, defaultVersion));
 
     const content = useMemo(() => {
         return visitDiscriminatedUnion(hit)._visit<ReactElement | null>({

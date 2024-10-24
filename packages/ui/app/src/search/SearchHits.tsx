@@ -3,14 +3,23 @@ import { FernButton, FernScrollArea } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
 import { Minus, Xmark } from "iconoir-react";
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
-import { COHERE_ASK_AI, COHERE_INITIAL_MESSAGE, useBasePath, useCloseSearchDialog, useFeatureFlags } from "../atoms";
+import {
+    COHERE_ASK_AI,
+    COHERE_INITIAL_MESSAGE,
+    CURRENT_VERSION_ATOM,
+    VERSIONS_ATOM,
+    useBasePath,
+    useCloseSearchDialog,
+    useFeatureFlags,
+} from "../atoms";
 import { Separator } from "../components/Separator";
 import { useToHref } from "../hooks/useHref";
 import { deduplicateAlgoliaHits } from "../util/deduplicateAlgoliaHits";
+import { filterAlgoliaByVersion } from "../util/filterAlgoliaByVersion";
 import { SearchHit } from "./SearchHit";
 import { AskCohereHit } from "./cohere/AskCohereHit";
 
@@ -109,10 +118,12 @@ export const SearchHits: React.FC = () => {
     const [orderedHits, setOrderedHits] = useState<SearchRecord[]>([]);
     const [expandEndpoints, setExpandEndpoints] = useState(false);
     const [expandPages, setExpandPages] = useState(false);
+    const version = useAtomValue(CURRENT_VERSION_ATOM)?.slug;
+    const defaultVersion = useAtomValue(VERSIONS_ATOM)?.[0]?.slug;
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
 
-    const hits = useMemo(() => deduplicateAlgoliaHits(items), [items]);
+    const hits = useMemo(() => filterAlgoliaByVersion(deduplicateAlgoliaHits(items), version), [items, version]);
 
     useEffect(() => {
         if (typeof document === "undefined") {
@@ -216,7 +227,9 @@ export const SearchHits: React.FC = () => {
 
             return;
         }
-        const slug = FernNavigation.Slug(getSlugForSearchRecord(hoveredSearchHit.record, basePath));
+        const slug = FernNavigation.Slug(
+            getSlugForSearchRecord(hoveredSearchHit.record, basePath, version, defaultVersion),
+        );
         void router.push(toHref(slug), undefined, {
             // TODO: shallow=true if currently in long scrolling api reference and the hit is on the same page
             shallow: false,
@@ -290,10 +303,13 @@ export const SearchHits: React.FC = () => {
 
 export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
     const { isAiChatbotEnabledInPreview } = useFeatureFlags();
-    const { hits } = useInfiniteHits<SearchRecord>();
+    const { items } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
     const [expandEndpoints, setExpandEndpoints] = useState(false);
     const [expandPages, setExpandPages] = useState(false);
+    const version = useAtomValue(CURRENT_VERSION_ATOM)?.slug;
+
+    const hits = useMemo(() => filterAlgoliaByVersion(deduplicateAlgoliaHits(items), version), [items, version]);
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
 
