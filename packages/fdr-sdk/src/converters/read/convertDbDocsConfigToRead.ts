@@ -26,6 +26,7 @@ export function convertDbDocsConfigToRead({ dbShape }: { dbShape: DocsV1Db.DocsD
         defaultLanguage: dbShape.defaultLanguage,
         analyticsConfig: dbShape.analyticsConfig,
         announcement: dbShape.announcement,
+        playground: dbShape.playground,
     };
 }
 

@@ -21,40 +21,24 @@ interface PlaygroundWebSocketProps {
 
 export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): ReactElement => {
     const [formState, setFormState] = usePlaygroundWebsocketFormState(context);
-    const websocketMessageLimit = usePlaygroundSettings(context.node.id)?.["limit-websocket-messages-per-connection"];
 
     const [connectedState, setConnectedState] = useState<"opening" | "opened" | "closed">("closed");
-    const { pushMessage, clearMessages } = useWebsocketMessages(context.node.id);
+    const { messages, pushMessage, clearMessages } = useWebsocketMessages(context.channel.id);
     const [error, setError] = useState<string | null>(null);
-    const [activeSessionMessageCount, setActiveSessionMessageCount] = useState(0);
 
     const socket = useRef<WebSocket | null>(null);
 
     // close the socket when the websocket changes
-    const prevWebsocket = usePrevious(context.node);
+    const prevWebsocket = usePrevious(context.channel);
     useEffect(() => {
-        if (prevWebsocket.id !== context.node.id) {
+        if (prevWebsocket.id !== context.channel.id) {
             socket.current?.close();
             setError(null);
         }
-    }, [context.node.id, prevWebsocket.id]);
+    }, [context.channel.id, prevWebsocket.id]);
 
     // auto-destroy the socket when the component is unmounted
     useEffect(() => () => socket.current?.close(), []);
-
-    // when we get to 20 messages, close the socket
-    useEffect(() => {
-        if (websocketMessageLimit && activeSessionMessageCount >= websocketMessageLimit) {
-            socket.current?.close();
-            setConnectedState("closed");
-            pushMessage({
-                type: "end",
-                data: "END OF SAMPLE SESSION",
-                origin: "endSample",
-                displayName: undefined,
-            });
-        }
-    }, [activeSessionMessageCount, pushMessage, websocketMessageLimit]);
 
     const settings = usePlaygroundSettings();
 
@@ -96,17 +80,13 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
                 if (data.type === "handshake" && data.status === "connected") {
                     setConnectedState("opened");
                     resolve(true);
-                } else if (
-                    data.type === "data" &&
-                    (!websocketMessageLimit || activeSessionMessageCount < websocketMessageLimit)
-                ) {
+                } else if (data.type === "data") {
                     pushMessage({
                         type: "received",
                         data: typeof data.data === "string" ? JSON.parse(data.data) : data.data,
                         origin: "server",
                         displayName: undefined,
                     });
-                    setActiveSessionMessageCount((m) => m + 1);
                 }
             };
 
@@ -117,7 +97,6 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
                 if (ev.code !== 1000) {
                     setError(ev.reason);
                 }
-                setActiveSessionMessageCount(0);
             };
 
             socket.current.onerror = (event) => {
@@ -133,7 +112,6 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
         formState.queryParameters,
         formState.headers,
         pushMessage,
-        activeSessionMessageCount,
     ]);
 
     const handleSendMessage = useCallback(
@@ -202,6 +180,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
                         context={context}
                         formState={formState}
                         setFormState={setFormState}
+                        messages={messages}
                         sendMessage={handleSendMessage}
                         startSesssion={startSession}
                         clearMessages={clearMessages}

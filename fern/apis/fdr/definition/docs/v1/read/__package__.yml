@@ -10,7 +10,7 @@ imports:
 
 service:
   base-path: /registry/docs
-  auth: false
+  auth: true
   audiences:
     - read
   endpoints:
@@ -118,6 +118,9 @@ types:
       # css and js
       css: optional<commons.CssConfig>
       js: optional<commons.JsConfig>
+
+      # playground
+      playground: optional<commons.PlaygroundConfig>
 
       # deprecated
       # backgroundImage:

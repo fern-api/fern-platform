@@ -254,7 +254,6 @@ types:
           A list of environment IDs that are allowed to be used in the playground.
           If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled.
       button: optional<PlaygroundButtonSettings>
-      limit-websocket-messages-per-connection: optional<integer>
 
   PlaygroundButtonSettings:
     properties:

@@ -1,6 +1,7 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
+import { WebSocketMessage } from "../api-reference/web-socket/WebSocketMessages";
 import { PlaygroundWebSocketSessionForm } from "./PlaygroundWebSocketSessionForm";
 import { PlaygroundWebSocketRequestFormState } from "./types";
 
@@ -8,6 +9,7 @@ interface PlaygroundWebSocketContentProps {
     context: WebSocketContext;
     formState: PlaygroundWebSocketRequestFormState;
     setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
+    messages: WebSocketMessage[];
     startSesssion: () => void;
     clearMessages: () => void;
     sendMessage: (message: ApiDefinition.WebSocketMessage, data: unknown) => void;
@@ -19,6 +21,7 @@ export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = (
     context,
     formState,
     setFormState,
+    messages,
     sendMessage,
     startSesssion,
     clearMessages,
@@ -53,6 +56,7 @@ export const PlaygroundWebSocketContent: FC<PlaygroundWebSocketContentProps> = (
                     context={context}
                     formState={formState}
                     scrollAreaHeight={scrollAreaHeight}
+                    messages={messages}
                     setFormState={setFormState}
                     sendMessage={sendMessage}
                     startSession={startSesssion}

@@ -26,6 +26,7 @@ expressApp.post("/v2/registry/docs/load-with-url", async (_, res) => {
         body: JSON.stringify({ url: "fern.docs.buildwithfern.com" }),
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.FERN_TOKEN}`,
         },
     });
 

@@ -117,6 +117,9 @@ types:
       css: optional<commons.CssConfig>
       js: optional<commons.JsConfig>
 
+      # playground
+      playground: optional<commons.PlaygroundConfig>
+
       # deprecated
       backgroundImage: optional<rootCommons.FileId>
       logoV2: optional<commons.ThemedFileId>
