@@ -10,7 +10,8 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./src/index.scss": "./src/index.scss"
+    "./src/": "./src/_.scss",
+    "./src/_.scss": "./src/_.scss"
   },
   "sideEffects": [
     "*.css",
