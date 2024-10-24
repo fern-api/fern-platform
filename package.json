@@ -71,6 +71,7 @@
     "js-yaml": "^4.1.0",
     "jsonc-parser": "~2.2.1",
     "lint-staged": "^13.0.3",
+    "micromatch": "^4.0.8",
     "organize-imports-cli": "^0.10.0",
     "playwright": "^1.47.1",
     "prettier": "^3.3.2",
@@ -101,7 +102,8 @@
   "dependencies": {
     "@radix-ui/colors": "^3.0.0",
     "fern-api": "0.41.16",
-    "get-port": "^7.1.0"
+    "get-port": "^7.1.0",
+    "micromatch": "^4.0.8"
   },
   "packageManager": "pnpm@9.4.0",
   "engines": {
