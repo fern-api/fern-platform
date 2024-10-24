@@ -2,7 +2,7 @@ import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig, FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import urlJoin from "url-join";
-import { withBasicTokenAnonymous } from "../withBasicTokenAnonymous";
+import { withBasicTokenAnonymous } from "../withRbac";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 
 export type AuthPartner = "workos" | "ory" | "webflow" | "custom";

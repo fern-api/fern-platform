@@ -4,7 +4,7 @@ import type { AuthEdgeConfig } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { getAuthState, type AuthState } from "./auth/getAuthState";
 import { loadWithUrl } from "./loadWithUrl";
-import { pruneWithBasicTokenAnonymous, pruneWithBasicTokenAuthed } from "./withBasicTokenAnonymous";
+import { pruneWithBasicTokenAnonymous, pruneWithBasicTokenAuthed } from "./withRbac";
 
 interface DocsLoaderFlags {
     isBatchStreamToggleDisabled: boolean;

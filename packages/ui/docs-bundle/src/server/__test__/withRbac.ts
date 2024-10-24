@@ -1,5 +1,5 @@
-import { NodeId, PageId, Slug, Url } from "@fern-api/fdr-sdk/navigation";
-import { matchRoles, withBasicTokenAnonymous, withBasicTokenAnonymousCheck } from "../withBasicTokenAnonymous";
+import { NodeId, PageId, RoleId, Slug, Url } from "@fern-api/fdr-sdk/navigation";
+import { getViewerFilters, matchRoles, withBasicTokenAnonymous, withBasicTokenAnonymousCheck } from "../withRbac";
 
 describe("withBasicTokenAnonymous", () => {
     it("should deny the request if the allowlist is empty", () => {
@@ -129,5 +129,54 @@ describe("matchRoles", () => {
         expect(matchRoles(["a", "b"], [])).toBe(true);
         expect(matchRoles(["a", "b"], [[]])).toBe(true);
         expect(matchRoles(["a", "b"], [["a"]])).toBe(true);
+    });
+});
+
+describe("getViewerFilters", () => {
+    it("should return an empty array if there are no viewer filters", () => {
+        expect(getViewerFilters()).toEqual([]);
+    });
+
+    it("should return the viewer filters for the given nodes", () => {
+        expect(
+            getViewerFilters(
+                { viewers: [RoleId("a")], orphaned: undefined },
+                { viewers: [], orphaned: undefined },
+                { viewers: [RoleId("b")], orphaned: undefined },
+            ),
+        ).toEqual([["a"], ["b"]]);
+    });
+
+    it("should ignore permissions of parents of the parents of an orphaned node", () => {
+        expect(
+            getViewerFilters(
+                { viewers: [RoleId("a")], orphaned: undefined },
+                { viewers: [RoleId("b")], orphaned: undefined },
+                { viewers: [RoleId("c")], orphaned: true },
+            ),
+        ).toEqual([["c"]]);
+    });
+
+    it("should return the viewer filters for the given nodes, ignoring permissions of parents of the parents of an orphaned node", () => {
+        expect(
+            getViewerFilters(
+                { viewers: [RoleId("a")], orphaned: undefined },
+                { viewers: [RoleId("b")], orphaned: undefined },
+                { viewers: [RoleId("c")], orphaned: true },
+                { viewers: [RoleId("d")], orphaned: undefined },
+            ),
+        ).toEqual([["c"], ["d"]]);
+    });
+
+    it("should pick the last orphaned node's viewers", () => {
+        expect(
+            getViewerFilters(
+                { viewers: [RoleId("a")], orphaned: undefined },
+                { viewers: [RoleId("b")], orphaned: true },
+                { viewers: [RoleId("c")], orphaned: undefined },
+                { viewers: [RoleId("d")], orphaned: undefined },
+                { viewers: [RoleId("e")], orphaned: true },
+            ),
+        ).toEqual([["e"]]);
     });
 });

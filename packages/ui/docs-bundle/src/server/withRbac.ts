@@ -119,22 +119,27 @@ export function pruneWithBasicTokenAuthed(auth: AuthRulesPathName, node: RootNod
     return result;
 }
 
+/**
+ * @param nodes - navigation nodes to get the viewer filters for
+ * @returns the viewer filters for the given nodes
+ * @internal visibleForTesting
+ */
+export function getViewerFilters(...nodes: FernNavigation.WithPermissions[]): string[][] {
+    // ignore permissions of parents of the parents of an orphaned node
+    const lastOrphanedIdx = nodes.findLastIndex((n) => n.orphaned);
+    return (
+        nodes
+            .slice(Math.max(lastOrphanedIdx, 0))
+            // TODO: if we ever support editors, we need to update this
+            .map((n) => n.viewers ?? [])
+            .filter((roles) => roles.length > 0)
+    );
+}
+
 function rbacViewPredicate(
     roles: string[],
     authed: boolean,
 ): (node: NavigationNode, parents: readonly NavigationNodeParent[]) => boolean {
-    function getViewerFilters(...nodes: FernNavigation.NavigationNode[]): string[][] {
-        // ignore permissions of parents of the parents of an orphaned node
-        const lastOrphanedIdx = nodes.findLastIndex((n) => (hasMetadata(n) ? n.orphaned : false));
-        return (
-            nodes
-                .slice(Math.max(lastOrphanedIdx, 0))
-                // TODO: if we ever support editors, we need to update this
-                .map((n) => (hasMetadata(n) ? n.viewers ?? [] : []))
-                .filter((roles) => roles.length > 0)
-        );
-    }
-
     return (node, parents) => {
         if (!hasMetadata(node)) {
             return true;
@@ -144,6 +149,7 @@ function rbacViewPredicate(
             return false;
         }
 
-        return matchRoles(roles, getViewerFilters(...parents, node));
+        const nodes = [...parents, node];
+        return matchRoles(roles, getViewerFilters(...nodes.filter(FernNavigation.hasMetadata)));
     };
 }
