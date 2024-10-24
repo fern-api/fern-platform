@@ -70,14 +70,14 @@ export const FieldRecordV1: React.FC<FieldRecordV1.Props> = ({ hit, isHovered })
                             )}
                     </div>
                 </div>
-                <div
+                {/* <div
                     className={cn("text-sm tracking-wide", {
                         "t-muted": !isHovered,
                         "t-accent-aaa": isHovered,
                     })}
                 >
                     Field
-                </div>
+                </div> */}
             </div>
             <span
                 className={cn("line-clamp-1 text-start text-xs", {

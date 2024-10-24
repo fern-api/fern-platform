@@ -10,6 +10,7 @@ import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
 import { COHERE_ASK_AI, COHERE_INITIAL_MESSAGE, useBasePath, useCloseSearchDialog, useFeatureFlags } from "../atoms";
 import { Separator } from "../components/Separator";
 import { useToHref } from "../hooks/useHref";
+import { deduplicateAlgoliaHits } from "../util/deduplicateAlgoliaHits";
 import { SearchHit } from "./SearchHit";
 import { AskCohereHit } from "./cohere/AskCohereHit";
 
@@ -28,7 +29,7 @@ const ExpandButton: React.FC<{ expanded: boolean; setExpanded: (expanded: boolea
     expanded,
     setExpanded,
 }) => (
-    <div className="justify-end">
+    <div className="flex justify-end pt-2">
         <FernButton
             className="text-left"
             variant="minimal"
@@ -50,10 +51,9 @@ const SearchSection: React.FC<{
     hoveredSearchHitId: string | null;
     setHoveredSearchHitId: (id: string) => void;
 }> = ({ title, hits, expanded, setExpanded, refs, hoveredSearchHitId, setHoveredSearchHitId }) => (
-    <div className="pb-4">
+    <div className="pb-2">
         <div className="flex justify-between items-center">
             <div className="text-normal font-semibold pl-0.5">{title}</div>
-            {hits.length > SEARCH_HITS_PER_SECTION && <ExpandButton expanded={expanded} setExpanded={setExpanded} />}
         </div>
         <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
         {expandHits(expanded, hits).map((hit) => (
@@ -69,6 +69,7 @@ const SearchSection: React.FC<{
                 onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
             />
         ))}
+        {hits.length > SEARCH_HITS_PER_SECTION && <ExpandButton expanded={expanded} setExpanded={setExpanded} />}
     </div>
 );
 
@@ -100,7 +101,7 @@ const MobileSearchSection: React.FC<{
 export const SearchHits: React.FC = () => {
     const { isAiChatbotEnabledInPreview } = useFeatureFlags();
     const basePath = useBasePath();
-    const { hits } = useInfiniteHits<SearchRecord>();
+    const { items } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
     const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(null);
     const router = useRouter();
@@ -110,6 +111,8 @@ export const SearchHits: React.FC = () => {
     const [expandPages, setExpandPages] = useState(false);
 
     const refs = useRef(new Map<string, HTMLAnchorElement>());
+
+    const hits = useMemo(() => deduplicateAlgoliaHits(items), [items]);
 
     useEffect(() => {
         if (typeof document === "undefined") {

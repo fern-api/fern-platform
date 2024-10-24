@@ -9,6 +9,7 @@ import {
     visitDbNavigationTab,
 } from "@fern-api/fdr-sdk";
 import { EndpointPathPart } from "@fern-api/fdr-sdk/src/client/APIV1Read";
+import { Frontmatter } from "@fern-api/fdr-sdk/src/docs";
 import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { kebabCase } from "lodash-es";
 import { v4 as uuid } from "uuid";
@@ -100,8 +101,12 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
         const fdrSlug = FernNavigation.V1.Slug(rawSlug);
 
         // New markdown processing method
-        const { frontmatter } = getFrontmatter(rawMarkdown);
+        const { frontmatter, content }: { frontmatter: Frontmatter; content: string } = getFrontmatter(rawMarkdown);
         const markdownTree = getMarkdownSectionTree(rawMarkdown, title);
+        const description = truncateToBytes(
+            frontmatter.description ?? frontmatter.subtitle ?? markdownTree.content ?? content,
+            9500,
+        );
         const markdownSectionRecords = getMarkdownSections(markdownTree, breadcrumbs, indexSegment.id, fdrSlug).map(
             compact,
         );
@@ -111,7 +116,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                 type: "page-v4",
                 objectID: uuid(),
                 title: frontmatter.title ?? title,
-                description: truncateToBytes(markdownTree.content, 9_500),
+                description,
                 breadcrumbs,
                 slug: fdrSlug,
                 version,
