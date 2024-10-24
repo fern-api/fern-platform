@@ -1,7 +1,7 @@
 import { DocsKVCache } from "@/server/DocsCache";
 import { DocsLoader } from "@/server/DocsLoader";
 import { Revalidator } from "@/server/revalidator";
-import { getDocsDomainNode } from "@/server/xfernhost/node";
+import { getDocsDomainNode, getHostNode } from "@/server/xfernhost/node";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import type { FernDocs } from "@fern-fern/fern-docs-sdk";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
@@ -30,10 +30,11 @@ const handler: NextApiHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<FernDocs.RevalidateAllV3Response>,
 ): Promise<unknown> => {
-    const xFernHost = getDocsDomainNode(req, true);
+    const domain = getDocsDomainNode(req, true);
+    const host = getHostNode(req) ?? domain;
 
     // never proivde a token here because revalidation should only be done on public routes (for now)
-    const loader = DocsLoader.for(xFernHost, undefined);
+    const loader = DocsLoader.for(domain, host, undefined);
 
     const root = await loader.root();
 
@@ -46,11 +47,11 @@ const handler: NextApiHandler = async (
             .json({ successfulRevalidations: [], failedRevalidations: [] });
     }
 
-    const revalidate = new Revalidator(res, xFernHost);
+    const revalidate = new Revalidator(res, domain);
     const slugs = NodeCollector.collect(root).pageSlugs;
 
     try {
-        const cache = DocsKVCache.getInstance(xFernHost);
+        const cache = DocsKVCache.getInstance(domain);
         const previouslyVisitedSlugs = (await cache.getVisitedSlugs()).filter((slug) => !slugs.includes(slug));
 
         const results: FernDocs.RevalidationResult[] = [];
