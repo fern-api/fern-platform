@@ -37,6 +37,7 @@ export const WRITE_DOCS_REGISTER_DEFINITION: DocsV1Write.DocsDefinition = {
         integrations: undefined,
         css: undefined,
         js: undefined,
+        playground: undefined,
         backgroundImage: undefined,
         logoV2: undefined,
         logo: undefined,

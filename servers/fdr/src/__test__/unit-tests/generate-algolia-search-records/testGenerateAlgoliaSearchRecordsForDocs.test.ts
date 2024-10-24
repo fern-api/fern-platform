@@ -173,6 +173,7 @@ describe("generateIndexSegmentsForDefinition", () => {
                     integrations: undefined,
                     css: undefined,
                     js: undefined,
+                    playground: undefined,
                     logo: undefined,
                     logoV2: undefined,
                     colors: undefined,

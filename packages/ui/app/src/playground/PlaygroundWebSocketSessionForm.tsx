@@ -4,11 +4,10 @@ import titleCase from "@fern-api/ui-core-utils/titleCase";
 import { FernButton, FernCard, FernScrollArea } from "@fern-ui/components";
 import cn from "clsx";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
-import { WebSocketMessages } from "../api-reference/web-socket/WebSocketMessages";
+import { WebSocketMessage, WebSocketMessages } from "../api-reference/web-socket/WebSocketMessages";
 import { PlaygroundWebSocketHandshakeForm } from "./PlaygroundWebSocketHandshakeForm";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
 import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
-import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
 import { PlaygroundWebSocketRequestFormState } from "./types";
 
 interface PlaygroundWebSocketSessionFormProps {
@@ -18,6 +17,7 @@ interface PlaygroundWebSocketSessionFormProps {
     // response: Loadable<ResponsePayload>;
     // sendRequest: () => void;
     scrollAreaHeight: number;
+    messages: WebSocketMessage[];
     sendMessage: (message: ApiDefinition.WebSocketMessage, data: unknown) => void;
     clearMessages: () => void;
     startSession: () => void;
@@ -30,13 +30,12 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
     formState,
     setFormState,
     scrollAreaHeight,
+    messages,
     sendMessage,
     clearMessages,
     connected,
     error,
 }) => {
-    const { messages } = useWebsocketMessages(context.node.id);
-
     const setMessage = useCallback(
         (message: ApiDefinition.WebSocketMessage, data: unknown) => {
             setFormState((old) => ({
@@ -131,7 +130,8 @@ export const PlaygroundWebSocketSessionForm: FC<PlaygroundWebSocketSessionFormPr
                         </div>
                     </div>
                     <FernScrollArea rootClassName="flex-1 rounded-b-[inherit]">
-                        <WebSocketMessages messages={messages} />
+                        {/* TODO(rohin): Implement Pagination here */}
+                        <WebSocketMessages messages={messages.slice(-25)} />
                     </FernScrollArea>
                 </FernCard>
             </div>

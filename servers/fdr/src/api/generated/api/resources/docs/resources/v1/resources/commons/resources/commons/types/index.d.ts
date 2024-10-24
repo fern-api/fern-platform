@@ -45,6 +45,7 @@ export * from "./CustomFontConfig";
 export * from "./CustomFontConfigVariant";
 export * from "./FontStyle";
 export * from "./FontDisplay";
+export * from "./PlaygroundConfig";
 export * from "./ThemedFileId";
 export * from "./ColorsConfig";
 export * from "./ColorsConfigV2";
