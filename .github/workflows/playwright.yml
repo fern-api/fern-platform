@@ -42,7 +42,7 @@ jobs:
         run: pnpm playwright:build
 
       - name: Run Playwright tests
-        run: pnpm exec playwright test playwright --workers 6 --reporter json
+        run: pnpm exec playwright test playwright --workers 6 --reporter json,html
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: results.json
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
