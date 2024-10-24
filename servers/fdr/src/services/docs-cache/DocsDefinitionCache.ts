@@ -49,7 +49,7 @@ export interface DocsDefinitionCache {
  * The semantic version that the current version of FDR expects.
  * Please bump this version if you would like to "clear" the cache.
  */
-const SEMANTIC_VERSION = "v2";
+const SEMANTIC_VERSION = "v3";
 
 /**
  * All modifications to this type must be forward compatible.
@@ -284,6 +284,7 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 updatedTime: dbDocs.updatedTime,
                 dbFiles: dbDocs.docsDefinition.files,
                 response: {
+                    orgId: dbDocs.orgId,
                     baseUrl: {
                         domain: dbDocs.domain,
                         basePath: dbDocs.path.trim() === "" ? undefined : dbDocs.path.trim(),
