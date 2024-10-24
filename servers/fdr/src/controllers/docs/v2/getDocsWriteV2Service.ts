@@ -269,8 +269,10 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 orgId: "fern",
             });
 
+            const parsedUrl = ParsedBaseUrl.parse(req.body.domain);
+
             await app.dao.docsV2().transferDomainOwner({
-                domain: req.body.domain,
+                domain: parsedUrl.getFullUrl(),
                 toOrgId: req.body.toOrgId,
             });
 
