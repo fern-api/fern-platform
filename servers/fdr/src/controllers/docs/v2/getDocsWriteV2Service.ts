@@ -262,6 +262,22 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
 
             res.send();
         },
+        transferOwnershipOfDomain: async (req, res) => {
+            // only fern users can transfer domain ownership
+            await app.services.auth.checkUserBelongsToOrg({
+                authHeader: req.headers.authorization,
+                orgId: "fern",
+            });
+
+            const parsedUrl = ParsedBaseUrl.parse(req.body.domain);
+
+            await app.dao.docsV2().transferDomainOwner({
+                domain: parsedUrl.getFullUrl(),
+                toOrgId: req.body.toOrgId,
+            });
+
+            return res.send();
+        },
     });
 }
 

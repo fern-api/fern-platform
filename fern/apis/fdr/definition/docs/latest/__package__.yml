@@ -22,6 +22,7 @@ types:
       code: string
       frontmatter: frontmatter.Frontmatter
       scope: map<string, unknown>
+      jsxRefs: optional<list<string>>
 
   MarkdownText:
     discriminated: false

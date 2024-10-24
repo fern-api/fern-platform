@@ -1,5 +1,12 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import { customHeadingHandler } from "@fern-ui/fern-docs-mdx";
+import { customHeadingHandler, sanitizeBreaks, sanitizeMdxExpression, toTree } from "@fern-ui/fern-docs-mdx";
+import {
+    rehypeAcornErrorBoundary,
+    rehypeMdxClassStyle,
+    rehypeSqueezeParagraphs,
+    remarkSanitizeAcorn,
+    remarkSqueezeParagraphs,
+} from "@fern-ui/fern-docs-mdx/plugins";
 import type { Options } from "@mdx-js/esbuild";
 import { mapKeys } from "es-toolkit/object";
 import { bundleMDX } from "mdx-bundler";
@@ -11,13 +18,10 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import { PluggableList } from "unified";
+import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
-import { mergeMatter, rehypeFernLayout } from "../plugins/rehypeLayout";
-import { rehypeSqueezeParagraphs } from "../plugins/rehypeSqueezeParagraphs";
-import { remarkSqueezeParagraphs } from "../plugins/remarkSqueezeParagraphs";
 import type { FernSerializeMdxOptions } from "../types";
-import { replaceBrokenBrTags } from "./replaceBrokenBrTags";
 
 /**
  * Should only be invoked server-side.
@@ -29,21 +33,20 @@ export async function serializeMdx(
 ): Promise<FernDocs.MarkdownText | undefined>;
 export async function serializeMdx(
     content: string | undefined,
-    { frontmatterDefaults, options = {}, disableMinify, files, filename }: FernSerializeMdxOptions = {},
+    { options = {}, disableMinify, files, filename }: FernSerializeMdxOptions = {},
 ): Promise<FernDocs.MarkdownText | undefined> {
     if (content == null) {
         return undefined;
     }
 
-    content = replaceBrokenBrTags(content);
+    content = sanitizeBreaks(content);
+    content = sanitizeMdxExpression(content);
 
     if (process.platform === "win32") {
         process.env.ESBUILD_BINARY_PATH = path.join(process.cwd(), "node_modules", "esbuild", "esbuild.exe");
     } else {
         process.env.ESBUILD_BINARY_PATH = path.join(process.cwd(), "node_modules", "esbuild", "bin", "esbuild");
     }
-
-    let frontmatter: Partial<FernDocs.Frontmatter> = { ...frontmatterDefaults };
 
     let cwd: string | undefined;
     if (filename != null) {
@@ -65,7 +68,7 @@ export async function serializeMdx(
                 return filename;
             }),
 
-            mdxOptions: (o: Options, matter) => {
+            mdxOptions: (o: Options) => {
                 o.remarkRehypeOptions = {
                     ...o.remarkRehypeOptions,
                     ...options,
@@ -78,6 +81,7 @@ export async function serializeMdx(
 
                 const remarkPlugins: PluggableList = [
                     remarkSqueezeParagraphs,
+                    remarkSanitizeAcorn,
                     remarkGfm,
                     remarkSmartypants,
                     remarkMath,
@@ -92,28 +96,19 @@ export async function serializeMdx(
 
                 const rehypePlugins: PluggableList = [
                     rehypeSqueezeParagraphs,
+                    rehypeMdxClassStyle,
+                    rehypeAcornErrorBoundary,
                     rehypeSlug,
                     rehypeKatex,
                     rehypeFernCode,
                     rehypeFernComponents,
+                    // always extract asides at the end
+                    rehypeExtractAsides,
                 ];
 
                 if (options?.rehypePlugins != null) {
                     rehypePlugins.push(...options.rehypePlugins);
                 }
-
-                if (frontmatterDefaults != null) {
-                    const opts = {
-                        matter: mergeMatter(matter, frontmatterDefaults),
-                    };
-                    rehypePlugins.push([rehypeFernLayout, opts]);
-                    frontmatter = opts.matter;
-                } else {
-                    frontmatter = mergeMatter(matter, frontmatter);
-                }
-
-                // Always sanitize JSX at the end.
-                // rehypePlugins.push([rehypeSanitizeJSX, { showError }]);
 
                 o.rehypePlugins = [...(o.rehypePlugins ?? []), ...rehypePlugins, ...(options?.rehypePlugins ?? [])];
 
@@ -137,12 +132,15 @@ export async function serializeMdx(
             });
         }
 
+        // TODO: this is doing duplicate work; figure out how to combine it with the compiler above.
+        const { jsxElements } = toTree(content, { sanitize: false });
+
         return {
             engine: "mdx-bundler",
             code: bundled.code,
-            // this casting is ok because Partial<FernDocs.Frontmatter> satisfies FernDocs.Frontmatter
-            frontmatter: frontmatter as FernDocs.Frontmatter,
+            frontmatter: bundled.frontmatter,
             scope: {},
+            jsxRefs: jsxElements,
         };
     } catch (e) {
         // eslint-disable-next-line no-console

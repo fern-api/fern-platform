@@ -1,5 +1,5 @@
 import { HeadingMetadata, collectRootHeadings } from "./headings.js";
-import { parseMarkdownToTree } from "./parse.js";
+import { toTree } from "./parse.js";
 
 export interface MarkdownSectionRoot {
     type: "root";
@@ -45,7 +45,7 @@ export type MarkdownSection =
  */
 export function splitMarkdownIntoSections(markdownContent: string): MarkdownSection[] {
     const lines = markdownContent.split("\n");
-    const tree = parseMarkdownToTree(markdownContent);
+    const tree = toTree(markdownContent).mdast;
 
     const headers = [...collectRootHeadings(tree, lines)];
 

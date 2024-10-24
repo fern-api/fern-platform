@@ -1,9 +1,9 @@
 import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import dynamic from "next/dynamic";
 import { type ReactNode } from "react";
 import { UnreachableCaseError } from "ts-essentials";
+import { DocsContent } from "../resolver/DocsContent";
 
 // TODO: implemenet suspense so that dynamic imports do not break the page layout on load
 const ApiSectionMarkdownPage = dynamic(
@@ -37,7 +37,7 @@ interface ApiPackageContentProps {
     node: ApiPackageContentNode;
     apiDefinition: ApiDefinition;
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-    mdxs: Record<FernNavigation.NodeId, FernDocs.MarkdownText>;
+    mdxs: Record<FernNavigation.NodeId, Omit<DocsContent.MarkdownPage, "type" | "apis">>;
     showErrors: boolean;
     last?: boolean;
 }
