@@ -9,12 +9,7 @@ import {
 } from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import type { AuthEdgeConfigBasicTokenVerification } from "@fern-ui/fern-docs-auth";
-import { matchPath } from "@fern-ui/fern-docs-utils";
-
-/**
- * The role that is used to represent everyone (including unauthenticated users)
- */
-const EVERYONE_ROLE = "everyone";
+import { EVERYONE_ROLE, matchPath } from "@fern-ui/fern-docs-utils";
 
 interface AuthRulesPathName {
     /**
