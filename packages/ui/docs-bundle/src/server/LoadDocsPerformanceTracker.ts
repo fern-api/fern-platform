@@ -4,26 +4,16 @@ import { DocsPage } from "@fern-ui/ui";
 import { track } from "@vercel/analytics/server";
 import { GetServerSidePropsResult } from "next/types";
 import { ComponentProps } from "react";
-import { AuthPartner } from "./auth/getAuthState";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 
 export class LoadDocsPerformanceTracker {
-    static init({
-        domain,
-        slug,
-        auth,
-    }: {
-        domain: string;
-        slug: FernNavigation.Slug;
-        auth: AuthPartner | undefined;
-    }): LoadDocsPerformanceTracker {
-        return new LoadDocsPerformanceTracker(domain, slug, auth);
+    static init({ domain, slug }: { domain: string; slug: FernNavigation.Slug }): LoadDocsPerformanceTracker {
+        return new LoadDocsPerformanceTracker(domain, slug);
     }
 
     private constructor(
-        private host: string,
+        private domain: string,
         private slug: FernNavigation.Slug,
-        private auth: AuthPartner | undefined,
     ) {}
 
     private loadDocsDurationMs: number | undefined;
@@ -48,9 +38,8 @@ export class LoadDocsPerformanceTracker {
 
     async track(): Promise<void> {
         return track(TRACK_LOAD_DOCS_PERFORMANCE, {
-            host: this.host,
+            domain: this.domain,
             slug: this.slug,
-            auth: this.auth ?? null,
             loadDocsDurationMs: this.loadDocsDurationMs ?? null,
             initialPropsDurationMs: this.initialPropsDurationMs ?? null,
         });

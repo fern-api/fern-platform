@@ -43,3 +43,7 @@ export function getHostNodeStatic(): string | undefined {
 
     return undefined;
 }
+
+export function getHostNode(req: { url?: string }): string | undefined {
+    return (req.url != null ? new URL(req.url).host : undefined) ?? getHostNodeStatic();
+}

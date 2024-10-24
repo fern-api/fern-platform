@@ -9,6 +9,6 @@ import { AuthState, getAuthState } from "./getAuthState";
  */
 export async function getAuthStateEdge(request: NextRequest, pathname?: string): Promise<AuthState> {
     const xFernHost = getDocsDomainEdge(request);
-    const fernToken = request.cookies.get(COOKIE_FERN_TOKEN)?.value;
-    return getAuthState(xFernHost, fernToken, pathname);
+    const fern_token = request.cookies.get(COOKIE_FERN_TOKEN)?.value;
+    return getAuthState(xFernHost, request.nextUrl.host, fern_token, pathname);
 }
