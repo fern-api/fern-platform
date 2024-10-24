@@ -31,7 +31,7 @@ export class FernNavigationV1ToLatest {
             icon: node.icon,
             hidden: node.hidden,
             authed: node.authed,
-            audience: node.audience,
+            viewers: node.viewers,
         };
 
         return latest;
@@ -101,7 +101,7 @@ export class FernNavigationV1ToLatest {
             authed: node.authed,
             id: FernNavigation.NodeId(node.id),
             pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
-            audience: node.audience,
+            viewers: node.viewers,
         };
         return latest;
     };
@@ -126,7 +126,7 @@ export class FernNavigationV1ToLatest {
             id: FernNavigation.NodeId(node.id),
             pageId: FernNavigation.PageId(node.pageId),
             noindex: node.noindex,
-            audience: node.audience,
+            viewers: node.viewers,
         };
         return latest;
     };
@@ -164,7 +164,7 @@ export class FernNavigationV1ToLatest {
             authed: node.authed,
             id: FernNavigation.NodeId(node.id),
             pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
-            audience: node.audience,
+            viewers: node.viewers,
         };
         return latest;
     };
@@ -265,7 +265,7 @@ export class FernNavigationV1ToLatest {
                 versioned: (value) => this.versioned(value, [...parents, node]),
             }),
             subtitle: node.subtitle,
-            audience: node.audience,
+            viewers: node.viewers,
         };
         return latest;
     };
@@ -320,7 +320,7 @@ export class FernNavigationV1ToLatest {
             authed: node.authed,
             pageId: FernNavigation.PageId(node.pageId),
             noindex: node.noindex,
-            audience: node.audience,
+            viewers: node.viewers,
         };
         return latest;
     };
@@ -352,7 +352,7 @@ export class FernNavigationV1ToLatest {
             collapsed: node.collapsed,
             overviewPageId,
             noindex: node.noindex,
-            audience: node.audience,
+            viewers: node.viewers,
         };
         return latest;
     };
@@ -390,7 +390,7 @@ export class FernNavigationV1ToLatest {
             apiDefinitionId: node.apiDefinitionId,
             availability: this.#availability(node.availability),
             pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
-            audience: node.audience,
+            viewers: node.viewers,
         };
         return latest;
     };
@@ -420,7 +420,7 @@ export class FernNavigationV1ToLatest {
             authed: node.authed,
             overviewPageId,
             noindex: node.noindex,
-            audience: node.audience,
+            viewers: node.viewers,
         };
         return latest;
     };
@@ -440,7 +440,7 @@ export class FernNavigationV1ToLatest {
             hidden: node.hidden,
             authed: node.authed,
             year: node.year,
-            audience: node.audience,
+            viewers: node.viewers,
         };
         return latest;
     };
@@ -460,7 +460,7 @@ export class FernNavigationV1ToLatest {
             hidden: node.hidden,
             authed: node.authed,
             month: node.month,
-            audience: node.audience,
+            viewers: node.viewers,
         };
         return latest;
     };
@@ -486,7 +486,7 @@ export class FernNavigationV1ToLatest {
             date: node.date,
             pageId: FernNavigation.PageId(node.pageId),
             noindex: node.noindex,
-            audience: node.audience,
+            viewers: node.viewers,
         };
         return latest;
     };
@@ -520,7 +520,7 @@ export class FernNavigationV1ToLatest {
             noindex: node.noindex,
             apiDefinitionId: node.apiDefinitionId,
             availability: this.#availability(node.availability),
-            audience: node.audience,
+            viewers: node.viewers,
         };
         return latest;
     };
@@ -549,7 +549,7 @@ export class FernNavigationV1ToLatest {
             method: node.method,
             endpointId: node.endpointId,
             isResponseStream: node.isResponseStream,
-            audience: node.audience,
+            viewers: node.viewers,
         };
         return latest;
     };
@@ -589,7 +589,7 @@ export class FernNavigationV1ToLatest {
             apiDefinitionId: node.apiDefinitionId,
             availability: this.#availability(node.availability),
             webSocketId: node.webSocketId,
-            audience: node.audience,
+            viewers: node.viewers,
         };
         return latest;
     };
@@ -616,7 +616,7 @@ export class FernNavigationV1ToLatest {
             availability: this.#availability(node.availability),
             method: node.method,
             webhookId: node.webhookId,
-            audience: node.audience,
+            viewers: node.viewers,
         };
         return latest;
     };
@@ -673,7 +673,7 @@ export class FernNavigationV1ToLatest {
 
     #canonicalSlugs = new Map<string, FernNavigation.Slug>();
 
-    // TODO: canonical url logic should account for auth rules + audiences, since we should always prefer the publicly available url over the private one (for SEO)
+    // TODO: canonical url logic should account for RBAC, since we should always prefer the publicly available url over the private one (for SEO)
     #getAndSetCanonicalSlug = (
         keyOrKeys: string | string[],
         slug: FernNavigation.Slug,

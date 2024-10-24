@@ -7,7 +7,7 @@ interface WithPrunedSidebarOpts {
 }
 
 /**
- * Note: at the stage of calling this function, the audiences should already been evaluated.
+ * Note: at the stage of calling this function, the RBAC should already been evaluated on the node.
  */
 export function pruneNavigationPredicate(
     n: FernNavigation.NavigationNode,

@@ -77,7 +77,7 @@ export class NavigationConfigConverter {
                 icon: undefined,
                 pointsTo,
                 authed: undefined,
-                audience: undefined,
+                viewers: undefined,
             };
 
             // tag all children of hidden nodes as hidden
@@ -119,7 +119,7 @@ export class NavigationConfigConverter {
                         pointsTo,
                         landingPage: child.landingPage,
                         authed: undefined,
-                        audience: undefined,
+                        viewers: undefined,
                     };
                 });
             });
@@ -161,7 +161,7 @@ export class NavigationConfigConverter {
                                     child,
                                     pointsTo,
                                     authed: undefined,
-                                    audience: undefined,
+                                    viewers: undefined,
                                 };
                             });
                         } else if (tab.type === "link") {
@@ -216,11 +216,11 @@ export class NavigationConfigConverter {
                         hidden: unversioned.landingPage.hidden,
                         noindex: this.noindexMap[pageId],
                         authed: undefined,
-                        audience: undefined,
+                        viewers: undefined,
                     };
                 }),
                 authed: undefined,
-                audience: undefined,
+                viewers: undefined,
             };
         });
     }
@@ -276,7 +276,7 @@ export class NavigationConfigConverter {
                         hidden: page.hidden,
                         noindex: this.noindexMap[pageId],
                         authed: undefined,
-                        audience: undefined,
+                        viewers: undefined,
                     };
                 }),
             link: (link) =>
@@ -315,7 +315,7 @@ export class NavigationConfigConverter {
                         children,
                         pointsTo,
                         authed: undefined,
-                        audience: undefined,
+                        viewers: undefined,
                     };
                 }),
             api: (apiSection) => {

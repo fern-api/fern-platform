@@ -3,10 +3,10 @@ import { z } from "zod";
 export const FernUserSchema = z.object({
     name: z.string().optional(),
     email: z.string().optional(),
-    audience: z
+    roles: z
         .union([z.string(), z.array(z.string())])
         .describe(
-            "The audience of the token (can be a string or an array of strings) which limits what content users can access",
+            "The roles of the token (can be a string or an array of strings) which limits what content users can access",
         )
         .optional(),
 });

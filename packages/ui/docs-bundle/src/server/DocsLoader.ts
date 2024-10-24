@@ -101,7 +101,7 @@ export class DocsLoader {
                 if (authConfig?.type === "basic_token_verification") {
                     // TODO: store this in cache
                     root = authState.authed
-                        ? pruneWithBasicTokenAuthed(authConfig, root, toAudience(authState.user.audience))
+                        ? pruneWithBasicTokenAuthed(authConfig, root, toRoles(authState.user.roles))
                         : pruneWithBasicTokenAnonymous(authConfig, root);
                 }
             } catch (e) {
@@ -128,9 +128,9 @@ export class DocsLoader {
     }
 }
 
-function toAudience(audience: string | string[] | undefined): string[] {
-    if (typeof audience === "string") {
-        return [audience];
+function toRoles(roles: string | string[] | undefined): string[] {
+    if (typeof roles === "string") {
+        return [roles];
     }
-    return audience ?? [];
+    return roles ?? [];
 }

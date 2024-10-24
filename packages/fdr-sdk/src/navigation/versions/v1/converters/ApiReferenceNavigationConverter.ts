@@ -106,7 +106,7 @@ export class ApiReferenceNavigationConverter {
                 pointsTo,
                 playground: undefined,
                 authed: undefined,
-                audience: undefined,
+                viewers: undefined,
             };
         });
     }
@@ -143,7 +143,7 @@ export class ApiReferenceNavigationConverter {
                 isResponseStream: endpoint.response?.type.type === "stream",
                 playground: undefined,
                 authed: undefined,
-                audience: undefined,
+                viewers: undefined,
             };
         });
     }
@@ -165,7 +165,7 @@ export class ApiReferenceNavigationConverter {
             availability: FernNavigation.V1.convertAvailability(webSocket.availability),
             playground: undefined,
             authed: undefined,
-            audience: undefined,
+            viewers: undefined,
         }));
     }
 
@@ -186,7 +186,7 @@ export class ApiReferenceNavigationConverter {
             apiDefinitionId: this.apiDefinitionId,
             availability: undefined,
             authed: undefined,
-            audience: undefined,
+            viewers: undefined,
         }));
     }
 
@@ -266,7 +266,7 @@ export class ApiReferenceNavigationConverter {
                     pointsTo,
                     playground: undefined,
                     authed: undefined,
-                    audience: undefined,
+                    viewers: undefined,
                 };
             });
             if (child != null) {
@@ -337,7 +337,7 @@ export class ApiReferenceNavigationConverter {
                                 icon: page.icon,
                                 hidden: page.hidden,
                                 authed: undefined,
-                                audience: undefined,
+                                viewers: undefined,
                             };
                         }),
                     );
@@ -409,7 +409,7 @@ export class ApiReferenceNavigationConverter {
                             pointsTo: FernNavigation.V1.followRedirects(convertedItems),
                             playground: undefined,
                             authed: undefined,
-                            audience: undefined,
+                            viewers: undefined,
                         });
                     });
                 },

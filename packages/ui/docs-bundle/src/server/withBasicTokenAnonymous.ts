@@ -11,6 +11,11 @@ import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import type { AuthEdgeConfigBasicTokenVerification } from "@fern-ui/fern-docs-auth";
 import { matchPath } from "@fern-ui/fern-docs-utils";
 
+/**
+ * The role that is used to represent everyone (including unauthenticated users)
+ */
+const EVERYONE_ROLE = "everyone";
+
 interface AuthRulesPathName {
     /**
      * List of paths that should be allowed to pass through without authentication
@@ -55,11 +60,8 @@ export function withBasicTokenAnonymous(auth: AuthRulesPathName, pathname: strin
 export function withBasicTokenAnonymousCheck(
     auth: AuthRulesPathName,
 ): (node: NavigationNode, parents?: readonly NavigationNodeParent[]) => boolean {
-    const hasAudience = (audiences: string[] | undefined) => {
-        return audiences != null && audiences.length > 0;
-    };
     return (node, parents = EMPTY_ARRAY) => {
-        if ([...parents, node].some((n) => hasMetadata(n) && (n.authed || hasAudience(n.audience)))) {
+        if (rbacViewPredicate([], false)(node, parents)) {
             return true;
         }
 
@@ -85,28 +87,24 @@ export function pruneWithBasicTokenAnonymous(auth: AuthEdgeConfigBasicTokenVerif
     return result;
 }
 
-function getAudienceFilters(...node: FernNavigation.NavigationNode[]): string[][] {
-    return node.map((n) => (hasMetadata(n) ? n.audience ?? [] : [])).filter((audience) => audience.length > 0);
-}
-
 /**
  * @internal
- * @param audience current viewer's audience
- * @param filters audience filters for the current node
- * @returns true if the audience matches the filters (i.e. the viewer is allowed to view the node)
+ * @param roles current viewer's roles
+ * @param filters rbac filters for the current node
+ * @returns true if the roles matches the filters (i.e. the viewer is allowed to view the node)
  */
-export function matchAudience(audience: string[], filters: string[][]): boolean {
+export function matchRoles(roles: string[], filters: string[][]): boolean {
     if (filters.length === 0 || filters.every((filter) => filter.length === 0)) {
         return true;
     }
 
-    return filters.every((filter) => filter.some((aud) => audience.includes(aud)));
+    return filters.every((filter) => filter.some((aud) => roles.includes(aud) || aud === EVERYONE_ROLE));
 }
 
-export function pruneWithBasicTokenAuthed(auth: AuthRulesPathName, node: RootNode, audience: string[] = []): RootNode {
+export function pruneWithBasicTokenAuthed(auth: AuthRulesPathName, node: RootNode, roles: string[] = []): RootNode {
     const result = Pruner.from(node)
-        // apply audience filters
-        .keep((n, parents) => !hasMetadata(n) || matchAudience(audience, getAudienceFilters(...parents, n)))
+        // apply rbac
+        .keep(rbacViewPredicate(roles, true))
         // hide nodes that are not authed
         .hide((n) => node.hidden || auth.anonymous?.find((path) => matchPath(path, `/${n.slug}`)) != null)
         // mark all nodes as unauthed since we are currently authenticated
@@ -119,4 +117,26 @@ export function pruneWithBasicTokenAuthed(auth: AuthRulesPathName, node: RootNod
     }
 
     return result;
+}
+
+function rbacViewPredicate(
+    roles: string[],
+    authed: boolean,
+): (node: NavigationNode, parents: readonly NavigationNodeParent[]) => boolean {
+    // TODO: if we ever support editors, we need to update this
+    function getViewerFilters(...node: FernNavigation.NavigationNode[]): string[][] {
+        return node.map((n) => (hasMetadata(n) ? n.viewers ?? [] : [])).filter((roles) => roles.length > 0);
+    }
+
+    return (node, parents) => {
+        if (!hasMetadata(node)) {
+            return true;
+        }
+
+        if (!authed && node.authed) {
+            return false;
+        }
+
+        return matchRoles(roles, getViewerFilters(...parents, node));
+    };
 }

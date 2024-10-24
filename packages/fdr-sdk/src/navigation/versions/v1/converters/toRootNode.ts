@@ -66,7 +66,7 @@ export function toRootNode(
             icon: undefined,
             hidden: undefined,
             authed: undefined,
-            audience: undefined,
+            viewers: undefined,
             id: FernNavigation.V1.NodeId("root"),
             pointsTo: undefined,
         };

@@ -155,10 +155,10 @@ export class Write {
      *                                 authed: {
      *                                     "key": "value"
      *                                 },
-     *                                 audience: {
+     *                                 id: FernRegistry.navigation.v1.NodeId("string"),
+     *                                 viewers: {
      *                                     "key": "value"
      *                                 },
-     *                                 id: FernRegistry.navigation.v1.NodeId("string"),
      *                                 pointsTo: {
      *                                     "key": "value"
      *                                 }
@@ -176,10 +176,10 @@ export class Write {
      *                     authed: {
      *                         "key": "value"
      *                     },
-     *                     audience: {
+     *                     id: FernRegistry.navigation.v1.NodeId("string"),
+     *                     viewers: {
      *                         "key": "value"
      *                     },
-     *                     id: FernRegistry.navigation.v1.NodeId("string"),
      *                     pointsTo: {
      *                         "key": "value"
      *                     }

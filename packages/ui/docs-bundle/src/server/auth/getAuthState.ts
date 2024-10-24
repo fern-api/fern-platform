@@ -84,7 +84,7 @@ export async function getAuthState(
     // check if the request is allowed to pass through without authentication
     if (authConfig.type === "basic_token_verification") {
         if (user) {
-            // TODO: right now it's not possible to compare the user's audience with the audience required for the current pathname
+            // TODO: right now it's not possible to compare the user's roles with the permissions required for the current pathname
             // because this function must be run in the middleware handler, which does not have access to the navigation node structure
             // so today we're assuming that getServerSideProps will return a 404 for specific pages (when it should certainly be a 403)
             return { host, authed: true, ok: true, user, partner: "custom" };
