@@ -107,6 +107,7 @@ export class ApiReferenceNavigationConverter {
                 playground: undefined,
                 authed: undefined,
                 viewers: undefined,
+                orphaned: undefined,
             };
         });
     }
@@ -144,6 +145,7 @@ export class ApiReferenceNavigationConverter {
                 playground: undefined,
                 authed: undefined,
                 viewers: undefined,
+                orphaned: undefined,
             };
         });
     }
@@ -166,6 +168,7 @@ export class ApiReferenceNavigationConverter {
             playground: undefined,
             authed: undefined,
             viewers: undefined,
+            orphaned: undefined,
         }));
     }
 
@@ -187,6 +190,7 @@ export class ApiReferenceNavigationConverter {
             availability: undefined,
             authed: undefined,
             viewers: undefined,
+            orphaned: undefined,
         }));
     }
 
@@ -267,6 +271,7 @@ export class ApiReferenceNavigationConverter {
                     playground: undefined,
                     authed: undefined,
                     viewers: undefined,
+                    orphaned: undefined,
                 };
             });
             if (child != null) {
@@ -338,6 +343,7 @@ export class ApiReferenceNavigationConverter {
                                 hidden: page.hidden,
                                 authed: undefined,
                                 viewers: undefined,
+                                orphaned: undefined,
                             };
                         }),
                     );
@@ -410,6 +416,7 @@ export class ApiReferenceNavigationConverter {
                             playground: undefined,
                             authed: undefined,
                             viewers: undefined,
+                            orphaned: undefined,
                         });
                     });
                 },

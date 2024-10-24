@@ -61,8 +61,8 @@ export function withBasicTokenAnonymousCheck(
     auth: AuthRulesPathName,
 ): (node: NavigationNode, parents?: readonly NavigationNodeParent[]) => boolean {
     return (node, parents = EMPTY_ARRAY) => {
-        if (rbacViewPredicate([], false)(node, parents)) {
-            return true;
+        if (!rbacViewPredicate([], false)(node, parents)) {
+            return false;
         }
 
         if (isPage(node)) {
@@ -123,9 +123,16 @@ function rbacViewPredicate(
     roles: string[],
     authed: boolean,
 ): (node: NavigationNode, parents: readonly NavigationNodeParent[]) => boolean {
-    // TODO: if we ever support editors, we need to update this
-    function getViewerFilters(...node: FernNavigation.NavigationNode[]): string[][] {
-        return node.map((n) => (hasMetadata(n) ? n.viewers ?? [] : [])).filter((roles) => roles.length > 0);
+    function getViewerFilters(...nodes: FernNavigation.NavigationNode[]): string[][] {
+        // ignore permissions of parents of the parents of an orphaned node
+        const lastOrphanedIdx = nodes.findLastIndex((n) => (hasMetadata(n) ? n.orphaned : false));
+        return (
+            nodes
+                .slice(Math.max(lastOrphanedIdx, 0))
+                // TODO: if we ever support editors, we need to update this
+                .map((n) => (hasMetadata(n) ? n.viewers ?? [] : []))
+                .filter((roles) => roles.length > 0)
+        );
     }
 
     return (node, parents) => {

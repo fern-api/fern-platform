@@ -20,7 +20,8 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
-                    audience: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
                 },
             ],
             collapsed: undefined,
@@ -31,7 +32,8 @@ describe("pruneNavigationTree", () => {
             overviewPageId: undefined,
             noindex: undefined,
             pointsTo: undefined,
-            audience: undefined,
+            viewers: undefined,
+            orphaned: undefined,
         };
 
         const result = Pruner.from(root)
@@ -58,7 +60,8 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
-                    audience: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
                 },
             ],
             collapsed: undefined,
@@ -69,7 +72,8 @@ describe("pruneNavigationTree", () => {
             overviewPageId: undefined,
             noindex: undefined,
             pointsTo: FernNavigation.Slug("root/page"),
-            audience: undefined,
+            viewers: undefined,
+            orphaned: undefined,
         });
     });
 
@@ -91,7 +95,8 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
-                    audience: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
                 },
             ],
             collapsed: undefined,
@@ -102,7 +107,8 @@ describe("pruneNavigationTree", () => {
             overviewPageId: undefined,
             noindex: undefined,
             pointsTo: FernNavigation.Slug("root/page"),
-            audience: undefined,
+            viewers: undefined,
+            orphaned: undefined,
         };
 
         const result = Pruner.from(root)
@@ -131,7 +137,8 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
-                    audience: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
                 },
             ],
             collapsed: undefined,
@@ -141,7 +148,8 @@ describe("pruneNavigationTree", () => {
             authed: undefined,
             noindex: undefined,
             pointsTo: undefined,
-            audience: undefined,
+            viewers: undefined,
+            orphaned: undefined,
         };
 
         const result = Pruner.from(root)
@@ -169,7 +177,8 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
-                    audience: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
                 },
             ],
             collapsed: undefined,
@@ -179,7 +188,8 @@ describe("pruneNavigationTree", () => {
             authed: undefined,
             noindex: undefined,
             pointsTo: FernNavigation.Slug("root/page"),
-            audience: undefined,
+            viewers: undefined,
+            orphaned: undefined,
         });
     });
 
@@ -202,7 +212,8 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
-                    audience: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
                 },
             ],
             collapsed: undefined,
@@ -212,7 +223,8 @@ describe("pruneNavigationTree", () => {
             authed: undefined,
             noindex: undefined,
             pointsTo: undefined,
-            audience: undefined,
+            viewers: undefined,
+            orphaned: undefined,
         };
 
         const result = Pruner.from(root)
@@ -236,7 +248,8 @@ describe("pruneNavigationTree", () => {
             authed: undefined,
             noindex: undefined,
             pointsTo: undefined,
-            audience: undefined,
+            viewers: undefined,
+            orphaned: undefined,
         });
     });
 
@@ -259,7 +272,8 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
-                    audience: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
                 },
             ],
             collapsed: undefined,
@@ -269,7 +283,8 @@ describe("pruneNavigationTree", () => {
             authed: undefined,
             noindex: undefined,
             pointsTo: undefined,
-            audience: undefined,
+            viewers: undefined,
+            orphaned: undefined,
         };
 
         const result = Pruner.from(root)
@@ -297,7 +312,8 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
-                    audience: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
                 },
             ],
             collapsed: undefined,
@@ -307,7 +323,8 @@ describe("pruneNavigationTree", () => {
             authed: undefined,
             noindex: undefined,
             pointsTo: FernNavigation.Slug("root/page"),
-            audience: undefined,
+            viewers: undefined,
+            orphaned: undefined,
         });
     });
 
@@ -337,7 +354,8 @@ describe("pruneNavigationTree", () => {
                             hidden: undefined,
                             authed: undefined,
                             noindex: undefined,
-                            audience: undefined,
+                            viewers: undefined,
+                            orphaned: undefined,
                         },
                     ],
                     collapsed: undefined,
@@ -347,7 +365,8 @@ describe("pruneNavigationTree", () => {
                     authed: undefined,
                     noindex: undefined,
                     pointsTo: undefined,
-                    audience: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
                 },
                 {
                     type: "page",
@@ -360,7 +379,8 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
-                    audience: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
                 },
             ],
             collapsed: undefined,
@@ -370,7 +390,8 @@ describe("pruneNavigationTree", () => {
             authed: undefined,
             noindex: undefined,
             pointsTo: undefined,
-            audience: undefined,
+            viewers: undefined,
+            orphaned: undefined,
         };
 
         const result = Pruner.from(root)
@@ -398,7 +419,8 @@ describe("pruneNavigationTree", () => {
                     hidden: undefined,
                     authed: undefined,
                     noindex: undefined,
-                    audience: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
                 },
             ],
             collapsed: undefined,
@@ -407,7 +429,8 @@ describe("pruneNavigationTree", () => {
             hidden: undefined,
             authed: undefined,
             noindex: undefined,
-            audience: undefined,
+            viewers: undefined,
+            orphaned: undefined,
 
             // NOTE: points to is updated!
             pointsTo: "root/page",

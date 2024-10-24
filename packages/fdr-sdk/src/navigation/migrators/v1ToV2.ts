@@ -32,6 +32,7 @@ export class FernNavigationV1ToLatest {
             hidden: node.hidden,
             authed: node.authed,
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
 
         return latest;
@@ -102,6 +103,7 @@ export class FernNavigationV1ToLatest {
             id: FernNavigation.NodeId(node.id),
             pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
         return latest;
     };
@@ -127,6 +129,7 @@ export class FernNavigationV1ToLatest {
             pageId: FernNavigation.PageId(node.pageId),
             noindex: node.noindex,
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
         return latest;
     };
@@ -165,6 +168,7 @@ export class FernNavigationV1ToLatest {
             id: FernNavigation.NodeId(node.id),
             pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
         return latest;
     };
@@ -266,6 +270,7 @@ export class FernNavigationV1ToLatest {
             }),
             subtitle: node.subtitle,
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
         return latest;
     };
@@ -321,6 +326,7 @@ export class FernNavigationV1ToLatest {
             pageId: FernNavigation.PageId(node.pageId),
             noindex: node.noindex,
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
         return latest;
     };
@@ -353,6 +359,7 @@ export class FernNavigationV1ToLatest {
             overviewPageId,
             noindex: node.noindex,
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
         return latest;
     };
@@ -391,6 +398,7 @@ export class FernNavigationV1ToLatest {
             availability: this.#availability(node.availability),
             pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
         return latest;
     };
@@ -421,6 +429,7 @@ export class FernNavigationV1ToLatest {
             overviewPageId,
             noindex: node.noindex,
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
         return latest;
     };
@@ -441,6 +450,7 @@ export class FernNavigationV1ToLatest {
             authed: node.authed,
             year: node.year,
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
         return latest;
     };
@@ -461,6 +471,7 @@ export class FernNavigationV1ToLatest {
             authed: node.authed,
             month: node.month,
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
         return latest;
     };
@@ -487,6 +498,7 @@ export class FernNavigationV1ToLatest {
             pageId: FernNavigation.PageId(node.pageId),
             noindex: node.noindex,
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
         return latest;
     };
@@ -521,6 +533,7 @@ export class FernNavigationV1ToLatest {
             apiDefinitionId: node.apiDefinitionId,
             availability: this.#availability(node.availability),
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
         return latest;
     };
@@ -550,6 +563,7 @@ export class FernNavigationV1ToLatest {
             endpointId: node.endpointId,
             isResponseStream: node.isResponseStream,
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
         return latest;
     };
@@ -590,6 +604,7 @@ export class FernNavigationV1ToLatest {
             availability: this.#availability(node.availability),
             webSocketId: node.webSocketId,
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
         return latest;
     };
@@ -617,6 +632,7 @@ export class FernNavigationV1ToLatest {
             method: node.method,
             webhookId: node.webhookId,
             viewers: node.viewers,
+            orphaned: node.orphaned,
         };
         return latest;
     };

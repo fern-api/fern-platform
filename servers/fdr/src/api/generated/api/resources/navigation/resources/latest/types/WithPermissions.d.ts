@@ -4,4 +4,6 @@
 import * as FernRegistry from "../../../../../index";
 export interface WithPermissions {
     viewers: FernRegistry.RoleId[] | undefined;
+    /** If true, ignore the parents permissions */
+    orphaned: boolean | undefined;
 }

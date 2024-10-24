@@ -6,4 +6,5 @@ import * as FernRegistry from "../../../../../index";
 
 export interface WithPermissions {
     viewers: FernRegistry.RoleId[] | undefined;
+    orphaned: boolean | undefined;
 }

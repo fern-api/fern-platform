@@ -317,6 +317,9 @@ types:
   WithPermissions:
     properties:
       viewers: optional<list<commons.RoleId>>
+      orphaned:
+        type: optional<boolean>
+        docs: If true, ignore the parents permissions
 
   WithNodeMetadata:
     extends:

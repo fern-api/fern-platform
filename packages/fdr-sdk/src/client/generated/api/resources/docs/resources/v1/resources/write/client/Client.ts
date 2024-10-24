@@ -159,6 +159,9 @@ export class Write {
      *                                 viewers: {
      *                                     "key": "value"
      *                                 },
+     *                                 orphaned: {
+     *                                     "key": "value"
+     *                                 },
      *                                 pointsTo: {
      *                                     "key": "value"
      *                                 }
@@ -178,6 +181,9 @@ export class Write {
      *                     },
      *                     id: FernRegistry.navigation.v1.NodeId("string"),
      *                     viewers: {
+     *                         "key": "value"
+     *                     },
+     *                     orphaned: {
      *                         "key": "value"
      *                     },
      *                     pointsTo: {

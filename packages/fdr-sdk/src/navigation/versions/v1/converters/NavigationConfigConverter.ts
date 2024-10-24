@@ -78,6 +78,7 @@ export class NavigationConfigConverter {
                 pointsTo,
                 authed: undefined,
                 viewers: undefined,
+                orphaned: undefined,
             };
 
             // tag all children of hidden nodes as hidden
@@ -120,6 +121,7 @@ export class NavigationConfigConverter {
                         landingPage: child.landingPage,
                         authed: undefined,
                         viewers: undefined,
+                        orphaned: undefined,
                     };
                 });
             });
@@ -162,6 +164,7 @@ export class NavigationConfigConverter {
                                     pointsTo,
                                     authed: undefined,
                                     viewers: undefined,
+                                    orphaned: undefined,
                                 };
                             });
                         } else if (tab.type === "link") {
@@ -217,10 +220,12 @@ export class NavigationConfigConverter {
                         noindex: this.noindexMap[pageId],
                         authed: undefined,
                         viewers: undefined,
+                        orphaned: undefined,
                     };
                 }),
                 authed: undefined,
                 viewers: undefined,
+                orphaned: undefined,
             };
         });
     }
@@ -277,6 +282,7 @@ export class NavigationConfigConverter {
                         noindex: this.noindexMap[pageId],
                         authed: undefined,
                         viewers: undefined,
+                        orphaned: undefined,
                     };
                 }),
             link: (link) =>
@@ -316,6 +322,7 @@ export class NavigationConfigConverter {
                         pointsTo,
                         authed: undefined,
                         viewers: undefined,
+                        orphaned: undefined,
                     };
                 }),
             api: (apiSection) => {
