@@ -6,9 +6,6 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { DocsPage } from "@fern-ui/ui";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { ComponentProps } from "react";
-import { Agent, setGlobalDispatcher } from "undici";
-
-setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
 
 export default DocsPage;
 
