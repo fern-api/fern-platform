@@ -22,8 +22,6 @@ export async function resolveApiReferencePage({
 
     if (!apiDefinition) {
         // TODO: sentry
-        // eslint-disable-next-line no-console
-        console.error(`Failed to load API definition for ${node.slug}`);
         return;
     }
 
@@ -32,15 +30,11 @@ export async function resolveApiReferencePage({
     const apiReferenceNodeIdx = parents.findIndex((parent) => parent.id === apiReferenceNode.id);
     if (apiReferenceNodeIdx === -1) {
         // TODO: sentry
-        // eslint-disable-next-line no-console
-        console.error("Could not find api reference node in parents");
     }
 
     const sidebarRootNodeIdx = parents.findIndex((parent) => parent.type === "sidebarRoot");
     if (sidebarRootNodeIdx === -1) {
         // TODO: sentry
-        // eslint-disable-next-line no-console
-        console.error("Failed to find sidebar root node");
     }
 
     // get all the parents of the api reference node (excluding the api reference node itself) up to the sidebar root node

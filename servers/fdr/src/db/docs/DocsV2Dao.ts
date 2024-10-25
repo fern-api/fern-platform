@@ -33,8 +33,13 @@ export interface LoadDocsConfigResponse {
     referencedApis: string[];
 }
 
+export interface CheckDomainOwnershipResponse {
+    allDomainsOwned: boolean;
+    unownedDomains: string[];
+}
+
 export interface DocsV2Dao {
-    checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<boolean>;
+    checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<CheckDomainOwnershipResponse>;
 
     loadDocsForURL(url: URL): Promise<LoadDocsDefinitionByUrlResponse | undefined>;
 
@@ -88,10 +93,14 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         });
     }
 
-    public async checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<boolean> {
+    public async checkDomainsDontBelongToAnotherOrg(
+        domains: string[],
+        orgId: string,
+    ): Promise<CheckDomainOwnershipResponse> {
         const matchedDomains = await this.prisma.docsV2.findMany({
             select: {
                 orgID: true,
+                domain: true,
             },
             where: {
                 domain: {
@@ -101,7 +110,14 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             distinct: ["orgID", "domain"],
         });
 
-        return matchedDomains.every((matchedDomain) => matchedDomain.orgID === orgId);
+        const allDomainsOwned = matchedDomains.every((matchedDomain) => matchedDomain.orgID === orgId);
+        const unownedDomains = matchedDomains
+            .filter((matchedDomain) => matchedDomain.orgID !== orgId)
+            .map((matchedDomain) => matchedDomain.domain);
+        return {
+            allDomainsOwned,
+            unownedDomains,
+        };
     }
 
     public async loadDocsForURL(url: URL): Promise<WithoutQuestionMarks<LoadDocsDefinitionByUrlResponse> | undefined> {
