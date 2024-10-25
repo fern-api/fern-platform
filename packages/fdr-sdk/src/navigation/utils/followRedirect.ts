@@ -43,10 +43,12 @@ export function followRedirect(
 
 export function followRedirects(nodes: readonly FernNavigation.NavigationNode[]): FernNavigation.Slug | undefined {
     for (const node of nodes) {
-        // skip hidden nodes
-        if (FernNavigation.hasMetadata(node) && node.hidden) {
+        // skip hidden nodes, and nodes that are authed (authed=false if the user is already logged in)
+        // TODO: the `authed: boolean` logic here is a bit convoluted and will cause confusion. We should revisit this.
+        if (FernNavigation.hasMetadata(node) && (node.hidden || node.authed)) {
             continue;
         }
+
         const redirect = followRedirect(node);
         if (redirect != null) {
             return redirect;

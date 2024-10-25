@@ -4,7 +4,7 @@ import type { AuthEdgeConfig } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { getAuthState, type AuthState } from "./auth/getAuthState";
 import { loadWithUrl } from "./loadWithUrl";
-import { pruneWithBasicTokenAnonymous, pruneWithBasicTokenAuthed } from "./withBasicTokenAnonymous";
+import { pruneWithBasicTokenAnonymous, pruneWithBasicTokenAuthed } from "./withRbac";
 
 interface DocsLoaderFlags {
     isBatchStreamToggleDisabled: boolean;
@@ -12,12 +12,13 @@ interface DocsLoaderFlags {
 }
 
 export class DocsLoader {
-    static for(xFernHost: string, fernToken?: string): DocsLoader {
-        return new DocsLoader(xFernHost, fernToken);
+    static for(domain: string, host: string, fernToken?: string): DocsLoader {
+        return new DocsLoader(domain, host, fernToken);
     }
 
     private constructor(
-        private xFernHost: string,
+        private domain: string,
+        private host: string,
         private fernToken: string | undefined,
     ) {}
 
@@ -42,12 +43,15 @@ export class DocsLoader {
 
     private async loadAuth(): Promise<[AuthState, AuthEdgeConfig | undefined]> {
         if (!this.authConfig) {
-            this.authConfig = await getAuthEdgeConfig(this.xFernHost);
+            this.authConfig = await getAuthEdgeConfig(this.domain);
         }
         if (this.authState) {
             return [this.authState, this.authConfig];
         }
-        return [await getAuthState(this.xFernHost, this.fernToken, undefined, this.authConfig), this.authConfig];
+        return [
+            await getAuthState(this.domain, this.host, this.fernToken, undefined, this.authConfig),
+            this.authConfig,
+        ];
     }
 
     #loadForDocsUrlResponse: DocsV2Read.LoadDocsForUrlResponse | undefined;
@@ -64,7 +68,7 @@ export class DocsLoader {
 
     private async loadDocs(): Promise<DocsV2Read.LoadDocsForUrlResponse | undefined> {
         if (!this.#loadForDocsUrlResponse) {
-            const response = await loadWithUrl(this.xFernHost);
+            const response = await loadWithUrl(this.domain);
 
             if (response.ok) {
                 this.#loadForDocsUrlResponse = response.body;
@@ -101,7 +105,7 @@ export class DocsLoader {
                 if (authConfig?.type === "basic_token_verification") {
                     // TODO: store this in cache
                     root = authState.authed
-                        ? pruneWithBasicTokenAuthed(authConfig, root, toAudience(authState.user.audience))
+                        ? pruneWithBasicTokenAuthed(authConfig, root, authState.user.roles)
                         : pruneWithBasicTokenAnonymous(authConfig, root);
                 }
             } catch (e) {
@@ -126,11 +130,4 @@ export class DocsLoader {
         const docs = await this.loadDocs();
         return docs?.definition.filesV2 ?? {};
     }
-}
-
-function toAudience(audience: string | string[] | undefined): string[] {
-    if (typeof audience === "string") {
-        return [audience];
-    }
-    return audience ?? [];
 }

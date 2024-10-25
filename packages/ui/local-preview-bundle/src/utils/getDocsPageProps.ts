@@ -60,7 +60,14 @@ export async function getDocsPageProps(
     const featureFlags: FeatureFlags = DEFAULT_FEATURE_FLAGS;
 
     const content = await resolveDocsContent({
-        found: node,
+        domain: docs.baseUrl.domain,
+        node: node.node,
+        version: node.currentVersion ?? root,
+        apiReference: node.apiReference,
+        parents: node.parents,
+        breadcrumb: node.breadcrumb,
+        prev: node.prev,
+        next: node.next,
         apis: docs.definition.apis,
         pages: docs.definition.pages,
         featureFlags,
@@ -68,7 +75,6 @@ export async function getDocsPageProps(
             files: docs.definition.jsFiles,
         },
         serializeMdx,
-        host: docs.baseUrl.domain,
         engine: "next-mdx-remote",
     });
 
