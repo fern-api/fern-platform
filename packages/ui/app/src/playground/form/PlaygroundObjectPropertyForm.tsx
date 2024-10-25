@@ -300,7 +300,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                     />
                 </FernDropdown>
             )}
-             
+
             {extraProperties != null && (
                 <div className={cn("flex-1 shrink min-w-0 mt-8")}>
                     <WithLabel
