@@ -139,6 +139,7 @@ export default function LocalPreviewDocs(): ReactElement {
 }
 
 async function loadDocsForUrl(origin: string) {
+    // NOTE: this fetch call does not hit FDR, it's a mocked localhost endpoint
     const response = await fetch(`${origin}/v2/registry/docs/load-with-url`, {
         method: "POST",
     });

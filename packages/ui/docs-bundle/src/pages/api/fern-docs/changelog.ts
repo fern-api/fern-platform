@@ -1,5 +1,5 @@
 import { DocsLoader } from "@/server/DocsLoader";
-import { getDocsDomainNode } from "@/server/xfernhost/node";
+import { getDocsDomainNode, getHostNode } from "@/server/xfernhost/node";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
@@ -24,10 +24,10 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
         return res.status(400).end();
     }
 
-    const xFernHost = getDocsDomainNode(req);
-
+    const domain = getDocsDomainNode(req);
+    const host = getHostNode(req) ?? domain;
     const fernToken = req.cookies[COOKIE_FERN_TOKEN];
-    const loader = DocsLoader.for(xFernHost, fernToken);
+    const loader = DocsLoader.for(domain, host, fernToken);
 
     const root = await loader.root();
 
@@ -44,7 +44,7 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
         return res.status(404).end();
     }
 
-    const link = urlJoin(withDefaultProtocol(xFernHost), node.slug);
+    const link = urlJoin(withDefaultProtocol(domain), node.slug);
 
     const feed = new Feed({
         id: link,
@@ -61,7 +61,7 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
         year.children.forEach((month) => {
             month.children.forEach((entry) => {
                 try {
-                    feed.addItem(toFeedItem(entry, xFernHost, pages, files));
+                    feed.addItem(toFeedItem(entry, domain, pages, files));
                 } catch (e) {
                     // eslint-disable-next-line no-console
                     console.error(e);
@@ -87,13 +87,13 @@ export default async function responseApiHandler(req: NextApiRequest, res: NextA
 
 function toFeedItem(
     entry: FernNavigation.ChangelogEntryNode,
-    xFernHost: string,
+    domain: string,
     pages: Record<DocsV1Read.PageId, DocsV1Read.PageContent>,
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
 ): Item {
     const item: Item = {
         title: entry.title,
-        link: urlJoin(withDefaultProtocol(xFernHost), entry.slug),
+        link: urlJoin(withDefaultProtocol(domain), entry.slug),
         date: new Date(entry.date),
     };
 

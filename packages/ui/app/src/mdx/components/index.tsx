@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import { ComponentProps, PropsWithChildren, ReactElement } from "react";
 import { FernErrorBoundary, FernErrorBoundaryProps, FernErrorTag } from "../../components/FernErrorBoundary";
 import { AccordionGroup } from "./accordion";
-import { Audience } from "./audience";
 import { Availability } from "./availability";
 import { Badge } from "./badge";
 import { Bleed } from "./bleed";
@@ -28,7 +27,9 @@ import { Column, ColumnGroup } from "./columns";
 import { Frame } from "./frame";
 import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
 import { Table } from "./html-table";
+import { If } from "./if";
 import { IFrame } from "./iframe";
+import { Mermaid } from "./mermaid";
 import { ParamField } from "./mintlify";
 import { ReferenceLayoutAside, ReferenceLayoutMain } from "./reference-layout";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
@@ -40,7 +41,6 @@ const LaunchDarkly = dynamic(() => import("./launchdarkly/LaunchDarkly").then((m
 
 const FERN_COMPONENTS = {
     AccordionGroup,
-    Audience,
     Availability,
     Badge,
     Bleed,
@@ -58,7 +58,9 @@ const FERN_COMPONENTS = {
     EndpointResponseSnippet,
     Frame,
     Icon: RemoteFontAwesomeIcon,
+    If,
     LaunchDarkly,
+    Mermaid,
     ParamField,
     Step,
     StepGroup,

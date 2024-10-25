@@ -20,17 +20,18 @@ exports[`no-version-no-tabs > gets navigation root for /docs 1`] = `
 
 exports[`no-version-no-tabs > gets navigation root for /docs/api/page-6 1`] = `
 {
-  "audience": undefined,
   "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": undefined,
   "icon": undefined,
   "id": "root.uv.section-3.page-6",
   "noindex": undefined,
+  "orphaned": undefined,
   "pageId": "page-6.md",
   "slug": "docs/api/page-6",
   "title": "Page 6",
   "type": "page",
+  "viewers": undefined,
 }
 `;
 
@@ -47,17 +48,18 @@ exports[`no-version-no-tabs > gets navigation root for /docs/api/section-1 1`] =
 
 exports[`no-version-no-tabs > gets navigation root for /docs/api/section-2 1`] = `
 {
-  "audience": undefined,
   "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": undefined,
   "icon": undefined,
   "id": "root.uv.section-2.page-3",
   "noindex": undefined,
+  "orphaned": undefined,
   "pageId": "page-3.md",
   "slug": "docs/api/section-2",
   "title": "Page 3",
   "type": "page",
+  "viewers": undefined,
 }
 `;
 

@@ -1,5 +1,6 @@
 import assertNever from "@fern-api/ui-core-utils/assertNever";
 import { kebabCase } from "es-toolkit/string";
+import { FernNavigation } from "../..";
 import {
     DocsV1Db,
     DocsV1Read,
@@ -81,7 +82,7 @@ export function convertDocsDefinitionToDb({
 
     return {
         type: "v3",
-        referencedApis: navigationConfig != null ? getReferencedApiDefinitionIds(navigationConfig) : [],
+        referencedApis: getReferencedApiDefinitionIds(navigationConfig, writeShape.config.root),
         files: transformedFiles,
         config: {
             navigation: navigationConfig,
@@ -112,6 +113,7 @@ export function convertDocsDefinitionToDb({
             defaultLanguage: writeShape.config.defaultLanguage,
             analyticsConfig: writeShape.config.analyticsConfig,
             announcement: writeShape.config.announcement,
+            playground: writeShape.config.playground,
         },
         pages: writeShape.pages,
         jsFiles: writeShape.jsFiles,
@@ -150,7 +152,7 @@ function transformUnversionedNavigationConfigForDb(
     return visitUnversionedWriteNavigationConfig<DocsV1Db.UnversionedNavigationConfig>(writeShape, {
         untabbed: (config) => {
             return {
-                items: config.items.map(transformNavigationItemForDb),
+                items: config.items?.map(transformNavigationItemForDb),
                 // landing page's slug should be "" because it's the root
                 landingPage: transformPageNavigationItemForDb(config.landingPage, ""),
             };
@@ -171,8 +173,8 @@ export function transformNavigationTabForDb(writeShape: DocsV1Write.NavigationTa
     }
     return {
         ...writeShape,
-        items: writeShape.items.map(transformNavigationItemForDb),
-        urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
+        items: writeShape.items?.map(transformNavigationItemForDb),
+        urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title ?? ""),
     };
 }
 
@@ -277,17 +279,26 @@ export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationI
     }
 }
 
-export function getReferencedApiDefinitionIds(navigationConfig: DocsV1Db.NavigationConfig): FdrAPI.ApiDefinitionId[] {
-    return visitDbNavigationConfig(navigationConfig, {
-        unversioned: (config) => {
-            return getReferencedApiDefinitionIdsForUnversionedReadConfig(config);
-        },
-        versioned: (config) => {
-            return config.versions.flatMap((version) =>
-                getReferencedApiDefinitionIdsForUnversionedReadConfig(version.config),
-            );
-        },
-    });
+export function getReferencedApiDefinitionIds(
+    navigationConfig: DocsV1Db.NavigationConfig | undefined,
+    root: FernNavigation.V1.RootNode | undefined,
+): FdrAPI.ApiDefinitionId[] {
+    if (root != null) {
+        const latest = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(root);
+        return FernNavigation.utils.collectApiReferences(latest).map((reference) => reference.apiDefinitionId);
+    }
+
+    if (navigationConfig != null) {
+        return visitDbNavigationConfig(navigationConfig, {
+            unversioned: (config) => getReferencedApiDefinitionIdsForUnversionedReadConfig(config),
+            versioned: (config) =>
+                config.versions.flatMap((version) =>
+                    getReferencedApiDefinitionIdsForUnversionedReadConfig(version.config),
+                ),
+        });
+    }
+
+    return [];
 }
 
 function getReferencedApiDefinitionIdsForUnversionedReadConfig(
@@ -301,12 +312,16 @@ function getReferencedApiDefinitionIdsForUnversionedReadConfig(
                 if (isNavigationTabLink(tab)) {
                     return;
                 } else {
-                    toRet.push(...tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
+                    if (tab.items) {
+                        toRet.push(...tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
+                    }
                 }
             });
             config.tabsV2?.forEach((tab) => {
                 if (tab.type === "group") {
-                    toRet.push(...tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
+                    if (tab.items) {
+                        toRet.push(...tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
+                    }
                 }
             });
             return toRet;

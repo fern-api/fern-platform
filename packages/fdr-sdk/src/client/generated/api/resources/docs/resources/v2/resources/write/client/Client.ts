@@ -257,10 +257,13 @@ export class Write {
      *                                 authed: {
      *                                     "key": "value"
      *                                 },
-     *                                 audience: {
+     *                                 id: FernRegistry.navigation.v1.NodeId("string"),
+     *                                 viewers: {
      *                                     "key": "value"
      *                                 },
-     *                                 id: FernRegistry.navigation.v1.NodeId("string"),
+     *                                 orphaned: {
+     *                                     "key": "value"
+     *                                 },
      *                                 pointsTo: {
      *                                     "key": "value"
      *                                 }
@@ -278,10 +281,13 @@ export class Write {
      *                     authed: {
      *                         "key": "value"
      *                     },
-     *                     audience: {
+     *                     id: FernRegistry.navigation.v1.NodeId("string"),
+     *                     viewers: {
      *                         "key": "value"
      *                     },
-     *                     id: FernRegistry.navigation.v1.NodeId("string"),
+     *                     orphaned: {
+     *                         "key": "value"
+     *                     },
      *                     pointsTo: {
      *                         "key": "value"
      *                     }
@@ -464,6 +470,9 @@ export class Write {
      *                             "key": "value"
      *                         }]
      *                 },
+     *                 playground: {
+     *                     oauth: true
+     *                 },
      *                 backgroundImage: FernRegistry.FileId("string"),
      *                 logoV2: {
      *                     dark: FernRegistry.FileId("string"),
@@ -611,6 +620,63 @@ export class Write {
         return {
             ok: false,
             error: FernRegistry.docs.v2.write.reindexAlgoliaSearchRecords.Error._unknown(_response.error),
+        };
+    }
+
+    /**
+     * @param {FernRegistry.docs.v2.write.TransferDomainOwnershipRequest} request
+     * @param {Write.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.docs.v2.write.transferOwnershipOfDomain({
+     *         domain: "string",
+     *         toOrgId: "string"
+     *     })
+     */
+    public async transferOwnershipOfDomain(
+        request: FernRegistry.docs.v2.write.TransferDomainOwnershipRequest,
+        requestOptions?: Write.RequestOptions
+    ): Promise<core.APIResponse<void, FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error>> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/transfer-ownership"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                ok: true,
+                body: undefined,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error)?.error) {
+                case "DocsNotFoundError":
+                case "UnauthorizedError":
+                    return {
+                        ok: false,
+                        error: _response.error.body as FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error,
+                    };
+            }
+        }
+
+        return {
+            ok: false,
+            error: FernRegistry.docs.v2.write.transferOwnershipOfDomain.Error._unknown(_response.error),
         };
     }
 

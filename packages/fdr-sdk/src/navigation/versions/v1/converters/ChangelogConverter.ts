@@ -52,7 +52,8 @@ export class ChangelogNavigationConverter {
                 hidden: changelog.hidden,
                 children: this.convertYear(changelog.items, slug),
                 authed: undefined,
-                audience: undefined,
+                viewers: undefined,
+                orphaned: undefined,
             };
         });
     }
@@ -90,7 +91,8 @@ export class ChangelogNavigationConverter {
                         hidden: undefined,
                         children: this.groupByMonth(entries, slug),
                         authed: undefined,
-                        audience: undefined,
+                        viewers: undefined,
+                        orphaned: undefined,
                     };
                 }),
             ),
@@ -122,7 +124,8 @@ export class ChangelogNavigationConverter {
                     hidden: undefined,
                     children: entries,
                     authed: undefined,
-                    audience: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
                 })),
             ),
             "month",
@@ -149,7 +152,8 @@ export class ChangelogNavigationConverter {
                 icon: undefined,
                 hidden: undefined,
                 authed: undefined,
-                audience: undefined,
+                viewers: undefined,
+                orphaned: undefined,
             };
         });
     }
