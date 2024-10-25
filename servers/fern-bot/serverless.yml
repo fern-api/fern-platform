@@ -272,14 +272,4 @@ resources:
         BucketName: fern-bot-${opt:stage}
 
 custom:
-  esbuild:
-    minify: true
-    bundle: true
-    sourcemap: true
-    target: "node18"
-    platform: "node"
-    concurrency: 10
-    packager: pnpm
-    external:
-      - fern-api
-      - fern
+  esbuild: false
