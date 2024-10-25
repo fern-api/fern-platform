@@ -27,17 +27,14 @@ const RULE_IDS = {
  * This is not really efficient because it can loop a lot and depends on try-catching errors, but it performs a bit of "magic" to improve quality of life.
  */
 export function sanitizeMdxExpression(content: string): string {
-    let loops = 0;
-
     // these are errors encountered but sanitized
     const errors: ErrorContext[] = [];
 
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-        if (loops++ >= 100) {
+    let loops = 0;
+    while (loops++ < 100) {
+        if (loops === 100) {
             // eslint-disable-next-line no-console
             console.error("Infinite Loop Detected: sanitizing acorn failed");
-            break;
         }
 
         try {
