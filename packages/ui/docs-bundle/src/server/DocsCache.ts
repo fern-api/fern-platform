@@ -25,7 +25,7 @@ export class DocsKVCache {
     }
 
     public async addVisitedSlugs(...slug: FernNavigation.Slug[]): Promise<void> {
-        await kv.sadd(`${PREFIX}:${this.domain}:visited-slugs`, ...slug);
+        await kv.sadd(`${PREFIX}:${this.domain}:visited-slugs`, slug);
     }
 
     public async getVisitedSlugs(): Promise<FernNavigation.Slug[]> {
