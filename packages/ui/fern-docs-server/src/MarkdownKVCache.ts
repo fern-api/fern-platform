@@ -44,7 +44,7 @@ export class MarkdownKVCache {
 
             const batchPromises = batches.map(async (batch) => {
                 const batchKeys = batch.map((key) => this.createKey(key));
-                return kv.mget<(FernDocs.MarkdownText | null)[]>(batchKeys);
+                return await kv.mget<(FernDocs.MarkdownText | null)[]>(batchKeys);
             });
 
             const responses = await Promise.all(batchPromises);
