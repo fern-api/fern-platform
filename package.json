@@ -92,7 +92,10 @@
   "resolutions": {
     "micromatch": "4.0.8",
     "postcss": "8.4.31",
-    "esbuild": "0.20.2"
+    "esbuild": "0.20.2",
+    "markdown-to-jsx": "7.4.0",
+    "serve-static": "1.16.0",
+    "send": "0.19.0"
   },
   "dependenciesMeta": {
     "jsonc-parser@2.2.1": {
