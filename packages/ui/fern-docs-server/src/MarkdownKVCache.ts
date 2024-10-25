@@ -36,22 +36,28 @@ export class MarkdownKVCache {
     public async mgetMarkdownText(keys: string[]): Promise<Record<string, FernDocs.MarkdownText>> {
         const toRet: Record<string, FernDocs.MarkdownText> = {};
         try {
-            const batchSize = 100; // Adjust this value based on Vercel Upstash limits
+            const batchSize = 500; // Adjust this value based on Vercel Upstash limits
             const batches = [];
             for (let i = 0; i < keys.length; i += batchSize) {
                 batches.push(keys.slice(i, i + batchSize));
             }
 
-            for (const batch of batches) {
+            const batchPromises = batches.map(async (batch) => {
                 const batchKeys = batch.map((key) => this.createKey(key));
-                const response = await kv.mget<(FernDocs.MarkdownText | null)[]>(batchKeys);
+                return kv.mget<(FernDocs.MarkdownText | null)[]>(batchKeys);
+            });
+
+            const responses = await Promise.all(batchPromises);
+
+            batches.forEach((batch, batchIndex) => {
+                const response = responses[batchIndex];
                 batch.forEach((key, index) => {
-                    const value = response[index];
+                    const value = response?.[index];
                     if (value != null) {
                         toRet[key] = value;
                     }
                 });
-            }
+            });
         } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
