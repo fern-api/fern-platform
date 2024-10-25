@@ -9,7 +9,7 @@ import { DocsContent } from "../resolver/DocsContent";
 export function ChangelogEntryPage({ content }: { content: DocsContent.ChangelogEntryPage }): ReactElement {
     const page = content.page;
     const title = typeof page !== "string" ? page?.frontmatter.title : undefined;
-    const excerpt = typeof page !== "string" ? page?.frontmatter.subtitle ?? page?.frontmatter.excerpt : undefined;
+    const excerpt = typeof page !== "string" ? (page?.frontmatter.subtitle ?? page?.frontmatter.excerpt) : undefined;
     return (
         <div className="flex justify-between px-4 md:px-6 lg:pl-8 lg:pr-16 xl:pr-0">
             <div className="w-full min-w-0 pt-8">

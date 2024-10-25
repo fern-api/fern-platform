@@ -1,7 +1,7 @@
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.scss";
+import "./_.scss";
 
 // Import the generated route tree
 import { Auth0Provider } from "@auth0/auth0-react";

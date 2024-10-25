@@ -32,7 +32,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
     const selectedErrorIndex = selectedError != null ? errors.indexOf(selectedError) : -1;
     const selectedExampleIndex =
         selectedError != null && selectedErrorExample != null
-            ? selectedError?.examples?.indexOf(selectedErrorExample) ?? -1
+            ? (selectedError?.examples?.indexOf(selectedErrorExample) ?? -1)
             : -1;
 
     const value = `${selectedErrorIndex}:${selectedExampleIndex}`;

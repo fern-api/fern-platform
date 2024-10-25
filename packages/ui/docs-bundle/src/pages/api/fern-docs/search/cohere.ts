@@ -7,7 +7,7 @@ import { provideRegistryService } from "@fern-ui/ui";
 import { kv } from "@vercel/kv";
 import { algoliasearch } from "algoliasearch";
 import { Cohere, CohereClient } from "cohere-ai";
-import { ChatMessage } from "cohere-ai/api";
+import { Message } from "cohere-ai/api";
 import { NextRequest } from "next/server";
 import { v4 } from "uuid";
 import { z } from "zod";
@@ -40,7 +40,7 @@ class ConversationCache {
     constructor(private conversationId: string) {}
     async get() {
         try {
-            return (await kv.get<ChatMessage[]>(this.conversationId)) ?? [];
+            return (await kv.get<Message[]>(this.conversationId)) ?? [];
         } catch (e) {
             // eslint-disable-next-line no-console
             console.error(e);
@@ -48,7 +48,7 @@ class ConversationCache {
         }
     }
 
-    async set(chatHistory: ChatMessage[]) {
+    async set(chatHistory: Message[]) {
         try {
             await kv.set(this.conversationId, chatHistory);
         } catch (e) {
@@ -198,7 +198,7 @@ function convertAsyncIterableToStream<T>(iterable: AsyncIterable<T>): ReadableSt
 
 function getCohereStreamTransformer(
     cache: ConversationCache,
-    chatHistory: ChatMessage[],
+    chatHistory: Message[],
 ): TransformStream<Cohere.StreamedChatResponse, Uint8Array> {
     const encoder = new TextEncoder();
     let reply: string = "";

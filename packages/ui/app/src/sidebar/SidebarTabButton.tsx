@@ -34,7 +34,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({ tab, sel
                             <RemoteFontAwesomeIcon
                                 className="size-4 bg-faded group-hover/tab-button:bg-accent group-data-[state=active]/tab-button:bg-background group-hover/tab-button:group-data-[state=active]/tab-button:bg-background"
                                 // TODO: Should we validate that the icon is not undefined in sidebar mode
-                                icon={tab.type !== "tabLink" && tab.authed ? "lock" : tab.icon ?? "book-open"}
+                                icon={tab.type !== "tabLink" && tab.authed ? "lock" : (tab.icon ?? "book-open")}
                             />
                         </div>
                     </div>
