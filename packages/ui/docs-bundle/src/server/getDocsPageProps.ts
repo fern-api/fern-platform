@@ -21,7 +21,7 @@ export async function getDocsPageProps(
     slug: FernNavigation.Slug,
     fern_token?: string | undefined,
 ): Promise<SSGDocsPageProps> {
-    if (domain == null || Array.isArray(domain)) {
+    if (typeof domain !== "string") {
         return { notFound: true };
     }
 
