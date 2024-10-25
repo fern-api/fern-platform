@@ -82,13 +82,11 @@ export function pruneWithBasicTokenAnonymous(auth: AuthEdgeConfigBasicTokenVerif
     return result;
 }
 
-<<<<<<< HEAD:packages/ui/docs-bundle/src/server/withBasicTokenAnonymous.ts
+
 function getAudienceFilters(...node: FernNavigation.NavigationNode[]): string[][] {
     return node.map((n) => (hasMetadata(n) ? (n.audience ?? []) : [])).filter((audience) => audience.length > 0);
 }
 
-=======
->>>>>>> d531a55534de204f44ed351c882b55201c01c026:packages/ui/docs-bundle/src/server/withRbac.ts
 /**
  * @internal
  * @param roles current viewer's roles
