@@ -63,7 +63,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             name:
                 user.firstName != null && user.lastName != null
                     ? `${user.firstName} ${user.lastName}`
-                    : user.firstName ?? user.email.split("@")[0],
+                    : (user.firstName ?? user.email.split("@")[0]),
             email: user.email,
         };
 
