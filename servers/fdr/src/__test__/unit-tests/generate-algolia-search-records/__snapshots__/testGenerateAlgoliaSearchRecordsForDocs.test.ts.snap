@@ -2281,26 +2281,7 @@ You can learn more about the challenges of AI development and how Humanloop solv
   },
   {
     "breadcrumbs": [],
-    "description": "
-Humanloop enables product teams to develop LLM-based applications that are reliable and scalable.
-
-Principally, it is an **evaluation suite** to enable you to rigorously measure and improve LLM performance during development and in production and a **collaborative workspace** where engineers, PMs and subject matter experts improve prompts, tools and agents together.
-
-By adopting Humanloop, teams save 6-8 engineering hours each week through better workflows and they feel confident that their AI is reliable.
-
-<Bleed>
-<Frame caption="Humanloop's IDE for LLMs helps teams prompt engineer and evaluate LLM applications.">
-<img src="file:f5afe711-c6fa-407b-ba00-52ae77e3d459" />
-</Frame>
-</Bleed>
-
-<br />
-
-The power of Humanloop lies in its integrated approach to AI development. Evaluation, monitoring and prompt engineering in one platform enables you to understand system performance and take the actions needed to fix it. Additionally, the SDK slots seamlessly into your existing code-based orchestration and the user-friendly interface allows both developers and non-technical stakeholders to adjust the AI together.
-
-You can learn more about the challenges of AI development and how Humanloop solves them in [Why Humanloop?](/docs/why-humanloop).
-
-",
+    "description": "Humanloop is an Integrated Development Environment for Large Language Models",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/overview",
     "title": "Overview",
@@ -2753,8 +2734,7 @@ To find out more on how to get the most from Humanloop, including how to use you
   },
   {
     "breadcrumbs": [],
-    "description": "
-",
+    "description": "Getting up and running with Humanloop is quick and easy. This guide will run you through creating and managing your first Prompt in a few minutes.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/quickstart-tutorial",
     "title": "Quickstart Tutorial",
@@ -3392,14 +3372,7 @@ All the code for this project is available at [https://github.com/humanloop/hl-c
   },
   {
     "breadcrumbs": [],
-    "description": "
-At the end of this tutorial, you'll have built a simple ChatGPT-style interface using Humanloop as the backend to manage interactions with your model provider, track user engagement and experiment with model configuration.
-
-If you just want to leap in, the complete repo for this project is available on GitHub [here.](https://github.com/humanloop/hl-chatgpt-clone-typescript)
-
-<img src="file:9eaa337b-5b8b-4465-96f4-3a6b20faedb9" alt="A simple ChatGPT-style interface using the Humanloop SDK to manage interaction with your model provider, track user engagement, log results and help you evaluate and improve your model." />
-
-",
+    "description": "In this tutorial, you'll build a simple clone of ChatGPT with Next.js and the Humanloop Typescript SDK.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/chat-gpt-clone-in-next-js",
     "title": "ChatGPT clone in Next.js",
@@ -4020,18 +3993,7 @@ If you want to learn how to improve your model by running experiments or finetun
   },
   {
     "breadcrumbs": [],
-    "description": "
-At the end of this tutorial, you’ll have created your first GPT-4 app. You’ll also have learned how to:
-
-1. Create a project using the Humanloop Playground
-2. Use the Humanloop SDK to call Open AI GPT-4 and log your results
-3. Capture feedback from your end users to evaluate and improve your model.
-
-This tutorial picks up where the [Quick Start](/docs/quickstart) left off. If you’ve already followed the quick start you can skip to step 4.
-
-<img src="file:b6c89f09-58b7-4884-8e2e-e26e5fcffd41" alt="In this tutorial, you'll build a simple GPT-4 app that can explain a topic in the style of different experts." />
-
-",
+    "description": "In this tutorial, you’ll use GPT-4 and Humanloop to quickly create a GPT-4 chat app that explains topics in the style of different experts.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/create-your-first-gpt-4-app",
     "title": "Create your first GPT-4 App",
@@ -4454,10 +4416,7 @@ With the project set up, you can now integrate it into your app by following the
   },
   {
     "breadcrumbs": [],
-    "description": "
-Going from exploring in the Playground to a [Humanloop project](/docs/key-concepts#projects) ready for integration into your application takes just a few clicks.
-
-",
+    "description": "Explore prompts and parameters in the Playground and then use them to create a Humanloop project.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/from-playground",
     "title": "From Playground",
@@ -4661,10 +4620,7 @@ With the project now set up, you can start to log generations from your models b
   },
   {
     "breadcrumbs": [],
-    "description": "
-The Humanloop Python SDK allows you to programmatically set up Humanloop projects with [model configs](/docs/key-concepts#model-config) and a [feedback schema](/docs/key-concepts#feedback).
-
-",
+    "description": "How to set up a project in Humanloop using the Python SDK.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/using-the-sdk",
     "title": "Using the SDK",
@@ -4804,15 +4760,7 @@ The guides in this section instruct how to create datapoints for your projects o
   },
   {
     "breadcrumbs": [],
-    "description": "A **log** is a generation from the AI model. It contains the inputs and the output as well as metadata such as which model configuration was used and any associated feedback.
-
-There are two types of log on Humanloop - a **completion** and a **chat**, generated by the \`/completion\` and the \`/chat\` API endpoint variants respectively.
-
-The guides in this section instruct how to create datapoints for your projects on Humanloop. Once this is setup, you can begin to use Humanloop to evaluate and improve your LLM apps.
-
-<img src="file:f3dc3b52-44a1-4292-a93a-59a1860bdcf6" />
-
-",
+    "description": "Use Humanloop to retrieve and log generations across multiple LLM providers",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/overview",
     "title": "Overview",
@@ -5012,10 +4960,7 @@ Navigate to your project's **Logs** tab in the browser to see the recorded input
   },
   {
     "breadcrumbs": [],
-    "description": "
-The Humanloop Python SDK allows you to easily replace your \`openai.Completions.create()\` calls with a \`humanloop.complete()\` call that, in addition to calling OpenAI to get a generation, automatically logs the data to your Humanloop project.
-
-",
+    "description": "A walkthrough of how to set up the SDK to use humanloop.complete()",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/generate-completions",
     "title": "Generate completions",
@@ -5289,10 +5234,7 @@ Navigate to your project's **Logs** tab in the browser to see the recorded input
   },
   {
     "breadcrumbs": [],
-    "description": "
-The Humanloop Python SDK allows you to easily replace your \`openai.ChatCompletions.create()\` calls with a \`humanloop.chat()\` call that, in addition to calling OpenAI to get a response, automatically logs the data to your Humanloop project.
-
-",
+    "description": "A walkthrough of how to set up the SDK to use humanloop.chat()",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/generate-chat-responses",
     "title": "Generate chat responses",
@@ -5540,10 +5482,7 @@ This feedback will also show up within Humanloop, where your internal users can 
   },
   {
     "breadcrumbs": [],
-    "description": "
-This guide shows how to use the Humanloop SDK to record user feedback on datapoints. This works equivalently for both the completion and chat APIs.
-
-",
+    "description": "You can record feedback on generations from your users using the Humanloop Python SDK. This allows you to monitor how your generations perform with your users.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/capture-user-feedback",
     "title": "Capture user feedback",
@@ -5784,10 +5723,7 @@ feedback={"type": "rating", "value": "good"}
   },
   {
     "breadcrumbs": [],
-    "description": "
-The Humanloop Python SDK allows you to upload your historic model data to an existing Humanloop project. This can be used to warm-start your project. The data can be considered for feedback and review alongside your new user generated data.
-
-",
+    "description": "Uploading historic model inputs and generations to an existing Humanloop project.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/upload-historic-data",
     "title": "Upload historic data",
@@ -6222,16 +6158,7 @@ model_config={
   },
   {
     "breadcrumbs": [],
-    "description": "
-The \`humanloop.complete()\`and \`humanloop.chat()\` call encapsulates the LLM provider calls (for example \`openai.Completions.create()\`), the model-config selection and logging steps in a single unified interface. There may be scenarios that you wish to manage the LLM provider calls directly in your own code instead of relying on Humanloop.
-
-For example, you may be using an LLM provider that currently is not directly supported by Humanloop such as Hugging Face.
-
-To support using your own model provider, we provide additional \`humanloop.log()\` and \`humanloop.projects.get_config()\` methods in the SDK.
-
-In this guide, we walk through how to use these SDK methods to log data to Humanloop and run experiments.
-
-",
+    "description": "Integrating Humanloop and running an experiment when using your own models.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/use-your-own-model",
     "title": "Use your own model",
@@ -7030,15 +6957,7 @@ output=output,
   },
   {
     "breadcrumbs": [],
-    "description": "This guide contains 3 sections. We'll start with an example Python script that makes a series of calls to an LLM upon receiving a user request. In the first section, we'll log these calls to Humanloop. In the second section, we'll link up these calls to a single session so they can be easily inspected on Humanloop. Finally, we'll explore how to deal with nested logs within a session.
-
-By following this guide, you will:
-
-- Have hooked up your backend system to use Humanloop.
-- Be able to view session traces displaying sequences of LLM calls on Humanloop.
-- Learn how to log complex session traces containing nested logs.
-
-",
+    "description": "This guide explains how to use sequences of LLM calls to achieve a task in Humanloop. Humanloop allows you to view a trace of these "sessions", enabling you to troubleshoot where your LLM chain went wrong or track sequences of actions taken by your LLM agent.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/chain-multiple-calls",
     "title": "Chain multiple calls",
@@ -7417,15 +7336,7 @@ This enables you to try out alternative prompts or models and use the feedback f
   },
   {
     "breadcrumbs": [],
-    "description": "Experiments allow you to set up A/B test between multiple different model configs.
-
-Experiments can be used to compare different prompt templates, different parameter combinations (such as temperature and presence penalties) and even different base models.
-
-This enables you to try out alternative prompts or models and use the feedback from your users to determine which works better.
-
-<img src="file:cd83fd70-5341-4788-8742-23b367909234" />
-
-",
+    "description": "Experiments help remove the guesswork from working with large language models.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/overview",
     "title": "Overview",
@@ -7656,9 +7567,7 @@ Generally, you should be able to draw some initial conclusions after on the orde
   },
   {
     "breadcrumbs": [],
-    "description": "Experiments can be used to compare different prompt templates, different parameter combinations (such as temperature and presence penalties) and even different base models.
-
-",
+    "description": "This guide shows you how to set up an experiment on Humanloop to systematically find the best-performing model configuration for your project based on your end-users’ feedback.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/run-an-experiment",
     "title": "Run an experiment",
@@ -7944,11 +7853,7 @@ Then, retrieve your model config from your experiment by calling \`humanloop.exp
   },
   {
     "breadcrumbs": [],
-    "description": "Experiments can be used to compare different prompt templates, different parameter combinations (such as temperature and presence penalties) and even different base models.
-
-**This guide focuses on the case where you wish to manage your own model provider calls.**
-
-",
+    "description": "How to set up an experiment on Humanloop with your own models.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/run-experiments-managing-your-own-model",
     "title": "Run experiments managing your own model",
@@ -8218,7 +8123,7 @@ A common question is how much data do I need to fine-tune effectively? Here we c
   },
   {
     "breadcrumbs": [],
-    "description": "",
+    "description": "In this guide we will demonstrate how to use Humanloop’s fine-tuning workflow to produce improved models leveraging your user feedback data.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/fine-tune-a-model",
     "title": "Fine-tune a model",
@@ -8600,13 +8505,7 @@ of its row to open its menu. ### Click **Revoke**. ### A confirmation dialog wil
   },
   {
     "breadcrumbs": [],
-    "description": "Inviting people to your organization allows them to interact with your Humanloop projects:
-
-- Teammates will be able to create new model configs and experiments
-- Developers will be able to get an API key to interact with projects through the SDK
-- Annotators may provide feedback on logged datapoints using the Data tab (in addition to feedback captured from your end-users via the SDK feedback integration)
-
-",
+    "description": "How to invite collaborators to your Humanloop organization.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/invite-collaborators",
     "title": "Invite collaborators",
@@ -8999,14 +8898,7 @@ Every organization will have a default environment. This can be updated by the f
   },
   {
     "breadcrumbs": [],
-    "description": "
-Environments enable you to deploy model configurations and experiments, making them accessible via API, while also maintaining a streamlined production workflow. These environments are created at the organizational level and can be utilized on a per-project basis. For detailed information on environments, please refer to our [Changelog](/reference/changelog).
-
-<Warning>
-Only Enterprise customers can create more than one environment
-</Warning>
-
-",
+    "description": "In this guide we will demonstrate how to create and use environments.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/deploy-to-environments",
     "title": "Deploy to environments",
@@ -9195,19 +9087,7 @@ Datasets can be created via CSV upload, converting from existing Logs in your pr
   },
   {
     "breadcrumbs": [],
-    "description": "Datasets are pre-defined collections of input-output pairs that you can use within Humanloop to define fixed examples for your projects.
-
-A datapoint consists of three things:
-
-- **Inputs**: a collection of prompt variable values which are interpolated into the prompt template of your model config at generation time (i.e. they replace the \`{{ variables }}\` you define in the prompt template.
-- **Messages**: for chat models, as well as the prompt template, you may have a history of prior chat messages from the same conversation forming part of the input to the next generation. Datapoints can have these messages included as part of the input.
-- **Target**: data representing the expected or intended output of the model. In the simplest case, this can simply be a string representing the exact output you hope the model produces for the example represented by the datapoint. In more complex cases, you can define an arbitrary JSON object for \`target\` with whatever fields are necessary to help you specify the intended behaviour. You can then use our [evaluations](/docs/evaluate-your-model)feature to run the necessary code to compare the actual generated output with your \`target\` data to determine whether the result was as expected.
-
-<img src="file:91c40c45-6db3-4557-8f8c-d1639a87a542" alt="Datapoints are pre-defined input-output pairs." />
-
-Datasets can be created via CSV upload, converting from existing Logs in your project, or by API requests.
-
-",
+    "description": "Datasets are collections of datapoints which represent input-output pairs for an LLM call.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/overview",
     "title": "Overview",
@@ -9549,10 +9429,7 @@ On the datasets tab in your Humanloop project you will now see the dataset you j
   },
   {
     "breadcrumbs": [],
-    "description": "
-You can currently create datasets in Humanloop in three ways: from existing **logs**, by uploading a **CSV** or via the **API**.
-
-",
+    "description": "Datasets can be created from existing logs or uploaded from CSV and via the API.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/create-a-dataset",
     "title": "Create a dataset",
@@ -9830,15 +9707,7 @@ The output the model produced is shown in the **output** column, and the exact m
   },
   {
     "breadcrumbs": [],
-    "description": "
-This guide demonstrates how to run a batch generation across all the datapoints in a dataset.
-
-**Prerequistes**
-
-- A [project](/docs/projects-2) in Humanloop
-- A [dataset](/docs/datasets) in that project
-
-",
+    "description": "Once you have created a dataset, you can trigger batch generations across it with any model config in your project.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/batch-generate",
     "title": "Batch generate",
@@ -10078,11 +9947,7 @@ In fact, it's possible to mix-and-match self-hosted and Humanloop-runtime genera
   },
   {
     "breadcrumbs": [],
-    "description": "A key part of successful prompt engineering and deployment for LLMs is a robust evaluation framework. In this section we provide guides for how to set up Humanloop's evaluation framework in your projects.
-
-The core entity in the Humanloop evaluation framework is an **evaluator** - a function you define which takes an LLM-generated log as an argument and returns an **evaluation**. The evaluation is typically either a boolean or a number, indicating how well the model performed according to criteria you determine based on your use case.
-
-",
+    "description": "Humanloop's evaluation framework allows you to test and track the performance of models in a rigorous way.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/overview",
     "title": "Overview",
@@ -10463,7 +10328,7 @@ To track the performance of different model configs in your project:
   },
   {
     "breadcrumbs": [],
-    "description": "",
+    "description": "In this guide, we will demonstrate how to create and use online evaluators to observe the performance of your models.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/evaluate-models-online",
     "title": "Evaluate models online",
@@ -10984,7 +10849,7 @@ return False
   },
   {
     "breadcrumbs": [],
-    "description": "",
+    "description": "In this guide, we will walk through creating a testset and using it to run an offline evaluation.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/evaluate-models-offline",
     "title": "Evaluate models offline",
@@ -11929,8 +11794,7 @@ dataset_id=dataset_id,
   },
   {
     "breadcrumbs": [],
-    "description": "
-",
+    "description": "In this guide, we'll walk through an example of using our API to create testsets and trigger an evaluation.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/set-up-evaluations-using-api",
     "title": "Set up evaluations using API",
@@ -12470,11 +12334,7 @@ Note that in order to get access to the fully populated prompt that was sent in 
   },
   {
     "breadcrumbs": [],
-    "description": "As well as using Python code to evaluate logs, you can also create special-purpose prompts for LLMs to evaluate logs too.
-
-In this guide, we'll show how to set up LLM evaluations.
-
-",
+    "description": "In this guide, we will set up an LLM evaluator to check for PII (Personally Identifiable Information) in logs.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/use-ll-ms-to-evaluate-logs",
     "title": "Use LLMs to evaluate logs",
@@ -12915,13 +12775,7 @@ humanloop.evaluations.update_status(id=evaluation_run.id, status="completed")
   },
   {
     "breadcrumbs": [],
-    "description": "For some use cases, you may wish to run your evaluation process outside of Humanloop, as opposed to running the evaluators we offer in our Humanloop runtime.
-
-For example, you may have implemented an evaluator that uses your own custom model or which has to interact with multiple systems. In these cases, you can continue to leverage the datasets you have curated on Humanloop, as well as consolidate all of the results alongside the prompts you maintain in Humanloop.
-
-In this guide, we'll show an example of setting up a simple script to run such a self-hosted evaluation using our Python SDK.
-
-",
+    "description": "In this guide, we'll show how to run an evaluation in your own infrastructure and post the results to Humanloop.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/self-hosted-evaluations",
     "title": "Self-hosted evaluations",
@@ -13533,16 +13387,7 @@ It's also a good practice to wrap the above code in a try-except block and to ma
   },
   {
     "breadcrumbs": [],
-    "description": "
-If you are running your own infrastructure to generate logs, you can still leverage the Humanloop evaluations suite via our API. The workflow looks like this:
-
-1. Trigger creation of an evaluation run
-2. Loop through the datapoints in your dataset and perform generations on your side
-3. Post the generated logs to the evaluation run
-
-This works with any evaluator - if you have configured a Humanloop-runtime evaluator, these will be automatically run on each log you post to the evaluation run; or, you can use self-hosted evaluators and post the results to the evaluation run yourself (see [Self-hosted evaluations](/docs/self-hosted-evaluations)).
-
-",
+    "description": "In this guide, we'll demonstrate an evaluation run workflow where logs are generated outside the Humanloop environment and posted via API.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/evaluating-externally-generated-logs",
     "title": "Evaluating externally generated logs",
@@ -13931,7 +13776,7 @@ It's also a good practice to wrap the above code in a try-except block and to ma
   },
   {
     "breadcrumbs": [],
-    "description": "",
+    "description": "This guide demonstrates how to run a batch generation and collect manual human feedback.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/evaluating-with-human-feedback",
     "title": "Evaluating with human feedback",
@@ -14106,7 +13951,7 @@ Tools for function calling can be defined inline in our Editor or centrally mana
   },
   {
     "breadcrumbs": [],
-    "description": "",
+    "description": "Improve your LLMs with external data sources and integrations.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/overview",
     "title": "Overview",
@@ -14359,11 +14204,7 @@ get_current_weather
   },
   {
     "breadcrumbs": [],
-    "description": "Humanloop's Editor supports the usage of [OpenAI function calling](https://platform.openai.com/docs/guides/function-calling/function-calling), which we refer to as JSON Schema tools. JSON Schema tools follow the universal [JSON Schema syntax](https://json-schema.org/) definition, similar to OpenAI function calling. You can define inline JSON Schema tools as part of your model configuration in the editor. These tools allow you to define a structure for OpenAI to follow when responding. In this guide, we'll walk through the process of using tools in the editor to interact with \`gpt-4\`.
-
-***
-
-",
+    "description": "In this guide we will demonstrate how to take advantage of OpenAI function calling in our Editor.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/in-the-editor",
     "title": "In the Editor",
@@ -14997,11 +14838,7 @@ print(response)
   },
   {
     "breadcrumbs": [],
-    "description": "The Humanloop SDK provides an easy way for you to integrate the functionality of [OpenAI function calling](https://platform.openai.com/docs/guides/function-calling/function-calling), which we refer to as JSON Schema tools, into your existing projects. Tools follow the same universal [JSON Schema syntax](https://json-schema.org/) definition as OpenAI function calling. In this guide, we'll walk you through the process of using tools with the Humanloop SDK via the chat endpoint.
-
-***
-
-",
+    "description": "In this guide we will demonstrate how to take advantage of OpenAI function calling in our Python SDK",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/with-the-sdk",
     "title": "With the SDK",
@@ -17224,9 +17061,7 @@ You can find the signature in the pink box on each tool card on t",
   },
   {
     "breadcrumbs": [],
-    "description": "Visit our [Github examples repo](https://github.com/humanloop/examples) for a collection of usage examples of Humanloop.
-
-",
+    "description": "A growing collection of example projects demonstrating usage of Humanloop.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/example-projects",
     "title": "Example Projects",
@@ -17333,52 +17168,7 @@ const chatResponse = await humanloop.chatDeployed({
   },
   {
     "breadcrumbs": [],
-    "description": "<img src="file:b62b87e2-0620-4d28-824e-41b10e6ca8f4" />
-
-Prompts define how an large language model (LLM) behaves.
-
-Large language models take in natural language, code, images and other data types as inputs and output text. Defining the inputs to the model is essentially how you “program” the model to do a task.
-
-A Prompt on Humanloop encapsulates the instructions and other configurations for how it should do a specific task. Prompts consist of a template such as \`Write a song about {{topic}}\` as well as the model and the parameters that define how it behaves.
-
-Inputs are defined in the template through the double-curly bracket syntax e.g. \`{{topic}}\` and the value to variable will need to be supplied at query time.
-
-This separation of concerns, keeping configuration separate from the query time data, is crucial for enabling you to experiment with different instructions, models and evaluate any changes. The configuration is stored in the Prompt and the query time data are stored in Logs, which can then be re-used in Datasets.
-
-A Prompt can be serialized as a Promptfile.
-
-\`\`\`jsx
----
-model: gpt-4
-temperature: 1.0
-max_tokens: -1
-provider: openai
-endpoint: chat
----
-<system>
-Write a song about {{topic}}
-</system>
-\`\`\`
-
-You should create a new Prompt for every different ‘task to be done’ with the LLM. For example each of these tasks are things that can be done by an LLM and should be a separate Prompt File: extractive summary, title creator, outline generator etc.
-
-A Prompt file can have multiple versions as you try out different models, params or templates, but they should all be doing the same task, and in general should be swappable with one-another.
-
-By versioning your Prompts, you can track how adjustments to the template or parameters influence the LLM's responses. This is crucial for iterative development, as you can pinpoint which versions produce the most relevant or accurate outputs for your specific use case.
-
-Prompts are callable as an API. You supply and query-time data such as input values or user messages, and the model will respond with its text output
-
-\`\`\`java JavaScript
-
-const chatResponse = await humanloop.chatDeployed({
-"project": "song writer",
-"inputs" : {
-"topic": "debugging compiler errors"
-},
-})
-\`\`\`
-
-",
+    "description": "Prompts define how an large language model behaves.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/prompts",
     "title": "Prompts",
@@ -17609,19 +17399,7 @@ In this way you benefit from being able to see the logs, and version your tool, 
   },
   {
     "breadcrumbs": [],
-    "description": "<img src="file:ef1a06c6-c964-4f68-99ab-db2a3918bbf7" />
-
-Tools are functions that can extend your LLMs with access to external data sources and enabling them to take actions.
-
-Humanloop Tools can be used in multiple ways:
-
-- within the Prompt template
-- provided to the LLM as something it can call (think [OpenAI Function calling](https://platform.openai.com/docs/guides/function-calling))
-- as part of a chain of LLM calls and other events, such as a Retrieval Tool in a RAG pipeline
-
-Some Tools are executable within Humanloop, and these offer the greatest utility and convenience. For example Google and Pinecone have pre-built integrations and so so Tools that use them can be automatically performed and inserted into the right place.
-
-",
+    "description": "Tools are functions that can extend your LLMs with access to external data sources and enabling them to take actions.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/tools",
     "title": "Tools",
@@ -17761,25 +17539,7 @@ Datasets can be created via CSV upload, converting from existing Logs in your pr
   },
   {
     "breadcrumbs": [],
-    "description": "<img src="file:e60e6baa-b0ac-4823-bd81-af9aefbdf292" />
-
-
-Datasets are collections of input-output pairs that you can use within Humanloop for evaluations and fine-tuning.
-
-A datapoint consists of three things:
-
-- **Inputs**: a collection of prompt variable values which are interpolated into the prompt template of your model config at generation time (i.e. they replace the \`{{ variables }}\` you define in the prompt template).
-- **Messages**: for chat models, as well as the prompt template, you may have a history of prior chat messages from the same conversation forming part of the input to the next generation. Datapoints can have these messages included as part of the input.
-- **Target**: data representing the expected or intended output of the model. In the simplest case, this can simply be a string representing the exact output you hope the model produces for the example represented by the datapoint. In more complex cases, you can define an arbitrary JSON object for \`target\` with whatever fields are necessary to help you specify the intended behaviour. You can then use our evaluations feature to run the necessary code to compare the actual generated output with your \`target\` data to determine whether the result was as expected.
-
-<br />
-
-<img src="file:3e36b7b0-9c7d-4d95-873a-0871c6773959" />
-
-
-Datasets can be created via CSV upload, converting from existing Logs in your project, or by API requests.
-
-",
+    "description": "Datasets are collections of input-output pairs that you can use within Humanloop for evaluations and fine-tuning.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/datasets",
     "title": "Datasets",
@@ -17975,16 +17735,7 @@ In fact, it's possible to mix-and-match self-hosted and Humanloop-runtime genera
   },
   {
     "breadcrumbs": [],
-    "description": "<img src="file:dac5d1e8-522d-4b1f-86c3-9225df37dd2f" />
-
-
-Evaluators on Humanloop are functions that can be used to judge the output of Prompts, Tools or other Evaluators
-
-Evaluators are functions which takes an LLM-generated Log as an argument and returns an **evaluation**. The evaluation is typically either a boolean or a number, indicating how well the model performed according to criteria you determine based on your use case.
-
-Evaluators can be used for monitoring live data as well as running evaluations.
-
-",
+    "description": "Evaluators on Humanloop are functions that can be used to judge the output of Prompts, Tools or other Evaluators.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/evaluators",
     "title": "Evaluators",
@@ -18488,11 +18239,7 @@ The **Chat** collection is the best place to start to get a project setup and se
   },
   {
     "breadcrumbs": [],
-    "description": "In our various guides we assumed the use of our [Python SDK](https://pypi.org/project/humanloop/). There are some use cases where this is not appropriate. For example, if you are integrating Humanloop from a non-Python backend, such as Node.js, or using a no-or-low-code builder such as [Bubble](https://bubble.io/) or [Zapier](https://zapier.com/). In these cases, you can leverage our RESTful [APIs](/reference/projects/get) directly.
-
-To help with direct API integrations, we maintain a [Postman Workspace](https://www.postman.com/humanloop/workspace/humanloop) with various worked examples for the main endpoints you will need.
-
-",
+    "description": "A companion to our API references.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/postman-workspace",
     "title": "Postman Workspace",
@@ -18915,9 +18662,7 @@ Cloudy with a chance of meatballs.
   },
   {
     "breadcrumbs": [],
-    "description": "Our \`.prompt\` file format is a serialized version of a model config that is designed to be human-readable and suitable for checking into your version control systems alongside your code.
-
-",
+    "description": "Our file format for serialising prompts to store alongside your source code.",
     "indexSegmentId": "v4.0-constant",
     "slug": "docs/prompt-files",
     "title": ".prompt files",
@@ -19362,8 +19107,7 @@ The service is temporarily overloaded and you should try again.
   },
   {
     "breadcrumbs": [],
-    "description": "
-",
+    "description": "In the event an issue occurs with our system, or with one of the model providers we integrate with, our API will raise a predictable and interpretable error.",
     "indexSegmentId": "v4.0-constant",
     "slug": "reference/errors",
     "title": "Errors",
@@ -23034,26 +22778,7 @@ You can learn more about the challenges of AI development and how Humanloop solv
   },
   {
     "breadcrumbs": [],
-    "description": "
-Humanloop enables product teams to develop LLM-based applications that are reliable and scalable.
-
-Principally, it is an **evaluation suite** to enable you to rigorously measure and improve LLM performance during development and in production and a **collaborative workspace** where engineers, PMs and subject matter experts improve prompts, tools and agents together.
-
-By adopting Humanloop, teams save 6-8 engineering hours each week through better workflows and they feel confident that their AI is reliable.
-
-<Bleed>
-<Frame caption="Humanloop's IDE for LLMs helps teams prompt engineer and evaluate LLM applications.">
-<img src="file:f5afe711-c6fa-407b-ba00-52ae77e3d459" />
-</Frame>
-</Bleed>
-
-<br />
-
-The power of Humanloop lies in its integrated approach to AI development. Evaluation, monitoring and prompt engineering in one platform enables you to understand system performance and take the actions needed to fix it. Additionally, the SDK slots seamlessly into your existing code-based orchestration and the user-friendly interface allows both developers and non-technical stakeholders to adjust the AI together.
-
-You can learn more about the challenges of AI development and how Humanloop solves them in [Why Humanloop?](/docs/why-humanloop).
-
-",
+    "description": "Humanloop is an Integrated Development Environment for Large Language Models",
     "indexSegmentId": "v5.0-constant",
     "slug": "guides/getting-started/overview",
     "title": "Overview",
@@ -25303,16 +25028,7 @@ It's also a good practice to wrap the above code in a try-except block and to ma
   },
   {
     "breadcrumbs": [],
-    "description": "
-If you are running your own infrastructure to generate logs, you can still leverage the Humanloop evaluations suite via our API. The workflow looks like this:
-
-1. Trigger creation of an evaluation run
-2. Loop through the datapoints in your dataset and perform generations on your side
-3. Post the generated logs to the evaluation run
-
-This works with any evaluator - if you have configured a Humanloop-runtime evaluator, these will be automatically run on each log you post to the evaluation run; or, you can use self-hosted evaluators and post the results to the evaluation run yourself (see [Self-hosted evaluations](/docs/self-hosted-evaluations)).
-
-",
+    "description": "In this guide, we'll demonstrate an evaluation run workflow where logs are generated outside the Humanloop environment and posted via API.",
     "indexSegmentId": "v5.0-constant",
     "slug": "guides/guides/evaluate-your-model/evaluating-externally-generated-logs",
     "title": "Evaluating externally generated logs",
@@ -26817,8 +26533,7 @@ The service is temporarily overloaded and you should try again.
   },
   {
     "breadcrumbs": [],
-    "description": "
-",
+    "description": "In the event an issue occurs with our system, or with one of the model providers we integrate with, our API will raise a predictable and interpretable error.",
     "indexSegmentId": "v5.0-constant",
     "slug": "api-reference/introduction/errors",
     "title": "Errors",
