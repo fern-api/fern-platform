@@ -60,7 +60,7 @@
     }
 
     .clipped-background {
-        @apply pointer-events-none absolute -z-10 h-full w-full overflow-hidden;
+        @apply pointer-events-none absolute top-0 -z-10 h-full w-full overflow-hidden;
 
         clip-path: inset(0);
     }

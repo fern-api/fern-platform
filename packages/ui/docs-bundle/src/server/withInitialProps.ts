@@ -66,8 +66,8 @@ export async function withInitialProps({
     }
 
     const featureFlags = await getFeatureFlags(domain);
-
     const authConfig = await getAuthEdgeConfig(domain);
+
     const loader = DocsLoader.for(domain)
         .withFeatureFlags(featureFlags)
         .withAuth(authConfig, auth)
@@ -104,11 +104,6 @@ export async function withInitialProps({
                 }
             }
         }
-
-        // TODO: returning "notFound: true" here will render vercel's default 404 page
-        // this is better than following redirects, since it will signal a proper 404 status code.
-        // however, we should consider rendering a custom 404 page in the future using the customer's branding.
-        // see: https://nextjs.org/docs/app/api-reference/file-conventions/not-found
 
         if (featureFlags.is404PageHidden && node.redirect != null) {
             return {
