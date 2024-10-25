@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { ApiDefinitionV1ToLatest } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -33,9 +34,16 @@ export async function resolveDocsContent({
     serializeMdx: MDX_SERIALIZER;
     engine: string;
 }): Promise<DocsContent | undefined> {
+    console.log("Starting resolveDocsContent");
+    console.time("resolveDocsContent");
+
+    console.time("getNeighbors");
     const neighbors = await getNeighbors(found, pages, serializeMdx);
+    console.timeEnd("getNeighbors");
+
     const { node, apiReference, parents, breadcrumb } = found;
 
+    console.time("createMarkdownLoader");
     const markdownLoader = MarkdownLoader.create(host)
         .withPages(pages)
         .withMdxBundler(
@@ -46,7 +54,9 @@ export async function resolveDocsContent({
                 }),
             engine,
         );
+    console.timeEnd("createMarkdownLoader");
 
+    console.time("createApiLoaders");
     const apiLoaders = mapValues(apis, (api) => {
         return ApiDefinitionLoader.create(host, api.id)
             .withMdxBundler(serializeMdx, engine)
@@ -55,9 +65,13 @@ export async function resolveDocsContent({
             .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
             .withResolveDescriptions();
     });
+    console.timeEnd("createApiLoaders");
 
+    let result: DocsContent | undefined;
+
+    console.time("resolveContent");
     if (node.type === "changelog") {
-        return resolveChangelogPage({
+        result = await resolveChangelogPage({
             node,
             breadcrumb,
             pages,
@@ -65,7 +79,7 @@ export async function resolveDocsContent({
             serializeMdx,
         });
     } else if (node.type === "changelogEntry") {
-        return resolveChangelogEntryPage({
+        result = await resolveChangelogEntryPage({
             node,
             parents,
             breadcrumb,
@@ -76,7 +90,7 @@ export async function resolveDocsContent({
         });
     } else if (apiReference != null && apiReference.paginated && FernNavigation.hasMarkdown(node)) {
         // if long scrolling is disabled, we should render a markdown page by itself
-        return resolveMarkdownPage({
+        result = await resolveMarkdownPage({
             node,
             found,
             apiLoaders,
@@ -86,30 +100,29 @@ export async function resolveDocsContent({
     } else if (apiReference != null) {
         const loader = apiLoaders[apiReference.apiDefinitionId];
         if (loader == null) {
-            // eslint-disable-next-line no-console
             console.error("API definition not found", apiReference.apiDefinitionId);
             return;
         }
 
         if (apiReference.paginated && FernNavigation.isApiLeaf(node)) {
-            return resolveApiEndpointPage({
+            result = await resolveApiEndpointPage({
                 node,
                 parents,
                 apiDefinitionLoader: loader,
                 neighbors,
                 showErrors: apiReference.showErrors,
             });
+        } else {
+            result = await resolveApiReferencePage({
+                node,
+                apiDefinitionLoader: loader,
+                apiReferenceNode: apiReference,
+                parents,
+                markdownLoader,
+            });
         }
-
-        return resolveApiReferencePage({
-            node,
-            apiDefinitionLoader: loader,
-            apiReferenceNode: apiReference,
-            parents,
-            markdownLoader,
-        });
     } else if (FernNavigation.hasMarkdown(node)) {
-        return resolveMarkdownPage({
+        result = await resolveMarkdownPage({
             node,
             found,
             apiLoaders,
@@ -117,13 +130,14 @@ export async function resolveDocsContent({
             markdownLoader,
         });
     }
+    console.timeEnd("resolveContent");
 
-    /**
-     * This should never happen, but if it does, we should log it and return undefined
-     */
-    // eslint-disable-next-line no-console
-    console.error(`Failed to resolve content for ${node.slug}`);
-    return undefined;
+    if (result === undefined) {
+        console.error(`Failed to resolve content for ${node.slug}`);
+    }
+
+    console.timeEnd("resolveDocsContent");
+    return result;
 }
 
 async function getNeighbor(
@@ -134,7 +148,9 @@ async function getNeighbor(
     if (node == null) {
         return null;
     }
+    console.time(`resolveSubtitle for ${node.slug}`);
     const excerpt = await resolveSubtitle(node, pages, serializeMdx);
+    console.timeEnd(`resolveSubtitle for ${node.slug}`);
     return {
         slug: node.slug,
         title: node.title,
@@ -147,9 +163,11 @@ async function getNeighbors(
     pages: Record<string, DocsV1Read.PageContent>,
     serializeMdx: MDX_SERIALIZER,
 ): Promise<DocsContent.Neighbors> {
+    console.time("getNeighbors");
     const [prev, next] = await Promise.all([
         getNeighbor(node.prev, pages, serializeMdx),
         getNeighbor(node.next, pages, serializeMdx),
     ]);
+    console.timeEnd("getNeighbors");
     return { prev, next };
 }

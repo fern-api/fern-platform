@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionLoader, MarkdownLoader } from "@fern-ui/fern-docs-server";
 import type { DocsContent } from "./DocsContent";
@@ -18,11 +19,13 @@ export async function resolveApiReferencePage({
     apiDefinitionLoader,
     markdownLoader,
 }: ResolveApiReferencePageOpts): Promise<DocsContent.ApiReferencePage | undefined> {
+    console.log("Starting resolveApiReferencePage");
+    console.time("resolveApiReferencePage");
+
     const apiDefinition = await apiDefinitionLoader.load();
 
     if (!apiDefinition) {
         // TODO: sentry
-        // eslint-disable-next-line no-console
         console.error(`Failed to load API definition for ${node.slug}`);
         return;
     }
@@ -32,14 +35,12 @@ export async function resolveApiReferencePage({
     const apiReferenceNodeIdx = parents.findIndex((parent) => parent.id === apiReferenceNode.id);
     if (apiReferenceNodeIdx === -1) {
         // TODO: sentry
-        // eslint-disable-next-line no-console
         console.error("Could not find api reference node in parents");
     }
 
     const sidebarRootNodeIdx = parents.findIndex((parent) => parent.type === "sidebarRoot");
     if (sidebarRootNodeIdx === -1) {
         // TODO: sentry
-        // eslint-disable-next-line no-console
         console.error("Failed to find sidebar root node");
     }
 
@@ -51,6 +52,7 @@ export async function resolveApiReferencePage({
 
     const breadcrumb = FernNavigation.utils.createBreadcrumb(apiReferenceNodeParents);
 
+    console.log("Traversing API reference node");
     FernNavigation.traverseDF(apiReferenceNode, (node, parents) => {
         if (!FernNavigation.hasMarkdown(node)) {
             return;
@@ -58,6 +60,8 @@ export async function resolveApiReferencePage({
         nodes.push([node, [...breadcrumb, ...FernNavigation.utils.createBreadcrumb(parents)]]);
     });
 
+    console.log("Resolving markdown pages");
+    console.time("resolveMdxs");
     const mdxs = Object.fromEntries(
         (
             await Promise.all(
@@ -80,7 +84,9 @@ export async function resolveApiReferencePage({
                 entry[1] != null,
         ),
     );
+    console.timeEnd("resolveMdxs");
 
+    console.timeEnd("resolveApiReferencePage");
     return {
         type: "api-reference-page",
         slug: node.slug,
