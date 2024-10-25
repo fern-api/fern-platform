@@ -9,7 +9,6 @@ import {
     visitDbNavigationTab,
 } from "@fern-api/fdr-sdk";
 import { EndpointPathPart } from "@fern-api/fdr-sdk/src/client/APIV1Read";
-import { Frontmatter } from "@fern-api/fdr-sdk/src/docs";
 import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { kebabCase } from "es-toolkit/string";
 import { v4 as uuid } from "uuid";
@@ -104,7 +103,9 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
         const { frontmatter, content } = getFrontmatter(rawMarkdown);
         const markdownTree = getMarkdownSectionTree(rawMarkdown, title);
         const description = truncateToBytes(
-            frontmatter.description ?? frontmatter.subtitle ?? markdownTree.content ?? content,
+            `${frontmatter.title}
+            ${frontmatter.description}
+            ${frontmatter.subtitle}`,
             9500,
         );
         const markdownSectionRecords = getMarkdownSections(markdownTree, breadcrumbs, indexSegment.id, fdrSlug).map(
@@ -113,10 +114,11 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
 
         markdownSectionRecords.push(
             compact({
-                type: "page-v4",
+                type: "markdown-section-v1",
                 objectID: uuid(),
                 title: frontmatter.title ?? title,
                 description,
+                content: "",
                 breadcrumbs,
                 slug: fdrSlug,
                 version,
