@@ -97,7 +97,10 @@
     "serve-static": "1.16.0",
     "send": "0.19.0",
     "fast-loops": "1.1.4",
-    "body-parser": "1.20.3"
+    "body-parser": "1.20.3",
+    "cookie": "0.7.0",
+    "elliptic": "6.5.7",
+    "jsonpath-plus": "10.0.0"
   },
   "dependenciesMeta": {
     "jsonc-parser@2.2.1": {
