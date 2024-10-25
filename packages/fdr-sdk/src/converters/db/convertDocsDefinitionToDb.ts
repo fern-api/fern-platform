@@ -1,5 +1,6 @@
 import assertNever from "@fern-api/ui-core-utils/assertNever";
 import { kebabCase } from "es-toolkit/string";
+import { FernNavigation } from "../..";
 import {
     DocsV1Db,
     DocsV1Read,
@@ -81,7 +82,7 @@ export function convertDocsDefinitionToDb({
 
     return {
         type: "v3",
-        referencedApis: navigationConfig != null ? getReferencedApiDefinitionIds(navigationConfig) : [],
+        referencedApis: getReferencedApiDefinitionIds(navigationConfig, writeShape.config.root),
         files: transformedFiles,
         config: {
             navigation: navigationConfig,
@@ -277,12 +278,26 @@ export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationI
     }
 }
 
-export function getReferencedApiDefinitionIds(navigationConfig: DocsV1Db.NavigationConfig): FdrAPI.ApiDefinitionId[] {
-    return visitDbNavigationConfig(navigationConfig, {
-        unversioned: (config) => getReferencedApiDefinitionIdsForUnversionedReadConfig(config),
-        versioned: (config) =>
-            config.versions.flatMap((version) => getReferencedApiDefinitionIdsForUnversionedReadConfig(version.config)),
-    });
+export function getReferencedApiDefinitionIds(
+    navigationConfig: DocsV1Db.NavigationConfig | undefined,
+    root: FernNavigation.V1.RootNode | undefined,
+): FdrAPI.ApiDefinitionId[] {
+    if (root != null) {
+        const latest = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(root);
+        return FernNavigation.utils.collectApiReferences(latest).map((reference) => reference.apiDefinitionId);
+    }
+
+    if (navigationConfig != null) {
+        return visitDbNavigationConfig(navigationConfig, {
+            unversioned: (config) => getReferencedApiDefinitionIdsForUnversionedReadConfig(config),
+            versioned: (config) =>
+                config.versions.flatMap((version) =>
+                    getReferencedApiDefinitionIdsForUnversionedReadConfig(version.config),
+                ),
+        });
+    }
+
+    return [];
 }
 
 function getReferencedApiDefinitionIdsForUnversionedReadConfig(

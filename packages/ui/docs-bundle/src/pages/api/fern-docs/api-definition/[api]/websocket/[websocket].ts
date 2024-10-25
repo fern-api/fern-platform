@@ -14,21 +14,21 @@ const resolveApiHandler: NextApiHandler = async (req, res: NextApiResponse<ApiDe
 
     // TODO: this auth needs to be more granular: the user should only have access to this api definition if
     // - the api definition belongs to this org
-    // - the user has view access to the the api definition based on their audience
+    // - the user has view access to the the api definition based on their roles
     const authState = await getAuthStateNode(req);
 
     if (!authState.ok) {
         return res.status(authState.authed ? 403 : 401).end();
     }
 
-    const flags = await getFeatureFlags(authState.host);
+    const flags = await getFeatureFlags(authState.domain);
 
     // TODO: pass in other tsx/mdx files to serializeMdx options
     const engine = flags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
     const serializeMdx = await getMdxBundler(engine);
 
     // TODO: authenticate the request in FDR
-    const apiDefinition = await ApiDefinitionLoader.create(authState.host, ApiDefinition.ApiDefinitionId(api))
+    const apiDefinition = await ApiDefinitionLoader.create(authState.domain, ApiDefinition.ApiDefinitionId(api))
         .withFlags(flags)
         .withMdxBundler(serializeMdx, engine)
         .withPrune({ type: "webSocket", webSocketId: ApiDefinition.WebSocketId(websocket) })

@@ -55,12 +55,16 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             const customUrls = parseCustomDomainUrls({ customUrls: req.body.customDomains });
 
             // ensure that the domains are not already registered by another org
-            const hasOwnership = await app.dao.docsV2().checkDomainsDontBelongToAnotherOrg(
-                [fernUrl, ...customUrls].map((url) => url.getFullUrl()),
-                req.body.orgId,
-            );
+            const { allDomainsOwned: hasOwnership, unownedDomains } = await app.dao
+                .docsV2()
+                .checkDomainsDontBelongToAnotherOrg(
+                    [fernUrl, ...customUrls].map((url) => url.getFullUrl()),
+                    req.body.orgId,
+                );
             if (!hasOwnership) {
-                throw new DomainBelongsToAnotherOrgError("Domain belongs to another org");
+                throw new DomainBelongsToAnotherOrgError(
+                    `The following domains belong to another organization: ${unownedDomains.join(", ")}`,
+                );
             }
 
             const docsRegistrationId = DocsV1Write.DocsRegistrationId(uuidv4());

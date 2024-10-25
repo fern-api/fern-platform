@@ -86,17 +86,18 @@ exports[`uploadcare > gets navigation root for /docs/file-management 1`] = `
 
 exports[`uploadcare > gets navigation root for /docs/file-management/overview 1`] = `
 {
-  "audience": undefined,
   "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": undefined,
   "icon": undefined,
   "id": "root.uv.docs.docs.file-management.overview",
   "noindex": undefined,
+  "orphaned": undefined,
   "pageId": "pages/start/file-management.mdx",
   "slug": "docs/file-management/overview",
   "title": "Overview",
   "type": "page",
+  "viewers": undefined,
 }
 `;
 
@@ -120,17 +121,18 @@ exports[`uploadcare > gets navigation root for /docs/introduction 1`] = `
 
 exports[`uploadcare > gets navigation root for /docs/introduction/intro 1`] = `
 {
-  "audience": undefined,
   "authed": undefined,
   "canonicalSlug": undefined,
   "hidden": undefined,
   "icon": undefined,
   "id": "root.uv.docs.docs.introduction.intro",
   "noindex": undefined,
+  "orphaned": undefined,
   "pageId": "pages/index.mdx",
   "slug": "docs/introduction/intro",
   "title": "Overview",
   "type": "page",
+  "viewers": undefined,
 }
 `;
 

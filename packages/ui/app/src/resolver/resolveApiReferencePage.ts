@@ -18,12 +18,19 @@ export async function resolveApiReferencePage({
     apiDefinitionLoader,
     markdownLoader,
 }: ResolveApiReferencePageOpts): Promise<DocsContent.ApiReferencePage | undefined> {
-    const apiDefinition = await apiDefinitionLoader.load();
+    const loader = apiDefinitionLoader.clone();
+
+    // prune the api definition loader to include only the nodes that are visible to the current user.
+    FernNavigation.traverseDF(apiReferenceNode, (node) => {
+        if (FernNavigation.isApiLeaf(node)) {
+            loader.withPrune(node);
+        }
+    });
+
+    const apiDefinition = await loader.load();
 
     if (!apiDefinition) {
         // TODO: sentry
-        // eslint-disable-next-line no-console
-        console.error(`Failed to load API definition for ${node.slug}`);
         return;
     }
 
@@ -32,15 +39,11 @@ export async function resolveApiReferencePage({
     const apiReferenceNodeIdx = parents.findIndex((parent) => parent.id === apiReferenceNode.id);
     if (apiReferenceNodeIdx === -1) {
         // TODO: sentry
-        // eslint-disable-next-line no-console
-        console.error("Could not find api reference node in parents");
     }
 
     const sidebarRootNodeIdx = parents.findIndex((parent) => parent.type === "sidebarRoot");
     if (sidebarRootNodeIdx === -1) {
         // TODO: sentry
-        // eslint-disable-next-line no-console
-        console.error("Failed to find sidebar root node");
     }
 
     // get all the parents of the api reference node (excluding the api reference node itself) up to the sidebar root node

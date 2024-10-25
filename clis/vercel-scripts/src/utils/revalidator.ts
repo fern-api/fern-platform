@@ -17,6 +17,7 @@ export class FernDocsRevalidator {
         this.teamId = teamId;
     }
 
+    // TODO: this should not be using vercel as the source of truth for domains becuase vercel's domain list does not include all subpath (proxied) domains.
     private async *getProductionDomains(): AsyncGenerator<Vercel.GetProjectDomainsResponseDomainsItem, void, unknown> {
         let cursor: number | undefined = undefined;
         do {

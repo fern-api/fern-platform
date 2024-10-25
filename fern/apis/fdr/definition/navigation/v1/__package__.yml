@@ -315,15 +315,21 @@ types:
         type: NodeId
         docs: A unique, stable identifier for this node.
 
+  WithPermissions:
+    properties:
+      viewers: optional<list<commons.RoleId>>
+      orphaned: optional<boolean>
+
   WithNodeMetadata:
-    extends: WithNodeId
+    extends:
+      - WithNodeId
+      - WithPermissions
     properties:
       title: string
       slug: Slug
       icon: optional<string>
       hidden: optional<boolean>
       authed: optional<boolean>
-      audience: optional<list<commons.AudienceId>>
 
   WithPage:
     properties:
