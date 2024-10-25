@@ -16,18 +16,19 @@ import {
     getGitHubRepo,
     getSeoProps,
     renderThemeStylesheet,
-    resolveDocsContent,
 } from "@fern-ui/ui";
 import { getMdxBundler } from "@fern-ui/ui/bundlers";
-import { GetServerSidePropsResult } from "next";
+import { GetServerSidePropsResult, Redirect } from "next";
 import { ComponentProps } from "react";
 import urlJoin from "url-join";
 import { DocsLoader } from "./DocsLoader";
-import type { AuthState } from "./auth/getAuthState";
+import { addLeadingSlash } from "./addLeadingSlash";
+import { getAuthState } from "./auth/getAuthState";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";
-import { pruneNavigationPredicate, withPrunedSidebar } from "./withPrunedSidebar";
+import { pruneNavigationPredicate, withPrunedNavigation } from "./withPrunedNavigation";
+import { withResolvedDocsContent } from "./withResolvedDocsContent";
 import { withVersionSwitcherInfo } from "./withVersionSwitcherInfo";
 
 interface WithInitialProps {
@@ -41,7 +42,7 @@ interface WithInitialProps {
      * Hostname of this request (i.e. localhost, or preview URL, otherwise the docs domain in production)
      */
     host: string;
-    auth?: AuthState;
+    fern_token: string | undefined;
 }
 
 export async function withInitialProps({
@@ -49,99 +50,82 @@ export async function withInitialProps({
     slug,
     domain,
     host,
-    auth,
+    fern_token,
 }: WithInitialProps): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
     if (!docsResponse.ok) {
         return handleLoadDocsError(domain, slug, docsResponse.error);
     }
 
     const docs = docsResponse.body;
-    const docsDefinition = docs.definition;
-    const docsConfig = docsDefinition.config;
 
-    const redirect = getRedirectForPath(urlJoin("/", slug), docs.baseUrl, docsConfig.redirects);
-
+    // check for redirects
+    const redirect = getRedirectForPath(addLeadingSlash(slug), docs.baseUrl, docs.definition.config.redirects);
     if (redirect != null) {
         return redirect;
     }
 
-    const featureFlags = await getFeatureFlags(domain);
-    const authConfig = await getAuthEdgeConfig(domain);
+    // load from edge config
+    const [featureFlags, authConfig] = await Promise.all([getFeatureFlags(domain), getAuthEdgeConfig(domain)]);
+    const authState = await getAuthState(domain, host, fern_token, addLeadingSlash(slug), authConfig);
 
-    const loader = DocsLoader.for(domain)
+    // create loader (this will load all nodes)
+    const loader = DocsLoader.for(domain, host)
         .withFeatureFlags(featureFlags)
-        .withAuth(authConfig, auth)
+        .withAuth(authConfig, authState)
         .withLoadDocsForUrlResponse(docs);
 
+    // get the root node
     const root = await loader.root();
 
     // this should not happen, but if it does, we should return a 404
     if (root == null) {
+        // TODO: sentry
+        // eslint-disable-next-line no-console
+        console.error("Root node not found");
         return { notFound: true };
     }
 
     // if the root has a slug and the current slug is empty, redirect to the root slug, rather than 404
     if (root.slug.length > 0 && slug.length === 0) {
-        return {
-            redirect: {
-                destination: encodeURI(urlJoin("/", root.slug)),
-                permanent: false,
-            },
-        };
+        return withRedirect(root.slug);
     }
 
-    const node = FernNavigation.utils.findNode(root, slug);
+    // find the node that is currently being viewed
+    const found = FernNavigation.utils.findNode(root, slug);
 
-    if (node.type === "notFound") {
-        // this is a special case where the user is not authenticated, and the page requires authentication,
-        // but the user is trying to access a page that is not found. in this case, we should redirect to the auth page.
-        if (authConfig?.type === "basic_token_verification" && auth == null) {
-            const original = await loader.unprunedRoot();
-            if (original) {
-                const node = FernNavigation.utils.findNode(original, slug);
-                if (node.type !== "notFound") {
-                    return { redirect: { destination: authConfig.redirect, permanent: false } };
-                }
-            }
-        }
+    if (found.type === "notFound") {
+        // TODO: returning "notFound: true" here will render vercel's default 404 page
+        // this is better than following redirects, since it will signal a proper 404 status code.
+        // however, we should consider rendering a custom 404 page in the future using the customer's branding.
+        // see: https://nextjs.org/docs/app/api-reference/file-conventions/not-found
 
-        if (featureFlags.is404PageHidden && node.redirect != null) {
-            return {
-                // urlJoin is bizarre: urlJoin("/", "") === "", urlJoin("/", "/") === "/", urlJoin("/", "/a") === "/a"
-                // "" || "/" === "/"
-                redirect: {
-                    destination: encodeURI(urlJoin("/", node.redirect) || "/"),
-                    permanent: false,
-                },
-            };
+        if (featureFlags.is404PageHidden && found.redirect != null) {
+            return withRedirect(found.redirect);
         }
 
         return { notFound: true };
     }
 
-    if (node.type === "redirect") {
-        return {
-            redirect: {
-                destination: encodeURI(urlJoin("/", node.redirect)),
-                permanent: false,
-            },
-        };
+    if (found.type === "redirect") {
+        return withRedirect(found.redirect);
     }
 
-    const engine = featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
-    const serializeMdx = await getMdxBundler(engine);
+    // if the current node requires authentication and the user is not authenticated, redirect to the auth page
+    if (found.node.authed && !authState.authed) {
+        // TODO: there's currently no way to express a 401 or 403 in Next.js so we'll redirect to 404.
+        // ideally this is handled in the middleware, and this should be a 500 error.
+        if (authState.authorizationUrl == null) {
+            return { notFound: true };
+        }
+        return withRedirect(authState.authorizationUrl);
+    }
 
-    const content = await resolveDocsContent({
-        found: node,
-        apis: docs.definition.apis,
-        pages: docs.definition.pages,
+    const content = await withResolvedDocsContent({
+        domain: docs.baseUrl.domain,
+        found,
+        authState,
+        definition: docs.definition,
         featureFlags,
-        mdxOptions: {
-            files: docs.definition.jsFiles,
-        },
-        serializeMdx,
-        host: docs.baseUrl.domain,
-        engine,
     });
 
     if (content == null) {
@@ -170,13 +154,15 @@ export async function withInitialProps({
 
     const logoHref =
         docs.definition.config.logoHref ??
-        (node.landingPage?.slug != null && !node.landingPage.hidden ? `/${node.landingPage.slug}` : undefined);
+        (found.landingPage?.slug != null && !found.landingPage.hidden
+            ? encodeURI(addLeadingSlash(found.landingPage.slug))
+            : undefined);
 
     const navbarLinks = docs.definition.config.navbarLinks ?? [];
 
     // TODO: This is a hack to add a login/logout button to the navbar. This should be done in a more generic way.
     if (authConfig?.type === "basic_token_verification") {
-        if (auth == null) {
+        if (!authState.authed) {
             const redirect = new URL(withDefaultProtocol(authConfig.redirect));
             redirect.searchParams.set("state", urlJoin(withDefaultProtocol(host), slug));
 
@@ -204,24 +190,29 @@ export async function withInitialProps({
     }
 
     const pruneOpts = {
-        node: node.node,
-        isAuthenticated: auth != null,
-        isAuthenticatedPagesDiscoverable: featureFlags.isAuthenticatedPagesDiscoverable,
+        visibleNodeIds: [found.node.id],
+        authed: authState.authed,
+        // when true, all unauthed pages are visible, but rendered with a LOCK button
+        // so they're not actually "pruned" from the sidebar
+        // TODO: move this out of a feature flag and into the navigation node metadata
+        discoverable: featureFlags.isAuthenticatedPagesDiscoverable ? (true as const) : undefined,
     };
 
-    const currentVersionId = node.currentVersion?.versionId;
+    const currentVersionId = found.currentVersion?.versionId;
     const versions = withVersionSwitcherInfo({
-        node: node.node,
-        parents: node.parents,
-        versions: node.versions.filter(
+        node: found.node,
+        parents: found.parents,
+        versions: found.versions.filter(
             (version) => pruneNavigationPredicate(version, pruneOpts) || version.versionId === currentVersionId,
         ),
-        slugMap: node.collector.slugMap,
+        slugMap: found.collector.slugMap,
     });
 
-    const sidebar = withPrunedSidebar(node.sidebar, pruneOpts);
+    const sidebar = withPrunedNavigation(found.sidebar, pruneOpts);
 
-    const filteredTabs = node.tabs.filter((tab) => pruneNavigationPredicate(tab, pruneOpts) || tab === node.currentTab);
+    const filteredTabs = found.tabs.filter(
+        (tab) => pruneNavigationPredicate(tab, pruneOpts) || tab === found.currentTab,
+    );
 
     const tabs = filteredTabs.map((tab, index) =>
         visitDiscriminatedUnion(tab)._visit<SidebarTab>({
@@ -254,7 +245,10 @@ export async function withInitialProps({
         }),
     );
 
-    const currentTabIndex = node.currentTab == null ? undefined : filteredTabs.indexOf(node.currentTab);
+    const currentTabIndex = found.currentTab == null ? undefined : filteredTabs.indexOf(found.currentTab);
+
+    const engine = featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
+    const serializeMdx = await getMdxBundler(engine);
 
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
@@ -291,11 +285,11 @@ export async function withInitialProps({
             docs.definition.pages,
             docs.definition.filesV2,
             docs.definition.apis,
-            node,
+            found,
             await getSeoDisabled(domain),
             isTrailingSlashEnabled(),
         ),
-        user: auth?.authed ? auth.user : undefined,
+        user: authState.authed ? authState.user : undefined,
         fallback: {},
         // eslint-disable-next-line deprecation/deprecation
         analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
@@ -308,12 +302,12 @@ export async function withInitialProps({
             docs.definition.config.layout,
             docs.definition.config.css,
             docs.definition.filesV2,
-            node.tabs.length > 0,
+            found.tabs.length > 0,
         ),
     };
 
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
-    const githubNavbarLink = docsConfig.navbarLinks?.find((link) => link.type === "github");
+    const githubNavbarLink = docs.definition.config.navbarLinks?.find((link) => link.type === "github");
     if (githubNavbarLink) {
         const repo = getGitHubRepo(githubNavbarLink.url);
         if (repo) {
@@ -327,4 +321,14 @@ export async function withInitialProps({
     return {
         props: JSON.parse(JSON.stringify(props)), // remove all undefineds
     };
+}
+
+function withRedirect(destination: string): { redirect: Redirect } {
+    if (destination.startsWith("http://") || destination.startsWith("https://")) {
+        const url = new URL(destination);
+        destination = url.toString();
+    } else {
+        destination = encodeURI(addLeadingSlash(destination));
+    }
+    return { redirect: { destination, permanent: false } };
 }

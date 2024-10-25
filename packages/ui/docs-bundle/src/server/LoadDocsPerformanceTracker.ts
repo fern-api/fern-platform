@@ -4,26 +4,16 @@ import { DocsPage } from "@fern-ui/ui";
 import { GetServerSidePropsResult } from "next/types";
 import { ComponentProps } from "react";
 import { track } from "./analytics/posthog";
-import { AuthPartner } from "./auth/getAuthState";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 
 export class LoadDocsPerformanceTracker {
-    static init({
-        domain,
-        slug,
-        auth,
-    }: {
-        domain: string;
-        slug: FernNavigation.Slug;
-        auth: AuthPartner | undefined;
-    }): LoadDocsPerformanceTracker {
-        return new LoadDocsPerformanceTracker(domain, slug, auth);
+    static init({ domain, slug }: { domain: string; slug: FernNavigation.Slug }): LoadDocsPerformanceTracker {
+        return new LoadDocsPerformanceTracker(domain, slug);
     }
 
     private constructor(
         private domain: string,
         private slug: FernNavigation.Slug,
-        private auth: AuthPartner | undefined,
     ) {}
 
     private loadDocsDurationMs: number | undefined;
@@ -50,7 +40,6 @@ export class LoadDocsPerformanceTracker {
         const properties = {
             domain: this.domain,
             slug: this.slug,
-            auth: this.auth,
             loadDocsDurationMs: this.loadDocsDurationMs,
             initialPropsDurationMs: this.initialPropsDurationMs,
             $current_url: `https://${this.domain}/${this.slug}`,

@@ -15,30 +15,45 @@ import { resolveChangelogPage } from "./resolveChangelogPage";
 import { resolveMarkdownPage } from "./resolveMarkdownPage";
 import { resolveSubtitle } from "./resolveSubtitle";
 
-export async function resolveDocsContent({
-    host,
-    found,
-    apis,
-    pages,
-    mdxOptions,
-    featureFlags,
-    serializeMdx,
-    engine,
-}: {
-    host: string;
-    found: FernNavigation.utils.Node.Found;
+interface ResolveDocsContentArgs {
+    /**
+     * This is x-fern-host (NOT the host of the current request)
+     */
+    domain: string;
+    node: FernNavigation.NavigationNodeWithMetadata;
+    version: FernNavigation.VersionNode | FernNavigation.RootNode;
+    apiReference: FernNavigation.ApiReferenceNode | undefined;
+    parents: readonly FernNavigation.NavigationNodeParent[];
+    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+    prev: FernNavigation.NavigationNodeNeighbor | undefined;
+    next: FernNavigation.NavigationNodeNeighbor | undefined;
     apis: Record<string, APIV1Read.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
     mdxOptions?: FernSerializeMdxOptions;
     featureFlags: FeatureFlags;
     serializeMdx: MDX_SERIALIZER;
     engine: string;
-}): Promise<DocsContent | undefined> {
-    const neighbors = await getNeighbors(found, pages, serializeMdx);
+}
 
-    const { node, apiReference, parents, breadcrumb } = found;
+export async function resolveDocsContent({
+    domain,
+    node,
+    version,
+    apiReference,
+    parents,
+    breadcrumb,
+    prev,
+    next,
+    apis,
+    pages,
+    mdxOptions,
+    featureFlags,
+    serializeMdx,
+    engine,
+}: ResolveDocsContentArgs): Promise<DocsContent | undefined> {
+    const neighbors = await getNeighbors({ prev, next }, pages, serializeMdx);
 
-    const markdownLoader = MarkdownLoader.create(host)
+    const markdownLoader = MarkdownLoader.create(domain)
         .withPages(pages)
         .withMdxBundler(
             (mdx: string, pageId: FernNavigation.PageId | undefined) =>
@@ -50,7 +65,7 @@ export async function resolveDocsContent({
         );
 
     const apiLoaders = mapValues(apis, (api) => {
-        return ApiDefinitionLoader.create(host, api.id)
+        return ApiDefinitionLoader.create(domain, api.id)
             .withMdxBundler(serializeMdx, engine)
             .withFlags(featureFlags)
             .withApiDefinition(ApiDefinitionV1ToLatest.from(api, featureFlags).migrate())
@@ -81,7 +96,8 @@ export async function resolveDocsContent({
     } else if (apiReference != null && apiReference.paginated && FernNavigation.hasMarkdown(node)) {
         result = await resolveMarkdownPage({
             node,
-            found,
+            version,
+            breadcrumb,
             apiLoaders,
             neighbors,
             markdownLoader,
@@ -113,7 +129,8 @@ export async function resolveDocsContent({
     } else if (FernNavigation.hasMarkdown(node)) {
         result = await resolveMarkdownPage({
             node,
-            found,
+            version,
+            breadcrumb,
             apiLoaders,
             neighbors,
             markdownLoader,
@@ -144,13 +161,16 @@ async function getNeighbor(
 }
 
 async function getNeighbors(
-    node: FernNavigation.utils.Node.Found,
+    neighbors: {
+        prev: FernNavigation.NavigationNodeNeighbor | undefined;
+        next: FernNavigation.NavigationNodeNeighbor | undefined;
+    },
     pages: Record<string, DocsV1Read.PageContent>,
     serializeMdx: MDX_SERIALIZER,
 ): Promise<DocsContent.Neighbors> {
     const [prev, next] = await Promise.all([
-        getNeighbor(node.prev, pages, serializeMdx),
-        getNeighbor(node.next, pages, serializeMdx),
+        getNeighbor(neighbors.prev, pages, serializeMdx),
+        getNeighbor(neighbors.next, pages, serializeMdx),
     ]);
     return { prev, next };
 }

@@ -5,7 +5,6 @@ import type { DocsPage } from "@fern-ui/ui";
 import type { GetServerSidePropsResult } from "next";
 import type { ComponentProps } from "react";
 import { LoadDocsPerformanceTracker } from "./LoadDocsPerformanceTracker";
-import type { AuthState } from "./auth/getAuthState";
 import { loadWithUrl } from "./loadWithUrl";
 import { withInitialProps } from "./withInitialProps";
 
@@ -20,13 +19,13 @@ export async function getDocsPageProps(
     domain: string | undefined,
     host: string,
     slug: FernNavigation.Slug,
-    auth?: AuthState,
+    fern_token?: string | undefined,
 ): Promise<SSGDocsPageProps> {
-    if (domain == null || Array.isArray(domain)) {
+    if (typeof domain !== "string") {
         return { notFound: true };
     }
 
-    const performance = LoadDocsPerformanceTracker.init({ domain, slug, auth: auth?.partner });
+    const performance = LoadDocsPerformanceTracker.init({ domain, slug });
 
     /**
      * Load the docs for the given URL.
@@ -38,7 +37,7 @@ export async function getDocsPageProps(
      * Convert the docs into initial props for the page.
      */
     const initialProps = await performance.trackInitialPropsPromise(
-        withInitialProps({ docs, slug, domain, host, auth }),
+        withInitialProps({ docs, slug, domain, host, fern_token }),
     );
     console.log("Converted docs into initial props");
 
