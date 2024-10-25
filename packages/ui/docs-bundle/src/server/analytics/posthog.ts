@@ -21,7 +21,11 @@ export async function track(event: string, properties?: Record<string, unknown>)
         client.capture({
             event,
             distinctId: "server-side-event",
-            properties,
+            properties: {
+                // anonymize this event because it's server-side https://posthog.com/docs/product-analytics/capture-events?tab=Backend
+                $process_person_profile: false,
+                ...properties,
+            },
         });
 
         await client.shutdown();
