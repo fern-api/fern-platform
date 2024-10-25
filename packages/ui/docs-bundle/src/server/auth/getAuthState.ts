@@ -70,8 +70,7 @@ export async function getAuthState(
     pathname?: string,
     authConfig?: AuthEdgeConfig,
 ): Promise<AuthState> {
-    // don't fetch auth config in dev (for now)
-    authConfig ??= process.env.NODE_ENV === "development" ? undefined : await getAuthEdgeConfig(domain);
+    authConfig ??= await getAuthEdgeConfig(domain);
 
     // if the auth type is neither sso nor basic_token_verification, allow the request to pass through
     // we're currently assuming that all oauth2 integrations are meant for API Playground. This may change.

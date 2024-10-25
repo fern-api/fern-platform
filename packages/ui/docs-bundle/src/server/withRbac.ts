@@ -33,6 +33,11 @@ interface AuthRulesPathName {
  * @returns true if the request should should be marked as authed
  */
 export function withBasicTokenAnonymous(auth: AuthRulesPathName, pathname: string): boolean {
+    // if there are no auth rules, allow the request to pass through
+    if (auth.allowlist == null && auth.denylist == null && auth.anonymous == null) {
+        return false;
+    }
+
     // if the path is in the denylist, deny the request
     if (auth.denylist?.find((path) => matchPath(path, pathname))) {
         return true;
