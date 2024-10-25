@@ -31,6 +31,7 @@ export async function getDocsPageProps(
      * Load the docs for the given URL.
      */
     const docs = await performance.trackLoadDocsPromise(loadWithUrl(domain));
+    console.log("Loaded docs from url");
 
     /**
      * Convert the docs into initial props for the page.
@@ -38,6 +39,7 @@ export async function getDocsPageProps(
     const initialProps = await performance.trackInitialPropsPromise(
         withInitialProps({ docs, slug, domain, host, auth }),
     );
+    console.log("Converted docs into initial props");
 
     /**
      * Send performance data to Vercel Analytics.

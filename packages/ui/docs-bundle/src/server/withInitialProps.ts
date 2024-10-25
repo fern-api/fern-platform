@@ -51,7 +51,10 @@ export async function withInitialProps({
     host,
     auth,
 }: WithInitialProps): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
+    console.time('withInitialProps');
+
     if (!docsResponse.ok) {
+        console.timeEnd('withInitialProps');
         return handleLoadDocsError(domain, slug, docsResponse.error);
     }
 
@@ -62,26 +65,36 @@ export async function withInitialProps({
     const redirect = getRedirectForPath(urlJoin("/", slug), docs.baseUrl, docsConfig.redirects);
 
     if (redirect != null) {
+        console.timeEnd('withInitialProps');
         return redirect;
     }
 
+    console.time('getFeatureFlags');
     const featureFlags = await getFeatureFlags(domain);
+    console.timeEnd('getFeatureFlags');
 
+    console.time('getAuthEdgeConfig');
     const authConfig = await getAuthEdgeConfig(domain);
+    console.timeEnd('getAuthEdgeConfig');
+
     const loader = DocsLoader.for(domain)
         .withFeatureFlags(featureFlags)
         .withAuth(authConfig, auth)
         .withLoadDocsForUrlResponse(docs);
 
+    console.time('loader.root');
     const root = await loader.root();
+    console.timeEnd('loader.root');
 
     // this should not happen, but if it does, we should return a 404
     if (root == null) {
+        console.timeEnd('withInitialProps');
         return { notFound: true };
     }
 
     // if the root has a slug and the current slug is empty, redirect to the root slug, rather than 404
     if (root.slug.length > 0 && slug.length === 0) {
+        console.timeEnd('withInitialProps');
         return {
             redirect: {
                 destination: encodeURI(urlJoin("/", root.slug)),
@@ -100,17 +113,14 @@ export async function withInitialProps({
             if (original) {
                 const node = FernNavigation.utils.findNode(original, slug);
                 if (node.type !== "notFound") {
+                    console.timeEnd('withInitialProps');
                     return { redirect: { destination: authConfig.redirect, permanent: false } };
                 }
             }
         }
 
-        // TODO: returning "notFound: true" here will render vercel's default 404 page
-        // this is better than following redirects, since it will signal a proper 404 status code.
-        // however, we should consider rendering a custom 404 page in the future using the customer's branding.
-        // see: https://nextjs.org/docs/app/api-reference/file-conventions/not-found
-
         if (featureFlags.is404PageHidden && node.redirect != null) {
+            console.timeEnd('withInitialProps');
             return {
                 // urlJoin is bizarre: urlJoin("/", "") === "", urlJoin("/", "/") === "/", urlJoin("/", "/a") === "/a"
                 // "" || "/" === "/"
@@ -121,10 +131,12 @@ export async function withInitialProps({
             };
         }
 
+        console.timeEnd('withInitialProps');
         return { notFound: true };
     }
 
     if (node.type === "redirect") {
+        console.timeEnd('withInitialProps');
         return {
             redirect: {
                 destination: encodeURI(urlJoin("/", node.redirect)),
@@ -134,8 +146,11 @@ export async function withInitialProps({
     }
 
     const engine = featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
+    console.time('getMdxBundler');
     const serializeMdx = await getMdxBundler(engine);
+    console.timeEnd('getMdxBundler');
 
+    console.time('resolveDocsContent');
     const content = await resolveDocsContent({
         found: node,
         apis: docs.definition.apis,
@@ -148,8 +163,10 @@ export async function withInitialProps({
         host: docs.baseUrl.domain,
         engine,
     });
+    console.timeEnd('resolveDocsContent');
 
     if (content == null) {
+        console.timeEnd('withInitialProps');
         return { notFound: true };
     }
 
@@ -261,6 +278,7 @@ export async function withInitialProps({
 
     const currentTabIndex = node.currentTab == null ? undefined : filteredTabs.indexOf(node.currentTab);
 
+    console.time('buildProps');
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
         layout: docs.definition.config.layout,
@@ -316,19 +334,23 @@ export async function withInitialProps({
             node.tabs.length > 0,
         ),
     };
+    console.timeEnd('buildProps');
 
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
     const githubNavbarLink = docsConfig.navbarLinks?.find((link) => link.type === "github");
     if (githubNavbarLink) {
         const repo = getGitHubRepo(githubNavbarLink.url);
         if (repo) {
+            console.time('getGitHubInfo');
             const data = await getGitHubInfo(repo);
+            console.timeEnd('getGitHubInfo');
             if (data) {
                 props.fallback[repo] = data;
             }
         }
     }
 
+    console.timeEnd('withInitialProps');
     return {
         props: JSON.parse(JSON.stringify(props)), // remove all undefineds
     };
