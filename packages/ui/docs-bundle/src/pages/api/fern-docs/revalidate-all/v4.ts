@@ -39,7 +39,7 @@ const handler: NextApiHandler = async (
         return res.status(400).json({ total: 0, results: [] });
     }
 
-    const domain = getDocsDomainNode(req, true);
+    const domain = getDocsDomainNode(req);
     const host = getHostNode(req) ?? domain;
 
     // never proivde a token here because revalidation should only be done on public routes (for now)

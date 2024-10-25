@@ -30,7 +30,7 @@ const handler: NextApiHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<FernDocs.RevalidateAllV3Response>,
 ): Promise<unknown> => {
-    const domain = getDocsDomainNode(req, true);
+    const domain = getDocsDomainNode(req);
     const host = getHostNode(req) ?? domain;
 
     // never proivde a token here because revalidation should only be done on public routes (for now)

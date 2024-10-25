@@ -6,9 +6,8 @@ import { cleanHost } from "./util";
 /**
  * Note: x-fern-host is always appended to the request header by cloudfront for all *.docs.buildwithfern.com requests.
  */
-export function getDocsDomainNode(req: NextApiRequest, useSearchParams = false): string {
+export function getDocsDomainNode(req: NextApiRequest): string {
     const hosts = [
-        useSearchParams ? req.query["host"] : undefined,
         getNextPublicDocsDomain(),
         req.cookies[COOKIE_FERN_DOCS_PREVIEW],
         req.headers[HEADER_X_FERN_HOST],
@@ -45,5 +44,14 @@ export function getHostNodeStatic(): string | undefined {
 }
 
 export function getHostNode(req: { url?: string }): string | undefined {
-    return (req.url != null ? new URL(req.url).host : undefined) ?? getHostNodeStatic();
+    if (req.url != null) {
+        try {
+            return new URL(req.url).host;
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(`Error parsing URL ${req.url}: ${e}`);
+        }
+    }
+
+    return getHostNodeStatic();
 }
