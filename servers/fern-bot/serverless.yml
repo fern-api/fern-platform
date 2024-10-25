@@ -1,7 +1,6 @@
 service: "fern-bot"
 frameworkVersion: "4"
 plugins:
-  - "serverless-esbuild"
   - "serverless-step-functions"
 provider:
   name: aws
@@ -272,4 +271,14 @@ resources:
         BucketName: fern-bot-${opt:stage}
 
 custom:
-  esbuild: false
+  esbuild:
+    minify: true
+    bundle: true
+    sourcemap: true
+    target: "node18"
+    platform: "node"
+    concurrency: 10
+    packager: pnpm
+    external:
+      - fern-api
+      - fern
