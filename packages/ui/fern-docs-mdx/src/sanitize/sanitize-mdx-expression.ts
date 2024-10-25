@@ -2,6 +2,24 @@ import { VFileMessage } from "vfile-message";
 import { mdastFromMarkdown } from "../mdast-utils/mdast-from-markdown.js";
 import { getStart, isPoint } from "../position.js";
 
+interface ErrorContext {
+    error: VFileMessage;
+    handled: boolean;
+    affectedLine: string | undefined;
+}
+
+// error rules are from
+// - acorn: https://github.com/micromark/micromark-extension-mdx-expression/blob/main/packages/micromark-extension-mdx-expression/readme.md#errors
+// - jsx:   https://github.com/micromark/micromark-extension-mdx-jsx?tab=readme-ov-file#errors
+const RULE_IDS = {
+    UNEXPECTED_EOF: "unexpected-eof",
+    UNEXPECTED_CHARACTER: "unexpected-character",
+    UNEXPECTED_LAZY: "unexpected-lazy",
+    NON_SPREAD: "non-spread",
+    SPREAD_EXTRA: "spread-extra",
+    ACORN: "acorn",
+} as const;
+
 /**
  * If the markdown contains unescaped curly braces that are not part of a javascript expression, the acorn parser will fail.
  * This function attempts to sanitize the markdown by escaping the curly braces, but listening for VFileMessage errors.
@@ -9,17 +27,17 @@ import { getStart, isPoint } from "../position.js";
  * This is not really efficient because it can loop a lot and depends on try-catching errors, but it performs a bit of "magic" to improve quality of life.
  */
 export function sanitizeMdxExpression(content: string): string {
-    const loops = 0;
+    let loops = 0;
 
     // these are errors encountered but sanitized
-    const errors: VFileMessage[] = [];
+    const errors: ErrorContext[] = [];
 
     // eslint-disable-next-line no-constant-condition
     while (true) {
-        if (loops >= 100) {
+        if (loops++ >= 100) {
             // eslint-disable-next-line no-console
-            errors.forEach((e) => console.error(e));
-            throw new Error("Infinite Loop Detected: sanitizing acorn failed");
+            console.error("Infinite Loop Detected: sanitizing acorn failed");
+            break;
         }
 
         try {
@@ -27,35 +45,34 @@ export function sanitizeMdxExpression(content: string): string {
             break;
         } catch (e) {
             if (e instanceof VFileMessage) {
-                errors.push(e);
+                const errorContext: ErrorContext = {
+                    error: e,
+                    handled: false,
+                    affectedLine: e.line != null ? content.split("\n")[e.line - 1] : undefined,
+                };
+                errors.push(errorContext);
 
-                // error rules are from
-                // - acorn: https://github.com/micromark/micromark-extension-mdx-expression/blob/main/packages/micromark-extension-mdx-expression/readme.md#errors
-                // - jsx:   https://github.com/micromark/micromark-extension-mdx-jsx?tab=readme-ov-file#errors
-
-                if (e.ruleId === "unexpected-eof" || e.ruleId === "unexpected-character" || e.ruleId === "acorn") {
-                    if (e.line) {
-                        // eslint-disable-next-line no-console
-                        console.debug(content.split("\n")[e.line - 1]);
-                    }
-
+                if (e.ruleId === RULE_IDS.UNEXPECTED_EOF || e.ruleId === RULE_IDS.UNEXPECTED_CHARACTER) {
                     const [newContent, handled] = handleUnexpectedEOF(content, e);
+                    errorContext.handled = handled;
                     if (handled) {
                         content = newContent;
                         continue;
                     }
                 }
 
-                if (e.ruleId === "unexpected-character" || e.ruleId === "unexpected-lazy") {
+                if (e.ruleId === RULE_IDS.UNEXPECTED_CHARACTER || e.ruleId === RULE_IDS.UNEXPECTED_LAZY) {
                     const [newContent, handled] = handleUnexpectedCharacter(content, e);
+                    errorContext.handled = handled;
                     if (handled) {
                         content = newContent;
                         continue;
                     }
                 }
 
-                if (e.ruleId === "spread-extra") {
+                if (e.ruleId === RULE_IDS.SPREAD_EXTRA) {
                     const [newContent, handled] = handleSpreadExtra(content, e);
+                    errorContext.handled = handled;
                     if (handled) {
                         content = newContent;
                         continue;
@@ -64,13 +81,20 @@ export function sanitizeMdxExpression(content: string): string {
 
                 // fallback 1: escape the current line
                 const [newContent, handled] = escapeCurrentLine(content, e);
+                errorContext.handled = handled;
                 if (handled) {
                     content = newContent;
                     continue;
                 }
 
                 // Fallback 2:  as a last resort, if we can't handle the error, we give up and escape all curly braces and alligators
-                content = escapeAllUnescapedOpeningBrackets(content);
+                const newContent2 = escapeAllUnescapedOpeningBrackets(content);
+                errorContext.handled = newContent2 !== content;
+                if (newContent2 !== content) {
+                    content = newContent2;
+                    break;
+                }
+
                 break;
             } else {
                 // if the error does not originate from mdast parser, throw it
@@ -99,7 +123,9 @@ function handleUnexpectedEOF(content: string, _e: VFileMessage): [string, boolea
     let i = 0;
     while (i < content.length) {
         const char = content[i++];
-        if (char === "{" || char === "<") {
+        if (char === "\\") {
+            continue;
+        } else if (char === "{" || char === "<") {
             stack.push([i, char]);
         } else if (char === "}" || char === ">") {
             if (stack.length === 0) {
