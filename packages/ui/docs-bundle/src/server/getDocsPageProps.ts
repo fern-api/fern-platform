@@ -43,7 +43,7 @@ export async function getDocsPageProps(
     console.log("Converted docs into initial props");
 
     /**
-     * Send performance data to Vercel Analytics.
+     * Send performance data to PostHog.
      */
     await performance.track();
 
