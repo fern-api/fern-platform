@@ -82,10 +82,6 @@ export function pruneWithBasicTokenAnonymous(auth: AuthEdgeConfigBasicTokenVerif
     return result;
 }
 
-function getAudienceFilters(...node: FernNavigation.NavigationNode[]): string[][] {
-    return node.map((n) => (hasMetadata(n) ? (n.audience ?? []) : [])).filter((audience) => audience.length > 0);
-}
-
 /**
  * @internal
  * @param roles current viewer's roles
