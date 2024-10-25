@@ -143,6 +143,11 @@ const nextConfig = {
         if (isServer) {
             config.externals = config.externals || [];
             config.externals.push("esbuild");
+        } else {
+            config.resolve.fallback = {
+                ...config.resolve.fallback,
+                undici: false,
+            };
         }
         return config;
     },
