@@ -62,4 +62,16 @@ describe("sanitizeMdxExpression", () => {
             "This is a test. a \\<= b, but b > c. {c} d",
         );
     });
+
+    it("should handle complex cases", () => {
+        expect(
+            sanitizeMdxExpression("previous billing period) Ex. January {M1:{VM:VM0}}, February"),
+        ).toMatchInlineSnapshot('"previous billing period) Ex. January \\{M1:\\{VM:VM0}}, February"');
+        expect(
+            sanitizeMdxExpression("from the previous month Ex. January15 {M1:{VM:VM0,on, 4}} February15"),
+        ).toMatchInlineSnapshot('"from the previous month Ex. January15 \\{M1:\\{VM:VM0,on, 4}} February15"');
+        expect(
+            sanitizeMdxExpression("{ M1:2, M1:4 } => {M1:6} 2] Minimum - min of all the values for the"),
+        ).toMatchInlineSnapshot('"\\{ M1:2, M1:4 } => \\{M1:6} 2] Minimum - min of all the values for the"');
+    });
 });
