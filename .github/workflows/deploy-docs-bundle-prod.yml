@@ -81,6 +81,7 @@ jobs:
     secrets:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
 
   revalidate-all:
     needs: promote

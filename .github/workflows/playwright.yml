@@ -14,6 +14,8 @@ on:
         description: "The URL of the deployment to test"
         required: true
     secrets:
+      TURBO_TOKEN:
+        required: true
       VERCEL_TOKEN:
         required: true
       FERN_TOKEN:
@@ -36,10 +38,12 @@ jobs:
         run: pnpm vercel-scripts domains.txt app.buildwithfern.com --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
+        run: pnpm exec playwright install chromium
 
       - name: Build Playwright Test Fixtures
         run: pnpm playwright:build
+        env:
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
 
       - name: Run Playwright tests
         run: pnpm exec playwright test playwright --workers 6 --reporter json
