@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { FernUser } from "@fern-ui/fern-docs-auth";
 import type { DocsPage } from "@fern-ui/ui";
