@@ -36,7 +36,7 @@ export class MarkdownKVCache {
     public async mgetMarkdownText(keys: string[]): Promise<Record<string, FernDocs.MarkdownText>> {
         const toRet: Record<string, FernDocs.MarkdownText> = {};
         try {
-            const batchSize = 500; // Adjust this value based on Vercel Upstash limits
+            const batchSize = 100; // Adjust this value based on Vercel Upstash limits
             const batches = [];
             for (let i = 0; i < keys.length; i += batchSize) {
                 batches.push(keys.slice(i, i + batchSize));
