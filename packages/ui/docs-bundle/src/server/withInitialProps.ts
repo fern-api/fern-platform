@@ -324,10 +324,11 @@ export async function withInitialProps({
 }
 
 function withRedirect(destination: string): { redirect: Redirect } {
-    return {
-        redirect: {
-            destination: encodeURI(addLeadingSlash(destination)),
-            permanent: false,
-        },
-    };
+    if (destination.startsWith("http://") || destination.startsWith("https://")) {
+        const url = new URL(destination);
+        destination = url.toString();
+    } else {
+        destination = encodeURI(addLeadingSlash(destination));
+    }
+    return { redirect: { destination, permanent: false } };
 }
