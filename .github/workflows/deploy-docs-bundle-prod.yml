@@ -121,7 +121,7 @@ jobs:
       - uses: ./.github/actions/install
 
       - name: Promote Deployment
-        run: pnpm vercel-scripts promote ${{ matrix.deployment_url }} --token ${{ secrets.VERCEL_TOKEN }}
+        run: pnpm vercel-scripts promote ${{ matrix.deployment_url }} --token ${{ secrets.VERCEL_TOKEN }} --revalidate-all
 
   smoke-test:
     needs: promote # Ensure that the deployment is promoted before running smoke tests
