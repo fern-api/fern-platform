@@ -52,7 +52,11 @@ export function sanitizeMdxExpression(content: string): string {
                 };
                 errors.push(errorContext);
 
-                if (e.ruleId === RULE_IDS.UNEXPECTED_EOF || e.ruleId === RULE_IDS.UNEXPECTED_CHARACTER) {
+                if (
+                    e.ruleId === RULE_IDS.UNEXPECTED_EOF ||
+                    e.ruleId === RULE_IDS.UNEXPECTED_CHARACTER ||
+                    e.ruleId === RULE_IDS.ACORN
+                ) {
                     const [newContent, handled] = handleUnexpectedEOF(content, e);
                     errorContext.handled = handled;
                     if (handled) {
@@ -105,7 +109,10 @@ export function sanitizeMdxExpression(content: string): string {
 
     if (errors.length > 0) {
         // eslint-disable-next-line no-console
-        console.debug("Sanitized errors:", errors);
+        console.debug(
+            "MDX sanitization errors:",
+            errors.map((e) => `handled=${e.handled}, rule=${e.error.ruleId}, line=\`${e.affectedLine}\``),
+        );
     }
 
     return content;
