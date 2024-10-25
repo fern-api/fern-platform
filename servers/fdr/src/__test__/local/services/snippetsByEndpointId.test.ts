@@ -129,7 +129,6 @@ it("Load snippets by endpoint id", async () => {
                 integrations: undefined,
                 css: undefined,
                 js: undefined,
-                playground: undefined,
                 backgroundImage: undefined,
                 logoV2: undefined,
                 logo: undefined,

@@ -1,0 +1,10 @@
+instances:
+  - url: test-websocket-reference.docs.buildwithfern.com
+
+navigation:
+  - api: Websocket API
+
+colors:
+  accentPrimary:
+    dark: "#f0c193"
+    light: "#7d7f7d"
