@@ -1,7 +1,7 @@
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionLoader, MarkdownLoader } from "@fern-ui/fern-docs-server";
 import type { DocsContent } from "./DocsContent";
+import { resolveMarkdownPageWithoutApiRefs } from "./resolveMarkdownPage";
 
 interface ResolveApiReferencePageOpts {
     node: FernNavigation.NavigationNodeWithMetadata;
@@ -22,8 +22,6 @@ export async function resolveApiReferencePage({
 
     if (!apiDefinition) {
         // TODO: sentry
-        // eslint-disable-next-line no-console
-        console.error(`Failed to load API definition for ${node.slug}`);
         return;
     }
 
@@ -32,15 +30,11 @@ export async function resolveApiReferencePage({
     const apiReferenceNodeIdx = parents.findIndex((parent) => parent.id === apiReferenceNode.id);
     if (apiReferenceNodeIdx === -1) {
         // TODO: sentry
-        // eslint-disable-next-line no-console
-        console.error("Could not find api reference node in parents");
     }
 
     const sidebarRootNodeIdx = parents.findIndex((parent) => parent.type === "sidebarRoot");
     if (sidebarRootNodeIdx === -1) {
         // TODO: sentry
-        // eslint-disable-next-line no-console
-        console.error("Failed to find sidebar root node");
     }
 
     // get all the parents of the api reference node (excluding the api reference node itself) up to the sidebar root node
@@ -62,11 +56,23 @@ export async function resolveApiReferencePage({
         (
             await Promise.all(
                 nodes.map(async ([node, breadcrumb]) => {
-                    const page = await markdownLoader.load(node, breadcrumb);
+                    const page = await resolveMarkdownPageWithoutApiRefs({
+                        node,
+                        breadcrumb,
+                        // TODO: should we add omit neighbors in upstream resolver?
+                        neighbors: {
+                            prev: null,
+                            next: null,
+                        },
+                        markdownLoader,
+                    });
                     return [node.id, page] as const;
                 }),
             )
-        ).filter((entry): entry is [FernNavigation.NodeId, FernDocs.MarkdownText] => entry[1] != null),
+        ).filter(
+            (entry): entry is [FernNavigation.NodeId, Omit<DocsContent.MarkdownPage, "type" | "apis">] =>
+                entry[1] != null,
+        ),
     );
 
     return {

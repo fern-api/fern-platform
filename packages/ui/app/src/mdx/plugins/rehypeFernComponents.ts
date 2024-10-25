@@ -1,18 +1,19 @@
+import {
+    hastMdxJsxElementHastToProps,
+    isMdxJsxAttribute,
+    isMdxJsxElementHast,
+    unknownToMdxJsxAttribute,
+    type MdxJsxElementHast,
+} from "@fern-ui/fern-docs-mdx";
 import GithubSlugger from "github-slugger";
 import type { Doctype, Element, ElementContent, Root } from "hast";
 import { toString } from "hast-util-to-string";
-import type { MdxJsxAttributeValueExpression, MdxJsxFlowElementHast, MdxJsxTextElementHast } from "mdast-util-mdx-jsx";
 import { CONTINUE, visit, type BuildVisitor, type VisitorResult } from "unist-util-visit";
-import { wrapChildren } from "./to-estree";
-import { isMdxJsxAttribute, isMdxJsxFlowElement, toAttribute } from "./utils";
 
 // TODO: combine this with rehype-slug so that we don't have to maintain two slugger instances
 const slugger = new GithubSlugger();
 
-type Visitor = BuildVisitor<
-    Root | Doctype | ElementContent,
-    Root | Element | MdxJsxTextElementHast | MdxJsxFlowElementHast | undefined
->;
+type Visitor = BuildVisitor<Root | Doctype | ElementContent, Root | Element | MdxJsxElementHast | undefined>;
 
 export function rehypeFernComponents(): (tree: Root) => void {
     return function (tree: Root): void {
@@ -20,7 +21,7 @@ export function rehypeFernComponents(): (tree: Root) => void {
 
         // convert img to Image
         visit(tree, (node) => {
-            if (isMdxJsxFlowElement(node)) {
+            if (isMdxJsxElementHast(node)) {
                 if (node.name === "img") {
                     node.name = "Image";
                 } else if (node.name === "iframe") {
@@ -46,13 +47,13 @@ export function rehypeFernComponents(): (tree: Root) => void {
         let request: { path: string; method: string; example: string } | undefined;
 
         visit(tree, (node) => {
-            if (isMdxJsxFlowElement(node)) {
+            if (isMdxJsxElementHast(node)) {
                 const isRequestSnippet = node.name === "EndpointRequestSnippet";
                 const isResponseSnippet = node.name === "EndpointResponseSnippet";
 
                 // check that the current node is a request or response snippet
                 if (isRequestSnippet || isResponseSnippet) {
-                    const props = collectProps(node);
+                    const { props } = hastMdxJsxElementHastToProps(node);
 
                     if (isRequestSnippet) {
                         if (
@@ -81,7 +82,7 @@ export function rehypeFernComponents(): (tree: Root) => void {
                     ) {
                         // if the response snippet meets the conditions, copy
                         // the example prop from the request snippet
-                        node.attributes.push(toAttribute("example", request.example));
+                        node.attributes.push(unknownToMdxJsxAttribute("example", request.example));
                     }
 
                     // reset the request reference in all cases (except when the
@@ -98,7 +99,7 @@ export function rehypeFernComponents(): (tree: Root) => void {
                 return;
             }
 
-            if (isMdxJsxFlowElement(node) && node.name != null) {
+            if (isMdxJsxElementHast(node) && node.name != null) {
                 if (node.name === "Steps" || node.name === "StepGroup") {
                     return transformSteps(node, index, parent, visitor);
                 } else if (node.name === "Tabs" || node.name === "TabGroup") {
@@ -118,12 +119,12 @@ export function rehypeFernComponents(): (tree: Root) => void {
 }
 
 function transformTabs(
-    node: MdxJsxFlowElementHast,
+    node: MdxJsxElementHast,
     index: number,
-    parent: Root | Element | MdxJsxFlowElementHast,
+    parent: Root | Element | MdxJsxElementHast,
     visitor: Visitor,
 ): VisitorResult {
-    const tabs = node.children.filter(isMdxJsxFlowElement).filter((child) => child.name === "Tab");
+    const tabs = node.children.filter(isMdxJsxElementHast).filter((child) => child.name === "Tab");
 
     tabs.forEach((tab, i) => {
         const title = getTitle(tab) ?? `Untitled ${i + 1}`;
@@ -134,7 +135,13 @@ function transformTabs(
     const child = {
         type: "mdxJsxFlowElement" as const,
         name: "TabGroup",
-        attributes: [toAttribute("tabs", tabs.map(collectProps)), ...node.attributes],
+        attributes: [
+            unknownToMdxJsxAttribute(
+                "tabs",
+                tabs.map((tab) => hastMdxJsxElementHastToProps(tab).props),
+            ),
+            ...node.attributes,
+        ],
         children: [],
     };
 
@@ -143,22 +150,22 @@ function transformTabs(
 }
 
 function transformTabItem(
-    node: MdxJsxFlowElementHast,
+    node: MdxJsxElementHast,
     index: number,
-    parent: Root | Element | MdxJsxFlowElementHast,
+    parent: Root | Element | MdxJsxElementHast,
     visitor: Visitor,
 ): VisitorResult {
     const title = getTitle(node) ?? "Untitled";
     applyGeneratedId(node, title);
     visit(node, visitor);
 
-    const tabItem = collectProps(node);
-    const tabs = [tabItem];
+    const { props } = hastMdxJsxElementHastToProps(node);
+    const tabs = [props];
 
     const child = {
         type: "mdxJsxFlowElement" as const,
         name: "TabGroup",
-        attributes: [toAttribute("tabs", tabs), ...node.attributes],
+        attributes: [unknownToMdxJsxAttribute("tabs", tabs), ...node.attributes],
         children: [],
     };
 
@@ -167,12 +174,12 @@ function transformTabItem(
 }
 
 function transformAccordionGroup(
-    node: MdxJsxFlowElementHast,
+    node: MdxJsxElementHast,
     index: number,
-    parent: Root | Element | MdxJsxFlowElementHast,
+    parent: Root | Element | MdxJsxElementHast,
     visitor: Visitor,
 ): VisitorResult {
-    const items = node.children.filter(isMdxJsxFlowElement).filter((child) => child.name === "Accordion");
+    const items = node.children.filter(isMdxJsxElementHast).filter((child) => child.name === "Accordion");
 
     items.forEach((tab, index) => {
         const title = getTitle(tab) ?? `Untitled ${index + 1}`;
@@ -183,7 +190,13 @@ function transformAccordionGroup(
     const child = {
         type: "mdxJsxFlowElement" as const,
         name: "AccordionGroup",
-        attributes: [toAttribute("items", items.map(collectProps)), ...node.attributes],
+        attributes: [
+            unknownToMdxJsxAttribute(
+                "items",
+                items.map((item) => hastMdxJsxElementHastToProps(item).props),
+            ),
+            ...node.attributes,
+        ],
         children: [],
     };
     parent.children.splice(index, 1, child);
@@ -192,12 +205,12 @@ function transformAccordionGroup(
 
 // TODO: handle lone <Step> component
 function transformSteps(
-    node: MdxJsxFlowElementHast,
+    node: MdxJsxElementHast,
     index: number,
-    parent: Root | Element | MdxJsxFlowElementHast,
+    parent: Root | Element | MdxJsxElementHast,
     visitor: Visitor,
 ): VisitorResult {
-    const children: MdxJsxFlowElementHast[] = [];
+    const children: MdxJsxElementHast[] = [];
 
     node.children.forEach((child) => {
         if (child.type === "mdxJsxFlowElement" && child.name === "Step") {
@@ -205,7 +218,7 @@ function transformSteps(
             child.attributes = child.attributes.filter((attr) =>
                 isMdxJsxAttribute(attr) ? attr.name !== "index" : true,
             );
-            child.attributes.push(toAttribute("index", index));
+            child.attributes.push(unknownToMdxJsxAttribute("index", index));
 
             const title = getTitle(child) ?? `Step ${index}`;
             applyGeneratedId(child, title);
@@ -222,9 +235,9 @@ function transformSteps(
                 type: "mdxJsxFlowElement",
                 name: "Step",
                 attributes: [
-                    toAttribute("title", title),
-                    toAttribute("id", slug),
-                    toAttribute("index", children.length + 1),
+                    unknownToMdxJsxAttribute("title", title),
+                    unknownToMdxJsxAttribute("id", slug),
+                    unknownToMdxJsxAttribute("index", children.length + 1),
                 ],
                 children: [],
             });
@@ -236,7 +249,7 @@ function transformSteps(
                 children.push({
                     type: "mdxJsxFlowElement",
                     name: "Step",
-                    attributes: [toAttribute("id", slug), toAttribute("index", index)],
+                    attributes: [unknownToMdxJsxAttribute("id", slug), unknownToMdxJsxAttribute("index", index)],
                     children: [child],
                 });
             } else {
@@ -260,22 +273,23 @@ function transformSteps(
 }
 
 function transformAccordion(
-    node: MdxJsxFlowElementHast,
+    node: MdxJsxElementHast,
     index: number,
-    parent: Root | Element | MdxJsxFlowElementHast,
+    parent: Root | Element | MdxJsxElementHast,
     visitor: Visitor,
 ): VisitorResult {
     const title = getTitle(node) ?? "Untitled";
     applyGeneratedId(node, title);
     visit(node, visitor);
 
-    const item = collectProps(node);
-    const items = [item];
+    const { props } = hastMdxJsxElementHastToProps(node);
+
+    const items = [props];
 
     const child = {
         type: "mdxJsxFlowElement" as const,
         name: "AccordionGroup",
-        attributes: [toAttribute("items", items)],
+        attributes: [unknownToMdxJsxAttribute("items", items)],
         children: [],
     };
 
@@ -283,34 +297,16 @@ function transformAccordion(
     return index + 1;
 }
 
-function collectProps(child: MdxJsxFlowElementHast) {
-    const props: Record<string, ElementContent | string | MdxJsxAttributeValueExpression | null | undefined> = {};
-
-    child.attributes.forEach((attr) => {
-        if (attr.type === "mdxJsxAttribute") {
-            props[attr.name] = attr.value;
-        }
-
-        // expression attributes are not supported
-    });
-
-    if (child.children.length > 0) {
-        props.children = wrapChildren(child.children);
-    }
-
-    return props;
-}
-
-function getTitle(node: MdxJsxFlowElementHast): string | undefined {
+function getTitle(node: MdxJsxElementHast): string | undefined {
     const title = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "title")?.value;
     // TODO: handle expression attributes
     return typeof title === "string" ? title : undefined;
 }
 
-function applyGeneratedId(node: MdxJsxFlowElementHast, title: string): void {
+function applyGeneratedId(node: MdxJsxElementHast, title: string): void {
     const id = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "id");
     if (id == null) {
         const slug = slugger.slug(title);
-        node.attributes.push(toAttribute("id", slug));
+        node.attributes.push(unknownToMdxJsxAttribute("id", slug));
     }
 }

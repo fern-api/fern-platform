@@ -4,11 +4,12 @@
 
 import * as FernRegistry from "../../../../../index";
 
-export interface WithNodeMetadata extends FernRegistry.navigation.v1.WithNodeId {
+export interface WithNodeMetadata
+    extends FernRegistry.navigation.v1.WithNodeId,
+        FernRegistry.navigation.v1.WithPermissions {
     title: string;
     slug: FernRegistry.navigation.v1.Slug;
     icon: string | undefined;
     hidden: boolean | undefined;
     authed: boolean | undefined;
-    audience: FernRegistry.AudienceId[] | undefined;
 }

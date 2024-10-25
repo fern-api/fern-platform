@@ -43,3 +43,20 @@ export type MarkdownNode = {
     content: string;
     children: MarkdownNode[];
 };
+
+export type AlgoliaAdditionalProperties =
+    | {
+          type: "endpoint-field-v1";
+          method: APIV1Read.HttpMethod;
+          endpointPath: APIV1Read.EndpointPathPart[];
+          isResponseStream?: boolean;
+      }
+    | {
+          type: "websocket-field-v1";
+          endpointPath: APIV1Read.EndpointPathPart[];
+      }
+    | {
+          type: "webhook-field-v1";
+          method: APIV1Read.HttpMethod;
+          endpointPath: APIV1Read.EndpointPathPart[];
+      };

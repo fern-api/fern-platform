@@ -2787,6 +2787,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/get-destination",
                       "endpointId": "endpoint_bulkSync.GetDestination",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.GetDestination",
                       "isResponseStream": false,
@@ -2797,6 +2798,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/get-source",
                       "endpointId": "endpoint_bulkSync.GetSource",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.GetSource",
                       "isResponseStream": false,
@@ -2827,6 +2829,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/list",
                       "endpointId": "endpoint_bulkSync.List",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.List",
                       "isResponseStream": false,
@@ -2837,6 +2840,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/create",
                       "endpointId": "endpoint_bulkSync.Create",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.Create",
                       "isResponseStream": false,
@@ -2847,6 +2851,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/get",
                       "endpointId": "endpoint_bulkSync.Get",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.Get",
                       "isResponseStream": false,
@@ -2857,6 +2862,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/remove",
                       "endpointId": "endpoint_bulkSync.Remove",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.Remove",
                       "isResponseStream": false,
@@ -2877,6 +2883,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/activate",
                       "endpointId": "endpoint_bulkSync.Activate",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.Activate",
                       "isResponseStream": false,
@@ -2887,6 +2894,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/start",
                       "endpointId": "endpoint_bulkSync.Start",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.Start",
                       "isResponseStream": false,
@@ -2897,6 +2905,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/get-status",
                       "endpointId": "endpoint_bulkSync.GetStatus",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.GetStatus",
                       "isResponseStream": false,
@@ -2910,6 +2919,7 @@
                       "children": [
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/bulk-sync/executions/list",
                           "endpointId": "endpoint_bulkSync/executions.List",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/executions.endpoint_bulkSync/executions.List",
                           "isResponseStream": false,
@@ -2920,6 +2930,7 @@
                         },
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/bulk-sync/executions/get",
                           "endpointId": "endpoint_bulkSync/executions.Get",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/executions.endpoint_bulkSync/executions.Get",
                           "isResponseStream": false,
@@ -2940,6 +2951,7 @@
                       "children": [
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/bulk-sync/schemas/list",
                           "endpointId": "endpoint_bulkSync/schemas.List",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas.endpoint_bulkSync/schemas.List",
                           "isResponseStream": false,
@@ -2950,6 +2962,7 @@
                         },
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/bulk-sync/schemas/patch",
                           "endpointId": "endpoint_bulkSync/schemas.Patch",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas.endpoint_bulkSync/schemas.Patch",
                           "isResponseStream": false,
@@ -2960,6 +2973,7 @@
                         },
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/bulk-sync/schemas/get",
                           "endpointId": "endpoint_bulkSync/schemas.Get",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas.endpoint_bulkSync/schemas.Get",
                           "isResponseStream": false,
@@ -2997,6 +3011,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/get-types",
                       "endpointId": "endpoint_connections.GetTypes",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_connections.endpoint_connections.GetTypes",
                       "isResponseStream": false,
@@ -3007,6 +3022,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/list",
                       "endpointId": "endpoint_connections.List",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_connections.endpoint_connections.List",
                       "isResponseStream": false,
@@ -3017,6 +3033,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/create",
                       "endpointId": "endpoint_connections.Create",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_connections.endpoint_connections.Create",
                       "isResponseStream": false,
@@ -3027,6 +3044,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/connect",
                       "endpointId": "endpoint_connections.Connect",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_connections.endpoint_connections.Connect",
                       "isResponseStream": false,
@@ -3037,6 +3055,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/get",
                       "endpointId": "endpoint_connections.Get",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_connections.endpoint_connections.Get",
                       "isResponseStream": false,
@@ -3047,6 +3066,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/remove",
                       "endpointId": "endpoint_connections.Remove",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_connections.endpoint_connections.Remove",
                       "isResponseStream": false,
@@ -3067,6 +3087,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/get-parameter-values",
                       "endpointId": "endpoint_connections.GetParameterValues",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_connections.endpoint_connections.GetParameterValues",
                       "isResponseStream": false,
@@ -3127,6 +3148,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/schemas/get-records",
                       "endpointId": "endpoint_schemas.GetRecords",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_schemas.endpoint_schemas.GetRecords",
                       "isResponseStream": false,
@@ -3147,6 +3169,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/models/post",
                       "endpointId": "endpoint_models.Post",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_models.endpoint_models.Post",
                       "isResponseStream": false,
@@ -3157,6 +3180,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/models/preview",
                       "endpointId": "endpoint_models.Preview",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_models.endpoint_models.Preview",
                       "isResponseStream": false,
@@ -3167,6 +3191,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/models/list",
                       "endpointId": "endpoint_models.List",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_models.endpoint_models.List",
                       "isResponseStream": false,
@@ -3177,6 +3202,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/models/create",
                       "endpointId": "endpoint_models.Create",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_models.endpoint_models.Create",
                       "isResponseStream": false,
@@ -3187,6 +3213,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/models/get",
                       "endpointId": "endpoint_models.Get",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_models.endpoint_models.Get",
                       "isResponseStream": false,
@@ -3197,6 +3224,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/models/remove",
                       "endpointId": "endpoint_models.Remove",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_models.endpoint_models.Remove",
                       "isResponseStream": false,
@@ -3217,6 +3245,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/models/sample",
                       "endpointId": "endpoint_models.Sample",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_models.endpoint_models.Sample",
                       "isResponseStream": false,
@@ -3237,6 +3266,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/events/list",
                       "endpointId": "endpoint_events.List",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_events.endpoint_events.List",
                       "isResponseStream": false,
@@ -3247,6 +3277,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/events/get-types",
                       "endpointId": "endpoint_events.GetTypes",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_events.endpoint_events.GetTypes",
                       "isResponseStream": false,
@@ -3267,6 +3298,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/jobs/get",
                       "endpointId": "endpoint_jobs.Get",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_jobs.endpoint_jobs.Get",
                       "isResponseStream": false,
@@ -3287,6 +3319,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/identity/get",
                       "endpointId": "endpoint_identity.Get",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_identity.endpoint_identity.Get",
                       "isResponseStream": false,
@@ -3307,6 +3340,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/organization/list",
                       "endpointId": "endpoint_organization.List",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_organization.endpoint_organization.List",
                       "isResponseStream": false,
@@ -3317,6 +3351,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/organization/create",
                       "endpointId": "endpoint_organization.Create",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_organization.endpoint_organization.Create",
                       "isResponseStream": false,
@@ -3327,6 +3362,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/organization/get",
                       "endpointId": "endpoint_organization.Get",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_organization.endpoint_organization.Get",
                       "isResponseStream": false,
@@ -3337,6 +3373,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/organization/remove",
                       "endpointId": "endpoint_organization.Remove",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_organization.endpoint_organization.Remove",
                       "isResponseStream": false,
@@ -3367,6 +3404,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/users/list",
                       "endpointId": "endpoint_users.List",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_users.endpoint_users.List",
                       "isResponseStream": false,
@@ -3377,6 +3415,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/users/create",
                       "endpointId": "endpoint_users.Create",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_users.endpoint_users.Create",
                       "isResponseStream": false,
@@ -3387,6 +3426,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/users/get",
                       "endpointId": "endpoint_users.Get",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_users.endpoint_users.Get",
                       "isResponseStream": false,
@@ -3397,6 +3437,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/users/remove",
                       "endpointId": "endpoint_users.Remove",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_users.endpoint_users.Remove",
                       "isResponseStream": false,
@@ -3417,6 +3458,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/users/create-api-key",
                       "endpointId": "endpoint_users.CreateApiKey",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_users.endpoint_users.CreateApiKey",
                       "isResponseStream": false,
@@ -3440,6 +3482,7 @@
                       "children": [
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/policies/list",
                           "endpointId": "endpoint_permissions/policies.List",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.List",
                           "isResponseStream": false,
@@ -3450,6 +3493,7 @@
                         },
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/policies/create",
                           "endpointId": "endpoint_permissions/policies.Create",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.Create",
                           "isResponseStream": false,
@@ -3460,6 +3504,7 @@
                         },
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/policies/get",
                           "endpointId": "endpoint_permissions/policies.Get",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.Get",
                           "isResponseStream": false,
@@ -3470,6 +3515,7 @@
                         },
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/policies/remove",
                           "endpointId": "endpoint_permissions/policies.Remove",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.Remove",
                           "isResponseStream": false,
@@ -3500,6 +3546,7 @@
                       "children": [
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/roles/list",
                           "endpointId": "endpoint_permissions/roles.List",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.List",
                           "isResponseStream": false,
@@ -3510,6 +3557,7 @@
                         },
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/roles/create",
                           "endpointId": "endpoint_permissions/roles.Create",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.Create",
                           "isResponseStream": false,
@@ -3520,6 +3568,7 @@
                         },
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/roles/get",
                           "endpointId": "endpoint_permissions/roles.Get",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.Get",
                           "isResponseStream": false,
@@ -3530,6 +3579,7 @@
                         },
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/roles/remove",
                           "endpointId": "endpoint_permissions/roles.Remove",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.Remove",
                           "isResponseStream": false,
@@ -3567,6 +3617,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/list",
                       "endpointId": "endpoint_modelSync.List",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync.endpoint_modelSync.List",
                       "isResponseStream": false,
@@ -3577,6 +3628,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/create",
                       "endpointId": "endpoint_modelSync.Create",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Create",
                       "isResponseStream": false,
@@ -3587,6 +3639,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/get-schedule-options",
                       "endpointId": "endpoint_modelSync.GetScheduleOptions",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync.endpoint_modelSync.GetScheduleOptions",
                       "isResponseStream": false,
@@ -3597,6 +3650,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/get",
                       "endpointId": "endpoint_modelSync.Get",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Get",
                       "isResponseStream": false,
@@ -3607,6 +3661,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/remove",
                       "endpointId": "endpoint_modelSync.Remove",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Remove",
                       "isResponseStream": false,
@@ -3627,6 +3682,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/activate",
                       "endpointId": "endpoint_modelSync.Activate",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Activate",
                       "isResponseStream": false,
@@ -3637,6 +3693,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/start",
                       "endpointId": "endpoint_modelSync.Start",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Start",
                       "isResponseStream": false,
@@ -3647,6 +3704,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/get-status",
                       "endpointId": "endpoint_modelSync.GetStatus",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync.endpoint_modelSync.GetStatus",
                       "isResponseStream": false,
@@ -3660,6 +3718,7 @@
                       "children": [
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/model-sync/executions/list",
                           "endpointId": "endpoint_modelSync/executions.List",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.List",
                           "isResponseStream": false,
@@ -3670,6 +3729,7 @@
                         },
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/model-sync/executions/get",
                           "endpointId": "endpoint_modelSync/executions.Get",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.Get",
                           "isResponseStream": false,
@@ -3680,6 +3740,7 @@
                         },
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/model-sync/executions/get-log-urls",
                           "endpointId": "endpoint_modelSync/executions.GetLogUrls",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.GetLogUrls",
                           "isResponseStream": false,
@@ -3690,6 +3751,7 @@
                         },
                         {
                           "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                          "canonicalSlug": "2024-02-08/api-reference/model-sync/executions/get-logs",
                           "endpointId": "endpoint_modelSync/executions.GetLogs",
                           "id": "root..2023-04-25.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.GetLogs",
                           "isResponseStream": false,
@@ -3717,6 +3779,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/webhooks/list",
                       "endpointId": "endpoint_webhooks.List",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_webhooks.endpoint_webhooks.List",
                       "isResponseStream": false,
@@ -3727,6 +3790,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/webhooks/create",
                       "endpointId": "endpoint_webhooks.Create",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_webhooks.endpoint_webhooks.Create",
                       "isResponseStream": false,
@@ -3737,6 +3801,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/webhooks/get",
                       "endpointId": "endpoint_webhooks.Get",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_webhooks.endpoint_webhooks.Get",
                       "isResponseStream": false,
@@ -3747,6 +3812,7 @@
                     },
                     {
                       "apiDefinitionId": "4f9d4e39-a928-4c8a-b9d0-308434722f10",
+                      "canonicalSlug": "2024-02-08/api-reference/webhooks/remove",
                       "endpointId": "endpoint_webhooks.Remove",
                       "id": "root..2023-04-25.uv.api-reference.subpackage_webhooks.endpoint_webhooks.Remove",
                       "isResponseStream": false,
@@ -4724,7 +4790,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/bulk-sync/get-destination",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/get-destination",
                       "endpointId": "endpoint_bulkSync.GetDestination",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.GetDestination",
                       "isResponseStream": false,
@@ -4735,7 +4801,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/bulk-sync/get-source",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/get-source",
                       "endpointId": "endpoint_bulkSync.GetSource",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.GetSource",
                       "isResponseStream": false,
@@ -4746,7 +4812,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/bulk-sync/list",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/list",
                       "endpointId": "endpoint_bulkSync.List",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.List",
                       "isResponseStream": false,
@@ -4757,7 +4823,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/bulk-sync/create",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/create",
                       "endpointId": "endpoint_bulkSync.Create",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.Create",
                       "isResponseStream": false,
@@ -4768,7 +4834,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/bulk-sync/get",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/get",
                       "endpointId": "endpoint_bulkSync.Get",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.Get",
                       "isResponseStream": false,
@@ -4779,7 +4845,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/bulk-sync/remove",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/remove",
                       "endpointId": "endpoint_bulkSync.Remove",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.Remove",
                       "isResponseStream": false,
@@ -4801,7 +4867,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/bulk-sync/activate",
+                      "canonicalSlug": "2024-02-08/api-reference/bulk-sync/activate",
                       "endpointId": "endpoint_bulkSync.Activate",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.endpoint_bulkSync.Activate",
                       "isResponseStream": false,
@@ -4815,7 +4881,7 @@
                       "children": [
                         {
                           "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                          "canonicalSlug": "2023-04-25/api-reference/bulk-sync/schemas/list",
+                          "canonicalSlug": "2024-02-08/api-reference/bulk-sync/schemas/list",
                           "endpointId": "endpoint_bulkSync/schemas.List",
                           "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas.endpoint_bulkSync/schemas.List",
                           "isResponseStream": false,
@@ -4826,7 +4892,7 @@
                         },
                         {
                           "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                          "canonicalSlug": "2023-04-25/api-reference/bulk-sync/schemas/patch",
+                          "canonicalSlug": "2024-02-08/api-reference/bulk-sync/schemas/patch",
                           "endpointId": "endpoint_bulkSync/schemas.Patch",
                           "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas.endpoint_bulkSync/schemas.Patch",
                           "isResponseStream": false,
@@ -4837,7 +4903,7 @@
                         },
                         {
                           "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                          "canonicalSlug": "2023-04-25/api-reference/bulk-sync/schemas/get",
+                          "canonicalSlug": "2024-02-08/api-reference/bulk-sync/schemas/get",
                           "endpointId": "endpoint_bulkSync/schemas.Get",
                           "id": "root..2022-12-12.uv.api-reference.subpackage_bulkSync.subpackage_bulkSync/schemas.endpoint_bulkSync/schemas.Get",
                           "isResponseStream": false,
@@ -4876,7 +4942,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/connections/get-types",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/get-types",
                       "endpointId": "endpoint_connections.GetTypes",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.GetTypes",
                       "isResponseStream": false,
@@ -4887,7 +4953,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/connections/list",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/list",
                       "endpointId": "endpoint_connections.List",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.List",
                       "isResponseStream": false,
@@ -4898,7 +4964,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/connections/create",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/create",
                       "endpointId": "endpoint_connections.Create",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.Create",
                       "isResponseStream": false,
@@ -4909,7 +4975,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/connections/get",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/get",
                       "endpointId": "endpoint_connections.Get",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.Get",
                       "isResponseStream": false,
@@ -4920,7 +4986,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/connections/remove",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/remove",
                       "endpointId": "endpoint_connections.Remove",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.Remove",
                       "isResponseStream": false,
@@ -4942,7 +5008,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/connections/get-parameter-values",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/get-parameter-values",
                       "endpointId": "endpoint_connections.GetParameterValues",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_connections.endpoint_connections.GetParameterValues",
                       "isResponseStream": false,
@@ -5007,7 +5073,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/models/post",
+                      "canonicalSlug": "2024-02-08/api-reference/models/post",
                       "endpointId": "endpoint_models.Post",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.Post",
                       "isResponseStream": false,
@@ -5018,7 +5084,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/models/preview",
+                      "canonicalSlug": "2024-02-08/api-reference/models/preview",
                       "endpointId": "endpoint_models.Preview",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.Preview",
                       "isResponseStream": false,
@@ -5029,7 +5095,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/models/list",
+                      "canonicalSlug": "2024-02-08/api-reference/models/list",
                       "endpointId": "endpoint_models.List",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.List",
                       "isResponseStream": false,
@@ -5040,7 +5106,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/models/create",
+                      "canonicalSlug": "2024-02-08/api-reference/models/create",
                       "endpointId": "endpoint_models.Create",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.Create",
                       "isResponseStream": false,
@@ -5051,7 +5117,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/models/get",
+                      "canonicalSlug": "2024-02-08/api-reference/models/get",
                       "endpointId": "endpoint_models.Get",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.Get",
                       "isResponseStream": false,
@@ -5062,7 +5128,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/models/remove",
+                      "canonicalSlug": "2024-02-08/api-reference/models/remove",
                       "endpointId": "endpoint_models.Remove",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.Remove",
                       "isResponseStream": false,
@@ -5084,7 +5150,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/models/sample",
+                      "canonicalSlug": "2024-02-08/api-reference/models/sample",
                       "endpointId": "endpoint_models.Sample",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_models.endpoint_models.Sample",
                       "isResponseStream": false,
@@ -5105,7 +5171,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/events/list",
+                      "canonicalSlug": "2024-02-08/api-reference/events/list",
                       "endpointId": "endpoint_events.List",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_events.endpoint_events.List",
                       "isResponseStream": false,
@@ -5116,7 +5182,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/events/get-types",
+                      "canonicalSlug": "2024-02-08/api-reference/events/get-types",
                       "endpointId": "endpoint_events.GetTypes",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_events.endpoint_events.GetTypes",
                       "isResponseStream": false,
@@ -5137,7 +5203,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/jobs/get",
+                      "canonicalSlug": "2024-02-08/api-reference/jobs/get",
                       "endpointId": "endpoint_jobs.Get",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_jobs.endpoint_jobs.Get",
                       "isResponseStream": false,
@@ -5158,7 +5224,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/identity/get",
+                      "canonicalSlug": "2024-02-08/api-reference/identity/get",
                       "endpointId": "endpoint_identity.Get",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_identity.endpoint_identity.Get",
                       "isResponseStream": false,
@@ -5179,7 +5245,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/organization/list",
+                      "canonicalSlug": "2024-02-08/api-reference/organization/list",
                       "endpointId": "endpoint_organization.List",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_organization.endpoint_organization.List",
                       "isResponseStream": false,
@@ -5190,7 +5256,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/organization/create",
+                      "canonicalSlug": "2024-02-08/api-reference/organization/create",
                       "endpointId": "endpoint_organization.Create",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_organization.endpoint_organization.Create",
                       "isResponseStream": false,
@@ -5201,7 +5267,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/organization/get",
+                      "canonicalSlug": "2024-02-08/api-reference/organization/get",
                       "endpointId": "endpoint_organization.Get",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_organization.endpoint_organization.Get",
                       "isResponseStream": false,
@@ -5212,7 +5278,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/organization/remove",
+                      "canonicalSlug": "2024-02-08/api-reference/organization/remove",
                       "endpointId": "endpoint_organization.Remove",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_organization.endpoint_organization.Remove",
                       "isResponseStream": false,
@@ -5244,7 +5310,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/users/list",
+                      "canonicalSlug": "2024-02-08/api-reference/users/list",
                       "endpointId": "endpoint_users.List",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_users.endpoint_users.List",
                       "isResponseStream": false,
@@ -5255,7 +5321,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/users/create",
+                      "canonicalSlug": "2024-02-08/api-reference/users/create",
                       "endpointId": "endpoint_users.Create",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_users.endpoint_users.Create",
                       "isResponseStream": false,
@@ -5266,7 +5332,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/users/get",
+                      "canonicalSlug": "2024-02-08/api-reference/users/get",
                       "endpointId": "endpoint_users.Get",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_users.endpoint_users.Get",
                       "isResponseStream": false,
@@ -5277,7 +5343,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/users/remove",
+                      "canonicalSlug": "2024-02-08/api-reference/users/remove",
                       "endpointId": "endpoint_users.Remove",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_users.endpoint_users.Remove",
                       "isResponseStream": false,
@@ -5299,7 +5365,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/users/create-api-key",
+                      "canonicalSlug": "2024-02-08/api-reference/users/create-api-key",
                       "endpointId": "endpoint_users.CreateApiKey",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_users.endpoint_users.CreateApiKey",
                       "isResponseStream": false,
@@ -5323,7 +5389,7 @@
                       "children": [
                         {
                           "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                          "canonicalSlug": "2023-04-25/api-reference/permissions/policies/list",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/policies/list",
                           "endpointId": "endpoint_permissions/policies.List",
                           "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.List",
                           "isResponseStream": false,
@@ -5334,7 +5400,7 @@
                         },
                         {
                           "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                          "canonicalSlug": "2023-04-25/api-reference/permissions/policies/create",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/policies/create",
                           "endpointId": "endpoint_permissions/policies.Create",
                           "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.Create",
                           "isResponseStream": false,
@@ -5345,7 +5411,7 @@
                         },
                         {
                           "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                          "canonicalSlug": "2023-04-25/api-reference/permissions/policies/get",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/policies/get",
                           "endpointId": "endpoint_permissions/policies.Get",
                           "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.Get",
                           "isResponseStream": false,
@@ -5356,7 +5422,7 @@
                         },
                         {
                           "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                          "canonicalSlug": "2023-04-25/api-reference/permissions/policies/remove",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/policies/remove",
                           "endpointId": "endpoint_permissions/policies.Remove",
                           "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/policies.endpoint_permissions/policies.Remove",
                           "isResponseStream": false,
@@ -5388,7 +5454,7 @@
                       "children": [
                         {
                           "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                          "canonicalSlug": "2023-04-25/api-reference/permissions/roles/list",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/roles/list",
                           "endpointId": "endpoint_permissions/roles.List",
                           "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.List",
                           "isResponseStream": false,
@@ -5399,7 +5465,7 @@
                         },
                         {
                           "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                          "canonicalSlug": "2023-04-25/api-reference/permissions/roles/create",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/roles/create",
                           "endpointId": "endpoint_permissions/roles.Create",
                           "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.Create",
                           "isResponseStream": false,
@@ -5410,7 +5476,7 @@
                         },
                         {
                           "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                          "canonicalSlug": "2023-04-25/api-reference/permissions/roles/get",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/roles/get",
                           "endpointId": "endpoint_permissions/roles.Get",
                           "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.Get",
                           "isResponseStream": false,
@@ -5421,7 +5487,7 @@
                         },
                         {
                           "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                          "canonicalSlug": "2023-04-25/api-reference/permissions/roles/remove",
+                          "canonicalSlug": "2024-02-08/api-reference/permissions/roles/remove",
                           "endpointId": "endpoint_permissions/roles.Remove",
                           "id": "root..2022-12-12.uv.api-reference.subpackage_permissions.subpackage_permissions/roles.endpoint_permissions/roles.Remove",
                           "isResponseStream": false,
@@ -5460,7 +5526,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/model-sync/list",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/list",
                       "endpointId": "endpoint_modelSync.List",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.List",
                       "isResponseStream": false,
@@ -5471,7 +5537,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/model-sync/create",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/create",
                       "endpointId": "endpoint_modelSync.Create",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Create",
                       "isResponseStream": false,
@@ -5482,7 +5548,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/model-sync/get-schedule-options",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/get-schedule-options",
                       "endpointId": "endpoint_modelSync.GetScheduleOptions",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.GetScheduleOptions",
                       "isResponseStream": false,
@@ -5493,7 +5559,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/model-sync/get",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/get",
                       "endpointId": "endpoint_modelSync.Get",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Get",
                       "isResponseStream": false,
@@ -5504,7 +5570,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/model-sync/remove",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/remove",
                       "endpointId": "endpoint_modelSync.Remove",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Remove",
                       "isResponseStream": false,
@@ -5526,7 +5592,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/model-sync/activate",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/activate",
                       "endpointId": "endpoint_modelSync.Activate",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Activate",
                       "isResponseStream": false,
@@ -5537,7 +5603,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/model-sync/start",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/start",
                       "endpointId": "endpoint_modelSync.Start",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Start",
                       "isResponseStream": false,
@@ -5548,7 +5614,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/model-sync/get-status",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/get-status",
                       "endpointId": "endpoint_modelSync.GetStatus",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.endpoint_modelSync.GetStatus",
                       "isResponseStream": false,
@@ -5562,7 +5628,7 @@
                       "children": [
                         {
                           "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                          "canonicalSlug": "2023-04-25/api-reference/model-sync/executions/list",
+                          "canonicalSlug": "2024-02-08/api-reference/model-sync/executions/list",
                           "endpointId": "endpoint_modelSync/executions.List",
                           "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.List",
                           "isResponseStream": false,
@@ -5573,7 +5639,7 @@
                         },
                         {
                           "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                          "canonicalSlug": "2023-04-25/api-reference/model-sync/executions/get",
+                          "canonicalSlug": "2024-02-08/api-reference/model-sync/executions/get",
                           "endpointId": "endpoint_modelSync/executions.Get",
                           "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.Get",
                           "isResponseStream": false,
@@ -5584,7 +5650,7 @@
                         },
                         {
                           "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                          "canonicalSlug": "2023-04-25/api-reference/model-sync/executions/get-log-urls",
+                          "canonicalSlug": "2024-02-08/api-reference/model-sync/executions/get-log-urls",
                           "endpointId": "endpoint_modelSync/executions.GetLogUrls",
                           "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.GetLogUrls",
                           "isResponseStream": false,
@@ -5595,7 +5661,7 @@
                         },
                         {
                           "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                          "canonicalSlug": "2023-04-25/api-reference/model-sync/executions/get-logs",
+                          "canonicalSlug": "2024-02-08/api-reference/model-sync/executions/get-logs",
                           "endpointId": "endpoint_modelSync/executions.GetLogs",
                           "id": "root..2022-12-12.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.GetLogs",
                           "isResponseStream": false,
@@ -5623,7 +5689,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/webhooks/list",
+                      "canonicalSlug": "2024-02-08/api-reference/webhooks/list",
                       "endpointId": "endpoint_webhooks.List",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_webhooks.endpoint_webhooks.List",
                       "isResponseStream": false,
@@ -5634,7 +5700,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/webhooks/create",
+                      "canonicalSlug": "2024-02-08/api-reference/webhooks/create",
                       "endpointId": "endpoint_webhooks.Create",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_webhooks.endpoint_webhooks.Create",
                       "isResponseStream": false,
@@ -5645,7 +5711,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/webhooks/get",
+                      "canonicalSlug": "2024-02-08/api-reference/webhooks/get",
                       "endpointId": "endpoint_webhooks.Get",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_webhooks.endpoint_webhooks.Get",
                       "isResponseStream": false,
@@ -5656,7 +5722,7 @@
                     },
                     {
                       "apiDefinitionId": "9b972bf3-4f92-48dd-8a15-386f34ae82e1",
-                      "canonicalSlug": "2023-04-25/api-reference/webhooks/remove",
+                      "canonicalSlug": "2024-02-08/api-reference/webhooks/remove",
                       "endpointId": "endpoint_webhooks.Remove",
                       "id": "root..2022-12-12.uv.api-reference.subpackage_webhooks.endpoint_webhooks.Remove",
                       "isResponseStream": false,
@@ -6570,7 +6636,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
-                      "canonicalSlug": "2023-04-25/api-reference/connections/get-types",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/get-types",
                       "endpointId": "endpoint_connections.GetTypes",
                       "id": "root..2021-05-23.uv.api-reference.subpackage_connections.endpoint_connections.GetTypes",
                       "isResponseStream": false,
@@ -6581,7 +6647,7 @@
                     },
                     {
                       "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
-                      "canonicalSlug": "2023-04-25/api-reference/connections/list",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/list",
                       "endpointId": "endpoint_connections.List",
                       "id": "root..2021-05-23.uv.api-reference.subpackage_connections.endpoint_connections.List",
                       "isResponseStream": false,
@@ -6592,7 +6658,7 @@
                     },
                     {
                       "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
-                      "canonicalSlug": "2023-04-25/api-reference/connections/create",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/create",
                       "endpointId": "endpoint_connections.Create",
                       "id": "root..2021-05-23.uv.api-reference.subpackage_connections.endpoint_connections.Create",
                       "isResponseStream": false,
@@ -6603,7 +6669,7 @@
                     },
                     {
                       "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
-                      "canonicalSlug": "2023-04-25/api-reference/connections/get",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/get",
                       "endpointId": "endpoint_connections.Get",
                       "id": "root..2021-05-23.uv.api-reference.subpackage_connections.endpoint_connections.Get",
                       "isResponseStream": false,
@@ -6614,7 +6680,7 @@
                     },
                     {
                       "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
-                      "canonicalSlug": "2023-04-25/api-reference/connections/remove",
+                      "canonicalSlug": "2024-02-08/api-reference/connections/remove",
                       "endpointId": "endpoint_connections.Remove",
                       "id": "root..2021-05-23.uv.api-reference.subpackage_connections.endpoint_connections.Remove",
                       "isResponseStream": false,
@@ -6667,7 +6733,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
-                      "canonicalSlug": "2023-04-25/api-reference/organization/list",
+                      "canonicalSlug": "2024-02-08/api-reference/organization/list",
                       "endpointId": "endpoint_organization.List",
                       "id": "root..2021-05-23.uv.api-reference.subpackage_organization.endpoint_organization.List",
                       "isResponseStream": false,
@@ -6678,7 +6744,7 @@
                     },
                     {
                       "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
-                      "canonicalSlug": "2023-04-25/api-reference/organization/create",
+                      "canonicalSlug": "2024-02-08/api-reference/organization/create",
                       "endpointId": "endpoint_organization.Create",
                       "id": "root..2021-05-23.uv.api-reference.subpackage_organization.endpoint_organization.Create",
                       "isResponseStream": false,
@@ -6689,7 +6755,7 @@
                     },
                     {
                       "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
-                      "canonicalSlug": "2023-04-25/api-reference/organization/get",
+                      "canonicalSlug": "2024-02-08/api-reference/organization/get",
                       "endpointId": "endpoint_organization.Get",
                       "id": "root..2021-05-23.uv.api-reference.subpackage_organization.endpoint_organization.Get",
                       "isResponseStream": false,
@@ -6721,7 +6787,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
-                      "canonicalSlug": "2023-04-25/api-reference/users/create",
+                      "canonicalSlug": "2024-02-08/api-reference/users/create",
                       "endpointId": "endpoint_users.Create",
                       "id": "root..2021-05-23.uv.api-reference.subpackage_users.endpoint_users.Create",
                       "isResponseStream": false,
@@ -6732,7 +6798,7 @@
                     },
                     {
                       "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
-                      "canonicalSlug": "2023-04-25/api-reference/users/get",
+                      "canonicalSlug": "2024-02-08/api-reference/users/get",
                       "endpointId": "endpoint_users.Get",
                       "id": "root..2021-05-23.uv.api-reference.subpackage_users.endpoint_users.Get",
                       "isResponseStream": false,
@@ -6743,7 +6809,7 @@
                     },
                     {
                       "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
-                      "canonicalSlug": "2023-04-25/api-reference/users/remove",
+                      "canonicalSlug": "2024-02-08/api-reference/users/remove",
                       "endpointId": "endpoint_users.Remove",
                       "id": "root..2021-05-23.uv.api-reference.subpackage_users.endpoint_users.Remove",
                       "isResponseStream": false,
@@ -6775,7 +6841,7 @@
                   "children": [
                     {
                       "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
-                      "canonicalSlug": "2023-04-25/api-reference/model-sync/list",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/list",
                       "endpointId": "endpoint_modelSync.List",
                       "id": "root..2021-05-23.uv.api-reference.subpackage_modelSync.endpoint_modelSync.List",
                       "isResponseStream": false,
@@ -6786,7 +6852,7 @@
                     },
                     {
                       "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
-                      "canonicalSlug": "2023-04-25/api-reference/model-sync/get",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/get",
                       "endpointId": "endpoint_modelSync.Get",
                       "id": "root..2021-05-23.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Get",
                       "isResponseStream": false,
@@ -6797,7 +6863,7 @@
                     },
                     {
                       "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
-                      "canonicalSlug": "2023-04-25/api-reference/model-sync/start",
+                      "canonicalSlug": "2024-02-08/api-reference/model-sync/start",
                       "endpointId": "endpoint_modelSync.Start",
                       "id": "root..2021-05-23.uv.api-reference.subpackage_modelSync.endpoint_modelSync.Start",
                       "isResponseStream": false,
@@ -6811,7 +6877,7 @@
                       "children": [
                         {
                           "apiDefinitionId": "9212af81-e9e3-43ce-bb7e-997fe422dfe3",
-                          "canonicalSlug": "2023-04-25/api-reference/model-sync/executions/get",
+                          "canonicalSlug": "2024-02-08/api-reference/model-sync/executions/get",
                           "endpointId": "endpoint_modelSync/executions.Get",
                           "id": "root..2021-05-23.uv.api-reference.subpackage_modelSync.subpackage_modelSync/executions.endpoint_modelSync/executions.Get",
                           "isResponseStream": false,

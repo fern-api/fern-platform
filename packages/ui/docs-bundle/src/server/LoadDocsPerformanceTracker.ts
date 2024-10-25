@@ -1,9 +1,10 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { TRACK_LOAD_DOCS_PERFORMANCE } from "@fern-ui/fern-docs-utils";
 import { DocsPage } from "@fern-ui/ui";
-import { track } from "@vercel/analytics/server";
 import { GetServerSidePropsResult } from "next/types";
 import { ComponentProps } from "react";
-import { AuthPartner } from "./authProps";
+import { track } from "./analytics/posthog";
+import { AuthPartner } from "./auth/getAuthState";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 
 export class LoadDocsPerformanceTracker {
@@ -13,15 +14,15 @@ export class LoadDocsPerformanceTracker {
         auth,
     }: {
         domain: string;
-        slug: string[];
+        slug: FernNavigation.Slug;
         auth: AuthPartner | undefined;
     }): LoadDocsPerformanceTracker {
         return new LoadDocsPerformanceTracker(domain, slug, auth);
     }
 
     private constructor(
-        private host: string,
-        private slug: string[],
+        private domain: string,
+        private slug: FernNavigation.Slug,
         private auth: AuthPartner | undefined,
     ) {}
 
@@ -46,12 +47,18 @@ export class LoadDocsPerformanceTracker {
     }
 
     async track(): Promise<void> {
-        return track(TRACK_LOAD_DOCS_PERFORMANCE, {
-            host: this.host,
-            slug: this.slug.join("/"),
-            auth: this.auth ?? null,
-            loadDocsDurationMs: this.loadDocsDurationMs ?? null,
-            initialPropsDurationMs: this.initialPropsDurationMs ?? null,
-        });
+        const properties = {
+            domain: this.domain,
+            slug: this.slug,
+            auth: this.auth,
+            loadDocsDurationMs: this.loadDocsDurationMs,
+            initialPropsDurationMs: this.initialPropsDurationMs,
+            $current_url: `https://${this.domain}/${this.slug}`,
+        };
+
+        // eslint-disable-next-line no-console
+        console.log(TRACK_LOAD_DOCS_PERFORMANCE, properties);
+
+        await track(TRACK_LOAD_DOCS_PERFORMANCE, properties);
     }
 }

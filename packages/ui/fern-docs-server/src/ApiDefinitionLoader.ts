@@ -78,7 +78,7 @@ export class ApiDefinitionLoader {
         return this;
     };
 
-    #getClient = () => new FdrClient({ environment: this.environment });
+    #getClient = () => new FdrClient({ environment: this.environment, token: process.env.FERN_TOKEN });
     #getApi = async (): Promise<ApiDefinition | undefined> => {
         if (this.apiDefinition != null) {
             return this.apiDefinition;

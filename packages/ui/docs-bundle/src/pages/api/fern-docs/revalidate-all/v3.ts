@@ -25,6 +25,7 @@ function chunk<T>(arr: T[], size: number): T[][] {
     return arr.reduce((acc, _, i) => (i % size ? acc : [...acc, arr.slice(i, i + size)]), [] as T[][]);
 }
 
+// TODO: gate this using a fern token
 const handler: NextApiHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<FernDocs.RevalidateAllV3Response>,

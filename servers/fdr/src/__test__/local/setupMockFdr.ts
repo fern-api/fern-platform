@@ -54,6 +54,10 @@ export async function setup({ provide }: { provide: (key: string, value: any) =>
 
 export const prisma = new PrismaClient({
     log: ["query", "info", "warn", "error"],
+    transactionOptions: {
+        timeout: 15000,
+        maxWait: 15000,
+    },
 });
 
 function sleep(ms: number) {

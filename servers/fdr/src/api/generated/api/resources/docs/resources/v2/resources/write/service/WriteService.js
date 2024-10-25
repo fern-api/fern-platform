@@ -151,6 +151,36 @@ export class WriteService {
                 next(error);
             }
         }));
+        this.router.post("/transfer-ownership", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.methods.transferOwnershipOfDomain(req, {
+                    send: () => __awaiter(this, void 0, void 0, function* () {
+                        res.sendStatus(204);
+                    }),
+                    cookie: res.cookie.bind(res),
+                    locals: res.locals,
+                }, next);
+                next();
+            }
+            catch (error) {
+                if (error instanceof errors.FernRegistryError) {
+                    switch (error.errorName) {
+                        case "DocsNotFoundError":
+                        case "UnauthorizedError":
+                            break;
+                        default:
+                            console.warn(`Endpoint 'transferOwnershipOfDomain' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition.");
+                    }
+                    yield error.send(res);
+                }
+                else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        }));
         return this.router;
     }
 }

@@ -23,7 +23,7 @@ import { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
 import urlJoin from "url-join";
 import { DocsLoader } from "./DocsLoader";
-import type { AuthProps } from "./authProps";
+import type { AuthState } from "./auth/getAuthState";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";
@@ -32,7 +32,7 @@ import { withVersionSwitcherInfo } from "./withVersionSwitcherInfo";
 
 interface WithInitialProps {
     docs: LoadWithUrlResponse;
-    slug: string[];
+    slug: FernNavigation.Slug;
     /**
      * Docs domain
      */
@@ -41,25 +41,23 @@ interface WithInitialProps {
      * Hostname of this request (i.e. localhost, or preview URL, otherwise the docs domain in production)
      */
     host: string;
-    auth?: AuthProps;
+    auth?: AuthState;
 }
 
 export async function withInitialProps({
     docs: docsResponse,
-    slug: slugArray,
+    slug,
     domain,
     host,
     auth,
 }: WithInitialProps): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
     if (!docsResponse.ok) {
-        return handleLoadDocsError(domain, slugArray, docsResponse.error);
+        return handleLoadDocsError(domain, slug, docsResponse.error);
     }
 
     const docs = docsResponse.body;
     const docsDefinition = docs.definition;
     const docsConfig = docsDefinition.config;
-
-    const slug = FernNavigation.slugjoin(...slugArray);
 
     const redirect = getRedirectForPath(urlJoin("/", slug), docs.baseUrl, docsConfig.redirects);
 
@@ -68,8 +66,8 @@ export async function withInitialProps({
     }
 
     const featureFlags = await getFeatureFlags(domain);
-
     const authConfig = await getAuthEdgeConfig(domain);
+
     const loader = DocsLoader.for(domain)
         .withFeatureFlags(featureFlags)
         .withAuth(authConfig, auth)
@@ -106,11 +104,6 @@ export async function withInitialProps({
                 }
             }
         }
-
-        // TODO: returning "notFound: true" here will render vercel's default 404 page
-        // this is better than following redirects, since it will signal a proper 404 status code.
-        // however, we should consider rendering a custom 404 page in the future using the customer's branding.
-        // see: https://nextjs.org/docs/app/api-reference/file-conventions/not-found
 
         if (featureFlags.is404PageHidden && node.redirect != null) {
             return {
@@ -302,7 +295,7 @@ export async function withInitialProps({
             await getSeoDisabled(domain),
             isTrailingSlashEnabled(),
         ),
-        user: auth?.user,
+        user: auth?.authed ? auth.user : undefined,
         fallback: {},
         // eslint-disable-next-line deprecation/deprecation
         analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),

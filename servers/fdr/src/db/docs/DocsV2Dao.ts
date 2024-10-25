@@ -33,10 +33,19 @@ export interface LoadDocsConfigResponse {
     referencedApis: string[];
 }
 
+export interface CheckDomainOwnershipResponse {
+    allDomainsOwned: boolean;
+    unownedDomains: string[];
+}
+
 export interface DocsV2Dao {
-    checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<boolean>;
+    checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<CheckDomainOwnershipResponse>;
 
     loadDocsForURL(url: URL): Promise<LoadDocsDefinitionByUrlResponse | undefined>;
+
+    getOrgIdForDocsUrl(url: URL): Promise<FdrAPI.OrgId | undefined>;
+
+    getOrgIdForDocsConfigInstanceId(docsConfigInstanceId: string): Promise<FdrAPI.OrgId | undefined>;
 
     loadDocsConfigByInstanceId(docsConfigInstanceId: string): Promise<LoadDocsConfigResponse | undefined>;
 
@@ -66,14 +75,32 @@ export interface DocsV2Dao {
         customOnly?: boolean;
         domainSuffix: string;
     }): Promise<DocsV2Read.ListAllDocsUrlsResponse>;
+
+    transferDomainOwner({ domain, toOrgId }: { domain: string; toOrgId: string }): Promise<void>;
 }
 
 export class DocsV2DaoImpl implements DocsV2Dao {
     constructor(private readonly prisma: PrismaClient) {}
-    public async checkDomainsDontBelongToAnotherOrg(domains: string[], orgId: string): Promise<boolean> {
+
+    public async transferDomainOwner({ domain, toOrgId }: { domain: string; toOrgId: string }): Promise<void> {
+        await this.prisma.docsV2.updateMany({
+            where: {
+                domain,
+            },
+            data: {
+                orgID: toOrgId,
+            },
+        });
+    }
+
+    public async checkDomainsDontBelongToAnotherOrg(
+        domains: string[],
+        orgId: string,
+    ): Promise<CheckDomainOwnershipResponse> {
         const matchedDomains = await this.prisma.docsV2.findMany({
             select: {
                 orgID: true,
+                domain: true,
             },
             where: {
                 domain: {
@@ -83,7 +110,14 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             distinct: ["orgID", "domain"],
         });
 
-        return matchedDomains.every((matchedDomain) => matchedDomain.orgID === orgId);
+        const allDomainsOwned = matchedDomains.every((matchedDomain) => matchedDomain.orgID === orgId);
+        const unownedDomains = matchedDomains
+            .filter((matchedDomain) => matchedDomain.orgID !== orgId)
+            .map((matchedDomain) => matchedDomain.domain);
+        return {
+            allDomainsOwned,
+            unownedDomains,
+        };
     }
 
     public async loadDocsForURL(url: URL): Promise<WithoutQuestionMarks<LoadDocsDefinitionByUrlResponse> | undefined> {
@@ -113,6 +147,30 @@ export class DocsV2DaoImpl implements DocsV2Dao {
             hasPublicS3Assets: docsDomain.hasPublicS3Assets,
             isPreview: docsDomain.isPreview,
         };
+    }
+
+    public async getOrgIdForDocsUrl(url: URL): Promise<FdrAPI.OrgId | undefined> {
+        const docsDomain = await this.prisma.docsV2.findFirst({
+            where: {
+                domain: url.hostname,
+            },
+            select: {
+                orgID: true,
+            },
+        });
+        return docsDomain?.orgID != null ? FdrAPI.OrgId(docsDomain.orgID) : undefined;
+    }
+
+    public async getOrgIdForDocsConfigInstanceId(docsConfigInstanceId: string): Promise<FdrAPI.OrgId | undefined> {
+        const instance = await this.prisma.docsV2.findFirst({
+            where: {
+                docsConfigInstanceId,
+            },
+            select: {
+                orgID: true,
+            },
+        });
+        return instance?.orgID != null ? FdrAPI.OrgId(instance.orgID) : undefined;
     }
 
     public async loadDocsConfigByInstanceId(docsConfigInstanceId: string): Promise<LoadDocsConfigResponse | undefined> {
