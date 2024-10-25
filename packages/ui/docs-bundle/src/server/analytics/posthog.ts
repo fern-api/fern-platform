@@ -8,8 +8,25 @@ function getPosthogKey(): string {
     return key.trim();
 }
 
-export function getPosthog(): PostHog {
+function getPosthog(): PostHog {
     return new PostHog(getPosthogKey(), {
         host: "https://us.i.posthog.com",
     });
+}
+
+export async function track(event: string, properties?: Record<string, unknown>): Promise<void> {
+    try {
+        const client = getPosthog();
+
+        client.capture({
+            event,
+            distinctId: "server-side-event",
+            properties,
+        });
+
+        await client.shutdown();
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+    }
 }

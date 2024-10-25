@@ -3,7 +3,7 @@ import { TRACK_LOAD_DOCS_PERFORMANCE } from "@fern-ui/fern-docs-utils";
 import { DocsPage } from "@fern-ui/ui";
 import { GetServerSidePropsResult } from "next/types";
 import { ComponentProps } from "react";
-import { getPosthog } from "./analytics/posthog";
+import { track } from "./analytics/posthog";
 import { AuthPartner } from "./auth/getAuthState";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 
@@ -47,31 +47,18 @@ export class LoadDocsPerformanceTracker {
     }
 
     async track(): Promise<void> {
-        const event = {
-            event: TRACK_LOAD_DOCS_PERFORMANCE,
-            distinctId: this.domain,
-            properties: {
-                domain: this.domain,
-                slug: this.slug,
-                url: `https://${this.domain}/${this.slug}`,
-                auth: this.auth,
-                loadDocsDurationMs: this.loadDocsDurationMs,
-                initialPropsDurationMs: this.initialPropsDurationMs,
-            },
+        const properties = {
+            domain: this.domain,
+            slug: this.slug,
+            auth: this.auth,
+            loadDocsDurationMs: this.loadDocsDurationMs,
+            initialPropsDurationMs: this.initialPropsDurationMs,
+            $current_url: `https://${this.domain}/${this.slug}`,
         };
 
         // eslint-disable-next-line no-console
-        console.log(event);
+        console.log(TRACK_LOAD_DOCS_PERFORMANCE, properties);
 
-        try {
-            const posthog = getPosthog();
-
-            posthog.capture(event);
-
-            await posthog.shutdown();
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.error(error);
-        }
+        await track(TRACK_LOAD_DOCS_PERFORMANCE, properties);
     }
 }
