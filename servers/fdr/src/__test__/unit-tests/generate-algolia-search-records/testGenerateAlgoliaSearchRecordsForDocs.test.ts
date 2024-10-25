@@ -24,9 +24,15 @@ const FIXTURES: Fixture[] = [
     {
         name: "candid",
     },
-    // {
-    //     name: "humanloop",
-    // },
+    {
+        name: "humanloop",
+    },
+    {
+        name: "vapi",
+    },
+    {
+        name: "nominal",
+    },
 ];
 
 function loadDocsDefinition(fixture: Fixture) {
@@ -173,7 +179,6 @@ describe("generateIndexSegmentsForDefinition", () => {
                     integrations: undefined,
                     css: undefined,
                     js: undefined,
-                    playground: undefined,
                     logo: undefined,
                     logoV2: undefined,
                     colors: undefined,
