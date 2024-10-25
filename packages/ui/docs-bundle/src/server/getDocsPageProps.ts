@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { FernUser } from "@fern-ui/fern-docs-auth";
 import type { DocsPage } from "@fern-ui/ui";
@@ -30,6 +31,7 @@ export async function getDocsPageProps(
      * Load the docs for the given URL.
      */
     const docs = await performance.trackLoadDocsPromise(loadWithUrl(domain));
+    console.log("Loaded docs from url");
 
     /**
      * Convert the docs into initial props for the page.
@@ -37,9 +39,10 @@ export async function getDocsPageProps(
     const initialProps = await performance.trackInitialPropsPromise(
         withInitialProps({ docs, slug, domain, host, fern_token }),
     );
+    console.log("Converted docs into initial props");
 
     /**
-     * Send performance data to Vercel Analytics.
+     * Send performance data to PostHog.
      */
     await performance.track();
 

@@ -1,9 +1,9 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { TRACK_LOAD_DOCS_PERFORMANCE } from "@fern-ui/fern-docs-utils";
 import { DocsPage } from "@fern-ui/ui";
-import { track } from "@vercel/analytics/server";
 import { GetServerSidePropsResult } from "next/types";
 import { ComponentProps } from "react";
+import { track } from "./analytics/posthog";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 
 export class LoadDocsPerformanceTracker {
@@ -37,11 +37,17 @@ export class LoadDocsPerformanceTracker {
     }
 
     async track(): Promise<void> {
-        return track(TRACK_LOAD_DOCS_PERFORMANCE, {
+        const properties = {
             domain: this.domain,
             slug: this.slug,
-            loadDocsDurationMs: this.loadDocsDurationMs ?? null,
-            initialPropsDurationMs: this.initialPropsDurationMs ?? null,
-        });
+            loadDocsDurationMs: this.loadDocsDurationMs,
+            initialPropsDurationMs: this.initialPropsDurationMs,
+            $current_url: `https://${this.domain}/${this.slug}`,
+        };
+
+        // eslint-disable-next-line no-console
+        console.log(TRACK_LOAD_DOCS_PERFORMANCE, properties);
+
+        await track(TRACK_LOAD_DOCS_PERFORMANCE, properties);
     }
 }

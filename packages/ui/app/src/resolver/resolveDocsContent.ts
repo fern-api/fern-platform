@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { ApiDefinitionV1ToLatest } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -72,8 +73,10 @@ export async function resolveDocsContent({
             .withResolveDescriptions();
     });
 
+    let result: DocsContent | undefined;
+
     if (node.type === "changelog") {
-        return resolveChangelogPage({
+        result = await resolveChangelogPage({
             node,
             breadcrumb,
             pages,
@@ -81,7 +84,7 @@ export async function resolveDocsContent({
             serializeMdx,
         });
     } else if (node.type === "changelogEntry") {
-        return resolveChangelogEntryPage({
+        result = await resolveChangelogEntryPage({
             node,
             parents,
             breadcrumb,
@@ -91,8 +94,7 @@ export async function resolveDocsContent({
             neighbors,
         });
     } else if (apiReference != null && apiReference.paginated && FernNavigation.hasMarkdown(node)) {
-        // if long scrolling is disabled, we should render a markdown page by itself
-        return resolveMarkdownPage({
+        result = await resolveMarkdownPage({
             node,
             version,
             breadcrumb,
@@ -103,30 +105,29 @@ export async function resolveDocsContent({
     } else if (apiReference != null) {
         const loader = apiLoaders[apiReference.apiDefinitionId];
         if (loader == null) {
-            // eslint-disable-next-line no-console
             console.error("API definition not found", apiReference.apiDefinitionId);
             return;
         }
 
         if (apiReference.paginated && FernNavigation.isApiLeaf(node)) {
-            return resolveApiEndpointPage({
+            result = await resolveApiEndpointPage({
                 node,
                 parents,
                 apiDefinitionLoader: loader,
                 neighbors,
                 showErrors: apiReference.showErrors,
             });
+        } else {
+            result = await resolveApiReferencePage({
+                node,
+                apiDefinitionLoader: loader,
+                apiReferenceNode: apiReference,
+                parents,
+                markdownLoader,
+            });
         }
-
-        return resolveApiReferencePage({
-            node,
-            apiDefinitionLoader: loader,
-            apiReferenceNode: apiReference,
-            parents,
-            markdownLoader,
-        });
     } else if (FernNavigation.hasMarkdown(node)) {
-        return resolveMarkdownPage({
+        result = await resolveMarkdownPage({
             node,
             version,
             breadcrumb,
@@ -136,12 +137,11 @@ export async function resolveDocsContent({
         });
     }
 
-    /**
-     * This should never happen, but if it does, we should log it and return undefined
-     */
-    // eslint-disable-next-line no-console
-    console.error(`Failed to resolve content for ${node.slug}`);
-    return undefined;
+    if (result === undefined) {
+        console.error(`Failed to resolve content for ${node.slug}`);
+    }
+
+    return result;
 }
 
 async function getNeighbor(

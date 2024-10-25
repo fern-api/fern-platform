@@ -1,5 +1,5 @@
+import { rewritePosthog } from "@/server/analytics/rewritePosthog";
 import { extractNextDataPathname } from "@/server/extractNextDataPathname";
-import { rewritePosthog } from "@/server/rewritePosthog";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { NextResponse, type NextMiddleware } from "next/server";
 import { withMiddlewareAuth } from "./server/withMiddlewareAuth";
