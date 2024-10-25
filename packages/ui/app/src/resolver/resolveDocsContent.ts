@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { ApiDefinitionV1ToLatest } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -34,16 +33,10 @@ export async function resolveDocsContent({
     serializeMdx: MDX_SERIALIZER;
     engine: string;
 }): Promise<DocsContent | undefined> {
-    console.log("Starting resolveDocsContent");
-    console.time("resolveDocsContent");
-
-    console.time("getNeighbors");
     const neighbors = await getNeighbors(found, pages, serializeMdx);
-    console.timeEnd("getNeighbors");
 
     const { node, apiReference, parents, breadcrumb } = found;
 
-    console.time("createMarkdownLoader");
     const markdownLoader = MarkdownLoader.create(host)
         .withPages(pages)
         .withMdxBundler(
@@ -54,9 +47,7 @@ export async function resolveDocsContent({
                 }),
             engine,
         );
-    console.timeEnd("createMarkdownLoader");
 
-    console.time("createApiLoaders");
     const apiLoaders = mapValues(apis, (api) => {
         return ApiDefinitionLoader.create(host, api.id)
             .withMdxBundler(serializeMdx, engine)
@@ -65,11 +56,9 @@ export async function resolveDocsContent({
             .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
             .withResolveDescriptions();
     });
-    console.timeEnd("createApiLoaders");
 
     let result: DocsContent | undefined;
 
-    console.time("resolveContent");
     if (node.type === "changelog") {
         result = await resolveChangelogPage({
             node,
@@ -89,7 +78,6 @@ export async function resolveDocsContent({
             neighbors,
         });
     } else if (apiReference != null && apiReference.paginated && FernNavigation.hasMarkdown(node)) {
-        // if long scrolling is disabled, we should render a markdown page by itself
         result = await resolveMarkdownPage({
             node,
             found,
@@ -130,13 +118,11 @@ export async function resolveDocsContent({
             markdownLoader,
         });
     }
-    console.timeEnd("resolveContent");
 
     if (result === undefined) {
         console.error(`Failed to resolve content for ${node.slug}`);
     }
 
-    console.timeEnd("resolveDocsContent");
     return result;
 }
 
@@ -148,9 +134,7 @@ async function getNeighbor(
     if (node == null) {
         return null;
     }
-    console.time(`resolveSubtitle for ${node.slug}`);
     const excerpt = await resolveSubtitle(node, pages, serializeMdx);
-    console.timeEnd(`resolveSubtitle for ${node.slug}`);
     return {
         slug: node.slug,
         title: node.title,
@@ -163,11 +147,9 @@ async function getNeighbors(
     pages: Record<string, DocsV1Read.PageContent>,
     serializeMdx: MDX_SERIALIZER,
 ): Promise<DocsContent.Neighbors> {
-    console.time("getNeighbors");
     const [prev, next] = await Promise.all([
         getNeighbor(node.prev, pages, serializeMdx),
         getNeighbor(node.next, pages, serializeMdx),
     ]);
-    console.timeEnd("getNeighbors");
     return { prev, next };
 }
