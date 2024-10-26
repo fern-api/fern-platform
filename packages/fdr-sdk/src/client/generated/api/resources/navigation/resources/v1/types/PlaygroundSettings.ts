@@ -11,4 +11,5 @@ export interface PlaygroundSettings {
      */
     environments: FernRegistry.EnvironmentId[] | undefined;
     button: FernRegistry.navigation.v1.PlaygroundButtonSettings | undefined;
+    "limit-websocket-messages-per-connection": number | undefined;
 }

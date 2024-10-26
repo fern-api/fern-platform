@@ -44,6 +44,7 @@ exports[`no-version-yes-tabs > gets navigation root for /docs/api/page-2 3`] = `
 
 exports[`no-version-yes-tabs > gets navigation root for /docs/api/section-1 1`] = `
 {
+  "authed": undefined,
   "redirect": "docs/api/tab-1/section-1/page-1",
   "type": "notFound",
 }

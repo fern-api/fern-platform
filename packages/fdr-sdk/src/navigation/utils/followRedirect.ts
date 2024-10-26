@@ -8,19 +8,24 @@ export function followRedirect(
         return undefined;
     }
 
-    if (FernNavigation.isPage(nodeToFollow)) {
+    // skip authed pages (but do not skip authed edge nodes, since we want to follow redirects to unauthed children)
+    // TODO: the `authed: boolean` logic here is a bit convoluted and will cause confusion. We should revisit this.
+    if (FernNavigation.isPage(nodeToFollow) && !nodeToFollow.authed) {
         return nodeToFollow.slug;
     }
 
+    // skip other leaf nodes that were not returned above
+    if (FernNavigation.isLeaf(nodeToFollow)) {
+        return undefined;
+    }
+
     switch (nodeToFollow.type) {
-        case "link":
-            return undefined;
         /**
          * Versioned and ProductGroup nodes are special in that they have a default child.
          */
         case "productgroup":
         case "versioned":
-            return followRedirect([...nodeToFollow.children].sort(defaultFirst)[0]);
+            return followRedirects([...nodeToFollow.children].sort(defaultFirst));
         case "apiReference":
         case "apiPackage":
         case "changelogMonth": // note: changelog month nodes don't exist yet as pages
@@ -35,6 +40,7 @@ export function followRedirect(
         case "tabbed":
         case "unversioned":
         case "version":
+        case "changelog":
             return followRedirects(FernNavigation.getChildren(nodeToFollow));
         default:
             throw new UnreachableCaseError(nodeToFollow);
@@ -43,9 +49,8 @@ export function followRedirect(
 
 export function followRedirects(nodes: readonly FernNavigation.NavigationNode[]): FernNavigation.Slug | undefined {
     for (const node of nodes) {
-        // skip hidden nodes, and nodes that are authed (authed=false if the user is already logged in)
-        // TODO: the `authed: boolean` logic here is a bit convoluted and will cause confusion. We should revisit this.
-        if (FernNavigation.hasMetadata(node) && (node.hidden || node.authed)) {
+        // skip hidden nodes
+        if (FernNavigation.hasMetadata(node) && node.hidden) {
             continue;
         }
 

@@ -4,7 +4,7 @@ import type { AuthEdgeConfig } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { getAuthState, type AuthState } from "./auth/getAuthState";
 import { loadWithUrl } from "./loadWithUrl";
-import { pruneWithBasicTokenAnonymous, pruneWithBasicTokenAuthed } from "./withRbac";
+import { pruneWithAuthState } from "./withRbac";
 
 interface DocsLoaderFlags {
     isBatchStreamToggleDisabled: boolean;
@@ -104,9 +104,7 @@ export class DocsLoader {
             try {
                 if (authConfig?.type === "basic_token_verification") {
                     // TODO: store this in cache
-                    root = authState.authed
-                        ? pruneWithBasicTokenAuthed(authConfig, root, authState.user.roles)
-                        : pruneWithBasicTokenAnonymous(authConfig, root);
+                    root = pruneWithAuthState(authState, authConfig, root);
                 }
             } catch (e) {
                 // TODO: sentry

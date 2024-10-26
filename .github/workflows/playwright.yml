@@ -23,7 +23,7 @@ on:
 
 jobs:
   playwright:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     permissions: write-all # required for the playwright-report-summary action
     if: inputs.deployment_url != ''
     steps:
@@ -44,13 +44,21 @@ jobs:
         run: pnpm playwright:build
         env:
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_TEAM: buildwithfern
 
       - name: Run Playwright tests
-        run: pnpm exec playwright test playwright --workers 6 --reporter json
+        run: pnpm exec playwright test playwright --workers 6 --reporter json,html
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: results.json
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           DEPLOYMENT_URL: ${{ inputs.deployment_url }}
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
 
       - uses: daun/playwright-report-summary@v3
         if: always()

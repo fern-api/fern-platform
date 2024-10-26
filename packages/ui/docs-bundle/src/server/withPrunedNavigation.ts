@@ -26,7 +26,7 @@ export function pruneNavigationPredicate(
     { visibleNodeIds, authed, discoverable }: WithPrunedSidebarOpts,
 ): boolean {
     // prune authenticated pages (unless the discoverable flag is turned on)
-    if (FernNavigation.hasMetadata(node) && node.authed && !authed && !discoverable) {
+    if (FernNavigation.isPage(node) && node.authed && !authed && !discoverable) {
         return false;
     }
 

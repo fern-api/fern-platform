@@ -847,6 +847,7 @@ exports[`polytomic > gets all urls from docs config 1`] = `
 
 exports[`polytomic > gets navigation root for /2023-04-25/guides/introduction 1`] = `
 {
+  "authed": undefined,
   "redirect": "2023-04-25/introduction",
   "type": "notFound",
 }
@@ -854,6 +855,7 @@ exports[`polytomic > gets navigation root for /2023-04-25/guides/introduction 1`
 
 exports[`polytomic > gets navigation root for /2023-04-25/not-found 1`] = `
 {
+  "authed": undefined,
   "redirect": "2023-04-25/introduction",
   "type": "notFound",
 }
