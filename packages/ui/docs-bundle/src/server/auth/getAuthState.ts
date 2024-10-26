@@ -2,7 +2,6 @@ import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig, FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import urlJoin from "url-join";
-import { withBasicTokenAnonymous } from "../withRbac";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 
 export type AuthPartner = "workos" | "ory" | "webflow" | "custom";
@@ -82,21 +81,12 @@ export async function getAuthState(
 
     // check if the request is allowed to pass through without authentication
     if (authConfig.type === "basic_token_verification") {
+        const partner = "custom";
         if (user) {
-            // TODO: right now it's not possible to compare the user's roles with the permissions required for the current pathname
-            // because this function must be run in the middleware handler, which does not have access to the navigation node structure
-            // so today we're assuming that getServerSideProps will return a 404 for specific pages (when it should certainly be a 403)
-            return { domain, host, authed: true, ok: true, user, partner: "custom" };
+            return { domain, host, authed: true, ok: true, user, partner };
         } else {
-            const isAuthRequired = pathname ? withBasicTokenAnonymous(authConfig, pathname) : true;
-            return {
-                domain,
-                host,
-                authed: false,
-                ok: !isAuthRequired,
-                authorizationUrl: getAuthorizationUrl(authConfig, domain, pathname),
-                partner: "custom",
-            };
+            const authorizationUrl = getAuthorizationUrl(authConfig, domain, pathname);
+            return { domain, host, authed: false, ok: true, authorizationUrl, partner };
         }
     }
 

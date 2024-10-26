@@ -30,13 +30,10 @@ export interface IfProps {
 export function If({ not, roles, children }: PropsWithChildren<IfProps>): ReactNode {
     const user = useFernUser();
 
-    if (roles == null || roles.length === 0) {
-        return children;
-    }
-
     const userRoles = user?.roles ?? [];
 
-    const show = roles.some((roles) => userRoles.some((role) => roles.includes(role) || role === EVERYONE_ROLE));
+    const show =
+        roles?.some((roles) => userRoles.some((role) => roles.includes(role) || role === EVERYONE_ROLE)) ?? false;
 
     return not ? !show && children : show && children;
 }

@@ -13,8 +13,8 @@ import { EVERYONE_ROLE, matchPath } from "@fern-ui/fern-docs-utils";
 import { addLeadingSlash } from "./addLeadingSlash";
 
 export enum Gate {
-    ALLOW,
     DENY,
+    ALLOW,
 }
 
 interface AuthRulesPathName {
@@ -38,11 +38,6 @@ interface AuthRulesPathName {
  * @returns true if the request should should be denied
  */
 export function withBasicTokenAnonymous(auth: AuthRulesPathName, pathname: string): Gate {
-    // if there are no auth rules, allow the request to pass through
-    if (auth.allowlist == null && auth.denylist == null && auth.anonymous == null) {
-        return Gate.ALLOW;
-    }
-
     // if the path is in the denylist, deny the request
     if (auth.denylist?.find((path) => matchPath(path, pathname))) {
         return Gate.DENY;
@@ -67,7 +62,7 @@ export function withBasicTokenAnonymousCheck(
     auth: AuthRulesPathName,
 ): (node: NavigationNode, parents?: readonly NavigationNodeParent[]) => Gate {
     return (node, parents = EMPTY_ARRAY) => {
-        if (isPage(node) && withBasicTokenAnonymous(auth, addLeadingSlash(node.slug)) === Gate.ALLOW) {
+        if (isPage(node) && withBasicTokenAnonymous(auth, addLeadingSlash(node.slug))) {
             return Gate.ALLOW;
         }
 
@@ -105,14 +100,13 @@ export function pruneWithBasicTokenAnonymous(auth: AuthEdgeConfigBasicTokenVerif
  * @param authed whether the viewer is authenticated
  * @returns true if the roles matches the filters (i.e. the viewer is allowed to view the node)
  */
-export function matchRoles(authed: boolean, roles: string[], filters: string[][]): Gate {
-    roles = [EVERYONE_ROLE, ...roles];
-
+export function matchRoles(roles: string[] | "anonymous", filters: string[][]): Gate {
     // filters must include "everyone" if the viewer is authenticated
-    if (authed && (filters.length === 0 || filters.every((filter) => filter.length === 0))) {
-        return Gate.ALLOW;
+    if (filters.length === 0 || filters.every((filter) => filter.length === 0)) {
+        return roles === "anonymous" ? Gate.DENY : Gate.ALLOW;
     }
 
+    roles = roles === "anonymous" ? [EVERYONE_ROLE] : [EVERYONE_ROLE, ...roles];
     return filters.every((filter) => filter.some((aud) => roles.includes(aud))) ? Gate.ALLOW : Gate.DENY;
 }
 
@@ -167,6 +161,6 @@ function rbacViewGate(
         const nodes = [...parents, node];
         const filters = getViewerFilters(...nodes.filter(FernNavigation.hasMetadata));
 
-        return matchRoles(authed, roles, filters);
+        return matchRoles(authed ? roles : "anonymous", filters);
     };
 }

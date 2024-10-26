@@ -2,8 +2,8 @@ import { NodeId, PageId, RoleId, Slug, Url } from "@fern-api/fdr-sdk/navigation"
 import { Gate, getViewerFilters, matchRoles, withBasicTokenAnonymous, withBasicTokenAnonymousCheck } from "../withRbac";
 
 describe("withBasicTokenAnonymous", () => {
-    it("should allow the request if no rules are provided", () => {
-        expect(withBasicTokenAnonymous({}, "/public")).toBe(Gate.ALLOW);
+    it("should deny the request if no rules are provided", () => {
+        expect(withBasicTokenAnonymous({}, "/public")).toBe(Gate.DENY);
     });
 
     it("should deny the request if the allowlist is empty", () => {
@@ -69,47 +69,54 @@ describe("withBasicTokenAnonymousCheck", () => {
 });
 
 describe("matchRoles", () => {
-    it("should return true if the audience is empty", () => {
-        expect(matchRoles(true, [], [])).toBe(Gate.ALLOW);
-        expect(matchRoles(true, [], [[], []])).toBe(Gate.ALLOW);
+    it("should return true if the user is logged in and the roles are empty", () => {
+        expect(matchRoles([], [])).toBe(Gate.ALLOW);
+        expect(matchRoles([], [[], []])).toBe(Gate.ALLOW);
+    });
+
+    it("should return false if the user is not logged in", () => {
+        expect(matchRoles("anonymous", [])).toBe(Gate.DENY);
+        expect(matchRoles("anonymous", [[], []])).toBe(Gate.DENY);
     });
 
     it("should return false if an audience filter exists", () => {
-        expect(matchRoles(true, [], [["a"]])).toBe(Gate.DENY);
+        expect(matchRoles("anonymous", [["a"]])).toBe(Gate.DENY);
+        expect(matchRoles([], [["a"]])).toBe(Gate.DENY);
     });
 
     it("should return true if the role is everyone", () => {
-        expect(matchRoles(true, [], [["everyone"]])).toBe(Gate.ALLOW);
+        expect(matchRoles([], [["everyone"]])).toBe(Gate.ALLOW);
+        expect(matchRoles("anonymous", [["everyone"]])).toBe(Gate.ALLOW);
     });
 
     it("should return true if the audience matches the filter", () => {
-        expect(matchRoles(true, ["a"], [["a"]])).toBe(Gate.ALLOW);
+        expect(matchRoles(["a"], [["a"]])).toBe(Gate.ALLOW);
     });
 
     it("should return true if the audience matches any of the filters", () => {
-        expect(matchRoles(true, ["a"], [["b", "a"]])).toBe(Gate.ALLOW);
+        expect(matchRoles(["a"], [["b", "a"]])).toBe(Gate.ALLOW);
     });
 
     it("should return false if the audience does not match any of the filters", () => {
-        expect(matchRoles(true, ["a"], [["b"]])).toBe(Gate.DENY);
+        expect(matchRoles(["a"], [["b"]])).toBe(Gate.DENY);
     });
 
     it("should return false if the audience does not match all filters across all nodes", () => {
-        expect(matchRoles(true, ["a"], [["a"], ["b"]])).toBe(Gate.DENY);
-        expect(matchRoles(true, ["b"], [["a"], ["a", "b"]])).toBe(Gate.DENY);
+        expect(matchRoles(["a"], [["a"], ["b"]])).toBe(Gate.DENY);
+        expect(matchRoles(["b"], [["a"], ["a", "b"]])).toBe(Gate.DENY);
     });
 
     it("should return true if the audience matches all filters across all nodes", () => {
-        expect(matchRoles(true, ["a"], [["a"], ["a"]])).toBe(Gate.ALLOW);
-        expect(matchRoles(true, ["a"], [["a"], ["a", "b"]])).toBe(Gate.ALLOW);
-        expect(matchRoles(true, ["a", "b"], [["a"], ["a", "b"]])).toBe(Gate.ALLOW);
-        expect(matchRoles(true, ["a", "b"], [["a"], ["b"]])).toBe(Gate.ALLOW);
+        expect(matchRoles(["a"], [["a"], ["a"]])).toBe(Gate.ALLOW);
+        expect(matchRoles(["a"], [["a"], ["a", "b"]])).toBe(Gate.ALLOW);
+        expect(matchRoles(["a", "b"], [["a"], ["a", "b"]])).toBe(Gate.ALLOW);
+        expect(matchRoles(["a", "b"], [["a"], ["b"]])).toBe(Gate.ALLOW);
     });
 
     it("should return true if the user has more audiences than the filter", () => {
-        expect(matchRoles(true, ["a", "b"], [])).toBe(Gate.ALLOW);
-        expect(matchRoles(true, ["a", "b"], [[]])).toBe(Gate.ALLOW);
-        expect(matchRoles(true, ["a", "b"], [["a"]])).toBe(Gate.ALLOW);
+        expect(matchRoles(["a", "b"], [])).toBe(Gate.ALLOW);
+        expect(matchRoles(["a", "b"], [[]])).toBe(Gate.ALLOW);
+        expect(matchRoles(["a", "b"], [["a"]])).toBe(Gate.ALLOW);
     });
 });
 
