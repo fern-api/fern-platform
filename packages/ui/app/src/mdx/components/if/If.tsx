@@ -64,30 +64,4 @@ export function If({ not, roles, loggedIn, children, __test_fern_user_atom }: Pr
     const show = not ? !shouldShow() : shouldShow();
 
     return show ? children : null;
-
-    // if roles is provided, we assume the loggedIn condition = true
-    // if (roles != null) {
-    //     loggedIn = true;
-    // }
-
-    // if (not) {
-    //     if (loggedIn) {
-    //         return user == null ? children : null;
-    //     } else {
-    //         return user != null ? children : null;
-    //     }
-    // } else if (!loggedIn) {
-    //     return user == null ? children : null;
-    // } else if (roles == null) {
-    //     return children;
-    // } else if (roles.length === 0) {
-    //     return user != null ? children : null;
-    // }
-
-    // const show =
-    //     roles == null || roles.length === 0
-    //         ? user != null && loggedIn
-    //         : roles.some((role) => userRoles.includes(role) || role === EVERYONE_ROLE);
-
-    // return not ? !show && children : show && children;
 }
