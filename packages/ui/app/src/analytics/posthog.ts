@@ -53,7 +53,14 @@ function ifCustomer(posthog: PostHog, run: (hog: PostHogWithCustomer) => void): 
 }
 
 export async function initializePosthog(api_host: string, customerConfig?: DocsV1Read.PostHogConfig): Promise<void> {
-    const apiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY?.trim() ?? "";
+    const apiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY;
+
+    if (apiKey == null) {
+        // eslint-disable-next-line no-console
+        console.warn("Posthog will NOT be initialized.");
+        return;
+    }
+
     /**
      * TODO: refactor this to use the posthog react provider
      */
