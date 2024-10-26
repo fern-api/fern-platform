@@ -44,6 +44,7 @@ jobs:
         run: pnpm playwright:build
         env:
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_TEAM: buildwithfern
 
       - name: Run Playwright tests
         run: pnpm exec playwright test playwright --workers 6 --reporter json,html
