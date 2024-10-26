@@ -3,6 +3,7 @@ packages:
   - "clis/**"
   - "packages/**"
   - "playwright/**"
+  - "workers/**"
   - "!packages/**/lib"
   - "!packages/**/dist"
   - "!packages/**/generated"
