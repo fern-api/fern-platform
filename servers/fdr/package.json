@@ -32,6 +32,7 @@
     "cors": "^2.8.5",
     "date-fns": "^2.30.0",
     "express": "^4.20.0",
+    "es-toolkit": "^1.24.0",
     "gray-matter": "^4.0.3",
     "html-to-text": "^9.0.5",
     "httpsnippet": "^2.0.0",
