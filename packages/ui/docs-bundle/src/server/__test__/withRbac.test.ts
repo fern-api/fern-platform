@@ -33,7 +33,7 @@ describe("withBasicTokenAnonymous", () => {
 });
 
 describe("withBasicTokenAnonymousCheck", () => {
-    it("should never deny external links", () => {
+    it("should allow external links", () => {
         expect(
             withBasicTokenAnonymousCheck({ denylist: ["/(.*)"] })({
                 type: "link",
@@ -45,7 +45,7 @@ describe("withBasicTokenAnonymousCheck", () => {
         ).toBe(Gate.ALLOW);
     });
 
-    it("should not prune childless non-leaf nodes that have content", () => {
+    it("should allow childless non-leaf nodes that have content", () => {
         expect(
             withBasicTokenAnonymousCheck({ allowlist: ["/public"] })({
                 type: "section",
@@ -65,6 +65,28 @@ describe("withBasicTokenAnonymousCheck", () => {
                 orphaned: undefined,
             }),
         ).toBe(Gate.ALLOW);
+    });
+
+    it("should deny childless non-leaf nodes that do not have content", () => {
+        expect(
+            withBasicTokenAnonymousCheck({ denylist: ["/private"] })({
+                type: "section",
+                title: "Private",
+                children: [],
+                id: NodeId("1"),
+                slug: Slug("private"),
+                collapsed: false,
+                canonicalSlug: undefined,
+                icon: undefined,
+                hidden: undefined,
+                authed: undefined,
+                overviewPageId: PageId("1.mdx"),
+                noindex: undefined,
+                pointsTo: undefined,
+                viewers: undefined,
+                orphaned: undefined,
+            }),
+        ).toBe(Gate.DENY);
     });
 });
 

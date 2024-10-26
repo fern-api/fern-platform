@@ -8,9 +8,9 @@ import {
     type RootNode,
 } from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
-import type { AuthEdgeConfigBasicTokenVerification } from "@fern-ui/fern-docs-auth";
 import { EVERYONE_ROLE, matchPath } from "@fern-ui/fern-docs-utils";
 import { addLeadingSlash } from "./addLeadingSlash";
+import { AuthState } from "./auth/getAuthState";
 
 export enum Gate {
     DENY,
@@ -62,8 +62,16 @@ export function withBasicTokenAnonymousCheck(
     auth: AuthRulesPathName,
 ): (node: NavigationNode, parents?: readonly NavigationNodeParent[]) => Gate {
     return (node, parents = EMPTY_ARRAY) => {
-        if (isPage(node) && withBasicTokenAnonymous(auth, addLeadingSlash(node.slug))) {
+        if (hasMetadata(node) && withBasicTokenAnonymous(auth, addLeadingSlash(node.slug)) === Gate.ALLOW) {
             return Gate.ALLOW;
+        }
+
+        if (
+            hasMetadata(node) &&
+            !isPage(node) &&
+            withBasicTokenAnonymous(auth, addLeadingSlash(node.slug)) === Gate.DENY
+        ) {
+            return Gate.DENY;
         }
 
         const predicate = rbacViewGate([], false);
@@ -79,7 +87,7 @@ function withAllowed<T extends (...args: any[]) => Gate>(predicate: T): (...args
     return (...args) => predicate(...args) === Gate.ALLOW;
 }
 
-export function pruneWithBasicTokenAnonymous(auth: AuthEdgeConfigBasicTokenVerification, node: RootNode): RootNode {
+export function pruneWithBasicTokenAnonymous(auth: AuthRulesPathName, node: RootNode): RootNode {
     const result = Pruner.from(node)
         // mark nodes that are authed
         .authed(withDenied(withBasicTokenAnonymousCheck(auth)))
@@ -126,6 +134,12 @@ export function pruneWithBasicTokenAuthed(auth: AuthRulesPathName, node: RootNod
     }
 
     return result;
+}
+
+export function pruneWithAuthState(authState: AuthState, authConfig: AuthRulesPathName, node: RootNode): RootNode {
+    return authState.authed
+        ? pruneWithBasicTokenAuthed(authConfig, node, authState.user.roles)
+        : pruneWithBasicTokenAnonymous(authConfig, node);
 }
 
 /**
