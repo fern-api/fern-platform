@@ -6,7 +6,10 @@
       "files": "*.{yml,yaml,json,md,mdx}",
       "options": {
         "tabWidth": 2
-      }
+      },
+      "excludeFiles": [
+        "src/__test__/unit-tests/generate-algolia-search-records/fixtures/vapi/apis/031f13c0-3070-48ca-bfcf-90aa72f935d8.json"
+      ]
     }
   ]
 }

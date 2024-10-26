@@ -13,6 +13,7 @@ exports[`no-version-no-tabs > gets all urls from docs config 1`] = `
 
 exports[`no-version-no-tabs > gets navigation root for /docs 1`] = `
 {
+  "authed": undefined,
   "redirect": "docs/api/section-1/page-1",
   "type": "notFound",
 }
@@ -69,6 +70,7 @@ exports[`no-version-no-tabs > gets navigation root for /docs/api/section-2 3`] =
 
 exports[`no-version-no-tabs > gets navigation root for /docs/api/section-3 1`] = `
 {
+  "authed": undefined,
   "redirect": "docs/api/section-1/page-1",
   "type": "notFound",
 }

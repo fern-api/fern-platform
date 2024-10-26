@@ -8,9 +8,14 @@ import {
     type RootNode,
 } from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
-import type { AuthEdgeConfigBasicTokenVerification } from "@fern-ui/fern-docs-auth";
 import { EVERYONE_ROLE, matchPath } from "@fern-ui/fern-docs-utils";
 import { addLeadingSlash } from "./addLeadingSlash";
+import { AuthState } from "./auth/getAuthState";
+
+export enum Gate {
+    DENY,
+    ALLOW,
+}
 
 interface AuthRulesPathName {
     /**
@@ -30,12 +35,12 @@ interface AuthRulesPathName {
 }
 
 /**
- * @returns true if the request should should be marked as authed
+ * @returns true if the request should should be denied
  */
-export function withBasicTokenAnonymous(auth: AuthRulesPathName, pathname: string): boolean {
+export function withBasicTokenAnonymous(auth: AuthRulesPathName, pathname: string): Gate {
     // if the path is in the denylist, deny the request
     if (auth.denylist?.find((path) => matchPath(path, pathname))) {
-        return true;
+        return Gate.DENY;
     }
 
     // if the path is in the allowlist, allow the request to pass through
@@ -43,11 +48,11 @@ export function withBasicTokenAnonymous(auth: AuthRulesPathName, pathname: strin
         auth.allowlist?.find((path) => matchPath(path, pathname)) ||
         auth.anonymous?.find((path) => matchPath(path, pathname))
     ) {
-        return false;
+        return Gate.ALLOW;
     }
 
     // if the path is not in the allowlist, deny the request
-    return true;
+    return Gate.DENY;
 }
 
 /**
@@ -55,24 +60,37 @@ export function withBasicTokenAnonymous(auth: AuthRulesPathName, pathname: strin
  */
 export function withBasicTokenAnonymousCheck(
     auth: AuthRulesPathName,
-): (node: NavigationNode, parents?: readonly NavigationNodeParent[]) => boolean {
+): (node: NavigationNode, parents?: readonly NavigationNodeParent[]) => Gate {
     return (node, parents = EMPTY_ARRAY) => {
-        if (!rbacViewPredicate([], false)(node, parents)) {
-            return false;
+        if (hasMetadata(node) && withBasicTokenAnonymous(auth, addLeadingSlash(node.slug)) === Gate.ALLOW) {
+            return Gate.ALLOW;
         }
 
-        if (isPage(node)) {
-            return withBasicTokenAnonymous(auth, addLeadingSlash(node.slug));
+        if (
+            hasMetadata(node) &&
+            !isPage(node) &&
+            withBasicTokenAnonymous(auth, addLeadingSlash(node.slug)) === Gate.DENY
+        ) {
+            return Gate.DENY;
         }
 
-        return false;
+        const predicate = rbacViewGate([], false);
+        return predicate(node, parents);
     };
 }
 
-export function pruneWithBasicTokenAnonymous(auth: AuthEdgeConfigBasicTokenVerification, node: RootNode): RootNode {
+function withDenied<T extends (...args: any[]) => Gate>(predicate: T): (...args: Parameters<T>) => boolean {
+    return (...args) => predicate(...args) === Gate.DENY;
+}
+
+function withAllowed<T extends (...args: any[]) => Gate>(predicate: T): (...args: Parameters<T>) => boolean {
+    return (...args) => predicate(...args) === Gate.ALLOW;
+}
+
+export function pruneWithBasicTokenAnonymous(auth: AuthRulesPathName, node: RootNode): RootNode {
     const result = Pruner.from(node)
         // mark nodes that are authed
-        .authed(withBasicTokenAnonymousCheck(auth))
+        .authed(withDenied(withBasicTokenAnonymousCheck(auth)))
         .get();
 
     // TODO: handle this more gracefully
@@ -87,20 +105,23 @@ export function pruneWithBasicTokenAnonymous(auth: AuthEdgeConfigBasicTokenVerif
  * @internal
  * @param roles current viewer's roles
  * @param filters rbac filters for the current node
+ * @param authed whether the viewer is authenticated
  * @returns true if the roles matches the filters (i.e. the viewer is allowed to view the node)
  */
-export function matchRoles(roles: string[], filters: string[][]): boolean {
+export function matchRoles(roles: string[] | "anonymous", filters: string[][]): Gate {
+    // filters must include "everyone" if the viewer is authenticated
     if (filters.length === 0 || filters.every((filter) => filter.length === 0)) {
-        return true;
+        return roles === "anonymous" ? Gate.DENY : Gate.ALLOW;
     }
 
-    return filters.every((filter) => filter.some((aud) => roles.includes(aud) || aud === EVERYONE_ROLE));
+    roles = roles === "anonymous" ? [EVERYONE_ROLE] : [EVERYONE_ROLE, ...roles];
+    return filters.every((filter) => filter.some((aud) => roles.includes(aud))) ? Gate.ALLOW : Gate.DENY;
 }
 
 export function pruneWithBasicTokenAuthed(auth: AuthRulesPathName, node: RootNode, roles: string[] = []): RootNode {
     const result = Pruner.from(node)
         // apply rbac
-        .keep(rbacViewPredicate(roles, true))
+        .keep(withAllowed(rbacViewGate(roles, true)))
         // hide nodes that are not authed
         .hide((n) => node.hidden || auth.anonymous?.find((path) => matchPath(path, addLeadingSlash(n.slug))) != null)
         // mark all nodes as unauthed since we are currently authenticated
@@ -113,6 +134,12 @@ export function pruneWithBasicTokenAuthed(auth: AuthRulesPathName, node: RootNod
     }
 
     return result;
+}
+
+export function pruneWithAuthState(authState: AuthState, authConfig: AuthRulesPathName, node: RootNode): RootNode {
+    return authState.authed
+        ? pruneWithBasicTokenAuthed(authConfig, node, authState.user.roles)
+        : pruneWithBasicTokenAnonymous(authConfig, node);
 }
 
 /**
@@ -132,20 +159,22 @@ export function getViewerFilters(...nodes: FernNavigation.WithPermissions[]): st
     );
 }
 
-function rbacViewPredicate(
+function rbacViewGate(
     roles: string[],
     authed: boolean,
-): (node: NavigationNode, parents: readonly NavigationNodeParent[]) => boolean {
+): (node: NavigationNode, parents: readonly NavigationNodeParent[]) => Gate {
     return (node, parents) => {
         if (!hasMetadata(node)) {
-            return true;
+            return Gate.ALLOW;
         }
 
         if (!authed && node.authed) {
-            return false;
+            return Gate.DENY;
         }
 
         const nodes = [...parents, node];
-        return matchRoles(roles, getViewerFilters(...nodes.filter(FernNavigation.hasMetadata)));
+        const filters = getViewerFilters(...nodes.filter(FernNavigation.hasMetadata));
+
+        return matchRoles(authed ? roles : "anonymous", filters);
     };
 }
