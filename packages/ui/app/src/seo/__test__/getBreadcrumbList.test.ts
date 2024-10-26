@@ -22,7 +22,8 @@ title: Overriden Title
             noindex: undefined,
             canonicalSlug: undefined,
             authed: undefined,
-            audience: undefined,
+            viewers: undefined,
+            orphaned: undefined,
         };
         const parents: FernNavigation.NavigationNode[] = [
             {
@@ -39,7 +40,8 @@ title: Overriden Title
                 pointsTo: undefined,
                 canonicalSlug: undefined,
                 authed: undefined,
-                audience: undefined,
+                viewers: undefined,
+                orphaned: undefined,
             },
         ];
         expect(

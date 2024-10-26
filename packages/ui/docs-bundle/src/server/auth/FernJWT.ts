@@ -22,11 +22,32 @@ export async function verifyFernJWT(token: string, secret?: string, issuer?: str
 }
 
 export async function verifyFernJWTConfig(token: string, authConfig: AuthEdgeConfig | undefined): Promise<FernUser> {
-    if (authConfig?.type === "basic_token_verification") {
-        return verifyFernJWT(token, authConfig.secret, authConfig.issuer);
-    } else {
-        return verifyFernJWT(token);
+    if (!authConfig) {
+        throw new Error("Auth config is undefined");
     }
+
+    if (authConfig.type === "basic_token_verification") {
+        return verifyFernJWT(token, authConfig.secret, authConfig.issuer);
+    }
+
+    // TODO: validate workos token and organization
+    throw new Error("Auth config type is not supported");
+}
+
+export async function safeVerifyFernJWTConfig(
+    token: string | undefined,
+    authConfig: AuthEdgeConfig | undefined,
+): Promise<FernUser | undefined> {
+    try {
+        if (token) {
+            return verifyFernJWTConfig(token, authConfig);
+        }
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+    }
+
+    return undefined;
 }
 
 const encoder = new TextEncoder();

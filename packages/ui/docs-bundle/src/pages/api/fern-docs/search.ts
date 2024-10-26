@@ -1,7 +1,6 @@
-import { checkViewerAllowedEdge } from "@/server/auth/checkViewerAllowed";
+import { getAuthStateEdge } from "@/server/auth/getAuthStateEdge";
 import { loadWithUrl } from "@/server/loadWithUrl";
-import { getDocsDomainEdge } from "@/server/xfernhost/edge";
-import { getAuthEdgeConfig, getInkeepSettings } from "@fern-ui/fern-docs-edge-config";
+import { getInkeepSettings } from "@fern-ui/fern-docs-edge-config";
 import { SearchConfig, getSearchConfig } from "@fern-ui/search-utils";
 import { provideRegistryService } from "@fern-ui/ui";
 import { NextRequest, NextResponse } from "next/server";
@@ -13,31 +12,20 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Se
         return NextResponse.json({ isAvailable: false }, { status: 405 });
     }
 
-    const domain = getDocsDomainEdge(req);
-    const auth = await getAuthEdgeConfig(domain);
+    const authState = await getAuthStateEdge(req, req.nextUrl.pathname);
 
-    try {
-        const status = await checkViewerAllowedEdge(auth, req);
-        if (status >= 400) {
-            return NextResponse.json({ isAvailable: false }, { status });
-        }
-
-        const docs = await loadWithUrl(domain);
-
-        if (!docs.ok) {
-            // eslint-disable-next-line no-console
-            console.error("Failed to load docs for domain", domain);
-            return NextResponse.json({ isAvailable: false }, { status: 503 });
-        }
-
-        const inkeepSettings = await getInkeepSettings(domain);
-        const searchInfo = docs.body.definition.search;
-        const config = await getSearchConfig(provideRegistryService(), searchInfo, inkeepSettings);
-        return NextResponse.json(config, { status: config.isAvailable ? 200 : 503 });
-    } catch (e) {
-        // TODO: sentry
-        // eslint-disable-next-line no-console
-        console.error(`Error fetching search config for domain ${domain}.`, e);
-        return NextResponse.json({ isAvailable: false }, { status: 500 });
+    if (!authState.ok) {
+        return NextResponse.json({ isAvailable: false }, { status: authState.authed ? 403 : 401 });
     }
+
+    const docs = await loadWithUrl(authState.domain);
+
+    if (!docs.ok) {
+        return NextResponse.json({ isAvailable: false }, { status: 503 });
+    }
+
+    const inkeepSettings = await getInkeepSettings(authState.domain);
+    const searchInfo = docs.body.definition.search;
+    const config = await getSearchConfig(provideRegistryService(), searchInfo, inkeepSettings);
+    return NextResponse.json(config, { status: config.isAvailable ? 200 : 503 });
 }

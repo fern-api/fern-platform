@@ -35,8 +35,18 @@ const CLIENTS: HTTPSnippetClient[] = [
 ];
 
 export class ApiDefinitionLoader {
-    public static create = (xFernHost: string, apiDefinitionId: ApiDefinitionId): ApiDefinitionLoader => {
-        return new ApiDefinitionLoader(xFernHost, apiDefinitionId);
+    public clone = (): ApiDefinitionLoader => {
+        return new ApiDefinitionLoader(this.domain, this.apiDefinitionId)
+            .withFlags(this.flags)
+            .withEnvironment(this.environment)
+            .withPrune(...this.prune)
+            .withResolveDescriptions(this.resolve)
+            .withApiDefinition(this.apiDefinition)
+            .withMdxBundler(this.#serializeMdx, this.#engine);
+    };
+
+    public static create = (domain: string, apiDefinitionId: ApiDefinitionId): ApiDefinitionLoader => {
+        return new ApiDefinitionLoader(domain, apiDefinitionId);
     };
 
     private environment: string | undefined;
@@ -47,10 +57,10 @@ export class ApiDefinitionLoader {
 
     private cache: ApiDefinitionKVCache;
     private constructor(
-        xFernHost: string,
+        private domain: string,
         private apiDefinitionId: ApiDefinitionId,
     ) {
-        this.cache = ApiDefinitionKVCache.getInstance(xFernHost, apiDefinitionId);
+        this.cache = ApiDefinitionKVCache.getInstance(domain, apiDefinitionId);
     }
 
     private flags: FeatureFlags = DEFAULT_FEATURE_FLAGS;
@@ -61,24 +71,24 @@ export class ApiDefinitionLoader {
 
     private prune: PruningNodeType[] = [];
 
-    public withPrune = (prune: PruningNodeType): ApiDefinitionLoader => {
-        this.prune.push(prune);
+    public withPrune = (...prune: PruningNodeType[]): ApiDefinitionLoader => {
+        this.prune.push(...prune);
         return this;
     };
 
     private resolve: boolean = false;
-    public withResolveDescriptions = (): ApiDefinitionLoader => {
-        this.resolve = true;
+    public withResolveDescriptions = (resolve = true): ApiDefinitionLoader => {
+        this.resolve = resolve;
         return this;
     };
 
     private apiDefinition: ApiDefinition | undefined;
-    public withApiDefinition = (definition: ApiDefinition): ApiDefinitionLoader => {
+    public withApiDefinition = (definition: ApiDefinition | undefined): ApiDefinitionLoader => {
         this.apiDefinition = definition;
         return this;
     };
 
-    #getClient = () => new FdrClient({ environment: this.environment });
+    #getClient = () => new FdrClient({ environment: this.environment, token: process.env.FERN_TOKEN });
     #getApi = async (): Promise<ApiDefinition | undefined> => {
         if (this.apiDefinition != null) {
             return this.apiDefinition;

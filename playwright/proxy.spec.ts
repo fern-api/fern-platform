@@ -46,6 +46,7 @@ test.skip("json request", async ({ request }) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.FERN_TOKEN}`,
             },
             body: {
                 type: "json",

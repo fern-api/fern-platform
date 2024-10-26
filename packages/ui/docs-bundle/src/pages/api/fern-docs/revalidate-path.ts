@@ -7,11 +7,12 @@ export const config = {
     maxDuration: 300,
 };
 
+// TODO: gate this using a fern token
 const handler: NextApiHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<FernDocs.RevalidationResult>,
 ): Promise<unknown> => {
-    const xFernHost = getDocsDomainNode(req, true);
+    const xFernHost = getDocsDomainNode(req);
     const revalidate = new Revalidator(res, xFernHost);
 
     const path = req.query.path;

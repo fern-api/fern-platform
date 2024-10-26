@@ -4,7 +4,9 @@
 
 import * as FernRegistry from "../../../../../index";
 
-export interface WithNodeMetadata extends FernRegistry.navigation.latest.WithNodeId {
+export interface WithNodeMetadata
+    extends FernRegistry.navigation.latest.WithNodeId,
+        FernRegistry.navigation.latest.WithPermissions {
     /**
      * This is the title that will be displayed in the sidebar. Unlike the h1 or SEO headline, this should be short and concise.
      * Do NOT use this property for the h1 of the page, the SEO headline, or search results, unless they are omitted. (This title should only be used as a fallback)
@@ -29,10 +31,4 @@ export interface WithNodeMetadata extends FernRegistry.navigation.latest.WithNod
      * If false, this node is only visible to all users (including anonymous).
      */
     authed: boolean | undefined;
-    /**
-     * The audience(s) that this node is intended for. If not provided, the node is intended for all audiences.
-     * If provided, the node is only intended for the specified audience(s). OR logic is used for multiple audiences on a single node.
-     * AND logic is used when evaluating audiences up the tree.
-     */
-    audience: FernRegistry.AudienceId[] | undefined;
 }

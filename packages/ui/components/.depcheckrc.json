@@ -15,7 +15,6 @@
     "tailwindcss",
     "cssnano",
     "unist-util-visit",
-    "@shikijs/transformers",
     "@chromatic-com/storybook",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",

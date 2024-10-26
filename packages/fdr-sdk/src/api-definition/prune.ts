@@ -112,13 +112,13 @@ class ApiDefinitionPruner {
         return types;
     }
 
-    private expandTypeIds(typeIds: Set<Latest.TypeId>): Set<Latest.TypeId> {
+    private expandTypeIds(typeIds: ReadonlySet<Latest.TypeId>): Set<Latest.TypeId> {
         const visitedTypeIds = new Set<Latest.TypeId>();
         const queue = Array.from(typeIds);
 
         let loop = 0;
         while (queue.length > 0) {
-            if (loop > LARGE_LOOP_TOLERANCE) {
+            if (loop > LARGE_LOOP_TOLERANCE + typeIds.size) {
                 throw new Error("Infinite loop detected while expanding type references.");
             }
 
