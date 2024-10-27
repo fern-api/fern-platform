@@ -121,6 +121,17 @@ export async function serializeMdx(
 
             esbuildOptions: (o) => {
                 o.minify = disableMinify ? false : true;
+
+                // Create a restricted define object that excludes process.env
+                const restrictedDefine = {
+                    "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+                };
+
+                o.define = restrictedDefine;
+
+                // Prevent direct process access
+                o.inject = o.inject?.filter((path) => !path.includes("process"));
+
                 return o;
             },
         });
