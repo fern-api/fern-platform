@@ -24,14 +24,6 @@ export const PageRecordV4: React.FC<PageRecordV4.Props> = ({ hit, isHovered }) =
                 >
                     {hit.title}
                 </span>
-                <div
-                    className={cn("text-sm tracking-wide", {
-                        "t-muted": !isHovered,
-                        "t-accent-aaa": isHovered,
-                    })}
-                >
-                    Page
-                </div>
             </div>
             {hit.description && (
                 <div className="flex items-center justify-between">

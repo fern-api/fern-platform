@@ -24,14 +24,6 @@ export const MarkdownSectionRecordV1: React.FC<MarkdownSectionRecordV1.Props> = 
                 >
                     {hit.title}
                 </span>
-                <div
-                    className={cn("text-sm tracking-wide", {
-                        "t-muted": !isHovered,
-                        "t-accent-aaa": isHovered,
-                    })}
-                >
-                    Section
-                </div>
             </div>
             {hit.content && (
                 <div className="flex items-center justify-between">
