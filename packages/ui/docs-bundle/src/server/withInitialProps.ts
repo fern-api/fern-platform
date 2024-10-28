@@ -93,12 +93,16 @@ export async function withInitialProps({
     // find the node that is currently being viewed
     const found = FernNavigation.utils.findNode(root, slug);
 
+    // this is a special case for when the user is not authenticated, but the not-found status originates from an authed node
+    if (found.type === "notFound" && found.authed && !authState.authed && authState.authorizationUrl != null) {
+        return withRedirect(authState.authorizationUrl);
+    }
+
     if (found.type === "notFound") {
         // TODO: returning "notFound: true" here will render vercel's default 404 page
         // this is better than following redirects, since it will signal a proper 404 status code.
         // however, we should consider rendering a custom 404 page in the future using the customer's branding.
         // see: https://nextjs.org/docs/app/api-reference/file-conventions/not-found
-
         if (featureFlags.is404PageHidden && found.redirect != null) {
             return withRedirect(found.redirect);
         }

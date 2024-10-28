@@ -1,3 +1,4 @@
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { COOKIE_FERN_DOCS_PREVIEW, HEADER_X_FERN_HOST } from "@fern-ui/fern-docs-utils";
 import type { NextApiRequest } from "next";
 import { getNextPublicDocsDomain } from "./dev";
@@ -46,10 +47,9 @@ export function getHostNodeStatic(): string | undefined {
 export function getHostNode(req: { url?: string }): string | undefined {
     if (req.url != null) {
         try {
-            return new URL(req.url).host;
-        } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error(`Error parsing URL ${req.url}: ${e}`);
+            return new URL(req.url, withDefaultProtocol(getHostNodeStatic())).host;
+        } catch (_e) {
+            // do nothing
         }
     }
 

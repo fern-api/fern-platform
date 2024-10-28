@@ -43,6 +43,7 @@ export declare namespace Node {
     interface NotFound {
         type: "notFound";
         redirect: FernNavigation.Slug | undefined;
+        authed: boolean | undefined;
     }
 }
 
@@ -62,7 +63,7 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
             }
         }
 
-        return { type: "notFound", redirect: maybeVersionNode.pointsTo };
+        return { type: "notFound", redirect: maybeVersionNode.pointsTo, authed: maybeVersionNode.authed };
     }
 
     const sidebar = found.parents.find(isSidebarRootNode);
@@ -128,7 +129,7 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
         : currentVersion?.pointsTo ?? root.pointsTo;
 
     if (redirect == null || redirect === slug) {
-        return { type: "notFound", redirect: undefined };
+        return { type: "notFound", redirect: undefined, authed: found.node.authed };
     }
 
     return { type: "redirect", redirect };
