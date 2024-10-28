@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // in order of priority:
-export const INDEXABLE_KEYS = [
+export const SEARCHABLE_ATTRIBUTES = [
     "page_title",
     "level_title",
     "description",
@@ -13,6 +13,7 @@ export const INDEXABLE_KEYS = [
     "parameter_name",
 
     // types (lower priority)
+    "availability",
     "api_type",
     "method",
     "section_type",
@@ -21,6 +22,9 @@ export const INDEXABLE_KEYS = [
     "status_code",
     "parameter_type",
 ] as const;
+
+// these are metadata fields that we do not want to include in the search hits:
+export const UNRETRIEVABLE_ATTRIBUTES = ["org_id", "domain", "visible_by", "authed"] as const;
 
 export const BaseRecordSchema = z.object({
     objectID: z.string().describe("The unique identifier of this record"),
