@@ -1,9 +1,7 @@
 import { browseAllObjectsForDomain } from "@/algolia/browse-all-objects-for-domain.js";
 import { createAlgoliaRecords } from "@/algolia/records/create-algolia-records.js";
 import { ApiDefinition, FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
-import { slugjoin } from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { FeatureFlags, addLeadingSlash } from "@fern-ui/fern-docs-utils";
 import { logger, task } from "@trigger.dev/sdk/v3";
 import { algoliasearch } from "algoliasearch";
 import { mapValues } from "es-toolkit";
@@ -11,6 +9,16 @@ import { z } from "zod";
 
 const algoliaIndexerPayloadSchema = z.object({
     domain: z.string(),
+
+    // whether the docs are authed or not
+    authed: z.boolean().optional(),
+
+    // feature flags for v1 -> v2 migration
+    isBatchStreamToggleDisabled: z.boolean().optional(),
+    isApiScrollingDisabled: z.boolean().optional(),
+    useJavaScriptAsTypeScript: z.boolean().optional(),
+    alwaysEnableJavaScriptFetch: z.boolean().optional(),
+    usesApplicationJsonInFormDataValue: z.boolean().optional(),
 });
 
 export const algoliaIndexerTask = task({
@@ -38,14 +46,10 @@ export const algoliaIndexerTask = task({
 
         const domain = new URL(withDefaultProtocol(payload.domain));
 
-        const flags = (await fetch(
-            new URL(addLeadingSlash(slugjoin(docs.body.baseUrl.basePath, "api/fern-docs/feature-flags")), domain),
-        ).then((res) => res.json())) as FeatureFlags;
-
         const root = FernNavigation.utils.toRootNode(
             docs.body,
-            flags.isBatchStreamToggleDisabled,
-            flags.isApiScrollingDisabled,
+            payload.isBatchStreamToggleDisabled ?? false,
+            payload.isApiScrollingDisabled ?? false,
         );
 
         // migrate pages
@@ -53,7 +57,11 @@ export const algoliaIndexerTask = task({
 
         // migrate apis
         const apis = mapValues(docs.body.definition.apis, (api) =>
-            ApiDefinition.ApiDefinitionV1ToLatest.from(api, flags).migrate(),
+            ApiDefinition.ApiDefinitionV1ToLatest.from(api, {
+                useJavaScriptAsTypeScript: payload.useJavaScriptAsTypeScript ?? false,
+                alwaysEnableJavaScriptFetch: payload.alwaysEnableJavaScriptFetch ?? false,
+                usesApplicationJsonInFormDataValue: payload.usesApplicationJsonInFormDataValue ?? false,
+            }).migrate(),
         );
 
         const records = createAlgoliaRecords({
@@ -62,7 +70,7 @@ export const algoliaIndexerTask = task({
             org_id: org.body,
             pages,
             apis,
-            authed: false,
+            authed: payload.authed ?? false,
         });
 
         if (process.env.ALGOLIA_APP_ID == null || process.env.ALGOLIA_ADMIN_API_KEY == null) {
