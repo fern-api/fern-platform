@@ -16,12 +16,13 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
     }
 
     const domain = getDocsDomainEdge(req);
+    const host = getHostEdge(req);
     const edgeConfig = await getAuthEdgeConfig(domain);
 
     // since we expect the callback to be redirected to, the token will be in the query params
     const token = req.nextUrl.searchParams.get(COOKIE_FERN_TOKEN);
     const state = req.nextUrl.searchParams.get("state");
-    const redirectLocation = safeUrl(state) ?? safeUrl(withDefaultProtocol(getHostEdge(req)));
+    const redirectLocation = safeUrl(state) ?? safeUrl(withDefaultProtocol(host));
 
     if (edgeConfig?.type !== "basic_token_verification" || token == null) {
         // eslint-disable-next-line no-console
@@ -34,7 +35,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
 
         // TODO: validate allowlist of domains to prevent open redirects
         const res = redirectLocation ? NextResponse.redirect(redirectLocation) : NextResponse.next();
-        res.cookies.set(COOKIE_FERN_TOKEN, token, withSecureCookie());
+        res.cookies.set(COOKIE_FERN_TOKEN, token, withSecureCookie(withDefaultProtocol(host)));
         return res;
     } catch (e) {
         // eslint-disable-next-line no-console

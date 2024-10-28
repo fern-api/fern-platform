@@ -18,12 +18,13 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     const domain = getDocsDomainEdge(req);
+    const host = getHostEdge(req);
 
     const code = req.nextUrl.searchParams.get("code");
     const state = req.nextUrl.searchParams.get("state");
     const error = req.nextUrl.searchParams.get("error");
     const error_description = req.nextUrl.searchParams.get("error_description");
-    const redirectLocation = safeUrl(state) ?? safeUrl(withDefaultProtocol(getHostEdge(req)));
+    const redirectLocation = safeUrl(state) ?? safeUrl(withDefaultProtocol(host));
 
     if (error != null) {
         // eslint-disable-next-line no-console
@@ -56,10 +57,18 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         const expires = token.exp == null ? undefined : new Date(token.exp * 1000);
         // TODO: validate allowlist of domains to prevent open redirects
         const res = redirectLocation ? NextResponse.redirect(redirectLocation) : NextResponse.next();
-        res.cookies.set(COOKIE_FERN_TOKEN, await signFernJWT(fernUser), withSecureCookie({ expires }));
-        res.cookies.set(COOKIE_ACCESS_TOKEN, access_token, withSecureCookie({ expires }));
+        res.cookies.set(
+            COOKIE_FERN_TOKEN,
+            await signFernJWT(fernUser),
+            withSecureCookie(withDefaultProtocol(host), { expires }),
+        );
+        res.cookies.set(COOKIE_ACCESS_TOKEN, access_token, withSecureCookie(withDefaultProtocol(host), { expires }));
         if (refresh_token != null) {
-            res.cookies.set(COOKIE_REFRESH_TOKEN, refresh_token, withSecureCookie({ expires }));
+            res.cookies.set(
+                COOKIE_REFRESH_TOKEN,
+                refresh_token,
+                withSecureCookie(withDefaultProtocol(host), { expires }),
+            );
         } else {
             res.cookies.delete(COOKIE_REFRESH_TOKEN);
         }

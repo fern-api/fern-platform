@@ -4,7 +4,7 @@ import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { provideRegistryService } from "@fern-ui/ui";
 import type { Redirect } from "next/types";
 import urlJoin from "url-join";
-import { getAuthorizationUrl } from "./workos";
+import { getAuthorizationUrl } from "./auth/workos";
 
 export async function getUnauthenticatedRedirect(xFernHost: string, path: string): Promise<Redirect> {
     const authorizationUrl = getAuthorizationUrl(
