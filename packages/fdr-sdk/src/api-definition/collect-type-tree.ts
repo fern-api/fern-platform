@@ -18,8 +18,12 @@ import { unwrapObjectType, unwrapReference } from "./unwrap";
  * We collect the true shape of the path here so that the frontend can determine how to render it.
  */
 export type KeyPathItem =
-    | { type: "objectProperty"; key: string }
-    | { type: "undiscriminatedUnionVariant"; displayName: string | undefined; idx: number }
+    | { type: "objectProperty"; key: string; optional: boolean | undefined }
+    | {
+          type: "undiscriminatedUnionVariant";
+          displayName: string | undefined;
+          idx: number;
+      }
     | {
           type: "discriminatedUnionVariant";
           discriminant: string;
@@ -27,9 +31,7 @@ export type KeyPathItem =
           discriminantValue: string;
       }
     | { type: "list" | "set" | "mapValue" | "extra" }
-    | { type: "enumValue"; value: string }
-    // "meta" is not part of the key path, but is meant for parents to describe itself, i.e. "request" or "header"
-    | { type: "meta"; value: string; displayName: string | undefined };
+    | { type: "enumValue"; value: string };
 
 export interface TypeDefinitionTreeItem {
     /**
@@ -123,7 +125,14 @@ export function collectTypeDefinitionTree(
             obj.properties.forEach((property) => {
                 stack.push({
                     type: property.valueShape,
-                    path: [...parentpath, { type: "objectProperty", key: property.key }],
+                    path: [
+                        ...parentpath,
+                        {
+                            type: "objectProperty",
+                            key: property.key,
+                            optional: unwrapReference(property.valueShape, types).isOptional,
+                        },
+                    ],
                     descriptions: property.description ? [property.description] : [],
                     visitedTypeIds,
                     availability,
@@ -220,14 +229,28 @@ export function collectTypeDefinitionTreeForObjectProperty(
 ): TypeDefinitionTreeItem[] {
     return [
         {
-            path: [...rootPath, { type: "objectProperty", key: property.key }],
+            path: [
+                ...rootPath,
+                {
+                    type: "objectProperty",
+                    key: property.key,
+                    optional: unwrapReference(property.valueShape, types).isOptional,
+                },
+            ],
             descriptions: property.description ? [property.description] : [],
             availability: property.availability,
         },
         ...collectTypeDefinitionTree(property.valueShape, types, {
             maxDepth: maxDepth - 1,
             availability: property.availability,
-            path: [...rootPath, { type: "objectProperty", key: property.key }],
+            path: [
+                ...rootPath,
+                {
+                    type: "objectProperty",
+                    key: property.key,
+                    optional: unwrapReference(property.valueShape, types).isOptional,
+                },
+            ],
         }),
     ];
 }

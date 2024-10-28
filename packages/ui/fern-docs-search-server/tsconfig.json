@@ -2,12 +2,16 @@
   "extends": "@fern-platform/configs/tsconfig/library.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src",
     "moduleResolution": "NodeNext",
     "module": "NodeNext",
-    "types": ["node", "vitest/globals"]
+    "types": ["node", "vitest/globals"],
+    "rootDirs": ["./src", "."],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "trigger.config.ts"],
   "references": [
     {
       "path": "../../fdr-sdk/tsconfig.build.json"
@@ -17,6 +21,9 @@
     },
     {
       "path": "../fern-docs-mdx"
+    },
+    {
+      "path": "../fern-docs-utils"
     }
   ]
 }

@@ -8,7 +8,7 @@ import {
     getFeatureFlags,
     getSeoDisabled,
 } from "@fern-ui/fern-docs-edge-config";
-import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
+import { addLeadingSlash, getRedirectForPath } from "@fern-ui/fern-docs-utils";
 import {
     DocsPage,
     getApiRouteSupplier,
@@ -22,7 +22,6 @@ import { GetServerSidePropsResult, Redirect } from "next";
 import { ComponentProps } from "react";
 import urlJoin from "url-join";
 import { DocsLoader } from "./DocsLoader";
-import { addLeadingSlash } from "./addLeadingSlash";
 import { getAuthState } from "./auth/getAuthState";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";

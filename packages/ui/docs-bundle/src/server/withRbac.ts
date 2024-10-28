@@ -8,8 +8,7 @@ import {
     type RootNode,
 } from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
-import { EVERYONE_ROLE, matchPath } from "@fern-ui/fern-docs-utils";
-import { addLeadingSlash } from "./addLeadingSlash";
+import { EVERYONE_ROLE, addLeadingSlash, matchPath } from "@fern-ui/fern-docs-utils";
 import { AuthState } from "./auth/getAuthState";
 
 export enum Gate {
