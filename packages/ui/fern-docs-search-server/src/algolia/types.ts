@@ -1,9 +1,31 @@
 import { z } from "zod";
 
+// in order of priority:
+export const INDEXABLE_KEYS = [
+    "page_title",
+    "level_title",
+    "description",
+    "payload_description",
+    "request_description",
+    "response_description",
+    "content",
+    "endpoint_path",
+    "parameter_name",
+
+    // types (lower priority)
+    "api_type",
+    "method",
+    "section_type",
+    "subsection_type",
+    "response_type",
+    "status_code",
+    "parameter_type",
+] as const;
+
 export const BaseRecordSchema = z.object({
     objectID: z.string().describe("The unique identifier of this record"),
     org_id: z.string().describe("The Fern Organization ID"),
-    domain: z.string(),
+    domain: z.string().describe("The domain where the docs instance is hosted"),
     pathname: z.string().optional().describe("The pathname of the page (with leading slash)"),
     hash: z.string().optional(),
     page_title: z.string().describe("The title of the page, as specified in the frontmatter or docs.yml"),
@@ -13,7 +35,7 @@ export const BaseRecordSchema = z.object({
     description: z
         .string()
         .optional()
-        .describe("The description of the page. This will be rendered unless a highlighted snippet is returned"),
+        .describe("The description of the page. This should be rendered unless a highlighted snippet is returned"),
     breadcrumb: z
         .array(
             z.object({
@@ -35,25 +57,28 @@ export const MarkdownRecordSchema = BaseRecordSchema.extend({
         .string()
         .optional()
         .describe(
-            "The raw markdown of this record. This must be raw markdown because it will be used as a document input to for conversational search.",
+            "The raw markdown of this record. This must be raw markdown because it will be used as a document input to for conversational search. Unlike the description field, this should NOT be rendered by default.",
         ),
     hierarchy: z
         .object({
-            h1: z.string().optional(),
-            h2: z.string().optional(),
-            h3: z.string().optional(),
-            h4: z.string().optional(),
-            h5: z.string().optional(),
-            h6: z.string().optional(),
+            h1: z.object({ id: z.string(), title: z.string() }).optional(),
+            h2: z.object({ id: z.string(), title: z.string() }).optional(),
+            h3: z.object({ id: z.string(), title: z.string() }).optional(),
+            h4: z.object({ id: z.string(), title: z.string() }).optional(),
+            h5: z.object({ id: z.string(), title: z.string() }).optional(),
+            h6: z.object({ id: z.string(), title: z.string() }).optional(),
         })
         .optional()
-        .describe("The hierarchy of this record, within a markdown document"),
+        .describe(
+            "The hierarchy of this record, within a markdown document. This will be useful for nesting markdown records under other markdown records",
+        ),
     level: z
         .enum(["h1", "h2", "h3", "h4", "h5", "h6"])
         .optional()
         .describe(
             "For convenience, this is the lowest indexable level described in the hierarchy, which identifies the rank of the content of this record",
         ),
+    level_title: z.string().optional().describe("The title of the level, which is the heading text"),
 });
 
 export const ChangelogRecordSchema = BaseRecordSchema.extend({
@@ -87,7 +112,7 @@ export const ApiReferenceRecordSchema = EndpointBaseRecordSchema.extend({
 
 export const ParameterRecordSchema = EndpointBaseRecordSchema.extend({
     type: z.literal("parameter"),
-    section: z.enum(["request", "response", "payload"]).optional(),
+    section_type: z.enum(["request", "response", "payload"]).optional(),
     subsection_type: z.enum(["header", "path", "query", "body"]).optional(),
     websocket_origin: z.enum(["client", "server"]).optional(),
     status_code: z.string().optional(), // anything >= 400 is considered an error

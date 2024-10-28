@@ -57,28 +57,29 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
 
         const { heading, content, parents } = section;
 
-        const hierarchy: Record<`h${1 | 2 | 3 | 4 | 5 | 6}`, string | undefined> = {
-            h1: parents[0]?.depth === 1 ? heading.title : undefined,
-            h2: parents[0]?.depth === 2 ? heading.title : undefined,
-            h3: parents[0]?.depth === 3 ? heading.title : undefined,
-            h4: parents[0]?.depth === 4 ? heading.title : undefined,
-            h5: parents[0]?.depth === 5 ? heading.title : undefined,
-            h6: parents[0]?.depth === 6 ? heading.title : undefined,
+        const hierarchy: Record<`h${1 | 2 | 3 | 4 | 5 | 6}`, { id: string; title: string } | undefined> = {
+            h1: parents[0]?.depth === 1 ? { id: heading.id, title: heading.title } : undefined,
+            h2: parents[0]?.depth === 2 ? { id: heading.id, title: heading.title } : undefined,
+            h3: parents[0]?.depth === 3 ? { id: heading.id, title: heading.title } : undefined,
+            h4: parents[0]?.depth === 4 ? { id: heading.id, title: heading.title } : undefined,
+            h5: parents[0]?.depth === 5 ? { id: heading.id, title: heading.title } : undefined,
+            h6: parents[0]?.depth === 6 ? { id: heading.id, title: heading.title } : undefined,
         };
 
-        hierarchy[`h${heading.depth}`] = heading.title;
+        hierarchy[`h${heading.depth}`] = { id: heading.id, title: heading.title };
 
         // Note: unlike the root content, it's less important if subheadings are not indexed if there's no content inside
         // which should already been filtered out by splitMarkdownIntoSections()
         // TODO: we should probably separate this out into another record-type specifically for subheadings.
         const record: MarkdownRecord = {
             ...base,
-            objectID: `${base.objectID}-${heading.anchor}`, // theoretically this is unique, but we'll see
+            objectID: `${base.objectID}-${heading.id}`, // theoretically this is unique, but we'll see
             type: "markdown",
-            hash: `#${heading.anchor}`,
+            hash: `#${heading.id}`,
             content,
             hierarchy,
             level: `h${heading.depth}`,
+            level_title: heading.title,
         };
 
         records.push(record);

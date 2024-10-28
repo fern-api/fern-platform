@@ -8,7 +8,7 @@ import { getPosition } from "./position.js";
 export interface HeadingMetadata {
     depth: 1 | 2 | 3 | 4 | 5 | 6;
     title: string;
-    anchor: string;
+    id: string;
 
     /**
      * Position of the heading in the raw markdown
@@ -45,17 +45,17 @@ export function collectRootHeadings(tree: Root, lines: readonly string[]): Headi
         // TODO: we should preserve some formatting within the heading, i.e. `<code>` and `<u>`, etc.
         const title = toString(heading);
 
-        let anchor = extractAnchorFromHeadingText(title).anchor;
+        let id = extractAnchorFromHeadingText(title).anchor;
 
-        if (anchor == null) {
-            anchor = slugger.slug(title);
+        if (id == null) {
+            id = slugger.slug(title);
         } else {
             // add occurrences to ensure uniqueness
-            slugger.occurrences[anchor] = (slugger.occurrences[anchor] ?? 0) + 1;
+            slugger.occurrences[id] = (slugger.occurrences[id] ?? 0) + 1;
         }
 
         const { start, length } = getPosition(lines, heading.position);
-        headings.push({ depth: heading.depth, title, anchor, start, length });
+        headings.push({ depth: heading.depth, title, id, start, length });
     });
 
     return headings;
