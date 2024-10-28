@@ -28,7 +28,7 @@ const ExpandButton: React.FC<{ expanded: boolean; setExpanded: (expanded: boolea
     expanded,
     setExpanded,
 }) => (
-    <div className="justify-end">
+    <div className="flex justify-end pt-2">
         <FernButton
             className="text-left"
             variant="minimal"
@@ -50,10 +50,9 @@ const SearchSection: React.FC<{
     hoveredSearchHitId: string | null;
     setHoveredSearchHitId: (id: string) => void;
 }> = ({ title, hits, expanded, setExpanded, refs, hoveredSearchHitId, setHoveredSearchHitId }) => (
-    <div className="pb-4">
+    <div className="pb-2">
         <div className="flex justify-between items-center">
             <div className="text-normal font-semibold pl-0.5">{title}</div>
-            {hits.length > SEARCH_HITS_PER_SECTION && <ExpandButton expanded={expanded} setExpanded={setExpanded} />}
         </div>
         <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
         {expandHits(expanded, hits).map((hit) => (
@@ -69,6 +68,7 @@ const SearchSection: React.FC<{
                 onMouseEnter={() => setHoveredSearchHitId(hit.objectID)}
             />
         ))}
+        {hits.length > SEARCH_HITS_PER_SECTION && <ExpandButton expanded={expanded} setExpanded={setExpanded} />}
     </div>
 );
 
