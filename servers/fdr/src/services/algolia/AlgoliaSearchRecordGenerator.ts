@@ -9,6 +9,7 @@ import {
     visitDbNavigationTab,
     visitUnversionedDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
+import { Frontmatter } from "@fern-api/fdr-sdk/src/docs";
 import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import grayMatter from "gray-matter";
 import { noop } from "lodash-es";
@@ -1010,18 +1011,14 @@ function getSubpackagesMap({
     );
 }
 
-interface Frontmatter {
-    title?: string; // overrides sidebar title
-}
-
 export function getFrontmatter(content: string): {
     frontmatter: Frontmatter;
     content: string;
 } {
     try {
         const gm = grayMatter(content);
-        return { frontmatter: gm.data, content: gm.content };
+        return { frontmatter: gm.data as Frontmatter, content: gm.content };
     } catch (e) {
-        return { frontmatter: {}, content };
+        return { frontmatter: {} as Frontmatter, content };
     }
 }

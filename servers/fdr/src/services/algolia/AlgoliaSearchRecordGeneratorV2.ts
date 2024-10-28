@@ -100,18 +100,25 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
         const fdrSlug = FernNavigation.V1.Slug(rawSlug);
 
         // New markdown processing method
-        const { frontmatter } = getFrontmatter(rawMarkdown);
+        const { frontmatter, content } = getFrontmatter(rawMarkdown);
         const markdownTree = getMarkdownSectionTree(rawMarkdown, title);
+        const description = truncateToBytes(
+            `${frontmatter.title}
+            ${frontmatter.description}
+            ${frontmatter.subtitle}`,
+            9500,
+        );
         const markdownSectionRecords = getMarkdownSections(markdownTree, breadcrumbs, indexSegment.id, fdrSlug).map(
             compact,
         );
 
         markdownSectionRecords.push(
             compact({
-                type: "page-v4",
+                type: "markdown-section-v1",
                 objectID: uuid(),
                 title: frontmatter.title ?? title,
-                description: truncateToBytes(markdownTree.content, 9_500),
+                description,
+                content: "",
                 breadcrumbs,
                 slug: fdrSlug,
                 version,

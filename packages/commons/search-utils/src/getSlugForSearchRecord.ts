@@ -2,9 +2,17 @@ import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { UnreachableCaseError } from "ts-essentials";
 
-export function getSlugForSearchRecord(record: Algolia.AlgoliaRecord, basePath: string | undefined): string {
+export function getSlugForSearchRecord(
+    record: Algolia.AlgoliaRecord,
+    basePath: string | undefined,
+    versionSlug: string | undefined,
+    defaultVersionSlug: string | undefined,
+): string {
     return visitSearchRecord<string>(record)._visit({
-        v4: (record) => record.slug,
+        v4: (record) =>
+            defaultVersionSlug === "" && versionSlug === defaultVersionSlug
+                ? record.slug.split("/").slice(1).join("/")
+                : record.slug.replace(defaultVersionSlug ?? "", ""),
         v3: (record) => record.slug,
         v2: (record) =>
             FernNavigation.slugjoin(
