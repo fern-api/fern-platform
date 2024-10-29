@@ -162,34 +162,30 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
 
     const onChangeAdditionalObjectProperty = useCallback(
         (newValue: unknown) => {
-            onChange((oldValue: unknown) => {
-                const oldObject = castToRecord(oldValue);
-                const val = castToRecord(newValue);
+            if (JSON.stringify(castToRecord(additionalProperties)) !== JSON.stringify(castToRecord(newValue))) {
+                onChange((oldValue: unknown) => {
+                    const oldObject = castToRecord(oldValue);
 
-                if (newValue === undefined) {
-                    return Object.fromEntries(
-                        Object.entries(oldObject).filter(
-                            ([k]) => !Object.keys(castToRecord(additionalProperties)).includes(k),
-                        ),
-                    );
-                } else {
-                    if (
-                        JSON.stringify(Object.keys(castToRecord(additionalProperties))) !==
-                        JSON.stringify(Object.keys(val))
-                    ) {
-                        setAdditionalProperties(newValue);
-                    }
-
-                    return {
-                        ...Object.fromEntries(
+                    if (newValue === undefined) {
+                        return Object.fromEntries(
                             Object.entries(oldObject).filter(
                                 ([k]) => !Object.keys(castToRecord(additionalProperties)).includes(k),
                             ),
-                        ),
-                        ...newValue,
-                    };
-                }
-            });
+                        );
+                    } else {
+                        setAdditionalProperties(newValue);
+
+                        return {
+                            ...Object.fromEntries(
+                                Object.entries(oldObject).filter(
+                                    ([k]) => !Object.keys(castToRecord(additionalProperties)).includes(k),
+                                ),
+                            ),
+                            ...newValue,
+                        };
+                    }
+                });
+            }
         },
         [onChange, additionalProperties],
     );
