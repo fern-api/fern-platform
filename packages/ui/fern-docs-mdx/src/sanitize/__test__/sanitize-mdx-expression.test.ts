@@ -74,4 +74,9 @@ describe("sanitizeMdxExpression", () => {
             sanitizeMdxExpression("{ M1:2, M1:4 } => {M1:6} 2] Minimum - min of all the values for the"),
         ).toMatchInlineSnapshot('"\\{ M1:2, M1:4 } => \\{M1:6} 2] Minimum - min of all the values for the"');
     });
+
+    it("should avoid escaping math expressions", () => {
+        expect(sanitizeMdxExpression("$$x^2$$")).toBe("$$x^2$$");
+        expect(sanitizeMdxExpression("$${x^2}$$")).toBe("$${x^2}$$");
+    });
 });

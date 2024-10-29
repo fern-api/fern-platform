@@ -2190,6 +2190,9 @@ importers:
       mdast-util-from-markdown:
         specifier: ^2.0.0
         version: 2.0.0
+      mdast-util-math:
+        specifier: ^3.0.0
+        version: 3.0.0
       mdast-util-mdx:
         specifier: ^3.0.0
         version: 3.0.0
@@ -2208,6 +2211,9 @@ importers:
       mdast-util-to-string:
         specifier: ^4.0.0
         version: 4.0.0
+      micromark-extension-math:
+        specifier: ^3.1.0
+        version: 3.1.0
       micromark-extension-mdxjs:
         specifier: ^3.0.0
         version: 3.0.0
@@ -12975,6 +12981,9 @@ packages:
 
   micromark-extension-math@3.0.0:
     resolution: {integrity: sha512-iJ2Q28vBoEovLN5o3GO12CpqorQRYDPT+p4zW50tGwTfJB+iv/VnB6Ini+gqa24K97DwptMBBIvVX6Bjk49oyQ==}
+
+  micromark-extension-math@3.1.0:
+    resolution: {integrity: sha512-lvEqd+fHjATVs+2v/8kg9i5Q0AP2k85H0WUOwpIVvUML8BapsMvh1XAogmQjOCsLpoKRCVQqEkQBB3NhVBcsOg==}
 
   micromark-extension-mdx-expression@3.0.0:
     resolution: {integrity: sha512-sI0nwhUDz97xyzqJAbHQhp5TfaxEvZZZ2JDqUo+7NvyIYG6BZ5CPPqj2ogUoPJlmXHBnyZUzISg9+oUmU6tUjQ==}
@@ -31855,6 +31864,16 @@ snapshots:
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
 
+  micromark-extension-math@3.1.0:
+    dependencies:
+      '@types/katex': 0.16.7
+      devlop: 1.1.0
+      katex: 0.16.10
+      micromark-factory-space: 2.0.0
+      micromark-util-character: 2.1.0
+      micromark-util-symbol: 2.0.0
+      micromark-util-types: 2.0.0
+
   micromark-extension-mdx-expression@3.0.0:
     dependencies:
       '@types/estree': 1.0.5
@@ -35454,7 +35473,7 @@ snapshots:
   terser@5.31.0:
     dependencies:
       '@jridgewell/source-map': 0.3.6
-      acorn: 8.11.3
+      acorn: 8.13.0
       commander: 2.20.3
       source-map-support: 0.5.21
 

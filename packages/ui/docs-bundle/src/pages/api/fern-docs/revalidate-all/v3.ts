@@ -33,8 +33,8 @@ const handler: NextApiHandler = async (
     const domain = getDocsDomainNode(req);
     const host = getHostNode(req) ?? domain;
 
-    // never proivde a token here because revalidation should only be done on public routes (for now)
-    const loader = DocsLoader.for(domain, host, undefined);
+    // never provide a token here because revalidation should only be done on public routes (for now)
+    const loader = DocsLoader.for(domain, host);
 
     const root = await loader.root();
 
@@ -48,7 +48,7 @@ const handler: NextApiHandler = async (
     }
 
     const revalidate = new Revalidator(res, domain);
-    const slugs = NodeCollector.collect(root).pageSlugs;
+    const slugs = NodeCollector.collect(root).staticPageSlugs;
 
     try {
         const cache = DocsKVCache.getInstance(domain);
