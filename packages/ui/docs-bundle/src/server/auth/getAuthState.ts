@@ -1,8 +1,12 @@
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig, FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
+import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import urlJoin from "url-join";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
+import { getAuthorizationUrl as getWorkOSAuthorizationUrl } from "./workos";
+import { getSessionFromToken, toSessionUserInfo } from "./workos-session";
+import { toFernUser } from "./workos-user-to-fern-user";
 
 export type AuthPartner = "workos" | "ory" | "webflow" | "custom";
 
@@ -77,10 +81,9 @@ export async function getAuthState(
         return { domain, host, authed: false, ok: true, authorizationUrl: undefined, partner: authConfig?.partner };
     }
 
-    const user = await safeVerifyFernJWTConfig(fernToken, authConfig);
-
     // check if the request is allowed to pass through without authentication
     if (authConfig.type === "basic_token_verification") {
+        const user = await safeVerifyFernJWTConfig(fernToken, authConfig);
         const partner = "custom";
         if (user) {
             return { domain, host, authed: true, ok: true, user, partner };
@@ -90,31 +93,58 @@ export async function getAuthState(
         }
     }
 
-    // TODO: implement workos auth
-    if (authConfig.type === "sso") {
-        return user
-            ? { domain, host, authed: true, ok: true, user, partner: authConfig.partner }
-            : { domain, host, authed: false, ok: false, authorizationUrl: undefined, partner: authConfig.partner };
+    // check if the user is logged in via WorkOS
+    if (authConfig.type === "sso" && authConfig.partner === "workos") {
+        const workos = await toSessionUserInfo(fernToken != null ? await getSessionFromToken(fernToken) : undefined);
+        if (workos.user) {
+            return { domain, host, authed: true, ok: true, user: toFernUser(workos), partner: authConfig.partner };
+        }
+        const authorizationUrl = getAuthorizationUrl(authConfig, domain, pathname);
+        return { domain, host, authed: false, ok: false, authorizationUrl, partner: authConfig.partner };
     }
 
     return { domain, host, authed: false, ok: false, authorizationUrl: undefined, partner: undefined };
 }
 
 function getAuthorizationUrl(authConfig: AuthEdgeConfig, xFernHost: string, pathname?: string): string | undefined {
+    // TODO: this is currently not a correct implementation of the state parameter b/c it should be signed w/ the jwt secret
+    // however, we should not break existing customers who are consuming the state as a `return_to` param in their auth flows.
+    const state = urlJoin(removeTrailingSlash(withDefaultProtocol(xFernHost)), pathname ?? "");
+
     if (authConfig.type === "basic_token_verification") {
         if (!pathname) {
             return authConfig.redirect;
         }
 
         const destination = new URL(authConfig.redirect);
-        // TODO: this is currently not a correct implementation of the state parameter b/c it should be signed w/ the jwt secret
-        // however, we should not break existing customers who are consuming the state as a `return_to` param in their auth flows.
-        destination.searchParams.set("state", urlJoin(withDefaultProtocol(xFernHost), pathname));
+        destination.searchParams.set("state", state);
         return destination.toString();
     } else if (authConfig.type === "sso" && authConfig.partner === "workos") {
-        // TODO: implement workos auth redirect url
-        return undefined;
+        const redirectUri = urlJoin(
+            removeTrailingSlash(withDefaultProtocol(getRedirectUri())),
+            "/api/fern-docs/auth/sso/callback",
+        );
+        return getWorkOSAuthorizationUrl({ state, redirectUri, organization: authConfig.organization });
     }
 
     return undefined;
+}
+
+/*
+ * Note: our WorkOS prod/staging is not 1:1 with FDR (app/app-dev2) so instead, we:
+ * - use the WorkOS production url for ONLY the production docs deployments
+ * - use the WorkOS staging instance for all other deployments (prod-preview, dev2, local dev, etc.)
+ *
+ * This is so that we can test workos using open redirects, and not have to worry about the authkit redirect uri changing:
+ */
+function getRedirectUri(): string {
+    if (process.env.NODE_ENV !== "production" || process.env.VERCEL_ENV === "development") {
+        return `http://localhost:${process.env.PORT ?? 3000}`;
+    }
+    return (
+        process.env.NEXT_PUBLIC_CDN_URI ??
+        process.env.VERCEL_BRANCH_URL ??
+        process.env.VERCEL_DEPLOYMENT_URL ??
+        "https://app.buildwithfern.com"
+    );
 }
