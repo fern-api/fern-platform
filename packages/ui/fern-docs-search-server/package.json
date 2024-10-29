@@ -12,6 +12,10 @@
   ],
   "type": "module",
   "exports": {
+    "./algolia/types": {
+      "types": "./dist/algolia/types.d.ts",
+      "default": "./dist/algolia/types.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"

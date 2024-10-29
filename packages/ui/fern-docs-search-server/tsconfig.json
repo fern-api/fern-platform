@@ -5,13 +5,13 @@
     "moduleResolution": "NodeNext",
     "module": "NodeNext",
     "types": ["node", "vitest/globals"],
-    "rootDirs": ["./src", "."],
-    "baseUrl": ".",
+    "rootDir": "./src",
+    "baseUrl": "./src",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./*"]
     }
   },
-  "include": ["./src/**/*", "trigger.config.ts"],
+  "include": ["./src/**/*"],
   "references": [
     {
       "path": "../../fdr-sdk/tsconfig.build.json"
