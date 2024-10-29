@@ -2,14 +2,15 @@
   "name": "@fern-ui/fern-docs-search-ui",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbo",
     "dev:build": "next build",
     "dev:start": "next start",
     "dev:lint": "next lint"
   },
   "peerDependencies": {
-    "next": "npm:@fern-api/next@14.2.9-fork.2",
+    "next": "^14",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -19,7 +20,7 @@
     "@types/react-dom": "^18.2.18",
     "eslint": "^8.56.0",
     "eslint-config-next": "14.2.15",
-    "next": "npm:@fern-api/next@14.2.9-fork.2",
+    "next": "^14",
     "postcss": "^8.4.33",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -27,6 +28,15 @@
     "typescript": "5.4.3"
   },
   "dependencies": {
-    "algoliasearch": "^5.10.2"
+    "@algolia/autocomplete-core": "^1.17.6",
+    "@fern-ui/fern-docs-search-server": "workspace:*",
+    "@radix-ui/react-visually-hidden": "^1.1.0",
+    "algoliasearch": "^5.10.2",
+    "es-toolkit": "^1.24.0",
+    "instantsearch.css": "8.5.1",
+    "instantsearch.js": "4.75.3",
+    "react-instantsearch": "7.13.3",
+    "react-instantsearch-nextjs": "0.3.16",
+    "ts-essentials": "^10.0.1"
   }
 }

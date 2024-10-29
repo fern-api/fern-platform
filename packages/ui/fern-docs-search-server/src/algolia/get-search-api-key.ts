@@ -38,7 +38,7 @@ interface GetSearchApiKeyOptions {
     expiresInSeconds: number;
 }
 
-export async function getSearchApiKey({
+export function getSearchApiKey({
     client,
     parentApiKey,
     domain,
@@ -46,7 +46,7 @@ export async function getSearchApiKey({
     authed,
     expiresInSeconds,
     searchIndex,
-}: GetSearchApiKeyOptions): Promise<string | undefined> {
+}: GetSearchApiKeyOptions): string {
     return client.generateSecuredApiKey({
         parentApiKey,
         restrictions: {

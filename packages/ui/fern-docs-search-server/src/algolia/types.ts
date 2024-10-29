@@ -30,7 +30,7 @@ export const BaseRecordSchema = z.object({
     objectID: z.string().describe("The unique identifier of this record"),
     org_id: z.string().describe("The Fern Organization ID"),
     domain: z.string().describe("The domain where the docs instance is hosted"),
-    pathname: z.string().optional().describe("The pathname of the page (with leading slash)"),
+    pathname: z.string().describe("The pathname of the page (with leading slash)"),
     hash: z.string().optional(),
     page_title: z.string().describe("The title of the page, as specified in the frontmatter or docs.yml"),
     availability: z
@@ -40,6 +40,15 @@ export const BaseRecordSchema = z.object({
         .string()
         .optional()
         .describe("The description of the page. This should be rendered unless a highlighted snippet is returned"),
+    code_snippets: z
+        .array(
+            z.object({
+                lang: z.string().optional(),
+                meta: z.string().optional(),
+                code: z.string(),
+            }),
+        )
+        .optional(),
     breadcrumb: z
         .array(
             z.object({
@@ -148,3 +157,4 @@ export type ChangelogRecord = z.infer<typeof ChangelogRecordSchema>;
 export type ApiReferenceRecord = z.infer<typeof ApiReferenceRecordSchema>;
 export type ParameterRecord = z.infer<typeof ParameterRecordSchema>;
 export type AlgoliaRecord = z.infer<typeof AlgoliaRecordSchema>;
+export type VisibleAlgoliaRecord = Omit<AlgoliaRecord, (typeof UNRETRIEVABLE_ATTRIBUTES)[number]>;

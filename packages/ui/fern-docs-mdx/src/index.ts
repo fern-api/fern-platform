@@ -1,4 +1,5 @@
 export type { MdxJsxAttribute } from "mdast-util-mdx";
+export { visit } from "unist-util-visit";
 export * from "./declarations.js";
 export * from "./frontmatter.js";
 export * from "./handlers/index.js";

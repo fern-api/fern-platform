@@ -64,8 +64,8 @@ Finished.
             {
               "content": "Hello",
               "heading": {
-                "anchor": "level-1-heading",
                 "depth": 1,
+                "id": "level-1-heading",
                 "length": 17,
                 "start": 26,
                 "title": "level 1 heading",
@@ -76,8 +76,8 @@ Finished.
             {
               "content": "Uses a custom anchor",
               "heading": {
-                "anchor": "custom-anchor",
                 "depth": 1,
+                "id": "custom-anchor",
                 "length": 34,
                 "start": 52,
                 "title": "level 1 heading [#custom-anchor]",
@@ -88,8 +88,8 @@ Finished.
             {
               "content": "duplicate heading",
               "heading": {
-                "anchor": "level-1-heading-1",
                 "depth": 1,
+                "id": "level-1-heading-1",
                 "length": 17,
                 "start": 110,
                 "title": "level 1 heading",
@@ -100,16 +100,16 @@ Finished.
             {
               "content": "nested heading",
               "heading": {
-                "anchor": "level-2-heading",
                 "depth": 2,
+                "id": "level-2-heading",
                 "length": 18,
                 "start": 148,
                 "title": "level 2 heading",
               },
               "parents": [
                 {
-                  "anchor": "level-1-heading-1",
                   "depth": 1,
+                  "id": "level-1-heading-1",
                   "length": 17,
                   "start": 110,
                   "title": "level 1 heading",
@@ -124,23 +124,23 @@ Finished.
 
           \`\`\`",
               "heading": {
-                "anchor": "level-3-heading",
                 "depth": 3,
+                "id": "level-3-heading",
                 "length": 19,
                 "start": 184,
                 "title": "level 3 heading",
               },
               "parents": [
                 {
-                  "anchor": "level-1-heading-1",
                   "depth": 1,
+                  "id": "level-1-heading-1",
                   "length": 17,
                   "start": 110,
                   "title": "level 1 heading",
                 },
                 {
-                  "anchor": "level-2-heading",
                   "depth": 2,
+                  "id": "level-2-heading",
                   "length": 18,
                   "start": 148,
                   "title": "level 2 heading",
@@ -151,30 +151,30 @@ Finished.
             {
               "content": "deeply nested heading",
               "heading": {
-                "anchor": "level-5-heading",
                 "depth": 5,
+                "id": "level-5-heading",
                 "length": 21,
                 "start": 243,
                 "title": "level 5 heading",
               },
               "parents": [
                 {
-                  "anchor": "level-1-heading-1",
                   "depth": 1,
+                  "id": "level-1-heading-1",
                   "length": 17,
                   "start": 110,
                   "title": "level 1 heading",
                 },
                 {
-                  "anchor": "level-2-heading",
                   "depth": 2,
+                  "id": "level-2-heading",
                   "length": 18,
                   "start": 148,
                   "title": "level 2 heading",
                 },
                 {
-                  "anchor": "level-3-heading",
                   "depth": 3,
+                  "id": "level-3-heading",
                   "length": 19,
                   "start": 184,
                   "title": "level 3 heading",
@@ -185,16 +185,16 @@ Finished.
             {
               "content": "This should still be nested under level-1-heading-1",
               "heading": {
-                "anchor": "level-2-heading-again",
                 "depth": 2,
+                "id": "level-2-heading-again",
                 "length": 25,
                 "start": 289,
                 "title": "level 2 heading, again",
               },
               "parents": [
                 {
-                  "anchor": "level-1-heading-1",
                   "depth": 1,
+                  "id": "level-1-heading-1",
                   "length": 17,
                   "start": 110,
                   "title": "level 1 heading",
@@ -213,23 +213,23 @@ Finished.
 
           </Steps>",
               "heading": {
-                "anchor": "level-3-heading-again",
                 "depth": 5,
+                "id": "level-3-heading-again",
                 "length": 28,
                 "start": 369,
                 "title": "level 3 heading, again",
               },
               "parents": [
                 {
-                  "anchor": "level-1-heading-1",
                   "depth": 1,
+                  "id": "level-1-heading-1",
                   "length": 17,
                   "start": 110,
                   "title": "level 1 heading",
                 },
                 {
-                  "anchor": "level-2-heading-again",
                   "depth": 2,
+                  "id": "level-2-heading-again",
                   "length": 25,
                   "start": 289,
                   "title": "level 2 heading, again",
@@ -240,30 +240,30 @@ Finished.
             {
               "content": "Finished.",
               "heading": {
-                "anchor": "testing-empty-section-above",
                 "depth": 4,
+                "id": "testing-empty-section-above",
                 "length": 32,
                 "start": 544,
                 "title": "testing empty section above",
               },
               "parents": [
                 {
-                  "anchor": "level-1-heading-1",
                   "depth": 1,
+                  "id": "level-1-heading-1",
                   "length": 17,
                   "start": 110,
                   "title": "level 1 heading",
                 },
                 {
-                  "anchor": "level-2-heading-again",
                   "depth": 2,
+                  "id": "level-2-heading-again",
                   "length": 25,
                   "start": 289,
                   "title": "level 2 heading, again",
                 },
                 {
-                  "anchor": "testing-stack-pop",
                   "depth": 3,
+                  "id": "testing-stack-pop",
                   "length": 21,
                   "start": 521,
                   "title": "testing stack pop",

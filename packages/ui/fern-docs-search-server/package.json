@@ -12,7 +12,7 @@
   ],
   "type": "module",
   "exports": {
-    "./algolia/types": {
+    "./types": {
       "types": "./dist/algolia/types.d.ts",
       "default": "./dist/algolia/types.js"
     },
@@ -24,6 +24,7 @@
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
+    "trigger:dev": "pnpm dlx trigger.dev@latest dev",
     "compile": "tsc --build",
     "test": "vitest --run --passWithNoTests --globals",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
@@ -43,10 +44,9 @@
     "@fern-ui/fern-docs-mdx": "workspace:*",
     "@fern-ui/fern-docs-utils": "workspace:*",
     "@trigger.dev/sdk": "^3.0.13",
-    "algoliasearch": "^5.8.1",
+    "algoliasearch": "^5.10.2",
     "es-toolkit": "^1.24.0",
     "pnpm": "^9.12.1",
-    "ts-essentials": "^10.0.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {

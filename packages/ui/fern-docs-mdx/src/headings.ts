@@ -1,8 +1,8 @@
 import GithubSlugger from "github-slugger";
 import type { Root } from "mdast";
-import { toString } from "mdast-util-to-string";
 import { visit } from "unist-util-visit";
 import { extractAnchorFromHeadingText } from "./handlers/custom-headings.js";
+import { mdastToString } from "./mdast-utils/mdast-to-string.js";
 import { getPosition } from "./position.js";
 
 export interface HeadingMetadata {
@@ -43,7 +43,7 @@ export function collectRootHeadings(tree: Root, lines: readonly string[]): Headi
 
         // `toString` will strip away all markdown formatting for the title
         // TODO: we should preserve some formatting within the heading, i.e. `<code>` and `<u>`, etc.
-        const title = toString(heading);
+        const title = mdastToString(heading, { preserveNewlines: false });
 
         let id = extractAnchorFromHeadingText(title).anchor;
 

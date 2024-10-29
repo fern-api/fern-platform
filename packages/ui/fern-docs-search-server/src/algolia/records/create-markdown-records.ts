@@ -1,6 +1,13 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { MarkdownSectionRoot, getFrontmatter, splitMarkdownIntoSections } from "@fern-ui/fern-docs-mdx";
+import {
+    MarkdownSectionRoot,
+    getFrontmatter,
+    markdownToString,
+    splitMarkdownIntoSections,
+} from "@fern-ui/fern-docs-mdx";
+import { compact, flatten } from "es-toolkit";
 import { BaseRecord, MarkdownRecord } from "../types.js";
+import { maybePrepareMdxContent } from "./prepare-mdx-content.js";
 
 interface CreateMarkdownRecordsOptions {
     base: BaseRecord;
@@ -15,7 +22,7 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
      * If the title is not set in the frontmatter, use the title from the sidebar.
      */
     // TODO: handle case where title is set in <h1> tag (this should be an upstream utility)
-    const page_title = data.title ?? base.page_title;
+    const page_title = markdownToString(data.title) ?? base.page_title;
 
     const sections = [...splitMarkdownIntoSections(content)];
 
@@ -40,12 +47,17 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
 
     // we should still insert this record even if there's no content, because
     // the title of the record can still be matched
+    const { content: description_content, code_snippets: description_code_snippets } =
+        maybePrepareMdxContent(description);
+    const { content: root_content, code_snippets: root_code_snippets } = maybePrepareMdxContent(rootContent);
+    const code_snippets = flatten(compact([base.code_snippets, description_code_snippets, root_code_snippets]));
     records.push({
         ...base,
         type: "markdown",
         hash: undefined,
-        description: description.length > 0 ? description : undefined,
-        content: rootContent,
+        description: description_content,
+        content: root_content,
+        code_snippets,
         page_title,
     });
 
@@ -55,7 +67,7 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
             throw new Error(`Invariant: unexpected root section detected at index=${i + 1}`);
         }
 
-        const { heading, content, parents } = section;
+        const { heading, content: markdownContent, parents } = section;
 
         const hierarchy: Record<`h${1 | 2 | 3 | 4 | 5 | 6}`, { id: string; title: string } | undefined> = {
             h1: parents[0]?.depth === 1 ? { id: heading.id, title: heading.title } : undefined,
@@ -68,6 +80,9 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
 
         hierarchy[`h${heading.depth}`] = { id: heading.id, title: heading.title };
 
+        const prepared = maybePrepareMdxContent(markdownContent);
+        const code_snippets = flatten(compact([base.code_snippets, prepared.code_snippets]));
+
         // Note: unlike the root content, it's less important if subheadings are not indexed if there's no content inside
         // which should already been filtered out by splitMarkdownIntoSections()
         // TODO: we should probably separate this out into another record-type specifically for subheadings.
@@ -76,10 +91,11 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
             objectID: `${base.objectID}-${heading.id}`, // theoretically this is unique, but we'll see
             type: "markdown",
             hash: `#${heading.id}`,
-            content,
+            content: prepared.content,
+            code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
             hierarchy,
             level: `h${heading.depth}`,
-            level_title: heading.title,
+            level_title: markdownToString(heading.title),
         };
 
         records.push(record);
