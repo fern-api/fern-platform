@@ -66,14 +66,6 @@ export const EndpointRecordV4: React.FC<EndpointRecordV4.Props> = ({ hit, isHove
                             )}
                     </div>
                 </div>
-                <div
-                    className={cn("text-sm tracking-wide", {
-                        "t-muted": !isHovered,
-                        "t-accent-aaa": isHovered,
-                    })}
-                >
-                    Endpoint
-                </div>
             </div>
             {
                 <div className="flex items-center justify-between">
