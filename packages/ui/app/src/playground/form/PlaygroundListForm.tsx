@@ -1,6 +1,6 @@
 import { TypeDefinition, TypeShapeOrReference } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton } from "@fern-ui/components";
-import cn from "clsx";
+import { clsx } from "clsx";
 import { Plus, Xmark } from "iconoir-react";
 import { memo, useCallback } from "react";
 import { getEmptyValueForType, shouldRenderInline } from "../utils";
@@ -26,7 +26,11 @@ export const PlaygroundListForm = memo<PlaygroundListFormProps>(({ itemShape, on
         (idx: number, newValue: unknown) => {
             onChange((oldValue: unknown) => {
                 const oldArray = Array.isArray(oldValue) ? oldValue : [];
-                return [...oldArray.slice(0, idx), newValue, ...oldArray.slice(idx + 1)];
+                return [
+                    ...oldArray.slice(0, idx),
+                    typeof newValue === "function" ? newValue(oldArray[idx]) : newValue,
+                    ...oldArray.slice(idx + 1),
+                ];
             });
         },
         [onChange],
@@ -47,58 +51,17 @@ export const PlaygroundListForm = memo<PlaygroundListFormProps>(({ itemShape, on
             {valueAsList.length > 0 && (
                 <ul className="border-default divide-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
                     {valueAsList.map((item, idx) => (
-                        <li
+                        <PlaygroundListItemForm
                             key={idx}
-                            className={cn("min-h-12 w-full space-y-2", {
-                                "py-2": renderInline,
-                                "pt-2 pb-4": !renderInline,
-                            })}
-                        >
-                            <div className="flex min-w-0 shrink items-center justify-between gap-2">
-                                <label className="inline-flex flex-wrap items-baseline">
-                                    <span className="t-muted min-w-6 rounded-xl bg-tag-default p-1 text-center text-xs font-semibold uppercase">
-                                        {idx + 1}
-                                    </span>
-                                </label>
-
-                                {renderInline && (
-                                    <PlaygroundTypeReferenceForm
-                                        shape={itemShape}
-                                        value={item}
-                                        onChange={(newItem) =>
-                                            handleChangeItem(
-                                                idx,
-                                                typeof newItem === "function" ? newItem(item) : newItem,
-                                            )
-                                        }
-                                        renderAsPanel={true}
-                                        id={`${id}[${idx}]`}
-                                        types={types}
-                                    />
-                                )}
-
-                                <FernButton
-                                    icon={<Xmark />}
-                                    onClick={() => handleRemoveItem(idx)}
-                                    variant="minimal"
-                                    size="small"
-                                    className="-ml-1 -mr-3 opacity-50 transition-opacity hover:opacity-100"
-                                />
-                            </div>
-
-                            {!renderInline && (
-                                <PlaygroundTypeReferenceForm
-                                    shape={itemShape}
-                                    value={item}
-                                    onChange={(newItem) =>
-                                        handleChangeItem(idx, typeof newItem === "function" ? newItem(item) : newItem)
-                                    }
-                                    renderAsPanel={true}
-                                    id={`${id}[${idx}]`}
-                                    types={types}
-                                />
-                            )}
-                        </li>
+                            id={id}
+                            idx={idx}
+                            renderInline={renderInline}
+                            itemShape={itemShape}
+                            item={item}
+                            onChange={handleChangeItem}
+                            types={types}
+                            onRemove={handleRemoveItem}
+                        />
                     ))}
                     <li className="pt-2">
                         <FernButton
@@ -123,5 +86,81 @@ export const PlaygroundListForm = memo<PlaygroundListFormProps>(({ itemShape, on
         </>
     );
 });
+
+interface PlaygroundListItemFormProps {
+    id: string;
+    idx: number;
+    renderInline: boolean;
+    itemShape: TypeShapeOrReference;
+    item: unknown;
+    onChange: (idx: number, newValue: unknown) => void;
+    types: Record<string, TypeDefinition>;
+    onRemove: (idx: number) => void;
+}
+
+function PlaygroundListItemForm({
+    id,
+    idx,
+    renderInline,
+    itemShape,
+    item,
+    onChange,
+    types,
+    onRemove,
+}: PlaygroundListItemFormProps) {
+    const handleChangeItem = useCallback(
+        (newItem: unknown) =>
+            onChange(idx, (prev: unknown) => (typeof newItem === "function" ? newItem(prev) : newItem)),
+        [onChange, idx],
+    );
+
+    return (
+        <li
+            key={idx}
+            className={clsx("min-h-12 w-full space-y-2", {
+                "py-2": renderInline,
+                "pt-2 pb-4": !renderInline,
+            })}
+        >
+            <div className="flex min-w-0 shrink items-center justify-between gap-2">
+                <label className="inline-flex flex-wrap items-baseline">
+                    <span className="t-muted min-w-6 rounded-xl bg-tag-default p-1 text-center text-xs font-semibold uppercase">
+                        {idx + 1}
+                    </span>
+                </label>
+
+                {renderInline && (
+                    <PlaygroundTypeReferenceForm
+                        shape={itemShape}
+                        value={item}
+                        onChange={handleChangeItem}
+                        renderAsPanel={true}
+                        id={`${id}[${idx}]`}
+                        types={types}
+                    />
+                )}
+
+                <FernButton
+                    icon={<Xmark />}
+                    onClick={() => onRemove(idx)}
+                    variant="minimal"
+                    size="small"
+                    className="-ml-1 -mr-3 opacity-50 transition-opacity hover:opacity-100"
+                />
+            </div>
+
+            {!renderInline && (
+                <PlaygroundTypeReferenceForm
+                    shape={itemShape}
+                    value={item}
+                    onChange={handleChangeItem}
+                    renderAsPanel={true}
+                    id={`${id}[${idx}]`}
+                    types={types}
+                />
+            )}
+        </li>
+    );
+}
 
 PlaygroundListForm.displayName = "PlaygroundListForm";

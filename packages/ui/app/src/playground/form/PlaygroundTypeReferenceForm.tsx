@@ -2,7 +2,6 @@ import {
     ObjectProperty,
     TypeDefinition,
     TypeShapeOrReference,
-    unwrapObjectType,
     unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
@@ -15,7 +14,7 @@ import { PlaygroundElevenLabsVoiceIdForm } from "./PlaygroundElevenLabsVoiceIdFo
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";
 import { PlaygroundMapForm } from "./PlaygroundMapForm";
-import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
+import { PlaygroundObjectForm } from "./PlaygroundObjectForm";
 import { PlaygroundUniscriminatedUnionForm } from "./PlaygroundUniscriminatedUnionForm";
 
 interface PlaygroundTypeReferenceFormProps {
@@ -41,23 +40,19 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
         onChange(undefined);
     }, [onChange]);
     return visitDiscriminatedUnion(unwrapReference(shape, types).shape)._visit<ReactElement | null>({
-        object: (object) => {
-            const unwrappedObjectType = unwrapObjectType(object, types);
-            return (
-                <WithLabel property={property} value={value} onRemove={onRemove} types={types}>
-                    <PlaygroundObjectPropertiesForm
-                        properties={unwrappedObjectType.properties}
-                        extraProperties={unwrappedObjectType.extraProperties}
-                        onChange={onChange}
-                        value={value}
-                        indent={indent}
-                        id={id}
-                        types={types}
-                        disabled={disabled}
-                    />
-                </WithLabel>
-            );
-        },
+        object: (object) => (
+            <WithLabel property={property} value={value} onRemove={onRemove} types={types}>
+                <PlaygroundObjectForm
+                    shape={object}
+                    onChange={onChange}
+                    value={value}
+                    indent={indent}
+                    id={id}
+                    types={types}
+                    disabled={disabled}
+                />
+            </WithLabel>
+        ),
         enum: ({ values }) => (
             <WithLabel property={property} value={value} onRemove={onRemove} types={types}>
                 <PlaygroundEnumForm enumValues={values} onChange={onChange} value={value} id={id} disabled={disabled} />
