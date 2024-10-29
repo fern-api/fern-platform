@@ -1,7 +1,5 @@
 import { FernDocs } from "@fern-fern/fern-docs-sdk";
 import { FernRevalidationClient } from "@fern-fern/revalidation-sdk";
-import axios, { type AxiosInstance } from "axios";
-import * as AxiosLogger from "axios-logger";
 import { FdrApplication } from "../../app";
 import { ParsedBaseUrl } from "../../util/ParsedBaseUrl";
 
@@ -16,13 +14,7 @@ export interface RevalidatorService {
 }
 
 export class RevalidatorServiceImpl implements RevalidatorService {
-    public readonly axiosInstance: AxiosInstance;
     // private readonly semaphore = new Semaphore(50);
-
-    public constructor() {
-        this.axiosInstance = axios.create();
-        this.axiosInstance.interceptors.request.use(AxiosLogger.requestLogger);
-    }
 
     /**
      * NOTE on basepath revalidation:

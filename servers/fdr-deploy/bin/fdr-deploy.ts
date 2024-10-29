@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import { Environments, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api/";
 import * as cdk from "aws-cdk-lib";
-import axios from "axios";
 import { FdrDeployStack } from "../scripts/fdr-deploy-stack";
 
 void main();
@@ -70,7 +69,7 @@ async function main() {
 }
 
 async function getEnvironments(): Promise<Environments> {
-    const response = await axios(
+    const response = await fetch(
         "https://raw.githubusercontent.com/fern-api/fern-cloud/main/env-scoped-resources/environments.json",
         {
             method: "GET",
@@ -79,5 +78,5 @@ async function getEnvironments(): Promise<Environments> {
             },
         },
     );
-    return response.data as Environments;
+    return (await response.json()) as Environments;
 }

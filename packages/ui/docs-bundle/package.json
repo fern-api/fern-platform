@@ -29,7 +29,7 @@
     "@aws-sdk/s3-request-presigner": "^3.574.0",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",
-    "@fern-api/venus-api-sdk": "^0.1.0",
+    "@fern-api/venus-api-sdk": "^0.10.1-5-ged06d22",
     "@fern-fern/fern-docs-sdk": "0.0.5",
     "@fern-fern/proxy-sdk": "0.0.26",
     "@fern-ui/chatbot": "workspace:*",
