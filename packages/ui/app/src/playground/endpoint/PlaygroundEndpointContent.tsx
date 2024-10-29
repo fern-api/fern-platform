@@ -1,6 +1,6 @@
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { Loadable } from "@fern-ui/loadable";
-import { Dispatch, ReactElement, SetStateAction, useDeferredValue } from "react";
+import { Dispatch, ReactElement, SetStateAction } from "react";
 import { PlaygroundAuthorizationFormCard } from "../PlaygroundAuthorizationForm";
 import { PlaygroundEndpointRequestFormState } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
@@ -29,8 +29,6 @@ export function PlaygroundEndpointContent({
     response,
     sendRequest,
 }: PlaygroundEndpointContentProps): ReactElement {
-    const deferredFormState = useDeferredValue(formState);
-
     const form = (
         <div className="mx-auto w-full max-w-5xl space-y-6 pt-6 max-sm:pt-0 sm:pb-20">
             {context.auth != null && <PlaygroundAuthorizationFormCard auth={context.auth} disabled={false} />}
@@ -47,7 +45,7 @@ export function PlaygroundEndpointContent({
         </div>
     );
 
-    const requestCard = <PlaygroundEndpointRequestCard context={context} formState={deferredFormState} />;
+    const requestCard = <PlaygroundEndpointRequestCard context={context} formState={formState} />;
     const responseCard = <PlaygroundResponseCard response={response} sendRequest={sendRequest} />;
 
     return (
