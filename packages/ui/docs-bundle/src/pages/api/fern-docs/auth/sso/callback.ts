@@ -34,25 +34,22 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
         return new NextResponse(null, { status: 400 });
     }
 
-    if (
-        req.nextUrl.searchParams.get(FORWARDED_HOST_QUERY) === getDocsDomainEdge(req) &&
-        getDocsDomainEdge(req) !== url.host
-    ) {
-        // eslint-disable-next-line no-console
-        console.error(
-            FORWARDED_HOST_QUERY,
-            "is the same as the host:",
-            String(req.nextUrl.searchParams.get(FORWARDED_HOST_QUERY)),
-        );
-        return new NextResponse(null, { status: 400 });
-    }
-
     // TODO: this is a security risk (open redirect)! We need to verify that the target host is one of ours.
     // if the current url is app.buildwithfern.com, we should redirect to ***.docs.buildwithfern.com
-    if (getDocsDomainEdge(req) !== url.host) {
+    if (req.nextUrl.host !== url.host && getDocsDomainEdge(req) !== url.host) {
+        if (req.nextUrl.searchParams.get(FORWARDED_HOST_QUERY) === req.nextUrl.host) {
+            // eslint-disable-next-line no-console
+            console.error(
+                FORWARDED_HOST_QUERY,
+                "is the same as the host:",
+                String(req.nextUrl.searchParams.get(FORWARDED_HOST_QUERY)),
+            );
+            return new NextResponse(null, { status: 400 });
+        }
+
         // TODO: need to support docs instances with subpaths (forward-proxied from the origin).
         const destination = new URL(`${req.nextUrl.pathname}${req.nextUrl.search}`, url.origin);
-        destination.searchParams.set(FORWARDED_HOST_QUERY, getDocsDomainEdge(req));
+        destination.searchParams.set(FORWARDED_HOST_QUERY, req.nextUrl.host);
         return NextResponse.redirect(destination);
     }
 
