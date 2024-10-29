@@ -12,6 +12,7 @@ export function maybePrepareMdxContent(content: string | undefined): Partial<Pre
     return prepareMdxContent(content);
 }
 
+// TODO: this function needs to be updated to handle markdown snippets imported via mdxjsEsm
 export function prepareMdxContent(content: string): PreparedMdxContent {
     const tree = toTree(content).mdast;
     const code_snippets: PreparedMdxContent["code_snippets"] = [];

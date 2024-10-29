@@ -1,3 +1,5 @@
+"use client";
+
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import type { MutableRefObject, ReactElement } from "react";
 import { useEffect } from "react";
@@ -10,13 +12,10 @@ export type SearchBoxTranslations = Partial<{
 interface DesktopSearchBoxProps {
     autoFocus: boolean;
     inputRef: MutableRefObject<HTMLInputElement | null>;
-    formRef: MutableRefObject<HTMLFormElement | null>;
-    formClassName: string;
     inputClassName: string;
     placeholder: string;
     isFromSelection: boolean;
     translations?: SearchBoxTranslations;
-    onClick: () => void;
 }
 
 export function DesktopSearchBox({ translations = {}, ...props }: DesktopSearchBoxProps): ReactElement {
@@ -37,14 +36,7 @@ export function DesktopSearchBox({ translations = {}, ...props }: DesktopSearchB
     }, [props.isFromSelection, props.inputRef]);
 
     return (
-        <form
-            ref={props.formRef}
-            className={props.formClassName}
-            onSubmit={(event) => {
-                event.preventDefault();
-            }}
-            onClick={props.onClick}
-        >
+        <>
             <VisuallyHidden.Root>
                 <label>{searchInputLabel}</label>
             </VisuallyHidden.Root>
@@ -64,6 +56,6 @@ export function DesktopSearchBox({ translations = {}, ...props }: DesktopSearchB
                     refine(e.target.value);
                 }}
             />
-        </form>
+        </>
     );
 }

@@ -77,4 +77,14 @@ Be sure to save the generated token - it won't be displayed after you leave the 
           Value 1 Value 2 Value 3"
         `);
     });
+
+    it("should strip math nodes but keep the content", () => {
+        const content = "$x^2$";
+        const result = prepareMdxContent(content);
+        expect(result.content).toBe("x^2");
+
+        const content2 = "$$x^2$$";
+        const result2 = prepareMdxContent(content2);
+        expect(result2.content).toBe("x^2");
+    });
 });

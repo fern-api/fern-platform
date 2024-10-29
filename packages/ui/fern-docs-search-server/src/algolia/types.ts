@@ -2,8 +2,8 @@ import { z } from "zod";
 
 // in order of priority:
 export const SEARCHABLE_ATTRIBUTES = [
-    "page_title",
     "level_title",
+    "page_title",
     "description",
     "payload_description",
     "request_description",
@@ -21,6 +21,14 @@ export const SEARCHABLE_ATTRIBUTES = [
     "response_type",
     "status_code",
     "parameter_type",
+
+    // hierarchy (in descending order of priority)
+    "hierarchy.h6.title",
+    "hierarchy.h5.title",
+    "hierarchy.h4.title",
+    "hierarchy.h3.title",
+    "hierarchy.h2.title",
+    "hierarchy.h1.title",
 ] as const;
 
 // these are metadata fields that we do not want to include in the search hits:

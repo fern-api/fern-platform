@@ -50,6 +50,7 @@ export const algoliaIndexerTask = task({
                 ),
                 unretrievableAttributes: [...UNRETRIEVABLE_ATTRIBUTES],
                 attributeForDistinct: "pathname",
+                enableRules: true,
             },
         });
 
