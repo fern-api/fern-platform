@@ -299,17 +299,14 @@ importers:
   packages/cdk:
     dependencies:
       '@fern-fern/fern-cloud-sdk':
-        specifier: ^0.0.257
-        version: 0.0.257
+        specifier: ^0.0.305
+        version: 0.0.305
       archiver:
         specifier: ^7.0.1
         version: 7.0.1
       aws-cdk-lib:
         specifier: ^2.122.0
         version: 2.141.0(constructs@10.3.0)
-      axios:
-        specifier: ^1.7.4
-        version: 1.7.4
       constructs:
         specifier: ^10.3.0
         version: 10.3.0
@@ -448,7 +445,7 @@ importers:
         version: 3.3.2
       simple-git:
         specifier: ^3.24.0
-        version: 3.24.0(supports-color@8.1.1)
+        version: 3.24.0
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.4.3)
@@ -1712,8 +1709,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/venus-api-sdk':
-        specifier: ^0.1.0
-        version: 0.1.1
+        specifier: ^0.10.1-5-ged06d22
+        version: 0.10.1-5-ged06d22
       '@fern-fern/fern-docs-sdk':
         specifier: 0.0.5
         version: 0.0.5
@@ -1906,8 +1903,8 @@ importers:
         specifier: ^1.4.2
         version: 1.4.2
       '@fern-api/venus-api-sdk':
-        specifier: 0.6.5-4-gdc534cf
-        version: 0.6.5-4-gdc534cf
+        specifier: 0.10.1-5-ged06d22
+        version: 0.10.1-5-ged06d22
       '@fern-ui/components':
         specifier: workspace:*
         version: link:../components
@@ -2680,8 +2677,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/core-utils
       '@fern-api/venus-api-sdk':
-        specifier: ^0.6.2-1-gbbd1ac5
-        version: 0.6.2-1-gbbd1ac5
+        specifier: ^0.10.1-5-ged06d22
+        version: 0.10.1-5-ged06d22
       '@fern-fern/fern-docs-sdk':
         specifier: 0.0.5
         version: 0.0.5
@@ -2709,12 +2706,6 @@ importers:
       algoliasearch:
         specifier: ^4.24.0
         version: 4.24.0
-      axios:
-        specifier: ^1.7.4
-        version: 1.7.4
-      axios-logger:
-        specifier: ^2.6.2
-        version: 2.8.0
       compression:
         specifier: ^1.7.4
         version: 1.7.4
@@ -2855,14 +2846,11 @@ importers:
   servers/fdr-deploy:
     dependencies:
       '@fern-fern/fern-cloud-sdk':
-        specifier: ^0.0.257
-        version: 0.0.257
+        specifier: ^0.0.305
+        version: 0.0.305
       aws-cdk-lib:
         specifier: ^2.122.0
         version: 2.141.0(constructs@10.3.0)
-      axios:
-        specifier: ^1.7.4
-        version: 1.7.4
       constructs:
         specifier: ^10.3.0
         version: 10.3.0
@@ -2916,8 +2904,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/github
       '@fern-api/venus-api-sdk':
-        specifier: 0.8.1-1-gd6d1a5b
-        version: 0.8.1-1-gd6d1a5b
+        specifier: 0.10.1-5-ged06d22
+        version: 0.10.1-5-ged06d22
       '@fern-fern/generators-sdk':
         specifier: 0.110.0-8f5b3cd3c
         version: 0.110.0-8f5b3cd3c
@@ -2962,7 +2950,7 @@ importers:
         version: 3.21.0(serverless@3.38.0)
       simple-git:
         specifier: ^3.24.0
-        version: 3.24.0(supports-color@8.1.1)
+        version: 3.24.0
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -4362,23 +4350,14 @@ packages:
       sass:
         optional: true
 
-  '@fern-api/venus-api-sdk@0.1.1':
-    resolution: {integrity: sha512-e8cr2kS7DwhMvoDtKWciQvoeBwecHwUTwbdiKv5afsoY/hIv0ssHxfR0SlZKxZ4ncYaUVKfcjuN50cpWmkCJbA==}
-
-  '@fern-api/venus-api-sdk@0.6.2-1-gbbd1ac5':
-    resolution: {integrity: sha512-Sa1i7krrEfqSbHHuP/9k9JABsF6A6AkKM4LZRu1h7+Z3LajbRoEDbdjuuTZWfkdN5OU/LF+mzeO8ejLKhzoh6g==}
-
-  '@fern-api/venus-api-sdk@0.6.5-4-gdc534cf':
-    resolution: {integrity: sha512-BYcczImGt2Z+L9k7hKSBtUSp+DOzFc5ew+RuoOZf/OtkFkj2/RK3v4ba1F/YDbQYytKz4tXW/eVYmAU0SLqcOA==}
-
-  '@fern-api/venus-api-sdk@0.8.1-1-gd6d1a5b':
-    resolution: {integrity: sha512-m5BzRbAuYhirIZpdomBebCai5U9ePFVaO5E40mEeyazWUshh0I1drhn2X2xEFKLAtccSh/0Qkuk9bZ1CIYbhJw==}
+  '@fern-api/venus-api-sdk@0.10.1-5-ged06d22':
+    resolution: {integrity: sha512-36tR/u4IO1C7OU1gmKwO05OrNV1noY+SrPzsC085QkbHI+WLEZQv4l6V9qCQ7Vi7KAYJ1hWkrzg8eRa62PqxeQ==}
 
   '@fern-fern/fdr-cjs-sdk@0.116.5-873e41db0':
     resolution: {integrity: sha512-ZWY+R3gEnpvhdvhyupMpjrvMXJU++d7whgaozRz4+j+IaYpNmCt/IeIemCcyVWDUbGV4/7GXec85iyTK13wTgA==}
 
-  '@fern-fern/fern-cloud-sdk@0.0.257':
-    resolution: {integrity: sha512-JwlE6Qk84VAGrTYR1EMgwQlneKDIQ3ZRlHTu3O/L56bLtIbhdMTzLSGqSxf4/KFXfhH/RukhRuTsM4/DRmgJ/A==}
+  '@fern-fern/fern-cloud-sdk@0.0.305':
+    resolution: {integrity: sha512-FDV2dlBpIaf4ZULjPKwUh+kZ8jnUbRS0Vth/Izwa/mIt7lbbrynUTJiPVANhQdVpt5cqq0Q/8BeBx0/7IvNVDA==}
 
   '@fern-fern/fern-docs-sdk@0.0.5':
     resolution: {integrity: sha512-x6kfRboXiG1J3fpON2lXtD9qCub2UXvNuscvCsIY3ACYvSvLHHlHvc84rIDv+ZlP/anlEvtTyfNh72Hmi0nffw==}
@@ -8887,12 +8866,6 @@ packages:
     resolution: {integrity: sha512-M0JtH+hlOL5pLQwHOLNYZaXuhqmvS8oExsqB1SBYgA4Dk7u/xx+YdGHXaK5pyUfed5mYXdlYiphWq3G8cRi5JQ==}
     engines: {node: '>=4'}
 
-  axios-logger@2.8.0:
-    resolution: {integrity: sha512-MWOBmbyAarx18rkI0xsuMDkK1oaqwROqeZjsfVgsD0Y7IGLzN3ZNZPpcnoCDKeajU0uLxjCs85186CeLU36bXg==}
-
-  axios@0.27.2:
-    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
-
   axios@1.7.4:
     resolution: {integrity: sha512-DukmaFRnY6AzAALSH4J2M3k6PkaC+MfaAGdEERRWcC9q3/TWQwLpHR8ZRLKTdQ3aBDL64EdluRDjJqKw+BPZEw==}
 
@@ -9968,9 +9941,6 @@ packages:
   date-fns@2.30.0:
     resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
     engines: {node: '>=0.11'}
-
-  dateformat@3.0.3:
-    resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
 
   dayjs@1.11.11:
     resolution: {integrity: sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==}
@@ -18047,7 +18017,7 @@ snapshots:
       '@babel/traverse': 7.24.5
       '@babel/types': 7.24.5
       convert-source-map: 2.0.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -18846,7 +18816,7 @@ snapshots:
       '@babel/helper-split-export-declaration': 7.24.5
       '@babel/parser': 7.24.5
       '@babel/types': 7.24.5
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -19104,7 +19074,7 @@ snapshots:
   '@eslint/eslintrc@2.1.4':
     dependencies:
       ajv: 6.12.6
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       espree: 9.6.1
       globals: 13.24.0
       ignore: 5.3.1
@@ -19149,41 +19119,17 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  '@fern-api/venus-api-sdk@0.1.1':
+  '@fern-api/venus-api-sdk@0.10.1-5-ged06d22':
     dependencies:
-      '@types/url-join': 4.0.1
-      axios: 0.27.2
+      form-data: 4.0.0
+      formdata-node: 6.0.3
       js-base64: 3.7.2
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      readable-stream: 4.5.2
       url-join: 4.0.1
     transitivePeerDependencies:
-      - debug
-
-  '@fern-api/venus-api-sdk@0.6.2-1-gbbd1ac5':
-    dependencies:
-      '@types/url-join': 4.0.1
-      axios: 0.27.2
-      js-base64: 3.7.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - debug
-
-  '@fern-api/venus-api-sdk@0.6.5-4-gdc534cf':
-    dependencies:
-      '@types/url-join': 4.0.1
-      axios: 0.27.2
-      js-base64: 3.7.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - debug
-
-  '@fern-api/venus-api-sdk@0.8.1-1-gd6d1a5b':
-    dependencies:
-      '@types/url-join': 4.0.1
-      axios: 0.27.2
-      js-base64: 3.7.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - debug
+      - encoding
 
   '@fern-fern/fdr-cjs-sdk@0.116.5-873e41db0':
     dependencies:
@@ -19196,15 +19142,17 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/fern-cloud-sdk@0.0.257':
+  '@fern-fern/fern-cloud-sdk@0.0.305':
     dependencies:
-      '@types/url-join': 4.0.1
-      '@ungap/url-search-params': 0.2.2
-      axios: 0.27.2
+      form-data: 4.0.0
+      formdata-node: 6.0.3
       js-base64: 3.7.2
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      readable-stream: 4.5.2
       url-join: 4.0.1
     transitivePeerDependencies:
-      - debug
+      - encoding
 
   '@fern-fern/fern-docs-sdk@0.0.5':
     dependencies:
@@ -19378,7 +19326,7 @@ snapshots:
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -19859,6 +19807,12 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
+
+  '@kwsites/file-exists@1.1.1':
+    dependencies:
+      debug: 4.3.4(supports-color@5.5.0)
+    transitivePeerDependencies:
+      - supports-color
 
   '@kwsites/file-exists@1.1.1(supports-color@8.1.1)':
     dependencies:
@@ -24449,7 +24403,7 @@ snapshots:
       '@typescript-eslint/type-utils': 7.3.1(eslint@8.57.0)(typescript@5.4.3)
       '@typescript-eslint/utils': 7.3.1(eslint@8.57.0)(typescript@5.4.3)
       '@typescript-eslint/visitor-keys': 7.3.1
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       eslint: 8.57.0
       graphemer: 1.4.0
       ignore: 5.3.1
@@ -24467,7 +24421,7 @@ snapshots:
       '@typescript-eslint/types': 7.17.0
       '@typescript-eslint/typescript-estree': 7.17.0(typescript@5.4.3)
       '@typescript-eslint/visitor-keys': 7.17.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       eslint: 8.57.0
     optionalDependencies:
       typescript: 5.4.3
@@ -24493,7 +24447,7 @@ snapshots:
       '@typescript-eslint/types': 7.3.1
       '@typescript-eslint/typescript-estree': 7.3.1(typescript@5.4.3)
       '@typescript-eslint/visitor-keys': 7.3.1
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       eslint: 8.57.0
     optionalDependencies:
       typescript: 5.4.3
@@ -26451,18 +26405,6 @@ snapshots:
 
   axe-core@4.7.0: {}
 
-  axios-logger@2.8.0:
-    dependencies:
-      chalk: 4.1.2
-      dateformat: 3.0.3
-
-  axios@0.27.2:
-    dependencies:
-      follow-redirects: 1.15.6(debug@4.3.7)
-      form-data: 4.0.0
-    transitivePeerDependencies:
-      - debug
-
   axios@1.7.4:
     dependencies:
       follow-redirects: 1.15.6(debug@4.3.7)
@@ -27737,8 +27679,6 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.5
 
-  dateformat@3.0.3: {}
-
   dayjs@1.11.11: {}
 
   debounce@1.2.1: {}
@@ -27920,7 +27860,7 @@ snapshots:
       callsite: 1.0.0
       camelcase: 6.3.0
       cosmiconfig: 7.1.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       deps-regex: 0.2.0
       findup-sync: 5.0.0
       ignore: 5.3.1
@@ -28704,7 +28644,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.3
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
       eslint-scope: 7.2.2
@@ -30179,7 +30119,7 @@ snapshots:
     dependencies:
       '@ioredis/commands': 1.2.0
       cluster-key-slot: 1.1.2
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       denque: 2.1.0
       lodash.defaults: 4.2.0
       lodash.isarguments: 3.1.0
@@ -31179,7 +31119,7 @@ snapshots:
     dependencies:
       chalk: 5.3.0
       commander: 11.0.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       execa: 7.2.0
       lilconfig: 2.1.0
       listr2: 6.6.1
@@ -34717,6 +34657,14 @@ snapshots:
       once: 1.4.0
       simple-concat: 1.0.1
 
+  simple-git@3.24.0:
+    dependencies:
+      '@kwsites/file-exists': 1.1.1
+      '@kwsites/promise-deferred': 1.1.1
+      debug: 4.3.4(supports-color@5.5.0)
+    transitivePeerDependencies:
+      - supports-color
+
   simple-git@3.24.0(supports-color@8.1.1):
     dependencies:
       '@kwsites/file-exists': 1.1.1(supports-color@8.1.1)
@@ -35155,7 +35103,7 @@ snapshots:
       cosmiconfig: 9.0.0(typescript@5.4.3)
       css-functions-list: 3.2.2
       css-tree: 2.3.1
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       fast-glob: 3.3.2
       fastest-levenshtein: 1.0.16
       file-entry-cache: 8.0.0
@@ -35792,7 +35740,7 @@ snapshots:
       bundle-require: 4.1.0(esbuild@0.20.2)
       cac: 6.7.14
       chokidar: 3.6.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       esbuild: 0.20.2
       execa: 5.1.1
       globby: 11.1.0
@@ -36326,7 +36274,7 @@ snapshots:
   vite-node@1.6.0(@types/node@18.19.33)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0):
     dependencies:
       cac: 6.7.14
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       pathe: 1.1.2
       picocolors: 1.0.0
       vite: 5.4.6(@types/node@18.19.33)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
@@ -36344,7 +36292,7 @@ snapshots:
   vite-node@1.6.0(@types/node@22.5.5)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0):
     dependencies:
       cac: 6.7.14
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       pathe: 1.1.2
       picocolors: 1.0.0
       vite: 5.4.6(@types/node@22.5.5)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
@@ -36442,7 +36390,7 @@ snapshots:
       '@vitest/utils': 1.6.0
       acorn-walk: 8.3.2
       chai: 4.4.1
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       execa: 8.0.1
       local-pkg: 0.5.0
       magic-string: 0.30.10
@@ -36478,7 +36426,7 @@ snapshots:
       '@vitest/utils': 1.6.0
       acorn-walk: 8.3.2
       chai: 4.4.1
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       execa: 8.0.1
       local-pkg: 0.5.0
       magic-string: 0.30.10

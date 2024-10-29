@@ -16,7 +16,7 @@
   "dependencies": {
     "@auth0/auth0-react": "^2.2.4",
     "@devbookhq/splitter": "^1.4.2",
-    "@fern-api/venus-api-sdk": "0.6.5-4-gdc534cf",
+    "@fern-api/venus-api-sdk": "0.10.1-5-ged06d22",
     "@fern-ui/components": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
     "@hookform/resolvers": "^3.6.0",
