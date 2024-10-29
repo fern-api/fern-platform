@@ -1,4 +1,4 @@
-import { TypeDefinition, TypeShapeOrReference, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
+import { TypeDefinition, TypeShapeOrReference } from "@fern-api/fdr-sdk/api-definition";
 import { isPlainObject, unknownToString } from "@fern-api/ui-core-utils";
 import { FernButton } from "@fern-ui/components";
 import { Plus, Xmark } from "iconoir-react";
@@ -71,6 +71,7 @@ export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
             return [...oldState.slice(0, idx), nextState, ...oldState.slice(idx + 1)];
         });
     }, []);
+
     const handleRemoveItem = useCallback((idx: number) => {
         setInternalState((oldArray) => [...oldArray.slice(0, idx), ...oldArray.slice(idx + 1)]);
     }, []);
@@ -80,45 +81,18 @@ export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
             {internalState.length > 0 && (
                 <ul className="border-default divide-default w-full max-w-full list-none divide-y divide-dashed border-t border-dashed">
                     {internalState.map((item, idx) => (
-                        <li key={idx} className="flex min-h-12 flex-row items-start gap-1 py-2">
-                            {/* <div className="flex min-w-0 shrink items-center justify-between gap-2">
-                                <label className="inline-flex flex-wrap items-baseline">
-                                    <span className="t-muted bg-tag-default min-w-6 rounded-xl p-1 text-center text-xs font-semibold uppercase">
-                                        {idx + 1}
-                                    </span>
-                                </label>
-                            </div> */}
-
-                            <div className="min-w-0 flex-1 shrink">
-                                <span className="t-muted text-xs">{"key"}</span>
-                                <PlaygroundTypeReferenceForm
-                                    id={`${id}[${idx}].key`}
-                                    shape={keyShape}
-                                    value={item.key}
-                                    onChange={(newKey) => handleChangeKey(idx, newKey)}
-                                    types={types}
-                                />
-                            </div>
-                            <div className="min-w-0 flex-1 shrink">
-                                <span className="t-muted text-xs">{"value"}</span>
-                                <PlaygroundTypeReferenceForm
-                                    id={`${id}[${idx}].value`}
-                                    shape={unwrapReference(valueShape, types).shape}
-                                    value={item.value}
-                                    onChange={(newValue) => handleChangeValue(idx, newValue)}
-                                    types={types}
-                                />
-                            </div>
-                            <div>
-                                <FernButton
-                                    icon={<Xmark />}
-                                    onClick={() => handleRemoveItem(idx)}
-                                    variant="minimal"
-                                    size="small"
-                                    className="-ml-1 -mr-3 opacity-50 transition-opacity hover:opacity-100"
-                                />
-                            </div>
-                        </li>
+                        <PlaygroundMapItemForm
+                            key={idx}
+                            idx={idx}
+                            id={id}
+                            keyShape={keyShape}
+                            valueShape={valueShape}
+                            onKeyChange={handleChangeKey}
+                            onValueChange={handleChangeValue}
+                            onRemoveItem={handleRemoveItem}
+                            item={item}
+                            types={types}
+                        />
                     ))}
                     <li className="pt-2">
                         <FernButton
@@ -143,5 +117,85 @@ export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
         </>
     );
 });
+
+interface PlaygroundMapItemFormProps {
+    idx: number;
+    id: string;
+    keyShape: TypeShapeOrReference;
+    valueShape: TypeShapeOrReference;
+    onKeyChange: (idx: number, value: unknown) => void;
+    onValueChange: (idx: number, value: unknown) => void;
+    onRemoveItem: (idx: number) => void;
+    item: { key: unknown; value: unknown };
+    types: Record<string, TypeDefinition>;
+}
+
+function PlaygroundMapItemForm({
+    idx,
+    id,
+    keyShape,
+    valueShape,
+    onKeyChange,
+    onValueChange,
+    onRemoveItem,
+    item,
+    types,
+}: PlaygroundMapItemFormProps) {
+    const handleChangeKey = useCallback(
+        (newKey: unknown) => {
+            onKeyChange(idx, newKey);
+        },
+        [onKeyChange, idx],
+    );
+
+    const handleChangeValue = useCallback(
+        (newValue: unknown) => {
+            onValueChange(idx, newValue);
+        },
+        [onValueChange, idx],
+    );
+
+    return (
+        <li key={idx} className="flex min-h-12 flex-row items-start gap-1 py-2">
+            {/* <div className="flex min-w-0 shrink items-center justify-between gap-2">
+                <label className="inline-flex flex-wrap items-baseline">
+                    <span className="t-muted bg-tag-default min-w-6 rounded-xl p-1 text-center text-xs font-semibold uppercase">
+                        {idx + 1}
+                    </span>
+                </label>
+            </div> */}
+
+            <div className="min-w-0 flex-1 shrink">
+                <span className="t-muted text-xs">{"key"}</span>
+                <PlaygroundTypeReferenceForm
+                    id={`${id}[${idx}].key`}
+                    shape={keyShape}
+                    value={item.key}
+                    onChange={handleChangeKey}
+                    types={types}
+                />
+            </div>
+            <div className="min-w-0 flex-1 shrink">
+                <span className="t-muted text-xs">{"value"}</span>
+                <PlaygroundTypeReferenceForm
+                    id={`${id}[${idx}].value`}
+                    shape={valueShape}
+                    value={item.value}
+                    onChange={handleChangeValue}
+                    types={types}
+                />
+            </div>
+            <div>
+                <FernButton
+                    icon={<Xmark />}
+                    onClick={() => onRemoveItem(idx)}
+                    variant="minimal"
+                    size="small"
+                    className="-ml-1 -mr-3 opacity-50 transition-opacity hover:opacity-100"
+                />
+            </div>
+        </li>
+    );
+}
 
 PlaygroundMapForm.displayName = "PlaygroundMapForm";
