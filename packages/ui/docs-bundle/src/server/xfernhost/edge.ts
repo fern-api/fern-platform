@@ -30,7 +30,7 @@ export function getDocsDomainEdge(req: NextRequest): string {
 export function getHostEdge(req: NextRequest): string {
     if (
         process.env.NODE_ENV === "development" ||
-        process.env.VERCEL_ENV === "preview" ||
+        (process.env.VERCEL_ENV === "preview" && req.cookies.get(COOKIE_FERN_DOCS_PREVIEW)?.value != null) ||
         process.env.VERCEL_ENV === "development"
     ) {
         return req.nextUrl.host;
