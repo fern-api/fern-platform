@@ -5,7 +5,7 @@ import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-tr
 import urlJoin from "url-join";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 import { getAuthorizationUrl as getWorkOSAuthorizationUrl } from "./workos";
-import { getSessionFromToken, toSessionUserInfo } from "./workos-session";
+import { encryptSession, getSessionFromToken, refreshSession, toSessionUserInfo } from "./workos-session";
 import { toFernUser } from "./workos-user-to-fern-user";
 
 export type AuthPartner = "workos" | "ory" | "webflow" | "custom";
@@ -72,6 +72,7 @@ export async function getAuthState(
     fernToken: string | undefined,
     pathname?: string,
     authConfig?: AuthEdgeConfig,
+    setFernToken?: (token: string) => void,
 ): Promise<AuthState> {
     authConfig ??= await getAuthEdgeConfig(domain);
 
@@ -95,10 +96,29 @@ export async function getAuthState(
 
     // check if the user is logged in via WorkOS
     if (authConfig.type === "sso" && authConfig.partner === "workos") {
-        const workos = await toSessionUserInfo(fernToken != null ? await getSessionFromToken(fernToken) : undefined);
+        const session = fernToken != null ? await getSessionFromToken(fernToken) : undefined;
+        const workos = await toSessionUserInfo(session);
         if (workos.user) {
             return { domain, host, authed: true, ok: true, user: toFernUser(workos), partner: authConfig.partner };
         }
+
+        if (session?.refreshToken) {
+            const updatedSession = await refreshSession(session);
+            if (updatedSession) {
+                if (setFernToken) {
+                    setFernToken(await encryptSession(updatedSession));
+                }
+                return {
+                    domain,
+                    host,
+                    authed: true,
+                    ok: true,
+                    user: toFernUser(await toSessionUserInfo(updatedSession)),
+                    partner: authConfig.partner,
+                };
+            }
+        }
+
         const authorizationUrl = getAuthorizationUrl(authConfig, domain, pathname);
         return { domain, host, authed: false, ok: false, authorizationUrl, partner: authConfig.partner };
     }

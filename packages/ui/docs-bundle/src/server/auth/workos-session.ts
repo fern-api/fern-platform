@@ -14,6 +14,26 @@ async function encryptSession(session: WorkOSSession): Promise<string> {
     return sealData(session, { password: getJwtSecretKey() });
 }
 
+async function refreshSession(session: WorkOSSession): Promise<WorkOSSession | undefined> {
+    try {
+        const { org_id: organizationId } = decodeJwt<AccessToken>(session.accessToken);
+        const { accessToken, refreshToken, user, impersonator } =
+            await workos.userManagement.authenticateWithRefreshToken({
+                clientId: getWorkOSClientId(),
+                refreshToken: session.refreshToken,
+                organizationId,
+            });
+        return {
+            accessToken,
+            refreshToken,
+            user,
+            impersonator,
+        };
+    } catch (e) {
+        return undefined;
+    }
+}
+
 // async function updateSession(request: NextRequest): Promise<NextResponse> {
 //     const session = await getSessionFromCookie();
 
@@ -175,4 +195,4 @@ async function toSessionUserInfo(session?: WorkOSSession): Promise<WorkOSUserInf
     return { user: null };
 }
 
-export { encryptSession, getSessionFromToken, terminateSession, toSessionUserInfo };
+export { encryptSession, getSessionFromToken, refreshSession, terminateSession, toSessionUserInfo };
