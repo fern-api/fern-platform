@@ -147,31 +147,9 @@ function getAuthorizationUrl(authConfig: AuthEdgeConfig, host: string, pathname?
         destination.searchParams.set("state", state);
         return destination.toString();
     } else if (authConfig.type === "sso" && authConfig.partner === "workos") {
-        const redirectUri = urlJoin(
-            removeTrailingSlash(withDefaultProtocol(getRedirectUri())),
-            "/api/fern-docs/auth/sso/callback",
-        );
+        const redirectUri = urlJoin(removeTrailingSlash(withDefaultProtocol(host)), "/api/fern-docs/auth/sso/callback");
         return getWorkOSAuthorizationUrl({ state, redirectUri, organization: authConfig.organization });
     }
 
     return undefined;
-}
-
-/*
- * Note: our WorkOS prod/staging is not 1:1 with FDR (app/app-dev2) so instead, we:
- * - use the WorkOS production url for ONLY the production docs deployments
- * - use the WorkOS staging instance for all other deployments (prod-preview, dev2, local dev, etc.)
- *
- * This is so that we can test workos using open redirects, and not have to worry about the authkit redirect uri changing:
- */
-function getRedirectUri(): string {
-    if (process.env.NODE_ENV !== "production" || process.env.VERCEL_ENV === "development") {
-        return `http://localhost:${process.env.PORT ?? 3000}`;
-    }
-    return (
-        process.env.NEXT_PUBLIC_CDN_URI ??
-        process.env.VERCEL_BRANCH_URL ??
-        process.env.VERCEL_DEPLOYMENT_URL ??
-        "https://app.buildwithfern.com"
-    );
 }
