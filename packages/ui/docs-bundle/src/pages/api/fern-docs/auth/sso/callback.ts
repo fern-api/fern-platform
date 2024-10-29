@@ -2,6 +2,7 @@ import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { getWorkOSClientId, workos } from "@/server/auth/workos";
 import { encryptSession } from "@/server/auth/workos-session";
 import { safeUrl } from "@/server/safeUrl";
+import { getHostEdge } from "@/server/xfernhost/edge";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -30,7 +31,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
     }
 
     // TODO: this is a security risk (open redirect)! We need to verify that the target host is one of ours.
-    if (req.nextUrl.host !== url.host) {
+    if (getHostEdge(req) !== url.host) {
         return NextResponse.redirect(new URL(`${req.nextUrl.pathname}${req.nextUrl.search}`, url.origin));
     }
 
