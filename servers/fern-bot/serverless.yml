@@ -1,5 +1,5 @@
 service: "fern-bot"
-frameworkVersion: "3"
+frameworkVersion: "4"
 plugins:
   - "serverless-esbuild"
   - "serverless-step-functions"
