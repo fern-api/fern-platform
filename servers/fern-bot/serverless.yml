@@ -1,7 +1,6 @@
 service: "fern-bot"
 frameworkVersion: "4"
 plugins:
-  - "serverless-esbuild"
   - "serverless-step-functions"
 provider:
   name: aws
