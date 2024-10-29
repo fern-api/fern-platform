@@ -73,9 +73,8 @@ Be sure to save the generated token - it won't be displayed after you leave the 
         `;
         const result = prepareMdxContent(content);
         expect(result.content).toMatchInlineSnapshot(`
-          "| Column 1 | Column 2 | Column 3 |
-          | -------- | -------- | -------- |
-          | Value 1  | Value 2  | Value 3  |"
+          "Column 1 Column 2 Column 3 
+          Value 1 Value 2 Value 3"
         `);
     });
 });

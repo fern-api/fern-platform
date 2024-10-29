@@ -72,7 +72,7 @@ function one(value: unknown, includeImageAlt: boolean, includeHtml: boolean, pre
         if ("children" in value) {
             return (
                 all(value.children as Array<unknown>, includeImageAlt, includeHtml, preserveNewlines) +
-                (preserveNewlines && hasBreak(value) ? "\n" : "")
+                (preserveNewlines && hasBreak(value) ? "\n" : hasSpace(value) ? " " : "")
             );
         }
     }
@@ -94,6 +94,10 @@ function hasBreak(value: Extract<Nodes, { children: unknown[] }>): boolean {
         value.type === "tableRow" ||
         value.type === "heading"
     );
+}
+
+function hasSpace(value: Extract<Nodes, { children: unknown[] }>): boolean {
+    return hasBreak(value) || value.type === "tableCell";
 }
 
 /**
