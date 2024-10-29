@@ -1,6 +1,6 @@
 import { signFernJWT } from "@/server/auth/FernJWT";
 import { OAuth2Client } from "@/server/auth/OAuth2Client";
-import { withSecureCookie } from "@/server/auth/withSecure";
+import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
@@ -62,6 +62,8 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             await signFernJWT(fernUser),
             withSecureCookie(withDefaultProtocol(host), { expires }),
         );
+
+        // TODO: should we have a more specific place to set these cookies (such as inside fern_token, or fern_ory, etc.)?
         res.cookies.set(COOKIE_ACCESS_TOKEN, access_token, withSecureCookie(withDefaultProtocol(host), { expires }));
         if (refresh_token != null) {
             res.cookies.set(

@@ -82,6 +82,8 @@ export async function getAuthState(
         return { domain, host, authed: false, ok: true, authorizationUrl: undefined, partner: authConfig?.partner };
     }
 
+    const authorizationUrl = getAuthorizationUrl(authConfig, host, pathname);
+
     // check if the request is allowed to pass through without authentication
     if (authConfig.type === "basic_token_verification") {
         const user = await safeVerifyFernJWTConfig(fernToken, authConfig);
@@ -89,7 +91,6 @@ export async function getAuthState(
         if (user) {
             return { domain, host, authed: true, ok: true, user, partner };
         } else {
-            const authorizationUrl = getAuthorizationUrl(authConfig, domain, pathname);
             return { domain, host, authed: false, ok: true, authorizationUrl, partner };
         }
     }
@@ -119,17 +120,16 @@ export async function getAuthState(
             }
         }
 
-        const authorizationUrl = getAuthorizationUrl(authConfig, domain, pathname);
         return { domain, host, authed: false, ok: false, authorizationUrl, partner: authConfig.partner };
     }
 
     return { domain, host, authed: false, ok: false, authorizationUrl: undefined, partner: undefined };
 }
 
-function getAuthorizationUrl(authConfig: AuthEdgeConfig, xFernHost: string, pathname?: string): string | undefined {
+function getAuthorizationUrl(authConfig: AuthEdgeConfig, host: string, pathname?: string): string | undefined {
     // TODO: this is currently not a correct implementation of the state parameter b/c it should be signed w/ the jwt secret
     // however, we should not break existing customers who are consuming the state as a `return_to` param in their auth flows.
-    const state = urlJoin(removeTrailingSlash(withDefaultProtocol(xFernHost)), pathname ?? "");
+    const state = urlJoin(removeTrailingSlash(withDefaultProtocol(host)), pathname ?? "");
 
     if (authConfig.type === "basic_token_verification") {
         if (!pathname) {

@@ -16,6 +16,6 @@ export function withSecureCookie(targetUrl: string, opts?: Partial<ResponseCooki
         ...opts,
         secure: url.protocol === "https:",
         httpOnly: true,
-        domain: url.host,
+        domain: url.hostname,
     };
 }

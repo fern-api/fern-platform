@@ -1,6 +1,6 @@
 import { OAuth2Client } from "@/server/auth/OAuth2Client";
 import { getAPIKeyInjectionConfig } from "@/server/auth/getApiKeyInjectionConfig";
-import { withSecureCookie } from "@/server/auth/withSecure";
+import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { APIKeyInjectionConfig, OryAccessTokenSchema } from "@fern-ui/fern-docs-auth";
