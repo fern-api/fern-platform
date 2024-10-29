@@ -2,7 +2,7 @@ import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { getWorkOSClientId, workos } from "@/server/auth/workos";
 import { encryptSession } from "@/server/auth/workos-session";
 import { safeUrl } from "@/server/safeUrl";
-import { getHostEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -15,12 +15,6 @@ const CODE_QUERY = "code";
 export default async function handler(req: NextRequest): Promise<NextResponse> {
     if (req.method !== "GET") {
         return new NextResponse(null, { status: 405 });
-    }
-
-    if (req.nextUrl.searchParams.get(FORWARDED_HOST_QUERY) === req.nextUrl.host) {
-        // eslint-disable-next-line no-console
-        console.error(FORWARDED_HOST_QUERY, "is the same as the host");
-        return new NextResponse(null, { status: 400 });
     }
 
     const state = req.nextUrl.searchParams.get(STATE_QUERY);
@@ -40,11 +34,25 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
         return new NextResponse(null, { status: 400 });
     }
 
-    // TODO: this is a security risk (open redirect)! We need to verify that the target host is one of ours.
-    if (getHostEdge(req) !== url.host) {
-        const destination = new URL(`${req.nextUrl.pathname}${req.nextUrl.search}`, url.origin);
-        destination.searchParams.set(FORWARDED_HOST_QUERY, req.nextUrl.host);
+    if (
+        req.nextUrl.searchParams.get(FORWARDED_HOST_QUERY) === getDocsDomainEdge(req) &&
+        getDocsDomainEdge(req) !== url.host
+    ) {
+        // eslint-disable-next-line no-console
+        console.error(
+            FORWARDED_HOST_QUERY,
+            "is the same as the host:",
+            String(req.nextUrl.searchParams.get(FORWARDED_HOST_QUERY)),
+        );
+        return new NextResponse(null, { status: 400 });
+    }
 
+    // TODO: this is a security risk (open redirect)! We need to verify that the target host is one of ours.
+    // if the current url is app.buildwithfern.com, we should redirect to ***.docs.buildwithfern.com
+    if (getDocsDomainEdge(req) !== url.host) {
+        // TODO: need to support docs instances with subpaths (forward-proxied from the origin).
+        const destination = new URL(`${req.nextUrl.pathname}${req.nextUrl.search}`, url.origin);
+        destination.searchParams.set(FORWARDED_HOST_QUERY, getDocsDomainEdge(req));
         return NextResponse.redirect(destination);
     }
 
