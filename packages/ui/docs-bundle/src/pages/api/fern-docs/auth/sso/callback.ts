@@ -43,7 +43,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
     }
 
     try {
-        const { accessToken, refreshToken, user, impersonator } = await workos.userManagement.authenticateWithCode({
+        const { accessToken, refreshToken, user, impersonator } = await workos().userManagement.authenticateWithCode({
             code,
             clientId: getWorkOSClientId(),
         });

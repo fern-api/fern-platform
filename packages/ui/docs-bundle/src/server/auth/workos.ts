@@ -1,6 +1,7 @@
 import { AuthorizationURLOptions, WorkOS } from "@workos-inc/node";
+import { once } from "es-toolkit/function";
 
-export const workos = new WorkOS(getWorkOSApiKey());
+export const workos = once(() => new WorkOS(getWorkOSApiKey()));
 
 export function getWorkOSApiKey(): string {
     const apiKey = process.env.WORKOS_API_KEY;
@@ -33,7 +34,7 @@ export function getJwtSecretKey(): string {
 }
 
 export function getAuthorizationUrl(options: Omit<AuthorizationURLOptions, "provider" | "clientId">): string {
-    const authorizationUrl = workos.sso.getAuthorizationUrl({
+    const authorizationUrl = workos().sso.getAuthorizationUrl({
         ...options,
         provider: "authkit",
         clientId: getWorkOSClientId(),

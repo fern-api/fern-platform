@@ -1,11 +1,10 @@
+import { once } from "es-toolkit/function";
 import { sealData, unsealData } from "iron-session";
 import { createRemoteJWKSet, decodeJwt, jwtVerify } from "jose";
-import { AccessToken, NoWorkOSUserInfo, WorkOSSession, WorkOSUserInfo } from "./interfaces";
+import type { AccessToken, NoWorkOSUserInfo, WorkOSSession, WorkOSUserInfo } from "./interfaces";
 import { getJwtSecretKey, getWorkOSClientId, workos } from "./workos";
 
 // This is adapted from https://github.com/workos/authkit-nextjs/blob/main/src/session.ts
-
-const JWKS = createRemoteJWKSet(new URL(workos.userManagement.getJwksUrl(getWorkOSClientId())));
 
 async function encryptSession(session: WorkOSSession): Promise<string> {
     return sealData(session, { password: getJwtSecretKey() });
@@ -15,7 +14,7 @@ async function refreshSession(session: WorkOSSession): Promise<WorkOSSession | u
     try {
         const { org_id: organizationId } = decodeJwt<AccessToken>(session.accessToken);
         const { accessToken, refreshToken, user, impersonator } =
-            await workos.userManagement.authenticateWithRefreshToken({
+            await workos().userManagement.authenticateWithRefreshToken({
                 clientId: getWorkOSClientId(),
                 refreshToken: session.refreshToken,
                 organizationId,
@@ -37,12 +36,14 @@ async function getLogoutUrl(fern_token: string | undefined): Promise<string | un
     }
 
     const { sid: sessionId } = decodeJwt<AccessToken>(session.accessToken);
-    return workos.userManagement.getLogoutUrl({ sessionId });
+    return workos().userManagement.getLogoutUrl({ sessionId });
 }
+
+const withJWKS = once(() => createRemoteJWKSet(new URL(workos().userManagement.getJwksUrl(getWorkOSClientId()))));
 
 async function verifyAccessToken(accessToken: string) {
     try {
-        await jwtVerify(accessToken, JWKS);
+        await jwtVerify(accessToken, withJWKS());
         return true;
     } catch {
         return false;

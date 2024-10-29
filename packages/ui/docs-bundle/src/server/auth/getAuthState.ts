@@ -98,9 +98,16 @@ export async function getAuthState(
     // check if the user is logged in via WorkOS
     if (authConfig.type === "sso" && authConfig.partner === "workos") {
         const session = fernToken != null ? await getSessionFromToken(fernToken) : undefined;
-        const workos = await toSessionUserInfo(session);
-        if (workos.user) {
-            return { domain, host, authed: true, ok: true, user: toFernUser(workos), partner: authConfig.partner };
+        const workosUserInfo = await toSessionUserInfo(session);
+        if (workosUserInfo.user) {
+            return {
+                domain,
+                host,
+                authed: true,
+                ok: true,
+                user: toFernUser(workosUserInfo),
+                partner: authConfig.partner,
+            };
         }
 
         if (session?.refreshToken) {
