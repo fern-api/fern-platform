@@ -1708,9 +1708,6 @@ importers:
       '@fern-api/ui-core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
-      '@fern-api/venus-api-sdk':
-        specifier: ^0.10.1-5-ged06d22
-        version: 0.10.1-5-ged06d22
       '@fern-fern/fern-docs-sdk':
         specifier: 0.0.5
         version: 0.0.5
