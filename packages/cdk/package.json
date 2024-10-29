@@ -22,10 +22,9 @@
     "synth:dev2": "cdk synth local-preview-bundle2-dev2"
   },
   "dependencies": {
-    "@fern-fern/fern-cloud-sdk": "^0.0.257",
+    "@fern-fern/fern-cloud-sdk": "^0.0.305",
     "archiver": "^7.0.1",
     "aws-cdk-lib": "^2.122.0",
-    "axios": "^1.7.4",
     "constructs": "^10.3.0",
     "tsx": "^4.7.1"
   },
