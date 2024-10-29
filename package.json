@@ -94,7 +94,8 @@
     "postcss": "8.4.31",
     "esbuild": "0.20.2",
     "instantsearch.js": "4.75.3",
-    "next": "npm:@fern-api/next@14.2.9-fork.2"
+    "next": "npm:@fern-api/next@14.2.9-fork.2",
+    "markdown-to-jsx": "7.4.0"
   },
   "dependenciesMeta": {
     "jsonc-parser@2.2.1": {

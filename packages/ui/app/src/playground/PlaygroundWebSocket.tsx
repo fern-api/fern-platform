@@ -134,6 +134,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({ context }): 
         formState.headers,
         pushMessage,
         activeSessionMessageCount,
+        websocketMessageLimit,
     ]);
 
     const handleSendMessage = useCallback(
