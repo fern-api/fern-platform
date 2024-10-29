@@ -156,21 +156,22 @@ export class NodeCollector {
     /**
      * Returns a list of slugs for all pages in the navigation tree.
      *
-     * This includes hidden pages and noindex pages, and is intended for revalidation purposes.
+     * This includes hidden pages and noindex pages, but not authed pages, and is intended for revalidation purposes.
      *
      * @returns {string[]} A list of slugs for all canonical pages in the navigation tree.
      */
-    #getPageSlugs = once((): string[] => {
+    #getStaticPageSlugs = once((): string[] => {
         return Array.from(
             new Set(
                 [...this.slugToNode.values()]
                     .filter(({ node }) => FernNavigation.isPage(node))
+                    .filter(({ node }) => !node.authed)
                     .map(({ node }) => node.slug),
             ),
         );
     });
-    get pageSlugs(): string[] {
-        return this.#getPageSlugs();
+    get staticPageSlugs(): string[] {
+        return this.#getStaticPageSlugs();
     }
 
     /**

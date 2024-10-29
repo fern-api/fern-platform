@@ -42,8 +42,8 @@ const handler: NextApiHandler = async (
     const domain = getDocsDomainNode(req);
     const host = getHostNode(req) ?? domain;
 
-    // never proivde a token here because revalidation should only be done on public routes (for now)
-    const loader = DocsLoader.for(domain, host, undefined);
+    // never provide a token here because revalidation should only be done on public routes (for now)
+    const loader = DocsLoader.for(domain, host);
     const root = await loader.root();
 
     if (!root) {
@@ -53,7 +53,7 @@ const handler: NextApiHandler = async (
         return res.status(loader.error?.error === "UnauthorizedError" ? 200 : 404).json({ total: 0, results: [] });
     }
 
-    const slugs = NodeCollector.collect(root).pageSlugs;
+    const slugs = NodeCollector.collect(root).staticPageSlugs;
     const revalidate = new Revalidator(res, domain);
 
     if (offset === 0) {

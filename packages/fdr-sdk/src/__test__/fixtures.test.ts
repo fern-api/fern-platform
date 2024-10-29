@@ -52,7 +52,7 @@ function testNavigationConfigConverter(fixtureName: string): void {
                 `output/${fixtureName}/slugs.json`,
             );
 
-            expect(JSON.stringify(collector.pageSlugs, undefined, 2)).toMatchFileSnapshot(
+            expect(JSON.stringify(collector.staticPageSlugs, undefined, 2)).toMatchFileSnapshot(
                 `output/${fixtureName}/slugs-pages.json`,
             );
 
