@@ -1,9 +1,9 @@
 import { DocsLoader } from "@/server/DocsLoader";
 import { conformTrailingSlash } from "@/server/trailingSlash";
+import { withPrunedNavigation } from "@/server/withPrunedNavigation";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 import urljoin from "url-join";
 
@@ -17,9 +17,8 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const domain = getDocsDomainEdge(req);
     const host = getHostEdge(req);
 
-    // load the root node
-    const fernToken = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
-    const root = await DocsLoader.for(domain, host, fernToken).root();
+    // load the root node, and prune it— sitemap should only include public routes
+    const root = withPrunedNavigation(await DocsLoader.for(domain, host).root(), { authed: false });
 
     // collect all indexable page slugs
     const slugs = NodeCollector.collect(root).indexablePageSlugs;
