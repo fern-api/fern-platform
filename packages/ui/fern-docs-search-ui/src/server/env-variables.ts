@@ -2,12 +2,20 @@ export function algoliaAppId() {
     return getEnvVariable("ALGOLIA_APP_ID");
 }
 
-export function algoliaAdminApiKey() {
-    return getEnvVariable("ALGOLIA_ADMIN_API_KEY");
+export function algoliaWriteApiKey() {
+    return getEnvVariable("ALGOLIA_WRITE_API_KEY");
 }
 
 export function algoliaSearchApikey() {
     return getEnvVariable("ALGOLIA_SEARCH_API_KEY");
+}
+
+export function fernToken() {
+    return getEnvVariable("FERN_TOKEN");
+}
+
+export function fdrEnvironment() {
+    return getEnvVariable("FDR_ENVIRONMENT");
 }
 
 function assertNonNullable<T>(value: T, key: string): asserts value is NonNullable<T> {

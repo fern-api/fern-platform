@@ -125,5 +125,7 @@ export function createAlgoliaRecords({
         }
     });
 
-    return records;
+    // remove all undefined values
+    // TODO: trim or filter out any record that is > 100kb
+    return JSON.parse(JSON.stringify(records));
 }

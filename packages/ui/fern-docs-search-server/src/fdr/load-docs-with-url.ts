@@ -3,7 +3,22 @@ import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { mapValues } from "es-toolkit/object";
 
 interface LoadDocsWithUrlPayload {
+    /**
+     * FDR environment to use. (either `https://registry-dev2.buildwithfern.com` or `https://registry.buildwithfern.com`)
+     */
+    environment: string;
+
+    /**
+     * The shared secret token use to authenticate with FDR.
+     */
+    fernToken: string;
+
+    /**
+     * The domain to load docs for.
+     */
     domain: string;
+
+    // feature flags
     isBatchStreamToggleDisabled?: boolean;
     isApiScrollingDisabled?: boolean;
     useJavaScriptAsTypeScript?: boolean;
@@ -21,8 +36,8 @@ interface LoadDocsWithUrlResponse {
 
 export async function loadDocsWithUrl(payload: LoadDocsWithUrlPayload): Promise<LoadDocsWithUrlResponse> {
     const client = new FdrClient({
-        environment: "https://registry-dev2.buildwithfern.com",
-        token: process.env.FERN_TOKEN,
+        environment: payload.environment,
+        token: payload.fernToken,
     });
 
     const docs = await client.docs.v2.read.getDocsForUrl({ url: ApiDefinition.Url(payload.domain) });

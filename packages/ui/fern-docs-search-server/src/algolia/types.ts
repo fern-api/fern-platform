@@ -2,13 +2,10 @@ import { z } from "zod";
 
 // in order of priority:
 export const SEARCHABLE_ATTRIBUTES = [
-    "level_title",
     "page_title",
-    "description",
-    "payload_description",
-    "request_description",
-    "response_description",
-    "content",
+    "level_title",
+    "description,payload_description,request_description,response_description",
+    "unordered(content)",
     "endpoint_path",
     "parameter_name",
 
@@ -22,17 +19,15 @@ export const SEARCHABLE_ATTRIBUTES = [
     "status_code",
     "parameter_type",
 
+    // make code snippets searchable
+    "unordered(code_snippets.code)",
+
     // hierarchy (in descending order of priority)
-    "hierarchy.h6.title",
-    "hierarchy.h5.title",
-    "hierarchy.h4.title",
-    "hierarchy.h3.title",
-    "hierarchy.h2.title",
-    "hierarchy.h1.title",
+    "hierarchy.h6.title,hierarchy.h5.title,hierarchy.h4.title,hierarchy.h3.title,hierarchy.h2.title,hierarchy.h1.title",
 ] as const;
 
 // these are metadata fields that we do not want to include in the search hits:
-export const UNRETRIEVABLE_ATTRIBUTES = ["org_id", "domain", "visible_by", "authed"] as const;
+export const DISTINCT_FACET_ATTRIBUTES = ["org_id", "domain", "visible_by", "authed"] as const;
 
 export const BaseRecordSchema = z.object({
     objectID: z.string().describe("The unique identifier of this record"),
@@ -49,21 +44,10 @@ export const BaseRecordSchema = z.object({
         .optional()
         .describe("The description of the page. This should be rendered unless a highlighted snippet is returned"),
     code_snippets: z
-        .array(
-            z.object({
-                lang: z.string().optional(),
-                meta: z.string().optional(),
-                code: z.string(),
-            }),
-        )
+        .array(z.object({ lang: z.string().optional(), meta: z.string().optional(), code: z.string() }))
         .optional(),
     breadcrumb: z
-        .array(
-            z.object({
-                title: z.string(),
-                pathname: z.string().optional(),
-            }),
-        )
+        .array(z.object({ title: z.string(), pathname: z.string().optional() }))
         .describe("The breadcrumb of this record"),
     product: z.object({ id: z.string(), title: z.string() }).optional(),
     version: z.object({ id: z.string(), title: z.string() }).optional(),
@@ -165,4 +149,3 @@ export type ChangelogRecord = z.infer<typeof ChangelogRecordSchema>;
 export type ApiReferenceRecord = z.infer<typeof ApiReferenceRecordSchema>;
 export type ParameterRecord = z.infer<typeof ParameterRecordSchema>;
 export type AlgoliaRecord = z.infer<typeof AlgoliaRecordSchema>;
-export type VisibleAlgoliaRecord = Omit<AlgoliaRecord, (typeof UNRETRIEVABLE_ATTRIBUTES)[number]>;

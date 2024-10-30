@@ -31,6 +31,8 @@ export function createBaseRecord({
         .filter((n): n is Extract<FernNavigation.NavigationNodeWithMetadata, FernNavigation.NavigationNodeParent> =>
             FernNavigation.hasMetadata(n),
         )
+        // Changelog months and years are no
+        .filter((n) => n.type !== "changelogMonth" && n.type !== "changelogYear")
         .map((metadata) => ({
             title: metadata.title,
             pathname: addLeadingSlash(metadata.canonicalSlug ?? metadata.slug),

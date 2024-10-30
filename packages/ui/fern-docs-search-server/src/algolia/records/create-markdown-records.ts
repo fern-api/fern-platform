@@ -57,7 +57,7 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
         hash: undefined,
         description: description_content,
         content: root_content,
-        code_snippets,
+        code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
         page_title,
     });
 
@@ -69,13 +69,20 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
 
         const { heading, content: markdownContent, parents } = section;
 
+        const h1 = parents.find((p) => p.depth === 1);
+        const h2 = parents.find((p) => p.depth === 2);
+        const h3 = parents.find((p) => p.depth === 3);
+        const h4 = parents.find((p) => p.depth === 4);
+        const h5 = parents.find((p) => p.depth === 5);
+        const h6 = parents.find((p) => p.depth === 6);
+
         const hierarchy: Record<`h${1 | 2 | 3 | 4 | 5 | 6}`, { id: string; title: string } | undefined> = {
-            h1: parents[0]?.depth === 1 ? { id: heading.id, title: heading.title } : undefined,
-            h2: parents[0]?.depth === 2 ? { id: heading.id, title: heading.title } : undefined,
-            h3: parents[0]?.depth === 3 ? { id: heading.id, title: heading.title } : undefined,
-            h4: parents[0]?.depth === 4 ? { id: heading.id, title: heading.title } : undefined,
-            h5: parents[0]?.depth === 5 ? { id: heading.id, title: heading.title } : undefined,
-            h6: parents[0]?.depth === 6 ? { id: heading.id, title: heading.title } : undefined,
+            h1: h1 ? { id: h1.id, title: h1.title } : undefined,
+            h2: h2 ? { id: h2.id, title: h2.title } : undefined,
+            h3: h3 ? { id: h3.id, title: h3.title } : undefined,
+            h4: h4 ? { id: h4.id, title: h4.title } : undefined,
+            h5: h5 ? { id: h5.id, title: h5.title } : undefined,
+            h6: h6 ? { id: h6.id, title: h6.title } : undefined,
         };
 
         hierarchy[`h${heading.depth}`] = { id: heading.id, title: heading.title };

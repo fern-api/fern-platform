@@ -40,7 +40,7 @@ export function mdastToString(
     value?: unknown,
     { includeImageAlt = true, includeHtml = true, preserveNewlines = true }: Options = {},
 ): string {
-    return one(value, includeImageAlt, includeHtml, preserveNewlines);
+    return one(value, includeImageAlt, includeHtml, preserveNewlines).trim();
 }
 
 /**

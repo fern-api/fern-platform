@@ -1,11 +1,11 @@
 import { isMdxExpression, isMdxJsxElement, mdastToString, toTree, visit } from "@fern-ui/fern-docs-mdx";
 
 interface PreparedMdxContent {
-    content: string;
-    code_snippets?: { lang: string | undefined; meta: string | undefined; code: string }[];
+    content: string | undefined;
+    code_snippets: { lang: string | undefined; meta: string | undefined; code: string }[] | undefined;
 }
 
-export function maybePrepareMdxContent(content: string | undefined): Partial<PreparedMdxContent> {
+export function maybePrepareMdxContent(content: string | undefined): PreparedMdxContent {
     if (content == null) {
         return { content: undefined, code_snippets: undefined };
     }
@@ -46,8 +46,13 @@ export function prepareMdxContent(content: string): PreparedMdxContent {
 
         return true;
     });
+    const stringifiedContent = mdastToString(tree, {
+        includeHtml: false,
+        includeImageAlt: true,
+        preserveNewlines: true,
+    }).trim();
     return {
-        content: mdastToString(tree, { includeHtml: false, includeImageAlt: true, preserveNewlines: true }).trim(),
+        content: stringifiedContent.length > 0 ? stringifiedContent : undefined,
         code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
     };
 }

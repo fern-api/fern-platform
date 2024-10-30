@@ -8,7 +8,8 @@
     "rootDir": "./src",
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["./*"]
+      "@/algolia/*": ["./algolia/*"],
+      "@/fdr/*": ["./fdr/*"]
     }
   },
   "include": ["./src/**/*"],

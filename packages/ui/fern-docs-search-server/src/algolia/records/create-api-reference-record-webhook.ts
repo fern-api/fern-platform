@@ -2,7 +2,7 @@ import { ApiDefinition } from "@fern-api/fdr-sdk";
 import { compact, flatten } from "es-toolkit";
 import { ApiReferenceRecord, EndpointBaseRecord } from "../types.js";
 import { maybePrepareMdxContent } from "./prepare-mdx-content.js";
-import { toDescription } from "./utils.js";
+import { toDescription } from "./to-description.js";
 
 interface CreateApiReferenceRecordWebhookOptions {
     endpointBase: EndpointBaseRecord;

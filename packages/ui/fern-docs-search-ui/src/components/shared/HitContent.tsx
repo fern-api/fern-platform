@@ -1,13 +1,10 @@
-import {
-    ApiReferenceRecord,
-    ChangelogRecord,
-    ParameterRecord,
-} from "@fern-ui/fern-docs-search-server/src/algolia/types";
+import { ParameterRecord } from "@fern-ui/fern-docs-search-server/types";
+import { HttpMethodTag } from "@fern-ui/fern-http-method-tag";
 import { Hit } from "algoliasearch/lite";
 import { ReactElement } from "react";
 import { Highlight, Snippet } from "react-instantsearch";
 import { MarkRequired, UnreachableCaseError } from "ts-essentials";
-import { AlgoliaRecordHit, MarkdownRecordHit } from "../types";
+import { AlgoliaRecordHit, ApiReferenceRecordHit, ChangelogRecordHit, MarkdownRecordHit } from "../types";
 
 const headingLevels = ["h1", "h2", "h3", "h4", "h5", "h6"] as const;
 
@@ -23,13 +20,19 @@ function HierarchyBreadcrumb({
     if (!level) {
         return null;
     }
+
     const breadcrumb: string[] = [];
 
     if (pageTitle) {
         breadcrumb.push(pageTitle);
     }
 
-    headingLevels.slice(0, headingLevels.indexOf(level));
+    headingLevels.slice(0, headingLevels.indexOf(level)).forEach((headingLevel) => {
+        const title = hierarchy?.[headingLevel]?.title;
+        if (title) {
+            breadcrumb.push(title);
+        }
+    });
 
     return (
         <div className="text-xs text-[#969696]">
@@ -47,7 +50,8 @@ function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
     return (
         <div className="flex flex-col gap-1">
             <Highlight
-                attribute={hit._highlightResult.level_title ? "level_title" : "page_title"}
+                className="line-clamp-1"
+                attribute={hit._highlightResult?.level_title ? "level_title" : "page_title"}
                 hit={hit}
                 classNames={{
                     highlighted: "font-bold bg-transparent",
@@ -55,9 +59,9 @@ function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
             />
             <HierarchyBreadcrumb pageTitle={hit.page_title} hierarchy={hit.hierarchy} level={hit.level} />
             <Snippet
-                attribute={hit._highlightResult.description ? "description" : "content"}
+                attribute={hit._highlightResult?.description ? "description" : "content"}
                 hit={hit}
-                className="text-sm leading-snug block"
+                className="text-sm leading-snug line-clamp-2"
                 classNames={{
                     highlighted: "font-bold bg-transparent",
                 }}
@@ -66,12 +70,46 @@ function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
     );
 }
 
-function ChangelogHitContent({ hit }: { hit: MarkRequired<ChangelogRecord, "type"> }): ReactElement {
+function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement {
     return <div>{hit.page_title ?? hit.objectID}</div>;
 }
 
-function ApiReferenceHitContent({ hit }: { hit: MarkRequired<ApiReferenceRecord, "type"> }): ReactElement {
-    return <div>{hit.page_title ?? hit.objectID}</div>;
+function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactElement {
+    const attribute = hit._highlightResult?.request_description
+        ? "request_description"
+        : hit._highlightResult?.response_description
+          ? "response_description"
+          : hit._highlightResult?.payload_description
+            ? "payload_description"
+            : hit._highlightResult?.description
+              ? "description"
+              : undefined;
+    return (
+        <div className="flex flex-col gap-1">
+            <Highlight
+                className="line-clamp-1"
+                attribute="page_title"
+                hit={hit}
+                classNames={{
+                    highlighted: "font-bold bg-transparent",
+                }}
+            />
+            <div className="flex items-baseline gap-1">
+                <HttpMethodTag method={hit.method} size="sm" />
+                <span className="text-xs font-mono line-clamp-1 text-[#969696]">{hit.endpoint_path}</span>
+            </div>
+            {attribute && (
+                <Snippet
+                    attribute={attribute}
+                    hit={hit}
+                    className="text-sm leading-snug line-clamp-2"
+                    classNames={{
+                        highlighted: "font-bold bg-transparent",
+                    }}
+                />
+            )}
+        </div>
+    );
 }
 
 function ParameterHitContent({ hit }: { hit: MarkRequired<ParameterRecord, "type"> }): ReactElement {
@@ -83,12 +121,12 @@ export function HitContent({ hit }: { hit: MarkRequired<AlgoliaRecordHit, "type"
         case "markdown":
             return <MarkdownHitContent hit={hit as MarkdownRecordHit} />;
         case "changelog":
-            return <ChangelogHitContent hit={hit as MarkRequired<Hit<ChangelogRecord>, "type">} />;
+            return <ChangelogHitContent hit={hit as ChangelogRecordHit} />;
         case "api-reference":
-            return <ApiReferenceHitContent hit={hit as MarkRequired<Hit<ApiReferenceRecord>, "type">} />;
+            return <ApiReferenceHitContent hit={hit as ApiReferenceRecordHit} />;
         case "parameter":
             return <ParameterHitContent hit={hit as MarkRequired<Hit<ParameterRecord>, "type">} />;
         default:
-            throw new UnreachableCaseError(hit.type);
+            throw new UnreachableCaseError(hit);
     }
 }

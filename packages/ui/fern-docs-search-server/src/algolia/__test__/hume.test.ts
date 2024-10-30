@@ -2,15 +2,15 @@ import { uniq } from "es-toolkit";
 import { createAlgoliaRecords } from "../records/create-algolia-records.js";
 import { readFixture, readFixtureToRootNode } from "./test-utils.js";
 
-describe("humanloop", () => {
+describe("hume", () => {
     it("should work", () => {
-        const [fixture, snapshotFilepath] = readFixture("humanloop");
+        const [fixture, snapshotFilepath] = readFixture("hume");
         const { root, apis, pages } = readFixtureToRootNode(fixture);
 
         const records = createAlgoliaRecords({
             root,
-            domain: "humanloop.com",
-            org_id: "humanloop",
+            domain: "dev.hume.ai",
+            org_id: "hume",
             pages,
             apis,
             authed: false,

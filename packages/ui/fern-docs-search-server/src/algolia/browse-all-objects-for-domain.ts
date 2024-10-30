@@ -4,6 +4,7 @@ export async function browseAllObjectsForDomain(
     algolia: Algoliasearch,
     domain: string,
     indexName: string,
+    attributesToRetrieve?: string[],
 ): Promise<Record<string, any>[]> {
     let response: BrowseResponse;
     let cursor: string | undefined;
@@ -14,6 +15,7 @@ export async function browseAllObjectsForDomain(
                 filters: `domain:${domain}`,
                 hitsPerPage: 1000,
                 cursor,
+                attributesToRetrieve,
             },
             indexName,
         });

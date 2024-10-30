@@ -43,9 +43,12 @@ export function collectRootHeadings(tree: Root, lines: readonly string[]): Headi
 
         // `toString` will strip away all markdown formatting for the title
         // TODO: we should preserve some formatting within the heading, i.e. `<code>` and `<u>`, etc.
-        const title = mdastToString(heading, { preserveNewlines: false });
+        const rawTitle = mdastToString(heading, { preserveNewlines: false });
 
-        let id = extractAnchorFromHeadingText(title).anchor;
+        const extractedTitle = extractAnchorFromHeadingText(rawTitle);
+        const title = extractedTitle.text;
+
+        let id = extractedTitle.anchor;
 
         if (id == null) {
             id = slugger.slug(title);

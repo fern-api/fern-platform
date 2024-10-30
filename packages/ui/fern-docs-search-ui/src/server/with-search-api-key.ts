@@ -1,19 +1,19 @@
-import { getSearchApiKey } from "@fern-ui/fern-docs-search-server";
+import { getSearchApiKey } from "@fern-ui/fern-docs-search-server/algolia";
 import { algoliasearch } from "algoliasearch";
 
 interface WithSearchApiKeyOptions {
     appId: string;
-    adminApiKey: string;
-    parentApiKey: string;
+    writeApiKey: string;
+    searchApiKey: string;
     domain: string;
     roles: string[];
     authed: boolean;
 }
 
-export function withSearchApiKey({ appId, adminApiKey, parentApiKey, domain, roles, authed }: WithSearchApiKeyOptions) {
+export function withSearchApiKey({ appId, writeApiKey, searchApiKey, domain, roles, authed }: WithSearchApiKeyOptions) {
     return getSearchApiKey({
-        client: algoliasearch(appId, adminApiKey),
-        parentApiKey,
+        client: algoliasearch(appId, writeApiKey),
+        parentApiKey: searchApiKey,
         domain,
         roles,
         authed,

@@ -4,7 +4,7 @@ describe("prepareMdxContent", () => {
     it("should remove mdxjsEsm nodes", () => {
         const content = "export default function MyComponent() { return <div>Hello, world!</div>; }";
         const result = prepareMdxContent(content);
-        expect(result.content).toBe("");
+        expect(result.content).toBeUndefined();
     });
 
     it("should squeeze mdxJsxElement nodes", () => {
@@ -20,7 +20,7 @@ describe("prepareMdxContent", () => {
     it("should remove mdxExpression nodes", () => {
         const content = "\n{props.testing}\n";
         const result = prepareMdxContent(content);
-        expect(result.content).toBe("");
+        expect(result.content).toBeUndefined();
     });
 
     it("should stringify text in a newline delimited way nodes", () => {
@@ -76,6 +76,17 @@ Be sure to save the generated token - it won't be displayed after you leave the 
           "Column 1 Column 2 Column 3 
           Value 1 Value 2 Value 3"
         `);
+    });
+
+    it("should extract code snippets", () => {
+        const content = `
+        \`\`\`python
+        print("Hello, world!")
+        \`\`\`
+        `;
+        const result = prepareMdxContent(content);
+        expect(result.content).toBe(undefined);
+        expect(result.code_snippets).toEqual([{ lang: "python", meta: undefined, code: 'print("Hello, world!")' }]);
     });
 
     it("should strip math nodes but keep the content", () => {
