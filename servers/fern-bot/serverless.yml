@@ -4,8 +4,7 @@ plugins:
   - "serverless-esbuild"
   - "serverless-step-functions"
 build:
-  esbuild:
-    false
+  esbuild: false
 provider:
   name: aws
   runtime: nodejs18.x
