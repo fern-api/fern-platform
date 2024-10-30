@@ -1,4 +1,4 @@
-import { getLogoutUrl } from "@/server/auth/workos-session";
+import { revokeSessionForToken } from "@/server/auth/workos-session";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
@@ -13,14 +13,12 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
     const authConfig = await getAuthEdgeConfig(domain);
 
-    const logoutUrlRaw =
-        authConfig?.type === "basic_token_verification"
-            ? authConfig.logout
-            : authConfig?.partner === "workos"
-              ? await getLogoutUrl(req.cookies.get(COOKIE_FERN_TOKEN)?.value)
-              : undefined;
+    if (authConfig?.type === "sso" && authConfig.partner === "workos") {
+        // revoke session in WorkOS
+        await revokeSessionForToken(req.cookies.get(COOKIE_FERN_TOKEN)?.value);
+    }
 
-    const logoutUrl = safeUrl(logoutUrlRaw);
+    const logoutUrl = safeUrl(authConfig?.type === "basic_token_verification" ? authConfig.logout : undefined);
 
     // if logout url is provided, append the state to it before redirecting
     if (req.nextUrl.searchParams.has("state")) {
