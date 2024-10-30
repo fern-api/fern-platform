@@ -36,6 +36,7 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
 
     const visitor: Visitor = (node) => {
         // if the node is a <Steps toc={false}>, skip traversing its children
+        console.log(node)
         if (isMdxJsxElementHast(node) && node.name === "StepGroup") {
             const isTocEnabled =
                 hastGetBooleanValue(
@@ -55,7 +56,7 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
                         headings.push({ depth: 3, id, title });
 
                         visit(child, visitor);
-                    }
+                    } 
                 });
             }
             return SKIP;
@@ -92,6 +93,7 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
         }
 
         if (isMdxJsxElementHast(node) && node.name === "TabGroup") {
+            console.log(node)
             const attributes = node.attributes.filter(isMdxJsxAttribute);
             const itemsAttr = attributes.find((attr) => attr.name === "tabs");
             const tocAttr = attributes.find((attr) => attr.name === "toc");

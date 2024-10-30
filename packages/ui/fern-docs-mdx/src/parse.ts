@@ -22,6 +22,7 @@ interface ToTreeOptions {
     format?: "mdx" | "md";
     allowedIdentifiers?: string[];
     sanitize?: boolean;
+    rehypePlugins?: any[];
 }
 
 /**
@@ -30,7 +31,7 @@ interface ToTreeOptions {
  */
 export function toTree(
     content: string,
-    { format = "mdx", allowedIdentifiers = [], sanitize = true }: ToTreeOptions = {},
+    { format = "mdx", allowedIdentifiers = [], sanitize = true, rehypePlugins }: ToTreeOptions = {},
 ): {
     mdast: MdastRoot;
     hast: HastRoot;
@@ -60,6 +61,10 @@ export function toTree(
 
     // add ids to headings
     rehypeSlug()(hast);
+    
+    rehypePlugins?.forEach((plugin) => {
+        plugin()(hast);
+    })
 
     return {
         mdast,

@@ -4,6 +4,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { getFrontmatter, makeToc, toTree } from "@fern-ui/fern-docs-mdx";
 import { ApiDefinitionLoader, type MarkdownLoader } from "@fern-ui/fern-docs-server";
+import { rehypeFernComponents } from "../mdx/plugins/rehypeFernComponents";
 import type { DocsContent } from "./DocsContent";
 
 interface ResolveMarkdownPageOptions {
@@ -132,7 +133,7 @@ export async function resolveMarkdownPageWithoutApiRefs({
 
     // TODO: this is doing duplicate work; figure out how to combine it with the compiler above.
     // or at least parallelize it.
-    const { hast } = toTree(getFrontmatter(markdown).content);
+    const { hast } = toTree(getFrontmatter(markdown).content, {rehypePlugins: [rehypeFernComponents]});
     const tableOfContents = makeToc(hast, frontmatter?.["force-toc"]);
 
     return {
