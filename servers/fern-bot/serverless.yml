@@ -1,7 +1,11 @@
 service: "fern-bot"
 frameworkVersion: "4"
 plugins:
+  - "serverless-esbuild"
   - "serverless-step-functions"
+build:
+  esbuild:
+    false
 provider:
   name: aws
   runtime: nodejs18.x
