@@ -1,8 +1,10 @@
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { FernUser } from "@fern-ui/fern-docs-auth";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthStateEdge } from "./auth/getAuthStateEdge";
 import { withSecureCookie } from "./auth/with-secure-cookie";
+import { getHostEdge } from "./xfernhost/edge";
 
 /**
  * @param pathname must be specified because `_next/data` must be stripped out of the pathname
@@ -24,7 +26,11 @@ export async function withMiddlewareAuth(
 
         // set the fern token cookie if it changed (e.g. if the refresh token was used)
         if (fernToken) {
-            response.cookies.set(COOKIE_FERN_TOKEN, fernToken, withSecureCookie(request.nextUrl.origin));
+            response.cookies.set(
+                COOKIE_FERN_TOKEN,
+                fernToken,
+                withSecureCookie(withDefaultProtocol(getHostEdge(request))),
+            );
         }
 
         return response;
