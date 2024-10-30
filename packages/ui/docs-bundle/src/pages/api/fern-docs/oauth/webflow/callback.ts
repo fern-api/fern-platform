@@ -1,4 +1,4 @@
-import { withSecureCookie } from "@/server/auth/withSecure";
+import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
@@ -15,12 +15,13 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     const domain = getDocsDomainEdge(req);
+    const host = getHostEdge(req);
 
     const code = req.nextUrl.searchParams.get("code");
     const state = req.nextUrl.searchParams.get("state");
     const error = req.nextUrl.searchParams.get("error");
     const error_description = req.nextUrl.searchParams.get("error_description");
-    const redirectLocation = safeUrl(state) ?? safeUrl(withDefaultProtocol(getHostEdge(req)));
+    const redirectLocation = safeUrl(state) ?? safeUrl(withDefaultProtocol(host));
 
     if (error != null) {
         // eslint-disable-next-line no-console
@@ -52,7 +53,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
         // TODO: validate allowlist of domains to prevent open redirects
         const res = redirectLocation ? NextResponse.redirect(redirectLocation) : NextResponse.next();
-        res.cookies.set("access_token", accessToken, withSecureCookie());
+        res.cookies.set("access_token", accessToken, withSecureCookie(withDefaultProtocol(host)));
         return res;
     } catch (error) {
         // eslint-disable-next-line no-console

@@ -301,17 +301,14 @@ importers:
   packages/cdk:
     dependencies:
       '@fern-fern/fern-cloud-sdk':
-        specifier: ^0.0.257
-        version: 0.0.257
+        specifier: ^0.0.305
+        version: 0.0.305
       archiver:
         specifier: ^7.0.1
         version: 7.0.1
       aws-cdk-lib:
         specifier: ^2.122.0
         version: 2.141.0(constructs@10.3.0)
-      axios:
-        specifier: ^1.7.4
-        version: 1.7.4
       constructs:
         specifier: ^10.3.0
         version: 10.3.0
@@ -450,7 +447,7 @@ importers:
         version: 3.3.2
       simple-git:
         specifier: ^3.24.0
-        version: 3.24.0(supports-color@8.1.1)
+        version: 3.24.0
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.4.3)
@@ -1713,9 +1710,6 @@ importers:
       '@fern-api/ui-core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
-      '@fern-api/venus-api-sdk':
-        specifier: ^0.1.0
-        version: 0.1.1
       '@fern-fern/fern-docs-sdk':
         specifier: 0.0.5
         version: 0.0.5
@@ -1756,8 +1750,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       '@workos-inc/node':
-        specifier: ^6.1.0
-        version: 6.8.0
+        specifier: ^7.29.0
+        version: 7.30.0(@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.1)
       algoliasearch:
         specifier: ^5.10.2
         version: 5.10.2
@@ -1779,6 +1773,9 @@ importers:
       form-data:
         specifier: 4.0.0
         version: 4.0.0
+      iron-session:
+        specifier: ^8.0.3
+        version: 8.0.3
       jose:
         specifier: ^5.2.3
         version: 5.2.4
@@ -1905,8 +1902,8 @@ importers:
         specifier: ^1.4.2
         version: 1.4.2
       '@fern-api/venus-api-sdk':
-        specifier: 0.6.5-4-gdc534cf
-        version: 0.6.5-4-gdc534cf
+        specifier: 0.10.1-5-ged06d22
+        version: 0.10.1-5-ged06d22
       '@fern-ui/components':
         specifier: workspace:*
         version: link:../components
@@ -2764,8 +2761,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/core-utils
       '@fern-api/venus-api-sdk':
-        specifier: ^0.6.2-1-gbbd1ac5
-        version: 0.6.2-1-gbbd1ac5
+        specifier: ^0.10.1-5-ged06d22
+        version: 0.10.1-5-ged06d22
       '@fern-fern/fern-docs-sdk':
         specifier: 0.0.5
         version: 0.0.5
@@ -2793,12 +2790,6 @@ importers:
       algoliasearch:
         specifier: ^4.24.0
         version: 4.24.0
-      axios:
-        specifier: ^1.7.4
-        version: 1.7.4
-      axios-logger:
-        specifier: ^2.6.2
-        version: 2.8.0
       compression:
         specifier: ^1.7.4
         version: 1.7.4
@@ -2939,14 +2930,11 @@ importers:
   servers/fdr-deploy:
     dependencies:
       '@fern-fern/fern-cloud-sdk':
-        specifier: ^0.0.257
-        version: 0.0.257
+        specifier: ^0.0.305
+        version: 0.0.305
       aws-cdk-lib:
         specifier: ^2.122.0
         version: 2.141.0(constructs@10.3.0)
-      axios:
-        specifier: ^1.7.4
-        version: 1.7.4
       constructs:
         specifier: ^10.3.0
         version: 10.3.0
@@ -3000,8 +2988,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/github
       '@fern-api/venus-api-sdk':
-        specifier: 0.8.1-1-gd6d1a5b
-        version: 0.8.1-1-gd6d1a5b
+        specifier: 0.10.1-5-ged06d22
+        version: 0.10.1-5-ged06d22
       '@fern-fern/generators-sdk':
         specifier: 0.110.0-8f5b3cd3c
         version: 0.110.0-8f5b3cd3c
@@ -3046,7 +3034,7 @@ importers:
         version: 3.21.0(serverless@3.38.0)
       simple-git:
         specifier: ^3.24.0
-        version: 3.24.0(supports-color@8.1.1)
+        version: 3.24.0
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -4476,23 +4464,14 @@ packages:
       sass:
         optional: true
 
-  '@fern-api/venus-api-sdk@0.1.1':
-    resolution: {integrity: sha512-e8cr2kS7DwhMvoDtKWciQvoeBwecHwUTwbdiKv5afsoY/hIv0ssHxfR0SlZKxZ4ncYaUVKfcjuN50cpWmkCJbA==}
-
-  '@fern-api/venus-api-sdk@0.6.2-1-gbbd1ac5':
-    resolution: {integrity: sha512-Sa1i7krrEfqSbHHuP/9k9JABsF6A6AkKM4LZRu1h7+Z3LajbRoEDbdjuuTZWfkdN5OU/LF+mzeO8ejLKhzoh6g==}
-
-  '@fern-api/venus-api-sdk@0.6.5-4-gdc534cf':
-    resolution: {integrity: sha512-BYcczImGt2Z+L9k7hKSBtUSp+DOzFc5ew+RuoOZf/OtkFkj2/RK3v4ba1F/YDbQYytKz4tXW/eVYmAU0SLqcOA==}
-
-  '@fern-api/venus-api-sdk@0.8.1-1-gd6d1a5b':
-    resolution: {integrity: sha512-m5BzRbAuYhirIZpdomBebCai5U9ePFVaO5E40mEeyazWUshh0I1drhn2X2xEFKLAtccSh/0Qkuk9bZ1CIYbhJw==}
+  '@fern-api/venus-api-sdk@0.10.1-5-ged06d22':
+    resolution: {integrity: sha512-36tR/u4IO1C7OU1gmKwO05OrNV1noY+SrPzsC085QkbHI+WLEZQv4l6V9qCQ7Vi7KAYJ1hWkrzg8eRa62PqxeQ==}
 
   '@fern-fern/fdr-cjs-sdk@0.116.5-873e41db0':
     resolution: {integrity: sha512-ZWY+R3gEnpvhdvhyupMpjrvMXJU++d7whgaozRz4+j+IaYpNmCt/IeIemCcyVWDUbGV4/7GXec85iyTK13wTgA==}
 
-  '@fern-fern/fern-cloud-sdk@0.0.257':
-    resolution: {integrity: sha512-JwlE6Qk84VAGrTYR1EMgwQlneKDIQ3ZRlHTu3O/L56bLtIbhdMTzLSGqSxf4/KFXfhH/RukhRuTsM4/DRmgJ/A==}
+  '@fern-fern/fern-cloud-sdk@0.0.305':
+    resolution: {integrity: sha512-FDV2dlBpIaf4ZULjPKwUh+kZ8jnUbRS0Vth/Izwa/mIt7lbbrynUTJiPVANhQdVpt5cqq0Q/8BeBx0/7IvNVDA==}
 
   '@fern-fern/fern-docs-sdk@0.0.5':
     resolution: {integrity: sha512-x6kfRboXiG1J3fpON2lXtD9qCub2UXvNuscvCsIY3ACYvSvLHHlHvc84rIDv+ZlP/anlEvtTyfNh72Hmi0nffw==}
@@ -5326,6 +5305,17 @@ packages:
 
   '@pandacss/types@0.22.1':
     resolution: {integrity: sha512-WZCQrTa5wlenBStlu0gntKGi4dWA96LCft1oEqdh2u6VPK0sEfqk0wjyJGps/YN3pNjNKiQW3b4p1Wx+RshlYA==}
+
+  '@peculiar/asn1-schema@2.3.13':
+    resolution: {integrity: sha512-3Xq3a01WkHRZL8X04Zsfg//mGaA21xlL4tlVn4v2xGT0JStiztATRkMwa5b+f/HXmY2smsiLXYK46Gwgzvfg3g==}
+
+  '@peculiar/json-schema@1.1.12':
+    resolution: {integrity: sha512-coUfuoMeIB7B8/NMekxaDzLhaYmp0HZNPEjYRm9goRou8UZIC3z21s0sL9AWoCw4EG876QyO3kYrc61WNF9B/w==}
+    engines: {node: '>=8.0.0'}
+
+  '@peculiar/webcrypto@1.5.0':
+    resolution: {integrity: sha512-BRs5XUAwiyCDQMsVA9IDvDa7UBR9gAvPHgugOeGng3YN6vJ9JYonyDc0lNczErgtCWtucjR5N7VtaonboD/ezg==}
+    engines: {node: '>=10.12.0'}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -7510,6 +7500,9 @@ packages:
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
+  '@types/accepts@1.3.7':
+    resolution: {integrity: sha512-Pay9fq2lM2wXPWbteBsRAGiWH2hig4ZE2asK+mm7kUzlxRTfL961rj89I6zV/E3PcIkDqyuBEcMxFT7rccugeQ==}
+
   '@types/acorn@4.0.6':
     resolution: {integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==}
 
@@ -7552,8 +7545,17 @@ packages:
   '@types/connect@3.4.38':
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
 
+  '@types/content-disposition@0.5.8':
+    resolution: {integrity: sha512-QVSSvno3dE0MgO76pJhmv4Qyi/j0Yk9pBp0Y7TJ2Tlj+KCgJWY6qX7nnxCOLkZ3VYRSIk1WTxCvwUSdx6CCLdg==}
+
+  '@types/cookie@0.5.4':
+    resolution: {integrity: sha512-7z/eR6O859gyWIAjuvBWFzNURmf2oPBmJlfVWkwehU5nzIyjwBsTh7WMmEEV4JFnHuQ3ex4oyTvfKzcyJVDBNA==}
+
   '@types/cookie@0.6.0':
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+
+  '@types/cookies@0.9.0':
+    resolution: {integrity: sha512-40Zk8qR147RABiQ7NQnBzWzDcjKzNrntB5BAmeGCb2p/MIyOE+4BVvc17wumsUqUw00bJYqoXFHYygQnEFh4/Q==}
 
   '@types/cors@2.8.17':
     resolution: {integrity: sha512-8CGDvrBj1zgo2qE+oS3pOCyYNqCPryMWY2bGfwA0dcfopWGgxs+78df0Rs3rc9THP4JkOhLsAa+15VdpAqkcUA==}
@@ -7643,6 +7645,9 @@ packages:
   '@types/html-to-text@9.0.4':
     resolution: {integrity: sha512-pUY3cKH/Nm2yYrEmDlPR1mR7yszjGx4DrwPjQ702C4/D5CwHuZTgZdIdwPkRbcuhs7BAh2L5rg3CL5cbRiGTCQ==}
 
+  '@types/http-assert@1.5.6':
+    resolution: {integrity: sha512-TTEwmtjgVbYAzZYWyeHPrrtWnfVkm8tQkP8P21uQifPgMRgjrow3XDEYqucuC8SKZJT7pUnhU/JymvjggxO9vw==}
+
   '@types/http-cache-semantics@4.0.4':
     resolution: {integrity: sha512-1m0bIFVc7eJWyve9S0RnuRgcQqF/Xd5QsUZAZeQFr1Q3/p9JWoQQEqmVy+DPTNpGXwhgIetAoYF8JSc33q29QA==}
 
@@ -7694,8 +7699,17 @@ packages:
   '@types/katex@0.16.7':
     resolution: {integrity: sha512-HMwFiRujE5PjrgwHQ25+bsLJgowjGjm5Z8FVSf0N6PwgJrwxH0QxzHYDcKsTfV3wva0vzrpqMTJS2jXPr5BMEQ==}
 
+  '@types/keygrip@1.0.6':
+    resolution: {integrity: sha512-lZuNAY9xeJt7Bx4t4dx0rYCDqGPW8RXhQZK1td7d4H6E9zYbLoOtjBvfwdTKpsyxQI/2jv+armjX/RW+ZNpXOQ==}
+
   '@types/keyv@3.1.4':
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
+
+  '@types/koa-compose@3.2.8':
+    resolution: {integrity: sha512-4Olc63RY+MKvxMwVknCUDhRQX1pFQoBZ/lXcRLP69PQkEpze/0cr8LNqJQe5NFb/b19DWi2a5bTi2VAlQzhJuA==}
+
+  '@types/koa@2.15.0':
+    resolution: {integrity: sha512-7QFsywoE5URbuVnG3loe03QXuGajrnotr3gQkXcEBShORai23MePfFYdhz90FEtBBpkyIYQbVD+evKtloCgX3g==}
 
   '@types/lodash-es@4.17.12':
     resolution: {integrity: sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==}
@@ -8251,8 +8265,9 @@ packages:
   '@webassemblyjs/wast-printer@1.12.1':
     resolution: {integrity: sha512-+X4WAlOisVWQMikjbcvY2e0rwPsKQ9F688lksZhBcPycBBuii3O7m8FACbDMWDojpAqvjIncrG8J0XHKyQfVeA==}
 
-  '@workos-inc/node@6.8.0':
-    resolution: {integrity: sha512-uhlmK3DozCTBOBuy2IY2GvHbpYmDmolc2N5j8MpOUKMYyTWZpdkmETqg1Ky7mUSSPA203E3v6VIra9G4J7me1g==}
+  '@workos-inc/node@7.30.0':
+    resolution: {integrity: sha512-NIPFlY4HT15btv1ueJO6b/q7fB7D57Z1BYf+MKBA6VZJECWI/wro4mcb+Y19VZT7qCJRf2+njbXQKq6hydZbtQ==}
+    engines: {node: '>=16'}
 
   '@wry/caches@1.0.1':
     resolution: {integrity: sha512-bXuaUNLVVkD20wcGBWRyo7j9N3TxePEWFZj2Y+r9OoUzfqmavM84+mFykRicNsBqatba5JLay1t48wxaXaWnlA==}
@@ -8969,6 +8984,10 @@ packages:
   asn1.js@4.10.1:
     resolution: {integrity: sha512-p32cOF5q0Zqs9uBiONKYLm6BClCoBCM5O9JfeUSlnQLBTxYdTK+pW+nXflm8UkKd2UYlEbYz5qEi0JuZR9ckSw==}
 
+  asn1js@3.0.5:
+    resolution: {integrity: sha512-FVnvrKJwpt9LP2lAMl8qZswRNm3T4q9CON+bxldk2iwk3FFpuwhx2FfinyitizWHsVYyaY+y5JzDR0rCMV5yTQ==}
+    engines: {node: '>=12.0.0'}
+
   assert@2.1.0:
     resolution: {integrity: sha512-eLHpSK/Y4nhMJ07gDaAzoX/XAKS8PSaojml3M0DM4JpV1LAi5JOJ/p6H/XWrl8L+DzVEvVCW1z3vWAaB9oTsQw==}
 
@@ -9052,12 +9071,6 @@ packages:
   axe-core@4.7.0:
     resolution: {integrity: sha512-M0JtH+hlOL5pLQwHOLNYZaXuhqmvS8oExsqB1SBYgA4Dk7u/xx+YdGHXaK5pyUfed5mYXdlYiphWq3G8cRi5JQ==}
     engines: {node: '>=4'}
-
-  axios-logger@2.8.0:
-    resolution: {integrity: sha512-MWOBmbyAarx18rkI0xsuMDkK1oaqwROqeZjsfVgsD0Y7IGLzN3ZNZPpcnoCDKeajU0uLxjCs85186CeLU36bXg==}
-
-  axios@0.27.2:
-    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
 
   axios@1.7.4:
     resolution: {integrity: sha512-DukmaFRnY6AzAALSH4J2M3k6PkaC+MfaAGdEERRWcC9q3/TWQwLpHR8ZRLKTdQ3aBDL64EdluRDjJqKw+BPZEw==}
@@ -9754,6 +9767,10 @@ packages:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
 
+  cookie@0.6.0:
+    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
+    engines: {node: '>= 0.6'}
+
   cookie@0.7.1:
     resolution: {integrity: sha512-6DnInpx7SJ2AK3+CTUE/ZM0vWTUboZCegxhC2xiIydHR9jNuTAASBrfEpHhiGOZw/nX51bHt6YQl8jsGo4y/0w==}
     engines: {node: '>= 0.6'}
@@ -10138,9 +10155,6 @@ packages:
   date-fns@2.30.0:
     resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
     engines: {node: '>=0.11'}
-
-  dateformat@3.0.3:
-    resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
 
   dayjs@1.11.11:
     resolution: {integrity: sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==}
@@ -11975,6 +11989,30 @@ packages:
     resolution: {integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==}
     engines: {node: '>= 0.10'}
 
+  iron-session@6.3.1:
+    resolution: {integrity: sha512-3UJ7y2vk/WomAtEySmPgM6qtYF1cZ3tXuWX5GsVX4PJXAcs5y/sV9HuSfpjKS6HkTL/OhZcTDWJNLZ7w+Erx3A==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      express: '>=4'
+      koa: '>=2'
+      next: npm:@fern-api/next@14.2.9-fork.2
+    peerDependenciesMeta:
+      express:
+        optional: true
+      koa:
+        optional: true
+      next:
+        optional: true
+
+  iron-session@8.0.3:
+    resolution: {integrity: sha512-WtDX0griBliMoR6hGoU3SlefW+VSbfHrIVqURQ0Nbg/Pd+nj7VDsKV+sx0FHjyUCaO02YoYV5v+kW0PqvFJISQ==}
+
+  iron-webcrypto@0.2.8:
+    resolution: {integrity: sha512-YPdCvjFMOBjXaYuDj5tiHst5CEk6Xw84Jo8Y2+jzhMceclAnb3+vNPP/CTtb5fO2ZEuXEaO4N+w62Vfko757KA==}
+
+  iron-webcrypto@1.2.1:
+    resolution: {integrity: sha512-feOM6FaSr6rEABp/eDfVseKyTMDt+KGpeB35SkVn9Tyn0CqvVsY3EwI0v5i8nMHyJnzCIQf7nsy3p41TPkJZhg==}
+
   is-absolute-url@4.0.1:
     resolution: {integrity: sha512-/51/TKE88Lmm7Gc4/8btclNXWS+g50wXhYJq8HWIBAGUBnoAdRu1aXeh364t/O7wXDAcTJDP8PNuNKWUDWie+A==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
@@ -12440,6 +12478,9 @@ packages:
 
   jose@5.2.4:
     resolution: {integrity: sha512-6ScbIk2WWCeXkmzF6bRPmEuaqy1m8SbsRFMa/FLrSCkGIhj8OLVG/IH+XHVmNMx/KUo8cVWEE6oKR4dJ+S0Rkg==}
+
+  jose@5.6.3:
+    resolution: {integrity: sha512-1Jh//hEEwMhNYPDDLwXHa2ePWgWiFNNUadVmguAAw2IJ6sj9mNxV5tGXJNqlMkJAybF6Lgw1mISDxTePP/187g==}
 
   jotai-effect@1.0.0:
     resolution: {integrity: sha512-eCgKKG4BACDzuJGYTu0xZRk1C1MEOvbAhC3L8w7YufQ2lSLORwNX/WFnCuZxLFX0sDLkTUeoUzOYaw8wnXY+UQ==}
@@ -14543,6 +14584,13 @@ packages:
   pure-rand@6.1.0:
     resolution: {integrity: sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA==}
 
+  pvtsutils@1.3.5:
+    resolution: {integrity: sha512-ARvb14YB9Nm2Xi6nBq1ZX6dAM0FsJnuk+31aUp4TrcZEdKUlSqOqsxJHUPJDNE3qiIp+iUPEIeR6Je/tgV7zsA==}
+
+  pvutils@1.1.3:
+    resolution: {integrity: sha512-pMpnA0qRdFp32b1sJl1wOJNxZLQ2cbQx+k6tjNtZ8CpvVhNqEPRgivZ2WOUev2YMajecdH7ctUPDvEe87nariQ==}
+    engines: {node: '>=6.0.0'}
+
   qs@6.11.2:
     resolution: {integrity: sha512-tDNIz22aBzCDxLtVH++VnTfzxlfeK5CbqohpSqpJgj1Wg/cQbStNAz3NuqCs5vV+pjBsK4x4pN9HlVh7rcYRiA==}
     engines: {node: '>=0.6'}
@@ -16270,6 +16318,9 @@ packages:
   tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
 
+  tslib@2.8.0:
+    resolution: {integrity: sha512-jWVzBLplnCmoaTr13V9dYbiQ99wvZRd0vNWaDRg+aVYRcjDF3nDksxFDE/+fkXnKhpnUUkmx5pK/v8mCtLVqZA==}
+
   tsup@8.0.2:
     resolution: {integrity: sha512-NY8xtQXdH7hDUAZwcQdY/Vzlw9johQsaqf7iwZ6g1DOUlFYQ5/AtVAjTvihhEyeRlGo4dLRVHtrRaL35M1daqQ==}
     engines: {node: '>=18'}
@@ -16459,6 +16510,9 @@ packages:
 
   unbzip2-stream@1.4.3:
     resolution: {integrity: sha512-mlExGW4w71ebDJviH16lQLtZS32VKqsSfk80GCfUlwT/4/hNRFsoscrF/c++9xinkMzECL1uL9DDwXqFWkruPg==}
+
+  uncrypto@0.1.3:
+    resolution: {integrity: sha512-Ql87qFHB3s/De2ClA9e0gsnS6zXG27SkTiSJwjCc9MebbfapQfuPzumMIUMi38ezPZVNFcHI9sUIepeQfw8J8Q==}
 
   undefsafe@2.0.5:
     resolution: {integrity: sha512-WxONCrssBM8TSPRqN5EmsjVrsv4A8X12J4ArBiiayv3DyyG3ZlIg6yysuuSYdZsVz3TKcTg2fd//Ujd4CHV1iA==}
@@ -16876,6 +16930,9 @@ packages:
 
   web-vitals@4.2.3:
     resolution: {integrity: sha512-/CFAm1mNxSmOj6i0Co+iGFJ58OS4NRGVP+AWS/l509uIK5a1bSoIVaHz/ZumpHTfHSZBpgrJ+wjfpAOrTHok5Q==}
+
+  webcrypto-core@1.8.1:
+    resolution: {integrity: sha512-P+x1MvlNCXlKbLSOY4cYrdreqPG5hbzkmawbcXLKN/mf6DZW0SdNNkZ+sjwsqVkI4A4Ko2sPZmkZtCKY58w83A==}
 
   webflow-api@2.4.2:
     resolution: {integrity: sha512-+znE6V6E6YULwZIGIk8NLFZaimGFH7xVEAjCeivHz4gV13Zcg4FRXyhWxxTHnOYBwKjcjDoaWl8ZK1H9mUA5mQ==}
@@ -18318,7 +18375,7 @@ snapshots:
       '@babel/traverse': 7.24.5
       '@babel/types': 7.24.5
       convert-source-map: 2.0.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -19117,7 +19174,7 @@ snapshots:
       '@babel/helper-split-export-declaration': 7.24.5
       '@babel/parser': 7.24.5
       '@babel/types': 7.24.5
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -19375,7 +19432,7 @@ snapshots:
   '@eslint/eslintrc@2.1.4':
     dependencies:
       ajv: 6.12.6
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       espree: 9.6.1
       globals: 13.24.0
       ignore: 5.3.1
@@ -19420,41 +19477,17 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  '@fern-api/venus-api-sdk@0.1.1':
+  '@fern-api/venus-api-sdk@0.10.1-5-ged06d22':
     dependencies:
-      '@types/url-join': 4.0.1
-      axios: 0.27.2
+      form-data: 4.0.0
+      formdata-node: 6.0.3
       js-base64: 3.7.2
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      readable-stream: 4.5.2
       url-join: 4.0.1
     transitivePeerDependencies:
-      - debug
-
-  '@fern-api/venus-api-sdk@0.6.2-1-gbbd1ac5':
-    dependencies:
-      '@types/url-join': 4.0.1
-      axios: 0.27.2
-      js-base64: 3.7.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - debug
-
-  '@fern-api/venus-api-sdk@0.6.5-4-gdc534cf':
-    dependencies:
-      '@types/url-join': 4.0.1
-      axios: 0.27.2
-      js-base64: 3.7.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - debug
-
-  '@fern-api/venus-api-sdk@0.8.1-1-gd6d1a5b':
-    dependencies:
-      '@types/url-join': 4.0.1
-      axios: 0.27.2
-      js-base64: 3.7.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - debug
+      - encoding
 
   '@fern-fern/fdr-cjs-sdk@0.116.5-873e41db0':
     dependencies:
@@ -19467,15 +19500,17 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/fern-cloud-sdk@0.0.257':
+  '@fern-fern/fern-cloud-sdk@0.0.305':
     dependencies:
-      '@types/url-join': 4.0.1
-      '@ungap/url-search-params': 0.2.2
-      axios: 0.27.2
+      form-data: 4.0.0
+      formdata-node: 6.0.3
       js-base64: 3.7.2
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      readable-stream: 4.5.2
       url-join: 4.0.1
     transitivePeerDependencies:
-      - debug
+      - encoding
 
   '@fern-fern/fern-docs-sdk@0.0.5':
     dependencies:
@@ -19663,7 +19698,7 @@ snapshots:
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -20146,6 +20181,12 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.4.15
 
   '@js-sdsl/ordered-map@4.4.2': {}
+
+  '@kwsites/file-exists@1.1.1':
+    dependencies:
+      debug: 4.3.4(supports-color@5.5.0)
+    transitivePeerDependencies:
+      - supports-color
 
   '@kwsites/file-exists@1.1.1(supports-color@8.1.1)':
     dependencies:
@@ -20790,6 +20831,24 @@ snapshots:
       ts-pattern: 5.0.5
 
   '@pandacss/types@0.22.1': {}
+
+  '@peculiar/asn1-schema@2.3.13':
+    dependencies:
+      asn1js: 3.0.5
+      pvtsutils: 1.3.5
+      tslib: 2.6.2
+
+  '@peculiar/json-schema@1.1.12':
+    dependencies:
+      tslib: 2.6.2
+
+  '@peculiar/webcrypto@1.5.0':
+    dependencies:
+      '@peculiar/asn1-schema': 2.3.13
+      '@peculiar/json-schema': 1.1.12
+      pvtsutils: 1.3.5
+      tslib: 2.6.2
+      webcrypto-core: 1.8.1
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
@@ -24635,6 +24694,10 @@ snapshots:
 
   '@tsconfig/node16@1.0.4': {}
 
+  '@types/accepts@1.3.7':
+    dependencies:
+      '@types/node': 20.12.12
+
   '@types/acorn@4.0.6':
     dependencies:
       '@types/estree': 1.0.5
@@ -24694,8 +24757,19 @@ snapshots:
     dependencies:
       '@types/node': 20.12.12
 
+  '@types/content-disposition@0.5.8': {}
+
+  '@types/cookie@0.5.4': {}
+
   '@types/cookie@0.6.0':
     optional: true
+
+  '@types/cookies@0.9.0':
+    dependencies:
+      '@types/connect': 3.4.38
+      '@types/express': 4.17.21
+      '@types/keygrip': 1.0.6
+      '@types/node': 20.12.12
 
   '@types/cors@2.8.17':
     dependencies:
@@ -24790,6 +24864,8 @@ snapshots:
 
   '@types/html-to-text@9.0.4': {}
 
+  '@types/http-assert@1.5.6': {}
+
   '@types/http-cache-semantics@4.0.4': {}
 
   '@types/http-errors@2.0.4': {}
@@ -24841,8 +24917,25 @@ snapshots:
 
   '@types/katex@0.16.7': {}
 
+  '@types/keygrip@1.0.6': {}
+
   '@types/keyv@3.1.4':
     dependencies:
+      '@types/node': 20.12.12
+
+  '@types/koa-compose@3.2.8':
+    dependencies:
+      '@types/koa': 2.15.0
+
+  '@types/koa@2.15.0':
+    dependencies:
+      '@types/accepts': 1.3.7
+      '@types/content-disposition': 0.5.8
+      '@types/cookies': 0.9.0
+      '@types/http-assert': 1.5.6
+      '@types/http-errors': 2.0.4
+      '@types/keygrip': 1.0.6
+      '@types/koa-compose': 3.2.8
       '@types/node': 20.12.12
 
   '@types/lodash-es@4.17.12':
@@ -25052,7 +25145,7 @@ snapshots:
       '@typescript-eslint/type-utils': 7.3.1(eslint@8.57.0)(typescript@5.4.3)
       '@typescript-eslint/utils': 7.3.1(eslint@8.57.0)(typescript@5.4.3)
       '@typescript-eslint/visitor-keys': 7.3.1
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       eslint: 8.57.0
       graphemer: 1.4.0
       ignore: 5.3.1
@@ -25070,7 +25163,7 @@ snapshots:
       '@typescript-eslint/types': 7.17.0
       '@typescript-eslint/typescript-estree': 7.17.0(typescript@5.4.3)
       '@typescript-eslint/visitor-keys': 7.17.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       eslint: 8.57.0
     optionalDependencies:
       typescript: 5.4.3
@@ -25083,7 +25176,7 @@ snapshots:
       '@typescript-eslint/types': 7.3.1
       '@typescript-eslint/typescript-estree': 7.3.1(typescript@5.4.3)
       '@typescript-eslint/visitor-keys': 7.3.1
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       eslint: 8.57.0
     optionalDependencies:
       typescript: 5.4.3
@@ -25594,9 +25687,15 @@ snapshots:
       '@webassemblyjs/ast': 1.12.1
       '@xtuc/long': 4.2.2
 
-  '@workos-inc/node@6.8.0':
+  '@workos-inc/node@7.30.0(@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.1)':
     dependencies:
+      iron-session: 6.3.1(@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.1)
+      jose: 5.6.3
       pluralize: 8.0.0
+    transitivePeerDependencies:
+      - express
+      - koa
+      - next
 
   '@wry/caches@1.0.1':
     dependencies:
@@ -26927,6 +27026,12 @@ snapshots:
       inherits: 2.0.4
       minimalistic-assert: 1.0.1
 
+  asn1js@3.0.5:
+    dependencies:
+      pvtsutils: 1.3.5
+      pvutils: 1.1.3
+      tslib: 2.6.2
+
   assert@2.1.0:
     dependencies:
       call-bind: 1.0.7
@@ -27004,18 +27109,6 @@ snapshots:
       xml2js: 0.6.2
 
   axe-core@4.7.0: {}
-
-  axios-logger@2.8.0:
-    dependencies:
-      chalk: 4.1.2
-      dateformat: 3.0.3
-
-  axios@0.27.2:
-    dependencies:
-      follow-redirects: 1.15.6(debug@4.3.7)
-      form-data: 4.0.0
-    transitivePeerDependencies:
-      - debug
 
   axios@1.7.4:
     dependencies:
@@ -27798,8 +27891,9 @@ snapshots:
 
   cookie-signature@1.0.6: {}
 
-  cookie@0.5.0:
-    optional: true
+  cookie@0.5.0: {}
+
+  cookie@0.6.0: {}
 
   cookie@0.7.1: {}
 
@@ -28296,8 +28390,6 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.5
 
-  dateformat@3.0.3: {}
-
   dayjs@1.11.11: {}
 
   debounce@1.2.1: {}
@@ -28479,7 +28571,7 @@ snapshots:
       callsite: 1.0.0
       camelcase: 6.3.0
       cosmiconfig: 7.1.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       deps-regex: 0.2.0
       findup-sync: 5.0.0
       ignore: 5.3.1
@@ -29204,7 +29296,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.3
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
       eslint-scope: 7.2.2
@@ -30680,7 +30772,7 @@ snapshots:
     dependencies:
       '@ioredis/commands': 1.2.0
       cluster-key-slot: 1.1.2
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       denque: 2.1.0
       lodash.defaults: 4.2.0
       lodash.isarguments: 3.1.0
@@ -30693,6 +30785,31 @@ snapshots:
   ip@2.0.1: {}
 
   ipaddr.js@1.9.1: {}
+
+  iron-session@6.3.1(@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.1):
+    dependencies:
+      '@peculiar/webcrypto': 1.5.0
+      '@types/cookie': 0.5.4
+      '@types/express': 4.17.21
+      '@types/koa': 2.15.0
+      '@types/node': 17.0.45
+      cookie: 0.5.0
+      iron-webcrypto: 0.2.8
+    optionalDependencies:
+      express: 4.21.1
+      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+
+  iron-session@8.0.3:
+    dependencies:
+      cookie: 0.6.0
+      iron-webcrypto: 1.2.1
+      uncrypto: 0.1.3
+
+  iron-webcrypto@0.2.8:
+    dependencies:
+      buffer: 6.0.3
+
+  iron-webcrypto@1.2.1: {}
 
   is-absolute-url@4.0.1: {}
 
@@ -31330,6 +31447,8 @@ snapshots:
 
   jose@5.2.4: {}
 
+  jose@5.6.3: {}
+
   jotai-effect@1.0.0(jotai@2.8.1(@types/react@18.3.1)(react@18.3.1)):
     dependencies:
       jotai: 2.8.1(@types/react@18.3.1)(react@18.3.1)
@@ -31653,7 +31772,7 @@ snapshots:
     dependencies:
       chalk: 5.3.0
       commander: 11.0.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       execa: 7.2.0
       lilconfig: 2.1.0
       listr2: 6.6.1
@@ -33958,6 +34077,12 @@ snapshots:
 
   pure-rand@6.1.0: {}
 
+  pvtsutils@1.3.5:
+    dependencies:
+      tslib: 2.6.2
+
+  pvutils@1.1.3: {}
+
   qs@6.11.2:
     dependencies:
       side-channel: 1.0.6
@@ -35197,6 +35322,14 @@ snapshots:
       once: 1.4.0
       simple-concat: 1.0.1
 
+  simple-git@3.24.0:
+    dependencies:
+      '@kwsites/file-exists': 1.1.1
+      '@kwsites/promise-deferred': 1.1.1
+      debug: 4.3.4(supports-color@5.5.0)
+    transitivePeerDependencies:
+      - supports-color
+
   simple-git@3.24.0(supports-color@8.1.1):
     dependencies:
       '@kwsites/file-exists': 1.1.1(supports-color@8.1.1)
@@ -35655,7 +35788,7 @@ snapshots:
       cosmiconfig: 9.0.0(typescript@5.4.3)
       css-functions-list: 3.2.2
       css-tree: 2.3.1
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       fast-glob: 3.3.2
       fastest-levenshtein: 1.0.16
       file-entry-cache: 8.0.0
@@ -36310,12 +36443,14 @@ snapshots:
 
   tslib@2.6.2: {}
 
+  tslib@2.8.0: {}
+
   tsup@8.0.2(@swc/core@1.5.7)(postcss@8.4.31)(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@4.9.5))(typescript@4.9.5):
     dependencies:
       bundle-require: 4.1.0(esbuild@0.20.2)
       cac: 6.7.14
       chokidar: 3.6.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       esbuild: 0.20.2
       execa: 5.1.1
       globby: 11.1.0
@@ -36509,6 +36644,8 @@ snapshots:
     dependencies:
       buffer: 5.7.1
       through: 2.3.8
+
+  uncrypto@0.1.3: {}
 
   undefsafe@2.0.5: {}
 
@@ -36849,7 +36986,7 @@ snapshots:
   vite-node@1.6.0(@types/node@18.19.33)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0):
     dependencies:
       cac: 6.7.14
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       pathe: 1.1.2
       picocolors: 1.0.0
       vite: 5.4.6(@types/node@18.19.33)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
@@ -36867,7 +37004,7 @@ snapshots:
   vite-node@1.6.0(@types/node@22.5.5)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0):
     dependencies:
       cac: 6.7.14
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       pathe: 1.1.2
       picocolors: 1.0.0
       vite: 5.4.6(@types/node@22.5.5)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
@@ -36965,7 +37102,7 @@ snapshots:
       '@vitest/utils': 1.6.0
       acorn-walk: 8.3.2
       chai: 4.4.1
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       execa: 8.0.1
       local-pkg: 0.5.0
       magic-string: 0.30.10
@@ -37001,7 +37138,7 @@ snapshots:
       '@vitest/utils': 1.6.0
       acorn-walk: 8.3.2
       chai: 4.4.1
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       execa: 8.0.1
       local-pkg: 0.5.0
       magic-string: 0.30.10
@@ -37143,6 +37280,14 @@ snapshots:
   web-streams-polyfill@4.0.0-beta.3: {}
 
   web-vitals@4.2.3: {}
+
+  webcrypto-core@1.8.1:
+    dependencies:
+      '@peculiar/asn1-schema': 2.3.13
+      '@peculiar/json-schema': 1.1.12
+      asn1js: 3.0.5
+      pvtsutils: 1.3.5
+      tslib: 2.8.0
 
   webflow-api@2.4.2:
     dependencies:

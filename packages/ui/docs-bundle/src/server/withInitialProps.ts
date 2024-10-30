@@ -163,33 +163,34 @@ export async function withInitialProps({
 
     const navbarLinks = docs.definition.config.navbarLinks ?? [];
 
-    // TODO: This is a hack to add a login/logout button to the navbar. This should be done in a more generic way.
-    if (authConfig?.type === "basic_token_verification") {
-        if (!authState.authed) {
-            const redirect = new URL(withDefaultProtocol(authConfig.redirect));
-            redirect.searchParams.set("state", urlJoin(withDefaultProtocol(host), slug));
+    // TODO: This is a hack to add a login button to the navbar. This should be done in a more generic way.
+    if (authConfig?.type === "basic_token_verification" && !authState.authed) {
+        const redirect = new URL(withDefaultProtocol(authConfig.redirect));
+        redirect.searchParams.set("state", urlJoin(withDefaultProtocol(host), slug));
 
-            navbarLinks.push({
-                type: "outlined",
-                text: "Login",
-                url: FernNavigation.Url(redirect.toString()),
-                icon: undefined,
-                rightIcon: undefined,
-                rounded: false,
-            });
-        } else {
-            const logout = new URL(getApiRoute("/api/fern-docs/auth/logout"), withDefaultProtocol(host));
-            logout.searchParams.set("state", urlJoin(withDefaultProtocol(host), slug));
+        navbarLinks.push({
+            type: "outlined",
+            text: "Login",
+            url: FernNavigation.Url(redirect.toString()),
+            icon: undefined,
+            rightIcon: undefined,
+            rounded: false,
+        });
+    }
 
-            navbarLinks.push({
-                type: "outlined",
-                text: "Logout",
-                url: FernNavigation.Url(logout.toString()),
-                icon: undefined,
-                rightIcon: undefined,
-                rounded: false,
-            });
-        }
+    // TODO: This is a hack to add a logout button to the navbar. This should be done in a more generic way.
+    if (authState.authed) {
+        const logout = new URL(getApiRoute("/api/fern-docs/auth/logout"), withDefaultProtocol(host));
+        logout.searchParams.set("state", urlJoin(withDefaultProtocol(host), slug));
+
+        navbarLinks.push({
+            type: "outlined",
+            text: "Logout",
+            url: FernNavigation.Url(logout.toString()),
+            icon: undefined,
+            rightIcon: undefined,
+            rounded: false,
+        });
     }
 
     const pruneOpts = {

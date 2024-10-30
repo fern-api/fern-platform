@@ -1,16 +1,13 @@
 import type { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import type { Redirect } from "next/types";
-import { getUnauthenticatedRedirect } from "./getUnauthenticatedRedirect";
 
 export async function handleLoadDocsError(
     xFernHost: string,
     slug: FernNavigation.Slug,
     error: FdrAPI.docs.v2.read.getDocsForUrl.Error,
 ): Promise<{ redirect: Redirect } | { notFound: true }> {
-    if (error.error === "UnauthorizedError") {
-        const redirect = await getUnauthenticatedRedirect(xFernHost, encodeURI(slug));
-        return { redirect };
-    } else if (error.error === "DomainNotRegisteredError") {
+    if (error.error === "DomainNotRegisteredError") {
+        // TODO: emit a telemetry event
         return { notFound: true };
     }
 

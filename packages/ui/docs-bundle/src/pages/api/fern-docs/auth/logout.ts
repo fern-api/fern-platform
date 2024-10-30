@@ -1,3 +1,4 @@
+import { getLogoutUrl } from "@/server/auth/workos-session";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
@@ -11,16 +12,24 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const domain = getDocsDomainEdge(req);
 
     const authConfig = await getAuthEdgeConfig(domain);
-    const logoutUrl = authConfig?.type === "basic_token_verification" ? safeUrl(authConfig.logout) : undefined;
 
-    const state = safeUrl(req.nextUrl.searchParams.get("state"));
+    const logoutUrlRaw =
+        authConfig?.type === "basic_token_verification"
+            ? authConfig.logout
+            : authConfig?.partner === "workos"
+              ? await getLogoutUrl(req.cookies.get(COOKIE_FERN_TOKEN)?.value)
+              : undefined;
+
+    const logoutUrl = safeUrl(logoutUrlRaw);
 
     // if logout url is provided, append the state to it before redirecting
-    if (logoutUrl != null && state != null) {
-        logoutUrl?.searchParams.set("state", state.toString());
+    if (req.nextUrl.searchParams.has("state")) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        logoutUrl?.searchParams.set("state", req.nextUrl.searchParams.get("state")!);
     }
 
-    const redirectLocation = logoutUrl ?? state ?? safeUrl(withDefaultProtocol(getHostEdge(req)));
+    const redirectLocation =
+        logoutUrl ?? safeUrl(req.nextUrl.searchParams.get("state")) ?? safeUrl(withDefaultProtocol(getHostEdge(req)));
 
     const res = redirectLocation ? NextResponse.redirect(redirectLocation) : NextResponse.next();
     res.cookies.delete(COOKIE_FERN_TOKEN);

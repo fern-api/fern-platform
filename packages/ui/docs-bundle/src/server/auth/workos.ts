@@ -1,7 +1,7 @@
-import WorkOS, { AuthorizationURLOptions } from "@workos-inc/node";
+import { AuthorizationURLOptions, WorkOS } from "@workos-inc/node";
 import { once } from "es-toolkit/function";
 
-export const getWorkOS = once(() => new WorkOS(getWorkOSApiKey()));
+export const workos = once(() => new WorkOS(getWorkOSApiKey()));
 
 export function getWorkOSApiKey(): string {
     const apiKey = process.env.WORKOS_API_KEY;
@@ -23,23 +23,23 @@ export function getWorkOSClientId(): string {
     throw new Error("WORKOS_CLIENT_ID is not set");
 }
 
-export function getAuthorizationUrl(
-    options: Omit<AuthorizationURLOptions, "provider" | "clientId" | "redirectUri"> = {},
-    xFernHost: string,
-): string {
-    // TODO: make this work for docs with basepath or trailing slash
-    const redirectUri =
-        process.env.NODE_ENV === "development"
-            ? "http://localhost:3000/api/fern-docs/auth/callback"
-            : `https://${xFernHost}/api/fern-docs/auth/callback`;
+export function getJwtSecretKey(): string {
+    const secret = process.env.JWT_SECRET_KEY;
 
-    const authorizationUrl = getWorkOS().sso.getAuthorizationUrl({
+    if (secret != null) {
+        return secret;
+    }
+
+    throw new Error("JWT_SECRET_KEY is not set");
+}
+
+export function getAuthorizationUrl(options: Omit<AuthorizationURLOptions, "provider" | "clientId">): string {
+    const authorizationUrl = workos().sso.getAuthorizationUrl({
         ...options,
         provider: "authkit",
         clientId: getWorkOSClientId(),
         // The endpoint that WorkOS will redirect to after a user authenticates
-        redirectUri,
+        redirectUri: options.redirectUri,
     });
-
     return authorizationUrl;
 }
