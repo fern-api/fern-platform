@@ -51,7 +51,6 @@ export function DesktopInstantSearch({
                     restrictHighlightAndSnippetArrays={true}
                     distinct={true}
                     attributesToSnippet={["description:20", "content:20"]}
-                    hitsPerPage={100}
                     ignorePlurals
                 />
                 <DesktopSearchForm

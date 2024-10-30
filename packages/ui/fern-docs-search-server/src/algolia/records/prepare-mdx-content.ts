@@ -1,4 +1,5 @@
 import { isMdxExpression, isMdxJsxElement, mdastToString, toTree, visit } from "@fern-ui/fern-docs-mdx";
+import { decode } from "html-entities";
 
 interface PreparedMdxContent {
     content: string | undefined;
@@ -44,13 +45,20 @@ export function prepareMdxContent(content: string): PreparedMdxContent {
             return index;
         }
 
+        if (node.type === "text" || node.type === "html") {
+            // replace all html entities with their corresponding characters
+            node.value = decode(node.value);
+        }
+
         return true;
     });
+
     const stringifiedContent = mdastToString(tree, {
         includeHtml: false,
         includeImageAlt: true,
         preserveNewlines: true,
     }).trim();
+
     return {
         content: stringifiedContent.length > 0 ? stringifiedContent : undefined,
         code_snippets: code_snippets.length > 0 ? code_snippets : undefined,

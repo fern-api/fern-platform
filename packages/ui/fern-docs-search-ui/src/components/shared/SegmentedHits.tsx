@@ -8,6 +8,7 @@ import { AlgoliaRecordHit } from "../types";
 import { ArrowTurnDownLeftIcon } from "./ArrowTurnDownLeftIcon";
 import { HitContent } from "./HitContent";
 import { LinkComponentType } from "./LinkComponent";
+import { RegularFileLinesIcon } from "./RegularFileLinesIcon";
 import { SegmentedHitsRadioGroup } from "./SegmentedHitsRadioGroup";
 
 interface HitProps {
@@ -25,6 +26,10 @@ function Hit({ hit, LinkComponent }: HitProps): ReactElement | null {
             className="mx-2 p-2 rounded-md hover:bg-[#CCC]/30 data-[state=checked]:bg-[#CCC]/30 text-left block"
         >
             <LinkComponent hit={{ pathname: hit.pathname ?? "", hash: hit.hash ?? "" }} className="flex gap-2">
+                <div className="shrink-0 py-1">
+                    <RegularFileLinesIcon className="size-4 text-[#969696]" />
+                </div>
+
                 <div className="flex-1">
                     <HitContent hit={hit as MarkRequired<AlgoliaRecordHit, "type">} />
                 </div>

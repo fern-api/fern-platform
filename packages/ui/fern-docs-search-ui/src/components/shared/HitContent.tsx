@@ -61,7 +61,7 @@ function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
             <Snippet
                 attribute={hit._highlightResult?.description ? "description" : "content"}
                 hit={hit}
-                className="text-sm leading-snug line-clamp-2"
+                className="text-sm leading-snug line-clamp-2 text-black/50"
                 classNames={{
                     highlighted: "font-bold bg-transparent",
                 }}
