@@ -694,7 +694,11 @@ class ApiDefinitionTransformationContext {
     }
 
     private getHost(url: string) {
-        const parsedBaseUrl = new URL(url);
-        return parsedBaseUrl.host;
+        try {
+            const parsedBaseUrl = new URL(url);
+            return parsedBaseUrl.host;
+        } catch (err) {
+            return "";
+        }
     }
 }
