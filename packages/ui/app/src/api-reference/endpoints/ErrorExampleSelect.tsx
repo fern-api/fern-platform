@@ -16,7 +16,7 @@ export declare namespace ErrorExampleSelect {
         selectedExampleKey: SelectedExampleKey | undefined;
         setSelectedExampleKey: (statusCode: StatusCode, exampleIndex: ExampleIndex) => void;
         examplesByStatusCode: ExamplesByStatusCode | undefined;
-        getExampleTitle: (
+        getExampleId: (
             example: CodeExample | undefined,
             errorName: string | undefined,
             exampleIndex: number | undefined,
@@ -31,7 +31,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
     selectedExampleKey,
     setSelectedExampleKey,
     examplesByStatusCode,
-    getExampleTitle,
+    getExampleId,
 }) => {
     const errorName = useMemo(
         () => (example: ApiDefinition.ExampleEndpointCall | undefined) => {
@@ -63,7 +63,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
     if (errors.length === 0) {
         return (
             <span className="t-muted text-sm">
-                {getExampleTitle(selectedExample, selectedError?.examples?.[0]?.name ?? selectedError?.name, undefined)}
+                {getExampleId(selectedExample, selectedError?.examples?.[0]?.name ?? selectedError?.name, undefined)}
             </span>
         );
     }
@@ -86,7 +86,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                     }
                 >
                     <Select.Value>
-                        {getExampleTitle(selectedExample, errorName(selectedExample?.exampleCall), undefined)}
+                        {getExampleId(selectedExample, errorName(selectedExample?.exampleCall), undefined)}
                     </Select.Value>
                 </FernButton>
             </Select.Trigger>
@@ -108,11 +108,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                                                     key={j}
                                                     intent={statusCodeToIntent(Number(statusCode))}
                                                 >
-                                                    {getExampleTitle(
-                                                        example,
-                                                        errorName(example.exampleCall),
-                                                        undefined,
-                                                    )}
+                                                    {getExampleId(example, errorName(example.exampleCall), undefined)}
                                                 </FernSelectItem>
                                             );
                                         })}

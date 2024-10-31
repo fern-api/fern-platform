@@ -82,7 +82,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
         setSelectedExampleKey([selectedClient.language, selectedExampleKey?.[1], statusCode, exampleIndex]);
     };
 
-    const getExampleTitle = useMemo(
+    const getExampleId = useMemo(
         () => (example: CodeExample | undefined, errorName: string | undefined, exampleIndex: number | undefined) =>
             example?.exampleCall.responseBody != null
                 ? visitDiscriminatedUnion(example.exampleCall.responseBody)._visit<ReactNode>({
@@ -131,11 +131,11 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
             examplesByStatusCode={
                 examplesByClientAndTitleAndStatusCode?.[selectedClient.language]?.[selectedExampleKey?.[1] ?? ""]
             }
-            getExampleTitle={getExampleTitle}
+            getExampleId={getExampleId}
         />
     ) : (
         <span className="text-sm t-muted">
-            {getExampleTitle(selectedExample, selectedError?.examples?.[0]?.name, undefined)}
+            {getExampleId(selectedExample, selectedError?.examples?.[0]?.name, undefined)}
         </span>
     );
 

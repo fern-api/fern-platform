@@ -209,9 +209,9 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                               ),
                               (e) => e.key ?? "",
                           ),
-                      ).map(([exampleTitle, examples]) => {
+                      ).map(([exampleId, examples]) => {
                           return [
-                              exampleTitle,
+                              exampleId,
                               {
                                   ...groupBy(examples, (e) => e.exampleCall.responseStatusCode),
                                   ...groupBy(
@@ -239,8 +239,8 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
 
             const examplesAcc = acc[client.language];
             if (examplesAcc != null) {
-                Object.keys(examplesAcc).forEach((exampleTitle) => {
-                    const examplesByStatusCode = examplesAcc[exampleTitle];
+                Object.keys(examplesAcc).forEach((exampleId) => {
+                    const examplesByStatusCode = examplesAcc[exampleId];
                     if (examplesByStatusCode != null) {
                         Object.keys(allGlobalErrors).forEach((statusCode) => {
                             if (examplesByStatusCode[Number(statusCode)] == null) {
@@ -259,16 +259,16 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
     useEffect(() => {
         setSelectedError(undefined);
         setSelectedExampleKey((selectedExampleKey) => {
-            const [currentLanguage, exampleTitle, statusCode, exampleIndex] = selectedExampleKey ?? [];
+            const [currentLanguage, exampleId, statusCode, exampleIndex] = selectedExampleKey ?? [];
             if (examplesByClientAndTitleAndStatusCode != null && currentLanguage !== selectedLanguage) {
                 setSelectedError(undefined);
                 const examplesByTitleAndStatusCode = examplesByClientAndTitleAndStatusCode[selectedLanguage];
                 if (
-                    (exampleTitle != null &&
+                    (exampleId != null &&
                         statusCode != null &&
                         exampleIndex != null &&
-                        examplesByTitleAndStatusCode?.[exampleTitle]?.[statusCode]?.[exampleIndex] == null) ||
-                    (statusCode == null && exampleIndex == null && exampleTitle == null)
+                        examplesByTitleAndStatusCode?.[exampleId]?.[statusCode]?.[exampleIndex] == null) ||
+                    (statusCode == null && exampleIndex == null && exampleId == null)
                 ) {
                     const firstExampleKey = Object.keys(examplesByTitleAndStatusCode ?? {})[0];
                     const examplesByStatusCodes = firstExampleKey
@@ -287,7 +287,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                             : 200;
                     return [selectedLanguage, firstExampleKey, statusCode, 0];
                 } else {
-                    return [selectedLanguage, exampleTitle, statusCode, exampleIndex];
+                    return [selectedLanguage, exampleId, statusCode, exampleIndex];
                 }
             }
 
