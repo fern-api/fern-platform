@@ -2,11 +2,9 @@
 
 import { DesktopInstantSearch } from "@/components/desktop/DesktopInstantSearch";
 import { createDefaultLinkComponent } from "@/components/shared/LinkComponent";
-import { InitialResultsResponse } from "@/server/browse-results";
+import { useInitialResults } from "@/hooks/useInitialResults";
 import { ReactElement } from "react";
 import useSWR from "swr";
-
-const DEFAULT_INITIAL_RESULTS = { tabs: [], products: [], versions: [] };
 
 export function DesktopInstantSearchClient({ appId, domain }: { appId: string; domain: string }): ReactElement | false {
     const handleSubmit = (path: string) => {
@@ -21,23 +19,31 @@ export function DesktopInstantSearchClient({ appId, domain }: { appId: string; d
                 .then((data) => data.apiKey),
     );
 
-    const { data: initialResults } = useSWR(
-        [domain, "initial-results"],
-        (): Promise<InitialResultsResponse> => fetch(`/api/initial-result?domain=${domain}`).then((res) => res.json()),
-    );
+    const { initialResults, isLoading: initialResultsLoading } = useInitialResults(domain);
 
     if (!apiKey) {
         return false;
     }
 
     return (
-        <DesktopInstantSearch
-            appId={appId}
-            apiKey={apiKey}
-            LinkComponent={createDefaultLinkComponent(domain)}
-            onSubmit={handleSubmit}
-            disabled={isLoading || !apiKey}
-            initialResults={initialResults ?? DEFAULT_INITIAL_RESULTS}
-        />
+        <>
+            {initialResults.versions.length > 0 && (
+                <select>
+                    {initialResults.versions.map((version) => (
+                        <option key={version.title} value={version.title}>
+                            {version.title}
+                        </option>
+                    ))}
+                </select>
+            )}
+            <DesktopInstantSearch
+                appId={appId}
+                apiKey={apiKey}
+                LinkComponent={createDefaultLinkComponent(domain)}
+                onSubmit={handleSubmit}
+                disabled={isLoading || initialResultsLoading || !apiKey}
+                initialResults={initialResults}
+            />
+        </>
     );
 }

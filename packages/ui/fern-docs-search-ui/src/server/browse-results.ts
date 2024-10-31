@@ -9,9 +9,9 @@ export interface NavigationRecord {
 }
 
 export interface InitialResultsResponse {
-    tabs: NavigationRecord[];
+    tabs: (NavigationRecord & { version?: string; product?: string })[];
+    versions: (NavigationRecord & { product?: string })[];
     products: NavigationRecord[];
-    versions: NavigationRecord[];
 }
 
 export async function browseInitialResults(domain: string): Promise<InitialResultsResponse> {
@@ -25,7 +25,7 @@ export async function browseInitialResults(domain: string): Promise<InitialResul
         client,
         createSearchFilters({ domain, roles: [], authed: false }) + " AND type:navigation",
         "fern-docs-search",
-        ["pathname", "node_type", "title", "icon"],
+        ["pathname", "node_type", "title", "icon", "version", "product"],
         true,
     );
 
@@ -39,10 +39,12 @@ export async function browseInitialResults(domain: string): Promise<InitialResul
                 return;
             }
 
-            const r: NavigationRecord = {
+            const r = {
                 title: record.title,
                 pathname: record.pathname,
                 icon: record.icon,
+                version: record.version?.title,
+                product: record.product?.title,
             };
 
             if (record.node_type === "tab") {
