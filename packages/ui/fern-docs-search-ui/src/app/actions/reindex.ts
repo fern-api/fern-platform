@@ -5,8 +5,9 @@ import { algoliaIndexSettingsTask, algoliaIndexerTask } from "@fern-ui/fern-docs
 
 const INDEX_NAME = "fern-docs-search";
 
-export const handleReindex = async (domain: string) => {
-    console.log("Reindexing");
+export const handleReindex = async (domain: string): Promise<void> => {
+    // eslint-disable-next-line no-console
+    console.debug("Reindexing");
 
     await algoliaIndexSettingsTask({
         appId: algoliaAppId(),
@@ -24,5 +25,6 @@ export const handleReindex = async (domain: string) => {
         authed: false,
     });
 
+    // eslint-disable-next-line no-console
     console.debug(response);
 };

@@ -1,22 +1,22 @@
 import "server-only";
 
-export function algoliaAppId() {
+export function algoliaAppId(): string {
     return getEnvVariable("ALGOLIA_APP_ID");
 }
 
-export function algoliaWriteApiKey() {
+export function algoliaWriteApiKey(): string {
     return getEnvVariable("ALGOLIA_WRITE_API_KEY");
 }
 
-export function algoliaSearchApikey() {
+export function algoliaSearchApikey(): string {
     return getEnvVariable("ALGOLIA_SEARCH_API_KEY");
 }
 
-export function fernToken() {
+export function fernToken(): string {
     return getEnvVariable("FERN_TOKEN");
 }
 
-export function fdrEnvironment() {
+export function fdrEnvironment(): string {
     return getEnvVariable("FDR_ENVIRONMENT");
 }
 

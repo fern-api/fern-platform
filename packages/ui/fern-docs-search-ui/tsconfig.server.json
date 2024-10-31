@@ -9,6 +9,5 @@
     "moduleResolution": "Node16",
     "isolatedModules": false
   },
-  "include": ["./src/server/**/*.ts"],
-  "references": [{ "path": "../fern-docs-search-server" }]
+  "include": ["./src/server/**/*.ts"]
 }

@@ -1,12 +1,8 @@
-import { type Algoliasearch } from "algoliasearch";
+import { GenerateSecuredApiKeyOptions } from "algoliasearch";
+import { createHmac } from "crypto";
 import { createSearchFilters } from "./roles/create-search-filters.js";
 
 interface GetSearchApiKeyOptions {
-    /**
-     * Algolia search client
-     */
-    client: Algoliasearch;
-
     /**
      * Parent READ-only API key scoped to the search index.
      */
@@ -39,7 +35,6 @@ interface GetSearchApiKeyOptions {
 }
 
 export function getSearchApiKey({
-    client,
     parentApiKey,
     domain,
     roles,
@@ -47,7 +42,7 @@ export function getSearchApiKey({
     expiresInSeconds,
     searchIndex,
 }: GetSearchApiKeyOptions): string {
-    return client.generateSecuredApiKey({
+    return generateSecuredApiKey({
         parentApiKey,
         restrictions: {
             filters: createSearchFilters({ domain, roles, authed }),
@@ -55,4 +50,47 @@ export function getSearchApiKey({
             restrictIndices: [searchIndex],
         },
     });
+}
+
+function generateSecuredApiKey({ parentApiKey, restrictions = {} }: GenerateSecuredApiKeyOptions): string {
+    let mergedRestrictions = restrictions;
+    if (restrictions.searchParams) {
+        // merge searchParams with the root restrictions
+        mergedRestrictions = {
+            ...restrictions,
+            ...restrictions.searchParams,
+        };
+
+        delete mergedRestrictions.searchParams;
+    }
+
+    mergedRestrictions = Object.keys(mergedRestrictions)
+        .sort()
+        .reduce(
+            (acc, key) => {
+                acc[key] = (mergedRestrictions as any)[key];
+                return acc;
+            },
+            {} as Record<string, unknown>,
+        );
+
+    const queryParameters = serializeQueryParameters(mergedRestrictions);
+    return Buffer.from(
+        createHmac("sha256", parentApiKey).update(queryParameters).digest("hex") + queryParameters,
+    ).toString("base64");
+}
+
+function serializeQueryParameters(parameters: Record<string, any>): string {
+    return Object.keys(parameters)
+        .filter((key) => parameters[key] !== undefined)
+        .sort()
+        .map(
+            (key) =>
+                `${key}=${encodeURIComponent(
+                    Object.prototype.toString.call(parameters[key]) === "[object Array]"
+                        ? parameters[key].join(",")
+                        : parameters[key],
+                ).replace(/\+/g, "%20")}`,
+        )
+        .join("&");
 }

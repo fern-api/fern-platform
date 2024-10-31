@@ -36,7 +36,7 @@ export function DesktopInstantSearch({
 
     useEffect(() => {
         ref.current.setClientApiKey({ apiKey });
-        ref.current.clearCache();
+        void ref.current.clearCache();
     }, [apiKey]);
 
     useTrapFocus({ container: formRef.current });
@@ -101,3 +101,5 @@ const DesktopSearchForm = forwardRef<HTMLFormElement, PropsWithChildren<DesktopS
         );
     },
 );
+
+DesktopSearchForm.displayName = "DesktopSearchForm";

@@ -13,15 +13,15 @@
   "type": "module",
   "exports": {
     "./types": {
-      "types": "./src/algolia/types.ts",
+      "types": "./dist/algolia/types.d.ts",
       "default": "./dist/algolia/types.js"
     },
     "./algolia": {
-      "types": "./src/algolia/index.ts",
+      "types": "./dist/algolia/index.d.ts",
       "default": "./dist/algolia/index.js"
     },
     "./tasks": {
-      "types": "./src/tasks/index.ts",
+      "types": "./dist/tasks/index.d.ts",
       "default": "./dist/tasks/index.js"
     }
   },

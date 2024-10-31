@@ -1,6 +1,8 @@
 {
   "extends": "@fern-platform/configs/tsconfig/library.json",
   "compilerOptions": {
+    "composite": false,
+    "incremental": false,
     "outDir": "./dist",
     "moduleResolution": "NodeNext",
     "module": "NodeNext",

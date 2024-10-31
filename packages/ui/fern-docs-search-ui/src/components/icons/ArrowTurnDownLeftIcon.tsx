@@ -19,3 +19,5 @@ export const ArrowTurnDownLeftIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGEl
         />
     </svg>
 ));
+
+ArrowTurnDownLeftIcon.displayName = "ArrowTurnDownLeftIcon";

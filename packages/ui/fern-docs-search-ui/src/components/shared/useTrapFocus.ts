@@ -7,7 +7,7 @@ interface UseTrapFocusProps {
 }
 
 // https://github.com/algolia/docsearch/blob/main/packages/docsearch-react/src/useTrapFocus.ts
-export function useTrapFocus({ container }: UseTrapFocusProps) {
+export function useTrapFocus({ container }: UseTrapFocusProps): void {
     useEffect(() => {
         if (!container) {
             return undefined;

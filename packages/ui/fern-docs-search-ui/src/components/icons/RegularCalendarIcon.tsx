@@ -19,3 +19,5 @@ export const RegularCalendarIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGElem
         />
     </svg>
 ));
+
+RegularCalendarIcon.displayName = "RegularCalendarIcon";

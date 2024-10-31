@@ -19,3 +19,5 @@ export const RegularFileLinesIcon = forwardRef<SVGSVGElement, SVGProps<SVGSVGEle
         />
     </svg>
 ));
+
+RegularFileLinesIcon.displayName = "RegularFileLinesIcon";
