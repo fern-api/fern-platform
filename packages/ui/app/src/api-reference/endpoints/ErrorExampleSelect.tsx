@@ -3,66 +3,73 @@ import { FernButton, Intent } from "@fern-ui/components";
 import * as Select from "@radix-ui/react-select";
 import clsx from "clsx";
 import { Check, NavArrowDown, NavArrowUp } from "iconoir-react";
-import { FC, Fragment, PropsWithChildren, forwardRef } from "react";
-import { StatusCodeTag, statusCodeToIntent } from "../../components/StatusCodeTag";
+import { FC, Fragment, PropsWithChildren, ReactNode, forwardRef, useMemo } from "react";
+import { statusCodeToIntent } from "../../components/StatusCodeTag";
+import { CodeExample } from "../examples/code-example";
+import { ExampleIndex, ExamplesByStatusCode, SelectedExampleKey, StatusCode } from "../types/EndpointContent";
 
 export declare namespace ErrorExampleSelect {
     export interface Props {
-        selectedError: ApiDefinition.ErrorResponse | undefined;
-        selectedErrorExample: ApiDefinition.ErrorExample | undefined;
         errors: readonly ApiDefinition.ErrorResponse[];
-        setSelectedErrorAndExample: (
-            error: ApiDefinition.ErrorResponse | undefined,
-            example: ApiDefinition.ErrorExample | undefined,
-        ) => void;
+        selectedError: ApiDefinition.ErrorResponse | undefined;
+        setSelectedErrorAndExample: (error: ApiDefinition.ErrorResponse | undefined) => void;
+        selectedExampleKey: SelectedExampleKey | undefined;
+        setSelectedExampleKey: (statusCode: StatusCode, exampleIndex: ExampleIndex) => void;
+        examplesByStatusCode: ExamplesByStatusCode | undefined;
+        getExampleTitle: (
+            example: CodeExample | undefined,
+            errorName: string | undefined,
+            exampleIndex: number | undefined,
+        ) => ReactNode;
     }
 }
 
 export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>> = ({
-    selectedError,
-    selectedErrorExample,
     errors,
+    selectedError,
     setSelectedErrorAndExample,
-    children,
+    selectedExampleKey,
+    setSelectedExampleKey,
+    examplesByStatusCode,
+    getExampleTitle,
 }) => {
-    const handleValueChange = (value: string) => {
-        const [errorIndex = 0, exampleIndex = 0] = value.split(":").map((v) => parseInt(v, 10));
-        setSelectedErrorAndExample(errors[errorIndex], errors[errorIndex]?.examples?.[exampleIndex]);
-    };
-    const selectedErrorIndex = selectedError != null ? errors.indexOf(selectedError) : -1;
-    const selectedExampleIndex =
-        selectedError != null && selectedErrorExample != null
-            ? selectedError?.examples?.indexOf(selectedErrorExample) ?? -1
-            : -1;
+    const errorName = useMemo(
+        () => (example: ApiDefinition.ExampleEndpointCall | undefined) => {
+            const errorResponse = errors.find((e) => e.statusCode === example?.responseStatusCode);
 
-    const value = `${selectedErrorIndex}:${selectedExampleIndex}`;
+            return errorResponse?.examples?.find((e) => e.name === example?.name)?.name ?? errorResponse?.name;
+        },
+        [errors],
+    );
+    const handleValueChange = (value: string) => {
+        const [statusCode = 200, exampleIndex = 0] = value.split(":").map((v) => parseInt(v, 10));
+        if (statusCode >= 400) {
+            const errorIndex = errors.findIndex((e) => e.statusCode === statusCode);
+            setSelectedErrorAndExample(errors[errorIndex]);
+        } else {
+            setSelectedErrorAndExample(undefined);
+        }
+        setSelectedExampleKey(statusCode, exampleIndex);
+    };
+
+    const selectedExample = useMemo(() => {
+        if (selectedExampleKey == null) {
+            return undefined;
+        }
+        const [_client, _title, statusCode = 200, exampleIndex = 0] = selectedExampleKey;
+        return examplesByStatusCode?.[statusCode]?.[exampleIndex];
+    }, [selectedExampleKey, examplesByStatusCode]);
 
     if (errors.length === 0) {
-        return <span className="t-muted text-sm">{children}</span>;
+        return (
+            <span className="t-muted text-sm">
+                {getExampleTitle(selectedExample, selectedError?.examples?.[0]?.name ?? selectedError?.name, undefined)}
+            </span>
+        );
     }
 
-    const renderValue = () => {
-        if (selectedError != null) {
-            const content = `${
-                selectedError.examples && selectedError.examples.length > 1
-                    ? `${selectedError.name} Example ${selectedExampleIndex + 1}`
-                    : selectedError.name
-            }`;
-            return (
-                <span className={clsx("inline-flex gap-2 items-center")}>
-                    <StatusCodeTag statusCode={selectedError.statusCode} />
-                    <span className={`text-intent-${statusCodeToIntent(selectedError.statusCode)}`}>
-                        {selectedErrorExample?.name ?? content}
-                    </span>
-                </span>
-            );
-        } else {
-            return children ?? "Response";
-        }
-    };
-
     return (
-        <Select.Root onValueChange={handleValueChange} value={value}>
+        <Select.Root onValueChange={handleValueChange} value={getExampleKey(selectedExampleKey)}>
             <Select.Trigger asChild={true}>
                 <FernButton
                     rightIcon={
@@ -72,9 +79,19 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                     }
                     variant="minimal"
                     className="-ml-1 pl-1"
-                    intent={selectedError != null ? statusCodeToIntent(selectedError.statusCode) : "none"}
+                    intent={
+                        selectedExample != null
+                            ? statusCodeToIntent(selectedExample.exampleCall.responseStatusCode)
+                            : "none"
+                    }
                 >
-                    <Select.Value>{renderValue()}</Select.Value>
+                    <Select.Value>
+                        {getExampleTitle(
+                            selectedExample,
+                            selectedError?.examples?.[0]?.name ?? selectedError?.name,
+                            undefined,
+                        )}
+                    </Select.Value>
                 </FernButton>
             </Select.Trigger>
             <Select.Portal>
@@ -83,49 +100,29 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                         <NavArrowUp className="size-icon" />
                     </Select.ScrollUpButton>
                     <Select.Viewport className="p-[5px]">
-                        <Select.Group>
-                            <FernSelectItem value="-1:-1">{children ?? "Response"}</FernSelectItem>
-                        </Select.Group>
-                        {errors.map((error, i) => (
-                            <Fragment key={i}>
-                                <Select.Separator className="bg-tag-default m-[5px] h-px" />
-                                <Select.Group>
-                                    {error.examples?.map((example, j) => (
-                                        <FernSelectItem
-                                            value={`${i}:${j}`}
-                                            key={j}
-                                            intent={statusCodeToIntent(error.statusCode)}
-                                        >
-                                            <span className="inline-flex gap-2 items-center">
-                                                <StatusCodeTag statusCode={error.statusCode} />
-                                                <span className={`text-intent-${statusCodeToIntent(error.statusCode)}`}>
-                                                    {example.name ??
-                                                        (error.examples && error.examples.length > 1
-                                                            ? `${error.name} Example ${j + 1}`
-                                                            : error.name)}
-                                                </span>
-                                            </span>
-                                        </FernSelectItem>
-                                    ))}
-                                    {!error.examples ||
-                                        (error.examples.length === 0 && (
-                                            <FernSelectItem
-                                                value={`${i}:-1`}
-                                                intent={statusCodeToIntent(error.statusCode)}
-                                            >
-                                                <span className="inline-flex gap-2 items-center">
-                                                    <StatusCodeTag statusCode={error.statusCode} />
-                                                    <span
-                                                        className={`text-intent-${statusCodeToIntent(error.statusCode)}`}
-                                                    >
-                                                        {error.name}
-                                                    </span>
-                                                </span>
-                                            </FernSelectItem>
-                                        ))}
-                                </Select.Group>
-                            </Fragment>
-                        ))}
+                        {examplesByStatusCode &&
+                            Object.entries(examplesByStatusCode).map(([statusCode, examples]) => (
+                                <Fragment key={statusCode}>
+                                    <Select.Separator className="bg-tag-default m-[5px] h-px" />
+                                    <Select.Group>
+                                        {examples?.map((example, j) => {
+                                            return (
+                                                <FernSelectItem
+                                                    value={`${statusCode}:${j}`}
+                                                    key={j}
+                                                    intent={statusCodeToIntent(Number(statusCode))}
+                                                >
+                                                    {getExampleTitle(
+                                                        example,
+                                                        errorName(example.exampleCall),
+                                                        undefined,
+                                                    )}
+                                                </FernSelectItem>
+                                            );
+                                        })}
+                                    </Select.Group>
+                                </Fragment>
+                            ))}
                     </Select.Viewport>
                     <Select.ScrollDownButton className="t-accent flex h-8 cursor-default items-center justify-center bg-card">
                         <NavArrowDown className="size-icon" />
@@ -162,3 +159,14 @@ export const FernSelectItem = forwardRef<
         </Select.Item>
     );
 });
+
+const getExampleKey = (key: SelectedExampleKey | undefined) => {
+    if (key == null) {
+        return undefined;
+    }
+    const [_, statusCode, exampleIndex] = key;
+    if (statusCode == null || exampleIndex == null) {
+        return undefined;
+    }
+    return `${statusCode}:${exampleIndex}`;
+};
