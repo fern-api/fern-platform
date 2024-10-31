@@ -1,2 +1,2 @@
-export * from "./algolia-index-settings-task.js";
-export * from "./algolia-indexer-task.js";
+export * from "./algolia-index-settings-task";
+export * from "./algolia-indexer-task";

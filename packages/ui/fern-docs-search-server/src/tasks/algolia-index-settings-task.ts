@@ -1,6 +1,6 @@
-import { setIndexSettings } from "@/algolia/set-index-settings.js";
 import { algoliasearch } from "algoliasearch";
 import { assert } from "ts-essentials";
+import { setIndexSettings } from "../algolia/set-index-settings";
 
 interface AlgoliaIndexSettingsTaskOptions {
     indexName: string;

@@ -1,6 +1,6 @@
 // import { Algolia, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
-// import { BaseRecord, EndpointBaseRecord } from "../types.js";
-// import { convertNameToAnchorPart, toBreadcrumbs, toDescription } from "./utils.js";
+// import { BaseRecord, EndpointBaseRecord } from "../types";
+// import { convertNameToAnchorPart, toBreadcrumbs, toDescription } from "./utils";
 
 // interface GenerateEndpointBaseRecordsOptions {
 //     node: FernNavigation.EndpointNode;

@@ -14,7 +14,7 @@
   "exports": {
     "./types": {
       "types": "./dist/algolia/types.d.ts",
-      "default": "./dist/algolia/types.js"
+      "default": "./dist/algolia/index.js"
     },
     "./algolia": {
       "types": "./dist/algolia/index.d.ts",
@@ -27,7 +27,7 @@
   },
   "sideEffects": false,
   "scripts": {
-    "compile": "tsup --clean",
+    "compile": "tsc --build",
     "test": "vitest --run --passWithNoTests --globals",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
@@ -37,7 +37,7 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "dev": "tsup --watch",
+    "dev": "tsc --watch",
     "docs:dev": "pnpm dev"
   },
   "dependencies": {
@@ -62,7 +62,6 @@
     "prettier": "^3.3.2",
     "server-only": "^0.0.1",
     "stylelint": "^16.1.0",
-    "tsup": "^8.0.2",
     "typescript": "5.4.3",
     "vitest": "^1.5.0"
   }

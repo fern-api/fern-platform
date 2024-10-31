@@ -1,8 +1,8 @@
-import { browseAllObjectsForDomain } from "@/algolia/browse-all-objects-for-domain.js";
-import { createAlgoliaRecords } from "@/algolia/records/create-algolia-records.js";
-import { loadDocsWithUrl } from "@/fdr/load-docs-with-url.js";
 import { algoliasearch } from "algoliasearch";
 import { assert } from "ts-essentials";
+import { browseAllObjectsForDomain } from "../algolia/browse-all-objects-for-domain";
+import { createAlgoliaRecords } from "../algolia/records/create-algolia-records";
+import { loadDocsWithUrl } from "../fdr/load-docs-with-url";
 
 interface AlgoliaIndexerPayload {
     /**

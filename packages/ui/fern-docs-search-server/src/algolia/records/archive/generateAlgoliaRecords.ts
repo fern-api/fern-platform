@@ -2,11 +2,11 @@
 // import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 // import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 // import { isNonNullish } from "@fern-api/ui-core-utils";
-// import { AlgoliaRecord } from "../types.js";
-// import { generateMarkdownRecords } from "./generate-markdown-records.js";
-// import { generateEndpointFieldRecords, generateEndpointBaseRecord } from "./generateEndpointBaseRecords2.js";
-// import { generateWebSocketFieldRecords, generateWebSocketRecord } from "./generateWebSocketRecords.js";
-// import { generateWebhookFieldRecords, generateWebhookRecord } from "./generateWebhookRecords.js";
+// import { AlgoliaRecord } from "../types";
+// import { generateMarkdownRecords } from "./generate-markdown-records";
+// import { generateEndpointFieldRecords, generateEndpointBaseRecord } from "./generateEndpointBaseRecords2";
+// import { generateWebSocketFieldRecords, generateWebSocketRecord } from "./generateWebSocketRecords";
+// import { generateWebhookFieldRecords, generateWebhookRecord } from "./generateWebhookRecords";
 
 // interface GenerateAlgoliaRecordsOptions {
 //     // indexSegmentId: string;

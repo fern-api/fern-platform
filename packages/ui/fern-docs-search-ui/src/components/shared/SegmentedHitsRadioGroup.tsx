@@ -86,7 +86,7 @@ export function SegmentedHitsRadioGroup({
     useEffect(() => {
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [orderedObjectIDs]);
+    }, [orderedObjectIDs, handleKeyDown]);
 
     return (
         <RadioGroup.Root value={value} onValueChange={setSelectedObjectID} name="fern-docs-search-selected-hit">

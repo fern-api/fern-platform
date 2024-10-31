@@ -1,15 +1,15 @@
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { AlgoliaRecord } from "../types.js";
-import { createApiReferenceRecordHttp } from "./create-api-reference-record-http.js";
-import { createApiReferenceRecordWebSocket } from "./create-api-reference-record-web-socket.js";
-import { createApiReferenceRecordWebhook } from "./create-api-reference-record-webhook.js";
-import { createBaseRecord } from "./create-base-record.js";
-import { createChangelogRecord } from "./create-changelog-record.js";
-import { createEndpointBaseRecordHttp } from "./create-endpoint-record-http.js";
-import { createEndpointBaseRecordWebSocket } from "./create-endpoint-record-web-socket.js";
-import { createEndpointBaseRecordWebhook } from "./create-endpoint-record-webhook.js";
-import { createMarkdownRecords } from "./create-markdown-records.js";
+import { AlgoliaRecord } from "../types";
+import { createApiReferenceRecordHttp } from "./create-api-reference-record-http";
+import { createApiReferenceRecordWebSocket } from "./create-api-reference-record-web-socket";
+import { createApiReferenceRecordWebhook } from "./create-api-reference-record-webhook";
+import { createBaseRecord } from "./create-base-record";
+import { createChangelogRecord } from "./create-changelog-record";
+import { createEndpointBaseRecordHttp } from "./create-endpoint-record-http";
+import { createEndpointBaseRecordWebSocket } from "./create-endpoint-record-web-socket";
+import { createEndpointBaseRecordWebhook } from "./create-endpoint-record-webhook";
+import { createMarkdownRecords } from "./create-markdown-records";
 
 interface CreateAlgoliaRecordsOptions {
     root: FernNavigation.RootNode;

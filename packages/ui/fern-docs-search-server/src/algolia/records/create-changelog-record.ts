@@ -2,8 +2,8 @@ import { getFrontmatter, markdownToString } from "@fern-ui/fern-docs-mdx";
 import { format } from "date-fns";
 import { compact, flatten } from "es-toolkit";
 import { decode } from "html-entities";
-import { BaseRecord, ChangelogRecord } from "../types.js";
-import { maybePrepareMdxContent } from "./prepare-mdx-content.js";
+import { BaseRecord, ChangelogRecord } from "../types";
+import { maybePrepareMdxContent } from "./prepare-mdx-content";
 
 interface CreateChangelogRecordOptions {
     base: BaseRecord;

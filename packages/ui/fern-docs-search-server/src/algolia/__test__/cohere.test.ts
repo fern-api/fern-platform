@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import { createMarkdownRecords } from "../records/create-markdown-records.js";
-import { BaseRecord } from "../types.js";
+import { createMarkdownRecords } from "../records/create-markdown-records";
+import { BaseRecord } from "../types";
 
 const base: BaseRecord = {
     objectID: "test",

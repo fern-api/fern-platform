@@ -1,6 +1,6 @@
 import { GenerateSecuredApiKeyOptions } from "algoliasearch";
 import { createHmac } from "crypto";
-import { createSearchFilters } from "./roles/create-search-filters.js";
+import { createSearchFilters } from "./roles/create-search-filters";
 
 interface GetSearchApiKeyOptions {
     /**

@@ -7,8 +7,8 @@ import {
 } from "@fern-ui/fern-docs-mdx";
 import { compact, flatten } from "es-toolkit";
 import { decode } from "html-entities";
-import { BaseRecord, MarkdownRecord } from "../types.js";
-import { maybePrepareMdxContent } from "./prepare-mdx-content.js";
+import { BaseRecord, MarkdownRecord } from "../types";
+import { maybePrepareMdxContent } from "./prepare-mdx-content";
 
 interface CreateMarkdownRecordsOptions {
     base: BaseRecord;

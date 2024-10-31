@@ -1,5 +1,5 @@
 import { EVERYONE_ROLE } from "@fern-ui/fern-docs-utils";
-import { createPermutations, flipAndOrToOrAnd, modifyRolesForEveryone } from "../role-utils.js";
+import { createPermutations, flipAndOrToOrAnd, modifyRolesForEveryone } from "../role-utils";
 
 describe("flipAndOrToOrAnd", () => {
     it("should return []", () => {

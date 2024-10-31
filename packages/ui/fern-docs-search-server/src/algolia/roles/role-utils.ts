@@ -1,6 +1,6 @@
 import { EVERYONE_ROLE } from "@fern-ui/fern-docs-utils";
 import { sortBy, uniq, uniqBy } from "es-toolkit/array";
-import { createRoleFacet } from "./create-role-facet.js";
+import { createRoleFacet } from "./create-role-facet";
 
 /**
  * Create a list of viewers for a given hierarchy of viewers.

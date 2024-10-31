@@ -1,6 +1,6 @@
 // import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-// import { EndpointBaseRecord, ParameterRecord } from "../types.js";
-// import { toDescription } from "./utils.js";
+// import { EndpointBaseRecord, ParameterRecord } from "../types";
+// import { toDescription } from "./utils";
 
 // interface CreateParameterRecordHttpOptions {
 //     base: EndpointBaseRecord;

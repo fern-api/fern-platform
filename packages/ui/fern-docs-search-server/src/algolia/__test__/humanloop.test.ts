@@ -1,6 +1,6 @@
 import { uniq } from "es-toolkit";
-import { createAlgoliaRecords } from "../records/create-algolia-records.js";
-import { readFixture, readFixtureToRootNode } from "./test-utils.js";
+import { createAlgoliaRecords } from "../records/create-algolia-records";
+import { readFixture, readFixtureToRootNode } from "./test-utils";
 
 describe("humanloop", () => {
     it("should work", () => {

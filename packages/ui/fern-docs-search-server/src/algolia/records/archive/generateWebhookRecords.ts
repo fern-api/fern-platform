@@ -1,5 +1,5 @@
 // import { Algolia, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
-// import { toBreadcrumbs, toDescription } from "./utils.js";
+// import { toBreadcrumbs, toDescription } from "./utils";
 
 // interface GenerateWebhookRecordsOptions {
 //     indexSegmentId: Algolia.IndexSegmentId;

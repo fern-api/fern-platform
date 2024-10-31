@@ -1,5 +1,5 @@
 import { Algoliasearch } from "algoliasearch";
-import { DISTINCT_FACET_ATTRIBUTES, SEARCHABLE_ATTRIBUTES } from "./types.js";
+import { DISTINCT_FACET_ATTRIBUTES, SEARCHABLE_ATTRIBUTES } from "./types";
 
 export async function setIndexSettings(
     client: Algoliasearch,

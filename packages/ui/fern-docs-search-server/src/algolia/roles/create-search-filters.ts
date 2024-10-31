@@ -1,6 +1,6 @@
 import { EVERYONE_ROLE } from "@fern-ui/fern-docs-utils";
-import { createRoleFacet } from "./create-role-facet.js";
-import { createPermutations } from "./role-utils.js";
+import { createRoleFacet } from "./create-role-facet";
+import { createPermutations } from "./role-utils";
 
 interface CreateSearchFiltersOpts {
     domain: string;

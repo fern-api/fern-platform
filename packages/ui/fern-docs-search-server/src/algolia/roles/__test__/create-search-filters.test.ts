@@ -1,4 +1,4 @@
-import { createSearchFilters } from "../create-search-filters.js";
+import { createSearchFilters } from "../create-search-filters";
 
 const TEST_DOMAIN = "buildwithfern.com";
 

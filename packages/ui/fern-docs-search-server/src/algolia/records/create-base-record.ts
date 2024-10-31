@@ -1,9 +1,9 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { addLeadingSlash } from "@fern-ui/fern-docs-utils";
-import { createRoleFacet } from "../roles/create-role-facet.js";
-import { flipAndOrToOrAnd, modifyRolesForEveryone } from "../roles/role-utils.js";
-import { BaseRecord } from "../types.js";
+import { createRoleFacet } from "../roles/create-role-facet";
+import { flipAndOrToOrAnd, modifyRolesForEveryone } from "../roles/role-utils";
+import { BaseRecord } from "../types";
 
 interface CreateBaseRecordOptions {
     domain: string;
