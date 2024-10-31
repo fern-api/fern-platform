@@ -10,26 +10,20 @@ import { AlgoliaRecordHit, ApiReferenceRecordHit, ChangelogRecordHit, MarkdownRe
 
 const utc = tz("UTC");
 
-const headingLevels = ["h1", "h2", "h3", "h4", "h5", "h6"] as const;
+const headingLevels = ["h0", "h1", "h2", "h3", "h4", "h5", "h6"] as const;
 
 function HierarchyBreadcrumb({
-    pageTitle,
     hierarchy,
     level,
 }: {
-    pageTitle: string | undefined;
-    hierarchy: Partial<Record<"h1" | "h2" | "h3" | "h4" | "h5" | "h6", { title?: string; id?: string }>> | undefined;
-    level: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | undefined;
+    hierarchy: Partial<Record<(typeof headingLevels)[number], { title?: string; id?: string }>> | undefined;
+    level: (typeof headingLevels)[number] | undefined;
 }) {
     if (!level) {
         return null;
     }
 
     const breadcrumb: string[] = [];
-
-    if (pageTitle) {
-        breadcrumb.push(pageTitle);
-    }
 
     headingLevels.slice(0, headingLevels.indexOf(level)).forEach((headingLevel) => {
         const title = hierarchy?.[headingLevel]?.title;
@@ -55,13 +49,13 @@ function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
         <div className="flex flex-col gap-1">
             <Highlight
                 className="line-clamp-1"
-                attribute={hit._highlightResult?.level_title ? "level_title" : "page_title"}
+                attribute="title"
                 hit={hit}
                 classNames={{
                     highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
                 }}
             />
-            <HierarchyBreadcrumb pageTitle={hit.page_title} hierarchy={hit.hierarchy} level={hit.level} />
+            <HierarchyBreadcrumb hierarchy={hit.hierarchy} level={hit.level} />
             <Snippet
                 attribute={hit._highlightResult?.description ? "description" : "content"}
                 hit={hit}
@@ -79,7 +73,7 @@ function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement
         <div className="flex flex-col gap-1">
             <Highlight
                 className="line-clamp-1"
-                attribute="page_title"
+                attribute="title"
                 hit={hit}
                 classNames={{
                     highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
@@ -112,7 +106,7 @@ function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactE
         <div className="flex flex-col gap-1">
             <Highlight
                 className="line-clamp-1"
-                attribute="page_title"
+                attribute="title"
                 hit={hit}
                 classNames={{
                     highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",

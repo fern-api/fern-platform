@@ -7,6 +7,7 @@ import { MarkRequired } from "ts-essentials";
 import { ArrowTurnDownLeftIcon } from "../icons/ArrowTurnDownLeftIcon";
 import { RegularCalendarIcon } from "../icons/RegularCalendarIcon";
 import { RegularFileLinesIcon } from "../icons/RegularFileLinesIcon";
+import { RemoteIcon } from "../icons/RemoteIcon";
 import { AlgoliaRecordHit } from "../types";
 import { HitContent } from "./HitContent";
 import { LinkComponentType } from "./LinkComponent";
@@ -28,7 +29,9 @@ function Hit({ hit, LinkComponent }: HitProps): ReactElement | null {
         >
             <LinkComponent hit={{ pathname: hit.pathname ?? "", hash: hit.hash ?? "" }} className="flex gap-2">
                 <div className="shrink-0 py-1">
-                    {hit.type === "changelog" ? (
+                    {hit.icon != null ? (
+                        <RemoteIcon icon={hit.icon} className="size-4 text-[#969696] dark:text-white/50" />
+                    ) : hit.type === "changelog" ? (
                         <RegularCalendarIcon className="size-4 text-[#969696] dark:text-white/50" />
                     ) : (
                         <RegularFileLinesIcon className="size-4 text-[#969696] dark:text-white/50" />

@@ -19,14 +19,14 @@ export function createChangelogRecord({ base, markdown, date }: CreateChangelogR
      */
     // TODO: handle case where title is set in <h1> tag (this should be an upstream utility)
     const data_title = markdownToString(data.title);
-    const page_title = data_title != null ? decode(data_title) : base.page_title;
+    const title = data_title != null ? decode(data_title) : base.title;
 
     const prepared = maybePrepareMdxContent(content);
     const code_snippets = flatten(compact([base.code_snippets, prepared.code_snippets]));
     return {
         ...base,
         type: "changelog",
-        page_title,
+        title,
         content: prepared.content,
         code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
         date: format(new Date(date), "yyyy-MM-dd"),

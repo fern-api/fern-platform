@@ -4,7 +4,7 @@
     "org_id": "test",
     "domain": "test",
     "pathname": "/test",
-    "page_title": "Elasticsearch and Cohere",
+    "title": "Elasticsearch and Cohere",
     "breadcrumb": [],
     "visible_by": [],
     "authed": false,
@@ -17,7 +17,7 @@
     "org_id": "test",
     "domain": "test",
     "pathname": "/test",
-    "page_title": "test",
+    "title": "Prerequisites",
     "breadcrumb": [],
     "visible_by": [],
     "authed": false,
@@ -25,20 +25,22 @@
     "hash": "#prerequisites",
     "content": "This tutorial assumes you have the following:\nAn Elastic Cloud account through Elastic Cloud, available with a free trial\n\nA Cohere production API Key. Get your API Key at this link if you don't have one\n\nPython 3.7 or higher\n\n\nNote: While this tutorial integrates Cohere with an Elastic Cloud serverless project, you can also integrate with your self-managed Elasticsearch deployment or Elastic Cloud deployment by simply switching from the serverless to the general language client.",
     "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
       "h2": {
         "id": "prerequisites",
         "title": "Prerequisites"
       }
     },
-    "level": "h2",
-    "level_title": "Prerequisites"
+    "level": "h2"
   },
   {
     "objectID": "test-create-an-elastic-serverless-deployment",
     "org_id": "test",
     "domain": "test",
     "pathname": "/test",
-    "page_title": "test",
+    "title": "Create an Elastic Serverless deployment",
     "breadcrumb": [],
     "visible_by": [],
     "authed": false,
@@ -46,20 +48,22 @@
     "hash": "#create-an-elastic-serverless-deployment",
     "content": "If you don't have an Elastic Cloud deployment, sign up here for a free trial and request access to Elastic Serverless",
     "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
       "h2": {
         "id": "create-an-elastic-serverless-deployment",
         "title": "Create an Elastic Serverless deployment"
       }
     },
-    "level": "h2",
-    "level_title": "Create an Elastic Serverless deployment"
+    "level": "h2"
   },
   {
     "objectID": "test-install-the-required-packages",
     "org_id": "test",
     "domain": "test",
     "pathname": "/test",
-    "page_title": "test",
+    "title": "Install the required packages",
     "breadcrumb": [],
     "visible_by": [],
     "authed": false,
@@ -74,20 +78,22 @@
       }
     ],
     "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
       "h2": {
         "id": "install-the-required-packages",
         "title": "Install the required packages"
       }
     },
-    "level": "h2",
-    "level_title": "Install the required packages"
+    "level": "h2"
   },
   {
     "objectID": "test-import-the-required-packages",
     "org_id": "test",
     "domain": "test",
     "pathname": "/test",
-    "page_title": "test",
+    "title": "Import the required packages",
     "breadcrumb": [],
     "visible_by": [],
     "authed": false,
@@ -102,20 +108,22 @@
       }
     ],
     "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
       "h2": {
         "id": "import-the-required-packages",
         "title": "Import the required packages"
       }
     },
-    "level": "h2",
-    "level_title": "Import the required packages"
+    "level": "h2"
   },
   {
     "objectID": "test-create-an-elasticsearch-client",
     "org_id": "test",
     "domain": "test",
     "pathname": "/test",
-    "page_title": "test",
+    "title": "Create an Elasticsearch client",
     "breadcrumb": [],
     "visible_by": [],
     "authed": false,
@@ -130,20 +138,22 @@
       }
     ],
     "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
       "h2": {
         "id": "create-an-elasticsearch-client",
         "title": "Create an Elasticsearch client"
       }
     },
-    "level": "h2",
-    "level_title": "Create an Elasticsearch client"
+    "level": "h2"
   },
   {
     "objectID": "test-create-an-inference-endpoint",
     "org_id": "test",
     "domain": "test",
     "pathname": "/test",
-    "page_title": "test",
+    "title": "Create an inference endpoint",
     "breadcrumb": [],
     "visible_by": [],
     "authed": false,
@@ -161,6 +171,9 @@
       }
     ],
     "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
       "h1": {
         "id": "build-a-hybrid-search-index-with-cohere-and-elasticsearch",
         "title": "Build a Hybrid Search Index with Cohere and Elasticsearch"
@@ -170,15 +183,14 @@
         "title": "Create an inference endpoint"
       }
     },
-    "level": "h2",
-    "level_title": "Create an inference endpoint"
+    "level": "h2"
   },
   {
     "objectID": "test-create-the-index",
     "org_id": "test",
     "domain": "test",
     "pathname": "/test",
-    "page_title": "test",
+    "title": "Create the Index",
     "breadcrumb": [],
     "visible_by": [],
     "authed": false,
@@ -196,6 +208,9 @@
       }
     ],
     "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
       "h1": {
         "id": "build-a-hybrid-search-index-with-cohere-and-elasticsearch",
         "title": "Build a Hybrid Search Index with Cohere and Elasticsearch"
@@ -205,15 +220,14 @@
         "title": "Create the Index"
       }
     },
-    "level": "h2",
-    "level_title": "Create the Index"
+    "level": "h2"
   },
   {
     "objectID": "test-insert-documents",
     "org_id": "test",
     "domain": "test",
     "pathname": "/test",
-    "page_title": "test",
+    "title": "Insert Documents",
     "breadcrumb": [],
     "visible_by": [],
     "authed": false,
@@ -231,6 +245,9 @@
       }
     ],
     "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
       "h1": {
         "id": "build-a-hybrid-search-index-with-cohere-and-elasticsearch",
         "title": "Build a Hybrid Search Index with Cohere and Elasticsearch"
@@ -240,15 +257,14 @@
         "title": "Insert Documents"
       }
     },
-    "level": "h2",
-    "level_title": "Insert Documents"
+    "level": "h2"
   },
   {
     "objectID": "test-semantic-search",
     "org_id": "test",
     "domain": "test",
     "pathname": "/test",
-    "page_title": "test",
+    "title": "Semantic Search",
     "breadcrumb": [],
     "visible_by": [],
     "authed": false,
@@ -266,6 +282,9 @@
       }
     ],
     "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
       "h1": {
         "id": "build-a-hybrid-search-index-with-cohere-and-elasticsearch",
         "title": "Build a Hybrid Search Index with Cohere and Elasticsearch"
@@ -275,15 +294,14 @@
         "title": "Semantic Search"
       }
     },
-    "level": "h2",
-    "level_title": "Semantic Search"
+    "level": "h2"
   },
   {
     "objectID": "test-hybrid-search",
     "org_id": "test",
     "domain": "test",
     "pathname": "/test",
-    "page_title": "test",
+    "title": "Hybrid Search",
     "breadcrumb": [],
     "visible_by": [],
     "authed": false,
@@ -298,6 +316,9 @@
       }
     ],
     "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
       "h1": {
         "id": "build-a-hybrid-search-index-with-cohere-and-elasticsearch",
         "title": "Build a Hybrid Search Index with Cohere and Elasticsearch"
@@ -307,15 +328,14 @@
         "title": "Hybrid Search"
       }
     },
-    "level": "h2",
-    "level_title": "Hybrid Search"
+    "level": "h2"
   },
   {
     "objectID": "test-ranking",
     "org_id": "test",
     "domain": "test",
     "pathname": "/test",
-    "page_title": "test",
+    "title": "Ranking",
     "breadcrumb": [],
     "visible_by": [],
     "authed": false,
@@ -335,6 +355,9 @@
       }
     ],
     "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
       "h1": {
         "id": "build-a-hybrid-search-index-with-cohere-and-elasticsearch",
         "title": "Build a Hybrid Search Index with Cohere and Elasticsearch"
@@ -344,15 +367,14 @@
         "title": "Ranking"
       }
     },
-    "level": "h2",
-    "level_title": "Ranking"
+    "level": "h2"
   },
   {
     "objectID": "test-retrieval-augemented-generation",
     "org_id": "test",
     "domain": "test",
     "pathname": "/test",
-    "page_title": "test",
+    "title": "Retrieval augemented generation",
     "breadcrumb": [],
     "visible_by": [],
     "authed": false,
@@ -372,6 +394,9 @@
       }
     ],
     "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
       "h1": {
         "id": "build-a-hybrid-search-index-with-cohere-and-elasticsearch",
         "title": "Build a Hybrid Search Index with Cohere and Elasticsearch"
@@ -381,7 +406,6 @@
         "title": "Retrieval augemented generation"
       }
     },
-    "level": "h2",
-    "level_title": "Retrieval augemented generation"
+    "level": "h2"
   }
 ]

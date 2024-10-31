@@ -7,7 +7,7 @@ import {
 } from "@fern-ui/fern-docs-mdx";
 import { compact, flatten } from "es-toolkit";
 import { decode } from "html-entities";
-import { BaseRecord, MarkdownRecord } from "../types";
+import { BaseRecord, Hierarchy, MarkdownRecord } from "../types";
 import { maybePrepareMdxContent } from "./prepare-mdx-content";
 
 interface CreateMarkdownRecordsOptions {
@@ -24,7 +24,7 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
      */
     // TODO: handle case where title is set in <h1> tag (this should be an upstream utility)
     const data_title = markdownToString(data.title);
-    const page_title = data_title != null ? decode(data_title) : base.page_title;
+    const title = data_title != null ? decode(data_title) : base.title;
 
     const sections = [...splitMarkdownIntoSections(content)];
 
@@ -60,7 +60,7 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
         description: description_content,
         content: root_content,
         code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
-        page_title,
+        title,
     });
 
     sections.forEach((section, i) => {
@@ -78,7 +78,8 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
         const h5 = parents.find((p) => p.depth === 5);
         const h6 = parents.find((p) => p.depth === 6);
 
-        const hierarchy: Record<`h${1 | 2 | 3 | 4 | 5 | 6}`, { id: string; title: string } | undefined> = {
+        const hierarchy: Hierarchy = {
+            h0: { title },
             h1: h1 ? { id: h1.id, title: decode(h1.title) } : undefined,
             h2: h2 ? { id: h2.id, title: decode(h2.title) } : undefined,
             h3: h3 ? { id: h3.id, title: decode(h3.title) } : undefined,
@@ -99,12 +100,12 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
             ...base,
             objectID: `${base.objectID}-${heading.id}`, // theoretically this is unique, but we'll see
             type: "markdown",
+            title: decode(markdownToString(heading.title)),
             hash: `#${heading.id}`,
             content: prepared.content,
             code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
             hierarchy,
             level: `h${heading.depth}`,
-            level_title: decode(markdownToString(heading.title)),
         };
 
         records.push(record);

@@ -5,10 +5,11 @@ import { createDefaultLinkComponent } from "@/components/shared/LinkComponent";
 import { ReactElement } from "react";
 import useSWR from "swr";
 
-export function DesktopInstantSearchClient({ appId, domain }: { appId: string; domain: string }): ReactElement | null {
+export function DesktopInstantSearchClient({ appId, domain }: { appId: string; domain: string }): ReactElement | false {
     const handleSubmit = ({ pathname, hash }: { pathname: string; hash: string }) => {
         window.open(`https://${domain}${pathname}${hash}`, "_blank", "noopener,noreferrer");
     };
+
     const { data: apiKey, isLoading } = useSWR(
         domain,
         (domain): Promise<string> =>
@@ -18,7 +19,7 @@ export function DesktopInstantSearchClient({ appId, domain }: { appId: string; d
     );
 
     if (!apiKey) {
-        return null;
+        return false;
     }
 
     return (

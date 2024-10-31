@@ -2,8 +2,7 @@ import { z } from "zod";
 
 // in order of priority:
 export const SEARCHABLE_ATTRIBUTES = [
-    "page_title",
-    "level_title",
+    "title",
     "description,payload_description,request_description,response_description",
     "unordered(content)",
     "endpoint_path",
@@ -34,8 +33,9 @@ export const BaseRecordSchema = z.object({
     org_id: z.string().describe("The Fern Organization ID"),
     domain: z.string().describe("The domain where the docs instance is hosted"),
     pathname: z.string().describe("The pathname of the page (with leading slash)"),
+    icon: z.string().optional(),
     hash: z.string().optional(),
-    page_title: z.string().describe("The title of the page, as specified in the frontmatter or docs.yml"),
+    title: z.string().describe("The title of the page, as specified in the frontmatter or docs.yml"),
     availability: z
         .enum(["Stable", "GenerallyAvailable", "InDevelopment", "PreRelease", "Deprecated", "Beta"])
         .optional(),
@@ -56,6 +56,20 @@ export const BaseRecordSchema = z.object({
     authed: z.boolean().describe("Whether this record requires authentication to view"),
 });
 
+const HierarchySchema = z
+    .object({
+        h0: z.object({ title: z.string() }).optional(),
+        h1: z.object({ id: z.string(), title: z.string() }).optional(),
+        h2: z.object({ id: z.string(), title: z.string() }).optional(),
+        h3: z.object({ id: z.string(), title: z.string() }).optional(),
+        h4: z.object({ id: z.string(), title: z.string() }).optional(),
+        h5: z.object({ id: z.string(), title: z.string() }).optional(),
+        h6: z.object({ id: z.string(), title: z.string() }).optional(),
+    })
+    .describe(
+        "The hierarchy of this record, within a markdown document. This will be useful for nesting markdown records under other markdown records",
+    );
+
 export const MarkdownRecordSchema = BaseRecordSchema.extend({
     type: z.literal("markdown"),
     content: z
@@ -64,26 +78,13 @@ export const MarkdownRecordSchema = BaseRecordSchema.extend({
         .describe(
             "The raw markdown of this record. This must be raw markdown because it will be used as a document input to for conversational search. Unlike the description field, this should NOT be rendered by default.",
         ),
-    hierarchy: z
-        .object({
-            h1: z.object({ id: z.string(), title: z.string() }).optional(),
-            h2: z.object({ id: z.string(), title: z.string() }).optional(),
-            h3: z.object({ id: z.string(), title: z.string() }).optional(),
-            h4: z.object({ id: z.string(), title: z.string() }).optional(),
-            h5: z.object({ id: z.string(), title: z.string() }).optional(),
-            h6: z.object({ id: z.string(), title: z.string() }).optional(),
-        })
-        .optional()
-        .describe(
-            "The hierarchy of this record, within a markdown document. This will be useful for nesting markdown records under other markdown records",
-        ),
+    hierarchy: HierarchySchema.optional(),
     level: z
-        .enum(["h1", "h2", "h3", "h4", "h5", "h6"])
+        .enum(["h0", "h1", "h2", "h3", "h4", "h5", "h6"])
         .optional()
         .describe(
             "For convenience, this is the lowest indexable level described in the hierarchy, which identifies the rank of the content of this record",
         ),
-    level_title: z.string().optional().describe("The title of the level, which is the heading text"),
 });
 
 export const ChangelogRecordSchema = BaseRecordSchema.extend({
@@ -150,3 +151,4 @@ export type ChangelogRecord = z.infer<typeof ChangelogRecordSchema>;
 export type ApiReferenceRecord = z.infer<typeof ApiReferenceRecordSchema>;
 export type ParameterRecord = z.infer<typeof ParameterRecordSchema>;
 export type AlgoliaRecord = z.infer<typeof AlgoliaRecordSchema>;
+export type Hierarchy = z.infer<typeof HierarchySchema>;

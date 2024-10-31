@@ -8,7 +8,7 @@ const base: BaseRecord = {
     org_id: "test",
     domain: "test",
     pathname: "/test",
-    page_title: "test",
+    title: "test",
     breadcrumb: [],
     visible_by: [],
     authed: false,

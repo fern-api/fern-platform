@@ -31,7 +31,7 @@ export function createBaseRecord({
         .filter((n): n is Extract<FernNavigation.NavigationNodeWithMetadata, FernNavigation.NavigationNodeParent> =>
             FernNavigation.hasMetadata(n),
         )
-        // Changelog months and years are no
+        // Changelog months and years should not be included in the breadcrumb
         .filter((n) => n.type !== "changelogMonth" && n.type !== "changelogYear")
         .map((metadata) => ({
             title: metadata.title,
@@ -45,7 +45,8 @@ export function createBaseRecord({
         org_id,
         domain,
         pathname: addLeadingSlash(node.canonicalSlug ?? node.slug),
-        page_title: node.title,
+        icon: node.icon,
+        title: node.title,
         breadcrumb,
         product: productNode ? { id: productNode.productId, title: productNode.title } : undefined,
         version: versionNode ? { id: versionNode.versionId, title: versionNode.title } : undefined,
