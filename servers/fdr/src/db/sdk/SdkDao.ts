@@ -1,6 +1,7 @@
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { Language, Prisma, PrismaClient } from "@prisma/client";
 import { DefaultArgs } from "@prisma/client/runtime/library";
+import { LOGGER } from "../../app/FdrApplication";
 import { SdkIdFactory } from "../snippets/SdkIdFactory";
 import { SdkId } from "../types";
 
@@ -171,13 +172,13 @@ export class SdkDaoImpl implements SdkDao {
             },
             where: {
                 package: sdkPackage,
-                version,
                 language,
             },
             orderBy: {
                 createdAt: "desc",
             },
         });
+        LOGGER.info(`Looking for latest registered SDK ${sdkPackage} and found id ${sdkRow?.id}`);
         return sdkRow?.id;
     }
 }
