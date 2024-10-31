@@ -1,6 +1,8 @@
 import { ParameterRecord } from "@fern-ui/fern-docs-search-server/types";
 import { HttpMethodTag } from "@fern-ui/fern-http-method-tag";
 import { Hit } from "algoliasearch/lite";
+import { format } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 import { ReactElement } from "react";
 import { Highlight, Snippet } from "react-instantsearch";
 import { MarkRequired, UnreachableCaseError } from "ts-essentials";
@@ -71,7 +73,27 @@ function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
 }
 
 function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement {
-    return <div>{hit.page_title ?? hit.objectID}</div>;
+    return (
+        <div className="flex flex-col gap-1">
+            <Highlight
+                className="line-clamp-1"
+                attribute="page_title"
+                hit={hit}
+                classNames={{
+                    highlighted: "font-bold bg-transparent",
+                }}
+            />
+            <div className="text-xs text-[#969696]">{format(toZonedTime(hit.date, "UTC"), "MMM d, yyyy")}</div>
+            <Snippet
+                attribute={hit._highlightResult?.description ? "description" : "content"}
+                hit={hit}
+                className="text-sm leading-snug line-clamp-2 text-black/50"
+                classNames={{
+                    highlighted: "font-bold bg-transparent",
+                }}
+            />
+        </div>
+    );
 }
 
 function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactElement {

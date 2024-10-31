@@ -364,8 +364,8 @@
     "content": "You can create and manage these files in the Humanloop UI,\nor via the API. Product teams and their subject matter experts may prefer using the UI first workflows for convenience, whereas AI teams and engineers may prefer to use the API for greater control and customisation.",
     "hierarchy": {
       "h2": {
-        "id": "managed-ui-or-code-first",
-        "title": "Managed UI or code first"
+        "id": "file-properties",
+        "title": "File Properties"
       },
       "h3": {
         "id": "managed-ui-or-code-first",
@@ -407,8 +407,8 @@
     "content": "Files have immutable versions that are uniquely determined by\ntheir parameters that characterise the behaviour of the system. For example, a Prompt version is determined by the prompt template, base model and hyperparameters chosen.\nWithin the Humanloop Editor and via the API, you can commit new versions of a file, view the history of changes and revert to a previous version.",
     "hierarchy": {
       "h2": {
-        "id": "are-strictly-version-controlled",
-        "title": "Are strictly version controlled"
+        "id": "file-properties",
+        "title": "File Properties"
       },
       "h3": {
         "id": "are-strictly-version-controlled",
@@ -450,8 +450,8 @@
     "content": "All files can be called (if you use the Humanloop runtime) or logged to (where you manage the runtime yourself). For example,\nwith Prompts, Humanloop integrates to all the major model providers. You can choose to call a Prompt, where Humanloop acts as a proxy to the model provider. Alternatively, you can choose to manage the model calls yourself and log the results to the Prompt on Humanloop.\nUsing the Humanloop runtime is generally the simpler option and allows you to call the file natively within the Humanloop UI, whereas owning the runtime yourself and logging allows you to have more fine-grained control.",
     "hierarchy": {
       "h2": {
-        "id": "have-a-flexible-runtime",
-        "title": "Have a flexible runtime"
+        "id": "file-properties",
+        "title": "File Properties"
       },
       "h3": {
         "id": "have-a-flexible-runtime",
@@ -493,8 +493,8 @@
     "content": "Files can be combined with other files to create more complex systems like chains and agents. For example, a Prompt can call a Tool, which can then be evaluated by an Evaluator.\nThe orchestration of more complex systems is best done in code using the API and the full trace of execution is accessible in the Humanloop UI for debugging and evaluation purposes.",
     "hierarchy": {
       "h2": {
-        "id": "are-composable-with-sessions",
-        "title": "Are composable with sessions"
+        "id": "file-properties",
+        "title": "File Properties"
       },
       "h3": {
         "id": "are-composable-with-sessions",
@@ -536,8 +536,8 @@
     "content": "All files can be exported and imported in a serialized form. For example, Prompts are serialized to our .prompt format. This provides a useful medium for more technical teams that wish to maintain the source of truth in their existing version control system like git.",
     "hierarchy": {
       "h2": {
-        "id": "have-a-serialized-form",
-        "title": "Have a serialized form"
+        "id": "file-properties",
+        "title": "File Properties"
       },
       "h3": {
         "id": "have-a-serialized-form",
@@ -579,8 +579,8 @@
     "content": "You can tag file versions with specific environments and target these environments via the UI and API to facilitate robust deployment workflows.\n\n\nHumanloop also has the concept of Datasets that are used within Evaluation workflows. Datasets share all the same properties, except they do not have a runtime consideration.",
     "hierarchy": {
       "h2": {
-        "id": "support-deployments",
-        "title": "Support deployments"
+        "id": "file-properties",
+        "title": "File Properties"
       },
       "h3": {
         "id": "support-deployments",
@@ -702,8 +702,8 @@
     "content": "You should create a new Prompt for every different ‘task to be done’ with the LLM. For example each of these tasks are things that can be done by an LLM and should be a separate Prompt File: Writing Copilot, Personal Assistant, Summariser, etc.\nWe've seen people find it useful to also create a Prompt called 'Playground' where they can free form experiment without concern of breaking anything or making a mess of their other Prompts.",
     "hierarchy": {
       "h2": {
-        "id": "when-to-create-a-new-prompt",
-        "title": "When to create a new Prompt"
+        "id": "versioning",
+        "title": "Versioning"
       },
       "h3": {
         "id": "when-to-create-a-new-prompt",
@@ -823,8 +823,8 @@
     "content": "The .prompt file is heavily inspired by MDX, with model and hyperparameters specified in a YAML header alongside a JSX-inspired format for your Chat Template.",
     "hierarchy": {
       "h2": {
-        "id": "format",
-        "title": "Format"
+        "id": "serialization-prompt-file",
+        "title": "Serialization (.prompt file)"
       },
       "h3": {
         "id": "format",
@@ -890,8 +890,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "basic-examples",
-        "title": "Basic examples"
+        "id": "serialization-prompt-file",
+        "title": "Serialization (.prompt file)"
       },
       "h3": {
         "id": "basic-examples",
@@ -1081,8 +1081,8 @@
     "content": "Pinecone Search - Vector similarity search using Pinecone vector DB and OpenAI embeddings.\n\nGoogle Search - API for searching Google: https://serpapi.com/.\n\nGET API - Send a GET request to an external API.",
     "hierarchy": {
       "h2": {
-        "id": "third-party-integrations",
-        "title": "Third-party integrations"
+        "id": "tools-within-a-chain",
+        "title": "Tools within a chain"
       },
       "h3": {
         "id": "third-party-integrations",
@@ -1124,8 +1124,8 @@
     "content": "Snippet Tool - Create reusable key/value pairs for use in prompts - see how to use the Snippet Tool.\n\nJSON Schema - JSON schema that can be used across multiple Prompts - see how to link a JSON Schema Tool.",
     "hierarchy": {
       "h2": {
-        "id": "humanloop-tools",
-        "title": "Humanloop tools"
+        "id": "tools-within-a-chain",
+        "title": "Tools within a chain"
       },
       "h3": {
         "id": "humanloop-tools",
@@ -1424,8 +1424,8 @@
     "content": "Evaluators are run against the Logs generated by your AI applications. Typically, they are used to monitor deployed model performance over time and check for drift or degradation in performance.\nThe Evaluator in this case only takes a single argument - the log generated by the model. The Evaluator is expected to return a judgment based on the Log,\nwhich can be used to trigger alerts or other actions in your monitoring system.\nSee our Monitoring guides for more details.",
     "hierarchy": {
       "h2": {
-        "id": "online-monitoring",
-        "title": "Online Monitoring"
+        "id": "online-monitoring-versus-offline-evaluation",
+        "title": "Online Monitoring versus Offline Evaluation"
       },
       "h3": {
         "id": "online-monitoring",
@@ -1467,8 +1467,8 @@
     "content": "Offline Evaluators are combined with predefined Datasets in order to evaluate your application as you iterate in your prompt engineering workflow, or to test for regressions in a CI environment.\nA test Dataset is a collection of Datapoints, which are roughly analogous to unit tests or test cases in traditional programming. Each datapoint specifies inputs to your model and (optionally) some target data.\nWhen you run an offline evaluation, a Log needs to be generated using the inputs of each Datapoint and the version of the application being evaluated. Evaluators then need to be run against each Log to provide judgements,\nwhich are then aggregated to provide an overall score for the application. Evaluators in this case take the generated Log and the testcase datapoint that gave rise to it as arguments.\nSee our guides on creating Datasets and running Evaluations for more details.",
     "hierarchy": {
       "h2": {
-        "id": "offline-evaluations",
-        "title": "Offline Evaluations"
+        "id": "online-monitoring-versus-offline-evaluation",
+        "title": "Online Monitoring versus Offline Evaluation"
       },
       "h3": {
         "id": "offline-evaluations",
@@ -1689,8 +1689,8 @@
     "content": "By default, the production environment is marked as the Default environment. This means that all API calls that don't explicitly target a specific environment will use this environment. You can rename the default environment on the organisation's environments page.\n\n\nRenaming the environments will take immediate effect, so ensure that this\nchange is planned and does not disrupt your production workflows.",
     "hierarchy": {
       "h3": {
-        "id": "the-default-environment",
-        "title": "The default environment"
+        "id": "managing-your-environments",
+        "title": "Managing your environments"
       },
       "h4": {
         "id": "the-default-environment",
@@ -1909,8 +1909,8 @@
     "content": "You can create a Prompt explicitly in the Prompt Editor or via the API.\nNew prompts can also be created automatically via the API if you specify the Prompt's path (its name and directory) while supplying the Prompt's parameters and template. This is useful if you are developing your prompts in code and want to be able to version them as you make changes to the code.",
     "hierarchy": {
       "h1": {
-        "id": "creating-a-prompt",
-        "title": "Creating a Prompt"
+        "id": "prompt-management",
+        "title": "Prompt Management"
       },
       "h3": {
         "id": "creating-a-prompt",
@@ -1948,8 +1948,8 @@
     "content": "A Prompt will have multiple versions as you experiment with different models, parameters, or templates. However, all versions should perform the same task and generally be interchangeable with one another.\nBy versioning your Prompts, you can track how adjustments to the template or parameters influence the LLM's responses. This is crucial for iterative development, as you can pinpoint which versions produce the most relevant or accurate outputs for your specific use case.\nAs you edit your prompt, new versions of the Prompt are created automatically. Each version is timestamped and given a unique version ID which is deterministically based on the Prompt's contents. For every version that you want to \"save\", you commit that version and it will be recorded as a new committed version of the Prompt with a commit message.",
     "hierarchy": {
       "h1": {
-        "id": "versioning",
-        "title": "Versioning"
+        "id": "prompt-management",
+        "title": "Prompt Management"
       },
       "h3": {
         "id": "versioning",
@@ -1987,8 +1987,12 @@
     "content": "You should create a new Prompt for every different 'task to be done' with the LLM. For example each of these tasks are things that can be done by an LLM and should be a separate Prompt File: Writing Copilot, Personal Assistant, Summariser, etc.\nWe've seen people find it useful to also create a Prompt called 'Playground' where they can free form experiment without concern of breaking anything or making a mess of their other Prompts.",
     "hierarchy": {
       "h1": {
-        "id": "when-to-create-a-new-prompt",
-        "title": "When to create a new Prompt"
+        "id": "prompt-management",
+        "title": "Prompt Management"
+      },
+      "h3": {
+        "id": "versioning",
+        "title": "Versioning"
       },
       "h4": {
         "id": "when-to-create-a-new-prompt",
@@ -2067,8 +2071,8 @@
     ],
     "hierarchy": {
       "h1": {
-        "id": "prompt-templates",
-        "title": "Prompt templates"
+        "id": "prompt-engineering",
+        "title": "Prompt Engineering"
       },
       "h3": {
         "id": "prompt-templates",
@@ -2106,8 +2110,8 @@
     "content": "Certain large language models support tool use or \"function calling\". For these models, you can supply the description of functions and the model can choose to call one or more of them by providing the values to call the functions with.\nFunction calling enables the model to perform various tasks:\n1. Call external APIs: The model can translate natural language into API calls, allowing it to interact with external services and retrieve information.\n2. Take actions: The model can exhibit agentic behavior, making decisions and taking actions based on the given context.\n3. Provide structured output: The model's responses can be constrained to a specific structured format, ensuring consistency and ease of parsing in downstream applications.\n\n\nTools for function calling can be defined inline in the Prompt editor in which case they form part of the Prompt version. Alternatively, they can be pulled out in a Tool file which is then referenced in the Prompt.\nEach Tool has functional interface that can be supplied as the JSON Schema needed for function calling. Additionally, if the Tool is executable on Humanloop, the result of any tool will automatically be inserted into the response in the API and in the Editor.",
     "hierarchy": {
       "h1": {
-        "id": "tool-use-function-calling",
-        "title": "Tool Use (Function Calling)"
+        "id": "prompt-engineering",
+        "title": "Prompt Engineering"
       },
       "h3": {
         "id": "tool-use-function-calling",
@@ -2145,8 +2149,8 @@
     "content": "Prompts are callable as an API. You supply and query-time data such as input values or user messages, and the model will respond with its text output.\n\n\nA Prompt is callable in that if you supply the necessary inputs, it will return a response from the model.\nOnce you have created and versioned your Prompt, you can call it as an API to generate responses from the large language model directly. You can also fetch the log the data from your LLM calls, enabling you to evaluate and improve your models.",
     "hierarchy": {
       "h1": {
-        "id": "using-prompts",
-        "title": "Using Prompts"
+        "id": "prompt-engineering",
+        "title": "Prompt Engineering"
       },
       "h2": {
         "id": "using-prompts",
@@ -2184,8 +2188,8 @@
     "content": "The easiest way to both call the large language model with your Prompt and to log the data is to use the Prompt.call() method (see the guide on Calling a Prompt) which will do both in a single API request. However, there are two main reasons why you may wish to log the data seperately from generation:\nYou are using your own model that is not natively supported in the Humanloop runtime.\n\nYou wish to avoid relying on Humanloop runtime as the proxied calls adds a small additional latency, or\n\n\nThe prompt.call() Api encapsulates the LLM provider calls (for example openai.Completions.create()), the model-config selection and logging steps in a single unified interface. There may be scenarios that you wish to manage the LLM provider calls directly in your own code instead of relying on Humanloop.\nHumanloop provides a comprehensive platform for developing, managing, and versioning Prompts, Tools and your other artifacts of you AI systems. This explainer will show you how to create, version and manage your Prompts, Tools and other artifacts.\nYou can also use Prompts without proxying through Humanloop to the model provider and instead call the model yourself and explicitly log the results to your Prompt.",
     "hierarchy": {
       "h1": {
-        "id": "proxying-your-llm-calls-vs-async-logging",
-        "title": "Proxying your LLM calls vs async logging"
+        "id": "prompt-engineering",
+        "title": "Prompt Engineering"
       },
       "h2": {
         "id": "proxying-your-llm-calls-vs-async-logging",
@@ -2223,8 +2227,8 @@
     "content": "Our .prompt file format is a serialized version of a model config that is designed to be human-readable and suitable for checking into your version control systems alongside your code. See the .prompt files reference reference for more details.",
     "hierarchy": {
       "h1": {
-        "id": "serialization-prompt-file",
-        "title": "Serialization (.prompt file)"
+        "id": "prompt-engineering",
+        "title": "Prompt Engineering"
       },
       "h2": {
         "id": "serialization-prompt-file",
@@ -2262,8 +2266,12 @@
     "content": "The .prompt file is heavily inspired by MDX, with model and hyperparameters specified in a YAML header alongside a JSX-inspired format for your Chat Template.",
     "hierarchy": {
       "h1": {
-        "id": "format",
-        "title": "Format"
+        "id": "prompt-engineering",
+        "title": "Prompt Engineering"
+      },
+      "h2": {
+        "id": "serialization-prompt-file",
+        "title": "Serialization (.prompt file)"
       },
       "h3": {
         "id": "format",
@@ -2322,8 +2330,12 @@
     ],
     "hierarchy": {
       "h1": {
-        "id": "basic-examples",
-        "title": "Basic examples"
+        "id": "prompt-engineering",
+        "title": "Prompt Engineering"
+      },
+      "h2": {
+        "id": "serialization-prompt-file",
+        "title": "Serialization (.prompt file)"
       },
       "h3": {
         "id": "basic-examples",
@@ -2361,8 +2373,8 @@
     "content": "When working with sensitive data in your AI applications, it's crucial to handle it securely. Humanloop provides options to help you manage sensitive information while still benefiting from our platform's features.\nIf you need to process sensitive data without storing it in Humanloop, you can use the save: false parameter when making calls to the API or logging data. This ensures that only metadata about the request is stored, while the actual sensitive content is not persisted in our systems.\nFor PII detection, you can set up Guardrails to detect and prevent the generation of sensitive information.",
     "hierarchy": {
       "h1": {
-        "id": "dealing-with-sensitive-data",
-        "title": "Dealing with sensitive data"
+        "id": "prompt-engineering",
+        "title": "Prompt Engineering"
       },
       "h2": {
         "id": "dealing-with-sensitive-data",
@@ -2635,8 +2647,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "prerequisites",
-        "title": "Prerequisites"
+        "id": "call-an-existing-prompt",
+        "title": "Call an existing Prompt"
       },
       "h3": {
         "id": "prerequisites",
@@ -2770,8 +2782,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "prerequisites",
-        "title": "Prerequisites"
+        "id": "call-the-llm-with-a-prompt-that-youre-defining-in-code",
+        "title": "Call the LLM with a prompt that you're defining in code"
       },
       "h3": {
         "id": "prerequisites",
@@ -3185,8 +3197,8 @@
     "content": "You already have a Prompt — if not, please follow our Prompt creation guide first.\n\n\n\n\nThis feature is not available for the Free tier. Please contact us if you wish\nto learn more about our Enterprise plan\nTo create and use a snippet tool, follow the following steps:\n\n\nCreate a new Snippet Tool\n\n\nName the Tool\nName it assistant-personalities and give it a description Useful assistant personalities.\nAdd a key called \"helpful-assistant\"\nIn the initial box add helpful-assistant and give it a value of You are a helpful assistant. You like to tell jokes and if anyone asks your name is Sam.\nAdd another key called \"grumpy-assistant\"\nLet's add another key-value pair, so press the Add a key/value pair button and add a new key of grumpy-assistant and give it a value of You are a grumpy assistant. You rarely try to help people and if anyone asks your name is Freddy..\n\n\nPress Create Tool.\nNow your Snippets are set up, you can use it to populate strings in your prompt templates across your projects.\nNavigate to the Editor\nGo to the Editor of your previously created project.\nAdd {{ assistant-personalities(key) }} to your prompt\nDelete the existing prompt template and add {{ assistant-personalities(key) }} to your prompt.\n\n\nDouble curly bracket syntax is used to call a tool in the editor. Inside the curly brackets you put the tool name, e.g. {{ my-tool-name(key) }}.\nEnter the key as an input\nIn the input area set the value to helpful-assistant. The tool requires an input value to be provided for the key. When adding the tool an inputs field will appear in the top right of the editor where you can specify your key.\nPress the Run button\nStart the chat with the LLM and you can see the response of the LLM, as well as, see the key you previously defined add in the Chat on the right.\n\n\nChange the key to grumpy-assistant.\n\n\nIf you want to see the corresponding snippet to the key you either need to\nfirst run the conversation to fetch the string and see it in the preview.\nPlay with the LLM\nAsk the LLM, I'm a customer and need help solving this issue. Can you help?'. You should see a grumpy response from \"Freddy\" now.\nIf you have a specific key you would like to hardcode in the prompt, you can define it using the literal key value: {{ <your-tool-name>(\"key\") }}, so in this case it would be {{ assistant-personalities(\"grumpy-assistant\") }}. Delete the grumpy-assistant field and add it into your chat template.\nSave your Prompt.\nIf you're happy with you're grumpy assistant, save this new version of your Prompt.\n\n\nThe Snippet tool is particularly useful because you can define passages of text once in a Snippet tool and reuse them across multiple prompts, without needing to copy/paste them and manually keep them all in sync. Editing the values in your tool allows the changes to automatically propagate to the Prompts when you update them, as long as the key is the same.\n\n\nSince the values for a Snippet are saved on the Tool, not the Prompt, changing\nthe values (or keys) defined in your Snippet tools can affect the Prompt's\nbehaviour in way that won't be captured by the Prompt's version.\nThis could be exactly what you intend, however caution should still be used make sure the\nchanges are expected.",
     "hierarchy": {
       "h2": {
-        "id": "prerequisites",
-        "title": "Prerequisites"
+        "id": "create-and-use-a-snippet-tool",
+        "title": "Create and use a Snippet Tool"
       },
       "h3": {
         "id": "prerequisites",
@@ -3337,8 +3349,8 @@
     "content": "You have multiple environments - if not first go through the Create an\nenvironment section.\n\n\nEvery organization will have a default environment. This can be updated by the following:\n\n\nGo to your Organization's Environments page.\nClick on the dropdown menu of an environment that is not already the default.\nClick the Make default option\nA dialog will open asking you if you are certain this is a change you want to make. If so, click the Make default button.\nVerify the default tag has moved to the environment you selected.",
     "hierarchy": {
       "h2": {
-        "id": "prerequisites",
-        "title": "Prerequisites"
+        "id": "updating-the-default-environment",
+        "title": "Updating the default environment"
       },
       "h3": {
         "id": "prerequisites",
@@ -3867,8 +3879,8 @@
     "content": "Evaluators are run against the Logs generated by your AI applications. Typically, they are used to monitor deployed model performance over time and check for drift or degradation in performance.\nThe Evaluator in this case only takes a single argument - the log generated by the model. The Evaluator is expected to return a judgment based on the Log,\nwhich can be used to trigger alerts or other actions in your monitoring system.\nSee our Monitoring guides for more details.",
     "hierarchy": {
       "h2": {
-        "id": "online-monitoring",
-        "title": "Online Monitoring"
+        "id": "online-monitoring-vs-offline-evaluation",
+        "title": "Online Monitoring vs. Offline Evaluation"
       },
       "h3": {
         "id": "online-monitoring",
@@ -3906,8 +3918,8 @@
     "content": "Offline Evaluators are combined with predefined Datasets in order to evaluate your application as you iterate in your prompt engineering workflow, or to test for regressions in a CI environment.\nA test Dataset is a collection of Datapoints, which are roughly analogous to unit tests or test cases in traditional programming. Each datapoint specifies inputs to your model and (optionally) some target data.\nWhen you run an offline evaluation, a Log needs to be generated using the inputs of each Datapoint and the version of the application being evaluated. Evaluators then need to be run against each Log to provide judgements,\nwhich are then aggregated to provide an overall score for the application. Evaluators in this case take the generated Log and the testcase datapoint that gave rise to it as arguments.\nSee our guides on creating Datasets and running Evaluations for more details.",
     "hierarchy": {
       "h2": {
-        "id": "offline-evaluations",
-        "title": "Offline Evaluations"
+        "id": "online-monitoring-vs-offline-evaluation",
+        "title": "Online Monitoring vs. Offline Evaluation"
       },
       "h3": {
         "id": "offline-evaluations",
@@ -5008,8 +5020,8 @@
     "content": "Incorporate this Evaluation process into your Prompt engineering and deployment workflow.\n\nSetup Evaluations where the runtime for producing Logs lives in your code - see our guide on Logging.\n\nUtilise Evaluations as part of your CI/CD pipeline",
     "hierarchy": {
       "h2": {
-        "id": "next-steps",
-        "title": "Next Steps"
+        "id": "run-an-evaluation-via-api",
+        "title": "Run an Evaluation via API"
       },
       "h3": {
         "id": "next-steps",
@@ -5230,8 +5242,8 @@
     "content": "A GitHub repository for your project\n\nA Humanloop account with access to Evaluations\n\nA Prompt and Dataset set up in Humanloop\n\nAn Evaluator configured in Humanloop",
     "hierarchy": {
       "h2": {
-        "id": "prerequisites",
-        "title": "Prerequisites"
+        "id": "setting-up-cicd-integration-with-github-actions",
+        "title": "Setting up CI/CD Integration with GitHub Actions"
       },
       "h3": {
         "id": "prerequisites",
@@ -5477,8 +5489,8 @@
     "content": "Alerts are triggered when certain predefined conditions are met in your system. These conditions are typically monitored using log evaluators, which continuously analyze system logs and metrics.",
     "hierarchy": {
       "h2": {
-        "id": "overview",
-        "title": "Overview"
+        "id": "alerting",
+        "title": "Alerting"
       },
       "h3": {
         "id": "overview",
@@ -5516,8 +5528,8 @@
     "content": "Performance Issues\nUse Case: Alert when API response times exceed a certain threshold.\n\nBenefit: Quickly identify and address performance bottlenecks.\n\n\n\nError Rate Spikes\nUse Case: Notify when the error rate for a specific service surpasses normal levels.\n\nBenefit: Detect and investigate unusual error patterns promptly.\n\n\n\nResource Utilization\nUse Case: Alert when CPU or memory usage approaches capacity limits.\n\nBenefit: Prevent system crashes and maintain optimal performance.\n\n\n\nSecurity Incidents\nUse Case: Notify on multiple failed login attempts or unusual access patterns.\n\nBenefit: Rapidly respond to potential security breaches.\n\n\n\nData Quality Issues\nUse Case: Alert when incoming data doesn't meet predefined quality standards.\n\nBenefit: Maintain data integrity and prevent propagation of bad data.\n\n\n\nSLA Violations\nUse Case: Notify when service level agreements are at risk of being breached.\n\nBenefit: Proactively manage client expectations and service quality.",
     "hierarchy": {
       "h2": {
-        "id": "use-cases-for-alerting",
-        "title": "Use Cases for Alerting"
+        "id": "alerting",
+        "title": "Alerting"
       },
       "h3": {
         "id": "use-cases-for-alerting",
@@ -5555,8 +5567,8 @@
     "content": "Define Clear Thresholds: Establish meaningful thresholds based on historical data and business requirements.\n\nPrioritize Alerts: Categorize alerts by severity to ensure critical issues receive immediate attention.\n\nProvide Context: Include relevant information in alerts to aid in quick diagnosis and resolution.\n\nAvoid Alert Fatigue: Regularly review and refine alert conditions to minimize false positives.\n\nEstablish Escalation Procedures: Define clear processes for handling and escalating different types of alerts.",
     "hierarchy": {
       "h2": {
-        "id": "best-practices-for-alerting",
-        "title": "Best Practices for Alerting"
+        "id": "alerting",
+        "title": "Alerting"
       },
       "h3": {
         "id": "best-practices-for-alerting",
@@ -5594,8 +5606,8 @@
     "content": "Webhooks are a crucial component of Humanloop's alerting system, allowing you to integrate alerts into your existing workflows and communication channels. By leveraging webhooks, you can:\nReceive real-time notifications when alert conditions are met\n\nIntegrate alerts with your preferred messaging platforms (e.g., Slack, Microsoft Teams)\n\nTrigger automated responses or workflows in external systems\n\nCentralize alert management in your existing incident response tools\n\n\nSetting up webhooks enables you to respond quickly to critical events, maintain system health, and streamline your MLOps processes. Many Humanloop users find webhooks invaluable for managing their AI systems effectively at scale.\nFor detailed instructions on setting up webhooks, please refer to our Set up Webhooks guide.",
     "hierarchy": {
       "h2": {
-        "id": "webhooks",
-        "title": "Webhooks"
+        "id": "alerting",
+        "title": "Alerting"
       },
       "h3": {
         "id": "webhooks",
@@ -5668,8 +5680,8 @@
     "content": "Guardrails typically work by setting boundaries on various system parameters and automatically taking action when these boundaries are approached or exceeded.",
     "hierarchy": {
       "h1": {
-        "id": "overview-1",
-        "title": "Overview"
+        "id": "guardrails",
+        "title": "Guardrails"
       },
       "h3": {
         "id": "overview-1",
@@ -5742,8 +5754,8 @@
     "content": "Content Moderation\nUse Case: Automatically filter or flag inappropriate, offensive, or harmful content generated by LLMs.\n\nBenefit: Maintain a safe and respectful environment for users, comply with content policies.\n\n\n\nPII Protection\nUse Case: Detect and redact personally identifiable information (PII) in LLM outputs.\n\nBenefit: Ensure data privacy, comply with regulations like GDPR and CCPA.\n\n\n\nBias Detection\nUse Case: Identify and mitigate biased language or unfair treatment in LLM responses.\n\nBenefit: Promote fairness and inclusivity, reduce discriminatory outputs.\n\n\n\nFairness Assurance\nUse Case: Ensure equal treatment and representation across different demographic groups in LLM interactions.\n\nBenefit: Maintain ethical AI practices, avoid reinforcing societal biases.\n\n\n\nToxicity Filtering\nUse Case: Detect and prevent the generation of toxic, abusive, or hateful content.\n\nBenefit: Create a positive user experience, protect brand reputation.\n\n\n\nHallucination Protections\nUse Case: Detect and prevent the generation of false or fabricated information by the LLM.\n\nBenefit: Ensure output reliability, maintain user trust, and avoid potential misinformation spread.",
     "hierarchy": {
       "h1": {
-        "id": "use-cases-for-guardrails",
-        "title": "Use Cases for Guardrails"
+        "id": "how-guardrails-works-in-humanloop",
+        "title": "How Guardrails works in Humanloop"
       },
       "h3": {
         "id": "use-cases-for-guardrails",
@@ -5781,8 +5793,8 @@
     "content": "Start Conservative: Begin with more restrictive guardrails and loosen them as you gain confidence.\n\nMonitor Guardrail Actions: Keep track of when and why guardrails are triggered to identify patterns.\n\nRegular Reviews: Periodically assess the effectiveness of your guardrails and adjust as needed.\n\nProvide Override Mechanisms: Allow authorized personnel to bypass guardrails in controlled situations.\n\nDocument Thoroughly: Maintain clear documentation of all implemented guardrails for team awareness.",
     "hierarchy": {
       "h1": {
-        "id": "best-practices-for-implementing-guardrails",
-        "title": "Best Practices for Implementing Guardrails"
+        "id": "how-guardrails-works-in-humanloop",
+        "title": "How Guardrails works in Humanloop"
       },
       "h3": {
         "id": "best-practices-for-implementing-guardrails",
@@ -5855,8 +5867,8 @@
     "content": "You need to have access to evaluations.\n\nYou also need to have a Prompt – if not, please follow our Prompt creation guide.\n\nFinally, you need at least a few logs in your project. Use the Editor to generate some logs if you don't have any yet.\n\n\nTo set up an online Python evaluator:\n\n\nGo to the Evaluations page in one of your projects and select the Evaluators tab\nSelect + New Evaluator and choose Code Evaluator in the dialog\n\n\nFrom the library of presets on the left-hand side, we'll choose Valid JSON for this guide. You'll see a pre-populated evaluator with Python code that checks the output of our model is valid JSON grammar.\n\n\nIn the debug console at the bottom of the dialog, click Random logs from project. The console will be populated with five datapoints from your project.\n\n\nClick the Run button at the far right of one of the log rows. After a moment, you'll see the Result column populated with a True or False.\n\n\nExplore the log dictionary in the table to help understand what is available on the Python object passed into the evaluator.\nClick Create on the left side of the page.",
     "hierarchy": {
       "h2": {
-        "id": "prerequisites",
-        "title": "Prerequisites"
+        "id": "create-an-online-evaluator",
+        "title": "Create an online evaluator"
       },
       "h3": {
         "id": "prerequisites",
@@ -5937,8 +5949,8 @@
     "content": "A Humanloop project with a reasonable amount of data.\n\nAn Evaluator activated in that project.\n\n\nTo track the performance of different model configs in your project:\n\n\nGo to the Dashboard tab.\nIn the table of model configs at the\nbottom, choose a subset of the project's model configs.\nUse the graph controls\nAt the top of the page to select the date range and time granularity\nof interest.\nReview the relative performance\nFor each activated Evaluator shown in the graphs, you can see the relative performance of the model configs you selected.\n\n\n\n\nThe following Python modules are available to be imported in your code evaluators:\nre\n\nmath\n\nrandom\n\ndatetime\n\njson (useful for validating JSON grammar as per the example above)\n\njsonschema (useful for more fine-grained validation of JSON output - see the in-app example)\n\nsqlglot (useful for validating SQL query grammar)\n\nrequests (useful to make further LLM calls as part of your evaluation - see the in-app example for a suggestion of how to get started).",
     "hierarchy": {
       "h2": {
-        "id": "prerequisites-1",
-        "title": "Prerequisites"
+        "id": "track-the-performance-of-models",
+        "title": "Track the performance of models"
       },
       "h3": {
         "id": "prerequisites-1",
@@ -6516,8 +6528,8 @@
     "content": "The feedback recorded for each Log can be viewed in the Logs table of your Prompt.\nLogs table showing feedback applied to Logs\nYour internal users can also apply feedback to the Logs directly through the Humanloop app.\nLog drawer showing feedback section",
     "hierarchy": {
       "h2": {
-        "id": "viewing-feedback-applied-to-logs",
-        "title": "Viewing Feedback applied to Logs"
+        "id": "viewing-feedback",
+        "title": "Viewing feedback"
       },
       "h3": {
         "id": "viewing-feedback-applied-to-logs",
@@ -6559,8 +6571,8 @@
     "content": "Alternatively, you can view all feedback recorded for a specific Evaluator in the Logs tab of the Evaluator.\nThis will display all feedback recorded for the Evaluator across all other Files.\nLogs table for \"Tweet Issues\" Evaluator showing feedback",
     "hierarchy": {
       "h2": {
-        "id": "viewing-feedback-through-its-human-evaluator",
-        "title": "Viewing Feedback through its Human Evaluator"
+        "id": "viewing-feedback",
+        "title": "Viewing feedback"
       },
       "h3": {
         "id": "viewing-feedback-through-its-human-evaluator",
@@ -6722,8 +6734,8 @@
     "content": "Google Workspace\n\nOkta\n\nAzure Active Directory\n\nOneLogin\n\nCustom SAML 2.0 providers",
     "hierarchy": {
       "h2": {
-        "id": "supported-sso-providers",
-        "title": "Supported SSO Providers"
+        "id": "single-sign-on-sso",
+        "title": "Single Sign-On (SSO)"
       },
       "h3": {
         "id": "supported-sso-providers",
@@ -6761,8 +6773,8 @@
     "content": "Enhanced security with centralized authentication\n\nSimplified user management\n\nImproved user experience with reduced password fatigue\n\nStreamlined onboarding and offboarding processes",
     "hierarchy": {
       "h2": {
-        "id": "benefits-of-sso",
-        "title": "Benefits of SSO"
+        "id": "single-sign-on-sso",
+        "title": "Single Sign-On (SSO)"
       },
       "h3": {
         "id": "benefits-of-sso",
@@ -6800,8 +6812,8 @@
     "content": "To set up SSO for your organization:\nContact our sales team to enable SSO for your account\n\nChoose your identity provider\n\nConfigure the connection between Humanloop and your identity provider\n\nTest the SSO integration\n\nRoll out to your users",
     "hierarchy": {
       "h2": {
-        "id": "setting-up-sso",
-        "title": "Setting up SSO"
+        "id": "single-sign-on-sso",
+        "title": "Single Sign-On (SSO)"
       },
       "h3": {
         "id": "setting-up-sso",
@@ -6874,8 +6886,8 @@
     "content": "Time-based One-Time Password (TOTP) apps\n\nSMS-based verification\n\nHardware security keys (e.g., YubiKey)",
     "hierarchy": {
       "h2": {
-        "id": "mfa-options",
-        "title": "MFA Options"
+        "id": "multi-factor-authentication-mfa",
+        "title": "Multi-Factor Authentication (MFA)"
       },
       "h3": {
         "id": "mfa-options",
@@ -6948,8 +6960,8 @@
     "content": "Generate API keys in your account settings\n\nUse environment variables to store API keys in your applications\n\nImplement key rotation policies for enhanced security",
     "hierarchy": {
       "h2": {
-        "id": "managing-api-keys",
-        "title": "Managing API Keys"
+        "id": "api-authentication",
+        "title": "API Authentication"
       },
       "h3": {
         "id": "managing-api-keys",
@@ -7585,8 +7597,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "basic-examples",
-        "title": "Basic examples"
+        "id": "format",
+        "title": "Format"
       },
       "h3": {
         "id": "basic-examples",
@@ -7631,8 +7643,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "multi-modality-and-images",
-        "title": "Multi-modality and Images"
+        "id": "format",
+        "title": "Format"
       },
       "h3": {
         "id": "multi-modality-and-images",
@@ -7679,8 +7691,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "tools-tool-calls-and-tool-responses",
-        "title": "Tools, tool calls and tool responses"
+        "id": "format",
+        "title": "Format"
       },
       "h3": {
         "id": "tools-tool-calls-and-tool-responses",
@@ -8076,8 +8088,8 @@
     "content": "All users of the Humanloop web application require a valid email address and password to use the system:\nEmail addresses are verified on account creation.\n\nPasswords are verified as sufficiently complex.\n\nPasswords are stored using a one-way salted hash.\n\nUser access logs are maintained including date, time, user ID, relevant URL, operation performed, and source IP address for audit purposes.",
     "hierarchy": {
       "h2": {
-        "id": "authentication--access-control---humanloop-web-app",
-        "title": "Authentication & Access Control - Humanloop Web App"
+        "id": "user-authentication-and-access-control",
+        "title": "User Authentication and Access Control"
       },
       "h3": {
         "id": "authentication--access-control---humanloop-web-app",
@@ -8115,8 +8127,8 @@
     "content": "All users of the API are required to authenticate with a unique API token header:\nFollows the OAuth 2.0 pattern.\n\nAPI tokens are only visible once on creation and then obfuscated.\n\nUsers can manage the expiry of API keys.\n\nAPI token access logs are maintained including date, time, user ID, relevant URL, operation performed, and source IP address for audit purposes.",
     "hierarchy": {
       "h2": {
-        "id": "authentication--access-control---humanloop-api",
-        "title": "Authentication & Access Control - Humanloop API"
+        "id": "user-authentication-and-access-control",
+        "title": "User Authentication and Access Control"
       },
       "h3": {
         "id": "authentication--access-control---humanloop-api",
@@ -8154,8 +8166,8 @@
     "content": "Role-based access control (RBAC) - We implement strict role-based access control (RBAC) for all our systems.\n\nMulti-factor authentication (MFA) - MFA is enforced for all employee accounts.",
     "hierarchy": {
       "h2": {
-        "id": "additional-resources",
-        "title": "Additional Resources"
+        "id": "user-authentication-and-access-control",
+        "title": "User Authentication and Access Control"
       },
       "h3": {
         "id": "additional-resources",
@@ -8193,8 +8205,8 @@
     "content": "Humanloop follows best practices for data management and encryption. All data in transit is secured with TLS/SSL, and all data at rest is encrypted using the AES-256 algorithm. All encryption keys are managed using AWS Key Management Service (KMS) as part of the VPC definition.\nAll data in transit is encrypted using TLS 1.2 or higher.\n\nData at rest is encrypted using AES-256 encryption.",
     "hierarchy": {
       "h2": {
-        "id": "encryption",
-        "title": "Encryption"
+        "id": "encryption-standards",
+        "title": "Encryption Standards"
       },
       "h3": {
         "id": "encryption",
@@ -8232,8 +8244,8 @@
     "content": "All sensitive data is encrypted in transit. For Self-Hosted Cloud (VPC) environments, network traffic is also encrypted in transit and at rest to meet HIPAA requirements. Sensitive application data is only ever processed within the ECS cluster and stored in Aurora. To request a network infrastructure diagram or more information, please contact privacy@humanloop.com.\nLearn More\nFor more information about how Humanloop processes user data, visit our Data Management & Hosting Options page.",
     "hierarchy": {
       "h2": {
-        "id": "infrastructure",
-        "title": "Infrastructure"
+        "id": "encryption-standards",
+        "title": "Encryption Standards"
       },
       "h3": {
         "id": "infrastructure",
@@ -8271,8 +8283,8 @@
     "content": "Humanloop is fully SOC2 Type II compliant. Learn more via our Trust Center and our Security Policy page.",
     "hierarchy": {
       "h2": {
-        "id": "soc2-type-ii-compliance",
-        "title": "SOC2 Type II Compliance"
+        "id": "security-certifications",
+        "title": "Security Certifications"
       },
       "h3": {
         "id": "soc2-type-ii-compliance",
@@ -8310,8 +8322,8 @@
     "content": "Humanloop actively works with paying customers to help them achieve HIPAA compliance. Official certification is pending.\nTo request references or more information, contact sales@humanloop.com.\nHIPAA Compliance via Hosting Environment:\nHumanloop offers dedicated platform instances on AWS with HIPAA provisions for enterprise customers that have particularly sensitive data. These provisions include:\nThe ability for enterprises to manage their own encryption keys.\n\nA specific AWS Fargate deployment that follows HIPAA practices.",
     "hierarchy": {
       "h2": {
-        "id": "hipaa-compliance",
-        "title": "HIPAA Compliance"
+        "id": "security-certifications",
+        "title": "Security Certifications"
       },
       "h3": {
         "id": "hipaa-compliance",
@@ -8349,8 +8361,8 @@
     "content": "We are fully compliant with the General Data Protection Regulation (GDPR). This includes:\nData minimization practices\n\nUser rights management\n\nData processing agreements",
     "hierarchy": {
       "h2": {
-        "id": "gdpr-compliance",
-        "title": "GDPR Compliance"
+        "id": "security-certifications",
+        "title": "Security Certifications"
       },
       "h3": {
         "id": "gdpr-compliance",
@@ -8423,8 +8435,8 @@
     "content": "Cloud Hosting Options\n\nData Management Protocols\n\nSecurity Policy\n\nPrivacy Policy\n\nTrust Center\n\n\nTo request references or more information, contact sales@humanloop.com",
     "hierarchy": {
       "h2": {
-        "id": "learn-more",
-        "title": "Learn more:"
+        "id": "how-humanloop-helps-customers-maintain-compliance",
+        "title": "How Humanloop helps customers maintain compliance:"
       },
       "h3": {
         "id": "learn-more",
@@ -8558,8 +8570,8 @@
     "content": "Humanloop follows best practices for data management and encryption. All data in transit is secured with TLS/SSL, and all data at rest is encrypted using the AES-256 algorithm. All encryption keys are managed using AWS Key Management Service (KMS) as part of the VPC definition.",
     "hierarchy": {
       "h3": {
-        "id": "encryption",
-        "title": "Encryption"
+        "id": "data-encryption-and-security",
+        "title": "Data Encryption and Security"
       },
       "h4": {
         "id": "encryption",
@@ -9022,7 +9034,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Evaluation Names\nYou can now name your Evaluations in the UI and via the API. This is helpful for more easily identifying the purpose of your different Evaluations, especially when multiple teams are running different experiments.\nEvaluation with a name\nIn the API, pass in the name field when creating your Evaluation to set the name. Note that names must be unique for all Evaluations for a specific file. In the UI, navigate to your Evaluation and you will see an option to rename it in the header.",
-    "date": "2024-09-17T00:00:00.000Z"
+    "date": "2024-09-16",
+    "date_timestamp": 1726531200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-9-15",
@@ -9054,7 +9067,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Introducing Flows\nWe've added a new key building block to our app with the first release of Flows. This release focuses on improving the code-first workflows for evaluating more complex AI applications like RAG and Agent-based apps.\nFlows allow you to version your whole AI application on Humanloop (as opposed to just individual Prompts and Tools) and allows you to log and evaluate the full trace of the important processing steps that occur when running your app.\nSee our cookbook tutorial for examples on how to use Flows in your code.\nImage of a Flow with logs\nWhat's next\nWe'll soon be extending support for allowing Evaluators to access all Logs inside a trace.\nAdditionally, we will build on this by adding UI-first visualisations and management of your Flows.\nWe'll sunset Sessions in favour of Flows in the near future. Reach out to us for guidance on how to migrate your Session-based workflows to Flows.",
-    "date": "2024-09-15T00:00:00.000Z"
+    "date": "2024-09-14",
+    "date_timestamp": 1726358400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-9-13",
@@ -9086,7 +9100,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Bedrock support for Anthropic models\nWe've introduced a Bedrock integration on Humanloop, allowing you to use Anthropic's models via the Bedrock API, leveraging your AWS-managed infrastructure.\nAWS Bedrock Claude models in model selection dropdown in a Prompt Editor on Humanloop\nTo set this up, head to the API Keys tab in your Organization settings here. Enter your AWS credentials and configuration.\nBedrock keys dialog in Humanloop app\nOnce you've set up your Bedrock keys, you can select the Anthropic models in the model selection dropdown in the Prompt Editor and start using them in your Prompts.",
-    "date": "2024-09-13T00:00:00.000Z"
+    "date": "2024-09-12",
+    "date_timestamp": 1726185600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-9-10",
@@ -9118,7 +9133,8 @@
     "authed": false,
     "type": "changelog",
     "content": "OpenAI o1\nWe added same day support for OpenAI's new models, the o1 series. Unlike their predecessors, the o1 models have been designed to spend more time thinking before they respond.\nIn practise this means that when you call the API, time and tokens are spent doing chain-of-thought reasoning before you receive a response back.\no1 in the Humanloop Editor\nRead more about this new class of models in OpenAI's release note and their documentation.\nThese models are still in Beta and don't yet support streaming or tool use, the temperature has to be set to 1 and there are specific rate limits in place.",
-    "date": "2024-09-10T00:00:00.000Z"
+    "date": "2024-09-09",
+    "date_timestamp": 1725926400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-9-5",
@@ -9155,7 +9171,8 @@
         "code": "⏳ Evaluation Progress\nTotal Logs: 40/40\nTotal Judgments: 120/120\n\n\n\n📊 Evaluation Results for evals_demo/answer-flow \n+------------------------+---------------------------+---------------------------+\n|             Version id | flv_xo7ZxnkkvcFcDJ9pwSrA9 | flv_foxO18ZHEgxQmwYJO4bR1 |\n+------------------------+---------------------------+---------------------------+\n|                Created |    2024-09-01 14:50:28    |    2024-09-02 14:53:24    |\n+------------------------+---------------------------+---------------------------+\n|             Evaluators |                           |                           |\n+------------------------+---------------------------+---------------------------+\n| evals_demo/exact_match |            0.8            |            0.65           |\n| evals_demo/levenshtein |            7.5            |            33.5           |\n|   evals_demo/reasoning |            0.3            |            0.05           |\n+------------------------+---------------------------+---------------------------+\n\n\nNavigate to Evaluation:  https://app.humanloop.com/evaluations/evr_vXjRgufGzwuX37UY83Lr8\n❌ Latest score [0.05] below the threshold [0.5] for evaluator evals_demo/reasoning.\n❌ Regression of [-0.25] for evaluator evals_demo/reasoning\n"
       }
     ],
-    "date": "2024-09-05T00:00:00.000Z"
+    "date": "2024-09-04",
+    "date_timestamp": 1725494400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-8-30",
@@ -9187,7 +9204,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Get All Deployed Versions via API\nWe've introduced a new Files API in our v5 API resources that lets you query all files simultaneously. This is useful when managing your workflows on Humanloop and you wish to find all files that match specific criteria, such as having a deployment in a specific environment. Some of the supported filters to search with are file name, file type, and deployed environments. If you find there are additional access patterns you'd find useful, please reach out and let us know.",
-    "date": "2024-08-30T00:00:00.000Z"
+    "date": "2024-08-29",
+    "date_timestamp": 1724976000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-8-29",
@@ -9219,7 +9237,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Update Logs API\nWe've introduced the ability to patch Logs for Prompts and Tools. This can come in useful in scenarios where certain characteristics of your Log are delayed that you may want to add later, such as the output, or if you have a process of redacting inputs that takes time.\nNote that not all fields support being patched, so start by referring to our V5 API References. From there, you can submit updates to your previously created logs.",
-    "date": "2024-08-29T00:00:00.000Z"
+    "date": "2024-08-28",
+    "date_timestamp": 1724889600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-8-28",
@@ -9251,7 +9270,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Search files by path\nWe've extended our search interface to include file paths, allowing you to more easily find and navigate to related files that you've grouped under a directory.\nSearch dialog showing file paths\nBring up this search dialog by clicking \"Search\" near the top of the left-hand sidebar, or by pressing Cmd+K.",
-    "date": "2024-08-28T00:00:00.000Z"
+    "date": "2024-08-27",
+    "date_timestamp": 1724803200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-8-24",
@@ -9283,7 +9303,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Updated Gemini 1.5 models\nHumanloop supports the three newly released Gemini 1.5 models.\nStart using these improved models by specifying one of the following model names in your Prompts:\ngemini-1.5-pro-exp-0827 The improved Gemini 1.5 Pro model\n\ngemini-1.5-flash-exp-0827 The improved Gemini 1.5 Flash model\n\ngemini-1.5-flash-8b-exp-0827 The smaller Gemini 1.5 Flash variant\n\n\nMore details on these models can be viewed here.",
-    "date": "2024-08-24T00:00:00.000Z"
+    "date": "2024-08-23",
+    "date_timestamp": 1724457600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-8-20",
@@ -9315,7 +9336,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Custom attributes for Files\nYou can now include custom attributes to determine the unique version of your file definitions on Humanloop.\nThis allows you to make the version depend on data custom to your application that Humanloop may not be aware of.\nFor example, if there are feature flags or identifiers that indicate a different configuration of your system that may impact the behaviour of your Prompt or Tool.\nattributes can be submitted via the v5 API endpoints. When added, the attributes are visible on the Version Drawer and in the Editor.\nMetadata on versions",
-    "date": "2024-08-20T00:00:00.000Z"
+    "date": "2024-08-19",
+    "date_timestamp": 1724112000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-8-16",
@@ -9347,7 +9369,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Improved popover UI\nWe've expanded the information shown in the version popover so that it is easier to identify which version you are working with.\nThis is particularly useful in places like the Logs table and within Evaluation reports, where you may be working with multiple versions of a Prompt, Tool, or Evaluator and need to preview the contents.\nImproved version popover",
-    "date": "2024-08-16T00:00:00.000Z"
+    "date": "2024-08-15",
+    "date_timestamp": 1723766400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-8-15",
@@ -9379,7 +9402,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Evaluate uncommitted versions\nYou can now evaluate versions without committing them first. This means you can draft a version of a Prompt in the editor and simultaneously evaluate it in the evaluations tab, speeding up your iteration cycle.\nThis is a global change that allows you to load and use uncommitted versions. Uncommitted versions are created automatically when a new version of a Prompt, Tool, or Evaluator is run in their respective editors or called via the API. These versions will now appear in the version pickers underneath all your committed versions.\nTo evaluate an uncommitted version, simply select it by using the hash (known as the \"version id\") when setting up your evaluation.\nUncommitted versions in the version picker",
-    "date": "2024-08-15T00:00:00.000Z"
+    "date": "2024-08-14",
+    "date_timestamp": 1723680000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-8-14",
@@ -9411,7 +9435,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Human Evaluator upgrades\nWe've made significant upgrades to Human Evaluators and related workflows to improve your ability to gather Human judgments (sometimes referred to as \"feedback\") in assessing the quality of your AI applications.\nHere are some of the key improvements:\nInstead of having to define a limited feedback schema tied to the settings of a specific Prompt, you can now define your schema with a Human Evaluator file and reuse it across multiple Prompts and Tools for both monitoring and offline evaluation purposes.\n\nYou are no longer restricted to the default types of Rating, Actions and Issues when defining your feedback schemas from the UI. We've introduced a more flexible Editor interface supporting different return types and valence controls.\n\nWe've extended the scope of Human Evaluators so that they can now also be used with Tools and other Evaluators (useful for validating AI judgments) in the same way as with Prompts.\n\nWe've improved the Logs drawer UI for applying feedback to Logs. In particular, we've made the buttons more responsive.\n\n\nTo set up a Human Evaluator, create a new file. Within the file creation dialog, click on Evaluator, then click on Human.\nThis will create a new Human Evaluator file and bring you to its Editor. Here, you can choose a Return type for the Evaluator and configure the feedback schema.\nTone evaluator set up with options and instructions\nYou can then reference this Human Evaluator within the Monitoring dropdown of Prompts, Tools, and other Evaluators, as well as when configuring reports in their Evaluations tab.\nWe've set up default Rating and Correction Evaluators that will be automatically attached to all Prompts new and existing. We've migrated all your existing Prompt specific feedback schemas to Human Evaluator files and these will continue to work as before with no disruption.\nCheck out our updated document for further details on how to use Human Evaluators:\nCreate a Human Evaluator\n\nCapture End User Feedback\n\nRun a Human Evaluation",
-    "date": "2024-08-14T00:00:00.000Z"
+    "date": "2024-08-13",
+    "date_timestamp": 1723593600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-8-13",
@@ -9443,7 +9468,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Evaluations improvements\nWe've made improvements to help you evaluate the components of your AI applications, quickly see issues and explore the full context of each evaluation.\nA clearer Evaluation tab in Logs\nWe've given the Log drawer's Evaluation tab a facelift. You can now clearly see what the results are for each of the connected Evaluators.\nThis means that it's now easier to debug the judgments applied to a Log, and if necessary, re-run code/AI Evaluators in-line.\nLog drawer's Evaluation tab with the \"Run again\" menu open\nAbility to re-run Evaluators\nWe have introduced the ability to re-run your Evaluators against a specific Log. This feature allows you to more easily address and fix issues with previous Evaluator judgments for specific Logs.\nYou can request a re-run of that Evaluator by opening the menu next to that Evaluator and pressing the \"Run Again\" option.\nEvaluation popover\nIf you hover over an evaluation result, you'll now see a popover with more details about the evaluation including any intermediate results or console logs without context switching.\nEvaluation popover\nUpdated Evaluator Logs table\nThe Logs table for Evaluators now supports the functionality as you would expect from our other Logs tables. This will make it easier to filter and sort your Evaluator judgments.",
-    "date": "2024-08-13T00:00:00.000Z"
+    "date": "2024-08-12",
+    "date_timestamp": 1723507200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-8-7",
@@ -9475,7 +9501,8 @@
     "authed": false,
     "type": "changelog",
     "content": "More Code Evaluator packages\nWe have expanded the packages available in the Evaluator Python environment. The new packages we've added are: continuous-eval, jellyfish, langdetect, nltk, scikit-learn, spacy, transformers. The full list of packages can been seen in our Python environment reference.\nWe are actively improving our execution environment so if you have additional packages you'd like us to support, please do not hesitate to get in touch.",
-    "date": "2024-08-07T00:00:00.000Z"
+    "date": "2024-08-06",
+    "date_timestamp": 1722988800
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-8-5",
@@ -9517,7 +9544,8 @@
         "code": "\nclient.prompts.call(\n    path=\"person-extractor\",\n    prompt={\n        \"model\": \"gpt-4o\",\n        \"template\": [\n            {\n                \"role\": \"system\",\n                \"content\": \"You are an information extractor.\",\n            },\n        ],\n        # New parameter to enable structured outputs\n        \"response_format\": {\n            \"type\": \"json_schema\",\n            \"json_schema\": {\n                \"name\": \"person_object\",\n                \"strict\": True,\n                \"schema\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"name\": {\n                            \"type\": \"string\",\n                            \"name\": \"Full name\",\n                            \"description\": \"Full name of the person\"\n                        },\n                        \"address\": {\n                            \"type\": \"string\",\n                            \"name\": \"Full address\",\n                            \"description\": \"Full address of the person\"\n                        },\n                        \"job\": {\n                            \"type\": \"string\",\n                            \"name\": \"Job\",\n                            \"description\": \"The job of the person\"\n                        }\n                    },\n                    \"required\": [\"name\", \"address\", \"job\"],\n                    \"additionalProperties\": False\n                }\n            }\n        }\n    },\n    messages=[\n        {\n            \"role\": \"user\",\n            \"content\": \"Hey! I'm Jacob Martial, I live on 123c Victoria street, Toronto and I'm a software engineer at Humanloop.\",\n        },\n    ],\n    stream=False,\n)"
       }
     ],
-    "date": "2024-08-05T00:00:00.000Z"
+    "date": "2024-08-04",
+    "date_timestamp": 1722816000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-8-1",
@@ -9549,7 +9577,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Improved Code Evaluator Debugging\nWe've added the ability to view the Standard Output (Stdout) for your Code Evaluators.\nYou can now use print(...) statements within your code to output intermediate results to aid with debugging.\nThe Stdout is available within the Debug console as you iterate on your Code Evaluator:\nDebugConsole\nAdditionally, it is stored against the Evaluator Log for future reference:\nEvaluatorLog",
-    "date": "2024-08-01T00:00:00.000Z"
+    "date": "2024-07-31",
+    "date_timestamp": 1722470400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-7-30",
@@ -9581,7 +9610,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Select multiple Versions when creating an Evaluation\nOur Evaluations feature allows you to benchmark Versions of a same File. We've made the form for creating new Evaluations simpler by allowing the selection of multiple in the picker dialog. Columns will be filled or inserted as needed.\nAs an added bonus, we've made adding and removing columns feel smoother with animations. The form will also scroll to newly-added columns.",
-    "date": "2024-07-30T00:00:00.000Z"
+    "date": "2024-07-29",
+    "date_timestamp": 1722297600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-7-19",
@@ -9613,7 +9643,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Faster log queries\nYou should notice that queries against your logs should load faster and the tables should render more quickly.\nWe're still making more enhancements so keep an eye for more speed-ups coming soon!",
-    "date": "2024-07-19T00:00:00.000Z"
+    "date": "2024-07-18",
+    "date_timestamp": 1721347200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-7-18",
@@ -9645,7 +9676,8 @@
     "authed": false,
     "type": "changelog",
     "content": "gpt-4o-mini support\nLatest model from OpenAI, GPT-4o-mini, has been added. It's a smaller version of the GPT-4o model which shows GPT-4 level performance with a model that is 60% cheaper than gpt-3.5-turbo.\nCost: 15 cents per million input tokens, 60 cents per million output tokens\n\nPerformance: MMLU score of 82%",
-    "date": "2024-07-18T00:00:00.000Z"
+    "date": "2024-07-17",
+    "date_timestamp": 1721260800
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-7-10",
@@ -9677,7 +9709,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Enhanced code Evaluators\nWe've introduced several enhancements to our code Evaluator runtime environment to support additional packages, environment variables, and improved runtime output.\nRuntime environment\nOur Code Evaluator now logs both stdout and stderr when executed and environment variables can now be accessed via the os.environ dictionary, allowing you to retrieve values such as os.environ['HUMANLOOP_API_KEY'] or os.environ['PROVIDER_KEYS'].\nPython packages\nPreviously, the selection of Python packages we could support was limited. We are now able to accommodate customer-requested packages. If you have specific package requirements for your eval workflows, please let us know!",
-    "date": "2024-07-10T00:00:00.000Z"
+    "date": "2024-07-09",
+    "date_timestamp": 1720569600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-6-30",
@@ -9709,7 +9742,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Gemini 1.5 Flash support\nGemini 1.5 Flash is Googles most efficient model to date with a long context window and great latency.\nWhile it’s smaller than 1.5 Pro, it’s highly capable of multimodal reasoning with a 1 million token length context window.\nFind out more about Flash's availability and pricing",
-    "date": "2024-06-30T00:00:00.000Z"
+    "date": "2024-06-29",
+    "date_timestamp": 1719705600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-6-24",
@@ -9741,7 +9775,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Committing and deploying UX improvements\nWe've made some improvements to the user experience around committing and deploying changes to your evaluators, tools and datasets.\nNow, each editor has a consistent and reliable loading and saving experience. You can choose prior versions in the dropdown, making it easier to toggle between versions.\nAnd, as you commit, you'll also get the option to immediately deploy your changes. This reduces the number of steps needed to get your changes live.\nAdditional bug fixes:\nFixed the flickering issue on the datasets editor\n\nFixed the issue where the evaluator editor would lose the state of the debug drawer on commit.",
-    "date": "2024-06-24T00:00:00.000Z"
+    "date": "2024-06-23",
+    "date_timestamp": 1719187200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-6-20",
@@ -9773,7 +9808,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Claude 3.5 Sonnet support\nClaude 3.5 Sonnet is now in Humanloop!\nSonnet is the latest and most powerful model from Anthropic.\n2x the speed, 1/5th the cost, yet smarter than Claude 3 Opus.\nAnthropic have now enabled streaming of tool calls too, which is supported in Humanloop now too.\nAdd your Anthropic key and select Sonnet in the Editor to give it a go.\nSonnet",
-    "date": "2024-06-20T00:00:00.000Z"
+    "date": "2024-06-19",
+    "date_timestamp": 1718841600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-6-18",
@@ -9805,7 +9841,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Prompt and Tool version drawer in Evaluation reports\nYou can now click on the Prompt and Tool version tags within your Evaluation report to open a drawer with details. This helps provide the additional context needed when reasoning with the results without having to navigate awa\nPrompt drawer in Evaluation report",
-    "date": "2024-06-18T00:00:00.000Z"
+    "date": "2024-06-17",
+    "date_timestamp": 1718668800
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-6-16",
@@ -9837,7 +9874,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Status of Human Evaluators\nWith Humanloop Evaluation Reports, you can leverage multiple Evaluators for comparing your Prompt and Tool variations. Evaluators can be of different types: code, AI or Human and the progress of the report is dependent on collecting all the required judgements. Human judgments generally take longer than the rest and are collected async by members of your team.\nHuman Evaluators\nTo better support this workflow, we've improved the UX around monitoring the status of judgments, with a new progress bar. Your Human Evaluators can now also update the status of the report when they're done.\nHuman Evaluators\nWe've also added the ability to cancel ongoing Evaluations that are pending or running. Humanloop will then stop generating Logs and running Evaluators for this Evaluation report.",
-    "date": "2024-06-16T00:00:00.000Z"
+    "date": "2024-06-15",
+    "date_timestamp": 1718496000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-6-10",
@@ -9869,7 +9907,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Faster Evaluations\nFollowing the recent upgrades around Evaluation reports, we've improved the batching and concurrency for both calling models and getting the evaluation results. This has increased the speed of Evaluation report generation by 10x and the reports now update as new batches of logs and evaluations are completed to give a sense of intermediary progress.",
-    "date": "2024-06-10T00:00:00.000Z"
+    "date": "2024-06-09",
+    "date_timestamp": 1717977600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-6-4",
@@ -9901,7 +9940,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Evaluation Comparison Reports\nWe've released Evaluation reports, which allows you to easily compare the performance of your different Prompts or Tools across multiple different Evaluator criteria.\nThis generalises our previous concept of Evaluation runs, extending it with multiple complimentary changes with getting more from your evals. All your existing Evaluation runs have been migrated to Evaluation reports with a single evaluated Prompt or Tool. You can easily extend these existing runs to cover additional Evaluators and Prompts/Tools with out having to regenerate existing logs.\n\n\nFeature breakdown\nWe've introduced a new stats comparison view, including a radar chart that gives you a quick overview of how your versions compare across all Evaluators. Below it, your evaluated versions are shown in columns, forming a grid with a row per Evaluator you've selected.\nThe performance of each version for a given Evaluator is shown in a chart, where bar charts are used for boolean results, while box plots are used for numerical results providing an indication of variance within your Dataset.\nEvaluation reports also introduce an automatic deduplication feature, which utilizes previous logs to avoid generating new logs for the same inputs. If a log already exists for a given evaluated-version-and-datapoint pair, it will automatically be reused. You can also override this behavior and force the generation of new logs for a report by creating a New Batch in the setup panel.\n\n\nHow to use Evaluation reports\nTo get started, head over to the Evaluations tab of the Prompt you'd like to evaluate, and click Evaluate in the top right.\nThis will bring you to a page where you can set up your Evaluation, choosing a Dataset, some versions to Evaluate and compare, and the Evaluators you'd like to use.\n\nWhen you click Save, the Evaluation report will be created, and any missing Logs will be generated.\nWhat's next\nWe're planning on improving the functionality of Evaluation reports by adding a more comprehensive detailed view, allowing you to get a more in-depth look at the generations produced by your Prompt versions. Together with this, we'll also be improving Human evaluators so you can better annotate and aggregate feedback on your generations.",
-    "date": "2024-06-04T00:00:00.000Z"
+    "date": "2024-06-03",
+    "date_timestamp": 1717459200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-5-28",
@@ -9933,7 +9973,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Azure Model Updates\nYou can now access the latest versions of GPT-4 and GPT-4o hosted on Azure in the Humanloop Editor and via our Chat endpoints.\nOnce you've configured your Azure key and endpoint in your organization's provider settings, the model versions will show up in the Editor dropown as follows:\nFor more detail, please see the API documentation on our Logs endpoints.",
-    "date": "2024-05-28T00:00:00.000Z"
+    "date": "2024-05-27",
+    "date_timestamp": 1716854400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-5-20",
@@ -9965,7 +10006,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Improved Logs Filtering\nWe've improved the ability to filter logs by time ranges. The API logs filter parameters for start_date and end_date now supports querying with more granularity. Previously the filters were limited to dates, such as 2024-05-22, now you can use hourly ranges as well, such as 2024-05-22 13:45.\nFor more detail, please see the API documentation on our Logs endpoints.",
-    "date": "2024-05-20T00:00:00.000Z"
+    "date": "2024-05-19",
+    "date_timestamp": 1716163200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-5-15",
@@ -9997,7 +10039,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Monitoring with deployed Evaluators\nYou can now connect deployed Evaluator versions for online monitoring of your Prompts and Tools.\nThis enables you to update Evaluators for multiple Prompt or Tools when you deploy a new Evaluator version.",
-    "date": "2024-05-15T00:00:00.000Z"
+    "date": "2024-05-14",
+    "date_timestamp": 1715731200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-5-13",
@@ -10029,7 +10072,8 @@
     "authed": false,
     "type": "changelog",
     "content": "GPT-4o\nSame day support for OpenAIs new GPT4-Omni model! You can now use this within the Humanloop Editor and chat APIs.\nFind out more from OpenAI here.",
-    "date": "2024-05-13T00:00:00.000Z"
+    "date": "2024-05-12",
+    "date_timestamp": 1715558400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-5-12",
@@ -10061,7 +10105,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Logs for Evaluators\nFor AI and Code Evaluators, you can now inspect and reference their logs as with Prompts and Tools. This provides greater transparency into how they are being used and improves the ability to debug and improve.\nFurther improvements to Human Evaluators are coming very soon...",
-    "date": "2024-05-12T00:00:00.000Z"
+    "date": "2024-05-11",
+    "date_timestamp": 1715472000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-5-8",
@@ -10093,7 +10138,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Improved Evaluator management\nEvaluators are now first class citizens alongside Prompts, Tools and Datasets. This allows for easier re-use, version control and helps with organising your workspace within directories.\nYou can create a new Evaluator by choosing Evaluator in the File creation dialog in the sidebar or on your home page.\n\n\nMigration and backwards compatibility\nWe've migrated all of your Evaluators previously managed within Prompts > Evaluations > Evaluators to new Evaluator files. All your existing Evaluation runs will remain unchanged and online Evaluators will continue to work as before. Moving forward you should use the new Evaluator file to make edits and manage versions.",
-    "date": "2024-05-08T00:00:00.000Z"
+    "date": "2024-05-07",
+    "date_timestamp": 1715126400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-4-30",
@@ -10125,7 +10171,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Log drawer in Editor\nYou can now open up the Log drawer directly in the Editor.\nThis enables you to see exactly what was sent to the provider as well as the tokens used and cost. You can also conveniently add feedback and run evaluators on that specific Log, or add it to a dataset.\nTo show the Logs just click the arrow icon beside each generated message or completion.",
-    "date": "2024-04-30T00:00:00.000Z"
+    "date": "2024-04-29",
+    "date_timestamp": 1714435200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-4-26",
@@ -10157,7 +10204,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Groq support (Beta)\nWe have introduced support for models available on Groq to Humanloop. You can now try out the blazingly fast generations made with the open-source models (such as Llama 3 and Mixtral 8x7B) hosted on Groq within our Prompt Editor.\n\n\nGroq achieves faster throughput  using specialized hardware, their LPU Inference Engine. More information is available in their FAQ and on their website.\n\n\nNote that their API service, GroqCloud, is still in beta and low rate limits are enforced.",
-    "date": "2024-04-26T00:00:00.000Z"
+    "date": "2024-04-25",
+    "date_timestamp": 1714089600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-4-23",
@@ -10189,7 +10237,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Llama 3\nLlama 3, Meta AI's latest openly-accessible model, can now be used in the Humanloop Prompt Editor.\nLlama 3 comes in two variants: an 8-billion parameter model that performs similarly to their previous 70-billion parameter Llama 2 model, and a new 70-billion parameter model. Both of these variants have an expanded context window of 8192 tokens.\nMore details and benchmarks against other models can be found on their blog post and model card.\nHumanloop supports Llama 3 on the Replicate model provider, and on the newly-introduced Groq model provider.",
-    "date": "2024-04-23T00:00:00.000Z"
+    "date": "2024-04-22",
+    "date_timestamp": 1713830400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-4-18",
@@ -10221,7 +10270,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Anthropic tool support (Beta)\nOur Editor and deployed endpoints now supports tool use with the Anthropic's Claude3 models. Tool calling with Anthropic is still in Beta, so streaming is not important.\nIn order to user tool calling for Claude in Editor you therefore need to first turn off streaming mode in the menu dropdown to the right of the load button.",
-    "date": "2024-04-18T00:00:00.000Z"
+    "date": "2024-04-17",
+    "date_timestamp": 1713398400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-4-16",
@@ -10253,7 +10303,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Cost, Tokens and Latency\nWe now compute Cost, Tokens and Latency for all Prompt logs by default across all model providers.\nThese values will now appear automatically as graphs in your Dashboard, as columns in your logs table and will be displayed in our Version and Log drawers.",
-    "date": "2024-04-16T00:00:00.000Z"
+    "date": "2024-04-15",
+    "date_timestamp": 1713225600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-4-13",
@@ -10285,7 +10336,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Cohere Command-r\nWe've expanded the Cohere models with the latest command-r suite. You can now use these models in our Editor and via our APIs once you have set your Cohere API key.\nMore details can be found on their blog post.",
-    "date": "2024-04-13T00:00:00.000Z"
+    "date": "2024-04-12",
+    "date_timestamp": 1712966400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-4-5",
@@ -10317,7 +10369,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Dataset Files & Versions\nIn our recent release, we promoted Datasets from being attributes managed within the context of a single Prompt, to a first-class Humanloop file type alongside Prompts and Tools.\n\n\nThis means you can curate Datasets and share them for use across any of the Prompts in your organization. It also means you get the full power of our file versioning system, allowing you track and commit every change you make Datasets and their Datapoints, with attribution and commit messages inspired by Git.\n\n\nIt's now easy to understand which version of a Dataset was used in a given Evaluation run, and whether the most recent edits to the Dataset were included or not.\nRead more on how to get started with datasets here.\nThis change lays the foundation for lots more improvements we have coming to Evaluations in the coming weeks. Stay tuned!",
-    "date": "2024-04-05T00:00:00.000Z"
+    "date": "2024-04-04",
+    "date_timestamp": 1712275200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-3-25",
@@ -10349,7 +10402,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Mixtral 8x7B\nKeeping you up to date with the latest open models, we've added support for Mixtral 8x7B to our Editor with a Replicate integration.\n\n\nMixtral 8x7B outperforms LLaMA 2 70B (already supported in Editor) with faster inference, with performance comparable to that of GPT-3.5. More details are available in its release announcement.\nAdditional Replicate models support via API\nThrough the Replicate model provider additional open models can be used by specifying a model name via the API. The model name should be of a similar form as the ref used when calling replicate.run(ref) using Replicate's Python SDK.\nFor example, Vicuna, an open-source chatbot model based on finetuning LLaMA can be used with the following model name alongside provider: \"replicate\" in your Prompt version.\n\nreplicate/vicuna-13b:6282abe6a492de4145d7bb601023762212f9ddbbe78278bd6771c8b3b2f2a13b",
-    "date": "2024-03-25T00:00:00.000Z"
+    "date": "2024-03-24",
+    "date_timestamp": 1711324800
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-3-18",
@@ -10381,7 +10435,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Surfacing uncommitted Versions\nWe now provide the ability to access your uncommitted Prompt Versions and associated Logs.\nAdding to our recent changes around the Commit flow for Versions, we've added the ability to view any uncommitted versions in your Versions and Logs tables. This can be useful if you need to recover or compare to a previous state during your Prompt engineering and Evaluation workflows.\nUncommitted Versions are created when you make generations in our Editor without first committing what you are working on. In future, it will also be possible to create uncommitted versions when logging or generating using the API.\nWe've added new filter tabs to the Versions and Logs table to enable this:",
-    "date": "2024-03-18T00:00:00.000Z"
+    "date": "2024-03-17",
+    "date_timestamp": 1710720000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-3-7",
@@ -10413,7 +10468,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Improved navigation & sidebar\nWe've introduced a sidebar for easier navigation between your Prompts and Tools.\nAs new language models unlock more complex use cases, you'll be setting up and connecting Prompts, Tools, and Evaluators. The new layout better reflects these emerging patterns, and switching between your files is now seamless with the directory tree in the sidebar.\n\nYou can also bring up the search dialog with Cmd+K and switch to another file using only your keyboard.",
-    "date": "2024-03-07T00:00:00.000Z"
+    "date": "2024-03-06",
+    "date_timestamp": 1709769600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-3-6",
@@ -10445,7 +10501,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Claude 3\nIntroducing same day support for the Claude 3 - Anthropics new industry leading models. Read more about the release here.\nThe release contains three models in ascending order of capability: Haiku, Sonnet, and Opus. This suite provides users with the different options to balance intelligence, speed, and cost for their specific use-cases.\n\n\nKey take aways\nPerformance - a new leader. The largest of the 3 models, Opus, is claimed to outperform GPT-4 and Gemini Ultra on key benchmarks such as MMLU and Hellaswag. It even reached 84.9% on the Humaneval coding test set (vs GPT-4’s 67%) 🤯\n\n200k context window with near-perfect recall on selected benchmarks. Opus reports 99% accuracy on the NIAH test, which measures how accurately a model can recall information given to it in a large corpus of data.\n\nOpus has vision. Anthropic claim that performance here is on par with that of other leading models (ie GPT-4 and Gemini). They say it’s most useful for inputting graphs, slides etc. in an enterprise setting.\n\nPricing - as compared to OpenAI:\n\n\nOpus - 75 (2.5x GPT-4 Turbo)  \nSonnet - 15 (50% of GPT-4 Turbo)\n\nHaiku - $1.25 (1.6x GPT-3.5)\nHow you can use it: The Claude 3 family is now available on Humanloop. Bring your API key to test, evaluate and deploy the publicly available models - Opus and Sonnet.",
-    "date": "2024-03-06T00:00:00.000Z"
+    "date": "2024-03-05",
+    "date_timestamp": 1709683200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-2-26",
@@ -10477,7 +10534,8 @@
     "authed": false,
     "type": "changelog",
     "content": "New Tool creation flow\nYou can now create Tools in the same way as you create Prompts and Directories. This is helpful as it makes it easier to discover Tools and easier to quickly create new ones.\n\nTo create a new Tool simply press the New button from the directory of your choice and select one of our supported Tools, such as JSON Schema tool for function calling or our Pinecone tool to integrate with your RAG pipelines.\nTool editor and deployments\nYou can now manage and edit your Tools in our new Tool Editor. This is found in each Tool file and lets you create and iterate on your tools. As well, we have introduced deployments to Tools, so you can better control which versions of a tool are used within your Prompts.\n\nTool Editor\nThis replaces the previous Tools section which has been removed. The editor will let you edit  any of the tool types that Humanloop supports (JSON Schema, Google, Pinecone, Snippet, Get API) and commit new Versions.\n\nDeployment\nTools can now be deployed. You can pick a version of your Tool and deploy it. When deployed it can be used and referenced in a Prompt editor.\nAnd example of this, if you have a version of a Snippet tool with the signature snippet(key) with a key/value pair of \"helpful\"/\"You are a helpful assistant\". You decide you would rather change the value to say \"You are a funny assistant\", you can commit a version of the Tool with the updated key. This wont affect any of your prompts that reference the Snippet tool until you Deploy the second version, after which each prompt will automatically start using the funny assistant prompt.\nPrompt labels and hover cards\nWe've rolled out a unified label for our Prompt Versions to allow you to quickly identify your Prompt Versions throughout our UI. As we're rolling out these labels across the app, you'll have a consistent way of interacting with and identifying your Prompt Versions.\n\n\nThe labels show the deployed status and short ID of the Prompt Version. When you hover over these labels, you will see a card that displays the commit message and authorship of the committed version.\nYou'll be able to find these labels in many places across the app, such as in your Prompt's deployment settings, in the Logs drawer, and in the Editor.\n\n\nAs a quick tip, the color of the checkmark in the label indicates that this is a version that has been deployed. If the Prompt Version has not been deployed, the checkmark will be black.\n\n\nCommitting Prompt Versions\nBuilding on our terminology improvements from Project -> Prompt, we've now updated Model Configs -> Prompt Versions to improve consistency in our UI.\nThis is part of a larger suite of changes to improve the workflows around how entities are managed on Humanloop and to make them easier to work with and understand. We will also be following up soon with a new and improved major version of our API that encapsulates all of our terminology improvements.\nIn addition to just the terminology update, we've improved our Prompt versioning functionality to now use commits that can take commit messages, where you can describe how you've been iterating on your Prompts.\nWe've removed the need for names (and our auto-generated placeholder names) in favour of using explicit commit messages.\n\n\nWe'll continue to improve the version control and file types support over the coming weeks.\nLet us know if you have any questions around these changes!",
-    "date": "2024-02-26T00:00:00.000Z"
+    "date": "2024-02-25",
+    "date_timestamp": 1708905600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-2-14",
@@ -10509,7 +10567,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Online evaluators for monitoring Tools\nYou can now use your online evaluators for monitoring the logs sent to your Tools. The results of this can be seen in the graphs on the Tool dashboard as well as on the Logs tab of the Tool.\n\nTo enable Online Evaluations follow the steps seen in our Evaluate models online guide.\nLogging token usage\nWe're now computing and storing the number of tokens used in both the requests to and responses from the model.\nThis information is available in the logs table UI and as part of the log response in the API. Furthermore you can use the token counts as inputs to your code and LLM based evaluators.\nThe number of tokens used in the request is called prompt_tokens and the number of tokens used in the response is called output_tokens.\nThis works consistently across all model providers and whether or not you are you are streaming the responses. OpenAI, for example, do not return token usage stats when in streaming mode.",
-    "date": "2024-02-14T00:00:00.000Z"
+    "date": "2024-02-13",
+    "date_timestamp": 1707868800
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-2-13",
@@ -10541,7 +10600,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Prompt Version authorship\nYou can now view who authored a Prompt Version.\n\n\nWe've also introduced a popover showing more Prompt Version details that shows when you mouseover a Prompt Version's ID.\n\n\nKeep an eye out as we'll be introducing this in more places across the app.",
-    "date": "2024-02-13T00:00:00.000Z"
+    "date": "2024-02-12",
+    "date_timestamp": 1707782400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-2-9",
@@ -10573,7 +10633,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Filterable and sortable evaluations overview\nWe've made improvements to the evaluations runs overview page to make it easier for your team to find interesting or important runs.\n\nThe charts have been updated to show a single datapoint per run. Each chart represents a single evaluator, and shows the performance of the prompt tested in that run, so you can see at a glance how the performance your prompt versions have evolved through time, and visually spot the outliers. Datapoints are color-coded by the dataset used for the run.\nThe table is now paginated and does not load your entire project's list of evaluation runs in a single page load. The page should therefore load faster for teams with a large number of runs.\nThe columns in the table are now filterable and sortable, allowing you to - for example - filter just for the completed runs which test two specific prompt versions on a specific datasets, sorted by their performance under a particular evaluator.",
-    "date": "2024-02-09T00:00:00.000Z"
+    "date": "2024-02-08",
+    "date_timestamp": 1707436800
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-2-8",
@@ -10605,7 +10666,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Projects rename and file creation flow\nWe've renamed Projects to Prompts and Tools as part of our move towards managing Prompts, Tools, Evaluators and Datasets as special-cased and strictly versioned files in your Humanloop directories.\nThis is a purely cosmetic change for now. Your Projects (now Prompts and Tools) will continue to behave exactly the same. This is the first step in a whole host of app layout, navigation and API improvements we have planned in the coming weeks.\nIf you are curious, please reach out to learn more.\n\n\nNew creation flow\nWe've also updated our file creation flow UI. When you go to create projects you'll notice they are called Prompts now.",
-    "date": "2024-02-08T00:00:00.000Z"
+    "date": "2024-02-07",
+    "date_timestamp": 1707350400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-2-2",
@@ -10643,7 +10705,8 @@
         "code": "from humanloop import Humanloop\n\n# You need to initialize the Humanloop SDK with your API Keys\nhumanloop = Humanloop(api_key=\"<YOUR Humanloop API KEY>\")\n\n# humanloop.complete_deployed(...) will call the active model config on your project.\n# You can optionally set the save flag to False\ncomplete_response = humanloop.complete_deployed(\n  \tsave=False,\n    project=\"<YOUR UNIQUE PROJECT NAME>\",\n    inputs={\"question\": \"I have inquiry about by life insurance policy. Can you help?\"},\n)\n\n# You can still retrieve the data_id and output as normal\ndata_id = complete_response.data[0].id\noutput = complete_response.data[0].output\n\n# And log end user feedback that will still be stored\nhumanloop.feedback(data_id=data_id, type=\"rating\", value=\"good\")\n\n"
       }
     ],
-    "date": "2024-02-02T00:00:00.000Z"
+    "date": "2024-02-01",
+    "date_timestamp": 1706832000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-1-30",
@@ -10675,7 +10738,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Add Evaluators to existing runs\nYou can now add an evaluator to any existing evaluation run. This is helpful in situations where you have no need to regenerate logs across a dataset, but simply want to run new evaluators across the existing run. By doing this instead of launching a fresh run, you can the save significant time & costs associated with unnecessarily regenerating logs, especially when working with large datasets.\n\n\nImproved Evaluation Debug Console\nWe've enhanced the usability of the debug console when creating and modifying evaluators. Now you can more easily inspect the data you are working with, and understand the root causes of errors to make debugging quicker and more intuitive.\n\nOn any row in the debug console, click the arrow next to a testcase to inspect the full entity in a slideover panel.\nAfter clicking Run to generate a log from a testcase, you can inspect the full log right from the debug console, giving you clearer access to error messages or the model-generated content, as in the example below.\n\nLLM Evaluators\nWe expect this feature to be most useful in the case of creating and debugging LLM evaluators. You can now inspect the log of the LLM evaluation itself right from the debug console, along with the original testcase and model-generated log, as described above.\nAfter clicking Run on a testcase in the debug console, you'll see the LLM Evaluation Log column populated with a button that opens a full drawer.\n\nThis is particularly helpful to verify that your evaluation prompt was correctly populated with data from the underlying log and testcase, and to help understand why the LLM's evaluation output may not have been parsed correctly into the output values.\n\nTool projects\nWe have upgraded projects to now also work for tools. Tool projects are automatically created for tools you define as part of your model config in the Editor as well as tools managed at organization level.\nIt is now easier to access the logs from your tools and manage different versions like you currently do for your prompts.\n\nTool versioning\nIn the dashboard view, you can see the different versions of your tools. This will soon be expanded to link you to the source config and provide a more comprehensive view of your tool's usage.\nLogs\nAny logs submitted via the SDK that relate to these tools will now appear in the Logs view of these projects. You can see this by following our sessions guide and logging a new tool via the SDK. This also works natively with online Evaluators, so you can start to layer in observability for the individual non-LLM components of your session\nOffline Evaluations via SDK\nYou can trigger evaluations on your tools projects similar to how you would for an LLM project with model configs. This can be done by logging to the tool project, creating a dataset, and triggering an evaluation run. A good place to start would be the Set up evaluations using API guide.\nSupport for new OpenAI Models\nFollowing OpenAI's latest model releases, you will find support for all the latest models in our Playground and Editor.\nGPT-3.5-Turbo and GPT-4-Turbo\nIf your API key has access to the models, you'll see the new release gpt-4-0125-preview and gpt-3.5-turbo-0125 available when working in Playground and Editor. These models are more capable and cheaper than their predecessors - see the OpenAI release linked above for full details.\n\nWe also support the new gpt-4-turbo-preview model alias, which points to the latest gpt-4-turbo model without specifying a specific version.\nEmbedding Models\nFinally, the new embedding models - text-embedding-3-small and text-embedding-3-large are also available for use via Humanloop. The small model is 5x cheaper than the previous generation ada-002 embedding model, while the larger model significantly improves performance and maps to a much larger embedding space.",
-    "date": "2024-01-30T00:00:00.000Z"
+    "date": "2024-01-29",
+    "date_timestamp": 1706572800
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-1-19",
@@ -10707,7 +10771,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Improved evaluation run launcher\nWe've made some usability enhancements to the launch experience when setting up batch generation & evaluation runs.\nIt's now clearer which model configs, datasets and evaluators you've selected. It's also now possible to specify whether you want the logs to be generated in the Humanloop runtime, or if you're going to post the logs from your own infrastructure via the API.\n\nCancellable evaluation runs\nOccasionally, you may launch an evaluation run and then realise that you didn't configure it quite the way you wanted. Perhaps you want to use a different model config or dataset, or would like to halt its progress for some other reason.\nWe've now made evaluation runs cancellable from the UI - see the screenshot below. This is especially helpful if you're running evaluations over large datasets, where you don't want to unnecessarily consume provider credits.",
-    "date": "2024-01-19T00:00:00.000Z"
+    "date": "2024-01-18",
+    "date_timestamp": 1705622400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-1-12",
@@ -10739,7 +10804,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Faster offline evaluations\nWe've introduced batching to our offline Evaluations to significantly speed up runtime performance and also improved the robustness to things going wrong mid-run.\nIn addition to our recent enhancements to the Evaluations API, we've also made some significant improvements to our underlying orchestration framework which should mean your evaluation runs are now faster and more reliable. In particular, we now batch generations across the run - by default in groups of five, being conscious of potential rate limit errors (though this will soon be configurable).\nEach batch runs its generations concurrently, so you should see much faster completion times - especially in runs across larger datasets.",
-    "date": "2024-01-12T00:00:00.000Z"
+    "date": "2024-01-11",
+    "date_timestamp": 1705017600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2024-1-11",
@@ -10771,7 +10837,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Evaluation API enhancements\nWe've started the year by enhancing our evaluations API to give you more flexibility for self-hosting whichever aspects of the evaluation workflow you need to run in your own infrastructure - while leaving the rest to us!\nMixing and matching the Humanloop-runtime with self-hosting\nConceptually, evaluation runs have two components:\nGeneration of logs for the datapoints using the version of the model you are evaluating.\n\nEvaluating those logs using Evaluators.\n\n\nNow, using the Evaluations API, Humanloop offers the ability to generate logs either within the Humanloop runtime, or self-hosted (see our guide on external generations for evaluations).\nSimilarly, evaluating of the logs can be performed in the Humanloop runtime (using evaluators that you can define in-app), or self-hosted (see our guide on self-hosted evaluations).\nIt is now possible to mix-and-match self-hosted and Humanloop-runtime logs and evaluations in any combination you wish.\nWhen creating an Evaluation (via the improved UI dialogue or via the API), you can set the new hl_generated flag to False to indicate that you are posting the logs from your own infrastructure. You can then also include an evaluator of type External to indicate that you will post evaluation results from your own infrastructure.\n\n\nYou can now also include multiple evaluators on any run, and these can include a combination of External (i.e. self-hosted) and Humanloop-runtime evaluators.",
-    "date": "2024-01-11T00:00:00.000Z"
+    "date": "2024-01-10",
+    "date_timestamp": 1704931200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-12-22",
@@ -10803,7 +10870,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Human Evaluators\nWe've introduced a new special type of 'Human' Evaluator to compliment our existing code and AI based Evaluators.\nThere are many important evaluation use cases that require input from your internal domain experts, or product teams. Typically this is where you would like a gold standard judgement of how your LLM app is performing.\n\n\nOur new Human Evaluator allows you to trigger a batch evaluation run as normal (from our UI as part of your prompt engineering process, or using our SDK as part of your CI/CD pipeline) and then queues the results ready for a human to provide feedback.\nOnce completed, the feedback is aggregated to give a top-line summary of how the model is performing. It can also be combined with automatic code and AI evaluators in a single run.\n\n\nSet up your first Human Evaluator run by following our guide.\nReturn inputs flag\nWe've introduced a return_inputs flag on our chat and completion endpoints to improve performance for larger payloads.\nAs context model windows get increasingly larger, for example Claude with 200k tokens, it's important to make sure our APIs remain performant. A contributor to response times is the size of the response payload being sent over the wire.\nWhen you set this new flag to false, our responses will no longer contain the inputs that were sent to the model and so can be significantly smaller. This is the first in a sequence of changes to add more control to the caller around API behaviour.\nAs always, we welcome suggestions, requests, and feedback should you have any.\nGemini\nYou can now use Google's latest LLMs, Gemini, in Humanloop.\nSetup\nTo use Gemini, first go to https://makersuite.google.com/app/apikey and generate an API key. Then, save this under the \"Google\" provider on your API keys page.\nHead over to the playground, and you should see gemini-pro and gemini-pro-vision in your list of models.\n\n\nYou can also now use Gemini through the Humanloop API's /chatendpoints.\nFeatures\nGemini offers support for multi-turn chats, tool calling, and multi-modality.\nHowever, note that while gemini-pro supports multi-turn chats and tool calling, it does not support multi-modality. On the other hand, gemini-pro-vision supports multi-modality but not multi-turn chats or tool calling. Refer to Gemini's docs for more details.\nWhen providing images to Gemini, we've maintained compatibility with OpenAI's API. This means that when using Humanloop, you can provide images either via a HTTP URL or with a base64-encoded data URL.",
-    "date": "2023-12-22T00:00:00.000Z"
+    "date": "2023-12-21",
+    "date_timestamp": 1703203200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-12-21",
@@ -10835,7 +10903,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Chat sessions in Editor\nYour chat messages in Editor are now recorded as part of a session so you can more easily keep track of conversations.\n\n\nAfter chatting with a saved prompt, go to the sessions tab and your messages will be grouped together.\nIf you want to do this with the API, it can be as simple as setting the session_reference_id– see docs on sessions.",
-    "date": "2023-12-21T00:00:00.000Z"
+    "date": "2023-12-20",
+    "date_timestamp": 1703116800
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-12-13",
@@ -10867,7 +10936,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Environment logs\nLogs for your deployed prompts will now be tagged with the corresponding environment.\nIn your logs table, you can now filter your logs based on environment:\n\n\nYou can now also pass an environment tag when using the explicit /log  endpoint; helpful for use cases such as orchestrating your own models.",
-    "date": "2023-12-13T00:00:00.000Z"
+    "date": "2023-12-12",
+    "date_timestamp": 1702425600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-12-12",
@@ -10899,7 +10969,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Improved Evaluator UI\nWe've improved the experience of creating and debugging your evaluators.\nNow that you can access any property of the objects you're testing we've cleaned up the debug panel to make easier to view the testcases that you load from a dataset or from your projects.\n\n\nWe've also clarified what the return types are expected as you create your evaluators.\nPrompt diffs\nFollowing our recent introduction of our .prompt file, you can now compare your model configs within a project with our new 'diff' view.\n\nAs you modify and improve upon your model configs, you might want to remind yourself of the changes that were made between different versions of your model config. To do so, you can now select 2 model configs in your project dashboard and click Compare to bring up a side-by-side comparison between them. Alternatively, open the actions menu and click Compare to deployed.\n\n\nThis diff compares the .prompt files representing the two model configs, and will highlight any differences such as in the model, hyperparameters, or prompt template.\nLLM evals - improved data access\nIn order to help you write better LLM evaluator prompts, you now have finer-grained access to the objects you are evaluating.\nIt's now possible to access any part of the log and testcase objects using familiar syntax like log.messages[0].content. Use the debug console to help understand what the objects look like when writing your prompts.",
-    "date": "2023-12-12T00:00:00.000Z"
+    "date": "2023-12-11",
+    "date_timestamp": 1702339200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-12-5",
@@ -10931,7 +11002,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Tool linking\nIt's now possible to manage tool definitions globally for your organization and re-use them across multiple projects by linking them to your model configs.\nPrior to this change, if you wanted to re-use the same tool definition across multiple model configs, you had to copy and paste the JSON schema snippet defining the name, description and parameters into your Editor for each case. And if you wanted to make changes to this tool, you would have to recall which model configs it was saved to prior and update them inline 1 by 1.\nYou can achieve this tool re-use by first defining an instance of our new JsonSchema tool available as another option in your global Tools tab. Here you can define a tool once, such as get_current_weather(location: string, unit: 'celsius' | 'fahrenheit'), and then link that to as many model configs as you need within the Editor as shown below.\nImportantly, updates to the get_current_weather JsonSchema tool defined here will then propagate automatically to all the model configs you've linked it to, without having to publish new versions of the prompt.\nThe old behaviour of defining the tool inline as part of your model config definition is still available for the cases where you do want changes in the definition of the tool to lead to new versions of the model-config.\nSet up the tool\nNavigate to the tools tab in your organisation and select the JsonSchema tool card.\n\nWith the dialog open, define your tool with name, description, and parameters values. Our guide for using OpenAI Function Calling in the playground can be a useful reference in this case.\nUsing the tool\nIn the editor of your target project, link the tool by pressing the Add Tool button and selecting your get_current_weather tool.",
-    "date": "2023-12-05T00:00:00.000Z"
+    "date": "2023-12-04",
+    "date_timestamp": 1701734400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-12-4",
@@ -10963,7 +11035,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Improved log table UI\nWe've updated how we show logs and datapoints in their respective tables. You can now see the stack of inputs and messages in a cleaner interface rather than having them spread into separate columns.\n\n\nThere will be more updates soon to improve how logs and prompts are shown in tables and the drawers soon, so if you have ideas for improvements please let us know.\nIntroducing .prompt files\nWe're introducing a .prompt file format for representing model configs in a format that's both human-readable and easy to work with.\nFor certain use cases it can be helpful for engineers to also store their prompts alongside their app's source code in their favourite version control system. The .prompt file is the appropriate artefact for this.\nThese .prompt files can be retrieved through both the API and through the Humanloop app.\nExporting via API\nTo fetch a .prompt file via the API, make POST request to https://api.humanloop.com/v4/model-configs/{id}/export, where {id} is the ID of the model config (beginning with config_).\nExport from Humanloop\nYou can also export an existing model config as a .prompt file from the app. Find the model config within the project's dashboard's table of model configs and open the actions menu by clicking the three dots. Then click Export .prompt. (You can also find this button within the drawer that opens after clicking on on a model config's row).\n\n\nEditor\nAdditionally, we've added the ability to view and edit your model configs in a .prompt file format when in Editor. Press Cmd-Shift-E when in editor to swap over to a view of your .prompt file.\n\n\nMore details on our .prompt file format are available here. We'll be building on this and making it more powerful. Stay tuned.",
-    "date": "2023-12-04T00:00:00.000Z"
+    "date": "2023-12-03",
+    "date_timestamp": 1701648000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-11-28",
@@ -11009,7 +11082,8 @@
         "code": "{\n    \"project_id\": \"pr_GWx6n0lv6xUu3HNRjY8UA\",\n    \"data\": [\n        {\n            \"id\": \"data_Vdy9ZoiFv2B7iYLIh15Jj\",\n\t\t\t\t\t\t\"output_message\": {\n                \"content\": \"Well, I gotta say, ...\",\n                \"name\": null,\n                \"role\": \"assistant\",\n                \"tool_calls\": null\n            },\n            \"index\": 0,\n            \"output\": \"Well, I gotta say, ...\",\n            \"raw_output\": \"Well, I gotta say...\",\n            \"finish_reason\": \"length\",\n            \"model_config_id\": \"config_VZAPd51sJH7i3ZsjauG2Q\",\n            \"messages\": [\n                {\n                    \"content\": \"what's your best guess...\",\n                    \"role\": \"user\",\n                }\n            ],\n            \"tool_calls\": null,\n        }\n    ],\n...\n...\n...\n}"
       }
     ],
-    "date": "2023-11-28T00:00:00.000Z"
+    "date": "2023-11-27",
+    "date_timestamp": 1701129600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-11-22",
@@ -11041,7 +11115,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Quality-of-life app improvements\nWe've been shipping some quality-of-life \"little big things\" to improve your every day usage of the platform.\nProject switcher throughout the app\nWe've added the project switcher throughout the app so its easier to jump between Projects from anywhere\n\n\nWe've tidied up the Editor\nWith all the new capabilities and changes (tools, images and more) we need to keep a tight ship to stop things from becoming too busy.\nWe're unifying how we show all your logged generations, in the editor, and in the logs and sessions. We've also changed the font to Inter to be legible at small font sizes.\n\n\nNo more accidental blank messages\nWe've also fixed issues where empty messages would get appended to the chat.\nWe've improved keyboard navigation\nThe keyboard shortcuts have been updated so its now easier to navigate in the log tables (up/down keys), and to run generations in Editor (cmd/ctrl + enter).\nThanks for all your requests and tips. Please keep the feedback coming!",
-    "date": "2023-11-22T00:00:00.000Z"
+    "date": "2023-11-21",
+    "date_timestamp": 1700611200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-11-21",
@@ -11073,7 +11148,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Claude 2.1\nToday, Anthropic released its latest model, Claude 2.1, and we've added support for it in the Humanloop app.\n\n\nThe new model boasts a 200K context window and a reported 2x decrease in hallucination rates.\nAdditionally, this model introduces tool use to the line-up of Anthropic models. The feature is presently in beta preview, and we'll be adding support for it to Humanloop in the coming days.\nRead more about Claude 2.1 in the official release notes.",
-    "date": "2023-11-21T00:00:00.000Z"
+    "date": "2023-11-20",
+    "date_timestamp": 1700524800
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-11-20",
@@ -11123,7 +11199,8 @@
         "code": "from humanloop import Humanloop\n\n# Initialize the Humanloop SDK with your API Keys\nhumanloop = Humanloop(api_key=\"<YOUR Humanloop API KEY>\")\n\n# humanloop.chat_deployed(...) will call the active model config on your project.\nchat_response = humanloop.chat_deployed(\n    project_id=\"<YOUR PROJECT ID>\",\n  \tmessages: [\n      {\n        \"role\": \"user\",\n        \"content\": [\n          {\n            \"type\": \"image_url\",\n            \"image_url\": {\n              \"detail\": \"high\",\n              \"url\": \"https://www.acomaanimalclinictucson.com/wp-content/uploads/2020/04/AdobeStock_288690671-scaled.jpeg\"\n            }\n          }\n        ]\n)"
       }
     ],
-    "date": "2023-11-20T00:00:00.000Z"
+    "date": "2023-11-19",
+    "date_timestamp": 1700438400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-11-17",
@@ -11155,7 +11232,8 @@
     "authed": false,
     "type": "changelog",
     "content": "LLM Evaluators\nUntil now, it's been possible to trigger LLM-based evaluations by writing Python code that uses the Humanloop API to trigger the LLM generations.\nToday, in order to make this increasingly important workflow simpler and more intuitive, we're releasing LLM Evaluators, which require no Python configuration.\nFrom the Evaluations page, click New Evaluator and select LLM Evaluator.\n\n\nInstead of a code editor, the right hand side of the page is now a prompt editor for defining instructions to the LLM Evaluator. Underneath the prompt, you can configure the parameters of the Evaluator (things like model, temperature etc.) just like any normal model config.\n\n\nIn the prompt editor, you have access to a variety of variables that correspond to data from the underlying Log that you are trying to evaluate. These use the usual {{ variable }} syntax, and include:\nlog_inputs - the input variables that were passed in to the prompt template when the Log was generated\n\nlog_prompt - the fully populated prompt (if it was a completion mode generation)\n\nlog_messages - a JSON representation of the messages array (if it was a chat mode generation)\n\nlog_output - the output produced by the model\n\nlog_error - if the underlying Log was an unsuccessful generation, this is the error that was produced\n\ntestcase - when in offline mode, this is the testcase that was used for the evaluation.\n\n\nTake a look at some of the presets we've provided on the left-hand side of the page for inspiration.\n\n\nAt the bottom of the page you can expand the debug console - this can be used verify that your Evaluator is working as intended. We've got further enhancements coming to this part of the Evaluator Editor very soon.\nSince an LLM Evaluator is just another model config managed within Humanloop, it gets its own project. When you create an LLM Evaluator, you'll see that a new project is created in your organisation with the same name as the Evaluator. Every time the Evaluator produces a Log as part of its evaluation activity, that output will be visible in the Logs tab of that project.\nImproved evaluator editor\nGiven our current focus on delivering a best-in-class evaluations experience, we've promoted the Evaluator editor to a full-page screen in the app.\n\nIn the left-hand pane, you'll find drop-downs to:\nSelect the mode of the Evaluator - either Online or Offline, depending on whether the Evaluator is intended to run against pre-defined testcases or against live production Logs\n\nSelect the return type of the Evaluator - either boolean or number\n\n\nUnderneath that configuration you'll find a collection of presets.",
-    "date": "2023-11-17T00:00:00.000Z"
+    "date": "2023-11-16",
+    "date_timestamp": 1700179200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-11-10",
@@ -11187,7 +11265,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Evaluation comparison charts\nWe've added comparison charts to the evaluation runs page to help you better compare your evaluation results. These can be found in the evaluations run tab for each of your projects.\n\nComparing runs\nYou can use this to compare specific evaluation runs by selecting those in the runs table. If you don't select any specific rows the charts show an averaged view of all the previous runs for all the evaluators.\n\nHiding a chart\nTo hide a chart for a specific evaluator you can hide the column in the table and it will hide the corresponding chart.",
-    "date": "2023-11-10T00:00:00.000Z"
+    "date": "2023-11-09",
+    "date_timestamp": 1699574400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-11-9",
@@ -11219,7 +11298,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Comparison mode in Editor\nYou can now compare generations across Model Configs and inputs in Editor!\n\nQuick start\nTo enter comparison mode, click New panel in the dropdown menu adds a new blank panel to the right.\nDuplicate panel adds a new panel containing the same information as your current panel.\n[\n\n\n\n\nEach panel is split into two section: a Model Config section at the top and an Inputs & Chat section at the bottom. These can be collapsed and resized to suit your experimentation.\nIf you've made changes in one panel, you can copy the changes you've made using the Copy button in the subsection's header and paste it in the target panel using its corresponding Paste button.\n\n\n\n\nOther changes\nOur recently-introduced local history has also been upgraded to save your full session even when you have multiple panels open.\nThe toggle to completion mode and the button to open history have now been moved into the new dropdown menu.",
-    "date": "2023-11-09T00:00:00.000Z"
+    "date": "2023-11-08",
+    "date_timestamp": 1699488000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-11-8",
@@ -11251,7 +11331,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Improved evaluation runs\nYou can now trigger runs against multiple model configs simultaneously.\nThis improves your ability to compare and evaluate changes  across your prompts. We've also removed the summary cards. In their place, we've added a table that supports sorting and rearranging of columns to help you better interrogate results.\nMultiple model configs\nTo run evaluations against multiple model configs it's as simple as selecting the targeted model configs in the run dialog, similar to before, but multiple choices are now supported. This will trigger multiple evaluation runs at once, with each model config selected as a target.\n\nEvaluation table\nWe've updated our evaluation runs with a table to help view the outcomes of runs in a more condensed form. It also allows you to sort results and trigger re-runs easier. As new evaluators are included, a column will be added automatically to the table.\n\nRe-run previous evaluations\nWe've exposed the re-run option in the table to allow you to quickly trigger runs again, or use older runs as a way to preload the dialog and change the parameters such as the target dataset or model config.\n\nNew OpenAI turbos\nOff the back of OpenAI's dev day we've added support for the new turbo models that were announced:\ngpt-4-1106-preview\n\ngpt-3.5-turbo-1106\n\n\nBoth of these models add a couple of nice capabilities:\nBetter instruction following performance\n\nJSON mode that forces the model to return valid JSON\n\nCan call multiple tools at once\n\nSet a seed for reproducible outputs\n\n\nYou can now access these in your Humanloop Editor and via the API.",
-    "date": "2023-11-08T00:00:00.000Z"
+    "date": "2023-11-07",
+    "date_timestamp": 1699401600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-11-1",
@@ -11283,7 +11364,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Improved logs drawer\nYou can now resize the message section in the Logs and Session drawers, allowing you to review your logs more easily.\n\nTo resize the message section we've introduced a resize bar that you can drag up or down to give yourself the space needed. To reset the layout back to default just give the bar a double click.",
-    "date": "2023-11-01T00:00:00.000Z"
+    "date": "2023-10-31",
+    "date_timestamp": 1698796800
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-10-30",
@@ -11315,7 +11397,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Local editor history\nThe Humanloop playground and editor now save history locally as you make edits, giving you complete peace of mind that your precisely-crafted prompts will not be lost due to an accidental page reload or navigating away.\n\nLocal history entries will be saved as you use the playground (e.g. as you modify your model config, make generations, or add messages). These will be visible under the Local tab within the history side panel. Local history is saved to your browser and is only visible to you.\nOur shared history feature, where all playground generations are saved, has now been moved under the Shared tab in the history side panel.",
-    "date": "2023-10-30T00:00:00.000Z"
+    "date": "2023-10-29",
+    "date_timestamp": 1698624000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-10-17",
@@ -11347,7 +11430,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Project folders\nYou can now organize your projects into folders!\nLogging in to Humanloop will bring you to the new page where you can start arranging your projects.\n\nNavigate into folders and open projects by clicking on the row. To go back to a parent folder, click on the displayed breadcrumbs (e.g. \"Projects\" or \"Development\" in the above screenshot).\n\n\nSearch\nSearching will give you a list of directories and projects with a matching name.\n\nMoving multiple projects\nYou can move a group of projects and directories by selecting them and moving them together.\nSelect the projects you want to move.\n\nTip: Put your cursor on a project row and press [x] to select the row.\n\nTo move the selected projects into a folder, drag and drop them into the desired folder.\n\n\n\nTo move projects out of a folder and into a parent folder, you can drag and drop them onto the parent folder breadcrumbs:\n\nTo move projects into deeply nested folders, it might be easier to select your target directory manually. To do so, select the projects you wish to move and then click the blue Actions button and then click Move ... to bring up a dialog allowing you to move the selected projects.\n\n\n\n\nIf you prefer the old view, we've kept it around for now. Let us know what you're missing from the new view so we can improve it.",
-    "date": "2023-10-17T00:00:00.000Z"
+    "date": "2023-10-16",
+    "date_timestamp": 1697500800
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-10-16",
@@ -11379,7 +11463,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Datasets\nWe've introduced Datasets to Humanloop. Datasets are collections of Datapoints, which represent input-output pairs for an LLM call.\nWe recently released Datasets in our Evaluations beta, by the name Evaluation Testsets. We're now promoting the concept to a first-class citizen within your projects. If you've previously been using testsets in the evaluations beta, you'll see that your testsets have now automatically migrated to datasets.\nDatasets can be created via CSV upload, converting from existing Logs in your project, or by API requests.\nSee our guides on datasets, which show how to upload from CSV and perform a batch generation across the whole dataset.\n\n\nClicking into a dataset, you can explore its datapoints.\n\n\nA dataset contains a collection of prompt variable inputs (the dynamic values which are interpolated into your model config prompt template at generation-time), as well as a collection of messages forming the chat history, and a target output with data representing what we expect the model to produce when it runs on those inputs.\nDatasets are useful for evaluating the behaviour of you model configs across a well-defined collection of test cases. You can use datasets to check for regressions as you iterate your model configs, knowing that you are checking behaviour against a deterministic collection of known important examples.\nDatasets can also be used as collections of input data for fine-tuning jobs.",
-    "date": "2023-10-16T00:00:00.000Z"
+    "date": "2023-10-15",
+    "date_timestamp": 1697414400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-10-10",
@@ -11425,7 +11510,8 @@
         "code": "You are a helpful assistant. Please draft an example job role summary for the following user:\n\nUser details: {{ get_user_api(user_id) }}\nKeep it short and concise."
       }
     ],
-    "date": "2023-10-10T00:00:00.000Z"
+    "date": "2023-10-09",
+    "date_timestamp": 1696896000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-9-15",
@@ -11463,7 +11549,8 @@
         "code": "{\n  \"name\": \"get_current_weather\",\n  \"description\": \"Get the current weather in a given location\",\n  \"parameters\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"location\": {\n        \"type\": \"string\",\n        \"name\": \"Location\",\n        \"description\": \"The city and state, e.g. San Francisco, CA\"\n      },\n      \"unit\": {\n        \"type\": \"string\",\n        \"name\": \"Unit\",\n        \"enum\": [\n          \"celsius\",\n          \"fahrenheit\"\n        ]\n      }\n    },\n    \"required\": [\n      \"location\"\n    ]\n  }\n}"
       }
     ],
-    "date": "2023-09-15T00:00:00.000Z"
+    "date": "2023-09-14",
+    "date_timestamp": 1694736000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-9-13",
@@ -11495,7 +11582,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Organization slug in URLs\nWe have altered routes specific to your organization to include the organization slug. The organization slug is a unique value that was derived from your organization name when your organization was created.\nFor project paths we've dropped the projects label in favour of a more specific project label.\nAn example of what this looks like can be seen below:\n\n\n\n\nWhen a request is made to one of the legacy URL paths, we'll redirect it to the corresponding new path. Although the legacy routes are still supported, we encourage you to update your links and bookmarks to adopt the new naming scheme.\nUpdating your organization slug\nThe organization slug can be updated by organization administrators. This can be done by navigating to the general settings page. Please exercise caution when changing this, as it will affect the URLs across the organization.",
-    "date": "2023-09-13T00:00:00.000Z"
+    "date": "2023-09-12",
+    "date_timestamp": 1694563200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-8-31",
@@ -11527,7 +11615,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Allow trusted email domains\nYou can now add trusted email domains to your organization. Adding trusted email domains allows new users, when creating an account with a matching email, to join your organization without requiring an invite.\nManaging trusted domains\nAdding and removing trusted email domains is controlled from your organizations General settings page.\n\n\nOnly Admins can manage trusted domains for an organization.\nTo add a new trusted domain press the Add domain button and enter the domains trusted by your organization. The domains added here will check against new users signing up to Humanloop and if there is a match those users will be given the option to join your organization.\n\n\nSignup for new users\nNew users signing up to Humanloop will see the following screen when they signup with an email that matches and organizations trusted email domain. By pressing Join they will be added to the matching organization.",
-    "date": "2023-08-31T00:00:00.000Z"
+    "date": "2023-08-30",
+    "date_timestamp": 1693440000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-8-21",
@@ -11559,7 +11648,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Editor - insert new message within existing chat\nYou can now insert a new message within an existing chat in our Editor.  Click the plus button that appears between the rows.",
-    "date": "2023-08-21T00:00:00.000Z"
+    "date": "2023-08-20",
+    "date_timestamp": 1692576000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-8-15",
@@ -11591,7 +11681,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Claude instant 1.2\nWe've added support for Anthropic's latest model Claude instant 1.2! Claude Instant is the faster and lower-priced yet still very capable model from Anthropic, great for use cases where low latency and high throughput are required.\nYou can use Claude instant 1.2 directly within the Humanloop playground and deployment workflows.\nRead more about the latest Claude instant model here.",
-    "date": "2023-08-15T00:00:00.000Z"
+    "date": "2023-08-14",
+    "date_timestamp": 1692057600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-8-14",
@@ -11623,7 +11714,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Offline evaluations with testsets\nWe're continuing to build and release more functionality to Humanloop's evaluations framework!\nOur first release provided the ability to run online evaluators in your projects. Online evaluators allow you to monitor the performance of your live deployments by defining functions which evaluate all new datapoints in real time as they get logged to the project.\nToday, to augment online evaluators, we are releasing offline evaluators as the second part of our evaluations framework.\nOffline evaluators provide the ability to test your prompt engineering efforts rigorously in development and CI. Offline evaluators test the performance of your model configs against a pre-defined suite of testcases - much like unit testing in traditional programming.\nWith this framework, you can use test-driven development practices to iterate and improve your model configs, while monitoring for regressions in CI.\nTo learn more about how to use online and offline evaluators, check out the Evaluate your model section of our guides.",
-    "date": "2023-08-14T00:00:00.000Z"
+    "date": "2023-08-13",
+    "date_timestamp": 1691971200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-7-30",
@@ -11661,7 +11753,8 @@
         "code": "{\n  \"type\": \"unprocessable_entity_error\",\n  \"message\": \"This model's maximum context length is 4097 tokens. However, you requested 10000012 tokens (12 in the messages, 10000000 in the completion). Please reduce the length of the messages or completion.\",\n  \"code\": 422,\n  \"origin\": \"OpenAI\"\n}"
       }
     ],
-    "date": "2023-07-30T00:00:00.000Z"
+    "date": "2023-07-29",
+    "date_timestamp": 1690675200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-7-25",
@@ -11693,7 +11786,8 @@
     "authed": false,
     "type": "changelog",
     "content": "OpenAI functions in Playground\nWe've added support for OpenAI functions to our playground!\nThis builds on our API support and allows you to easily experiment with OpenAI functions within our playground UI.\nOpenAI functions are implemented as tools on Humanloop. Tools follow the same universal json-schema definition as OpenAI functions. You can now define tools as part of your model configuration in the playground. These tools are sent as OpenAI functions when running the OpenAI chat models that support function calling.\nThe model can choose to return a JSON object containing the arguments needed to call a function. This object is displayed as a special assistant message within the playground. You can then provide the result of the call in a message back to the model to consider, which simulates the function calling workflow.\nUse tools in Playground\nTake the following steps to use tools for function calling in the playground:\nFind tools: Navigate to the playground and locate the Tools section. This is where you'll be able to manage your tool definitions.\n\n\n\nCreate a new tool: Click on the \"Add Tool\" button. There are two options in the dropdown: create a new tool or to start with one of our examples. You define your tool using the json-schema syntax. This represents the function definition sent to OpenAI.\n\n\n\nEdit a tool: To edit an existing tool, simply click on the tool in the Tools section and make the necessary changes to its json-schema definition. This will result in a new model configuration.\n\n\n\nRun a model with tools: Once you've defined your tools, you can run the model by pressing the \"Run\" button.\nIf the model chooses to call a function, an assistant message will be displayed with the corresponding tool name and arguments to use.\n\nA subsequent Tool message is then displayed to simulate sending the results of the call back to the model to consider.\n\n\n\n\n\nSave your model config with tools by using the Save button. Model configs with tools defined can then deployed to environments as normal.\n\n\nComing soon\nProvide the runtime for your tool under the existing pre-defined Tools section  of your organization on Humanloop.",
-    "date": "2023-07-25T00:00:00.000Z"
+    "date": "2023-07-24",
+    "date_timestamp": 1690243200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-7-24",
@@ -11725,7 +11819,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Llama 2\nWe've added support for Llama 2!\nYou can now select llama70b-v2 from the model dropdown in the Playground and Editor. You don't currently need to provide an API key or any other special configuration to get Llama 2 access via Humanloop.\n\n\nRead more about the latest version of Llama here and in the original announcement.",
-    "date": "2023-07-24T00:00:00.000Z"
+    "date": "2023-07-23",
+    "date_timestamp": 1690156800
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-7-17",
@@ -11757,7 +11852,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Claude 2\nWe've added support for Anthropic's latest model Claude 2.0!\nRead more about the latest Claude here.",
-    "date": "2023-07-17T00:00:00.000Z"
+    "date": "2023-07-16",
+    "date_timestamp": 1689552000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-7-7",
@@ -11799,7 +11895,8 @@
         "code": "import json\n    \ndef check_valid_json(datapoint):\n    try:\n        return json.loads(datapoint[\"output\"]) is not None\n    except:\n        return False"
       }
     ],
-    "date": "2023-07-07T00:00:00.000Z"
+    "date": "2023-07-06",
+    "date_timestamp": 1688688000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-7-5",
@@ -11837,7 +11934,8 @@
         "code": "import uuid\nsession_reference_id = str(uuid.uuid4())\n\nresponse = humanloop.complete(\n    project=\"sessions_example_assistant\",\n    model_config={\n        \"prompt_template\": \"Question: {{user_request}}\\nGoogle result: {{google_answer}}\\nAnswer:\\n\",\n        \"model\": \"text-davinci-002\",\n        \"temperature\": 0,\n    },\n    inputs={\"user_request\": user_request, \"google_answer\": google_answer},\n    session_reference_id=session_reference_id,\n)"
       }
     ],
-    "date": "2023-07-05T00:00:00.000Z"
+    "date": "2023-07-04",
+    "date_timestamp": 1688515200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-7-3",
@@ -11883,7 +11981,8 @@
         "code": "from humanloop import Humanloop\n\nhl = Humanloop(\n  \t# get your API key here: https://app.humanloop.com/account/api-keys\n    api_key=\"YOUR_API_KEY\",\n)\n\ndef run_conversation():\n    # Step 1: send the conversation and available functions to GPT\n    messages = [{\"role\": \"user\", \"content\": \"What's the weather like in Boston?\"}]\n    functions = [\n        {\n            \"name\": \"get_current_weather\",\n            \"description\": \"Get the current weather in a given location\",\n            \"parameters\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"location\": {\n                        \"type\": \"string\",\n                        \"description\": \"The city and state, e.g. San Francisco, CA\",\n                    },\n                    \"unit\": {\"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\"]},\n                },\n                \"required\": [\"location\"],\n            },\n        }\n    ]\n    response = openai.ChatCompletion.create(\n        model=\"gpt-3.5-turbo-0613\",\n        messages=messages,\n        functions=functions,\n        function_call=\"auto\",  # auto is default, but we'll be explicit\n    )\n    response_message = response[\"choices\"][0][\"message\"]\n\n\t\t# log the result to humanloop\n    log_response = hl.log(\n       project=\"Assistant\",\n          model_config={\n            \"model\": \"gpt-3.5-turbo-0613\",\n            \"tools\": tools,\n          },\n          messages=messages,\n      \t\ttool_call=response_message.get(\"function_call\")\n    )\n\n    # Step 2: check if GPT wanted to call a function\n    if response_message.get(\"function_call\"):\n        # Step 3: call the function\n        # Note: the JSON response may not always be valid; be sure to handle errors\n        available_functions = {\n            \"get_current_weather\": get_current_weather,\n        }  # only one function in this example, but you can have multiple\n        function_name = response_message[\"function_call\"][\"name\"]\n        fuction_to_call = available_functions[function_name]\n        function_args = json.loads(response_message[\"function_call\"][\"arguments\"])\n        function_response = fuction_to_call(\n            location=function_args.get(\"location\"),\n            unit=function_args.get(\"unit\"),\n        )\n\n        # Step 4: send the info on the function call and function response to GPT\n        messages.append(response_message)  # extend conversation with assistant's reply\n        messages.append(\n            {\n                \"role\": \"function\",\n                \"name\": function_name,\n                \"content\": function_response,\n            }\n        )  # extend conversation with function response\n        second_response = openai.ChatCompletion.create(\n            model=\"gpt-3.5-turbo-0613\",\n            messages=messages,\n        )  # get a new response from GPT where it can see the function response\n\n        log_response = hl.log(\n          project=\"Assistant\",\n          model_config={\n                  \"model\": \"gpt-3.5-turbo-0613\",\n                  \"tools\": tools,\n          },\n          messages=messages,\n          output=second_response[\"choices\"][0][\"message\"][\"content\"],\n    )\n    return second_response\n\n\nprint(run_conversation())"
       }
     ],
-    "date": "2023-07-03T00:00:00.000Z"
+    "date": "2023-07-02",
+    "date_timestamp": 1688342400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-6-27",
@@ -11915,7 +12014,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Deployment environments\nWe've added support for environments to your deployments in Humanloop!\nThis enables you to deploy your model configurations to specific environments. You'll no longer have to duplicate your projects to manage the deployment workflow between testing and production. With environments, you'll have the control required to manage the full LLM deployment lifecycle.\nEnabling environments for your organisation\nEvery organisation automatically receives a default production environment. For any of your existing projects that had active deployments define, these have been automatically migrated over to use the default environment with no change in behaviour for the APIs.\nYou can create additional environments with custom names by visiting your organisation's environments page.\nCreating an environment\nEnter a custom name in the create environment dialog. Names have a constraint in that they must be unique within an organisation.\n\nThe environments you define for your organisation will be available for each project and can be viewed in the project dashboard once created.\n\nThe default environment\nBy default, the production environment is marked as the Default environment. This means that all API calls targeting the \"Active Deployment,\" such as Get Active Config or Chat Deployed will use this environment.\n\n\nRenaming environments will take immediate effect, so ensure that this change is planned and does not disrupt your production workflows.\nUsing environments\nOnce created on the environments page, environments can be used for each project and are visible in the respective project dashboards.\nYou can deploy directly to a specific environment by selecting it in the Deployments section.\n\nAlternatively, you can deploy to multiple environments simultaneously by deploying a Model Config from either the Editor or the Model Configs table.\nUsing environments via API\n\nFor v4.0 API endpoints that support Active Deployments, such as Get Active Config or Chat Deployed, you can now optionally point to a model configuration deployed in a specific environment by including an optional additional environment field.\nYou can find this information in our v4.0 API Documentation or within the environment card in the Project Dashboard under the \"Use API\" option.\nClicking on the \"Use API\" option will provide code snippets that demonstrate the usage of the environment variable in practice.",
-    "date": "2023-06-27T00:00:00.000Z"
+    "date": "2023-06-26",
+    "date_timestamp": 1687824000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-6-20",
@@ -11964,7 +12064,8 @@
         "code": "import { Humanloop } from \"humanloop\";\n\nconst humanloop = new Humanloop({\n  apiKey: \"API_KEY\",\n});\n\nconst chatResponse = await humanloop.chat({\n  project: \"project_example\",\n  messages: [\n    {\n      role: \"user\",\n      content: \"Write me a song\",\n    },\n  ],\n  provider_api_keys: {\n    openai_azure: OPENAI_AZURE_API_KEY,\n    openai_azure_endpoint: OPENAI_AZURE_ENDPOINT,\n  },\n  model_config: {\n    model: \"my-azure-deployed-gpt-4\",\n    temperature: 1,\n  },\n});\n\nconsole.log(chatResponse);"
       }
     ],
-    "date": "2023-06-20T00:00:00.000Z"
+    "date": "2023-06-19",
+    "date_timestamp": 1687219200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-6-13",
@@ -11996,7 +12097,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Project Editor\nWe’ve introduced an Editor within each project to help you make it easier to to change prompts and bring in project specific data.\n\n\nYou can now also bring datapoints directly to the Editor. Select any datapoints you want to bring to Editor (also through x shortcut) and you can choose to open them in Editor (or e shortcut)\n\n\nWe think this workflow significantly improves the workflow to go from interesting datapoint to improved model config. As always, let us know if you have other feedback.",
-    "date": "2023-06-13T00:00:00.000Z"
+    "date": "2023-06-12",
+    "date_timestamp": 1686614400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-5-23",
@@ -12034,7 +12136,8 @@
         "code": "import { Humanloop } from \"humanloop\";\n\nconst humanloop = new Humanloop({\n  apiKey: \"API_KEY\",\n});\n\nconst chatResponse = await humanloop.chat({\n  project: \"project_example\",\n  messages: [\n    {\n      role: \"user\",\n      content: \"Write me a song\",\n    },\n  ],\n  provider_api_keys: {\n    cohere: COHERE_API_KEY,\n  },\n  model_config: {\n    model: \"command\",\n    temperature: 1,\n  },\n});\n\nconsole.log(chatResponse);"
       }
     ],
-    "date": "2023-05-23T00:00:00.000Z"
+    "date": "2023-05-22",
+    "date_timestamp": 1684800000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-5-17",
@@ -12076,7 +12179,8 @@
         "code": "humanloop = Humanloop(\n    api_key=\"YOUR_API_KEY\",\n    openai_api_key=\"YOUR_OPENAI_API_KEY\",\n    anthropic_api_key=\"YOUR_ANTHROPIC_API_KEY\",\n)"
       }
     ],
-    "date": "2023-05-17T00:00:00.000Z"
+    "date": "2023-05-16",
+    "date_timestamp": 1684281600
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-4-3",
@@ -12118,7 +12222,8 @@
         "code": "import { Humanloop } from \"humanloop\"\n\nconst humanloop = new Humanloop({\n  // Defining the base path is optional and defaults to https://api.humanloop.com/v3\n  // basePath: \"https://api.humanloop.com/v3\",\n  apiKey: 'API_KEY',\n})\n\n\nconst chatResponse = await humanloop.chat({\n  \"project\": \"project_example\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Write me a song\",\n    }\n  ],\n  \"provider_api_keys\": {\n    \"openai\": OPENAI_API_KEY\n  },\n  \"model_config\": {\n    \"model\": \"gpt-4\",\n    \"temperature\": 1,\n  },\n})\n\nconsole.log(chatResponse)"
       }
     ],
-    "date": "2023-04-03T00:00:00.000Z"
+    "date": "2023-04-02",
+    "date_timestamp": 1680480000
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-3-30",
@@ -12150,7 +12255,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Keyboard shortcuts and datapoint links\n\n\nWe’ve added keyboard shortcuts to the datapoint viewer\ng for good\n\nb for bad\nand j / k for next/prev\nThis should help you for quickly annotating data within your team.\nYou can also link to specific datapoint in the URL now as well.",
-    "date": "2023-03-30T00:00:00.000Z"
+    "date": "2023-03-29",
+    "date_timestamp": 1680134400
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-3-2",
@@ -12182,7 +12288,8 @@
     "authed": false,
     "type": "changelog",
     "content": "ChatGPT support\nChatGPT is here! It's called 'gpt-3.5-turbo'. Try it out today in playground and on the generate endpoint.\nFaster and 10x cheaper than text-davinci-003.",
-    "date": "2023-03-02T00:00:00.000Z"
+    "date": "2023-03-01",
+    "date_timestamp": 1677715200
   },
   {
     "objectID": "humanloop:humanloop.com:docs/v5.changelog.2023-2-20",
@@ -12214,7 +12321,8 @@
     "authed": false,
     "type": "changelog",
     "content": "Faster datapoints table loading\nInitial datapoints table is now twice as fast to load! And it will continue to get faster.\nAbility to open datapoint in playground\nAdded a way to go from the datapoint drawer to the playground with that datapoint loaded. Very convenient for trying tweaks to a model config or understanding an issue, without copy pasting.\n\n\n\n\nMarkdown view and completed prompt templates\nWe’ve added a tab to the datapoint drawer so you can see the prompt template filled in with the inputs and output.\nWe’ve also button in the top right hand corner (or press M)  to toggle on/off viewing the text as markdown.",
-    "date": "2023-02-20T00:00:00.000Z"
+    "date": "2023-02-19",
+    "date_timestamp": 1676851200
   },
   {
     "objectID": "humanloop:humanloop.com:root..v4.uv.docs.docs.tutorials.create-your-first-gpt-4-app",
@@ -12396,8 +12504,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "setup",
-        "title": "Setup"
+        "id": "call-the-prompt-in-an-app",
+        "title": "Call the Prompt in an app"
       },
       "h3": {
         "id": "setup",
@@ -12440,8 +12548,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "run-the-app",
-        "title": "Run the app"
+        "id": "call-the-prompt-in-an-app",
+        "title": "Call the Prompt in an app"
       },
       "h3": {
         "id": "run-the-app",
@@ -14090,8 +14198,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "example-script",
-        "title": "Example script"
+        "id": "prerequisites",
+        "title": "Prerequisites"
       },
       "h3": {
         "id": "example-script",
@@ -14277,8 +14385,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "final-example-script",
-        "title": "Final example script"
+        "id": "post-logs-to-a-session",
+        "title": "Post logs to a session"
       },
       "h3": {
         "id": "final-example-script",
@@ -14478,8 +14586,8 @@
     "content": "Online evaluators are for use on logs generated in your project, including live in production. Typically, they are used to monitor deployed model performance over time.\nOnline evaluators can be set to run automatically whenever logs are added to a project. The evaluator takes the log as an argument.",
     "hierarchy": {
       "h2": {
-        "id": "online",
-        "title": "Online"
+        "id": "modes-monitoring-vs-testing",
+        "title": "Modes: Monitoring vs. testing"
       },
       "h3": {
         "id": "online",
@@ -14521,8 +14629,8 @@
     "content": "Offline evaluators are for use with predefined test datasets in order to evaluate models as you iterate in your prompt engineering workflow, or to test for regressions in a CI environment.\nA test dataset is a collection of datapoints, which are roughly analogous to unit tests or test cases in traditional programming. Each datapoint specifies inputs to your model and (optionally) some target data.\nWhen you run an offline evaluation, Humanloop iterates through each datapoint in the dataset and triggers a fresh LLM generation using the inputs of the testcase and the model config being evaluated. For each test case, your evaluator function will be called, taking as arguments the freshly generated log and the testcase datapoint that gave rise to it. Typically, you would write your evaluator to perform some domain-specific logic to determine whether the model-generated log meets your desired criteria (as specified in the datapoint 'target').",
     "hierarchy": {
       "h2": {
-        "id": "offline",
-        "title": "Offline"
+        "id": "modes-monitoring-vs-testing",
+        "title": "Modes: Monitoring vs. testing"
       },
       "h3": {
         "id": "offline",
@@ -14681,8 +14789,8 @@
     "content": "These individual components represent a large and unique design space to\nnavigate. The configuration of each one requires careful consideration; it's no\nlonger just strictly prompt engineering.\nFor example, take the vector database - now a mainstay for the problem of\nproviding the relevant chunks of context to the model, for a particular query,\nfrom a larger corpus of documents. There is a near infinite number of open or\nclosed source vector stores to choose from. Then there is the embedding model\n(that also has its own design choices), retrieval technique, similarity metric,\nhow to chunk your documents, how to sync your vector store... and the list goes\non.\nNot only that, but there are often complex interactions between these components\nthat are hard to predict. For example, maybe the performance of your prompt\ntemplate is weirdly sensitive to the format of the separator tokens you forgot\nto strip when chunking your documents in the vector database (a real personal\nanecdote).\nFurthermore, we're seeing applications that have multiple specialist blocks of\nthese components chained together to solve a task. This all adds to the\nchallenge of evaluating the resulting complex system. Specialist tooling is\nincreasingly a necessity to help teams build robust applications.\nLike for testing in traditional software development, the goal of a good LLM\nevaluation framework is to provide confidence that the system is working as\nexpected and also transparency into what might be causing issues when things go\nwrong. Unlike traditional software development, a significant amount of\nexperimentation and collaboration is required when building with LLMs. From\nprompt engineering with domain experts, to tool integrations with engineers. A\nsystematic way to track progress is required.",
     "hierarchy": {
       "h1": {
-        "id": "llm-apps-are-complex-systems",
-        "title": "LLM apps are complex systems"
+        "id": "llms-are-not-all-you-need",
+        "title": "LLMs are not all you need"
       },
       "h2": {
         "id": "llm-apps-are-complex-systems",
@@ -14763,8 +14871,8 @@
     "content": "Competent teams will traditionally set up robust test suites that are run\nautomatically against every system change before deploying to production. This\nis a key aspect of continuous integration (CI) and is done to protect against\nregressions and ensure the system is working as the engineers expect. Test\nsuites are generally made up of 3 canonical types of tests: unit, integration\nand end-to-end.\n\n\nUnit - very numerous, target a specific atom of code and are fast to run.\n\nIntegration - less numerous, cover multiple chunks of code, are slower to\nrun than unit tests and may require mocking external services.\n\nEnd-to-end - emulate the experience of an end UI user or API caller; they\nare slow to run and oftentimes need to interact with a live version of the\nsystem.\n\n\nThe most effective mix of test types for a given system often sparks debate.\nYet, the role of automated testing as part of the deployment lifecycle,\nalongside the various trade-offs between complexity and speed, remain valuable\nconsiderations when working with LLMs.",
     "hierarchy": {
       "h1": {
-        "id": "automation-and-continuous-integration-is-still-the-goal",
-        "title": "Automation and continuous integration is still the goal"
+        "id": "take-lessons-from-traditional-software",
+        "title": "Take lessons from traditional software"
       },
       "h2": {
         "id": "automation-and-continuous-integration-is-still-the-goal",
@@ -14806,8 +14914,8 @@
     "content": "There are however a number of fundamental differences with LLM native products\nwhen it comes to this type of testing. Of the test types, the most difficult to\ntransfer over to LLMs is the unit test because of:\nRandomness - LLMs produce probabilities over words which can result in\nrandom variation between generations for the same prompt. Certain\napplications, like task automation, require deterministic predictions. Others,\nlike creative writing, demand diversity.\n\nSubjectivity - we oftentimes want LLMs to produce natural human-like\ninteractions. This requires more nuanced approaches to evaluation because of\nthe inherent subjectivity of the correctness of outputs, which may depend on\ncontext or user preferences.\n\nCost and latency - given the computation involved, running SOTA LLMs can\ncome with a significant cost and tend to have relatively high latency;\nespecially if configured as an agent that can take multiple steps.\n\nScope - LLMs are increasingly capable of solving broader less well-defined\ntasks, resulting in the scope of what we are evaluating often being a lot more\nopen-ended than in traditional software applications.\n\n\nAs a result, the majority of automation efforts in evaluating LLM apps take the\nform of integration and end-to-end style tests and should be managed as such\nwithin CI pipelines.",
     "hierarchy": {
       "h1": {
-        "id": "unit-tests-are-tricky-for-llms",
-        "title": "Unit tests are tricky for LLMs"
+        "id": "take-lessons-from-traditional-software",
+        "title": "Take lessons from traditional software"
       },
       "h2": {
         "id": "unit-tests-are-tricky-for-llms",
@@ -14849,8 +14957,8 @@
     "content": "There is also the important practice of monitoring the system in production.\nLoad and usage patterns in the wild can be unexpected and lead to bugs.\nTraditional observability solutions like Datadog\nand New Relic monitor the health of the system and\nprovide alerts when things go wrong; usually based on simple heuristics and\nerror codes. This tends to fall short when it comes to LLMs. The more capable\nand complex the system, the harder it can be to determine something actually\nwent wrong and the more important observability and traceability is.\nFurthermore, one of the promises of building with LLMs is the potential to more\nrapidly intervene and experiment. By tweaking instructions you can fix issues\nand improve performance. Another advantage is that less technical teams can be\nmore involved in building; the\nmakeup of the teams\nis evolving. This impacts what's needed from an observability solution in this\nsetting. A tighter integration between observability data and the development\nenvironment to make changes is more beneficial, as well as usability for\ncollaborating with product teams and domain experts outside of engineering. This\npromise of more rapid and sometimes non-technical iteration cycles also\nincreases the importance of robust regression testing.\nBefore delving more into the stages of evaluation and how they relate to\nexisting CI and observability concepts, it's important to understand more about\nthe different types of evaluations in this space.",
     "hierarchy": {
       "h1": {
-        "id": "observability-needs-to-evolve",
-        "title": "Observability needs to evolve"
+        "id": "take-lessons-from-traditional-software",
+        "title": "Take lessons from traditional software"
       },
       "h2": {
         "id": "observability-needs-to-evolve",
@@ -14931,8 +15039,8 @@
     "content": "The most common judgment return types are familiar from traditional data science\nand machine learning frameworks. From simple to more complex:\nBinary - involves a yes/no, true/false, or pass/fail judgment based on\nsome criteria.\n\nCategorical - involves more than two categories; for exampling adding an\nabstain or maybe option to a binary judgment.\n\nRanking - the relative quality of output from different samples or\nvariations of the model are being ranked from best to worst based on some\ncriteria. Preference based judgments are often used in evaluating the quality\nof a ranking.\n\nNumerical - involves a score, a percentage, or any other kind of numeric\nrating.\n\nText - a simple comment or a more detailed critique. Often used when a\nmore nuanced or detailed evaluation of the model's output is required.\n\nMulti-task - combines multiple types of judgment simultaneously. For\nexample, a model's output could be evaluated using both a binary rating and a\nfree-form text explanation.\n\n\nSimple individual judgments can be easily aggregated across a dataset of\nmultiple examples using well known metrics. For example, for classification\nproblems, precision,\nrecall and\nF1 are typical choices. For rankings,\nthere are metrics like\nNDCG,\nElo ratings and\nKendall's Tau.\nFor numerical judgments there are variations of the\nBleu score.\nI find that in practice binary and categorical types generally cover the\nmajority of use cases. They have the added benefit of being the most straight\nforward to source reliably. The more complex the judgment type, the more\npotential for ambiguity there is and the harder it becomes to make inferences.",
     "hierarchy": {
       "h1": {
-        "id": "judgment-return-types-are-best-kept-simple",
-        "title": "Judgment return types are best kept simple"
+        "id": "types-of-evaluation-can-vary-significantly",
+        "title": "Types of evaluation can vary significantly"
       },
       "h2": {
         "id": "judgment-return-types-are-best-kept-simple",
@@ -14974,8 +15082,8 @@
     "content": "Sourcing judgments is an area where there are new and evolving patterns around\nfoundation models like LLMs. At Humanloop, we've standardised around the\nfollowing canonical sources:\nHeuristic/Code - using simple deterministic rules based judgments against\nattributes like cost, token usage, latency, regex rules on the output, etc.\nThese are generally fast and cheap to run at scale.\n\nModel (or 'AI') - using other foundation models to provide judgments on\nthe output of the component. This allows for more qualitative and nuanced\njudgments for a fraction of the cost of human judgments.\n\nHuman - getting gold standard judgments from either end users of your\napplication, or internal domain experts. This can be the most expensive and\nslowest option, but also the most reliable.\n\n\n\n\n\nModel judgments in particular are increasingly promising and an active research\narea. The paper Judging LLM-as-a-Judge\ndemonstrates that an appropriately prompted GPT-4 model achieves over 80%\nagreement with human judgments when rating LLM model responses to questions on a\nscale of 1-10; that's equivalent to the levels of agreement between humans.\nSuch evaluators can be equally effective in evaluating the important non-LLM\ncomponents, such as the retrieval component in RAG. In\nAutomated Evaluation of Retrieval Augmented Generation\na GPT-3 model is tasked with extracting the most relevant sentences from the\nretrieved context. A numeric judgment for relevance is then computed using the\nratio of the number of relevant to irrelevant sentences, which was also found to\nbe highly correlated with expert human judgments.\nHowever, there are risks to consider. The same reasons that evaluating LLMs is\nhard apply to using them as evaluators. Recent research has also shown LLMs to\nhave biases that can contaminate the evaluation process. In\nBenchmarking Cognitive Biases in Large Language Models as Evaluators\nthey measure 6 cognitive biases across 15 different LLM variations. They find\nthat simple details such as the order of the results presented to the model can\nhave material impact on the evaluation.\n\n\n\nThe takeaway here is that it's important to still experiment with performance on\nyour target use cases before trusting LLM evaluators - evaluate the evaluator!\nAll the usual prompt engineering techniques such as including few-shot examples\nare just as applicable here. In addition, fine-tuning specialist, more\neconomical evaluator models using human judgements can be a real unlock.\nI believe teams should consider shifting more of their human judgment efforts up\na level to focus on helping improve model evaluators. This will ultimately lead\nto a more scalable, repeatable and cost-effective evaluation process. As well as\none where the human expertise can be more targeted on the most important high\nvalue scenarios.",
     "hierarchy": {
       "h1": {
-        "id": "model-sourced-judgments-are-increasingly-promising",
-        "title": "Model sourced judgments are increasingly promising"
+        "id": "types-of-evaluation-can-vary-significantly",
+        "title": "Types of evaluation can vary significantly"
       },
       "h2": {
         "id": "model-sourced-judgments-are-increasingly-promising",
@@ -15017,8 +15125,8 @@
     "content": "The actual criteria for the judgment is what tends to be most specific to the\nneeds of a particular use case. This will either be defined in code, in a prompt\n(or in the parameters of a model), or just in guidelines depending on whether\nit's a code, model or human based evaluator.\nThere are lots of broad themes to crib from. Humanloop for example provides\ntemplates for popular use cases and best practises, with the ability to\nexperiment and customize. There are categories like general performance\n(latency, cost and error thresholds), behavioural (tone of voice, writing style,\ndiversity, factuality, relevance, etc.), ethical (bias, safety, privacy, etc.)\nand user experience (engagement, satisfaction, productivity, etc.).\nUnsurprisingly, starting with a small set of evaluators that cover the most\nimportant criteria is wise. These can then be adapted and added to over time as\nrequirements are clarified and new edge cases uncovered. Tradeoffs are often\nnecessary between these criteria. For example, a more diverse set of responses\nmight be more engaging, but also more likely to contain errors and higher\nquality can often come at a cost in terms of latency.\nThinking about these criteria upfront for your project can be a good hack to\nensure your team deeply understand the end goals of the application.",
     "hierarchy": {
       "h1": {
-        "id": "judgment-criteria-is-where-most-of-the-customisation-happens",
-        "title": "Judgment criteria is where most of the customisation happens"
+        "id": "types-of-evaluation-can-vary-significantly",
+        "title": "Types of evaluation can vary significantly"
       },
       "h2": {
         "id": "judgment-criteria-is-where-most-of-the-customisation-happens",
@@ -15138,8 +15246,8 @@
     "content": "There are well cited academic benchmarks that have been curated to evaluate the\ngeneral capabilities of LLMs. For AI leaders, these can be helpful to reference\nwhen choosing which base models to build with originally, or to graduate to when\nthings like scale and cost start to factor in. For example the\nLarge Model Systems Organizations maintains\nChatbot Arena where they have crowd-sourced over 200k\nhuman preferences votes to rank LLMs, both commercial and open source, as well\nas recording the performance on academic multi-task reasoning benchmarks like\nMMLU.\n\n\n\nAnother great resource in the same vein is\nHugging Face datasets, where they\nalso maintain a leaderboard of how all the latest OSS models perform across a\nrange of tasks using the\nEleuther LLM evaluation harness library.\n\n\n\nMore domain specific academic datasets may also be particularly relevant for\nyour target use case and can be used to warm start your evaluation efforts; for\nexample if you were working on\nmedical related tasks.",
     "hierarchy": {
       "h1": {
-        "id": "pay-attention-to-academic-and-public-benchmarks",
-        "title": "Pay attention to academic and public benchmarks"
+        "id": "high-quality-datasets-are-still-paramount",
+        "title": "High quality datasets are still paramount"
       },
       "h2": {
         "id": "pay-attention-to-academic-and-public-benchmarks",
@@ -15181,8 +15289,8 @@
     "content": "Arguably the best form of dataset comes from real user interactions. Useful\nsources of this kind of data are actually the interactive and monitoring stages\ndiscussed above.\nWith access to an interactive environment for prompt engineering (or a test\nversion of your application), internal domain experts can synthesize examples of\nthe kinds of interactions they expect to see in production. These interactions\nshould be recorded throughout the course of initial experimentation to form a\nbenchmark dataset for subsequent offline evaluations.\nFor leveraging real end-user interactions, a tighter integration between\nobservability data and the development environment that manages evaluations\nmakes it easier to curate real scenarios into your benchmark datasets over time.\n\n\n\nSomething worth careful consideration to maximise the impact of end-user\ninteractions is to set up your application to\ncapture rich feedback\nfrom users form the start. This is an example of an online evaluator that relies\non human judgments, which can be used to filter for particularly interesting\nscenarios to add to benchmark datasets.\nFeedback doesn't need to be only explicit from the user; it can be provided\nimplicitly in the way they interact with the system. For example,\ngithub copilot reportedly\nmonitors whether the code suggestion was accepted at various time increments\nafter the suggestion was made, as well as whether the user made any edits to the\nsuggestion before accepting it.",
     "hierarchy": {
       "h1": {
-        "id": "real-product-interactions-are-the-most-valuable-source-of-data",
-        "title": "Real product interactions are the most valuable source of data"
+        "id": "high-quality-datasets-are-still-paramount",
+        "title": "High quality datasets are still paramount"
       },
       "h2": {
         "id": "real-product-interactions-are-the-most-valuable-source-of-data",
@@ -15224,8 +15332,8 @@
     "content": "Once you have a small amount of high quality data leveraging LLMs to generate\nadditional input examples can help bootstrap to larger datasets. By utilizing\nfew-shot prompting and including a representative subset of your existing data\nwithin the prompt, you can guide the synthesizer model to generate a wide range\nof supplementary examples.\nA quick pointer here is to prompt the model to generate a batch of examples at a\ntime, rather than one at a time, such that you can encourage characteristics\nlike diversity between examples. Or, similarly, feed previously generated\nexamples back into your prompt. For instance, for a customer service system,\nprompts could be designed to elicit responses across a variety of emotional\nstates, from satisfaction to frustration.\nA specific example of this is model red-teaming, or synthesizing adversarial\nexamples. This is where you use the synthesizer model to generate examples that\nare designed to break the system. For example, in\nRed Teaming Language Models with Language Models,\nthey uncover offensive replies, data leakage and other vulnerabilities in an LLM\nchat-bot using variations of few-shot prompts to generate adversarial questions.\nThey also leverage a pre-trained offensive classifier to help automate their\nevaluation process. However, it is worth noting they too point out the\nlimitations caused by LLM biases that limits diversity. They ultimately need to\ngenerate and filter hundreds of thousands of synthetic examples.\n\n\n\nAs with LLM evaluators, all the same rigour and tools should be applied to\nevaluating the quality of the synthetic data generator model before trusting it.",
     "hierarchy": {
       "h1": {
-        "id": "synthetic-data-is-on-the-rise",
-        "title": "Synthetic data is on the rise"
+        "id": "high-quality-datasets-are-still-paramount",
+        "title": "High quality datasets are still paramount"
       },
       "h2": {
         "id": "synthetic-data-is-on-the-rise",
@@ -15337,8 +15445,8 @@
     "content": "You need to have access to Evaluations\n\nYou also need to have a Prompt – if not, please follow our Prompt creation guide.\n\nFinally, you need at least a few Logs in your prompt. Use the Editor to generate some logs if you have none.\n\n\n\n\nYou need logs for your project because we will use these as a source of test datapoints for the dataset we create. If you want to make arbitrary test datapoints from scratch, see our guide to doing this from the API. We will soon update the app to enable arbitrary test datapoint creation from your browser.\nFor this example, we will evaluate a model responsible for extracting critical information from a customer service request and returning this information in JSON. In the image below, you can see the model config we've drafted on the left and an example of it running against a customer query on the right.",
     "hierarchy": {
       "h2": {
-        "id": "prerequisites",
-        "title": "Prerequisites"
+        "id": "create-an-offline-evaluator",
+        "title": "Create an offline evaluator"
       },
       "h3": {
         "id": "prerequisites",
@@ -15380,8 +15488,8 @@
     "content": "We will create a dataset based on existing logs in the project.\n\n\nNavigate to the Logs tab\nSelect the logs you would like to convert into test datapoints\nFrom the dropdown menu in the top right (see below), choose Add to Dataset\n\n\nIn the dialog box, give the new dataset a name and provide an optional description. Click Create dataset.\n\n\n\n\nYou can add more datapoints to the same dataset later by clicking the 'add to existing dataset' button at the top.\nGo to the Datasets tab.\nClick on the newly created dataset. One datapoint will be present for each log you selected in Step 3\n\n\nClick on a datapoint to inspect its parameters.\n\n\nA test datapoint contains inputs (the variables passed into your model config template), an optional sequence of messages (if used for a chat model) and a target representing the desired output.\nWhen existing logs are converted to datapoints, the datapoint target defaults to the output of the source Log.\nIn our example, we created datapoints from existing logs. The default behaviour is that the original log's output becomes an output field in the target JSON.\nTo access the feature field more efficiently in our evaluator, we'll modify the datapoint targets to be a raw JSON with a feature key.\n\n\nModify the datapoint if you need to make refinements\nYou can provide an arbitrary JSON object as the target.",
     "hierarchy": {
       "h2": {
-        "id": "set-up-a-dataset",
-        "title": "Set up a dataset"
+        "id": "create-an-offline-evaluator",
+        "title": "Create an offline evaluator"
       },
       "h3": {
         "id": "set-up-a-dataset",
@@ -15662,8 +15770,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "set-up-a-project",
-        "title": "Set up a project"
+        "id": "create-evaluation",
+        "title": "Create evaluation"
       },
       "h3": {
         "id": "set-up-a-project",
@@ -15723,8 +15831,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "create-a-dataset",
-        "title": "Create a dataset"
+        "id": "create-evaluation",
+        "title": "Create evaluation"
       },
       "h3": {
         "id": "create-a-dataset",
@@ -15841,8 +15949,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "launch-an-evaluation",
-        "title": "Launch an evaluation"
+        "id": "create-an-evaluator",
+        "title": "Create an evaluator"
       },
       "h3": {
         "id": "launch-an-evaluation",
@@ -16728,8 +16836,8 @@
     "content": "You need to have access to evaluations.\n\nYou also need to have a Prompt – if not, please follow our Prompt creation guide.\n\nFinally, you need at least a few logs in your project. Use the Editor to generate some logs if you don't have any yet.\n\n\nTo set up an online Python evaluator:\n\n\nGo to the Evaluations page in one of your projects and select the Evaluators tab\nSelect + New Evaluator and choose Code Evaluator in the dialog\n\n\nFrom the library of presets on the left-hand side, we'll choose Valid JSON for this guide. You'll see a pre-populated evaluator with Python code that checks the output of our model is valid JSON grammar.\n\n\nIn the debug console at the bottom of the dialog, click Random logs from project. The console will be populated with five datapoints from your project.\n\n\nClick the Run button at the far right of one of the log rows. After a moment, you'll see the Result column populated with a True or False.\n\n\nExplore the log dictionary in the table to help understand what is available on the Python object passed into the evaluator.\nClick Create on the left side of the page.",
     "hierarchy": {
       "h2": {
-        "id": "prerequisites",
-        "title": "Prerequisites"
+        "id": "create-an-online-evaluator",
+        "title": "Create an online evaluator"
       },
       "h3": {
         "id": "prerequisites",
@@ -16810,8 +16918,8 @@
     "content": "A Humanloop project with a reasonable amount of data.\n\nAn Evaluator activated in that project.\n\n\nTo track the performance of different model configs in your project:\n\n\nGo to the Dashboard tab.\nIn the table of model configs at the\nbottom, choose a subset of the project's model configs.\nUse the graph controls\nAt the top of the page to select the date range and time granularity\nof interest.\nReview the relative performance\nFor each activated Evaluator shown in the graphs, you can see the relative performance of the model configs you selected.\n\n\n\n\nThe following Python modules are available to be imported in your code evaluators:\nre\n\nmath\n\nrandom\n\ndatetime\n\njson (useful for validating JSON grammar as per the example above)\n\njsonschema (useful for more fine-grained validation of JSON output - see the in-app example)\n\nsqlglot (useful for validating SQL query grammar)\n\nrequests (useful to make further LLM calls as part of your evaluation - see the in-app example for a suggestion of how to get started).",
     "hierarchy": {
       "h2": {
-        "id": "prerequisites-1",
-        "title": "Prerequisites"
+        "id": "track-the-performance-of-models",
+        "title": "Track the performance of models"
       },
       "h3": {
         "id": "prerequisites-1",
@@ -17559,8 +17667,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "prerequisites",
-        "title": "Prerequisites"
+        "id": "create-a-tool",
+        "title": "Create a Tool"
       },
       "h3": {
         "id": "prerequisites",
@@ -17655,8 +17763,8 @@
     ],
     "hierarchy": {
       "h1": {
-        "id": "prerequisites",
-        "title": "Prerequisites"
+        "id": "creating-a-tool",
+        "title": "Creating a Tool"
       },
       "h2": {
         "id": "prerequisites",
@@ -17772,8 +17880,8 @@
     ],
     "hierarchy": {
       "h1": {
-        "id": "install-and-initialize-the-sdk",
-        "title": "Install and initialize the SDK"
+        "id": "creating-a-tool",
+        "title": "Creating a Tool"
       },
       "h2": {
         "id": "install-and-initialize-the-sdk",
@@ -17973,8 +18081,8 @@
     "content": "A Humanloop account - you can create one by going to our sign up page.\n\nBe on a paid plan - your organization has been upgraded from the Free tier.\n\nYou already have a Prompt — if not, please follow our Prompt creation guide first.\n\n\n\n\nThe Snippet tool is not available for the Free tier. Please contact us if you\nwish to learn more about our Enterprise plan\nTo create and use a snippet tool, follow the following steps:\n\n\nNavigate to the tools tab in your organisation and select the Snippet tool card.\n\n\nName the tool\nName itassistant-personalities and give it a description Useful assistant personalities.\nAdd a snippet called \"helpful-assistant\"\nIn the initial box add helpful-assistant and give it a value of You are a helpful assistant. You like to tell jokes and if anyone asks your name is Sam.\nAdd another snippet called \"grumpy-assistant\"\nLet's add another key-value pair, so press the Add a key/value pair button and add a new key of grumpy-assistant and give it a value of You are a grumpy assistant. You rarely try to help people and if anyone asks your name is Freddy..\n\n\nPress Create Tool.\nNow your Snippets are set up, you can use it to populate strings in your prompt templates across your projects.\nNavigate to the Editor\nGo to the Editor of your previously created project.\nAdd {{ assistant-personalities(key) }} to your prompt\nDelete the existing prompt template and add {{ assistant-personalities(key) }} to your prompt.\n\n\nDouble curly bracket syntax is used to call a tool in the editor.  Inside the curly brackets you put the tool name, e.g. {{ <tool-name>(key) }}.\nEnter the key as an input\nIn the input area set the value to helpful-assistant. The tool requires an input value to be provided for the key. When adding the tool an inputs field will appear in the top right of the editor where you can specify your key.\nPress the Run button\nStart the chat with the LLM and you can see the response of the LLM, as well as, see the key you previously defined add in the Chat on the right.\n\n\nChange the key to grumpy-assistant.\n\n\nIf you want to see the corresponding snippet to the key you either need to\nfirst run the conversation to fetch the string and see it in the preview.\nPlay with the LLM\nAsk the LLM, I'm a customer and need help solving this issue. Can you help?'. You should see a grumpy response from \"Freddy\" now.\nIf you have a specific key you would like to hardcode in the prompt, you can define it using the literal key value: {{ <your-tool-name>(\"key\") }}, so in this case it would be {{ assistant-personalities(\"grumpy-assistant\") }}. Delete the grumpy-assistant field and add it into your chat template.\nSave your Prompt.\nIf you're happy with you're grumpy assistant, save this new version of your Prompt.\n\n\nThe Snippet tool is particularly useful because you can define passages of text once in a Snippet tool and reuse them across multiple prompts, without needing to copy/paste them and manually keep them all in sync. Editing the values in your tool allows the changes to automatically propagate to the model configs when you update them, as long as the key is the same.\n\n\nSince the values for a Snippet are saved on the Tool, not the Prompt, changing\nthe values (or keys) defined in your Snippet tools could affect the relative\npropmt's behaviour that won't be captured by the Prompt's version. This could\nbe exactly what you intend, however caution should still be used make sure the\nchanges are expected.",
     "hierarchy": {
       "h2": {
-        "id": "prerequisites",
-        "title": "Prerequisites"
+        "id": "create-and-use-a-snippet-tool",
+        "title": "Create and use a Snippet Tool"
       },
       "h3": {
         "id": "prerequisites",
@@ -18112,8 +18220,8 @@
     ],
     "hierarchy": {
       "h1": {
-        "id": "install-the-pinecone-sdk",
-        "title": "Install the Pinecone SDK"
+        "id": "set-up-pinecone",
+        "title": "Set up Pinecone"
       },
       "h2": {
         "id": "install-the-pinecone-sdk",
@@ -18161,8 +18269,8 @@
     ],
     "hierarchy": {
       "h1": {
-        "id": "create-a-pinecone-index",
-        "title": "Create a Pinecone index"
+        "id": "set-up-pinecone",
+        "title": "Set up Pinecone"
       },
       "h2": {
         "id": "create-a-pinecone-index",
@@ -18256,8 +18364,8 @@
     ],
     "hierarchy": {
       "h1": {
-        "id": "preprocess-the-data",
-        "title": "Preprocess the data"
+        "id": "set-up-pinecone",
+        "title": "Set up Pinecone"
       },
       "h2": {
         "id": "preprocess-the-data",
@@ -18299,8 +18407,8 @@
     "content": "Now that you have a Pinecone index and a dataset of text chunks, we can populate the index with embeddings before moving on to Humanloop. We'll use one of OpenAI's embedding models to create the vectors for storage.",
     "hierarchy": {
       "h1": {
-        "id": "populate-pinecone",
-        "title": "Populate Pinecone"
+        "id": "set-up-pinecone",
+        "title": "Set up Pinecone"
       },
       "h2": {
         "id": "populate-pinecone",
@@ -18362,8 +18470,12 @@
     ],
     "hierarchy": {
       "h1": {
-        "id": "install-and-initialise-open-ai-sdk",
-        "title": "Install and initialise Open AI SDK"
+        "id": "set-up-pinecone",
+        "title": "Set up Pinecone"
+      },
+      "h2": {
+        "id": "populate-pinecone",
+        "title": "Populate Pinecone"
       },
       "h3": {
         "id": "install-and-initialise-open-ai-sdk",
@@ -18431,8 +18543,12 @@
     ],
     "hierarchy": {
       "h1": {
-        "id": "populate-the-index",
-        "title": "Populate the index"
+        "id": "set-up-pinecone",
+        "title": "Set up Pinecone"
+      },
+      "h2": {
+        "id": "populate-pinecone",
+        "title": "Populate Pinecone"
       },
       "h3": {
         "id": "populate-the-index",
@@ -18474,8 +18590,8 @@
     "content": "You're now ready to configure a Pinecone tool in Humanloop:\n\n\nCreate a New Tools\nFrom the Humanloop dashboard or the sidebar, click 'New File' and select Tool.\nSelect Pinecone Search\nSelect the Pinecone Search option\nConfigure Pinecone and OpenAI\nThese should be the same values you used when setting\nup your Pinecone index in the previous sections. All these values are editable\nlater.\nFor Pinecone: populate values for Name (use quora_search),\npinecone_key, pinecone_environment, pinecone_index (note: we named our\nindex humanloop-demo). The name will be used to create the signature for the\ntool that you will use in your prompt templates in the next section.\n\nFor OpenAI: populate the openai_key and openai_model (note: we used the\ntext-embedding-ada-002 model above)\n\n\nSave the tool\nBy selecting Save.\nAn active tool for quora_search will now appear on the tools tab and you're ready to use it within a prompt template.",
     "hierarchy": {
       "h1": {
-        "id": "configure-pinecone",
-        "title": "Configure Pinecone"
+        "id": "set-up-humanloop",
+        "title": "Set up Humanloop"
       },
       "h2": {
         "id": "configure-pinecone",
@@ -18527,8 +18643,8 @@
     ],
     "hierarchy": {
       "h1": {
-        "id": "enhance-your-prompt-template",
-        "title": "Enhance your Prompt template"
+        "id": "set-up-humanloop",
+        "title": "Set up Humanloop"
       },
       "h2": {
         "id": "enhance-your-prompt-template",
@@ -18883,8 +18999,8 @@
     "content": "You already have a Prompt — if not, please follow our Prompt creation guide first.\n\nEnsure that your project has existing model configs that you wish to use.\n\n\nTo deploy a model config to an environment:\n\n\nNavigate to the Dashboard of your project.\nClick the dropdown menu of the environment.\n\n\nClick the Change deployment button\nSelect a version\nFrom the model configs or experiments within that project, click on the one that you wish to deploy to the target environment\n\n\nClick the Deploy button.",
     "hierarchy": {
       "h2": {
-        "id": "prerequisites",
-        "title": "Prerequisites"
+        "id": "deploying-to-an-environment",
+        "title": "Deploying to an environment"
       },
       "h3": {
         "id": "prerequisites",
@@ -18932,8 +19048,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "prerequisites-1",
-        "title": "Prerequisites"
+        "id": "calling-the-model-in-the-environment",
+        "title": "Calling the model in the environment"
       },
       "h3": {
         "id": "prerequisites-1",
@@ -19006,8 +19122,8 @@
     "content": "You have multiple environments - if not first go through the Create an\nenvironment section.\n\n\nEvery organization will have a default environment. This can be updated by the following:\n\n\nGo to your Organization's Environments page.\nClick on the dropdown menu of an environment that is not already the default.\nClick the Make default option\nA dialog will open asking you if you are certain this is a change you want to make. If so, click the Make default button.\nVerify the default tag has moved to the environment you selected.",
     "hierarchy": {
       "h2": {
-        "id": "prerequisites-2",
-        "title": "Prerequisites"
+        "id": "updating-the-default-environment",
+        "title": "Updating the default environment"
       },
       "h3": {
         "id": "prerequisites-2",
@@ -19117,8 +19233,8 @@
     "content": "You should create a new Prompt for every different ‘task to be done’ with the LLM. For example each of these tasks are things that can be done by an LLM and should be a separate Prompt File: extractive summary, title creator, outline generator etc.\nWe've seen people find it useful to also create a Prompt called 'Playground' where they can free form experiment without concern of breaking anything or making a mess of their other Prompts.",
     "hierarchy": {
       "h2": {
-        "id": "when-to-create-a-new-prompt",
-        "title": "When to create a new Prompt"
+        "id": "versioning",
+        "title": "Versioning"
       },
       "h3": {
         "id": "when-to-create-a-new-prompt",
@@ -19233,8 +19349,8 @@
     "content": "The .prompt file is heavily inspired by MDX, with model and hyperparameters specified in a YAML header alongside a JSX-inspired format for your Chat Template.",
     "hierarchy": {
       "h2": {
-        "id": "format",
-        "title": "Format"
+        "id": "serialization-prompt-file",
+        "title": "Serialization (.prompt file)"
       },
       "h3": {
         "id": "format",
@@ -19296,8 +19412,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "basic-examples",
-        "title": "Basic examples"
+        "id": "serialization-prompt-file",
+        "title": "Serialization (.prompt file)"
       },
       "h3": {
         "id": "basic-examples",
@@ -19467,8 +19583,8 @@
     "content": "Pinecone Search - Vector similarity search using Pinecone vector DB and OpenAI embeddings.\n\nGoogle Search - API for searching Google: https://serpapi.com/.\n\nGET API - Send a GET request to an external API.",
     "hierarchy": {
       "h2": {
-        "id": "third-party-integrations",
-        "title": "Third-party integrations"
+        "id": "tools-within-a-chain",
+        "title": "Tools within a chain"
       },
       "h3": {
         "id": "third-party-integrations",
@@ -19506,8 +19622,8 @@
     "content": "Snippet Tool - Create reusable key/value pairs for use in prompts - see how to use the Snippet Tool.\n\nJSON Schema - JSON schema that can be used across multiple Prompts - see how to link a JSON Schema Tool.",
     "hierarchy": {
       "h2": {
-        "id": "humanloop-tools",
-        "title": "Humanloop tools"
+        "id": "tools-within-a-chain",
+        "title": "Tools within a chain"
       },
       "h3": {
         "id": "humanloop-tools",
@@ -19669,8 +19785,8 @@
     "content": "Online evaluators are for use on logs generated in your project, including live in production. Typically, they are used to monitor deployed model performance over time.\nOnline evaluators can be set to run automatically whenever logs are added to a project. The evaluator takes the log as an argument.",
     "hierarchy": {
       "h2": {
-        "id": "online",
-        "title": "Online"
+        "id": "modes-monitoring-vs-testing",
+        "title": "Modes: Monitoring vs. testing"
       },
       "h3": {
         "id": "online",
@@ -19708,8 +19824,8 @@
     "content": "Offline evaluators are for use with predefined test datasets in order to evaluate models as you iterate in your prompt engineering workflow, or to test for regressions in a CI environment.\nA test dataset is a collection of datapoints, which are roughly analogous to unit tests or test cases in traditional programming. Each datapoint specifies inputs to your model and (optionally) some target data.\nWhen you run an offline evaluation, Humanloop iterates through each datapoint in the dataset and triggers a fresh LLM generation using the inputs of the testcase and the model config being evaluated. For each test case, your evaluator function will be called, taking as arguments the freshly generated log and the testcase datapoint that gave rise to it. Typically, you would write your evaluator to perform some domain-specific logic to determine whether the model-generated log meets your desired criteria (as specified in the datapoint 'target').",
     "hierarchy": {
       "h2": {
-        "id": "offline",
-        "title": "Offline"
+        "id": "modes-monitoring-vs-testing",
+        "title": "Modes: Monitoring vs. testing"
       },
       "h3": {
         "id": "offline",
@@ -19871,8 +19987,8 @@
     "content": "By default, the production environment is marked as the Default environment. This means that all API calls targeting the \"Active Deployment,\" such as Get Active Config or Chat Deployed will use this environment. You can rename the default environment on the organisation's environments page.\n\n\nRenaming the environments will take immediate effect, so ensure that this\nchange is planned and does not disrupt your production workflows.",
     "hierarchy": {
       "h3": {
-        "id": "the-default-environment",
-        "title": "The default environment"
+        "id": "managing-your-environments",
+        "title": "Managing your environments"
       },
       "h4": {
         "id": "the-default-environment",
@@ -20660,8 +20776,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "basic-examples",
-        "title": "Basic examples"
+        "id": "format",
+        "title": "Format"
       },
       "h3": {
         "id": "basic-examples",
@@ -20706,8 +20822,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "multi-modality-and-images",
-        "title": "Multi-modality and Images"
+        "id": "format",
+        "title": "Format"
       },
       "h3": {
         "id": "multi-modality-and-images",
@@ -20754,8 +20870,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "tools-tool-calls-and-tool-responses",
-        "title": "Tools, tool calls and tool responses"
+        "id": "format",
+        "title": "Format"
       },
       "h3": {
         "id": "tools-tool-calls-and-tool-responses",

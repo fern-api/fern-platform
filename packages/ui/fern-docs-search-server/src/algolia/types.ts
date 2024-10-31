@@ -94,7 +94,8 @@ export const ChangelogRecordSchema = BaseRecordSchema.extend({
         .describe(
             "The raw markdown of this record. This must be raw markdown because it will be used as a document input to for conversational search.",
         ),
-    date: z.string().date(),
+    date: z.string().describe("YYYY-MM-DD"),
+    date_timestamp: z.number().optional().describe("The timestamp of the date, in seconds since epoch"),
 });
 
 const EndpointBaseRecordSchema = BaseRecordSchema.extend({

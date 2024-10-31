@@ -1,3 +1,5 @@
+import "server-only";
+
 export function algoliaAppId() {
     return getEnvVariable("ALGOLIA_APP_ID");
 }

@@ -36,41 +36,40 @@ export function DesktopInstantSearch({
 
     useEffect(() => {
         ref.current.setClientApiKey({ apiKey });
+        ref.current.clearCache();
     }, [apiKey]);
 
     useTrapFocus({ container: formRef.current });
 
     return (
-        <div className="w-96">
-            <InstantSearchNext
-                searchClient={ref.current}
-                indexName="fern-docs-search"
-                future={{ preserveSharedStateOnUnmount: true }}
+        <InstantSearchNext
+            searchClient={ref.current}
+            indexName="fern-docs-search"
+            future={{ preserveSharedStateOnUnmount: true }}
+        >
+            <Configure
+                restrictHighlightAndSnippetArrays={true}
+                distinct={true}
+                attributesToSnippet={["description:20", "content:20"]}
+                ignorePlurals
+            />
+            <DesktopSearchForm
+                className="flex flex-col gap-2 border border-[#DBDBDB] rounded-lg overflow-hidden bg-[#F2F2F2]/30 backdrop-blur-xl"
+                ref={formRef}
+                onSubmit={onSubmit}
             >
-                <Configure
-                    restrictHighlightAndSnippetArrays={true}
-                    distinct={true}
-                    attributesToSnippet={["description:20", "content:20"]}
-                    ignorePlurals
-                />
-                <DesktopSearchForm
-                    className="flex flex-col gap-2 border border-[#DBDBDB] rounded-lg overflow-hidden bg-[#F2F2F2]/30 backdrop-blur-xl"
-                    ref={formRef}
-                    onSubmit={onSubmit}
-                >
-                    <div className="p-4 border-b border-[#DBDBDB]" onClick={() => inputRef.current?.focus()}>
-                        <DesktopSearchBox
-                            inputClassName="w-full focus:outline-none bg-transparent text-lg placeholder:text-[#969696]"
-                            placeholder="Search"
-                            autoFocus
-                            inputRef={inputRef}
-                            isFromSelection={false}
-                        />
-                    </div>
-                    <SegmentedHits inputRef={inputRef} LinkComponent={LinkComponent} />
-                </DesktopSearchForm>
-            </InstantSearchNext>
-        </div>
+                <div className="p-4 border-b border-[#DBDBDB]" onClick={() => inputRef.current?.focus()}>
+                    <DesktopSearchBox
+                        inputClassName="w-full focus:outline-none bg-transparent text-lg placeholder:text-[#969696]"
+                        placeholder="Search"
+                        autoFocus
+                        inputRef={inputRef}
+                        isFromSelection={false}
+                    />
+                </div>
+                <SegmentedHits inputRef={inputRef} LinkComponent={LinkComponent} />
+            </DesktopSearchForm>
+        </InstantSearchNext>
     );
 }
 

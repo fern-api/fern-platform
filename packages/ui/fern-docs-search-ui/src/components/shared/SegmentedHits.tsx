@@ -4,11 +4,12 @@ import { last, uniq } from "es-toolkit/array";
 import { ReactElement, RefObject, useDeferredValue } from "react";
 import { useHits } from "react-instantsearch";
 import { MarkRequired } from "ts-essentials";
+import { ArrowTurnDownLeftIcon } from "../icons/ArrowTurnDownLeftIcon";
+import { RegularCalendarIcon } from "../icons/RegularCalendarIcon";
+import { RegularFileLinesIcon } from "../icons/RegularFileLinesIcon";
 import { AlgoliaRecordHit } from "../types";
-import { ArrowTurnDownLeftIcon } from "./ArrowTurnDownLeftIcon";
 import { HitContent } from "./HitContent";
 import { LinkComponentType } from "./LinkComponent";
-import { RegularFileLinesIcon } from "./RegularFileLinesIcon";
 import { SegmentedHitsRadioGroup } from "./SegmentedHitsRadioGroup";
 
 interface HitProps {
@@ -23,11 +24,15 @@ function Hit({ hit, LinkComponent }: HitProps): ReactElement | null {
     return (
         <RadioGroup.Item
             value={hit.objectID}
-            className="mx-2 p-2 rounded-md hover:bg-[#CCC]/30 data-[state=checked]:bg-[#CCC]/30 text-left block"
+            className="mx-2 p-2 rounded-md hover:bg-[#CCC]/15 data-[state=checked]:bg-[#CCC]/30 text-left block"
         >
             <LinkComponent hit={{ pathname: hit.pathname ?? "", hash: hit.hash ?? "" }} className="flex gap-2">
                 <div className="shrink-0 py-1">
-                    <RegularFileLinesIcon className="size-4 text-[#969696]" />
+                    {hit.type === "changelog" ? (
+                        <RegularCalendarIcon className="size-4 text-[#969696]" />
+                    ) : (
+                        <RegularFileLinesIcon className="size-4 text-[#969696]" />
+                    )}
                 </div>
 
                 <div className="flex-1">
@@ -54,6 +59,14 @@ export function SegmentedHits({
 
     // avoid unnecessary re-renders while the user is typing
     const items = useDeferredValue(rawHits);
+
+    if (items.length === 0) {
+        return (
+            <div className="p-4 pb-6 text-center text-[#969696]">
+                <span className="font-semibold text-sm">No results found</span>
+            </div>
+        );
+    }
 
     // NOTE: the items from `useHits` gets re-ordered whenever the query changes, so we should NOT memoize any of the following logic:
 

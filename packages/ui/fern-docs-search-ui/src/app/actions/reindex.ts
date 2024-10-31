@@ -5,7 +5,7 @@ import { algoliaIndexSettingsTask, algoliaIndexerTask } from "@fern-ui/fern-docs
 
 const INDEX_NAME = "fern-docs-search";
 
-export const handleReindex = async () => {
+export const handleReindex = async (domain: string) => {
     console.log("Reindexing");
 
     await algoliaIndexSettingsTask({
@@ -20,7 +20,7 @@ export const handleReindex = async () => {
         indexName: INDEX_NAME,
         environment: fdrEnvironment(),
         fernToken: fernToken(),
-        domain: "docs.cohere.com",
+        domain,
         authed: false,
     });
 

@@ -98,4 +98,14 @@ Be sure to save the generated token - it won't be displayed after you leave the 
         const result2 = prepareMdxContent(content2);
         expect(result2.content).toBe("x^2");
     });
+
+    it("should replace html entities with their corresponding characters", () => {
+        const content = "Hello, &amp; world!";
+        const result = prepareMdxContent(content);
+        expect(result.content).toBe("Hello, & world!");
+
+        const content2 = "Hello, &gt; world!";
+        const result2 = prepareMdxContent(content2);
+        expect(result2.content).toBe("Hello, > world!");
+    });
 });

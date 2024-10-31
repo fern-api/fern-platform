@@ -1083,8 +1083,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "canceling-a-function-call",
-        "title": "Canceling a function call"
+        "id": "interruptibility",
+        "title": "Interruptibility"
       },
       "h3": {
         "id": "canceling-a-function-call",
@@ -1128,8 +1128,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "updating-a-function-call",
-        "title": "Updating a function call"
+        "id": "interruptibility",
+        "title": "Interruptibility"
       },
       "h3": {
         "id": "updating-a-function-call",
@@ -1212,8 +1212,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "specifying-fallback-content",
-        "title": "Specifying fallback content"
+        "id": "handling-errors",
+        "title": "Handling errors"
       },
       "h3": {
         "id": "specifying-fallback-content",
@@ -1265,8 +1265,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "failure-message-flow",
-        "title": "Failure message flow"
+        "id": "handling-errors",
+        "title": "Handling errors"
       },
       "h3": {
         "id": "failure-message-flow",
@@ -1449,8 +1449,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "prompt-for-voice-only-conversations",
-        "title": "Prompt for voice-only conversations"
+        "id": "evi-specific-prompting-instructions",
+        "title": "EVI-specific prompting instructions"
       },
       "h3": {
         "id": "prompt-for-voice-only-conversations",
@@ -1502,8 +1502,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "expressive-prompt-engineering",
-        "title": "Expressive prompt engineering"
+        "id": "evi-specific-prompting-instructions",
+        "title": "EVI-specific prompting instructions"
       },
       "h3": {
         "id": "expressive-prompt-engineering",
@@ -1547,8 +1547,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "continue-from-short-response-model",
-        "title": "Continue from short response model"
+        "id": "evi-specific-prompting-instructions",
+        "title": "EVI-specific prompting instructions"
       },
       "h3": {
         "id": "continue-from-short-response-model",
@@ -1592,8 +1592,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "prompting-best-practices",
-        "title": "Prompting best practices"
+        "id": "general-llm-prompting-guidelines",
+        "title": "General LLM prompting guidelines"
       },
       "h3": {
         "id": "prompting-best-practices",
@@ -1627,8 +1627,8 @@
     "content": "Different LLMs have varying capabilities, limitations, and context windows. More advanced LLMs can handle longer, nuanced prompts, but are often slower and pricier. Simpler LLMs are faster and cheaper but require shorter, less complex prompts with fewer instructions and less nuance. Some LLMs also have longer context windows - the number of tokens the model can process while generating a response, acting essentially as the model's memory. Tailor your prompt length to fit within the LLM's context window to ensure the model can use the full conversation history.",
     "hierarchy": {
       "h2": {
-        "id": "understand-your-llms-capabilities",
-        "title": "Understand your LLM’s capabilities"
+        "id": "general-llm-prompting-guidelines",
+        "title": "General LLM prompting guidelines"
       },
       "h3": {
         "id": "understand-your-llms-capabilities",
@@ -1672,8 +1672,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "use-sections-to-divide-your-prompt",
-        "title": "Use sections to divide your prompt"
+        "id": "general-llm-prompting-guidelines",
+        "title": "General LLM prompting guidelines"
       },
       "h3": {
         "id": "use-sections-to-divide-your-prompt",
@@ -1717,8 +1717,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "give-few-shot-examples",
-        "title": "Give few-shot examples"
+        "id": "general-llm-prompting-guidelines",
+        "title": "General LLM prompting guidelines"
       },
       "h3": {
         "id": "give-few-shot-examples",
@@ -1752,8 +1752,8 @@
     "content": "Crafting an effective system prompt to create the conversations you’re looking for often requires several iterations—cycles of changing and testing the prompt, seeing if it produces the conversations you want, and improving it over time. It is often best to start with ten to twenty gold-standard examples of excellent conversations, then test the system prompt for each of these examples after you make major changes. You can also try having voice conversations with your EVI (in the playground) to see if its responses match your expectations or are at least as good as your examples. If not, then try changing one part of the prompt at a time and then re-testing to make sure your changes are improving performance.",
     "hierarchy": {
       "h2": {
-        "id": "test-your-prompts",
-        "title": "Test your prompts"
+        "id": "general-llm-prompting-guidelines",
+        "title": "General LLM prompting guidelines"
       },
       "h3": {
         "id": "test-your-prompts",
@@ -1940,8 +1940,8 @@
     "content": "For managing conversational state and connecting your frontend experiences with your backend data and logic, you should pass a custom_session_id in the SessionSettings message. When a custom_session_id is provided from the frontend SessionSettings message, the response sent from Hume to your backend includes this id, so you can correlate frontend users with their incoming messages.\nUsing a custom_session_id will enable you to:\nmaintain user state on your backend\n\npause/resume conversations\n\npersist conversations across sessions\n\nmatch frontend and backend connections\n\n\nWe recommend passing a custom_session_id if you are using a Custom Language Model.",
     "hierarchy": {
       "h2": {
-        "id": "custom-session-id",
-        "title": "Custom Session ID"
+        "id": "payload-structure",
+        "title": "Payload Structure"
       },
       "h3": {
         "id": "custom-session-id",
@@ -2060,8 +2060,8 @@
     "content": "Facial Expression, including subtle facial movements often seen as expressing love or admiration, awe, disappointment, or cringes of empathic pain, along 48 distinct dimensions of emotional meaning. Our Facial Expression model will also optionally output FACS 2.0 measurements, our model of facial movements including traditional Action Units (AUs such as “Inner brow raise”, “Nose crinkle”) and facial descriptions (“Smile”, “Wink”, “Hand over mouth”, “Hand over eyes”)\n\nSpeech Prosody, or the non-linguistic tone, rhythm, and timbre of speech, spanning 48 distinct dimensions of emotional meaning.\n\nVocal Burst, including laughs, sighs, huhs, hmms, cries and shrieks (to name a few), along 48 distinct dimensions of emotional meaning.\n\nEmotional Language, or the emotional tone of transcribed text, along 53 dimensions.\n\n\n\n\nThese behaviors are complex and multifaceted.\nTo learn more about how to use our models visit our API reference.",
     "hierarchy": {
       "h2": {
-        "id": "measurements",
-        "title": "Measurements"
+        "id": "intro",
+        "title": "Intro"
       },
       "h3": {
         "id": "measurements",
@@ -2095,8 +2095,8 @@
     "content": "The models were trained on human intensity ratings of large-scale, experimentally controlled emotional expression data gathered using the methods described in these papers: Deep learning reveals what vocal bursts express in different cultures and Deep learning reveals what facial expressions mean to people in different cultures.\nWhile our models measure nuanced expressions that people most typically describe with emotion labels, it's important to remember that they are not a direct readout of what someone is experiencing. Sometimes, the outputs from facial and vocal models will show different emotional meanings, which is completely normal. Generally speaking, emotional experience is subjective and its expression is multimodal and context-dependent.",
     "hierarchy": {
       "h2": {
-        "id": "model-training",
-        "title": "Model training"
+        "id": "intro",
+        "title": "Intro"
       },
       "h3": {
         "id": "model-training",
@@ -2381,8 +2381,8 @@
     "content": "The size of any individual file provided by URL cannot exceed 1 GB.\n\nThe size of any individual local file cannot exceed 100 MB.\n\nEach request has an upper limit of 100 URLs, 100 strings (raw text), and 100 local media files. Can be a mix of the media files or archives (.zip, .tar.gz, .tar.bz2, .tar.xz).\n\nFor audio and video files the max length supported is 1 Hour.",
     "hierarchy": {
       "h2": {
-        "id": "api-limits",
-        "title": "API limits"
+        "id": "using-humes-expression-measurement-api",
+        "title": "Using Hume’s Expression Measurement API"
       },
       "h3": {
         "id": "api-limits",
@@ -2416,8 +2416,8 @@
     "content": "You can provide data for your job in one of the following formats: hosted file URLs, local files, or raw text presented as a list of strings.\nIn this tutorial, the data is publicly available to download. For added security, you may choose to create a signed URL through your preferred cloud storage provider.\nCloud Provider Signing URLs \nGCP https://cloud.google.com/storage/docs/access-control/signed-urls \nAWS https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-signed-urls.html \nAzure https://learn.microsoft.com/en-us/azure/storage/common/storage-sas-overview",
     "hierarchy": {
       "h2": {
-        "id": "providing-urls-and-files",
-        "title": "Providing URLs and files"
+        "id": "using-humes-expression-measurement-api",
+        "title": "Using Hume’s Expression Measurement API"
       },
       "h3": {
         "id": "providing-urls-and-files",
@@ -2566,8 +2566,8 @@
     "content": "Make sure to enable the optional stream feature when installing the Hume Python SDK.\n\n\n\n\nbash pip install \"hume[stream]\"",
     "hierarchy": {
       "h2": {
-        "id": "install-the-hume-python-sdk",
-        "title": "Install the Hume Python SDK"
+        "id": "getting-started-with-websocket-streaming",
+        "title": "Getting started with WebSocket streaming"
       },
       "h3": {
         "id": "install-the-hume-python-sdk",
@@ -2619,8 +2619,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "emotional-language-from-text",
-        "title": "Emotional language from text"
+        "id": "getting-started-with-websocket-streaming",
+        "title": "Getting started with WebSocket streaming"
       },
       "h3": {
         "id": "emotional-language-from-text",
@@ -2664,8 +2664,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "facial-expressions-from-an-image",
-        "title": "Facial expressions from an image"
+        "id": "getting-started-with-websocket-streaming",
+        "title": "Getting started with WebSocket streaming"
       },
       "h3": {
         "id": "facial-expressions-from-an-image",
@@ -2709,8 +2709,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "speech-prosody-from-an-audio-or-video-file",
-        "title": "Speech prosody from an audio or video file"
+        "id": "getting-started-with-websocket-streaming",
+        "title": "Getting started with WebSocket streaming"
       },
       "h3": {
         "id": "speech-prosody-from-an-audio-or-video-file",
@@ -2811,8 +2811,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "sending-images-or-audio",
-        "title": "Sending images or audio"
+        "id": "streaming-with-your-own-websockets-client",
+        "title": "Streaming with your own WebSockets client"
       },
       "h3": {
         "id": "sending-images-or-audio",
@@ -3325,8 +3325,8 @@
     "content": "Find up-to-date pricing information at hume.ai/pricing.",
     "hierarchy": {
       "h2": {
-        "id": "pricing",
-        "title": "Pricing"
+        "id": "understanding-your-bill",
+        "title": "Understanding your bill"
       },
       "h3": {
         "id": "pricing",
@@ -3360,8 +3360,8 @@
     "content": "Audio and video:\nOur listed prices are presented per minute for ease of understanding.\n\nHowever, we bill these services on a corresponding per-second basis to ensure precise and fair charges. This means you are only billed for the exact amount of time your audio or video content is processed.\n\n\n\nImage and text:\nImage processing charges are incurred per image.\n\nText processing is billed based on the number of words processed.",
     "hierarchy": {
       "h2": {
-        "id": "billing-methodology",
-        "title": "Billing methodology"
+        "id": "understanding-your-bill",
+        "title": "Understanding your bill"
       },
       "h3": {
         "id": "billing-methodology",
@@ -3589,8 +3589,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "transcript-confidence-below-threshold-value",
-        "title": "Transcript confidence below threshold value"
+        "id": "common-errors",
+        "title": "Common errors"
       },
       "h3": {
         "id": "transcript-confidence-below-threshold-value",
@@ -3646,8 +3646,8 @@
     "content": "Facial expression is the most well-studied modality of expressive behavior, but the overwhelming focus has been on six discrete categories of facial movement or time-consuming manual annotations of facial movements (the scientifically useful, but outdated, Facial Action Coding System). Our research shows that these approaches capture less than 30% of what typical facial expressions convey.\nHume’s Facial Emotional Expression model generates 48 outputs encompassing the dimensions of emotional meaning people reliably attribute to facial expressions. As with every model, the labels for each dimension are proxies for how people tend to label the underlying patterns of behavior. They should not be treated as direct inferences of emotional experience.\nHume’s FACS 2.0 model is a new generation automated facial action coding system (FACS). With 55 outputs encompassing 26 traditional actions units (AUs) and 29 other descriptive features (e.g., smile, scowl), FACS 2.0 is even more comprehensive than manual FACS annotations.\nOur facial expression models are packaged with face detection and work on both images and videos.\nIn addition to our image-based facial expression models, we also offer an Anonymized Facemesh model for applications in which it is essential to keep personally identifiable data on-device (e.g., for compliance with local laws). Instead of face images, our facemesh model processes facial landmarks detected using Google's MediaPipe library. It achieves about 80% accuracy relative to our image-based model.\nTo read more about the team’s research on facial expressions, check out our publications in American Psychologist (2018), Nature (2021), and iScience (2024).",
     "hierarchy": {
       "h2": {
-        "id": "facial-expression",
-        "title": "Facial Expression"
+        "id": "modalities",
+        "title": "Modalities"
       },
       "h3": {
         "id": "facial-expression",
@@ -3681,8 +3681,8 @@
     "content": "Speech prosody is not about the words you say, but the way you say them. It is distinct from language (words) and from non-linguistic vocal utterances.\nOur Speech Prosody model generates 48 outputs encompassing the 48 dimensions of emotional meaning that people reliably distinguish from variations in speech prosody. As with every model, the labels for each dimension are proxies for how people tend to label the underlying patterns of behavior. They should not be treated as direct inferences of emotional experience.\nOur Speech Prosody model is packaged with speech detection and works on both audio files and videos.\nTo read more about the team’s research on speech prosody, check out our publications in Nature Human Behaviour (2019) and Proceedings of the 31st ACM International Conference on Multimedia (2023).",
     "hierarchy": {
       "h2": {
-        "id": "speech-prosody",
-        "title": "Speech Prosody"
+        "id": "modalities",
+        "title": "Modalities"
       },
       "h3": {
         "id": "speech-prosody",
@@ -3716,8 +3716,8 @@
     "content": "Non-linguistic vocal utterances, including sighs, laughs, oohs, ahhs, umms, and shrieks (to name but a few), are a particularly powerful and understudied modality of expressive behavior. Recent studies reveal that they reliably convey distinct emotional meanings that are extremely well-preserved across most cultures.\nNon-linguistic vocal utterances have different acoustic characteristics than speech emotional intonation (prosody) and need to be modeled separately.\nOur Vocal Burst Expression model generates 48 outputs encompassing the distinct dimensions of emotional meaning that people distinguish in vocal bursts. As with every model, the labels for each dimension are proxies for how people tend to label the underlying patterns of behavior. They should not be treated as direct inferences of emotional experience.\nOur Vocal Burst Description model provides a more descriptive and categorical view of nonverbal vocal expressions (“gasp,” “mhm,” etc.) intended for use cases such as audio captioning. It generates 67 descriptors, including 30 call types (“sigh,” “laugh,” “shriek,” etc.) and 37 common onomatopoeia transliterations of vocal bursts (“hmm,” “ha,” “mhm,” etc.).\nOur vocal burst models are packaged with non-linguistic vocal utterance detection and works on both audio files and videos.\nTo read more about the team’s research on vocal bursts, check out our publications in American Psychologist (2019), Interspeech 2022, ICASSP 2023, and Nature Human Behaviour (2023).",
     "hierarchy": {
       "h2": {
-        "id": "vocal-bursts",
-        "title": "Vocal Bursts"
+        "id": "modalities",
+        "title": "Modalities"
       },
       "h3": {
         "id": "vocal-bursts",
@@ -3751,8 +3751,8 @@
     "content": "The words we say include explicit disclosures of emotion and implicit emotional connotations. These meanings are complex and high-dimensional.\nFrom written or spoken words, our Emotional Language model generates 53 outputs encompassing different dimensions of emotion that people often perceive from language. As with every model, the labels for each dimension are proxies for how people tend to label the underlying patterns of behavior. They should not be treated as direct inferences of emotional experience.\nOur Emotional Language model is packaged with speech transcription and works on audio files, videos, and text.\nOur Named Entity Recognition (NER) model can also identify topics or entities (people, places, organizations, etc.) mentioned in speech or text and the tone of language they are associated with, as identified by our emotional language model.",
     "hierarchy": {
       "h2": {
-        "id": "emotional-language",
-        "title": "Emotional Language"
+        "id": "modalities",
+        "title": "Modalities"
       },
       "h3": {
         "id": "emotional-language",
@@ -4030,8 +4030,8 @@
     ],
     "hierarchy": {
       "h2": {
-        "id": "evi-api-additions",
-        "title": "EVI API additions"
+        "id": "05-24-2024",
+        "title": "May 24, 2024"
       },
       "h3": {
         "id": "evi-api-additions",
@@ -4060,8 +4060,8 @@
     "content": "Increased the limit for tool descriptions from 100 chars to 512 chars\n\nSet the maximum length for tool_name to 64 chars",
     "hierarchy": {
       "h2": {
-        "id": "evi-api-modifications",
-        "title": "EVI API modifications"
+        "id": "05-24-2024",
+        "title": "May 24, 2024"
       },
       "h3": {
         "id": "evi-api-modifications",
@@ -4090,8 +4090,8 @@
     "content": "Added support for built-in tools, starting with web search: Using built-in tools\n\nAdded support for phone calling through a Twilio integration: Phone calling\n\nAdded DACHER voice to the voice configuration options\n\nAdded support for the gpt-4o language model",
     "hierarchy": {
       "h2": {
-        "id": "evi-api-additions-1",
-        "title": "EVI API additions"
+        "id": "05-17-2024",
+        "title": "May 17, 2024"
       },
       "h3": {
         "id": "evi-api-additions-1",
@@ -4120,8 +4120,8 @@
     "content": "Increased the limit for tool descriptions from 100 chars to 512 chars",
     "hierarchy": {
       "h2": {
-        "id": "evi-api-modifications-1",
-        "title": "EVI API modifications"
+        "id": "05-17-2024",
+        "title": "May 17, 2024"
       },
       "h3": {
         "id": "evi-api-modifications-1",
@@ -4150,8 +4150,8 @@
     "content": "Added support for three open-source models through the Groq language model provider: Gemma 7B (gemma-7b-it), Llama 3 8B (llama3-8b-8192), and Llama 3 70B (llama3-70b-8192)\n\nAdded support for Llama 30 70B language model through the Fireworks language model provider (accounts/fireworks/models/llama-v3-70b-instruct)\n\nAdded a custom_session_id field in the SessionSettings message, and documentation for using it: Custom Session ID",
     "hierarchy": {
       "h2": {
-        "id": "evi-api-additions-2",
-        "title": "EVI API additions"
+        "id": "05-10-2024",
+        "title": "May 10, 2024"
       },
       "h3": {
         "id": "evi-api-additions-2",
@@ -4180,8 +4180,8 @@
     "content": "Disabled short response generation for custom language models\n\nAdded error codes for when Hume credits run out while using EVI. Users will receive either the E0300 error code if they are out of credits or E0301 if they are blocked via subscription. The WebSocket connection will also be closed with code 1008",
     "hierarchy": {
       "h2": {
-        "id": "evi-api-modifications-2",
-        "title": "EVI API modifications"
+        "id": "05-10-2024",
+        "title": "May 10, 2024"
       },
       "h3": {
         "id": "evi-api-modifications-2",
@@ -4210,8 +4210,8 @@
     "content": "Fixed an issue with the from_text field in UserMessage. It is now set to True if any part of the UserMessage is from a developer-provided UserInput message",
     "hierarchy": {
       "h2": {
-        "id": "bugs-bashed",
-        "title": "Bugs bashed"
+        "id": "05-10-2024",
+        "title": "May 10, 2024"
       },
       "h3": {
         "id": "bugs-bashed",
@@ -4240,8 +4240,8 @@
     "content": "Added support for Tools through our tool use feature\n\nAdded ToolErrorMessage as a supported input type",
     "hierarchy": {
       "h2": {
-        "id": "evi-api-additions-3",
-        "title": "EVI API additions"
+        "id": "05-03-2024",
+        "title": "May 3, 2024"
       },
       "h3": {
         "id": "evi-api-additions-3",
@@ -4270,8 +4270,8 @@
     "content": "Added an error that returns status 400 if a Config, Tool, or Prompt is created with a name or versionDescription that's too long or non-ASCII. Names must be under 75 chars, versionDescription must be under 256 chars, description for Tools must be under 100 chars, fallback_content for Tools must be under 2048 chars, and model_resource for LanguageModels must be under 1024 chars\n\nFixed several edge cases and bugs involving Tool calls, including supporting only single tool calls with EVI (no parallel tool calling)",
     "hierarchy": {
       "h2": {
-        "id": "bugs-bashed-1",
-        "title": "Bugs bashed"
+        "id": "05-03-2024",
+        "title": "May 3, 2024"
       },
       "h3": {
         "id": "bugs-bashed-1",
@@ -4300,8 +4300,8 @@
     "content": "Added support for reading language model type from EVI configs\n\nAdded support for reading language model temperature from EVI configs\n\nAdded system prompt to SessionSettings message to allow dynamic prompt updating",
     "hierarchy": {
       "h2": {
-        "id": "evi-api-additions-4",
-        "title": "EVI API additions"
+        "id": "04-30-2024",
+        "title": "April 30, 2024"
       },
       "h3": {
         "id": "evi-api-additions-4",
@@ -4330,8 +4330,8 @@
     "content": "Renamed TextInput message to UserInput to indicate this is text to be added to the chat history as a User message and used as context by the LLM\n\nRenamed TtsInput message to AssistantInput to make it clear that this is input text to be spoken by EVI and added to the chat history as an Assistant message\n\nMoved audio configuration options to SessionSettings message",
     "hierarchy": {
       "h2": {
-        "id": "evi-api-changes",
-        "title": "EVI API changes"
+        "id": "04-30-2024",
+        "title": "April 30, 2024"
       },
       "h3": {
         "id": "evi-api-changes",
@@ -4360,8 +4360,8 @@
     "content": "Fixed chats staying open after errors, chats will now end upon exceptions\n\nAdded an error thrown if config uses both custom_model and prompt, because custom language models do not use prompts\n\nFixed issue where erroring when sending errors would cause the API to get stuck\n\nAdded clearer errors for custom language models\n\nAdded unable to configure audio service error\n\nAdded an error to invalidate outdated language model responses",
     "hierarchy": {
       "h2": {
-        "id": "bugs-bashed-2",
-        "title": "Bugs bashed"
+        "id": "04-30-2024",
+        "title": "April 30, 2024"
       },
       "h3": {
         "id": "bugs-bashed-2",
