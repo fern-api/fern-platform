@@ -1,3 +1,4 @@
+import { InitialResultsResponse } from "@/server/browse-results";
 import { ReactElement, RefObject } from "react";
 import { LinkComponentType } from "./LinkComponent";
 import { SearchHitRadioItem } from "./SearchHitRadioItem";
@@ -8,11 +9,7 @@ export function InitialSearchView({
     inputRef,
     LinkComponent,
 }: {
-    initialResults: {
-        tabs: { title: string; pathname: string }[];
-        products: { id: string; title: string; pathname: string }[];
-        versions: { id: string; title: string; pathname: string }[];
-    };
+    initialResults: InitialResultsResponse;
     inputRef: RefObject<HTMLInputElement>;
     LinkComponent: LinkComponentType;
 }): ReactElement | false {
@@ -29,7 +26,12 @@ export function InitialSearchView({
             {initialResults.tabs.length > 0 && (
                 <section className="mb-2 flex flex-col justify-stretch">
                     {initialResults.tabs.map((tab) => (
-                        <SearchHitRadioItem key={tab.pathname} LinkComponent={LinkComponent} path={tab.pathname}>
+                        <SearchHitRadioItem
+                            key={tab.pathname}
+                            LinkComponent={LinkComponent}
+                            path={tab.pathname}
+                            icon={tab.icon}
+                        >
                             {tab.title}
                         </SearchHitRadioItem>
                     ))}

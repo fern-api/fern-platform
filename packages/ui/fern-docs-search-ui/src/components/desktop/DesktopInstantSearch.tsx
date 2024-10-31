@@ -1,3 +1,4 @@
+import { InitialResultsResponse } from "@/server/browse-results";
 import { liteClient as algoliasearch } from "algoliasearch/lite";
 import "instantsearch.css/themes/reset.css";
 import {
@@ -22,11 +23,7 @@ interface DesktopInstantSearchProps {
     LinkComponent: LinkComponentType;
     onSubmit: (path: string) => void;
     disabled?: boolean;
-    initialResults: {
-        tabs: { title: string; pathname: string }[];
-        products: { id: string; title: string; pathname: string }[];
-        versions: { id: string; title: string; pathname: string }[];
-    };
+    initialResults: InitialResultsResponse;
 }
 
 export function DesktopInstantSearch({

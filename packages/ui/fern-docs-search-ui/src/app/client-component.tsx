@@ -2,6 +2,7 @@
 
 import { DesktopInstantSearch } from "@/components/desktop/DesktopInstantSearch";
 import { createDefaultLinkComponent } from "@/components/shared/LinkComponent";
+import { InitialResultsResponse } from "@/server/browse-results";
 import { ReactElement } from "react";
 import useSWR from "swr";
 
@@ -22,11 +23,7 @@ export function DesktopInstantSearchClient({ appId, domain }: { appId: string; d
 
     const { data: initialResults } = useSWR(
         [domain, "initial-results"],
-        (): Promise<{
-            tabs: { title: string; pathname: string }[];
-            products: { id: string; title: string; pathname: string }[];
-            versions: { id: string; title: string; pathname: string }[];
-        }> => fetch(`/api/initial-result?domain=${domain}`).then((res) => res.json()),
+        (): Promise<InitialResultsResponse> => fetch(`/api/initial-result?domain=${domain}`).then((res) => res.json()),
     );
 
     if (!apiKey) {

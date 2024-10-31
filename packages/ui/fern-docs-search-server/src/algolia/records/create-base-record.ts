@@ -9,7 +9,7 @@ interface CreateBaseRecordOptions {
     domain: string;
     org_id: string;
     parents: readonly FernNavigation.NavigationNodeParent[];
-    node: FernNavigation.NavigationNodeWithMarkdown | FernNavigation.NavigationNodeApiLeaf;
+    node: FernNavigation.NavigationNodeWithMetadata;
     authed: boolean;
 }
 

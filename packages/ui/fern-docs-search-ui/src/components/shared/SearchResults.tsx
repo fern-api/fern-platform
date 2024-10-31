@@ -1,3 +1,4 @@
+import { InitialResultsResponse } from "@/server/browse-results";
 import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
 import { ReactElement, RefObject, useDeferredValue } from "react";
 import { useHits } from "react-instantsearch";
@@ -13,11 +14,7 @@ export function SearchResults({
 }: {
     inputRef: RefObject<HTMLInputElement>;
     LinkComponent: LinkComponentType;
-    initialResults: {
-        tabs: { title: string; pathname: string }[];
-        products: { id: string; title: string; pathname: string }[];
-        versions: { id: string; title: string; pathname: string }[];
-    };
+    initialResults: InitialResultsResponse;
 }): ReactElement {
     const { items: rawHits, results } = useHits<AlgoliaRecord>();
 

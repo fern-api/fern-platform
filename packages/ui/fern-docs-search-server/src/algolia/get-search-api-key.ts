@@ -45,7 +45,7 @@ export function getSearchApiKey({
     return generateSecuredApiKey({
         parentApiKey,
         restrictions: {
-            filters: createSearchFilters({ domain, roles, authed }),
+            filters: createSearchFilters({ domain, roles, authed }) + " AND NOT type:navigation",
             validUntil: Math.floor(Date.now() / 1_000) + expiresInSeconds,
             restrictIndices: [searchIndex],
         },

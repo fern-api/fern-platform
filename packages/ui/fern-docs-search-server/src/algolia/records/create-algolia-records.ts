@@ -10,6 +10,7 @@ import { createEndpointBaseRecordHttp } from "./create-endpoint-record-http";
 import { createEndpointBaseRecordWebSocket } from "./create-endpoint-record-web-socket";
 import { createEndpointBaseRecordWebhook } from "./create-endpoint-record-webhook";
 import { createMarkdownRecords } from "./create-markdown-records";
+import { createNavigationRecord } from "./create-navigation-record";
 
 interface CreateAlgoliaRecordsOptions {
     root: FernNavigation.RootNode;
@@ -123,6 +124,16 @@ export function createAlgoliaRecords({
             records.push(createApiReferenceRecordWebhook({ endpointBase, endpoint }));
             return;
         }
+    });
+
+    const distinctNodes = new Set<string>();
+    [...collector.slugMap.values()].forEach((node) => {
+        if (distinctNodes.has(node.id)) {
+            return;
+        }
+        distinctNodes.add(node.id);
+        const base = createBaseRecord({ node, parents: collector.getParents(node.id) ?? [], domain, org_id, authed });
+        records.push(createNavigationRecord({ base, node_type: node.type }));
     });
 
     // remove all undefined values

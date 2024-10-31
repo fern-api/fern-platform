@@ -136,7 +136,7 @@ function ParameterHitContent({ hit }: { hit: MarkRequired<ParameterRecord, "type
     return <div>{hit.parameter_name}</div>;
 }
 
-export function HitContent({ hit }: { hit: MarkRequired<AlgoliaRecordHit, "type"> }): ReactElement {
+export function HitContent({ hit }: { hit: MarkRequired<AlgoliaRecordHit, "type"> }): ReactElement | false {
     switch (hit.type) {
         case "markdown":
             return <MarkdownHitContent hit={hit as MarkdownRecordHit} />;
@@ -146,6 +146,8 @@ export function HitContent({ hit }: { hit: MarkRequired<AlgoliaRecordHit, "type"
             return <ApiReferenceHitContent hit={hit as ApiReferenceRecordHit} />;
         case "parameter":
             return <ParameterHitContent hit={hit as MarkRequired<Hit<ParameterRecord>, "type">} />;
+        case "navigation":
+            return false;
         default:
             throw new UnreachableCaseError(hit);
     }

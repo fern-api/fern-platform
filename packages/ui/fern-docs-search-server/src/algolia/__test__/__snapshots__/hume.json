@@ -12,7 +12,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -35,7 +36,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -68,7 +70,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -101,7 +104,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -134,7 +138,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -167,7 +172,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -200,7 +206,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -223,7 +230,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -245,7 +253,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -278,7 +287,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -311,7 +321,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -344,7 +355,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -377,7 +389,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -400,7 +413,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -433,7 +447,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -466,7 +481,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -499,7 +515,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -550,7 +567,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -734,7 +752,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -757,7 +776,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -808,7 +828,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -851,7 +872,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -874,7 +896,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -941,7 +964,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1008,7 +1032,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1067,7 +1092,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1100,7 +1126,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1147,7 +1174,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1194,7 +1222,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1227,7 +1256,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1282,7 +1312,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1337,7 +1368,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1360,7 +1392,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1393,7 +1426,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1426,7 +1460,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1449,7 +1484,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1482,7 +1518,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1529,7 +1566,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1584,7 +1622,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1631,7 +1670,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1678,7 +1718,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1715,7 +1756,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1762,7 +1804,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1809,7 +1852,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1846,7 +1890,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1879,7 +1924,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1902,7 +1948,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1935,7 +1982,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -1968,7 +2016,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2007,7 +2056,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2044,7 +2094,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2076,7 +2127,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2098,7 +2150,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2131,7 +2184,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2168,7 +2222,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2205,7 +2260,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2238,7 +2294,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2271,7 +2328,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2293,7 +2351,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2326,7 +2385,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2359,7 +2419,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2466,7 +2527,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2503,7 +2565,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2540,7 +2603,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2562,7 +2626,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2595,7 +2660,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2628,7 +2694,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2661,7 +2728,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2698,7 +2766,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2753,7 +2822,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2800,7 +2870,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2847,7 +2918,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2906,7 +2978,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2953,7 +3026,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -2986,7 +3060,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3008,7 +3083,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3031,7 +3107,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3087,7 +3164,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3183,7 +3261,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3205,7 +3284,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3238,7 +3318,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3271,7 +3352,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3304,7 +3386,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3326,7 +3409,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3347,7 +3431,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3380,7 +3465,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3413,7 +3499,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3446,7 +3533,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3483,7 +3571,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3520,7 +3609,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3553,7 +3643,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3574,7 +3665,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3607,7 +3699,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3640,7 +3733,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3673,7 +3767,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3706,7 +3801,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3761,7 +3857,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3783,7 +3880,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3820,7 +3918,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3857,7 +3956,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3894,7 +3994,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3931,7 +4032,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3964,7 +4066,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -3985,7 +4088,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -4018,7 +4122,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -4051,7 +4156,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -4072,7 +4178,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -4105,7 +4212,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -4138,7 +4246,8 @@
       }
     ],
     "tab": {
-      "title": "Documentation"
+      "title": "Documentation",
+      "pathname": "/docs"
     },
     "visible_by": [
       "role/everyone"
@@ -4166,7 +4275,8 @@
     "title": "Changelog",
     "breadcrumb": [],
     "tab": {
-      "title": "Changelog"
+      "title": "Changelog",
+      "pathname": "/changelog"
     },
     "visible_by": [
       "role/everyone"
@@ -4182,7 +4292,8 @@
     "title": "EVI API additions",
     "breadcrumb": [],
     "tab": {
-      "title": "Changelog"
+      "title": "Changelog",
+      "pathname": "/changelog"
     },
     "visible_by": [
       "role/everyone"
@@ -4219,7 +4330,8 @@
     "title": "EVI API modifications",
     "breadcrumb": [],
     "tab": {
-      "title": "Changelog"
+      "title": "Changelog",
+      "pathname": "/changelog"
     },
     "visible_by": [
       "role/everyone"
@@ -4251,7 +4363,8 @@
     "title": "EVI API additions",
     "breadcrumb": [],
     "tab": {
-      "title": "Changelog"
+      "title": "Changelog",
+      "pathname": "/changelog"
     },
     "visible_by": [
       "role/everyone"
@@ -4283,7 +4396,8 @@
     "title": "EVI API modifications",
     "breadcrumb": [],
     "tab": {
-      "title": "Changelog"
+      "title": "Changelog",
+      "pathname": "/changelog"
     },
     "visible_by": [
       "role/everyone"
@@ -4315,7 +4429,8 @@
     "title": "EVI API additions",
     "breadcrumb": [],
     "tab": {
-      "title": "Changelog"
+      "title": "Changelog",
+      "pathname": "/changelog"
     },
     "visible_by": [
       "role/everyone"
@@ -4347,7 +4462,8 @@
     "title": "EVI API modifications",
     "breadcrumb": [],
     "tab": {
-      "title": "Changelog"
+      "title": "Changelog",
+      "pathname": "/changelog"
     },
     "visible_by": [
       "role/everyone"
@@ -4379,7 +4495,8 @@
     "title": "Bugs bashed",
     "breadcrumb": [],
     "tab": {
-      "title": "Changelog"
+      "title": "Changelog",
+      "pathname": "/changelog"
     },
     "visible_by": [
       "role/everyone"
@@ -4411,7 +4528,8 @@
     "title": "EVI API additions",
     "breadcrumb": [],
     "tab": {
-      "title": "Changelog"
+      "title": "Changelog",
+      "pathname": "/changelog"
     },
     "visible_by": [
       "role/everyone"
@@ -4443,7 +4561,8 @@
     "title": "Bugs bashed",
     "breadcrumb": [],
     "tab": {
-      "title": "Changelog"
+      "title": "Changelog",
+      "pathname": "/changelog"
     },
     "visible_by": [
       "role/everyone"
@@ -4475,7 +4594,8 @@
     "title": "EVI API additions",
     "breadcrumb": [],
     "tab": {
-      "title": "Changelog"
+      "title": "Changelog",
+      "pathname": "/changelog"
     },
     "visible_by": [
       "role/everyone"
@@ -4507,7 +4627,8 @@
     "title": "EVI API changes",
     "breadcrumb": [],
     "tab": {
-      "title": "Changelog"
+      "title": "Changelog",
+      "pathname": "/changelog"
     },
     "visible_by": [
       "role/everyone"
@@ -4539,7 +4660,8 @@
     "title": "Bugs bashed",
     "breadcrumb": [],
     "tab": {
-      "title": "Changelog"
+      "title": "Changelog",
+      "pathname": "/changelog"
     },
     "visible_by": [
       "role/everyone"
@@ -4580,7 +4702,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -4617,7 +4740,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -4654,7 +4778,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -4691,7 +4816,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -4728,7 +4854,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -4765,7 +4892,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -4802,7 +4930,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -4839,7 +4968,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -4876,7 +5006,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -4913,7 +5044,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -4950,7 +5082,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -4987,7 +5120,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5024,7 +5158,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5061,7 +5196,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5098,7 +5234,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5135,7 +5272,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5172,7 +5310,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5209,7 +5348,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5246,7 +5386,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5283,7 +5424,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5320,7 +5462,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5357,7 +5500,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5394,7 +5538,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5431,7 +5576,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5468,7 +5614,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5505,7 +5652,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5542,7 +5690,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5579,7 +5728,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5616,7 +5766,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5653,7 +5804,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5690,7 +5842,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5727,7 +5880,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5764,7 +5918,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5802,7 +5957,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5840,7 +5996,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5878,7 +6035,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5916,7 +6074,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5954,7 +6113,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -5992,7 +6152,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6029,7 +6190,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6067,7 +6229,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6105,7 +6268,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6143,7 +6307,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6181,7 +6346,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6219,7 +6385,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6257,7 +6424,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6295,7 +6463,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6333,7 +6502,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6371,7 +6541,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6409,7 +6580,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6447,7 +6619,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6485,7 +6658,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6523,7 +6697,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6561,7 +6736,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6599,7 +6775,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6637,7 +6814,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6675,7 +6853,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6713,7 +6892,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6751,7 +6931,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6789,7 +6970,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6827,7 +7009,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6865,7 +7048,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6903,7 +7087,8 @@
       }
     ],
     "tab": {
-      "title": "API Reference"
+      "title": "API Reference",
+      "pathname": "/reference"
     },
     "visible_by": [
       "role/everyone"
@@ -6923,5 +7108,2773 @@
     ],
     "default_environment_id": "Default",
     "type": "api-reference"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/",
+    "title": "Hume API",
+    "breadcrumb": [],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "root"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs",
+    "icon": "fa-solid fa-home",
+    "title": "Documentation",
+    "breadcrumb": [
+      {
+        "title": "Hume API",
+        "pathname": "/"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "tab"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/introduction",
+    "title": "Introduction",
+    "breadcrumb": [],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "section"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.welcome-to-hume-ai__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/intro",
+    "title": "Welcome to Hume AI",
+    "breadcrumb": [
+      {
+        "title": "Introduction",
+        "pathname": "/docs/introduction"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.api-key__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/introduction/api-key",
+    "title": "Getting your API key",
+    "breadcrumb": [
+      {
+        "title": "Introduction",
+        "pathname": "/docs/introduction"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.support__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/support",
+    "title": "Support",
+    "breadcrumb": [
+      {
+        "title": "Introduction",
+        "pathname": "/docs/introduction"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/empathic-voice-interface-evi",
+    "title": "Empathic Voice Interface (EVI)",
+    "breadcrumb": [],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "section"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.overview__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/empathic-voice-interface-evi/overview",
+    "title": "Overview",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/docs/empathic-voice-interface-evi"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.quickstart__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/empathic-voice-interface-evi/quickstart",
+    "title": "Quickstart",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/docs/empathic-voice-interface-evi"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.configuration__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/empathic-voice-interface-evi/configuration",
+    "title": "Configuration",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/docs/empathic-voice-interface-evi"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/empathic-voice-interface-evi/tool-use",
+    "title": "Tool use",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/docs/empathic-voice-interface-evi"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.phone-calling__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/empathic-voice-interface-evi/phone-calling",
+    "title": "Phone calling",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/docs/empathic-voice-interface-evi"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/empathic-voice-interface-evi/prompting",
+    "title": "Prompting guide",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/docs/empathic-voice-interface-evi"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/empathic-voice-interface-evi/custom-language-model",
+    "title": "Custom language model",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/docs/empathic-voice-interface-evi"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.faq__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/empathic-voice-interface-evi/faq",
+    "title": "FAQ",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/docs/empathic-voice-interface-evi"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement-api__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/expression-measurement-api",
+    "title": "Expression Measurement API",
+    "breadcrumb": [],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "section"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement-api.overview__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/expression-measurement-api/overview",
+    "title": "Overview",
+    "breadcrumb": [
+      {
+        "title": "Expression Measurement API",
+        "pathname": "/docs/expression-measurement-api"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement-api.rest__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/expression-measurement-api/rest",
+    "title": "Processing batches of media files",
+    "breadcrumb": [
+      {
+        "title": "Expression Measurement API",
+        "pathname": "/docs/expression-measurement-api"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement-api.websocket__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/expression-measurement-api/websocket",
+    "title": "Real-time measurement streaming",
+    "breadcrumb": [
+      {
+        "title": "Expression Measurement API",
+        "pathname": "/docs/expression-measurement-api"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement-api.faq__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/expression-measurement-api/faq",
+    "title": "FAQ",
+    "breadcrumb": [
+      {
+        "title": "Expression Measurement API",
+        "pathname": "/docs/expression-measurement-api"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.custom-models-api__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/custom-models-api",
+    "title": "Custom Models API",
+    "breadcrumb": [],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "section"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.custom-models-api.overview__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/custom-models-api/overview",
+    "title": "Overview",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/docs/custom-models-api"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.custom-models-api.creating-your-dataset__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/custom-models-api/creating-your-dataset",
+    "title": "Creating your dataset",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/docs/custom-models-api"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.custom-models-api.training-a-custom-model__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/custom-models-api/training-a-custom-model",
+    "title": "Training a custom model",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/docs/custom-models-api"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.custom-models-api.evaluating-a-custom-model__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/custom-models-api/evaluating-a-custom-model",
+    "title": "Evaluating your custom model",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/docs/custom-models-api"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.custom-models-api.faq__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/custom-models-api/faq",
+    "title": "FAQ",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/docs/custom-models-api"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/resources",
+    "title": "Resources",
+    "breadcrumb": [],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "section"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.billing__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/resources/billing",
+    "title": "Billing",
+    "breadcrumb": [
+      {
+        "title": "Resources",
+        "pathname": "/docs/resources"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.errors__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/resources/errors",
+    "title": "Errors",
+    "breadcrumb": [
+      {
+        "title": "Resources",
+        "pathname": "/docs/resources"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.science__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/resources/science",
+    "title": "About the science",
+    "breadcrumb": [
+      {
+        "title": "Resources",
+        "pathname": "/docs/resources"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.use-case-guidelines__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/resources/use-case-guidelines",
+    "title": "Use case guidelines",
+    "breadcrumb": [
+      {
+        "title": "Resources",
+        "pathname": "/docs/resources"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.privacy__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/docs/resources/privacy",
+    "title": "Privacy",
+    "breadcrumb": [
+      {
+        "title": "Resources",
+        "pathname": "/docs/resources"
+      }
+    ],
+    "tab": {
+      "title": "Documentation",
+      "pathname": "/docs"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference",
+    "icon": "fa-solid fa-file-contract",
+    "title": "API Reference",
+    "breadcrumb": [
+      {
+        "title": "Hume API",
+        "pathname": "/"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "tab"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi",
+    "title": "Empathic Voice Interface (EVI)",
+    "breadcrumb": [],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "apiReference"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/tools",
+    "title": "Tools",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "apiPackage"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.list-tools__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/tools/list-tools",
+    "title": "List tools",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Tools",
+        "pathname": "/reference/empathic-voice-interface-evi/tools"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.create-tool__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/tools/create-tool",
+    "title": "Create tool",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Tools",
+        "pathname": "/reference/empathic-voice-interface-evi/tools"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.list-tool-versions__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/tools/list-tool-versions",
+    "title": "List tool versions",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Tools",
+        "pathname": "/reference/empathic-voice-interface-evi/tools"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.create-tool-version__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/tools/create-tool-version",
+    "title": "Create tool version",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Tools",
+        "pathname": "/reference/empathic-voice-interface-evi/tools"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.delete-tool__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/tools/delete-tool",
+    "title": "Delete tool",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Tools",
+        "pathname": "/reference/empathic-voice-interface-evi/tools"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.update-tool-name__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/tools/update-tool-name",
+    "title": "Update tool name",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Tools",
+        "pathname": "/reference/empathic-voice-interface-evi/tools"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.get-tool-version__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/tools/get-tool-version",
+    "title": "Get tool version",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Tools",
+        "pathname": "/reference/empathic-voice-interface-evi/tools"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.delete-tool-version__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/tools/delete-tool-version",
+    "title": "Delete tool version",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Tools",
+        "pathname": "/reference/empathic-voice-interface-evi/tools"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.update-tool-description__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/tools/update-tool-description",
+    "title": "Update tool description",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Tools",
+        "pathname": "/reference/empathic-voice-interface-evi/tools"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/prompts",
+    "title": "Prompts",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "apiPackage"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.list-prompts__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/prompts/list-prompts",
+    "title": "List prompts",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Prompts",
+        "pathname": "/reference/empathic-voice-interface-evi/prompts"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.create-prompt__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/prompts/create-prompt",
+    "title": "Create prompt",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Prompts",
+        "pathname": "/reference/empathic-voice-interface-evi/prompts"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.list-prompt-versions__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/prompts/list-prompt-versions",
+    "title": "List prompt versions",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Prompts",
+        "pathname": "/reference/empathic-voice-interface-evi/prompts"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.create-prompt-verison__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/prompts/create-prompt-verison",
+    "title": "Create prompt version",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Prompts",
+        "pathname": "/reference/empathic-voice-interface-evi/prompts"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.delete-prompt__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/prompts/delete-prompt",
+    "title": "Delete prompt",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Prompts",
+        "pathname": "/reference/empathic-voice-interface-evi/prompts"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.update-prompt-name__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/prompts/update-prompt-name",
+    "title": "Update prompt name",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Prompts",
+        "pathname": "/reference/empathic-voice-interface-evi/prompts"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.get-prompt-version__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/prompts/get-prompt-version",
+    "title": "Get prompt version",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Prompts",
+        "pathname": "/reference/empathic-voice-interface-evi/prompts"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.delete-prompt-version__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/prompts/delete-prompt-version",
+    "title": "Delete prompt version",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Prompts",
+        "pathname": "/reference/empathic-voice-interface-evi/prompts"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.update-prompt-description__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/prompts/update-prompt-description",
+    "title": "Update prompt description",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Prompts",
+        "pathname": "/reference/empathic-voice-interface-evi/prompts"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/configs",
+    "title": "Configs",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "apiPackage"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.list-configs__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/configs/list-configs",
+    "title": "List configs",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Configs",
+        "pathname": "/reference/empathic-voice-interface-evi/configs"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.create-config__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/configs/create-config",
+    "title": "Create config",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Configs",
+        "pathname": "/reference/empathic-voice-interface-evi/configs"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.list-config-versions__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/configs/list-config-versions",
+    "title": "List config versions",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Configs",
+        "pathname": "/reference/empathic-voice-interface-evi/configs"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.create-config-version__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/configs/create-config-version",
+    "title": "Create config version",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Configs",
+        "pathname": "/reference/empathic-voice-interface-evi/configs"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.delete-config__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/configs/delete-config",
+    "title": "Delete config",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Configs",
+        "pathname": "/reference/empathic-voice-interface-evi/configs"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.update-config-name__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/configs/update-config-name",
+    "title": "Update config name",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Configs",
+        "pathname": "/reference/empathic-voice-interface-evi/configs"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.get-config-version__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/configs/get-config-version",
+    "title": "Get config version",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Configs",
+        "pathname": "/reference/empathic-voice-interface-evi/configs"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.delete-config-version__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/configs/delete-config-version",
+    "title": "Delete config version",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Configs",
+        "pathname": "/reference/empathic-voice-interface-evi/configs"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.update-config-description__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/configs/update-config-description",
+    "title": "Update config description",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Configs",
+        "pathname": "/reference/empathic-voice-interface-evi/configs"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chats__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/chats",
+    "title": "Chats",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "apiPackage"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chats.endpoint_chats.list-chats__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/chats/list-chats",
+    "title": "List chats",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Chats",
+        "pathname": "/reference/empathic-voice-interface-evi/chats"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chats.endpoint_chats.list-chat-events__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/chats/list-chat-events",
+    "title": "List chat events",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Chats",
+        "pathname": "/reference/empathic-voice-interface-evi/chats"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chatGroups__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/chat-groups",
+    "title": "Chat Groups",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "apiPackage"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chatGroups.endpoint_chatGroups.list-chat-groups__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/chat-groups/list-chat-groups",
+    "title": "List chat_groups",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Chat Groups",
+        "pathname": "/reference/empathic-voice-interface-evi/chat-groups"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chatGroups.endpoint_chatGroups.list-chat-group-events__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/chat-groups/list-chat-group-events",
+    "title": "List chat events from a specific chat_group",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Chat Groups",
+        "pathname": "/reference/empathic-voice-interface-evi/chat-groups"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chat__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/chat",
+    "title": "Chat",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "apiPackage"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chat.subpackage_chat.chat__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/empathic-voice-interface-evi/chat/chat",
+    "title": "Chat",
+    "breadcrumb": [
+      {
+        "title": "Empathic Voice Interface (EVI)",
+        "pathname": "/reference/empathic-voice-interface-evi"
+      },
+      {
+        "title": "Chat",
+        "pathname": "/reference/empathic-voice-interface-evi/chat"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "webSocket"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.expression-measurement-api__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/expression-measurement-api",
+    "title": "Expression Measurement API",
+    "breadcrumb": [],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "apiReference"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.expression-measurement-api.subpackage_batch__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/expression-measurement-api/batch",
+    "title": "Batch",
+    "breadcrumb": [
+      {
+        "title": "Expression Measurement API",
+        "pathname": "/reference/expression-measurement-api"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "apiPackage"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.list-jobs__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/expression-measurement-api/batch/list-jobs",
+    "title": "List jobs",
+    "breadcrumb": [
+      {
+        "title": "Expression Measurement API",
+        "pathname": "/reference/expression-measurement-api"
+      },
+      {
+        "title": "Batch",
+        "pathname": "/reference/expression-measurement-api/batch"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.start-inference-job__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/expression-measurement-api/batch/start-inference-job",
+    "title": "Start inference job",
+    "breadcrumb": [
+      {
+        "title": "Expression Measurement API",
+        "pathname": "/reference/expression-measurement-api"
+      },
+      {
+        "title": "Batch",
+        "pathname": "/reference/expression-measurement-api/batch"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.get-job-details__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/expression-measurement-api/batch/get-job-details",
+    "title": "Get job details",
+    "breadcrumb": [
+      {
+        "title": "Expression Measurement API",
+        "pathname": "/reference/expression-measurement-api"
+      },
+      {
+        "title": "Batch",
+        "pathname": "/reference/expression-measurement-api/batch"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.get-job-predictions__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/expression-measurement-api/batch/get-job-predictions",
+    "title": "Get job predictions",
+    "breadcrumb": [
+      {
+        "title": "Expression Measurement API",
+        "pathname": "/reference/expression-measurement-api"
+      },
+      {
+        "title": "Batch",
+        "pathname": "/reference/expression-measurement-api/batch"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.get-job-artifacts__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/expression-measurement-api/batch/get-job-artifacts",
+    "title": "Get job artifacts",
+    "breadcrumb": [
+      {
+        "title": "Expression Measurement API",
+        "pathname": "/reference/expression-measurement-api"
+      },
+      {
+        "title": "Batch",
+        "pathname": "/reference/expression-measurement-api/batch"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.start-inference-job-from-local-file__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/expression-measurement-api/batch/start-inference-job-from-local-file",
+    "title": "Start inference job from local file",
+    "breadcrumb": [
+      {
+        "title": "Expression Measurement API",
+        "pathname": "/reference/expression-measurement-api"
+      },
+      {
+        "title": "Batch",
+        "pathname": "/reference/expression-measurement-api/batch"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.expression-measurement-api.subpackage_stream__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/expression-measurement-api/stream",
+    "title": "Stream",
+    "breadcrumb": [
+      {
+        "title": "Expression Measurement API",
+        "pathname": "/reference/expression-measurement-api"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "apiPackage"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.expression-measurement-api.subpackage_stream.subpackage_stream.stream__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/expression-measurement-api/stream/stream",
+    "title": "Stream",
+    "breadcrumb": [
+      {
+        "title": "Expression Measurement API",
+        "pathname": "/reference/expression-measurement-api"
+      },
+      {
+        "title": "Stream",
+        "pathname": "/reference/expression-measurement-api/stream"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "webSocket"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api",
+    "title": "Custom Models API",
+    "breadcrumb": [],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "apiReference"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_files__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/files",
+    "title": "Files",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "apiPackage"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.list-files__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/files/list-files",
+    "title": "List files",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Files",
+        "pathname": "/reference/custom-models-api/files"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.create-files__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/files/create-files",
+    "title": "Create files",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Files",
+        "pathname": "/reference/custom-models-api/files"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.upload-file__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/files/upload-file",
+    "title": "Upload file",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Files",
+        "pathname": "/reference/custom-models-api/files"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.get-file__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/files/get-file",
+    "title": "Get file",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Files",
+        "pathname": "/reference/custom-models-api/files"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.delete-file__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/files/delete-file",
+    "title": "Delete file",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Files",
+        "pathname": "/reference/custom-models-api/files"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.update-file-name__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/files/update-file-name",
+    "title": "Update file name",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Files",
+        "pathname": "/reference/custom-models-api/files"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.get-file-predictions__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/files/get-file-predictions",
+    "title": "Get file predictions",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Files",
+        "pathname": "/reference/custom-models-api/files"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_datasets__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/datasets",
+    "title": "Datasets",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "apiPackage"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-datasets__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/datasets/list-datasets",
+    "title": "List datasets",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Datasets",
+        "pathname": "/reference/custom-models-api/datasets"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.create-dataset__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/datasets/create-dataset",
+    "title": "Create dataset",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Datasets",
+        "pathname": "/reference/custom-models-api/datasets"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.get-dataset__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/datasets/get-dataset",
+    "title": "Get dataset",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Datasets",
+        "pathname": "/reference/custom-models-api/datasets"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.create-dataset-version__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/datasets/create-dataset-version",
+    "title": "Create dataset version",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Datasets",
+        "pathname": "/reference/custom-models-api/datasets"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.delete-dataset__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/datasets/delete-dataset",
+    "title": "Delete dataset",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Datasets",
+        "pathname": "/reference/custom-models-api/datasets"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-dataset-versions__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/datasets/list-dataset-versions",
+    "title": "List dataset versions",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Datasets",
+        "pathname": "/reference/custom-models-api/datasets"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-dataset-files__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/datasets/list-dataset-files",
+    "title": "List dataset files",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Datasets",
+        "pathname": "/reference/custom-models-api/datasets"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.get-dataset-version__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/datasets/get-dataset-version",
+    "title": "Get dataset version",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Datasets",
+        "pathname": "/reference/custom-models-api/datasets"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-dataset-version-files__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/datasets/list-dataset-version-files",
+    "title": "List dataset version files",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Datasets",
+        "pathname": "/reference/custom-models-api/datasets"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_models__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/models",
+    "title": "Models",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "apiPackage"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.list-models__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/models/list-models",
+    "title": "List models",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Models",
+        "pathname": "/reference/custom-models-api/models"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.get-model-details__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/models/get-model-details",
+    "title": "Get model details",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Models",
+        "pathname": "/reference/custom-models-api/models"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.update-model-name__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/models/update-model-name",
+    "title": "Update model name",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Models",
+        "pathname": "/reference/custom-models-api/models"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.list-model-versions__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/models/list-model-versions",
+    "title": "List model versions",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Models",
+        "pathname": "/reference/custom-models-api/models"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.get-model-version__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/models/get-model-version",
+    "title": "Get model version",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Models",
+        "pathname": "/reference/custom-models-api/models"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.update-model-description__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/models/update-model-description",
+    "title": "Update model description",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Models",
+        "pathname": "/reference/custom-models-api/models"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_jobs__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/jobs",
+    "title": "Jobs",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "apiPackage"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_jobs.endpoint_jobs.start-training-job__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/jobs/start-training-job",
+    "title": "Start training job",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Jobs",
+        "pathname": "/reference/custom-models-api/jobs"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.reference.reference.custom-models-api.subpackage_jobs.endpoint_jobs.start-custom-models-inference-job__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/reference/custom-models-api/jobs/start-custom-models-inference-job",
+    "title": "Start custom models inference job",
+    "breadcrumb": [
+      {
+        "title": "Custom Models API",
+        "pathname": "/reference/custom-models-api"
+      },
+      {
+        "title": "Jobs",
+        "pathname": "/reference/custom-models-api/jobs"
+      }
+    ],
+    "tab": {
+      "title": "API Reference",
+      "pathname": "/reference"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "endpoint"
+  },
+  {
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog__navigation_record",
+    "org_id": "hume",
+    "domain": "dev.hume.ai",
+    "pathname": "/changelog",
+    "title": "Changelog",
+    "breadcrumb": [],
+    "tab": {
+      "title": "Changelog",
+      "pathname": "/changelog"
+    },
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "type": "navigation",
+    "node_type": "page"
   }
 ]

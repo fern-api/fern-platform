@@ -25,8 +25,7 @@ export const SEARCHABLE_ATTRIBUTES = [
     "hierarchy.h6.title,hierarchy.h5.title,hierarchy.h4.title,hierarchy.h3.title,hierarchy.h2.title,hierarchy.h1.title",
 ] as const;
 
-// these are metadata fields that we do not want to include in the search hits:
-export const DISTINCT_FACET_ATTRIBUTES = ["org_id", "domain", "visible_by", "authed"] as const;
+export const DISTINCT_FACET_ATTRIBUTES = ["org_id", "domain", "visible_by", "authed", "type"] as const;
 
 export const BaseRecordSchema = z.object({
     objectID: z.string().describe("The unique identifier of this record"),
@@ -69,6 +68,11 @@ const HierarchySchema = z
     .describe(
         "The hierarchy of this record, within a markdown document. This will be useful for nesting markdown records under other markdown records",
     );
+
+export const NavigationRecordSchema = BaseRecordSchema.extend({
+    type: z.literal("navigation"),
+    node_type: z.string(),
+}).describe("A navigation record is a record that doesn't contain searchable content, but is useful for navigation");
 
 export const MarkdownRecordSchema = BaseRecordSchema.extend({
     type: z.literal("markdown"),
@@ -142,6 +146,7 @@ export const AlgoliaRecordSchema = z.discriminatedUnion("type", [
     ChangelogRecordSchema,
     ApiReferenceRecordSchema,
     ParameterRecordSchema,
+    NavigationRecordSchema,
 ]);
 
 export type BaseRecord = z.infer<typeof BaseRecordSchema>;
@@ -152,3 +157,4 @@ export type ApiReferenceRecord = z.infer<typeof ApiReferenceRecordSchema>;
 export type ParameterRecord = z.infer<typeof ParameterRecordSchema>;
 export type AlgoliaRecord = z.infer<typeof AlgoliaRecordSchema>;
 export type Hierarchy = z.infer<typeof HierarchySchema>;
+export type NavigationRecord = z.infer<typeof NavigationRecordSchema>;
