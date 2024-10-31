@@ -10,25 +10,26 @@ export function DesktopInstantSearchWrapper({ appId }: { appId: string }): React
 
     return (
         <>
-            <h1 className="text-2xl font-semibold">Search Demo</h1>
-            <select
-                className="border rounded-md p-2"
-                value={selectedDomain}
-                onChange={(e) => setSelectedDomain(e.target.value)}
-            >
-                <option value="buildwithfern.com">buildwithfern.com</option>
-                <option value="docs.cohere.com">docs.cohere.com</option>
-                <option value="workato.docs.buildwithfern.com">workato.docs.buildwithfern.com</option>
-                <option value="developers.webflow.com">developers.webflow.com</option>
-            </select>
+            <div className="flex gap-2 w-full">
+                <select
+                    className="border rounded-md p-2"
+                    value={selectedDomain}
+                    onChange={(e) => setSelectedDomain(e.target.value)}
+                >
+                    <option value="buildwithfern.com">buildwithfern.com</option>
+                    <option value="docs.cohere.com">docs.cohere.com</option>
+                    <option value="workato.docs.buildwithfern.com">workato.docs.buildwithfern.com</option>
+                    <option value="developers.webflow.com">developers.webflow.com</option>
+                </select>
+                <div className="flex-1" />
+                <form action={() => handleReindex(selectedDomain)}>
+                    <SubmitButton />
+                </form>
+            </div>
 
             <div className="w-[500px]">
                 <DesktopInstantSearchClient appId={appId} domain={selectedDomain} />
             </div>
-
-            <form action={() => handleReindex(selectedDomain)}>
-                <SubmitButton />
-            </form>
         </>
     );
 }
