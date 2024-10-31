@@ -1,5 +1,6 @@
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { COOKIE_FERN_DOCS_PREVIEW, HEADER_X_FERN_HOST } from "@fern-ui/fern-docs-utils";
+import type { IncomingHttpHeaders } from "http";
 import type { NextApiRequest } from "next";
 import { getNextPublicDocsDomain } from "./dev";
 import { cleanHost } from "./util";
@@ -44,14 +45,23 @@ export function getHostNodeStatic(): string | undefined {
     return undefined;
 }
 
-export function getHostNode(req: { url?: string }): string | undefined {
-    if (req.url != null) {
-        try {
-            return new URL(req.url, withDefaultProtocol(getHostNodeStatic())).host;
-        } catch (_e) {
-            // do nothing
-        }
+function getHostFromUrl(url: string | undefined): string | undefined {
+    if (url == null) {
+        return undefined;
     }
 
-    return getHostNodeStatic();
+    try {
+        return new URL(url, withDefaultProtocol(getHostNodeStatic())).host;
+    } catch (_e) {
+        return undefined;
+    }
+}
+
+export function getHostNode(req: { url?: string; headers?: IncomingHttpHeaders }): string | undefined {
+    const host = req.headers?.host;
+
+    const xFernHostHeader = req.headers?.[HEADER_X_FERN_HOST];
+    const xFernHost = typeof xFernHostHeader === "string" ? xFernHostHeader : undefined;
+
+    return xFernHost ?? host ?? getHostFromUrl(req.url) ?? getHostNodeStatic();
 }
