@@ -87,7 +87,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
             example?.exampleCall.responseBody != null
                 ? visitDiscriminatedUnion(example.exampleCall.responseBody)._visit<ReactNode>({
                       json: () =>
-                          example.globalError
+                          example.globalError || errorName
                               ? renderErrorTitle(errorName, example.exampleCall.responseStatusCode, exampleIndex)
                               : renderExampleTitle(
                                     example.exampleCall.responseStatusCode,
@@ -95,7 +95,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                                     exampleIndex,
                                 ),
                       filename: () =>
-                          example.globalError
+                          example.globalError || errorName
                               ? renderErrorTitle(errorName, example.exampleCall.responseStatusCode, exampleIndex)
                               : renderExampleTitle(
                                     example.exampleCall.responseStatusCode,

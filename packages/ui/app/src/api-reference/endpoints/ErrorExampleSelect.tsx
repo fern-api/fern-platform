@@ -86,11 +86,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                     }
                 >
                     <Select.Value>
-                        {getExampleTitle(
-                            selectedExample,
-                            selectedError?.examples?.[0]?.name ?? selectedError?.name,
-                            undefined,
-                        )}
+                        {getExampleTitle(selectedExample, errorName(selectedExample?.exampleCall), undefined)}
                     </Select.Value>
                 </FernButton>
             </Select.Trigger>
