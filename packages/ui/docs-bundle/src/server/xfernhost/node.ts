@@ -45,17 +45,23 @@ export function getHostNodeStatic(): string | undefined {
     return undefined;
 }
 
-export function getHostNode(req: { url?: string; headers?: IncomingHttpHeaders }): string | undefined {
-    let host = req.headers?.host;
-    if (host == null && req.url != null) {
-        try {
-            host = new URL(req.url, withDefaultProtocol(getHostNodeStatic())).host;
-        } catch (_e) {
-            // do nothing
-        }
+function getHostFromUrl(url: string | undefined): string | undefined {
+    if (url == null) {
+        return undefined;
     }
 
-    const xFernHost = req.headers?.[HEADER_X_FERN_HOST];
+    try {
+        return new URL(url, withDefaultProtocol(getHostNodeStatic())).host;
+    } catch (_e) {
+        return undefined;
+    }
+}
 
-    return typeof xFernHost === "string" ? xFernHost : host ?? getHostNodeStatic();
+export function getHostNode(req: { url?: string; headers?: IncomingHttpHeaders }): string | undefined {
+    const host = req.headers?.host;
+
+    const xFernHostHeader = req.headers?.[HEADER_X_FERN_HOST];
+    const xFernHost = typeof xFernHostHeader === "string" ? xFernHostHeader : undefined;
+
+    return xFernHost ?? host ?? getHostFromUrl(req.url) ?? getHostNodeStatic();
 }

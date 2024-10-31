@@ -28,13 +28,6 @@ export function getDocsDomainEdge(req: NextRequest): string {
 
 // use this for testing auth-based redirects on development and preview environments
 export function getHostEdge(req: NextRequest): string {
-    if (
-        process.env.NODE_ENV === "development" ||
-        (process.env.VERCEL_ENV === "preview" && req.cookies.has(COOKIE_FERN_DOCS_PREVIEW)) ||
-        process.env.VERCEL_ENV === "development"
-    ) {
-        return req.headers.get("host") ?? req.nextUrl.host;
-    }
     // if x-fern-host is set, assume it's proxied:
     return req.headers.get(HEADER_X_FERN_HOST) ?? req.headers.get("host") ?? req.nextUrl.host;
 }
