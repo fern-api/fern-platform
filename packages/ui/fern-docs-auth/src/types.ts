@@ -9,6 +9,7 @@ export const FernUserSchema = z.object({
             "The roles of the token (can be a string or an array of strings) which limits what content users can access",
         )
         .optional(),
+    api_key: z.string().optional().describe("For API Playground key injection"),
 });
 
 export type FernUser = z.infer<typeof FernUserSchema>;

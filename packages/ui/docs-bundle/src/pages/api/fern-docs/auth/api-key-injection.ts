@@ -1,3 +1,4 @@
+import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { OAuth2Client } from "@/server/auth/OAuth2Client";
 import { getAPIKeyInjectionConfig } from "@/server/auth/getApiKeyInjectionConfig";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
@@ -16,6 +17,19 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
     const domain = getDocsDomainEdge(req);
     const host = getHostEdge(req);
     const edgeConfig = await getAuthEdgeConfig(domain);
+
+    const fern_token = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
+
+    if (fern_token != null) {
+        const fernUser = await safeVerifyFernJWTConfig(fern_token, edgeConfig);
+        if (fernUser?.api_key != null) {
+            return NextResponse.json({
+                enabled: true,
+                authenticated: true,
+                access_token: fernUser.api_key,
+            });
+        }
+    }
 
     // assume that if the edge config is set for webflow, api key injection is always enabled
     if (edgeConfig?.type === "oauth2" && edgeConfig.partner === "webflow") {
