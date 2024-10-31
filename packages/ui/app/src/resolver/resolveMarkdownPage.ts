@@ -113,7 +113,7 @@ export async function resolveMarkdownPageWithoutApiRefs({
 
     let hasAside = false;
     // this is a hack to force the layout to reference for pages that contain an <Aside>
-    
+
     const parsing = typeof content === "string" ? "" : content.code;
     if (parsing.includes("ReferenceLayoutAside")) {
         frontmatter.layout = "reference";
