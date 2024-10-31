@@ -16,9 +16,10 @@ interface DesktopSearchBoxProps {
     placeholder: string;
     isFromSelection: boolean;
     translations?: SearchBoxTranslations;
+    disabled?: boolean;
 }
 
-export function DesktopSearchBox({ translations = {}, ...props }: DesktopSearchBoxProps): ReactElement {
+export function DesktopSearchBox({ translations = {}, disabled, ...props }: DesktopSearchBoxProps): ReactElement {
     const { searchInputLabel = "Search" } = translations;
 
     const { query, refine } = useSearchBox();
@@ -45,6 +46,7 @@ export function DesktopSearchBox({ translations = {}, ...props }: DesktopSearchB
                 className={props.inputClassName}
                 ref={props.inputRef}
                 autoFocus={props.autoFocus}
+                disabled={disabled}
                 autoComplete="off"
                 autoCorrect="off"
                 autoCapitalize="off"

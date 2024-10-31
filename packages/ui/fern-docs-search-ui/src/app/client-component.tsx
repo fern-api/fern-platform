@@ -5,7 +5,7 @@ import { createDefaultLinkComponent } from "@/components/shared/LinkComponent";
 import { ReactElement } from "react";
 import useSWR from "swr";
 
-export function DesktopInstantSearchClient({ appId, domain }: { appId: string; domain: string }): ReactElement {
+export function DesktopInstantSearchClient({ appId, domain }: { appId: string; domain: string }): ReactElement | null {
     const handleSubmit = ({ pathname, hash }: { pathname: string; hash: string }) => {
         window.open(`https://${domain}${pathname}${hash}`, "_blank", "noopener,noreferrer");
     };
@@ -17,12 +17,8 @@ export function DesktopInstantSearchClient({ appId, domain }: { appId: string; d
                 .then((data) => data.apiKey),
     );
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
     if (!apiKey) {
-        return <div>Error loading API key</div>;
+        return null;
     }
 
     return (
@@ -31,6 +27,7 @@ export function DesktopInstantSearchClient({ appId, domain }: { appId: string; d
             apiKey={apiKey}
             LinkComponent={createDefaultLinkComponent(domain)}
             onSubmit={handleSubmit}
+            disabled={isLoading || !apiKey}
         />
     );
 }

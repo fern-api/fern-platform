@@ -22,6 +22,7 @@ interface DesktopInstantSearchProps {
     apiKey: string;
     LinkComponent: LinkComponentType;
     onSubmit: (hit: { pathname: string; hash: string }) => void;
+    disabled?: boolean;
 }
 
 export function DesktopInstantSearch({
@@ -29,6 +30,7 @@ export function DesktopInstantSearch({
     apiKey,
     LinkComponent,
     onSubmit,
+    disabled,
 }: DesktopInstantSearchProps): ReactElement {
     const ref = useRef(algoliasearch(appId, apiKey));
     const formRef = useRef<HTMLFormElement>(null);
@@ -63,9 +65,10 @@ export function DesktopInstantSearch({
                     onClick={() => inputRef.current?.focus()}
                 >
                     <DesktopSearchBox
+                        disabled={disabled}
+                        autoFocus={false}
                         inputClassName="w-full focus:outline-none bg-transparent text-lg placeholder:text-[#969696] dark:placeholder:text-white/50"
                         placeholder="Search"
-                        autoFocus
                         inputRef={inputRef}
                         isFromSelection={false}
                     />
