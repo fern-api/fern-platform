@@ -1,6 +1,5 @@
 import {
     ObjectProperty,
-    PropertyKey,
     TypeDefinition,
     TypeId,
     TypeReference,
@@ -13,59 +12,13 @@ import { PlusCircle } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 import { renderTypeShorthandRoot } from "../../type-shorthand";
-import { WithLabel } from "../WithLabel";
 import { castToRecord, getEmptyValueForType, isExpandable } from "../utils";
-import { PlaygroundMapForm } from "./PlaygroundMapForm";
+import { PlaygroundAdditionalProperties } from "./PlaygroundAdditionalProperties";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
 
 const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown));
 
 const ADD_ALL_KEY = "__FERN_ADD_ALL__" as const;
-
-const ADDITIONAL_PROPERTIES_KEY_SHAPE = {
-    type: "primitive",
-    value: {
-        type: "string",
-        regex: undefined,
-        minLength: undefined,
-        maxLength: undefined,
-        default: undefined,
-    },
-} as const;
-
-const ADDITIONAL_PROPERTIES_VALUE_SHAPE = {
-    type: "primitive",
-    value: {
-        type: "string",
-        regex: undefined,
-        minLength: undefined,
-        maxLength: undefined,
-        default: undefined,
-    },
-} as const;
-
-// TODO: This is hardcoded for now, but change to dynamic type references, by setting value
-const ADDITIONAL_PROPERTIES_DEFAULT_SHAPE = {
-    type: "alias",
-    value: {
-        type: "optional",
-        shape: {
-            type: "alias",
-            value: {
-                type: "map",
-                keyShape: {
-                    type: "alias",
-                    value: ADDITIONAL_PROPERTIES_KEY_SHAPE,
-                },
-                valueShape: {
-                    type: "alias",
-                    value: ADDITIONAL_PROPERTIES_VALUE_SHAPE,
-                },
-            },
-        },
-        default: undefined,
-    },
-} as const;
 
 interface PlaygroundObjectPropertyFormProps {
     id: string;
@@ -114,7 +67,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
         <PlaygroundTypeReferenceForm
             id={id}
             property={property}
-            shape={unwrapReference(property.valueShape, types).shape}
+            shape={property.valueShape}
             onChange={handleChange}
             value={value}
             renderAsPanel={true}
@@ -158,47 +111,12 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
         [onChange],
     );
 
-    const [additionalProperties, setAdditionalProperties] = useState<unknown>({});
-
-    const onChangeAdditionalObjectProperty = useCallback(
-        (newValue: unknown) => {
-            onChange((oldValue: unknown) => {
-                const oldObject = castToRecord(oldValue);
-                const val = castToRecord(newValue);
-
-                if (newValue === undefined) {
-                    return Object.fromEntries(
-                        Object.entries(oldObject).filter(
-                            ([k]) => !Object.keys(castToRecord(additionalProperties)).includes(k),
-                        ),
-                    );
-                } else {
-                    if (
-                        JSON.stringify(Object.keys(castToRecord(additionalProperties))) !==
-                        JSON.stringify(Object.keys(val))
-                    ) {
-                        setAdditionalProperties(newValue);
-                    }
-
-                    return {
-                        ...Object.fromEntries(
-                            Object.entries(oldObject).filter(
-                                ([k]) => !Object.keys(castToRecord(additionalProperties)).includes(k),
-                            ),
-                        ),
-                        ...newValue,
-                    };
-                }
-            });
-        },
-        [onChange, additionalProperties],
-    );
-
     const shownProperties = useMemo(() => {
         return properties.filter((property) =>
             shouldShowProperty(property.valueShape, types, castToRecord(value)[property.key]),
         );
     }, [properties, types, value]);
+
     const hiddenProperties = useMemo(() => {
         return properties.filter(
             (property) => !shouldShowProperty(property.valueShape, types, castToRecord(value)[property.key]),
@@ -231,6 +149,31 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
         return options;
     }, [hiddenProperties, types]);
 
+    const handleAddAdditionalProperties = useCallback(
+        (key: string) => {
+            if (key === ADD_ALL_KEY) {
+                onChange((oldValue: unknown) => {
+                    const oldObject = castToRecord(oldValue);
+                    return hiddenProperties.reduce((acc, property) => {
+                        const newValue = getEmptyValueForType(unwrapReference(property.valueShape, types).shape, types);
+                        return { ...acc, [property.key]: newValue };
+                    }, oldObject);
+                });
+                return;
+            }
+
+            const property = hiddenProperties.find((p) => p.key === key);
+            if (!property) {
+                return;
+            }
+            onChangeObjectProperty(
+                property.key,
+                getEmptyValueForType(unwrapReference(property.valueShape, types).shape, types) ?? "",
+            );
+        },
+        [hiddenProperties, onChange, onChangeObjectProperty, types],
+    );
+
     return (
         <div
             className={cn("flex-1 shrink min-w-0", {
@@ -258,33 +201,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
             )}
 
             {hiddenProperties.length > 0 && (
-                <FernDropdown
-                    options={hiddenPropertiesOptions}
-                    onValueChange={(key) => {
-                        if (key === ADD_ALL_KEY) {
-                            onChange((oldValue: unknown) => {
-                                const oldObject = castToRecord(oldValue);
-                                return hiddenProperties.reduce((acc, property) => {
-                                    const newValue = getEmptyValueForType(
-                                        unwrapReference(property.valueShape, types).shape,
-                                        types,
-                                    );
-                                    return { ...acc, [property.key]: newValue };
-                                }, oldObject);
-                            });
-                            return;
-                        }
-
-                        const property = hiddenProperties.find((p) => p.key === key);
-                        if (!property) {
-                            return;
-                        }
-                        onChangeObjectProperty(
-                            property.key,
-                            getEmptyValueForType(unwrapReference(property.valueShape, types).shape, types) ?? "",
-                        );
-                    }}
-                >
+                <FernDropdown options={hiddenPropertiesOptions} onValueChange={handleAddAdditionalProperties}>
                     <FernButton
                         text={
                             <span>
@@ -302,33 +219,13 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
             )}
 
             {extraProperties != null && (
-                <div className={cn("flex-1 shrink min-w-0 mt-8")}>
-                    <WithLabel
-                        property={{
-                            key: PropertyKey("Optional Extra Properties"),
-                            valueShape: ADDITIONAL_PROPERTIES_DEFAULT_SHAPE,
-                            description: undefined,
-                            availability: undefined,
-                        }}
-                        value={"Optional Extra Properties"}
-                        onRemove={() => onChangeAdditionalObjectProperty(undefined)}
-                        types={types}
-                    >
-                        <PlaygroundMapForm
-                            id="extraProperties"
-                            keyShape={ADDITIONAL_PROPERTIES_KEY_SHAPE}
-                            valueShape={ADDITIONAL_PROPERTIES_VALUE_SHAPE}
-                            onChange={onChangeAdditionalObjectProperty}
-                            value={Object.keys(castToRecord(value)).reduce((acc: Record<string, unknown>, key) => {
-                                if (!properties.some((p) => p.key === key)) {
-                                    acc[key] = castToRecord(value)[key];
-                                }
-                                return acc;
-                            }, {})}
-                            types={types}
-                        />
-                    </WithLabel>
-                </div>
+                <PlaygroundAdditionalProperties
+                    onChange={onChange}
+                    properties={properties}
+                    extraProperties={extraProperties}
+                    value={value}
+                    types={types}
+                />
             )}
         </div>
     );

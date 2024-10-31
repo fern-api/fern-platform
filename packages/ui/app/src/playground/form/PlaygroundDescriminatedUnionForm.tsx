@@ -70,7 +70,10 @@ export const PlaygroundDiscriminatedUnionForm = memo<PlaygroundDiscriminatedUnio
         (variant) => variant.discriminantValue === selectedVariantKey,
     );
 
-    const properties = selectedVariant != null ? unwrapObjectType(selectedVariant, types).properties : [];
+    const properties = useMemo(
+        () => (selectedVariant != null ? unwrapObjectType(selectedVariant, types).properties : []),
+        [selectedVariant, types],
+    );
 
     return (
         <div className="w-full">

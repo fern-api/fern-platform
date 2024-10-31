@@ -1,5 +1,6 @@
 import { FernUserSchema, type AuthEdgeConfig, type FernUser } from "@fern-ui/fern-docs-auth";
 import { SignJWT, jwtVerify } from "jose";
+import { getJwtSecretKey } from "./workos";
 
 // "user" is reserved for workos
 
@@ -53,13 +54,5 @@ export async function safeVerifyFernJWTConfig(
 const encoder = new TextEncoder();
 
 function getJwtTokenSecret(secret?: string): Uint8Array {
-    if (secret == null) {
-        secret = process.env.JWT_SECRET_KEY;
-    }
-
-    if (secret != null) {
-        return encoder.encode(secret);
-    }
-
-    throw new Error("JWT_SECRET_KEY is not set");
+    return encoder.encode(secret ?? getJwtSecretKey());
 }

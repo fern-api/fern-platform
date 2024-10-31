@@ -1,7 +1,8 @@
 import { OAuth2Client } from "@/server/auth/OAuth2Client";
 import { getAPIKeyInjectionConfig } from "@/server/auth/getApiKeyInjectionConfig";
-import { withSecureCookie } from "@/server/auth/withSecure";
-import { getDocsDomainEdge } from "@/server/xfernhost/edge";
+import { withSecureCookie } from "@/server/auth/with-secure-cookie";
+import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { APIKeyInjectionConfig, OryAccessTokenSchema } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
@@ -13,6 +14,7 @@ export const runtime = "edge";
 
 export default async function handler(req: NextRequest): Promise<NextResponse<APIKeyInjectionConfig>> {
     const domain = getDocsDomainEdge(req);
+    const host = getHostEdge(req);
     const edgeConfig = await getAuthEdgeConfig(domain);
 
     // assume that if the edge config is set for webflow, api key injection is always enabled
@@ -46,7 +48,11 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
     if (config.enabled && config.authenticated) {
         const expires = config.exp != null ? new Date(config.exp * 1000) : undefined;
         if (fernToken != null) {
-            response.cookies.set(COOKIE_FERN_TOKEN, fernToken, withSecureCookie({ expires }));
+            response.cookies.set(
+                COOKIE_FERN_TOKEN,
+                fernToken,
+                withSecureCookie(withDefaultProtocol(host), { expires }),
+            );
         }
 
         let access_token = config.access_token;
@@ -74,9 +80,17 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
             }
         }
 
-        response.cookies.set("access_token", access_token, withSecureCookie({ expires: exp }));
+        response.cookies.set(
+            "access_token",
+            access_token,
+            withSecureCookie(withDefaultProtocol(host), { expires: exp }),
+        );
         if (refresh_token != null) {
-            response.cookies.set("refresh_token", refresh_token, withSecureCookie({ expires }));
+            response.cookies.set(
+                "refresh_token",
+                refresh_token,
+                withSecureCookie(withDefaultProtocol(host), { expires }),
+            );
         }
     }
     return response;

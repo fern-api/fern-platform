@@ -7,9 +7,13 @@ import { AuthState, getAuthState } from "./getAuthState";
  * @param request - the request to check the headers / cookies
  * @param pathname - the pathname to check the auth config against. The pathname MUST be provided in the middleware.
  */
-export async function getAuthStateEdge(request: NextRequest, pathname?: string): Promise<AuthState> {
+export async function getAuthStateEdge(
+    request: NextRequest,
+    pathname?: string,
+    setFernToken?: (token: string) => void,
+): Promise<AuthState> {
     const domain = getDocsDomainEdge(request);
     const host = getHostEdge(request);
     const fern_token = request.cookies.get(COOKIE_FERN_TOKEN)?.value;
-    return getAuthState(domain, host, fern_token, pathname);
+    return getAuthState(domain, host, fern_token, pathname, undefined, setFernToken);
 }
