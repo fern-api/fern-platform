@@ -33,7 +33,8 @@ export function getHostEdge(req: NextRequest): string {
         (process.env.VERCEL_ENV === "preview" && req.cookies.has(COOKIE_FERN_DOCS_PREVIEW)) ||
         process.env.VERCEL_ENV === "development"
     ) {
-        return req.nextUrl.host;
+        return req.headers.get("host") ?? req.nextUrl.host;
     }
-    return getDocsDomainEdge(req);
+    // if x-fern-host is set, assume it's proxied:
+    return req.headers.get(HEADER_X_FERN_HOST) ?? req.headers.get("host") ?? req.nextUrl.host;
 }

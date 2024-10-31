@@ -1,3 +1,4 @@
+import { withDeleteCookie } from "@/server/auth/with-secure-cookie";
 import { revokeSessionForToken } from "@/server/auth/workos-session";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
@@ -30,8 +31,8 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         logoutUrl ?? safeUrl(req.nextUrl.searchParams.get("state")) ?? safeUrl(withDefaultProtocol(getHostEdge(req)));
 
     const res = redirectLocation ? NextResponse.redirect(redirectLocation) : NextResponse.next();
-    res.cookies.delete(COOKIE_FERN_TOKEN);
-    res.cookies.delete(COOKIE_ACCESS_TOKEN);
-    res.cookies.delete(COOKIE_REFRESH_TOKEN);
+    res.cookies.delete(withDeleteCookie(COOKIE_FERN_TOKEN, withDefaultProtocol(getHostEdge(req))));
+    res.cookies.delete(withDeleteCookie(COOKIE_ACCESS_TOKEN, withDefaultProtocol(getHostEdge(req))));
+    res.cookies.delete(withDeleteCookie(COOKIE_REFRESH_TOKEN, withDefaultProtocol(getHostEdge(req))));
     return res;
 }
