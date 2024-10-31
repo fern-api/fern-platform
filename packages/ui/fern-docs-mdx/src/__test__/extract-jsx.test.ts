@@ -1,4 +1,4 @@
-import { toTree } from "../parse.js";
+import { toTree } from "../parse";
 
 describe("extractJsx", () => {
     it("ignores html elements", () => {

@@ -1,9 +1,9 @@
 import GithubSlugger from "github-slugger";
 import type { Root } from "mdast";
 import { visit } from "unist-util-visit";
-import { extractAnchorFromHeadingText } from "./handlers/custom-headings.js";
-import { mdastToString } from "./mdast-utils/mdast-to-string.js";
-import { getPosition } from "./position.js";
+import { extractAnchorFromHeadingText } from "./handlers/custom-headings";
+import { mdastToString } from "./mdast-utils/mdast-to-string";
+import { getPosition } from "./position";
 
 export interface HeadingMetadata {
     depth: 1 | 2 | 3 | 4 | 5 | 6;

@@ -1,4 +1,4 @@
-import { splitMarkdownIntoSections } from "../split-into-sections.js";
+import { splitMarkdownIntoSections } from "../split-into-sections";
 
 describe("chunk", () => {
     it("should chunk", () => {

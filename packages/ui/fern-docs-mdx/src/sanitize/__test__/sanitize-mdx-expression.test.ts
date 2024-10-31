@@ -1,4 +1,4 @@
-import { sanitizeMdxExpression } from "../sanitize-mdx-expression.js";
+import { sanitizeMdxExpression } from "../sanitize-mdx-expression";
 
 describe("sanitizeMdxExpression", () => {
     it("should escape base cases", () => {

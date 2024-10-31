@@ -1,6 +1,6 @@
 import type { MdxJsxAttribute } from "mdast-util-mdx";
-import { isMdxJsxAttributeValueExpression } from "./is-mdx-jsx-attr.js";
-import { unknownToEstreeExpression } from "./unknown-to-estree-expression.js";
+import { isMdxJsxAttributeValueExpression } from "./is-mdx-jsx-attr";
+import { unknownToEstreeExpression } from "./unknown-to-estree-expression";
 
 export function unknownToMdxJsxAttributeValue(value: unknown): MdxJsxAttribute["value"] {
     if (typeof value === "string" || value == null) {

@@ -1,3 +1,3 @@
-export * from "./mdast-from-markdown.js";
-export * from "./mdast-to-markdown.js";
-export * from "./mdast-to-string.js";
+export * from "./mdast-from-markdown";
+export * from "./mdast-to-markdown";
+export * from "./mdast-to-string";

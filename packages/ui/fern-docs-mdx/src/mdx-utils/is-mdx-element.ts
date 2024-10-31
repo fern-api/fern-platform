@@ -1,6 +1,6 @@
 import type { Node as HastNode } from "hast";
 import type { Node as MdastNode } from "mdast";
-import type { MdxJsxElement, MdxJsxElementHast } from "../declarations.js";
+import type { MdxJsxElement, MdxJsxElementHast } from "../declarations";
 
 export function isMdxJsxElement(node: MdastNode): node is MdxJsxElement {
     return node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement";

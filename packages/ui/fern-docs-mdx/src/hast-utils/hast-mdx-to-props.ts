@@ -2,7 +2,7 @@ import type { ElementContent } from "hast";
 import { toEstree } from "hast-util-to-estree";
 import { h } from "hastscript";
 import type { MdxJsxAttribute, MdxJsxAttributeValueExpression, MdxJsxExpressionAttribute } from "mdast-util-mdx";
-import type { MdxJsxElementHast } from "../declarations.js";
+import type { MdxJsxElementHast } from "../declarations";
 
 interface MdxJsxElementHastAttributes {
     /**

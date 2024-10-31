@@ -1,5 +1,5 @@
-import { mdastToString } from "../mdast-utils/mdast-to-string.js";
-import { toTree } from "../parse.js";
+import { mdastToString } from "../mdast-utils/mdast-to-string";
+import { toTree } from "../parse";
 
 /**
  * Strips the markdown of all formatting and returns a plain string.

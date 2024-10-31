@@ -2,13 +2,13 @@ import type { Root as HastRoot } from "hast";
 import type { Root as MdastRoot } from "mdast";
 import { toHast } from "mdast-util-to-hast";
 import rehypeSlug from "rehype-slug";
-import { customHeadingHandler } from "./handlers/custom-headings.js";
-import { mdastFromMarkdown } from "./mdast-utils/mdast-from-markdown.js";
-import { extractJsx } from "./mdx-utils/extract-jsx.js";
-import { remarkMarkAndUnravel } from "./plugins/remark-mark-and-unravel.js";
-import { remarkSanitizeAcorn } from "./plugins/remark-sanitize-acorn.js";
-import { sanitizeBreaks } from "./sanitize/sanitize-breaks.js";
-import { sanitizeMdxExpression } from "./sanitize/sanitize-mdx-expression.js";
+import { customHeadingHandler } from "./handlers/custom-headings";
+import { mdastFromMarkdown } from "./mdast-utils/mdast-from-markdown";
+import { extractJsx } from "./mdx-utils/extract-jsx";
+import { remarkMarkAndUnravel } from "./plugins/remark-mark-and-unravel";
+import { remarkSanitizeAcorn } from "./plugins/remark-sanitize-acorn";
+import { sanitizeBreaks } from "./sanitize/sanitize-breaks";
+import { sanitizeMdxExpression } from "./sanitize/sanitize-mdx-expression";
 
 const MDX_NODE_TYPES = [
     "mdxFlowExpression",

@@ -1,8 +1,8 @@
 import type { Root } from "hast";
 import { visit } from "unist-util-visit";
-import { parseStringStyle } from "../hast-utils/parse-string-style.js";
-import { isMdxJsxElementHast } from "../mdx-utils/is-mdx-element.js";
-import { unknownToMdxJsxAttribute } from "../mdx-utils/unknown-to-mdx-jsx-attr.js";
+import { parseStringStyle } from "../hast-utils/parse-string-style";
+import { isMdxJsxElementHast } from "../mdx-utils/is-mdx-element";
+import { unknownToMdxJsxAttribute } from "../mdx-utils/unknown-to-mdx-jsx-attr";
 
 /**
  * Handles cases where customer is migrating from md w/ html to mdx w/ jsx
