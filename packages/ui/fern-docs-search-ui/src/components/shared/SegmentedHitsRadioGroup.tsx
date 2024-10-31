@@ -1,4 +1,5 @@
-import { useDeepCompareEffect, useEventCallback } from "@fern-ui/react-commons";
+import { useDeepCompareEffect } from "@/hooks/useDeepCompareEffect";
+import { useEventCallback } from "@/hooks/useEventCallback";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { last } from "es-toolkit/array";
 import { ReactElement, ReactNode, RefObject, useEffect, useState } from "react";

@@ -20,12 +20,7 @@
       "@/*": ["./src/*"]
     }
   },
-  "references": [
-    { "path": "./tsconfig.server.json" },
-    { "path": "../fern-docs-search-server" },
-    { "path": "../fern-http-method-tag" },
-    { "path": "../../commons/react/react-commons" }
-  ],
+  "references": [{ "path": "./tsconfig.server.json" }, { "path": "../fern-http-method-tag" }],
   "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "src/server/**/*"]
 }
