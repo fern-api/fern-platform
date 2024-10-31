@@ -58,7 +58,7 @@ function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
                 attribute={hit._highlightResult?.level_title ? "level_title" : "page_title"}
                 hit={hit}
                 classNames={{
-                    highlighted: "font-bold bg-transparent",
+                    highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
                 }}
             />
             <HierarchyBreadcrumb pageTitle={hit.page_title} hierarchy={hit.hierarchy} level={hit.level} />
@@ -67,7 +67,7 @@ function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
                 hit={hit}
                 className="text-sm leading-snug line-clamp-2 text-black/50 dark:text-white/50"
                 classNames={{
-                    highlighted: "font-bold bg-transparent",
+                    highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
                 }}
             />
         </div>
@@ -91,7 +91,7 @@ function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement
                 hit={hit}
                 className="text-sm leading-snug line-clamp-2 text-black/50 dark:text-white/50"
                 classNames={{
-                    highlighted: "font-bold bg-transparent",
+                    highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
                 }}
             />
         </div>
@@ -115,7 +115,7 @@ function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactE
                 attribute="page_title"
                 hit={hit}
                 classNames={{
-                    highlighted: "font-bold bg-transparent",
+                    highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
                 }}
             />
             <div className="flex items-baseline gap-1">
@@ -130,7 +130,7 @@ function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactE
                     hit={hit}
                     className="text-sm leading-snug line-clamp-2"
                     classNames={{
-                        highlighted: "font-bold bg-transparent",
+                        highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
                     }}
                 />
             )}
