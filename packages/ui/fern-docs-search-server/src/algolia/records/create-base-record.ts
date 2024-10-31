@@ -48,9 +48,26 @@ export function createBaseRecord({
         icon: node.icon,
         title: node.title,
         breadcrumb,
-        product: productNode ? { id: productNode.productId, title: productNode.title } : undefined,
-        version: versionNode ? { id: versionNode.versionId, title: versionNode.title } : undefined,
-        tab: tabNode ? { title: tabNode.title } : undefined,
+        product: productNode
+            ? {
+                  id: productNode.productId,
+                  title: productNode.title,
+                  pathname: `/${productNode.canonicalSlug ?? productNode.slug}`,
+              }
+            : undefined,
+        version: versionNode
+            ? {
+                  id: versionNode.versionId,
+                  title: versionNode.title,
+                  pathname: `/${versionNode.canonicalSlug ?? versionNode.slug}`,
+              }
+            : undefined,
+        tab: tabNode
+            ? {
+                  title: tabNode.title,
+                  pathname: `/${tabNode.canonicalSlug ?? tabNode.slug}`,
+              }
+            : undefined,
         visible_by: roles.map(createRoleFacet),
         authed,
     };

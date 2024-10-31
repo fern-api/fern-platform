@@ -49,9 +49,9 @@ export const BaseRecordSchema = z.object({
     breadcrumb: z
         .array(z.object({ title: z.string(), pathname: z.string().optional() }))
         .describe("The breadcrumb of this record"),
-    product: z.object({ id: z.string(), title: z.string() }).optional(),
-    version: z.object({ id: z.string(), title: z.string() }).optional(),
-    tab: z.object({ title: z.string() }).optional(),
+    product: z.object({ id: z.string(), title: z.string(), pathname: z.string().optional() }).optional(),
+    version: z.object({ id: z.string(), title: z.string(), pathname: z.string().optional() }).optional(),
+    tab: z.object({ title: z.string(), pathname: z.string().optional() }).optional(),
     visible_by: z.array(z.string()).describe("The roles that can view this record"),
     authed: z.boolean().describe("Whether this record requires authentication to view"),
 });

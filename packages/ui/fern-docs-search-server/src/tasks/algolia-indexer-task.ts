@@ -1,6 +1,6 @@
 import { algoliasearch } from "algoliasearch";
 import { assert } from "ts-essentials";
-import { browseAllObjectsForDomain } from "../algolia/browse-all-objects-for-domain";
+import { browseAllObjectsForDomain } from "../algolia/browse-all-objects";
 import { createAlgoliaRecords } from "../algolia/records/create-algolia-records";
 import { loadDocsWithUrl } from "../fdr/load-docs-with-url";
 

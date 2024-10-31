@@ -13,7 +13,7 @@ import {
 import { Configure, useHits } from "react-instantsearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
 import { LinkComponentType } from "../shared/LinkComponent";
-import { SegmentedHits } from "../shared/SegmentedHits";
+import { SearchResults } from "../shared/SearchResults";
 import { useTrapFocus } from "../shared/useTrapFocus";
 import { DesktopSearchBox } from "./DesktopSearchBox";
 
@@ -23,6 +23,11 @@ interface DesktopInstantSearchProps {
     LinkComponent: LinkComponentType;
     onSubmit: (hit: { pathname: string; hash: string }) => void;
     disabled?: boolean;
+    initialResults: {
+        tabs: { title: string; pathname: string }[];
+        products: { id: string; title: string; pathname: string }[];
+        versions: { id: string; title: string; pathname: string }[];
+    };
 }
 
 export function DesktopInstantSearch({
@@ -31,6 +36,7 @@ export function DesktopInstantSearch({
     LinkComponent,
     onSubmit,
     disabled,
+    initialResults,
 }: DesktopInstantSearchProps): ReactElement {
     const ref = useRef(algoliasearch(appId, apiKey));
     const formRef = useRef<HTMLFormElement>(null);
@@ -61,7 +67,7 @@ export function DesktopInstantSearch({
                 onSubmit={onSubmit}
             >
                 <div
-                    className="p-4 border-b border-[#DBDBDB] dark:border-white/10"
+                    className="p-4 border-b last:border-b-0 border-[#DBDBDB] dark:border-white/10 cursor-text"
                     onClick={() => inputRef.current?.focus()}
                 >
                     <DesktopSearchBox
@@ -73,7 +79,7 @@ export function DesktopInstantSearch({
                         isFromSelection={false}
                     />
                 </div>
-                <SegmentedHits inputRef={inputRef} LinkComponent={LinkComponent} />
+                <SearchResults inputRef={inputRef} LinkComponent={LinkComponent} initialResults={initialResults} />
             </DesktopSearchForm>
         </InstantSearchNext>
     );
@@ -90,13 +96,10 @@ const DesktopSearchForm = forwardRef<HTMLFormElement, PropsWithChildren<DesktopS
             event.preventDefault();
             const radioGroup = event.currentTarget.elements.namedItem("fern-docs-search-selected-hit");
             if (radioGroup instanceof RadioNodeList) {
-                const objectID = radioGroup.value;
-                const hit = items.find((hit) => hit.objectID === objectID);
+                const path = radioGroup.value;
+                const hit = items.find((hit) => `${hit.pathname}${hit.hash ?? ""}` === path);
                 if (hit) {
-                    onSubmit({
-                        pathname: hit.pathname ?? "",
-                        hash: hit.hash ?? "",
-                    });
+                    onSubmit({ pathname: hit.pathname ?? "", hash: hit.hash ?? "" });
                 }
             }
         };

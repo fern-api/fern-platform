@@ -10,7 +10,7 @@ export const createDefaultLinkComponent = (domain: string): LinkComponentType =>
             <a
                 href={`https://${domain}${hit.pathname ?? ""}${hit.hash ?? ""}`}
                 target="_blank"
-                rel=",noopener noreferrer"
+                rel="noreferrer noopener"
                 tabIndex={-1}
                 className={className}
             >

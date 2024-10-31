@@ -5,28 +5,30 @@ import { last } from "es-toolkit/array";
 import { ReactElement, ReactNode, RefObject, useEffect, useState } from "react";
 
 export function SegmentedHitsRadioGroup({
-    orderedObjectIDs,
-    segmentsIndices,
+    paths,
+    segmentsIndices = [],
     children,
     inputRef,
 }: {
-    orderedObjectIDs: string[];
-    segmentsIndices: { segment: string; index: number }[];
+    paths: string[];
+    /**
+     * An array of objects that contain a segment and an index.
+     * The segment is the name of the segment that the hit belongs to.
+     * The index is the index of the hit in the paths array.
+     */
+    segmentsIndices?: { segment: string; index: number }[];
     children: ReactNode;
     inputRef: RefObject<HTMLInputElement>;
 }): ReactElement {
-    const [selectedObjectID, setSelectedObjectID] = useState((): string | undefined => orderedObjectIDs[0]);
+    const [selectedObjectID, setSelectedObjectID] = useState((): string | undefined => paths[0]);
 
-    // fall back to the first objectID if the selectedObjectID is not in the orderedObjectIDs
-    const value =
-        selectedObjectID != null && orderedObjectIDs.includes(selectedObjectID)
-            ? selectedObjectID
-            : orderedObjectIDs[0];
+    // fall back to the first objectID if the selectedObjectID is not in the paths
+    const value = selectedObjectID != null && paths.includes(selectedObjectID) ? selectedObjectID : paths[0];
 
-    // reset the selectedObjectID to the first objectID when the orderedObjectIDs change
+    // reset the selectedObjectID to the first objectID when the paths change
     useDeepCompareEffect(() => {
-        setSelectedObjectID(orderedObjectIDs[0]);
-    }, [orderedObjectIDs]);
+        setSelectedObjectID(paths[0]);
+    }, [paths]);
 
     // handle keyboard navigation
     // arrow down/up: navigate to the next/previous hit in the current segment
@@ -39,25 +41,25 @@ export function SegmentedHitsRadioGroup({
         }
 
         try {
-            const index = orderedObjectIDs.indexOf(value);
+            const index = paths.indexOf(value);
             const currentSegmentIndex = segmentsIndices.findLastIndex((segment) => index >= segment.index);
             if (event.key === "ArrowDown") {
                 if (!event.altKey && !event.metaKey && !event.shiftKey && !event.ctrlKey) {
-                    setSelectedObjectID(orderedObjectIDs[index + 1] ?? last(orderedObjectIDs));
+                    setSelectedObjectID(paths[index + 1] ?? last(paths));
                 } else if (event.altKey) {
-                    setSelectedObjectID(orderedObjectIDs[index + 5] ?? last(orderedObjectIDs));
+                    setSelectedObjectID(paths[index + 5] ?? last(paths));
                 } else if (event.metaKey) {
                     const nextSegment = segmentsIndices[currentSegmentIndex + 1];
-                    setSelectedObjectID(orderedObjectIDs[nextSegment?.index ?? orderedObjectIDs.length - 1]);
+                    setSelectedObjectID(paths[nextSegment?.index ?? paths.length - 1]);
                 } else {
                     // don't prevent default
                     return;
                 }
             } else if (event.key === "ArrowUp") {
                 if (!event.altKey && !event.metaKey && !event.shiftKey && !event.ctrlKey) {
-                    setSelectedObjectID(orderedObjectIDs[index - 1] ?? orderedObjectIDs[0]);
+                    setSelectedObjectID(paths[index - 1] ?? paths[0]);
                 } else if (event.altKey) {
-                    setSelectedObjectID(orderedObjectIDs[index - 5] ?? orderedObjectIDs[0]);
+                    setSelectedObjectID(paths[index - 5] ?? paths[0]);
                 } else if (event.metaKey) {
                     // this is a special UX case where if you're not at the start of the current segment, meta + up will jump to the start of the current segment
                     // and if you're at the start of the current segment, it will jump to the start of the previous segment
@@ -65,7 +67,7 @@ export function SegmentedHitsRadioGroup({
                     const previousSegment = segmentsIndices[currentSegmentIndex - 1];
                     const jumpedToIndex =
                         currentSegmentStartIndex === index ? previousSegment?.index : currentSegmentStartIndex;
-                    setSelectedObjectID(orderedObjectIDs[jumpedToIndex ?? 0]);
+                    setSelectedObjectID(paths[jumpedToIndex ?? 0]);
                 } else {
                     // don't prevent default
                     return;
@@ -86,7 +88,7 @@ export function SegmentedHitsRadioGroup({
     useEffect(() => {
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [orderedObjectIDs, handleKeyDown]);
+    }, [paths, handleKeyDown]);
 
     return (
         <RadioGroup.Root value={value} onValueChange={setSelectedObjectID} name="fern-docs-search-selected-hit">
