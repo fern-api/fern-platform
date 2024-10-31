@@ -227,12 +227,14 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
             const allGlobalErrors = endpoint.errors
                 ? Object.fromEntries(
                       Object.entries(groupBy(endpoint.errors, (e) => e.statusCode)).map(
-                          ([statusCode, errorResponses]) => [
-                              statusCode,
-                              errorResponses.flatMap((e, idx) =>
-                                  convertErrorResponseToCodeExamples(e, client.language, idx),
-                              ),
-                          ],
+                          ([statusCode, errorResponses]) => {
+                              return [
+                                  statusCode,
+                                  errorResponses.flatMap((e, idx) =>
+                                      convertErrorResponseToCodeExamples(e, client.language, idx),
+                                  ),
+                              ];
+                          },
                       ),
                   )
                 : {};
@@ -243,10 +245,15 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                     const examplesByStatusCode = examplesAcc[exampleId];
                     if (examplesByStatusCode != null) {
                         Object.keys(allGlobalErrors).forEach((statusCode) => {
-                            if (examplesByStatusCode[Number(statusCode)] == null) {
-                                examplesByStatusCode[Number(statusCode)] = [];
+                            const globalErrorCount = allGlobalErrors?.[statusCode];
+                            if (globalErrorCount != null && globalErrorCount.length > 0) {
+                                if (examplesByStatusCode[Number(statusCode)] == null) {
+                                    examplesByStatusCode[Number(statusCode)] = [];
+                                }
+                                examplesByStatusCode[Number(statusCode)]?.push(
+                                    ...(allGlobalErrors?.[statusCode] ?? []),
+                                );
                             }
-                            examplesByStatusCode[Number(statusCode)]?.push(...(allGlobalErrors?.[statusCode] ?? []));
                         });
                     }
                 });
