@@ -3,10 +3,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { extractBuildId } from "./extractNextDataPathname";
 import { getNextDataPageRoute, getPageRoute } from "./pageRoutes";
 import { withPathname } from "./withPathname";
-import { getDocsDomainEdge } from "./xfernhost/edge";
+import { getDocsDomainEdge, getHostEdge } from "./xfernhost/edge";
 
 export function withMiddlewareRewrite(request: NextRequest, pathname: string): (isLoggedIn: boolean) => NextResponse {
-    const xFernHost = getDocsDomainEdge(request);
+    const domain = getDocsDomainEdge(request);
+    const host = getHostEdge(request);
+
+    const search = new URLSearchParams(request.nextUrl.search);
 
     /**
      * error=true is a hack to force dynamic rendering when `_error.ts` is rendered.
@@ -24,6 +27,10 @@ export function withMiddlewareRewrite(request: NextRequest, pathname: string): (
          */
         const isDynamic = isLoggedIn || hasError;
 
+        if (!isDynamic) {
+            search.set("host", host);
+        }
+
         /**
          * Mock the /_next/data/... request to the corresponding page route
          */
@@ -35,15 +42,17 @@ export function withMiddlewareRewrite(request: NextRequest, pathname: string): (
 
             const rewrittenPathname = pathname;
 
-            pathname = getPageRoute(!isDynamic, xFernHost, rewrittenPathname);
+            pathname = getPageRoute(!isDynamic, domain, rewrittenPathname);
 
             // NOTE: skipMiddlewareUrlNormalize=true must be set for this to work
             // if the request is not in the /_next/data/... path, we need to rewrite to the full /_next/data/... path
             if (!request.nextUrl.pathname.startsWith("/_next/data/") && process.env.NODE_ENV === "development") {
-                pathname = getNextDataPageRoute(!isDynamic, buildId, xFernHost, rewrittenPathname);
+                pathname = getNextDataPageRoute(!isDynamic, buildId, domain, rewrittenPathname);
             }
 
-            let response = NextResponse.rewrite(withPathname(request, pathname), { request: { headers } });
+            let response = NextResponse.rewrite(withPathname(request, pathname, searchToString(search)), {
+                request: { headers },
+            });
 
             if (pathname === request.nextUrl.pathname) {
                 response = NextResponse.next({ request: { headers } });
@@ -54,7 +63,7 @@ export function withMiddlewareRewrite(request: NextRequest, pathname: string): (
              */
             response.headers.set(
                 HEADER_X_MATCHED_PATH,
-                getNextDataPageRoute(!isDynamic, buildId, xFernHost, rewrittenPathname),
+                getNextDataPageRoute(!isDynamic, buildId, domain, rewrittenPathname),
             );
 
             return response;
@@ -64,8 +73,8 @@ export function withMiddlewareRewrite(request: NextRequest, pathname: string): (
          * Rewrite all other requests to /static/[domain]/[[...slug]] or /dynamic/[domain]/[[...slug]]
          */
 
-        pathname = getPageRoute(!isDynamic, xFernHost, pathname);
-        return NextResponse.rewrite(withPathname(request, pathname));
+        pathname = getPageRoute(!isDynamic, domain, pathname);
+        return NextResponse.rewrite(withPathname(request, pathname, searchToString(search)));
     };
 }
 
@@ -75,4 +84,9 @@ function getBuildId(req: NextRequest): string {
         extractBuildId(req.nextUrl.pathname) ??
         (process.env.NODE_ENV === "development" ? "development" : "")
     );
+}
+
+function searchToString(search: URLSearchParams): string | undefined {
+    const searchString = search.toString();
+    return searchString === "" ? undefined : `?${searchString}`;
 }
