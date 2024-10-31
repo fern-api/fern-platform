@@ -29,7 +29,7 @@ export function InitialSearchView({
             {initialResults.tabs.length > 0 && (
                 <section className="mb-2 flex flex-col justify-stretch">
                     {initialResults.tabs.map((tab) => (
-                        <SearchHitRadioItem key={tab.pathname} LinkComponent={LinkComponent} pathname={tab.pathname}>
+                        <SearchHitRadioItem key={tab.pathname} LinkComponent={LinkComponent} path={tab.pathname}>
                             {tab.title}
                         </SearchHitRadioItem>
                     ))}

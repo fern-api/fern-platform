@@ -1,4 +1,3 @@
-import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
 import { liteClient as algoliasearch } from "algoliasearch/lite";
 import "instantsearch.css/themes/reset.css";
 import {
@@ -10,7 +9,7 @@ import {
     useRef,
     type ReactElement,
 } from "react";
-import { Configure, useHits } from "react-instantsearch";
+import { Configure } from "react-instantsearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
 import { LinkComponentType } from "../shared/LinkComponent";
 import { SearchResults } from "../shared/SearchResults";
@@ -21,7 +20,7 @@ interface DesktopInstantSearchProps {
     appId: string;
     apiKey: string;
     LinkComponent: LinkComponentType;
-    onSubmit: (hit: { pathname: string; hash: string }) => void;
+    onSubmit: (path: string) => void;
     disabled?: boolean;
     initialResults: {
         tabs: { title: string; pathname: string }[];
@@ -86,21 +85,17 @@ export function DesktopInstantSearch({
 }
 
 interface DesktopSearchFormProps extends Omit<FormHTMLAttributes<HTMLFormElement>, "onSubmit"> {
-    onSubmit: (hit: { pathname: string; hash: string }) => void;
+    onSubmit: (path: string) => void;
 }
 
 const DesktopSearchForm = forwardRef<HTMLFormElement, PropsWithChildren<DesktopSearchFormProps>>(
     ({ children, onSubmit, ...props }, ref): ReactElement => {
-        const { items } = useHits<AlgoliaRecord>();
         const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
             event.preventDefault();
             const radioGroup = event.currentTarget.elements.namedItem("fern-docs-search-selected-hit");
             if (radioGroup instanceof RadioNodeList) {
                 const path = radioGroup.value;
-                const hit = items.find((hit) => `${hit.pathname}${hit.hash ?? ""}` === path);
-                if (hit) {
-                    onSubmit({ pathname: hit.pathname ?? "", hash: hit.hash ?? "" });
-                }
+                onSubmit(path);
             }
         };
         return (

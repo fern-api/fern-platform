@@ -20,14 +20,14 @@ export function SegmentedHitsRadioGroup({
     children: ReactNode;
     inputRef: RefObject<HTMLInputElement>;
 }): ReactElement {
-    const [selectedObjectID, setSelectedObjectID] = useState((): string | undefined => paths[0]);
+    const [selectedPath, setSelectedPath] = useState((): string | undefined => paths[0]);
 
     // fall back to the first objectID if the selectedObjectID is not in the paths
-    const value = selectedObjectID != null && paths.includes(selectedObjectID) ? selectedObjectID : paths[0];
+    const value = selectedPath != null && paths.includes(selectedPath) ? selectedPath : paths[0];
 
     // reset the selectedObjectID to the first objectID when the paths change
     useDeepCompareEffect(() => {
-        setSelectedObjectID(paths[0]);
+        setSelectedPath(paths[0]);
     }, [paths]);
 
     // handle keyboard navigation
@@ -45,21 +45,21 @@ export function SegmentedHitsRadioGroup({
             const currentSegmentIndex = segmentsIndices.findLastIndex((segment) => index >= segment.index);
             if (event.key === "ArrowDown") {
                 if (!event.altKey && !event.metaKey && !event.shiftKey && !event.ctrlKey) {
-                    setSelectedObjectID(paths[index + 1] ?? last(paths));
+                    setSelectedPath(paths[index + 1] ?? last(paths));
                 } else if (event.altKey) {
-                    setSelectedObjectID(paths[index + 5] ?? last(paths));
+                    setSelectedPath(paths[index + 5] ?? last(paths));
                 } else if (event.metaKey) {
                     const nextSegment = segmentsIndices[currentSegmentIndex + 1];
-                    setSelectedObjectID(paths[nextSegment?.index ?? paths.length - 1]);
+                    setSelectedPath(paths[nextSegment?.index ?? paths.length - 1]);
                 } else {
                     // don't prevent default
                     return;
                 }
             } else if (event.key === "ArrowUp") {
                 if (!event.altKey && !event.metaKey && !event.shiftKey && !event.ctrlKey) {
-                    setSelectedObjectID(paths[index - 1] ?? paths[0]);
+                    setSelectedPath(paths[index - 1] ?? paths[0]);
                 } else if (event.altKey) {
-                    setSelectedObjectID(paths[index - 5] ?? paths[0]);
+                    setSelectedPath(paths[index - 5] ?? paths[0]);
                 } else if (event.metaKey) {
                     // this is a special UX case where if you're not at the start of the current segment, meta + up will jump to the start of the current segment
                     // and if you're at the start of the current segment, it will jump to the start of the previous segment
@@ -67,7 +67,7 @@ export function SegmentedHitsRadioGroup({
                     const previousSegment = segmentsIndices[currentSegmentIndex - 1];
                     const jumpedToIndex =
                         currentSegmentStartIndex === index ? previousSegment?.index : currentSegmentStartIndex;
-                    setSelectedObjectID(paths[jumpedToIndex ?? 0]);
+                    setSelectedPath(paths[jumpedToIndex ?? 0]);
                 } else {
                     // don't prevent default
                     return;
@@ -91,7 +91,7 @@ export function SegmentedHitsRadioGroup({
     }, [paths, handleKeyDown]);
 
     return (
-        <RadioGroup.Root value={value} onValueChange={setSelectedObjectID} name="fern-docs-search-selected-hit">
+        <RadioGroup.Root value={value} onValueChange={setSelectedPath} name="fern-docs-search-selected-hit">
             {children}
         </RadioGroup.Root>
     );

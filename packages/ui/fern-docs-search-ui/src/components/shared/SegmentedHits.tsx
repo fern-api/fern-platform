@@ -21,8 +21,7 @@ function Hit({ hit, LinkComponent }: HitProps): ReactElement | null {
     return (
         <SearchHitRadioItem
             LinkComponent={LinkComponent}
-            pathname={hit.pathname}
-            hash={hit.hash}
+            path={`${hit.pathname}${hit.hash ?? ""}`}
             type={hit.type}
             icon={hit.icon}
         >

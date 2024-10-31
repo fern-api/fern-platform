@@ -8,26 +8,24 @@ import { LinkComponentType } from "./LinkComponent";
 
 interface SearchHitRadioItemProps {
     LinkComponent: LinkComponentType;
-    pathname: string;
+    path: string;
     icon?: string | undefined;
     type?: string | undefined;
-    hash?: string | undefined;
 }
 
 export function SearchHitRadioItem({
     LinkComponent,
     children,
-    pathname,
-    hash,
+    path,
     type,
     icon,
 }: PropsWithChildren<SearchHitRadioItemProps>): ReactElement {
     return (
         <RadioGroup.Item
-            value={`${pathname}${hash ?? ""}`}
+            value={path}
             className="mx-2 p-2 rounded-md hover:bg-[#CCC]/15 dark:hover:bg-white/5 data-[state=checked]:bg-[#CCC]/30 dark:data-[state=checked]:bg-white/10 text-left block"
         >
-            <LinkComponent hit={{ pathname, hash: hash ?? "" }} className="flex gap-2">
+            <LinkComponent path={path} className="flex gap-2">
                 <div className="shrink-0 py-1">
                     {icon != null ? (
                         <RemoteIcon icon={icon} className="size-4 text-[#969696] dark:text-white/50" />
