@@ -54,13 +54,16 @@ export function DesktopInstantSearch({
                 ignorePlurals
             />
             <DesktopSearchForm
-                className="flex flex-col gap-2 border border-[#DBDBDB] rounded-lg overflow-hidden bg-[#F2F2F2]/30 backdrop-blur-xl"
+                className="flex flex-col gap-2 border border-[#DBDBDB] dark:border-white/10 rounded-lg overflow-hidden bg-[#F2F2F2]/30 dark:bg-[#1A1919]/30 backdrop-blur-xl"
                 ref={formRef}
                 onSubmit={onSubmit}
             >
-                <div className="p-4 border-b border-[#DBDBDB]" onClick={() => inputRef.current?.focus()}>
+                <div
+                    className="p-4 border-b border-[#DBDBDB] dark:border-white/10"
+                    onClick={() => inputRef.current?.focus()}
+                >
                     <DesktopSearchBox
-                        inputClassName="w-full focus:outline-none bg-transparent text-lg placeholder:text-[#969696]"
+                        inputClassName="w-full focus:outline-none bg-transparent text-lg placeholder:text-[#969696] dark:placeholder:text-white/50"
                         placeholder="Search"
                         autoFocus
                         inputRef={inputRef}

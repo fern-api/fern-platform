@@ -39,7 +39,7 @@ function HierarchyBreadcrumb({
     });
 
     return (
-        <div className="text-xs text-[#969696]">
+        <div className="text-xs text-[#969696] dark:text-white/50">
             {breadcrumb.map((title, idx) => (
                 <>
                     <span key={title}>{title}</span>
@@ -65,7 +65,7 @@ function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
             <Snippet
                 attribute={hit._highlightResult?.description ? "description" : "content"}
                 hit={hit}
-                className="text-sm leading-snug line-clamp-2 text-black/50"
+                className="text-sm leading-snug line-clamp-2 text-black/50 dark:text-white/50"
                 classNames={{
                     highlighted: "font-bold bg-transparent",
                 }}
@@ -85,11 +85,11 @@ function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement
                     highlighted: "font-bold bg-transparent",
                 }}
             />
-            <div className="text-xs text-[#969696]">{format(utc(hit.date), "MMM d, yyyy")}</div>
+            <div className="text-xs text-[#969696] dark:text-white/50">{format(utc(hit.date), "MMM d, yyyy")}</div>
             <Snippet
                 attribute={hit._highlightResult?.description ? "description" : "content"}
                 hit={hit}
-                className="text-sm leading-snug line-clamp-2 text-black/50"
+                className="text-sm leading-snug line-clamp-2 text-black/50 dark:text-white/50"
                 classNames={{
                     highlighted: "font-bold bg-transparent",
                 }}
@@ -120,7 +120,9 @@ function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactE
             />
             <div className="flex items-baseline gap-1">
                 <HttpMethodTag method={hit.method} size="sm" />
-                <span className="text-xs font-mono line-clamp-1 text-[#969696]">{hit.endpoint_path}</span>
+                <span className="text-xs font-mono line-clamp-1 text-[#969696] dark:text-white/50">
+                    {hit.endpoint_path}
+                </span>
             </div>
             {attribute && (
                 <Snippet

@@ -12,7 +12,7 @@ export function DesktopInstantSearchWrapper({ appId }: { appId: string }): React
         <>
             <div className="flex gap-2 w-full">
                 <select
-                    className="border rounded-md p-2"
+                    className="border rounded-md p-2 dark:bg-black"
                     value={selectedDomain}
                     onChange={(e) => setSelectedDomain(e.target.value)}
                 >

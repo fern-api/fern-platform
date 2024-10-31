@@ -24,14 +24,14 @@ function Hit({ hit, LinkComponent }: HitProps): ReactElement | null {
     return (
         <RadioGroup.Item
             value={hit.objectID}
-            className="mx-2 p-2 rounded-md hover:bg-[#CCC]/15 data-[state=checked]:bg-[#CCC]/30 text-left block"
+            className="mx-2 p-2 rounded-md hover:bg-[#CCC]/15 dark:hover:bg-white/5 data-[state=checked]:bg-[#CCC]/30 dark:data-[state=checked]:bg-white/10 text-left block"
         >
             <LinkComponent hit={{ pathname: hit.pathname ?? "", hash: hit.hash ?? "" }} className="flex gap-2">
                 <div className="shrink-0 py-1">
                     {hit.type === "changelog" ? (
-                        <RegularCalendarIcon className="size-4 text-[#969696]" />
+                        <RegularCalendarIcon className="size-4 text-[#969696] dark:text-white/50" />
                     ) : (
-                        <RegularFileLinesIcon className="size-4 text-[#969696]" />
+                        <RegularFileLinesIcon className="size-4 text-[#969696] dark:text-white/50" />
                     )}
                 </div>
 
@@ -39,7 +39,7 @@ function Hit({ hit, LinkComponent }: HitProps): ReactElement | null {
                     <HitContent hit={hit as MarkRequired<AlgoliaRecordHit, "type">} />
                 </div>
                 <RadioGroup.Indicator asChild>
-                    <ArrowTurnDownLeftIcon className="size-3 text-[#969696] shrink-0" />
+                    <ArrowTurnDownLeftIcon className="size-3 text-[#969696] dark:text-white/50 shrink-0" />
                 </RadioGroup.Indicator>
             </LinkComponent>
         </RadioGroup.Item>
@@ -62,7 +62,7 @@ export function SegmentedHits({
 
     if (items.length === 0) {
         return (
-            <div className="p-4 pb-6 text-center text-[#969696]">
+            <div className="p-4 pb-6 text-center text-[#969696] dark:text-white/50">
                 <span className="font-semibold text-sm">No results found</span>
             </div>
         );
@@ -117,7 +117,7 @@ export function SegmentedHits({
             {uniqueSegments.map((segment) => (
                 <section key={segment} className="mb-3 flex flex-col justify-stretch">
                     {segment !== DEFAULT_SEGMENT && (
-                        <h6 className="text-xs font-semibold text-[#969696] px-4 my-1">{segment}</h6>
+                        <h6 className="text-xs font-semibold text-[#969696] dark:text-white/50 px-4 my-1">{segment}</h6>
                     )}
 
                     {segmentedHits[segment]?.map((hit) => (
