@@ -36,8 +36,9 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
 
     const visitor: Visitor = (node) => {
         // if the node is a <Steps toc={false}>, skip traversing its children
-        console.log(node)
         if (isMdxJsxElementHast(node) && node.name === "StepGroup") {
+            // console.log("found a step group!");
+            // console.log(node)
             const isTocEnabled =
                 hastGetBooleanValue(
                     node.attributes.find((attr) => isMdxJsxAttribute(attr) && attr.name === "toc")?.value,
@@ -91,9 +92,12 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
             const title = toString(node);
             headings.push({ depth, id, title });
         }
+                
+        // if (isMdxJsxElementHast(node) && node.name === "Tab") {
+        //     console.log(node)
+        // }
 
         if (isMdxJsxElementHast(node) && node.name === "TabGroup") {
-            console.log(node)
             const attributes = node.attributes.filter(isMdxJsxAttribute);
             const itemsAttr = attributes.find((attr) => attr.name === "tabs");
             const tocAttr = attributes.find((attr) => attr.name === "toc");
@@ -102,9 +106,29 @@ export function makeToc(tree: Root, isTocDefaultEnabled = false): TableOfContent
             if (itemsAttr?.value == null || typeof itemsAttr.value === "string") {
                 return;
             }
+            
+            // console.log(itemsAttr)
+            
+            // try {
+            //     const i = itemsAttr.value.data as MdxJsxAttributeValueExpressionData;
+            //     console.log(i)
+            // } catch (e) {
+            //     // eslint-disable-next-line no-console
+            //     console.error(e);
+            // }
+            
+            // try {
+            //     const i = JSON.parse(itemsAttr.value.value) as MdxJsxAttributeData;
+            //     console.log(i)
+            // } catch (e) {
+            //     // eslint-disable-next-line no-console
+            //     console.error(e);
+            // }
+            
 
             try {
                 const items = JSON.parse(itemsAttr.value.value) as AccordionItemProps[];
+                
                 items.forEach((item) => {
                     const isTocEnabled = item.toc ?? isParentTocEnabled;
                     if (item.title.trim().length === 0 || !isTocEnabled) {

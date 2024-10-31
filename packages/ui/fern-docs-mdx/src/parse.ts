@@ -62,9 +62,9 @@ export function toTree(
     // add ids to headings
     rehypeSlug()(hast);
     
-    rehypePlugins?.forEach((plugin) => {
-        plugin()(hast);
-    })
+    // rehypePlugins?.forEach((plugin) => {
+    //     plugin()(hast);
+    // })
 
     return {
         mdast,
