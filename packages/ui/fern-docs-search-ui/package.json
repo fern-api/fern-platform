@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@algolia/autocomplete-core": "^1.17.6",
+    "@date-fns/tz": "^1.1.2",
     "@fern-ui/fern-docs-search-server": "workspace:*",
     "@fern-ui/fern-http-method-tag": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
@@ -39,7 +40,6 @@
     "@radix-ui/react-visually-hidden": "^1.1.0",
     "algoliasearch": "^5.10.2",
     "date-fns": "^2.30.0",
-    "date-fns-tz": "^3.2.0",
     "es-toolkit": "^1.24.0",
     "instantsearch.css": "8.5.1",
     "instantsearch.js": "4.75.3",

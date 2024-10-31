@@ -1,12 +1,14 @@
+import { tz } from "@date-fns/tz";
 import { ParameterRecord } from "@fern-ui/fern-docs-search-server/types";
 import { HttpMethodTag } from "@fern-ui/fern-http-method-tag";
 import { Hit } from "algoliasearch/lite";
 import { format } from "date-fns";
-import { toZonedTime } from "date-fns-tz";
 import { ReactElement } from "react";
 import { Highlight, Snippet } from "react-instantsearch";
 import { MarkRequired, UnreachableCaseError } from "ts-essentials";
 import { AlgoliaRecordHit, ApiReferenceRecordHit, ChangelogRecordHit, MarkdownRecordHit } from "../types";
+
+const utc = tz("UTC");
 
 const headingLevels = ["h1", "h2", "h3", "h4", "h5", "h6"] as const;
 
@@ -83,7 +85,7 @@ function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement
                     highlighted: "font-bold bg-transparent",
                 }}
             />
-            <div className="text-xs text-[#969696]">{format(toZonedTime(hit.date, "UTC"), "MMM d, yyyy")}</div>
+            <div className="text-xs text-[#969696]">{format(utc(hit.date), "MMM d, yyyy")}</div>
             <Snippet
                 attribute={hit._highlightResult?.description ? "description" : "content"}
                 hit={hit}
