@@ -82,7 +82,7 @@ function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement
                 attribute="page_title"
                 hit={hit}
                 classNames={{
-                    highlighted: "font-bold bg-transparent",
+                    highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
                 }}
             />
             <div className="text-xs text-[#969696] dark:text-white/50">{format(utc(hit.date), "MMM d, yyyy")}</div>
