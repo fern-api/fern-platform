@@ -88,7 +88,7 @@ export async function getAuthState(
     // check if the request is allowed to pass through without authentication
     if (authConfig.type === "basic_token_verification" || authConfig.type === "oauth2") {
         const user = await safeVerifyFernJWTConfig(fernToken, authConfig);
-        const partner = "custom";
+        const partner = authConfig.type === "oauth2" ? authConfig.partner : "custom";
         if (user) {
             return { domain, host, authed: true, ok: true, user, partner };
         } else {

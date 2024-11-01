@@ -1,4 +1,4 @@
-import { verifyFernJWTConfig } from "@/server/auth/FernJWT";
+import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { LaunchDarklyEdgeConfig, getAuthEdgeConfig, getLaunchDarklySettings } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_EMAIL, COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
@@ -66,14 +66,11 @@ async function getUserContext(req: NextRequest): Promise<LaunchDarklyInfo["user"
     const fernToken = jar.get(COOKIE_FERN_TOKEN)?.value;
     const email = jar.get(COOKIE_EMAIL)?.value;
 
-    if (fernToken) {
-        try {
-            const user = await verifyFernJWTConfig(fernToken, await getAuthEdgeConfig(getDocsDomainEdge(req)));
-            const key = (await hashString(user.email)) ?? randomUUID();
-            return { key: `fern-docs-user-${key}`, email: user.email, name: user.name };
-        } catch (e) {
-            // do nothing
-        }
+    const user = await safeVerifyFernJWTConfig(fernToken, await getAuthEdgeConfig(getDocsDomainEdge(req)));
+
+    if (user) {
+        const key = (await hashString(user.email)) ?? randomUUID();
+        return { key: `fern-docs-user-${key}`, email: user.email, name: user.name };
     }
 
     if (email) {

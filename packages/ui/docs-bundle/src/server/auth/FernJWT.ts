@@ -1,6 +1,8 @@
 import { FernUserSchema, type AuthEdgeConfig, type FernUser } from "@fern-ui/fern-docs-auth";
 import { SignJWT, jwtVerify } from "jose";
 import { getJwtSecretKey } from "./workos";
+import { getSessionFromToken, toSessionUserInfo } from "./workos-session";
+import { toFernUser } from "./workos-user-to-fern-user";
 
 // "user" is reserved for workos
 
@@ -31,6 +33,15 @@ export async function verifyFernJWTConfig(token: string, authConfig: AuthEdgeCon
         return verifyFernJWT(token, authConfig.secret, authConfig.issuer);
     }
 
+    if (authConfig.type === "sso" && authConfig.partner === "workos") {
+        const session = await toSessionUserInfo(await getSessionFromToken(token));
+        if (session.user) {
+            return toFernUser(session);
+        } else {
+            throw new Error("Invalid WorkOS session");
+        }
+    }
+
     // TODO: validate workos token and organization
     throw new Error("Auth config type is not supported");
 }
@@ -41,7 +52,7 @@ export async function safeVerifyFernJWTConfig(
 ): Promise<FernUser | undefined> {
     try {
         if (token) {
-            return verifyFernJWTConfig(token, authConfig);
+            return await verifyFernJWTConfig(token, authConfig);
         }
     } catch (e) {
         // eslint-disable-next-line no-console
