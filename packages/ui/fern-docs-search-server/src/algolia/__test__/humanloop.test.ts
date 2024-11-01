@@ -15,22 +15,7 @@ describe("humanloop", () => {
     it("should work", () => {
         const fixture = readFixture("humanloop");
         const root = FernNavigation.utils.toRootNode(fixture);
-
-        // const apis = Object.fromEntries(
-        //     Object.values(fixture.definition.apis).map((api) => {
-        //         return [
-        //             api.id,
-        //             ApiDefinition.ApiDefinitionV1ToLatest.from(api, {
-        //                 useJavaScriptAsTypeScript: false,
-        //                 alwaysEnableJavaScriptFetch: false,
-        //                 usesApplicationJsonInFormDataValue: false,
-        //             }).migrate(),
-        //         ];
-        //     }),
-        // );
         const apis = FernNavigation.utils.toApis(fixture);
-
-        // const pages = mapValues(fixture.definition.pages, (page) => page.markdown);
         const pages = FernNavigation.utils.toPages(fixture);
 
         const records = generateAlgoliaRecords({
