@@ -97,9 +97,13 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                     </Select.ScrollUpButton>
                     <Select.Viewport className="p-[5px]">
                         {examplesByStatusCode &&
-                            Object.entries(examplesByStatusCode).map(([statusCode, examples]) => (
+                            Object.entries(examplesByStatusCode).map(([statusCode, examples], idx) => (
                                 <Fragment key={statusCode}>
-                                    <Select.Separator className="bg-tag-default m-[5px] h-px" />
+                                    {idx > 0 ? (
+                                        <Select.Separator className="bg-tag-default m-[5px] h-px" />
+                                    ) : (
+                                        <div className="m-[2px] h-px" />
+                                    )}
                                     <Select.Group>
                                         {examples?.map((example, j) => {
                                             return (

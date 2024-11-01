@@ -3,6 +3,7 @@ import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
 import { groupBy } from "es-toolkit/array";
+import { mapValues } from "es-toolkit/object";
 import { isEqual } from "es-toolkit/predicate";
 import { useInView } from "framer-motion";
 import { atom, useAtom, useAtomValue } from "jotai";
@@ -167,75 +168,62 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
         ]);
     }, [selectedClient]);
 
-    const convertErrorResponseToCodeExamples = useMemo(
-        () =>
-            (errorResponse: ApiDefinition.ErrorResponse, language: Language, index: number): CodeExample[] => {
-                return errorResponse.examples
-                    ? errorResponse.examples.map((example, j) => ({
-                          key: `error-${j}/${index}`,
-                          exampleIndex: index,
-                          language,
+    const convertErrorResponseToCodeExamples = useCallback(
+        (errorResponse: ApiDefinition.ErrorResponse, language: Language, index: number): CodeExample[] => {
+            return errorResponse.examples
+                ? errorResponse.examples.map((example, j) => ({
+                      key: `error-${j}/${index}`,
+                      exampleIndex: index,
+                      language,
+                      name: example.name ?? errorResponse.name ?? `Error ${index}`,
+                      code: "",
+                      install: null,
+                      exampleCall: {
+                          path: endpoint.path.map((p) => p.value).join("/"),
+                          responseStatusCode: errorResponse.statusCode,
                           name: example.name ?? errorResponse.name ?? `Error ${index}`,
-                          code: "",
-                          install: null,
-                          exampleCall: {
-                              path: endpoint.path.map((p) => p.value).join("/"),
-                              responseStatusCode: errorResponse.statusCode,
-                              name: example.name ?? errorResponse.name ?? `Error ${index}`,
-                              pathParameters: {},
-                              queryParameters: {},
-                              headers: {},
-                              requestBody: undefined,
-                              responseBody: example.responseBody,
-                              snippets: {},
-                              description: errorResponse.description,
-                          },
-                          globalError: true,
-                      }))
-                    : [];
-            },
+                          pathParameters: {},
+                          queryParameters: {},
+                          headers: {},
+                          requestBody: undefined,
+                          responseBody: example.responseBody,
+                          snippets: {},
+                          description: errorResponse.description,
+                      },
+                      globalError: true,
+                  }))
+                : [];
+        },
         [endpoint.path],
     );
 
     const examplesByClientAndTitleAndStatusCode = useMemo(() => {
         return clients.reduce<ExamplesByClientAndTitleAndStatusCode>((acc, client) => {
             acc[client.language] = client.examples
-                ? Object.fromEntries(
-                      Object.entries(
-                          groupBy(
-                              client.examples.filter(
-                                  (e) =>
-                                      e.exampleCall.responseStatusCode >= 200 && e.exampleCall.responseStatusCode < 300,
-                              ),
-                              (e) => e.key ?? "",
+                ? mapValues(
+                      groupBy(
+                          client.examples.filter(
+                              (e) => e.exampleCall.responseStatusCode >= 200 && e.exampleCall.responseStatusCode < 300,
                           ),
-                      ).map(([exampleId, examples]) => {
-                          return [
-                              exampleId,
-                              {
-                                  ...groupBy(examples, (e) => e.exampleCall.responseStatusCode),
-                                  ...groupBy(
-                                      client.examples.filter((e) => e.exampleCall.responseStatusCode >= 400),
-                                      (e) => e.exampleCall.responseStatusCode,
-                                  ),
-                              },
-                          ];
+                          (e) => e.key,
+                      ),
+                      (examples) => ({
+                          ...groupBy(examples, (e) => e.exampleCall.responseStatusCode),
+                          ...groupBy(
+                              client.examples.filter((e) => e.exampleCall.responseStatusCode >= 400),
+                              (e) => e.exampleCall.responseStatusCode,
+                          ),
                       }),
                   )
                 : {};
 
             const allGlobalErrors = endpoint.errors
-                ? Object.fromEntries(
-                      Object.entries(groupBy(endpoint.errors, (e) => e.statusCode)).map(
-                          ([statusCode, errorResponses]) => {
-                              return [
-                                  statusCode,
-                                  errorResponses.flatMap((e, idx) =>
-                                      convertErrorResponseToCodeExamples(e, client.language, idx),
-                                  ),
-                              ];
-                          },
-                      ),
+                ? mapValues(
+                      groupBy(endpoint.errors, (e) => e.statusCode),
+                      (errorResponses) =>
+                          errorResponses.flatMap((e, idx) =>
+                              convertErrorResponseToCodeExamples(e, client.language, idx),
+                          ),
                   )
                 : {};
 
@@ -245,13 +233,13 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                     const examplesByStatusCode = examplesAcc[exampleId];
                     if (examplesByStatusCode != null) {
                         Object.keys(allGlobalErrors).forEach((statusCode) => {
-                            const globalErrorCount = allGlobalErrors?.[statusCode];
+                            const globalErrorCount = allGlobalErrors[Number(statusCode)];
                             if (globalErrorCount != null && globalErrorCount.length > 0) {
                                 if (examplesByStatusCode[Number(statusCode)] == null) {
                                     examplesByStatusCode[Number(statusCode)] = [];
                                 }
                                 examplesByStatusCode[Number(statusCode)]?.push(
-                                    ...(allGlobalErrors?.[statusCode] ?? []),
+                                    ...(allGlobalErrors?.[Number(statusCode)] ?? []),
                                 );
                             }
                         });
@@ -302,8 +290,8 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
         });
     }, [selectedLanguage, examplesByClientAndTitleAndStatusCode]);
 
-    const handleSelectError = useMemo(
-        () => (error: ApiDefinition.ErrorResponse | undefined) => {
+    const handleSelectError = useCallback(
+        (error: ApiDefinition.ErrorResponse | undefined) => {
             if (error && error !== selectedError) {
                 const foundExample =
                     examplesByClientAndTitleAndStatusCode?.[selectedClient.language]?.[selectedClient.key]?.[
