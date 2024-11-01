@@ -39,11 +39,15 @@
     "@fern-ui/fern-docs-mdx": "workspace:*",
     "algoliasearch": "^5.8.1",
     "es-toolkit": "^1.24.0",
+    "html-to-text": "^9.0.5",
+    "marked": "^5.1.0",
     "pnpm": "^9.12.1",
     "ts-essentials": "^10.0.1"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
+    "@types/html-to-text": "^9.0.1",
+    "@types/marked": "^5.0.0",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
