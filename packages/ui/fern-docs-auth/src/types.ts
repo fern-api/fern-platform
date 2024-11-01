@@ -19,6 +19,13 @@ export const AuthEdgeConfigSSOWorkOSSchema = z.object({
     type: z.literal("sso"),
     partner: z.literal("workos"),
     organization: z.string().describe("This should be the org name, NOT the org ID"),
+    connection: z
+        .string()
+        .optional()
+        .describe("The WorkOS SSO connection ID to use for authentication (if you want to skip Authkit)"),
+    provider: z.string().optional().describe("Provider (if you want to skip Authkit for social login)"),
+    domainHint: z.string().optional().describe("Domain hint for social login"),
+    loginHint: z.string().optional().describe("Login hint for social login"),
 
     // TODO: we can probably use the allowlist, denylist, and anonymous here too (similar to JWT basic auth)
 });
