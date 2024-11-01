@@ -4,7 +4,7 @@ import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import urlJoin from "url-join";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
-import { getAuthorizationUrl as getWorkOSAuthorizationUrl } from "./workos";
+import { getWorkosSSOAuthorizationUrl } from "./workos";
 import { encryptSession, getSessionFromToken, refreshSession, toSessionUserInfo } from "./workos-session";
 import { toFernUser } from "./workos-user-to-fern-user";
 
@@ -148,7 +148,15 @@ function getAuthorizationUrl(authConfig: AuthEdgeConfig, host: string, pathname?
         return destination.toString();
     } else if (authConfig.type === "sso" && authConfig.partner === "workos") {
         const redirectUri = urlJoin(removeTrailingSlash(withDefaultProtocol(host)), "/api/fern-docs/auth/sso/callback");
-        return getWorkOSAuthorizationUrl({ state, redirectUri, organization: authConfig.organization });
+        return getWorkosSSOAuthorizationUrl({
+            state,
+            redirectUri,
+            organization: authConfig.organization,
+            connection: authConfig.connection,
+            provider: authConfig.provider,
+            domainHint: authConfig.domainHint,
+            loginHint: authConfig.loginHint,
+        });
     }
 
     return undefined;

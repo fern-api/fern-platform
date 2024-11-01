@@ -33,10 +33,10 @@ export function getJwtSecretKey(): string {
     throw new Error("JWT_SECRET_KEY is not set");
 }
 
-export function getAuthorizationUrl(options: Omit<AuthorizationURLOptions, "provider" | "clientId">): string {
+export function getWorkosSSOAuthorizationUrl(options: Omit<AuthorizationURLOptions, "clientId">): string {
     const authorizationUrl = workos().sso.getAuthorizationUrl({
         ...options,
-        provider: "authkit",
+        provider: options.provider ?? "authkit",
         clientId: getWorkOSClientId(),
         // The endpoint that WorkOS will redirect to after a user authenticates
         redirectUri: options.redirectUri,
