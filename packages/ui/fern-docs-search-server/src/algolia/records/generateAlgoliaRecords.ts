@@ -1,5 +1,6 @@
 import { Algolia, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { convertEndpointV4ToV3 } from "../v1-record-converter/convertRecords.js";
 import { generateEndpointFieldRecords, generateEndpointRecord } from "./generateEndpointRecords.js";
 import { generateMarkdownRecords } from "./generateMarkdownRecords.js";
 import { generateWebSocketFieldRecords, generateWebSocketRecord } from "./generateWebSocketRecords.js";
@@ -110,7 +111,10 @@ export function generateAlgoliaRecords({
                 version,
             });
 
-            records.push(endpointRecord);
+            // TODO: remove this once we've migrated to v4
+            const endpointRecordV3 = convertEndpointV4ToV3(endpointRecord, endpoint, apiDefinition.types);
+
+            records.push(endpointRecordV3);
 
             if (isFieldRecordsEnabled) {
                 records.push(
