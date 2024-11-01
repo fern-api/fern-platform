@@ -12,56 +12,7 @@ export const FernUserSchema = z.object({
     api_key: z.string().optional().describe("For API Playground key injection"),
 });
 
-export type FernUser = z.infer<typeof FernUserSchema>;
-
-// WorkOS is our only SSO provider for now, and is meant for private docs.
-export const AuthEdgeConfigSSOWorkOSSchema = z.object({
-    type: z.literal("sso"),
-    partner: z.literal("workos"),
-    organization: z.string().describe("This should be the org name, NOT the org ID"),
-    connection: z
-        .string()
-        .optional()
-        .describe("The WorkOS SSO connection ID to use for authentication (if you want to skip Authkit)"),
-    provider: z.string().optional().describe("Provider (if you want to skip Authkit for social login)"),
-    domainHint: z.string().optional().describe("Domain hint for social login"),
-    loginHint: z.string().optional().describe("Login hint for social login"),
-
-    // TODO: we can probably use the allowlist, denylist, and anonymous here too (similar to JWT basic auth)
-});
-
-// Note: this is a bit confusing, as it conflates API Playground auth with Fern Docs auth.
-// TODO: it should be clear that anonymous users have access to all pages, and that the auth here is used only in the API Playground context.
-export const AuthEdgeConfigOAuth2OrySchema = z.object({
-    type: z.literal("oauth2"),
-    partner: z.literal("ory"),
-    environment: z.string(),
-    jwks: z.optional(z.string()),
-    scope: z.optional(z.string()),
-    clientId: z.string(),
-    clientSecret: z.string(),
-    redirectUri: z.string().optional(),
-    // TODO: this is a bit confusing. should we delete this field?
-    "api-key-injection-enabled": z.optional(z.boolean()),
-});
-
-// Note: same as above; webflow oauth2 scheme is used just to generate a token for the API Playground.
-export const AuthEdgeConfigOAuth2WebflowSchema = z.object({
-    type: z.literal("oauth2"),
-    partner: z.literal("webflow"),
-    scope: z.optional(z.union([z.string(), z.array(z.string())])),
-    clientId: z.string(),
-    clientSecret: z.string(),
-    redirectUri: z.string().optional(),
-});
-
-export const AuthEdgeConfigBasicTokenVerificationSchema = z.object({
-    type: z.literal("basic_token_verification"),
-    secret: z.string(),
-    issuer: z.string(),
-    redirect: z.string(),
-    logout: z.string().optional(),
-
+export const PathnameViewerRulesSchema = z.object({
     allowlist: z
         .array(z.string())
         .describe("List of pages (regexp allowed) that are public and do not require authentication")
@@ -78,18 +29,64 @@ export const AuthEdgeConfigBasicTokenVerificationSchema = z.object({
         .optional(),
 });
 
-export const AuthEdgeConfigSchema = z.union([
-    AuthEdgeConfigSSOWorkOSSchema,
-    AuthEdgeConfigOAuth2OrySchema,
-    AuthEdgeConfigOAuth2WebflowSchema,
-    AuthEdgeConfigBasicTokenVerificationSchema,
-]);
+// WorkOS is our only SSO provider for now, and is meant for private docs.
+export const SSOWorkOSSchema = z
+    .object({
+        type: z.literal("sso"),
+        partner: z.literal("workos"),
+        organization: z.string().describe("This should be the org name, NOT the org ID"),
+        connection: z
+            .string()
+            .optional()
+            .describe("The WorkOS SSO connection ID to use for authentication (if you want to skip Authkit)"),
+        provider: z.string().optional().describe("Provider (if you want to skip Authkit for social login)"),
+        domainHint: z.string().optional().describe("Domain hint for social login"),
+        loginHint: z.string().optional().describe("Login hint for social login"),
+    })
+    .merge(PathnameViewerRulesSchema);
 
-export type AuthEdgeConfig = z.infer<typeof AuthEdgeConfigSchema>;
-export type AuthEdgeConfigSSOWorkOS = z.infer<typeof AuthEdgeConfigSSOWorkOSSchema>;
-export type AuthEdgeConfigOAuth2Ory = z.infer<typeof AuthEdgeConfigOAuth2OrySchema>;
-export type AuthEdgeConfigOAuth2Webflow = z.infer<typeof AuthEdgeConfigOAuth2WebflowSchema>;
-export type AuthEdgeConfigBasicTokenVerification = z.infer<typeof AuthEdgeConfigBasicTokenVerificationSchema>;
+export const APIPlaygroundEdgeConfigSchema = z.object({
+    "api-key-injection-enabled": z
+        .optional(z.boolean())
+        .describe("When true, API playground will render a login box instead of the API key input"),
+});
+
+export const OAuth2SharedSchema = z
+    .object({
+        type: z.literal("oauth2"),
+        clientId: z.string(),
+        clientSecret: z.string(),
+        redirectUri: z.string().optional(),
+    })
+    .merge(APIPlaygroundEdgeConfigSchema)
+    .merge(PathnameViewerRulesSchema);
+
+export const OAuth2OrySchema = OAuth2SharedSchema.extend({
+    partner: z.literal("ory"),
+    environment: z.string(),
+    jwks: z.optional(z.string()),
+    scope: z.optional(z.string()),
+});
+
+export const OAuth2WebflowSchema = OAuth2SharedSchema.extend({
+    partner: z.literal("webflow"),
+    scope: z.optional(z.union([z.string(), z.array(z.string())])),
+});
+
+export const OAuth2Schema = z.union([OAuth2OrySchema, OAuth2WebflowSchema]);
+
+export const BasicTokenVerificationSchema = z
+    .object({
+        type: z.literal("basic_token_verification"),
+        secret: z.string(),
+        issuer: z.string(),
+        redirect: z.string(),
+        logout: z.string().optional(),
+    })
+    .merge(APIPlaygroundEdgeConfigSchema)
+    .merge(PathnameViewerRulesSchema);
+
+export const AuthEdgeConfigSchema = z.union([SSOWorkOSSchema, OAuth2Schema, BasicTokenVerificationSchema]);
 
 export const OAuthTokenResponseSchema = z.object({
     access_token: z.string(),
@@ -98,8 +95,6 @@ export const OAuthTokenResponseSchema = z.object({
     scope: z.string(),
     token_type: z.string(),
 });
-
-export type OAuthTokenResponse = z.infer<typeof OAuthTokenResponseSchema>;
 
 export const RightbrainUserSchema = z.object({
     avatar_url: z.string().optional(),
@@ -123,8 +118,6 @@ export const OryAccessTokenSchema = z.object({
     sub: z.string().optional(),
 });
 
-export type OryAccessToken = z.infer<typeof OryAccessTokenSchema>;
-
 export const JwkSchema = z.object({
     kty: z.string().describe("Key Type"),
     use: z.string().optional().describe("Public Key Use"),
@@ -141,5 +134,15 @@ export const JwksSchema = z.object({
     keys: z.array(JwkSchema).describe("Array of JWKs"),
 });
 
+export type FernUser = z.infer<typeof FernUserSchema>;
+export type AuthEdgeConfig = z.infer<typeof AuthEdgeConfigSchema>;
+export type SSOWorkOS = z.infer<typeof SSOWorkOSSchema>;
+export type OAuth2Ory = z.infer<typeof OAuth2OrySchema>;
+export type OAuth2Webflow = z.infer<typeof OAuth2WebflowSchema>;
+export type BasicTokenVerification = z.infer<typeof BasicTokenVerificationSchema>;
+export type OAuth2 = z.infer<typeof OAuth2Schema>;
+export type OAuthTokenResponse = z.infer<typeof OAuthTokenResponseSchema>;
+export type OryAccessToken = z.infer<typeof OryAccessTokenSchema>;
 export type Jwk = z.infer<typeof JwkSchema>;
 export type Jwks = z.infer<typeof JwksSchema>;
+export type PathnameViewerRules = z.infer<typeof PathnameViewerRulesSchema>;

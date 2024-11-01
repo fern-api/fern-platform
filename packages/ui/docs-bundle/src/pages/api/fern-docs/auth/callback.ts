@@ -23,11 +23,15 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const redirectLocation = safeUrl(state) ?? safeUrl(withDefaultProtocol(host));
 
     if (error != null) {
-        return redirectWithLoginError(redirectLocation, error_description ?? error);
+        return redirectWithLoginError(redirectLocation, error, error_description);
     }
 
     if (typeof code !== "string") {
-        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+        return redirectWithLoginError(
+            redirectLocation,
+            "missing_authorization_code",
+            "Couldn't login, please try again",
+        );
     }
 
     const config = await getAuthEdgeConfig(domain);
@@ -52,5 +56,5 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         return NextResponse.redirect(nextUrl);
     }
 
-    return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+    return redirectWithLoginError(redirectLocation, "unknown_error", "Couldn't login, please try again");
 }

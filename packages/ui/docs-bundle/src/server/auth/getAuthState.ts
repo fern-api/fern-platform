@@ -4,6 +4,8 @@ import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import urlJoin from "url-join";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
+import { getOryAuthorizationUrl } from "./ory";
+import { getWebflowAuthorizationUrl } from "./webflow";
 import { getWorkosSSOAuthorizationUrl } from "./workos";
 import { encryptSession, getSessionFromToken, refreshSession, toSessionUserInfo } from "./workos-session";
 import { toFernUser } from "./workos-user-to-fern-user";
@@ -77,15 +79,14 @@ export async function getAuthState(
     authConfig ??= await getAuthEdgeConfig(domain);
 
     // if the auth type is neither sso nor basic_token_verification, allow the request to pass through
-    // we're currently assuming that all oauth2 integrations are meant for API Playground. This may change.
-    if (!authConfig || (authConfig.type !== "sso" && authConfig.type !== "basic_token_verification")) {
-        return { domain, host, authed: false, ok: true, authorizationUrl: undefined, partner: authConfig?.partner };
+    if (!authConfig) {
+        return { domain, host, authed: false, ok: true, authorizationUrl: undefined, partner: undefined };
     }
 
     const authorizationUrl = getAuthorizationUrl(authConfig, host, pathname);
 
     // check if the request is allowed to pass through without authentication
-    if (authConfig.type === "basic_token_verification") {
+    if (authConfig.type === "basic_token_verification" || authConfig.type === "oauth2") {
         const user = await safeVerifyFernJWTConfig(fernToken, authConfig);
         const partner = "custom";
         if (user) {
@@ -157,6 +158,24 @@ function getAuthorizationUrl(authConfig: AuthEdgeConfig, host: string, pathname?
             domainHint: authConfig.domainHint,
             loginHint: authConfig.loginHint,
         });
+    } else if (authConfig.type === "oauth2") {
+        if (authConfig.partner === "webflow") {
+            return getWebflowAuthorizationUrl(authConfig, {
+                state,
+                redirectUri: urlJoin(
+                    removeTrailingSlash(withDefaultProtocol(host)),
+                    "/api/fern-docs/oauth/webflow/callback",
+                ),
+            });
+        } else if (authConfig.partner === "ory") {
+            return getOryAuthorizationUrl(authConfig, {
+                state,
+                redirectUri: urlJoin(
+                    removeTrailingSlash(withDefaultProtocol(host)),
+                    "/api/fern-docs/oauth/ory/callback",
+                ),
+            });
+        }
     }
 
     return undefined;

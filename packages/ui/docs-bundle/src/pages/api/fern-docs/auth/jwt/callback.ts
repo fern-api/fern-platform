@@ -27,7 +27,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
     if (edgeConfig?.type !== "basic_token_verification" || token == null) {
         // eslint-disable-next-line no-console
         console.error(`Invalid config for domain ${domain}`);
-        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+        return redirectWithLoginError(redirectLocation, "unknown_error", "Couldn't login, please try again");
     }
 
     try {
@@ -40,6 +40,6 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+        return redirectWithLoginError(redirectLocation, "unknown_error", "Couldn't login, please try again");
     }
 }
