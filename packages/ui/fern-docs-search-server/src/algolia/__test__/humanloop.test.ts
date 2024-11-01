@@ -1,5 +1,4 @@
-import { Algolia, ApiDefinition, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { mapValues } from "es-toolkit/object";
+import { Algolia, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import fs from "fs";
 import path from "path";
 import { generateAlgoliaRecords } from "../records/generateAlgoliaRecords.js";
@@ -16,21 +15,8 @@ describe("humanloop", () => {
     it("should work", () => {
         const fixture = readFixture("humanloop");
         const root = FernNavigation.utils.toRootNode(fixture);
-
-        const apis = Object.fromEntries(
-            Object.values(fixture.definition.apis).map((api) => {
-                return [
-                    api.id,
-                    ApiDefinition.ApiDefinitionV1ToLatest.from(api, {
-                        useJavaScriptAsTypeScript: false,
-                        alwaysEnableJavaScriptFetch: false,
-                        usesApplicationJsonInFormDataValue: false,
-                    }).migrate(),
-                ];
-            }),
-        );
-
-        const pages = mapValues(fixture.definition.pages, (page) => page.markdown);
+        const apis = FernNavigation.utils.toApis(fixture);
+        const pages = FernNavigation.utils.toPages(fixture);
 
         const records = generateAlgoliaRecords({
             indexSegmentId: Algolia.IndexSegmentId("0"),
