@@ -126,12 +126,18 @@ export function createAlgoliaRecords({
         }
     });
 
-    const distinctNodes = new Set<string>();
-    [...collector.slugMap.values()].forEach((node) => {
-        if (distinctNodes.has(node.id)) {
+    const distinctSlugs = new Set<string>();
+    collector.getNodesInOrder().forEach((node) => {
+        if (!FernNavigation.hasMetadata(node)) {
             return;
         }
-        distinctNodes.add(node.id);
+
+        if (distinctSlugs.has(node.slug)) {
+            return;
+        }
+
+        distinctSlugs.add(node.slug);
+
         const base = createBaseRecord({ node, parents: collector.getParents(node.id) ?? [], domain, org_id, authed });
         records.push(createNavigationRecord({ base, node_type: node.type }));
     });

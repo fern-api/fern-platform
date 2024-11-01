@@ -25,7 +25,16 @@ export const SEARCHABLE_ATTRIBUTES = [
     "hierarchy.h6.title,hierarchy.h5.title,hierarchy.h4.title,hierarchy.h3.title,hierarchy.h2.title,hierarchy.h1.title",
 ] as const;
 
-export const DISTINCT_FACET_ATTRIBUTES = ["org_id", "domain", "visible_by", "authed", "type"] as const;
+export const DISTINCT_FACET_ATTRIBUTES = [
+    "org_id",
+    "domain",
+    "visible_by",
+    "authed",
+    "type",
+    "node_type",
+    "product.id",
+    "version.id",
+] as const;
 
 export const BaseRecordSchema = z.object({
     objectID: z.string().describe("The unique identifier of this record"),

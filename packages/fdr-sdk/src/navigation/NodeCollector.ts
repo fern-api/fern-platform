@@ -14,6 +14,7 @@ const NodeCollectorInstances = new WeakMap<FernNavigation.NavigationNode, NodeCo
 
 export class NodeCollector {
     private static readonly EMPTY = new NodeCollector(undefined);
+    private nodesInOrder: FernNavigation.NavigationNode[] = [];
     private idToNode = new Map<FernNavigation.NodeId, FernNavigation.NavigationNode>();
     private idToNodeParents = new Map<FernNavigation.NodeId, readonly FernNavigation.NavigationNodeParent[]>();
     private slugToNode = new Map<FernNavigation.Slug, NavigationNodeWithMetadataAndParents>();
@@ -83,6 +84,7 @@ export class NodeCollector {
         if (!this.idToNode.has(node.id) || isDefaultVersion) {
             this.idToNode.set(node.id, node);
             this.idToNodeParents.set(node.id, parents);
+            this.nodesInOrder.push(node);
         }
 
         if (node.type === "sidebarRoot") {
@@ -196,5 +198,9 @@ export class NodeCollector {
 
     public getVersionNodes = (): FernNavigation.VersionNode[] => {
         return this.versionNodes;
+    };
+
+    public getNodesInOrder = (): FernNavigation.NavigationNode[] => {
+        return this.nodesInOrder;
     };
 }

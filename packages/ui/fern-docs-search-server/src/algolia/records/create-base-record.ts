@@ -25,18 +25,24 @@ export function createBaseRecord({
     const tabNode = parents.find((n): n is FernNavigation.TabNode => n.type === "tab");
     const sidebarRootIdx = parents.findIndex((n): n is FernNavigation.SidebarRootNode => n.type === "sidebarRoot");
 
-    const breadcrumb = parents
-        // we don't want to include the product, version, or tab in the breadcrumb
-        .slice(sidebarRootIdx + 1)
-        .filter((n): n is Extract<FernNavigation.NavigationNodeWithMetadata, FernNavigation.NavigationNodeParent> =>
-            FernNavigation.hasMetadata(n),
-        )
-        // Changelog months and years should not be included in the breadcrumb
-        .filter((n) => n.type !== "changelogMonth" && n.type !== "changelogYear")
-        .map((metadata) => ({
-            title: metadata.title,
-            pathname: addLeadingSlash(metadata.canonicalSlug ?? metadata.slug),
-        }));
+    const breadcrumb =
+        sidebarRootIdx <= 0
+            ? []
+            : parents
+                  // we don't want to include the product, version, or tab in the breadcrumb
+                  .slice(sidebarRootIdx + 1)
+                  .filter(
+                      (
+                          n,
+                      ): n is Extract<FernNavigation.NavigationNodeWithMetadata, FernNavigation.NavigationNodeParent> =>
+                          FernNavigation.hasMetadata(n),
+                  )
+                  // Changelog months and years should not be included in the breadcrumb
+                  .filter((n) => n.type !== "changelogMonth" && n.type !== "changelogYear")
+                  .map((metadata) => ({
+                      title: metadata.title,
+                      pathname: addLeadingSlash(metadata.canonicalSlug ?? metadata.slug),
+                  }));
 
     const { roles, authed } = createViewersForNodes([...parents, node], isDocsSiteAuthed);
 
