@@ -11,6 +11,7 @@ export interface CodeExample {
     // hast: Root;
     install: string | null | undefined;
     exampleCall: ApiDefinition.ExampleEndpointCall;
+    globalError?: boolean;
 }
 
 export interface CodeExampleGroup {

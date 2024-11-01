@@ -2,6 +2,8 @@ import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
+import { groupBy } from "es-toolkit/array";
+import { mapValues } from "es-toolkit/object";
 import { isEqual } from "es-toolkit/predicate";
 import { useInView } from "framer-motion";
 import { atom, useAtom, useAtomValue } from "jotai";
@@ -23,6 +25,7 @@ import {
 import { useHref } from "../../hooks/useHref";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { CodeExample, generateCodeExamples } from "../examples/code-example";
+import { ExamplesByClientAndTitleAndStatusCode, Language, SelectedExampleKey } from "../types/EndpointContent";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContentHeader } from "./EndpointContentHeader";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
@@ -120,31 +123,24 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
         ),
     );
 
-    const examples = useMemo(() => {
-        if (selectedError == null) {
-            // Look for success example
-            return endpoint.examples?.filter((e) => e.responseStatusCode >= 200 && e.responseStatusCode < 300);
-        }
-        return endpoint.examples?.filter((e) => e.responseStatusCode === selectedError.statusCode);
-    }, [endpoint.examples, selectedError]);
-
     // TODO: remove after pinecone demo
     const { grpcEndpoints } = useFeatureFlags();
     const [contentType, setContentType] = useState<string | undefined>(endpoint.request?.contentType);
     const clients = useMemo(
         () =>
             generateCodeExamples(
-                examples,
+                endpoint.examples,
                 grpcEndpoints?.includes(endpoint.id) &&
                     !(
-                        examples != null &&
-                        examples.length === 1 &&
-                        examples[0]?.snippets?.["curl"] != null &&
-                        examples[0]?.snippets["curl"].length > 0
+                        endpoint.examples != null &&
+                        endpoint.examples.length === 1 &&
+                        endpoint.examples[0]?.snippets?.["curl"] != null &&
+                        endpoint.examples[0]?.snippets["curl"].length > 0
                     ),
             ),
-        [examples, grpcEndpoints, endpoint.id],
+        [endpoint.examples, grpcEndpoints, endpoint.id],
     );
+
     const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
     const [selectedClient, setSelectedClient] = useState<CodeExample>(() => {
         const curlExample = clients[0]?.examples[0];
@@ -154,6 +150,166 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
     useEffect(() => {
         setSelectedClient((prev) => clients.find((c) => c.language === selectedLanguage)?.examples[0] ?? prev);
     }, [clients, selectedLanguage]);
+
+    // We use a string here with the intention that this can be used in a query param to deeplink to a particular example
+    const [selectedExampleKey, setSelectedExampleKey] = useState<SelectedExampleKey | undefined>([
+        selectedClient.language,
+        selectedClient.key,
+        selectedClient.exampleCall.responseStatusCode,
+        0,
+    ]);
+
+    useEffect(() => {
+        setSelectedExampleKey([
+            selectedClient.language,
+            selectedClient.key,
+            selectedClient.exampleCall.responseStatusCode,
+            0,
+        ]);
+    }, [selectedClient]);
+
+    const convertErrorResponseToCodeExamples = useCallback(
+        (errorResponse: ApiDefinition.ErrorResponse, language: Language, index: number): CodeExample[] => {
+            return errorResponse.examples
+                ? errorResponse.examples.map((example, j) => ({
+                      key: `error-${j}/${index}`,
+                      exampleIndex: index,
+                      language,
+                      name: example.name ?? errorResponse.name ?? `Error ${index}`,
+                      code: "",
+                      install: null,
+                      exampleCall: {
+                          path: endpoint.path.map((p) => p.value).join("/"),
+                          responseStatusCode: errorResponse.statusCode,
+                          name: example.name ?? errorResponse.name ?? `Error ${index}`,
+                          pathParameters: {},
+                          queryParameters: {},
+                          headers: {},
+                          requestBody: undefined,
+                          responseBody: example.responseBody,
+                          snippets: {},
+                          description: errorResponse.description,
+                      },
+                      globalError: true,
+                  }))
+                : [];
+        },
+        [endpoint.path],
+    );
+
+    const examplesByClientAndTitleAndStatusCode = useMemo(() => {
+        return clients.reduce<ExamplesByClientAndTitleAndStatusCode>((acc, client) => {
+            acc[client.language] = client.examples
+                ? mapValues(
+                      groupBy(
+                          client.examples.filter(
+                              (e) => e.exampleCall.responseStatusCode >= 200 && e.exampleCall.responseStatusCode < 300,
+                          ),
+                          (e) => e.key,
+                      ),
+                      (examples) => ({
+                          ...groupBy(examples, (e) => e.exampleCall.responseStatusCode),
+                          ...groupBy(
+                              client.examples.filter((e) => e.exampleCall.responseStatusCode >= 400),
+                              (e) => e.exampleCall.responseStatusCode,
+                          ),
+                      }),
+                  )
+                : {};
+
+            const allGlobalErrors = endpoint.errors
+                ? mapValues(
+                      groupBy(endpoint.errors, (e) => e.statusCode),
+                      (errorResponses) =>
+                          errorResponses.flatMap((e, idx) =>
+                              convertErrorResponseToCodeExamples(e, client.language, idx),
+                          ),
+                  )
+                : {};
+
+            const examplesAcc = acc[client.language];
+            if (examplesAcc != null) {
+                Object.keys(examplesAcc).forEach((exampleId) => {
+                    const examplesByStatusCode = examplesAcc[exampleId];
+                    if (examplesByStatusCode != null) {
+                        Object.keys(allGlobalErrors).forEach((statusCode) => {
+                            const globalErrorCount = allGlobalErrors[Number(statusCode)];
+                            if (globalErrorCount != null && globalErrorCount.length > 0) {
+                                if (examplesByStatusCode[Number(statusCode)] == null) {
+                                    examplesByStatusCode[Number(statusCode)] = [];
+                                }
+                                examplesByStatusCode[Number(statusCode)]?.push(
+                                    ...(allGlobalErrors?.[Number(statusCode)] ?? []),
+                                );
+                            }
+                        });
+                    }
+                });
+            }
+
+            return acc;
+        }, {});
+    }, [clients, endpoint, convertErrorResponseToCodeExamples]);
+
+    useEffect(() => {
+        setSelectedError(undefined);
+        setSelectedExampleKey((selectedExampleKey) => {
+            const [currentLanguage, exampleId, statusCode, exampleIndex] = selectedExampleKey ?? [];
+            if (examplesByClientAndTitleAndStatusCode != null && currentLanguage !== selectedLanguage) {
+                setSelectedError(undefined);
+                const examplesByTitleAndStatusCode = examplesByClientAndTitleAndStatusCode[selectedLanguage];
+                if (
+                    (exampleId != null &&
+                        statusCode != null &&
+                        exampleIndex != null &&
+                        examplesByTitleAndStatusCode?.[exampleId]?.[statusCode]?.[exampleIndex] == null) ||
+                    (statusCode == null && exampleIndex == null && exampleId == null)
+                ) {
+                    const firstExampleKey = Object.keys(examplesByTitleAndStatusCode ?? {})[0];
+                    const examplesByStatusCodes = firstExampleKey
+                        ? examplesByTitleAndStatusCode?.[firstExampleKey]
+                        : undefined;
+                    if (examplesByStatusCodes == null) {
+                        return;
+                    }
+                    const statusCode =
+                        examplesByTitleAndStatusCode != null
+                            ? Number(
+                                  Object.keys(examplesByStatusCodes ?? {})
+                                      .filter((statusCode) => Number(statusCode) >= 200 && Number(statusCode) < 300)
+                                      .sort((statusCode1, statusCode2) => Number(statusCode1) - Number(statusCode2))[0],
+                              )
+                            : 200;
+                    return [selectedLanguage, firstExampleKey, statusCode, 0];
+                } else {
+                    return [selectedLanguage, exampleId, statusCode, exampleIndex];
+                }
+            }
+
+            return selectedExampleKey;
+        });
+    }, [selectedLanguage, examplesByClientAndTitleAndStatusCode]);
+
+    const handleSelectError = useCallback(
+        (error: ApiDefinition.ErrorResponse | undefined) => {
+            if (error && error !== selectedError) {
+                const foundExample =
+                    examplesByClientAndTitleAndStatusCode?.[selectedClient.language]?.[selectedClient.key]?.[
+                        error.statusCode
+                    ]?.[0];
+                if (foundExample) {
+                    setSelectedExampleKey((selectedExampleKey) => [
+                        foundExample.language,
+                        selectedExampleKey?.[1],
+                        foundExample.exampleCall.responseStatusCode,
+                        0,
+                    ]);
+                }
+            }
+            setSelectedError(error);
+        },
+        [examplesByClientAndTitleAndStatusCode, selectedClient, selectedError],
+    );
 
     const setSelectedExampleClientAndScrollToTop = useCallback(
         (nextClient: CodeExample) => {
@@ -281,12 +437,13 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                     >
                         <EndpointContentLeft
                             context={context}
+                            // TODO: remove this code call
                             example={selectedClient.exampleCall}
                             showErrors={showErrors}
                             onHoverRequestProperty={onHoverRequestProperty}
                             onHoverResponseProperty={onHoverResponseProperty}
                             selectedError={selectedError}
-                            setSelectedError={setSelectedError}
+                            setSelectedError={handleSelectError}
                             contentType={contentType}
                             setContentType={setContentType}
                         />
@@ -301,7 +458,9 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                         {isInViewport && (
                             <EndpointContentCodeSnippets
                                 endpoint={endpoint}
-                                example={selectedClient.exampleCall}
+                                examplesByClientAndTitleAndStatusCode={examplesByClientAndTitleAndStatusCode}
+                                selectedExampleKey={selectedExampleKey}
+                                setSelectedExampleKey={setSelectedExampleKey}
                                 clients={clients}
                                 selectedClient={selectedClient}
                                 onClickClient={setSelectedExampleClientAndScrollToTop}
