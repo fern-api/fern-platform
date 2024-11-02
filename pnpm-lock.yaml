@@ -2698,6 +2698,9 @@ importers:
       '@fern-fern/revalidation-sdk':
         specifier: 0.0.9
         version: 0.0.9
+      '@fern-ui/fern-docs-search-server':
+        specifier: workspace:*
+        version: link:../../packages/ui/fern-docs-search-server
       '@prisma/client':
         specifier: 5.13.0
         version: 5.13.0(prisma@5.13.0)

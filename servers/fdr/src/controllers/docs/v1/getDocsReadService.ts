@@ -208,7 +208,7 @@ export async function loadIndexSegmentsAndGetSearchInfo({
     });
 }
 
-function getSearchInfoFromDocs({
+export function getSearchInfoFromDocs({
     algoliaIndex,
     indexSegmentIds,
     activeIndexSegments,

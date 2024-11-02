@@ -1,10 +1,19 @@
-import { APIV1Db, convertDocsDefinitionToDb, DocsV1Db, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import {
+    APIV1Db,
+    convertDocsDefinitionToDb,
+    convertDocsDefinitionToRead,
+    DocsV1Db,
+    DocsV1Write,
+    FdrAPI,
+    FernNavigation,
+} from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { generateAlgoliaRecords } from "@fern-ui/fern-docs-search-server";
 import { AuthType } from "@prisma/client";
 import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
 import { DocsV2WriteService } from "../../../api";
+import { FernRegistry } from "../../../api/generated";
 import { DomainBelongsToAnotherOrgError } from "../../../api/generated/api/resources/commons/errors";
 import { DocsRegistrationIdNotFound } from "../../../api/generated/api/resources/docs/resources/v1/resources/write/errors";
 import { LoadDocsForUrlResponse } from "../../../api/generated/api/resources/docs/resources/v2/resources/read";
@@ -18,7 +27,7 @@ import { IndexSegment } from "../../../services/algolia";
 import { type S3DocsFileInfo } from "../../../services/s3";
 import { WithoutQuestionMarks } from "../../../util";
 import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
-import { getDocsDefinition } from "../v1/getDocsReadService";
+import { getSearchInfoFromDocs } from "../v1/getDocsReadService";
 
 export interface DocsRegistrationInfo {
     fernUrl: ParsedBaseUrl;
@@ -174,27 +183,9 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                     });
                 });
 
-                const response = await app.dao.docsV2().loadDocsForURL(docsRegistrationInfo.fernUrl.getFullUrl());
-
-                const definition = await getDocsDefinition({
-                    app,
-                    docsDbDefinition: dbDocsDefinition,
-                    docsV2: response,
-                });
-
-                const loadDocsForUrlResponse: LoadDocsForUrlResponse = {
-                    baseUrl: {
-                        domain: docsRegistrationInfo.fernUrl.getFullUrl(),
-                        basePath: .path.trim() === "" ? undefined : response.path.trim(),
-                    },
-                    definition,
-                    lightModeEnabled: response.docsDefinition.config.colorsV3?.type !== "dark",
-                };
-
                 const indexSegments = await uploadToAlgoliaForRegistration(
                     app,
                     docsRegistrationInfo,
-                    loadDocsForUrlResponse,
                     dbDocsDefinition,
                     apiDefinitionsById,
                 );
@@ -270,28 +261,14 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 apiDefinitions.map((definition) => [definition.id, definition]),
             );
 
-            const definition = await getDocsDefinition({
-                app,
-                docsDbDefinition: response.docsDefinition,
-                docsV2: response,
-            });
-
-            const loadDocsForUrlResponse: LoadDocsForUrlResponse = {
-                baseUrl: {
-                    domain: response.domain,
-                    basePath: response.path.trim() === "" ? undefined : response.path.trim(),
-                },
-                definition,
-                lightModeEnabled: response.docsDefinition.config.colorsV3?.type !== "dark",
-            };
-
             // step 2. create new index segments in algolia
             const indexSegments = await uploadToAlgolia(
                 app,
                 ParsedBaseUrl.parse(response.domain),
-                loadDocsForUrlResponse,
                 response.docsDefinition,
                 apiDefinitionsById,
+                response.algoliaIndex,
+                response.docsConfigInstanceId,
             );
 
             // step 3. store docs + new algolia segments
@@ -325,8 +302,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
 async function uploadToAlgoliaForRegistration(
     app: FdrApplication,
     docsRegistrationInfo: DocsRegistrationInfo,
-    loadDocsForUrlResponse: LoadDocsForUrlResponse,
-    dbDocsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb>,
+    dbDocsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb.V3>,
     apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>,
 ): Promise<IndexSegment[]> {
     // TODO: make sure to store private docs index into user-restricted algolia index
@@ -340,21 +316,16 @@ async function uploadToAlgoliaForRegistration(
         return [];
     }
 
-    return uploadToAlgolia(
-        app,
-        docsRegistrationInfo.fernUrl,
-        loadDocsForUrlResponse,
-        dbDocsDefinition,
-        apiDefinitionsById,
-    );
+    return uploadToAlgolia(app, docsRegistrationInfo.fernUrl, dbDocsDefinition, apiDefinitionsById);
 }
 
 async function uploadToAlgolia(
     app: FdrApplication,
     url: ParsedBaseUrl,
-    response: LoadDocsForUrlResponse,
-    dbDocsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb>,
+    dbDocsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb.V3>,
     apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>,
+    algoliaIndex?: FernRegistry.AlgoliaSearchIndex,
+    docsConfigInstanceId?: DocsV1Write.DocsConfigId,
 ): Promise<IndexSegment[]> {
     app.logger.debug(`[${url.getFullUrl()}] Generating new index segments`);
     const generateNewIndexSegmentsResult = app.services.algoliaIndexSegmentManager.generateIndexSegmentsForDefinition({
@@ -375,15 +346,45 @@ async function uploadToAlgolia(
         configSegmentTuples,
     });
 
+    const loadDocsForUrlResponse: LoadDocsForUrlResponse = {
+        baseUrl: {
+            domain: url.hostname,
+            basePath: url.path?.trim(),
+        },
+        definition: convertDocsDefinitionToRead({
+            docsDbDefinition: dbDocsDefinition,
+            algoliaSearchIndex: algoliaIndex,
+            filesV2: dbDocsDefinition.files,
+            apis: apiDefinitionsById,
+            id: docsConfigInstanceId ?? DocsV1Write.DocsConfigId(""),
+            search: getSearchInfoFromDocs({
+                algoliaIndex,
+                indexSegmentIds: newIndexSegments.map((indexSegment) => indexSegment.id),
+                activeIndexSegments: newIndexSegments.map((indexSegment) => ({
+                    id: indexSegment.id,
+                    createdAt: new Date(),
+                    version: null,
+                })),
+                docsDbDefinition: dbDocsDefinition,
+                app,
+            }),
+        }),
+        lightModeEnabled: dbDocsDefinition.config.colorsV3?.type !== "dark",
+    };
     configSegmentTuples.map(([_, indexSegment]) => {
         const v2Records = generateAlgoliaRecords({
             indexSegmentId: indexSegment.id,
-            nodes: FernNavigation.utils.toRootNode(response),
-            pages: FernNavigation.utils.toPages(response),
-            apis: FernNavigation.utils.toApis(response),
+            nodes: FernNavigation.utils.toRootNode(loadDocsForUrlResponse),
+            pages: FernNavigation.utils.toPages(loadDocsForUrlResponse),
+            apis: FernNavigation.utils.toApis(loadDocsForUrlResponse),
             isFieldRecordsEnabled: false,
         });
-        searchRecords.push(...v2Records);
+        searchRecords.push(
+            ...v2Records.map((record) => ({
+                ...record,
+                objectID: uuidv4(),
+            })),
+        );
     });
 
     app.logger.debug(`[${url.getFullUrl()}] Uploading search records to Algolia`);
