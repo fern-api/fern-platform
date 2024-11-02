@@ -122,7 +122,7 @@
     "@storybook/addon-interactions": "8.1.0-alpha.6",
     "@storybook/addon-links": "8.1.0-alpha.6",
     "@storybook/addon-onboarding": "8.1.0-alpha.6",
-    "@storybook/addon-themes": "^8.0.10",
+    "@storybook/addon-themes": "^8.4.1",
     "@storybook/blocks": "8.1.0-alpha.6",
     "@storybook/nextjs": "8.1.0-alpha.6",
     "@storybook/react": "8.1.0-alpha.6",
@@ -161,7 +161,7 @@
     "ts-essentials": "^10.0.1",
     "typescript": "5.4.3",
     "vite": "^5.4.6",
-    "vitest": "^1.5.0"
+    "vitest": "^1.6.0"
   },
   "eslintConfig": {
     "extends": [
