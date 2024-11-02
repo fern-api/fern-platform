@@ -31715,7 +31715,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.log({\n    path: \"persona\",\n    prompt: {\n        model: \"gpt-4\",\n        template: [{\n                role: \"system\",\n                content: \"You are {{person}}. Answer questions as this person. Do not break character.\"\n            }]\n    },\n    messages: [{\n            role: \"user\",\n            content: \"What really happened at Roswell?\"\n        }],\n    inputs: {\n        \"person\": \"Trump\"\n    },\n    createdAt: \"2024-07-19T00:29:35.178992\",\n    providerLatency: 6.5931549072265625,\n    outputMessage: {\n        content: \"Well, you know, there is so much secrecy involved in government, folks, it's unbelievable. They don't want to tell you everything. They don't tell me everything! But about Roswell, it’s a very popular question. I know, I just know, that something very, very peculiar happened there. Was it a weather balloon? Maybe. Was it something extraterrestrial? Could be. I'd love to go down and open up all the classified documents, believe me, I would. But they don't let that happen. The Deep State, folks, the Deep State. They’re unbelievable. They want to keep everything a secret. But whatever the truth is, I can tell you this: it’s something big, very very big. Tremendous, in fact.\",\n        role: \"assistant\"\n    },\n    promptTokens: 100,\n    outputTokens: 220,\n    promptCost: 0.00001,\n    outputCost: 0.0002,\n    finishReason: \"stop\"\n});\n",
                   "generated": true
@@ -31767,7 +31766,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.log({\n    path: \"persona\",\n    prompt: {\n        model: \"gpt-4\",\n        template: [{\n                role: \"system\",\n                content: \"You are {{person}}. Answer questions as this person. Do not break character.\"\n            }]\n    },\n    messages: [{\n            role: \"user\",\n            content: \"What really happened at Roswell?\"\n        }],\n    inputs: {\n        \"person\": \"Trump\"\n    },\n    createdAt: \"2024-07-19T00:29:35.178992\",\n    providerLatency: 6.5931549072265625,\n    outputMessage: {\n        content: \"Well, you know, there is so much secrecy involved in government, folks, it's unbelievable. They don't want to tell you everything. They don't tell me everything! But about Roswell, it’s a very popular question. I know, I just know, that something very, very peculiar happened there. Was it a weather balloon? Maybe. Was it something extraterrestrial? Could be. I'd love to go down and open up all the classified documents, believe me, I would. But they don't let that happen. The Deep State, folks, the Deep State. They’re unbelievable. They want to keep everything a secret. But whatever the truth is, I can tell you this: it’s something big, very very big. Tremendous, in fact.\",\n        role: \"assistant\"\n    },\n    promptTokens: 100,\n    outputTokens: 220,\n    promptCost: 0.00001,\n    outputCost: 0.0002,\n    finishReason: \"stop\"\n});\n",
                   "generated": true
@@ -34768,7 +34766,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.update(\"id\", \"log_id\");\n",
                   "generated": true
@@ -34820,7 +34817,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.update(\"id\", \"log_id\");\n",
                   "generated": true
@@ -36701,7 +36697,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.callStream({\n    versionId: \"string\",\n    environment: \"string\",\n    path: \"string\",\n    id: \"string\",\n    messages: [{\n            content: \"string\",\n            name: \"string\",\n            toolCallId: \"string\",\n            role: \"user\",\n            toolCalls: [{\n                    id: \"string\",\n                    type: \"function\",\n                    function: {\n                        name: \"string\",\n                        arguments: undefined\n                    }\n                }]\n        }],\n    toolChoice: \"none\",\n    prompt: {\n        model: \"string\",\n        endpoint: \"complete\",\n        template: \"string\",\n        provider: \"openai\",\n        maxTokens: 1,\n        temperature: 1.1,\n        topP: 1.1,\n        stop: \"string\",\n        presencePenalty: 1.1,\n        frequencyPenalty: 1.1,\n        other: {\n            \"string\": {\n                \"key\": \"value\"\n            }\n        },\n        seed: 1,\n        responseFormat: {\n            type: \"json_object\",\n            jsonSchema: {}\n        },\n        tools: [{\n                name: \"string\",\n                description: \"string\",\n                strict: undefined,\n                parameters: undefined\n            }],\n        linkedTools: [\"string\"],\n        attributes: {\n            \"string\": {\n                \"key\": \"value\"\n            }\n        }\n    },\n    inputs: {\n        \"string\": {\n            \"key\": \"value\"\n        }\n    },\n    source: \"string\",\n    metadata: {\n        \"string\": {\n            \"key\": \"value\"\n        }\n    },\n    startTime: \"2024-01-15T09:30:00Z\",\n    endTime: \"2024-01-15T09:30:00Z\",\n    sourceDatapointId: \"string\",\n    traceParentId: \"string\",\n    batches: [\"string\"],\n    user: \"string\",\n    promptsCallStreamRequestEnvironment: \"string\",\n    save: true,\n    providerApiKeys: {\n        openai: \"string\",\n        ai21: \"string\",\n        mock: \"string\",\n        anthropic: \"string\",\n        bedrock: \"string\",\n        cohere: \"string\",\n        openaiAzure: \"string\",\n        openaiAzureEndpoint: \"string\"\n    },\n    numSamples: 1,\n    returnInputs: true,\n    logprobs: 1,\n    suffix: \"string\"\n});\n",
                   "generated": true
@@ -36755,7 +36750,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.callStream({\n    versionId: \"string\",\n    environment: \"string\",\n    path: \"string\",\n    id: \"string\",\n    messages: [{\n            content: \"string\",\n            name: \"string\",\n            toolCallId: \"string\",\n            role: \"user\",\n            toolCalls: [{\n                    id: \"string\",\n                    type: \"function\",\n                    function: {\n                        name: \"string\",\n                        arguments: undefined\n                    }\n                }]\n        }],\n    toolChoice: \"none\",\n    prompt: {\n        model: \"string\",\n        endpoint: \"complete\",\n        template: \"string\",\n        provider: \"openai\",\n        maxTokens: 1,\n        temperature: 1.1,\n        topP: 1.1,\n        stop: \"string\",\n        presencePenalty: 1.1,\n        frequencyPenalty: 1.1,\n        other: {\n            \"string\": {\n                \"key\": \"value\"\n            }\n        },\n        seed: 1,\n        responseFormat: {\n            type: \"json_object\",\n            jsonSchema: {}\n        },\n        tools: [{\n                name: \"string\",\n                description: \"string\",\n                strict: undefined,\n                parameters: undefined\n            }],\n        linkedTools: [\"string\"],\n        attributes: {\n            \"string\": {\n                \"key\": \"value\"\n            }\n        }\n    },\n    inputs: {\n        \"string\": {\n            \"key\": \"value\"\n        }\n    },\n    source: \"string\",\n    metadata: {\n        \"string\": {\n            \"key\": \"value\"\n        }\n    },\n    startTime: \"2024-01-15T09:30:00Z\",\n    endTime: \"2024-01-15T09:30:00Z\",\n    sourceDatapointId: \"string\",\n    traceParentId: \"string\",\n    batches: [\"string\"],\n    user: \"string\",\n    promptsCallStreamRequestEnvironment: \"string\",\n    save: true,\n    providerApiKeys: {\n        openai: \"string\",\n        ai21: \"string\",\n        mock: \"string\",\n        anthropic: \"string\",\n        bedrock: \"string\",\n        cohere: \"string\",\n        openaiAzure: \"string\",\n        openaiAzureEndpoint: \"string\"\n    },\n    numSamples: 1,\n    returnInputs: true,\n    logprobs: 1,\n    suffix: \"string\"\n});\n",
                   "generated": true
@@ -39276,7 +39270,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.call({\n    path: \"persona\",\n    prompt: {\n        model: \"gpt-4\",\n        template: [{\n                role: \"system\",\n                content: \"You are stockbot. Return latest prices.\"\n            }],\n        tools: [{\n                name: \"get_stock_price\",\n                description: \"Get current stock price\",\n                parameters: {\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"ticker_symbol\": {\n                            \"type\": \"string\",\n                            \"name\": \"Ticker Symbol\",\n                            \"description\": \"Ticker symbol of the stock\"\n                        }\n                    },\n                    \"required\": []\n                }\n            }]\n    },\n    messages: [{\n            role: \"user\",\n            content: \"latest apple\"\n        }]\n});\n",
                   "generated": true
@@ -39379,7 +39372,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.call({\n    path: \"persona\",\n    prompt: {\n        model: \"gpt-4\",\n        template: [{\n                role: \"system\",\n                content: \"You are {{person}}. Answer any questions as this person. Do not break character.\"\n            }]\n    },\n    messages: [{\n            role: \"user\",\n            content: \"What really happened at Roswell?\"\n        }],\n    inputs: {\n        \"person\": \"Trump\"\n    }\n});\n",
                   "generated": true
@@ -39474,7 +39466,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.call({\n    versionId: \"prv_Wu6zx1lAWJRqOyL8nWuZk\",\n    path: \"persona\",\n    messages: [{\n            role: \"user\",\n            content: \"What really happened at Roswell?\"\n        }],\n    inputs: {\n        \"person\": \"Trump\"\n    }\n});\n",
                   "generated": true
@@ -39528,7 +39519,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.call({\n    path: \"persona\",\n    prompt: {\n        model: \"gpt-4\",\n        template: [{\n                role: \"system\",\n                content: \"You are stockbot. Return latest prices.\"\n            }],\n        tools: [{\n                name: \"get_stock_price\",\n                description: \"Get current stock price\",\n                parameters: {\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"ticker_symbol\": {\n                            \"type\": \"string\",\n                            \"name\": \"Ticker Symbol\",\n                            \"description\": \"Ticker symbol of the stock\"\n                        }\n                    },\n                    \"required\": []\n                }\n            }]\n    },\n    messages: [{\n            role: \"user\",\n            content: \"latest apple\"\n        }]\n});\n",
                   "generated": true
@@ -41645,7 +41635,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.list({\n    size: 1\n});\n",
                   "generated": true
@@ -41693,7 +41682,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.list({\n    size: 1\n});\n",
                   "generated": true
@@ -42408,7 +42396,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.upsert({\n    path: \"Personal Projects/Coding Assistant\",\n    model: \"gpt-4o\",\n    endpoint: \"chat\",\n    template: [{\n            content: \"You are a helpful coding assistant specialising in {{language}}\",\n            role: \"system\"\n        }],\n    provider: \"openai\",\n    maxTokens: -1,\n    temperature: 0.7,\n    topP: 1,\n    presencePenalty: 0,\n    frequencyPenalty: 0,\n    other: {},\n    tools: [],\n    linkedTools: [],\n    commitMessage: \"Initial commit\"\n});\n",
                   "generated": true
@@ -42459,7 +42446,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.upsert({\n    path: \"Personal Projects/Coding Assistant\",\n    model: \"gpt-4o\",\n    endpoint: \"chat\",\n    template: [{\n            content: \"You are a helpful coding assistant specialising in {{language}}\",\n            role: \"system\"\n        }],\n    provider: \"openai\",\n    maxTokens: -1,\n    temperature: 0.7,\n    topP: 1,\n    presencePenalty: 0,\n    frequencyPenalty: 0,\n    other: {},\n    tools: [],\n    linkedTools: [],\n    commitMessage: \"Initial commit\"\n});\n",
                   "generated": true
@@ -43642,7 +43628,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.get(\"pr_30gco7dx6JDq4200GVOHa\");\n",
                   "generated": true
@@ -43692,7 +43677,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.get(\"pr_30gco7dx6JDq4200GVOHa\");\n",
                   "generated": true
@@ -43910,7 +43894,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.delete(\"pr_30gco7dx6JDq4200GVOHa\");\n",
                   "generated": true
@@ -43957,7 +43940,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.delete(\"pr_30gco7dx6JDq4200GVOHa\");\n",
                   "generated": true
@@ -44246,7 +44228,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.move(\"pr_30gco7dx6JDq4200GVOHa\", {\n    path: \"new directory/new name\"\n});\n",
                   "generated": true
@@ -44297,7 +44278,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.move(\"pr_30gco7dx6JDq4200GVOHa\", {\n    path: \"new directory/new name\"\n});\n",
                   "generated": true
@@ -44625,7 +44605,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.listVersions(\"pr_30gco7dx6JDq4200GVOHa\", {\n    status: \"committed\"\n});\n",
                   "generated": true
@@ -44675,7 +44654,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.listVersions(\"pr_30gco7dx6JDq4200GVOHa\", {\n    status: \"committed\"\n});\n",
                   "generated": true
@@ -44999,7 +44977,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.commit(\"pr_30gco7dx6JDq4200GVOHa\", \"prv_F34aba5f3asp0\", {\n    commitMessage: \"Reiterated point about not discussing sentience\"\n});\n",
                   "generated": true
@@ -45053,7 +45030,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.commit(\"pr_30gco7dx6JDq4200GVOHa\", \"prv_F34aba5f3asp0\", {\n    commitMessage: \"Reiterated point about not discussing sentience\"\n});\n",
                   "generated": true
@@ -45368,7 +45344,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.updateMonitoring(\"pr_30gco7dx6JDq4200GVOHa\", {\n    activate: [{\n            evaluatorVersionId: \"evv_1abc4308abd\"\n        }]\n});\n",
                   "generated": true
@@ -45419,7 +45394,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.updateMonitoring(\"pr_30gco7dx6JDq4200GVOHa\", {\n    activate: [{\n            evaluatorVersionId: \"evv_1abc4308abd\"\n        }]\n});\n",
                   "generated": true
@@ -45963,7 +45937,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.setDeployment(\"id\", \"environment_id\", {\n    versionId: \"version_id\"\n});\n",
                   "generated": true
@@ -46013,7 +45986,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.setDeployment(\"id\", \"environment_id\", {\n    versionId: \"version_id\"\n});\n",
                   "generated": true
@@ -46252,7 +46224,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.removeDeployment(\"id\", \"environment_id\");\n",
                   "generated": true
@@ -46300,7 +46271,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.removeDeployment(\"id\", \"environment_id\");\n",
                   "generated": true
@@ -46570,7 +46540,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.listEnvironments(\"pr_30gco7dx6JDq4200GVOHa\");\n",
                   "generated": true
@@ -46617,7 +46586,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.prompts.listEnvironments(\"pr_30gco7dx6JDq4200GVOHa\");\n",
                   "generated": true
@@ -47321,7 +47289,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.log({\n    path: \"math-tool\",\n    tool: {\n        function: {\n            name: \"multiply\",\n            description: \"Multiply two numbers\",\n            parameters: {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"a\": {\n                        \"type\": \"number\"\n                    },\n                    \"b\": {\n                        \"type\": \"number\"\n                    }\n                },\n                \"required\": [\n                    \"a\",\n                    \"b\"\n                ]\n            }\n        }\n    },\n    inputs: {\n        \"a\": 5,\n        \"b\": 7\n    },\n    output: \"35\"\n});\n",
                   "generated": true
@@ -47373,7 +47340,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.log({\n    path: \"math-tool\",\n    tool: {\n        function: {\n            name: \"multiply\",\n            description: \"Multiply two numbers\",\n            parameters: {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"a\": {\n                        \"type\": \"number\"\n                    },\n                    \"b\": {\n                        \"type\": \"number\"\n                    }\n                },\n                \"required\": [\n                    \"a\",\n                    \"b\"\n                ]\n            }\n        }\n    },\n    inputs: {\n        \"a\": 5,\n        \"b\": 7\n    },\n    output: \"35\"\n});\n",
                   "generated": true
@@ -48738,7 +48704,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.update(\"id\", \"log_id\");\n",
                   "generated": true
@@ -48790,7 +48755,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.update(\"id\", \"log_id\");\n",
                   "generated": true
@@ -49415,7 +49379,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.list({\n    size: 1\n});\n",
                   "generated": true
@@ -49463,7 +49426,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.list({\n    size: 1\n});\n",
                   "generated": true
@@ -49937,7 +49899,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.upsert({\n    path: \"math-tool\",\n    function: {\n        name: \"multiply\",\n        description: \"Multiply two numbers\",\n        parameters: {\n            \"type\": \"object\",\n            \"properties\": {\n                \"a\": {\n                    \"type\": \"number\"\n                },\n                \"b\": {\n                    \"type\": \"number\"\n                }\n            },\n            \"required\": [\n                \"a\",\n                \"b\"\n            ]\n        }\n    },\n    commitMessage: \"Initial commit\"\n});\n",
                   "generated": true
@@ -49986,7 +49947,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.upsert({\n    path: \"math-tool\",\n    function: {\n        name: \"multiply\",\n        description: \"Multiply two numbers\",\n        parameters: {\n            \"type\": \"object\",\n            \"properties\": {\n                \"a\": {\n                    \"type\": \"number\"\n                },\n                \"b\": {\n                    \"type\": \"number\"\n                }\n            },\n            \"required\": [\n                \"a\",\n                \"b\"\n            ]\n        }\n    },\n    commitMessage: \"Initial commit\"\n});\n",
                   "generated": true
@@ -50483,7 +50443,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.get(\"tl_789ghi\");\n",
                   "generated": true
@@ -50533,7 +50492,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.get(\"tl_789ghi\");\n",
                   "generated": true
@@ -50751,7 +50709,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.delete(\"tl_789ghi\");\n",
                   "generated": true
@@ -50798,7 +50755,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.delete(\"tl_789ghi\");\n",
                   "generated": true
@@ -51056,7 +51012,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.move(\"tl_789ghi\", {\n    path: \"new directory/new name\"\n});\n",
                   "generated": true
@@ -51107,7 +51062,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.move(\"tl_789ghi\", {\n    path: \"new directory/new name\"\n});\n",
                   "generated": true
@@ -51404,7 +51358,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.listVersions(\"tl_789ghi\", {\n    status: \"committed\"\n});\n",
                   "generated": true
@@ -51454,7 +51407,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.listVersions(\"tl_789ghi\", {\n    status: \"committed\"\n});\n",
                   "generated": true
@@ -51747,7 +51699,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.commit(\"tl_789ghi\", \"tv_012jkl\", {\n    commitMessage: \"Initial commit\"\n});\n",
                   "generated": true
@@ -51801,7 +51752,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.commit(\"tl_789ghi\", \"tv_012jkl\", {\n    commitMessage: \"Initial commit\"\n});\n",
                   "generated": true
@@ -52085,7 +52035,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.updateMonitoring(\"tl_789ghi\", {\n    activate: [{\n            evaluatorVersionId: \"evv_1abc4308abd\"\n        }]\n});\n",
                   "generated": true
@@ -52136,7 +52085,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.updateMonitoring(\"tl_789ghi\", {\n    activate: [{\n            evaluatorVersionId: \"evv_1abc4308abd\"\n        }]\n});\n",
                   "generated": true
@@ -52612,7 +52560,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.setDeployment(\"tl_789ghi\", \"staging\", {\n    versionId: \"tv_012jkl\"\n});\n",
                   "generated": true
@@ -52662,7 +52609,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.setDeployment(\"tl_789ghi\", \"staging\", {\n    versionId: \"tv_012jkl\"\n});\n",
                   "generated": true
@@ -52902,7 +52848,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.removeDeployment(\"tl_789ghi\", \"staging\");\n",
                   "generated": true
@@ -52950,7 +52895,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.removeDeployment(\"tl_789ghi\", \"staging\");\n",
                   "generated": true
@@ -53189,7 +53133,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.listEnvironments(\"tl_789ghi\");\n",
                   "generated": true
@@ -53236,7 +53179,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.tools.listEnvironments(\"tl_789ghi\");\n",
                   "generated": true
@@ -53541,7 +53483,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.list({\n    size: 1\n});\n",
                   "generated": true
@@ -53589,7 +53530,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.list({\n    size: 1\n});\n",
                   "generated": true
@@ -54047,7 +53987,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.upsert({\n    path: \"test-questions\",\n    datapoints: [{\n            inputs: {\n                \"question\": \"What is the capital of France?\"\n            },\n            target: {\n                \"answer\": \"Paris\"\n            }\n        }, {\n            inputs: {\n                \"question\": \"Who wrote Hamlet?\"\n            },\n            target: {\n                \"answer\": \"William Shakespeare\"\n            }\n        }],\n    action: \"set\",\n    commitMessage: \"Add two new questions and answers\"\n});\n",
                   "generated": true
@@ -54125,7 +54064,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.upsert({\n    path: \"datasets/support-queries\",\n    datapoints: [{\n            messages: [{\n                    role: \"user\",\n                    content: \"How do i manage my organizations API keys?\\n\"\n                }],\n            target: {\n                \"response\": \"Hey, thanks for your questions. Here are steps for how to achieve: 1. Log in to the Humanloop Dashboard \\n\\n2. Click on \\\"Organization Settings.\\\"\\n If you do not see this option, you might need to contact your organization admin to gain the necessary permissions.\\n\\n3. Within the settings or organization settings, select the option labeled \\\"API Keys\\\" on the left. Here you will be able to view and manage your API keys.\\n\\n4. You will see a list of existing API keys. You can perform various actions, such as:\\n     - **Generate New API Key:** Click on the \\\"Generate New Key\\\" button if you need a new API key.\\n     - **Revoke an API Key:** If you need to disable an existing key, find the key in the list and click the \\\"Revoke\\\" or \\\"Delete\\\" button.\\n     - **Copy an API Key:** If you need to use an existing key, you can copy it to your clipboard by clicking the \\\"Copy\\\" button next to the key.\\n\\n5. **Save and Secure API Keys:** Make sure to securely store any new or existing API keys you are using. Treat them like passwords and do not share them publicly.\\n\\nIf you encounter any issues or need further assistance, it might be helpful to engage with an engineer or your IT department to ensure you have the necessary permissions and support.\\n\\nWould you need help with anything else?\"\n            }\n        }, {\n            messages: [{\n                    role: \"user\",\n                    content: \"Hey, can do I use my code evaluator for monitoring my legal-copilot prompt?\"\n                }],\n            target: {\n                \"response\": \"Hey, thanks for your questions. Here are steps for how to achieve: 1. Navigate to your Prompt dashboard. \\n 2. Select the `Monitoring` button on the top right of the Prompt dashboard \\n 3. Within the model select the Version of the Evaluator you want to turn on for monitoring. \\n\\nWould you need help with anything else?\"\n            }\n        }],\n    commitMessage: \"Add two new questions and answers\"\n});\n",
                   "generated": true
@@ -54181,7 +54119,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.upsert({\n    path: \"datasets/support-queries\",\n    datapoints: [{\n            messages: [{\n                    role: \"user\",\n                    content: \"How do i manage my organizations API keys?\\n\"\n                }],\n            target: {\n                \"response\": \"Hey, thanks for your questions. Here are steps for how to achieve: 1. Log in to the Humanloop Dashboard \\n\\n2. Click on \\\"Organization Settings.\\\"\\n If you do not see this option, you might need to contact your organization admin to gain the necessary permissions.\\n\\n3. Within the settings or organization settings, select the option labeled \\\"API Keys\\\" on the left. Here you will be able to view and manage your API keys.\\n\\n4. You will see a list of existing API keys. You can perform various actions, such as:\\n     - **Generate New API Key:** Click on the \\\"Generate New Key\\\" button if you need a new API key.\\n     - **Revoke an API Key:** If you need to disable an existing key, find the key in the list and click the \\\"Revoke\\\" or \\\"Delete\\\" button.\\n     - **Copy an API Key:** If you need to use an existing key, you can copy it to your clipboard by clicking the \\\"Copy\\\" button next to the key.\\n\\n5. **Save and Secure API Keys:** Make sure to securely store any new or existing API keys you are using. Treat them like passwords and do not share them publicly.\\n\\nIf you encounter any issues or need further assistance, it might be helpful to engage with an engineer or your IT department to ensure you have the necessary permissions and support.\\n\\nWould you need help with anything else?\"\n            }\n        }, {\n            messages: [{\n                    role: \"user\",\n                    content: \"Hey, can do I use my code evaluator for monitoring my legal-copilot prompt?\"\n                }],\n            target: {\n                \"response\": \"Hey, thanks for your questions. Here are steps for how to achieve: 1. Navigate to your Prompt dashboard. \\n 2. Select the `Monitoring` button on the top right of the Prompt dashboard \\n 3. Within the model select the Version of the Evaluator you want to turn on for monitoring. \\n\\nWould you need help with anything else?\"\n            }\n        }],\n    commitMessage: \"Add two new questions and answers\"\n});\n",
                   "generated": true
@@ -55139,7 +55076,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.get(\"ds_b0baF1ca7652\", {\n    versionId: \"dsv_6L78pqrdFi2xa\",\n    includeDatapoints: true\n});\n",
                   "generated": true
@@ -55189,7 +55125,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.get(\"ds_b0baF1ca7652\", {\n    versionId: \"dsv_6L78pqrdFi2xa\",\n    includeDatapoints: true\n});\n",
                   "generated": true
@@ -55422,7 +55357,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.delete(\"id\");\n",
                   "generated": true
@@ -55469,7 +55403,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.delete(\"id\");\n",
                   "generated": true
@@ -55752,7 +55685,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.move(\"id\");\n",
                   "generated": true
@@ -55803,7 +55735,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.move(\"id\");\n",
                   "generated": true
@@ -56149,7 +56080,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.listDatapoints(\"ds_b0baF1ca7652\", {\n    size: 1\n});\n",
                   "generated": true
@@ -56199,7 +56129,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.listDatapoints(\"ds_b0baF1ca7652\", {\n    size: 1\n});\n",
                   "generated": true
@@ -56509,7 +56438,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.listVersions(\"ds_b0baF1ca7652\", {\n    status: \"committed\"\n});\n",
                   "generated": true
@@ -56558,7 +56486,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.listVersions(\"ds_b0baF1ca7652\", {\n    status: \"committed\"\n});\n",
                   "generated": true
@@ -56835,7 +56762,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.commit(\"ds_b0baF1ca7652\", \"dsv_6L78pqrdFi2xa\", {\n    commitMessage: \"initial commit\"\n});\n",
                   "generated": true
@@ -56889,7 +56815,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.commit(\"ds_b0baF1ca7652\", \"dsv_6L78pqrdFi2xa\", {\n    commitMessage: \"initial commit\"\n});\n",
                   "generated": true
@@ -57261,7 +57186,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\nimport * as fs from \"fs\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.uploadCsv(fs.createReadStream(\"/path/to/your/file\"), \"id\", {\n    commitMessage: \"commit_message\"\n});\n",
                   "generated": true
@@ -57324,7 +57248,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\nimport * as fs from \"fs\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.uploadCsv(fs.createReadStream(\"/path/to/your/file\"), \"id\", {\n    commitMessage: \"commit_message\"\n});\n",
                   "generated": true
@@ -57658,7 +57581,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.setDeployment(\"ds_b0baF1ca7652\", \"staging\", {\n    versionId: \"dsv_6L78pqrdFi2xa\"\n});\n",
                   "generated": true
@@ -57708,7 +57630,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.setDeployment(\"ds_b0baF1ca7652\", \"staging\", {\n    versionId: \"dsv_6L78pqrdFi2xa\"\n});\n",
                   "generated": true
@@ -57948,7 +57869,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.removeDeployment(\"ds_b0baF1ca7652\", \"staging\");\n",
                   "generated": true
@@ -57996,7 +57916,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.removeDeployment(\"ds_b0baF1ca7652\", \"staging\");\n",
                   "generated": true
@@ -58291,7 +58210,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.listEnvironments(\"id\");\n",
                   "generated": true
@@ -58338,7 +58256,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.datasets.listEnvironments(\"id\");\n",
                   "generated": true
@@ -58649,7 +58566,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.list({\n    size: 1\n});\n",
                   "generated": true
@@ -58697,7 +58613,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.list({\n    size: 1\n});\n",
                   "generated": true
@@ -59059,7 +58974,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.upsert({\n    path: \"Shared Evaluators/Accuracy Evaluator\",\n    spec: {\n        argumentsType: \"target_required\",\n        returnType: \"number\",\n        evaluatorType: \"python\",\n        code: \"def evaluate(answer, target):\\n    return 0.5\"\n    },\n    commitMessage: \"Initial commit\"\n});\n",
                   "generated": true
@@ -59114,7 +59028,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.upsert({\n    path: \"Shared Evaluators/Accuracy Evaluator\",\n    spec: {\n        argumentsType: \"target_required\",\n        returnType: \"number\",\n        evaluatorType: \"python\",\n        code: \"def evaluate(answer, target):\\n    return 0.5\"\n    },\n    commitMessage: \"Initial commit\"\n});\n",
                   "generated": true
@@ -60712,7 +60625,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.get(\"ev_890bcd\");\n",
                   "generated": true
@@ -60762,7 +60674,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.get(\"ev_890bcd\");\n",
                   "generated": true
@@ -60980,7 +60891,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.delete(\"ev_890bcd\");\n",
                   "generated": true
@@ -61027,7 +60937,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.delete(\"ev_890bcd\");\n",
                   "generated": true
@@ -61291,7 +61200,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.move(\"ev_890bcd\", {\n    path: \"new directory/new name\"\n});\n",
                   "generated": true
@@ -61342,7 +61250,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.move(\"ev_890bcd\", {\n    path: \"new directory/new name\"\n});\n",
                   "generated": true
@@ -61643,7 +61550,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.listVersions(\"ev_890bcd\");\n",
                   "generated": true
@@ -61693,7 +61599,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.listVersions(\"ev_890bcd\");\n",
                   "generated": true
@@ -61992,7 +61897,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.commit(\"ev_890bcd\", \"evv_012def\", {\n    commitMessage: \"Initial commit\"\n});\n",
                   "generated": true
@@ -62046,7 +61950,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.commit(\"ev_890bcd\", \"evv_012def\", {\n    commitMessage: \"Initial commit\"\n});\n",
                   "generated": true
@@ -62352,7 +62255,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.setDeployment(\"ev_890bcd\", \"staging\", {\n    versionId: \"evv_012def\"\n});\n",
                   "generated": true
@@ -62402,7 +62304,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.setDeployment(\"ev_890bcd\", \"staging\", {\n    versionId: \"evv_012def\"\n});\n",
                   "generated": true
@@ -62642,7 +62543,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.removeDeployment(\"ev_890bcd\", \"staging\");\n",
                   "generated": true
@@ -62690,7 +62590,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.removeDeployment(\"ev_890bcd\", \"staging\");\n",
                   "generated": true
@@ -62935,7 +62834,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.listEnvironments(\"ev_890bcd\");\n",
                   "generated": true
@@ -62982,7 +62880,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.listEnvironments(\"ev_890bcd\");\n",
                   "generated": true
@@ -63688,7 +63585,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.log({\n    parentId: \"parent_id\"\n});\n",
                   "generated": true
@@ -63742,7 +63638,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluators.log({\n    parentId: \"parent_id\"\n});\n",
                   "generated": true
@@ -65954,7 +65849,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.get(\"id\");\n",
                   "generated": true
@@ -66004,7 +65898,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.get(\"id\");\n",
                   "generated": true
@@ -66221,7 +66114,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.delete(\"id\");\n",
                   "generated": true
@@ -66268,7 +66160,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.delete(\"id\");\n",
                   "generated": true
@@ -66619,7 +66510,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.move(\"id\");\n",
                   "generated": true
@@ -66670,7 +66560,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.move(\"id\");\n",
                   "generated": true
@@ -67086,7 +66975,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.list();\n",
                   "generated": true
@@ -67134,7 +67022,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.list();\n",
                   "generated": true
@@ -67576,7 +67463,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.upsert({\n    attributes: {\n        \"key\": \"value\"\n    }\n});\n",
                   "generated": true
@@ -67629,7 +67515,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.upsert({\n    attributes: {\n        \"key\": \"value\"\n    }\n});\n",
                   "generated": true
@@ -68432,7 +68317,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.log();\n",
                   "generated": true
@@ -68484,7 +68368,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.log();\n",
                   "generated": true
@@ -69622,7 +69505,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.updateLog(\"log_id\", {\n    traceStatus: \"complete\"\n});\n",
                   "generated": true
@@ -69675,7 +69557,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.updateLog(\"log_id\", {\n    traceStatus: \"complete\"\n});\n",
                   "generated": true
@@ -70081,7 +69962,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.listVersions(\"id\");\n",
                   "generated": true
@@ -70131,7 +70011,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.listVersions(\"id\");\n",
                   "generated": true
@@ -70500,7 +70379,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.commit(\"id\", \"version_id\", {\n    commitMessage: \"commit_message\"\n});\n",
                   "generated": true
@@ -70554,7 +70432,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.commit(\"id\", \"version_id\", {\n    commitMessage: \"commit_message\"\n});\n",
                   "generated": true
@@ -70930,7 +70807,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.setDeployment(\"id\", \"environment_id\", {\n    versionId: \"version_id\"\n});\n",
                   "generated": true
@@ -70980,7 +70856,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.setDeployment(\"id\", \"environment_id\", {\n    versionId: \"version_id\"\n});\n",
                   "generated": true
@@ -71219,7 +71094,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.removeDeployment(\"id\", \"environment_id\");\n",
                   "generated": true
@@ -71267,7 +71141,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.removeDeployment(\"id\", \"environment_id\");\n",
                   "generated": true
@@ -71562,7 +71435,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.listEnvironments(\"id\");\n",
                   "generated": true
@@ -71609,7 +71481,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.listEnvironments(\"id\");\n",
                   "generated": true
@@ -71907,7 +71778,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient, Humanloop } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.updateMonitoring(\"id\", {});\n",
                   "generated": true
@@ -71958,7 +71828,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient, Humanloop } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.flows.updateMonitoring(\"id\", {});\n",
                   "generated": true
@@ -72566,7 +72435,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.files.list();\n",
                   "generated": true
@@ -72614,7 +72482,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.files.list();\n",
                   "generated": true
@@ -73053,7 +72920,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.list({\n    fileId: \"pr_30gco7dx6JDq4200GVOHa\",\n    size: 1\n});\n",
                   "generated": true
@@ -73102,7 +72968,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.list({\n    fileId: \"pr_30gco7dx6JDq4200GVOHa\",\n    size: 1\n});\n",
                   "generated": true
@@ -73523,7 +73388,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.create({\n    dataset: {\n        versionId: \"dsv_6L78pqrdFi2xa\"\n    },\n    evaluatees: [{\n            versionId: \"prv_7ZlQREDScH0xkhUwtXruN\",\n            orchestrated: false\n        }],\n    evaluators: [{\n            versionId: \"evv_012def\",\n            orchestrated: false\n        }]\n});\n",
                   "generated": true
@@ -73577,7 +73441,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.create({\n    dataset: {\n        versionId: \"dsv_6L78pqrdFi2xa\"\n    },\n    evaluatees: [{\n            versionId: \"prv_7ZlQREDScH0xkhUwtXruN\",\n            orchestrated: false\n        }],\n    evaluators: [{\n            versionId: \"evv_012def\",\n            orchestrated: false\n        }]\n});\n",
                   "generated": true
@@ -74213,7 +74076,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.get(\"ev_567yza\");\n",
                   "generated": true
@@ -74260,7 +74122,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.get(\"ev_567yza\");\n",
                   "generated": true
@@ -74434,7 +74295,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.delete(\"ev_567yza\");\n",
                   "generated": true
@@ -74481,7 +74341,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.delete(\"ev_567yza\");\n",
                   "generated": true
@@ -74903,7 +74762,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.updateSetup(\"ev_567yza\", {\n    dataset: {\n        versionId: \"dsv_6L78pqrdFi2xa\"\n    },\n    evaluatees: [{\n            versionId: \"prv_7ZlQREDScH0xkhUwtXruN\",\n            orchestrated: false\n        }],\n    evaluators: [{\n            versionId: \"evv_012def\",\n            orchestrated: false\n        }]\n});\n",
                   "generated": true
@@ -74954,7 +74812,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.updateSetup(\"ev_567yza\", {\n    dataset: {\n        versionId: \"dsv_6L78pqrdFi2xa\"\n    },\n    evaluatees: [{\n            versionId: \"prv_7ZlQREDScH0xkhUwtXruN\",\n            orchestrated: false\n        }],\n    evaluators: [{\n            versionId: \"evv_012def\",\n            orchestrated: false\n        }]\n});\n",
                   "generated": true
@@ -75639,7 +75496,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.updateStatus(\"id\", {\n    status: \"pending\"\n});\n",
                   "generated": true
@@ -75692,7 +75548,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.updateStatus(\"id\", {\n    status: \"pending\"\n});\n",
                   "generated": true
@@ -75947,7 +75802,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.getStats(\"id\");\n",
                   "generated": true
@@ -75994,7 +75848,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.getStats(\"id\");\n",
                   "generated": true
@@ -76354,7 +76207,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.getLogs(\"id\");\n",
                   "generated": true
@@ -76404,7 +76256,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.evaluations.getLogs(\"id\");\n",
                   "generated": true
@@ -76851,7 +76702,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.logs.list({\n    fileId: \"file_123abc\",\n    size: 1\n});\n",
                   "generated": true
@@ -76900,7 +76750,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.logs.list({\n    fileId: \"file_123abc\",\n    size: 1\n});\n",
                   "generated": true
@@ -77237,7 +77086,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.logs.delete({\n    id: \"string\"\n});\n",
                   "generated": true
@@ -77284,7 +77132,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.logs.delete({\n    id: \"string\"\n});\n",
                   "generated": true
@@ -77495,7 +77342,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.logs.get(\"prv_Wu6zx1lAWJRqOyL8nWuZk\");\n",
                   "generated": true
@@ -77542,7 +77388,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumanloopClient } from \"humanloop\";\n\nconst client = new HumanloopClient({ apiKey: \"YOUR_API_KEY\" });\nawait client.logs.get(\"prv_Wu6zx1lAWJRqOyL8nWuZk\");\n",
                   "generated": true
