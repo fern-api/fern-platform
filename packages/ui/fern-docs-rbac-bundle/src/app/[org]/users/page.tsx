@@ -9,10 +9,10 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { PopoverTrigger } from "@radix-ui/react-popover";
 import { withAuth } from "@workos-inc/authkit-nextjs";
 import { notFound } from "next/navigation";
-import { InviteUsersForm } from "../components/invite-users-form";
-import { RevokeInviteButton } from "../components/revoke-invite-button";
-import { UserRoleButton } from "../components/user-role-button";
-import { UserSummary } from "../components/user-summary";
+import { InviteUsersForm } from "../../../components/invite-users-form";
+import { RevokeInviteButton } from "../../../components/revoke-invite-button";
+import { UserRoleButton } from "../../../components/user-role-button";
+import { UserSummary } from "../../../components/user-summary";
 
 export default async function UsersPage({ params }: { params: Promise<{ org: string }> }): Promise<React.ReactElement> {
     const { org } = await params;

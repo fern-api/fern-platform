@@ -9,10 +9,10 @@ import { isUserAdminOfOrg } from "@/server/fga";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { withAuth } from "@workos-inc/authkit-nextjs";
 import { notFound } from "next/navigation";
-import { CreateRoleForm } from "../components/create-role-form";
-import DeleteRole from "../components/delete-role-button";
-import { RoleSummary } from "../components/role-summary";
-import { UsersForRoleList } from "../components/users-for-role-list";
+import { CreateRoleForm } from "../../../components/create-role-form";
+import DeleteRole from "../../../components/delete-role-button";
+import { RoleSummary } from "../../../components/role-summary";
+import { UsersForRoleList } from "../../../components/users-for-role-list";
 
 export default async function RolesPage({ params }: { params: Promise<{ org: string }> }): Promise<React.ReactElement> {
     const { user } = await withAuth({ ensureSignedIn: true });

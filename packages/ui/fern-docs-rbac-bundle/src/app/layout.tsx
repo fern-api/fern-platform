@@ -1,12 +1,11 @@
 import { ModeToggle } from "@/components/mode-toggle";
+import SignOutButton from "@/components/sign-out-button";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthKitProvider } from "@workos-inc/authkit-nextjs";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Image from "next/image";
-import Link from "next/link";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -50,9 +49,7 @@ export default function RootLayout({
                             className="hidden dark:block"
                         />
                         <div className="flex items-center gap-2">
-                            <Button asChild variant="ghost">
-                                <Link href="/">Sign out</Link>
-                            </Button>
+                            <SignOutButton />
                             <ModeToggle />
                         </div>
                     </header>

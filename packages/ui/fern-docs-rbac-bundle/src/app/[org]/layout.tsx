@@ -1,7 +1,7 @@
 "use server";
 
 import { PropsWithChildren } from "react";
-import { OrgTabs } from "./components/org-tabs";
+import { OrgTabs } from "../../components/org-tabs";
 
 export default async function Home({ children }: PropsWithChildren): Promise<React.ReactElement> {
     return (

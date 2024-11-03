@@ -3,6 +3,8 @@ import { withAuth } from "@workos-inc/authkit-nextjs";
 import { CreateResourceOptions, ResourceOp, WarrantOp } from "@workos-inc/node";
 import { NextRequest, NextResponse } from "next/server";
 
+export const runtime = "edge";
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
     const { organizationId, role } = await withAuth({ ensureSignedIn: true });
 
