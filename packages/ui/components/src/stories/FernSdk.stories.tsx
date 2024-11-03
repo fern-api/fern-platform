@@ -37,11 +37,11 @@ export const Default: Story = {
             },
         },
     },
-    render: (args: typeof Default.args) => {
-        const [{ language }, updateArgs] = useArgs();
+    render: () => {
+        const [{ language, sdks }, updateArgs] = useArgs();
         return (
             <FernSdk
-                {...args}
+                sdks={sdks}
                 language={language}
                 onChange={(language) => {
                     updateArgs({ language });
