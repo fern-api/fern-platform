@@ -49,7 +49,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         const org = await workos().organizations.getOrganization(event.data.organizationId);
         const user = await workos().userManagement.getUser(event.data.userId);
         await workos().fga.writeWarrant({
-            op: WarrantOp.Create,
+            // if the user is inactive, we should delete the warrant
+            op: event.data.status === "inactive" ? WarrantOp.Delete : WarrantOp.Create,
             resource: {
                 resourceType: "org",
                 resourceId: org.name,

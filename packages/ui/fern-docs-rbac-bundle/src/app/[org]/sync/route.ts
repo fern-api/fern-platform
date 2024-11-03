@@ -1,31 +1,32 @@
+import { isUserAdminOfWorkOSOrg } from "@/server/checks";
 import { workos } from "@/workos";
 import { withAuth } from "@workos-inc/authkit-nextjs";
 import { CreateResourceOptions, ResourceOp, WarrantOp } from "@workos-inc/node";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest): Promise<NextResponse> {
-    const { organizationId, role } = await withAuth({ ensureSignedIn: true });
+export async function GET(
+    request: NextRequest,
+    { params }: { params: Promise<{ org: string }> },
+): Promise<NextResponse> {
+    const { org } = await params;
+    const { user } = await withAuth({ ensureSignedIn: true });
 
-    if (!organizationId) {
-        return NextResponse.json(
-            { error: "unauthorized", error_message: "User is not a member of any organization" },
-            { status: 403 },
-        );
+    const organization = await workos()
+        .organizations.listOrganizations()
+        .then((result) => result.autoPagination())
+        .then((result) => result.find((o) => o.name === org));
+
+    if (!organization) {
+        return new NextResponse(null, { status: 404 });
     }
 
-    if (role !== "admin") {
-        return NextResponse.json(
-            { error: "unauthorized", error_message: "User is not allowed to trigger a sync operation" },
-            { status: 403 },
-        );
+    if (!(await isUserAdminOfWorkOSOrg(user, organization.id))) {
+        return new NextResponse(null, { status: 403 });
     }
 
-    const [users, organization] = await Promise.all([
-        workos()
-            .userManagement.listUsers({ organizationId })
-            .then((result) => result.autoPagination()),
-        workos().organizations.getOrganization(organizationId),
-    ]);
+    const users = await workos()
+        .userManagement.listUsers({ organizationId: organization.id })
+        .then((result) => result.autoPagination());
 
     await workos().fga.batchWriteResources({
         op: ResourceOp.Create,

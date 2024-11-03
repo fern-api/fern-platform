@@ -3,9 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 // TODO: this endpoint should be gated by a shared secret between the client and server
 // for now, we'll keep this open
-export async function GET(request: NextRequest): Promise<NextResponse> {
-    const org = request.nextUrl.searchParams.get("org");
-    const email = request.nextUrl.searchParams.get("email");
+export async function GET(
+    _request: NextRequest,
+    { params }: { params: Promise<{ org: string; email: string }> },
+): Promise<NextResponse> {
+    const { org, email } = await params;
 
     if (!org || !email) {
         return new NextResponse(null, { status: 400 });

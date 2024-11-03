@@ -38,20 +38,23 @@ export async function inviteMember(data: { org: string; email: string }): Promis
 
     if (foundUser) {
         // if user exists, we should check if they are already a member of the organization
-        const memberships = await workos()
+        const membership = await workos()
             .userManagement.listOrganizationMemberships({
                 userId: foundUser.id,
+                organizationId,
             })
-            .then((result) => result.autoPagination());
+            .then((result) => result.autoPagination())
+            .then((memberships) => memberships[0]);
 
-        const isMember = memberships.find((membership) => membership.organizationId === organizationId);
-
-        if (!isMember) {
+        if (!membership) {
             // if user is not a member, we should add them to the organization
             await workos().userManagement.createOrganizationMembership({
                 userId: foundUser.id,
                 organizationId,
             });
+        } else if (membership.status === "inactive") {
+            // if user is inactive, we should reactivate them
+            await workos().userManagement.reactivateOrganizationMembership(membership.id);
         }
 
         await workos().fga.createResource({

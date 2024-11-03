@@ -6,6 +6,7 @@ export async function isUserAdminOfWorkOSOrg(user: User, organizationId: string)
         .userManagement.listOrganizationMemberships({
             userId: user.id,
             organizationId,
+            statuses: ["active"],
         })
         .then((result) => result.autoPagination())
         .then((results) => results.find((membership) => membership.role.slug === "admin"));
