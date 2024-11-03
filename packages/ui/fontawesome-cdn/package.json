@@ -50,7 +50,7 @@
     "prettier": "^3.3.2",
     "stylelint": "^16.1.0",
     "typescript": "5.4.3",
-    "vitest": "^1.6.0"
+    "vitest": "^2.1.4"
   },
   "optionalDependencies": {
     "@next/swc-darwin-arm64": "14.2.9",
