@@ -29,8 +29,8 @@
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "date-fns": "^2.30.0",
-    "express": "^4.20.0",
     "es-toolkit": "^1.24.0",
+    "express": "^4.20.0",
     "gray-matter": "^4.0.3",
     "html-to-text": "^9.0.5",
     "httpsnippet": "^2.0.0",
@@ -73,7 +73,7 @@
     "redis": "^4.6.13",
     "tsx": "^4.7.1",
     "typescript": "5.4.3",
-    "vitest": "^1.5.0"
+    "vitest": "^2.1.4"
   },
   "scripts": {
     "compile": "tsc --build",
