@@ -14,8 +14,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     // Lists all the roles that this user is a member of
-    const roles = await workos.fga
-        .listWarrants({
+    const roles = await workos()
+        .fga.listWarrants({
             resourceType: "role",
             relation: "member",
             subjectType: "user",

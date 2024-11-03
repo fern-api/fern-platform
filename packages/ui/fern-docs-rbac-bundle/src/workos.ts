@@ -16,4 +16,4 @@ export function getWorkosWebhookSecret(): string {
     return process.env.WORKOS_WEBHOOK_SECRET;
 }
 
-export const workos = new WorkOS(getWorkosApiKey());
+export const workos = (): WorkOS => new WorkOS(getWorkosApiKey());

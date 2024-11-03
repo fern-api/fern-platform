@@ -12,7 +12,7 @@ export async function deleteRole(org: string, role: string): Promise<void> {
         return;
     }
 
-    await workos.fga.deleteResource({ resourceId: `${org}|${role}`, resourceType: "role" });
+    await workos().fga.deleteResource({ resourceId: `${org}|${role}`, resourceType: "role" });
 
     revalidatePath(`/${org}/roles`, "page");
     revalidatePath(`/${org}/users`, "page");

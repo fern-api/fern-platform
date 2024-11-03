@@ -7,8 +7,8 @@ import { notFound, redirect } from "next/navigation";
 export default async function Home(): Promise<React.ReactElement> {
     const { user } = await withAuth({ ensureSignedIn: true });
 
-    const orgsResult = await workos.fga
-        .query({ q: `select org where user:${user.email} is member` })
+    const orgsResult = await workos()
+        .fga.query({ q: `select org where user:${user.email} is member` })
         .then((result) => result.autoPagination());
 
     if (orgsResult.length === 0) {

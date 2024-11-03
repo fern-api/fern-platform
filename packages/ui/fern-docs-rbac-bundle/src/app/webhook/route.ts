@@ -13,7 +13,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const payload = await request.json();
 
-    const verified = await workos.webhooks.verifyHeader({
+    const verified = await workos().webhooks.verifyHeader({
         sigHeader,
         payload,
         secret: getWorkosWebhookSecret(),
@@ -23,14 +23,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         return new NextResponse(null, { status: 400 });
     }
 
-    const event = await workos.webhooks.constructEvent({
+    const event = await workos().webhooks.constructEvent({
         sigHeader,
         payload,
         secret: getWorkosWebhookSecret(),
     });
 
     if (event.event === "user.created" || event.event === "user.updated") {
-        await workos.fga.createResource({
+        await workos().fga.createResource({
             resource: {
                 resourceType: "user",
                 resourceId: event.data.email,
@@ -43,14 +43,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             },
         });
     } else if (event.event === "user.deleted") {
-        await workos.fga.deleteResource({
+        await workos().fga.deleteResource({
             resourceType: "user",
             resourceId: event.data.email,
         });
     } else if (event.event === "organization_membership.created" || event.event === "organization_membership.updated") {
-        const org = await workos.organizations.getOrganization(event.data.organizationId);
-        const user = await workos.userManagement.getUser(event.data.userId);
-        await workos.fga.writeWarrant({
+        const org = await workos().organizations.getOrganization(event.data.organizationId);
+        const user = await workos().userManagement.getUser(event.data.userId);
+        await workos().fga.writeWarrant({
             op: WarrantOp.Create,
             resource: {
                 resourceType: "org",
@@ -63,9 +63,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             },
         });
     } else if (event.event === "organization_membership.deleted") {
-        const org = await workos.organizations.getOrganization(event.data.organizationId);
-        const user = await workos.userManagement.getUser(event.data.userId);
-        await workos.fga.writeWarrant({
+        const org = await workos().organizations.getOrganization(event.data.organizationId);
+        const user = await workos().userManagement.getUser(event.data.userId);
+        await workos().fga.writeWarrant({
             op: WarrantOp.Delete,
             resource: {
                 resourceType: "org",

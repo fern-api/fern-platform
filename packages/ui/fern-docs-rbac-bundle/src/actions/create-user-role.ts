@@ -13,7 +13,7 @@ export async function createUserRole(email: string, org: string, role: string): 
         throw new Error("Unauthorized");
     }
 
-    await workos.fga.writeWarrant({
+    await workos().fga.writeWarrant({
         op: WarrantOp.Create,
         resource: { resourceType: "role", resourceId: `${org}|${role}` },
         relation: "member",

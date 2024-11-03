@@ -1,8 +1,8 @@
 import { workos } from "@/workos";
 
 export async function isUserAdminOfOrg(email: string, org: string): Promise<boolean> {
-    return workos.fga
-        .check({
+    return workos()
+        .fga.check({
             checks: [
                 {
                     subject: { resourceType: "user", resourceId: email },
@@ -15,8 +15,8 @@ export async function isUserAdminOfOrg(email: string, org: string): Promise<bool
 }
 
 export async function isUserAdminOfDoc(email: string, doc: string): Promise<boolean> {
-    return workos.fga
-        .check({
+    return workos()
+        .fga.check({
             checks: [
                 {
                     subject: { resourceType: "user", resourceId: email },

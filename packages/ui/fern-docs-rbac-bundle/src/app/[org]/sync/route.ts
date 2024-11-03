@@ -21,11 +21,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const [users, organization] = await Promise.all([
-        workos.userManagement.listUsers({ organizationId }).then((result) => result.autoPagination()),
-        workos.organizations.getOrganization(organizationId),
+        workos()
+            .userManagement.listUsers({ organizationId })
+            .then((result) => result.autoPagination()),
+        workos().organizations.getOrganization(organizationId),
     ]);
 
-    await workos.fga.batchWriteResources({
+    await workos().fga.batchWriteResources({
         op: ResourceOp.Create,
         resources: [
             {
@@ -50,7 +52,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         ],
     });
 
-    await workos.fga.batchWriteWarrants(
+    await workos().fga.batchWriteWarrants(
         users.map((user) => ({
             op: WarrantOp.Create,
             resource: {

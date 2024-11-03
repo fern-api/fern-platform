@@ -20,7 +20,7 @@ export async function removeUserFromOrg(email: string, org: string): Promise<voi
     }
 
     // Delete the user from the org in FGA
-    await workos.fga.writeWarrant({
+    await workos().fga.writeWarrant({
         op: WarrantOp.Delete,
         resource: {
             resourceType: "org",
@@ -34,8 +34,8 @@ export async function removeUserFromOrg(email: string, org: string): Promise<voi
     });
 
     // Delete the user from the WorkOS org
-    const organization = await workos.organizations
-        .listOrganizations()
+    const organization = await workos()
+        .organizations.listOrganizations()
         .then((result) => result.autoPagination())
         .then((results) => results.find((organization) => organization.name === org));
 
@@ -58,8 +58,8 @@ export async function removeUserFromOrg(email: string, org: string): Promise<voi
 }
 
 async function deactivateOrganizationMemberships(organizationId: string, email: string): Promise<void> {
-    const user = await workos.userManagement
-        .listUsers({ email, organizationId })
+    const user = await workos()
+        .userManagement.listUsers({ email, organizationId })
         .then((result) => result.autoPagination())
         .then((results) => results.find((user) => user.email === email));
 
@@ -67,23 +67,23 @@ async function deactivateOrganizationMemberships(organizationId: string, email: 
         return;
     }
 
-    const memberships = await workos.userManagement
-        .listOrganizationMemberships({ organizationId, userId: user.id, statuses: ["active"] })
+    const memberships = await workos()
+        .userManagement.listOrganizationMemberships({ organizationId, userId: user.id, statuses: ["active"] })
         .then((result) => result.autoPagination());
 
     for (const membership of memberships) {
-        await workos.userManagement.deactivateOrganizationMembership(membership.id);
+        await workos().userManagement.deactivateOrganizationMembership(membership.id);
     }
 }
 
 async function revokeInvitations(organizationId: string, email: string): Promise<void> {
-    const invitations = await workos.userManagement
-        .listInvitations({ email, organizationId })
+    const invitations = await workos()
+        .userManagement.listInvitations({ email, organizationId })
         .then((result) => result.autoPagination());
 
     for (const invitation of invitations) {
         if (invitation.state === "pending") {
-            await workos.userManagement.revokeInvitation(invitation.id);
+            await workos().userManagement.revokeInvitation(invitation.id);
         }
     }
 }

@@ -42,7 +42,7 @@ export async function updateRoles(data: { email: string; org: string; roles: str
         return;
     }
 
-    await workos.fga.batchWriteWarrants(warrants);
+    await workos().fga.batchWriteWarrants(warrants);
 
     revalidatePath(`/${data.org}/users`, "page");
     revalidatePath(`/${data.org}/roles`, "page");

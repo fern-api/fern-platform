@@ -24,11 +24,11 @@ export async function createRole(data: { org: string; role: string }): Promise<v
         throw new Error("Not admin");
     }
 
-    const resource = await workos.fga.createResource({
+    const resource = await workos().fga.createResource({
         resource: { resourceType: "role", resourceId: `${org}|${role}` },
     });
 
-    await workos.fga.writeWarrant({
+    await workos().fga.writeWarrant({
         resource,
         relation: "parent",
         subject: { resourceType: "org", resourceId: org },
