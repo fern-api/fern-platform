@@ -1,5 +1,5 @@
 import { createLoggingExecutable } from "@utils/createLoggingExecutable";
-import execa from "execa";
+import { execa } from "execa";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
 
@@ -31,7 +31,7 @@ export declare namespace Buf {
     }
 }
 
-export type CLI = (args?: string[]) => execa.ExecaChildProcess<string>;
+export type CLI = (args?: string[]) => ReturnType<typeof execa>;
 
 export class Buf {
     private cli: CLI | undefined;
