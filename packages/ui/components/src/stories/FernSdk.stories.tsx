@@ -1,4 +1,4 @@
-import { useArgs } from "@storybook/preview-api";
+import { useArgs } from "@storybook/client-api";
 import type { Meta, StoryObj } from "@storybook/react";
 import { FernSdk } from "../FernSdk";
 
@@ -37,7 +37,7 @@ export const Default: Story = {
             },
         },
     },
-    render: (args) => {
+    render: (args: typeof Default.args) => {
         const [{ language }, updateArgs] = useArgs();
         return (
             <FernSdk

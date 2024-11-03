@@ -37,7 +37,7 @@ export const ColorSchemes: Story = {
             control: false,
         },
     },
-    render: (args) => {
+    render: (args: StoryObj<typeof meta>["args"]) => {
         const colorSchemes = Object.values(FernTagColorSchemes);
         return (
             <div className="flex flex-col gap-2">
@@ -55,7 +55,7 @@ export const Sizes: Story = {
             control: false,
         },
     },
-    render: (args) => {
+    render: (args: StoryObj<typeof meta>["args"]) => {
         const sizes = Object.values(FernTagSizes);
         return (
             <div className="flex gap-2">
@@ -78,7 +78,7 @@ export const ClassNameOverrides: Story = {
         size: "sm",
         className: "w-11 uppercase",
     },
-    render: (args) => {
+    render: (args: StoryObj<typeof meta>["args"]) => {
         return (
             <div className="flex flex-col gap-2">
                 {methods.map((method) => (

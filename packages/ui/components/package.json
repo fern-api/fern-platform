@@ -48,6 +48,7 @@
     "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
+    "@storybook/client-api": "^7.6.17",
     "clsx": "^2.1.0",
     "copyfiles": "^2.4.1",
     "iconoir-react": "^7.7.0",
