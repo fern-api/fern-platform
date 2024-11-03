@@ -1,8 +1,6 @@
 import { workos } from "@/workos";
 import { NextRequest, NextResponse } from "next/server";
 
-export const runtime = "edge";
-
 // TODO: this endpoint should be gated by a shared secret between the client and server
 // for now, we'll keep this open
 export async function GET(request: NextRequest): Promise<NextResponse> {

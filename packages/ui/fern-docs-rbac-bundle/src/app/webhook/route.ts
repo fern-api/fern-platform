@@ -2,8 +2,6 @@ import { getWorkosWebhookSecret, workos } from "@/workos";
 import { WarrantOp } from "@workos-inc/node";
 import { NextRequest, NextResponse } from "next/server";
 
-export const runtime = "edge";
-
 export async function POST(request: NextRequest): Promise<NextResponse> {
     const sigHeader = request.headers.get("workos-signature");
 
