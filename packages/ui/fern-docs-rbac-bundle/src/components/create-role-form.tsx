@@ -20,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { InlineCode } from "./typography/inline-code";
 
 const FormSchema = z.object({
     role: z.string().regex(/^[a-zA-Z0-9_-]+$/),
@@ -70,7 +71,7 @@ export function CreateRoleForm({ org }: { org: string }): React.ReactElement {
                                 <DialogTitle>Create role</DialogTitle>
                                 <DialogDescription>
                                     Create a new role. Please mirror the roles exactly as defined in your{" "}
-                                    <code>docs.yml</code> file.
+                                    <InlineCode>docs.yml</InlineCode> file.
                                 </DialogDescription>
                             </DialogHeader>
                             <FormField

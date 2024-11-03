@@ -1,5 +1,6 @@
 "use server";
 
+import { InlineCode } from "@/components/typography/inline-code";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -42,7 +43,7 @@ export default async function RolesPage({ params }: { params: Promise<{ org: str
                                 <DialogContent>
                                     <DialogHeader>
                                         <DialogTitle>
-                                            Manage users for <code>{role}</code>
+                                            Manage users for <InlineCode>{role}</InlineCode>
                                         </DialogTitle>
                                     </DialogHeader>
                                     <UsersForRoleList role={role} org={org} />
