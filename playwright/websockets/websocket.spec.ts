@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import execa from "execa";
+import { execa } from "execa";
 import { addPreviewCookie, generatePreviewContext } from "../utils/utils";
 
 const target = "https://test-websocket-reference.docs.buildwithfern.com";
