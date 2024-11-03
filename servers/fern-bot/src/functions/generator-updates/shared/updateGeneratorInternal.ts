@@ -146,7 +146,8 @@ export async function updateVersionInternal(
     for (const fernWorkspacePath of fernWorkspaces) {
         let maybeOrganization: string | undefined;
         try {
-            maybeOrganization = cleanStdout((await execFernCli("organization", fullRepoPath)).stdout);
+            const result = await execFernCli("organization", fullRepoPath);
+            maybeOrganization = cleanStdout(typeof result.stdout === "string" ? result.stdout : "");
             console.log(`Found organization ID: ${maybeOrganization}`);
         } catch (error) {
             console.error(
@@ -177,7 +178,8 @@ export async function updateVersionInternal(
                 return formatChangelogResponses(fromVersion, await getCliChangelog(fdrUrl, fromVersion, toVersion));
             },
             getEntityVersion: async () => {
-                return cleanStdout((await execFernCli("--version", fernWorkspacePath)).stdout);
+                const result = await execFernCli("--version", fernWorkspacePath);
+                return cleanStdout(typeof result.stdout === "string" ? result.stdout : "");
             },
             slackClient,
             maybeOrganization,
@@ -234,7 +236,8 @@ export async function updateVersionInternal(
                             if (apiName !== NO_API_FALLBACK_KEY) {
                                 command += ` --api ${apiName}`;
                             }
-                            return cleanStdout((await execFernCli(command, fernWorkspacePath)).stdout);
+                            const result = await execFernCli(command, fernWorkspacePath);
+                            return cleanStdout(typeof result.stdout === "string" ? result.stdout : "");
                         },
                         maybeGetGeneratorMetadata: async () => {
                             return {

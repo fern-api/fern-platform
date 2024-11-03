@@ -96,7 +96,8 @@
     "esbuild": "0.20.2",
     "jsonpath-plus": "10.0.0",
     "markdown-to-jsx": "7.4.0",
-    "webpack": "5.94.0"
+    "webpack": "5.94.0",
+    "clipboardy": "4.0.0"
   },
   "dependenciesMeta": {
     "jsonc-parser@2.2.1": {

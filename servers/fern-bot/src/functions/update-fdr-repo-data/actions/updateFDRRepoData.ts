@@ -52,7 +52,8 @@ async function updateRepoDb(
         try {
             // Try this to see if it's a fern config repo, there are probably better ways to do this
             const generatorsList = await getGenerators(fernWorkspacePath);
-            const organizationId = cleanFernStdout((await execFernCli("organization", fernWorkspacePath)).stdout);
+            const result = await execFernCli("organization", fernWorkspacePath);
+            const organizationId = cleanFernStdout(typeof result.stdout === "string" ? result.stdout : "");
 
             // Update config repo in FDR
             const upsertResponse = await client.git.upsertRepository({
