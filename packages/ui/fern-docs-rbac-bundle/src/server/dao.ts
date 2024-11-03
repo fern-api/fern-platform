@@ -1,4 +1,5 @@
 import { workos } from "@/workos";
+import { Organization, WarrantOp, User as WorkOSUser } from "@workos-inc/node";
 import { z } from "zod";
 
 const UserMetaSchema = z.object({
@@ -83,4 +84,26 @@ export async function getPendingInvitesOfOrg(org: string): Promise<PendingInvite
         .then((result) => result.autoPagination());
 
     return invites.filter((invite) => invite.state === "pending").map((invite) => ({ email: invite.email }));
+}
+
+export async function getWorkosUserByEmail(email: string): Promise<WorkOSUser | undefined> {
+    const result = await workos().userManagement.listUsers({ email });
+    const users = await result.autoPagination();
+    return users[0];
+}
+
+export async function getWorkosOrganizationByName(name: string): Promise<Organization | undefined> {
+    const result = await workos().organizations.listOrganizations();
+    const organizations = await result.autoPagination();
+    return organizations.find((org) => org.name === name);
+}
+
+export async function deleteUserFromOrg(email: string, org: string): Promise<void> {
+    const client = workos();
+    await client.fga.writeWarrant({
+        op: WarrantOp.Delete,
+        resource: { resourceType: "org", resourceId: org },
+        relation: "member",
+        subject: { resourceType: "user", resourceId: email },
+    });
 }

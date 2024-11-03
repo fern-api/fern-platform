@@ -1,4 +1,5 @@
 import { isUserAdminOfWorkOSOrg } from "@/server/checks";
+import { getWorkosOrganizationByName } from "@/server/dao";
 import { workos } from "@/workos";
 import { withAuth } from "@workos-inc/authkit-nextjs";
 import { CreateResourceOptions, ResourceOp, WarrantOp } from "@workos-inc/node";
@@ -11,11 +12,7 @@ export async function GET(
     const { org } = await params;
     const { user } = await withAuth({ ensureSignedIn: true });
 
-    const organization = await workos()
-        .organizations.listOrganizations()
-        .then((result) => result.autoPagination())
-        .then((result) => result.find((o) => o.name === org));
-
+    const organization = await getWorkosOrganizationByName(org);
     if (!organization) {
         return new NextResponse(null, { status: 404 });
     }

@@ -1,10 +1,10 @@
 "use server";
 
 import { isUserAdminOfWorkOSOrg } from "@/server/checks";
+import { deleteUserFromOrg, getWorkosOrganizationByName } from "@/server/dao";
 import { isUserAdminOfOrg } from "@/server/fga";
 import { workos } from "@/workos";
 import { withAuth } from "@workos-inc/authkit-nextjs";
-import { WarrantOp } from "@workos-inc/node";
 import { revalidatePath } from "next/cache";
 
 export async function removeUserFromOrg(email: string, org: string): Promise<void> {
@@ -20,24 +20,10 @@ export async function removeUserFromOrg(email: string, org: string): Promise<voi
     }
 
     // Delete the user from the org in FGA
-    await workos().fga.writeWarrant({
-        op: WarrantOp.Delete,
-        resource: {
-            resourceType: "org",
-            resourceId: org,
-        },
-        relation: "member",
-        subject: {
-            resourceType: "user",
-            resourceId: email,
-        },
-    });
+    await deleteUserFromOrg(email, org);
 
     // Delete the user from the WorkOS org
-    const organization = await workos()
-        .organizations.listOrganizations()
-        .then((result) => result.autoPagination())
-        .then((results) => results.find((organization) => organization.name === org));
+    const organization = await getWorkosOrganizationByName(org);
 
     if (!organization) {
         revalidatePath(`/${org}/users`);

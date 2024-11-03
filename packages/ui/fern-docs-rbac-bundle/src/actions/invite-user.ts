@@ -1,5 +1,6 @@
 "use server";
 
+import { getWorkosOrganizationByName, getWorkosUserByEmail } from "@/server/dao";
 import { isUserAdminOfOrg } from "@/server/fga";
 import { workos } from "@/workos";
 import { withAuth } from "@workos-inc/authkit-nextjs";
@@ -20,28 +21,21 @@ export async function inviteMember(data: { org: string; email: string }): Promis
         throw new Error("Unauthorized");
     }
 
-    const organizations = await workos()
-        .organizations.listOrganizations()
-        .then((result) => result.autoPagination());
+    const organization = await getWorkosOrganizationByName(data.org);
 
-    const organizationId = organizations.find((org) => org.name === data.org)?.id;
-
-    if (!organizationId) {
+    if (!organization) {
         throw new Error("Organization not found");
     }
 
     // Check if the user already exists in WorkOS under the organization
-    const foundUser = await workos()
-        .userManagement.listUsers({ email: data.email })
-        .then((result) => result.autoPagination())
-        .then((users) => users.filter((user) => user.email === data.email)[0]);
+    const foundUser = await getWorkosUserByEmail(data.email);
 
     if (foundUser) {
         // if user exists, we should check if they are already a member of the organization
         const membership = await workos()
             .userManagement.listOrganizationMemberships({
                 userId: foundUser.id,
-                organizationId,
+                organizationId: organization.id,
             })
             .then((result) => result.autoPagination())
             .then((memberships) => memberships[0]);
@@ -50,7 +44,7 @@ export async function inviteMember(data: { org: string; email: string }): Promis
             // if user is not a member, we should add them to the organization
             await workos().userManagement.createOrganizationMembership({
                 userId: foundUser.id,
-                organizationId,
+                organizationId: organization.id,
             });
         } else if (membership.status === "inactive") {
             // if user is inactive, we should reactivate them
@@ -86,7 +80,7 @@ export async function inviteMember(data: { org: string; email: string }): Promis
     // if the user does not exist, we should create them in WorkOS
     const invitation = await workos().userManagement.sendInvitation({
         email: data.email,
-        organizationId,
+        organizationId: organization.id,
         inviterUserId: user.id,
     });
 
