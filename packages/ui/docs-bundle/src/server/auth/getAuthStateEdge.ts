@@ -1,7 +1,7 @@
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest } from "next/server";
 import { getDocsDomainEdge, getHostEdge } from "../xfernhost/edge";
-import { AuthState, getAuthState } from "./getAuthState";
+import { getAuthState } from "./getAuthState";
 
 /**
  * @param request - the request to check the headers / cookies
@@ -11,7 +11,7 @@ export async function getAuthStateEdge(
     request: NextRequest,
     pathname?: string,
     setFernToken?: (token: string) => void,
-): Promise<AuthState> {
+): ReturnType<typeof getAuthState> {
     const domain = getDocsDomainEdge(request);
     const host = getHostEdge(request);
     const fern_token = request.cookies.get(COOKIE_FERN_TOKEN)?.value;
