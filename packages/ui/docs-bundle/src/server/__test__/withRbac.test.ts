@@ -59,7 +59,7 @@ describe("withBasicTokenAnonymousCheck", () => {
         ).toBe(Gate.ALLOW);
     });
 
-    it.only("should allow childless non-leaf nodes that have content", () => {
+    it("should allow childless non-leaf nodes that have content", () => {
         expect(
             withBasicTokenAnonymousCheck({ allowlist: ["/public"] })({
                 type: "section",
@@ -71,7 +71,7 @@ describe("withBasicTokenAnonymousCheck", () => {
         ).toBe(Gate.ALLOW);
     });
 
-    it.only("should deny childless non-leaf nodes that do not have content", () => {
+    it("should deny childless non-leaf nodes that do not have content", () => {
         expect(
             withBasicTokenAnonymousCheck({ denylist: ["/private"] })({
                 type: "section",
