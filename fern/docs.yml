@@ -2,6 +2,10 @@ instances:
   - url: https://fern-internal.docs.buildwithfern.com
     private: true
 title: Fern Internal Docs
+
+roles:
+  - testing
+
 navigation:
   - page: Welcome
     path: ./docs/pages/welcome.mdx
@@ -9,6 +13,8 @@ navigation:
     contents:
       - page: Enable API Playground
         path: ./docs/pages/enable-api-playground.mdx
+        viewers:
+          - testing
       - page: Configure Custom Domain
         path: ./docs/pages/configure-custom-domain.mdx
       - page: Configure Segment for a new Customer

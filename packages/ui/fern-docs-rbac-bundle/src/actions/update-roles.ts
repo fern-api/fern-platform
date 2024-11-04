@@ -46,4 +46,5 @@ export async function updateRoles(data: { email: string; org: string; roles: str
 
     revalidatePath(`/${data.org}/users`, "page");
     revalidatePath(`/${data.org}/roles`, "page");
+    revalidatePath(`/${data.org}/users/${data.email}/roles`);
 }

@@ -22,4 +22,5 @@ export async function deleteUserRole(email: string, org: string, role: string): 
 
     revalidatePath(`/${org}/roles`, "page");
     revalidatePath(`/${org}/users`, "page");
+    revalidatePath(`/${org}/users/${email}/roles`, "page");
 }

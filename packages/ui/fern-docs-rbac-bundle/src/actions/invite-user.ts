@@ -96,5 +96,6 @@ export async function inviteMember(data: { org: string; email: string }): Promis
         });
     }
 
+    revalidatePath(`/${data.org}/users`);
     return { type: "invite-sent" };
 }
