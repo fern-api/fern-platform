@@ -1,20 +1,18 @@
-import execa, { ExecaReturnValue } from "execa";
+import { execa, Options as ExecaOptions, Result } from "execa";
 
 export declare namespace loggingExeca {
-    export interface Options extends execa.Options {
+    export interface Options extends ExecaOptions {
         doNotPipeOutput?: boolean;
         secrets?: string[];
         substitutions?: Record<string, string>;
     }
-
-    export type ReturnValue = ExecaReturnValue;
 }
 
 export async function loggingExeca(
     executable: string,
     args: string[] = [],
     { doNotPipeOutput = false, secrets = [], substitutions = {}, ...execaOptions }: loggingExeca.Options = {},
-): Promise<ExecaReturnValue> {
+): Promise<Result<ExecaOptions>> {
     const allSubstitutions = secrets.reduce(
         (acc, secret) => ({
             ...acc,

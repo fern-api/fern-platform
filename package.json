@@ -88,14 +88,16 @@
     "turbo": "^2.1.2",
     "typescript": "5.4.3",
     "typescript-plugin-css-modules": "^5.1.0",
-    "vitest": "^1.6.0"
+    "vitest": "^2.1.4"
   },
   "resolutions": {
     "micromatch": "4.0.8",
     "postcss": "8.4.31",
     "esbuild": "0.20.2",
     "jsonpath-plus": "10.0.0",
-    "markdown-to-jsx": "7.4.0"
+    "markdown-to-jsx": "7.4.0",
+    "webpack": "5.94.0",
+    "clipboardy": "4.0.0"
   },
   "dependenciesMeta": {
     "jsonc-parser@2.2.1": {
