@@ -102,10 +102,12 @@ export async function getAuthStateInternal({
         const session = fernToken != null ? await getSessionFromToken(fernToken) : undefined;
         const workosUserInfo = await toSessionUserInfo(session);
         if (workosUserInfo.user) {
+            // TODO: should this be stored in the session itself?
+            const roles = await getWorkosRbacRoles(authConfig.organization, workosUserInfo.user.email);
             return {
                 authed: true,
                 ok: true,
-                user: toFernUser(workosUserInfo),
+                user: toFernUser(workosUserInfo, roles),
                 partner: authConfig.partner,
             };
         }
@@ -116,10 +118,12 @@ export async function getAuthStateInternal({
                 if (setFernToken) {
                     setFernToken(await encryptSession(updatedSession));
                 }
+                // TODO: should this be stored in the session itself?
+                const roles = await getWorkosRbacRoles(authConfig.organization, updatedSession.user.email);
                 return {
                     authed: true,
                     ok: true,
-                    user: toFernUser(await toSessionUserInfo(updatedSession)),
+                    user: toFernUser(await toSessionUserInfo(updatedSession), roles),
                     partner: authConfig.partner,
                 };
             }
@@ -204,4 +208,21 @@ function getAuthorizationUrl(authConfig: AuthEdgeConfig, host: string, pathname?
     }
 
     return undefined;
+}
+
+export async function getWorkosRbacRoles(org: string, email: string): Promise<string[]> {
+    try {
+        // TODO: use `rbac.ferndocs.dev` for staging, and `rbac.ferndocs.com` for production, once available
+        const roles = await fetch(
+            `https://rbac.ferndocs.dev/${encodeURIComponent(org)}/users/${encodeURIComponent(email)}/roles`,
+        ).then((res) => res.json());
+        if (Array.isArray(roles)) {
+            return roles.filter((role) => typeof role === "string");
+        }
+        return [];
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(`Error fetching RBAC roles for ${org}/${email}: ${error}`);
+        return [];
+    }
 }
