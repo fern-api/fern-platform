@@ -6,14 +6,17 @@ import { toFernUser } from "./workos-user-to-fern-user";
 
 // "user" is reserved for workos
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function signFernJWT(fern: FernUser, user?: any): Promise<string> {
-    return new SignJWT({ fern, user })
+interface Opts {
+    secret?: string;
+    issuer?: string;
+}
+export function signFernJWT(fern: FernUser, { secret, issuer }: Opts = {}): Promise<string> {
+    return new SignJWT({ fern })
         .setProtectedHeader({ alg: "HS256", typ: "JWT" })
         .setIssuedAt()
         .setExpirationTime("30d")
-        .setIssuer("https://buildwithfern.com")
-        .sign(getJwtTokenSecret());
+        .setIssuer(issuer ?? "https://buildwithfern.com")
+        .sign(getJwtTokenSecret(secret));
 }
 
 export async function verifyFernJWT(token: string, secret?: string, issuer?: string): Promise<FernUser> {
@@ -42,7 +45,6 @@ export async function verifyFernJWTConfig(token: string, authConfig: AuthEdgeCon
         }
     }
 
-    // TODO: validate workos token and organization
     throw new Error("Auth config type is not supported");
 }
 
@@ -56,7 +58,7 @@ export async function safeVerifyFernJWTConfig(
         }
     } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        console.debug(String(e));
     }
 
     return undefined;

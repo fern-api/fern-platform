@@ -12,15 +12,19 @@ import { toFernUser } from "./workos-user-to-fern-user";
 
 export type AuthPartner = "workos" | "ory" | "webflow" | "custom";
 
-interface AuthStateBase {
+interface DomainAndHost {
     /**
      * x-fern-host (NOT the host of the request)
      */
     domain: string;
+
     /**
      * The host of the request
      */
     host: string;
+}
+
+interface AuthStateBase {
     /**
      * If true, the request is allowed to pass through
      * Otherwise, the request must be redirected to the authorizationUrl, or return a 401, or 403
@@ -60,6 +64,74 @@ interface IsLoggedIn extends AuthStateBase {
 export type AuthState = NotLoggedIn | IsLoggedIn;
 
 /**
+ * @internal visible for testing
+ */
+export async function getAuthStateInternal({
+    host,
+    fernToken,
+    pathname,
+    authConfig,
+    setFernToken,
+}: {
+    host: string;
+    fernToken: string | undefined;
+    pathname?: string;
+    authConfig?: AuthEdgeConfig;
+    setFernToken?: (token: string) => void;
+}): Promise<AuthState> {
+    // if the auth type is neither sso nor basic_token_verification, allow the request to pass through
+    if (!authConfig) {
+        return { authed: false, ok: true, authorizationUrl: undefined, partner: undefined };
+    }
+
+    const authorizationUrl = getAuthorizationUrl(authConfig, host, pathname);
+
+    // check if the request is allowed to pass through without authentication
+    if (authConfig.type === "basic_token_verification" || authConfig.type === "oauth2") {
+        const user = await safeVerifyFernJWTConfig(fernToken, authConfig);
+        const partner = authConfig.type === "oauth2" ? authConfig.partner : "custom";
+        if (user) {
+            return { authed: true, ok: true, user, partner };
+        } else {
+            return { authed: false, ok: true, authorizationUrl, partner };
+        }
+    }
+
+    // check if the user is logged in via WorkOS
+    if (authConfig.type === "sso" && authConfig.partner === "workos") {
+        const session = fernToken != null ? await getSessionFromToken(fernToken) : undefined;
+        const workosUserInfo = await toSessionUserInfo(session);
+        if (workosUserInfo.user) {
+            return {
+                authed: true,
+                ok: true,
+                user: toFernUser(workosUserInfo),
+                partner: authConfig.partner,
+            };
+        }
+
+        if (session?.refreshToken) {
+            const updatedSession = await refreshSession(session);
+            if (updatedSession) {
+                if (setFernToken) {
+                    setFernToken(await encryptSession(updatedSession));
+                }
+                return {
+                    authed: true,
+                    ok: true,
+                    user: toFernUser(await toSessionUserInfo(updatedSession)),
+                    partner: authConfig.partner,
+                };
+            }
+        }
+
+        return { authed: false, ok: false, authorizationUrl, partner: authConfig.partner };
+    }
+
+    return { authed: false, ok: false, authorizationUrl: undefined, partner: undefined };
+}
+
+/**
  * Check if the user is logged in and the session is valid for the current docs.
  * - if the auth config is not present, assume that the site is available to the public
  * - if the auth config is present, check if the user is logged in and the session is valid for the current docs
@@ -75,63 +147,18 @@ export async function getAuthState(
     pathname?: string,
     authConfig?: AuthEdgeConfig,
     setFernToken?: (token: string) => void,
-): Promise<AuthState> {
+): Promise<AuthState & DomainAndHost> {
     authConfig ??= await getAuthEdgeConfig(domain);
 
-    // if the auth type is neither sso nor basic_token_verification, allow the request to pass through
-    if (!authConfig) {
-        return { domain, host, authed: false, ok: true, authorizationUrl: undefined, partner: undefined };
-    }
+    const authState = await getAuthStateInternal({
+        host,
+        fernToken,
+        pathname,
+        authConfig,
+        setFernToken,
+    });
 
-    const authorizationUrl = getAuthorizationUrl(authConfig, host, pathname);
-
-    // check if the request is allowed to pass through without authentication
-    if (authConfig.type === "basic_token_verification" || authConfig.type === "oauth2") {
-        const user = await safeVerifyFernJWTConfig(fernToken, authConfig);
-        const partner = authConfig.type === "oauth2" ? authConfig.partner : "custom";
-        if (user) {
-            return { domain, host, authed: true, ok: true, user, partner };
-        } else {
-            return { domain, host, authed: false, ok: true, authorizationUrl, partner };
-        }
-    }
-
-    // check if the user is logged in via WorkOS
-    if (authConfig.type === "sso" && authConfig.partner === "workos") {
-        const session = fernToken != null ? await getSessionFromToken(fernToken) : undefined;
-        const workosUserInfo = await toSessionUserInfo(session);
-        if (workosUserInfo.user) {
-            return {
-                domain,
-                host,
-                authed: true,
-                ok: true,
-                user: toFernUser(workosUserInfo),
-                partner: authConfig.partner,
-            };
-        }
-
-        if (session?.refreshToken) {
-            const updatedSession = await refreshSession(session);
-            if (updatedSession) {
-                if (setFernToken) {
-                    setFernToken(await encryptSession(updatedSession));
-                }
-                return {
-                    domain,
-                    host,
-                    authed: true,
-                    ok: true,
-                    user: toFernUser(await toSessionUserInfo(updatedSession)),
-                    partner: authConfig.partner,
-                };
-            }
-        }
-
-        return { domain, host, authed: false, ok: false, authorizationUrl, partner: authConfig.partner };
-    }
-
-    return { domain, host, authed: false, ok: false, authorizationUrl: undefined, partner: undefined };
+    return { ...authState, domain, host };
 }
 
 function getAuthorizationUrl(authConfig: AuthEdgeConfig, host: string, pathname?: string): string | undefined {
@@ -140,11 +167,9 @@ function getAuthorizationUrl(authConfig: AuthEdgeConfig, host: string, pathname?
     const state = urlJoin(removeTrailingSlash(withDefaultProtocol(host)), pathname ?? "");
 
     if (authConfig.type === "basic_token_verification") {
-        if (!pathname) {
-            return authConfig.redirect;
-        }
-
+        const redirectUri = urlJoin(removeTrailingSlash(withDefaultProtocol(host)), "/api/fern-docs/auth/jwt/callback");
         const destination = new URL(authConfig.redirect);
+        destination.searchParams.set("redirect_uri", redirectUri);
         destination.searchParams.set("state", state);
         return destination.toString();
     } else if (authConfig.type === "sso" && authConfig.partner === "workos") {
