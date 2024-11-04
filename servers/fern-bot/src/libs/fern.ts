@@ -1,15 +1,11 @@
-import execa from "execa";
-import { readFile, readdir } from "fs/promises";
+import { execa, Options, Result } from "execa";
+import { readdir, readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import tmp from "tmp-promise";
 import { doesPathExist } from "./fs";
 
-export async function execFernCli(
-    command: string,
-    cwd?: string,
-    pipeYes: boolean = false,
-): Promise<execa.ExecaChildProcess<string>> {
+export async function execFernCli(command: string, cwd?: string, pipeYes: boolean = false): Promise<Result<Options>> {
     console.log(`Running command on fern CLI: ${command}`);
     const commandParts = command.split(" ");
     try {
@@ -26,7 +22,7 @@ export async function execFernCli(
         // Re-install the CLI to ensure it's at the correct path, given the updated config
         await execa("npm", ["install", "-g", "fern-api"]);
 
-        let command: execa.ExecaChildProcess<string>;
+        let command: Promise<Result<Options>>;
         // If you don't have node_modules/fern-api, try using the CLI directly
         if (!(await doesPathExist(`${process.cwd()}/node_modules/fern-api`))) {
             // TODO: is there a better way to pipe `yes`? Piping the output of the real `yes` command doesn't work -- resulting in an EPIPE error.

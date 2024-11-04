@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@fern-ui/loadable": "workspace:*",
-    "@tanstack/react-query": "^4.29.7",
+    "@tanstack/react-query": "^4.36.1",
     "react": "^18.2.0"
   },
   "devDependencies": {
@@ -40,11 +40,11 @@
     "@types/react": "^18.0.20",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
-    "vitest": "^1.5.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.3.2",
     "stylelint": "^16.1.0",
     "typescript": "5.4.3",
-    "vite": "^5.4.6"
+    "vite": "^5.4.6",
+    "vitest": "^2.1.4"
   }
 }
