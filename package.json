@@ -91,6 +91,8 @@
     "vitest": "^2.1.4"
   },
   "resolutions": {
+    "cookie": "0.7.0",
+    "elliptic": "6.6.0",
     "micromatch": "4.0.8",
     "postcss": "8.4.31",
     "esbuild": "0.20.2",
