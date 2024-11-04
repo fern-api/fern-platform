@@ -10,8 +10,6 @@ import {
     convertDocsDefinitionToRead,
     migrateDocsDbDefinition,
     visitDbNavigationConfig,
-    CONTINUE,
-    STOP,
 } from "@fern-api/fdr-sdk";
 import { AuthType, type IndexSegment } from "@prisma/client";
 import { keyBy } from "es-toolkit";
@@ -251,12 +249,12 @@ export function getSearchInfoFromDocs({
         FernNavigation.traverseBF(latestRoot, (node) => {
             if (node.type === "versioned") {
                 searchInfo = getVersionedSearchInfoFromDocs(activeIndexSegments, app);
-                return STOP;
+                return false;
             } else if (node.type === "unversioned") {
                 searchInfo = getUnversionedSearchInfoFromDocs(activeIndexSegments, app);
-                return STOP;
+                return false;
             }
-            return CONTINUE;
+            return true;
         });
         if (searchInfo != null) {
             return searchInfo;
