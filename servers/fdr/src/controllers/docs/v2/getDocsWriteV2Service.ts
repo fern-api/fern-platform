@@ -1,5 +1,6 @@
 import {
     APIV1Db,
+    convertDbAPIDefinitionToRead,
     convertDocsDefinitionToDb,
     convertDocsDefinitionToRead,
     DocsV1Db,
@@ -10,6 +11,7 @@ import {
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { generateAlgoliaRecords } from "@fern-ui/fern-docs-search-server";
 import { AuthType } from "@prisma/client";
+import { mapValues } from "es-toolkit";
 import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
 import { DocsV2WriteService } from "../../../api";
@@ -26,6 +28,7 @@ import { type FdrApplication } from "../../../app";
 import { AlgoliaSearchRecord, IndexSegment } from "../../../services/algolia";
 import { type S3DocsFileInfo } from "../../../services/s3";
 import { WithoutQuestionMarks } from "../../../util";
+import { getFilesV2 } from "../../../util/getFilesV2";
 import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
 import { getSearchInfoFromDocs } from "../v1/getDocsReadService";
 
@@ -322,7 +325,7 @@ async function uploadToAlgoliaForRegistration(
 async function uploadToAlgolia(
     app: FdrApplication,
     url: ParsedBaseUrl,
-    dbDocsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb.V3>,
+    dbDocsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb>,
     apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>,
     algoliaIndex?: FernRegistry.AlgoliaSearchIndex,
     docsConfigInstanceId?: DocsV1Write.DocsConfigId,
@@ -341,7 +344,7 @@ async function uploadToAlgolia(
     app.logger.debug(`[${url.getFullUrl()}] Generating search records for all versions`);
 
     let searchRecords: AlgoliaSearchRecord[] = [];
-    if (dbDocsDefinition.config.root != null) {
+    if (dbDocsDefinition.config.root == null) {
         searchRecords = await app.services.algolia.generateSearchRecords({
             url: url.getFullUrl(),
             docsDefinition: dbDocsDefinition,
@@ -357,8 +360,8 @@ async function uploadToAlgolia(
             definition: convertDocsDefinitionToRead({
                 docsDbDefinition: dbDocsDefinition,
                 algoliaSearchIndex: algoliaIndex,
-                filesV2: dbDocsDefinition.files,
-                apis: apiDefinitionsById,
+                filesV2: await getFilesV2(dbDocsDefinition, app),
+                apis: mapValues(apiDefinitionsById, (def) => convertDbAPIDefinitionToRead(def)),
                 id: docsConfigInstanceId ?? DocsV1Write.DocsConfigId(""),
                 search: getSearchInfoFromDocs({
                     algoliaIndex,
