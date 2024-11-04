@@ -10,8 +10,9 @@ import {
     convertDocsDefinitionToRead,
     migrateDocsDbDefinition,
     visitDbNavigationConfig,
+    CONTINUE,
+    STOP,
 } from "@fern-api/fdr-sdk";
-import { CONTINUE, STOP } from "@fern-api/fdr-sdk/src/utils/traversers/types";
 import { AuthType, type IndexSegment } from "@prisma/client";
 import { keyBy } from "es-toolkit";
 import { mapValues } from "lodash-es";
