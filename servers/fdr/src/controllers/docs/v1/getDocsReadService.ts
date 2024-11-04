@@ -223,7 +223,7 @@ function getUnversionedSearchInfoFromDocs(
     };
 }
 
-function getSearchInfoFromDocs({
+export function getSearchInfoFromDocs({
     algoliaIndex,
     indexSegmentIds,
     activeIndexSegments,
