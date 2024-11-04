@@ -3,6 +3,7 @@ import { mapValues } from "es-toolkit";
 import { DocsV1Db, DocsV1Read } from "../../client";
 import { SearchInfo } from "../../client/FdrAPI";
 import { FernRegistry } from "../../client/generated";
+import { convertDbAPIDefinitionToRead } from "./convertDbAPIDefinitionToRead";
 import { convertDbDocsConfigToRead } from "./convertDbDocsConfigToRead";
 
 export function convertDocsDefinitionToRead({
@@ -36,13 +37,7 @@ export function convertDocsDefinitionToRead({
 function convertDbApisToRead(
     apis: Record<DocsV1Db.ApiDefinitionId, FernRegistry.api.v1.db.DbApiDefinition>,
 ): Record<FernRegistry.ApiDefinitionId, FernRegistry.api.v1.read.ApiDefinition> {
-    return mapValues(apis, (api) => convertDbApiDefinitionToRead(api));
-}
-
-function convertDbApiDefinitionToRead(
-    api: FernRegistry.api.v1.db.DbApiDefinition,
-): FernRegistry.api.v1.read.ApiDefinition {
-    return convertDbApiDefinitionToRead(api);
+    return mapValues(apis, (api) => convertDbAPIDefinitionToRead(api));
 }
 
 function convertDbFilesToRead(
