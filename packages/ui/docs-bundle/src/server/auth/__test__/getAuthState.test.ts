@@ -4,6 +4,8 @@ import { getAuthStateInternal } from "../getAuthState";
 import * as session from "../workos-session";
 
 describe("getAuthState", () => {
+    const host = "docs.test.com";
+
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const TEST_JWT_SECRET = process.env.JWT_SECRET_KEY!;
     const ISSUER = "https://f";
@@ -20,14 +22,14 @@ describe("getAuthState", () => {
     it("should not throw an error if the Fern JWT is invalid", async () => {
         await expect(
             getAuthStateInternal({
-                host: "localhost:3000",
+                host,
                 fernToken: "bad_token",
             }),
         ).resolves.not.toThrowError();
 
         await expect(
             getAuthStateInternal({
-                host: "localhost:3000",
+                host,
                 fernToken: await new SignJWT({
                     fern: {},
                     exp: "bad_token",
@@ -47,7 +49,7 @@ describe("getAuthState", () => {
         };
 
         const authStateBadToken = await getAuthStateInternal({
-            host: "docs.test.com",
+            host,
             fernToken: "bad_token",
             authConfig: BASIC_TOKEN_AUTH,
         });
@@ -66,7 +68,7 @@ describe("getAuthState", () => {
         }
 
         const authStateBadTokenWithPathname = await getAuthStateInternal({
-            host: "docs.test.com",
+            host,
             fernToken: "bad_token",
             authConfig: BASIC_TOKEN_AUTH,
             pathname: "/docs/test",
@@ -86,7 +88,7 @@ describe("getAuthState", () => {
         }
 
         const authStateGoodToken = await getAuthStateInternal({
-            host: "localhost:3000",
+            host,
             fernToken: await signFernJWT({}, { secret: TEST_JWT_SECRET, issuer: ISSUER }),
             authConfig: BASIC_TOKEN_AUTH,
         });
@@ -105,7 +107,7 @@ describe("getAuthState", () => {
         };
 
         const authStateBadToken = await getAuthStateInternal({
-            host: "docs.test.com",
+            host,
             fernToken: "bad_token",
             authConfig: ORY_AUTH_CONFIG,
         });
@@ -125,7 +127,7 @@ describe("getAuthState", () => {
         }
 
         const authStateBadTokenWithPathname = await getAuthStateInternal({
-            host: "docs.test.com",
+            host,
             fernToken: "bad_token",
             authConfig: ORY_AUTH_CONFIG,
             pathname: "/docs/test",
@@ -146,10 +148,12 @@ describe("getAuthState", () => {
             expect(authorizationUrl.searchParams.get("state")).toBe("https://docs.test.com/docs/test");
         }
 
+        const fernToken = await signFernJWT({}, { secret: TEST_JWT_SECRET, issuer: ISSUER });
+
         const authStateGoodToken = await getAuthStateInternal({
-            host: "localhost:3000",
+            host,
             // Note: this is a valid Fern JWT, but it's not a valid ORY JWT
-            fernToken: await signFernJWT({}, { secret: TEST_JWT_SECRET, issuer: ISSUER }),
+            fernToken,
             authConfig: ORY_AUTH_CONFIG,
         });
 
@@ -167,7 +171,7 @@ describe("getAuthState", () => {
         };
 
         const authStateBadToken = await getAuthStateInternal({
-            host: "docs.test.com",
+            host,
             fernToken: "bad_token",
             authConfig: WORKOS_AUTH_CONFIG,
         });
@@ -187,7 +191,7 @@ describe("getAuthState", () => {
         }
 
         const authStateBadTokenWithPathname = await getAuthStateInternal({
-            host: "docs.test.com",
+            host,
             fernToken: "bad_token",
             authConfig: WORKOS_AUTH_CONFIG,
             pathname: "/docs/test",
@@ -209,7 +213,7 @@ describe("getAuthState", () => {
         }
 
         const authStateGoodToken = await getAuthStateInternal({
-            host: "localhost:3000",
+            host,
             // Note: this is a valid Fern JWT, but it's not a valid Webflow JWT
             fernToken: await signFernJWT({}, { secret: TEST_JWT_SECRET, issuer: ISSUER }),
             authConfig: WORKOS_AUTH_CONFIG,
@@ -240,7 +244,7 @@ describe("getAuthState", () => {
         };
 
         const authStateBadToken = await getAuthStateInternal({
-            host: "docs.test.com",
+            host,
             fernToken: "bad_token",
             authConfig: WORKOS_AUTH_CONFIG,
         });
@@ -271,7 +275,7 @@ describe("getAuthState", () => {
         );
 
         const authStateGoodToken = await getAuthStateInternal({
-            host: "localhost:3000",
+            host,
             fernToken: await session.encryptSession({
                 accessToken: "test",
                 refreshToken: "test",

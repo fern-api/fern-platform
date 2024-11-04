@@ -44,7 +44,7 @@ export function withBasicTokenAnonymous(auth: PathnameViewerRules, pathname: str
  */
 export function withBasicTokenAnonymousCheck(
     auth: PathnameViewerRules,
-): (node: NavigationNode, parents?: readonly NavigationNodeParent[]) => Gate {
+): (node: Partial<NavigationNode>, parents?: readonly NavigationNodeParent[]) => Gate {
     return (node, parents = EMPTY_ARRAY) => {
         if (hasMetadata(node) && withBasicTokenAnonymous(auth, addLeadingSlash(node.slug)) === Gate.ALLOW) {
             return Gate.ALLOW;
@@ -52,14 +52,14 @@ export function withBasicTokenAnonymousCheck(
 
         if (
             hasMetadata(node) &&
-            !isPage(node) &&
+            !isPage(node as NavigationNode) &&
             withBasicTokenAnonymous(auth, addLeadingSlash(node.slug)) === Gate.DENY
         ) {
             return Gate.DENY;
         }
 
         const predicate = rbacViewGate([], false);
-        return predicate(node, parents);
+        return predicate(node as NavigationNode, parents);
     };
 }
 
