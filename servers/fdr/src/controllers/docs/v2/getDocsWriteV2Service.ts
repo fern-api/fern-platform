@@ -23,7 +23,7 @@ import {
     ReindexNotAllowedError,
 } from "../../../api/generated/api/resources/docs/resources/v2/resources/write/errors";
 import { type FdrApplication } from "../../../app";
-import { IndexSegment } from "../../../services/algolia";
+import { AlgoliaSearchRecord, IndexSegment } from "../../../services/algolia";
 import { type S3DocsFileInfo } from "../../../services/s3";
 import { WithoutQuestionMarks } from "../../../util";
 import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
@@ -339,53 +339,57 @@ async function uploadToAlgolia(
     const newIndexSegments = configSegmentTuples.map(([, seg]) => seg);
 
     app.logger.debug(`[${url.getFullUrl()}] Generating search records for all versions`);
-    const searchRecords = await app.services.algolia.generateSearchRecords({
-        url: url.getFullUrl(),
-        docsDefinition: dbDocsDefinition,
-        apiDefinitionsById,
-        configSegmentTuples,
-    });
 
-    const loadDocsForUrlResponse: LoadDocsForUrlResponse = {
-        baseUrl: {
-            domain: url.hostname,
-            basePath: url.path?.trim(),
-        },
-        definition: convertDocsDefinitionToRead({
-            docsDbDefinition: dbDocsDefinition,
-            algoliaSearchIndex: algoliaIndex,
-            filesV2: dbDocsDefinition.files,
-            apis: apiDefinitionsById,
-            id: docsConfigInstanceId ?? DocsV1Write.DocsConfigId(""),
-            search: getSearchInfoFromDocs({
-                algoliaIndex,
-                indexSegmentIds: newIndexSegments.map((indexSegment) => indexSegment.id),
-                activeIndexSegments: newIndexSegments.map((indexSegment) => ({
-                    id: indexSegment.id,
-                    createdAt: new Date(),
-                    version: null,
-                })),
-                docsDbDefinition: dbDocsDefinition,
-                app,
-            }),
-        }),
-        lightModeEnabled: dbDocsDefinition.config.colorsV3?.type !== "dark",
-    };
-    configSegmentTuples.map(([_, indexSegment]) => {
-        const v2Records = generateAlgoliaRecords({
-            indexSegmentId: indexSegment.id,
-            nodes: FernNavigation.utils.toRootNode(loadDocsForUrlResponse),
-            pages: FernNavigation.utils.toPages(loadDocsForUrlResponse),
-            apis: FernNavigation.utils.toApis(loadDocsForUrlResponse),
-            isFieldRecordsEnabled: false,
+    let searchRecords: AlgoliaSearchRecord[] = [];
+    if (dbDocsDefinition.config.root != null) {
+        searchRecords = await app.services.algolia.generateSearchRecords({
+            url: url.getFullUrl(),
+            docsDefinition: dbDocsDefinition,
+            apiDefinitionsById,
+            configSegmentTuples,
         });
-        searchRecords.push(
-            ...v2Records.map((record) => ({
-                ...record,
-                objectID: uuidv4(),
-            })),
-        );
-    });
+    } else {
+        const loadDocsForUrlResponse: LoadDocsForUrlResponse = {
+            baseUrl: {
+                domain: url.hostname,
+                basePath: url.path?.trim(),
+            },
+            definition: convertDocsDefinitionToRead({
+                docsDbDefinition: dbDocsDefinition,
+                algoliaSearchIndex: algoliaIndex,
+                filesV2: dbDocsDefinition.files,
+                apis: apiDefinitionsById,
+                id: docsConfigInstanceId ?? DocsV1Write.DocsConfigId(""),
+                search: getSearchInfoFromDocs({
+                    algoliaIndex,
+                    indexSegmentIds: newIndexSegments.map((indexSegment) => indexSegment.id),
+                    activeIndexSegments: newIndexSegments.map((indexSegment) => ({
+                        id: indexSegment.id,
+                        createdAt: new Date(),
+                        version: null,
+                    })),
+                    docsDbDefinition: dbDocsDefinition,
+                    app,
+                }),
+            }),
+            lightModeEnabled: dbDocsDefinition.config.colorsV3?.type !== "dark",
+        };
+        configSegmentTuples.map(([_, indexSegment]) => {
+            const v2Records = generateAlgoliaRecords({
+                indexSegmentId: indexSegment.id,
+                nodes: FernNavigation.utils.toRootNode(loadDocsForUrlResponse),
+                pages: FernNavigation.utils.toPages(loadDocsForUrlResponse),
+                apis: FernNavigation.utils.toApis(loadDocsForUrlResponse),
+                isFieldRecordsEnabled: false,
+            });
+            searchRecords.push(
+                ...v2Records.map((record) => ({
+                    ...record,
+                    objectID: uuidv4(),
+                })),
+            );
+        });
+    }
 
     app.logger.debug(`[${url.getFullUrl()}] Uploading search records to Algolia`);
     await app.services.algolia.uploadSearchRecords(searchRecords);
