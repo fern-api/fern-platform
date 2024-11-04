@@ -244,7 +244,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.expressionMeasurement.batch.listJobs();\n",
                   "generated": true
@@ -329,7 +328,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.expressionMeasurement.batch.startInferenceJob({\n    urls: [\"https://hume-tutorials.s3.amazonaws.com/faces.zip\"],\n    notify: true\n});\n",
                   "generated": true
@@ -430,7 +428,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.expressionMeasurement.batch.getJobDetails(\"job_id\");\n",
                   "generated": true
@@ -510,7 +507,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.expressionMeasurement.batch.getJobDetails(\"job_id\");\n",
                   "generated": true
@@ -838,7 +834,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.expressionMeasurement.batch.getJobPredictions(\"job_id\");\n",
                   "generated": true
@@ -922,7 +917,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.expressionMeasurement.batch.getJobArtifacts(\"string\");\n",
                   "generated": true
@@ -1030,7 +1024,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.expressionMeasurement.batch.startInferenceJob({\n    urls: [\"https://hume-tutorials.s3.amazonaws.com/faces.zip\"],\n    notify: true\n});\n",
                   "generated": true
@@ -8066,7 +8059,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.files.listFiles();\n",
                   "generated": true
@@ -8193,7 +8185,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.files.createFiles([{\n        file: {\n            name: \"name\",\n            humeStorage: true,\n            dataType: \"data_type\"\n        }\n    }]);\n",
                   "generated": true
@@ -8315,7 +8306,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\nimport * as fs from \"fs\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.files.uploadFile(fs.createReadStream(\"/path/to/your/file\"), fs.createReadStream(\"/path/to/your/file\"));\n",
                   "generated": true
@@ -8427,7 +8417,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.files.getFile(\"id\");\n",
                   "generated": true
@@ -8498,7 +8487,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.files.deleteFile(\"id\");\n",
                   "generated": true
@@ -8627,7 +8615,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.files.updateFileName(\"id\", {\n    name: \"name\"\n});\n",
                   "generated": true
@@ -8702,7 +8689,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.files.getFilePredictions(\"id\");\n",
                   "generated": true
@@ -8892,7 +8878,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.datasets.listDatasets();\n",
                   "generated": true
@@ -9027,7 +9012,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\nimport * as fs from \"fs\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.datasets.createDataset(fs.createReadStream(\"/path/to/your/file\"), fs.createReadStream(\"/path/to/your/file\"), {\n    name: \"name\"\n});\n",
                   "generated": true
@@ -9134,7 +9118,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.datasets.getDataset(\"id\");\n",
                   "generated": true
@@ -9276,7 +9259,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\nimport * as fs from \"fs\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.datasets.createDatasetVersion(fs.createReadStream(\"/path/to/your/file\"), fs.createReadStream(\"/path/to/your/file\"), \"id\");\n",
                   "generated": true
@@ -9347,7 +9329,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.datasets.deleteDataset(\"id\");\n",
                   "generated": true
@@ -9535,7 +9516,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.datasets.listDatasetVersions(\"id\");\n",
                   "generated": true
@@ -9724,7 +9704,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.datasets.listDatasetFiles(\"id\");\n",
                   "generated": true
@@ -9818,7 +9797,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.datasets.getDatasetVersion(\"id\");\n",
                   "generated": true
@@ -10007,7 +9985,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.datasets.listDatasetVersionFiles(\"id\");\n",
                   "generated": true
@@ -10197,7 +10174,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.models.listModels();\n",
                   "generated": true
@@ -10314,7 +10290,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.models.getModelDetails(\"id\");\n",
                   "generated": true
@@ -10448,7 +10423,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.models.updateModelName(\"id\", {\n    name: \"name\"\n});\n",
                   "generated": true
@@ -10620,7 +10594,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.models.listModelVersions();\n",
                   "generated": true
@@ -10752,7 +10725,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.models.getModelVersion(\"id\");\n",
                   "generated": true
@@ -10879,7 +10851,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.models.updateModelDescription(\"id\", \"string\");\n",
                   "generated": true
@@ -10966,7 +10937,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.jobs.startTrainingJob({\n    customModel: {\n        name: \"name\"\n    },\n    dataset: {\n        id: \"id\"\n    }\n});\n",
                   "generated": true
@@ -11050,7 +11020,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.customModels.jobs.startCustomModelsInferenceJob({\n    customModel: {\n        id: \"id\"\n    }\n});\n",
                   "generated": true
@@ -18774,7 +18743,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.tools.listTools({\n    pageNumber: 0,\n    pageSize: 2\n});\n",
                   "generated": true
@@ -18954,7 +18922,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.tools.createTool({\n    name: \"get_current_weather\",\n    parameters: \"{ \\\"type\\\": \\\"object\\\", \\\"properties\\\": { \\\"location\\\": { \\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The city and state, e.g. San Francisco, CA\\\" }, \\\"format\\\": { \\\"type\\\": \\\"string\\\", \\\"enum\\\": [\\\"celsius\\\", \\\"fahrenheit\\\"], \\\"description\\\": \\\"The temperature unit to use. Infer this from the users location.\\\" } }, \\\"required\\\": [\\\"location\\\", \\\"format\\\"] }\",\n    versionDescription: \"Fetches current weather and uses celsius or fahrenheit based on location of user.\",\n    description: \"This tool is for getting the current weather.\",\n    fallbackContent: \"Unable to fetch current weather.\"\n});\n",
                   "generated": true
@@ -19112,7 +19079,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.tools.listToolVersions(\"00183a3f-79ba-413d-9f3b-609864268bea\");\n",
                   "generated": true
@@ -19299,7 +19265,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.tools.createToolVersion(\"00183a3f-79ba-413d-9f3b-609864268bea\", {\n    parameters: \"{ \\\"type\\\": \\\"object\\\", \\\"properties\\\": { \\\"location\\\": { \\\"type\\\": \\\"string\\\", \\\"description\\\": \\\"The city and state, e.g. San Francisco, CA\\\" }, \\\"format\\\": { \\\"type\\\": \\\"string\\\", \\\"enum\\\": [\\\"celsius\\\", \\\"fahrenheit\\\", \\\"kelvin\\\"], \\\"description\\\": \\\"The temperature unit to use. Infer this from the users location.\\\" } }, \\\"required\\\": [\\\"location\\\", \\\"format\\\"] }\",\n    versionDescription: \"Fetches current weather and uses celsius, fahrenheit, or kelvin based on location of user.\",\n    fallbackContent: \"Unable to fetch current weather.\",\n    description: \"This tool is for getting the current weather.\"\n});\n",
                   "generated": true
@@ -19366,7 +19331,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.tools.deleteTool(\"00183a3f-79ba-413d-9f3b-609864268bea\");\n",
                   "generated": true
@@ -19461,7 +19425,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.tools.updateToolName(\"00183a3f-79ba-413d-9f3b-609864268bea\", {\n    name: \"get_current_temperature\"\n});\n",
                   "generated": true
@@ -19582,7 +19545,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.tools.getToolVersion(\"00183a3f-79ba-413d-9f3b-609864268bea\", 1);\n",
                   "generated": true
@@ -19671,7 +19633,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.tools.deleteToolVersion(\"00183a3f-79ba-413d-9f3b-609864268bea\", 1);\n",
                   "generated": true
@@ -19826,7 +19787,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.tools.updateToolDescription(\"00183a3f-79ba-413d-9f3b-609864268bea\", 1, {\n    versionDescription: \"Fetches current temperature, precipitation, wind speed, AQI, and other weather conditions. Uses Celsius, Fahrenheit, or kelvin depending on user's region.\"\n});\n",
                   "generated": true
@@ -19960,7 +19920,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.prompts.listPrompts();\n",
                   "generated": true
@@ -20096,7 +20055,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.prompts.createPrompt({\n    name: \"name\",\n    text: \"text\"\n});\n",
                   "generated": true
@@ -20251,7 +20209,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.prompts.listPromptVersions(\"id\");\n",
                   "generated": true
@@ -20394,7 +20351,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.prompts.createPromptVerison(\"id\", {\n    text: \"text\"\n});\n",
                   "generated": true
@@ -20461,7 +20417,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.prompts.deletePrompt(\"id\");\n",
                   "generated": true
@@ -20556,7 +20511,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.prompts.updatePromptName(\"string\", {\n    name: \"string\"\n});\n",
                   "generated": true
@@ -20674,7 +20628,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.prompts.getPromptVersion(\"id\", 1);\n",
                   "generated": true
@@ -20763,7 +20716,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.prompts.deletePromptVersion(\"id\", 1);\n",
                   "generated": true
@@ -20913,7 +20865,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.prompts.updatePromptDescription(\"id\", 1);\n",
                   "generated": true
@@ -21058,7 +21009,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.configs.listConfigs();\n",
                   "generated": true
@@ -21319,7 +21269,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.configs.createConfig({\n    name: \"name\"\n});\n",
                   "generated": true
@@ -21485,7 +21434,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.configs.listConfigVersions(\"id\");\n",
                   "generated": true
@@ -21752,7 +21700,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.configs.createConfigVersion(\"id\");\n",
                   "generated": true
@@ -21819,7 +21766,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.configs.deleteConfig(\"id\");\n",
                   "generated": true
@@ -21914,7 +21860,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.configs.updateConfigName(\"string\", {\n    name: \"string\"\n});\n",
                   "generated": true
@@ -22065,7 +22010,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.configs.getConfigVersion(\"id\", 1);\n",
                   "generated": true
@@ -22154,7 +22098,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.configs.deleteConfigVersion(\"id\", 1);\n",
                   "generated": true
@@ -22337,7 +22280,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.configs.updateConfigDescription(\"id\", 1);\n",
                   "generated": true
@@ -22455,7 +22397,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.chats.listChats();\n",
                   "generated": true
@@ -22602,7 +22543,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.chats.listChatEvents(\"id\");\n",
                   "generated": true
@@ -22715,7 +22655,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.chatGroups.listChatGroups();\n",
                   "generated": true
@@ -22876,7 +22815,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { HumeClient } from \"hume\";\n\nconst hume = new HumeClient({ apiKey: \"YOUR_API_KEY\" });\nawait hume.empathicVoice.chatGroups.listChatGroupEvents(\"id\");\n",
                   "generated": true

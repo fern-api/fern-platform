@@ -1,6 +1,7 @@
 import { Algolia, FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { MarkdownSectionRoot, getFrontmatter, splitMarkdownIntoSections } from "@fern-ui/fern-docs-mdx";
+import { convertPageV4ToV3 } from "../v1-record-converter/convertRecords.js";
 
 interface GenerateMarkdownRecordsOptions {
     indexSegmentId: Algolia.IndexSegmentId;
@@ -16,7 +17,7 @@ export function generateMarkdownRecords({
     node,
     version,
     markdown,
-}: GenerateMarkdownRecordsOptions): Algolia.AlgoliaRecord.PageV4[] {
+}: GenerateMarkdownRecordsOptions): (Algolia.AlgoliaRecord.PageV4 | Algolia.AlgoliaRecord.PageV3)[] {
     const { data, content } = getFrontmatter(markdown);
 
     /**
@@ -51,11 +52,9 @@ export function generateMarkdownRecords({
         .filter((text) => text.length > 0)
         .join("\n\n");
 
-    const records: Algolia.AlgoliaRecord.PageV4[] = [];
+    const records: (Algolia.AlgoliaRecord.PageV4 | Algolia.AlgoliaRecord.PageV3)[] = [];
 
-    // we should still insert this record even if there's no content, because
-    // the title of the record can still be matched
-    records.push({
+    const rootRecord: Algolia.AlgoliaRecord.PageV4 = {
         type: "page-v4",
         title,
         slug,
@@ -63,7 +62,10 @@ export function generateMarkdownRecords({
         breadcrumbs: rootBreadcrumbs,
         version,
         indexSegmentId,
-    });
+    };
+    // we should still insert this record even if there's no content, because
+    // the title of the record can still be matched
+    records.push(rootRecord, convertPageV4ToV3(rootRecord, content));
 
     sections.forEach((section, i) => {
         if (section.type === "root") {
