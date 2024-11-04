@@ -1,3 +1,4 @@
+import { SignJWT } from "jose";
 import { signFernJWT } from "../FernJWT";
 import { getAuthStateInternal } from "../getAuthState";
 import * as session from "../workos-session";
@@ -14,6 +15,27 @@ describe("getAuthState", () => {
         });
         expect(authState.authed).toBe(false);
         expect(authState.ok).toBe(true); // even fern_token is bad, this is still OK because authConfig is missing.
+    });
+
+    it("should not throw an error if the Fern JWT is invalid", async () => {
+        await expect(
+            getAuthStateInternal({
+                host: "localhost:3000",
+                fernToken: "bad_token",
+            }),
+        ).resolves.not.toThrowError();
+
+        await expect(
+            getAuthStateInternal({
+                host: "localhost:3000",
+                fernToken: await new SignJWT({
+                    fern: {},
+                    exp: "bad_token",
+                } as any)
+                    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+                    .sign(new TextEncoder().encode(TEST_JWT_SECRET)),
+            }),
+        ).resolves.not.toThrowError();
     });
 
     it("should handle basic token verification", async () => {
