@@ -118,12 +118,14 @@ export async function getAuthState(
                 if (setFernToken) {
                     setFernToken(await encryptSession(updatedSession));
                 }
+                // TODO: should this be stored in the session itself?
+                const roles = await getWorkosRbacRoles(authConfig.organization, updatedSession.user.email);
                 return {
                     domain,
                     host,
                     authed: true,
                     ok: true,
-                    user: toFernUser(await toSessionUserInfo(updatedSession)),
+                    user: toFernUser(await toSessionUserInfo(updatedSession), roles),
                     partner: authConfig.partner,
                 };
             }
