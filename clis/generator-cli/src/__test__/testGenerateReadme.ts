@@ -1,4 +1,4 @@
-import execa from "execa";
+import { execa } from "execa";
 import { writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
