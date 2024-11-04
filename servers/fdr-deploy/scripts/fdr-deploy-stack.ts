@@ -1,5 +1,5 @@
 import { EnvironmentInfo, EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
-import { CfnOutput, Duration, Environment, RemovalPolicy, Stack, StackProps, Token } from "aws-cdk-lib";
+import { CfnOutput, Duration, Environment, Stack, StackProps, Token } from "aws-cdk-lib";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
@@ -15,7 +15,7 @@ import * as route53 from "aws-cdk-lib/aws-route53";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 import * as targets from "aws-cdk-lib/aws-route53-targets";
 import { LoadBalancerTarget } from "aws-cdk-lib/aws-route53-targets";
-import { Bucket, HttpMethods } from "aws-cdk-lib/aws-s3";
+import { Bucket } from "aws-cdk-lib/aws-s3";
 import { PrivateDnsNamespace } from "aws-cdk-lib/aws-servicediscovery";
 import * as sns from "aws-cdk-lib/aws-sns";
 import { EmailSubscription } from "aws-cdk-lib/aws-sns-subscriptions";
@@ -97,51 +97,66 @@ export class FdrDeployStack extends Stack {
         });
         snsTopic.addSubscription(new EmailSubscription("support@buildwithfern.com"));
 
-        const privateApiDefinitionSourceBucket = new Bucket(this, "fdr-api-definition-source-files", {
-            bucketName: `fdr-${environmentType.toLowerCase()}-api-definition-source-files`,
-            removalPolicy: RemovalPolicy.RETAIN,
-            cors: [
-                {
-                    allowedMethods: [HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT],
-                    allowedOrigins: ["*"],
-                    allowedHeaders: ["*"],
-                },
-            ],
-            versioned: true,
-        });
+        const privateApiDefinitionSourceBucket = Bucket.fromBucketName(
+            this,
+            "fdr-api-definition-source-files",
+            `fdr-${environmentType.toLowerCase()}-api-definition-source-files`,
+        );
+        // const privateApiDefinitionSourceBucket = new Bucket(this, "fdr-api-definition-source-files", {
+        //     bucketName: `fdr-${environmentType.toLowerCase()}-api-definition-source-files`,
+        //     removalPolicy: RemovalPolicy.RETAIN,
+        //     cors: [
+        //         {
+        //             allowedMethods: [HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT],
+        //             allowedOrigins: ["*"],
+        //             allowedHeaders: ["*"],
+        //         },
+        //     ],
+        //     versioned: true,
+        // });
 
-        const privateDocsBucket = new Bucket(this, "fdr-docs-files", {
-            bucketName: `fdr-${environmentType.toLowerCase()}-docs-files`,
-            removalPolicy: RemovalPolicy.RETAIN,
-            cors: [
-                {
-                    allowedMethods: [HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT],
-                    allowedOrigins: ["*"],
-                    allowedHeaders: ["*"],
-                },
-            ],
-            versioned: true,
-        });
+        const privateDocsBucket = Bucket.fromBucketName(
+            this,
+            "fdr-docs-files",
+            `fdr-${environmentType.toLowerCase()}-docs-files`,
+        );
+        // const privateDocsBucket = new Bucket(this, "fdr-docs-files", {
+        //     bucketName: `fdr-${environmentType.toLowerCase()}-docs-files`,
+        //     removalPolicy: RemovalPolicy.RETAIN,
+        //     cors: [
+        //         {
+        //             allowedMethods: [HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT],
+        //             allowedOrigins: ["*"],
+        //             allowedHeaders: ["*"],
+        //         },
+        //     ],
+        //     versioned: true,
+        // });
 
-        const publicDocsBucket = new Bucket(this, "fdr-docs-files-public", {
-            bucketName: `fdr-${environmentType.toLowerCase()}-docs-files-public`,
-            removalPolicy: RemovalPolicy.RETAIN,
-            cors: [
-                {
-                    allowedMethods: [HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT],
-                    allowedOrigins: ["*"],
-                    allowedHeaders: ["*"],
-                },
-            ],
-            blockPublicAccess: {
-                blockPublicAcls: false,
-                blockPublicPolicy: false,
-                ignorePublicAcls: false,
-                restrictPublicBuckets: false,
-            },
-            versioned: true,
-        });
-        publicDocsBucket.grantPublicAccess();
+        const publicDocsBucket = Bucket.fromBucketName(
+            this,
+            "fdr-docs-files-public",
+            `fdr-${environmentType.toLowerCase()}-docs-files-public`,
+        );
+        // const publicDocsBucket = new Bucket(this, "fdr-docs-files-public", {
+        //     bucketName: `fdr-${environmentType.toLowerCase()}-docs-files-public`,
+        //     removalPolicy: RemovalPolicy.RETAIN,
+        //     cors: [
+        //         {
+        //             allowedMethods: [HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT],
+        //             allowedOrigins: ["*"],
+        //             allowedHeaders: ["*"],
+        //         },
+        //     ],
+        //     blockPublicAccess: {
+        //         blockPublicAcls: false,
+        //         blockPublicPolicy: false,
+        //         ignorePublicAcls: false,
+        //         restrictPublicBuckets: false,
+        //     },
+        //     versioned: true,
+        // });
+        // publicDocsBucket.grantPublicAccess();
 
         const publicDocsFilesDomainName = getPublicBucketDomainName(environmentType, environmentInfo);
         const publicDocsFilesDistribution = new cloudfront.Distribution(this, "PublicDocsFilesDistribution", {
