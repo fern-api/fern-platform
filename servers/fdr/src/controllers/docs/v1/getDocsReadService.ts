@@ -6,12 +6,11 @@ import {
     DocsV1Read,
     FdrAPI,
     convertDbAPIDefinitionToRead,
-    convertDocsDefinitionToRead,
+    convertDbDocsConfigToRead,
     migrateDocsDbDefinition,
     visitDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
 import { AuthType, type IndexSegment } from "@prisma/client";
-import { keyBy } from "es-toolkit";
 import { mapValues } from "lodash-es";
 import { DocsV1ReadService } from "../../../api";
 import { UnauthorizedError } from "../../../api/generated/api";
@@ -19,7 +18,6 @@ import { DomainNotRegisteredError } from "../../../api/generated/api/resources/d
 import type { FdrApplication } from "../../../app";
 import { LoadDocsDefinitionByUrlResponse } from "../../../db";
 import { readBuffer } from "../../../util";
-import { getFilesV2 } from "../../../util/getFilesV2";
 
 export function getDocsReadService(app: FdrApplication): DocsV1ReadService {
     return new DocsV1ReadService({
@@ -129,22 +127,61 @@ export async function getDocsDefinition({
         }),
     ]);
 
-    const bufferedApiDefinitionsById = keyBy(apiDefinitions, (def) => DocsV1Db.ApiDefinitionId(def.apiDefinitionId));
-
     const filesV2 = await getFilesV2(docsDbDefinition, app);
 
-    const apiDefinitionsById = mapValues(bufferedApiDefinitionsById, (def) =>
-        convertDbApiDefinitionToRead(def.definition),
-    );
-
-    return convertDocsDefinitionToRead({
-        docsDbDefinition,
+    return {
         algoliaSearchIndex: docsV2?.algoliaIndex ?? undefined,
+        config: convertDbDocsConfigToRead({ dbShape: docsDbDefinition.config }),
+        apis: Object.fromEntries(
+            apiDefinitions.map((apiDefinition) => {
+                const parsedApiDefinition = convertDbApiDefinitionToRead(apiDefinition.definition);
+                return [apiDefinition.apiDefinitionId, parsedApiDefinition];
+            }),
+        ),
+        files: mapValues(filesV2, (fileV2) => fileV2.url),
+        jsFiles: docsDbDefinition.type === "v3" ? docsDbDefinition.jsFiles : undefined,
         filesV2,
-        apis: apiDefinitionsById,
-        id: docsV2?.docsConfigInstanceId ?? undefined,
+        pages: docsDbDefinition.pages,
         search: searchInfo,
-    });
+        id: docsV2?.docsConfigInstanceId ?? undefined,
+    };
+}
+
+async function getFilesV2(docsDbDefinition: DocsV1Db.DocsDefinitionDb, app: FdrApplication) {
+    let promisedFiles: Promise<[DocsV1Read.FileId, DocsV1Read.File_]>[];
+    if (docsDbDefinition.type === "v3") {
+        promisedFiles = Object.entries(docsDbDefinition.files).map(
+            async ([fileId, fileDbInfo]): Promise<[DocsV1Read.FileId, DocsV1Read.File_]> => {
+                const s3DownloadUrl = await app.services.s3.getPresignedDocsAssetsDownloadUrl({
+                    key: fileDbInfo.s3Key,
+                    isPrivate: true, // for backcompat
+                });
+                const readFile: DocsV1Read.File_ =
+                    fileDbInfo.type === "image"
+                        ? {
+                              type: "image",
+                              url: s3DownloadUrl,
+                              width: fileDbInfo.width,
+                              height: fileDbInfo.height,
+                              blurDataUrl: fileDbInfo.blurDataUrl,
+                              alt: fileDbInfo.alt,
+                          }
+                        : { type: "url", url: s3DownloadUrl };
+                return [DocsV1Read.FileId(fileId), readFile];
+            },
+        );
+    } else {
+        promisedFiles = Object.entries(docsDbDefinition.files).map(
+            async ([fileId, fileDbInfo]): Promise<[DocsV1Read.FileId, DocsV1Read.File_]> => {
+                const s3DownloadUrl = await app.services.s3.getPresignedDocsAssetsDownloadUrl({
+                    key: fileDbInfo.s3Key,
+                    isPrivate: true, // for backcompat
+                });
+                return [DocsV1Read.FileId(fileId), { type: "url", url: s3DownloadUrl }];
+            },
+        );
+    }
+    return Object.fromEntries(await Promise.all(promisedFiles));
 }
 
 export async function loadIndexSegmentsAndGetSearchInfo({
@@ -171,7 +208,7 @@ export async function loadIndexSegmentsAndGetSearchInfo({
     });
 }
 
-export function getSearchInfoFromDocs({
+function getSearchInfoFromDocs({
     algoliaIndex,
     indexSegmentIds,
     activeIndexSegments,

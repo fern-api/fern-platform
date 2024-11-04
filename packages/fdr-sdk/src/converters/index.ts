@@ -4,4 +4,3 @@ export { SDKSnippetHolder } from "./db/snippets/SDKSnippetHolder";
 export { migrateDocsDbDefinition } from "./db/upgrade/migrateDocsDbDefinition";
 export { convertDbAPIDefinitionToRead, convertDbAPIDefinitionsToRead } from "./read/convertDbAPIDefinitionToRead";
 export { convertDbDocsConfigToRead } from "./read/convertDbDocsConfigToRead";
-export { convertDocsDefinitionToRead } from "./read/convertDocsDefinitionToRead";
