@@ -28,7 +28,6 @@ import { type FdrApplication } from "../../../app";
 import { AlgoliaSearchRecord, IndexSegment } from "../../../services/algolia";
 import { type S3DocsFileInfo } from "../../../services/s3";
 import { WithoutQuestionMarks } from "../../../util";
-import { getFilesV2 } from "../../../util/getFilesV2";
 import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
 import { getSearchInfoFromDocs } from "../v1/getDocsReadService";
 
@@ -360,7 +359,8 @@ async function uploadToAlgolia(
             definition: convertDocsDefinitionToRead({
                 docsDbDefinition: dbDocsDefinition,
                 algoliaSearchIndex: algoliaIndex,
-                filesV2: await getFilesV2(dbDocsDefinition, app),
+                // we don't need to use this for generating algolia records
+                filesV2: {},
                 apis: mapValues(apiDefinitionsById, (def) => convertDbAPIDefinitionToRead(def)),
                 id: docsConfigInstanceId ?? DocsV1Write.DocsConfigId(""),
                 search: getSearchInfoFromDocs({
