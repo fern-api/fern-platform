@@ -1,11 +1,5 @@
-import {
-    OAuthTokenResponseSchema,
-    type AuthEdgeConfigOAuth2Ory,
-    type OAuthTokenResponse,
-} from "@fern-ui/fern-docs-auth";
+import { OAuthTokenResponseSchema, type OAuth2Ory, type OAuthTokenResponse } from "@fern-ui/fern-docs-auth";
 import { JWTPayload, createRemoteJWKSet, decodeJwt, jwtVerify } from "jose";
-import { NextApiRequestCookies } from "next/dist/server/api-utils";
-import type { NextRequest } from "next/server";
 import urlJoin from "url-join";
 
 interface TokenInfo {
@@ -14,7 +8,7 @@ interface TokenInfo {
     refresh_token?: string;
 }
 
-export class OAuth2Client {
+export class OryOAuth2Client {
     private readonly clientId: string;
     private readonly clientSecret: string;
     private readonly environment: string;
@@ -22,7 +16,7 @@ export class OAuth2Client {
     private readonly jwks: string | undefined;
     private readonly redirectUri?: string;
 
-    constructor(config: AuthEdgeConfigOAuth2Ory) {
+    constructor(config: OAuth2Ory) {
         this.clientId = config.clientId;
         this.clientSecret = config.clientSecret;
         this.environment = config.environment;
@@ -73,23 +67,6 @@ export class OAuth2Client {
         throw new Error(`Failed to refresh OAuth token: ${response.status} ${await response.text()}`);
     }
 
-    public getRedirectUrl(state?: string): string {
-        const url = new URL(urlJoin(this.environment, "/auth"));
-        url.searchParams.set("response_type", "code");
-        url.searchParams.set("client_id", this.clientId);
-        if (this.redirectUri != null) {
-            url.searchParams.set("redirect_uri", this.redirectUri);
-        }
-        if (state != null) {
-            url.searchParams.set("state", state);
-        }
-        if (this.scope != null) {
-            url.searchParams.set("scope", this.scope);
-        }
-        url.search = url.search.replace(/%2B/g, "+");
-        return url.toString();
-    }
-
     public async decode(access_token: string): Promise<JWTPayload> {
         if (this.jwks == null) {
             return decodeJwt(access_token);
@@ -109,19 +86,7 @@ export class OAuth2Client {
         }
     }
 
-    public async getOrRefreshAccessTokenEdge(cookies: NextRequest["cookies"]): Promise<TokenInfo | undefined> {
-        const access_token = cookies.get("access_token")?.value;
-        const refresh_token = cookies.get("refresh_token")?.value;
-        return this.getOrRefreshAccessToken(access_token, refresh_token);
-    }
-
-    public async getOrRefreshAccessTokenNode(cookies: NextApiRequestCookies): Promise<TokenInfo | undefined> {
-        const access_token = cookies.access_token;
-        const refresh_token = cookies.refresh_token;
-        return this.getOrRefreshAccessToken(access_token, refresh_token);
-    }
-
-    private async getOrRefreshAccessToken(
+    public async getOrRefreshAccessToken(
         access_token: string | undefined,
         refresh_token: string | undefined,
     ): Promise<TokenInfo | undefined> {
@@ -140,4 +105,32 @@ export class OAuth2Client {
 
         return { access_token, exp: payload.exp, refresh_token };
     }
+}
+
+export function getOryAuthorizationUrl(
+    authConfig: OAuth2Ory,
+    {
+        state,
+        redirectUri,
+    }: {
+        state?: string;
+        redirectUri?: string;
+    },
+): string {
+    const url = new URL(urlJoin(authConfig.environment, "/auth"));
+    url.searchParams.set("response_type", "code");
+    url.searchParams.set("client_id", authConfig.clientId);
+    if (authConfig.redirectUri != null) {
+        url.searchParams.set("redirect_uri", authConfig.redirectUri);
+    } else if (redirectUri != null) {
+        url.searchParams.set("redirect_uri", redirectUri);
+    }
+    if (state != null) {
+        url.searchParams.set("state", state);
+    }
+    if (authConfig.scope != null) {
+        url.searchParams.set("scope", authConfig.scope);
+    }
+    url.search = url.search.replace(/%2B/g, "+");
+    return url.toString();
 }

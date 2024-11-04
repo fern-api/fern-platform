@@ -7,7 +7,7 @@ export const APIKeyInjectionConfigDisabledSchema = z.object({
 export const APIKeyInjectionConfigUnauthorizedSchema = z.object({
     enabled: z.literal(true),
     authenticated: z.literal(false),
-    url: z.string(),
+    authorizationUrl: z.string(),
     partner: z.string().optional(),
 });
 
@@ -15,8 +15,6 @@ export const APIKeyInjectionConfigAuthorizedSchema = z.object({
     enabled: z.literal(true),
     authenticated: z.literal(true),
     access_token: z.string(),
-    refresh_token: z.string().optional(),
-    exp: z.number().optional(),
     partner: z.string().optional(),
 });
 

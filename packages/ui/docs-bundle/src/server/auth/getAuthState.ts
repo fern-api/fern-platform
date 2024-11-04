@@ -4,21 +4,27 @@ import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import urlJoin from "url-join";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
+import { getOryAuthorizationUrl } from "./ory";
+import { getWebflowAuthorizationUrl } from "./webflow";
 import { getWorkosSSOAuthorizationUrl } from "./workos";
 import { encryptSession, getSessionFromToken, refreshSession, toSessionUserInfo } from "./workos-session";
 import { toFernUser } from "./workos-user-to-fern-user";
 
 export type AuthPartner = "workos" | "ory" | "webflow" | "custom";
 
-interface AuthStateBase {
+interface DomainAndHost {
     /**
      * x-fern-host (NOT the host of the request)
      */
     domain: string;
+
     /**
      * The host of the request
      */
     host: string;
+}
+
+interface AuthStateBase {
     /**
      * If true, the request is allowed to pass through
      * Otherwise, the request must be redirected to the authorizationUrl, or return a 401, or 403
@@ -58,40 +64,36 @@ interface IsLoggedIn extends AuthStateBase {
 export type AuthState = NotLoggedIn | IsLoggedIn;
 
 /**
- * Check if the user is logged in and the session is valid for the current docs.
- * - if the auth config is not present, assume that the site is available to the public
- * - if the auth config is present, check if the user is logged in and the session is valid for the current docs
- * - if the user is not logged in, check if the request is allowed to pass through without authentication; otherwise, redirect to the login page
- *
- * @param request - the request to check the headers / cookies
- * @param next - the function to call if the user is logged in and the session is valid for the current pathname
+ * @internal visible for testing
  */
-export async function getAuthState(
-    domain: string,
-    host: string,
-    fernToken: string | undefined,
-    pathname?: string,
-    authConfig?: AuthEdgeConfig,
-    setFernToken?: (token: string) => void,
-): Promise<AuthState> {
-    authConfig ??= await getAuthEdgeConfig(domain);
-
+export async function getAuthStateInternal({
+    host,
+    fernToken,
+    pathname,
+    authConfig,
+    setFernToken,
+}: {
+    host: string;
+    fernToken: string | undefined;
+    pathname?: string;
+    authConfig?: AuthEdgeConfig;
+    setFernToken?: (token: string) => void;
+}): Promise<AuthState> {
     // if the auth type is neither sso nor basic_token_verification, allow the request to pass through
-    // we're currently assuming that all oauth2 integrations are meant for API Playground. This may change.
-    if (!authConfig || (authConfig.type !== "sso" && authConfig.type !== "basic_token_verification")) {
-        return { domain, host, authed: false, ok: true, authorizationUrl: undefined, partner: authConfig?.partner };
+    if (!authConfig) {
+        return { authed: false, ok: true, authorizationUrl: undefined, partner: undefined };
     }
 
     const authorizationUrl = getAuthorizationUrl(authConfig, host, pathname);
 
     // check if the request is allowed to pass through without authentication
-    if (authConfig.type === "basic_token_verification") {
+    if (authConfig.type === "basic_token_verification" || authConfig.type === "oauth2") {
         const user = await safeVerifyFernJWTConfig(fernToken, authConfig);
-        const partner = "custom";
+        const partner = authConfig.type === "oauth2" ? authConfig.partner : "custom";
         if (user) {
-            return { domain, host, authed: true, ok: true, user, partner };
+            return { authed: true, ok: true, user, partner };
         } else {
-            return { domain, host, authed: false, ok: true, authorizationUrl, partner };
+            return { authed: false, ok: true, authorizationUrl, partner };
         }
     }
 
@@ -103,8 +105,6 @@ export async function getAuthState(
             // TODO: should this be stored in the session itself?
             const roles = await getWorkosRbacRoles(authConfig.organization, workosUserInfo.user.email);
             return {
-                domain,
-                host,
                 authed: true,
                 ok: true,
                 user: toFernUser(workosUserInfo, roles),
@@ -121,8 +121,6 @@ export async function getAuthState(
                 // TODO: should this be stored in the session itself?
                 const roles = await getWorkosRbacRoles(authConfig.organization, updatedSession.user.email);
                 return {
-                    domain,
-                    host,
                     authed: true,
                     ok: true,
                     user: toFernUser(await toSessionUserInfo(updatedSession), roles),
@@ -131,10 +129,40 @@ export async function getAuthState(
             }
         }
 
-        return { domain, host, authed: false, ok: false, authorizationUrl, partner: authConfig.partner };
+        return { authed: false, ok: false, authorizationUrl, partner: authConfig.partner };
     }
 
-    return { domain, host, authed: false, ok: false, authorizationUrl: undefined, partner: undefined };
+    return { authed: false, ok: false, authorizationUrl: undefined, partner: undefined };
+}
+
+/**
+ * Check if the user is logged in and the session is valid for the current docs.
+ * - if the auth config is not present, assume that the site is available to the public
+ * - if the auth config is present, check if the user is logged in and the session is valid for the current docs
+ * - if the user is not logged in, check if the request is allowed to pass through without authentication; otherwise, redirect to the login page
+ *
+ * @param request - the request to check the headers / cookies
+ * @param next - the function to call if the user is logged in and the session is valid for the current pathname
+ */
+export async function getAuthState(
+    domain: string,
+    host: string,
+    fernToken: string | undefined,
+    pathname?: string,
+    authConfig?: AuthEdgeConfig,
+    setFernToken?: (token: string) => void,
+): Promise<AuthState & DomainAndHost> {
+    authConfig ??= await getAuthEdgeConfig(domain);
+
+    const authState = await getAuthStateInternal({
+        host,
+        fernToken,
+        pathname,
+        authConfig,
+        setFernToken,
+    });
+
+    return { ...authState, domain, host };
 }
 
 function getAuthorizationUrl(authConfig: AuthEdgeConfig, host: string, pathname?: string): string | undefined {
@@ -143,11 +171,9 @@ function getAuthorizationUrl(authConfig: AuthEdgeConfig, host: string, pathname?
     const state = urlJoin(removeTrailingSlash(withDefaultProtocol(host)), pathname ?? "");
 
     if (authConfig.type === "basic_token_verification") {
-        if (!pathname) {
-            return authConfig.redirect;
-        }
-
+        const redirectUri = urlJoin(removeTrailingSlash(withDefaultProtocol(host)), "/api/fern-docs/auth/jwt/callback");
         const destination = new URL(authConfig.redirect);
+        destination.searchParams.set("redirect_uri", redirectUri);
         destination.searchParams.set("state", state);
         return destination.toString();
     } else if (authConfig.type === "sso" && authConfig.partner === "workos") {
@@ -161,6 +187,24 @@ function getAuthorizationUrl(authConfig: AuthEdgeConfig, host: string, pathname?
             domainHint: authConfig.domainHint,
             loginHint: authConfig.loginHint,
         });
+    } else if (authConfig.type === "oauth2") {
+        if (authConfig.partner === "webflow") {
+            return getWebflowAuthorizationUrl(authConfig, {
+                state,
+                redirectUri: urlJoin(
+                    removeTrailingSlash(withDefaultProtocol(host)),
+                    "/api/fern-docs/oauth/webflow/callback",
+                ),
+            });
+        } else if (authConfig.partner === "ory") {
+            return getOryAuthorizationUrl(authConfig, {
+                state,
+                redirectUri: urlJoin(
+                    removeTrailingSlash(withDefaultProtocol(host)),
+                    "/api/fern-docs/oauth/ory/callback",
+                ),
+            });
+        }
     }
 
     return undefined;

@@ -14,7 +14,7 @@ import {
 import { useBooleanState } from "@fern-ui/react-commons";
 import { HelpCircle, Key, User } from "iconoir-react";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import { FC, ReactElement, SetStateAction, useCallback, useEffect, useState } from "react";
 import urlJoin from "url-join";
 import { useMemoOne } from "use-memo-one";
@@ -375,31 +375,28 @@ export function PlaygroundAuthorizationFormCard({
     const oAuth = useAtomValue(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
     const isOpen = useBooleanState(false);
     const apiKeyInjection = useApiKeyInjectionConfig();
-    const router = useRouter();
     const apiKey = apiKeyInjection.enabled && apiKeyInjection.authenticated ? apiKeyInjection.access_token : null;
-    const [loginError, setLoginError] = useState<string | null>(null);
+    const searchParams = useSearchParams();
+    const error = searchParams.get("error");
+    const errorDescription = searchParams.get("error_description");
 
     const handleResetBearerAuth = useCallback(() => {
         setBearerAuth({ token: apiKey ?? "" });
     }, [apiKey, setBearerAuth]);
 
     const logoutApiRoute = useApiRoute("/api/fern-docs/auth/logout");
-    const callbackApiRoute = useApiRoute("/api/fern-docs/auth/callback");
 
     const redirectOrOpenAuthForm = () => {
         if (apiKeyInjection.enabled && !apiKeyInjection.authenticated) {
-            const url = new URL(apiKeyInjection.url);
+            const url = new URL(apiKeyInjection.authorizationUrl);
             const state = new URL(window.location.href);
-            if (state.searchParams.has("loginError")) {
-                state.searchParams.delete("loginError");
+            if (state.searchParams.has("error")) {
+                state.searchParams.delete("error");
+            }
+            if (state.searchParams.has("error_description")) {
+                state.searchParams.delete("error_description");
             }
             url.searchParams.set("state", state.toString());
-
-            if (apiKeyInjection.partner === "ory" || apiKeyInjection.partner === "webflow") {
-                const redirect_uri = urlJoin(window.location.origin, callbackApiRoute);
-                url.searchParams.set("redirect_uri", redirect_uri);
-            }
-
             window.location.replace(url);
         } else {
             isOpen.toggleValue();
@@ -416,17 +413,6 @@ export function PlaygroundAuthorizationFormCard({
                   : "API key"
           } to send a real request`;
 
-    useEffect(() => {
-        if (!router.isReady) {
-            return;
-        }
-
-        const { loginError } = router.query;
-        if (loginError) {
-            setLoginError(loginError as string);
-        }
-    }, [router.query, router.isReady]);
-
     // TODO change this to on-login
     useEffect(() => {
         if (apiKey != null) {
@@ -439,7 +425,7 @@ export function PlaygroundAuthorizationFormCard({
             {apiKeyInjection.enabled && apiKey == null && (
                 <>
                     <FernCard className="rounded-xl p-4 shadow-sm mb-2">
-                        {loginError && <Callout intent="error">{loginError}</Callout>}
+                        {error && <Callout intent="error">{errorDescription ?? error}</Callout>}
 
                         <h5 className="t-muted m-0">Login to send a real request</h5>
                         <div className="flex justify-center my-5 gap-2">

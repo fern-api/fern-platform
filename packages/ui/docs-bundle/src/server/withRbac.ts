@@ -8,36 +8,20 @@ import {
     type RootNode,
 } from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
+import type { PathnameViewerRules } from "@fern-ui/fern-docs-auth";
 import { EVERYONE_ROLE, matchPath } from "@fern-ui/fern-docs-utils";
 import { addLeadingSlash } from "./addLeadingSlash";
-import { AuthState } from "./auth/getAuthState";
+import type { AuthState } from "./auth/getAuthState";
 
 export enum Gate {
     DENY,
     ALLOW,
 }
 
-interface AuthRulesPathName {
-    /**
-     * List of paths that should be allowed to pass through without authentication
-     */
-    allowlist?: string[];
-
-    /**
-     * List of paths that should be denied access without authentication
-     */
-    denylist?: string[];
-
-    /**
-     * List of paths that should be allowed to pass through without authentication, but should be hidden when the user is authenticated
-     */
-    anonymous?: string[];
-}
-
 /**
  * @returns true if the request should should be denied
  */
-export function withBasicTokenAnonymous(auth: AuthRulesPathName, pathname: string): Gate {
+export function withBasicTokenAnonymous(auth: PathnameViewerRules, pathname: string): Gate {
     // if the path is in the denylist, deny the request
     if (auth.denylist?.find((path) => matchPath(path, pathname))) {
         return Gate.DENY;
@@ -59,8 +43,8 @@ export function withBasicTokenAnonymous(auth: AuthRulesPathName, pathname: strin
  * @internal visibleForTesting
  */
 export function withBasicTokenAnonymousCheck(
-    auth: AuthRulesPathName,
-): (node: NavigationNode, parents?: readonly NavigationNodeParent[]) => Gate {
+    auth: PathnameViewerRules,
+): (node: Partial<NavigationNode>, parents?: readonly NavigationNodeParent[]) => Gate {
     return (node, parents = EMPTY_ARRAY) => {
         if (hasMetadata(node) && withBasicTokenAnonymous(auth, addLeadingSlash(node.slug)) === Gate.ALLOW) {
             return Gate.ALLOW;
@@ -68,14 +52,14 @@ export function withBasicTokenAnonymousCheck(
 
         if (
             hasMetadata(node) &&
-            !isPage(node) &&
+            !isPage(node as NavigationNode) &&
             withBasicTokenAnonymous(auth, addLeadingSlash(node.slug)) === Gate.DENY
         ) {
             return Gate.DENY;
         }
 
         const predicate = rbacViewGate([], false);
-        return predicate(node, parents);
+        return predicate(node as NavigationNode, parents);
     };
 }
 
@@ -87,7 +71,7 @@ function withAllowed<T extends (...args: any[]) => Gate>(predicate: T): (...args
     return (...args) => predicate(...args) === Gate.ALLOW;
 }
 
-export function pruneWithBasicTokenAnonymous(auth: AuthRulesPathName, node: RootNode): RootNode {
+export function pruneWithBasicTokenAnonymous(auth: PathnameViewerRules, node: RootNode): RootNode {
     const result = Pruner.from(node)
         // mark nodes that are authed
         .authed(withDenied(withBasicTokenAnonymousCheck(auth)))
@@ -118,7 +102,7 @@ export function matchRoles(roles: string[] | "anonymous", filters: string[][]): 
     return filters.every((filter) => filter.some((aud) => roles.includes(aud))) ? Gate.ALLOW : Gate.DENY;
 }
 
-export function pruneWithBasicTokenAuthed(auth: AuthRulesPathName, node: RootNode, roles: string[] = []): RootNode {
+export function pruneWithBasicTokenAuthed(auth: PathnameViewerRules, node: RootNode, roles: string[] = []): RootNode {
     const result = Pruner.from(node)
         // apply rbac
         .keep(withAllowed(rbacViewGate(roles, true)))
@@ -136,7 +120,7 @@ export function pruneWithBasicTokenAuthed(auth: AuthRulesPathName, node: RootNod
     return result;
 }
 
-export function pruneWithAuthState(authState: AuthState, authConfig: AuthRulesPathName, node: RootNode): RootNode {
+export function pruneWithAuthState(authState: AuthState, authConfig: PathnameViewerRules, node: RootNode): RootNode {
     return authState.authed
         ? pruneWithBasicTokenAuthed(authConfig, node, authState.user.roles)
         : pruneWithBasicTokenAnonymous(authConfig, node);

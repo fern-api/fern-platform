@@ -1,4 +1,4 @@
-import { verifyFernJWTConfig } from "@/server/auth/FernJWT";
+import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
@@ -27,19 +27,17 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
     if (edgeConfig?.type !== "basic_token_verification" || token == null) {
         // eslint-disable-next-line no-console
         console.error(`Invalid config for domain ${domain}`);
-        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+        return redirectWithLoginError(redirectLocation, "unknown_error", "Couldn't login, please try again");
     }
 
-    try {
-        await verifyFernJWTConfig(token, edgeConfig);
+    const fernUser = await safeVerifyFernJWTConfig(token, edgeConfig);
 
-        // TODO: validate allowlist of domains to prevent open redirects
-        const res = redirectLocation ? NextResponse.redirect(redirectLocation) : NextResponse.next();
-        res.cookies.set(COOKIE_FERN_TOKEN, token, withSecureCookie(withDefaultProtocol(host)));
-        return res;
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
-        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+    if (fernUser) {
+        return redirectWithLoginError(redirectLocation, "unknown_error", "Couldn't login, please try again");
     }
+
+    // TODO: validate allowlist of domains to prevent open redirects
+    const res = redirectLocation ? NextResponse.redirect(redirectLocation) : NextResponse.next();
+    res.cookies.set(COOKIE_FERN_TOKEN, token, withSecureCookie(withDefaultProtocol(host)));
+    return res;
 }
