@@ -1,4 +1,3 @@
-import { getReturnToQueryParam } from "@/pages/api/fern-docs/auth/return-to";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
@@ -25,6 +24,7 @@ import urlJoin from "url-join";
 import { DocsLoader } from "./DocsLoader";
 import { addLeadingSlash } from "./addLeadingSlash";
 import { getAuthState } from "./auth/getAuthState";
+import { getReturnToQueryParam } from "./auth/return-to";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";

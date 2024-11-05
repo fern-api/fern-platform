@@ -1,3 +1,4 @@
+import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withDeleteCookie } from "@/server/auth/with-secure-cookie";
 import { revokeSessionForToken } from "@/server/auth/workos-session";
 import { safeUrl } from "@/server/safeUrl";
@@ -6,7 +7,6 @@ import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_ACCESS_TOKEN, COOKIE_FERN_TOKEN, COOKIE_REFRESH_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
-import { getReturnToQueryParam } from "./return-to";
 
 export const runtime = "edge";
 

@@ -1,4 +1,5 @@
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
+import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
@@ -7,7 +8,6 @@ import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
-import { getReturnToQueryParam } from "../return-to";
 
 export const runtime = "edge";
 

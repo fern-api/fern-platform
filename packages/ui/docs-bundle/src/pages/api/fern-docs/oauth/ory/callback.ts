@@ -1,4 +1,6 @@
 import { signFernJWT } from "@/server/auth/FernJWT";
+import { OryOAuth2Client } from "@/server/auth/ory";
+import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
@@ -8,8 +10,6 @@ import { FernUser, OryAccessTokenSchema } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_ACCESS_TOKEN, COOKIE_FERN_TOKEN, COOKIE_REFRESH_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
-import { OryOAuth2Client } from "../../../../../server/auth/ory";
-import { getReturnToQueryParam } from "../../auth/return-to";
 
 export const runtime = "edge";
 

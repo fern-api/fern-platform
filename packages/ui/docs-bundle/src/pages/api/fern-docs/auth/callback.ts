@@ -1,3 +1,4 @@
+import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
@@ -5,7 +6,6 @@ import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { HEADER_X_FERN_HOST } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
-import { getReturnToQueryParam } from "./return-to";
 
 export const runtime = "edge";
 

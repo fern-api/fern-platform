@@ -1,5 +1,6 @@
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { OryOAuth2Client, getOryAuthorizationUrl } from "@/server/auth/ory";
+import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
@@ -11,7 +12,6 @@ import { NextRequest, NextResponse } from "next/server";
 import urlJoin from "url-join";
 import { WebflowClient } from "webflow-api";
 import type { OauthScope } from "webflow-api/api/types/OAuthScope";
-import { getReturnToQueryParam } from "./return-to";
 
 export const runtime = "edge";
 

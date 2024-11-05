@@ -1,4 +1,3 @@
-import { getReturnToQueryParam } from "@/pages/api/fern-docs/auth/return-to";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig, FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
@@ -6,6 +5,7 @@ import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-tr
 import urlJoin from "url-join";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 import { getOryAuthorizationUrl } from "./ory";
+import { getReturnToQueryParam } from "./return-to";
 import { getWebflowAuthorizationUrl } from "./webflow";
 import { getWorkosSSOAuthorizationUrl } from "./workos";
 import { encryptSession, getSessionFromToken, refreshSession, toSessionUserInfo } from "./workos-session";
