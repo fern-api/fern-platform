@@ -3,7 +3,6 @@ import {
     NavigationNodeParent,
     Pruner,
     hasMetadata,
-    isPage,
     type NavigationNode,
     type RootNode,
 } from "@fern-api/fdr-sdk/navigation";
@@ -50,13 +49,15 @@ export function withBasicTokenAnonymousCheck(
             return Gate.ALLOW;
         }
 
-        if (
-            hasMetadata(node) &&
-            !isPage(node as NavigationNode) &&
-            withBasicTokenAnonymous(auth, addLeadingSlash(node.slug)) === Gate.DENY
-        ) {
-            return Gate.DENY;
-        }
+        // Note: this was causing random edge nodes to show "authed=true"
+        // TODO: decide if we should keep this or remove it
+        // if (
+        //     hasMetadata(node) &&
+        //     !isPage(node as NavigationNode) &&
+        //     withBasicTokenAnonymous(auth, addLeadingSlash(node.slug)) === Gate.DENY
+        // ) {
+        //     return Gate.DENY;
+        // }
 
         const predicate = rbacViewGate([], false);
         return predicate(node as NavigationNode, parents);
