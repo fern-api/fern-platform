@@ -52,7 +52,6 @@
     "gray-matter": "^4.0.3",
     "hast-util-heading-rank": "^3.0.0",
     "hast-util-to-estree": "^3.1.0",
-    "hast-util-to-mdast": "^10.1.0",
     "hast-util-to-string": "^3.0.0",
     "hastscript": "^9.0.0",
     "mdast-util-from-markdown": "^2.0.0",
