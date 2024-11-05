@@ -1,0 +1,1140 @@
+{
+  "baseUrl": {
+    "domain": "athena.docs.buildwithfern.com"
+  },
+  "definition": {
+    "config": {
+      "navigation": {
+        "items": [
+          {
+            "type": "section",
+            "title": "Getting Started",
+            "urlSlug": "getting-started",
+            "collapsed": false,
+            "hidden": false,
+            "items": [
+              {
+                "type": "page",
+                "id": "pages/getting_started.mdx",
+                "title": "Athena SDK Quickstart",
+                "urlSlug": "athena-sdk-quickstart",
+                "hidden": false
+              }
+            ],
+            "skipUrlSlug": false
+          },
+          {
+            "type": "section",
+            "title": "Guides",
+            "urlSlug": "guides",
+            "collapsed": false,
+            "hidden": false,
+            "items": [
+              {
+                "type": "page",
+                "id": "pages/examples/research.mdx",
+                "title": "Online Research",
+                "urlSlug": "online-research",
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "id": "pages/examples/research_oss.mdx",
+                "title": "Online Research with Open Source Models",
+                "urlSlug": "online-research-with-open-source-models",
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "id": "pages/examples/structured_output.mdx",
+                "title": "Structured Output",
+                "urlSlug": "structured-output",
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "id": "pages/examples/query_and_visualize.mdx",
+                "title": "Query and Visualize",
+                "urlSlug": "query-and-visualize",
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "id": "pages/examples/documentation.mdx",
+                "title": "Generate Documentation",
+                "urlSlug": "generate-documentation",
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "id": "pages/examples/data_frames.mdx",
+                "title": "Load Data Frames",
+                "urlSlug": "load-data-frames",
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "id": "pages/examples/upload_files.mdx",
+                "title": "Upload Files",
+                "urlSlug": "upload-files",
+                "hidden": false
+              }
+            ],
+            "skipUrlSlug": false
+          },
+          {
+            "type": "apiV2",
+            "node": {
+              "id": "c173bee9-1794-4364-93d9-780ed8d82ec7",
+              "type": "apiReference",
+              "title": "API Reference",
+              "apiDefinitionId": "c173bee9-1794-4364-93d9-780ed8d82ec7",
+              "paginated": false,
+              "slug": "api-reference",
+              "hideTitle": false,
+              "showErrors": false,
+              "children": [
+                {
+                  "id": "c173bee9-1794-4364-93d9-780ed8d82ec7:subpackage_tools",
+                  "type": "apiPackage",
+                  "children": [
+                    {
+                      "id": "c173bee9-1794-4364-93d9-780ed8d82ec7:endpoint_tools._data_frame",
+                      "type": "endpoint",
+                      "method": "GET",
+                      "endpointId": "endpoint_tools._data_frame",
+                      "apiDefinitionId": "c173bee9-1794-4364-93d9-780ed8d82ec7",
+                      "availability": "beta",
+                      "isResponseStream": false,
+                      "title": "Get Tabular Data from Object",
+                      "slug": "api-reference/tools/data-frame"
+                    },
+                    {
+                      "id": "c173bee9-1794-4364-93d9-780ed8d82ec7:endpoint_tools._raw_data",
+                      "type": "endpoint",
+                      "method": "GET",
+                      "endpointId": "endpoint_tools._raw_data",
+                      "apiDefinitionId": "c173bee9-1794-4364-93d9-780ed8d82ec7",
+                      "availability": "beta",
+                      "isResponseStream": false,
+                      "title": "Get Raw File Data from Object",
+                      "slug": "api-reference/tools/raw-data"
+                    }
+                  ],
+                  "title": "Tools",
+                  "slug": "api-reference/tools",
+                  "apiDefinitionId": "c173bee9-1794-4364-93d9-780ed8d82ec7",
+                  "pointsTo": "api-reference/tools/data-frame"
+                }
+              ],
+              "pointsTo": "api-reference/tools/data-frame"
+            }
+          }
+        ]
+      },
+      "logoHeight": 32,
+      "colorsV3": {
+        "type": "light",
+        "accentPrimary": {
+          "r": 53,
+          "g": 100,
+          "b": 202,
+          "a": 1
+        },
+        "logo": "ccfad7cd-5ff9-4ad8-9e3c-fe84695b348c",
+        "background": {
+          "type": "solid",
+          "r": 255,
+          "g": 255,
+          "b": 255,
+          "a": 1
+        }
+      },
+      "navbarLinks": [
+        {
+          "type": "outlined",
+          "text": "Login",
+          "url": "https://app.athenaintelligence.ai/"
+        },
+        {
+          "type": "filled",
+          "text": "Book a Demo",
+          "url": "https://calendly.com/d/3vs-8g8-9vf/athena-intelligence-team"
+        }
+      ],
+      "title": "Athena | API Reference Docs",
+      "favicon": "ccf946b4-1cbf-417e-a54c-786d0e1866b8",
+      "layout": {
+        "headerHeight": {
+          "type": "px",
+          "value": 70
+        },
+        "searchbarPlacement": "HEADER",
+        "tabsPlacement": "SIDEBAR",
+        "contentAlignment": "CENTER",
+        "headerPosition": "FIXED",
+        "disableHeader": false
+      },
+      "js": {
+        "files": []
+      },
+      "analyticsConfig": {
+        "posthog": {
+          "apiKey": "phc_klucwJxuBrgYuAXGSCOUGnp0qhKeA81OuIFyUngiPGQ",
+          "endpoint": "https://app.athenaintelligence.ai/ingest"
+        }
+      }
+    },
+    "apis": {
+      "c173bee9-1794-4364-93d9-780ed8d82ec7": {
+        "id": "c173bee9-1794-4364-93d9-780ed8d82ec7",
+        "rootPackage": {
+          "endpoints": [],
+          "subpackages": ["subpackage_tools"],
+          "types": [
+            "type_:DataFrameParsingError",
+            "type_:DataFrameRequestOutColumnsItem",
+            "type_:DataFrameRequestOutDataItemItem",
+            "type_:DataFrameRequestOutIndexItem",
+            "type_:DataFrameRequestOut",
+            "type_:DataFrameUnknownFormatError",
+            "type_:FileFetchError",
+            "type_:HTTPValidationError",
+            "type_:ValidationErrorLocItem",
+            "type_:ValidationError"
+          ],
+          "webhooks": [],
+          "websockets": []
+        },
+        "types": {
+          "type_tools:ToolsDataFrameRequestColumnsItem": {
+            "name": "ToolsDataFrameRequestColumnsItem",
+            "shape": {
+              "type": "undiscriminatedUnion",
+              "variants": [
+                {
+                  "type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:DataFrameParsingError": {
+            "name": "DataFrameParsingError",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "document_id",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "key": "message",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:DataFrameRequestOutColumnsItem": {
+            "name": "DataFrameRequestOutColumnsItem",
+            "shape": {
+              "type": "undiscriminatedUnion",
+              "variants": [
+                {
+                  "type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:DataFrameRequestOutDataItemItem": {
+            "name": "DataFrameRequestOutDataItemItem",
+            "shape": {
+              "type": "undiscriminatedUnion",
+              "variants": [
+                {
+                  "type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:DataFrameRequestOutIndexItem": {
+            "name": "DataFrameRequestOutIndexItem",
+            "shape": {
+              "type": "undiscriminatedUnion",
+              "variants": [
+                {
+                  "type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:DataFrameRequestOut": {
+            "description": "Response model with JSON dataframe representation.",
+            "name": "DataFrameRequestOut",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "columns",
+                  "valueType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "type_:DataFrameRequestOutColumnsItem"
+                    }
+                  }
+                },
+                {
+                  "key": "data",
+                  "valueType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_:DataFrameRequestOutDataItemItem"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "index",
+                  "valueType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "type_:DataFrameRequestOutIndexItem"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:DataFrameUnknownFormatError": {
+            "name": "DataFrameUnknownFormatError",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "document_id",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "key": "media_type",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "key": "message",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:FileFetchError": {
+            "name": "FileFetchError",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "message",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "key": "status_code",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:HTTPValidationError": {
+            "name": "HTTPValidationError",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "detail",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_:ValidationError"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:ValidationErrorLocItem": {
+            "name": "ValidationErrorLocItem",
+            "shape": {
+              "type": "undiscriminatedUnion",
+              "variants": [
+                {
+                  "type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:ValidationError": {
+            "name": "ValidationError",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "loc",
+                  "valueType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "type_:ValidationErrorLocItem"
+                    }
+                  }
+                },
+                {
+                  "key": "msg",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "key": "type",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "subpackages": {
+          "subpackage_tools": {
+            "subpackageId": "subpackage_tools",
+            "name": "tools",
+            "endpoints": [
+              {
+                "environments": [
+                  {
+                    "id": "Production",
+                    "baseUrl": "https://api.athenaintel.com"
+                  }
+                ],
+                "availability": "Beta",
+                "defaultEnvironment": "Production",
+                "urlSlug": "data-frame",
+                "migratedFromUrlSlugs": ["get-tabular-data-from-object"],
+                "method": "GET",
+                "id": "_data_frame",
+                "originalEndpointId": "endpoint_tools._data_frame",
+                "name": "Get Tabular Data from Object",
+                "path": {
+                  "pathParameters": [],
+                  "parts": [
+                    {
+                      "type": "literal",
+                      "value": ""
+                    },
+                    {
+                      "type": "literal",
+                      "value": "/api/v0/tools/file/data-frame"
+                    }
+                  ]
+                },
+                "queryParameters": [
+                  {
+                    "key": "document_id",
+                    "type": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "key": "row_limit",
+                    "type": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "index_column",
+                    "type": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "description": "should be a list of strings or a list of integers",
+                    "key": "columns",
+                    "type": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_tools:ToolsDataFrameRequestColumnsItem"
+                      }
+                    }
+                  },
+                  {
+                    "description": "only for excel files",
+                    "key": "sheet_name",
+                    "type": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "description": "only for csv files",
+                    "key": "separator",
+                    "type": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "headers": [],
+                "response": {
+                  "type": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "type_:DataFrameRequestOut"
+                    }
+                  }
+                },
+                "errors": [],
+                "errorsV2": [
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:FileFetchError"
+                      }
+                    },
+                    "statusCode": 404,
+                    "description": "Not Found",
+                    "examples": []
+                  },
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:DataFrameUnknownFormatError"
+                      }
+                    },
+                    "statusCode": 415,
+                    "description": "Unsupported Media Type",
+                    "examples": []
+                  },
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:HTTPValidationError"
+                      }
+                    },
+                    "statusCode": 422,
+                    "description": "Validation Error",
+                    "examples": []
+                  },
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:DataFrameParsingError"
+                      }
+                    },
+                    "statusCode": 500,
+                    "description": "Internal Server Error",
+                    "examples": []
+                  }
+                ],
+                "examples": [
+                  {
+                    "path": "/api/v0/tools/file/data-frame",
+                    "pathParameters": {},
+                    "queryParameters": {
+                      "document_id": "document_id"
+                    },
+                    "headers": {},
+                    "responseStatusCode": 200,
+                    "responseBody": {
+                      "columns": ["header1", "header2"],
+                      "data": [
+                        ["a", 1],
+                        ["b", 2]
+                      ],
+                      "index": [0, 1]
+                    },
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "pythonSdk": {
+                        "type": "python",
+                        "sdk": {
+                          "version": "0.1.95",
+                          "package": "athena-intelligence"
+                        },
+                        "async_client": "from athena.client import AsyncAthena\n\nclient = AsyncAthena(\n    api_key=\"YOUR_API_KEY\",\n)\nawait client.tools.data_frame(\n    document_id=\"document_id\",\n)\n",
+                        "sync_client": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.data_frame(\n    document_id=\"document_id\",\n)\n",
+                        "exampleIdentifier": "default"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "columns": ["header1", "header2"],
+                        "data": [
+                          ["a", 1],
+                          ["b", 2]
+                        ],
+                        "index": [0, 1]
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v0/tools/file/data-frame",
+                    "pathParameters": {},
+                    "queryParameters": {
+                      "document_id": "string",
+                      "row_limit": 0,
+                      "index_column": 0
+                    },
+                    "headers": {},
+                    "responseStatusCode": 404,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "pythonSdk": {
+                        "type": "python",
+                        "sdk": {
+                          "version": "0.1.95",
+                          "package": "athena-intelligence"
+                        },
+                        "async_client": "from athena.client import AsyncAthena\n\nclient = AsyncAthena(\n    api_key=\"YOUR_API_KEY\",\n)\nawait client.tools.data_frame(\n    document_id=\"document_id\",\n)\n",
+                        "sync_client": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.data_frame(\n    document_id=\"document_id\",\n)\n",
+                        "exampleIdentifier": "default"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "message": "string",
+                        "status_code": 0
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v0/tools/file/data-frame",
+                    "pathParameters": {},
+                    "queryParameters": {
+                      "document_id": "string",
+                      "row_limit": 0,
+                      "index_column": 0
+                    },
+                    "headers": {},
+                    "responseStatusCode": 415,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "pythonSdk": {
+                        "type": "python",
+                        "sdk": {
+                          "version": "0.1.95",
+                          "package": "athena-intelligence"
+                        },
+                        "async_client": "from athena.client import AsyncAthena\n\nclient = AsyncAthena(\n    api_key=\"YOUR_API_KEY\",\n)\nawait client.tools.data_frame(\n    document_id=\"document_id\",\n)\n",
+                        "sync_client": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.data_frame(\n    document_id=\"document_id\",\n)\n",
+                        "exampleIdentifier": "default"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "document_id": "string",
+                        "media_type": "string",
+                        "message": "string"
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v0/tools/file/data-frame",
+                    "pathParameters": {},
+                    "queryParameters": {
+                      "document_id": "string",
+                      "row_limit": 0,
+                      "index_column": 0
+                    },
+                    "headers": {},
+                    "responseStatusCode": 422,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "pythonSdk": {
+                        "type": "python",
+                        "sdk": {
+                          "version": "0.1.95",
+                          "package": "athena-intelligence"
+                        },
+                        "async_client": "from athena.client import AsyncAthena\n\nclient = AsyncAthena(\n    api_key=\"YOUR_API_KEY\",\n)\nawait client.tools.data_frame(\n    document_id=\"document_id\",\n)\n",
+                        "sync_client": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.data_frame(\n    document_id=\"document_id\",\n)\n",
+                        "exampleIdentifier": "default"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "detail": [
+                          {
+                            "loc": ["string"],
+                            "msg": "string",
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v0/tools/file/data-frame",
+                    "pathParameters": {},
+                    "queryParameters": {
+                      "document_id": "string",
+                      "row_limit": 0,
+                      "index_column": 0
+                    },
+                    "headers": {},
+                    "responseStatusCode": 500,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "pythonSdk": {
+                        "type": "python",
+                        "sdk": {
+                          "version": "0.1.95",
+                          "package": "athena-intelligence"
+                        },
+                        "async_client": "from athena.client import AsyncAthena\n\nclient = AsyncAthena(\n    api_key=\"YOUR_API_KEY\",\n)\nawait client.tools.data_frame(\n    document_id=\"document_id\",\n)\n",
+                        "sync_client": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.data_frame(\n    document_id=\"document_id\",\n)\n",
+                        "exampleIdentifier": "default"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "document_id": "string",
+                        "message": "string"
+                      }
+                    },
+                    "codeSamples": []
+                  }
+                ],
+                "authed": true
+              },
+              {
+                "environments": [
+                  {
+                    "id": "Production",
+                    "baseUrl": "https://api.athenaintel.com"
+                  }
+                ],
+                "availability": "Beta",
+                "defaultEnvironment": "Production",
+                "urlSlug": "raw-data",
+                "migratedFromUrlSlugs": ["get-raw-file-data-from-object"],
+                "method": "GET",
+                "id": "_raw_data",
+                "originalEndpointId": "endpoint_tools._raw_data",
+                "name": "Get Raw File Data from Object",
+                "path": {
+                  "pathParameters": [],
+                  "parts": [
+                    {
+                      "type": "literal",
+                      "value": ""
+                    },
+                    {
+                      "type": "literal",
+                      "value": "/api/v0/tools/file/raw-data"
+                    }
+                  ]
+                },
+                "queryParameters": [
+                  {
+                    "key": "document_id",
+                    "type": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ],
+                "headers": [],
+                "response": {
+                  "type": {
+                    "type": "fileDownload"
+                  }
+                },
+                "errors": [],
+                "errorsV2": [
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:FileFetchError"
+                      }
+                    },
+                    "statusCode": 404,
+                    "description": "Not Found",
+                    "examples": []
+                  },
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:HTTPValidationError"
+                      }
+                    },
+                    "statusCode": 422,
+                    "description": "Validation Error",
+                    "examples": []
+                  }
+                ],
+                "examples": [
+                  {
+                    "path": "/api/v0/tools/file/raw-data",
+                    "pathParameters": {},
+                    "queryParameters": {
+                      "document_id": "string"
+                    },
+                    "headers": {},
+                    "responseStatusCode": 200,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "pythonSdk": {
+                        "type": "python",
+                        "sdk": {
+                          "version": "0.1.95",
+                          "package": "athena-intelligence"
+                        },
+                        "async_client": "from athena.client import AsyncAthena\n\nclient = AsyncAthena(\n    api_key=\"YOUR_API_KEY\",\n)\nawait client.tools.raw_data(\n    document_id=\"string\",\n)\n",
+                        "sync_client": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.raw_data(\n    document_id=\"string\",\n)\n",
+                        "exampleIdentifier": "default"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "filename",
+                      "value": "<filename>"
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v0/tools/file/raw-data",
+                    "pathParameters": {},
+                    "queryParameters": {
+                      "document_id": "string"
+                    },
+                    "headers": {},
+                    "responseStatusCode": 404,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "pythonSdk": {
+                        "type": "python",
+                        "sdk": {
+                          "version": "0.1.95",
+                          "package": "athena-intelligence"
+                        },
+                        "async_client": "from athena.client import AsyncAthena\n\nclient = AsyncAthena(\n    api_key=\"YOUR_API_KEY\",\n)\nawait client.tools.raw_data(\n    document_id=\"string\",\n)\n",
+                        "sync_client": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.raw_data(\n    document_id=\"string\",\n)\n",
+                        "exampleIdentifier": "default"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "message": "string",
+                        "status_code": 0
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v0/tools/file/raw-data",
+                    "pathParameters": {},
+                    "queryParameters": {
+                      "document_id": "string"
+                    },
+                    "headers": {},
+                    "responseStatusCode": 422,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "pythonSdk": {
+                        "type": "python",
+                        "sdk": {
+                          "version": "0.1.95",
+                          "package": "athena-intelligence"
+                        },
+                        "async_client": "from athena.client import AsyncAthena\n\nclient = AsyncAthena(\n    api_key=\"YOUR_API_KEY\",\n)\nawait client.tools.raw_data(\n    document_id=\"string\",\n)\n",
+                        "sync_client": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.raw_data(\n    document_id=\"string\",\n)\n",
+                        "exampleIdentifier": "default"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "detail": [
+                          {
+                            "loc": ["string"],
+                            "msg": "string",
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    },
+                    "codeSamples": []
+                  }
+                ],
+                "description": "Get the raw file data for given asset.",
+                "authed": true
+              }
+            ],
+            "types": ["type_tools:ToolsDataFrameRequestColumnsItem"],
+            "subpackages": [],
+            "urlSlug": "tools",
+            "webhooks": [],
+            "websockets": []
+          }
+        },
+        "auth": {
+          "type": "header",
+          "headerWireValue": "X-API-KEY",
+          "nameOverride": "apiKey"
+        },
+        "hasMultipleBaseUrls": false,
+        "globalHeaders": []
+      }
+    },
+    "files": {
+      "ccfad7cd-5ff9-4ad8-9e3c-fe84695b348c": "https://fdr-prod-docs-files.s3.us-east-1.amazonaws.com/https%3A//athena.docs.buildwithfern.com/2024-11-05T15%3A39%3A25.367Z/assets/logo.png",
+      "ccf946b4-1cbf-417e-a54c-786d0e1866b8": "https://fdr-prod-docs-files.s3.us-east-1.amazonaws.com/https%3A//athena.docs.buildwithfern.com/2024-11-05T15%3A39%3A25.367Z/assets/favicon.png"
+    },
+    "jsFiles": {},
+    "filesV2": {
+      "ccfad7cd-5ff9-4ad8-9e3c-fe84695b348c": {
+        "type": "image",
+        "width": 500,
+        "height": 70,
+        "url": "https://fdr-prod-docs-files-public.s3.amazonaws.com/https://athena.docs.buildwithfern.com/2024-11-05T15:39:25.367Z/assets/logo.png"
+      },
+      "ccf946b4-1cbf-417e-a54c-786d0e1866b8": {
+        "type": "image",
+        "width": 32,
+        "height": 32,
+        "url": "https://fdr-prod-docs-files-public.s3.amazonaws.com/https://athena.docs.buildwithfern.com/2024-11-05T15:39:25.367Z/assets/favicon.png"
+      }
+    },
+    "pages": {
+      "pages/getting_started.mdx": {
+        "markdown": "---\ntitle: Quickstart\ndescription: Learn how to get started with Athena Python SDK.\n---\n\nWe recommend using the SDK in Athena Notebooks.\n\n<Steps>\n### Install Athena Python SDK\n\n```python\n!pip install -U athena-intelligence\n```\n\n### Initialize Athena client\n```python\nimport os\n\nATHENA_API_KEY = os.environ[\"ATHENA_API_KEY\"]\n\nfrom athena import Model, Tools\nfrom athena.client import Athena\n\nathena = Athena(\n    api_key=ATHENA_API_KEY,\n)\n```\nTo get API early access, reach out to team@athenaintelligence.ai\n\n\n### Continue\nExplore examples and sample notebooks of end-to-end workflows with Athena SDK. \nClick `Athena Notebooks` -> `File Viewer` -> `Sample Notebooks`.\n\n</Steps>\n"
+      },
+      "pages/examples/research.mdx": {
+        "markdown": "Athena has the following tools to help you research information online:\n```python\ntools=[\n  Tools.SEARCH, \n  Tools.BROWSE, \n  Tools.WIKIPEDIA, \n  Tools.ENRICH_PERSON, \n  Tools.ENRICH_COMPANY\n  ]\n```\n\n\n<Steps>\n### Set up environment \n```python\n!pip install -U athena-intelligence\n```\n```python\nimport json\nimport pandas as pd\nimport os\n\nATHENA_API_KEY = os.environ[\"ATHENA_API_KEY\"]\n\nfrom athena import Model, Tools\nfrom athena.client import AsyncAthena\n\nathena = AsyncAthena(\n    api_key=ATHENA_API_KEY,\n)\n\n```\n\n### Research general topics with `search` & `browse` and `wikipedia` tools.\nWrite a reasearch request and add tools you want Athena to use. \n```python\nteam = \"KC Chiefs\"\nUSER_MESSAGE_INPUT = f\"\"\"\nWho plays quarterback in {team}?\n\"\"\"\n\nmessage = await athena.message.submit_and_poll(\n    content=USER_MESSAGE_INPUT,\n    model=Model.GPT_4_TURBO_PREVIEW,\n    tools=[Tools.SEARCH, Tools.BROWSE, Tools.WIKIPEDIA],\n)\n\nprint(message.content)\n```\n\n### Research specific person or company with `enrich_person` and `enrich_company` tools.\nAthena data providers APIs to gather information about individuals and companies. However, these tools might not always provide detailed information for some queries. For more consistent results, consider adding the `search` and `browse` tools as fallback options.\n```python\nperson = \"Patrick Mahomes\"\nUSER_MESSAGE_INPUT = f\"\"\"\nAnswer the question below using available tools. \n\nWho is {person}?\n\"\"\"\n\nmessage = await athena.message.submit_and_poll(\n    content=USER_MESSAGE_INPUT,\n    model=Model.GPT_4_TURBO_PREVIEW,\n    tools=[ Tools.ENRICH_PERSON, Tools. ENRICH_COMPANY, Tools.SEARCH, Tools.BROWSE],\n)\n\nprint(message.content)\n```\n</Steps>\n\n### Specifying tool order\nYou can tell Athena which tools to use first by simply passing the request in the input message: \n```python\nteam = \"KC Chiefs\"\nUSER_MESSAGE_INPUT = f\"\"\"\nAnswer the question below using available tools. \nUse the tools in the following order: \n1. Wikipedia\n2. Enrich tools\n3. Search and Browse - only use if Wikipedia didn't return results. \n\nWho plays quarterback in {team}?\n\"\"\"\n\nmessage = await athena.message.submit_and_poll(\n    content=USER_MESSAGE_INPUT,\n    model=Model.GPT_4_TURBO_PREVIEW,\n    tools=[Tools.SEARCH, Tools.BROWSE, Tools.WIKIPEDIA, Tools.ENRICH_PERSON, Tools. ENRICH_COMPANY],\n)\n\nprint(message.content)\n```\n"
+      },
+      "pages/examples/research_oss.mdx": {
+        "markdown": "Athena can leverage open-source models to research web and analyse results using open source models with `tools.tool_first_workflow()`\n\n\n<Steps>\n### Set up environment \n```python\n!pip install -U athena-intelligence\n```\n```python\nimport json\nimport pandas as pd\nimport os\n\nATHENA_API_KEY = os.environ[\"ATHENA_API_KEY\"]\n\nfrom athena import Model, Tools\nfrom athena.client import AsyncAthena\n\nathena = AsyncAthena(\n    api_key=ATHENA_API_KEY,\n)\n\n```\n\n### Set up search query and instructions for analysing results\nWrite a search request and what you want Athena to do with search results. \n```python\nmessage = await async_athena.tools.tool_first_workflow(\n\n    model=ToolModels.MISTRAL_LARGE_0224,\n    tool_name=\"tavily_search\",\n    content=\"Summarize information on the topic\",\n    tool_kwargs={\"query\": \"AI advances in April 2024\"},\n\n)\ndisplay(Markdown(message.output_message))\n```\n\n```markdown\nBased on the search results, it appears that Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.\n\nStanford University's 2024 AI Index has charted the meteoric rise of AI tools, and AI is now outperforming humans at basic tasks, necessitating new benchmarks. The power of Gen AI, combined with traditional AI, is expected to provide even more help in the future.\n\nHowever, the use of Gen AI in the workplace is not without its challenges. Organizations must have a clear policy around Gen AI and be wary of 'shadow AI' - the unofficial use of AI in the workplace by employees without IT approval or oversight.\n\nThe Gartner Hype Cycle positions Gen AI at the 'Peak of Inflated Expectations,' on the cusp of a slide into the 'Trough of Disillusionment,' indicating a relatively underwhelming transition period. Despite this, many leaders expect substantial transformative impacts in the short term.\n\nIn terms of regulations, policymakers have been drawing up tough new regulations, with Biden’s executive order coming out in October and the European Union’s AI Act being finally agreed in December.\n\nIn conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.\n```\n</Steps>\n"
+      },
+      "pages/examples/structured_output.mdx": {
+        "markdown": "Athena can return structured output if you pass it the desired schema using `chain.structured_parse()`:\n\n\n\n<Steps>\n### Set up environment \n```python\n!pip install -U athena-intelligence\n```\n```python\nimport json\nimport pandas as pd\nimport os\n\nATHENA_API_KEY = os.environ[\"ATHENA_API_KEY\"]\n\nfrom athena import Model, Tools\nfrom athena.client import AsyncAthena\n\nathena = AsyncAthena(\n    api_key=ATHENA_API_KEY,\n)\n\n```\n\n### Set up a sample search query: \nWrite a search request and what you want Athena to do with search results. \n```python\nmessage = await async_athena.tools.tool_first_workflow(\n\n    model=ToolModels.MISTRAL_LARGE_0224,\n    tool_name=\"tavily_search\",\n    content=\"Summarize information on the topic\",\n    tool_kwargs={\"query\": \"AI advances in April 2024\"},\n\n)\ndisplay(Markdown(message.output_message))\n```\n\n```markdown\nBased on the search results, it appears that Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.\n\nStanford University's 2024 AI Index has charted the meteoric rise of AI tools, and AI is now outperforming humans at basic tasks, necessitating new benchmarks. The power of Gen AI, combined with traditional AI, is expected to provide even more help in the future.\n\nHowever, the use of Gen AI in the workplace is not without its challenges. Organizations must have a clear policy around Gen AI and be wary of 'shadow AI' - the unofficial use of AI in the workplace by employees without IT approval or oversight.\n\nThe Gartner Hype Cycle positions Gen AI at the 'Peak of Inflated Expectations,' on the cusp of a slide into the 'Trough of Disillusionment,' indicating a relatively underwhelming transition period. Despite this, many leaders expect substantial transformative impacts in the short term.\n\nIn terms of regulations, policymakers have been drawing up tough new regulations, with Biden’s executive order coming out in October and the European Union’s AI Act being finally agreed in December.\n\nIn conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.\n```\n\n### Use structured_parse() to return structured output\n\n```python\nfrom athena import StructuredParseInParsingModel\nstructured_output = athena.chain.structured_parse(\n    text_input=message.output_message, \n    custom_type_dict={\"news\": {\"news_item_1\": \"news_content_1\", \"news_item_2\": \"news_content_2\"}},\n    parsing_model=StructuredParseInParsingModel.MISTRAL_LARGE_0224,\n)\nstructured_output.result\n```\n\n```json\n{'news': {'news_item_1': 'Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.',\n  'news_item_2': \"Stanford University's 2024 AI Index has charted the meteoric rise of AI tools, and AI is now outperforming humans at basic tasks, necessitating new benchmarks. The power of Gen AI, combined with traditional AI, is expected to provide even more help in the future.\",\n  'news_item_3': \"However, the use of Gen AI in the workplace is not without its challenges. Organizations must have a clear policy around Gen AI and be wary of 'shadow AI' - the unofficial use of AI in the workplace by employees without IT approval or oversight.\",\n  'news_item_4': \"The Gartner Hype Cycle positions Gen AI at the 'Peak of Inflated Expectations,' on the cusp of a slide into the 'Trough of Disillusionment,' indicating a relatively underwhelming transition period. Despite this, many leaders expect substantial transformative impacts in the short term.\",\n  'news_item_5': 'In terms of regulations, policymakers have been drawing up tough new regulations, with Biden’s executive order coming out in October and the European Union’s AI Act being finally agreed in December.',\n  'news_item_6': 'In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.'}}\n  ```\n</Steps>\n"
+      },
+      "pages/examples/query_and_visualize.mdx": {
+        "markdown": "\n\n<Steps>\n### Set up environment \n```python\n!pip install -U athena-intelligence\n```\n```python\nimport json\nimport pandas as pd\nimport os\n\nATHENA_API_KEY = os.environ[\"ATHENA_API_KEY\"]\n\nfrom athena import Model, Tools\nfrom athena.client import Athena\n\nathena = Athena(\n    api_key=ATHENA_API_KEY,\n)\n```\n\n### Query SQL with `athena.query.execute()`\nInitialize default database or specify id of another connected database. Ask Athena team if unclear. \n```python\n# default database id = 9\ndefault_database_id = 9\n```\n\nPut your query here\n```python\nquery = \"\"\"\nWITH RankedCustomers AS (\n  SELECT\n    r.route_id,\n    r.src AS route_source,\n    r.dst AS route_destination,\n    ts.passenger_id,\n    c.name AS customer_name,\n    SUM(ts.num_tickets) AS total_tickets,\n    RANK() OVER (PARTITION BY r.route_id ORDER BY SUM(ts.num_tickets) DESC) AS rank\n  FROM\n    sample_schema.train_routes r\n  JOIN sample_schema.train_trips t ON r.route_id = t.route_id\n  JOIN sample_schema.train_ticketsales ts ON t.trip_id = ts.trip_id\n  JOIN sample_schema.train_customers c ON ts.passenger_id = c.passenger_id\n  GROUP BY\n    r.route_id,\n    r.src,\n    r.dst,\n    ts.passenger_id,\n    c.name\n)\nSELECT\n  route_id,\n  route_source,\n  route_destination,\n  passenger_id,\n  customer_name,\n  total_tickets\nFROM\n  RankedCustomers\nWHERE\n  rank <= 3\nORDER BY\n  route_id,\n  rank;\n\"\"\"\n```\n\nRun the query and convert to Pandas dataframe for subsequent analysis \n```python\nquery_result = athena.query.execute(\n    sql_command = query,\n    database_id = default_database_id\n    )\n\nformatted_query_result = json.loads(query_result.json())\ndata_output = formatted_query_result['result']['data']\n\n# Convert the list of dictionaries to a DataFrame\ndf = pd.DataFrame(data_output)\n\n# Display the DataFrame to verify the contents\ndf\n\n```\n\n### Visualize data using Athena Notebooks Sidebar\nOnce you have an SQL output, you can harness the power and flexibility of visualisations or further analysis using Python. In Athena Notebooks, you can click \"Chat\" in the top right corner to ask Athena for help writing code for visualizations you need. Copy and paste a dataframe headers and 2-3 rows to give Athena all needed context. \n\n- Write code to visualize this table: \n \troute_id \troute_source \troute_destination \tpassenger_id \tcustomer_name \ttotal_tickets\n0 \t1 \tWest Sylvia \tWilliamsshire \t816 \tJaruwan Rogers \t13\n1 \t1 \tWest Sylvia \tWilliamsshire \t679 \tKaren Tapp \t9\n\n- Sure, here's the code:\n...\n\nCopy & run the code in the notebook. \n```python\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport numpy as np\n\n# Assuming 'df' is your DataFrame\n# Ensure your DataFrame is named 'df' or adjust the variable name accordingly\n\n# Visualization 1: Total Tickets Sold by Route\nroute_tickets_sum = df.groupby('route_id')['total_tickets'].sum().reset_index()\nplt.figure(figsize=(10, 6))\nplt.bar(route_tickets_sum['route_id'], route_tickets_sum['total_tickets'], color='deepskyblue')  # Changed color to 'deepskyblue'\nplt.title('Total Tickets Sold by Route')\nplt.xlabel('Route ID')\nplt.ylabel('Total Tickets Sold')\nplt.xticks(rotation=45)\nplt.tight_layout()\nplt.show()\n```\n</Steps>\n"
+      },
+      "pages/examples/documentation.mdx": {
+        "markdown": "---\ntitle: Generate Data Documentation\n---\n\n<Steps>\n### Set up environment\n\n```python\n!pip install -U athena-intelligence\n```\n\n```python\nimport json\nimport os\nimport pandas as pd\nfrom IPython.display import Markdown\n\nATHENA_API_KEY = os.environ[\"ATHENA_API_KEY\"]\n\nfrom athena import Model, Tools\nfrom athena.client import Athena\n\nathena = Athena(\n    api_key=ATHENA_API_KEY,\n)\n```\n\n### Get datasets\nCall `dataset.get` method to get datasets. Use optional pagination parameters to run bulk workflows with datasets.\n```python\ndatasets = athena.dataset.get(page=1, page_size=5)\ndatasets\n```\n\nAthena returns a json object with a list of datasets with the following fields: dataset id, name, database id, schema details (dialect, CREATE statement and first 3 rows), as well as pagination info.\n\nTo access raw json, use `.json()`:\n\n```python\ndata = json.loads(datasets.json())\ndatasets_list = data['datasets']\nimport pandas as pd\npd.set_option('display.max_colwidth', None)\ndf_datasets = pd.DataFrame(datasets_list)\ndf_datasets\n```\n\n### Document individual datasets with `athena.submit_and_poll`\nWith datasets loaded, we can proceed with the documentation workflow. We'll start by defining a function that takes a list of datasets and send them one by one to Athena with a documentation prompt. \n\n```python\ndocumentation_responses = [] \ndef generate_documentation_for_dataset(dataset_name, dataset_schema_details):\n    # Placeholder for the function to submit and poll for documentation generation\n    message = athena.message.submit_and_poll(\n    content=\n    f\"\"\"\n**Task:** Generate comprehensive documentation for a dataset.\n\n**Objective:**\nCreate output template documentation for a table, detailing its schema, fields, and relevant metadata. The documentation should follow the structure provided below and adhere to the specified markdown format and tone. Use metadata and other available information to produce the documentation tailored to the context. This documentation will serve as a guide for understanding the dataset's structure, purpose, and usage within the organization. It should be clear, concise, and informative, catering to both technical and non-technical stakeholders.\n\n**Instructions:**\n1. Explore information available on the dataset {dataset_name}:\n- dataset metadata: \n\n{dataset_schema_details}\n\n\n2. For each section of the documentation, provide clear, concise information as outlined in the output template. Use professional language and ensure the documentation is accessible to a broad audience.\n3. Include a brief example value or description where requested to illustrate the type of content expected.\n4. Only include factual statements. When making assumptions or inferences, clearly label them as such.\n\n**Output Template:**\n\n## Athena Generated Dataset Documentation\n\n### TABLE: \\`[TABLE NAME]\\`\n\n**Generated on: [CURRENT DATE]**\n\n#### Dataset Description:\nProvide a comprehensive explanation of the table's purpose, detailing what one row represents and the business process or workflow it supports.\n\n#### Field Report:\nDocument each field in the table, including its name, description, data type, and an example value.\n\n| Field Name | Field Description | Field Type | Example Value |\n| ---------- | ----------------- | ---------- | ------------- |\n| [FIELD NAME] | [FIELD DESCRIPTION] | [FIELD TYPE] | [EXAMPLE VALUE] |\n| ...additional fields as necessary... |\n\n#### Sample Query and First Three Rows:\nInclude a sample SQL query that returns the first three rows of data, followed by the results of the query.\n\n#### Use Cases & Guidelines:\nDescribe the organization's use cases and guidelines for using this dataset, highlighting any best practices or restrictions.\n\n#### Other Notes & Considerations:\nList any additional notes or considerations relevant to the dataset's use or interpretation.\n\n**End of Template**\n\nPlease ensure all information is accurate and up-to-date, reflecting the current state of the dataset as of [CURRENT DATE].\n    \"\"\",\n    model=Model.MIXTRAL_SMALL_8_X_7_B_0211,\n    tools=[],\n    )\n    print(f\"Generating documentation for dataset: {dataset_name}\")\n    message_json=json.loads(message.json())\n    documentation_responses.append({'dataset_name': dataset_name, 'documentation_message': message_json['content']})\n    \n```\n\nNow we can kick off the workflow.\n\n```python\n# Iterate over each row in the DataFrame\nfor index, row in df_datasets.iterrows():\n    dataset_name = row['name']\n    dataset_schema_details = row['schema_details']\n    \n    # Generate documentation for the current dataset\n    generate_documentation_for_dataset(dataset_name, dataset_schema_details)\n```\n\nConvert results to markdown to read and copy generated documentation. \n\n```python\ndef json_to_markdown_document(json_list):\n    markdown_document = \"\"\n    if not json_list:\n        return \"No data available\"\n    \n    for item in json_list:\n        for key, value in item.items():\n            markdown_document += f\"**{key}:** {value}\\n\\n\"\n        markdown_document += \"---\\n\\n\"  # Separator line between items\n    \n    return markdown_document\n\n# Convert the list of dictionaries to Markdown\nmarkdown_document = json_to_markdown_document(documentation_responses)\n\n# Display the Markdown in the notebook\ndisplay(Markdown(markdown_document))\n```\n\n### Generate documentation and ERD diagrams for multiple datasets\nNow that we documented all individual tables, we can ask Athena to process proccess created documentation and generate a higher-level description of the whole body of data, together with joins and other notable relationships between tables.\n```python\ndef generate_high_level_documentation(markdown_document):\n    # Placeholder for the function to submit and poll for high-level documentation generation\n    message = athena.message.submit_and_poll(\n    content=\n    f\"\"\"\n**Task:** Generate high-level comprehensive documentation for a body of datasets.\n\n**Objective:**\nCreate high-level output documentation for multiple related tables, detailing their schema, fields, relationships, and relevant metadata. The documentation should follow the structure provided below and adhere to the specified markdown format and tone. Use the provided markdown document and other available information to produce the documentation tailored to the context. This documentation will serve as a guide for understanding the structure, purpose, and usage of the datasets within the organization. It should be clear, concise, and informative, catering to both technical and non-technical stakeholders.\n\n**Instructions:**\n1. Explore information available in the provided markdown document:\n- Provided markdown document:\n\n{markdown_document}\n\n\n2. For each section of the documentation, provide clear, concise information as outlined in the output template. Use professional language and ensure the documentation is accessible to a broad audience.\n3. Include diagrams such as Entity-Relationship Diagrams (ERD) and other helpful diagrams to explore relationships in the data.\n4. Discuss possible analyses and how the datasets can be joined for these analyses.\n5. Only include factual statements. When making assumptions or inferences, clearly label them as such.\n6. Pay attention to Mermaid diagram dialect and double-check yourself. \n\n**Output Template:**\n\n## Athena Generated High-Level Dataset Documentation\n\n### Overview of Datasets\n\nProvide a brief overview of the datasets included in the markdown document, summarizing their purpose and how they relate to each other.\n\n### Entity-Relationship Diagram (ERD)\n\nInclude an ERD that visually represents the relationships between the datasets.\n\n### Possible Analyses\n\nDiscuss potential analyses that could be performed using these datasets, highlighting how they can be joined and what insights might be derived.\n\n### Other Helpful Diagrams\n\nInclude other diagrams that may help in understanding the relationships between the datasets, such as flowcharts or sequence diagrams.\n\n### Guidelines for Use\n\nDescribe the organization's guidelines for using these datasets together, including any best practices or restrictions.\n\n### Other Notes & Considerations\n\nList any additional notes or considerations relevant to the use or interpretation of these datasets as a whole.\n\n**End of Template**\n\nPlease ensure all information is accurate and up-to-date, reflecting the current state of the datasets as of [CURRENT DATE].\n    \"\"\",\n    model=Model.MIXTRAL_SMALL_8_X_7_B_0211,\n    tools=[],\n    )\n    print(\"Generating description for provided dataset-level documentation\")\n    message_json=json.loads(message.json())\n    return message_json['content']\n```\n\n```python\nhigh_level_documentation = generate_high_level_documentation(markdown_document)\ndisplay(Markdown(high_level_documentation))\n```\n\n</Steps>\n\n\n\n"
+      },
+      "pages/examples/data_frames.mdx": {
+        "markdown": "---\ntitle: Load Data Frames\n---\n\n### Set up environment\n\n```python\n%pip install -U athena-intelligence\n```\n\n```python\nimport os\n\nATHENA_API_KEY = os.environ[\"ATHENA_API_KEY\"]\n\nfrom athena.client import Athena\n\nathena = Athena(\n    api_key=ATHENA_API_KEY,\n)\n```\n\n### Load a JSON-serialisable data frame\n\nCall `tools.data_frame()` to load a data frame from a CSV/excel file:\n```python\ndf = athena.tools.data_frame(\n    document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f'\n)\ndf\n```\n\nAthena returns a simple pandas `DataFrame` representation with the default parsing options. You can adjust the following options:\n\n- `row_limit: int` number of rows to load,\n- `index_column: int` column to use as an index,\n- `columns: list[str | int]` indices or names of columns to include,\n- `sheet_name: str | int` name of the sheet to load, only applicable to Excel files\n- `separator: str` separator to use when parsing, only applicable to CSV files\n\nFor example, when working with large datasets, it might be beneficial to first examine at the initial five rows:\n\n```python\ndf_head = athena.tools.data_frame(\n    document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f',\n    row_limit=5\n)\ndf_head\n```\n\n### Load a large or complex data frame\n\nThe `tools.data_frame()` method is sufficient for handling well-formatted,\nmedium-sized data frames and provides interface that is agnostic to the SDK version\n(a sister method is available in the TypeScript SDK).\n\nHowever, if your Excel files include values that cannot be JSON-serialized,\nare serializable with a loss of precision, or contain additional metadata,\nyou may prefer to use `tools.read_data_frame()` method.\nThis method skips the JSON serialization step and provides a raw byte stream\nto the pandas `read_csv` or `read_excel` methods, as appropriate.\n\nThe keyword arguments provided to `read_data_frame` will be passed to\nthe underlying `read_csv`/`read_excel`, depending on the file type.\n\n\n```python\ndf_head = athena.tools.read_data_frame(\n    document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f',\n    dtype={\"a\": np.float64, \"b\": np.int32}\n)\ndf_head\n```\n\n### Load a data frame with another package\n\nIf you prefer to use another data frame implementation, you can access the\nraw bytes stream object using the `tools.get_file()` method, which accepts\na single argument - the document identifier. The resulting object complies\nwith the `io.BytesIO` interface and can be used with most data frame libraries,\nfor example:\n\n```python\nimport polars as pl\n\nbytes_io = athena.tools.get_file(\n    document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f',\n)\ndf = pl.read_csv(bytes_io)\n```\n"
+      },
+      "pages/examples/upload_files.mdx": {
+        "markdown": "---\ntitle: Upload Files\n---\n\n### Set up environment\n\n```python\n%pip install -U athena-intelligence\n```\n\n```python\nimport os\nimport io\nimport asyncio\nfrom athena.client import Athena\n\nATHENA_API_KEY = os.environ[\"ATHENA_API_KEY\"]\n\nathena = Athena(\n    api_key=ATHENA_API_KEY,\n)\n```\n\n### Upload a file\n\nTo upload a file using the Athena SDK, you can use the `upload.upload_documents()` method. This method accepts a list of file tuples, where each tuple contains the filename, file content as a BytesIO object, and the MIME type.\n\nHere's an example of how to upload an Excel file:\n\n```python\nasync def upload_file():\n    # Prepare the file for upload\n    file_bytes = io.BytesIO()\n    with open(\"your_file.xlsx\", \"rb\") as f:\n        file_bytes.write(f.read())\n        file_bytes.seek(0)  # Reset the cursor of the BytesIO object\n\n    # Create the file tuple\n    file_tuple = (\n        \"your_file.xlsx\",\n        file_bytes,\n        \"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\"\n    )\n\n    # Upload the file\n    result = await athena.upload.upload_documents(files=[file_tuple])\n    print(result)\n\n# Run the async function\nawait upload_file()\n```\n\nIn this example:\n\n1. We open the file and read its contents into a `BytesIO` object.\n2. We create a tuple containing the filename, the `BytesIO` object, and the MIME type.\n3. We call `athena.upload.upload_documents()` with a list containing our file tuple.\n4. The function returns the result of the upload operation.\n\n### Upload multiple files\n\nYou can upload multiple files in a single request by adding more file tuples to the list:\n\n```python\nasync def upload_multiple_files():\n    files = [\n        (\"file1.xlsx\", file1_bytes, \"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\"),\n        (\"file2.csv\", file2_bytes, \"text/csv\"),\n        (\"file3.pdf\", file3_bytes, \"application/pdf\")\n    ]\n\n    result = await athena.upload.upload_documents(files=files)\n    print(result)\n\nawait upload_multiple_files()\n```\n\n### Using with FastAPI\n\nIf you're using FastAPI and want to upload files received from a client, you can use the `UploadFile` object:\n\n```python\nfrom fastapi import FastAPI, UploadFile\n\napp = FastAPI()\n\n@app.post(\"/upload/\")\nasync def upload_file(file: UploadFile):\n    file_tuple = (file.filename, file.file, file.content_type)\n    result = await athena.upload.upload_documents(files=[file_tuple])\n    return {\"message\": \"File uploaded successfully\", \"result\": result}\n```\n\nThis endpoint will accept file uploads and forward them to the Athena API using the SDK.\n\nRemember to handle exceptions and implement proper error checking in your production code.\n"
+      }
+    },
+    "search": {
+      "type": "singleAlgoliaIndex",
+      "value": {
+        "type": "unversioned",
+        "indexSegment": {
+          "id": "seg_athena.docs.buildwithfern.com_5064db47-096e-44c4-a9a4-e60be729ddd9",
+          "searchApiKey": "MmNhMjhiNWUzOGQzODIzZTcxYjJlZjBjMjAxYzg0NDNlMmIzODg1NzAwN2RlYjYxOWUxZDA4NWQwNzFkYWUzNWZpbHRlcnM9aW5kZXhTZWdtZW50SWQlM0FzZWdfYXRoZW5hLmRvY3MuYnVpbGR3aXRoZmVybi5jb21fNTA2NGRiNDctMDk2ZS00NGM0LWE5YTQtZTYwYmU3MjlkZGQ5JnZhbGlkVW50aWw9MTczMDg1MTc2Nw=="
+        }
+      }
+    },
+    "id": "docs_definition_a1a1017f-cbb1-417e-a991-26c6e1cd679e"
+  },
+  "lightModeEnabled": true
+}
