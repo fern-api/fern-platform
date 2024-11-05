@@ -1,0 +1,1951 @@
+{
+  "child": {
+    "child": {
+      "children": [
+        {
+          "children": [
+            {
+              "hidden": false,
+              "icon": "fa-regular fa-home",
+              "id": "root.uv.overview.welcome",
+              "pageId": "mdx/welcome.mdx",
+              "slug": "overview/welcome",
+              "title": "Welcome",
+              "type": "page"
+            },
+            {
+              "hidden": false,
+              "icon": "fa-regular fa-key",
+              "id": "root.uv.overview.auth",
+              "pageId": "mdx/auth.mdx",
+              "slug": "overview/auth",
+              "title": "Authentication",
+              "type": "page"
+            },
+            {
+              "hidden": false,
+              "icon": "fa-regular fa-cogs",
+              "id": "root.uv.overview.using-environments",
+              "pageId": "mdx/using-environments.mdx",
+              "slug": "overview/using-environments",
+              "title": "Using Environments",
+              "type": "page"
+            }
+          ],
+          "collapsed": false,
+          "hidden": false,
+          "id": "root.uv.overview",
+          "pointsTo": "overview/welcome",
+          "slug": "overview",
+          "title": "Overview",
+          "type": "section"
+        },
+        {
+          "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+          "children": [
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_accounts.getCurrent",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_accounts.getCurrent",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/accounts/get-current",
+                  "title": "Get the current account",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_accounts.updateCurrent",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_accounts.updateCurrent",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/accounts/update-current",
+                  "title": "Update the current account",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_accounts",
+              "pointsTo": "api-reference/accounts/get-current",
+              "slug": "api-reference/accounts",
+              "title": "Accounts",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_actions.create",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_actions.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/actions/create",
+                  "title": "Create an action",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_actions.bulkCreate",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_actions.bulkCreate",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/actions/bulk-create",
+                  "title": "Create several actions",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_actions.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_actions.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/actions/get",
+                  "title": "Get an action",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_actions.update",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_actions.update",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/actions/update",
+                  "title": "Update an action",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_actions.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_actions.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/actions/delete",
+                  "title": "Delete an action",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_actions",
+              "pointsTo": "api-reference/actions/create",
+              "slug": "api-reference/actions",
+              "title": "Actions",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_agents.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/agents/list",
+                  "title": "List agents",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_agents.create",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/agents/create",
+                  "title": "Create an agent",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_agents.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/agents/get",
+                  "title": "Get an agent",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_agents.listVersions",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.listVersions",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/agents/list-versions",
+                  "title": "List agent versions for an agent",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_agents.revert",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.revert",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/agents/revert",
+                  "title": "Revert to a specific agent version",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_agents.listAgentRoles",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.listAgentRoles",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/agents/list-agent-roles",
+                  "title": "List Agent Roles",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_agents.assignAgentRole",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.assignAgentRole",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/agents/assign-agent-role",
+                  "title": "Assign Role to Agent",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_agents.deleteAgentRole",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.deleteAgentRole",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/agents/delete-agent-role",
+                  "title": "Remove Role from Agent",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_agents.getAgentLogs",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.getAgentLogs",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/agents/get-agent-logs",
+                  "title": "Get logs for an agent",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_agents.getAgentLog",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.getAgentLog",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/agents/get-agent-log",
+                  "title": "Get an agent log",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_agents.getEnvironmentAgentLogs",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.getEnvironmentAgentLogs",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/agents/get-environment-agent-logs",
+                  "title": "Get all agent logs in your environment",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_agents.getEnvironmentAgentExecutions",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.getEnvironmentAgentExecutions",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/agents/get-environment-agent-executions",
+                  "title": "Get all executions in your environment",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_agents.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_agents.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/agents/delete",
+                  "title": "Delete an agent",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_agents",
+              "pointsTo": "api-reference/agents/list",
+              "slug": "api-reference/agents",
+              "title": "Agents",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_apps.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/apps/list",
+                  "title": "List apps",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_apps.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/apps/get",
+                  "title": "Get an app",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_apps.update",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.update",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/apps/update",
+                  "title": "Update an app",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_apps.create",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/apps/create",
+                  "title": "Create an app",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_apps.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/apps/delete",
+                  "title": "Delete an app",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_apps.getConstraints",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.getConstraints",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/apps/get-constraints",
+                  "title": "Get constraints",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_apps.createConstraint",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.createConstraint",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/apps/create-constraint",
+                  "title": "Create constraint",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_apps.getConstraintById",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.getConstraintById",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/apps/get-constraint-by-id",
+                  "title": "Get constraint by ID",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_apps.getConstraintVersions",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.getConstraintVersions",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/apps/get-constraint-versions",
+                  "title": "Get constraint versions",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_apps.getConstraintVersion",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.getConstraintVersion",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/apps/get-constraint-version",
+                  "title": "Get constraint version",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_apps.updateConstraint",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.updateConstraint",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/apps/update-constraint",
+                  "title": "Update constraint",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_apps.deleteConstraint",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_apps.deleteConstraint",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/apps/delete-constraint",
+                  "title": "Delete constraint",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_apps",
+              "pointsTo": "api-reference/apps/list",
+              "slug": "api-reference/apps",
+              "title": "Apps",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_assistant.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_assistant.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/assistant/list",
+                  "title": "List prompts",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_assistant.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_assistant.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/assistant/get",
+                  "title": "Get a prompt",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_assistant.update",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_assistant.update",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/assistant/update",
+                  "title": "Update a prompt",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_assistant.create",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_assistant.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/assistant/create",
+                  "title": "Create a prompt",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_assistant.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_assistant.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/assistant/delete",
+                  "title": "Delete a prompts",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_assistant",
+              "pointsTo": "api-reference/assistant/list",
+              "slug": "api-reference/assistant",
+              "title": "Assistant",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_commits.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_commits.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/commits/get",
+                  "title": "Get a commit version",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_commits.complete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_commits.complete",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/commits/complete",
+                  "title": "Complete a commit version",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_commits.replay",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_commits.replay",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/commits/replay",
+                  "title": "Replay a commit version",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_commits",
+              "pointsTo": "api-reference/commits/get",
+              "slug": "api-reference/commits",
+              "title": "Commits",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_data-retention-policies.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_data-retention-policies.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/data-retention-policies/list",
+                  "title": "List data retention policies",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_data-retention-policies.create",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_data-retention-policies.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/data-retention-policies/create",
+                  "title": "Create a data retention policy",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_data-retention-policies.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_data-retention-policies.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/data-retention-policies/get",
+                  "title": "Get a data retention policy",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_data-retention-policies.update",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_data-retention-policies.update",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/data-retention-policies/update",
+                  "title": "Update a data retention policy",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_data-retention-policies.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_data-retention-policies.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/data-retention-policies/delete",
+                  "title": "Delete a data retention policy",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_data-retention-policies",
+              "pointsTo": "api-reference/data-retention-policies/list",
+              "slug": "api-reference/data-retention-policies",
+              "title": "Data Retention Policies",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_documents.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_documents.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/documents/list",
+                  "title": "List documents",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_documents.create",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_documents.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/documents/create",
+                  "title": "Create a document",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_documents.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_documents.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/documents/get",
+                  "title": "Get a document",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_documents.update",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_documents.update",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/documents/update",
+                  "title": "Update a document",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_documents.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_documents.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/documents/delete",
+                  "title": "Delete a document",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_documents",
+              "pointsTo": "api-reference/documents/list",
+              "slug": "api-reference/documents",
+              "title": "Documents",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_entitlements.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_entitlements.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/entitlements/list",
+                  "title": "List entitlements",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_entitlements",
+              "pointsTo": "api-reference/entitlements/list",
+              "slug": "api-reference/entitlements",
+              "title": "Entitlements",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_environments.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_environments.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/environments/list",
+                  "title": "List environments",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_environments.create",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_environments.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/environments/create",
+                  "title": "Create an environment",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_environments.getEnvironmentEventToken",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_environments.getEnvironmentEventToken",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/environments/get-environment-event-token",
+                  "title": "Get environment subscription credentials",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_environments.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_environments.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/environments/get",
+                  "title": "Get an environment",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_environments.update",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_environments.update",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/environments/update",
+                  "title": "Update an environment",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_environments.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_environments.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/environments/delete",
+                  "title": "Delete an environment",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_environments",
+              "pointsTo": "api-reference/environments/list",
+              "slug": "api-reference/environments",
+              "title": "Environments",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_events.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_events.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/events/list",
+                  "title": "List events",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_events.create",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_events.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/events/create",
+                  "title": "Create an event",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_events.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_events.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/events/get",
+                  "title": "Get an event",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_events.ack",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_events.ack",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/events/ack",
+                  "title": "Acknowledge an event",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_events.getEventToken",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_events.getEventToken",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/events/get-event-token",
+                  "title": "Get subscription credentials",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_events",
+              "pointsTo": "api-reference/events/list",
+              "slug": "api-reference/events",
+              "title": "Events",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_files.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_files.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/files/list",
+                  "title": "List files",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_files.upload",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_files.upload",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/files/upload",
+                  "title": "Upload a file",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_files.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_files.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/files/get",
+                  "title": "Get a file",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_files.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_files.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/files/delete",
+                  "title": "Delete a file",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_files.update",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_files.update",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/files/update",
+                  "title": "Update a file",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_files.download",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_files.download",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/files/download",
+                  "title": "Download a file",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_files",
+              "pointsTo": "api-reference/files/list",
+              "slug": "api-reference/files",
+              "title": "Files",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_guests.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/guests/list",
+                  "title": "List guests",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_guests.create",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/guests/create",
+                  "title": "Create a guest",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_guests.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/guests/get",
+                  "title": "Get a guest",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_guests.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/guests/delete",
+                  "title": "Delete a guest",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_guests.update",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.update",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/guests/update",
+                  "title": "Update a guest",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_guests.getGuestToken",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.getGuestToken",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/guests/get-guest-token",
+                  "title": "Get guest token",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_guests.listGuestRoles",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.listGuestRoles",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/guests/list-guest-roles",
+                  "title": "List Guest Roles",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_guests.assignGuestRole",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.assignGuestRole",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/guests/assign-guest-role",
+                  "title": "Assign Role to Guest",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_guests.deleteGuestRole",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.deleteGuestRole",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/guests/delete-guest-role",
+                  "title": "Remove Role from Guest",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_guests.invite",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_guests.invite",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/guests/invite",
+                  "title": "Invite guests",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_guests",
+              "pointsTo": "api-reference/guests/list",
+              "slug": "api-reference/guests",
+              "title": "Guests",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/jobs/list",
+                  "title": "List jobs",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.create",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/jobs/create",
+                  "title": "Create a job",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/jobs/get",
+                  "title": "Get a job",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.update",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.update",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/jobs/update",
+                  "title": "Update a job",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/jobs/delete",
+                  "title": "Delete a job",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.execute",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.execute",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/jobs/execute",
+                  "title": "Execute a job",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.getExecutionPlan",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.getExecutionPlan",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/jobs/get-execution-plan",
+                  "title": "Get a job's execution plan",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.updateExecutionPlan",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.updateExecutionPlan",
+                  "isResponseStream": false,
+                  "method": "PUT",
+                  "slug": "api-reference/jobs/update-execution-plan",
+                  "title": "Replace a job's plan",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.updateExecutionPlanFields",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.updateExecutionPlanFields",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/jobs/update-execution-plan-fields",
+                  "title": "Update a job's plan",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.ack",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.ack",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/jobs/ack",
+                  "title": "Acknowledge a job",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.ackOutcome",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.ackOutcome",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/jobs/ack-outcome",
+                  "title": "Acknowledge a job outcome",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.complete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.complete",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/jobs/complete",
+                  "title": "Complete a job",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.fail",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.fail",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/jobs/fail",
+                  "title": "Fail a job",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.cancel",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.cancel",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/jobs/cancel",
+                  "title": "Cancel a job",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.retry",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.retry",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/jobs/retry",
+                  "title": "Retry a failed job",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.previewMutation",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.previewMutation",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/jobs/preview-mutation",
+                  "title": "Preview a mutation",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_jobs.split",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_jobs.split",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/jobs/split",
+                  "title": "Split a job",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_jobs",
+              "pointsTo": "api-reference/jobs/list",
+              "slug": "api-reference/jobs",
+              "title": "Jobs",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_mapping.createMappingProgram",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.createMappingProgram",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/mapping/create-mapping-program",
+                  "title": "Create a mapping between two schemas",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_mapping.deleteAllHistoryForUser",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.deleteAllHistoryForUser",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/mapping/delete-all-history-for-user",
+                  "title": "Delete all history for the authenticated user",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_mapping.listMappingPrograms",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.listMappingPrograms",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/mapping/list-mapping-programs",
+                  "title": "List mapping programs",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_mapping.getMappingProgram",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.getMappingProgram",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/mapping/get-mapping-program",
+                  "title": "Get a mapping program",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_mapping.updateMappingProgram",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.updateMappingProgram",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/mapping/update-mapping-program",
+                  "title": "Update a mapping program",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_mapping.deleteMappingProgram",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.deleteMappingProgram",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/mapping/delete-mapping-program",
+                  "title": "Delete a mapping program",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_mapping.createRules",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.createRules",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/mapping/create-rules",
+                  "title": "Add mapping rules to a program",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_mapping.deleteMultipleRules",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.deleteMultipleRules",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/mapping/delete-multiple-rules",
+                  "title": "Delete multiple mapping rules",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_mapping.listRules",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.listRules",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/mapping/list-rules",
+                  "title": "List mapping rules",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_mapping.getRule",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.getRule",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/mapping/get-rule",
+                  "title": "Get a mapping rule",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_mapping.updateRule",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.updateRule",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/mapping/update-rule",
+                  "title": "Update a mapping rule",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_mapping.updateRules",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.updateRules",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/mapping/update-rules",
+                  "title": "Update a list of mapping rules",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_mapping.deleteRule",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_mapping.deleteRule",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/mapping/delete-rule",
+                  "title": "Delete a mapping rule",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_mapping",
+              "pointsTo": "api-reference/mapping/create-mapping-program",
+              "slug": "api-reference/mapping",
+              "title": "Mapping",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_records.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_records.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/records/get",
+                  "title": "Get records",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_records.update",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_records.update",
+                  "isResponseStream": false,
+                  "method": "PUT",
+                  "slug": "api-reference/records/update",
+                  "title": "Update records",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_records.insert",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_records.insert",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/records/insert",
+                  "title": "Insert records",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_records.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_records.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/records/delete",
+                  "title": "Delete records",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_records.findAndReplace",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_records.findAndReplace",
+                  "isResponseStream": false,
+                  "method": "PUT",
+                  "slug": "api-reference/records/find-and-replace",
+                  "title": "Finds and replaces field values matching search criteria\n",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_records",
+              "pointsTo": "api-reference/records/get",
+              "slug": "api-reference/records",
+              "title": "Records",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_roles.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_roles.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/roles/list",
+                  "title": "List roles",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_roles",
+              "pointsTo": "api-reference/roles/list",
+              "slug": "api-reference/roles",
+              "title": "Roles",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_secrets.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_secrets.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/secrets/list",
+                  "title": "List secrets",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_secrets.upsert",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_secrets.upsert",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/secrets/upsert",
+                  "title": "Upsert a Secret",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_secrets.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_secrets.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/secrets/delete",
+                  "title": "Delete a secret by it's Id",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_secrets",
+              "pointsTo": "api-reference/secrets/list",
+              "slug": "api-reference/secrets",
+              "title": "Secrets",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_sheets.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/sheets/list",
+                  "title": "List sheets",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_sheets.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/sheets/get",
+                  "title": "Get a sheet",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_sheets.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/sheets/delete",
+                  "title": "Delete a sheet",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_sheets.validate",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.validate",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/sheets/validate",
+                  "title": "Validate a sheet",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_sheets.getRecordsAsCsv",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.getRecordsAsCsv",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/sheets/get-records-as-csv",
+                  "title": "Download records as a CSV file",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_sheets.getRecordCounts",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.getRecordCounts",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/sheets/get-record-counts",
+                  "title": "Get record counts",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_sheets.getSheetCommits",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.getSheetCommits",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/sheets/get-sheet-commits",
+                  "title": "Get commit versions for a sheet",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_sheets.lockSheet",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.lockSheet",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/sheets/lock-sheet",
+                  "title": "Lock a sheet",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_sheets.unlockSheet",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.unlockSheet",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/sheets/unlock-sheet",
+                  "title": "Unlock a sheet",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_sheets.getCellValues",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.getCellValues",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/sheets/get-cell-values",
+                  "title": "Get record cells by field",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_sheets.updateSheet",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_sheets.updateSheet",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/sheets/update-sheet",
+                  "title": "Update a sheet",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_sheets",
+              "pointsTo": "api-reference/sheets/list",
+              "slug": "api-reference/sheets",
+              "title": "Sheets",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_snapshots.createSnapshot",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_snapshots.createSnapshot",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/snapshots/create-snapshot",
+                  "title": "Create a snapshot",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_snapshots.listSnapshots",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_snapshots.listSnapshots",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/snapshots/list-snapshots",
+                  "title": "List snapshots",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_snapshots.getSnapshot",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_snapshots.getSnapshot",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/snapshots/get-snapshot",
+                  "title": "Get a snapshot",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_snapshots.deleteSnapshot",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_snapshots.deleteSnapshot",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/snapshots/delete-snapshot",
+                  "title": "Delete a snapshot",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_snapshots.restoreSnapshot",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_snapshots.restoreSnapshot",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/snapshots/restore-snapshot",
+                  "title": "Restore a snapshot",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_snapshots.getSnapshotRecords",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_snapshots.getSnapshotRecords",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/snapshots/get-snapshot-records",
+                  "title": "Get records from a snapshot",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_snapshots",
+              "pointsTo": "api-reference/snapshots/create-snapshot",
+              "slug": "api-reference/snapshots",
+              "title": "Snapshots",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_spaces.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/spaces/list",
+                  "title": "List spaces",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_spaces.create",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/spaces/create",
+                  "title": "Create a space",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_spaces.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/spaces/get",
+                  "title": "Get a space",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_spaces.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/spaces/delete",
+                  "title": "Delete a space",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_spaces.bulkDelete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.bulkDelete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/spaces/bulk-delete",
+                  "title": "Delete spaces",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_spaces.update",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.update",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/spaces/update",
+                  "title": "Update a space",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_spaces.archiveSpace",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.archiveSpace",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/spaces/archive-space",
+                  "title": "Archives a space",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_spaces.unarchiveSpace",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_spaces.unarchiveSpace",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/spaces/unarchive-space",
+                  "title": "Unarchives a space",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_spaces",
+              "pointsTo": "api-reference/spaces/list",
+              "slug": "api-reference/spaces",
+              "title": "Spaces",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_users.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/users/list",
+                  "title": "List users",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_users.createAndInvite",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.createAndInvite",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/users/create-and-invite",
+                  "title": "Create and Invite User",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_users.resendInvite",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.resendInvite",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/users/resend-invite",
+                  "title": "Resend User Invite",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_users.update",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.update",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/users/update",
+                  "title": "Update a user",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_users.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/users/get",
+                  "title": "Get a user",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_users.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/users/delete",
+                  "title": "Delete a user",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_users.listUserRoles",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.listUserRoles",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/users/list-user-roles",
+                  "title": "List User Roles",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_users.assignUserRole",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.assignUserRole",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/users/assign-user-role",
+                  "title": "Assign Role to User",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_users.deleteUserRole",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_users.deleteUserRole",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/users/delete-user-role",
+                  "title": "Remove Role from User",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_users",
+              "pointsTo": "api-reference/users/list",
+              "slug": "api-reference/users",
+              "title": "Users",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "availability": "Deprecated",
+                  "endpointId": "endpoint_versions.createId",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_versions.createId",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/versions/create-id",
+                  "title": "Create Id",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_versions",
+              "pointsTo": "api-reference/versions/create-id",
+              "slug": "api-reference/versions",
+              "title": "Versions",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_views.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_views.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/views/list",
+                  "title": "List views by Sheet",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_views.create",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_views.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/views/create",
+                  "title": "Create a view",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_views.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_views.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/views/get",
+                  "title": "Get a view",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_views.update",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_views.update",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/views/update",
+                  "title": "Update a view",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_views.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_views.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/views/delete",
+                  "title": "Delete a view",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_views",
+              "pointsTo": "api-reference/views/list",
+              "slug": "api-reference/views",
+              "title": "Views",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+              "children": [
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_workbooks.list",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_workbooks.list",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/workbooks/list",
+                  "title": "List workbooks",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_workbooks.create",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_workbooks.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/workbooks/create",
+                  "title": "Create a workbook",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_workbooks.get",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_workbooks.get",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/workbooks/get",
+                  "title": "Get a workbook",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_workbooks.delete",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_workbooks.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/workbooks/delete",
+                  "title": "Delete a workbook",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_workbooks.update",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_workbooks.update",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/workbooks/update",
+                  "title": "Update a workbook",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+                  "endpointId": "endpoint_workbooks.getWorkbookCommits",
+                  "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:endpoint_workbooks.getWorkbookCommits",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/workbooks/get-workbook-commits",
+                  "title": "Get commits for a workbook",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "71e56795-ad60-4fec-aa7b-ecd860b41022:subpackage_workbooks",
+              "pointsTo": "api-reference/workbooks/list",
+              "slug": "api-reference/workbooks",
+              "title": "Workbooks",
+              "type": "apiPackage"
+            }
+          ],
+          "hideTitle": false,
+          "id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
+          "paginated": false,
+          "pointsTo": "api-reference/accounts/get-current",
+          "showErrors": true,
+          "slug": "api-reference",
+          "title": "API Reference",
+          "type": "apiReference"
+        }
+      ],
+      "id": "root.uv",
+      "type": "sidebarRoot"
+    },
+    "id": "root.uv",
+    "type": "unversioned"
+  },
+  "hidden": false,
+  "id": "root",
+  "pointsTo": "overview/welcome",
+  "slug": "",
+  "title": "Flatfile | API Reference",
+  "type": "root",
+  "version": "v2"
+}

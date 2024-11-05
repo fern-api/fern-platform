@@ -1,0 +1,404 @@
+{
+  "child": {
+    "child": {
+      "children": [
+        {
+          "children": [
+            {
+              "hidden": false,
+              "id": "root.uv.getting-started.overview",
+              "pageId": "docs/pages/guides/overview.mdx",
+              "slug": "getting-started/overview",
+              "title": "Overview",
+              "type": "page"
+            },
+            {
+              "children": [
+                {
+                  "hidden": false,
+                  "id": "root.uv.getting-started.copilots.quick-start",
+                  "pageId": "docs/pages/guides/copilots/quick-start.mdx",
+                  "slug": "getting-started/copilots/quick-start",
+                  "title": "Quick Start",
+                  "type": "page"
+                },
+                {
+                  "hidden": false,
+                  "id": "root.uv.getting-started.copilots.in-depth-guide",
+                  "pageId": "docs/pages/guides/copilots/in-depth-guide.mdx",
+                  "slug": "getting-started/copilots/in-depth-guide",
+                  "title": "In-Depth Guide",
+                  "type": "page"
+                }
+              ],
+              "collapsed": false,
+              "hidden": false,
+              "id": "root.uv.getting-started.copilots",
+              "pointsTo": "getting-started/copilots/quick-start",
+              "slug": "getting-started/copilots",
+              "title": "Copilots",
+              "type": "section"
+            },
+            {
+              "hidden": false,
+              "id": "root.uv.getting-started.bulk-analysis",
+              "pageId": "docs/pages/guides/bulk-analysis.mdx",
+              "slug": "getting-started/bulk-analysis",
+              "title": "Bulk Analysis",
+              "type": "page"
+            },
+            {
+              "hidden": false,
+              "id": "root.uv.getting-started.permissions-service",
+              "pageId": "docs/pages/guides/permissions-service.mdx",
+              "slug": "getting-started/permissions-service",
+              "title": "Permissions Service",
+              "type": "page"
+            },
+            {
+              "hidden": false,
+              "id": "root.uv.getting-started.o-auth",
+              "pageId": "docs/pages/guides/oauth.mdx",
+              "slug": "getting-started/o-auth",
+              "title": "OAuth",
+              "type": "page"
+            },
+            {
+              "hidden": false,
+              "id": "root.uv.getting-started.prompting",
+              "pageId": "docs/pages/guides/prompting.mdx",
+              "slug": "getting-started/prompting",
+              "title": "Prompting",
+              "type": "page"
+            }
+          ],
+          "collapsed": false,
+          "hidden": false,
+          "id": "root.uv.getting-started",
+          "pointsTo": "getting-started/overview",
+          "slug": "getting-started",
+          "title": "Getting Started",
+          "type": "section"
+        },
+        {
+          "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+          "children": [
+            {
+              "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+              "children": [
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_copilots.createCopilot",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.createCopilot",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/copilots/create-copilot",
+                  "title": "Create Copilot",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "endpointId": "endpoint_copilots.createConversation",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.createConversation",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/copilots/create-conversation",
+                  "title": "Create Conversation",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "endpointId": "endpoint_copilots.provideMessageFeedback",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.provideMessageFeedback",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/copilots/provide-message-feedback",
+                  "title": "Provide Message Feedback",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "endpointId": "endpoint_copilots.sendMessage",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.sendMessage",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/copilots/send-message",
+                  "title": "Send Message",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_copilots.streamMessage",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.streamMessage",
+                  "isResponseStream": true,
+                  "method": "POST",
+                  "slug": "api-reference/copilots/stream-message",
+                  "title": "Stream Message",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_copilots.addCollectionToCopilot",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.addCollectionToCopilot",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/copilots/add-collection-to-copilot",
+                  "title": "Add Collection To Copilot",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_copilots.removeCollectionFromCopilot",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.removeCollectionFromCopilot",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/copilots/remove-collection-from-copilot",
+                  "title": "Remove Collection From Copilot",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_copilots.updateConfiguration",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.updateConfiguration",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/copilots/update-configuration",
+                  "title": "Update Configuration",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_copilots.deleteCopilot",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_copilots.deleteCopilot",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/copilots/delete-copilot",
+                  "title": "Delete Copilot",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "12db1278-2c20-48ce-a475-512268587c8b:subpackage_copilots",
+              "pointsTo": "api-reference/copilots/create-copilot",
+              "slug": "api-reference/copilots",
+              "title": "Copilots",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+              "children": [
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "endpointId": "endpoint_documentCatalog.uploadDocumentContents",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCatalog.uploadDocumentContents",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/document-catalog/upload-document-contents",
+                  "title": "Upload Document Contents",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "endpointId": "endpoint_documentCatalog.metadata",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCatalog.metadata",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/document-catalog/metadata",
+                  "title": "Metadata",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "12db1278-2c20-48ce-a475-512268587c8b:subpackage_documentCatalog",
+              "pointsTo": "api-reference/document-catalog/upload-document-contents",
+              "slug": "api-reference/document-catalog",
+              "title": "Document Catalog",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+              "children": [
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "endpointId": "endpoint_documentCollections.addDocumentsToCollection",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCollections.addDocumentsToCollection",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/document-collections/add-documents-to-collection",
+                  "title": "Add Documents To Collection",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_documentCollections.removeDocumentsFromCollection",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCollections.removeDocumentsFromCollection",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/document-collections/remove-documents-from-collection",
+                  "title": "Remove Documents From Collection",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_documentCollections.createCollection",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCollections.createCollection",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/document-collections/create-collection",
+                  "title": "Create Collection",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_documentCollections.deleteCollection",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCollections.deleteCollection",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/document-collections/delete-collection",
+                  "title": "Delete Collection",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_documentCollections.createMongoCollectionSync",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCollections.createMongoCollectionSync",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/document-collections/create-mongo-collection-sync",
+                  "title": "Create Mongo Collection Sync",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_documentCollections.updateMongoCollectionSync",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_documentCollections.updateMongoCollectionSync",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/document-collections/update-mongo-collection-sync",
+                  "title": "Update Mongo Collection Sync",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "12db1278-2c20-48ce-a475-512268587c8b:subpackage_documentCollections",
+              "pointsTo": "api-reference/document-collections/add-documents-to-collection",
+              "slug": "api-reference/document-collections",
+              "title": "Document Collections",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+              "children": [
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_permissionsService.checkResourceAuthorizationForUser",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_permissionsService.checkResourceAuthorizationForUser",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/permissions-service/check-resource-authorization-for-user",
+                  "title": "Check Resource Authorization For User",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_permissionsService.checkBulkResourcesAuthorizationForUser",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_permissionsService.checkBulkResourcesAuthorizationForUser",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/permissions-service/check-bulk-resources-authorization-for-user",
+                  "title": "Check Bulk Resources Authorization For User",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_permissionsService.listCachedAuthorizedResourcesForUser",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_permissionsService.listCachedAuthorizedResourcesForUser",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/permissions-service/list-cached-authorized-resources-for-user",
+                  "title": "List Cached Authorized Resources For User",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "12db1278-2c20-48ce-a475-512268587c8b:subpackage_permissionsService",
+              "pointsTo": "api-reference/permissions-service/check-resource-authorization-for-user",
+              "slug": "api-reference/permissions-service",
+              "title": "Permissions Service",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+              "children": [
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "endpointId": "endpoint_search.searchDocumentCollection",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_search.searchDocumentCollection",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/search/search-document-collection",
+                  "title": "Search Document Collection",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "12db1278-2c20-48ce-a475-512268587c8b:subpackage_search",
+              "pointsTo": "api-reference/search/search-document-collection",
+              "slug": "api-reference/search",
+              "title": "Search",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+              "children": [
+                {
+                  "apiDefinitionId": "12db1278-2c20-48ce-a475-512268587c8b",
+                  "endpointId": "endpoint_users.metadata",
+                  "id": "12db1278-2c20-48ce-a475-512268587c8b:endpoint_users.metadata",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/users/metadata",
+                  "title": "Metadata",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "12db1278-2c20-48ce-a475-512268587c8b:subpackage_users",
+              "pointsTo": "api-reference/users/metadata",
+              "slug": "api-reference/users",
+              "title": "Users",
+              "type": "apiPackage"
+            }
+          ],
+          "hideTitle": false,
+          "id": "12db1278-2c20-48ce-a475-512268587c8b",
+          "paginated": false,
+          "pointsTo": "api-reference/copilots/create-copilot",
+          "showErrors": false,
+          "slug": "api-reference",
+          "title": "API Reference",
+          "type": "apiReference"
+        }
+      ],
+      "id": "root.uv",
+      "type": "sidebarRoot"
+    },
+    "id": "root.uv",
+    "type": "unversioned"
+  },
+  "hidden": false,
+  "id": "root",
+  "pointsTo": "getting-started/overview",
+  "slug": "",
+  "title": "Credal | Documentation",
+  "type": "root",
+  "version": "v2"
+}

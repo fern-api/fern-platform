@@ -1,0 +1,500 @@
+{
+  "child": {
+    "child": {
+      "children": [
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.guides.guides.getting-started.what-is-airtop",
+                    "pageId": "pages/guides/getting-started/what-is-airtop.mdx",
+                    "slug": "guides/getting-started/what-is-airtop",
+                    "title": "What is Airtop?",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.guides.guides.getting-started.quick-start",
+                    "pageId": "pages/guides/getting-started/quick-start.mdx",
+                    "slug": "guides/getting-started/quick-start",
+                    "title": "Quick Start",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.guides.guides.getting-started",
+                "pointsTo": "guides/getting-started/what-is-airtop",
+                "slug": "guides/getting-started",
+                "title": "Getting Started",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.guides.guides.how-to.creating-a-session",
+                    "pageId": "pages/guides/how-to/creating-a-session.mdx",
+                    "slug": "guides/how-to/creating-a-session",
+                    "title": "Creating a Session",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.guides.guides.how-to.saving-a-profile",
+                    "pageId": "pages/guides/how-to/saving-a-profile.mdx",
+                    "slug": "guides/how-to/saving-a-profile",
+                    "title": "Saving a Profile",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.guides.guides.how-to.creating-a-live-view",
+                    "pageId": "pages/guides/how-to/creating-a-live-view.mdx",
+                    "slug": "guides/how-to/creating-a-live-view",
+                    "title": "Creating a Live View",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.guides.guides.how-to.using-a-proxy",
+                    "pageId": "pages/guides/how-to/proxy.mdx",
+                    "slug": "guides/how-to/using-a-proxy",
+                    "title": "Using a Proxy",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.guides.guides.how-to.debugging-a-session",
+                    "pageId": "pages/guides/how-to/remote-debugging.mdx",
+                    "slug": "guides/how-to/debugging-a-session",
+                    "title": "Debugging a Session",
+                    "type": "page"
+                  },
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.guides.guides.how-to.automation-frameworks.puppeteer",
+                        "pageId": "pages/guides/how-to/automation-frameworks/puppeteer.mdx",
+                        "slug": "guides/how-to/automation-frameworks/puppeteer",
+                        "title": "Puppeteer",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.guides.guides.how-to.automation-frameworks.playwright",
+                        "pageId": "pages/guides/how-to/automation-frameworks/playwright.mdx",
+                        "slug": "guides/how-to/automation-frameworks/playwright",
+                        "title": "Playwright",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.guides.guides.how-to.automation-frameworks.selenium",
+                        "pageId": "pages/guides/how-to/automation-frameworks/selenium.mdx",
+                        "slug": "guides/how-to/automation-frameworks/selenium",
+                        "title": "Selenium",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "id": "root.uv.guides.guides.how-to.automation-frameworks",
+                    "pointsTo": "guides/how-to/automation-frameworks/puppeteer",
+                    "slug": "guides/how-to/automation-frameworks",
+                    "title": "Automation Frameworks",
+                    "type": "section"
+                  },
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.guides.guides.how-to.ai.smart-scraping",
+                        "pageId": "pages/guides/how-to/ai/scraping-a-page.mdx",
+                        "slug": "guides/how-to/ai/smart-scraping",
+                        "title": "Smart Scraping",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.guides.guides.how-to.ai.prompting-a-page",
+                        "pageId": "pages/guides/how-to/ai/scrape-and-prompt.mdx",
+                        "slug": "guides/how-to/ai/prompting-a-page",
+                        "title": "Prompting a Page",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.guides.guides.how-to.ai.ai-costs",
+                        "pageId": "pages/guides/how-to/ai/ai-costs.mdx",
+                        "slug": "guides/how-to/ai/ai-costs",
+                        "title": "AI Costs",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "id": "root.uv.guides.guides.how-to.ai",
+                    "pointsTo": "guides/how-to/ai/smart-scraping",
+                    "slug": "guides/how-to/ai",
+                    "title": "AI APIs",
+                    "type": "section"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.guides.guides.how-to",
+                "pointsTo": "guides/how-to/creating-a-session",
+                "slug": "guides/how-to",
+                "title": "How To",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.guides.guides.misc.support",
+                    "pageId": "pages/guides/misc/support.mdx",
+                    "slug": "guides/misc/support",
+                    "title": "Support",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.guides.guides.misc.faq",
+                    "pageId": "pages/guides/misc/faq.mdx",
+                    "slug": "guides/misc/faq",
+                    "title": "FAQ",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.guides.guides.misc",
+                "pointsTo": "guides/misc/support",
+                "slug": "guides/misc",
+                "title": "Misc",
+                "type": "section"
+              }
+            ],
+            "id": "root.uv.guides.guides",
+            "type": "sidebarRoot"
+          },
+          "icon": "book",
+          "id": "root.uv.guides",
+          "pointsTo": "guides/getting-started/what-is-airtop",
+          "slug": "guides",
+          "title": "Guides",
+          "type": "tab"
+        },
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.recipes.recipes.recipes.summarize-a-webpage",
+                    "pageId": "pages/recipes/summarize.mdx",
+                    "slug": "recipes/recipes/summarize-a-webpage",
+                    "title": "Summarize a webpage",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.recipes.recipes.recipes.extract-data-from-a-webpage-requiring-login",
+                    "pageId": "pages/recipes/prompt-content.mdx",
+                    "slug": "recipes/recipes/extract-data-from-a-webpage-requiring-login",
+                    "title": "Extract data from a webpage requiring login",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.recipes.recipes.recipes.scrape-the-sec-database-for-recent-s-1-filings",
+                    "pageId": "pages/recipes/sec-filings.mdx",
+                    "slug": "recipes/recipes/scrape-the-sec-database-for-recent-s-1-filings",
+                    "title": "Scrape the SEC database for recent S-1 filings",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.recipes.recipes.recipes",
+                "pointsTo": "recipes/recipes/summarize-a-webpage",
+                "slug": "recipes/recipes",
+                "title": "Recipes",
+                "type": "section"
+              }
+            ],
+            "id": "root.uv.recipes.recipes",
+            "type": "sidebarRoot"
+          },
+          "icon": "hat-chef",
+          "id": "root.uv.recipes",
+          "pointsTo": "recipes/recipes/summarize-a-webpage",
+          "slug": "recipes",
+          "title": "Recipes",
+          "type": "tab"
+        },
+        {
+          "child": {
+            "children": [
+              {
+                "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                "children": [
+                  {
+                    "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                    "children": [
+                      {
+                        "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                        "endpointId": "endpoint_sessions.create",
+                        "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6.subpackage_sessions.create",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/airtop-api/sessions/create",
+                        "title": "Create a session",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                        "endpointId": "endpoint_sessions.list",
+                        "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6:endpoint_sessions.list",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-reference/airtop-api/sessions/list",
+                        "title": "Get a list of sessions",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                        "endpointId": "endpoint_sessions.getInfo",
+                        "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6:endpoint_sessions.getInfo",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-reference/airtop-api/sessions/get-info",
+                        "title": "Get info for a session",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                        "endpointId": "endpoint_sessions.terminate",
+                        "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6:endpoint_sessions.terminate",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "api-reference/airtop-api/sessions/terminate",
+                        "title": "Ends a session",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "hidden": false,
+                    "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6.subpackage_sessions",
+                    "pointsTo": "api-reference/airtop-api/sessions/create",
+                    "slug": "api-reference/airtop-api/sessions",
+                    "title": "Sessions",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                    "children": [
+                      {
+                        "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                        "availability": "Deprecated",
+                        "endpointId": "endpoint_windows.summarize-content",
+                        "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6.subpackage_windows.summarize-content",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/airtop-api/windows/summarize-content",
+                        "title": "Get a summary of content in a browser window",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                        "endpointId": "endpoint_windows.scrape-content",
+                        "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6.subpackage_windows.scrape-content",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/airtop-api/windows/scrape-content",
+                        "title": "Scrape a window",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                        "endpointId": "endpoint_windows.prompt-content",
+                        "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6.subpackage_windows.prompt-content",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/airtop-api/windows/prompt-content",
+                        "title": "Submit a prompt about the content in a specific browser window.",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                        "endpointId": "endpoint_windows.create",
+                        "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6:endpoint_windows.create",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/airtop-api/windows/create",
+                        "title": "Creates a new browser window in a session",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                        "endpointId": "endpoint_windows.get-window-info",
+                        "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6:endpoint_windows.get-window-info",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-reference/airtop-api/windows/get-window-info",
+                        "title": "Get information about a browser window in a session",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                        "endpointId": "endpoint_windows.loadUrl",
+                        "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6:endpoint_windows.loadUrl",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/airtop-api/windows/load-url",
+                        "title": "Loads a specified url on a given window",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                        "endpointId": "endpoint_windows.close",
+                        "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6:endpoint_windows.close",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "api-reference/airtop-api/windows/close",
+                        "title": "Close the specified window",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "hidden": false,
+                    "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6.subpackage_windows",
+                    "pointsTo": "api-reference/airtop-api/windows/summarize-content",
+                    "slug": "api-reference/airtop-api/windows",
+                    "title": "Windows",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                    "children": [
+                      {
+                        "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                        "endpointId": "endpoint_profiles.get",
+                        "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6:endpoint_profiles.get",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-reference/airtop-api/profiles/get",
+                        "title": "Get profiles",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                        "endpointId": "endpoint_profiles.delete",
+                        "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6:endpoint_profiles.delete",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "api-reference/airtop-api/profiles/delete",
+                        "title": "Delete profiles",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6.subpackage_profiles",
+                    "pointsTo": "api-reference/airtop-api/profiles/get",
+                    "slug": "api-reference/airtop-api/profiles",
+                    "title": "Profiles",
+                    "type": "apiPackage"
+                  }
+                ],
+                "hideTitle": false,
+                "id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
+                "overviewPageId": "pages/api-summary.mdx",
+                "paginated": false,
+                "pointsTo": "api-reference/airtop-api/sessions/create",
+                "showErrors": false,
+                "slug": "api-reference/airtop-api",
+                "title": "Airtop API",
+                "type": "apiReference"
+              }
+            ],
+            "id": "root.uv.api-reference.api-reference",
+            "type": "sidebarRoot"
+          },
+          "icon": "puzzle",
+          "id": "root.uv.api-reference",
+          "pointsTo": "api-reference/airtop-api",
+          "slug": "api-reference",
+          "title": "API Reference",
+          "type": "tab"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "date": "2024-11-01T00:00:00.000Z",
+                      "id": ".changelog.2024-11-1",
+                      "pageId": "changelog/2024-11-01.mdx",
+                      "slug": "changelog/2024/11/1",
+                      "title": "November 1, 2024",
+                      "type": "changelogEntry"
+                    }
+                  ],
+                  "id": ".changelog.1900-11",
+                  "month": 11,
+                  "slug": "changelog/11",
+                  "title": "November 1900",
+                  "type": "changelogMonth"
+                },
+                {
+                  "children": [
+                    {
+                      "date": "2024-10-19T00:00:00.000Z",
+                      "id": ".changelog.2024-10-19",
+                      "pageId": "changelog/2024-10-19.mdx",
+                      "slug": "changelog/2024/10/19",
+                      "title": "October 19, 2024",
+                      "type": "changelogEntry"
+                    }
+                  ],
+                  "id": ".changelog.1900-10",
+                  "month": 10,
+                  "slug": "changelog/10",
+                  "title": "October 1900",
+                  "type": "changelogMonth"
+                }
+              ],
+              "id": ".changelog.2024",
+              "slug": "changelog/2024",
+              "title": "2024",
+              "type": "changelogYear",
+              "year": 2024
+            }
+          ],
+          "icon": "history",
+          "id": ".changelog",
+          "slug": "changelog",
+          "title": "Changelog",
+          "type": "changelog"
+        }
+      ],
+      "id": "root.uv",
+      "type": "tabbed"
+    },
+    "id": "root.uv",
+    "type": "unversioned"
+  },
+  "hidden": false,
+  "id": "root",
+  "pointsTo": "guides/getting-started/what-is-airtop",
+  "slug": "",
+  "title": "Airtop | Documentation",
+  "type": "root",
+  "version": "v2"
+}

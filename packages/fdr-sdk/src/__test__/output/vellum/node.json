@@ -1,0 +1,1134 @@
+{
+  "child": {
+    "child": {
+      "children": [
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.welcome.welcome",
+                    "pageId": "docs/content/help/welcome/intro.mdx",
+                    "slug": "help-center/welcome/welcome",
+                    "title": "Welcome to Vellum",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.welcome.getting-support",
+                    "pageId": "docs/content/help/welcome/getting-support.mdx",
+                    "slug": "help-center/welcome/getting-support",
+                    "title": "Getting Support",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.help-center.help-center.welcome",
+                "pointsTo": "help-center/welcome/welcome",
+                "slug": "help-center/welcome",
+                "title": "Welcome",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.prompts.prompt-engineering",
+                    "pageId": "docs/content/help/prompts/prompt-engineering-in-vellum.mdx",
+                    "slug": "help-center/prompts/prompt-engineering",
+                    "title": "Prompt Engineering in Vellum",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.prompts.collaboration",
+                    "pageId": "docs/content/help/prompts/collaborating-on-prompts.mdx",
+                    "slug": "help-center/prompts/collaboration",
+                    "title": "Collaborating on Prompts",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.prompts.custom-models",
+                    "pageId": "docs/content/help/prompts/adding-custom-models-to-your-workspace.mdx",
+                    "slug": "help-center/prompts/custom-models",
+                    "title": "Adding Custom Models to your Workspace",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.prompts.images",
+                    "pageId": "docs/content/help/prompts/working-with-images-in-vellum.mdx",
+                    "slug": "help-center/prompts/images",
+                    "title": "Working with Images in Vellum",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.prompts.prompting-tips-and-examples",
+                    "pageId": "docs/content/help/prompts/prompting-tips-and-examples.mdx",
+                    "slug": "help-center/prompts/prompting-tips-and-examples",
+                    "title": "Prompting Tips and Examples",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.help-center.help-center.prompts",
+                "pointsTo": "help-center/prompts/prompt-engineering",
+                "slug": "help-center/prompts",
+                "title": "Prompts",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.workflows.introduction",
+                    "pageId": "docs/content/help/workflows/intro.mdx",
+                    "slug": "help-center/workflows/introduction",
+                    "title": "Introduction to Workflows",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.workflows.experimentation",
+                    "pageId": "docs/content/help/workflows/experimenting.mdx",
+                    "slug": "help-center/workflows/experimentation",
+                    "title": "Experimenting with Workflows",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.workflows.node-types",
+                    "pageId": "docs/content/help/workflows/node-types.mdx",
+                    "slug": "help-center/workflows/node-types",
+                    "title": "Node Types",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.workflows.common-architectures",
+                    "pageId": "docs/content/help/workflows/common-architectures.mdx",
+                    "slug": "help-center/workflows/common-architectures",
+                    "title": "Common Architectures",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.workflows.common-data-transforms",
+                    "pageId": "docs/content/help/workflows/common-data-transforms.mdx",
+                    "slug": "help-center/workflows/common-data-transforms",
+                    "title": "Common Data Transformation Templates",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.workflows.code-execution-node-examples",
+                    "pageId": "docs/content/help/workflows/code-execution-node-examples.mdx",
+                    "slug": "help-center/workflows/code-execution-node-examples",
+                    "title": "Code Execution Node Examples",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.workflows.api-integration",
+                    "pageId": "docs/content/help/workflows/integrating.mdx",
+                    "slug": "help-center/workflows/api-integration",
+                    "title": "Integrating w/ APIs",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.workflows.function-calling-with-chat-models",
+                    "pageId": "docs/content/help/workflows/function-calling.mdx",
+                    "slug": "help-center/workflows/function-calling-with-chat-models",
+                    "title": "Function Calling with Chat Models",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.workflows.examples-and-walkthroughs",
+                    "pageId": "docs/content/help/workflows/examples-and-walkthroughs.mdx",
+                    "slug": "help-center/workflows/examples-and-walkthroughs",
+                    "title": "Examples & Walkthroughs",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.help-center.help-center.workflows",
+                "pointsTo": "help-center/workflows/introduction",
+                "slug": "help-center/workflows",
+                "title": "Workflows",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.evaluation.quantitative-evaluation",
+                    "pageId": "docs/content/help/evaluation/quantitatively-evaluating-outputs.mdx",
+                    "slug": "help-center/evaluation/quantitative-evaluation",
+                    "title": "Quantitative Evaluation",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.evaluation.evaluating-rag-pipelines",
+                    "pageId": "docs/content/help/evaluation/evaluating-rag-pipelines.mdx",
+                    "slug": "help-center/evaluation/evaluating-rag-pipelines",
+                    "title": "Evaluating RAG Pipelines",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.evaluation.online-evaluations",
+                    "pageId": "docs/content/help/evaluation/online-evaluations.mdx",
+                    "slug": "help-center/evaluation/online-evaluations",
+                    "title": "Online Evaluations",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.help-center.help-center.evaluation",
+                "pointsTo": "help-center/evaluation/quantitative-evaluation",
+                "slug": "help-center/evaluation",
+                "title": "Evaluation & Test Suites",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.metrics.out-of-the-box-metrics",
+                    "pageId": "docs/content/help/metrics/out-of-the-box-metrics.mdx",
+                    "slug": "help-center/metrics/out-of-the-box-metrics",
+                    "title": "Out of the Box Metrics",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.metrics.custom-metrics",
+                    "pageId": "docs/content/help/metrics/custom-metrics.mdx",
+                    "slug": "help-center/metrics/custom-metrics",
+                    "title": "Custom Metrics",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.help-center.help-center.metrics",
+                "pointsTo": "help-center/metrics/out-of-the-box-metrics",
+                "slug": "help-center/metrics",
+                "title": "Metrics",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.deployments.prompt-lifecycle-management",
+                    "pageId": "docs/content/help/deployments/prompt-lifecycle-management.mdx",
+                    "slug": "help-center/deployments/prompt-lifecycle-management",
+                    "title": "Prompt Lifecycle Management",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.deployments.observability",
+                    "pageId": "docs/content/help/deployments/observability-in-production.mdx",
+                    "slug": "help-center/deployments/observability",
+                    "title": "Observability in Production",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.deployments.monitoring",
+                    "pageId": "docs/content/help/deployments/monitoring-production-trends.mdx",
+                    "slug": "help-center/deployments/monitoring",
+                    "title": "Monitoring Production Trends",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.deployments.managing-releases",
+                    "pageId": "docs/content/help/deployments/managing-releases.mdx",
+                    "slug": "help-center/deployments/managing-releases",
+                    "title": "Managing Releases",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.help-center.help-center.deployments",
+                "pointsTo": "help-center/deployments/prompt-lifecycle-management",
+                "slug": "help-center/deployments",
+                "title": "Deployments",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.documents.uploading-documents",
+                    "pageId": "docs/content/help/documents/uploading-documents.mdx",
+                    "slug": "help-center/documents/uploading-documents",
+                    "title": "Uploading Documents",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.documents.running-searches",
+                    "pageId": "docs/content/help/documents/running-searches.mdx",
+                    "slug": "help-center/documents/running-searches",
+                    "title": "Running Searches in Playground",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.documents.api-integration",
+                    "pageId": "docs/content/help/documents/integrating-search.mdx",
+                    "slug": "help-center/documents/api-integration",
+                    "title": "Integrating w/ Search API",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.documents.metadata-filtering",
+                    "pageId": "docs/content/help/documents/metadata-filtering.mdx",
+                    "slug": "help-center/documents/metadata-filtering",
+                    "title": "Metadata Filtering",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.help-center.help-center.documents",
+                "pointsTo": "help-center/documents/uploading-documents",
+                "slug": "help-center/documents",
+                "title": "Documents",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.help-center.help-center.security.hmac-authentication",
+                    "pageId": "docs/content/help/security/hmac-authentication.mdx",
+                    "slug": "help-center/security/hmac-authentication",
+                    "title": "HMAC Authentication",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.help-center.help-center.security",
+                "pointsTo": "help-center/security/hmac-authentication",
+                "slug": "help-center/security",
+                "title": "Security",
+                "type": "section"
+              }
+            ],
+            "id": "root.uv.help-center.help-center",
+            "type": "sidebarRoot"
+          },
+          "icon": "fa-solid fa-cube",
+          "id": "root.uv.help-center",
+          "pointsTo": "help-center/welcome/welcome",
+          "slug": "help-center",
+          "title": "Help Center",
+          "type": "tab"
+        },
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.api-reference.api-reference.overview.getting-started",
+                    "pageId": "docs/content/api/intro.mdx",
+                    "slug": "api-reference/overview/getting-started",
+                    "title": "Getting started",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.api-reference.api-reference.overview.authentication",
+                    "pageId": "docs/content/api/authentication.mdx",
+                    "slug": "api-reference/overview/authentication",
+                    "title": "Authentication",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.api-reference.api-reference.overview",
+                "pointsTo": "api-reference/overview/getting-started",
+                "slug": "api-reference/overview",
+                "title": "Overview",
+                "type": "section"
+              },
+              {
+                "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                "children": [
+                  {
+                    "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                    "children": [
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "GenerallyAvailable",
+                        "endpointId": "endpoint_.execute-prompt",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.execute-prompt",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/prompts/execute-prompt",
+                        "title": "Execute Prompt",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "GenerallyAvailable",
+                        "endpointId": "endpoint_.execute-prompt-stream",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.execute-prompt-stream",
+                        "isResponseStream": true,
+                        "method": "POST",
+                        "slug": "api-reference/prompts/execute-prompt-stream",
+                        "title": "Execute Prompt as Stream",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "GenerallyAvailable",
+                        "endpointId": "endpoint_.submit-completion-actuals",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.submit-completion-actuals",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/prompts/submit-completion-actuals",
+                        "title": "Submit Prompt Execution Actuals",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_deployments.retrieve_provider_payload",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.retrieve_provider_payload",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/prompts/retrieve-provider-payload",
+                        "title": "Retrieve Provider Payload",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "children": [
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_sandboxes.deploy_prompt",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.deploy_prompt",
+                            "isResponseStream": false,
+                            "method": "POST",
+                            "slug": "api-reference/prompts/sandboxes/deploy-prompt",
+                            "title": "Deploy Prompt Sandbox",
+                            "type": "endpoint"
+                          },
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_sandboxes.upsert_sandbox_scenario",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.upsert_sandbox_scenario",
+                            "isResponseStream": false,
+                            "method": "POST",
+                            "slug": "api-reference/prompts/sandboxes/upsert-scenario",
+                            "title": "Upsert Prompt Sandbox Scenario",
+                            "type": "endpoint"
+                          },
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_sandboxes.delete_sandbox_scenario",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.delete_sandbox_scenario",
+                            "isResponseStream": false,
+                            "method": "DELETE",
+                            "slug": "api-reference/prompts/sandboxes/delete-scenario",
+                            "title": "Delete Prompt Sandbox Scenario",
+                            "type": "endpoint"
+                          }
+                        ],
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.section:prompt-sandboxes",
+                        "pointsTo": "api-reference/prompts/sandboxes/deploy-prompt",
+                        "slug": "api-reference/prompts/sandboxes",
+                        "title": "Prompt Sandboxes",
+                        "type": "apiPackage"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "children": [
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_deployments.list",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.list",
+                            "isResponseStream": false,
+                            "method": "GET",
+                            "slug": "api-reference/prompts/deployments/list",
+                            "title": "List Prompt Deployments",
+                            "type": "endpoint"
+                          },
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_deployments.retrieve",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.retrieve",
+                            "isResponseStream": false,
+                            "method": "GET",
+                            "slug": "api-reference/prompts/deployments/retrieve",
+                            "title": "Retrieve Prompt Deployment",
+                            "type": "endpoint"
+                          },
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_deployments.retrieve_deployment_release_tag",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.retrieve_deployment_release_tag",
+                            "isResponseStream": false,
+                            "method": "GET",
+                            "slug": "api-reference/prompts/deployments/retrieve-release-tag",
+                            "title": "Retrieve Prompt Deployment Release Tag",
+                            "type": "endpoint"
+                          },
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_deployments.update_deployment_release_tag",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.update_deployment_release_tag",
+                            "isResponseStream": false,
+                            "method": "PATCH",
+                            "slug": "api-reference/prompts/deployments/update-release-tag",
+                            "title": "Update Prompt Deployment Release Tag",
+                            "type": "endpoint"
+                          }
+                        ],
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.section:prompt-deployments",
+                        "pointsTo": "api-reference/prompts/deployments/list",
+                        "slug": "api-reference/prompts/deployments",
+                        "title": "Prompt Deployments",
+                        "type": "apiPackage"
+                      }
+                    ],
+                    "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.section:prompts",
+                    "pointsTo": "api-reference/prompts/execute-prompt",
+                    "slug": "api-reference/prompts",
+                    "title": "Prompts",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                    "children": [
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "GenerallyAvailable",
+                        "endpointId": "endpoint_.execute-workflow",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.execute-workflow",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/workflows/execute-workflow",
+                        "title": "Execute Workflow",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "GenerallyAvailable",
+                        "endpointId": "endpoint_.execute-workflow-stream",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.execute-workflow-stream",
+                        "isResponseStream": true,
+                        "method": "POST",
+                        "slug": "api-reference/workflows/execute-workflow-stream",
+                        "title": "Execute Workflow as Stream",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "GenerallyAvailable",
+                        "endpointId": "endpoint_.submit-workflow-execution-actuals",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.submit-workflow-execution-actuals",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/workflows/submit-workflow-execution-actuals",
+                        "title": "Submit Workflow Execution Actuals",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "children": [
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_workflowSandboxes.deploy_workflow",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742:endpoint_workflowSandboxes.deploy_workflow",
+                            "isResponseStream": false,
+                            "method": "POST",
+                            "slug": "api-reference/workflows/sandboxes/deploy-workflow",
+                            "title": "Deploy Workflow",
+                            "type": "endpoint"
+                          }
+                        ],
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_workflowSandboxes",
+                        "pointsTo": "api-reference/workflows/sandboxes/deploy-workflow",
+                        "slug": "api-reference/workflows/sandboxes",
+                        "title": "Workflow Sandboxes",
+                        "type": "apiPackage"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "children": [
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_workflowDeployments.list",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_workflowDeployments.list",
+                            "isResponseStream": false,
+                            "method": "GET",
+                            "slug": "api-reference/workflows/deployments/list",
+                            "title": "List Workflow Deployments",
+                            "type": "endpoint"
+                          },
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_workflowDeployments.retrieve",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_workflowDeployments.retrieve",
+                            "isResponseStream": false,
+                            "method": "GET",
+                            "slug": "api-reference/workflows/deployments/retrieve",
+                            "title": "Retrieve Workflow Deployment",
+                            "type": "endpoint"
+                          },
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_workflowDeployments.retrieve_workflow_release_tag",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_workflowDeployments.retrieve_workflow_release_tag",
+                            "isResponseStream": false,
+                            "method": "GET",
+                            "slug": "api-reference/workflows/deployments/retrieve-release-tag",
+                            "title": "Retrieve Workflow Deployment Release Tag",
+                            "type": "endpoint"
+                          },
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_workflowDeployments.update_workflow_release_tag",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_workflowDeployments.update_workflow_release_tag",
+                            "isResponseStream": false,
+                            "method": "PATCH",
+                            "slug": "api-reference/workflows/deployments/update-release-tag",
+                            "title": "Update Workflow Deployment Release Tag",
+                            "type": "endpoint"
+                          }
+                        ],
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_workflowDeployments",
+                        "pointsTo": "api-reference/workflows/deployments/list",
+                        "slug": "api-reference/workflows/deployments",
+                        "title": "Workflow Deployments",
+                        "type": "apiPackage"
+                      }
+                    ],
+                    "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.section:workflows",
+                    "pointsTo": "api-reference/workflows/execute-workflow",
+                    "slug": "api-reference/workflows",
+                    "title": "Workflows",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                    "children": [
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "GenerallyAvailable",
+                        "endpointId": "endpoint_.search",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documentIndexes.search",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/document-indexes/search",
+                        "title": "Search",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_documentIndexes.add_document",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documentIndexes.add_document",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/document-indexes/add-document",
+                        "title": "Add Document",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_documentIndexes.create",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documentIndexes.create",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/document-indexes/create",
+                        "title": "Create Document Index",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_documentIndexes.retrieve",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documentIndexes.retrieve",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-reference/document-indexes/retrieve",
+                        "title": "Retrieve Document Index",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_documentIndexes.list",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documentIndexes.list",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-reference/document-indexes/list",
+                        "title": "List Document Indexes",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_documentIndexes.partialUpdate",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documentIndexes.partialUpdate",
+                        "isResponseStream": false,
+                        "method": "PATCH",
+                        "slug": "api-reference/document-indexes/partial-update",
+                        "title": "Update Document Index",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_documentIndexes.update",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documentIndexes.update",
+                        "isResponseStream": false,
+                        "method": "PUT",
+                        "slug": "api-reference/document-indexes/update",
+                        "title": "Replace Document Index",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_documentIndexes.destroy",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742:endpoint_documentIndexes.destroy",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "api-reference/document-indexes/destroy",
+                        "title": "Destroy",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_documentIndexes.remove_document",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742:endpoint_documentIndexes.remove_document",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "api-reference/document-indexes/remove-document",
+                        "title": "Remove Document",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documentIndexes",
+                    "pointsTo": "api-reference/document-indexes/search",
+                    "slug": "api-reference/document-indexes",
+                    "title": "Document Indexes",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                    "children": [
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "GenerallyAvailable",
+                        "endpointId": "endpoint_documents.upload",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documents.upload",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/documents/upload",
+                        "title": "Upload Document",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_documents.retrieve",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documents.retrieve",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-reference/documents/retrieve",
+                        "title": "Retrieve Document",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "GenerallyAvailable",
+                        "endpointId": "endpoint_documents.list",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documents.list",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-reference/documents/list",
+                        "title": "List Documents",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_documents.partialUpdate",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documents.partialUpdate",
+                        "isResponseStream": false,
+                        "method": "PATCH",
+                        "slug": "api-reference/documents/partial-update",
+                        "title": "Update Document",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_documents.destroy",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742:endpoint_documents.destroy",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "api-reference/documents/destroy",
+                        "title": "Destroy",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_documents",
+                    "pointsTo": "api-reference/documents/upload",
+                    "slug": "api-reference/documents",
+                    "title": "Documents",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                    "children": [
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "children": [
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_testSuites.list_test_suite_test_cases",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.list_test_suite_test_cases",
+                            "isResponseStream": false,
+                            "method": "GET",
+                            "slug": "api-reference/test-suites/test-cases/list",
+                            "title": "List Test Cases",
+                            "type": "endpoint"
+                          },
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_testSuites.upsert_test_suite_test_case",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.upsert_test_suite_test_case",
+                            "isResponseStream": false,
+                            "method": "POST",
+                            "slug": "api-reference/test-suites/test-cases/upsert",
+                            "title": "Upsert Test Cases",
+                            "type": "endpoint"
+                          },
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_testSuites.test_suite_test_cases_bulk",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.test_suite_test_cases_bulk",
+                            "isResponseStream": true,
+                            "method": "POST",
+                            "slug": "api-reference/test-suites/test-cases/bulk-update",
+                            "title": "Bulk Update Test Cases",
+                            "type": "endpoint"
+                          },
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_testSuites.delete_test_suite_test_case",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.delete_test_suite_test_case",
+                            "isResponseStream": false,
+                            "method": "DELETE",
+                            "slug": "api-reference/test-suites/test-cases/delete",
+                            "title": "Delete Test Case",
+                            "type": "endpoint"
+                          }
+                        ],
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.test-suite",
+                        "pointsTo": "api-reference/test-suites/test-cases/list",
+                        "slug": "api-reference/test-suites/test-cases",
+                        "title": "Test Cases",
+                        "type": "apiPackage"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "children": [
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_testSuiteRuns.create",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_testSuiteRuns.create",
+                            "isResponseStream": false,
+                            "method": "POST",
+                            "slug": "api-reference/test-suites/runs/create",
+                            "title": "Create Test Suite Run",
+                            "type": "endpoint"
+                          },
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_testSuiteRuns.retrieve",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_testSuiteRuns.retrieve",
+                            "isResponseStream": false,
+                            "method": "GET",
+                            "slug": "api-reference/test-suites/runs/retrieve",
+                            "title": "Retrieve Test Suite Run",
+                            "type": "endpoint"
+                          },
+                          {
+                            "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                            "availability": "Beta",
+                            "endpointId": "endpoint_testSuiteRuns.listExecutions",
+                            "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_testSuiteRuns.listExecutions",
+                            "isResponseStream": false,
+                            "method": "GET",
+                            "slug": "api-reference/test-suites/runs/list-executions",
+                            "title": "List Test Suite Executions",
+                            "type": "endpoint"
+                          }
+                        ],
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.subpackage_testSuiteRuns",
+                        "pointsTo": "api-reference/test-suites/runs/create",
+                        "slug": "api-reference/test-suites/runs",
+                        "title": "Test Suite Runs",
+                        "type": "apiPackage"
+                      }
+                    ],
+                    "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.section:test-suites",
+                    "pointsTo": "api-reference/test-suites/test-cases/list",
+                    "slug": "api-reference/test-suites",
+                    "title": "Test Suites",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                    "children": [
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_folderEntities.add_entity_to_folder",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.add_entity_to_folder",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-reference/folders/add-entity-to-folder",
+                        "title": "Add Entity to Folder",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_folderEntities.list",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.list-1",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-reference/folders/list-folder-entities",
+                        "title": "List Folder Entities",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.section:folders",
+                    "pointsTo": "api-reference/folders/add-entity-to-folder",
+                    "slug": "api-reference/folders",
+                    "title": "Folders",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                    "children": [
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_workspaceSecrets.retrieve",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.retrieve-1",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-reference/secrets/retrieve-workspace-secret",
+                        "title": "Retrieve Workspace Secret",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_workspaceSecrets.partialUpdate",
+                        "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.partialUpdate",
+                        "isResponseStream": false,
+                        "method": "PATCH",
+                        "slug": "api-reference/secrets/update-workspace-secret",
+                        "title": "Update Workspace Secret",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "83d12b33-dab6-466a-9d55-0dbc8135e742.section:secrets",
+                    "pointsTo": "api-reference/secrets/retrieve-workspace-secret",
+                    "slug": "api-reference/secrets",
+                    "title": "Secrets",
+                    "type": "apiPackage"
+                  }
+                ],
+                "hideTitle": false,
+                "id": "83d12b33-dab6-466a-9d55-0dbc8135e742",
+                "paginated": false,
+                "pointsTo": "api-reference/prompts/execute-prompt",
+                "showErrors": false,
+                "slug": "api-reference",
+                "title": "API Reference",
+                "type": "apiReference"
+              }
+            ],
+            "id": "root.uv.api-reference.api-reference",
+            "type": "sidebarRoot"
+          },
+          "icon": "fa-solid fa-code",
+          "id": "root.uv.api-reference",
+          "pointsTo": "api-reference/overview/getting-started",
+          "slug": "api-reference",
+          "title": "API Reference",
+          "type": "tab"
+        },
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.changelog.changelog.2024.2024-10",
+                    "pageId": "docs/content/change-log/2024-10.mdx",
+                    "slug": "changelog/2024/2024-10",
+                    "title": "October",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.changelog.changelog.2024.2024-09",
+                    "pageId": "docs/content/change-log/2024-09.mdx",
+                    "slug": "changelog/2024/2024-09",
+                    "title": "September",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.changelog.changelog.2024.2024-08",
+                    "pageId": "docs/content/change-log/2024-08.mdx",
+                    "slug": "changelog/2024/2024-08",
+                    "title": "August",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.changelog.changelog.2024.2024-07",
+                    "pageId": "docs/content/change-log/2024-07.mdx",
+                    "slug": "changelog/2024/2024-07",
+                    "title": "July",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.changelog.changelog.2024.2024-06",
+                    "pageId": "docs/content/change-log/2024-06.mdx",
+                    "slug": "changelog/2024/2024-06",
+                    "title": "June",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.changelog.changelog.2024.2024-05",
+                    "pageId": "docs/content/change-log/2024-05.mdx",
+                    "slug": "changelog/2024/2024-05",
+                    "title": "May",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.changelog.changelog.2024.2024-04",
+                    "pageId": "docs/content/change-log/2024-04.mdx",
+                    "slug": "changelog/2024/2024-04",
+                    "title": "April",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.changelog.changelog.2024.2024-03",
+                    "pageId": "docs/content/change-log/2024-03.mdx",
+                    "slug": "changelog/2024/2024-03",
+                    "title": "March",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.changelog.changelog.2024.2024-02",
+                    "pageId": "docs/content/change-log/2024-02.mdx",
+                    "slug": "changelog/2024/2024-02",
+                    "title": "February",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.changelog.changelog.2024.2024-01",
+                    "pageId": "docs/content/change-log/2024-01.mdx",
+                    "slug": "changelog/2024/2024-01",
+                    "title": "January",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.changelog.changelog.2024",
+                "pointsTo": "changelog/2024/2024-10",
+                "slug": "changelog/2024",
+                "title": "2024",
+                "type": "section"
+              }
+            ],
+            "id": "root.uv.changelog.changelog",
+            "type": "sidebarRoot"
+          },
+          "icon": "fa-solid fa-bolt",
+          "id": "root.uv.changelog",
+          "pointsTo": "changelog/2024/2024-10",
+          "slug": "changelog",
+          "title": "Changelog",
+          "type": "tab"
+        }
+      ],
+      "id": "root.uv",
+      "type": "tabbed"
+    },
+    "id": "root.uv",
+    "type": "unversioned"
+  },
+  "hidden": false,
+  "id": "root",
+  "pointsTo": "help-center/welcome/welcome",
+  "slug": "",
+  "title": "Vellum | Documentation",
+  "type": "root",
+  "version": "v2"
+}

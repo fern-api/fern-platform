@@ -1,0 +1,1563 @@
+{
+  "child": {
+    "child": {
+      "children": [
+        {
+          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+          "children": [
+            {
+              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+              "children": [
+                {
+                  "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                  "children": [
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "endpointId": "endpoint_api/aiprise/aiprise_webhook_api.verify",
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/aiprise/aiprise_webhook_api.verify",
+                          "isResponseStream": false,
+                          "method": "POST",
+                          "slug": "api-reference/api/aiprise/aiprise-webhook-api/verify",
+                          "title": "Verify User Callback",
+                          "type": "endpoint"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/aiprise/aiprise_webhook_api",
+                      "pointsTo": "api-reference/api/aiprise/aiprise-webhook-api/verify",
+                      "slug": "api-reference/api/aiprise/aiprise-webhook-api",
+                      "title": "AiPrise Webhook",
+                      "type": "apiPackage"
+                    }
+                  ],
+                  "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/aiprise",
+                  "pointsTo": "api-reference/api/aiprise/aiprise-webhook-api/verify",
+                  "slug": "api-reference/api/aiprise",
+                  "title": "Aiprise",
+                  "type": "apiPackage"
+                },
+                {
+                  "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                  "children": [
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "endpointId": "endpoint_api/dev/dev.uploadEor",
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/dev/dev.uploadEor",
+                          "isResponseStream": false,
+                          "method": "POST",
+                          "slug": "api-reference/api/dev/dev/upload-eor",
+                          "title": "Upload Eor",
+                          "type": "endpoint"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/dev/dev",
+                      "pointsTo": "api-reference/api/dev/dev/upload-eor",
+                      "slug": "api-reference/api/dev/dev",
+                      "title": "Dev",
+                      "type": "apiPackage"
+                    }
+                  ],
+                  "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/dev",
+                  "pointsTo": "api-reference/api/dev/dev/upload-eor",
+                  "slug": "api-reference/api/dev",
+                  "title": "Dev",
+                  "type": "apiPackage"
+                },
+                {
+                  "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                  "children": [
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "endpointId": "endpoint_api/services/file.attachDocumentToEmployment",
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/services/file.attachDocumentToEmployment",
+                          "isResponseStream": false,
+                          "method": "POST",
+                          "slug": "api-reference/api/services/file/attach-document-to-employment",
+                          "title": "Attach Document To Employment",
+                          "type": "endpoint"
+                        },
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "endpointId": "endpoint_api/services/file.deleteDocumentFromEmployment",
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/services/file.deleteDocumentFromEmployment",
+                          "isResponseStream": false,
+                          "method": "DELETE",
+                          "slug": "api-reference/api/services/file/delete-document-from-employment",
+                          "title": "Delete Document From Employment",
+                          "type": "endpoint"
+                        },
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "endpointId": "endpoint_api/services/file.loadGenericDocumentFromEmployment",
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/services/file.loadGenericDocumentFromEmployment",
+                          "isResponseStream": false,
+                          "method": "GET",
+                          "slug": "api-reference/api/services/file/load-generic-document-from-employment",
+                          "title": "Load Generic Document From Employment",
+                          "type": "endpoint"
+                        },
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "endpointId": "endpoint_api/services/file.loadPayslipFromEorEmployment",
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/services/file.loadPayslipFromEorEmployment",
+                          "isResponseStream": false,
+                          "method": "GET",
+                          "slug": "api-reference/api/services/file/load-payslip-from-eor-employment",
+                          "title": "Load Payslip From Eor Employment",
+                          "type": "endpoint"
+                        },
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "endpointId": "endpoint_api/services/file.loadPayInFromEorEmployment",
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/services/file.loadPayInFromEorEmployment",
+                          "isResponseStream": false,
+                          "method": "GET",
+                          "slug": "api-reference/api/services/file/load-pay-in-from-eor-employment",
+                          "title": "Load Pay In From Eor Employment",
+                          "type": "endpoint"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/services/file",
+                      "pointsTo": "api-reference/api/services/file/attach-document-to-employment",
+                      "slug": "api-reference/api/services/file",
+                      "title": "File",
+                      "type": "apiPackage"
+                    }
+                  ],
+                  "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/services",
+                  "pointsTo": "api-reference/api/services/file/attach-document-to-employment",
+                  "slug": "api-reference/api/services",
+                  "title": "Services",
+                  "type": "apiPackage"
+                },
+                {
+                  "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                  "children": [
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/accounting/accounting_api.changeAccountingIntegrationSetting",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/accounting/accounting_api.changeAccountingIntegrationSetting",
+                              "isResponseStream": false,
+                              "method": "PUT",
+                              "slug": "api-reference/api/thera/accounting/accounting-api/change-accounting-integration-setting",
+                              "title": "Change Accounting Integration Setting",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/accounting/accounting_api.getAccountingIntegrationsInfo",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/accounting/accounting_api.getAccountingIntegrationsInfo",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/accounting/accounting-api/get-accounting-integrations-info",
+                              "title": "Get Company Accounting Integrations Info",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/accounting/accounting_api.getCompanyAccountingMappingDetails",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/accounting/accounting_api.getCompanyAccountingMappingDetails",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/accounting/accounting-api/get-company-accounting-mapping-details",
+                              "title": "Get Company Accounting Mapping Details",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/accounting/accounting_api.completeAccountingIntegrationAuth",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/accounting/accounting_api.completeAccountingIntegrationAuth",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/accounting/accounting-api/complete-accounting-integration-auth",
+                              "title": "Complete Accounting Integration Auth",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/accounting/accounting_api",
+                          "pointsTo": "api-reference/api/thera/accounting/accounting-api/change-accounting-integration-setting",
+                          "slug": "api-reference/api/thera/accounting/accounting-api",
+                          "title": "Accounting API",
+                          "type": "apiPackage"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/accounting",
+                      "pointsTo": "api-reference/api/thera/accounting/accounting-api/change-accounting-integration-setting",
+                      "slug": "api-reference/api/thera/accounting",
+                      "title": "Accounting",
+                      "type": "apiPackage"
+                    },
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.getPlaidBankDetails",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getPlaidBankDetails",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/bank/bank-api/get-plaid-bank-details",
+                              "title": "Get Plaid Bank Account Details",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.generatePlaidUpdateFlowLinkToken",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.generatePlaidUpdateFlowLinkToken",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/bank/bank-api/generate-plaid-update-flow-link-token",
+                              "title": "Generate Plaid Update Flow Link Token",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.generateBankSignup",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.generateBankSignup",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/bank/bank-api/generate-bank-signup",
+                              "title": "Generate Bank Signup Token",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.completeBankSignup",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.completeBankSignup",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/bank/bank-api/complete-bank-signup",
+                              "title": "Complete Bank Signup",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.reattachStripeMandate",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.reattachStripeMandate",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/bank/bank-api/reattach-stripe-mandate",
+                              "title": "Re-attach Stripe Mandate",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.getPaymentMethods",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getPaymentMethods",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/bank/bank-api/get-payment-methods",
+                              "title": "Get Payment Methods",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.deletePaymentMethod",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.deletePaymentMethod",
+                              "isResponseStream": false,
+                              "method": "DELETE",
+                              "slug": "api-reference/api/thera/bank/bank-api/delete-payment-method",
+                              "title": "Delete Payment Method",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.chooseW2PaymentMethod",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.chooseW2PaymentMethod",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/bank/bank-api/choose-w-2-payment-method",
+                              "title": "Choose W2 Payment Method",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.verifyBankSignup",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.verifyBankSignup",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/bank/bank-api/verify-bank-signup",
+                              "title": "Verify Bank Signup",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.setAutoPay",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.setAutoPay",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/bank/bank-api/set-auto-pay",
+                              "title": "Set Autopay",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.getWithdrawalMethodCurrencies",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWithdrawalMethodCurrencies",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/bank/bank-api/get-withdrawal-method-currencies",
+                              "title": "Get Withdrawal Method Currencies",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.getBankTransferCurrenciesByCountry",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getBankTransferCurrenciesByCountry",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/bank/bank-api/get-bank-transfer-currencies-by-country",
+                              "title": "Get Bank Transfer Currencies By Country",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.getWithdrawalLimitsByMethod",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWithdrawalLimitsByMethod",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/bank/bank-api/get-withdrawal-limits-by-method",
+                              "title": "Get Worker Withdrawal Limits By Method",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByCurrency",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByCurrency",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/bank/bank-api/get-withdrawal-minimum-by-currency",
+                              "title": "Get Worker Withdrawal Minimum By Currency (DEPRECATED SOON)",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByMethod",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByMethod",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/bank/bank-api/get-withdrawal-minimum-by-method",
+                              "title": "Get Worker Withdrawal Minimum By Method",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.getSupportedWithdrawalMethods",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getSupportedWithdrawalMethods",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/bank/bank-api/get-supported-withdrawal-methods",
+                              "title": "Get Supported Withdrawal Methods",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.saveWithdrawalMethod",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.saveWithdrawalMethod",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/bank/bank-api/save-withdrawal-method",
+                              "title": "Save Withdrawal Methods",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.deleteWithdrawalMethod",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.deleteWithdrawalMethod",
+                              "isResponseStream": false,
+                              "method": "DELETE",
+                              "slug": "api-reference/api/thera/bank/bank-api/delete-withdrawal-method",
+                              "title": "Delete Withdrawal Methods",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.editWithdrawalMethod",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.editWithdrawalMethod",
+                              "isResponseStream": false,
+                              "method": "PATCH",
+                              "slug": "api-reference/api/thera/bank/bank-api/edit-withdrawal-method",
+                              "title": "Edit Withdrawal Methods",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.getWorkerWithdrawalPreview",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWorkerWithdrawalPreview",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/bank/bank-api/get-worker-withdrawal-preview",
+                              "title": "Get Worker Withdrawal Preview",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.initiateWorkerWithdrawal",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.initiateWorkerWithdrawal",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/bank/bank-api/initiate-worker-withdrawal",
+                              "title": "Initiate Worker Withdrawal",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.getWorkerBalance",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWorkerBalance",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/bank/bank-api/get-worker-balance",
+                              "title": "Get Worker Balance",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.getWorkerTransactions",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWorkerTransactions",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/bank/bank-api/get-worker-transactions",
+                              "title": "Get Worker Transactions",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "canonicalSlug": "api-reference/api/thera/bank/bank-api/get-worker-transactions",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.getWorkerWithdrawalDeliveryEstimate",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWorkerWithdrawalDeliveryEstimate",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/bank/bank-api/get-worker-withdrawal-delivery-estimate",
+                              "title": "Get Worker Transactions",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.getPayInHistory",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getPayInHistory",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/bank/bank-api/get-pay-in-history",
+                              "title": "Get Pay in History",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.getPayInDetails",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getPayInDetails",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/bank/bank-api/get-pay-in-details",
+                              "title": "Get Pay In Details",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.deleteOffPlatformPayment",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.deleteOffPlatformPayment",
+                              "isResponseStream": false,
+                              "method": "DELETE",
+                              "slug": "api-reference/api/thera/bank/bank-api/delete-off-platform-payment",
+                              "title": "Delete Off Platform Payment",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.getCurrencyConversion",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getCurrencyConversion",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/bank/bank-api/get-currency-conversion",
+                              "title": "Get Currency Conversion",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.setAutoWithdrawals",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.setAutoWithdrawals",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/bank/bank-api/set-auto-withdrawals",
+                              "title": "Set Auto-Withdrawals for Worker",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.createCheckPaymentMethodFromPlaid",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.createCheckPaymentMethodFromPlaid",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/bank/bank-api/create-check-payment-method-from-plaid",
+                              "title": "Create Check Payment Method from Plaid",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/bank/bank_api.createStripePaymentMethodFromPlaid",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.createStripePaymentMethodFromPlaid",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/bank/bank-api/create-stripe-payment-method-from-plaid",
+                              "title": "Create Stripe Payment Method from Plaid",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/bank/bank_api",
+                          "pointsTo": "api-reference/api/thera/bank/bank-api/get-plaid-bank-details",
+                          "slug": "api-reference/api/thera/bank/bank-api",
+                          "title": "Bank API",
+                          "type": "apiPackage"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/bank",
+                      "pointsTo": "api-reference/api/thera/bank/bank-api/get-plaid-bank-details",
+                      "slug": "api-reference/api/thera/bank",
+                      "title": "Bank",
+                      "type": "apiPackage"
+                    },
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.getMoniteToken",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getMoniteToken",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/company/company-api/get-monite-token",
+                              "title": "Get Monite Token",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.inviteContractor",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.inviteContractor",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/company/company-api/invite-contractor",
+                              "title": "Create Contract",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.inviteManager",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.inviteManager",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/company/company-api/invite-manager",
+                              "title": "Invite Manager",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.editManagerRoles",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.editManagerRoles",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/company/company-api/edit-manager-roles",
+                              "title": "Edit Manager Roles",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.editOrgRoles",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.editOrgRoles",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/company/company-api/edit-org-roles",
+                              "title": "Edit Org Roles (Org Admins or Org Manager)",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.removeManager",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.removeManager",
+                              "isResponseStream": false,
+                              "method": "DELETE",
+                              "slug": "api-reference/api/thera/company/company-api/remove-manager",
+                              "title": "Remove Manager",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.changeContractTeam",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.changeContractTeam",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/company/company-api/change-contract-team",
+                              "title": "Change Contract Team",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.getTeams",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getTeams",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/company/company-api/get-teams",
+                              "title": "Get Teams For Company",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.getManagers",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getManagers",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/company/company-api/get-managers",
+                              "title": "Get Managers",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.createTeam",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.createTeam",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/company/company-api/create-team",
+                              "title": "Create Team",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.deleteTeam",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.deleteTeam",
+                              "isResponseStream": false,
+                              "method": "DELETE",
+                              "slug": "api-reference/api/thera/company/company-api/delete-team",
+                              "title": "Delete Team",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.editTeam",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.editTeam",
+                              "isResponseStream": false,
+                              "method": "PATCH",
+                              "slug": "api-reference/api/thera/company/company-api/edit-team",
+                              "title": "Edit Team",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.getAllCompanyAffiliations",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getAllCompanyAffiliations",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/company/company-api/get-all-company-affiliations",
+                              "title": "Get All Company Affiliations",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.checkCanCreateAccount",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.checkCanCreateAccount",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/company/company-api/check-can-create-account",
+                              "title": "Check Can Create Account",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.addEorEmployee",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.addEorEmployee",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/company/company-api/add-eor-employee",
+                              "title": "Add EOR Employee",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.getContractorCsv",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getContractorCsv",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/company/company-api/get-contractor-csv",
+                              "title": "Get Contractor CSV",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_api.getContractsCSV",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getContractsCSV",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/company/company-api/get-contracts-csv",
+                              "title": "Get Contracts CSV",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/company/company_api",
+                          "pointsTo": "api-reference/api/thera/company/company-api/get-monite-token",
+                          "slug": "api-reference/api/thera/company/company-api",
+                          "title": "Company",
+                          "type": "apiPackage"
+                        },
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_w2payroll_api.onboardW2Payroll",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_w2payroll_api.onboardW2Payroll",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/company/company-w-2-payroll-api/onboard-w-2-payroll",
+                              "title": "Onboard W2 Payroll",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_w2payroll_api.toggleW2PayrollOnboardingFlowComplete",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_w2payroll_api.toggleW2PayrollOnboardingFlowComplete",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/company/company-w-2-payroll-api/toggle-w-2-payroll-onboarding-flow-complete",
+                              "title": "Toggle W2 Payroll Onboarding Flow Complete",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/company/company_w2payroll_api.setupPayroll",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_w2payroll_api.setupPayroll",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/company/company-w-2-payroll-api/setup-payroll",
+                              "title": "Setup W2 Payroll",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/company/company_w2payroll_api",
+                          "pointsTo": "api-reference/api/thera/company/company-w-2-payroll-api/onboard-w-2-payroll",
+                          "slug": "api-reference/api/thera/company/company-w-2-payroll-api",
+                          "title": "W2 Payroll",
+                          "type": "apiPackage"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/company",
+                      "pointsTo": "api-reference/api/thera/company/company-api/get-monite-token",
+                      "slug": "api-reference/api/thera/company",
+                      "title": "Company",
+                      "type": "apiPackage"
+                    },
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/contractor/contractor_api.getUsContractorsTaxInfo",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/contractor/contractor_api.getUsContractorsTaxInfo",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/contractor/contractor-api/get-us-contractors-tax-info",
+                              "title": "Get US Contractors Tax Info API",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/contractor/contractor_api.updateUsContractorTaxInfo",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/contractor/contractor_api.updateUsContractorTaxInfo",
+                              "isResponseStream": false,
+                              "method": "PUT",
+                              "slug": "api-reference/api/thera/contractor/contractor-api/update-us-contractor-tax-info",
+                              "title": "Update US Contractors Tax Info",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/contractor/contractor_api.onboardContractorsCsv",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/contractor/contractor_api.onboardContractorsCsv",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/contractor/contractor-api/onboard-contractors-csv",
+                              "title": "Onboard Contractors Via CSV",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/contractor/contractor_api",
+                          "pointsTo": "api-reference/api/thera/contractor/contractor-api/get-us-contractors-tax-info",
+                          "slug": "api-reference/api/thera/contractor/contractor-api",
+                          "title": "Contractor API",
+                          "type": "apiPackage"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/contractor",
+                      "pointsTo": "api-reference/api/thera/contractor/contractor-api/get-us-contractors-tax-info",
+                      "slug": "api-reference/api/thera/contractor",
+                      "title": "Contractor",
+                      "type": "apiPackage"
+                    },
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/disbursement/disbursement_api.uploadCsvInvoice",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.uploadCsvInvoice",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/disbursement/disbursement-api/upload-csv-invoice",
+                              "title": "Upload CSV Invoice",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/disbursement/disbursement_api.createDisbursement",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.createDisbursement",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/disbursement/disbursement-api/create-disbursement",
+                              "title": "Create Disbursement",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/disbursement/disbursement_api.approveInvoice",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.approveInvoice",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/disbursement/disbursement-api/approve-invoice",
+                              "title": "Approve Invoice",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/disbursement/disbursement_api.createInvoiceDeduction",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.createInvoiceDeduction",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/disbursement/disbursement-api/create-invoice-deduction",
+                              "title": "Create Invoice Deduction",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/disbursement/disbursement_api.deleteInvoiceDeduction",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.deleteInvoiceDeduction",
+                              "isResponseStream": false,
+                              "method": "DELETE",
+                              "slug": "api-reference/api/thera/disbursement/disbursement-api/delete-invoice-deduction",
+                              "title": "Delete Invoice Deduction",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/disbursement/disbursement_api.getInvoicesCsv",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.getInvoicesCsv",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/disbursement/disbursement-api/get-invoices-csv",
+                              "title": "Get Invoices CSV",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/disbursement/disbursement_api",
+                          "pointsTo": "api-reference/api/thera/disbursement/disbursement-api/upload-csv-invoice",
+                          "slug": "api-reference/api/thera/disbursement/disbursement-api",
+                          "title": "Disbursement API",
+                          "type": "apiPackage"
+                        },
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/disbursement/disbursement_webhook_api.invoiceWebhook",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_webhook_api.invoiceWebhook",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/disbursement/disbursement-webhook-api/invoice-webhook",
+                              "title": "Invoice Webhook",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/disbursement/disbursement_webhook_api",
+                          "pointsTo": "api-reference/api/thera/disbursement/disbursement-webhook-api/invoice-webhook",
+                          "slug": "api-reference/api/thera/disbursement/disbursement-webhook-api",
+                          "title": "Disbursement Webhook API",
+                          "type": "apiPackage"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/disbursement",
+                      "pointsTo": "api-reference/api/thera/disbursement/disbursement-api/upload-csv-invoice",
+                      "slug": "api-reference/api/thera/disbursement",
+                      "title": "Disbursement",
+                      "type": "apiPackage"
+                    },
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/document/document_api.getW9Document",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/document/document_api.getW9Document",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/document/document-api/get-w-9-document",
+                              "title": "Get US IRS W9 Document API",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/document/document_api.getUsIrs1099NecDocument",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/document/document_api.getUsIrs1099NecDocument",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/document/document-api/get-us-irs-1099-nec-document",
+                              "title": "Get US IRS 1099-NEC Document Metadata",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/document/document_api.bulkFileUsIrs1099NecDocument",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/document/document_api.bulkFileUsIrs1099NecDocument",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/document/document-api/bulk-file-us-irs-1099-nec-document",
+                              "title": "Bulk File US IRS 1099-NEC Documents",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/document/document_api",
+                          "pointsTo": "api-reference/api/thera/document/document-api/get-w-9-document",
+                          "slug": "api-reference/api/thera/document/document-api",
+                          "title": "Document API",
+                          "type": "apiPackage"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/document",
+                      "pointsTo": "api-reference/api/thera/document/document-api/get-w-9-document",
+                      "slug": "api-reference/api/thera/document",
+                      "title": "Document",
+                      "type": "apiPackage"
+                    },
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/email/email_api.sendLoginEmail",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/email/email_api.sendLoginEmail",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/email/email-api/send-login-email",
+                              "title": "Send Login Email",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/email/email_api.updateUserEmail",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/email/email_api.updateUserEmail",
+                              "isResponseStream": false,
+                              "method": "PUT",
+                              "slug": "api-reference/api/thera/email/email-api/update-user-email",
+                              "title": "Change User's Email",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/email/email_api",
+                          "pointsTo": "api-reference/api/thera/email/email-api/send-login-email",
+                          "slug": "api-reference/api/thera/email/email-api",
+                          "title": "Email API",
+                          "type": "apiPackage"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/email",
+                      "pointsTo": "api-reference/api/thera/email/email-api/send-login-email",
+                      "slug": "api-reference/api/thera/email",
+                      "title": "Email",
+                      "type": "apiPackage"
+                    },
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/employment/employment_api.deleteInvoiceItemRecurrence",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/employment/employment_api.deleteInvoiceItemRecurrence",
+                              "isResponseStream": false,
+                              "method": "DELETE",
+                              "slug": "api-reference/api/thera/employment/employment-api/delete-invoice-item-recurrence",
+                              "title": "Delete Contract's Invoice Item Recurrence",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/employment/employment_api.estimateContract",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/employment/employment_api.estimateContract",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/employment/employment-api/estimate-contract",
+                              "title": "Estimate Contract",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/employment/employment_api.deleteContract",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/employment/employment_api.deleteContract",
+                              "isResponseStream": false,
+                              "method": "DELETE",
+                              "slug": "api-reference/api/thera/employment/employment-api/delete-contract",
+                              "title": "Hard Delete Contract",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/employment/employment_api.cancelContractTermination",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/employment/employment_api.cancelContractTermination",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/employment/employment-api/cancel-contract-termination",
+                              "title": "Cancel Contract Termination",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/employment/employment_api.getPayCycle",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/employment/employment_api.getPayCycle",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/employment/employment-api/get-pay-cycle",
+                              "title": "Get Pay Cycle",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/employment/employment_api",
+                          "pointsTo": "api-reference/api/thera/employment/employment-api/delete-invoice-item-recurrence",
+                          "slug": "api-reference/api/thera/employment/employment-api",
+                          "title": "Contracts API",
+                          "type": "apiPackage"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/employment",
+                      "pointsTo": "api-reference/api/thera/employment/employment-api/delete-invoice-item-recurrence",
+                      "slug": "api-reference/api/thera/employment",
+                      "title": "Employment",
+                      "type": "apiPackage"
+                    },
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/misc/misc.regularCron",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/misc/misc.regularCron",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/misc/misc/regular-cron",
+                              "title": "Daily Cron",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/misc/misc.autoPayCron",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/misc/misc.autoPayCron",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/misc/misc/auto-pay-cron",
+                              "title": "Auto Pay Cron",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/misc/misc.autoPayEmailNotificationCron",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/misc/misc.autoPayEmailNotificationCron",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/misc/misc/auto-pay-email-notification-cron",
+                              "title": "Email Notification Cron",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/misc/misc.contractRenewalCron",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/misc/misc.contractRenewalCron",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/misc/misc/contract-renewal-cron",
+                              "title": "Contract Renewal Cron",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/misc/misc",
+                          "pointsTo": "api-reference/api/thera/misc/misc/regular-cron",
+                          "slug": "api-reference/api/thera/misc/misc",
+                          "title": "Miscellaneous API",
+                          "type": "apiPackage"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/misc",
+                      "pointsTo": "api-reference/api/thera/misc/misc/regular-cron",
+                      "slug": "api-reference/api/thera/misc",
+                      "title": "Misc",
+                      "type": "apiPackage"
+                    },
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/payroll/offcycle_api.getCurrentOffCycleChecks",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/payroll/offcycle_api.getCurrentOffCycleChecks",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/payroll/offcycle-api/get-current-off-cycle-checks",
+                              "title": "Get Current Offcycle Checks",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/payroll/offcycle_api",
+                          "pointsTo": "api-reference/api/thera/payroll/offcycle-api/get-current-off-cycle-checks",
+                          "slug": "api-reference/api/thera/payroll/offcycle-api",
+                          "title": "Offcycle API",
+                          "type": "apiPackage"
+                        },
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/payroll/oncycle_api.approveOncycleChecks",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/payroll/oncycle_api.approveOncycleChecks",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/payroll/oncycle-api/approve-oncycle-checks",
+                              "title": "Approve Oncycle Checks",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/payroll/oncycle_api.getOnCycleChecks",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/payroll/oncycle_api.getOnCycleChecks",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/payroll/oncycle-api/get-on-cycle-checks",
+                              "title": "Get Oncycle Checks",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/payroll/oncycle_api.cancelCurrentAutopilotPayroll",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/payroll/oncycle_api.cancelCurrentAutopilotPayroll",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/payroll/oncycle-api/cancel-current-autopilot-payroll",
+                              "title": "Cancel Current Autopilot Payroll",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/payroll/oncycle_api",
+                          "pointsTo": "api-reference/api/thera/payroll/oncycle-api/approve-oncycle-checks",
+                          "slug": "api-reference/api/thera/payroll/oncycle-api",
+                          "title": "Oncycle API",
+                          "type": "apiPackage"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/payroll",
+                      "pointsTo": "api-reference/api/thera/payroll/offcycle-api/get-current-off-cycle-checks",
+                      "slug": "api-reference/api/thera/payroll",
+                      "title": "Payroll",
+                      "type": "apiPackage"
+                    },
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/timeoff/timeoff_api.associateTimeOffPolicyToContractor",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.associateTimeOffPolicyToContractor",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/timeoff/timeoff-api/associate-time-off-policy-to-contractor",
+                              "title": "Associate Time Off Policy To Contractors",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/timeoff/timeoff_api.requestPtoForContractor",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.requestPtoForContractor",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/timeoff/timeoff-api/request-pto-for-contractor",
+                              "title": "Request PTO For Contractor",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/timeoff/timeoff_api.addTimeOffPolicy",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.addTimeOffPolicy",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/timeoff/timeoff-api/add-time-off-policy",
+                              "title": "Add Timeoff Policy",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/timeoff/timeoff_api.getTimeOffPolicy",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.getTimeOffPolicy",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/timeoff/timeoff-api/get-time-off-policy",
+                              "title": "Get Timeoff Policy",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/timeoff/timeoff_api.updateTimeOffPolicy",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.updateTimeOffPolicy",
+                              "isResponseStream": false,
+                              "method": "PUT",
+                              "slug": "api-reference/api/thera/timeoff/timeoff-api/update-time-off-policy",
+                              "title": "Update Timeoff Policy",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/timeoff/timeoff_api.deleteTimeOffPolicy",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.deleteTimeOffPolicy",
+                              "isResponseStream": false,
+                              "method": "DELETE",
+                              "slug": "api-reference/api/thera/timeoff/timeoff-api/delete-time-off-policy",
+                              "title": "Deletes a Timeoff Policy",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/timeoff/timeoff_api.getContractorsTimeOffHistoryByCompany",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.getContractorsTimeOffHistoryByCompany",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/timeoff/timeoff-api/get-contractors-time-off-history-by-company",
+                              "title": "Get All Contractors' Time Off by Company",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/timeoff/timeoff_api.getTimeOffHistoryByContractor",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.getTimeOffHistoryByContractor",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/timeoff/timeoff-api/get-time-off-history-by-contractor",
+                              "title": "Get Time Off History By Contractor",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByPolicy",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByPolicy",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/timeoff/timeoff-api/get-contractors-policies-details-by-policy",
+                              "title": "Get Contractor Policies' Details By Policy",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByContractor",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByContractor",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/timeoff/timeoff-api/get-contractors-policies-details-by-contractor",
+                              "title": "Get Contractor's Policies Details",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/timeoff/timeoff_api.modifyTimeOffStatus",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.modifyTimeOffStatus",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/timeoff/timeoff-api/modify-time-off-status",
+                              "title": "Modify Time Off Status",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/timeoff/timeoff_api.bulkModifyTimeOffStatuses",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.bulkModifyTimeOffStatuses",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/timeoff/timeoff-api/bulk-modify-time-off-statuses",
+                              "title": "Bulk Modify Time Off Statuses",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/timeoff/timeoff_api.updatePTOForContractor",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.updatePTOForContractor",
+                              "isResponseStream": false,
+                              "method": "PUT",
+                              "slug": "api-reference/api/thera/timeoff/timeoff-api/update-pto-for-contractor",
+                              "title": "Update PTO For Contractor",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/timeoff/timeoff_api",
+                          "pointsTo": "api-reference/api/thera/timeoff/timeoff-api/associate-time-off-policy-to-contractor",
+                          "slug": "api-reference/api/thera/timeoff/timeoff-api",
+                          "title": "Time Off Management",
+                          "type": "apiPackage"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/timeoff",
+                      "pointsTo": "api-reference/api/thera/timeoff/timeoff-api/associate-time-off-policy-to-contractor",
+                      "slug": "api-reference/api/thera/timeoff",
+                      "title": "Timeoff",
+                      "type": "apiPackage"
+                    },
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/tp/tp_api.addCompanyBankingDetails",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.addCompanyBankingDetails",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/tp/tp-api/add-company-banking-details",
+                              "title": "Add Company Banking Details",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/tp/tp_api.getNaicsCodes",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.getNaicsCodes",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/tp/tp-api/get-naics-codes",
+                              "title": "Get NAICS Codes",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/tp/tp_api.processTreasuryPrimePayment",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.processTreasuryPrimePayment",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/tp/tp-api/process-treasury-prime-payment",
+                              "title": "Process payments to fbo accounts",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/tp/tp_api.createCounterPartyForBanking",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.createCounterPartyForBanking",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/tp/tp-api/create-counter-party-for-banking",
+                              "title": "Create TP counter party required for processing payments",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/tp/tp_api.getTpAccountsForCompany",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.getTpAccountsForCompany",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/tp/tp-api/get-tp-accounts-for-company",
+                              "title": "Get All Accounts for a Given Company",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/tp/tp_api.getTpAccount",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.getTpAccount",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/tp/tp-api/get-tp-account",
+                              "title": "Get a TP Account",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/tp/tp_api.transferFundsToOmnibusAccount",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.transferFundsToOmnibusAccount",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/tp/tp-api/transfer-funds-to-omnibus-account",
+                              "title": "transfer funds from FBO to omnibus account",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/tp/tp_api.transactionHistory",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.transactionHistory",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/tp/tp-api/transaction-history",
+                              "title": "Get all account Transactions",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/tp/tp_api.deatiledTpTransaction",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.deatiledTpTransaction",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/tp/tp-api/deatiled-tp-transaction",
+                              "title": "Get a detailed account transaction",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/tp/tp_api.externalTransferFund",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.externalTransferFund",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/tp/tp-api/external-transfer-fund",
+                              "title": "Use for sending funds to wise/dlocal from omnibus Account",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/tp/tp_api",
+                          "pointsTo": "api-reference/api/thera/tp/tp-api/add-company-banking-details",
+                          "slug": "api-reference/api/thera/tp/tp-api",
+                          "title": "Treasury Prime",
+                          "type": "apiPackage"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/tp",
+                      "pointsTo": "api-reference/api/thera/tp/tp-api/add-company-banking-details",
+                      "slug": "api-reference/api/thera/tp",
+                      "title": "Tp",
+                      "type": "apiPackage"
+                    },
+                    {
+                      "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                      "children": [
+                        {
+                          "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                          "children": [
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/user/user_api.setUserComplianceSetting",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/user/user_api.setUserComplianceSetting",
+                              "isResponseStream": false,
+                              "method": "POST",
+                              "slug": "api-reference/api/thera/user/user-api/set-user-compliance-setting",
+                              "title": "Set User Compliance Setting",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/user/user_api.getComplianceUserSetting",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/user/user_api.getComplianceUserSetting",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/user/user-api/get-compliance-user-setting",
+                              "title": "Get User Compliance Setting",
+                              "type": "endpoint"
+                            },
+                            {
+                              "apiDefinitionId": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+                              "endpointId": "endpoint_api/thera/user/user_api.getUser",
+                              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/user/user_api.getUser",
+                              "isResponseStream": false,
+                              "method": "GET",
+                              "slug": "api-reference/api/thera/user/user-api/get-user",
+                              "title": "Get User",
+                              "type": "endpoint"
+                            }
+                          ],
+                          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/user/user_api",
+                          "pointsTo": "api-reference/api/thera/user/user-api/set-user-compliance-setting",
+                          "slug": "api-reference/api/thera/user/user-api",
+                          "title": "User API",
+                          "type": "apiPackage"
+                        }
+                      ],
+                      "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera/user",
+                      "pointsTo": "api-reference/api/thera/user/user-api/set-user-compliance-setting",
+                      "slug": "api-reference/api/thera/user",
+                      "title": "User",
+                      "type": "apiPackage"
+                    }
+                  ],
+                  "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api/thera",
+                  "pointsTo": "api-reference/api/thera/accounting/accounting-api/change-accounting-integration-setting",
+                  "slug": "api-reference/api/thera",
+                  "title": "Thera",
+                  "type": "apiPackage"
+                }
+              ],
+              "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312:subpackage_api",
+              "pointsTo": "api-reference/api/aiprise/aiprise-webhook-api/verify",
+              "slug": "api-reference/api",
+              "title": "API",
+              "type": "apiPackage"
+            }
+          ],
+          "hideTitle": false,
+          "id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+          "paginated": false,
+          "pointsTo": "api-reference/api/aiprise/aiprise-webhook-api/verify",
+          "showErrors": false,
+          "slug": "api-reference",
+          "title": "API Reference",
+          "type": "apiReference"
+        }
+      ],
+      "id": "root.uv",
+      "type": "sidebarRoot"
+    },
+    "id": "root.uv",
+    "type": "unversioned"
+  },
+  "hidden": false,
+  "id": "root",
+  "pointsTo": "api-reference/api/aiprise/aiprise-webhook-api/verify",
+  "slug": "",
+  "title": "Thera | Docs",
+  "type": "root",
+  "version": "v2"
+}

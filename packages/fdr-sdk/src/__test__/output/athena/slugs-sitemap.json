@@ -1,0 +1,12 @@
+[
+  "getting-started/athena-sdk-quickstart",
+  "guides/online-research",
+  "guides/online-research-with-open-source-models",
+  "guides/structured-output",
+  "guides/query-and-visualize",
+  "guides/generate-documentation",
+  "guides/load-data-frames",
+  "guides/upload-files",
+  "api-reference/tools/data-frame",
+  "api-reference/tools/raw-data"
+]
