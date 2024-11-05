@@ -53,28 +53,11 @@ export class Pruner<ROOT extends FernNavigation.NavigationNode> {
         if (this.tree == null) {
             return this;
         }
-
-        const unauthedParents = new Set<FernNavigation.NodeId>();
-
-        // step 1. mark authed nodes based on the predicate
         FernNavigation.traverseBF(this.tree, (node, parents) => {
             if (FernNavigation.hasMetadata(node)) {
                 node.authed = predicate(node, parents) ? true : undefined;
-                if (!node.authed) {
-                    parents.forEach((p) => unauthedParents.add(p.id));
-                }
             }
         });
-
-        // step 2. remove the authed flag only from EDGE nodes that are parents of unauthed nodes
-        // for example, a version node is authed and contains children that are unauthed, then the version node should not be authed
-        // because then the version node would be pruned away, even though it has children that can be viewed.
-        FernNavigation.traverseBF(this.tree, (node) => {
-            if (FernNavigation.hasMetadata(node) && !FernNavigation.isPage(node) && unauthedParents.has(node.id)) {
-                node.authed = undefined;
-            }
-        });
-
         return this;
     }
 
