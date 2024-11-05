@@ -14,7 +14,10 @@ export type IndexSegment =
           searchApiKey: string;
       };
 
-export type ConfigSegmentTuple = readonly [config: DocsV1Db.UnversionedNavigationConfig, segment: IndexSegment];
+export type ConfigSegmentTuple = readonly [
+    config: DocsV1Db.UnversionedNavigationConfig | undefined,
+    segment: IndexSegment,
+];
 
 type WithObjectId<T> = {
     [K: string]: unknown;
