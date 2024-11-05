@@ -80,6 +80,7 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
     const apiReference =
         found.parents.find(isApiReferenceNode) ?? (found.node.type === "apiReference" ? found.node : undefined);
 
+    // if the node is visible (becaues it's a page), return it as "found"
     if (FernNavigation.isPage(found.node)) {
         const parentsAndNode = [...found.parents, found.node];
         const tabbedNodeIndex = parentsAndNode.findIndex((node) => node === tabbedNode);
@@ -124,13 +125,11 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
         return { type: "redirect", redirect: root.pointsTo };
     }
 
-    const redirect = FernNavigation.hasRedirect(found.node)
-        ? found.node.pointsTo
-        : currentVersion?.pointsTo ?? root.pointsTo;
-
-    if (redirect == null || redirect === slug) {
-        return { type: "notFound", redirect: undefined, authed: found.node.authed };
+    // if the node has a redirect, return it
+    if (FernNavigation.hasRedirect(found.node) && found.node.pointsTo != null) {
+        return { type: "redirect", redirect: found.node.pointsTo };
     }
 
-    return { type: "redirect", redirect };
+    // if the node does not have a redirect, return a 404
+    return { type: "notFound", redirect: currentVersion?.pointsTo ?? root.pointsTo, authed: found.node.authed };
 }
