@@ -18,7 +18,7 @@
     "node": ">=14.15.0"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.335.0",
+    "@aws-sdk/client-s3": "^3.685.0",
     "@fern-api/core-utils": "0.15.0-rc63",
     "@fern-api/github": "workspace:*",
     "@fern-api/venus-api-sdk": "0.10.1-5-ged06d22",
