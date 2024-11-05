@@ -52,6 +52,10 @@ export class AlgoliaServiceImpl implements AlgoliaService {
     }) {
         return configSegmentTuples.flatMap(([config, indexSegment]) => {
             const generator = new AlgoliaSearchRecordGeneratorV2({ docsDefinition, apiDefinitionsById });
+
+            if (config == null) {
+                return [];
+            }
             // const generator = getConfig().algoliaSearchV2Domains.some((domains) => url.includes(domains))
             //     ? new AlgoliaSearchRecordGeneratorV2({ docsDefinition, apiDefinitionsById })
             //     : new AlgoliaSearchRecordGenerator({ docsDefinition, apiDefinitionsById });

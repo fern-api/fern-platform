@@ -1,5 +1,4 @@
 import { signFernJWT } from "@/server/auth/FernJWT";
-import { OAuth2Client } from "@/server/auth/OAuth2Client";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
@@ -9,6 +8,7 @@ import { FernUser, OryAccessTokenSchema } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_ACCESS_TOKEN, COOKIE_FERN_TOKEN, COOKIE_REFRESH_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
+import { OryOAuth2Client } from "../../../../../server/auth/ory";
 
 export const runtime = "edge";
 
@@ -29,13 +29,17 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     if (error != null) {
         // eslint-disable-next-line no-console
         console.error(`OAuth2 error: ${error} - ${error_description}`);
-        return redirectWithLoginError(redirectLocation, error_description ?? error);
+        return redirectWithLoginError(redirectLocation, error, error_description);
     }
 
     if (typeof code !== "string") {
         // eslint-disable-next-line no-console
         console.error("Missing code in query params");
-        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+        return redirectWithLoginError(
+            redirectLocation,
+            "missing_authorization_code",
+            "Couldn't login, please try again",
+        );
     }
 
     const config = await getAuthEdgeConfig(domain);
@@ -43,10 +47,10 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     if (config == null || config.type !== "oauth2" || config.partner !== "ory") {
         // eslint-disable-next-line no-console
         console.log(`Invalid config for domain ${domain}`);
-        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+        return redirectWithLoginError(redirectLocation, "unknown_error", "Couldn't login, please try again");
     }
 
-    const oauthClient = new OAuth2Client(config);
+    const oauthClient = new OryOAuth2Client(config);
     try {
         const { access_token, refresh_token } = await oauthClient.getToken(code);
         const token = OryAccessTokenSchema.parse(await oauthClient.decode(access_token));
@@ -78,6 +82,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     } catch (error) {
         // eslint-disable-next-line no-console
         console.error("Error getting access token", error);
-        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+        return redirectWithLoginError(redirectLocation, "unknown_error", "Couldn't login, please try again");
     }
 }

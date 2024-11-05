@@ -41,7 +41,10 @@ async function revokeSessionForToken(fern_token: string | undefined): Promise<vo
 
 const withJWKS = once(() => createRemoteJWKSet(new URL(workos().userManagement.getJwksUrl(getWorkOSClientId()))));
 
-async function verifyAccessToken(accessToken: string) {
+/**
+ * @internal visible for testing
+ */
+async function verifyAccessToken(accessToken: string): Promise<boolean> {
     try {
         await jwtVerify(accessToken, withJWKS());
         return true;
@@ -86,4 +89,11 @@ async function toSessionUserInfo(session?: WorkOSSession): Promise<WorkOSUserInf
     return { user: null };
 }
 
-export { encryptSession, getSessionFromToken, refreshSession, revokeSessionForToken, toSessionUserInfo };
+export {
+    encryptSession,
+    getSessionFromToken,
+    refreshSession,
+    revokeSessionForToken,
+    toSessionUserInfo,
+    verifyAccessToken,
+};

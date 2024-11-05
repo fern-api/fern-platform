@@ -5,6 +5,7 @@ import {
     DocsV1Db,
     DocsV1Read,
     FdrAPI,
+    FernNavigation,
     convertDbAPIDefinitionToRead,
     convertDocsDefinitionToRead,
     migrateDocsDbDefinition,
@@ -171,6 +172,56 @@ export async function loadIndexSegmentsAndGetSearchInfo({
     });
 }
 
+function getVersionedSearchInfoFromDocs(activeIndexSegments: IndexSegment[], app: FdrApplication): Algolia.SearchInfo {
+    const indexSegmentsByVersionId = activeIndexSegments.reduce<Record<string, Algolia.IndexSegment>>(
+        (acc, indexSegment) => {
+            const searchApiKey = app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
+                indexSegment.id,
+            );
+            // Since the docs are versioned, all referenced index segments will have a version
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            acc[indexSegment.version!] = {
+                id: FdrAPI.IndexSegmentId(indexSegment.id),
+                searchApiKey,
+            };
+            return acc;
+        },
+        {},
+    );
+    return {
+        type: "singleAlgoliaIndex",
+        value: {
+            type: "versioned",
+            indexSegmentsByVersionId,
+        },
+    };
+}
+
+function getUnversionedSearchInfoFromDocs(
+    activeIndexSegments: IndexSegment[],
+    app: FdrApplication,
+): Algolia.SearchInfo {
+    const indexSegment = activeIndexSegments[0];
+    if (indexSegment == null) {
+        /* preview docs do not have algolia index segments, and should return with an undefined index */
+        return { type: "legacyMultiAlgoliaIndex", algoliaIndex: undefined };
+    }
+    const searchApiKey = app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
+        indexSegment.id,
+    );
+
+    return {
+        type: "singleAlgoliaIndex",
+        value: {
+            type: "unversioned",
+            indexSegment: {
+                id: FdrAPI.IndexSegmentId(indexSegment.id),
+                searchApiKey,
+            },
+        },
+    };
+}
+
 export function getSearchInfoFromDocs({
     algoliaIndex,
     indexSegmentIds,
@@ -184,57 +235,42 @@ export function getSearchInfoFromDocs({
     docsDbDefinition: DocsV1Db.DocsDefinitionDb;
     app: FdrApplication;
 }): Algolia.SearchInfo {
-    if (indexSegmentIds == null || docsDbDefinition.config.navigation == null) {
+    if (indexSegmentIds == null) {
         return { type: "legacyMultiAlgoliaIndex", algoliaIndex };
     }
-    return visitDbNavigationConfig<Algolia.SearchInfo>(docsDbDefinition.config.navigation, {
-        versioned: () => {
-            const indexSegmentsByVersionId = activeIndexSegments.reduce<Record<string, Algolia.IndexSegment>>(
-                (acc, indexSegment) => {
-                    const searchApiKey =
-                        app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
-                            indexSegment.id,
-                        );
-                    // Since the docs are versioned, all referenced index segments will have a version
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    acc[indexSegment.version!] = {
-                        id: FdrAPI.IndexSegmentId(indexSegment.id),
-                        searchApiKey,
-                    };
-                    return acc;
-                },
-                {},
-            );
-            return {
-                type: "singleAlgoliaIndex",
-                value: {
-                    type: "versioned",
-                    indexSegmentsByVersionId,
-                },
-            };
-        },
-        unversioned: () => {
-            const indexSegment = activeIndexSegments[0];
-            if (indexSegment == null) {
-                /* preview docs do not have algolia index segments, and should return with an undefined index */
-                return { type: "legacyMultiAlgoliaIndex", algoliaIndex: undefined };
-            }
-            const searchApiKey = app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
-                indexSegment.id,
-            );
 
-            return {
-                type: "singleAlgoliaIndex",
-                value: {
-                    type: "unversioned",
-                    indexSegment: {
-                        id: FdrAPI.IndexSegmentId(indexSegment.id),
-                        searchApiKey,
-                    },
-                },
-            };
-        },
-    });
+    if (docsDbDefinition.config.navigation == null && docsDbDefinition.config.root == null) {
+        return { type: "legacyMultiAlgoliaIndex", algoliaIndex };
+    }
+
+    if (docsDbDefinition.config.root != null) {
+        const latestRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(docsDbDefinition.config.root);
+        let searchInfo: Algolia.SearchInfo | undefined;
+        FernNavigation.traverseBF(latestRoot, (node) => {
+            if (node.type === "versioned") {
+                searchInfo = getVersionedSearchInfoFromDocs(activeIndexSegments, app);
+                return false;
+            } else if (node.type === "unversioned") {
+                searchInfo = getUnversionedSearchInfoFromDocs(activeIndexSegments, app);
+                return false;
+            }
+            return true;
+        });
+        if (searchInfo != null) {
+            return searchInfo;
+        }
+    } else if (docsDbDefinition.config.navigation != null) {
+        return visitDbNavigationConfig<Algolia.SearchInfo>(docsDbDefinition.config.navigation, {
+            versioned: () => {
+                return getVersionedSearchInfoFromDocs(activeIndexSegments, app);
+            },
+            unversioned: () => {
+                return getUnversionedSearchInfoFromDocs(activeIndexSegments, app);
+            },
+        });
+    }
+
+    return { type: "legacyMultiAlgoliaIndex", algoliaIndex };
 }
 
 export function convertDbApiDefinitionToRead(buffer: Buffer): APIV1Read.ApiDefinition {

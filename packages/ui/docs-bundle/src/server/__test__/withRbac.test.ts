@@ -1,4 +1,4 @@
-import { NodeId, PageId, RoleId, Slug, Url } from "@fern-api/fdr-sdk/navigation";
+import { PageId, RoleId, Slug } from "@fern-api/fdr-sdk/navigation";
 import { Gate, getViewerFilters, matchRoles, withBasicTokenAnonymous, withBasicTokenAnonymousCheck } from "../withRbac";
 
 describe("withBasicTokenAnonymous", () => {
@@ -34,13 +34,27 @@ describe("withBasicTokenAnonymous", () => {
 
 describe("withBasicTokenAnonymousCheck", () => {
     it("should allow external links", () => {
+        expect(withBasicTokenAnonymousCheck({ denylist: ["/(.*)"] })({ type: "link" })).toBe(Gate.ALLOW);
+    });
+
+    it("should deny all nodes if denylist is /(.*)", () => {
         expect(
             withBasicTokenAnonymousCheck({ denylist: ["/(.*)"] })({
-                type: "link",
-                url: Url("https://example.com"),
-                title: "External url",
-                icon: undefined,
-                id: NodeId("1"),
+                type: "page",
+                title: "Public",
+                slug: Slug("public"),
+                pageId: PageId("1.mdx"),
+            }),
+        ).toBe(Gate.DENY);
+    });
+
+    it("should allow all nodes if allowlist is /(.*)", () => {
+        expect(
+            withBasicTokenAnonymousCheck({ allowlist: ["/(.*)"] })({
+                type: "page",
+                title: "Public",
+                slug: Slug("public"),
+                pageId: PageId("1.mdx"),
             }),
         ).toBe(Gate.ALLOW);
     });
@@ -51,18 +65,8 @@ describe("withBasicTokenAnonymousCheck", () => {
                 type: "section",
                 title: "Public",
                 children: [],
-                id: NodeId("1"),
-                slug: Slug("public"),
-                collapsed: false,
-                canonicalSlug: undefined,
-                icon: undefined,
-                hidden: undefined,
-                authed: undefined,
                 overviewPageId: PageId("1.mdx"),
-                noindex: undefined,
-                pointsTo: undefined,
-                viewers: undefined,
-                orphaned: undefined,
+                slug: Slug("public"),
             }),
         ).toBe(Gate.ALLOW);
     });
@@ -73,18 +77,8 @@ describe("withBasicTokenAnonymousCheck", () => {
                 type: "section",
                 title: "Private",
                 children: [],
-                id: NodeId("1"),
                 slug: Slug("private"),
-                collapsed: false,
-                canonicalSlug: undefined,
-                icon: undefined,
-                hidden: undefined,
-                authed: undefined,
                 overviewPageId: PageId("1.mdx"),
-                noindex: undefined,
-                pointsTo: undefined,
-                viewers: undefined,
-                orphaned: undefined,
             }),
         ).toBe(Gate.DENY);
     });
