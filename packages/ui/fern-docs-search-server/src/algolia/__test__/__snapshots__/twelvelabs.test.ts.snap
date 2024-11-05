@@ -369,13 +369,13 @@ For more details, see the Engine Options page.",
     ],
     "description": "This guide demonstrates building a production-ready video understanding service using a three-step process:
 
-1. **Create an Index**: Organize and store video data, consisting of video embeddings and metadata.
-2. **Upload Videos**: Add video content to your index for processing.
-3. **Perform Downstream Tasks**: Utilize the platform's capabilities to search, classify, and generate text from videos.
+Create an Index: Organize and store video data, consisting of video embeddings and metadata.
+Upload Videos: Add video content to your index for processing.
+Perform Downstream Tasks: Utilize the platform's capabilities to search, classify, and generate text from videos.
 
 Each step is composed of a single API call, making the process straightforward and efficient.
 
-> **Note**: You can interact with the platform using one of the available SDKs or an HTTP client like `requests` or `axios`. This guide demonstrates how to use the SDKs, the recommended approach for most scenarios.",
+Note: You can interact with the platform using one of the available SDKs or an HTTP client like requests or axios. This guide demonstrates how to use the SDKs, the recommended approach for most scenarios.",
     "indexSegmentId": "0",
     "slug": "guides/get-started/quickstart",
     "title": "Quickstart",
@@ -1187,7 +1187,6 @@ If the API key is valid, the index will be created successfully. If it is expire
       },
     ],
     "description": "An index is a fundamental unit for organizing and storing video data, consisting of video embeddings and metadata. Indexes facilitate information retrieval and processing.
-
 You can use indexes to group related videos. For example, if you want to upload multiple videos from a car race, you can create a single index and upload all the videos to it. After uploading, you can search for specific moments across all videos in that index in a single request.",
     "indexSegmentId": "0",
     "slug": "guides/guides/create-indexes",
@@ -1507,12 +1506,14 @@ Note that the response contains, among other information, a field named id, repr
     ],
     "description": "This guide shows how you can upload a video file to the Twelve Labs platform. The platform offers the following options for uploading single videos:
 
-- **Upload from the local file system**: Use this option to upload a single video file from your local file system.
-- **Upload from a direct URL**: Use this option to upload a video file from a publicly accessible URL. The platform will retrieve the file directly from the specified URL, so your application doesn't have to store the video locally and upload it.
+Upload from the local file system: Use this option to upload a single video file from your local file system.
+Upload from a direct URL: Use this option to upload a video file from a publicly accessible URL. The platform will retrieve the file directly from the specified URL, so your application doesn't have to store the video locally and upload it.
 
-> **Notes:**
-> - The platform supports uploading video files that can play without additional user interaction or custom video players. Ensure your URL points to the raw video file, not a web page containing the video. Links to third-party hosting sites, cloud storage services, or videos requiring extra steps to play are not supported.
-> - The ability to upload videos from YouTube is no longer supported.",
+
+Notes:
+
+The platform supports uploading video files that can play without additional user interaction or custom video players. Ensure your URL points to the raw video file, not a web page containing the video. Links to third-party hosting sites, cloud storage services, or videos requiring extra steps to play are not supported.
+The ability to upload videos from YouTube is no longer supported.",
     "indexSegmentId": "0",
     "slug": "guides/guides/upload-videos",
     "title": "Upload Videos",

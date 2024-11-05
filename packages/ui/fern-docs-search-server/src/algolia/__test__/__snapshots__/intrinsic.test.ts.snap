@@ -6,9 +6,7 @@
         "title": "Getting started",
       },
     ],
-    "description": "<Callout intent="success">
-Intrinsic is now SOC-2 Compliant
-</Callout>",
+    "description": "Intrinsic is now SOC-2 Compliant",
     "indexSegmentId": "0",
     "slug": "getting-started/welcome",
     "title": "Welcome",
@@ -682,7 +680,7 @@ for any event.",
         "title": "SDKs",
       },
     ],
-    "description": "The Intrinsic Ruby SDK provides access to Intrinsic API events, event types, and detections. 
+    "description": "The Intrinsic Ruby SDK provides access to Intrinsic API events, event types, and detections.
 See the API reference for more information on each of these endpoints.",
     "indexSegmentId": "0",
     "slug": "sd-ks/ruby-sdk",
@@ -2685,10 +2683,7 @@ if err != nil {
       },
     ],
     "description": "Intrinsic's Okta Integration provides a seamless Single Sign-On (SSO) experience for users accessing Intrinsic via Okta. This guide outlines the steps to configure the Intrinsic application in Okta and enable SSO for your users.
-
-<Callout intent="info">
-To setup Okta SSO, follow the steps below. If you encounter any issues, please contact [Intrinsic Support](mailto:support@withintrinsic.com), and we'll be happy to walk thorugh the setup with you over a call. Be sure to invite your Okta Admin.
-</Callout>",
+To setup Okta SSO, follow the steps below. If you encounter any issues, please contact Intrinsic Support, and we'll be happy to walk thorugh the setup with you over a call. Be sure to invite your Okta Admin.",
     "indexSegmentId": "0",
     "slug": "okta-sso-integration/setup-okta-sso",
     "title": "Setup Okta SSO",

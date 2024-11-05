@@ -474,139 +474,42 @@ Finally, if you get stuck, you can always reach out to us for support.
 
 Welcome to Airtop! We're thrilled to guide you through connecting your AI Agent to the web using our powerful cloud browsers. In this quick-start guide, we'll walk you through:
 
-- Setting up your project
-- Creating a browser session
-- Navigating the web
-- Summarizing web pages using AI
+Setting up your project
+Creating a browser session
+Navigating the web
+Summarizing web pages using AI
 
 By the end, you'll have created your browser session and summarized the page contents in just a few minutes. Let's get started!
-
-<Steps toc={true}>
- 
-### Step 1
-
-Let's begin by installing the necessary packages. You'll need the Airtop SDK to interact with our service.
-
-<CodeGroup>
-
-```bash NodeJS (npm)
-npm i -s @airtop/sdk
-```
-
-```bash NodeJS (yarn)
+Step 1Let's begin by installing the necessary packages. You'll need the Airtop SDK to interact with our service.npm i -s @airtop/sdk
 yarn add @airtop/sdk
-```
-
-```bash NodeJS (pnpm)
 pnpm add @airtop/sdk
-```
-
-```bash Python
 pip install airtop
-```
-
-</CodeGroup>
-
-### Step 2
-
-Get an API key from the [Airtop Developer Portal](https://portal.airtop.ai/api-keys).
-
-<Tip>You can create a **free** account if you don't already have one when you first log in.</Tip>
-
-### Step 3
-
-Open up your favorite code editor and create a new file called `quickstart.js`. Create a new Airtop client.
-
-<CodeGroup>
-
-```ts NodeJS
-import { AirtopClient } from '@airtop/sdk';
+Step 2Get an API key from the Airtop Developer Portal.You can create a free account if you don't already have one when you first log in.Step 3Open up your favorite code editor and create a new file called quickstart.js. Create a new Airtop client.import { AirtopClient } from '@airtop/sdk';
 
 const apiKey = 'YOUR_AIRTOP_API_KEY';
 const client = new AirtopClient({ apiKey });
-```
-
-```python Python
 from airtop import Airtop
 
 client = Airtop(api_key="YOUR_AIRTOP_API_KEY")
-```
-
-</CodeGroup>
-
-### Step 4
-
-Create a new browser session.
-
-<CodeGroup>
-```ts NodeJS
-const session = await client.sessions.create();
-```
-
-```python Python
+Step 4Create a new browser session.const session = await client.sessions.create();
 session = client.sessions.create()
-```
-
-</CodeGroup>
-
-### Step 5
-
-Create a new window, load a URL and get the window information.
-
-<CodeGroup>
-```ts NodeJS
-const window = await client.windows.create(session.data.id, { url: "https://www.airtop.ai" });
-```
-
-```python Python
+Step 5Create a new window, load a URL and get the window information.const window = await client.windows.create(session.data.id, { url: "https://www.airtop.ai" });
 window = client.windows.create(session.data.id, url="https://www.airtop.ai")
-```
-
-</CodeGroup>
-
-
-### Step 6
-
-Get the page content and summarize using AI.
-
-<CodeGroup>
-```ts NodeJS
-const contentSummary = await client.windows.promptContent(session.data.id, window.data.windowId, {
+Step 6Get the page content and summarize using AI.const contentSummary = await client.windows.promptContent(session.data.id, window.data.windowId, {
   prompt: 'Summarize the contents of the page in 1 short paragraph up to 170 characters.',
 });
 console.log(contentSummary.data.modelResponse);
 
 // Terminate the session when you're done
 await client.sessions.terminate(session.data.id);
-```
-
-```python Python
 prompt = 'Summarize the contents of the page in 1 short paragraph up to 170 characters.'
 content_summary = client.windows.prompt_content(session.data.id, window.data.window_id, prompt=prompt)
 print(content_summary.data.model_response)
 
 # Terminate the session when you're done
 client.sessions.terminate(session.data.id)
-```
-
-</CodeGroup>
-
-### Step 7
-
-In your terminal, run the following command:
-
-<CodeGroup>
-```bash NodeJS
-node quickstart.js
-```
-
-```bash Python
+Step 7In your terminal, run the following command:node quickstart.js
 python quickstart.py
-```
-
-</CodeGroup>
-
-</Steps>
 
 Congratulations 🎉! You've just created your first browser session, navigated to the Airtop website and summarized the page contents using AI.",
     "indexSegmentId": "0",
@@ -2320,7 +2223,7 @@ IPRoyal
     ],
     "description": "How to open DevTools for a browser
 
-You can access the remote browser's DevTools via a [Live View](./creating-a-live-view). Here you'll be able to inspect a page, network requests, console logs, cookies, and much more.",
+You can access the remote browser's DevTools via a Live View. Here you'll be able to inspect a page, network requests, console logs, cookies, and much more.",
     "indexSegmentId": "0",
     "slug": "guides/how-to/debugging-a-session",
     "title": "Debugging a Session",
@@ -2396,11 +2299,8 @@ Once you select a page, the DevTools will connect to the browser and you'll be a
     ],
     "description": "How to use Puppeteer with Airtop
 
-[Puppeteer](https://pptr.dev) is a popular automation library for Node.js that allows you to control headless browsers. Airtop provides a Puppeteer connector that allows you to use Puppeteer to automate your browser.
-
-<Note>
-Puppeteer is not supported in Python. We recommend using Playwright or Selenium instead.
-</Note>",
+Puppeteer is a popular automation library for Node.js that allows you to control headless browsers. Airtop provides a Puppeteer connector that allows you to use Puppeteer to automate your browser.
+Puppeteer is not supported in Python. We recommend using Playwright or Selenium instead.",
     "indexSegmentId": "0",
     "slug": "guides/how-to/automation-frameworks/puppeteer",
     "title": "Integrating with Puppeteer",
@@ -2744,7 +2644,7 @@ if (matchingPage) {
     ],
     "description": "How to use Playwright with Airtop
 
-[Playwright](https://playwright.dev) is a powerful automation library that allows you to control headless browsers. Airtop provides a Playwright connector that allows you to use Playwright to automate your browser.",
+Playwright is a powerful automation library that allows you to control headless browsers. Airtop provides a Playwright connector that allows you to use Playwright to automate your browser.",
     "indexSegmentId": "0",
     "slug": "guides/how-to/automation-frameworks/playwright",
     "title": "Integrating with Playwright",
@@ -3216,7 +3116,7 @@ with sync_playwright() as p:
     ],
     "description": "How to use Selenium with Airtop
 
-[Selenium](https://www.selenium.dev/) is a powerful automation framework for web browsers. Airtop provides a Selenium connector that allows you to use Selenium to automate your browser.",
+Selenium is a powerful automation framework for web browsers. Airtop provides a Selenium connector that allows you to use Selenium to automate your browser.",
     "indexSegmentId": "0",
     "slug": "guides/how-to/automation-frameworks/selenium",
     "title": "Integrating with Selenium",
@@ -3540,8 +3440,7 @@ If you're not already familiar with Selenium, you might want to check out their 
     ],
     "description": "Enhance your scraping with AI
 
-You can use the `scrapeContent` method to intelligently scrape the content of a page. This method extracts the content of the page and formats it as markdown, which is easy to read and ingest into your application. It will extract headers, formatting, tables, and more and present them in a structured manner.
-
+You can use the scrapeContent method to intelligently scrape the content of a page. This method extracts the content of the page and formats it as markdown, which is easy to read and ingest into your application. It will extract headers, formatting, tables, and more and present them in a structured manner.
 Additionally, this method will correctly scrape content from Office365 and Google Workspace documents. These applications are notoriously difficult to scrape due to their use virtualized DOMs and require more sophisticated methods. Not only will Airtop correctly parse text content, but also table content from Microsoft Excel and Google Sheets and present it in CSV format.",
     "indexSegmentId": "0",
     "slug": "guides/how-to/ai/smart-scraping",
@@ -4035,14 +3934,13 @@ With Smart Scraping, you actually get the content from the page, without any of 
     ],
     "description": "Interact with a page using LLMs
 
-You can use the `promptContent` method to interact with a page using LLMs. You might want to use this method to scrape a page for specific information, or even ask a more general question about the page.
-
+You can use the promptContent method to interact with a page using LLMs. You might want to use this method to scrape a page for specific information, or even ask a more general question about the page.
 Examples:
 
-- On a company's website, ask if they have a certain job opening.
-- On a foreign news website, ask for a translation.
-- On a product page, ask for list of product, but with the price in different currencies.
-- etc.",
+On a company's website, ask if they have a certain job opening.
+On a foreign news website, ask for a translation.
+On a product page, ask for list of product, but with the price in different currencies.
+etc.",
     "indexSegmentId": "0",
     "slug": "guides/how-to/ai/prompting-a-page",
     "title": "Prompting a Page",
@@ -4857,7 +4755,6 @@ Response schema:
     "description": "Learn more about how AI costs are calculated and how to control them
 
 If you are using any of the AI APIs, you may be charged for the tokens used. The cost is calculated based on the number of input and output tokens used, as well as the model used.
-
 Airtop uses a credit system to keep track of your usage since we often use multiple models and different pricing tiers for each model. We do not charge any markup on LLM costs.",
     "indexSegmentId": "0",
     "slug": "guides/how-to/ai/ai-costs",
@@ -4978,9 +4875,8 @@ timeThresholdSeconds: A time threshold in seconds that, once exceeded, will caus
     ],
     "description": "How to get help with Airtop
 
-We're happy to help with any issues you're having with Airtop and eager to hear your feedback. If you run into any issues, please reach out to us at [support@airtop.ai](mailto:support@airtop.ai).
-
-If you run into any bugs, please file an issue on [GitHub](https://github.com/airtop-ai/airtop-node-sdk/issues).",
+We're happy to help with any issues you're having with Airtop and eager to hear your feedback. If you run into any issues, please reach out to us at support@airtop.ai.
+If you run into any bugs, please file an issue on GitHub.",
     "indexSegmentId": "0",
     "slug": "guides/misc/support",
     "title": "Support",
@@ -7279,27 +7175,10 @@ npm run start
   {
     "breadcrumbs": [],
     "description": "Welcome to our API reference. We currently offer a RESTful API, as well as Typescript/NodeJS and Python SDKs to use in your applications.
-
-If you have any other languages that you would like us to support, please [reach out to us](mailto:support@airtop.ai).
-
-<CardGroup cols={4}>
-  <Card
-    title="Node.js SDK"
-    href="https://github.com/airtop-ai/airtop-node-sdk"
-    icon={<img src="https://cdn.brandfetch.io/idKX_Hb7va/theme/dark/logo.svg" alt="Typescript logo" />}
-  >
-    <a href="https://github.com/airtop-ai/airtop-node-sdk" style="text-decoration: underline; color: #ffffff;">Github</a>&nbsp;
-    <a href="https://www.npmjs.com/package/@airtop/sdk" style="text-decoration: underline; color: #ffffff;">NPM</a>
-  </Card> 
-  <Card
-    title="Python SDK"
-    href="https://github.com/airtop-ai/airtop-python-sdk"
-    icon={<img src="https://cdn.brandfetch.io/idbpOFBgcc/theme/dark/logo.svg" alt="Python Logo" />}
-  >
-    <a href="https://github.com/airtop-ai/airtop-python-sdk" style="text-decoration: underline; color: #ffffff;">Github</a>&nbsp;
-    <a href="https://pypi.org/project/airtop/" style="text-decoration: underline; color: #ffffff;">PyPI</a>
-  </Card>
-</CardGroup>",
+If you have any other languages that you would like us to support, please reach out to us.
+Github 
+NPMGithub 
+PyPI",
     "indexSegmentId": "0",
     "slug": "api-reference/airtop-api",
     "title": "Airtop API",

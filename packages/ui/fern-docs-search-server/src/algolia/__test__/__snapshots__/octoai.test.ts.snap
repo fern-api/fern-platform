@@ -224,10 +224,10 @@ Support
     ],
     "description": "Only pay for what you use.
 
-At OctoAI you only pay for what you use. Upon sign up you will receive **$10 of free credit** in your account, and these credits don't expire. That is equivalent of:
+At OctoAI you only pay for what you use. Upon sign up you will receive $10 of free credit in your account, and these credits don't expire. That is equivalent of:
 
-- Over a million words of output with the largest Llama 3 70B model and Mixtral 8x7B model.
-- 1,000 SDXL default images and about 66 Stable Video Diffusion animations",
+Over a million words of output with the largest Llama 3 70B model and Mixtral 8x7B model.
+1,000 SDXL default images and about 66 Stable Video Diffusion animations",
     "indexSegmentId": "0",
     "slug": "docs/getting-started/pricing-and-billing",
     "title": "Pricing & billing",
@@ -1332,7 +1332,6 @@ Usage statistics for the completion request, detailing token usage in the prompt
     "description": "If you've been using GPT-3.5 or GPT-4, switching to Octo AI is easy!
 
 OctoAI LLMs are available to use through our OpenAI compatible API. Additionally, if you have been building or prototyping using OpenAI's Python SDK you can keep your code as-is and use OctoAI's LLM models.
-
 In this example, we will show you how to change just three lines of code to make your Python application use OctoAI's Open Source models through OpenAI's Python SDK.",
     "indexSegmentId": "0",
     "slug": "docs/text-gen-solution/migration-from-openai",
@@ -1688,20 +1687,15 @@ ChatCompletionMessage(content="  Hello! How can I assist you today? Do you have 
       },
     ],
     "description": "All of our image generation models are accessible via REST API. Below you can see a simple cURL/Python SDK and TypeScript SDK example for our image gen endpoints, along with explanations of all parameters.
+Our URL for image generations is at https://image.octoai.run/generate/{engine_id}, where engine_id is one of the following:
 
-Our URL for image generations is at `https://image.octoai.run/generate/{engine_id}`, where engine_id is one of the following:
-
-1. `sdxl`: Stable DiffusionXL v1.0
-2. `sd`: Stable Diffusion v1.5
-3. `controlnet-sdxl`: ControlNet SDXL
-4. `controlnet-sd15`: ControlNet SD1.5
+sdxl: Stable DiffusionXL v1.0
+sd: Stable Diffusion v1.5
+controlnet-sdxl: ControlNet SDXL
+controlnet-sd15: ControlNet SD1.5
 
 This includes text-to-image, image-to-image, controlnets, photo merge, inpainting and outpainting.
-
-**Input Sample**
-
-<CodeGroup>
-```bash cURL
+Input Sample
 curl -H 'Content-Type: application/json' -H "Authorization: Bearer $OCTOAI_TOKEN" -X POST "https://image.octoai.run/generate/sdxl" \
     -d '{
         "prompt": "The angel of death Hyperrealistic, splash art, concept art, mid shot, intricately detailed, color depth, dramatic, 2/3 face angle, side light, colorful background",
@@ -1718,9 +1712,6 @@ curl -H 'Content-Type: application/json' -H "Authorization: Bearer $OCTOAI_TOKEN
         "use_refiner": true,
         "style_preset": "3d-model"
     }' > response.json
-```
-
-```Python Python
 import requests
 import os
 import base64
@@ -1759,9 +1750,6 @@ def _process_test(url):
 
 if __name__ == "__main__":
     _process_test("https://image.octoai.run/generate/sdxl")
-```
-
-```typescript TypeScript
 import fs from "node:fs";
 import { OctoAIClient } from "@octoai/sdk";
 
@@ -1788,10 +1776,7 @@ images.forEach((output, i) => {
     const buffer = Buffer.from(output.imageB64, "base64");
     fs.writeFileSync(`result${i}.jpg`, buffer);
   }
-});
-```
-
-</CodeGroup>",
+});",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/rest-apis/image-gen-api",
     "title": "Image Gen REST API",
@@ -2580,9 +2565,7 @@ if __name__ == "__main__":
     "description": "Animate and add motion to your images
 
 Our video generation model is accessible via REST API. Below, you'll find straightforward examples using cURL/Python SDK and TypeScript SDK for our video generation endpoints, complete with explanations of all parameters.
-
-The endpoint URL for video generation is `https://image.octoai.run/generate/svd`.
-
+The endpoint URL for video generation is https://image.octoai.run/generate/svd.
 This encompasses image-to-video conversion. Additionally, we offer support for a text-to-video workflow, which involves utilizing the text-to-image API (Image Gen API) followed by the image-to-video API.",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/rest-apis/video-gen",
@@ -3965,17 +3948,12 @@ Check out our Image Gen API and Video Gen API docs when you’re ready to use me
         "title": "Quickstart",
       },
     ],
-    "description": "All endpoints require authentication by default. That means you will need an access token in order to run inferences against those endpoints. To generate a token, head to your [Account Settings](https://octoai.cloud/settings) and click **Generate token**:
-![](https://www.datocms-assets.com/45680/1711722965-generatetoken.png?max-w=2000&auto=compress)
+    "description": "All endpoints require authentication by default. That means you will need an access token in order to run inferences against those endpoints. To generate a token, head to your Account Settings and click Generate token:
 
 After generating a token, make sure to store it in your terminal and/or environment file for your app.
-
-```bash bash
 export OCTOAI_TOKEN=<INSERT_HERE>
-```
 
 Now you'll be able to run inferences! For example:
-```bash cURL
 curl -X POST "https://text.octoai.run/v1/chat/completions" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $OCTOAI_TOKEN" \
@@ -3995,8 +3973,7 @@ curl -X POST "https://text.octoai.run/v1/chat/completions" \
         "presence_penalty": 0,
         "temperature": 0.1,
         "top_p": 0.9
-    }'
-```",
+    }'",
     "indexSegmentId": "0",
     "slug": "docs/getting-started/how-to-create-an-octoai-access-token",
     "title": "How to create an OctoAI API token",
@@ -4050,8 +4027,7 @@ curl -X POST "https://text.octoai.run/v1/chat/completions" \
     "description": "The OctoAI Text Gen Solution offers market-leading price and performance for a growing list open source LLMs including Llama2, CodeLlama, and Mistral (see Supported models section below). We offer a WebUI playground, API endpoints, and Python/TypeScript SDK solution for interacting with these models. All of our endpoints are callable via chat completions format currently popular in the industry (see API documentation).
 
 In the coming months, we will launch additional features including efficient fine-tuning, longer-context models, JSON mode support, and other features.
-
-If you have an LLM use case that our existing endpoints do not support, [contact us](https://octo.ai/contact-us/). We offer low-latency and throughput-optimized solutions for all LLama2, CodeLlama, and Mistral checkpoints.",
+If you have an LLM use case that our existing endpoints do not support, contact us. We offer low-latency and throughput-optimized solutions for all LLama2, CodeLlama, and Mistral checkpoints.",
     "indexSegmentId": "0",
     "slug": "docs/text-gen-solution/getting-started",
     "title": "Getting started with our Text Gen Solution",
@@ -4262,8 +4238,7 @@ Once you provide billing information and generate an API key, any usage of these
     ],
     "description": "Use the OctoAI Chat Completion API to easily generate text.
 
-The `OctoAI` class allows you to run inferences simply to any model that accepts JSON-formatted inputs as a dictionary, and provides you with all JSON-formatted outputs as a dictionary. The `OctoAI` class also supports the Chat Completions API and provides easy access to a set of highly optimized text models on OctoAI.
-
+The OctoAI class allows you to run inferences simply to any model that accepts JSON-formatted inputs as a dictionary, and provides you with all JSON-formatted outputs as a dictionary. The OctoAI class also supports the Chat Completions API and provides easy access to a set of highly optimized text models on OctoAI.
 This guide will walk you through how to select your model of interest, how to call highly optimized text models on OctoAI using the Chat Completions API, and how to use the responses in both streaming and regular modes.",
     "indexSegmentId": "0",
     "slug": "docs/text-gen-solution/python-sdk",
@@ -5154,7 +5129,6 @@ console.log(result);
     "description": "Ensure Text Gen outputs fit into your desired JSON schema.
 
 OctoAIs Large Language Models (LLMs) can generate generate outputs that not only adhere to JSON format but also align with your unique schema specifications.
-
 This is supported for all models, but works especially well with Mixtral & Mistral models, including the Hermes family of fine tunes.",
     "indexSegmentId": "0",
     "slug": "docs/text-gen-solution/json-mode",
@@ -7184,16 +7158,10 @@ You can leverage advanced video settings such as motion scale, cfg scale, frames
     ],
     "description": "You can tweak your images using various customizations available within OctoAI Media Gen solution including checkpoints, LoRAs, textual inversions and ControlNets
 
-With OctoAI Media Gen solution, you can effortlessly integrate Stable Diffusion’s customizable image generation features into your application. While standard pre-trained image generation assets from repositories like HuggingFace may suffice for simple tasks, customization becomes crucial for commercial uses. Customization allows precise control over generating specific subjects and environments, which is essential for most commercial needs. Stable Diffusion, offered by OctoAI, provides both basic and advanced customization options. These include adjusting prompt weights, applying style presets, and employing advanced techniques like LoRAs, checkpoints, textual inversions, and ControlNets. Additionally, with OctoAI, you can create your own LoRA asset using custom image datasets and leverage it to meet your business requirements. To learn more, review [Fine-tuning on OctoAI](../fine-tuning-stable-diffusion/fine-tuning-stable-diffusion)
-
-<Note> Pro or Enterprise account is required to access fine-tuning. </Note>
-
+With OctoAI Media Gen solution, you can effortlessly integrate Stable Diffusion’s customizable image generation features into your application. While standard pre-trained image generation assets from repositories like HuggingFace may suffice for simple tasks, customization becomes crucial for commercial uses. Customization allows precise control over generating specific subjects and environments, which is essential for most commercial needs. Stable Diffusion, offered by OctoAI, provides both basic and advanced customization options. These include adjusting prompt weights, applying style presets, and employing advanced techniques like LoRAs, checkpoints, textual inversions, and ControlNets. Additionally, with OctoAI, you can create your own LoRA asset using custom image datasets and leverage it to meet your business requirements. To learn more, review Fine-tuning on OctoAI
+ Pro or Enterprise account is required to access fine-tuning. 
 OctoAI web UI provides an easy way to experiment by combining assets. An equivalent API call is displayed in the example below.
-
-    **Example Code:**
-
-<CodeGroup>
-```bash cURL
+Example Code:
 curl -X POST "https://image.octoai.run/generate/sdxl" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $OCTOAI_TOKEN" \
@@ -7217,9 +7185,6 @@ curl -X POST "https://image.octoai.run/generate/sdxl" \
         "high_noise_frac": 0.8,
         "style_preset": "base"
     }' | jq -r ".images[0].image_b64" | base64 -d >result.jpg
-```
-
-```Python Python
 import os
 from octoai.util import to_file
 from octoai.client import OctoAI
@@ -7246,9 +7211,6 @@ if __name__ == "__main__":
 
     for i, image in enumerate(images):
         to_file(image, f"result{i}.jpg")
-```
-
-```typescript TypeScript
 import fs from "node:fs";
 import { OctoAIClient } from "@octoai/sdk";
 
@@ -7284,10 +7246,7 @@ images.forEach((output, i) => {
     const buffer = Buffer.from(output.imageB64, "base64");
     fs.writeFileSync(`result${i}.jpg`, buffer);
   }
-});
-```
-
-</CodeGroup>",
+});",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/customizations/overview",
     "title": "Overview",
@@ -7442,22 +7401,9 @@ Ready to start creating images? Get started with our Image Gen API.",
 
 Custom Stable Diffusion checkpoints are fine-tuned versions of the original model, trained to capture particular styles, subjects, or objects. They are designed to provide users with more control and customization options when generating images. These checkpoints can be tailored to produce images in various styles, such as realistic photography, artwork, or even specific themes like landscapes or portraits.
 While checkpoints represent a significant investment in terms of storage and computational resources, they excel in maintaining the desired customizations consistently. OctoAI's Asset Library boasts a rich collection of pre-loaded custom checkpoints, offering a diverse array of styles to enhance your images. Additionally, users have the flexibility to import bespoke checkpoints from external sources, integrating them seamlessly into OctoAI's Asset Library as personalized assets.
+The image results with different checkpoints, even using the same prompt, can be significantly different. Using the simple prompt A photo of an Australian cattle dog running through a park, you can see see the results from the SDXL base model (left) and samaritan model (right). The samaritan model represents a 3D-cartoon image style.
 
-    The image results with different checkpoints, even using the same prompt, can be significantly different. Using the simple prompt `A photo of an Australian cattle dog running through a park`, you can see see the results from the SDXL base model (left) and samaritan model (right). The samaritan model represents a 3D-cartoon image style.
-
-<CardGroup cols={2}>
-  <Card title="Using SDXL base model">
-    ![](https://www.datocms-assets.com/45680/1706909113-4d5ffd9-1.jpeg?max-w=2000&auto=compress)
-  </Card>
-  <Card title="Using samaritan checkpoint">
-    ![](https://www.datocms-assets.com/45680/1706909150-95229ac-2.jpeg?max-w=2000&auto=compress)
-  </Card>
-</CardGroup>
-
-    **Example Code:**
-
-<CodeGroup>
-```bash cURL
+Example Code:
 curl -X POST "https://image.octoai.run/generate/sdxl" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $OCTOAI_TOKEN" \
@@ -7475,9 +7421,6 @@ curl -X POST "https://image.octoai.run/generate/sdxl" \
         "high_noise_frac": 0.8,
         "style_preset": "base"
     }' | jq -r ".images[0].image_b64" | base64 -d >result.jpg
-```
-
-```Python Python
 import os
 from octoai.util import to_file
 from octoai.client import OctoAI
@@ -7502,9 +7445,6 @@ if __name__ == "__main__":
 
     for i, image in enumerate(images):
         to_file(image, f"result{i}.jpg")
-```
-
-```typescript TypeScript
 import fs from "node:fs";
 import { OctoAIClient } from "@octoai/sdk";
 
@@ -7532,10 +7472,7 @@ images.forEach((output, i) => {
     const buffer = Buffer.from(output.imageB64, "base64");
     fs.writeFileSync(`result${i}.jpg`, buffer);
   }
-});
-```
-
-</CodeGroup>",
+});",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/customizations/checkpoints",
     "title": "Checkpoints",
@@ -7642,29 +7579,9 @@ images.forEach((output, i) => {
     "description": "LoRAs for image or video AI models are custom weights applied to a base checkpoint. LoRAs are a way to make highly customized AI images or videos.
 
 LoRAs are additional custom weights applied to a base checkpoint. Similar to checkpoints, LoRAs can represent a specific style or custom subject, but they are much smaller in size and more economical to use. You can include multiple LoRAs in a single image generation, and provide a weight for each LoRA. A greater weight value will have more influence on the generated image. Similar to checkpoints, users have the flexibility to import LoRAs from external sources, and integrate them seamlessly into OctoAI's Asset Library as personalized assets.
+Below is an example of using a LoRA along with a simple prompt Commercial photography,snowy,luxury perfume bottle,angelic silver light, studio light, high resolution photography, fine details. You can see the results from the SDXL base model (top left) and subsequent results with add-detail LoRA - varying weights (top right and bottom left). Add-details LoRA adds intricate details to the output image. The image generated on the botton right is a result of two LoRAs, add-details (weight:0.3) and more-art (weight:1.0). More-art LoRA adds artistic details to the output image. You can clearly see the impact of more-art LoRA over add-detail LoRA in the resulting image.
 
-    Below is an example of using a LoRA along with a simple prompt `Commercial photography,snowy,luxury perfume bottle,angelic silver light, studio light, high resolution photography, fine details`. You can see the results from the SDXL base model (top left) and subsequent results with add-detail LoRA - varying weights (top right and bottom left). Add-details LoRA adds intricate details to the output image. The image generated on the botton right is a result of two LoRAs, add-details (weight:0.3) and more-art (weight:1.0). More-art LoRA adds artistic details to the output image. You can clearly see the impact of more-art LoRA over add-detail LoRA in the resulting image.
-
-<CardGroup cols={2}>
-  <Card title="Using SDXL without LoRA">
- ![](https://www.datocms-assets.com/45680/1709328256-download-1.jpeg?max-w=2000&auto=compress)
-  </Card>
-  <Card title="Using add-detail LoRA:0.5">
- ![](https://www.datocms-assets.com/45680/1709328968-download-2.jpeg?max-w=2000&auto=compress)
- </Card>
-  <Card title="Using add-detail LoRA:1.0">
- ![](https://www.datocms-assets.com/45680/1709328265-download.jpeg?max-w=2000&auto=compress)
-  </Card>
-   <Card title="add-detail:0.3, more-art LoRA:1.0">
- ![](https://www.datocms-assets.com/45680/1709329510-download-3.jpeg?max-w=2000&auto=compress)
-  </Card>
-
-</CardGroup>
-
-    **Example Code:**
-
-<CodeGroup>
-```bash cURL
+Example Code:
 curl -X POST "https://image.octoai.run/generate/sdxl" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $OCTOAI_TOKEN" \
@@ -7685,9 +7602,6 @@ curl -X POST "https://image.octoai.run/generate/sdxl" \
         "high_noise_frac": 0.8,
         "style_preset": "base"
     }' | jq -r ".images[0].image_b64" | base64 -d >result.jpg
-```
-
-```Python Python
 from octoai.util import to_file
 from octoai.client import OctoAI
 
@@ -7711,9 +7625,6 @@ images = image_gen_response.images
 
 for i, image in enumerate(images):
     to_file(image, f"result{i}.jpg")
-```
-
-```typescript TypeScript
 import fs from "node:fs";
 import { OctoAIClient } from "@octoai/sdk";
 
@@ -7746,9 +7657,6 @@ images.forEach((output, i) => {
     fs.writeFileSync(`result${i}.jpg`, buffer);
   }
 });
-```
-
-</CodeGroup>
 
 LoRAs can further customize your images, by including custom objects or styles.",
     "indexSegmentId": "0",
@@ -7862,30 +7770,14 @@ LoRAs can further customize your images, by including custom objects or styles."
     ],
     "description": "Customize your images on OctoAI using Textual inversions, which are embeddings that represent custom subjects.
 
-Textual inversions are embeddings that represent custom subjects.They can also represent negative embeddings, which are trained on undesirable content like bad quality hands or lighting. You can use these in your _negative_ prompt to improve your images, such as avoiding bad quality hands. These are the smallest and cheapest assets we currently support.
-The name of the textual inversion acts as a specific trigger word, which must be included in the prompt. Similar to prompt weighting, you can increase the weight of textual inversion using the format `(textual-inversion:weight)`.
+Textual inversions are embeddings that represent custom subjects.They can also represent negative embeddings, which are trained on undesirable content like bad quality hands or lighting. You can use these in your negative prompt to improve your images, such as avoiding bad quality hands. These are the smallest and cheapest assets we currently support.
+The name of the textual inversion acts as a specific trigger word, which must be included in the prompt. Similar to prompt weighting, you can increase the weight of textual inversion using the format (textual-inversion:weight).
+Below is an example of using a NegativeXL textual inversion (trigger word: negativeXL_D).
+Prompt:  Commercial photography,snowy,luxury perfume bottle,angelic silver light, studio light, high resolution photography, fine details
+Negative prompt: Blurry photo, distortion, low-res, poor quality, (flowers on bottle negativeXL_D:0.9), (snowflake on bottle negativeXL_D:0.9), (colored liquid in bottle negativeXL_D:1.0)
+You can see the results from the SDXL base model (left) generating an image with snowflake or flower shaped designs on the bottle and subsequent results with textual inversion (right) which ensures that the negative prompt is followed and no flower, snowflake design appears on the bottle in the output image.
 
-    Below is an example of using a NegativeXL textual inversion (trigger word: negativeXL_D).
-
-    Prompt:  `Commercial photography,snowy,luxury perfume bottle,angelic silver light, studio light, high resolution photography, fine details`
-
-    Negative prompt: `Blurry photo, distortion, low-res, poor quality, (flowers on bottle negativeXL_D:0.9), (snowflake on bottle negativeXL_D:0.9), (colored liquid in bottle negativeXL_D:1.0)`
-
-    You can see the results from the SDXL base model (left) generating an image with snowflake or flower shaped designs on the bottle and subsequent results with textual inversion (right) which ensures that the negative prompt is followed and no flower, snowflake design appears on the bottle in the output image.
-
-<CardGroup cols={2}>
-  <Card title="Using SDXL base model">
-    ![](https://www.datocms-assets.com/45680/1709334742-download-4.jpeg?max-w=2000&auto=compress)
-  </Card>
-  <Card title="Using SDXL with textual inversion">
-    ![](https://www.datocms-assets.com/45680/1709334749-download-5.jpeg?max-w=2000&auto=compress)
-  </Card>
-</CardGroup>
-
-     **Example Code:**
-
-<CodeGroup>
-```bash cURL
+Example Code:
 curl -X POST "https://image.octoai.run/generate/sdxl" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $OCTOAI_TOKEN" \
@@ -7905,9 +7797,6 @@ curl -X POST "https://image.octoai.run/generate/sdxl" \
         "high_noise_frac": 0.8,
         "style_preset": "base"
     }' | jq -r ".images[0].image_b64" | base64 -d >result.jpg
-```
-
-```Python Python
 import os
 from octoai.util import to_file
 from octoai.client import OctoAI
@@ -7932,9 +7821,6 @@ images = image_gen_response.images
 
 for i, image in enumerate(images):
     to_file(image, f"result{i}.jpg")
-```
-
-```typescript TypeScript
 import fs from "node:fs";
 import { OctoAIClient } from "@octoai/sdk";
 
@@ -7966,10 +7852,7 @@ images.forEach((output, i) => {
     const buffer = Buffer.from(output.imageB64, "base64");
     fs.writeFileSync(`result${i}.jpg`, buffer);
   }
-});
-```
-
-</CodeGroup>",
+});",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/customizations/textual-inversions",
     "title": "Textual Inversions",
@@ -8084,13 +7967,10 @@ images.forEach((output, i) => {
     ],
     "description": "OctoAI allows for prompt weighting, the emphasis or de-emphasis of certain words or phrases, in prompts to create customized images.
 
-You can emphasize, or de-emphasize, specific words or phrases of the image generation prompt using weighting. To use prompt weighting, format your prompt using parentheses: `prompt = "A cat with (long whiskers)"`
-
-    This emphasizes the phrase “long whiskers” with a weight of `1.1`. Adding additional parentheses such as `"\(\(\(long whiskers)))"` performs additional multiples of `1.1`, so for 3 sets of parentheses, the weight would be `1.33`. More specific weights can also be specified in the form: `prompt = "A cat with (long whiskers: 0.8)"`
-
-    This will weigh all words in the parentheses by a factor of `0.8`. Notably, weights do not have to be greater than one. Using a weight of less than 1 will de-emphasize the contained words.
-
-     Using weights in negative prompts can also be helpful. For example, you can avoid distorted hands: `negative_prompt = "(distorted hands: 1.5)"`",
+You can emphasize, or de-emphasize, specific words or phrases of the image generation prompt using weighting. To use prompt weighting, format your prompt using parentheses: prompt = "A cat with (long whiskers)"
+This emphasizes the phrase “long whiskers” with a weight of 1.1. Adding additional parentheses such as "\(\(\(long whiskers)))" performs additional multiples of 1.1, so for 3 sets of parentheses, the weight would be 1.33. More specific weights can also be specified in the form: prompt = "A cat with (long whiskers: 0.8)"
+This will weigh all words in the parentheses by a factor of 0.8. Notably, weights do not have to be greater than one. Using a weight of less than 1 will de-emphasize the contained words.
+Using weights in negative prompts can also be helpful. For example, you can avoid distorted hands: negative_prompt = "(distorted hands: 1.5)"",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/customizations/prompt-weighting",
     "title": "Prompt Weighting",
@@ -8126,10 +8006,7 @@ Using weights in negative prompts can also be helpful. For example, you can avoi
     "description": "OctoAI's asset library is pre-populated with the most popular available ControlNets which allow added image input to influence and customize the image generation.
 
 While traditional image generation models can produce stunning visuals, they often lack guidance, and therefore the ability to generate images subject to user-desired image composition. ControlNet changes the game by allowing an additional image input that can be used for conditioning (influencing) the final image generation. This could be anything from simple scribbles to detailed depth maps or edge maps. By conditioning on these input images, ControlNet directs the Stable Diffusion model to generate images that align closely with the user's intent.
-
-**OctoAI's Asset Library** comes pre-populated with the followinglist of public controlnets.
-
-```
+OctoAI's Asset Library comes pre-populated with the followinglist of public controlnets.
 octoai:canny_sdxl
 octoai:depth_sdxl
 octoai:openpose_sdxl
@@ -8141,25 +8018,11 @@ octoai:lineart_sd15
 octoai:openpose_sd15
 octoai:scribble_sd15
 octoai:tile_sd15
-```
 
-Other than using the default controlnet checkpoints, you can also upload private ControlNet checkpoints into the OctoAI Asset Library and then use those checkpoints at generation time via the parameter `controlnet` in the API. For custom controlnet checkpoints, make sure to provide your own ControlNet mask in the `controlnet_image` parameter.
+Other than using the default controlnet checkpoints, you can also upload private ControlNet checkpoints into the OctoAI Asset Library and then use those checkpoints at generation time via the parameter controlnet in the API. For custom controlnet checkpoints, make sure to provide your own ControlNet mask in the controlnet_image parameter.
+Below is an example of using a Canny ControlNet along with ControlNet image (left) and a simple prompt A photo of woman wearing a (rose  pink dress:1). Canny ControlNet is designed to detect a wide range of edges in images. Given a raw image or sketch, Canny can extract the image's contours and edges, and use them for image generation. You can see the image (right) generated from SDXL with Canny ControlNet applied.
 
-Below is an example of using a **Canny ControlNet** along with ControlNet image (left) and a simple prompt `A photo of woman wearing a (rose  pink dress:1)`. Canny ControlNet is designed to detect a wide range of edges in images. Given a raw image or sketch, Canny can extract the image's contours and edges, and use them for image generation. You can see the image (right) generated from SDXL with Canny ControlNet applied.
-
-<CardGroup cols={2}>
-  <Card title="ControlNet Image">
-    ![](https://www.datocms-assets.com/45680/1709366453-screenshot-2024-03-01-at-9-24-05-pm.png?max-w=2000&auto=compress)
-  </Card>
-  <Card title="SDXL with Canny ControlNet">
-    ![](https://www.datocms-assets.com/45680/1709366467-download-9.jpeg?max-w=2000&auto=compress)
-  </Card>
-</CardGroup>
-
-**Example Code for Canny ControlNet:**
-
-<CodeGroup>
-```bash cURL
+Example Code for Canny ControlNet:
 curl -X POST "https://image.octoai.run/generate/controlnet-sdxl" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $OCTOAI_TOKEN" \
@@ -8179,9 +8042,6 @@ curl -X POST "https://image.octoai.run/generate/controlnet-sdxl" \
         "controlnet_conditioning_scale": 1,
         "controlnet_image": "<BASE64 IMAGE>"
     }' | jq -r ".images[0].image_b64" | base64 -d >result.jpg
-```
-
-```Python Python
 import os
 from octoai.util import to_file
 from octoai.client import OctoAI
@@ -8208,9 +8068,6 @@ if __name__ == "__main__":
 
     for i, image in enumerate(images):
         to_file(image, f"result{i}.jpg")
-```
-
-```typescript TypeScript
 import fs from "node:fs";
 import { OctoAIClient } from "@octoai/sdk";
 
@@ -8241,25 +8098,10 @@ images.forEach((output, i) => {
     fs.writeFileSync(`result${i}.jpg`, buffer);
   }
 });
-```
 
-</CodeGroup>
+Below is an example of using a OpenPose ControlNet along with ControlNet image (left) and a prompt An photo of a white man on a japanese tatami mat . OpenPose ControlNet is a fast human keypoint detection model that can extract human poses like positions of hands, legs, and head. See the example below. You can see the image (right) generated from SDXL with OpenPose ControlNet applied.
 
-Below is an example of using a **OpenPose ControlNet** along with ControlNet image (left) and a prompt `An photo of a white man on a japanese tatami mat `. OpenPose ControlNet is a fast human keypoint detection model that can extract human poses like positions of hands, legs, and head. See the example below. You can see the image (right) generated from SDXL with OpenPose ControlNet applied.
-
-<CardGroup cols={2}>
-  <Card title="ControlNet Image">
-    ![](https://www.datocms-assets.com/45680/1709490527-screenshot-2024-03-02-at-10-33-06-am.png?max-w=2000&auto=compress)
-  </Card>
-  <Card title="SDXL with OpenPose ControlNet">
-    ![](https://www.datocms-assets.com/45680/1709490877-download-10.jpeg?max-w=2000&auto=compress)
-  </Card>
-</CardGroup>
-
-**Example Code for OpenPose ControlNet:**
-
-<CodeGroup>
-```bash cURL
+Example Code for OpenPose ControlNet:
 curl -X POST "https://image.octoai.run/generate/controlnet-sdxl" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $OCTOAI_TOKEN" \
@@ -8279,9 +8121,6 @@ curl -X POST "https://image.octoai.run/generate/controlnet-sdxl" \
         "controlnet_conditioning_scale": 1,
         "controlnet_image": "<BASE64 IMAGE>"
     }' | jq -r ".images[0].image_b64" | base64 -d >result.jpg
-```
-
-```Python Python
 import os
 from octoai.util import to_file
 from octoai.client import OctoAI
@@ -8308,9 +8147,6 @@ if __name__ == "__main__":
 
     for i, image in enumerate(images):
         to_file(image, f"result{i}.jpg")
-```
-
-```typescript TypeScript
 import fs from "node:fs";
 import { OctoAIClient } from "@octoai/sdk";
 
@@ -8340,10 +8176,7 @@ images.forEach((output, i) => {
     const buffer = Buffer.from(output.image_b64, "base64");
     fs.writeFileSync(`result${i}.jpg`, buffer);
   }
-});
-```
-
-</CodeGroup>",
+});",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/customizations/controlnets",
     "title": "ControlNets",
@@ -8548,22 +8381,16 @@ images.forEach((output, i) => {
     "description": "A new technology called SDXL Lighting enables high-quality image generations in less than 1 second
 
 SDXL Lighting enable you to achieve high-quality output from SDXL with only 4-8 steps and less than 1 second of latency. This stands in stark contrast to generating images using SDXL model, which typically demands 30-40 steps to produce a good quality image in 3-3.5 seconds, and even more when incorporating custom assets like LoRAs. More importantly, SDXL Lighting is completely compatible with existing image customization techniques available on OctoAI such as SDXL LoRAs. Customers using this can achieve both fast inference speed and product differentiation via customization.
-
-You can use SDXL Lighting via OctoAI's [Image Gen API](../rest-apis/image-gen-api)
-
+You can use SDXL Lighting via OctoAI's Image Gen API
 The following guidelines must be adhered to ensure high quality of output:
 
-- Opt for 4-8 steps, with 8 steps being the recommended choice.
-- Maintain a low CFG Scale, ideally ranging from 1.4 to 4.0, with 3.0 as the optimal value.
-- Utilize any sampler, textual inversion, or style preset.
-- Note that additional LoRAs and VAEs will result in increased inference time.
+Opt for 4-8 steps, with 8 steps being the recommended choice.
+Maintain a low CFG Scale, ideally ranging from 1.4 to 4.0, with 3.0 as the optimal value.
+Utilize any sampler, textual inversion, or style preset.
+Note that additional LoRAs and VAEs will result in increased inference time.
 
 Below is an example for text2img with SDXL Lighting:
-
-**Example Code:**
-
-<CodeGroup>
-```bash cURL
+Example Code:
 curl -X POST "https://image.octoai.run/generate/sdxl" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $OCTOAI_TOKEN" \
@@ -8581,9 +8408,6 @@ curl -X POST "https://image.octoai.run/generate/sdxl" \
         "use_refiner": false,
         "style_preset": "base"
     }' | jq -r ".images[0].image_b64" | base64 -d >result.jpg
-```
-
-```Python Python
 import os
 from octoai.util import to_file
 from octoai.client import OctoAI
@@ -8608,9 +8432,6 @@ if __name__ == "__main__":
 
     for i, image in enumerate(images):
         to_file(image, f"result{i}.jpg")
-```
-
-```typescript TypeScript
 import fs from "node:fs";
 import { OctoAIClient } from "@octoai/sdk";
 
@@ -8638,10 +8459,7 @@ images.forEach((output, i) => {
     const buffer = Buffer.from(output.imageB64, "base64");
     fs.writeFileSync(`result${i}.jpg`, buffer);
   }
-});
-```
-
-</CodeGroup>",
+});",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/optimizations/sdxl-lighting",
     "title": "SDXL Lighting for blazing fast generations",
@@ -8754,13 +8572,8 @@ images.forEach((output, i) => {
     "description": "SSD-1B, a distilled version of SDXL generates images 50% faster than SDXL.
 
 The primary advantage of utilizing Stable Diffusion SSD lies in its remarkable efficiency, boasting a 50% faster speed compared to SDXL, owing to its more compact design. Moreover, OctoAI has implemented its exclusive compiler and cloud system optimizations, culminating in an unparalleled end-to-end average generation speed of 1.4 seconds — establishing it as the swiftest iteration of SSD-1B available in the market.
-
 However, it's essential to acknowledge certain limitations inherent to the SSD-1B model. Due to its distillation into a smaller form, the resultant output images deviate from those produced by SDXL. In essence, even with identical seed and API parameters, replicating the same output images as SDXL is no longer feasible. Furthermore, the community surrounding this novel model remains comparatively modest in size compared to that of SDXL. Consequently, the availability of finely-tuned assets such as checkpoints and LoRAs for tailoring styles, objects, and facial features is notably limited.
-
-**Example Code:**
-
-<CodeGroup>
-```bash cURL
+Example Code:
 curl -X POST "https://image.octoai.run/generate/ssd" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $OCTOAI_TOKEN" \
@@ -8774,9 +8587,6 @@ curl -X POST "https://image.octoai.run/generate/ssd" \
         "steps": 30,
         "cfg_scale": 12
     }' | jq -r ".images[0].image_b64" | base64 -d >result.jpg
-```
-
-```Python Python
 import os
 from octoai.util import to_file
 from octoai.client import OctoAI
@@ -8797,9 +8607,6 @@ if __name__ == "__main__":
 
     for i, image in enumerate(images):
         to_file(image, f"result{i}.jpg")
-```
-
-```typescript TypeScript
 import fs from "node:fs";
 import { OctoAIClient } from "@octoai/sdk";
 
@@ -8823,10 +8630,7 @@ images.forEach((output, i) => {
     const buffer = Buffer.from(output.imageB64, "base64");
     fs.writeFileSync(`result${i}.jpg`, buffer);
   }
-});
-```
-
-</CodeGroup>",
+});",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/optimizations/ssd",
     "title": "Stable Diffusion SSD",
@@ -8919,10 +8723,8 @@ images.forEach((output, i) => {
     "description": "Stable Diffusion Samplers utilize diffusion models to iteratively refine noise, producing high-quality images with remarkable fidelity and coherence.
 
 Stable Diffusion Samplers encompass various techniques within generative modeling, each offering unique advantages and applications. These samplers operate by iteratively refining noise to generate high-quality images. By gradually diffusing noise while conditioning on observed data, these samplers excel at capturing intricate details and complex patterns, yielding visually stunning outputs across various domains.
-
 When selecting a sampler, considerations such as computational efficiency, convergence speed, and applicability to specific tasks are crucial. The choice of sampler depends on the specific requirements and constraints of the task at hand, with practitioners often experimenting to find the optimal balance between performance and efficacy.
-
-Supported samplers within OctoAI's Image Gen API include: `DDIM`,`DDPM`,`DPM_PLUS_PLUS_2M_KARRAS`,`DPM_SINGLE`,`DPM_SOLVER_MULTISTEP`,`K_EULER`, `K_EULER_ANCESTRAL`,`PNDM`,`UNI_PC`. These are regular samplers. Premium samplers (priced twice as the regular samplers) include `DPM_2`, `DPM_2_ANCESTRAL`,`DPM_PLUS_PLUS_SDE_KARRAS`, `HEUN` and `KLMS`.",
+Supported samplers within OctoAI's Image Gen API include: DDIM,DDPM,DPM_PLUS_PLUS_2M_KARRAS,DPM_SINGLE,DPM_SOLVER_MULTISTEP,K_EULER, K_EULER_ANCESTRAL,PNDM,UNI_PC. These are regular samplers. Premium samplers (priced twice as the regular samplers) include DPM_2, DPM_2_ANCESTRAL,DPM_PLUS_PLUS_SDE_KARRAS, HEUN and KLMS.",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/optimizations/samplers",
     "title": "Samplers",
@@ -8950,8 +8752,7 @@ Supported samplers within OctoAI's Image Gen API include: DDIM,DDPM,DPM_PLUS_PLU
         "title": "Media Gen Solution",
       },
     ],
-    "description": "The `ImageGenClient` class specializes in supporting image generation in your application, and guiding what options are available to modify your outputs. It will return a list of all images using the `ImageGeneration` type. It allows you to use both Stable Diffusion 1.5 and Stable Diffusion XL for text to image and image to image use cases, and set parameters and prompts either with weighted prompts with the `prompt` field as was common with Stable Diffusion 1.5 or human-readable descriptions using `prompt_2` with Stable Diffusion XL 1.0.
-
+    "description": "The ImageGenClient class specializes in supporting image generation in your application, and guiding what options are available to modify your outputs. It will return a list of all images using the ImageGeneration type. It allows you to use both Stable Diffusion 1.5 and Stable Diffusion XL for text to image and image to image use cases, and set parameters and prompts either with weighted prompts with the prompt field as was common with Stable Diffusion 1.5 or human-readable descriptions using prompt_2 with Stable Diffusion XL 1.0.
 This guide will walk you through a text to image example, and then we will use the resulting image to demonstrate the image to image use case.",
     "indexSegmentId": "0",
     "slug": "docs/python-sdk/image-generator-client",
@@ -9307,9 +9108,9 @@ if __name__ == "__main__":
 
 OctoAI lets you fine-tune Stable Diffusion to customize generated images. Fine-tuning is a process of training a model with additional data for your task. There's a few simple steps:
 
-1. Configure fine-tuning settings & upload your images
-2. Run the fine-tuning job
-3. Use the fine-tuned asset (a LoRA) in your image generation requests
+Configure fine-tuning settings & upload your images
+Run the fine-tuning job
+Use the fine-tuned asset (a LoRA) in your image generation requests
 
 We're using the LoRA fine-tuning method, which is an acronym for Low-Rank Adaptation. It's a fast and effective way to fine-tune Stable Diffusion. Fine-tuning is supported for Stable Diffusion v1.5 and Stable Diffusion XL. Fine-tuning is available in the OctoAI web UI or via the fine-tuning API.",
     "indexSegmentId": "0",
@@ -10347,8 +10148,7 @@ You can also include the subject class - such as person, animal, or object - to 
     "description": "How to create a fine-tuned LoRA using OctoAI's TypeScript SDK
 
 This guide will walk you through creating a fine-tuned LoRA using our TypeScript SDK to upload image file assets, creating a tune, and then using that LoRA to run an inference using our Image Gen service once it's ready.
-
-Please see [Fine-tuning Stable Diffusion](/docs/api-reference/fine-tuning/create) for more specifics about each parameter in the fine-tuning API, using curl, or the Python SDK. Our [Asset Library API reference](/docs/api-reference/asset-library/list) documentation goes more into the specifics of using different asset methods as well.",
+Please see Fine-tuning Stable Diffusion for more specifics about each parameter in the fine-tuning API, using curl, or the Python SDK. Our Asset Library API reference documentation goes more into the specifics of using different asset methods as well.",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/fine-tuning-stable-diffusion/typescript-sdk-finetuning",
     "title": "TypeScript SDK Fine-tuning",
@@ -11121,15 +10921,14 @@ images.forEach((image, index) => {
     ],
     "description": "OctoAI empowers you to customize images by leveraging assets like checkpoints, LoRAs, and textual inversions. You can either use:
 
-- Public assets in the OctoAI Asset Library
-- Upload your custom asset to the OctoAI Asset Library (private by default, and optionally public)
-- Or use OctoAI fine-tuning to create new assets - see [Fine-tuning Stable Diffusion](/docs/api-reference/fine-tuning/create)
+Public assets in the OctoAI Asset Library
+Upload your custom asset to the OctoAI Asset Library (private by default, and optionally public)
+Or use OctoAI fine-tuning to create new assets - see Fine-tuning Stable Diffusion
 
 This tutorial explains how to upload your own private assets to the Asset Library.
 
-1. First download the OctoAI CLI by following the instructions in [CLI Installation.](/docs/cli/cli-and-sdk-installation) Check that it is properly installed by running the following in your terminal:
+First download the OctoAI CLI by following the instructions in CLI Installation. Check that it is properly installed by running the following in your terminal:
 
-```bash bash
 $ octoai asset --help
 Manage OctoAI assets
 
@@ -11149,23 +10948,24 @@ Global Flags:
       --log-level string   Set log level: fatal, error, warning, info, debug, trace (default "info")
 
 Use "octoai asset [command] --help" for more information about a command.
-```
 
-1. Run `octoai login` to cache your token and authenticate to your account.
-2. We can now use the `octoai asset create` subcommand to upload assets (you can run `octoai asset create --help` to learn more on the options).
-   1. `--engine` denotes whether this is an asset for SDXL or SD1.5
-   2. `--upload-from-file` flag denotes the path of the file on your local machine that you’re trying to upload.
-   3. `--upload-from-url` flag is an alternative to `upload-from-file` allowing you to upload an asset from a public URL; OctoAI will fetch and upload the file.
-   4. `—type` can be lora, checkpoint, or textual_inversion (VAEs coming soon)
-   5. `--format` denotes the format of your asset, which can be safetensors or pt.
-   6. `--datatype` can be fp16, fp32, int4, or int8\. For image gen, it should almost always be fp16, but for LLMs and other modalities your asset may have other datatypes.
-   7. `--name` is a name for your asset. You can only use each asset name once.
-   8. `--transfer-api` defaults to sts which is the fastest way to upload a large asset.
-   9. If you are uploading a textual inversion, make sure to use the `-w` flag to denote the default trigger word for the asset. That trigger word can later be used at generation time to activate the inversion. For LoRAs, trigger words are optional.
+
+Run octoai login to cache your token and authenticate to your account.
+We can now use the octoai asset create subcommand to upload assets (you can run octoai asset create --help to learn more on the options).
+
+--engine denotes whether this is an asset for SDXL or SD1.5
+--upload-from-file flag denotes the path of the file on your local machine that you’re trying to upload.
+--upload-from-url flag is an alternative to upload-from-file allowing you to upload an asset from a public URL; OctoAI will fetch and upload the file.
+—type can be lora, checkpoint, or textual_inversion (VAEs coming soon)
+--format denotes the format of your asset, which can be safetensors or pt.
+--datatype can be fp16, fp32, int4, or int8. For image gen, it should almost always be fp16, but for LLMs and other modalities your asset may have other datatypes.
+--name is a name for your asset. You can only use each asset name once.
+--transfer-api defaults to sts which is the fastest way to upload a large asset.
+If you are uploading a textual inversion, make sure to use the -w flag to denote the default trigger word for the asset. That trigger word can later be used at generation time to activate the inversion. For LoRAs, trigger words are optional.
+
+
 
 As an example, you could use this command to upload a checkpoint from your local machine:
-
-```
 octoai asset create \
   --upload-from-file LCM_Dreamshaper_v7.safetensors \
   --name Dreamshaper_v7 \
@@ -11174,11 +10974,8 @@ octoai asset create \
   --data-type fp16 \
   --type checkpoint \
   --description "Dreamshaper v7"
-```
 
-You can alternatively upload the file via public URL using `upload-from-url`:
-
-```
+You can alternatively upload the file via public URL using upload-from-url:
 octoai asset create \
   --upload-from-url https://huggingface.co/SimianLuo/LCM_Dreamshaper_v7/resolve/main/LCM_Dreamshaper_v7_4k.safetensors?download=true \
   --name Dreamshaper_v7 \
@@ -11186,8 +10983,7 @@ octoai asset create \
   --format safetensors \
   --data-type fp16 \
   --type checkpoint \
-  --description "Dreamshaper v7"
-```",
+  --description "Dreamshaper v7"",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/uploading-a-custom-asset-to-the-octoai-asset-library",
     "title": "Uploading custom assets to OctoAI's Asset Library",
@@ -11284,8 +11080,7 @@ octoai asset create \
     ],
     "description": "Manage assets using the Python SDK.
 
-The AssetLibrary client in the Python SDK allows create, list, get, and delete actions of assets. These assets allow integration with the [ImageGenerator Client](image-generator-client) to generate more customized images.
-
+The AssetLibrary client in the Python SDK allows create, list, get, and delete actions of assets. These assets allow integration with the ImageGenerator Client to generate more customized images.
 This guide will walk you through using this API to see a list of our public assets, create your own asset, and use your asset to generate an image.",
     "indexSegmentId": "0",
     "slug": "docs/python-sdk/asset-orchestrator-client",
@@ -11783,8 +11578,7 @@ In this example, an already existing lora created in the previous example also e
     ],
     "description": "Manage assets using the TypeScript SDK.
 
-The AssetLibrary client in the TypeScript SDK allows `create`, `list`, `get`, and `delete` actions of assets. These assets allow integration with [Fine-tuning Stable Diffusion](/docs/api-reference/fine-tuning/create).
-
+The AssetLibrary client in the TypeScript SDK allows create, list, get, and delete actions of assets. These assets allow integration with Fine-tuning Stable Diffusion.
 This guide will walk you through using this API to see a list of our public assets, create your own asset, and use your asset to generate an image.",
     "indexSegmentId": "0",
     "slug": "docs/typescript-sdk/asset-library",
@@ -12072,27 +11866,8 @@ rainbow-origami-tailong-dragon.png generated on ImageGen service using AssetLibr
 
 Inpainting refers to the process of restoring or repairing an image by filling in missing or damaged parts. It is a valuable technique widely used in image editing and restoration, enabling the removal of flaws and unwanted objects to achieve a seamless and natural-looking final image. Inpainting finds applications in film restoration, photo editing, and digital art, among others.
 
-<CardGroup cols={2}>
-  <Card title="Init Image">
-![](https://www.datocms-assets.com/45680/1706909031-b13ee16-dog.jpg?max-w=2000&auto=compress) 
-  </Card>
-    <Card title="Output Image">
-![](https://www.datocms-assets.com/45680/1709376963-result_image0.jpg?max-w=2000&auto=compress) 
-  </Card>
-</CardGroup>
+Here is a Python example for inpainting. The Image Gen API call will take mask_image (right) and init_image (middle) as shown below.
 
-Here is a Python example for inpainting. The Image Gen API call will take mask_image (right) and init_image (middle) as shown below. 
-
-<CardGroup cols={2}>
-  <Card title="Init Image">
-![](https://www.datocms-assets.com/45680/1706909031-b13ee16-dog.jpg?max-w=2000&auto=compress) 
-  </Card>
-  <Card title="Inpainting Mask">
-![](https://www.datocms-assets.com/45680/1706909075-c984750-dogmask.jpg?max-w=2000&auto=compress)
-  </Card>
-</CardGroup>
-
-```Python Python
 import requests
 import json
 import os
@@ -12151,14 +11926,7 @@ def _process_test(url):
         img.save(f"result_image{i}.jpg")
 
 if __name__ == "__main__":
-    _process_test("https://image.octoai.run/generate/sdxl")
-```   
-
-<CardGroup cols={2}>
-  <Card title="Output Image">
-![](https://www.datocms-assets.com/45680/1709376963-result_image0.jpg?max-w=2000&auto=compress) 
-  </Card>
-</CardGroup>",
+    _process_test("https://image.octoai.run/generate/sdxl")",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/image-utilities/inpainting",
     "title": "Inpainting",
@@ -12254,54 +12022,25 @@ if __name__ == "__main__":
     ],
     "description": "Extend beyond the canvas of an existing image.
 
-Outpainting is the process of using an image generation model like Stable Diffusion to extend beyond the canvas of an existing image. Outpainting is very similar to inpainting, but instead of generating a region within an existing image, the model generates a region outside of it. 
+Outpainting is the process of using an image generation model like Stable Diffusion to extend beyond the canvas of an existing image. Outpainting is very similar to inpainting, but instead of generating a region within an existing image, the model generates a region outside of it.
 
- <CardGroup cols={2}>
-  <Card title="Init Image">
- ![](https://www.datocms-assets.com/45680/1709590599-1_9gkzwelnahqfyilgqpatxa.png?max-w=2000&auto=compress) 
- </Card>
-  <Card title="Output Image">
- ![](https://www.datocms-assets.com/45680/1709591655-download-13.jpeg?max-w=2000&auto=compress) 
-  </Card>
-  </CardGroup>
-
-Outpainting works both with SDXL and SD1.5. 
+Outpainting works both with SDXL and SD1.5.
 At a high level, outpainting works like this:
-* Choose an existing image you’d like to outpaint.
-* Create a source image that places your original image within a larger canvas.
-* Create a black and white mask image.
-* Use init_image (source image), mask_image (your mask image), a text prompt and outpainting parameter as inputs to Image Gen API to generate a new image.
 
-In the following example we will leverage the SD1.5 engine so we’ll start with a 512x512 image. 
+Choose an existing image you’d like to outpaint.
+Create a source image that places your original image within a larger canvas.
+Create a black and white mask image.
+Use init_image (source image), mask_image (your mask image), a text prompt and outpainting parameter as inputs to Image Gen API to generate a new image.
 
-<CardGroup cols={2}>
-  <Card title="Init Image (512X512)">
- ![](https://www.datocms-assets.com/45680/1709590599-1_9gkzwelnahqfyilgqpatxa.png?max-w=2000&auto=compress) 
-  </Card>
-</CardGroup>
+In the following example we will leverage the SD1.5 engine so we’ll start with a 512x512 image.
 
 You can extend the image in any direction, but for this example we’ll extend the width from 512 → 768. Supported resolutions for SD1.5 are:
-
-`(W, H): (768, 576), (1024, 576), (640, 512), (384, 704), (640, 768), (640, 640), (1024, 768), (1536, 1024), (768, 1024), (576, 448), (1024, 1024), (896, 896), (704, 1216), (512, 512), (448, 576), (832, 512), (512, 704), (576, 768), (1216, 704), (512, 768), (512, 832), (1024, 1536), (576, 1024), (704, 384), (768, 512)
-`
-
-Support resolutions for SDXL are: 
-
-`(W, H): {(1536, 640), (768, 1344), (832, 1216), (1344, 768), (1152, 896), (640, 1536), (1216, 832), (896, 1152), (1024, 1024)}`
-
+(W, H): (768, 576), (1024, 576), (640, 512), (384, 704), (640, 768), (640, 640), (1024, 768), (1536, 1024), (768, 1024), (576, 448), (1024, 1024), (896, 896), (704, 1216), (512, 512), (448, 576), (832, 512), (512, 704), (576, 768), (1216, 704), (512, 768), (512, 832), (1024, 1536), (576, 1024), (704, 384), (768, 512) 
+Support resolutions for SDXL are:
+(W, H): {(1536, 640), (768, 1344), (832, 1216), (1344, 768), (1152, 896), (640, 1536), (1216, 832), (896, 1152), (1024, 1024)}
 Two images are required for the next step. An init_image and mask_image are required in order to perform the outpainting to 768 pixels. Convert both images to base64.
 
- <CardGroup cols={2}>
-  <Card title="Init Image (768X512)">
- ![](https://www.datocms-assets.com/45680/1709590612-init-image-outpainting.jpg?max-w=2000&auto=compress) 
- </Card>
-  <Card title="Mask Image">
- ![](https://www.datocms-assets.com/45680/1709590621-mask-outpainting.jpg?max-w=2000&auto=compress) 
-  </Card>
-  </CardGroup>
-
-**Example Code for Outpainting**:
-```Python Python
+Example Code for Outpainting:
 import requests
 import json
 import os
@@ -12375,15 +12114,8 @@ def _process_test(url):
 
 if __name__ == "__main__":
     _process_test("https://image.octoai.run/generate/sd")
-    ```
 
-Here's the outpainted output that the above code generates: 
-
-<CardGroup cols={2}>
-  <Card title="Output image">
- ![](https://www.datocms-assets.com/45680/1709591655-download-13.jpeg?max-w=2000&auto=compress) 
-  </Card>
-</CardGroup>",
+Here's the outpainted output that the above code generates:",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/image-utilities/outpainting",
     "title": "Outpainting",
@@ -12510,16 +12242,8 @@ Here's the outpainted output that the above code generates:
     "description": "Automatically fix faces and hands using Adetailer
 
 OctoAI's Adetailer API supports various detection models. Whether you're interested in identifying faces, or hands, you can choose from options such as face_yolov8n, hand_yolov8n, face_full_mediapipe, face_short_mediapipe, face_mesh_mediapipe, and eyes_mesh_mediapipe. This allows you to tailor the detailing process to your specific needs and preferences.
-
 Adetailer effortlessly identifies faces and hands in images, automatically creating masks to fill in any missing parts. After this, it seamlessly integrates with the SDXL API, applying customized settings to achieve outstanding results. Additionally, OctoAI's  Adetailer API offers flexibility by allowing users to set the maximum number of detections. For example, if there are five people in an image but you only want to focus on two faces, you can easily do so using the max_num_detections parameter. The API prioritizes and corrects faces based on their confidence score and bounding box dimensions.
 
-
-
-![](https://www.datocms-assets.com/45680/1711650559-octoai-adetailer-before-and-after-email-550.png)
-
-
-
-```Python Python
 import requests
 import json
 import os
@@ -12572,9 +12296,7 @@ def _process_test(url):
     img.save(f"result_image.jpg")
 
 if __name__ == "__main__":
-    _process_test("https://image.octoai.run/adetailer")
-
-```",
+    _process_test("https://image.octoai.run/adetailer")",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/image-utilities/adetailer",
     "title": "Adetailer API",
@@ -12664,14 +12386,9 @@ if __name__ == "__main__":
     "description": "Seamlessly integrate a photo's subject into AI-generated output and eliminate the need to create time-consuming custom facial finetunes.
 
 OctoAI Photo Merge feature allows you to seamlessly integrate a photo’s subject into high-quality AI-generated output. It eliminates the need to create time-consuming custom facial fine-tunes with numerous tuning images and 15-30 minutes typically associated with SDXL LoRAs. OctoAI's Photo Merge simplifies this process, requiring only 1-4 images and delivering precise results within a few seconds. Businesses can now easily apply GenAI powered imagery for needs ranging from realistic CGI characters, to personalized product recommendations, to digital avatars.
-
 Photo Merge can be accessed through the "transfer_images" parameter within OctoAI’s Image Generation API. This parameter accepts a key-value pair consisting of a trigger word and an array of up to 4 images. It operates exclusively with SDXL models and seamlessly harmonizes with style presets, controlnets, checkpoints, and LoRAs when utilized with SDXL models, thereby amplifying its adaptability and functionality.
-
-In the example below, we will upload 1-4 images of a human and use photo merge to transfer his face into our prompts. 
-
-**Example Code Snippet showing the close portriat images of a human**:  
-
-```Python Python
+In the example below, we will upload 1-4 images of a human and use photo merge to transfer his face into our prompts.
+Example Code Snippet showing the close portriat images of a human:
 ENDPOINT_URL = "https://image.octoai.run/generate/sdxl"
 IMAGES_PATH = "/content/images"
 os.makedirs(IMAGES_PATH, exist_ok=True)
@@ -12688,14 +12405,10 @@ luis_image_names = download_from_urls(luis_urls, luis_path)
 image_grid(luis_path, luis_image_names)
 
 luis_b64_images = [encode_b64(luis_path, image) for image in luis_image_names]
-```
-![](https://www.datocms-assets.com/45680/1709586273-luis1.png?max-w=2000&auto=compress) 
 
-Next, we utilize the `transfer_images="triggerword": list of images parameter` within the payload of OctoAI’s SDXL Image Gen API at `https://image.octoai.run/generate/sdxl`.
 
-**Example Code Snippet of using Photo Merge (transfer_images)**:
-
-```Python Python
+Next, we utilize the transfer_images="triggerword": list of images parameter within the payload of OctoAI’s SDXL Image Gen API at https://image.octoai.run/generate/sdxl.
+Example Code Snippet of using Photo Merge (transfer_images):
 payload = {
     "prompt": "A man luis sitting in a coffee shop",
     "negative_prompt": "Blurry photo, distortion, low-res, bad quality",
@@ -12714,25 +12427,15 @@ response = query(ENDPOINT_URL, payload)
 
 generated_images = decode_response(response)
 image_grid_buffer(generated_images)
-```
 
 In the given example, we employ the trigger word ‘luis’ and link it with the dataset comprising the four images mentioned earlier. Subsequently, we structure the prompt to incorporate the trigger word.
-
-Prompt: `A man luis sitting in a coffee shop.`
-
-It's worth noting that in this instance, no LoRA is utilized. Additionally, we utilize a checkpoint named ‘RealVisXL’, an OctoAI asset checkpoint specifically optimized for the Photo Merge feature. However, it's important to mention that the Photo Merge feature is functional even if the base SDXL checkpoint is utilized. 
-
-Below are the AI-generated output images after using transfer_image parameter with the newly provided prompt: 
-
-![](https://www.datocms-assets.com/45680/1709586450-luis2.png?max-w=2000&auto=compress) 
+Prompt: A man luis sitting in a coffee shop.
+It's worth noting that in this instance, no LoRA is utilized. Additionally, we utilize a checkpoint named ‘RealVisXL’, an OctoAI asset checkpoint specifically optimized for the Photo Merge feature. However, it's important to mention that the Photo Merge feature is functional even if the base SDXL checkpoint is utilized.
+Below are the AI-generated output images after using transfer_image parameter with the newly provided prompt:
 
 Pretty accurate, isn’t it? Let’s try it with few different prompts and combine it with other style presets, LoRAs and checkpoints to confirm whether we consistently get the accurate results.
-
 Let us use transfer_images parameter in conjunction with ‘Graffiti’ style preset. We are keeping all other parameter values similar to the payload above.
-
-**Example Code Snippet of Photo Merge (transfer_images parameter) with Style Preset**: 
-
-```Python Python
+Example Code Snippet of Photo Merge (transfer_images parameter) with Style Preset:
 payload = {
     "prompt": "closeup colorfull portrait photo of a man luis",
     "negative_prompt": "(asymmetry, worst quality, low quality, illustration, 3d, 2d, painting, cartoons, sketch), open mouth",
@@ -12752,15 +12455,10 @@ response = query(ENDPOINT_URL, payload)
 
 generated_images = decode_response(response)
 image_grid_buffer(generated_images)
-```
 
-![](https://www.datocms-assets.com/45680/1709586551-luis3.png?max-w=2000&auto=compress) 
 
 Let’s now use transfer_images parameter with a pre-trained Style LoRA. We have already imported a pre-trained style based LoRA into OctoAI’s Asset Library. In the payload below, we are using the corresponding asset’s asset id and assigning it a weight of 1.0.
-
-**Example Code Snippet of Photo Merge (transfer_images parameter) with pre-trained LoRAs (uploaded from external sources)**: 
-
-```Python Python
+Example Code Snippet of Photo Merge (transfer_images parameter) with pre-trained LoRAs (uploaded from external sources):
 payload = {
     "prompt": "painting, martius_storm red ominous war [:style of vincent van gogh luis and leonardo da vinci:0.4] ral-dissolve",
     "negative_prompt": "(asymmetry, worst quality, low quality, illustration, 3d, 2d, painting, cartoons, sketch), open mouth",
@@ -12780,19 +12478,13 @@ response = query(ENDPOINT_URL, payload)
 
 generated_images = decode_response(response)
 image_grid_buffer(generated_images)
-```
-![](https://www.datocms-assets.com/45680/1709587246-luis4.png?max-w=2000&auto=compress) 
+
 
 Next, we'll create a custom fine-tune for a product and seamlessly integrate our AI-generated human model's image with it.
 To create custom fine tunes (SDXL LoRAs), we will upload 10-12 images of our product, which in our case are different colored Lacoste polo shirts for men.
 
-![](https://www.datocms-assets.com/45680/1709587288-1707936431-lacoste-shirt-fine-tune-images-being-created.avif?max-w=2000&auto=compress) 
 
-![](https://www.datocms-assets.com/45680/1709587279-1707936366-lacoste-fine-tune-created-on-octoai.avif?max-w=2000&auto=compress) 
-
-
-**Example Code Snippet of Photo Merge (transfer_images parameter) with custom fine-tuned LoRAs**: 
-```Python Python
+Example Code Snippet of Photo Merge (transfer_images parameter) with custom fine-tuned LoRAs:
 payload = {
     "prompt": "A man luis wearing a pink T-shirt lacosteshirt1:1, sitting in a coffee shop",
     "negative_prompt": "(asymmetry, worst quality, low quality, illustration, 3d, 2d, painting, cartoons, sketch), open mouth, shirt logo not visible, left position shirt logo",
@@ -12812,17 +12504,11 @@ response = query(ENDPOINT_URL, payload)
 
 generated_images = decode_response(response)
 image_grid_buffer(generated_images)
-```
 
-![](https://www.datocms-assets.com/45680/1709587262-luis5.png?max-w=2000&auto=compress)
 
-Let's now consider a use-case where we want to mix the identities of 2 or more humans. For this let's consider a new set of close up portriats of another human as shown below: 
+Let's now consider a use-case where we want to mix the identities of 2 or more humans. For this let's consider a new set of close up portriats of another human as shown below:
 
-![](https://www.datocms-assets.com/45680/1709587643-screenshot-2024-03-04-at-1-27-11-pm.png?max-w=2000&auto=compress)
-
-**Example Code Snippet of Photo Merge (transfer_images parameter) with multiple human portraits**: 
-
-```Python Python
+Example Code Snippet of Photo Merge (transfer_images parameter) with multiple human portraits:
 payload = {
     "prompt": "closeup b&w portrait photo of a man luis einstein",
     "negative_prompt": "(asymmetry, worst quality, low quality, illustration, 3d, 2d, painting, cartoons, sketch), open mouth",
@@ -12841,9 +12527,7 @@ response = query(ENDPOINT_URL, payload)
 
 generated_images = decode_response(response)
 image_grid_buffer(generated_images)
-```
 
-![](https://www.datocms-assets.com/45680/1709587798-luis6.png?max-w=2000&auto=compress)
 
 Photo Merge offers endless potential - whether in entertainment, gaming, marketing agencies, or fashion and retail sectors, it can help craft personalized avatars, advertisements, and brand ambassador representations. It can also enable virtual try-ons and lifelike digital product showcases.",
     "indexSegmentId": "0",
@@ -13023,19 +12707,7 @@ Photo Merge offers endless potential - whether in entertainment, gaming, marketi
 
 Upscaling takes an existing image you provide and upscales it to a higher resolution.
 
-
-<CardGroup cols={2}>
-  <Card title="Image resolution 1024X1024">
-![](https://www.datocms-assets.com/45680/1709595761-screenshot-2024-03-04-at-3-42-14-pm.png?max-w=2000&auto=compress) 
-  </Card>
-  <Card title="Upscaled image 2048X2048">
-![](https://www.datocms-assets.com/45680/1709595770-screenshot-2024-03-04-at-3-41-58-pm.png?max-w=2000&auto=compress)
-  </Card>
-</CardGroup>
-
-Example Code of upscaling an image from 1024X1024 to 2048X2048: 
-
-```Python Python
+Example Code of upscaling an image from 1024X1024 to 2048X2048:
 import requests
 import json
 import os
@@ -13087,8 +12759,7 @@ def _process_test(url):
     img.save("result_image.jpeg")
 
 if __name__ == "__main__":
-    _process_test("https://image.octoai.run/upscaling")
-```",
+    _process_test("https://image.octoai.run/upscaling")",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/image-utilities/upscaling",
     "title": "Upscaling",
@@ -13177,17 +12848,7 @@ if __name__ == "__main__":
 
 Background removal takes an existing image you provide and removes those parts of the image considered to be “background.”
 
-<CardGroup cols={2}>
-  <Card title="Image with background">
-![](https://www.datocms-assets.com/45680/1709595206-headphones1.jpeg?max-w=2000&auto=compress) 
-  </Card>
-  <Card title="Background removed">
-![](https://www.datocms-assets.com/45680/1709595214-result_image.png?max-w=2000&auto=compress)
-  </Card>
-</CardGroup>
-
-Example Code of removing background from an image: 
-```Python Python
+Example Code of removing background from an image:
 import requests
 import json
 import os
@@ -13237,8 +12898,7 @@ def _process_test(url):
     img.save("result_image.png")
 
 if __name__ == "__main__":
-    _process_test("https://image.octoai.run/background-removal")
-```",
+    _process_test("https://image.octoai.run/background-removal")",
     "indexSegmentId": "0",
     "slug": "docs/media-gen-solution/image-utilities/bg-removal",
     "title": "Background Removal",
@@ -13928,7 +13588,7 @@ Choose the route table where the routing entry is added, then click Create Endpo
         "title": "Compute Service",
       },
     ],
-    "description": "> **Contact us at customer-success@octo.ai to request access to the Compute Service.**",
+    "description": "Contact us at customer-success@octo.ai to request access to the Compute Service.",
     "indexSegmentId": "0",
     "slug": "docs/compute-service/compute-getting-started",
     "title": "Getting started with our Compute Service",
@@ -14025,45 +13685,40 @@ Create a container and endpoint using our CLI.
         "title": "Create an endpoint from an existing container",
       },
     ],
-    "description": "> **Contact us at customer-success@octo.ai to request access to the Compute Service.**
+    "description": "Contact us at customer-success@octo.ai to request access to the Compute Service.
 
 OctoAI allows you to create endpoints from custom containers. We support all containers with an HTTP server written in any language, as long as your container comes with a declarative configuration of which port is exposed for inferences and is built for a GPU.
 
-- Our coverage includes and is not limited to containers built using Fast API, cog, s2i, Nvidia Triton Inference Server, and Sagemaker/AzureML/Vertex AI based ML containers.
-- We allow you to pull containers from any private registry, except registries running in a fully private network (e.g. AWS ECR, Gitlab registries in private environments). This means you can pull containers from Docker Hub, Quay, Gitlab, GitHub, etc. that are not in private networks.
+Our coverage includes and is not limited to containers built using Fast API, cog, s2i, Nvidia Triton Inference Server, and Sagemaker/AzureML/Vertex AI based ML containers.
+We allow you to pull containers from any private registry, except registries running in a fully private network (e.g. AWS ECR, Gitlab registries in private environments). This means you can pull containers from Docker Hub, Quay, Gitlab, GitHub, etc. that are not in private networks.
 
-If you don't already have a container in hand, [see our guide to building a custom endpoint with our CLI.](../create-custom-endpoint-using-the-cli)
-
-In this example, we will create a production-grade endpoint for a Flan T5 container pre-built [here](https://hub.docker.com/r/vanessahlyan/flan-t5-small-pytorch-sanic) for a Question Answering application.
-
+If you don't already have a container in hand, see our guide to building a custom endpoint with our CLI.
+In this example, we will create a production-grade endpoint for a Flan T5 container pre-built here for a Question Answering application.
 In the web UI, navigate to the Custom Endpoints page. Click on “New Endpoint,” then specify the following fields:
-![](https://www.datocms-assets.com/45680/1711726378-new-endpoint.png?max-w=2000&auto=compress)
 
-- **Endpoint Name:** This name for your endpoint will be part of the endpoint URL you end up integrating into your application-- that URL will be `https://<endpoint-name>-<account-id>.octoai.run/<inference-route>`
-- **Container Image:** The reference to your container needs to be in "\[registry/\]organization/repository\[:tag\]" format. In our example, the container image is `vanessahlyan/flan-t5-small-pytorch-sanic:latest`, hosted [here](https://hub.docker.com/r/vanessahlyan/flan-t5-small-pytorch-sanic) on Docker Hub.
-- **Container Port:** The port of the container at which inferences are run is 8000 in our Flan T5 example, as defined [here](https://github.com/octoml/octocloud-templates/blob/main/flan-t5-small/Dockerfile#L3). **Make sure to change the default value from 8080 to 8000 in the case of this example!**
-- **Registry Credential:** Registry Credential defaults to Public, which indicates that your container is available for anyone on the internet to pull. If your container is instead stored in a private registry, follow the guide in [Pulling containers from a private registry](/docs/compute-service/create-endpoint-from-existing-container/pulling-containers-from-a-private-registry) to store your registry credentials so that we can pull the private container.
-- **Health Check Path:** See [Health Check Path in custom containers](../health-check-path-in-custom-containers)
-- **Enable Public Access**: By default, your endpoints are private and require an access token, but you can change this setting such that anyone who knows your endpoint URL can use it.
-- **Active**: Whether to spin down all replicas and disable inferences to it.
-- **Specify Secrets:** Provide secrets to mount onto the container, such as database secrets that you want to reuse across endpoints. Follow the guide in [Setting up account-wide secrets for your custom endpoints](setting-account-wide-secrets-for-custom-endpoints) to set these up.
-- **Environment Variables**: Just like secrets, these variables will be mounted onto the container at runtime. If you have a variable with key foo whose value is bar, you will get a variable foo whose value is bar mounted to the container.
-- **Select hardware:** We offer three tiers of hardware-- see [Hardware, Pricing, and Billing](/docs/getting-started/pricing-and-billing) for more information. Your choice of hardware determines the pricing that you will pay for your endpoint.
-- **Minimum Replicas:** The default minimum number of replicas is 0, which means we autoscale down to 0 whenever your endpoint is not receiving requests from your users and the timeout period has passed (this is a way to keep your costs down). Minimum replicas should be set to a higher number if you want to ensure highest uptime for your users and avoid cold starts. Cold start means there is currently no active container instance running inferences on our servers for your application, so we need to incur extra latency to spin up a new one.
-- **Maximum Replicas:** This is an important measure for capping your maximum cost. The maximum number of replicas should be set based on how much simultaneous capacity you're willing to support at your heaviest traffic periods. For example, if you set your maximum replicas at 5, and each inference takes 1 second for your model on a GPU, then your application will be able to support a total of 250 inferences per minute without queueing. If your traffic goes above that level (well done you!), requests will be queued until they can be handled, which will increase your average request response time.
-- **Timeout**: How many seconds to wait before we scale down your last replica since the time you have no more inferences running.
 
-Now click **Create** and you’ll be directed to a page for your new endpoint.
+Endpoint Name: This name for your endpoint will be part of the endpoint URL you end up integrating into your application-- that URL will be https://<endpoint-name>-<account-id>.octoai.run/<inference-route>
+Container Image: The reference to your container needs to be in "[registry/]organization/repository[:tag]" format. In our example, the container image is vanessahlyan/flan-t5-small-pytorch-sanic:latest, hosted here on Docker Hub.
+Container Port: The port of the container at which inferences are run is 8000 in our Flan T5 example, as defined here. Make sure to change the default value from 8080 to 8000 in the case of this example!
+Registry Credential: Registry Credential defaults to Public, which indicates that your container is available for anyone on the internet to pull. If your container is instead stored in a private registry, follow the guide in Pulling containers from a private registry to store your registry credentials so that we can pull the private container.
+Health Check Path: See Health Check Path in custom containers
+Enable Public Access: By default, your endpoints are private and require an access token, but you can change this setting such that anyone who knows your endpoint URL can use it.
+Active: Whether to spin down all replicas and disable inferences to it.
+Specify Secrets: Provide secrets to mount onto the container, such as database secrets that you want to reuse across endpoints. Follow the guide in Setting up account-wide secrets for your custom endpoints to set these up.
+Environment Variables: Just like secrets, these variables will be mounted onto the container at runtime. If you have a variable with key foo whose value is bar, you will get a variable foo whose value is bar mounted to the container.
+Select hardware: We offer three tiers of hardware-- see Hardware, Pricing, and Billing for more information. Your choice of hardware determines the pricing that you will pay for your endpoint.
+Minimum Replicas: The default minimum number of replicas is 0, which means we autoscale down to 0 whenever your endpoint is not receiving requests from your users and the timeout period has passed (this is a way to keep your costs down). Minimum replicas should be set to a higher number if you want to ensure highest uptime for your users and avoid cold starts. Cold start means there is currently no active container instance running inferences on our servers for your application, so we need to incur extra latency to spin up a new one.
+Maximum Replicas: This is an important measure for capping your maximum cost. The maximum number of replicas should be set based on how much simultaneous capacity you're willing to support at your heaviest traffic periods. For example, if you set your maximum replicas at 5, and each inference takes 1 second for your model on a GPU, then your application will be able to support a total of 250 inferences per minute without queueing. If your traffic goes above that level (well done you!), requests will be queued until they can be handled, which will increase your average request response time.
+Timeout: How many seconds to wait before we scale down your last replica since the time you have no more inferences running.
 
-To run an inference, use the endpoint URL shown in the UI, with the appropriate inference route appended to it. In our example, we serve inferences at the /predict route as defined in this [file](https://github.com/octoml/octocloud-templates/blob/main/flan-t5-small/server.py#L28), so we should send a CURL to `<your-endpont-url>/predict`. In my specific case, that is`https://flan-t5-small-01at11ru3fwy.octoai.run/predict`.
-
-```bash bash
+Now click Create and you’ll be directed to a page for your new endpoint.
+To run an inference, use the endpoint URL shown in the UI, with the appropriate inference route appended to it. In our example, we serve inferences at the /predict route as defined in this file, so we should send a CURL to <your-endpont-url>/predict. In my specific case, that ishttps://flan-t5-small-01at11ru3fwy.octoai.run/predict.
 curl -X POST '<your-endpoint-url>/predict' --data '{"prompt": "What state is Los Angeles in?", "max_length": 100}' -H 'content-type: application/json' -H "Authorization: Bearer $YOUR_TOKEN"
-```
 
-- You need to edit the curl to use your own API token. If you don't have an existing token, refer to [how to create an OctoAI API Token](/docs/getting-started/how-to-create-an-octoai-access-token)
-- This model expects the inputs `prompt` and `max_length`. We can fill in values `"What state is Los Angeles in?"` and `100` for those fields respectively, and get a response back.
-- To query the healthcheck for our endpoint (this is optional), we can hit `<your-endpoint-url>/healthcheck`
+
+You need to edit the curl to use your own API token. If you don't have an existing token, refer to how to create an OctoAI API Token
+This model expects the inputs prompt and max_length. We can fill in values "What state is Los Angeles in?" and 100 for those fields respectively, and get a response back.
+To query the healthcheck for our endpoint (this is optional), we can hit <your-endpoint-url>/healthcheck
 
 Once you use the curl to make an inference, look at the Events tab on the UI and you’ll see live events coming in informing you of the status of your deployment. Once you see here that the container is running, you inferences should complete successfully.",
     "indexSegmentId": "0",
@@ -14172,15 +13827,14 @@ Contact us if you have any questions.
         "title": "Create an endpoint from an existing container",
       },
     ],
-    "description": "> **Contact us at customer-success@octo.ai to request access to the Compute Service.**
+    "description": "Contact us at customer-success@octo.ai to request access to the Compute Service.
 
 When you create an endpoint from a custom container, you will see the following page, which has a field for a "Registry Credential." By default, this field is set to "Public," which requires that your container is available for anyone on the internet to pull and no registry credentials will be attached. If your container is instead stored in a private registry, click on the dropdown and then the + sign next to add a "New registry credential".
-![](https://www.datocms-assets.com/45680/1711726378-new-endpoint.png?max-w=2000&auto=compress)
 
-When you click a model will open where you can set a name for the credential, enter the username and password for the registry. 
-![](https://www.datocms-assets.com/45680/1711726364-add-registry-credential.png?max-w=2000&auto=compress)
+When you click a model will open where you can set a name for the credential, enter the username and password for the registry.
 
-* For example, if you are storing your container in a private repository within DockerHub, you can set the credential name to "docker" and look for your DockerHub username in the top right area of the navigation bar in the DockerHub [ UI](https://hub.docker.com/settings/security) once you've logged in. To get your DockerHub access token, go to your DockerHub Account Settings Security [page](https://hub.docker.com/settings/security), then click the New Access Token button.
+
+For example, if you are storing your container in a private repository within DockerHub, you can set the credential name to "docker" and look for your DockerHub username in the top right area of the navigation bar in the DockerHub  UI once you've logged in. To get your DockerHub access token, go to your DockerHub Account Settings Security page, then click the New Access Token button.
 
 Once you've added all the fields in the modal and clicked Save, the Registry Credential field will automatically change to the credential you just set up. Complete the remaining fields to create the endpoint.",
     "indexSegmentId": "0",
@@ -14222,13 +13876,11 @@ Once you've added all the fields in the modal and clicked Save, the Registry Cre
         "title": "Create an endpoint from an existing container",
       },
     ],
-    "description": "> **Contact us at customer-success@octo.ai to request access to the Compute Service.**
+    "description": "Contact us at customer-success@octo.ai to request access to the Compute Service.
 
-When creating a new endpoint from your custom containers, you may wish to mount your account-wide secrets onto your container, such as database secrets. Simply click the **Select secret(s)** dropdown when creating a new endpoint, and then the + sign next to **New Secret**. 
-![](https://www.datocms-assets.com/45680/1711726387-new-secret.png?max-w=2000&auto=compress)
+When creating a new endpoint from your custom containers, you may wish to mount your account-wide secrets onto your container, such as database secrets. Simply click the Select secret(s) dropdown when creating a new endpoint, and then the + sign next to New Secret.
 
-That would bring up a modal in which you can specify a key and a value for the secret. For example, if you create secret with key `foo` whose value is `bar,` you will get a variable `foo` whose value is `bar` mounted to the container.
-![](https://www.datocms-assets.com/45680/1711726372-add-secret.png?max-w=2000&auto=compress)
+That would bring up a modal in which you can specify a key and a value for the secret. For example, if you create secret with key foo whose value is bar, you will get a variable foo whose value is bar mounted to the container.
 
 Note that this flow currently cannot access a database that is in a private VPC. Please contact us if you have a private database you wish to access.",
     "indexSegmentId": "0",
@@ -14263,7 +13915,7 @@ Note that this flow currently cannot access a database that is in a private VPC.
         "title": "Compute Service",
       },
     ],
-    "description": "> **Contact us at customer-success@octo.ai to request access to the Compute Service.**",
+    "description": "Contact us at customer-success@octo.ai to request access to the Compute Service.",
     "indexSegmentId": "0",
     "slug": "docs/compute-service/create-custom-endpoint-using-the-cli",
     "title": "Create a container and endpoint using the CLI",
@@ -16608,14 +16260,13 @@ The CLI will then prompt you for the image repository namespace (such as your Do
         "title": "Compute Service",
       },
     ],
-    "description": "> **Contact us at customer-success@octo.ai to request access to the Compute Service.**
+    "description": "Contact us at customer-success@octo.ai to request access to the Compute Service.
 
-You can use our CLI to easily create containers for any model written in Python. However, note that OctoAI is able to run **any** container with an HTTP server, so you are always welcome to build containers in your own ways (with the understanding that using custom containers means potentially longer cold start/ fewer optimizations).
-
+You can use our CLI to easily create containers for any model written in Python. However, note that OctoAI is able to run any container with an HTTP server, so you are always welcome to build containers in your own ways (with the understanding that using custom containers means potentially longer cold start/ fewer optimizations).
 If you prefer to create your own container from scratch, this tutorial will walk you through one example of how to do so.
 
-- In this example, we will build a container for a [Flan-T5 small model](https://huggingface.co/google/flan-t5-small) from the Hugging Face `transformers` library. This model is commonly used for text generation and question answering, but note that because it's small it does not yield outputs that are as high-quality as other OctoAI LLM endpoints.
-- An equivalent example for Hugging Face `diffusers` models can be found in the same GitHub [repo](https://github.com/octoml/octocloud-templates/tree/main).",
+In this example, we will build a container for a Flan-T5 small model from the Hugging Face transformers library. This model is commonly used for text generation and question answering, but note that because it's small it does not yield outputs that are as high-quality as other OctoAI LLM endpoints.
+An equivalent example for Hugging Face diffusers models can be found in the same GitHub repo.",
     "indexSegmentId": "0",
     "slug": "docs/compute-service/advanced-build-a-container-from-scratch-in-python",
     "title": "Advanced: build a container from scratch in Python",
@@ -17408,13 +17059,13 @@ Now that you have your container, create an endpoint to establish your endpoint 
         "title": "Compute Service",
       },
     ],
-    "description": "> **Contact us at customer-success@octo.ai to request access to the Compute Service.**
+    "description": "Contact us at customer-success@octo.ai to request access to the Compute Service.
 
 The healthcheck path is be the server route in the container that indicates when the server is ready to receive requests:
 
-- It is strongly recommended that you configure a health check path in your container. Otherwise, you may have inference failures whenever you try to make a request before your server is ready.
-- If you define a healthcheck, your endpoint has 5 minutes from the time the the image is pulled to return a 200 OK response. This will mark the endpoint as available, and the same criteria applies for additional replicas. If there are 3 consecutive calls to the healthcheck endpoint that return a non-200 OK status, then the replica will be restarted.
-- You can see an example of a health check path in our Flan T5 container in [Advanced: Build a Container from Scratch in Python](advanced-build-a-container-from-scratch-in-python). The health check path exposed by that container is `/healthcheck`. After the endpoint is created, one should be able to hit `https://<endpoint-name>-<account-id>.octoai.run/healthcheck` for a 200 response whenever the server is healthy and ready.",
+It is strongly recommended that you configure a health check path in your container. Otherwise, you may have inference failures whenever you try to make a request before your server is ready.
+If you define a healthcheck, your endpoint has 5 minutes from the time the the image is pulled to return a 200 OK response. This will mark the endpoint as available, and the same criteria applies for additional replicas. If there are 3 consecutive calls to the healthcheck endpoint that return a non-200 OK status, then the replica will be restarted.
+You can see an example of a health check path in our Flan T5 container in Advanced: Build a Container from Scratch in Python. The health check path exposed by that container is /healthcheck. After the endpoint is created, one should be able to hit https://<endpoint-name>-<account-id>.octoai.run/healthcheck for a 200 response whenever the server is healthy and ready.",
     "indexSegmentId": "0",
     "slug": "docs/compute-service/health-check-path-in-custom-containers",
     "title": "Healthcheck path in custom containers",
@@ -17755,7 +17406,7 @@ Please see the individual package manager for how to remove an installation, as 
     ],
     "description": "A reference guide for all CLI commands and their behaviors.
 
-This document provides a detailed description of every command of the OctoAI CLI. Remember that you can install the CLI by following [CLI & SDK Installation](/docs/cli/cli-and-sdk-installation#latest-cli-release).",
+This document provides a detailed description of every command of the OctoAI CLI. Remember that you can install the CLI by following CLI & SDK Installation.",
     "indexSegmentId": "0",
     "slug": "docs/cli/cli-reference-guide",
     "title": "CLI reference",
@@ -20237,8 +19888,7 @@ Higher rate limits are available, please reach out if you need an increase.",
         "title": "FAQs",
       },
     ],
-    "description": "We are SOC Type 2 compliant and take data privacy extremely seriously. Our policies around customer data -- anything you upload to the platform and all inputs you send/outputs you generate — [are detailed here](https://octo.ai/legals/terms-of-use/) in sections 8-12. All data in transit and at rest uses SSL encryption.
-
+    "description": "We are SOC Type 2 compliant and take data privacy extremely seriously. Our policies around customer data -- anything you upload to the platform and all inputs you send/outputs you generate — are detailed here in sections 8-12. All data in transit and at rest uses SSL encryption.
 To summarize, OctoAI can only use your customer data to provide the service to you and not for any other purpose. Providing the service does include debugging, troubleshooting, and ensuring ToS compliance. Customer prompt data is persisted in logs for 15 days and then deleted. Outputs are never stored, and we do not use your data to train models unless you decide to use our fine-tuning service directly. Access to customer logs is controlled on a need to know basis and audited.",
     "indexSegmentId": "0",
     "slug": "docs/faqs/privacy-and-security",
@@ -20267,9 +19917,8 @@ To summarize, OctoAI can only use your customer data to provide the service to y
     ],
     "description": "There are multiple ways in which customers can build a RAG application on OctoAI.
 
-OctoAI allows customers to [run their choice of LLMs](/docs/text-gen-solution/getting-started)
-(like Llama 2 70B, Mixtral 8x7B, Mixtral 8x22B) and embedding models (like gte-large). With these primitives, customers can use their preferred vector database as the reference data store for their RAG application. OctoAI also supports integrations with popular LLM application development frameworks like LangChain, allowing the use of pre-built functions in [LangChain](/docs/integrations/langchain) to simplify their RAG application development.
-
+OctoAI allows customers to run their choice of LLMs
+(like Llama 2 70B, Mixtral 8x7B, Mixtral 8x22B) and embedding models (like gte-large). With these primitives, customers can use their preferred vector database as the reference data store for their RAG application. OctoAI also supports integrations with popular LLM application development frameworks like LangChain, allowing the use of pre-built functions in LangChain to simplify their RAG application development.
 Lastly, OctoAI supports integrations into turnkey RAG frameworks like PineCone Canopy for customers to easily implement RAG with their data.",
     "indexSegmentId": "0",
     "slug": "docs/faqs/rag",
@@ -20300,8 +19949,7 @@ Lastly, OctoAI supports integrations into turnkey RAG frameworks like PineCone C
     "description": "OctoAI currently runs on AWS and GCP hardware in several regions
 
 OctoAI currently runs on AWS and GCP hardware in several regions - including AWS us-east-1 and us-west-2 regions, and GCP us-central-1 region. We are actively expanding support for more regions.
-
-For customers with data residency requirements, [OctoStack](https://octo.ai/docs/private-deployment/octostack) can be hosted in your own private cloud environment or on your own hardware. [Contact our sales team](https://octo.ai/octostack-demo/) for more information.",
+For customers with data residency requirements, OctoStack can be hosted in your own private cloud environment or on your own hardware. Contact our sales team for more information.",
     "indexSegmentId": "0",
     "slug": "docs/faqs/service-regions",
     "title": "Service regions",
@@ -20329,7 +19977,7 @@ For customers with data residency requirements, OctoStack can be hosted in your 
     ],
     "description": "The default setup is 1 user profile per 1 OctoAI account. We can easily help you setup multiple users within a single account if you have a team or organization with multiple users. This will allow your team to manage endpoints, view logs & metrics, and securely share access to the account.
 
-Contact us on [Discord](https://discord.gg/rXTPeRBcG7) or our in-app chat feature to setup your multi-user account.",
+Contact us on Discord or our in-app chat feature to setup your multi-user account.",
     "indexSegmentId": "0",
     "slug": "docs/faqs/multi-user-accounts",
     "title": "Multi-user accounts",
@@ -20356,87 +20004,87 @@ Contact us on [Discord](https://discord.gg/rXTPeRBcG7) or our in-app chat featur
     ],
     "description": "Below are the open source technologies we make use of and their associated licenses
 
-| Package | License |  
-| ------- | --------- | 
-| alabaster 0.7.13 | BSD |  
-| annotated-types 0.5.0 | MIT) |  
-| anyio 3.7.1 | MIT |  
-| av 10.0.0 | BSD |  
-| Babel 2.12.1 | BSD |  
-| black 23.7.0 | MIT |  
-| certifi 2023.7.22 | MPL-2.0 |  
-| cffi 1.15.1 | MIT |  
-| cfgv 3.4.0 | MIT |  
-| charset-normalizer 3.2.0 | MIT |  
-| chevron 0.14.0 | MIT |  
-| click 8.1.6 | BSD-3-Clause |  
-| distlib 0.3.7 | PSF-2.0 |  
-| docutils 0.18.1 | public domain, Python, 2-Clause BSD, GPL 3 (see COPYING.txt) |  
-| execnet 2.0.2 | MIT |  
-| fastapi 0.100.1 | MIT |  
-| filelock 3.12.2 | Unlicense |  
-| flake8 6.1.0 | MIT |  
-| flake8-docstrings 1.7.0 | MIT |  
-| h11 0.14.0 | MIT |  
-| httpcore 0.17.3 | BSD |  
-| httpx 0.24.1 | BSD |  
-| identify 2.5.26 | MIT |  
-| idna 3.4 | BSD |  
-| imageio 2.31.1 | BSD-2-Clause |  
-| imagesize 1.4.1 | MIT |  
-| iniconfig 2.0.0 | MIT |  
-| isort 5.12.0 | MIT |  
-| Jinja2 3.1.2 | BSD-3-Clause |  
-| MarkupSafe 2.1.3 | BSD-3-Clause |  
-| mccabe 0.7.0 | Expat license |  
-| mypy 1.5.1 | MIT License |  
-| mypy-extensions 1.0.0 | MIT License |  
-| nodeenv 1.8.0 | BSD |  
-| numpy 1.24.4 | BSD-3-Clause |  
-| packaging 23.1 | Apache Software License, BSD License |  
-| pathspec 0.11.2 | Mozilla Public License 2.0 (MPL 2.0) |  
-| Pillow 9.5.0 | HPND |  
-| pip 23.2.1 | MIT |  
-| platformdirs 3.10.0 | MIT |  
-| pluggy 1.2.0 | MIT |  
-| pre-commit 3.3.3 | MIT |  
-| prettytable 3.9.0 | BSD (3 clause) |  
-| pycodestyle 2.11.0 | MIT |  
-| pycparser 2.21 | BSD |  
-| pydantic 2.2.0 | MIT |  
-| pydantic-core 2.6.0 | MIT |  
-| pydocstyle 6.3.0 | MIT |  
-| pyflakes 3.1.0 | MIT |  
-| Pygments 2.16.1 | BSD-2-Clause |  
-| pytest 7.4.0 | MIT |  
-| pytest-xdist 3.3.0 | MIT |  
-| python-multipart 0.0.6 | Apache Software License |  
-| PyYAML 6.0.1 | MIT |  
-| requests 2.31.0 | Apache 2.0 |  
-| requests-futures 1.0.1 | Apache License v2 |  
-| respx 0.20.2 | BSD-3-Clause |  
-| setuptools 68.1.0 | MIT |  
-| sniffio 1.3.0 | MIT OR Apache-2.0 |  
-| snowballstemmer 2.2.0 | BSD-3-Clause |  
-| soundfile 0.12.1 | BSD 3-Clause License |  
-| sphinx 6.2.1 | BSD |  
-| sphinx-rtd-theme 1.2.2 | MIT |  
-| sphinxcontrib-applehelp 1.0.4 | BSD-2-Clause |  
-| sphinxcontrib-devhelp 1.0.2 | BSD |  
-| sphinxcontrib-htmlhelp 2.0.1 | BSD-2-Clause |  
-| sphinxcontrib-jquery 4.1 | BSD |  
-| sphinxcontrib-jsmath 1.0.1 | BSD |  
-| sphinxcontrib-qthelp 1.0.3 | BSD |  
-| sphinxcontrib-serializinghtml 1.1.5 | BSD |  
-| starlette 0.27.0 | BSD |  
-| types-PyYAML 6.0.12.11 | Apache-2.0 license |  
-| types-requests 2.31.0.2 | Apache-2.0 license |  
-| types-urllib3 1.26.25.14 | Apache-2.0 license |  
-| typing-extensions 4.7.1 | (License not found) |  
-| urllib3 2.0.4 | MIT |  
-| uvicorn 0.22.0 | BSD |  
-| virtualenv 20.24.3 | MIT |  
-| wcwidth 0.2.8 | MIT |  
+| Package | License |
+| ------- | --------- |
+| alabaster 0.7.13 | BSD |
+| annotated-types 0.5.0 | MIT) |
+| anyio 3.7.1 | MIT |
+| av 10.0.0 | BSD |
+| Babel 2.12.1 | BSD |
+| black 23.7.0 | MIT |
+| certifi 2023.7.22 | MPL-2.0 |
+| cffi 1.15.1 | MIT |
+| cfgv 3.4.0 | MIT |
+| charset-normalizer 3.2.0 | MIT |
+| chevron 0.14.0 | MIT |
+| click 8.1.6 | BSD-3-Clause |
+| distlib 0.3.7 | PSF-2.0 |
+| docutils 0.18.1 | public domain, Python, 2-Clause BSD, GPL 3 (see COPYING.txt) |
+| execnet 2.0.2 | MIT |
+| fastapi 0.100.1 | MIT |
+| filelock 3.12.2 | Unlicense |
+| flake8 6.1.0 | MIT |
+| flake8-docstrings 1.7.0 | MIT |
+| h11 0.14.0 | MIT |
+| httpcore 0.17.3 | BSD |
+| httpx 0.24.1 | BSD |
+| identify 2.5.26 | MIT |
+| idna 3.4 | BSD |
+| imageio 2.31.1 | BSD-2-Clause |
+| imagesize 1.4.1 | MIT |
+| iniconfig 2.0.0 | MIT |
+| isort 5.12.0 | MIT |
+| Jinja2 3.1.2 | BSD-3-Clause |
+| MarkupSafe 2.1.3 | BSD-3-Clause |
+| mccabe 0.7.0 | Expat license |
+| mypy 1.5.1 | MIT License |
+| mypy-extensions 1.0.0 | MIT License |
+| nodeenv 1.8.0 | BSD |
+| numpy 1.24.4 | BSD-3-Clause |
+| packaging 23.1 | Apache Software License, BSD License |
+| pathspec 0.11.2 | Mozilla Public License 2.0 (MPL 2.0) |
+| Pillow 9.5.0 | HPND |
+| pip 23.2.1 | MIT |
+| platformdirs 3.10.0 | MIT |
+| pluggy 1.2.0 | MIT |
+| pre-commit 3.3.3 | MIT |
+| prettytable 3.9.0 | BSD (3 clause) |
+| pycodestyle 2.11.0 | MIT |
+| pycparser 2.21 | BSD |
+| pydantic 2.2.0 | MIT |
+| pydantic-core 2.6.0 | MIT |
+| pydocstyle 6.3.0 | MIT |
+| pyflakes 3.1.0 | MIT |
+| Pygments 2.16.1 | BSD-2-Clause |
+| pytest 7.4.0 | MIT |
+| pytest-xdist 3.3.0 | MIT |
+| python-multipart 0.0.6 | Apache Software License |
+| PyYAML 6.0.1 | MIT |
+| requests 2.31.0 | Apache 2.0 |
+| requests-futures 1.0.1 | Apache License v2 |
+| respx 0.20.2 | BSD-3-Clause |
+| setuptools 68.1.0 | MIT |
+| sniffio 1.3.0 | MIT OR Apache-2.0 |
+| snowballstemmer 2.2.0 | BSD-3-Clause |
+| soundfile 0.12.1 | BSD 3-Clause License |
+| sphinx 6.2.1 | BSD |
+| sphinx-rtd-theme 1.2.2 | MIT |
+| sphinxcontrib-applehelp 1.0.4 | BSD-2-Clause |
+| sphinxcontrib-devhelp 1.0.2 | BSD |
+| sphinxcontrib-htmlhelp 2.0.1 | BSD-2-Clause |
+| sphinxcontrib-jquery 4.1 | BSD |
+| sphinxcontrib-jsmath 1.0.1 | BSD |
+| sphinxcontrib-qthelp 1.0.3 | BSD |
+| sphinxcontrib-serializinghtml 1.1.5 | BSD |
+| starlette 0.27.0 | BSD |
+| types-PyYAML 6.0.12.11 | Apache-2.0 license |
+| types-requests 2.31.0.2 | Apache-2.0 license |
+| types-urllib3 1.26.25.14 | Apache-2.0 license |
+| typing-extensions 4.7.1 | (License not found) |
+| urllib3 2.0.4 | MIT |
+| uvicorn 0.22.0 | BSD |
+| virtualenv 20.24.3 | MIT |
+| wcwidth 0.2.8 | MIT |
 | wheel 0.41.2 | MIT |",
     "indexSegmentId": "0",
     "slug": "docs/faqs/open-source-licenses",
@@ -20543,11 +20191,9 @@ Contact us on [Discord](https://discord.gg/rXTPeRBcG7) or our in-app chat featur
         "title": "OctoAI API",
       },
     ],
-    "description": "```bash bash
-Authorization: Bearer $OCTOAI_TOKEN
-```
+    "description": "Authorization: Bearer $OCTOAI_TOKEN
 
-API requests to your endpoints must be authenticated with a token - you can generate a token from the Account [Settings](https://octoai.cloud/settings) page. Be sure to include your token in the header of your requests.",
+API requests to your endpoints must be authenticated with a token - you can generate a token from the Account Settings page. Be sure to include your token in the header of your requests.",
     "indexSegmentId": "0",
     "slug": "docs/api-reference/octoai-api/authentication",
     "title": "Authentication",
@@ -20886,48 +20532,23 @@ curl -X GET "https://async.octoai.run/v1/responses/778bbfd58c-hz95k" \
     ],
     "description": "Browse OctoAI's partner integrations to help you build your custom solution.
 
-<CardGroup cols={2}>
-  <Card href="langchain">
-    <div className="langchain">
-      <img src="file:401c961a-1481-4717-a837-10a0dca52fa7" noZoom />
-    </div>
-    <span className="title">LangChain</span>
-    LangChain provides a framework to easily construct LLM-powered apps.
-    Langchain developers can leverage OctoAI LLM and embedding endpoints to
-    easily access efficient compute across a wide selection of LLMs.
-  </Card>
-  <Card href="unstructured">
-    <img src="file:7556700f-ad9f-4b95-924f-73c87af7d36b" noZoom />
-    <span className="title">Unstructured.io</span>
-    Unstructured provides components to very easily embed text documents lke
-    PDFs, HTML, Word Docs, and more. The OctoAIEmbedingEncoder is available, so
-    documents parsed with Unstructured can easily be embedded with the OctoAI
-    embeddings endpoint.
-  </Card>
-  <Card href="pinecone">
-    <div className="pinecone">
-      <img src="file:f8d07fb4-b1e4-4adf-8678-8c3b4e1dc1b2" noZoom />
-    </div>
-    <span className="title">Pinecone (Canopy)</span>
-    Pinecone provides storage and retrieval infrastructure needed for building
-    and running AI apps. This integration allows a developer using Canopy to
-    choose from the best LLMs on OctoAI.
-  </Card>
-  <Card href="openrouter">
-    <img src="file:17ed68ed-3f3b-4863-bc65-a716d640f557" noZoom />
-    <span className="title">OpenRouter</span>
-    OpenRouter has a unified interface for using various LLMs, allowing users to
-    find and compare models for their needs. The OpenRouter API users can
-    leverage OctoAI's best in class LLM endpoints.
-  </Card>
-  <Card href="llamaindex">
-    <img src="file:e7159389-f6f1-4bfa-8fc1-d2cc7256b0da" noZoom />
-    <span className="title">LlamaIndex</span>
-    LlamaIndex aids in the management of interactions between your LLMs and
-    private data. A developer building AI apps can now access highly optimized
-    LLMs and Embeddings models on OctoAI.
-  </Card>
-</CardGroup>",
+LangChain
+LangChain provides a framework to easily construct LLM-powered apps.
+Langchain developers can leverage OctoAI LLM and embedding endpoints to
+easily access efficient compute across a wide selection of LLMs.Unstructured.io
+Unstructured provides components to very easily embed text documents lke
+PDFs, HTML, Word Docs, and more. The OctoAIEmbedingEncoder is available, so
+documents parsed with Unstructured can easily be embedded with the OctoAI
+embeddings endpoint.Pinecone (Canopy)
+Pinecone provides storage and retrieval infrastructure needed for building
+and running AI apps. This integration allows a developer using Canopy to
+choose from the best LLMs on OctoAI.OpenRouter
+OpenRouter has a unified interface for using various LLMs, allowing users to
+find and compare models for their needs. The OpenRouter API users can
+leverage OctoAI's best in class LLM endpoints.LlamaIndex
+LlamaIndex aids in the management of interactions between your LLMs and
+private data. A developer building AI apps can now access highly optimized
+LLMs and Embeddings models on OctoAI.",
     "indexSegmentId": "0",
     "slug": "docs/integrations/overview",
     "title": "All OctoAI Integrations",
@@ -22018,10 +21639,7 @@ If you are using LlamaIndex you can easily switch model provider, and enjoy usin
     ],
     "description": "OctoAI product updates and release notes for May 2024
 
-<div className="changelog-status">
-  <img src="file:5679d19e-04a2-4ed2-ba89-1fb38e521adf" width="14" height="14" noZoom />
-  <span>Improved</span>
-</div>",
+Improved",
     "indexSegmentId": "0",
     "slug": "docs/release-notes/2024/may",
     "title": "May 2024 Release Notes",
@@ -22084,10 +21702,7 @@ Improves browsing, filtering, and overall asset management.
     ],
     "description": "OctoAI product updates and release notes for April 2024
 
-<div className="changelog-status">
-  <img src="file:5679d19e-04a2-4ed2-ba89-1fb38e521adf" width="14" height="14" noZoom />
-  <span>Improved</span>
-</div>",
+Improved",
     "indexSegmentId": "0",
     "slug": "docs/release-notes/2024/april",
     "title": "April 2024 Release Notes",
@@ -22195,10 +21810,7 @@ telemetry.
     ],
     "description": "OctoAI product updates and release notes for February 2024
 
-<div className="changelog-status">
-  <img src="file:a090b4d6-cbde-4b2b-ba94-e021f246f037" width="12" height="12" noZoom />
-  <span>Added</span>
-</div>",
+Added",
     "indexSegmentId": "0",
     "slug": "docs/release-notes/2024/february",
     "title": "February 2024 Release Notes",
@@ -22363,10 +21975,7 @@ to enhance llms.
     ],
     "description": "OctoAI product updates and release notes for January 2024
 
-<div className='changelog-status'>
-<img src="file:a090b4d6-cbde-4b2b-ba94-e021f246f037" width='12' height='12' noZoom />
-<span>Added</span>
-</div>",
+Added",
     "indexSegmentId": "0",
     "slug": "docs/release-notes/2024/january",
     "title": "January 2024 Release Notes",
@@ -22483,10 +22092,7 @@ Run your fine-tuned model at the same cost and latency as the default models alr
     ],
     "description": "OctoAI product updates and release notes for December 2023
 
-<div className='changelog-status'>
-<img src="file:a090b4d6-cbde-4b2b-ba94-e021f246f037" width='12' height='12' noZoom />
-<span>Added</span>
-</div>",
+Added",
     "indexSegmentId": "0",
     "slug": "docs/release-notes/2023/december",
     "title": "December 2023 Release Notes",
@@ -22549,10 +22155,7 @@ You can now run Mixtral 8x7B Instruct using the Text Gen Solution and benefit fr
     ],
     "description": "OctoAI product updates and release notes for November 2023
 
-<div className='changelog-status'>
-<img src="file:a090b4d6-cbde-4b2b-ba94-e021f246f037" width='12' height='12' noZoom />
-<span>Added</span>
-</div>",
+Added",
     "indexSegmentId": "0",
     "slug": "docs/release-notes/2023/november",
     "title": "November 2023 Release Notes",
@@ -22762,10 +22365,7 @@ The fastest and most customizable GenAI stack for production-grade image generat
     ],
     "description": "OctoAI product updates and release notes for October 2023
 
-<div className='changelog-status'>
-<img src="file:5679d19e-04a2-4ed2-ba89-1fb38e521adf" width='14' height='14' noZoom />
-<span>Improved</span>
-</div>",
+Improved",
     "indexSegmentId": "0",
     "slug": "docs/release-notes/2023/october",
     "title": "October 2023 Release Notes",
@@ -22882,10 +22482,7 @@ Our most recent security enhancement showcases OctoAI provides processes and saf
     ],
     "description": "OctoAI product updates and release notes for September 2023
 
-<div className='changelog-status'>
-<img src="file:a090b4d6-cbde-4b2b-ba94-e021f246f037" width='12' height='12' noZoom />
-<span>Added</span>
-</div>",
+Added",
     "indexSegmentId": "0",
     "slug": "docs/release-notes/2023/september",
     "title": "September 2023 Release Notes",
@@ -22993,10 +22590,7 @@ We also have a new audio generation endpoint available under private preview (e.
     ],
     "description": "OctoAI product updates and release notes for August 2023
 
-<div className='changelog-status'>
-<img src="file:a090b4d6-cbde-4b2b-ba94-e021f246f037" width='12' height='12' noZoom />
-<span>Added</span>
-</div>",
+Added",
     "indexSegmentId": "0",
     "slug": "docs/release-notes/2023/august",
     "title": "August 2023 Release Notes",
@@ -23245,10 +22839,7 @@ We updated the web user interface.
     ],
     "description": "OctoAI product updates and release notes for July 2023
 
-<div className='changelog-status'>
-<img src="file:a090b4d6-cbde-4b2b-ba94-e021f246f037" width='12' height='12' noZoom />
-<span>Added</span>
-</div>",
+Added",
     "indexSegmentId": "0",
     "slug": "docs/release-notes/2023/july",
     "title": "July 2023 Release Notes",
@@ -23554,10 +23145,7 @@ Changed the HTTP status code to 201 for the REST API calls for create secret and
     ],
     "description": "OctoAI product updates and release notes for June 2023
 
-<div className='changelog-status'>
-<img src="file:a090b4d6-cbde-4b2b-ba94-e021f246f037" width='12' height='12' noZoom />
-<span>Added</span>
-</div>",
+Added",
     "indexSegmentId": "0",
     "slug": "docs/release-notes/2023/june",
     "title": "June 2023 Release Notes",
@@ -23824,10 +23412,7 @@ NVIDIA A100s are back online as of 5pm PDT on June 6th. The A100s were temporari
     ],
     "description": "OctoAI product updates and release notes for May 2023
 
-<div className='changelog-status'>
-<img src="file:5679d19e-04a2-4ed2-ba89-1fb38e521adf" width='14' height='14' noZoom />
-<span>Improved</span>
-</div>",
+Improved",
     "indexSegmentId": "0",
     "slug": "docs/release-notes/2023/may",
     "title": "May 2023 Release Notes",

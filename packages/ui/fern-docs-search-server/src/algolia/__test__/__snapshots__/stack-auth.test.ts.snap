@@ -3,38 +3,8 @@
     "breadcrumbs": [],
     "description": "Welcome to Stack Auth, the open-source authentication platform!
 
-You can get started in five minutes with our [setup guide](/getting-started/setup), or jump straight into the documentation.
-
-<CardGroup>
-  <Card 
-    title="Setup & Installation"
-    icon="fa-regular fa-play" 
-    href="/getting-started/setup"
-  >
-    Get started with Stack in 5 minutes
-  </Card>
-  <Card 
-    title="SDK Reference"
-    icon="fa-regular fa-file-lines" 
-    href="/sdk"
-  >
-    Learn how to use Stack's SDKs for Next.js
-  </Card>
-  <Card 
-    title="REST API Reference"
-    icon="fa-solid fa-code" 
-    href="/rest-api"
-  >
-    Explore Stack's REST API for your backends
-  </Card>
-  <Card 
-    title="Discord"
-    icon="fa-brands fa-discord"
-    href="https://discord.stack-auth.com"
-  >
-    Join our Discord community
-  </Card>
-</CardGroup>",
+You can get started in five minutes with our setup guide, or jump straight into the documentation.
+Get started with Stack in 5 minutesLearn how to use Stack's SDKs for Next.jsExplore Stack's REST API for your backendsJoin our Discord community",
     "indexSegmentId": "0",
     "slug": "overview",
     "title": "Overview",
@@ -547,9 +517,8 @@ After signing up/in, you will be redirected back to the home page. We will show 
     ],
     "description": "Pre-built Next.js components to make your life easier
 
-In [the last guide](/getting-started/setup), we initialized Stack. This time, we will take a quick look at some of the most useful Next.js components.
-
-For the full documentation of all available components, please refer to the [components reference](/components).",
+In the last guide, we initialized Stack. This time, we will take a quick look at some of the most useful Next.js components.
+For the full documentation of all available components, please refer to the components reference.",
     "indexSegmentId": "0",
     "slug": "getting-started/components",
     "title": "Components",
@@ -1660,11 +1629,9 @@ Configure Stack's Email Settings: Navigate to the Emails section in the Stack da
     ],
     "description": "The most important object of your Stack project
 
-By now, you may have seen the `useApp()` hook and the `stackServerApp` variable. Both return a `StackApp`, of type `StackClientApp` and `StackServerApp` respectively.
-
-Nearly all of Stack's functionality is on your `StackApp` object. Think of this object as the "connection" from your code to Stack's servers. Each app is always associated with one specific project ID (by default the one found in your environment variables).
-
-There is also a page on [StackApp](../sdk/stack-app) in the SDK reference, which lists all available functions.",
+By now, you may have seen the useApp() hook and the stackServerApp variable. Both return a StackApp, of type StackClientApp and StackServerApp respectively.
+Nearly all of Stack's functionality is on your StackApp object. Think of this object as the "connection" from your code to Stack's servers. Each app is always associated with one specific project ID (by default the one found in your environment variables).
+There is also a page on StackApp in the SDK reference, which lists all available functions.",
     "indexSegmentId": "0",
     "slug": "concepts/stack-app",
     "title": "The StackApp Object",
@@ -1821,9 +1788,9 @@ Some of the functions have different return types; for example, StackClientApp.g
 
 Stack Auth allows storing additional user information through three types of metadata fields:
 
-1. **clientMetadata**: Readable and writable from a [client](/concepts/stack-app#client-vs-server).
-2. **serverMetadata**: Readable and writable only from a [server](/concepts/stack-app#client-vs-server).
-3. **clientReadOnlyMetadata**: Readable from a client, writable only from a server.",
+clientMetadata: Readable and writable from a client.
+serverMetadata: Readable and writable only from a server.
+clientReadOnlyMetadata: Readable from a client, writable only from a server.",
     "indexSegmentId": "0",
     "slug": "concepts/custom-user-data",
     "title": "Custom User Data",
@@ -2036,13 +2003,12 @@ console.log(user.clientReadOnlyMetadata);
     "description": "Implementing a user onboarding page and collecting information on sign-up
 
 By default, Stack Auth collects information such as email addresses from OAuth providers. Sometimes, you may want to collect additional information from users during sign-up, for example a name or address.
-
 The most straightforward approach is to redirect users to an onboarding page right after they sign up. However, this is not recommended for the following reasons:
 
-1. Users can accidentally (or purposefully) close or navigate away from the page before completing the onboarding.
-2. Redirect URLs may vary depending on the context. For instance, if a user is redirected to a sign-in page after trying to access a protected page, they'll expect to return to the original protected page post-authentication.
+Users can accidentally (or purposefully) close or navigate away from the page before completing the onboarding.
+Redirect URLs may vary depending on the context. For instance, if a user is redirected to a sign-in page after trying to access a protected page, they'll expect to return to the original protected page post-authentication.
 
-Instead, a more reliable strategy is to store an `onboarded` flag in the user's metadata and redirect users to the onboarding page if they haven't completed it yet.",
+Instead, a more reliable strategy is to store an onboarded flag in the user's metadata and redirect users to the onboarding page if they haven't completed it yet.",
     "indexSegmentId": "0",
     "slug": "concepts/user-onboarding",
     "title": "User Onboarding",
@@ -2340,14 +2306,9 @@ export default async function HomePage() {
     "description": "Managing third-party OAuth access tokens
 
 Stack has good support for working with OAuth and OIDC providers, such as Google, Facebook, Microsoft, and others.
-
 Beyond using OAuth for signing in, Stack can manage your users' access token so you can invoke APIs on their behalf. For example, you can use this to send emails with Gmail, access repositories on GitHub, or access files on OneDrive.
-
 A connected account is simply an external account that is linked to the user in some way. If you are not using shared keys (see note below), any user created with "Sign up with OAuth" is automatically connected to the account they signed up with, but it's also possible to connect a user with a provider that is unavailable for sign in.
-
-<Note>
-  You cannot connect a user's accounts with shared OAuth keys. You need to set up your own OAuth client ID and client secret in Stack's dashboard. For more details, check [Going to Production](../getting-started/production#oauth-providers).
-</Note>",
+You cannot connect a user's accounts with shared OAuth keys. You need to set up your own OAuth client ID and client secret in Stack's dashboard. For more details, check Going to Production.",
     "indexSegmentId": "0",
     "slug": "concepts/oauth",
     "title": "Connected OAuth Accounts",
@@ -2660,8 +2621,7 @@ export const stackServerApp = new StackServerApp({
     "description": "Manage teams and team members
 
 Teams provide a structured way to group users and manage their permissions. Users can belong to multiple teams simultaneously, allowing them to represent departments, B2B customers, or projects.
-
-The server can perform all operations on a team, but the client can only carry out some actions if the user has the necessary permissions. This applies to all actions that can be performed on a server/client-side `User` object and a `Team` object.",
+The server can perform all operations on a team, but the client can only carry out some actions if the user has the necessary permissions. This applies to all actions that can be performed on a server/client-side User object and a Team object.",
     "indexSegmentId": "0",
     "slug": "concepts/orgs-and-teams",
     "title": "Teams",
@@ -3395,8 +3355,8 @@ await team.delete();
 
 A user can be a member of multiple teams, so most websites using teams will need a way to select a "current team" that the user is working on. There are two primary methods to accomplish this:
 
-- **Deep Link**: Each team has a unique URL, for example, `your-website.com/team/<team-id>`. When a team is selected, it redirects to a page with that team's URL.
-- **Current Team**: When a user selects a team, the app stores the team as a global "current team" state. In this way, the URL of the current team might be something like `your-website.com/current-team`, and the URL won't change after switching teams.",
+Deep Link: Each team has a unique URL, for example, your-website.com/team/<team-id>. When a team is selected, it redirects to a page with that team's URL.
+Current Team: When a user selects a team, the app stores the team as a global "current team" state. In this way, the URL of the current team might be something like your-website.com/current-team, and the URL won't change after switching teams.",
     "indexSegmentId": "0",
     "slug": "concepts/team-selection",
     "title": "Selecting a Team",
@@ -4691,49 +4651,44 @@ fetch(url, { headers })
         "title": "Customization",
       },
     ],
-    "description": "Stack components support light and dark mode out of the box. You can switch between light and dark mode using [next-themes](https://github.com/pacocoursey/next-themes) (or any other library that changes the `data-theme` or `class` to `dark` or `light` attribute of the `html` element).
+    "description": "Stack components support light and dark mode out of the box. You can switch between light and dark mode using next-themes (or any other library that changes the data-theme or class to dark or light attribute of the html element).
+Here is an example of how to set up next-themes with Stack (find more details in the next-themes documentation):
 
-Here is an example of how to set up next-themes with Stack (find more details in the [next-themes documentation](https://github.com/pacocoursey/next-themes)):
+Install next-themes:
 
-1. Install next-themes:
+npm install next-themes
 
-  ```bash
-  npm install next-themes
-  ```
 
-2. Add the `ThemeProvider` to your `layout.tsx` file:
+Add the ThemeProvider to your layout.tsx file:
 
-  ```jsx
-  import { ThemeProvider } from 'next-themes'
+import { ThemeProvider } from 'next-themes'
 
-  export default function Layout({ children }) {
-    return (
-      <ThemeProvider>
-        <StackTheme>
-          {children}
-        </StackTheme>
-      </ThemeProvider>
-    )
-  }
-  ```
+export default function Layout({ children }) {
+  return (
+    <ThemeProvider>
+      <StackTheme>
+        {children}
+      </StackTheme>
+    </ThemeProvider>
+  )
+}
 
-3. Build a color mode switcher component:
 
-  ```jsx
-  'use client';
-  import { useTheme } from 'next-themes'
+Build a color mode switcher component:
 
-  export default function ColorModeSwitcher() {
-    const { theme, setTheme } = useTheme()
-    return (
-      <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
-        Toggle theme
-      </button>
-    )
-  }
-  ```
+'use client';
+import { useTheme } from 'next-themes'
 
-Now if you put the `ColorModeSwitcher` component in your app, you should be able to switch between light and dark mode. There should be no flickering or re-rendering of the page after reloading.",
+export default function ColorModeSwitcher() {
+  const { theme, setTheme } = useTheme()
+  return (
+    <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+      Toggle theme
+    </button>
+  )
+}
+
+Now if you put the ColorModeSwitcher component in your app, you should be able to switch between light and dark mode. There should be no flickering or re-rendering of the page after reloading.",
     "indexSegmentId": "0",
     "slug": "customization/dark-mode",
     "title": "Dark/Light Mode",
@@ -4796,38 +4751,34 @@ Now if you put the ColorModeSwitcher component in your app, you should be able t
       },
     ],
     "description": "If you want to spend minimal time on styling but still want to align with your brand, you can customize the colors of the Stack app. Colors are stored in React context and can be easily overridden.
-
 There are some color variables that you can customize:
 
-- `background`
-- `foreground`
-- `card`
-- `cardForeground`
-- `popover`
-- `popoverForeground`
-- `primary`
-- `primaryForeground`
-- `secondary`
-- `secondaryForeground`
-- `muted`
-- `mutedForeground`
-- `accent`
-- `accentForeground`
-- `destructive`
-- `destructiveForeground`
-- `border`
-- `input`
-- `ring`
+background
+foreground
+card
+cardForeground
+popover
+popoverForeground
+primary
+primaryForeground
+secondary
+secondaryForeground
+muted
+mutedForeground
+accent
+accentForeground
+destructive
+destructiveForeground
+border
+input
+ring
 
 And some other variables:
 
-- `radius`: border radius of components like buttons, inputs, etc.
+radius: border radius of components like buttons, inputs, etc.
 
-These variables are css variables so you can use the syntax like `hsl(0, 0%, 0%)`, `black`, `#fff`, etc.
-
-The colors can be different for light and dark mode. You can pass these into the `StackTheme` component (in your `layout.tsx` file if you followed the get started guide) as follows:
-
-```jsx title="app/layout.tsx"
+These variables are css variables so you can use the syntax like hsl(0, 0%, 0%), black, #fff, etc.
+The colors can be different for light and dark mode. You can pass these into the StackTheme component (in your layout.tsx file if you followed the get started guide) as follows:
 const theme = {
   light: {
     primary: 'red',
@@ -4842,8 +4793,7 @@ const theme = {
 
 <StackTheme theme={theme}>
   {/* children */}
-</StackTheme>
-```",
+</StackTheme>",
     "indexSegmentId": "0",
     "slug": "customization/custom-styles",
     "title": "Colors and Styles",
@@ -5045,8 +4995,7 @@ pt-PT: Portuguese (Portugal)
       },
     ],
     "description": "If you want to have full control over the layout and logic flow, you can build your own pages using our built-in components or low-level functions.
-
-By default, `StackHandler` creates all pages you need, however, you can replace them with your own pages.",
+By default, StackHandler creates all pages you need, however, you can replace them with your own pages.",
     "indexSegmentId": "0",
     "slug": "customization/custom-pages",
     "title": "Custom Layouts and Pages",
@@ -6083,10 +6032,7 @@ export default function CustomCredentialSignUp() {
     "description": "Integrate Stack Auth with Supabase RLS
 
 This guide shows how to integrate Stack Auth with Supabase row level security (RLS).
-
-<Note>
-  This guide only focuses on the RLS/JWT integration and does not sync user data between Supabase and Stack. You should use [webhooks](/concepts/webhooks) to achieve data sync.
-</Note>",
+This guide only focuses on the RLS/JWT integration and does not sync user data between Supabase and Stack. You should use webhooks to achieve data sync.",
     "indexSegmentId": "0",
     "slug": "others/supabase",
     "title": "Supabase Integration",
@@ -6478,17 +6424,12 @@ You can find the full example here on GitHub.",
     "description": "Self-host Stack Auth on your own server
 
 Stack Auth is fully open-source and can be self-hosted on your own infrastructure. This guide will introduce each component of the project and how to set them up.
-
-<Note>
 If you are unsure whether you should self-host, here are some things to consider:
-
-- **Complexity**: Stack Auth is a complex project with many interdependent services. Self-hosting requires managing these services and ensuring they work together seamlessly.
-- **Updates**: Stack Auth is a rapidly evolving project with frequent feature and fix releases. Self-hosting requires you to manage updates and apply them timely.
-- **Reliability**: Self-hosting requires you to ensure the reliability of your infrastructure. Downtimes and outages can be costly to handle.
-- **Security**: Self-hosting requires ensuring the security of your infrastructure. A compromised service can affect your users.
-
-For most users, we recommend using [Stack Auth's cloud hosted solution](https://app.stack-auth.com). However, if you understand the above challenges and are comfortable managing them, follow the instructions below to self-host!
-</Note>",
+Complexity: Stack Auth is a complex project with many interdependent services. Self-hosting requires managing these services and ensuring they work together seamlessly.
+Updates: Stack Auth is a rapidly evolving project with frequent feature and fix releases. Self-hosting requires you to manage updates and apply them timely.
+Reliability: Self-hosting requires you to ensure the reliability of your infrastructure. Downtimes and outages can be costly to handle.
+Security: Self-hosting requires ensuring the security of your infrastructure. A compromised service can affect your users.
+For most users, we recommend using Stack Auth's cloud hosted solution. However, if you understand the above challenges and are comfortable managing them, follow the instructions below to self-host!",
     "indexSegmentId": "0",
     "slug": "others/self-host",
     "title": "Self-Hosting",
@@ -6935,9 +6876,7 @@ Now, create a new project for your app and follow the normal setup process. Add 
         "title": "Components",
       },
     ],
-    "description": "Renders a user button component with optional user information, color mode toggle, and extra menu items.
-
-![UserButton](file:64adbb26-a23d-4282-9d78-05ce53cb9984)",
+    "description": "Renders a user button component with optional user information, color mode toggle, and extra menu items.",
     "indexSegmentId": "0",
     "slug": "components/user-button",
     "title": "<UserButton />",
@@ -7088,9 +7027,7 @@ export default function Page() {
     ],
     "description": "A React component for switching between teams. It displays a dropdown of teams and allows the user to select a team.
 
-![SelectedTeamSwitcher](file:31e94df1-ecf0-457d-8a8a-d2a47e7d57c1)
-
-For a comprehensive guide on using this component, refer to our [Team Selection documentation](/concepts/team-selection).",
+For a comprehensive guide on using this component, refer to our Team Selection documentation.",
     "indexSegmentId": "0",
     "slug": "components/selected-team-switcher",
     "title": "<SelectedTeamSwitcher />",
@@ -7381,9 +7318,7 @@ export default function MyAccountPage() {
     ],
     "description": "Renders a sign-in component with customizable options.
 
-![SignIn](file:25f0c839-ca18-4351-83bd-956c91a467ee)
-
-For more information, please refer to the [custom pages guide](/customization/custom-pages).",
+For more information, please refer to the custom pages guide.",
     "indexSegmentId": "0",
     "slug": "components/sign-in",
     "title": "<SignIn />",
@@ -7526,9 +7461,7 @@ export default function Page() {
     ],
     "description": "A component that renders a sign-up page with various customization options.
 
-![SignUp](file:526009f0-d4d4-4b8e-9567-2ae570078c91)
-
-For more information, please refer to the [custom pages guide](/customization/custom-pages).",
+For more information, please refer to the custom pages guide.",
     "indexSegmentId": "0",
     "slug": "components/sign-up",
     "title": "<SignUp />",
@@ -7674,11 +7607,8 @@ export default function Page() {
     ],
     "description": "A component that renders a sign-in form with email and password fields.
 
-![CredentialSignIn](file:efafc5de-b619-4c84-9050-84577601f8e6)
-
 Note that if credential sign-in is disabled in the dashboard, this component will still render. However, attempting to use it will result in an error being thrown.
-
-For more information, please refer to the [custom pages guide](/customization/custom-pages).",
+For more information, please refer to the custom pages guide.",
     "indexSegmentId": "0",
     "slug": "components/credential-sign-in",
     "title": "<CredentialSignIn />",
@@ -7792,11 +7722,8 @@ export default function Page() {
     ],
     "description": "A component that renders a sign-up form with email and password fields.
 
-![CredentialSignUp](file:fa183cce-a9c8-4c32-b18a-1e4b8ffb4b3c)
-
 Note that if credential sign-up is disabled in the dashboard, this component will still render. However, attempting to use it will result in an error being thrown.
-
-For more information, please refer to the [custom pages guide](/customization/custom-pages).",
+For more information, please refer to the custom pages guide.",
     "indexSegmentId": "0",
     "slug": "components/credential-sign-up",
     "title": "<CredentialSignUp />",
@@ -7916,11 +7843,8 @@ export default function Page() {
     ],
     "description": "Renders a customized OAuth button for various providers to initiate sign-in or sign-up processes.
 
-![OAuthButton](file:97002ac1-d095-4ed1-bd53-f2a8a6019de8)
-
 Note that if the specific OAuth provider is disabled in the dashboard, this component will still render. However, attempting to use it will result in an error being thrown.
-
-For more information, please refer to the [custom pages guide](/customization/custom-pages).",
+For more information, please refer to the custom pages guide.",
     "indexSegmentId": "0",
     "slug": "components/oauth-button",
     "title": "<OAuthButton />",
@@ -8052,8 +7976,6 @@ The OAuthButton component automatically styles itself based on the provided OAut
     ],
     "description": "Renders all the available OAuth buttons for sign-in or sign-up functionality.
 
-![OAuthButtonGroup](file:ebab34cd-b591-4d66-a1cb-c03803140c12)
-
 Note that if there are no OAuth providers enabled in the dashboard, this component will be empty.",
     "indexSegmentId": "0",
     "slug": "components/oauth-button-group",
@@ -8175,8 +8097,7 @@ export default function Page() {
       },
     ],
     "description": "Renders the appropriate authentication or account-related component based on the current route.
-
-For detailed usage instructions, please refer to the manual section of the [setup guide](/getting-started/setup).",
+For detailed usage instructions, please refer to the manual section of the setup guide.",
     "indexSegmentId": "0",
     "slug": "components/stack-handler",
     "title": "<StackHandler />",
@@ -8329,8 +8250,7 @@ export default function Hanlder(props: { params: any, searchParams: any }) {
       },
     ],
     "description": "A React component that provides Stack context to its children.
-
-For detailed usage instructions, please refer to the manual section of the [setup guide](/getting-started/setup).",
+For detailed usage instructions, please refer to the manual section of the setup guide.",
     "indexSegmentId": "0",
     "slug": "components/stack-provider",
     "title": "<StackProvider />",
@@ -8453,8 +8373,7 @@ function App() {
       },
     ],
     "description": "A component that applies a theme to its children.
-
-For more information, please refer to the [color and styles guide](/customization/custom-styles).",
+For more information, please refer to the color and styles guide.",
     "indexSegmentId": "0",
     "slug": "components/stack-theme",
     "title": "<StackTheme />",
@@ -8591,7 +8510,7 @@ children (optional): React.ReactNode - Child components to be rendered within th
         "title": "Classes",
       },
     ],
-    "description": "This is a detailed reference for the `User` object. If you're looking for a more high-level overview, please refer to our guide on users [here](/concepts/orgs-and-teams).",
+    "description": "This is a detailed reference for the User object. If you're looking for a more high-level overview, please refer to our guide on users here.",
     "indexSegmentId": "0",
     "slug": "sdk/user",
     "title": "User",
@@ -10391,7 +10310,7 @@ To get a CurrentServerUser object, you can use the stackServerApp.getUser() meth
         "title": "Classes",
       },
     ],
-    "description": "This is a detailed reference for the `StackApp` object. [Here](/concepts/stack-app) is a more high-level overview.",
+    "description": "This is a detailed reference for the StackApp object. Here is a more high-level overview.",
     "indexSegmentId": "0",
     "slug": "sdk/stack-app",
     "title": "StackApp",
@@ -12010,7 +11929,7 @@ const team = await stackServerApp.createTeam({
         "title": "Classes",
       },
     ],
-    "description": "This is a detailed reference for the `Team` object. If you're looking for a more high-level overview, please refer to our guide on teams [here](/concepts/orgs-and-teams).",
+    "description": "This is a detailed reference for the Team object. If you're looking for a more high-level overview, please refer to our guide on teams here.",
     "indexSegmentId": "0",
     "slug": "sdk/team",
     "title": "Team",
@@ -12804,18 +12723,23 @@ await team.delete();
         "title": "Classes",
       },
     ],
-    "description": "`TeamUser` is represents a user in the context of a team. There are two types of `TeamUser`
+    "description": "TeamUser is represents a user in the context of a team. There are two types of TeamUser
 
-1. `TeamUser`
-    - This is used on the client side.
-    - It contains minimal information about the user, only the user's ID.
-    - It contains a `teamProfile` object, which is the user's profile for the team.
-    - You can obtain it by calling `team.useUsers()` or `team.listUsers()` on a `Team` object.
 
-2. `ServerTeamUser`
-    - This is used on the server side.
-    - Currently it only contains the user's ID, but in the future it will extend `ServerUser`.
-    - You can obtain it by calling `serverTeam.listUsers()` on a `ServerTeam` object.",
+TeamUser
+
+This is used on the client side.
+It contains minimal information about the user, only the user's ID.
+It contains a teamProfile object, which is the user's profile for the team.
+You can obtain it by calling team.useUsers() or team.listUsers() on a Team object.
+
+
+
+ServerTeamUser
+
+This is used on the server side.
+Currently it only contains the user's ID, but in the future it will extend ServerUser.
+You can obtain it by calling serverTeam.listUsers() on a ServerTeam object.",
     "indexSegmentId": "0",
     "slug": "sdk/team-user",
     "title": "TeamUser",
@@ -12925,16 +12849,20 @@ The ID of the user.The team profile of the user.",
         "title": "Classes",
       },
     ],
-    "description": "`TeamProfile` is the profile of a user in the context of a team. There are two types of `TeamProfile`
+    "description": "TeamProfile is the profile of a user in the context of a team. There are two types of TeamProfile
 
-1. `TeamProfile`
-    - This is used on the client side.
-    - It contains the user's profile information for the team.
-    - You can obtain it by calling `teamUser.teamProfile` on a `TeamUser` object.
-2. `ServerTeamProfile`
-    - This is used on the server side.
-    - Currently it contains the same information as `TeamProfile`, but in the future it might contain more information.
-    - You can obtain it by calling `serverTeamUser.teamProfile` on a `ServerTeamUser` object.",
+TeamProfile
+
+This is used on the client side.
+It contains the user's profile information for the team.
+You can obtain it by calling teamUser.teamProfile on a TeamUser object.
+
+
+ServerTeamProfile
+
+This is used on the server side.
+Currently it contains the same information as TeamProfile, but in the future it might contain more information.
+You can obtain it by calling serverTeamUser.teamProfile on a ServerTeamUser object.",
     "indexSegmentId": "0",
     "slug": "sdk/team-profile",
     "title": "TeamProfile",
@@ -13035,9 +12963,8 @@ Same as TeamProfile.",
         "title": "Classes",
       },
     ],
-    "description": "`TeamPermission` represents that a user has a certain permission for a team. It is currently very simple and only contains an id.
-
-It can be obtained by calling functions like `user.getPermission()` or `user.listPermissions()`.",
+    "description": "TeamPermission represents that a user has a certain permission for a team. It is currently very simple and only contains an id.
+It can be obtained by calling functions like user.getPermission() or user.listPermissions().",
     "indexSegmentId": "0",
     "slug": "sdk/team-permission",
     "title": "TeamPermission",
@@ -13090,9 +13017,8 @@ The id of the permission.",
         "title": "Classes",
       },
     ],
-    "description": "The `Project` object contains the information and configuration of a project like the name, description, enabled auth methods, etc.
-
-You can obtain a `Project` object by calling `stackApp.getProject()` or `useProject()`.",
+    "description": "The Project object contains the information and configuration of a project like the name, description, enabled auth methods, etc.
+You can obtain a Project object by calling stackApp.getProject() or useProject().",
     "indexSegmentId": "0",
     "slug": "sdk/project",
     "title": "Project",
@@ -13151,20 +13077,26 @@ The id of the project.The display name of the project.Whether sign up is enabled
         "title": "Classes",
       },
     ],
-    "description": "`ContactChannel` represents a user's contact information, such as an email address. In the future, it will support additional contact types like phone numbers. Contact channels can optionally be used for authentication.
-
+    "description": "ContactChannel represents a user's contact information, such as an email address. In the future, it will support additional contact types like phone numbers. Contact channels can optionally be used for authentication.
 Stack provides two types of contact channels:
 
-1. `ContactChannel`
-    - Used on the client side
-    - Contains basic information like the contact value (e.g. email address) and type
-    - You can obtain it by calling `user.listContactChannels()` or `user.useContactChannels()`
-2. `ServerContactChannel`
-    - Used on the server side
-    - Extends `ContactChannel` with additional properties:
-      - Verification status
-      - Whether it's the user's primary contact channel
-    - You can obtain it by calling `serverUser.listContactChannels()` or `serverUser.useContactChannels()`",
+ContactChannel
+
+Used on the client side
+Contains basic information like the contact value (e.g. email address) and type
+You can obtain it by calling user.listContactChannels() or user.useContactChannels()
+
+
+ServerContactChannel
+
+Used on the server side
+Extends ContactChannel with additional properties:
+
+Verification status
+Whether it's the user's primary contact channel
+
+
+You can obtain it by calling serverUser.listContactChannels() or serverUser.useContactChannels()",
     "indexSegmentId": "0",
     "slug": "sdk/contact-channel",
     "title": "ContactChannel",
@@ -13739,18 +13671,14 @@ function MyComponent() {
         "title": "Hooks",
       },
     ],
-    "description": "The `useStackApp` hook returns the `StackClientApp` object that you can use to interact with the Stack API. If you want to learn more about the `StackClientApp` object, check out the [StackApp](/sdk/stack-app) documentation.
-
+    "description": "The useStackApp hook returns the StackClientApp object that you can use to interact with the Stack API. If you want to learn more about the StackClientApp object, check out the StackApp documentation.
 Example:
-
-```jsx
 import { useStackApp } from "@stackframe/stack";
 
 function MyComponent() {
   const stackApp = useStackApp();
   return <div>Sign In URL: {stackApp.urls.signIn}</div>;
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "sdk/use-stack-app",
     "title": "useStackApp()",

@@ -11,7 +11,6 @@
 Welcome 👋 Vellum helps bring LLM-powered features to production with tools for prompt engineering,
 semantic search, version control, quantitative testing, and performance monitoring across
 all major LLM providers and open source models.
-
 Here you'll find resources and guides for the Vellum platform and our APIs. Please don't hesitate to contact
 us at support@vellum.ai if you can't find what you're looking for.",
     "indexSegmentId": "0",
@@ -182,23 +181,21 @@ Another great way to get help and connect with other Vellum users is to join our
 Prompts are the "instructions" that you give to Large Language Models (LLMs) to generate a response.
 If you've used ChatGPT, then you've actually already interacted with an LLM that was provided with a
 Prompt on how it should respond in a helpful, polite manner!
-
 When building your own AI-powered application, you'll very likely need to come up with your own Prompts.
 Furthermore, Prompts are rarely static strings. Instead, most Prompts are "templates" with dynamic
 sections whose contents are determined at runtime. For example, you might need to include information about
 the user that's interacting with your application, some relevant section of a knowledge base, etc.
-
 Vellum encourages the development of dynamic prompts by providing a powerful
 prompt syntax that supports variable substitution, jinja templating, and function calling.
 At a high level, you define "Input Variables" and reference those variables in your Prompt.
 You can experiment with different values for these variables via "Scenarios" to determine
 what the LLM's output would be.
-
 You can reference input variables in your Prompt in one of two ways using different types
 of "blocks."
-- Rich Text Blocks: Great for most use-cases where a simple variable substitution is needed.
-Begin type `{{ ` or `/` to get a dropdown of available variables.
-- Jinja Blocks: Used for more complex use-cases where you need the power of Jinja templating syntax
+
+Rich Text Blocks: Great for most use-cases where a simple variable substitution is needed.
+Begin type {{  or / to get a dropdown of available variables.
+Jinja Blocks: Used for more complex use-cases where you need the power of Jinja templating syntax
 to perform conditional logic, loops, etc.",
     "indexSegmentId": "0",
     "slug": "help-center/prompts/prompt-engineering",
@@ -1060,8 +1057,7 @@ at the top right of the page.
     "description": "Learn how to add both private and public custom models to your Vellum workspace for enhanced functionality and domain-specific advantages.
 
 Vellum supports several of the industry's most popular models by default available in your workspace right away. However, you may wish to use a custom model that gives your business some additional advantage not provided by these off the shelf models, such as higher rate limits or more domain-specific training. These models can also be set up for use within Vellum!
-
-Custom models fall under two categories: _private_ models and _public_ models. Both could be added via the `Models` tab within Vellum.",
+Custom models fall under two categories: private models and public models. Both could be added via the Models tab within Vellum.",
     "indexSegmentId": "0",
     "slug": "help-center/prompts/custom-models",
     "title": "Integrate Custom Models in Your Vellum Workspace Easily",
@@ -1204,10 +1200,7 @@ While most of these models require just adding your API key from the relevant mo
     "description": "Learn how to send images to multimodal models like GPT-4 Turbo with Vision from within Vellum’s UI
 
 Leverage the power of multimodal models to process both natural language and visual inputs within your LLM-applications using Vellum.
-
-Vellum supports images for OpenAI’s vision models like GPT-4 Turbo with Vision - both via [API](https://docs.vellum.ai/api-reference/) and in the Vellum UI.
-
-![Images in Vellum UI](https://storage.googleapis.com/vellum-public/help-docs/images-in-prompts-walkthrough.gif)
+Vellum supports images for OpenAI’s vision models like GPT-4 Turbo with Vision - both via API and in the Vellum UI.
 
 Read on to learn how to get started using images in Vellum!",
     "indexSegmentId": "0",
@@ -1702,9 +1695,7 @@ We also provide a default value so we can handle that downstream in our system r
     "description": "Discover how Vellum Workflows streamline LLM call chains with a low-code interface, easy testing, and versioned deployments.
 
 Vellum Workflows help you quickly prototype, deploy, version, and monitor complex chains of LLM calls and the business logic that tie them together.
-
 It provides a low-code interface for defining these chains so that you get rapid feedback on how they work across a variety of test cases that you define. Once you’re happy with the Workflow, you can “deploy” it and hit an API to invoke that Workflow from your application.
-
 Once deployed, future changes to the Workflow definition are versioned and invocations made from your application are logged. For a given invocation, you can view the inputs, outputs, and latency of each step along the way.",
     "indexSegmentId": "0",
     "slug": "help-center/workflows/introduction",
@@ -2954,8 +2945,7 @@ Custom - Define your own String output that this node will use as an error messa
     ],
     "description": "Discover how to build dynamic architectures using Workflows, from RAG systems to message routing and looping
 
-With a large number of supported node types (full details here: [Experimenting with Workflows](/help-center/workflows/experimentation)) and few limits on how they can be connected to each other, the types of architectures/ applications you can create using Workflows is very large.
-
+With a large number of supported node types (full details here: Experimenting with Workflows) and few limits on how they can be connected to each other, the types of architectures/ applications you can create using Workflows is very large.
 The list of architectures below is not exhaustive, we’re continuing to build it out. If you come up with an interesting architecture that you think the community might benefit from, please reach out so we can add it to the list here.",
     "indexSegmentId": "0",
     "slug": "help-center/workflows/common-architectures",
@@ -3167,7 +3157,7 @@ Workflow
     ],
     "description": "Learn how to manipulate strings, JSON, chat history, and search results using Templating Nodes for efficient AI workflows.
 
-The Templating Node supports [Jinja2](https://jinja.palletsprojects.com/en/3.1.x/templates/) syntax and is a flexible way of performing light-weight data transformations as part of your Workflow. Here are some common data manipulations you may want to make in a Workflow and how you define them via Templating Nodes.",
+The Templating Node supports Jinja2 syntax and is a flexible way of performing light-weight data transformations as part of your Workflow. Here are some common data manipulations you may want to make in a Workflow and how you define them via Templating Nodes.",
     "indexSegmentId": "0",
     "slug": "help-center/workflows/common-data-transforms",
     "title": "Guide to Data Transformation with Templating Nodes",
@@ -3975,7 +3965,6 @@ async function main(inputs: {
     "description": "Learn how to integrate and monitor your Workflow with Vellum's API, making production deployment quick and easy.
 
 Once you have your Workflow built in Vellum’s UI, we provide an easy way to use it in production. Vellum handles the execution of the Workflow — all you need to provide are the input variables to call the Workflow. Vellum abstracts away the need to store the prompts, semantic search & the business logic tying together these prompts in your code base. Using Workflows in production becomes a matter of minutes, not days.
-
 This help center article covers how to make the integration, and the monitoring options you have once in production.",
     "indexSegmentId": "0",
     "slug": "help-center/workflows/api-integration",
@@ -4095,12 +4084,9 @@ Clicking the View Details button on the Execution brings you to a UI where you c
     "description": "Learn how to use function calling with Chat Models in Vellum Workflows
 
 Function calling (aka “tool calling”) helps you get consistent structured data from LLMs. It lets you call custom functions, interact with external APIs, and generally turn natural language into something code can understand.
-
-But, don't be misled by the name—this feature doesn't _actually_ call functions for you.
-
-Instead, it creates a JSON object with the name of the function to call and the arguments to pass, which you can use to trigger functions in your code. OpenAI models generate this JSON based on the tools you define with the [tools parameter](https://platform.openai.com/docs/api-reference/chat/create#chat/create-functions) in the API.
-
-So now that we’ve cleared that part, let’s learn _how you can use function calling with Chat Models in Vellum._",
+But, don't be misled by the name—this feature doesn't actually call functions for you.
+Instead, it creates a JSON object with the name of the function to call and the arguments to pass, which you can use to trigger functions in your code. OpenAI models generate this JSON based on the tools you define with the tools parameter in the API.
+So now that we’ve cleared that part, let’s learn how you can use function calling with Chat Models in Vellum.",
     "indexSegmentId": "0",
     "slug": "help-center/workflows/function-calling-with-chat-models",
     "title": "Function Calling with Chat Models",
@@ -5542,20 +5528,18 @@ Concepts: Perplexity, SERP, Research Automation, Structured Data Extraction, Par
 Ensuring model quality is challenging, because prompts need to work effectively and
 consistently over a wide range of potential inputs.
 When modifying a Prompt, adjusting parameters, or switching models, the likelihood of regression is high.
-This is where [quantitative evaluation](https://www.vellum.ai/blog/how-to-evaluate-the-quality-of-large-language-models-for-production-use-cases) comes in.
-
+This is where quantitative evaluation comes in.
 Vellum's answer to quantitative evaluation are Test Suites and Metrics. Unlike Comparison Mode and Chat Mode,
 where the output of each Scenario is qualitatively evaluated by visual inspection,
 Test Suites use Metrics that return scores between 0 and 1 to provide a more objective measure of quality over a wider range of scenarios.
 This is especially important when your prompt's coverage needs scale and visual inspection is no longer feasible,
 which typically happens when you have 10+ scenarios.
-
 Test Suites cover common use cases in LLM development:
 
-1. Test Driven Development of Prompts/Workflows in a Sandbox
-2. Performance testing on large numbers of Scenarios
-3. Regression testing before deploying a change to a Prompt or Workflow
-4. Evaluating [external entities](#testing-functions-external-to-vellum)
+Test Driven Development of Prompts/Workflows in a Sandbox
+Performance testing on large numbers of Scenarios
+Regression testing before deploying a change to a Prompt or Workflow
+Evaluating external entities
 
 If you're looking to improve the velocity or quality of your LLM development, Test Suites could be your answer.",
     "indexSegmentId": "0",
@@ -6227,19 +6211,13 @@ python example here",
     "description": "How to evaluate and maintain high quality RAG pipelines in Vellum
 
 Retrieval Augmented Generation (RAG) is a powerful technique to improve your LLM output quality by providing it relevant data - usually retrieved from an external knowledgebase.
-
 In Vellum, setting up your RAG pipeline is straightforward using our Documents feature. Upload and vectorize your knowledgebase for use in minutes.
-For more details on how to set up a RAG pipeline in Vellum, see [common architectures here](/help-center/workflows/common-architectures).
-
+For more details on how to set up a RAG pipeline in Vellum, see common architectures here.
 Once you have your RAG workflow set up, a challenging but important and often overlooked aspect is evaluating quality. When it comes to RAG, you're not only interested in the quality of your LLM response (the Generation), but also the context being returned from your vector database (the Retrieval).
-
 Essentially, you're checking to see how effectively your system retrieves relevant information from a knowledge base and then uses it to produce reliable and precise responses or content.
-
 RAG evaluation is a continuous process - running these evaluations gives confidence when initially deploying your RAG into production but the benefits continue post-deployment.
 Running these evals in production help you understand your system's current performance and identify areas for optimization.
-
 Using Out-of-Box RAG Metrics in Test Suites, Vellum makes it easy to evaluate, monitor, and continuously improve your RAG pipeline over time without concern of introducing regressions.
-
 Read on to see how you can evaluate your RAG pipeline in Vellum!",
     "indexSegmentId": "0",
     "slug": "help-center/evaluation/evaluating-rag-pipelines",
@@ -6531,7 +6509,7 @@ article",
     ],
     "description": "Learn how Vellum's Online Evaluations feature continuously assesses LLM outputs, ensuring model quality across diverse deployment scenarios.
 
-Online Evaluations in Vellum provide a powerful way to continuously assess the quality of your deployed LLM applications. 
+Online Evaluations in Vellum provide a powerful way to continuously assess the quality of your deployed LLM applications.
 This feature allows you to monitor and evaluate the performance of your prompts or workflows in real-time as they're being used in production.",
     "indexSegmentId": "0",
     "slug": "help-center/evaluation/online-evaluations",
@@ -7201,21 +7179,18 @@ For details, see: https://docs.ragas.io/en/v0.1.5/concepts/metrics/context_relev
 
 In addition to the default Metrics, Vellum makes it easy to define custom Reusable Metrics tailored to your specific business logic and use-case.
 This saves you time and ensures standardized evaluation criteria for your Prompts, Workflows, or external entities you'd like to test.
-
 Let's create your first Reusable Metric
 
-1. Visit the [Evaluations tab](https://app.vellum.ai/evaluations) in Vellum and open the Metrics page
-2. Click the blue Create Metric button at the top-right of the page to open the Create Metric modal
-3. From the Metric type dropdown, select JSON Schema Match. To learn about Metric types other than JSON Schema Match, see Vellum's [Available Metric Types](#available-metric-types).
-4. In the "Label" field at the top left, enter "My First Metric". The "Name" field should autopopulate. This is a unique name that you can use to programmatically identify this Metric.
-5. In the "Description" field, type in "My first Metric description"
-6. Click next to configure your Metric and define what the expected output should match
-7. Add "name" and "email" properties to the JSON schema
-8. Click Finish to exit the modal and see your newly added Metric card on the Metrics page
+Visit the Evaluations tab in Vellum and open the Metrics page
+Click the blue Create Metric button at the top-right of the page to open the Create Metric modal
+From the Metric type dropdown, select JSON Schema Match. To learn about Metric types other than JSON Schema Match, see Vellum's Available Metric Types.
+In the "Label" field at the top left, enter "My First Metric". The "Name" field should autopopulate. This is a unique name that you can use to programmatically identify this Metric.
+In the "Description" field, type in "My first Metric description"
+Click next to configure your Metric and define what the expected output should match
+Add "name" and "email" properties to the JSON schema
+Click Finish to exit the modal and see your newly added Metric card on the Metrics page
 
-Congrats! You've now created a Reusable Metric that will be visible when selecting and configuring Metrics within any Test suite.
-
-![Create New Reusable Metric](https://storage.googleapis.com/vellum-public/help-docs/quantitatively-evaluating-outputs/metric-creation.png)",
+Congrats! You've now created a Reusable Metric that will be visible when selecting and configuring Metrics within any Test suite.",
     "indexSegmentId": "0",
     "slug": "help-center/metrics/custom-metrics",
     "title": "Create Custom Reusable Metrics for LLM Evaluation",
@@ -8190,25 +8165,17 @@ Note that you reference a Completion made previously by the ID that Vellum gener
 
 All the row-level Completions found in the "Completions" tab of a Prompt Deployment can
 be monitored in aggregate via the "Monitoring" tab.
-
 This is especially useful for spotting trends in things like request volume, latency,
 quality, and more. If there are other visualizations you'd like to see here, please share that feedback with us!
-
 The charts you see can be filtered down to specific time ranges using the “Relative Date” button.
 
-![Prompt Deployment Monitoring](https://storage.googleapis.com/vellum-public/help-docs/prompt_deployment_monitoring.png)
-
-**Number of Completions:** Number of requests made against the Generate endpoint
-
-**Average Quality over Time:** Quality tracked for each completion. This is only 
+Number of Completions: Number of requests made against the Generate endpoint
+Average Quality over Time: Quality tracked for each completion. This is only
 visible if Quality is filled out either through the UI or Actuals Endpoint API
-
-**Number of Completions w/ Actuals Submitted:** Number of requests that have an 
+Number of Completions w/ Actuals Submitted: Number of requests that have an
 associated quality / Actuals indication
-
-**Average Latency Over Time:** Time taken for the request to complete
-
-**Num LLM Provider Errors Over Time:** Number of errors from the LLM provider",
+Average Latency Over Time: Time taken for the request to complete
+Num LLM Provider Errors Over Time: Number of errors from the LLM provider",
     "indexSegmentId": "0",
     "slug": "help-center/deployments/monitoring",
     "title": "Track Production Trends with Prompt Deployment Monitoring",
@@ -8680,7 +8647,7 @@ curl -X POST \
     "description": "Learn how to upload and manage documents on Vellum AI for efficient document indexing and searching. Supports multiple file types.
 
 Any document that you want to query against should be uploaded ahead
-of time at [https://app.vellum.ai/document-indexes](https://app.vellum.ai/document-indexes).",
+of time at https://app.vellum.ai/document-indexes.",
     "indexSegmentId": "0",
     "slug": "help-center/documents/uploading-documents",
     "title": "Easy Guide to Uploading Documents on Vellum AI",
@@ -8932,10 +8899,7 @@ This configuration has proven to work well for most use cases. These settings wi
     "description": "Learn to add relevant context to your searches in Vellum Playground with simple steps for better query results.
 
 Vellum Search can be used to include relevant context in a prompt at run-time that fits within LLM token window limits. Typically, the query that produces the search results comes from an end-user.
-
 For example, here’s a prompt used to answer questions, pulling the source materials for an answer from a document index. The remainder of this article references variables from this prompt to explain the mechanics.
-
-```
 Answer questions based on the context provided below without
 using any other knowledge. If the question can't be answered
 using the provided context say "Sorry, I don't know."
@@ -8948,8 +8912,7 @@ Answer: ..
 {context_str}
 ---
 Question: {query_str}
-Answer:
-```",
+Answer:",
     "indexSegmentId": "0",
     "slug": "help-center/documents/running-searches",
     "title": "Using Search to retrieve context in a prompt",
@@ -9077,11 +9040,11 @@ Clicking Apply adds these results to the context_str variable
 
 Once in production, there’s a 3 step process to add search results in your queries at run-time:
 
-1. Call Search API to obtain relevant context (details below)
-2. Format the returned context and include as a single variable value when making requests to a Vellum Deployment
-3. Pass search results to request endpoint while calling the LLM
+Call Search API to obtain relevant context (details below)
+Format the returned context and include as a single variable value when making requests to a Vellum Deployment
+Pass search results to request endpoint while calling the LLM
 
-For Step 3, make sure you have a variable in Vellum Playground where search results are entered. Details to set that up are here: [Running Searches in Playground](/help-center/documents/running-searches)",
+For Step 3, make sure you have a variable in Vellum Playground where search results are entered. Details to set that up are here: Running Searches in Playground",
     "indexSegmentId": "0",
     "slug": "help-center/documents/api-integration",
     "title": "Easily integrate with Velum’s Search API",
@@ -9174,14 +9137,12 @@ For more info, see Metadata Filtering
     ],
     "description": "Learn how to refine searches using metadata filtering for precise document retrieval. Perfect for targeted searches.
 
-Some use-cases of Vellum Search require you to narrow in on a subset of documents prior to searching based on keyword match / semantic similarity. For example, you might want to search across historical conversations _for a specific user_ or only across documents _that have specific tags_.
-
+Some use-cases of Vellum Search require you to narrow in on a subset of documents prior to searching based on keyword match / semantic similarity. For example, you might want to search across historical conversations for a specific user or only across documents that have specific tags.
 You can do this through metadata filtering.
-
 Metadata filtering requires that you:
 
-1. Provide structured metadata for your documents either upon initial upload or later; and
-2. Provide filter criteria when performing a search.
+Provide structured metadata for your documents either upon initial upload or later; and
+Provide filter criteria when performing a search.
 
 Let’s see how to do each.",
     "indexSegmentId": "0",
@@ -9724,7 +9685,6 @@ def verify(message: str, secret: str, signature: str) -> bool:
 
 Welcome to Vellum's API documentation! Here you'll find information about the various endpoints available to you,
 as well as the parameters and responses that they accept and return.
-
 We will be exposing more and more of our APIs over time as they stabilize. If there is some action you can perform
 via the UI that you wish you could perform via API, please let us know and we can expose the relevant API here.",
     "indexSegmentId": "0",

@@ -3,8 +3,7 @@
     "breadcrumbs": [],
     "description": "The easiest way to use LLMs
 
-**BAML is a domain-specific language to generate structured outputs from LLMs -- with the best developer experience.**
-
+BAML is a domain-specific language to generate structured outputs from LLMs -- with the best developer experience.
 With BAML you can build reliable Agents, Chatbots with RAG, extract data from PDFs, and more.",
     "indexSegmentId": "0",
     "slug": "home",
@@ -434,18 +433,15 @@ You don't need to migrate 100% of your LLM code to BAML in one go! It works alon
         "title": "Introduction",
       },
     ],
-    "description": "**baml_src** is where you keep all your BAML files, and where all the prompt-related code lives. It must be named `baml_src` for our tooling to pick it up, but it can live wherever you want.
-
+    "description": "baml_src is where you keep all your BAML files, and where all the prompt-related code lives. It must be named baml_src for our tooling to pick it up, but it can live wherever you want.
 It helps keep your project organized, and makes it easy to separate prompt engineering from the rest of your code.
 
-<img src="file:eac0fc8d-8eb6-46bd-8c46-ae7a229b6571" width="300px"/>
-
-
 Some things to note:
-1. All declarations within this directory are accessible across all files contained in the `baml_src` folder.
-2. You can have multiple files, and even nest subdirectories.
 
-You don't need to worry about including this directory when deploying your code. See: [Deploying](/guide/development/deploying/aws)",
+All declarations within this directory are accessible across all files contained in the baml_src folder.
+You can have multiple files, and even nest subdirectories.
+
+You don't need to worry about including this directory when deploying your code. See: Deploying",
     "indexSegmentId": "0",
     "slug": "guide/introduction/baml_src",
     "title": "What is baml_src?",
@@ -478,22 +474,20 @@ You don't need to worry about including this directory when deploying your code.
         "title": "Introduction",
       },
     ],
-    "description": "**baml_client** is the code that gets generated from your BAML files that transforms your BAML prompts into the same equivalent function in your language, with validated type-safe outputs.
-<img src="file:eac0fc8d-8eb6-46bd-8c46-ae7a229b6571" width="300px"/>
+    "description": "baml_client is the code that gets generated from your BAML files that transforms your BAML prompts into the same equivalent function in your language, with validated type-safe outputs.
 
-```python Python
 from baml_client import b
 resume_info = b.ExtractResume("....some text...")
-```
 
 This has all the boilerplate to:
-1. call the LLM endpoint with the right parameters, 
-2. parse the output, 
-3. fix broken JSON (if any)
-4. return the result in a nice typed object.
-5. handle errors
 
-In Python, your BAML types get converted to Pydantic models. In Typescript, they get converted to TypeScript types, and so on. **BAML acts like a universal type system that can be used in any language**.",
+call the LLM endpoint with the right parameters,
+parse the output,
+fix broken JSON (if any)
+return the result in a nice typed object.
+handle errors
+
+In Python, your BAML types get converted to Pydantic models. In Typescript, they get converted to TypeScript types, and so on. BAML acts like a universal type system that can be used in any language.",
     "indexSegmentId": "0",
     "slug": "guide/introduction/baml_client",
     "title": "What is baml_client?",
@@ -730,9 +724,6 @@ The baml_client transforms a BAML function into the same equivalent function in 
       },
     ],
     "description": "We provide a BAML VSCode extension:     https://marketplace.visualstudio.com/items?itemName=Boundary.baml-extension
-
-
-
 | Feature | Supported |
 |---------|-----------|
 | Syntax highlighting for BAML files | ✅ |
@@ -740,7 +731,7 @@ The baml_client transforms a BAML function into the same equivalent function in 
 | LLM playground for testing BAML functions | ✅ |
 | Jump to definition for BAML files | ✅ |
 | Jump to definition between Python/TS files and BAML files | ✅ |
-| Auto generate `baml_client` on save | ✅ |
+| Auto generate baml_client on save | ✅ |
 | BAML formatter | ❌ |",
     "indexSegmentId": "0",
     "slug": "guide/installation-editors/vs-code-extension",
@@ -967,11 +958,8 @@ You can toggle between seeing the results of all test cases or all test cases fo
         "title": "Installation: Editors",
       },
     ],
-    "description": "Refer to the [Cursor Extension Installation Guide](https://www.cursor.com/how-to-install-extension) to install the extension in Cursor.
-
-<Warning>
-You may need to update BAML extension manually using the process above. Auto-update does not seem to be working well for many extensions in Cursor.
-</Warning>",
+    "description": "Refer to the Cursor Extension Installation Guide to install the extension in Cursor.
+You may need to update BAML extension manually using the process above. Auto-update does not seem to be working well for many extensions in Cursor.",
     "indexSegmentId": "0",
     "slug": "guide/installation-editors/cursor-extension",
     "title": "Cursor",
@@ -999,19 +987,17 @@ You may need to update BAML extension manually using the process above. Auto-upd
     ],
     "description": "We don't currently have any tier support for any other editors.
 
-* JetBrains IDEs
-* Helix
-* Zed
-* Vim
-* Emacs
-* Sublime Text
-* Atom
-
+JetBrains IDEs
+Helix
+Zed
+Vim
+Emacs
+Sublime Text
+Atom
 
 Since the extension is a language server, we can technically pull out the language server and syntax highlighter and support any editor supporting the language server protocol.
-If you're interested in contributing to the project and supporting another editor, [please reach out](/contact).
-
-An alternative is to edit your files in our [Playground](https://www.promptfiddle.com/), and copy the code into your editor, but we recommend using VSCode to edit BAML files for now.",
+If you're interested in contributing to the project and supporting another editor, please reach out.
+An alternative is to edit your files in our Playground, and copy the code into your editor, but we recommend using VSCode to edit BAML files for now.",
     "indexSegmentId": "0",
     "slug": "guide/installation-editors/others",
     "title": "Others",
@@ -1048,139 +1034,61 @@ An alternative is to edit your files in our Playground, and copy the code into y
         "title": "Installation: Language",
       },
     ],
-    "description": "<Note>You can check out this repo: 
-https://github.com/BoundaryML/baml-examples/tree/main/python-fastapi-starter</Note>
-
+    "description": "You can check out this repo:
+https://github.com/BoundaryML/baml-examples/tree/main/python-fastapi-starter
 To set up BAML with Python do the following:
+Install BAML VSCode/Cursor Extensionhttps://marketplace.visualstudio.com/items?itemName=boundary.baml-extension
+syntax highlighting
+testing playground
+prompt previews
+In your VSCode User Settings, highly recommend adding this to get better autocomplete for python in general, not just BAML.{
+  "python.analysis.typeCheckingMode": "basic"
+}
+Install BAMLpip install baml-py
+poetry add baml-py
+uv add baml-py
+Add BAML to your existing projectThis will give you some starter BAML code in a baml_src directory.baml-cli init
+poetry run baml-cli init
+uv run baml-cli init
+Generate the baml_client python module from .baml filesOne of the files in your baml_src directory will have a generator block. The next commmand will auto-generate the baml_client directory, which will have auto-generated python code to call your BAML functions.Any types defined in .baml files will be converted into Pydantic models in the baml_client directory.baml-cli generate
+poetry run baml-cli generate
+uv run baml-cli generate
+See What is baml_client to learn more about how this works.If you set up the VSCode extension, it will automatically run baml-cli generate on saving a BAML file.Use a BAML function in Python!If baml_client doesn't exist, make sure to run the previous step! from baml_client.sync_client import b
+from baml_client.types import Resume
 
-<Steps>
-  ### Install BAML VSCode/Cursor Extension
-      https://marketplace.visualstudio.com/items?itemName=boundary.baml-extension
+def example(raw_resume: str) -> Resume: 
+  # BAML's internal parser guarantees ExtractResume
+  # to be always return a Resume type
+  response = b.ExtractResume(raw_resume)
+  return response
 
-      - syntax highlighting
-      - testing playground
-      - prompt previews
-
-      <Tip>
-      In your VSCode User Settings, highly recommend adding this to get better autocomplete for python in general, not just BAML.
-
-      ```json
-      {
-        "python.analysis.typeCheckingMode": "basic"
-      }
-      ```
-      </Tip>
+def example_stream(raw_resume: str) -> Resume:
+  stream = b.stream.ExtractResume(raw_resume)
+  for msg in stream:
+    print(msg) # This will be a PartialResume type
   
-  ### Install BAML
-      <CodeBlocks>
-        ```bash pip
-        pip install baml-py
-        ```
+  # This will be a Resume type
+  final = stream.get_final_response()
 
-        ```bash poetry
-        poetry add baml-py
-        ```
+  return final
+from baml_client.async_client import b
+from baml_client.types import Resume
 
-         ```bash uv
-        uv add baml-py
-        ```
-        </CodeBlocks>
+async def example(raw_resume: str) -> Resume: 
+  # BAML's internal parser guarantees ExtractResume
+  # to be always return a Resume type
+  response = await b.ExtractResume(raw_resume)
+  return response
+
+async def example_stream(raw_resume: str) -> Resume:
+  stream = b.stream.ExtractResume(raw_resume)
+  async for msg in stream:
+    print(msg) # This will be a PartialResume type
   
-  ### Add BAML to your existing project
-      This will give you some starter BAML code in a `baml_src` directory.
+  # This will be a Resume type
+  final = stream.get_final_response()
 
-      <CodeBlocks>
-      ```bash pip
-      baml-cli init
-      ```
-
-      ```bash poetry
-      poetry run baml-cli init
-      ```
-
-      ```bash uv
-      uv run baml-cli init
-      ```
-      </CodeBlocks>
-  
-  ### Generate the `baml_client` python module from `.baml` files
-
-  One of the files in your `baml_src` directory will have a [generator block](/ref/baml/generator). The next commmand will auto-generate the `baml_client` directory, which will have auto-generated python code to call your BAML functions. 
-  
-  Any types defined in .baml files will be converted into Pydantic models in the `baml_client` directory.
-
-
-    <CodeBlocks>
-    ```bash pip
-    baml-cli generate
-    ```
-
-
-    ```bash poetry
-    poetry run baml-cli generate
-    ```
-
-    ```bash uv
-    uv run baml-cli generate
-    ```
-    </CodeBlocks>
-
-    See [What is baml_client](/guide/introduction/baml_client) to learn more about how this works.
-    <img src="file:362a1df5-e3ab-4ef1-9327-82ddc7addaba" />
-
-    <Tip>
-      If you set up the [VSCode extension](https://marketplace.visualstudio.com/items?itemName=Boundary.baml-extension), it will automatically run `baml-cli generate` on saving a BAML file.
-    </Tip>
-
-  
-  ### Use a BAML function in Python!
-    <Error>If `baml_client` doesn't exist, make sure to run the previous step! </Error>
-
-    <CodeBlocks>
-    ```python main.py 
-    from baml_client.sync_client import b
-    from baml_client.types import Resume
-
-    def example(raw_resume: str) -> Resume: 
-      # BAML's internal parser guarantees ExtractResume
-      # to be always return a Resume type
-      response = b.ExtractResume(raw_resume)
-      return response
-
-    def example_stream(raw_resume: str) -> Resume:
-      stream = b.stream.ExtractResume(raw_resume)
-      for msg in stream:
-        print(msg) # This will be a PartialResume type
-      
-      # This will be a Resume type
-      final = stream.get_final_response()
-
-      return final
-    ```
-
-    ```python async_main.py
-    from baml_client.async_client import b
-    from baml_client.types import Resume
-
-    async def example(raw_resume: str) -> Resume: 
-      # BAML's internal parser guarantees ExtractResume
-      # to be always return a Resume type
-      response = await b.ExtractResume(raw_resume)
-      return response
-
-    async def example_stream(raw_resume: str) -> Resume:
-      stream = b.stream.ExtractResume(raw_resume)
-      async for msg in stream:
-        print(msg) # This will be a PartialResume type
-      
-      # This will be a Resume type
-      final = stream.get_final_response()
-
-      return final
-    ```
-    </CodeBlocks>
-  
-</Steps>",
+  return final",
     "indexSegmentId": "0",
     "slug": "guide/installation-language/python",
     "title": "Python",
@@ -1323,129 +1231,59 @@ You're all set! Continue on to the Deployment Guides for your language to learn 
         "title": "Installation: Language",
       },
     ],
-    "description": "<Note>You can check out this repo: https://github.com/BoundaryML/baml-examples/tree/main/nextjs-starter</Note>
-
+    "description": "You can check out this repo: https://github.com/BoundaryML/baml-examples/tree/main/nextjs-starter
 To set up BAML with Typescript do the following:
+Install BAML VSCode/Cursor Extensionhttps://marketplace.visualstudio.com/items?itemName=boundary.baml-extension
+syntax highlighting
+testing playground
+prompt previews
+Install BAMLnpm install @boundaryml/baml
+pnpm add @boundaryml/baml
+yarn add @boundaryml/baml
+deno install npm:@boundaryml/baml
+Add BAML to your existing projectThis will give you some starter BAML code in a baml_src directory.npx baml-cli init
+pnpx baml-cli init
+yarn baml-cli init
+dpx baml-cli init
+Generate the baml_client typescript package from .baml filesOne of the files in your baml_src directory will have a generator block. This tells BAML how to generate the baml_client directory, which will have auto-generated typescript code to call your BAML functions.npx baml-cli generate
+You can modify your package.json so you have a helper prefix in front of your build command.{
+  "scripts": {
+    // Add a new command
+    "baml-generate": "baml-cli generate",
+    // Always call baml-generate on every build.
+    "build": "npm run baml-generate && tsc --build",
+  }
+}
+See What is baml_src to learn more about how this works.If you set up the VSCode extension, it will automatically run baml-cli generate on saving a BAML file.Use a BAML function in Typescript!If baml_client doesn't exist, make sure to run the previous step! import {b} from "baml_client"
+import type {Resume} from "baml_client/types"
 
-<Steps>
-  ### Install BAML VSCode/Cursor Extension
-      https://marketplace.visualstudio.com/items?itemName=boundary.baml-extension
+async function Example(raw_resume: string): Resume {
+  // BAML's internal parser guarantees ExtractResume
+  // to be always return a Resume type
+  const response = await b.ExtractResume(raw_resume);
+  return response;
+}
 
-      - syntax highlighting
-      - testing playground
-      - prompt previews
-  
-  ### Install BAML
-      <CodeBlocks>
-        ```bash npm
-        npm install @boundaryml/baml
-        ```
-        
-        ```bash pnpm
-        pnpm add @boundaryml/baml
-        ```
+async function ExampleStream(raw_resume: string): Resume {
+  const stream = b.stream.ExtractResume(raw_resume);
+  for await (const msg of stream) {
+    console.log(msg) // This will be a Partial<Resume> type
+  }
 
-        ```bash yarn
-        yarn add @boundaryml/baml
-        ```
+  // This is guaranteed to be a Resume type.
+  return await stream.get_final_response();
+}
+import {b} from "baml_client/sync_client"
+import type {Resume} from "baml_client/types"
 
-        ```bash deno
-        deno install npm:@boundaryml/baml
-        ```
-    </CodeBlocks>
-  
-  ### Add BAML to your existing project
-      This will give you some starter BAML code in a `baml_src` directory.
-      
-      <CodeBlocks>
-        ```bash npm
-        npx baml-cli init
-        ```
-        
-        ```bash pnpm
-        pnpx baml-cli init
-        ```
+function Example(raw_resume: string): Resume {
+  // BAML's internal parser guarantees ExtractResume
+  // to be always return a Resume type
+  const response = b.ExtractResume(raw_resume);
+  return response;
+}
 
-        ```bash yarn
-        yarn baml-cli init
-        ```
-
-        ```bash deno
-        dpx baml-cli init
-        ```
-    </CodeBlocks>
-  
-  ### Generate the `baml_client` typescript package from `.baml` files
-
-    One of the files in your `baml_src` directory will have a [generator block](/ref/baml/generator). This tells BAML how to generate the `baml_client` directory, which will have auto-generated typescript code to call your BAML functions.
-
-    ```bash
-    npx baml-cli generate
-    ```
-
-    You can modify your `package.json` so you have a helper prefix in front of your build command.
-
-    ```json package.json
-    {
-      "scripts": {
-        // Add a new command
-        "baml-generate": "baml-cli generate",
-        // Always call baml-generate on every build.
-        "build": "npm run baml-generate && tsc --build",
-      }
-    }
-    ```
-    
-    See [What is baml_src](/guide/introduction/baml_src) to learn more about how this works.
-    <img src="file:793e29f1-ff38-4e00-b009-36b0685a8945" />
-
-   
-    <Tip>
-      If you set up the [VSCode extension](https://marketplace.visualstudio.com/items?itemName=Boundary.baml-extension), it will automatically run `baml-cli generate` on saving a BAML file.
-    </Tip>
-  
-  ### Use a BAML function in Typescript!
-    <Error>If `baml_client` doesn't exist, make sure to run the previous step! </Error>
-
-    <CodeBlocks>
-    ```typescript index.ts
-    import {b} from "baml_client"
-    import type {Resume} from "baml_client/types"
-
-    async function Example(raw_resume: string): Resume {
-      // BAML's internal parser guarantees ExtractResume
-      // to be always return a Resume type
-      const response = await b.ExtractResume(raw_resume);
-      return response;
-    }
-
-    async function ExampleStream(raw_resume: string): Resume {
-      const stream = b.stream.ExtractResume(raw_resume);
-      for await (const msg of stream) {
-        console.log(msg) // This will be a Partial<Resume> type
-      }
-
-      // This is guaranteed to be a Resume type.
-      return await stream.get_final_response();
-    }
-    ```
-
-    ```typescript sync_example.ts
-    import {b} from "baml_client/sync_client"
-    import type {Resume} from "baml_client/types"
-
-    function Example(raw_resume: string): Resume {
-      // BAML's internal parser guarantees ExtractResume
-      // to be always return a Resume type
-      const response = b.ExtractResume(raw_resume);
-      return response;
-    }
-
-    // Streaming is not available in the sync_client.
-
-    ```
-    </CodeBlocks>
-</Steps>",
+// Streaming is not available in the sync_client.",
     "indexSegmentId": "0",
     "slug": "guide/installation-language/typescript",
     "title": "Typescript",
@@ -1524,77 +1362,40 @@ function Example(raw_resume: string): Resume {
         "title": "Installation: Language",
       },
     ],
-    "description": "<Note>You can check out this repo: https://github.com/BoundaryML/baml-examples/tree/main/ruby-example</Note>
-
+    "description": "You can check out this repo: https://github.com/BoundaryML/baml-examples/tree/main/ruby-example
 To set up BAML with Ruby do the following:
+Install BAML VSCode Extensionhttps://marketplace.visualstudio.com/items?itemName=boundary.baml-extension
+syntax highlighting
+testing playground
+prompt previews
+Install BAMLbundle add baml sorbet-runtime
+Add BAML to your existing projectThis will give you some starter BAML code in a baml_src directory.bundle exec baml-cli init
+Generate Ruby code from .baml filesbundle exec baml-cli generate
+`
+See What is baml_src to learn more about how this works.As fun as writing BAML is, we want you be able to leverage BAML with existing ruby modules. This command gives you a ruby module that is a type-safe interface to every BAML function.Our VSCode extension automatically runs this command when you save a BAML file.Use a BAML function in Ruby!If baml_client doesn't exist, make sure to run the previous step!require_relative "baml_client/client"
 
-<Steps>
-  ### Install BAML VSCode Extension
-      https://marketplace.visualstudio.com/items?itemName=boundary.baml-extension
+def example(raw_resume)
+    # r is an instance of Baml::Types::Resume, defined in baml_client/types
+    r = Baml.Client.ExtractResume(resume: raw_resume)
 
-      - syntax highlighting
-      - testing playground
-      - prompt previews
-  
-  ### Install BAML
-      ```bash bundle
-      bundle add baml sorbet-runtime
-      ```
-  
-  ### Add BAML to your existing project
-      This will give you some starter BAML code in a `baml_src` directory.
+    puts "ExtractResume response:"
+    puts r.inspect
+end
 
-      ```bash
-      bundle exec baml-cli init
-      ```
-  
-  ### Generate Ruby code from `.baml` files
+def example_stream(raw_resume)
+    stream = Baml.Client.stream.ExtractResume(resume: raw_resume)
 
-    ```bash
-    bundle exec baml-cli generate
-    ```
-    `
-    See [What is baml_src](/guide/introduction/baml_src) to learn more about how this works.
-    <img src="file:465b1613-60ca-43e7-bcb3-9daa124d4ca4" />
-    
-    As fun as writing BAML is, we want you be able to leverage BAML with existing ruby modules. This command gives you a ruby module that is a type-safe interface to every BAML function.
-
-    <Tip>
-      Our [VSCode extension](https://marketplace.visualstudio.com/items?itemName=Boundary.baml-extension) automatically runs this command when you save a BAML file.
-    </Tip>
-  
-  ### Use a BAML function in Ruby!
-    <Error>If `baml_client` doesn't exist, make sure to run the previous step!</Error>
-
-    <CodeBlocks>
-    ```ruby main.rb
-    require_relative "baml_client/client"
-
-    def example(raw_resume)
-        # r is an instance of Baml::Types::Resume, defined in baml_client/types
-        r = Baml.Client.ExtractResume(resume: raw_resume)
-
-        puts "ExtractResume response:"
-        puts r.inspect
+    stream.each do |msg|
+        # msg is an instance of Baml::PartialTypes::Resume
+        # defined in baml_client/partial_types
+        puts msg.inspect
     end
 
-    def example_stream(raw_resume)
-        stream = Baml.Client.stream.ExtractResume(resume: raw_resume)
+    stream.get_final_response
+end
 
-        stream.each do |msg|
-            # msg is an instance of Baml::PartialTypes::Resume
-            # defined in baml_client/partial_types
-            puts msg.inspect
-        end
-
-        stream.get_final_response
-    end
-
-    example 'Grace Hopper created COBOL'
-    example_stream 'Grace Hopper created COBOL'
-    ```
-    </CodeBlocks>
-</Steps>",
+example 'Grace Hopper created COBOL'
+example_stream 'Grace Hopper created COBOL'",
     "indexSegmentId": "0",
     "slug": "guide/installation-language/ruby",
     "title": "Ruby",
@@ -1653,224 +1454,79 @@ example_stream 'Grace Hopper created COBOL'
         "title": "Installation: Language",
       },
     ],
-    "description": "<Info>
-  Requires BAML version >=0.55
-</Info>
-
-<Warning>
-  This feature is a preview feature and may change. Please provide feedback either
-  in [Discord][discord] or on [GitHub][openapi-feedback-github-issue] so that
-  we can stabilize the feature and keep you updated!
-</Warning>
-
+    "description": "Requires BAML version >=0.55
+This feature is a preview feature and may change. Please provide feedback either
+in Discord or on GitHub so that
+we can stabilize the feature and keep you updated!
 BAML allows you to expose your BAML functions as RESTful APIs:
 
-<img src="file:6b35bd0f-00fa-4c89-a93e-ddaf360396d5" />
-
-We integrate with [OpenAPI](openapi) (universal API definitions), so you can get typesafe client libraries for free!
-
-<Steps>
-  ### Install BAML VSCode Extension
-      https://marketplace.visualstudio.com/items?itemName=boundary.baml-extension
-
-      - syntax highlighting
-      - testing playground
-      - prompt previews
-
-  ### Install NPX + OpenAPI
-
-     <Tabs>
-        <Tab title="macOS (brew)">
-          ```bash
-          brew install npm openapi-generator
-          # 'npm' will install npx
-          # 'openapi-generator' will install both Java and openapi-generator-cli
-          ```
-        </Tab>
-
-        <Tab title="Linux (apt)">
-          OpenAPI requires `default-jdk`
-
-          ```bash
-          apt install npm default-jdk -y
-          # 'npm' will install npx; 'default-jdk' will install java
-          ```
-        </Tab>
-
-        <Tab title="Linux (yum/dnf)">
-          OpenAPI requires Java
-
-          ```bash
-          dnf install npm java-21-openjdk -y
-          # dnf is the successor to yum
-          ```
-
-          Amazon Linux 2023:
-          ```bash
-          dnf install npm java-21-amazon-corretto -y
-          # 'npm' will install npx
-          # 'java-21-amazon-corretto' will install java
-          ```
-
-          Amazon Linux 2:
-          ```bash
-          curl -sL https://rpm.nodesource.com/setup_16.x | bash -
-          yum install nodejs -y
-          # 'nodejs' will install npx
-          amazon-linux-extras install java-openjdk11 -y
-          # 'java-openjdk11' will install java
-          ```
-        </Tab>
-
-        <Tab title="Windows">
-          To install `npx` and `java` (for OpenAPI):
-
-            1. Use the [Node.js installer](https://nodejs.org/en/download/prebuilt-installer) to install `npx` (default installer settings are fine).
-            2. Run `npm install -g npm@latest` to update `npx` (there is currently an [issue][npx-windows-issue] with the default install of `npx` on Windows where it doesn't work out of the box).
-            3. Run the [Adoptium OpenJDK `.msi` installer](https://adoptium.net/temurin/releases/?os=windows) (install the JDK; default installer settings are fine).
-
-          You can verify that `npx` and `java` are installed by running:
-          
-          ```powershell
-          npx -version
-          java -version
-          ```
-        </Tab>
-
-        <Tab title="Other">
-          To install `npx`, use the [Node.js installer](https://nodejs.org/en/download/prebuilt-installer).
-
-          To install `java` (for OpenAPI), use the [Adoptium OpenJDK packages](https://adoptium.net/installation/linux/).
-        </Tab>
-      </Tabs>
-
-  ### Add BAML to your existing project
-      This will give you some starter BAML code in a `baml_src` directory.
-    <Tabs>
-
-      <Tab title="C#">
-      ```bash
-      npx @boundaryml/baml init \
-        --client-type rest/openapi --openapi-client-type csharp
-      ```
-      </Tab>
-
-      <Tab title="C++">
-
-      <Tip>OpenAPI supports [5 different C++ client types][openapi-client-types];
-      any of them will work with BAML.</Tip>
-
-      ```bash
-      npx @boundaryml/baml init \
-        --client-type rest/openapi --openapi-client-type cpp-restsdk
-      ```
-      </Tab>
-
-      <Tab title="Go">
-      ```bash
-      npx @boundaryml/baml init \
-        --client-type rest/openapi --openapi-client-type go
-      ```
-      </Tab>
-
-      <Tab title="Java">
-      
-      ```bash
-      npx @boundaryml/baml init \
-        --client-type rest/openapi --openapi-client-type java
-      ```
-
-      Notice that `on_generate` has been initialized for you to:
-
-      - run the OpenAPI generator to generate a Java client library, and _also_
-      - run `mvn clean install` to install the generated client library to your
-        local Maven repository
-
-      <Warning>
-        If you only use Maven through an IDE (e.g. IntelliJ IDEA), you should
-        remove `&& mvn clean install` from the generated `on_generate` command.
-      </Warning>
-
-      </Tab>
-
-      <Tab title="PHP">
-      ```bash
-      npx @boundaryml/baml init \
-        --client-type rest/openapi --openapi-client-type php
-      ```
-      </Tab>
-
-      <Tab title="Ruby">
-      ```bash
-      npx @boundaryml/baml init \
-        --client-type rest/openapi --openapi-client-type ruby
-      ```
-      </Tab>
-
-      <Tab title="Rust">
-      ```bash
-      npx @boundaryml/baml init \
-        --client-type rest/openapi --openapi-client-type rust
-      ```
-      </Tab>
-
-      <Tab title="Other">
-
-      As long as there's an OpenAPI client generator that works with your stack,
-      you can use it with BAML. Check out the [full list in the OpenAPI docs][openapi-client-types].
-
-      ```bash
-      npx @boundaryml/baml init \
-        --client-type rest/openapi --openapi-client-type $OPENAPI_CLIENT_TYPE
-      ```
-      </Tab>
-
-    </Tabs>
-
-  ### Start the BAML development server
-
-    ```bash
-    npx @boundaryml/baml dev --preview
-    ```
-    
-    This will do four things:
-
-    - serve your BAML functions over a RESTful interface on `localhost:2024`
-    - generate an OpenAPI schema in `baml_client/openapi.yaml`
-    - run `openapi-generator -g $OPENAPI_CLIENT_TYPE` in `baml_client` directory to
-      generate an OpenAPI client for you to use
-    - re-run the above steps whenever you modify any `.baml` files
-
-  <Note>
-    BAML-over-REST is currently a preview feature. Please provide feedback
-    either in [Discord][discord] or on [GitHub][openapi-feedback-github-issue]
-    so that we can stabilize the feature and keep you updated!
-  </Note>
-
-  ### Use a BAML function in any language!
-  
-  `openapi-generator` will generate a `README` with instructions for installing
-  and using your client; we've included snippets for some of the most popular
-  languages below. Check out
-  [`baml-examples`](https://github.com/BoundaryML/baml-examples) for example
-  projects with instructions for running them.
-
-  <Note>
-    We've tested the below listed OpenAPI clients, but not all of them. If you run
-    into issues with any of the OpenAPI clients, please let us know, either in
-    [Discord][discord] or by commenting on
-    [GitHub][openapi-feedback-github-issue] so that we can either help you out
-    or fix it!
-  </Note>
-
-<Tabs>
-
-<Tab title="Go">
-
-Run this with `go run main.go`:
-
-```go main.go
-package main
+We integrate with OpenAPI (universal API definitions), so you can get typesafe client libraries for free!
+Install BAML VSCode Extensionhttps://marketplace.visualstudio.com/items?itemName=boundary.baml-extension
+syntax highlighting
+testing playground
+prompt previews
+Install NPX + OpenAPIbrew install npm openapi-generator
+# 'npm' will install npx
+# 'openapi-generator' will install both Java and openapi-generator-cli
+OpenAPI requires default-jdkapt install npm default-jdk -y
+# 'npm' will install npx; 'default-jdk' will install java
+OpenAPI requires Javadnf install npm java-21-openjdk -y
+# dnf is the successor to yum
+Amazon Linux 2023:dnf install npm java-21-amazon-corretto -y
+# 'npm' will install npx
+# 'java-21-amazon-corretto' will install java
+Amazon Linux 2:curl -sL https://rpm.nodesource.com/setup_16.x | bash -
+yum install nodejs -y
+# 'nodejs' will install npx
+amazon-linux-extras install java-openjdk11 -y
+# 'java-openjdk11' will install java
+To install npx and java (for OpenAPI):
+Use the Node.js installer to install npx (default installer settings are fine).
+Run npm install -g npm@latest to update npx (there is currently an issue with the default install of npx on Windows where it doesn't work out of the box).
+Run the Adoptium OpenJDK .msi installer (install the JDK; default installer settings are fine).
+You can verify that npx and java are installed by running:npx -version
+java -version
+To install npx, use the Node.js installer.To install java (for OpenAPI), use the Adoptium OpenJDK packages.Add BAML to your existing projectThis will give you some starter BAML code in a baml_src directory.npx @boundaryml/baml init \
+  --client-type rest/openapi --openapi-client-type csharp
+OpenAPI supports 5 different C++ client types;
+any of them will work with BAML.npx @boundaryml/baml init \
+  --client-type rest/openapi --openapi-client-type cpp-restsdk
+npx @boundaryml/baml init \
+  --client-type rest/openapi --openapi-client-type go
+npx @boundaryml/baml init \
+  --client-type rest/openapi --openapi-client-type java
+Notice that on_generate has been initialized for you to:
+run the OpenAPI generator to generate a Java client library, and also
+run mvn clean install to install the generated client library to your
+local Maven repository
+If you only use Maven through an IDE (e.g. IntelliJ IDEA), you should
+remove && mvn clean install from the generated on_generate command.npx @boundaryml/baml init \
+  --client-type rest/openapi --openapi-client-type php
+npx @boundaryml/baml init \
+  --client-type rest/openapi --openapi-client-type ruby
+npx @boundaryml/baml init \
+  --client-type rest/openapi --openapi-client-type rust
+As long as there's an OpenAPI client generator that works with your stack,
+you can use it with BAML. Check out the full list in the OpenAPI docs.npx @boundaryml/baml init \
+  --client-type rest/openapi --openapi-client-type $OPENAPI_CLIENT_TYPE
+Start the BAML development servernpx @boundaryml/baml dev --preview
+This will do four things:
+serve your BAML functions over a RESTful interface on localhost:2024
+generate an OpenAPI schema in baml_client/openapi.yaml
+run openapi-generator -g $OPENAPI_CLIENT_TYPE in baml_client directory to
+generate an OpenAPI client for you to use
+re-run the above steps whenever you modify any .baml files
+BAML-over-REST is currently a preview feature. Please provide feedback
+either in Discord or on GitHub
+so that we can stabilize the feature and keep you updated!Use a BAML function in any language!openapi-generator will generate a README with instructions for installing
+and using your client; we've included snippets for some of the most popular
+languages below. Check out
+baml-examples for example
+projects with instructions for running them.We've tested the below listed OpenAPI clients, but not all of them. If you run
+into issues with any of the OpenAPI clients, please let us know, either in
+Discord or by commenting on
+GitHub so that we can either help you out
+or fix it!Run this with go run main.go:package main
 
 import (
 	"context"
@@ -1893,33 +1549,14 @@ func main() {
 	}
 	log.Printf("Response from server: %v\n", resp)
 }
-```
-</Tab>
-
-<Tab title="Java">
-First, add the OpenAPI-generated client to your project.
-
-<AccordionGroup>
-
-<Accordion title="If you have 'mvn' in your PATH">
-
-You can use the default `on_generate` command, which will tell `baml dev` to
+First, add the OpenAPI-generated client to your project.You can use the default on_generate command, which will tell baml dev to
 install the OpenAPI-generated client into your local Maven repository by running
-`mvn clean install` every time you save a change to a BAML file.
-
-To depend on the client in your local Maven repo, you can use these configs:
-
-<CodeGroup>
-```xml pom.xml
-<dependency>
+mvn clean install every time you save a change to a BAML file.To depend on the client in your local Maven repo, you can use these configs:<dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
   <version>0.1.0</version>
   <scope>compile</scope>
 </dependency>
-```
-
-```kotlin settings.gradle.kts
 repositories {
     mavenCentral()
     mavenLocal()
@@ -1928,21 +1565,7 @@ repositories {
 dependencies {
     implementation("org.openapitools:openapi-java-client:0.1.0")
 }
-```
-</CodeGroup>
-
-</Accordion>
-
-<Accordion title="If you don't have 'mvn' in your PATH">
-
-You'll probably want to comment out `on_generate` and instead use either the [OpenAPI Maven plugin] or [OpenAPI Gradle plugin] to build your OpenAPI client.
-
-[OpenAPI Maven plugin]: https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-maven-plugin
-[OpenAPI Gradle plugin]: https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-gradle-plugin
-
-<CodeGroup>
-```xml pom.xml
-<build>
+You'll probably want to comment out on_generate and instead use either the OpenAPI Maven plugin or OpenAPI Gradle plugin to build your OpenAPI client.<build>
     <plugins>
         <plugin>
             <groupId>org.openapitools</groupId>
@@ -1967,9 +1590,6 @@ You'll probably want to comment out `on_generate` and instead use either the [Op
         </plugin>
     </plugins>
 </build>
-```
-
-```kotlin settings.gradle.kts
 plugins {
     id("org.openapi.generator") version "7.8.0"
 }
@@ -1991,16 +1611,7 @@ sourceSets["main"].java {
 tasks.named("compileJava") {
     dependsOn("openApiGenerate")
 }
-```
-</CodeGroup>
-
-</Accordion>
-</AccordionGroup>
-
-Then, copy this code into wherever your `main` function is:
-
-```Java
-import com.boundaryml.baml_client.ApiClient;
+Then, copy this code into wherever your main function is:import com.boundaryml.baml_client.ApiClient;
 import com.boundaryml.baml_client.ApiException;
 import com.boundaryml.baml_client.Configuration;
 // NOTE: baml_client/README.md will suggest importing from models.* - that is wrong.
@@ -2026,21 +1637,9 @@ public class Example {
   }
 }
 
-```
-</Tab>
-
-<Tab title="PHP">
-
-<Warning>
-  The PHP OpenAPI generator doesn't support OpenAPI's `oneOf` type, which is
-  what we map BAML union types to. Please let us know if this is an issue for
-  you, and you need help working around it.
-</Warning>
-
-First, add the OpenAPI-generated client to your project:
-
-```json composer.json
-    "repositories": [
+The PHP OpenAPI generator doesn't support OpenAPI's oneOf type, which is
+what we map BAML union types to. Please let us know if this is an issue for
+you, and you need help working around it.First, add the OpenAPI-generated client to your project:    "repositories": [
         {
             "type": "path",
             "url": "baml_client"
@@ -2049,12 +1648,7 @@ First, add the OpenAPI-generated client to your project:
     "require": {
         "boundaryml/baml-client": "*@dev"
     }
-```
-
-You can now use this code to call a BAML function:
-
-```PHP
-<?php
+You can now use this code to call a BAML function:<?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $apiInstance = new BamlClient\Api\DefaultApi(
@@ -2069,15 +1663,7 @@ try {
 } catch (Exception $e) {
     echo 'Exception when calling DefaultApi->extractResume: ', $e->getMessage(), PHP_EOL;
 }
-```
-</Tab>
-
-<Tab title="Ruby">
-
-Use `ruby -Ilib/baml_client app.rb` to run this:
-
-```ruby app.rb
-require 'baml_client'
+Use ruby -Ilib/baml_client app.rb to run this:require 'baml_client'
 require 'pp'
 
 api_client = BamlClient::ApiClient.new
@@ -2109,31 +1695,11 @@ rescue BamlClient::ApiError => e
   puts "Error when calling DefaultApi#extract_resume"
   pp e
 end
-```
-</Tab>
-
-<Tab title="Rust">
-
-<Tip>
-  If you're using `cargo watch -- cargo build` and seeing build failures because it can't find
-  the generated `baml_client`, try increasing the delay on `cargo watch` to 1 second like so:
-
-  ```bash
-  cargo watch --delay 1 -- cargo build
-  ```
-</Tip>
-
-First, add the OpenAPI-generated client to your project:
-
-```toml Cargo.toml
-[dependencies]
+If you're using cargo watch -- cargo build and seeing build failures because it can't find
+the generated baml_client, try increasing the delay on cargo watch to 1 second like so:cargo watch --delay 1 -- cargo build
+First, add the OpenAPI-generated client to your project:[dependencies]
 baml-client = { path = "./baml_client" }
-```
-
-You can now use `cargo run`:
-
-```rust
-use baml_client::models::ExtractResumeRequest;
+You can now use cargo run:use baml_client::models::ExtractResumeRequest;
 use baml_client::apis::default_api as b;
 
 #[tokio::main]
@@ -2145,18 +1711,7 @@ async fn main() {
     }).await.unwrap();
 
     println!("{:#?}", resp);
-}
-```
-</Tab>
-
-</Tabs>
-
-</Steps>
-
-[discord]: https://discord.gg/BTNBeXGuaS
-[openapi-feedback-github-issue]: https://github.com/BoundaryML/baml/issues/892
-[npx-windows-issue]: https://github.com/nodejs/node/issues/53538
-[openapi-client-types]: https://github.com/OpenAPITools/openapi-generator#overview",
+}",
     "indexSegmentId": "0",
     "slug": "guide/installation-language/rest-api-other-languages",
     "title": "REST API (other languages)",
@@ -2440,27 +1995,13 @@ async fn main() {
       },
     ],
     "description": "BAML can be used with Vercel's AI SDK to stream BAML functions to your UI.
-
-The latest example code is found in our [NextJS starter](https://github.com/BoundaryML/baml-examples/tree/main/nextjs-starter), but this tutorial will guide you on how to add BAML step-by-step.
-
-See the [live demo](https://baml-examples.vercel.app/)
-
-<Note>
+The latest example code is found in our NextJS starter, but this tutorial will guide you on how to add BAML step-by-step.
+See the live demo
 You will need to use Server Actions, from the App Router, for this tutorial. You can still stream BAML functions from Route Handlers however.
-</Note>
-
-
-<Steps>
-### Install BAML, and Generate a BAML client for TypeScript
-- Follow [the TS installation guide](/docs/get-started/quickstart/typescript)
-- Install the VSCode extension and Save a baml file to generate the client (or use `npx baml-cli generate`).
-
-
-### Update next.config.mjs
-
-@boundaryml/baml uses a native node addon to run the BAML functions. You need to tell NextJS to use the loader for these files.
-```JS
-/** @type {import('next').NextConfig} */
+Install BAML, and Generate a BAML client for TypeScript
+Follow the TS installation guide
+Install the VSCode extension and Save a baml file to generate the client (or use npx baml-cli generate).
+Update next.config.mjs@boundaryml/baml uses a native node addon to run the BAML functions. You need to tell NextJS to use the loader for these files./** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["@boundaryml/baml"],
@@ -2483,15 +2024,7 @@ const nextConfig = {
 };
 
 export default nextConfig;
-```
-
-
-### Create some helper utilities to stream BAML functions
-Let's add some helpers to export our baml functions as streamable server actions. See the last line in this file, where we export the `extractResume` function.
-
-In `app/utils/streamableObject.tsx` add the following code:
-```typescript
-import { createStreamableValue, StreamableValue as BaseStreamableValue } from "ai/rsc";
+Create some helper utilities to stream BAML functionsLet's add some helpers to export our baml functions as streamable server actions. See the last line in this file, where we export the extractResume function.In app/utils/streamableObject.tsx add the following code:import { createStreamableValue, StreamableValue as BaseStreamableValue } from "ai/rsc";
 import { BamlStream } from "@boundaryml/baml";
 import { b } from "@/baml_client"; // You can change the path of this to wherever your baml_client is located.
 
@@ -2564,25 +2097,12 @@ export function makeStreamable<
   };
 }
 
-```
-
-### Export your BAML functions to streamable server actions
-
-In `app/actions/extract.tsx` add the following code:
-```typescript
-import { makeStreamable } from "../_baml_utils/streamableObjects";
+Export your BAML functions to streamable server actionsIn app/actions/extract.tsx add the following code:import { makeStreamable } from "../_baml_utils/streamableObjects";
 
 
 export const extractResume = makeStreamable(b.stream.ExtractResume);
-```
-
-### Create a hook to use the streamable functions in React Components
-This hook will work like [react-query](https://react-query.tanstack.com/), but for BAML functions.
-It will give you partial data, the loading status, and whether the stream was completed.
-
-In `app/_hooks/useStream.ts` add:
-```typescript
-import { useState, useEffect } from "react";
+Create a hook to use the streamable functions in React ComponentsThis hook will work like react-query, but for BAML functions.
+It will give you partial data, the loading status, and whether the stream was completed.In app/_hooks/useStream.ts add:import { useState, useEffect } from "react";
 import { readStreamableValue, StreamableValue } from "ai/rsc";
 
 /**
@@ -2651,15 +2171,7 @@ export function useStream<PartialRet, Ret, P extends any[]>(
   return { data: streamResult, partialData, isLoading, isComplete, isError, error, mutate };
 }
 
-```
-
-
-
-### Stream your BAML function in a component
-In `app/page.tsx` you can use the hook to stream the BAML function and render the result in real-time.
-
-```tsx
-"use client";
+Stream your BAML function in a componentIn app/page.tsx you can use the hook to stream the BAML function and render the result in real-time."use client";
 import {
   extractResume,
   extractUnstructuredResume,
@@ -2684,16 +2196,10 @@ export default function Home() {
     </div>
   );
 }
-```
-
-</Steps>
-
 
 And now you're all set!
-
-If you have issues with your environment variables not loading, you may want to use [dotenv-cli](https://www.npmjs.com/package/dotenv-cli) to load your env vars before the nextjs process starts:
-
-`dotenv -- npm run dev`",
+If you have issues with your environment variables not loading, you may want to use dotenv-cli to load your env vars before the nextjs process starts:
+dotenv -- npm run dev",
     "indexSegmentId": "0",
     "slug": "guide/installation-language/next-js",
     "title": "Next.js Integration",
@@ -3128,35 +2634,24 @@ require 'baml_client'
       },
     ],
     "description": "You can add logging to determine what the BAML runtime is doing when it calls LLM endpoints and parses responses.
-
-To enable logging, set the `BAML_LOG` environment variable:
-```sh
+To enable logging, set the BAML_LOG environment variable:
 # default is warn
 BAML_LOG=info
-```
 
 | Level | Description |
 |-------|-------------|
-| `error` | Fatal errors by BAML |
-| `warn` | Logs any time a function fails (includes LLM calling failures, parsing failures) |
-| `info` | Logs every call to a function (including prompt, raw response, and parsed response) |
-| `debug` | Requests and detailed parsing errors (warning: may be a lot of logs) |
-| `trace` | Everything and more |
-| `off` | No logging |
-
-
+| error | Fatal errors by BAML |
+| warn | Logs any time a function fails (includes LLM calling failures, parsing failures) |
+| info | Logs every call to a function (including prompt, raw response, and parsed response) |
+| debug | Requests and detailed parsing errors (warning: may be a lot of logs) |
+| trace | Everything and more |
+| off | No logging |
 Example log:
-<img src="file:a410f5dc-aff8-430e-bce9-3fec22eca527" />
 
----
 
-Since `>0.54.0`:
-
-To truncate each log entry to a certain length, set the `BOUNDARY_MAX_LOG_CHUNK_CHARS` environment variable:
-
-```sh
+Since >0.54.0:
+To truncate each log entry to a certain length, set the BOUNDARY_MAX_LOG_CHUNK_CHARS environment variable:
 BOUNDARY_MAX_LOG_CHUNK_CHARS=3000
-```
 
 This will truncate each part in a log entry to 3000 characters.",
     "indexSegmentId": "0",
@@ -3203,36 +2698,27 @@ This will truncate each part in a log entry to 3000 characters.",
         "title": "Development",
       },
     ],
-    "description": "Remember that the generated `baml_client` code is generated by your `baml_py` / `@boundaryml/baml` package dependency (using `baml-cli generate`), but can also be generated by the VSCode extension when you save a BAML file.
+    "description": "Remember that the generated baml_client code is generated by your baml_py / @boundaryml/baml package dependency (using baml-cli generate), but can also be generated by the VSCode extension when you save a BAML file.
+To upgrade BAML versions:
 
-**To upgrade BAML versions:**
-1. Update the `generator` clause in your `generators.baml` file (or wherever you have it defined) to the new version. If you ran `baml-cli init`, one has already been generated for you!
-```baml generators.baml
+Update the generator clause in your generators.baml file (or wherever you have it defined) to the new version. If you ran baml-cli init, one has already been generated for you!
+
 generator TypescriptGenerator {
     output_type "typescript"
     ....
     // Version of runtime to generate code for (should match the package @boundaryml/baml version)
     version "0.62.0"
 }
-```
-
-2. Update your `baml_py`  / `@boundaryml/baml` package dependency to the same version.
 
 
-<CodeBlock>
-```sh pip
+Update your baml_py  / @boundaryml/baml package dependency to the same version.
+
 pip install --upgrade baml-py
-```
-```sh npm
 npm install @boundaryml/baml@latest
-```
-
-```sh ruby
 gem install baml
-```
-</CodeBlock>
 
-3. Update VSCode BAML extension to point to the same version. Read here for how to keep VSCode in sync with your `baml_py` / `@boundaryml/baml` package dependency: [VSCode BAML Extension reference](/ref/editor-extension-settings/baml-cli-path)
+
+Update VSCode BAML extension to point to the same version. Read here for how to keep VSCode in sync with your baml_py / @boundaryml/baml package dependency: VSCode BAML Extension reference
 
 You only need to do this for minor version upgrades (e.g., 0.54.0 -> 0.62.0), not patch versions (e.g., 0.62.0 -> 0.62.1).",
     "indexSegmentId": "0",
@@ -3312,12 +2798,9 @@ See the VSCode BAML Extension reference for more information on how to prevent v
         "title": "Deploying",
       },
     ],
-    "description": "You can use [SST](https://sst.dev/) to define the Lambda configuration and deploy it.
-
+    "description": "You can use SST to define the Lambda configuration and deploy it.
 The example below builds the BAML x86_64 rust binaries into a Lambda layer and uses the layer in the Lambda function.
-
-[Example Node + SST Project](https://github.com/BoundaryML/baml-examples/tree/main/node-aws-lambda-sst)
-
+Example Node + SST Project
 Let us know if you want to deploy a python BAML project on AWS. Our example project is coming soon.",
     "indexSegmentId": "0",
     "slug": "guide/development/deploying/aws",
@@ -3385,9 +2868,7 @@ The BAML binaries only support the NodeJS 20.x runtime (or a runtime using Amazo
     ],
     "description": "To deploy a NextJS with BAML, take a look at the starter template:
 https://github.com/BoundaryML/baml-examples/tree/main/nextjs-starter
-
-All you need is to modify the `nextjs.config.mjs` to allow BAML to run properly:
-```JS
+All you need is to modify the nextjs.config.mjs to allow BAML to run properly:
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -3411,19 +2892,15 @@ const nextConfig = {
 };
 
 export default nextConfig;
-```
 
-and change your `package.json` to build the baml client automatically (and enable logging in dev mode if you want):
-
-```json
+and change your package.json to build the baml client automatically (and enable logging in dev mode if you want):
  "scripts": {
     "dev": "BAML_LOG=info next dev",
     "build": "pnpm generate && next build",
     "start": "next start",
     "lint": "next lint",
     "generate": "baml-cli generate --from ./baml_src"
-  },
-```",
+  },",
     "indexSegmentId": "0",
     "slug": "guide/development/deploying/next-js",
     "title": "NextJS",
@@ -3488,30 +2965,15 @@ and change your package.json to build the baml client automatically (and enable 
         "title": "Deploying",
       },
     ],
-    "description": "When you develop with BAML, the BAML VScode extension generates a `baml_client` directory (on every save) with all the generated code you need to use your AI functions in your application.
-
-We recommend you add `baml_client` to your `.gitignore` file to avoid committing generated code to your repository, and re-generate the client code when you build and deploy your application.
-
-You _could_ commit the generated code if you're starting out to not deal with this, just make sure the VSCode extension version matches your baml package dependency version (e.g. `baml-py` for python and `@boundaryml/baml` for TS) so there are no compatibility issues.
-
-To build your client you can use the following command. See also [baml-cli generate](/ref/baml-cli/generate):
-  
-<CodeBlocks>
-
-```dockerfile python Dockerfile
+    "description": "When you develop with BAML, the BAML VScode extension generates a baml_client directory (on every save) with all the generated code you need to use your AI functions in your application.
+We recommend you add baml_client to your .gitignore file to avoid committing generated code to your repository, and re-generate the client code when you build and deploy your application.
+You could commit the generated code if you're starting out to not deal with this, just make sure the VSCode extension version matches your baml package dependency version (e.g. baml-py for python and @boundaryml/baml for TS) so there are no compatibility issues.
+To build your client you can use the following command. See also baml-cli generate:
 RUN baml-cli generate --from path-to-baml_src
-```
-
-```dockerfile TypeScript Dockerfile
 # Do this early on in the dockerfile script before transpiling to JS
 RUN npx baml-cli generate --from path-to-baml_src
-```
-
-```dockerfile Ruby Dockerfile
 RUN bundle add baml
-RUN bundle exec baml-cli generate --from path/to/baml_src
-```
-</CodeBlocks>",
+RUN bundle exec baml-cli generate --from path/to/baml_src",
     "indexSegmentId": "0",
     "slug": "guide/development/deploying/docker",
     "title": "Docker",
@@ -3550,30 +3012,19 @@ RUN bundle exec baml-cli generate --from path/to/baml_src
         "title": "Deploying",
       },
     ],
-    "description": "<Info>
-  This feature was added in: v0.55.0.
-</Info>
-
-<Info>
-  This page assumes you've gone through the [OpenAPI quickstart].
-</Info>
-
-[OpenAPI quickstart]: /docs/get-started/quickstart/openapi
-
+    "description": "This feature was added in: v0.55.0.
+This page assumes you've gone through the OpenAPI quickstart.
 To deploy BAML as a RESTful API, you'll need to do three things:
 
-- host your BAML functions in a Docker container
-- update your app to call it
-- run BAML and your app side-by-side using `docker-compose`
+host your BAML functions in a Docker container
+update your app to call it
+run BAML and your app side-by-side using docker-compose
 
-Read on to learn how to do this with `docker-compose`.
-
-<Tip>
-  You can also run `baml-cli` in a subprocess from your app directly, and we
-  may recommend this approach in the future. Please let us know if you'd
-  like to see instructions for doing so, and in what language, by asking in
-  [Discord][discord] or [on the GitHub issue][openapi-feedback-github-issue].
-</Tip>",
+Read on to learn how to do this with docker-compose.
+You can also run baml-cli in a subprocess from your app directly, and we
+may recommend this approach in the future. Please let us know if you'd
+like to see instructions for doing so, and in what language, by asking in
+[Discord][discord] or [on the GitHub issue][openapi-feedback-github-issue].",
     "indexSegmentId": "0",
     "slug": "guide/development/deploying/docker-rest-api",
     "title": "OpenAPI",
@@ -4363,10 +3814,7 @@ can always debug the reachability of your BAML server.",
         "title": "BAML Basics",
       },
     ],
-    "description": "<Note>
-We recommend reading the [installation](/guide/installation-language/python) instructions first
-</Note>
-
+    "description": "We recommend reading the installation instructions first
 BAML functions are special definitions that get converted into real code (Python, TS, etc) that calls LLMs. Think of them as a way to define AI-powered functions that are type-safe and easy to use in your application.",
     "indexSegmentId": "0",
     "slug": "guide/baml-basics/prompting-with-baml",
@@ -4732,10 +4180,8 @@ Use any provider or open-source modelTest your functions in the VSCode extension
         "title": "BAML Basics",
       },
     ],
-    "description": "BAML Supports getting structured output from **all** major providers as well as all OpenAI-API compatible open-source models. See [LLM Providers Reference](/ref/llm-client-providers/open-ai) for how to set each one up.
-<Tip>
-BAML can help you get structured output from **any Open-Source model**, with better performance than other techniques, even when it's not officially supported via a Tool-Use API (like o1-preview) or fine-tuned for it! [Read more about how BAML does this](https://www.boundaryml.com/blog/schema-aligned-parsing).
-</Tip>",
+    "description": "BAML Supports getting structured output from all major providers as well as all OpenAI-API compatible open-source models. See LLM Providers Reference for how to set each one up.
+BAML can help you get structured output from any Open-Source model, with better performance than other techniques, even when it's not officially supported via a Tool-Use API (like o1-preview) or fine-tuned for it! Read more about how BAML does this.",
     "indexSegmentId": "0",
     "slug": "guide/baml-basics/switching-llms",
     "title": "Switching LLMs",
@@ -4923,9 +4369,7 @@ different model.",
         "title": "BAML Basics",
       },
     ],
-    "description": "You can test your BAML functions in the VSCode Playground by adding a `test` snippet into a BAML file:
-
-```baml
+    "description": "You can test your BAML functions in the VSCode Playground by adding a test snippet into a BAML file:
 enum Category {
     Refund
     CancelOrder
@@ -4948,16 +4392,10 @@ test Test1 {
     input "Can't access my account using my usual login credentials, and each attempt results in an error message stating 'Invalid username or password.' I have tried resetting my password using the 'Forgot Password' link, but I haven't received the promised password reset email."
   }
 }
-```
-See the [interactive examples](https://promptfiddle.com)
 
+See the interactive examples
 The BAML playground will give you a starting snippet to copy that will match your function signature.
-
-<Warning>
-BAML doesn't use colons `:` between key-value pairs except in function parameters.
-</Warning>
-
-<hr />",
+BAML doesn't use colons : between key-value pairs except in function parameters.",
     "indexSegmentId": "0",
     "slug": "guide/baml-basics/testing-functions",
     "title": "Testing functions",
@@ -5442,27 +4880,15 @@ to be provided, BAML will try to infer it based on the contents of the file.If b
       },
     ],
     "description": "BAML lets you stream in structured JSON output from LLMs as it comes in.
-
 If you tried streaming in a JSON output from an LLM you'd see something like:
-```
 {"items": [{"name": "Appl
 {"items": [{"name": "Apple", "quantity": 2, "price": 1.
 {"items": [{"name": "Apple", "quantity": 2, "price": 1.50}], "total_cost":
 {"items": [{"name": "Apple", "quantity": 2, "price": 1.50}], "total_cost": 3.00} # Completed
-```
 
-BAML automatically fixes this partial JSON, and transforms all your types into `Partial` types with all `Optional` fields only during the stream.
-
-<Tip>You can check out more examples (including streaming in FastAPI and NextJS) in the [BAML Examples] repo.</Tip>
-
-[call BAML functions]: /docs/calling-baml/calling-functions
-[BAML Examples]: https://github.com/BoundaryML/baml-examples/tree/main
-
-Lets stream the output of this function `function ExtractReceiptInfo(email: string) -> ReceiptInfo` for our example:
-
-<Accordion title="extract-receipt-info.baml">
-
-```rust
+BAML automatically fixes this partial JSON, and transforms all your types into Partial types with all Optional fields only during the stream.
+You can check out more examples (including streaming in FastAPI and NextJS) in the BAML Examples repo.
+Lets stream the output of this function function ExtractReceiptInfo(email: string) -> ReceiptInfo for our example:
 class ReceiptItem {
   name string
   description string?
@@ -5485,16 +4911,8 @@ function ExtractReceiptInfo(email: string) -> ReceiptInfo {
     {{ ctx.output_format }}
   "#
 }
-```
-</Accordion>
 
-<Tabs>
-
-<Tab title="Python">
-BAML will generate `b.stream.ExtractReceiptInfo()` for you, which you can use like so:
-
-```python main.py
-import asyncio
+BAML will generate b.stream.ExtractReceiptInfo() for you, which you can use like so:import asyncio
 from baml_client import b, partial_types, types
 
 # Using a stream:
@@ -5552,14 +4970,7 @@ if __name__ == '__main__':
     asyncio.run(example1(receipt))
     asyncio.run(example2(receipt))
     asyncio.run(example3(receipt))
-```
-</Tab>
-
-<Tab title="TypeScript">
-BAML will generate `b.stream.ExtractReceiptInfo()` for you, which you can use like so:
-
-```ts main.ts
-import { b } from './baml_client'
+BAML will generate b.stream.ExtractReceiptInfo() for you, which you can use like so:import { b } from './baml_client'
 
 // Using both async iteration and getFinalResponse() from a stream
 const example1 = async (receipt: string) => {
@@ -5616,15 +5027,8 @@ if (require.main === module) {
   example2(receipt)
   example3(receipt)
 }
-```
-</Tab>
-
-<Tab title="Ruby (beta)">
-BAML will generate `Baml.Client.stream.ExtractReceiptInfo()` for you,
-which you can use like so:
-
-```ruby main.rb
-require_relative "baml_client/client"
+BAML will generate Baml.Client.stream.ExtractReceiptInfo() for you,
+which you can use like so:require_relative "baml_client/client"
 
 $b = Baml.Client
 
@@ -5681,19 +5085,8 @@ if __FILE__ == $0
   example2(receipt)
   example3(receipt)
 end
-```
-
-</Tab>
-<Tab title="OpenAPI">
-
 Streaming is not yet supported via OpenAPI, but it will be coming soon!
-
-</Tab>
-</Tabs>
-
-<Note>
-Number fields are always streamed in only when the LLM completes them. E.g. if the final number is 129.95, you'll only see null or 129.95 instead of partial numbers like 1, 12, 129.9, etc.
-</Note>",
+Number fields are always streamed in only when the LLM completes them. E.g. if the final number is 129.95, you'll only see null or 129.95 instead of partial numbers like 1, 12, 129.9, etc.",
     "indexSegmentId": "0",
     "slug": "guide/baml-basics/streaming",
     "title": "Streaming",
@@ -6305,7 +5698,7 @@ we're working on it!
         "title": "BAML Basics",
       },
     ],
-    "description": "When BAML raises an exception, it will be an instance of a subclass of `BamlError`. This allows you to catch all BAML-specific exceptions with a single `except` block.",
+    "description": "When BAML raises an exception, it will be an instance of a subclass of BamlError. This allows you to catch all BAML-specific exceptions with a single except block.",
     "indexSegmentId": "0",
     "slug": "guide/baml-basics/error-handling",
     "title": "Error Handling",
@@ -6724,10 +6117,7 @@ The original prompt that was sent to the LLM, formatted as a plain string. Image
         "title": "BAML Basics",
       },
     ],
-    "description": "We’ll use `function ClassifyMessage(input: string) -> Category` for our example:
-
-<Accordion title="classify-message.baml">
-```baml
+    "description": "We’ll use function ClassifyMessage(input: string) -> Category for our example:
 enum Category {
     Refund
     CancelOrder
@@ -6749,16 +6139,8 @@ function ClassifyMessage(input: string) -> Category {
     Response:
   "#
 }
-```
-</Accordion>
 
-<Tabs>
-<Tab title="Python">
-
-You can make concurrent `b.ClassifyMessage()` calls like so:
-
-```python main.py
-import asyncio
+You can make concurrent b.ClassifyMessage() calls like so:import asyncio
 
 from baml_client import b
 from baml_client.types import Category
@@ -6771,15 +6153,7 @@ async def main():
 
 if __name__ == '__main__':
     asyncio.run(main())
-```
-</Tab>
-
-<Tab title="TypeScript">
-
-You can make concurrent `b.ClassifyMessage()` calls like so:
-
-```ts main.ts
-import { b } from './baml_client'
+You can make concurrent b.ClassifyMessage() calls like so:import { b } from './baml_client'
 import { Category } from './baml_client/types'
 import assert from 'assert'
 
@@ -6794,17 +6168,7 @@ if (require.main === module) {
   main()
 }
 
-```
-</Tab>
-
-<Tab title="Ruby (beta)">
-
-BAML Ruby (beta) does not currently support async/concurrent calls.
-
-Please [contact us](/contact) if this is something you need.
-
-</Tab>
-</Tabs>",
+BAML Ruby (beta) does not currently support async/concurrent calls.Please contact us if this is something you need.",
     "indexSegmentId": "0",
     "slug": "guide/baml-basics/concurrent-calls",
     "title": "Concurrent function calls",
@@ -6880,13 +6244,7 @@ BAML Ruby (beta) does not currently support async/concurrent calls.Please contac
         "title": "BAML Advanced",
       },
     ],
-    "description": "If you need to modify the model / parameters for an LLM client at runtime, you can modify the `ClientRegistry` for any specified function.
-
-<Tabs>
-
-<Tab title="Python">
-
-```python
+    "description": "If you need to modify the model / parameters for an LLM client at runtime, you can modify the ClientRegistry for any specified function.
 import os
 from baml_py import ClientRegistry
 
@@ -6903,12 +6261,6 @@ async def run():
 
     # ExtractResume will now use MyAmazingClient as the calling client
     res = await b.ExtractResume("...", { "client_registry": cr })
-```
-
-</Tab>
-
-<Tab title="TypeScript">
-```typescript
 import { ClientRegistry } from '@boundaryml/baml'
 
 async function run() {
@@ -6925,12 +6277,6 @@ async function run() {
     // ExtractResume will now use MyAmazingClient as the calling client
     const res = await b.ExtractResume("...", { clientRegistry: cr })
 }
-```
-</Tab>
-
-<Tab title="Ruby">
-
-```ruby
 require_relative "baml_client/client"
 
 def run
@@ -6956,17 +6302,7 @@ end
 
 # Call the asynchronous function
 run
-```
-</Tab>
-
-<Tab title="OpenAPI">
-
-The API supports passing client registry as a field on `__baml_options__` in the request body.
-
-Example request body:
-
-```json
-{
+The API supports passing client registry as a field on __baml_options__ in the request body.Example request body:{
     "resume": "Vaibhav Gupta",
     "__baml_options__": {
         "client_registry": {
@@ -6985,16 +6321,8 @@ Example request body:
         }
     }
 }
-```
-
-```sh
 curl -X POST http://localhost:2024/call/ExtractResume \
-    -H 'Content-Type: application/json' -d @body.json
-```
-
-</Tab>
-
-</Tabs>",
+    -H 'Content-Type: application/json' -d @body.json",
     "indexSegmentId": "0",
     "slug": "guide/baml-advanced/llm-client-registry",
     "title": "Client Registry",
@@ -7249,11 +6577,10 @@ The name of the client to use.This can be a new client that was added with add_l
         "title": "BAML Advanced",
       },
     ],
-    "description": "Sometimes you have **output schemas that change at runtime** -- for example if
+    "description": "Sometimes you have output schemas that change at runtime -- for example if
 you have a list of Categories that you need to classify that come from a
 database, or your schema is user-provided.
-
-`TypeBuilder` is used to create or modify dynamic types at runtime to achieve this.",
+TypeBuilder is used to create or modify dynamic types at runtime to achieve this.",
     "indexSegmentId": "0",
     "slug": "guide/baml-advanced/dynamic-runtime-types",
     "title": "Dynamic Types - TypeBuilder",
@@ -8145,12 +7472,9 @@ You can still write tests in Python, TypeScript, Ruby, etc in the meantime.",
         "title": "BAML Advanced",
       },
     ],
-    "description": "Writing prompts requires a lot of string manipulation. BAML has a `template_string` to let you combine different string templates together. Under-the-hood they use [jinja](/ref/prompt-syntax/what-is-jinja) to evaluate the string and its inputs.
-
-**Template Strings are functions that always return a string.** They can be used to define reusable parts of a prompt, or to make the prompt more readable by breaking it into smaller parts.
-
+    "description": "Writing prompts requires a lot of string manipulation. BAML has a template_string to let you combine different string templates together. Under-the-hood they use jinja to evaluate the string and its inputs.
+Template Strings are functions that always return a string. They can be used to define reusable parts of a prompt, or to make the prompt more readable by breaking it into smaller parts.
 Example
-```baml BAML
 // Inject a list of "system" or "user" messages into the prompt.
 // Note the syntax -- there are no curlies. Just a string block.
 template_string PrintMessages(messages: Message[]) #"
@@ -8170,15 +7494,10 @@ function ClassifyConversation(messages: Message[]) -> Category[] {
     {{ ctx.output_format}}
   "#
 }
-```
 
-In this example we can call the template_string `PrintMessages` to subdivide the prompt into "user" or "system" messages using `_.role()` (see [message roles](/ref/prompt-syntax/role)). This allows us to reuse the logic for printing messages in multiple prompts. 
-
+In this example we can call the template_string PrintMessages to subdivide the prompt into "user" or "system" messages using _.role() (see message roles). This allows us to reuse the logic for printing messages in multiple prompts.
 You can nest as many template strings inside each other and call them however many times you want.
-
-<Warning>
-  The BAML linter may give you a warning when you use template strings due to a static analysis limitation. You can ignore this warning. If it renders in the playground, you're good!
-</Warning>
+The BAML linter may give you a warning when you use template strings due to a static analysis limitation. You can ignore this warning. If it renders in the playground, you're good!
 Use the playground preview to ensure your template string is being evaluated correctly!",
     "indexSegmentId": "0",
     "slug": "guide/baml-advanced/reusing-prompt-snippets",
@@ -8230,9 +7549,7 @@ Use the playground preview to ensure your template string is being evaluated cor
         "title": "BAML Advanced",
       },
     ],
-    "description": "Recall that an LLM request usually looks like this, where it sometimes has metadata in each `message`. In this case, Anthropic has a `cache_control` key.
-
-```curl {3,11} Anthropic Request
+    "description": "Recall that an LLM request usually looks like this, where it sometimes has metadata in each message. In this case, Anthropic has a cache_control key.
 curl https://api.anthropic.com/v1/messages \
   -H "content-type: application/json" \
   -H "anthropic-beta: prompt-caching-2024-07-31" \
@@ -8251,19 +7568,11 @@ curl https://api.anthropic.com/v1/messages \
       }
     ]
   }'
-```
 
-
-This is nearly the same as this BAML code, minus the `cache_control` metadata:
-
-
-Let's add the `cache-control` metadata to each of our messges in BAML now.
+This is nearly the same as this BAML code, minus the cache_control metadata:
+Let's add the cache-control metadata to each of our messges in BAML now.
 There's just 2 steps:
-
-<Steps>
-### Allow role metadata and header in the client definition
-```baml {5-8} main.baml
-client<llm> AnthropicClient {
+Allow role metadata and header in the client definitionclient<llm> AnthropicClient {
   provider "anthropic"
   options {
     model "claude-3-5-sonnet-20241022"
@@ -8273,11 +7582,7 @@ client<llm> AnthropicClient {
     }
   }
 }
-```
-
-### Add the metadata to the messages
-```baml {2,6} main.baml
-function AnalyzeBook(book: string) -> string {
+Add the metadata to the messagesfunction AnalyzeBook(book: string) -> string {
   client<llm> AnthropicClient
   prompt #"
     {{ _.role("user") }}
@@ -8286,16 +7591,9 @@ function AnalyzeBook(book: string) -> string {
     Analyze the major themes in Pride and Prejudice.
   "#
 }
-```
-
-</Steps>
 
 We have the "allowed_role_metadata" so that if you swap to other LLM clients, we don't accidentally forward the wrong metadata to the new provider API.
-
-
-<Tip>
-Remember to check the "raw curl" checkbox in the VSCode Playground to see the exact request being sent!
-</Tip>",
+Remember to check the "raw curl" checkbox in the VSCode Playground to see the exact request being sent!",
     "indexSegmentId": "0",
     "slug": "guide/baml-advanced/prompt-caching-message-role-metadata",
     "title": "Prompt Caching / Message Role Metadata",
@@ -8366,15 +7664,15 @@ Remember to check the "raw curl" checkbox in the VSCode Playground to see the ex
     ],
     "description": "With custom type validations, you can set specific rules to ensure your data's
 value falls within an acceptable range.
-
 BAML provides two types of validations:
-- **`@assert`** for strict validations. If a type fails an `@assert` validation, it
-  will not be returned in the response. If the failing assertion was part of the
-  top-level type, it will raise an exception. If it's part of a container, it
-  will be removed from the container.
-- **`@check`** for non-exception-raising validations. Whether a `@check` passes or
-  fails, the data will be returned. You can access the results of invidividual
-  checks in the response data.",
+
+@assert for strict validations. If a type fails an @assert validation, it
+will not be returned in the response. If the failing assertion was part of the
+top-level type, it will raise an exception. If it's part of a container, it
+will be removed from the container.
+@check for non-exception-raising validations. Whether a @check passes or
+fails, the data will be returned. You can access the results of invidividual
+checks in the response data.",
     "indexSegmentId": "0",
     "slug": "guide/baml-advanced/validations",
     "title": "Validations",
@@ -9404,40 +8702,25 @@ class Person {
         "title": "Functions",
       },
     ],
-    "description": "_Learn how to host your BAML code on Boundary Functions and call it over HTTP._
-
-<Info>
-  This is a preview feature, available starting with `baml-cli v0.66.0`.
-</Info>
-
-<Note>
-  The BAML language, compiler, and runtime will always be 100% free and
-  open-source: we will always allow you to run BAML functions directly in your
-  own backends.
-  
-  Boundary Functions' goal is to make it even easier to host and run BAML
-  functions, by adding support for features like rate limits, telemetry, and
-  end-user feedback.
-</Note>
-
+    "description": "Learn how to host your BAML code on Boundary Functions and call it over HTTP.
+This is a preview feature, available starting with baml-cli v0.66.0.
+The BAML language, compiler, and runtime will always be 100% free and
+open-source: we will always allow you to run BAML functions directly in your
+own backends.Boundary Functions' goal is to make it even easier to host and run BAML
+functions, by adding support for features like rate limits, telemetry, and
+end-user feedback.
 Boundary Functions allows you to host your BAML functions on our infrastructure, exposing
 one REST API endpoint per BAML function.
 
-<div class="flex flex-col items-center">
-  <img src="file:3f232775-f97b-449b-a76d-293b065c6307" alt="OpenAPI diagram" />
-</div>
-
 This guide will walk you through:
 
-  - creating a Boundary Cloud account,
-  - deploying your BAML code to Boundary Functions,
-  - setting your API keys, and
-  - calling your BAML functions.
+creating a Boundary Cloud account,
+deploying your BAML code to Boundary Functions,
+setting your API keys, and
+calling your BAML functions.
 
-Once you've deployed your BAML functions, you can use the [OpenAPI client] to
-call them.
-
-[OpenAPI client]: /guide/installation-language/rest-api-other-languages",
+Once you've deployed your BAML functions, you can use the OpenAPI client to
+call them.",
     "indexSegmentId": "0",
     "slug": "guide/cloud/functions/get-started",
     "title": "Get Started",
@@ -9735,17 +9018,11 @@ EOF
         "title": "Functions",
       },
     ],
-    "description": "_Learn how to use your OpenAPI client to call your functions in Boundary Functions._
-
-<Info>
-  This page assumes you've already deployed your BAML code to Boundary Functions. If
-  you haven't done that yet, check out the guide for [getting started](/guide/cloud/functions/get-started).
-</Info>
-
-<Info>
-  This page assumes you're using an OpenAPI-generated BAML client. If you
-  haven't done that yet, check out the [OpenAPI quickstart](/docs/get-started/quickstart/openapi).
-</Info>",
+    "description": "Learn how to use your OpenAPI client to call your functions in Boundary Functions.
+This page assumes you've already deployed your BAML code to Boundary Functions. If
+you haven't done that yet, check out the guide for getting started.
+This page assumes you're using an OpenAPI-generated BAML client. If you
+haven't done that yet, check out the OpenAPI quickstart.",
     "indexSegmentId": "0",
     "slug": "guide/cloud/functions/using-openapi",
     "title": "Using OpenAPI",
@@ -10186,20 +9463,14 @@ BOUNDARY_ENDPOINT=https://api2.boundaryml.com/v3/functions/prod/
         "title": "Functions",
       },
     ],
-    "description": "_Learn how to use Boundary Functions Environment Variables, which are key-value pairs
-configured outside your source code._
-
+    "description": "Learn how to use Boundary Functions Environment Variables, which are key-value pairs
+configured outside your source code.
 Environment variables are key-value pairs, configured outside your source code,
 and used to provide secrets for your deployed BAML functions, such as
-`ANTHROPIC_API_KEY` and `OPENAI_API_KEY`.
-
-You can set environment variables in the [Boundary
-Dashboard](https://dashboard.boundaryml.com/) by going to the left sidebar and
+ANTHROPIC_API_KEY and OPENAI_API_KEY.
+You can set environment variables in the Boundary
+Dashboard by going to the left sidebar and
 clicking on the cloud icon.
-
-<div class="flex flex-col items-center">
-  <img src="file:e2159ce8-f03f-4fda-9d91-92cd7cc867cf" alt="Boundary Cloud secrets" />
-</div>
 
 Changes to environment variables will take effect immediately.",
     "indexSegmentId": "0",
@@ -10272,31 +9543,21 @@ See Limits for more information.",
         "title": "Observability",
       },
     ],
-    "description": "<Tip>
-For the remaining of 2024, Boundary Studio is free for new accounts!
-
-Boundary Studio 2 will be released in 2025 with a new pricing model.
-</Tip>
-
-To enable observability with BAML, you'll first need to sign up for a [Boundary Studio](https://app.boundaryml.com) account. 
-
+    "description": "For the remaining of 2024, Boundary Studio is free for new accounts!Boundary Studio 2 will be released in 2025 with a new pricing model.
+To enable observability with BAML, you'll first need to sign up for a Boundary Studio account.
 Once you've signed up, you'll be able to create a new project and get your project token.
-
 Then simply add the following environment variables prior to running your application:
-
-```bash
 export BOUNDARY_PROJECT_ID=project_uuid
 export BOUNDARY_SECRET=your_token
-```
 
 There you'll be able to see all the metrics and logs from your application including:
 
-- Cost
-- Function calls
-- Execution time
-- Token Usage
-- Prompt Logs
-- and more...",
+Cost
+Function calls
+Execution time
+Token Usage
+Prompt Logs
+and more...",
     "indexSegmentId": "0",
     "slug": "guide/boundary-cloud/observability/tracking-usage",
     "title": "Boundary Studio",
@@ -10680,10 +9941,7 @@ async def pre_process_text(text):
         "title": "Comparisons",
       },
     ],
-    "description": "[Marvin](https://github.com/PrefectHQ/marvin) lets developers do extraction or classification tasks in Python as shown below (TypeScript is not supported):
-
-
-```python
+    "description": "Marvin lets developers do extraction or classification tasks in Python as shown below (TypeScript is not supported):
 import pydantic
 
 class Location(pydantic.BaseModel):
@@ -10691,10 +9949,8 @@ class Location(pydantic.BaseModel):
     state: str
 
 marvin.extract("I moved from NY to CHI", target=Location)
-```
 
 You can also provide instructions:
-```python
 marvin.extract(
     "I paid $10 for 3 tacos and got a dollar and 25 cents back.",
     target=float,
@@ -10702,9 +9958,8 @@ marvin.extract(
 )
 
 #  [10.0, 1.25]
-```
+
 or using enums to classify
-```python
 from enum import Enum
 import marvin
 
@@ -10715,12 +9970,8 @@ class RequestType(Enum):
 
 request = marvin.classify("Reset my password", RequestType)
 assert request == RequestType.ACCOUNT
-```
-
 
 For enum classification, you can add more instructions to each enum, but then you don't get fully typed outputs, nor can reuse the enum in your own code. You're back to working with raw strings.
-
-```python
 # Classifying a task based on project specifications
 project_specs = {
     "Frontend": "Tasks involving UI design, CSS, and JavaScript.",
@@ -10736,13 +9987,13 @@ task_category = marvin.classify(
     instructions="Match the task to the project category based on the provided specifications."
 )
 assert task_category == "Backend"
-```
 
 Marvin has some inherent limitations for example:
-1. How to use a different model?
-2. What is the full prompt? Where does it live? What if I want to change it because it doesn't work well for my use-case? How many tokens is it?
-3. How do I test this function?
-4. How do I visualize results over time in production?",
+
+How to use a different model?
+What is the full prompt? Where does it live? What if I want to change it because it doesn't work well for my use-case? How many tokens is it?
+How do I test this function?
+How do I visualize results over time in production?",
     "indexSegmentId": "0",
     "slug": "guide/comparisons/baml-vs-marvin",
     "title": "Comparing Marvin",
@@ -11018,10 +10269,8 @@ Developing requires VSCode. You could use vim and we have workarounds but we don
         "title": "Comparisons",
       },
     ],
-    "description": "Pydantic is a popular library for data validation in Python used by most -- if not all -- LLM frameworks, like [instructor](https://github.com/jxnl/instructor/tree/main).
-
-BAML also uses Pydantic. The BAML Rust compiler can generate Pydantic models from your `.baml` files. But that's not all the compiler does -- it also takes care of fixing common LLM parsing issues, supports more data types, handles retries, and reduces the amount of boilerplate code you have to write.
-
+    "description": "Pydantic is a popular library for data validation in Python used by most -- if not all -- LLM frameworks, like instructor.
+BAML also uses Pydantic. The BAML Rust compiler can generate Pydantic models from your .baml files. But that's not all the compiler does -- it also takes care of fixing common LLM parsing issues, supports more data types, handles retries, and reduces the amount of boilerplate code you have to write.
 Let's dive into how Pydantic is used and its limitations.",
     "indexSegmentId": "0",
     "slug": "guide/comparisons/baml-vs-pydantic",
@@ -12113,10 +11362,8 @@ Our mission is to make the best DX for AI engineers working with LLMs. Contact u
   {
     "breadcrumbs": [],
     "description": "We have seen many different prompts for many use-cases. We'd love to hear about your prompt and how you use BAML.
-
-Contact Us at [contact@boundaryml.com](mailto:contact@boundaryml.com)
-
-or join our [Discord](https://discord.gg/BTNBeXGuaS)",
+Contact Us at contact@boundaryml.com
+or join our Discord",
     "indexSegmentId": "0",
     "slug": "guide/contact",
     "title": "Contact",
@@ -12136,7 +11383,7 @@ or join our Discord",
   },
   {
     "breadcrumbs": [],
-    "description": "Check out the [live examples](https://baml-examples.vercel.app/) that use NextJS, and the [source code on Github](https://github.com/boundaryml/baml-examples).",
+    "description": "Check out the live examples that use NextJS, and the source code on Github.",
     "indexSegmentId": "0",
     "slug": "examples/interactive-examples",
     "title": "Interactive Examples",
@@ -12431,9 +11678,6 @@ Keep on reading for more tips and tricks! Or reach out in our Discord",
       },
     ],
     "description": "In this guide we'll build a small chatbot that takes in user messages and generates responses.
-
-
-```baml chat-history.baml
 class MyUserMessage {
   role "user" | "assistant"
   content string
@@ -12466,9 +11710,7 @@ test TestName {
       }
     ]
   }
-}
-
-```",
+}",
     "indexSegmentId": "0",
     "slug": "examples/prompt-engineering/chat",
     "title": "Chat",
@@ -12736,16 +11978,14 @@ main();
       },
     ],
     "description": ""Function calling" is a technique for getting an LLM to choose a function to call for you.
-
 The way it works is:
-1. You define a task with certain function(s)
-2. Ask the LLM to **choose which function to call**
-3. **Get the function parameters from the LLM** for the appropriate function it choose
-4. **Call the functions** in your code with those parameters
 
-In BAML, you can get represent a `tool` or a `function` you want to call as a BAML `class`, and make the function output be that class definition.
+You define a task with certain function(s)
+Ask the LLM to choose which function to call
+Get the function parameters from the LLM for the appropriate function it choose
+Call the functions in your code with those parameters
 
-```baml BAML
+In BAML, you can get represent a tool or a function you want to call as a BAML class, and make the function output be that class definition.
 class WeatherAPI {
   city string @description("the user's city")
   timeOfDay string @description("As an ISO8601 timestamp")
@@ -12765,11 +12005,8 @@ function UseTool(user_message: string) -> WeatherAPI {
     JSON:
   "#
 }
-```
-Call the function like this:
 
-<CodeGroup>
-```python Python
+Call the function like this:
 import asyncio
 from baml_client import b
 from baml_client.types import WeatherAPI
@@ -12783,9 +12020,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-```
-
-```typescript TypeScript
 import { b } from './baml_client'
 import { WeatherAPI } from './baml_client/types'
 import assert from 'assert'
@@ -12797,9 +12031,6 @@ const main = async () => {
   console.log(`City: ${weatherInfo.city}`)
   console.log(`Time of Day: ${weatherInfo.timeOfDay}`)
 }
-```
-
-```ruby Ruby
 require_relative "baml_client/client"
 
 $b = Baml.Client
@@ -12810,9 +12041,7 @@ def main
   raise unless weather_info.is_a?(Baml::Types::WeatherAPI)
   puts "City: #{weather_info.city}"
   puts "Time of Day: #{weather_info.timeOfDay}"
-end
-```
-</CodeGroup>",
+end",
     "indexSegmentId": "0",
     "slug": "examples/prompt-engineering/tools-function-calling",
     "title": "Tools / Function Calling",
@@ -13401,12 +12630,8 @@ BAML will still support native function-calling APIs in the future (please let u
       },
     ],
     "description": "Chain of thought prompting is a technique that encourages the language model to think step by step, reasoning through the problem before providing an answer. This can improve the quality of the response and make it easier to understand.
-
-
 In the below example, we use chain of thought prompting to extract information from an email.
-
-BAML will still parse the response as an `OrderInfo` object, even though there is additional text in the response.
-```baml
+BAML will still parse the response as an OrderInfo object, even though there is additional text in the response.
 class Email {
     subject string
     body string
@@ -13469,8 +12694,7 @@ test Test1 {
 
     }
   }
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "examples/prompt-engineering/chain-of-thought",
     "title": "Chain of Thought Prompting",
@@ -13562,10 +12786,7 @@ test Test1 {
       },
     ],
     "description": "Aliasing field names to abstract symbols like "k1", "k2", etc. can improve classification results. This technique, known as symbol tuning, helps the LLM focus on your descriptions rather than being biased by the enum or property names themselves.
-
-See the paper [Symbol Tuning Improves In-Context Learning in Language Models](https://arxiv.org/abs/2305.08298) for more details.
-
-```baml
+See the paper Symbol Tuning Improves In-Context Learning in Language Models for more details.
 enum MyClass {
     Refund @alias("k1")
     @description("Customer wants to refund a product")
@@ -13603,8 +12824,7 @@ test Test1 {
   args {
     input "I can't access my account using my login credentials. I havent received the promised reset password email. Please help."
   }
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "examples/prompt-engineering/symbol-tuning",
     "title": "Creating a Classification Function with Symbol Tuning",
@@ -13690,37 +12910,9 @@ test Test1 {
   {
     "breadcrumbs": [],
     "description": "Welcome to the BAML reference guide!
-
 Here you can learn about every BAML keyword, feature, and setting.
-
-For more in-depth explanations, we recommend reading the [Guides](/guide) first.
-
-<Cards>
-  <Card title="BAML Language" icon="fa-solid fa-language" href="/ref/baml">
-    Learn everything about BAML's language features.
-  </Card>
-
-  <Card title="Prompt (Jinja) Syntax" icon="fa-solid fa-code" href="/ref/prompt-syntax">
-    Learn about BAML's Jinja prompt syntax.
-  </Card>
-
-  <Card title="BAML CLI" icon="fa-solid fa-terminal" href="/ref/baml-cli">
-    BAML CLI commands and flags.
-  </Card>
-
-  <Card title="VSCode Settings" icon="fa-solid fa-gears" href="/ref/editor-extension-settings">
-    VSCode BAML Extension settings
-  </Card>
-
-  <Card title="LLM Clients" icon="fa-solid fa-brain" href="/ref/llm-client-providers">
-    LLM clients and how to configure them.
-  </Card>
-
-  <Card title="baml_client" icon="fa-solid fa-running" href="/ref/baml-client">
-    API Reference for the `baml_client` object.
-  </Card>
-
-</Cards>",
+For more in-depth explanations, we recommend reading the Guides first.
+Learn everything about BAML's language features.Learn about BAML's Jinja prompt syntax.BAML CLI commands and flags.VSCode BAML Extension settingsLLM clients and how to configure them.API Reference for the baml_client object.",
     "indexSegmentId": "0",
     "slug": "ref/overview",
     "title": "BAML Reference",
@@ -13746,7 +12938,7 @@ Learn everything about BAML's language features.Learn about BAML's Jinja prompt 
         "title": "baml-cli",
       },
     ],
-    "description": "The `init` command is used to initialize a project with BAML. It sets up the necessary directory structure and configuration files to get you started with BAML.",
+    "description": "The init command is used to initialize a project with BAML. It sets up the necessary directory structure and configuration files to get you started with BAML.",
     "indexSegmentId": "0",
     "slug": "ref/baml-cli/init",
     "title": "init",
@@ -14116,7 +13308,7 @@ For more information on getting started with BAML, visit the BAML documentation.
         "title": "baml-cli",
       },
     ],
-    "description": "The `generate` command is used to generate BAML clients based on your BAML source files. It processes the BAML configurations and creates the necessary client code for your specified output type.",
+    "description": "The generate command is used to generate BAML clients based on your BAML source files. It processes the BAML configurations and creates the necessary client code for your specified output type.",
     "indexSegmentId": "0",
     "slug": "ref/baml-cli/generate",
     "title": "generate",
@@ -14402,14 +13594,10 @@ If one of the generators fails, the command will stop at that point and report t
         "title": "baml-cli",
       },
     ],
-    "description": "The `serve` command starts a BAML-over-HTTP API server that exposes your BAML functions via HTTP endpoints. This feature allows you to interact with your BAML functions through a RESTful API interface.
-
-<Warning>
-  **Warning: Preview Feature**
-  
-  1. You must include the `--preview` flag when running the `dev` command.
-  2. Be aware that this feature is still being stabilized and may change in future releases.
-</Warning>",
+    "description": "The serve command starts a BAML-over-HTTP API server that exposes your BAML functions via HTTP endpoints. This feature allows you to interact with your BAML functions through a RESTful API interface.
+Warning: Preview Feature
+You must include the --preview flag when running the dev command.
+Be aware that this feature is still being stabilized and may change in future releases.",
     "indexSegmentId": "0",
     "slug": "ref/baml-cli/serve",
     "title": "serve",
@@ -14780,15 +13968,10 @@ Open http://localhost:2024/docs in your web browser.
         "title": "baml-cli",
       },
     ],
-    "description": "The `dev` command starts a development server that watches your BAML source files for changes and automatically reloads the BAML runtime. This feature is designed to streamline the development process by providing real-time updates as you modify your BAML configurations.
-
-
-<Warning>
-  **Warning: Preview Feature**
-  
-  1. You must include the `--preview` flag when running the `dev` command.
-  2. Be aware that this feature is still being stabilized and may change in future releases.
-</Warning>",
+    "description": "The dev command starts a development server that watches your BAML source files for changes and automatically reloads the BAML runtime. This feature is designed to streamline the development process by providing real-time updates as you modify your BAML configurations.
+Warning: Preview Feature
+You must include the --preview flag when running the dev command.
+Be aware that this feature is still being stabilized and may change in future releases.",
     "indexSegmentId": "0",
     "slug": "ref/baml-cli/dev",
     "title": "dev",
@@ -15064,12 +14247,9 @@ also be used for generating documentation in baml_client.
       },
     ],
     "description": "To set a value to an environment variable, use the following syntax:
-
-```baml
 env.YOUR_VARIABLE_NAME
-```
 
-<Warning>Environment variables with spaces in their names are not supported.</Warning>",
+Environment variables with spaces in their names are not supported.",
     "indexSegmentId": "0",
     "slug": "ref/baml/general-baml-syntax/enviornment-variables",
     "title": "Enviornment Variables",
@@ -15651,14 +14831,11 @@ This will render as #"Hello"#.",
       },
     ],
     "description": "Numerical values as denoted more specifically in BAML.
-
 | Value | Description |
 | --- | --- |
-| `int` | Integer |
-| `float` | Floating point number |
-
-
-We support implicit casting of int -> float, but if you need something to explicitly be a float, use `0.0` instead of `0`.",
+| int | Integer |
+| float | Floating point number |
+We support implicit casting of int -> float, but if you need something to explicitly be a float, use 0.0 instead of 0.",
     "indexSegmentId": "0",
     "slug": "ref/baml/general-baml-syntax/int-float",
     "title": "int / float",
@@ -15797,7 +14974,7 @@ test CircleDescription2 {
         "title": "General BAML Syntax",
       },
     ],
-    "description": "`true` or `false`",
+    "description": "true or false",
     "indexSegmentId": "0",
     "slug": "ref/baml/general-baml-syntax/bool",
     "title": "bool",
@@ -16211,8 +15388,7 @@ test FruitList {
       },
     ],
     "description": "Map values (AKA Dictionaries) allow you to store key-value pairs.
-
-<Tip>Most of BAML (clients, tests, classes, etc) is represented as a map.</Tip>",
+Most of BAML (clients, tests, classes, etc) is represented as a map.",
     "indexSegmentId": "0",
     "slug": "ref/baml/general-baml-syntax/map-dictionary",
     "title": "map (dictionary)",
@@ -19553,12 +18729,9 @@ Test result visualization
         "title": "Language Reference",
       },
     ],
-    "description": "Writing prompts requires a lot of string manipulation. BAML has a `template_string` to let you combine different string templates together. Under-the-hood they use [jinja](/ref/prompt-syntax/what-is-jinja) to evaluate the string and its inputs.
-
+    "description": "Writing prompts requires a lot of string manipulation. BAML has a template_string to let you combine different string templates together. Under-the-hood they use jinja to evaluate the string and its inputs.
 Think of template strings as functions that have variables, and return a string. They can be used to define reusable parts of a prompt, or to make the prompt more readable by breaking it into smaller parts.
-
 Example
-```baml BAML
 // Inject a list of "system" or "user" messages into the prompt.
 template_string PrintMessages(messages: Message[]) #"
   {% for m in messages %}
@@ -19577,15 +18750,10 @@ function ClassifyConversation(messages: Message[]) -> Category[] {
     {{ ctx.output_format}}
   "#
 }
-```
 
-In this example we can call the template_string `PrintMessages` to subdivide the prompt into "user" or "system" messages using `_.role()` (see [message roles](/ref/prompt-syntax/role)). This allows us to reuse the logic for printing messages in multiple prompts. 
-
+In this example we can call the template_string PrintMessages to subdivide the prompt into "user" or "system" messages using _.role() (see message roles). This allows us to reuse the logic for printing messages in multiple prompts.
 You can nest as many template strings inside each other and call them however many times you want.
-
-<Warning>
-  The BAML linter may give you a warning when you use template strings due to a static analysis limitation. You can ignore this warning. If it renders in the playground, you're good!
-</Warning>
+The BAML linter may give you a warning when you use template strings due to a static analysis limitation. You can ignore this warning. If it renders in the playground, you're good!
 Use the playground preview to ensure your template string is being evaluated correctly!",
     "indexSegmentId": "0",
     "slug": "ref/baml/template-string",
@@ -19637,19 +18805,14 @@ Use the playground preview to ensure your template string is being evaluated cor
       },
     ],
     "description": "Clients are used to configure how LLMs are called, like so:
-
-```rust BAML
 function MakeHaiku(topic: string) -> string {
   client "openai/gpt-4o"
   prompt #"
     Write a haiku about {{ topic }}.
   "#
 }
-```
 
-This is `<provider>/<model>` shorthand for:
-
-```rust BAML
+This is <provider>/<model> shorthand for:
 client<llm> MyClient {
   provider "openai"
   options {
@@ -19664,22 +18827,15 @@ function MakeHaiku(topic: string) -> string {
     Write a haiku about {{ topic }}.
   "#
 }
-```
 
-Consult the [provider documentation](#fields) for a list of supported providers
+Consult the provider documentation for a list of supported providers
 and models, and the default options.
-
-If you want to override options like `api_key` to use a different environment
-variable, or you want to point `base_url` to a different endpoint, you should use
+If you want to override options like api_key to use a different environment
+variable, or you want to point base_url to a different endpoint, you should use
 the latter form.
-
-<Tip>
 If you want to specify which client to use at runtime, in your Python/TS/Ruby code,
-you can use the [client registry](/guide/baml-advanced/llm-client-registry) to do so.
-
-This can come in handy if you're trying to, say, send 10% of your requests to a
-different model.
-</Tip>",
+you can use the client registry to do so.This can come in handy if you're trying to, say, send 10% of your requests to a
+different model.",
     "indexSegmentId": "0",
     "slug": "ref/baml/client-llm",
     "title": "client<llm>",
@@ -19813,24 +18969,15 @@ Policy.",
         "title": "Language Reference",
       },
     ],
-    "description": "Classes consist of a name, a list of properties, and their [types](class).
+    "description": "Classes consist of a name, a list of properties, and their types.
 In the context of LLMs, classes describe the type of the variables you can inject into prompts and extract out from the response.
-
-<Warning>
-  Note properties have no `:`
-</Warning>
-
-<CodeBlocks>
-```baml Baml
+Note properties have no :
 class Foo {
   property1 string
   property2 int?
   property3 Bar[]
   property4 MyEnum
 }
-```
-
-```python Python Equivalent
 from pydantic import BaseModel
 from path.to.bar import Bar
 from path.to.my_enum import MyEnum
@@ -19840,9 +18987,6 @@ class Foo(BaseModel):
   property2: Optional[int]= None
   property3: List[Bar]
   property4: MyEnum
-```
-
-```typescript Typescript Equivalent
 import z from "zod";
 import { BarZod } from "./path/to/bar";
 import { MyEnumZod } from "./path/to/my_enum";
@@ -19854,10 +18998,7 @@ const FooZod = z.object({
   property4: MyEnumZod,
 });
 
-type Foo = z.infer<typeof FooZod>;
-```
-
-</CodeBlocks>",
+type Foo = z.infer<typeof FooZod>;",
     "indexSegmentId": "0",
     "slug": "ref/baml/class",
     "title": "class",
@@ -20157,40 +19298,28 @@ Not yet supported. For optional properties, the default value is None in python.
       },
     ],
     "description": "Enums are useful for classification tasks. BAML has helper functions that can help you serialize an enum into your prompt in a neatly formatted list (more on that later).
-
 To define your own custom enum in BAML:
-
-<CodeBlocks>
-```baml BAML
 enum MyEnum {
   Value1
   Value2
   Value3
 }
-```
-
-```python Python Equivalent
 from enum import StrEnum
 
 class MyEnum(StrEnum):
   Value1 = "Value1"
   Value2 = "Value2"
   Value3 = "Value3"
-```
-
-```typescript Typescript Equivalent
 enum MyEnum {
   Value1 = "Value1",
   Value2 = "Value2",
   Value3 = "Value3",
 }
-```
 
-</CodeBlocks>
 
-- You may have as many values as you'd like.
-- Values may not be duplicated or empty.
-- Values may not contain spaces or special characters and must not start with a number.",
+You may have as many values as you'd like.
+Values may not be duplicated or empty.
+Values may not contain spaces or special characters and must not start with a number.",
     "indexSegmentId": "0",
     "slug": "ref/baml/enum",
     "title": "enum",
@@ -20364,17 +19493,10 @@ See more in prompt syntax docs",
         "title": "Language Reference",
       },
     ],
-    "description": "Each `generator` that you define in your BAML project will tell `baml-cli
-generate` to generate code for a specific target language. You can define
-multiple `generator` clauses in your BAML project, and `baml-cli generate` will
+    "description": "Each generator that you define in your BAML project will tell baml-cli generate to generate code for a specific target language. You can define
+multiple generator clauses in your BAML project, and baml-cli generate will
 generate code for each of them.
-
-<Tip>If you created your project using `baml-cli init`, then one has already been generated for you!</Tip>
-
-
-<CodeBlocks>
-
-```baml Python
+If you created your project using baml-cli init, then one has already been generated for you!
 generator target {
     // Valid values: "python/pydantic", "typescript", "ruby/sorbet"
     output_type "python/pydantic"
@@ -20390,9 +19512,6 @@ generator target {
     // Version of runtime to generate code for (should match installed baml-py version)
     version "0.63.0"
 }
-```
-
-```baml TypeScript
 generator target {
     // Valid values: "python/pydantic", "typescript", "ruby/sorbet"
     output_type "typescript"
@@ -20408,9 +19527,6 @@ generator target {
     // Version of runtime to generate code for (should match the package @boundaryml/baml version)
     version "0.63.0"
 }
-```
-
-```baml Ruby (beta)
 generator target {
     // Valid values: "python/pydantic", "typescript", "ruby/sorbet"
     output_type "ruby/sorbet"
@@ -20421,9 +19537,6 @@ generator target {
     // Version of runtime to generate code for (should match installed `baml` package version)
     version "0.63.0"
 }
-```
-
-```baml OpenAPI
 generator target {
     // Valid values: "python/pydantic", "typescript", "ruby/sorbet", "rest/openapi"
     output_type "rest/openapi"
@@ -20437,10 +19550,7 @@ generator target {
     // 'baml-cli generate' will run this after generating openapi.yaml, to generate your OpenAPI client
     // This command will be run from within $output_dir
     on_generate "npx @openapitools/openapi-generator-cli generate -i openapi.yaml -g OPENAPI_CLIENT_TYPE -o ."
-}
-```
-
-</CodeBlocks>",
+}",
     "indexSegmentId": "0",
     "slug": "ref/baml/generator",
     "title": "generator",
@@ -20768,7 +19878,7 @@ For more detailed information on each attribute, refer to the specific attribute
         "title": "Attributes",
       },
     ],
-    "description": "The `@alias` attribute in BAML is used to rename fields or values for better understanding by the LLM, while keeping the original name in your code. This is particularly useful for prompt engineering, as it allows you to provide a more intuitive name for the LLM without altering your existing codebase.",
+    "description": "The @alias attribute in BAML is used to rename fields or values for better understanding by the LLM, while keeping the original name in your code. This is particularly useful for prompt engineering, as it allows you to provide a more intuitive name for the LLM without altering your existing codebase.",
     "indexSegmentId": "0",
     "slug": "ref/attributes/alias-alias",
     "title": "@alias / @@alias",
@@ -21014,7 +20124,7 @@ Something
         "title": "Attributes",
       },
     ],
-    "description": "The `@description` attribute in BAML provides additional context to fields or values in prompts. This can help the LLM understand the intended use or meaning of a field or value.",
+    "description": "The @description attribute in BAML provides additional context to fields or values in prompts. This can help the LLM understand the intended use or meaning of a field or value.",
     "indexSegmentId": "0",
     "slug": "ref/attributes/description-description",
     "title": "@description / @@description",
@@ -21343,7 +20453,7 @@ Value2
         "title": "Attributes",
       },
     ],
-    "description": "The `@skip` attribute in BAML is used to exclude certain fields or values from being included in prompts or parsed responses. This can be useful when certain data is not relevant for the LLM's processing.",
+    "description": "The @skip attribute in BAML is used to exclude certain fields or values from being included in prompts or parsed responses. This can be useful when certain data is not relevant for the LLM's processing.",
     "indexSegmentId": "0",
     "slug": "ref/attributes/skip",
     "title": "@skip",
@@ -21490,7 +20600,7 @@ Value1
         "title": "Attributes",
       },
     ],
-    "description": "The `@assert` attribute in BAML is used for strict validations. If a type fails an `@assert` validation, it will not be returned in the response, and an exception will be raised if it's part of the top-level type.",
+    "description": "The @assert attribute in BAML is used for strict validations. If a type fails an @assert validation, it will not be returned in the response, and an exception will be raised if it's part of the top-level type.",
     "indexSegmentId": "0",
     "slug": "ref/attributes/assert",
     "title": "@assert",
@@ -21713,7 +20823,7 @@ class Foo {
         "title": "Attributes",
       },
     ],
-    "description": "The `@check` attribute in BAML adds validations without raising exceptions if they fail. This allows the validations to be inspected at runtime.",
+    "description": "The @check attribute in BAML adds validations without raising exceptions if they fail. This allows the validations to be inspected at runtime.",
     "indexSegmentId": "0",
     "slug": "ref/attributes/check",
     "title": "@check",
@@ -21866,7 +20976,7 @@ See more in validations guide.",
         "title": "Attributes",
       },
     ],
-    "description": "The `@@dynamic` attribute in BAML allows for the dynamic modification of fields or values at runtime. This is particularly useful when you need to adapt the structure of your data models based on runtime conditions or external inputs.",
+    "description": "The @@dynamic attribute in BAML allows for the dynamic modification of fields or values at runtime. This is particularly useful when you need to adapt the structure of your data models based on runtime conditions or external inputs.",
     "indexSegmentId": "0",
     "slug": "ref/attributes/dynamic",
     "title": "@@dynamic",
@@ -22219,12 +21329,9 @@ end
     ],
     "description": "AWS Bedrock provider for BAML
 
-The `aws-bedrock` provider supports all text-output models available via the
-[`Converse` API](https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html).
-
+The aws-bedrock provider supports all text-output models available via the
+Converse API.
 Example:
-
-```baml BAML
 client<llm> MyClient {
   provider aws-bedrock
   options {
@@ -22232,8 +21339,7 @@ client<llm> MyClient {
     model "gpt-3.5-turbo"
     temperature 0.1
   }
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/llm-client-providers/aws-bedrock",
     "title": "aws-bedrock",
@@ -22545,10 +21651,8 @@ documentation.Example:client<llm> MyClient {
         "title": "LLM Client Providers",
       },
     ],
-    "description": "The `anthropic` provider supports all APIs that use the same interface for the `/v1/messages` endpoint.
-
+    "description": "The anthropic provider supports all APIs that use the same interface for the /v1/messages endpoint.
 Example:
-```baml BAML
 client<llm> MyClient {
   provider anthropic
   options {
@@ -22556,7 +21660,6 @@ client<llm> MyClient {
     temperature 0
   }
 }
-```
 
 The options are passed through directly to the API, barring a few. Here's a shorthand of the options:",
     "indexSegmentId": "0",
@@ -22800,25 +21903,16 @@ For all other options, see the official anthropic API documentation.",
         "title": "LLM Client Providers",
       },
     ],
-    "description": "The `google-ai` provider supports the `https://generativelanguage.googleapis.com/v1beta/models/{model_id}/generateContent` and `https://generativelanguage.googleapis.com/v1beta/models/{model_id}/streamGenerateContent` endpoints.
-
-<Tip>
-The use of `v1beta` rather than `v1` aligns with the endpoint conventions established in [Google's SDKs](https://github.com/google-gemini/generative-ai-python/blob/8a29017e9120f0552ee3ad6092e8545d1aa6f803/google/generativeai/client.py#L60) and offers access to both the existing `v1` models and additional models exclusive to `v1beta`.
-</Tip>
-
-<Tip>
-BAML will automatically pick `streamGenerateContent` if you call the streaming interface.
-</Tip>
-
+    "description": "The google-ai provider supports the https://generativelanguage.googleapis.com/v1beta/models/{model_id}/generateContent and https://generativelanguage.googleapis.com/v1beta/models/{model_id}/streamGenerateContent endpoints.
+The use of v1beta rather than v1 aligns with the endpoint conventions established in Google's SDKs and offers access to both the existing v1 models and additional models exclusive to v1beta.
+BAML will automatically pick streamGenerateContent if you call the streaming interface.
 Example:
-```baml BAML
 client<llm> MyClient {
   provider google-ai
   options {
     model "gemini-1.5-flash"
   }
 }
-```
 
 The options are passed through directly to the API, barring a few. Here's a shorthand of the options:",
     "indexSegmentId": "0",
@@ -23021,18 +22115,11 @@ For all other options, see the official Google Gemini API documentation.",
         "title": "LLM Client Providers",
       },
     ],
-    "description": "The `vertex-ai` provider is used to interact with the Google Vertex AI services, specifically the following endpoints:
-
-```
+    "description": "The vertex-ai provider is used to interact with the Google Vertex AI services, specifically the following endpoints:
 https://${LOCATION}-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/locations/${LOCATION}/publishers/google/models/${MODEL_ID}:generateContent
 https://${LOCATION}-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/locations/${LOCATION}/publishers/google/models/${MODEL_ID}:streamGenerateContent
-```
 
-
-
-
-Example: 
-```baml BAML
+Example:
 client<llm> MyClient {
   provider vertex-ai
   options {
@@ -23040,8 +22127,7 @@ client<llm> MyClient {
     project_id my-project-id
     location us-central1
   }
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/llm-client-providers/google-vertex",
     "title": "vertex-ai",
@@ -23564,20 +22650,12 @@ For all other options, see the official Vertex AI documentation.",
         "title": "LLM Client Providers",
       },
     ],
-    "description": "The `openai` provider supports the OpenAI `/chat` endpoint, setting OpenAI-specific
+    "description": "The openai provider supports the OpenAI /chat endpoint, setting OpenAI-specific
 default configuration options.
-
-<Tip>
-  For Azure, we recommend using [`azure-openai`](azure) instead.
-
-  For all other OpenAI-compatible API providers, such as Groq, HuggingFace,
-  Ollama, OpenRouter, Together AI, and others, we recommend using
- [`openai-generic`](openai-generic) instead.
-</Tip>
-
+For Azure, we recommend using azure-openai instead.For all other OpenAI-compatible API providers, such as Groq, HuggingFace,
+Ollama, OpenRouter, Together AI, and others, we recommend using
+openai-generic instead.
 Example:
-
-```baml BAML
 client<llm> MyClient {
   provider "openai"
   options {
@@ -23586,7 +22664,6 @@ client<llm> MyClient {
     temperature 0.1
   }
 }
-```
 
 The options are passed through directly to the API, barring a few. Here's a shorthand of the options:",
     "indexSegmentId": "0",
@@ -23802,10 +22879,8 @@ For all other options, see the official OpenAI API documentation.",
         "title": "LLM Client Providers",
       },
     ],
-    "description": "For `azure-openai`, we provide a client that can be used to interact with the OpenAI API hosted on Azure using the `/chat/completions` endpoint.
-
+    "description": "For azure-openai, we provide a client that can be used to interact with the OpenAI API hosted on Azure using the /chat/completions endpoint.
 Example:
-```baml BAML
 client<llm> MyClient {
   provider azure-openai
   options {
@@ -23817,13 +22892,8 @@ client<llm> MyClient {
     api_key env.AZURE_OPENAI_API_KEY
   }
 }
-```
 
-<Warning>
-  `api_version` is required. Azure will return not found if the version is not specified.
-</Warning>
-
-
+api_version is required. Azure will return not found if the version is not specified.
 The options are passed through directly to the API, barring a few. Here's a shorthand of the options:",
     "indexSegmentId": "0",
     "slug": "ref/llm-client-providers/open-ai-from-azure",
@@ -24035,20 +23105,16 @@ For all other options, see the official Azure API documentation.",
         "title": "LLM Client Providers",
       },
     ],
-    "description": "The `openai-generic` provider supports all APIs that use OpenAI's request and
+    "description": "The openai-generic provider supports all APIs that use OpenAI's request and
 response formats, such as Groq, HuggingFace, Ollama, OpenRouter, and Together AI.
-
 Example:
-
-```baml BAML
 client<llm> MyClient {
   provider "openai-generic"
   options {
     base_url "https://api.provider.com"
     model "<provider-specified-format>"
   }
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/llm-client-providers/openai-generic",
     "title": "openai-generic",
@@ -24191,13 +23257,10 @@ For all other options, see the official OpenAI API documentation.",
         "title": "LLM Client Providers",
       },
     ],
-    "description": "[Groq](https://groq.com) supports the OpenAI client, allowing you to use the
-[`openai-generic`](/docs/snippets/clients/providers/openai) provider with an
-overridden `base_url`.
-
+    "description": "Groq supports the OpenAI client, allowing you to use the
+openai-generic provider with an
+overridden base_url.
 See https://console.groq.com/docs/openai for more information.
-
-```baml BAML
 client<llm> MyClient {
   provider openai-generic
   options {
@@ -24205,8 +23268,7 @@ client<llm> MyClient {
     api_key env.GROQ_API_KEY
     model "llama3-70b-8192"
   }
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/llm-client-providers/openai-generic-groq",
     "title": "groq",
@@ -24243,21 +23305,17 @@ client<llm> MyClient {
         "title": "LLM Client Providers",
       },
     ],
-    "description": "[HuggingFace](https://huggingface.co/) supports the OpenAI client, allowing you to use the
-[`openai-generic`](/docs/snippets/clients/providers/openai) provider with an
-overridden `base_url`.
-
+    "description": "HuggingFace supports the OpenAI client, allowing you to use the
+openai-generic provider with an
+overridden base_url.
 See https://huggingface.co/docs/inference-endpoints/index for more information on their Inference Endpoints.
-
-```baml BAML
 client<llm> MyClient {
   provider openai-generic
   options {
     base_url "https://api-inference.huggingface.co/v1"
     api_key env.HUGGINGFACE_API_KEY
   }
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/llm-client-providers/openai-generic-hugging-face",
     "title": "huggingface",
@@ -24294,8 +23352,7 @@ client<llm> MyClient {
       },
     ],
     "description": "Keywords AI is a proxying layer that allows you to route requests to hundreds of models.
-
-Follow the [Keywords AI + BAML Installation Guide](https://docs.keywordsai.co/integration/development-frameworks/baml) to get started!",
+Follow the Keywords AI + BAML Installation Guide to get started!",
     "indexSegmentId": "0",
     "slug": "ref/llm-client-providers/openai-generic-keywords-ai",
     "title": "Keywords AI",
@@ -24321,22 +23378,17 @@ Follow the Keywords AI + BAML Installation Guide to get started!",
         "title": "LLM Client Providers",
       },
     ],
-    "description": "[LMStudio](https://lmstudio.ai/docs) supports the OpenAI client, allowing you
-to use the [`openai-generic`](/docs/snippets/clients/providers/openai) provider
-with an overridden `base_url`.
-
-
+    "description": "LMStudio supports the OpenAI client, allowing you
+to use the openai-generic provider
+with an overridden base_url.
 See https://lmstudio.ai/docs/local-server#make-an-inferencing-request-using-openais-chat-completions-format for more information.
-
-```baml BAML
 client<llm> MyClient {
   provider "openai-generic"
   options {
     base_url "http://localhost:1234/v1"
     model "TheBloke/phi-2-GGUF"
   }
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/llm-client-providers/openai-generic-lm-studio",
     "title": "vLLM",
@@ -24372,18 +23424,13 @@ client<llm> MyClient {
         "title": "LLM Client Providers",
       },
     ],
-    "description": "[Ollama](https://ollama.com/) supports the OpenAI client, allowing you to use the
-[`openai-generic`](/docs/snippets/clients/providers/openai) provider with an
-overridden `base_url`.
-
-<Tip>
-  Note that to call Ollama, you must use its OpenAI-compatible
-  `/v1` endpoint. See [Ollama's OpenAI compatibility
-  documentation](https://ollama.com/blog/openai-compatibility).
-</Tip>
-<Tip>You can try out BAML with Ollama at promptfiddle.com, by running `OLLAMA_ORIGINS='*' ollama serve`. Learn more in [here](https://www.boundaryml.com/blog/ollama-structured-output)</Tip>
-
-```baml BAML
+    "description": "Ollama supports the OpenAI client, allowing you to use the
+openai-generic provider with an
+overridden base_url.
+Note that to call Ollama, you must use its OpenAI-compatible
+/v1 endpoint. See Ollama's OpenAI compatibility
+documentation.
+You can try out BAML with Ollama at promptfiddle.com, by running OLLAMA_ORIGINS='*' ollama serve. Learn more in here
 client<llm> MyClient {
   provider "openai-generic"
   options {
@@ -24391,7 +23438,6 @@ client<llm> MyClient {
     model llama3
   }
 }
-```
 
 The options are passed through directly to the API, barring a few. Here's a shorthand of the options:",
     "indexSegmentId": "0",
@@ -24610,13 +23656,9 @@ The model to use.| Model | Description |
         "title": "LLM Client Providers",
       },
     ],
-    "description": "[OpenRouter](https://openrouter.ai) supports the OpenAI client, allowing you to use the
-[`openai-generic`](/docs/snippets/clients/providers/openai) provider with an
-overridden `base_url`.
-
-
-
-```baml BAML
+    "description": "OpenRouter supports the OpenAI client, allowing you to use the
+openai-generic provider with an
+overridden base_url.
 client<llm> MyClient {
   provider "openai-generic"
   options {
@@ -24628,8 +23670,7 @@ client<llm> MyClient {
       "X-Title" "YOUR-TITLE" // Optional
     }
   }
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/llm-client-providers/openai-generic-open-router",
     "title": "openrouter",
@@ -24669,13 +23710,10 @@ client<llm> MyClient {
         "title": "LLM Client Providers",
       },
     ],
-    "description": "[Together AI](https://www.together.ai/) supports the OpenAI client, allowing you
-to use the [`openai-generic`](/docs/snippets/clients/providers/openai) provider
-with an overridden `base_url`.
-
+    "description": "Together AI supports the OpenAI client, allowing you
+to use the openai-generic provider
+with an overridden base_url.
 See https://docs.together.ai/docs/openai-api-compatibility for more information.
-
-```baml BAML
 client<llm> MyClient {
   provider "openai-generic"
   options {
@@ -24683,8 +23721,7 @@ client<llm> MyClient {
     api_key env.TOGETHER_API_KEY
     model "meta-llama/Llama-3-70b-chat-hf"
   }
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/llm-client-providers/openai-generic-together-ai",
     "title": "Together AI",
@@ -24721,13 +23758,10 @@ client<llm> MyClient {
         "title": "LLM Client Providers",
       },
     ],
-    "description": "[Unify AI](https://www.unify.ai/) supports the OpenAI client, allowing you
-to use the [`openai-generic`](/docs/snippets/clients/providers/openai) provider
-with an overridden `base_url`.
-
+    "description": "Unify AI supports the OpenAI client, allowing you
+to use the openai-generic provider
+with an overridden base_url.
 See https://docs.unify.ai/universal_api/making_queries#openai-python-package for more information.
-
-```baml BAML
 client<llm> UnifyClient {
     provider "openai-generic"
     options {
@@ -24735,8 +23769,7 @@ client<llm> UnifyClient {
         api_key env.MY_UNIFY_API_KEY
         model "llama-3.1-405b-chat@together-ai"
     }
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/llm-client-providers/openai-generic-unify-ai",
     "title": "Unify AI",
@@ -24773,14 +23806,10 @@ client<llm> UnifyClient {
         "title": "LLM Client Providers",
       },
     ],
-    "description": "[vLLM](https://docs.vllm.ai/) supports the OpenAI client, allowing you
-to use the [`openai-generic`](/docs/snippets/clients/providers/openai) provider
-with an overridden `base_url`.
-
-
+    "description": "vLLM supports the OpenAI client, allowing you
+to use the openai-generic provider
+with an overridden base_url.
 See https://docs.vllm.ai/en/latest/serving/openai_compatible_server.html for more information.
-
-```baml BAML
 client<llm> MyClient {
   provider "openai-generic"
   options {
@@ -24789,8 +23818,7 @@ client<llm> MyClient {
     model "NousResearch/Meta-Llama-3-8B-Instruct"
     default_role "user" // Required for using VLLM
   }
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/llm-client-providers/openai-generic-v-llm",
     "title": "vLLM",
@@ -24828,16 +23856,12 @@ client<llm> MyClient {
         "title": "LLM Client Strategies",
       },
     ],
-    "description": "A retry policy can be attached to any `client<llm>` and will attempt to retry requests that fail due to a network error.
-
-```baml BAML
+    "description": "A retry policy can be attached to any client<llm> and will attempt to retry requests that fail due to a network error.
 retry_policy MyPolicyName {
   max_retries 3
 }
-```
 
 Usage:
-```baml BAML
 client<llm> MyClient {
   provider anthropic
   retry_policy MyPolicyName
@@ -24845,8 +23869,7 @@ client<llm> MyClient {
     model "claude-3-sonnet-20240229"
     api_key env.ANTHROPIC_API_KEY
   }
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/llm-client-strategies/retry-policy",
     "title": "retry_policy",
@@ -25022,13 +24045,9 @@ The maximum delay in milliseconds to wait between retries. Default: 10000",
         "title": "LLM Client Strategies",
       },
     ],
-    "description": "You can use the `fallback` provider to add more resilliancy to your application.
-
+    "description": "You can use the fallback provider to add more resilliancy to your application.
 A fallback will attempt to use the first client, and if it fails, it will try the second client, and so on.
-
-<Tip>You can nest fallbacks inside of other fallbacks.</Tip>
-
-```baml BAML
+You can nest fallbacks inside of other fallbacks.
 client<llm> SuperDuperClient {
   provider fallback
   options {
@@ -25038,8 +24057,7 @@ client<llm> SuperDuperClient {
       ClientC
     ]
   }
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/llm-client-strategies/fallback",
     "title": "fallback",
@@ -25260,9 +24278,7 @@ client<llm> MegaClient {
         "title": "LLM Client Strategies",
       },
     ],
-    "description": "The `round_robin` provider allows you to distribute requests across multiple clients in a round-robin fashion. After each call, the next client in the list will be used.
-
-```baml BAML
+    "description": "The round_robin provider allows you to distribute requests across multiple clients in a round-robin fashion. After each call, the next client in the list will be used.
 client<llm> MyClient {
   provider round-robin
   options {
@@ -25272,8 +24288,7 @@ client<llm> MyClient {
       ClientC
     ]
   }
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/llm-client-strategies/round-robin",
     "title": "round-robin",
@@ -25516,12 +24531,9 @@ client<llm> MegaClient {
         "title": "baml_client",
       },
     ],
-    "description": "`TypeBuilder` is used to create or modify output schemas at runtime. It's particularly useful when you have dynamic output structures that can't be determined at compile time - like categories from a database or user-provided schemas.
-
+    "description": "TypeBuilder is used to create or modify output schemas at runtime. It's particularly useful when you have dynamic output structures that can't be determined at compile time - like categories from a database or user-provided schemas.
 Here's a simple example of using TypeBuilder to add new enum values before calling a BAML function:
-
-**BAML Code**
-```baml {4}
+BAML Code
 enum Category {
   RED
   BLUE
@@ -25536,11 +24548,8 @@ function Categorize(text: string) -> Category {
     {{ ctx.output_format }}
   "#
 }
-```
 
-**Runtime Usage**
-<CodeBlocks>
-```python Python
+Runtime Usage
 from baml_client.type_builder import TypeBuilder
 from baml_client import b
 
@@ -25554,8 +24563,6 @@ tb.Category.add_value('YELLOW')
 # Pass the typebuilder when calling the function
 result = await b.Categorize("The sun is bright", {"tb": tb})
 # result can now be RED, BLUE, GREEN, or YELLOW
-```
-```typescript TypeScript
 import { TypeBuilder } from '../baml_client/type_builder'
 import { b } from '../baml_client'
 
@@ -25569,8 +24576,6 @@ tb.Category.addValue('YELLOW')
 // Pass the typebuilder when calling the function
 const result = await b.Categorize("The sun is bright", { tb })
 // result can now be RED, BLUE, GREEN, or YELLOW
-```
-```ruby Ruby
 require_relative 'baml_client/client'
 
 # Create a TypeBuilder instance
@@ -25582,9 +24587,7 @@ tb.Category.add_value('YELLOW')
 
 # Pass the typebuilder when calling the function
 result = Baml::Client.categorize(text: "The sun is bright", baml_options: { tb: tb })
-# result can now be RED, BLUE, GREEN, or YELLOW
-```
-</CodeBlocks>",
+# result can now be RED, BLUE, GREEN, or YELLOW",
     "indexSegmentId": "0",
     "slug": "ref/baml-client/type-builder",
     "title": "TypeBuilder",
@@ -26381,7 +25384,7 @@ If you're interested in these features, please join the discussion in our GitHub
         "title": "Prompt Syntax",
       },
     ],
-    "description": "BAML Prompt strings are essentially [Minijinja](https://docs.rs/minijinja/latest/minijinja/filters/index.html#functions) templates, which offer the ability to express logic and data manipulation within strings. Jinja is a very popular and mature templating language amongst Python developers, so Github Copilot or another LLM can already help you write most of the logic you want.",
+    "description": "BAML Prompt strings are essentially Minijinja templates, which offer the ability to express logic and data manipulation within strings. Jinja is a very popular and mature templating language amongst Python developers, so Github Copilot or another LLM can already help you write most of the logic you want.",
     "indexSegmentId": "0",
     "slug": "ref/prompt-syntax/what-is-jinja",
     "title": "What is Jinja / Cookbook",
@@ -26757,13 +25760,9 @@ function MyFunc(arg1: string, user: User) -> string {
         "title": "Prompt Syntax",
       },
     ],
-    "description": "`{{ ctx.output_format }}` is used within a prompt template (or in any template_string) to print out the function's output schema into the prompt. It describes to the LLM how to generate a structure BAML can parse (usually JSON).
-
-Here's an example of a function with `{{ ctx.output_format }}`, and how it gets rendered by BAML before sending it to the LLM.
-
-**BAML Prompt**
-
-```baml
+    "description": "{{ ctx.output_format }} is used within a prompt template (or in any template_string) to print out the function's output schema into the prompt. It describes to the LLM how to generate a structure BAML can parse (usually JSON).
+Here's an example of a function with {{ ctx.output_format }}, and how it gets rendered by BAML before sending it to the LLM.
+BAML Prompt
 class Resume {
   name string
   education Education[]
@@ -26778,11 +25777,8 @@ function ExtractResume(resume_text: string) -> Resume {
     {{ ctx.output_format }}
   "#
 }
-```
 
-**Rendered prompt**
-
-```text
+Rendered prompt
 Extract this resume
 ---
 Aaron V.
@@ -26799,8 +25795,7 @@ Answer in JSON using this schema:
       graduation_year: string
     }
   ]
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/prompt-syntax/ctx-output-format",
     "title": "ctx.output_format",
@@ -27038,9 +26033,8 @@ Read our full article on json schema vs type definitions",
         "title": "Prompt Syntax",
       },
     ],
-    "description": "If you try rendering `{{ ctx }}` into the prompt (literally just write that out!), you'll see all the metadata we inject to run this prompt within the playground preview.
-
-In the earlier tutorial we mentioned `ctx.output_format`, which contains the schema, but you can also access client information:",
+    "description": "If you try rendering {{ ctx }} into the prompt (literally just write that out!), you'll see all the metadata we inject to run this prompt within the playground preview.
+In the earlier tutorial we mentioned ctx.output_format, which contains the schema, but you can also access client information:",
     "indexSegmentId": "0",
     "slug": "ref/prompt-syntax/ctx-client",
     "title": "ctx (accessing metadata)",
@@ -27165,15 +26159,11 @@ function MyFuncWithAnthropic(messages: Message[]) -> string {
         "title": "Prompt Syntax",
       },
     ],
-    "description": "BAML prompts are compiled into a `messages` array (or equivalent) that most LLM providers use:
-
-BAML Prompt -> `[{ role: "user": content: "hi there"}, { role: "assistant", ...}]`
-
-By default, BAML puts everything into a single message with the `system` role if available (or whichever one is best for the provider you have selected). 
+    "description": "BAML prompts are compiled into a messages array (or equivalent) that most LLM providers use:
+BAML Prompt -> [{ role: "user": content: "hi there"}, { role: "assistant", ...}]
+By default, BAML puts everything into a single message with the system role if available (or whichever one is best for the provider you have selected).
 When in doubt, the playground always shows you the current role for each message.
-
-To specify a role explicitly, add the `{{ _.role("user")}}` syntax to the prompt
-```rust
+To specify a role explicitly, add the {{ _.role("user")}} syntax to the prompt
 prompt #"
   {{ _.role("system") }} Everything after
   this element will be a system prompt!
@@ -27182,14 +26172,10 @@ prompt #"
   And everything after this
   will be a user role
 "#
-```
-Try it out in [PromptFiddle](https://www.promptfiddle.com)
 
-<Note>
-  BAML may change the default role to `user` if using specific APIs that only support user prompts, like when using prompts with images.
-</Note>
-
-We use `_` as the prefix of `_.role()` since we plan on adding more helpers here in the future.",
+Try it out in PromptFiddle
+BAML may change the default role to user if using specific APIs that only support user prompts, like when using prompts with images.
+We use _ as the prefix of _.role() since we plan on adding more helpers here in the future.",
     "indexSegmentId": "0",
     "slug": "ref/prompt-syntax/role",
     "title": "_.role",
@@ -27407,7 +26393,7 @@ function CheckJobPosting(post: string) -> bool {
         "title": "Prompt Syntax",
       },
     ],
-    "description": "See [template_string](/ref/baml/template-string) to learn how to add variables in .baml files",
+    "description": "See template_string to learn how to add variables in .baml files",
     "indexSegmentId": "0",
     "slug": "ref/prompt-syntax/variables",
     "title": "Variables",
@@ -27433,8 +26419,6 @@ function CheckJobPosting(post: string) -> bool {
       },
     ],
     "description": "Use conditional statements to control the flow and output of your templates based on conditions:
-
-```jinja
 function MyFunc(user: User) -> string {
   prompt #"
     {% if user.is_active %}
@@ -27443,8 +26427,7 @@ function MyFunc(user: User) -> string {
       Please activate your account.
     {% endif %}
   "#
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/prompt-syntax/conditionals",
     "title": "Conditionals",
@@ -27480,16 +26463,13 @@ function MyFunc(user: User) -> string {
       },
     ],
     "description": "Here's how you can iterate over a list of items, accessing each item's attributes:
-
-```jinja
 function MyFunc(messages: Message[]) -> string {
   prompt #"
     {% for message in messages %}
       {{ message.user_name }}: {{ message.content }}
     {% endfor %}
   "#
-}
-```",
+}",
     "indexSegmentId": "0",
     "slug": "ref/prompt-syntax/loops",
     "title": "Loops",
@@ -27614,15 +26594,9 @@ prompt #"
     ],
     "description": "| Type | Value |
 | --- | --- |
-| `string \| null` | null |
-
-
-
+| string \| null | null |
 If set, all generated code will use this instead of the packaged generator shipped with the extension.
-
-<Tip>
-We recommend this setting! This prevents mismatches between the VSCode Extension and the installed BAML package.
-</Tip>",
+We recommend this setting! This prevents mismatches between the VSCode Extension and the installed BAML package.",
     "indexSegmentId": "0",
     "slug": "ref/editor-extension-settings/baml-cli-path",
     "title": "baml.cliPath",
@@ -27692,17 +26666,13 @@ If you use unix, you can run where baml-cli in your project to figure out what t
     ],
     "description": "| Type | Default Value |
 | --- | --- |
-| `"always" \| "never"` | "always" |
+| "always" \| "never" | "always" |
 
+always: Generate code for baml_client on every save
+never: Do not generate baml_client on any save
 
-- `always`: Generate code for `baml_client` on every save
-- `never`: Do not generate `baml_client` on any save
-
-If you have a generator of type `rest/*`, `"always"` will not do any code generation. You will have to manually run:
-
-```
-path/to/baml-cli generate
-```",
+If you have a generator of type rest/*, "always" will not do any code generation. You will have to manually run:
+path/to/baml-cli generate",
     "indexSegmentId": "0",
     "slug": "ref/editor-extension-settings/baml-generate-code-on-save",
     "title": "baml.generateCodeOnSave",
@@ -27774,10 +26744,10 @@ Usage
     ],
     "description": "| Type | Default Value |
 | --- | --- |
-| `boolean` | `true` |
+| boolean | true |
 
-- `true`: Automatically restarts the TypeScript Language Server in VSCode when the BAML extension generates the TypeScript `baml_client` files. This is a workaround for VSCode's issues with recognizing newly added directories and files in the TypeScript Language Server. No-op if not generating TypeScript files.
-- `false`: Does not automatically restart the TypeScript Server. You may need to manually reload the TS server to ensure it recognizes the new types.",
+true: Automatically restarts the TypeScript Language Server in VSCode when the BAML extension generates the TypeScript baml_client files. This is a workaround for VSCode's issues with recognizing newly added directories and files in the TypeScript Language Server. No-op if not generating TypeScript files.
+false: Does not automatically restart the TypeScript Server. You may need to manually reload the TS server to ensure it recognizes the new types.",
     "indexSegmentId": "0",
     "slug": "ref/editor-extension-settings/baml-restart-ts-server-on-save",
     "title": "baml.restartTSServerOnSave",
@@ -27845,11 +26815,8 @@ Usage
       },
     ],
     "description": "We leveraged our expertise in structured data extraction to create a general purpose extraction API that is independent of BAML.
-
 If you are interested in converting PDF documents, invoices, images into readable structured data, this API is for you.
-
-
-To try it out visit our [Dashboard v2](https://dashboard.boundaryml.com). Note that this is a different website from the current tracing/observability dashboard (app.boundaryml.com). We are working on unifying the two.",
+To try it out visit our Dashboard v2. Note that this is a different website from the current tracing/observability dashboard (app.boundaryml.com). We are working on unifying the two.",
     "indexSegmentId": "0",
     "slug": "ref/boundary-extraction-api/extract",
     "title": "Overview",
@@ -28661,7 +27628,7 @@ You may have up to 64KiB of data across all environment variables combined.
   },
   {
     "breadcrumbs": [],
-    "description": "All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.",
+    "description": "All notable changes to this project will be documented in this file. See conventional commits for commit guidelines.",
     "indexSegmentId": "0",
     "slug": "changelog/changelog",
     "title": "Changelog",

@@ -7,19 +7,8 @@ Empowering AI workflows with simplicity and efficiency
 
 Scout makes it easy for anyone—from solo creators to growing teams—to build AI workflows that power real solutions. Scrape websites, upload documents, chunk and vectorize data, use semantic search, execute network requests, interact with large language models, and more, all without the complex technical deployments and orchestration headache.
 
-<div style="width: 100%; min-width: 350px; max-width: 800px;">
-  <div style="position: relative; width: 100%; overflow: hidden; padding-top: 56.25%;">
-    <p>
-      <iframe style="position: absolute; top: 0; left: 0; right: 0; width: 100%; height: 100%; border: none;" src="https://www.youtube.com/embed/CdwUVGwqtyI?si=aXjdrq8j4ALrzuts" width="560" height="315" allowfullscreen="allowfullscreen" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-    </p>
-  </div>
-</div>
 
-<hr/>
-
-<Success><b>Just getting started?</b> Check out our [Build a RAG app in under 5 minutes](/docs/quick-start) quick start guide!</Success>
-
-<hr/>",
+Just getting started? Check out our Build a RAG app in under 5 minutes quick start guide!",
     "indexSegmentId": "0",
     "slug": "docs/welcome",
     "title": "Welcome to Scout's Documentation 🎉",
@@ -66,138 +55,91 @@ Improve response times, accuracy, and overall customer experience with AI-driven
 Quickly create a retrieval-augmented generation app with Scout
 
 Scout makes building AI apps simple. With intuitive drag-and-drop functionality, you can easily build apps that leverage LLMs, APIs, your data, and your custom logic.
-
 In this guide, we’ll show you how to build a RAG app in Scout in under 5 minutes. Scout provisions all the underlying infrastructure, and our free tier doesn't require a credit card. Let's get started!
 
-<Frame
-  caption="Architecture for our 5 minute RAG app. First we'll integrate our data, then we'll configure and test our AI workflow."
->
-  <img src="file:cf441ec9-a82e-4b21-876d-b644e7b49fbe" />
-</Frame>
+Integrate your dataScout stores your data in collections, which are groups of documents. Each document can contain metadata and text content. The text content is chunked and used for vector search. The metadata can be used to filter and sort the documents. Scout abstracts all of this complexity and provides a simple process to upload documents as outlined below:
+Sign up for free or sign in to Scout
+Once logged in, click "Collections" in the nav
+Click "+ New Collection"
+Name and create your collection
+Once your collection is provisioned, click it to open it
+There are 3 primary ways you can add documents to a collection in Scout:
+Give Scout a URL or website to scrape
+Upload files to Scout
+Create a document directly in Scout
+In this guide, we'll build a collection by scraping Scout's docs (Scoutception?) but feel free to choose your own adventure for this section.First, in your collection, click "+" in the nav at the top to start adding documents. Then, select the "Website Crawl" option.
+Enter https://scoutos.com as the Start URL
+Select HTTP as the Scraper
+Select Readability as the Text Extractor
 
-<Steps>
-  ### Integrate your data
-  Scout stores your data in [collections](/docs/collections), which are groups of [documents](/docs/collections/documents). Each document can contain metadata and text content. The text content is chunked and used for vector search. The metadata can be used to filter and sort the documents. Scout abstracts all of this complexity and provides a simple process to upload documents as outlined below:
+Click the "Run" button to start scraping the Scout website. You'll land on a page showing you the progress and status of the process. Once it's complete, move on to the next step to configure your workflow.
+Configure your workflowWorkflows consist of inputs, composable blocks which represent different actions, and outputs. They can be created from scratch, cloned from an existing workflow, or started with a template. Each block is designed with its own set of configurations. In this guide, we'll create a workflow that uses an input, a collection search, an LLM, and then output:
+Click "Workflows" in the nav
+Click "+ New" to create a new workflow
+Name your workflow and click the "Create" button. You'll see your empty workflow canvas: 
 
-  <AccordionGroup toc={true}>
-    <Accordion title='Create a collection'>
-      1. [Sign up for free](https://studio.scoutos.com/onboarding/step-1) or [sign in](https://studio.scoutos.com/sign-in) to Scout
-      2. Once logged in, click "[Collections](https://studio.scoutos.com/dashboard/collections)" in the nav
-      3. Click "+ New Collection"
-      4. Name and create your collection
-      5. Once your collection is provisioned, click it to open it
-    </Accordion>
-    <Accordion title='Upload documents'>
-     There are 3 primary ways you can add documents to a collection in Scout:
+Hover over the input block and click the "+" button below it and add a new collection block 
+Then, click the newly created collection block, and modify its configurations as follows:
 
-     * Give Scout a URL or website to scrape
-     * Upload files to Scout
-     * Create a document directly in Scout
+Collection ID: Use the dropdown to select your collection.
+Limit: We'll use 10. This setting controls the max amount of documents retrieved
+Minimum Similarity: We'll use 0.7. This setting sets a threshold for similarity match between the RAG input and the documents we'll retrieve
+Query: This should be {{inputs.user_message}} in order to supply the RAG app's input to the collection query
 
-     In this guide, we'll build a collection by scraping Scout's docs (Scoutception?) but feel free to choose your own adventure for this section.
 
-     First, in your collection, click "+" in the nav at the top to start adding documents. Then, select the "Website Crawl" option.
-     <img src="file:04eaf47d-40b0-4c98-a2ee-de235de834d4" />
-     * Enter `https://scoutos.com` as the Start URL
-     * Select `HTTP` as the Scraper
-     * Select `Readability` as the Text Extractor
-     <img src="file:62f50863-a874-4e02-be23-897bf71e956d" width="400" />
-     * Click the "Run" button to start scraping the Scout website. You'll land on a page showing you the progress and status of the process. Once it's complete, move on to the next step to configure your workflow.
-     <img src="file:41e8fa83-f155-4c80-9c90-de81d1d4d9fa" />
-    </Accordion>
+Click the "Save" button in the upper right-hand corner. Your settings should look as follows, except for the Collection ID should be your unique value as mentioned above: 
+Hover over the collection block and click the "+" button below it and add a new LLM block.Then, click the newly created LLM block, and modify its configuration sections as follows:
+First is the Configuration section, where we'll use the following settings:
 
-  </AccordionGroup>
+Model: We'll use gpt-4o for this
+Temperature: We'll use 0.7 to keep it more factual
+Maximum Tokens: We'll use 2000 as we'll be supplying our queried documents in the request
+Response Type: text 
 
-  ### Configure your workflow
-  [Workflows](/docs/workflows) consist of inputs, composable [blocks](/docs/workflows/blocks) which represent different actions, and outputs. They can be created from scratch, cloned from an existing workflow, or started with a template. Each block is designed with its own set of configurations. In this guide, we'll create a workflow that uses an input, a collection search, an LLM, and then output:
 
-  <AccordionGroup toc={true}>
-    <Accordion title='Create a workflow'>
-      * Click "[Workflows](https://studio.scoutos.com/dashboard/workflows)" in the nav
-      * Click "+ New" to create a new workflow
-      * Name your workflow and click the "Create" button. You'll see your empty workflow canvas: <img src="file:256da35a-4ef4-4d3f-a9d8-823c49c7767b" />
-    </Accordion>
-    <Accordion title='Add a collection block'>
-     * Hover over the input block and click the "+" button below it and add a new collection block <img src="file:097b7f92-e6f4-48e5-80ed-31974c83b5ca"/>
-     * Then, click the newly created collection block, and modify its configurations as follows:
-        * `Collection ID`: Use the dropdown to select your collection.
-        * `Limit`: We'll use `10`. This setting controls the max amount of documents retrieved
-        * `Minimum Similarity`: We'll use `0.7`. This setting sets a threshold for similarity match between the RAG input and the documents we'll retrieve
-        * `Query`: This should be `{{inputs.user_message}}` in order to supply the RAG app's input to the collection query
-     * Click the "Save" button in the upper right-hand corner. Your settings should look as follows, except for the `Collection ID` should be your unique value as mentioned above: <img src="file:d5f12ab8-38dc-49d5-bb5e-db39bc73ddf6"/>
-    </Accordion>
-    <Accordion title='Add an LLM block'>
-     Hover over the collection block and click the "+" button below it and add a new LLM block.
+Then we'll configure the Chat Messages section as follows:
 
-     Then, click the newly created LLM block, and modify its configuration sections as follows:
-      * First is the <b>Configuration</b> section, where we'll use the following settings:
-        * `Model`: We'll use `gpt-4o` for this
-        * `Temperature`: We'll use `0.7` to keep it more factual
-        * `Maximum Tokens`: We'll use `2000` as we'll be supplying our queried documents in the request
-        * `Response Type`: `text` <img src="file:98aa7fa0-d839-4103-bb96-0412e2e82d99" />
-      * Then we'll configure the <b>Chat Messages</b> section as follows:
-        * First, we'll add a System Message
-          * Click "+ Add an item" <img src="file:53af2de1-4328-4803-ab4b-e09acfae164f" />
-          * Then change `Chat Messages-1`: `Single Message`
-          * Set `Role`: `system`
-          * And paste the following prompt into `Content`
-            ```
-            You are an expert customer solutions engineer at Scout. Your role is to respond to user inquiries in a helpful and guiding manner. You have access to Scout's technical configuration documentation for developers, which is provided below. Please use this documentation to answer user questions accurately and thoroughly. If you are not confident in your answer or if a question falls outside the scope of the provided information, kindly inform the user that you do not have that information. Maintain a professional and courteous tone in all your responses. Do not speculate or provide information not supported by the documentation.
-            ```
-          * The final configuration for the System Message should look as follows: <img src="file:120978cb-1409-43d3-a21f-2ecedd718610" />
-        * Then, we'll add the User Message
-          * Scroll to the bottom of the Chat Messages section and click "+ Add an item" to add another Chat Message
-          * Then change the newly created `Chat Messages-2`: `Single Message`
-          * Set `Role`: `user`
-          * And paste the following prompt into `Content`:
-            ```
-            <<<Scout Technical Documentation>>>
+First, we'll add a System Message
 
-            {{YOUR_COLLECTION_BLOCK.output}}
+Click "+ Add an item" 
+Then change Chat Messages-1: Single Message
+Set Role: system
+And paste the following prompt into Content
+You are an expert customer solutions engineer at Scout. Your role is to respond to user inquiries in a helpful and guiding manner. You have access to Scout's technical configuration documentation for developers, which is provided below. Please use this documentation to answer user questions accurately and thoroughly. If you are not confident in your answer or if a question falls outside the scope of the provided information, kindly inform the user that you do not have that information. Maintain a professional and courteous tone in all your responses. Do not speculate or provide information not supported by the documentation.
 
-            <<</Scout Technical Documentation>>>
 
-            <<<User Inquiry>>>
+The final configuration for the System Message should look as follows: 
 
-            {{inputs.user_message}}
 
-            <<</User Inquiry>>>
-            ```
-              <b>Important</b>: You will need to replace the `YOUR_COLLECTION_BLOCK.output` variable in the snippet above with your actual collection block ID. You can easily copy your collection block ID by hovering over it and clicking copy. For example, mine would be `collection_rmdz0c.output` <img src="file:638acca3-c29e-46a7-9a04-db46ae0f0ee4" />
-      * Then, at the very bottom of the LLM block settings, toggle `Output Block` to on. This signifies that this LLM block will be the last block to run, and will return its output and conclude the workflow. <img src="file:c1b48290-1f42-4329-8e09-efb845f9b393" />
-      Lastly, click the "Save" button in the upper right-hand corner. Your RAG app (workflow) is ready!
-    </Accordion>
+Then, we'll add the User Message
 
-  </AccordionGroup>
-  
-  ### Run your workflow
-  There are a variety of ways to run workflows; [Slackbots](/docs/integrations/slack-bot), [Scout's embeddable Copilot](/docs/integrations/scout-copilot), [SDKs](/api-sdk), [API](/api-sdk), directly from the [Console](/docs/workflows/console) in the Scout workflow UI, and many more.
+Scroll to the bottom of the Chat Messages section and click "+ Add an item" to add another Chat Message
+Then change the newly created Chat Messages-2: Single Message
+Set Role: user
+And paste the following prompt into Content:
+<<<Scout Technical Documentation>>>
 
-  In this guide, we'll keep it simple and test the output directly from the Console in the Scout workflow UI:
+{{YOUR_COLLECTION_BLOCK.output}}
 
-  <AccordionGroup toc={true}>
-    <Accordion title='Run workflow from Scout Console'>
+<<</Scout Technical Documentation>>>
 
-      On the upper left-hand side of the workflow canvas, click the play icon to open the Console.
-      <img src="file:5655c20d-fbaa-4588-88de-0ef1710227b5" />
+<<<User Inquiry>>>
 
-      In the User's Message text area, paste the following query then click "Run":
-              ``` 
-              Please build me a guide including relevant code snippets and information I'd need to install the Scout Copilot module into my website.
-              ```
-                <img src="file:617138aa-d875-482f-b462-22470b6b609a" />
-      The output will be automatically formatted and rendered below the input, and should look something like this:
-              <img src="file:0b66bf67-8b44-4618-89c7-0e3a8191ff4e" />
-    </Accordion>
-  </AccordionGroup>
-  
-</Steps>
+{{inputs.user_message}}
 
+<<</User Inquiry>>>
+
+Important: You will need to replace the YOUR_COLLECTION_BLOCK.output variable in the snippet above with your actual collection block ID. You can easily copy your collection block ID by hovering over it and clicking copy. For example, mine would be collection_rmdz0c.output 
+
+
+
+
+Then, at the very bottom of the LLM block settings, toggle Output Block to on. This signifies that this LLM block will be the last block to run, and will return its output and conclude the workflow. 
+Lastly, click the "Save" button in the upper right-hand corner. Your RAG app (workflow) is ready!
+Run your workflowThere are a variety of ways to run workflows; Slackbots, Scout's embeddable Copilot, SDKs, API, directly from the Console in the Scout workflow UI, and many more.In this guide, we'll keep it simple and test the output directly from the Console in the Scout workflow UI:On the upper left-hand side of the workflow canvas, click the play icon to open the Console.In the User's Message text area, paste the following query then click "Run":Please build me a guide including relevant code snippets and information I'd need to install the Scout Copilot module into my website.
+The output will be automatically formatted and rendered below the input, and should look something like this:
 Voila! And there you have it; we built a RAG app in under 5 minutes that can guide you in building more powerful and complex AI apps on Scout!
-
-<Tip>
-<b>Want to keep building?</b> Check out our free [Workflow Templates](/workflow-templates/whats-your-use-case) which can help jumpstart your use case!
-</Tip>",
+Want to keep building? Check out our free Workflow Templates which can help jumpstart your use case!",
     "indexSegmentId": "0",
     "slug": "docs/quick-start",
     "title": "Build a RAG app in under 5 minutes",
@@ -304,15 +246,11 @@ Want to keep building? Check out our free Workflow Templates which can help jump
 
 Understanding the power and flexibility of Scout workflows
 
-<Note><b>Just getting started?</b> Check out our [Build a RAG app in under 5 minutes](/docs/quick-start) quick start guide!</Note>
-
+Just getting started? Check out our Build a RAG app in under 5 minutes quick start guide!
 Workflows are a powerful tool in the Scout platform, designed to automate processes, streamline tasks, and integrate seamlessly with various data sources and services. By utilizing workflows, users can create sophisticated sequences of actions that respond to specific inputs, making them ideal for a wide range of use cases like data processing, automated reporting, and integration with third-party APIs.
 
-<img src="file:d50ea88e-882c-41da-b9b7-88799d31cfec"/>
-
-Workflows consist of configurable components known as [blocks](/docs/workflows/blocks), which can be customized to suit different needs and chained together to create complex logic flows. Each workflow can be tailored with specific parameters, allowing for dynamic input handling and tailored output generation. You can execute a workflow from the [console](/docs/workflows/console) in the Scout UI, [Scout's embeddable Copilot](/docs/integrations/scout-copilot), a [Slackbot](/docs/integrations/slack-bot), [API](/api-sdk), [SDK](/api-sdk) and more. This flexibility makes workflows suitable for both straightforward tasks and more intricate operations that require nuanced logic.
-
-In addition to their versatility, workflows provide a comprehensive environment for monitoring and managing operations, complete with a [console](/docs/workflows/console) for real-time execution, a revision [history](/docs/workflows/history) audit log, and detailed workflow execution [logs](/docs/workflows/logs) for troubleshooting. [Environment variables](/docs/workflows/environment-variables) can be set to manage configurations across different environments, ensuring robust and adaptable solutions.",
+Workflows consist of configurable components known as blocks, which can be customized to suit different needs and chained together to create complex logic flows. Each workflow can be tailored with specific parameters, allowing for dynamic input handling and tailored output generation. You can execute a workflow from the console in the Scout UI, Scout's embeddable Copilot, a Slackbot, API, SDK and more. This flexibility makes workflows suitable for both straightforward tasks and more intricate operations that require nuanced logic.
+In addition to their versatility, workflows provide a comprehensive environment for monitoring and managing operations, complete with a console for real-time execution, a revision history audit log, and detailed workflow execution logs for troubleshooting. Environment variables can be set to manage configurations across different environments, ensuring robust and adaptable solutions.",
     "indexSegmentId": "0",
     "slug": "docs/workflows",
     "title": "Workflow overview",
@@ -343,22 +281,8 @@ In addition to their versatility, workflows provide a comprehensive environment 
 
 Guidance on creating optimized workflows in Scout applications
 
-<Note><b>Just getting started?</b> Check out our [Build a RAG app in under 5 minutes](/docs/quick-start) quick start guide!</Note>
-
-<Steps>
-  ### Defining your objective
-  Creating workflows starts with a simple first step; clearly defining the objective of your workflow, understanding the inputs it will handle, and the outputs it is expected to produce. This helps in determining the necessary logic and components required. Consider mapping out the sequence of operations, which will guide the logical flow of your workflow, making it easier to identify the specific [blocks](/docs/workflows/blocks) needed. 
-
-  ### Data & integrations
-  Next, ensure you have all required data sources and third-party service integrations accessible, as these will be crucial for your workflow's functionality. At the very least, we'd suggest setting up a [collection](/docs/collections) so that you can augment LLM queries with your specific data. If you're going to production, and you want to make requests to external services, consider setting up [environment variables](/docs/workflows/environment-variables).
-
-  ### Tactical
-  You can create a workflow in the Scout UI by clicking "Workflows" in the Scout dashboard nav, then clicking "+ New".
-
-  Workflows can be given names, icons (an avatar image), and a description.
-
-  Request enterprise access for SDK and API workflow creation.
-</Steps>",
+Just getting started? Check out our Build a RAG app in under 5 minutes quick start guide!
+Defining your objectiveCreating workflows starts with a simple first step; clearly defining the objective of your workflow, understanding the inputs it will handle, and the outputs it is expected to produce. This helps in determining the necessary logic and components required. Consider mapping out the sequence of operations, which will guide the logical flow of your workflow, making it easier to identify the specific blocks needed.Data & integrationsNext, ensure you have all required data sources and third-party service integrations accessible, as these will be crucial for your workflow's functionality. At the very least, we'd suggest setting up a collection so that you can augment LLM queries with your specific data. If you're going to production, and you want to make requests to external services, consider setting up environment variables.TacticalYou can create a workflow in the Scout UI by clicking "Workflows" in the Scout dashboard nav, then clicking "+ New".Workflows can be given names, icons (an avatar image), and a description.Request enterprise access for SDK and API workflow creation.",
     "indexSegmentId": "0",
     "slug": "docs/workflows/creating-workflows",
     "title": "Building Effective Workflows in Scout",
@@ -388,7 +312,7 @@ Defining your objectiveCreating workflows starts with a simple first step; clear
 
 Understanding workflow execution and state management
 
-Workflows are designed to manage complex processes by chaining together a series of actions or [blocks](/docs/workflows/blocks). Understanding the logical flow of workflows and how state is managed between them is crucial for effective automation and integration.",
+Workflows are designed to manage complex processes by chaining together a series of actions or blocks. Understanding the logical flow of workflows and how state is managed between them is crucial for effective automation and integration.",
     "indexSegmentId": "0",
     "slug": "docs/workflows/workflow-logic-state",
     "title": "Scout Workflow Logic and State",
@@ -530,54 +454,9 @@ Building effective workflows with modular units
 
 Blocks are the foundational elements of any workflow in the Scout platform, acting as modular units that carry out specific tasks within a process. Each workflow begins with an input block, which receives initial data or a trigger, setting the stage for the series of actions that follow. The versatility of blocks allows users to construct complex logical flows and achieve a wide range of automation objectives.
 
-<img src="file:d50ea88e-882c-41da-b9b7-88799d31cfec"/>
-
 Blocks are designed to be both composable and customizable, enabling the creation of intricate processes by linking various types of blocks in a sequence. Each block performs a unique function, such as querying a database, sending an HTTP request, or processing text with an LLM. This modularity ensures that workflows can be tailored to specific use cases, whether for data processing, API integration, or automated reporting.
-
 Each block type has its own detailed sub-section, providing specific insights and configuration guidelines:
-
-<CardGroup cols={2}>
-<Card title="LLM" icon="sparkles" href="/docs/workflows/blocks/llm">
-    Interface with large language models (LLMs) using the LLM block.
-</Card>
-
-<Card title="Collection" icon="folder" href="/docs/workflows/blocks/collection">
-    Query collection data using the collection block.
-</Card>
-
-<Card title="JSON" icon="code" href="/docs/workflows/blocks/json">
-    Work with JSON data using the JSON block.
-</Card>
-
-<Card title="Save" icon="download" href="/docs/workflows/blocks/save">
-    Save data to various locations using the save block.
-</Card>
-
-<Card title="Text" icon="text" href="/docs/workflows/blocks/text">
-    Manage and manipulate text using the text block.
-</Card>
-
-<Card title="HTTP" icon="code" href="/docs/workflows/blocks/http">
-    Make HTTP requests using the HTTP block.
-</Card>
-
-<Card title="Extract Links" icon="link" href="/docs/workflows/blocks/extract-links">
-    Extract hyperlinks from text or web pages using the extract links block.
-</Card>
-
-<Card title="Conditional" icon="diagram-project" href="/docs/workflows/blocks/conditional">
-    Set conditions and branching logic using the conditional block.
-</Card>
-
-<Card title="Postgres" icon="database" href="/docs/workflows/blocks/postgres">
-    Interface with Postgres databases using the Postgres block.
-</Card>
-
-<Card title="Discord Message" icon="comment" href="/docs/workflows/blocks/discord-message">
-    Send messages to Discord channels using the Discord message block.
-</Card>
-
-</CardGroup>",
+Interface with large language models (LLMs) using the LLM block.Query collection data using the collection block.Work with JSON data using the JSON block.Save data to various locations using the save block.Manage and manipulate text using the text block.Make HTTP requests using the HTTP block.Extract hyperlinks from text or web pages using the extract links block.Set conditions and branching logic using the conditional block.Interface with Postgres databases using the Postgres block.Send messages to Discord channels using the Discord message block.",
     "indexSegmentId": "0",
     "slug": "docs/workflows/blocks",
     "title": "Understanding Blocks in Scout Workflows",
@@ -4166,16 +4045,10 @@ The Scout API offers a robust and flexible method for running workflows, enablin
 Real-time execution and monitoring of Scout workflows
 
 The workflow console provides a dynamic and interactive environment for executing and monitoring your workflow processes in real-time. The console offers a user-friendly interface where you can input data, initiate workflow runs, and observe the execution flow step-by-step, making it an invaluable tool for testing, debugging, and refining your workflows.
-
 On the upper left-hand side of the workflow canvas, click the play icon to open the console.
 
-<img src="file:5655c20d-fbaa-4588-88de-0ef1710227b5" />
-
 The console displays a form-like interface where you can enter the inputs defined in your workflow's input block. This allows you to test different scenarios by providing various data inputs, ensuring that your workflow is robust and versatile.
-
 Click "Run" below the input to execute the workflow. As the workflow runs, each block is executed in sequence, and the console provides detailed logs and status updates for every step. This real-time feedback helps you identify and troubleshoot any issues within your workflow, enhancing the accuracy and efficiency of your processes.
-
-<img src="file:132d2ce1-e301-4660-a76e-eee9385e0c0c" />
 
 The console not only shows the outputs generated by each block but also provides execution statistics and logs. This includes information about execution time, data transformations, and any errors encountered, enabling you to optimize the workflow for better performance.",
     "indexSegmentId": "0",
@@ -4367,13 +4240,9 @@ The history section functions as an audit log, providing a detailed account of e
 
 Detailed tracking and analysis of workflow executions in Scout
 
-<Note>Looking for [Audit Logs](/docs/workflows/history#audit-logs) showing workflow edit history?</Note>
-
+Looking for Audit Logs showing workflow edit history?
 The logs section in workflows provides a detailed record of workflow runs, offering insights into the process flow and helping to troubleshoot issues effectively.
-
-On the upper left-hand side of the workflow canvas, click the logs icon to open it: 
-
-<img src="file:d93b2509-2a77-47ab-9c8c-c50622c8558a" />",
+On the upper left-hand side of the workflow canvas, click the logs icon to open it:",
     "indexSegmentId": "0",
     "slug": "docs/workflows/logs",
     "title": "Logs",
@@ -4633,11 +4502,8 @@ Refer to Workflow Logic & State > State Management for guidance on using these d
 
 Managing and using collections for document storage and retrieval
 
-<Note><b>Just getting started?</b> Check out our [Build a RAG app in under 5 minutes](/docs/quick-start) quick start guide!</Note>
-
-Collections are groups of [documents](/docs/collections/documents) that can be used and created within Scout. Each document can contain metadata and text content. The text content is chunked and used for vector search. The metadata can be used to filter and sort the documents.
-
-<img src="file:9fdfd8fb-b72c-4c12-afb7-059122652105" />",
+Just getting started? Check out our Build a RAG app in under 5 minutes quick start guide!
+Collections are groups of documents that can be used and created within Scout. Each document can contain metadata and text content. The text content is chunked and used for vector search. The metadata can be used to filter and sort the documents.",
     "indexSegmentId": "0",
     "slug": "docs/collections",
     "title": "Collections in Scout",
@@ -4709,7 +4575,7 @@ Note that it may take around 30 seconds for Scout to provision the underlying ve
 
 Comprehensive guide to document creation and management
 
-Documents are stored within [collections](/docs/collections) and contain both metadata and text. These units of content power features like vector search, filtering, and semantic search. Documents can be [created manually or uploaded in bulk](/docs/collections/uploading-creating-documents), and metadata can be customized for sorting and filtering. Scout's dashboard or API enables document management for advanced use cases such as content clustering and search optimization.",
+Documents are stored within collections and contain both metadata and text. These units of content power features like vector search, filtering, and semantic search. Documents can be created manually or uploaded in bulk, and metadata can be customized for sorting and filtering. Scout's dashboard or API enables document management for advanced use cases such as content clustering and search optimization.",
     "indexSegmentId": "0",
     "slug": "docs/collections/documents",
     "title": "Managing Documents in Scout",
@@ -4896,18 +4762,7 @@ You can add metadata (custom fields) to a document. These fields can be of diffe
 Efficient ways to manage your scout collections
 
 Scout offers a few different ways to easily upload documents into a collection. Choose the option that is right for your use case below:
-
-<CardGroup cols={3}>
-  <Card title="Scraping a Website" icon="circle-1" href="/docs/collections/uploading-creating-documents/scraping-a-website">
-    Enter a website or sitemap and scrape a page, or multiple pages. This method is ideal for capturing dynamic content across multiple web pages efficiently.
-  </Card>
-  <Card title="Uploading Files" icon="circle-2" href="/docs/collections/uploading-creating-documents/uploading-files">
-    Upload a file (PDF, CSV, etc.) directly to a Scout collection. This option is perfect for managing static documents and datasets.
-  </Card>
-  <Card title="Creating Documents Directly in Scout" icon="circle-3" href="/docs/collections/uploading-creating-documents/creating-documents-directly-in-scout">
-    Create and edit a blank document directly in the Scout dashboard. This offers a hands-on approach to document creation and customization.
-  </Card>
-</CardGroup>",
+Enter a website or sitemap and scrape a page, or multiple pages. This method is ideal for capturing dynamic content across multiple web pages efficiently.Upload a file (PDF, CSV, etc.) directly to a Scout collection. This option is perfect for managing static documents and datasets.Create and edit a blank document directly in the Scout dashboard. This offers a hands-on approach to document creation and customization.",
     "indexSegmentId": "0",
     "slug": "docs/collections/uploading-creating-documents",
     "title": "Uploading & Creating Documents",
@@ -4941,9 +4796,7 @@ Enter a website or sitemap and scrape a page, or multiple pages. This method is 
 
 Comprehensive guide to web scraping options
 
-There are three different web scraping options: you can enter a URL for scraping a single web page, multiple pages via a sitemap, or an entire site (all URLs) using our crawler.
-
-<img src="file:4bd272b8-3d75-4055-8348-5fefa0573b50" />",
+There are three different web scraping options: you can enter a URL for scraping a single web page, multiple pages via a sitemap, or an entire site (all URLs) using our crawler.",
     "indexSegmentId": "0",
     "slug": "docs/collections/uploading-creating-documents/scraping-a-website",
     "title": "Scraping a Website",
@@ -5271,9 +5124,7 @@ A list of paths or patterns that the scraper will exclude from the crawl.",
 
 Effortless file management in scout
 
-You can drag and drop files directly into Scout, simplifying the process of document management. When creating a new document, choose the file upload option to streamline your workflow and enhance data accessibility. This feature ensures that your documents are efficiently chunked and embedded for optimal performance within your applications.
-
-<img src="file:ad7ab70b-39b1-49ad-88c9-90eee7201786" />",
+You can drag and drop files directly into Scout, simplifying the process of document management. When creating a new document, choose the file upload option to streamline your workflow and enhance data accessibility. This feature ensures that your documents are efficiently chunked and embedded for optimal performance within your applications.",
     "indexSegmentId": "0",
     "slug": "docs/collections/uploading-creating-documents/uploading-files",
     "title": "Uploading Files",
@@ -5310,8 +5161,6 @@ Manual document creation and metadata management
 
 Documents can be added manually to a collection within Scout. This process allows for precise control over the document's content and metadata, ensuring that each document is customized to meet specific requirements.
 
-<img src="file:1392602e-83dd-4d1c-ba22-f747a5410a01" />
-
 Markdown can be used to style the content, providing a flexible and user-friendly way to format text. Additionally, metadata can be edited directly from the Scout dashboard, allowing for efficient document management. This feature is essential for maintaining organized and searchable collections, enhancing the discoverability and utility of your documents.",
     "indexSegmentId": "0",
     "slug": "docs/collections/uploading-creating-documents/creating-documents-directly-in-scout",
@@ -5344,9 +5193,7 @@ Markdown can be used to style the content, providing a flexible and user-friendl
 
 Understanding publishable and secret keys in Scout
 
-The API Keys section of the settings contain the API keys you will use to interact with Scout.
-
-<img src="file:982a0526-38b2-46c8-bb31-5f94417088b3" />",
+The API Keys section of the settings contain the API keys you will use to interact with Scout.",
     "indexSegmentId": "0",
     "slug": "docs/settings/api-keys",
     "title": "API Keys for Secure Integration",
@@ -5432,10 +5279,10 @@ Step-by-step guide for seamless integration
 
 You can easily add our Scout Slackbot to your Slack channel by following these steps:
 
-1. **[Click Here](https://scoutos.com/slack/install)** to add the Slackbot to your Slack channel. You will be redirected to Slack to authorize the installation.
-2. Now that the bot is in your workspace, you can invite it to any channel by typing `/invite @scout` in the channel you want to add it to.
-3. After adding the bot to your workspace, you will need to [email us](mailto:hi@scoutos.com) your Slack Channel ID so that we can enable the bot for your workspace. You can find your Channel ID by selecting the Channel Name within Slack. Scroll to the bottom Channel detail panel to find and copy the Channel ID.
-4. You will also need to let us know which mode you would like the bot to be in. We currently have two modes: auto-reply and mention mode. In auto-reply mode, the bot will automatically reply to all messages in the channel that it is added to. In mention mode, it will only reply when mentioned. We can also enable custom modes for you if you would like, just let us know.",
+Click Here to add the Slackbot to your Slack channel. You will be redirected to Slack to authorize the installation.
+Now that the bot is in your workspace, you can invite it to any channel by typing /invite @scout in the channel you want to add it to.
+After adding the bot to your workspace, you will need to email us your Slack Channel ID so that we can enable the bot for your workspace. You can find your Channel ID by selecting the Channel Name within Slack. Scroll to the bottom Channel detail panel to find and copy the Channel ID.
+You will also need to let us know which mode you would like the bot to be in. We currently have two modes: auto-reply and mention mode. In auto-reply mode, the bot will automatically reply to all messages in the channel that it is added to. In mention mode, it will only reply when mentioned. We can also enable custom modes for you if you would like, just let us know.",
     "indexSegmentId": "0",
     "slug": "docs/integrations/slack-bot",
     "title": "Adding Scout Slackbot to Your Slack Channel",
@@ -6084,9 +5931,7 @@ In the example above, the Copilot is embedded within the .container div and it i
 
 Guide to tntegrating the command component on your website
 
-<Note>
-Before implementing this code, you'll want to build an Workflow in Scout. You can grab the Workflow's `id` on its detail page. You will also need your org's public key, which you can find on the settings page.
-</Note>",
+Before implementing this code, you'll want to build an Workflow in Scout. You can grab the Workflow's id on its detail page. You will also need your org's public key, which you can find on the settings page.",
     "indexSegmentId": "0",
     "slug": "docs/integrations/command-component",
     "title": "Implementing Scout's Command Module",
@@ -6373,53 +6218,7 @@ Then include this empty <div> tag right before your closing </body> tag. Set the
   },
   {
     "breadcrumbs": [],
-    "description": "<CardGroup cols={3}>
-  <Card title="Customer Support" icon='life-ring' 
-    href='/workflow-templates/use-cases/customer-support'>
-    Improve response times, accuracy, and overall customer experience with AI-driven support.
-  </Card>
-
-  <Card title="Startup Toolkit" icon='toolbox' 
-    href='/workflow-templates/use-cases/startup-toolkit'>
-    Quickly build and launch AI-powered apps or startup initiatives with a fraction of the resources.
-  </Card>
-
-  <Card title="Sales" icon='cash-register' 
-    href='/workflow-templates/use-cases/sales'>
-    Streamline RFPs, security questionnaires, meeting follow ups and sales outreach with AI-powered workflows.
-  </Card>
-
-  <Card title="Marketing & Content Creation" icon='newspaper' 
-    href='/workflow-templates/use-cases/marketing-content-creation'>
-    Use AI to generate personalized, SEO-optimized content and marketing campaigns.
-  </Card>
-
-  <Card title="Customer Success" icon='face-smile' 
-    href='/workflow-templates/use-cases/customer-success'>
-    Use AI for follow-ups, success plan building and personalized outreach to scale customer success.
-  </Card>
-
-  <Card title="Legal & Compliance" icon='gavel' 
-    href='/workflow-templates/use-cases/legal-compliance'>
-    Simplify legal and compliance processes with AI-driven document generation, analysis and review.
-  </Card>
-
-  <Card title="Internal Operations & Team Management" icon='people-group' 
-    href='/workflow-templates/use-cases/internal-operations-team-management'>
-    Streamline onboarding, Q&A, internal policy creation, revops workflows and team management with AI.
-  </Card>
-
-  <Card title="Product Management" icon='binoculars' 
-    href='/workflow-templates/use-cases/product-management'>
-    Augment feedback analysis, documentation generation, and roadmap/release content creation to accelerate product development.
-  </Card>
-
-  <Card title="Client Reporting & Analysis" icon='magnifying-glass-chart' 
-    href='/workflow-templates/use-cases/client-reporting-analysis'>
-    Generate detailed reports, proposals, and satisfaction summaries using AI.
-  </Card>
-
-</CardGroup>",
+    "description": "Improve response times, accuracy, and overall customer experience with AI-driven support.Quickly build and launch AI-powered apps or startup initiatives with a fraction of the resources.Streamline RFPs, security questionnaires, meeting follow ups and sales outreach with AI-powered workflows.Use AI to generate personalized, SEO-optimized content and marketing campaigns.Use AI for follow-ups, success plan building and personalized outreach to scale customer success.Simplify legal and compliance processes with AI-driven document generation, analysis and review.Streamline onboarding, Q&A, internal policy creation, revops workflows and team management with AI.Augment feedback analysis, documentation generation, and roadmap/release content creation to accelerate product development.Generate detailed reports, proposals, and satisfaction summaries using AI.",
     "indexSegmentId": "0",
     "slug": "workflow-templates/what-s-your-use-case",
     "title": "What's your use case?",
@@ -6442,32 +6241,7 @@ Then include this empty <div> tag right before your closing </body> tag. Set the
         "title": "Use Cases",
       },
     ],
-    "description": "<CardGroup cols={3}>
-  <Card title="Customer Support Reply Assistant" icon='envelope'
-    href='/workflow-templates/use-cases/customer-support/customer-support-reply-assistant'>
-    If AI is confident it can answer the question, it sends a first reply to customer queries.
-  </Card>
-  <Card title="Customer Query Router" icon='share'
-    href='/workflow-templates/use-cases/customer-support/customer-query-router'>
-    Automatically route customer queries to the correct team using AI.
-  </Card>
-  <Card title="Automated Support Bot" icon='robot'
-    href='/workflow-templates/use-cases/customer-support/automated-support-bot'>
-    Stand alone RAG support bots that have conversations and provide instant support.
-  </Card>
-  <Card title="Support Ticket Classifier" icon='ticket'
-    href='/workflow-templates/use-cases/customer-support/support-ticket-classifier'>
-    Use AI to classify and prioritize support tickets based on urgency and severity.
-  </Card>
-  <Card title="Internal Search Wiki" icon='headset'
-    href='/workflow-templates/use-cases/customer-support/internal-search-wiki'>
-    Build internal semantic search and suggest RAG responses to your customer facing teams.
-  </Card>
-  <Card title="Customer Issue Escalation Report Builder" icon='exclamation-triangle'
-    href='/workflow-templates/use-cases/customer-support/customer-issue-escalation-report-builder'>
-    Automatically generate detailed reports when customer issues need to be escalated.
-  </Card>
-</CardGroup>",
+    "description": "If AI is confident it can answer the question, it sends a first reply to customer queries.Automatically route customer queries to the correct team using AI.Stand alone RAG support bots that have conversations and provide instant support.Use AI to classify and prioritize support tickets based on urgency and severity.Build internal semantic search and suggest RAG responses to your customer facing teams.Automatically generate detailed reports when customer issues need to be escalated.",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/customer-support",
     "title": "Customer Support",
@@ -6501,17 +6275,7 @@ Then include this empty <div> tag right before your closing </body> tag. Set the
 Develop a RAG (Retrieval-Augmented Generation) Customer Support Reply Assistant Using Scout
 
 In this technical guide, we will explore how to build a RAG (Retrieval-Augmented Generation) customer support reply assistant using Scout. This AI chatbot will deliver initial responses to customer inquiries, only if it is confident it knows the answer. We'll build this AI workflow using Scout, OpenAI, and a vector database. Scout's platform simplifies AI workflow creation with tools like website scraping, document processing, and semantic search without complex technical setups. Scout provisions all the underlying infrastructure necessary to build this example, and our free tier doesn’t require a credit card!
-
-<Success>
-<b>New to Scout?</b> Watch our quick-start demo to get familiar with the platform:
-<div style="width: 100%; min-width: 350px; max-width: 800px;">
-  <div style="position: relative; width: 100%; overflow: hidden; padding-top: 56.25%;">
-    <p>
-      <iframe style="position: absolute; top: 0; left: 0; right: 0; width: 100%; height: 100%; border: none;" src="https://www.youtube.com/embed/CdwUVGwqtyI?si=aXjdrq8j4ALrzuts" width="560" height="315" allowfullscreen="allowfullscreen" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-    </p>
-  </div>
-</div>
-</Success>",
+New to Scout? Watch our quick-start demo to get familiar with the platform:",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/customer-support/customer-support-reply-assistant",
     "title": "Creating a Customer Support Reply Assistant with Scout's AI Workflow Automation",
@@ -6830,23 +6594,12 @@ Let us assist you in revolutionizing your support strategy.",
 
 Enhance Customer Support with AI-Powered Query Routing
 
-This technical guide explores how to create a Customer Query Router using Scout's Retrieval-Augmented Generation (RAG) workflow. 
-This system helps in directing customer inquiries to the correct department by leveraging previously resolved queries and a predefined mapping of query types to respective teams. 
-
-Utilizing Scout's workflow capabilities, including modular blocks and seamless data integration, you can optimize your customer support operations. 
-This guide provides a step-by-step walkthrough for setting up the RAG workflow in Scout, focusing on essential components and blocks that facilitate efficient query routing. 
+This technical guide explores how to create a Customer Query Router using Scout's Retrieval-Augmented Generation (RAG) workflow.
+This system helps in directing customer inquiries to the correct department by leveraging previously resolved queries and a predefined mapping of query types to respective teams.
+Utilizing Scout's workflow capabilities, including modular blocks and seamless data integration, you can optimize your customer support operations.
+This guide provides a step-by-step walkthrough for setting up the RAG workflow in Scout, focusing on essential components and blocks that facilitate efficient query routing.
 Whether you're new to Scout or seeking to enhance existing processes, this guide will equip you with the knowledge to improve response times and customer satisfaction.
-
-<Success>
-<b>New to Scout?</b> Watch our quick-start demo to get familiar with the platform:
-<div style="width: 100%; min-width: 350px; max-width: 800px;">
-  <div style="position: relative; width: 100%; overflow: hidden; padding-top: 56.25%;">
-    <p>
-      <iframe style="position: absolute; top: 0; left: 0; right: 0; width: 100%; height: 100%; border: none;" src="https://www.youtube.com/embed/CdwUVGwqtyI?si=aXjdrq8j4ALrzuts" width="560" height="315" allowfullscreen="allowfullscreen" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-    </p>
-  </div>
-</div>
-</Success>",
+New to Scout? Watch our quick-start demo to get familiar with the platform:",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/customer-support/customer-query-router",
     "title": "Creating a Customer Query Router with Scout's RAG Workflow",
@@ -7363,7 +7116,7 @@ Count on Scout to help streamline your operations, avoid common pitfalls, and en
         "title": "Customer Support",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/customer-support/automated-support-bot",
     "title": "Automated Support Bot",
@@ -7393,7 +7146,7 @@ Count on Scout to help streamline your operations, avoid common pitfalls, and en
         "title": "Customer Support",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/customer-support/support-ticket-classifier",
     "title": "Support Ticket Classifier",
@@ -7423,7 +7176,7 @@ Count on Scout to help streamline your operations, avoid common pitfalls, and en
         "title": "Customer Support",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/customer-support/internal-search-wiki",
     "title": "Internal Search Wiki",
@@ -7453,7 +7206,7 @@ Count on Scout to help streamline your operations, avoid common pitfalls, and en
         "title": "Customer Support",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/customer-support/customer-issue-escalation-report-builder",
     "title": "Customer Issue Escalation Report Builder",
@@ -7479,40 +7232,7 @@ Count on Scout to help streamline your operations, avoid common pitfalls, and en
         "title": "Use Cases",
       },
     ],
-    "description": "<CardGroup cols={3}>
-  <Card title="Responding to RFPs" icon='file-signature'
-    href='/workflow-templates/use-cases/sales/responding-to-rfps'>
-    Automate the RFP response process, saving time and improving accuracy.
-  </Card>
-  <Card title="Sales Proposal Generator" icon='file-invoice'
-    href='/workflow-templates/use-cases/sales/sales-proposal-generator'>
-    Quickly generate personalized sales proposals with AI assistance.
-  </Card>
-  <Card title="Sales Outreach Email Assistant" icon='paper-plane'
-    href='/workflow-templates/use-cases/sales/sales-outreach-email-assistant'>
-    Craft personalized sales outreach emails based on AI-driven insights.
-  </Card>
-  <Card title="Sales Demo Script Generator" icon='chalkboard'
-    href='/workflow-templates/use-cases/sales/sales-demo-script-generator'>
-    Create effective sales demo scripts tailored to specific audiences using AI.
-  </Card>
-  <Card title="Sales Playbook Generator" icon='book'
-    href='/workflow-templates/use-cases/sales/sales-playbook-generator'>
-    Build sales playbooks that guide your team to success with AI-generated best practices.
-  </Card>
-  <Card title="Sales Objection Handling Guide" icon='question-circle'
-    href='/workflow-templates/use-cases/sales/sales-objection-handling-guide'>
-    Prepare your team with AI-powered objection-handling guides to close more deals.
-  </Card>
-  <Card title="Lead Qualification Email Drafting" icon='check-circle'
-    href='/workflow-templates/use-cases/sales/lead-qualification-email-drafting'>
-    Automatically draft lead qualification emails that are personalized and targeted.
-  </Card>
-  <Card title="Product Feature Request Generator" icon='lightbulb'
-    href='/workflow-templates/use-cases/sales/product-feature-request-generator'>
-    Capture and prioritize product feature requests with AI.
-  </Card>
-</CardGroup>",
+    "description": "Automate the RFP response process, saving time and improving accuracy.Quickly generate personalized sales proposals with AI assistance.Craft personalized sales outreach emails based on AI-driven insights.Create effective sales demo scripts tailored to specific audiences using AI.Build sales playbooks that guide your team to success with AI-generated best practices.Prepare your team with AI-powered objection-handling guides to close more deals.Automatically draft lead qualification emails that are personalized and targeted.Capture and prioritize product feature requests with AI.",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/sales",
     "title": "Sales",
@@ -7541,7 +7261,7 @@ Count on Scout to help streamline your operations, avoid common pitfalls, and en
         "title": "Sales",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/sales/responding-to-rf-ps",
     "title": "Responding to RFPs",
@@ -7571,7 +7291,7 @@ Count on Scout to help streamline your operations, avoid common pitfalls, and en
         "title": "Sales",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/sales/sales-proposal-generator",
     "title": "Sales Proposal Generator",
@@ -7601,7 +7321,7 @@ Count on Scout to help streamline your operations, avoid common pitfalls, and en
         "title": "Sales",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/sales/sales-outreach-email-assistant",
     "title": "Sales Outreach Email Assistant",
@@ -7631,7 +7351,7 @@ Count on Scout to help streamline your operations, avoid common pitfalls, and en
         "title": "Sales",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/sales/sales-demo-script-generator",
     "title": "Sales Demo Script Generator",
@@ -7661,7 +7381,7 @@ Count on Scout to help streamline your operations, avoid common pitfalls, and en
         "title": "Sales",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/sales/sales-playbook-generator",
     "title": "Sales Playbook Generator",
@@ -7691,7 +7411,7 @@ Count on Scout to help streamline your operations, avoid common pitfalls, and en
         "title": "Sales",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/sales/sales-objection-handling-guide",
     "title": "Sales Objection Handling Guide",
@@ -7721,7 +7441,7 @@ Count on Scout to help streamline your operations, avoid common pitfalls, and en
         "title": "Sales",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/sales/product-feature-request-generator",
     "title": "Product Feature Request Generator",
@@ -7747,44 +7467,7 @@ Count on Scout to help streamline your operations, avoid common pitfalls, and en
         "title": "Use Cases",
       },
     ],
-    "description": "<CardGroup cols={3}>
-  <Card title="Writing Blogs & Landing Pages" icon='edit'
-    href='/workflow-templates/use-cases/marketing-content-creation/writing-blogs-landing-pages'>
-    Create high-quality, SEO-optimized blog posts and landing pages with AI.
-  </Card>
-  <Card title="Creating Personalized Marketing Campaigns" icon='bullhorn'
-    href='/workflow-templates/use-cases/marketing-content-creation/creating-personalized-marketing-campaigns'>
-    Craft targeted marketing campaigns using AI insights on customer behavior.
-  </Card>
-  <Card title="Automating Social Media Content Creation" icon='share-alt'
-    href='/workflow-templates/use-cases/marketing-content-creation/automating-social-media-content-creation'>
-    Automatically generate engaging social media posts tailored to your audience.
-  </Card>
-  <Card title="SEO Content Suggestion Tool" icon='search'
-    href='/workflow-templates/use-cases/marketing-content-creation/seo-content-suggestion-tool'>
-    Improve your content’s SEO performance with AI-driven suggestions.
-  </Card>
-  <Card title="Press Release Drafting Assistant" icon='newspaper'
-    href='/workflow-templates/use-cases/marketing-content-creation/press-release-drafting-assistant'>
-    Create professional press releases quickly with AI-generated drafts.
-  </Card>
-  <Card title="Marketing Campaign Idea Generator" icon='lightbulb'
-    href='/workflow-templates/use-cases/marketing-content-creation/marketing-campaign-idea-generator'>
-    Use AI to generate fresh and innovative marketing campaign ideas.
-  </Card>
-  <Card title="Content Personalization Engine" icon='user-cog'
-    href='/workflow-templates/use-cases/marketing-content-creation/content-personalization-engine'>
-    Deliver personalized content at scale, based on customer behavior and preferences.
-  </Card>
-  <Card title="Content Calendar Builder" icon='calendar'
-    href='/workflow-templates/use-cases/marketing-content-creation/content-calendar-builder'>
-    Generate a complete content calendar with AI based on strategy and trends.
-  </Card>
-  <Card title="Brand Voice Guide Generator" icon='microphone'
-    href='/workflow-templates/use-cases/startup-toolkit/brand-voice-guide-generator'>
-    Create a consistent brand voice guide using AI-driven analysis.
-  </Card>
-</CardGroup>",
+    "description": "Create high-quality, SEO-optimized blog posts and landing pages with AI.Craft targeted marketing campaigns using AI insights on customer behavior.Automatically generate engaging social media posts tailored to your audience.Improve your content’s SEO performance with AI-driven suggestions.Create professional press releases quickly with AI-generated drafts.Use AI to generate fresh and innovative marketing campaign ideas.Deliver personalized content at scale, based on customer behavior and preferences.Generate a complete content calendar with AI based on strategy and trends.Create a consistent brand voice guide using AI-driven analysis.",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/marketing-content-creation",
     "title": "Marketing & Content Creation",
@@ -7817,25 +7500,14 @@ Count on Scout to help streamline your operations, avoid common pitfalls, and en
 
 Leverage AI to Enhance Blog SEO
 
-In this guide, we explore how to create SEO-optimized blogs using a structured workflow that leverages AI-driven techniques. 
-This process involves generating content iteratively and refining it at different stages to ensure high-quality output. 
-We delve into prompt chaining techniques to identify core themes, clarify search intent, and uncover content gaps, ultimately crafting a comprehensive blog post. 
-Additionally, we incorporate Scout's capabilities to enhance content indexing and retrieval, ensuring your blog is engaging and optimized for search engines. 
-
-Scout empowers marketers and content creators by simplifying AI workflows, offering tools to automate and personalize content while maintaining a consistent brand voice. 
-Through Scout's platform, you can effortlessly integrate website scraping, document processing, and semantic search, making the creation of SEO-optimized content more efficient than ever. 
+In this guide, we explore how to create SEO-optimized blogs using a structured workflow that leverages AI-driven techniques.
+This process involves generating content iteratively and refining it at different stages to ensure high-quality output.
+We delve into prompt chaining techniques to identify core themes, clarify search intent, and uncover content gaps, ultimately crafting a comprehensive blog post.
+Additionally, we incorporate Scout's capabilities to enhance content indexing and retrieval, ensuring your blog is engaging and optimized for search engines.
+Scout empowers marketers and content creators by simplifying AI workflows, offering tools to automate and personalize content while maintaining a consistent brand voice.
+Through Scout's platform, you can effortlessly integrate website scraping, document processing, and semantic search, making the creation of SEO-optimized content more efficient than ever.
 Whether you're a solo creator or part of a growing team, this guide will help you harness the power of AI to produce impactful and search-friendly blogs, enhancing your content strategy and driving better engagement.
-
-<Success>
-<b>New to Scout?</b> Watch our quick-start demo to get familiar with the platform:
-<div style="width: 100%; min-width: 350px; max-width: 800px;">
-  <div style="position: relative; width: 100%; overflow: hidden; padding-top: 56.25%;">
-    <p>
-      <iframe style="position: absolute; top: 0; left: 0; right: 0; width: 100%; height: 100%; border: none;" src="https://www.youtube.com/embed/CdwUVGwqtyI?si=aXjdrq8j4ALrzuts" width="560" height="315" allowfullscreen="allowfullscreen" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-    </p>
-  </div>
-</div>
-</Success>",
+New to Scout? Watch our quick-start demo to get familiar with the platform:",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/marketing-content-creation/writing-blogs-landing-pages",
     "title": "SEO-Optimized Blogging with AI: A Comprehensive Guide",
@@ -8649,7 +8321,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Marketing & Content Creation",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/marketing-content-creation/creating-personalized-marketing-campaigns",
     "title": "Creating Personalized Marketing Campaigns",
@@ -8679,7 +8351,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Marketing & Content Creation",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/marketing-content-creation/automating-social-media-content-creation",
     "title": "Automating Social Media Content Creation",
@@ -8709,7 +8381,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Marketing & Content Creation",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/marketing-content-creation/seo-content-suggestion-tool",
     "title": "SEO Content Suggestion Tool",
@@ -8739,7 +8411,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Marketing & Content Creation",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/marketing-content-creation/press-release-drafting-assistant",
     "title": "Press Release Drafting Assistant",
@@ -8769,7 +8441,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Marketing & Content Creation",
       },
     ],
-    "description": "Coming soon! [Ping us](https://scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/marketing-content-creation/marketing-campaign-idea-generator",
     "title": "Marketing Campaign Idea Generator",
@@ -8799,7 +8471,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Marketing & Content Creation",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/marketing-content-creation/content-personalization-engine",
     "title": "Content Personalization Engine",
@@ -8829,7 +8501,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Marketing & Content Creation",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/marketing-content-creation/content-calendar-builder",
     "title": "Content Calendar Builder",
@@ -8859,7 +8531,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Marketing & Content Creation",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/marketing-content-creation/brand-voice-guide-generator",
     "title": "Brand Voice Guide Generator",
@@ -8885,33 +8557,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Use Cases",
       },
     ],
-    "description": "<CardGroup cols={3}>
-  <Card title="Client Onboarding Plan Generator" icon='clipboard-check'
-    href='/workflow-templates/use-cases/customer-success/client-onboarding-plan-generator'>
-    Automatically generate personalized onboarding plans for your clients.
-  </Card>
-  <Card title="Customer Retention Email Sequence Generator" icon='envelope-open-text'
-    href='/workflow-templates/use-cases/customer-success/customer-retention-email-sequence-generator'>
-    Create AI-powered email sequences to improve customer retention and engagement.
-  </Card>
-  <Card title="Customer Success Playbook Generator" icon='book'
-    href='/workflow-templates/use-cases/customer-success/customer-success-playbook-generator'>
-    Develop scalable customer success playbooks tailored to your team’s needs.
-  </Card>
-  <Card title="Client Satisfaction Feedback Summarizer" icon='smile'
-    href='/workflow-templates/use-cases/customer-success/client-satisfaction-feedback-summarizer'>
-    Automatically collect and summarize client satisfaction feedback using AI.
-  </Card>
-  <Card title="Internal Search Wiki" icon='headset'
-    href='/workflow-templates/use-cases/customer-success/internal-search-wiki'>
-    Build internal semantic search and suggest RAG responses to your customer facing teams.
-  </Card>
-  <Card title="Customer Issue Escalation Report Builder" icon='exclamation-triangle'
-    href='/workflow-templates/use-cases/customer-success/customer-issue-escalation-report-builder'>
-    Automatically generate detailed reports when customer issues need to be escalated.
-  </Card>
-
-</CardGroup>",
+    "description": "Automatically generate personalized onboarding plans for your clients.Create AI-powered email sequences to improve customer retention and engagement.Develop scalable customer success playbooks tailored to your team’s needs.Automatically collect and summarize client satisfaction feedback using AI.Build internal semantic search and suggest RAG responses to your customer facing teams.Automatically generate detailed reports when customer issues need to be escalated.",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/customer-success",
     "title": "Customer Success",
@@ -8940,7 +8586,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Customer Success",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/customer-success/client-onboarding-plan-generator",
     "title": "Client Onboarding Plan Generator",
@@ -8970,7 +8616,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Customer Success",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/customer-success/customer-retention-email-sequence-generator",
     "title": "Customer Retention Email Sequence Generator",
@@ -9000,7 +8646,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Customer Success",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/customer-success/customer-success-playbook-generator",
     "title": "Customer Success Playbook Generator",
@@ -9030,7 +8676,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Customer Success",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/customer-success/client-satisfaction-feedback-summarizer",
     "title": "Client Satisfaction Feedback Summarizer",
@@ -9056,40 +8702,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Use Cases",
       },
     ],
-    "description": "<CardGroup cols={3}>
-  <Card title="Augmenting Product Feedback Discovery" icon='comments'
-    href='/workflow-templates/use-cases/product-management/augmenting-product-feedback-discovery'>
-    Analyze customer feedback with AI to improve product development.
-  </Card>
-  <Card title="Product Documentation Generator" icon='file-alt'
-    href='/workflow-templates/use-cases/product-management/product-documentation-generator'>
-    Automatically generate and update product documentation using AI.
-  </Card>
-  <Card title="Product Feature Request Generator" icon='lightbulb'
-    href='/workflow-templates/use-cases/product-management/product-feature-request-generator'>
-    Capture and prioritize product feature requests with AI assistance.
-  </Card>
-  <Card title="Product Roadmap Generator" icon='road'
-    href='/workflow-templates/use-cases/product-management/product-roadmap-generator'>
-    Create dynamic product roadmaps based on customer feedback and market trends.
-  </Card>
-  <Card title="Feature Comparison Matrix Generator" icon='th-list'
-    href='/workflow-templates/use-cases/product-management/feature-comparison-matrix-generator'>
-    Build feature comparison matrices to evaluate product offerings.
-  </Card>
-  <Card title="User Manual Generator" icon='book-open'
-    href='/workflow-templates/use-cases/product-management/user-manual-generator'>
-    Automatically generate user manuals from product specifications with AI.
-  </Card>
-  <Card title="Market Research Report Generator" icon='chart-bar'
-    href='/workflow-templates/use-cases/product-management/market-research-report-generator'>
-    Generate comprehensive market research reports using AI insights.
-  </Card>
-  <Card title="Competitive Analysis Summarizer" icon='chart-pie'
-    href='/workflow-templates/use-cases/product-management/competitive-analysis-summarizer'>
-    Summarize competitive analysis reports with actionable insights using AI.
-  </Card>
-</CardGroup>",
+    "description": "Analyze customer feedback with AI to improve product development.Automatically generate and update product documentation using AI.Capture and prioritize product feature requests with AI assistance.Create dynamic product roadmaps based on customer feedback and market trends.Build feature comparison matrices to evaluate product offerings.Automatically generate user manuals from product specifications with AI.Generate comprehensive market research reports using AI insights.Summarize competitive analysis reports with actionable insights using AI.",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/product-management",
     "title": "Product Management",
@@ -9118,7 +8731,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Product Management",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/product-management/augmenting-product-feedback-discovery",
     "title": "Augmenting Product Feedback Discovery",
@@ -9148,7 +8761,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Product Management",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/product-management/product-documentation-generator",
     "title": "Product Documentation Generator",
@@ -9178,7 +8791,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Product Management",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/product-management/product-roadmap-generator",
     "title": "Product Roadmap Generator",
@@ -9208,7 +8821,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Product Management",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/product-management/feature-comparison-matrix-generator",
     "title": "Feature Comparison Matrix Generator",
@@ -9238,7 +8851,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Product Management",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/product-management/user-manual-generator",
     "title": "User Manual Generator",
@@ -9268,7 +8881,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Product Management",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/product-management/market-research-report-generator",
     "title": "Market Research Report Generator",
@@ -9298,7 +8911,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Product Management",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/product-management/competitive-analysis-summarizer",
     "title": "Competitive Analysis Summarizer",
@@ -9324,32 +8937,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Use Cases",
       },
     ],
-    "description": "<CardGroup cols={3}>
-  <Card title="Responding to Security Questionnaires" icon='file-contract'
-    href='/workflow-templates/use-cases/legal/responding-to-security-questionnaires'>
-    Automate responses to security questionnaires and ensure compliance with AI.
-  </Card>
-  <Card title="Contract Review Assistant" icon='balance-scale'
-    href='/workflow-templates/use-cases/legal/contract-review-assistant'>
-    Use AI to review contracts and flag risky clauses or terms for review.
-  </Card>
-  <Card title="Compliance Document Generator" icon='file-invoice'
-    href='/workflow-templates/use-cases/legal/compliance-document-generator'>
-    Automate the generation of compliance documents, ensuring accuracy and completeness.
-  </Card>
-  <Card title="Legal Discovery Document Summarizer" icon='folder-open'
-    href='/workflow-templates/use-cases/legal/legal-discovery-document-summarizer'>
-    Quickly summarize large volumes of legal discovery documents with AI.
-  </Card>
-  <Card title="Internal Compliance Training FAQ" icon='question'
-    href='/workflow-templates/use-cases/legal/internal-compliance-training-faq'>
-    Build AI-generated compliance training FAQs to keep your team informed.
-  </Card>
-  <Card title="SAAS Security Risk Assessment Report Generator" icon='shield-alt'
-    href='/workflow-templates/use-cases/legal/saas-security-risk-assessment-report-generator'>
-    Generate security risk assessments for SAAS platforms with AI assistance.
-  </Card>
-</CardGroup>",
+    "description": "Automate responses to security questionnaires and ensure compliance with AI.Use AI to review contracts and flag risky clauses or terms for review.Automate the generation of compliance documents, ensuring accuracy and completeness.Quickly summarize large volumes of legal discovery documents with AI.Build AI-generated compliance training FAQs to keep your team informed.Generate security risk assessments for SAAS platforms with AI assistance.",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/legal-compliance",
     "title": "Legal & Compliance",
@@ -9378,7 +8966,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Legal & Compliance",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/legal-compliance/responding-to-security-questionnaires",
     "title": "Responding to Security Questionnaires",
@@ -9408,7 +8996,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Legal & Compliance",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/legal-compliance/contract-review-assistant",
     "title": "Contract Review Assistant",
@@ -9438,7 +9026,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Legal & Compliance",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/legal-compliance/compliance-document-generator",
     "title": "Compliance Document Generator",
@@ -9468,7 +9056,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Legal & Compliance",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/legal-compliance/legal-discovery-document-summarizer",
     "title": "Legal Discovery Document Summarizer",
@@ -9498,7 +9086,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Legal & Compliance",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/legal-compliance/internal-compliance-training-faq",
     "title": "Internal Compliance Training FAQ",
@@ -9528,7 +9116,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Legal & Compliance",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/legal-compliance/saas-security-risk-assessment-report-generator",
     "title": "SAAS Security Risk Assessment Report Generator",
@@ -9554,40 +9142,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Use Cases",
       },
     ],
-    "description": "<CardGroup cols={3}>
-  <Card title="Enhancing Employee Onboarding" icon='user-plus'
-    href='/workflow-templates/use-cases/internal-operations/enhancing-employee-onboarding'>
-    Streamline employee onboarding with AI-powered workflows.
-  </Card>
-  <Card title="Internal Policy FAQ Generator" icon='clipboard'
-    href='/workflow-templates/use-cases/internal-operations/internal-policy-faq-generator'>
-    Automatically generate internal policy FAQs to keep your team informed.
-  </Card>
-  <Card title="Team Recognition & Reward Plan" icon='medal'
-    href='/workflow-templates/use-cases/internal-operations/team-recognition-reward-plan'>
-    Build a dynamic recognition and reward plan tailored to your team's achievements.
-  </Card>
-  <Card title="Meeting Transcript Summarizer" icon='microphone-alt'
-    href='/workflow-templates/use-cases/internal-operations/meeting-transcript-summarizer'>
-    Summarize key takeaways from meeting transcripts with AI.
-  </Card>
-  <Card title="Project Update Summarizer" icon='tasks'
-    href='/workflow-templates/use-cases/internal-operations/project-update-summarizer'>
-    Keep stakeholders informed with concise, AI-generated project updates.
-  </Card>
-  <Card title="Board Meeting Report Generator" icon='briefcase'
-    href='/workflow-templates/use-cases/internal-operations/board-meeting-report-generator'>
-    Summarize board meeting outcomes with AI to keep key stakeholders informed.
-  </Card>
-  <Card title="Job Description Generator" icon='id-badge'
-    href='/workflow-templates/use-cases/internal-operations/job-description-generator'>
-    Automatically generate job descriptions tailored to any role with AI.
-  </Card>
-  <Card title="Board Update Summarizer" icon='newspaper'
-    href='/workflow-templates/use-cases/internal-operations/board-update-summarizer'>
-    Generate concise board updates with key highlights using AI.
-  </Card>
-</CardGroup>",
+    "description": "Streamline employee onboarding with AI-powered workflows.Automatically generate internal policy FAQs to keep your team informed.Build a dynamic recognition and reward plan tailored to your team's achievements.Summarize key takeaways from meeting transcripts with AI.Keep stakeholders informed with concise, AI-generated project updates.Summarize board meeting outcomes with AI to keep key stakeholders informed.Automatically generate job descriptions tailored to any role with AI.Generate concise board updates with key highlights using AI.",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/internal-operations-team-management",
     "title": "Internal Operations & Team Management",
@@ -9616,7 +9171,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Internal Operations & Team Management",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/internal-operations-team-management/enhancing-employee-onboarding",
     "title": "Enhancing Employee Onboarding",
@@ -9646,7 +9201,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Internal Operations & Team Management",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/internal-operations-team-management/internal-policy-faq-generator",
     "title": "Internal Policy FAQ Generator",
@@ -9676,7 +9231,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Internal Operations & Team Management",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/internal-operations-team-management/team-recognition-reward-plan",
     "title": "Team Recognition & Reward Plan",
@@ -9706,7 +9261,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Internal Operations & Team Management",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/internal-operations-team-management/meeting-transcript-summarizer",
     "title": "Meeting Transcript Summarizer",
@@ -9736,7 +9291,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Internal Operations & Team Management",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/internal-operations-team-management/project-update-summarizer",
     "title": "Project Update Summarizer",
@@ -9766,7 +9321,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Internal Operations & Team Management",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/internal-operations-team-management/board-meeting-report-generator",
     "title": "Board Meeting Report Generator",
@@ -9796,7 +9351,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Internal Operations & Team Management",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/internal-operations-team-management/job-description-generator",
     "title": "Job Description Generator",
@@ -9826,7 +9381,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Internal Operations & Team Management",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/internal-operations-team-management/board-update-summarizer",
     "title": "Board Update Summarizer",
@@ -9852,28 +9407,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Use Cases",
       },
     ],
-    "description": "<CardGroup cols={3}>
-  <Card title="Take Customer Background Data and Generate a Report" icon='file-alt'
-    href='/workflow-templates/use-cases/client-reporting-analysis/take-customer-background-data-and-generate-a-report'>
-    Automatically generate detailed client reports based on background data.
-  </Card>
-  <Card title="Client Project Proposal Builder" icon='file-signature'
-    href='/workflow-templates/use-cases/client-reporting-analysis/client-project-proposal-builder'>
-    Build winning project proposals tailored to client needs with AI.
-  </Card>
-  <Card title="Investor Update Summarizer" icon='chart-line'
-    href='/workflow-templates/use-cases/client-reporting-analysis/investor-update-summarizer'>
-    Generate concise investor updates summarizing key company metrics and progress.
-  </Card>
-  <Card title="Client Satisfaction Feedback Summarizer" icon='smile'
-    href='/workflow-templates/use-cases/client-reporting-analysis/client-satisfaction-feedback-summarizer'>
-    Automatically collect and summarize client satisfaction feedback using AI.
-  </Card>
-  <Card title="RFP Response Generator" icon='file-invoice'
-    href='/workflow-templates/use-cases/client-reporting-analysis/rfp-response-generator'>
-    Quickly generate complete RFP responses based on historical data with AI.
-  </Card>
-</CardGroup>",
+    "description": "Automatically generate detailed client reports based on background data.Build winning project proposals tailored to client needs with AI.Generate concise investor updates summarizing key company metrics and progress.Automatically collect and summarize client satisfaction feedback using AI.Quickly generate complete RFP responses based on historical data with AI.",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/client-reporting-analysis",
     "title": "Client Reporting & Analysis",
@@ -9902,7 +9436,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Client Reporting & Analysis",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/client-reporting-analysis/take-customer-background-data-and-generate-a-report",
     "title": "Take Customer Background Data and Generate a Report",
@@ -9932,7 +9466,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Client Reporting & Analysis",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/client-reporting-analysis/client-project-proposal-builder",
     "title": "Client Project Proposal Builder",
@@ -9962,7 +9496,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Client Reporting & Analysis",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/client-reporting-analysis/investor-update-summarizer",
     "title": "Investor Update Summarizer",
@@ -9992,7 +9526,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Client Reporting & Analysis",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/client-reporting-analysis/rfp-response-generator",
     "title": "RFP Response Generator",
@@ -10018,36 +9552,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Use Cases",
       },
     ],
-    "description": "<CardGroup cols={3}>
-  <Card title="Build Custom AI Apps" icon='rocket'
-    href='/workflow-templates/use-cases/startup-toolkit/enabling-entrepreneurs-to-build-ai-apps'>
-    Build and launch AI-powered apps quickly and efficiently, without the technical headache.
-  </Card>
-  <Card title="Product Launch Plan Builder" icon='calendar-alt'
-    href='/workflow-templates/use-cases/startup-toolkit/product-launch-plan-builder'>
-    Automatically create comprehensive product launch plans with AI insights.
-  </Card>
-  <Card title="Knowledge Base Article Generator" icon='book'
-    href='/workflow-templates/use-cases/startup-toolkit/knowledge-base-article-generator'>
-    Build a robust knowledge base by generating articles with AI.
-  </Card>
-  <Card title="Case Study Generator" icon='file-alt'
-    href='/workflow-templates/use-cases/startup-toolkit/case-study-generator'>
-    Automatically generate compelling case studies to showcase your success stories.
-  </Card>
-  <Card title="Press Release Drafting Assistant" icon='bullhorn'
-    href='/workflow-templates/use-cases/startup-toolkit/press-release-drafting-assistant'>
-    Quickly draft press releases with AI that capture attention and key details.
-  </Card>
-  <Card title="Brand Voice Guide Generator" icon='microphone'
-    href='/workflow-templates/use-cases/startup-toolkit/brand-voice-guide-generator'>
-    Create a consistent brand voice guide using AI-driven analysis.
-  </Card>
-  <Card title="SEO Content Suggestion Tool" icon='search'
-    href='/workflow-templates/use-cases/startup-toolkit/seo-content-suggestion-tool'>
-    Optimize your content for SEO by generating AI-driven suggestions.
-  </Card>
-</CardGroup>",
+    "description": "Build and launch AI-powered apps quickly and efficiently, without the technical headache.Automatically create comprehensive product launch plans with AI insights.Build a robust knowledge base by generating articles with AI.Automatically generate compelling case studies to showcase your success stories.Quickly draft press releases with AI that capture attention and key details.Create a consistent brand voice guide using AI-driven analysis.Optimize your content for SEO by generating AI-driven suggestions.",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/startup-toolkit",
     "title": "Startup Toolkit",
@@ -10076,7 +9581,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Startup Toolkit",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/startup-toolkit/build-custom-ai-apps",
     "title": "Build Custom AI Apps",
@@ -10106,7 +9611,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Startup Toolkit",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/startup-toolkit/product-launch-plan-builder",
     "title": "Product Launch Plan Builder",
@@ -10136,7 +9641,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Startup Toolkit",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/startup-toolkit/knowledge-base-article-generator",
     "title": "Knowledge Base Article Generator",
@@ -10166,7 +9671,7 @@ Build smart, achieve your goals, and stay ahead with Scout.",
         "title": "Startup Toolkit",
       },
     ],
-    "description": "Coming soon! [Ping us](https://studio.scoutos.com/slack) if you want to chat about this use case or get this doc prioritized!",
+    "description": "Coming soon! Ping us if you want to chat about this use case or get this doc prioritized!",
     "indexSegmentId": "0",
     "slug": "workflow-templates/use-cases/startup-toolkit/case-study-generator",
     "title": "Case Study Generator",
