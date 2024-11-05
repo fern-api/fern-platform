@@ -116,6 +116,11 @@ export async function withInitialProps({
 
     // if the current node requires authentication and the user is not authenticated, redirect to the auth page
     if (found.node.authed && !authState.authed) {
+        // if the page can be considered an edge node when it's unauthed, then we'll follow the redirect
+        if (FernNavigation.hasRedirect(found.node)) {
+            return withRedirect(found.node.pointsTo);
+        }
+
         // TODO: there's currently no way to express a 401 or 403 in Next.js so we'll redirect to 404.
         // ideally this is handled in the middleware, and this should be a 500 error.
         if (authState.authorizationUrl == null) {
