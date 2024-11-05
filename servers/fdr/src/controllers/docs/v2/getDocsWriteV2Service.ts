@@ -383,7 +383,7 @@ async function uploadToAlgolia(
                 nodes: FernNavigation.utils.toRootNode(loadDocsForUrlResponse),
                 pages: FernNavigation.utils.toPages(loadDocsForUrlResponse),
                 apis: FernNavigation.utils.toApis(loadDocsForUrlResponse),
-                isFieldRecordsEnabled: false,
+                isFieldRecordsEnabled: true,
             });
             searchRecords.push(
                 ...v2Records.map((record) => ({
