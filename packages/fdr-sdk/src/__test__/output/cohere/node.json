@@ -2363,7 +2363,6 @@
                               {
                                 "apiDefinitionId": "041fb40b-38b9-4e6c-8c05-1c042441b92a",
                                 "endpointId": "endpoint_.chat",
-                                "hidden": true,
                                 "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.chat-1",
                                 "isResponseStream": false,
                                 "method": "POST",
@@ -2374,7 +2373,6 @@
                               {
                                 "apiDefinitionId": "041fb40b-38b9-4e6c-8c05-1c042441b92a",
                                 "endpointId": "endpoint_.chat_stream",
-                                "hidden": true,
                                 "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.chat_stream-1",
                                 "isResponseStream": true,
                                 "method": "POST",
@@ -2383,7 +2381,7 @@
                                 "type": "endpoint"
                               }
                             ],
-                            "hidden": true,
+                            "hidden": false,
                             "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-chat",
                             "pointsTo": "v2/reference/chat-v1",
                             "slug": "v2/reference",
@@ -2396,7 +2394,6 @@
                               {
                                 "apiDefinitionId": "041fb40b-38b9-4e6c-8c05-1c042441b92a",
                                 "endpointId": "endpoint_.generate",
-                                "hidden": true,
                                 "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.generate",
                                 "isResponseStream": false,
                                 "method": "POST",
@@ -2407,7 +2404,6 @@
                               {
                                 "apiDefinitionId": "041fb40b-38b9-4e6c-8c05-1c042441b92a",
                                 "endpointId": "endpoint_.generate_stream",
-                                "hidden": true,
                                 "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.generate_stream",
                                 "isResponseStream": true,
                                 "method": "POST",
@@ -2416,7 +2412,7 @@
                                 "type": "endpoint"
                               }
                             ],
-                            "hidden": true,
+                            "hidden": false,
                             "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-generate",
                             "pointsTo": "v2/reference/generate-v1",
                             "slug": "v2/reference",
@@ -2473,7 +2469,6 @@
                               {
                                 "apiDefinitionId": "041fb40b-38b9-4e6c-8c05-1c042441b92a",
                                 "endpointId": "endpoint_.summarize",
-                                "hidden": true,
                                 "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.summarize",
                                 "isResponseStream": false,
                                 "method": "POST",
@@ -2482,7 +2477,7 @@
                                 "type": "endpoint"
                               }
                             ],
-                            "hidden": true,
+                            "hidden": false,
                             "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-summarize",
                             "pointsTo": "v2/reference/summarize",
                             "slug": "v2/reference",
