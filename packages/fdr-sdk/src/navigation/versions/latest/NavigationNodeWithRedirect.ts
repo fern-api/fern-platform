@@ -1,29 +1,12 @@
-import type { Exact, MarkRequired } from "ts-essentials";
-import type {
-    ApiPackageNode,
-    ApiReferenceNode,
-    ProductNode,
-    RootNode,
-    SectionNode,
-    TabNode,
-    VersionNode,
-    WithRedirect,
-} from ".";
+import type { Slug, WithRedirect } from ".";
 import type { NavigationNode } from "./NavigationNode";
 
 /**
  * Navigation nodes that can have a redirect
  */
-export type NavigationNodeWithPointsTo =
-    | RootNode
-    | ProductNode
-    | VersionNode
-    | TabNode
-    | SectionNode
-    | ApiReferenceNode
-    | ApiPackageNode;
+export type NavigationNodeWithPointsTo = Extract<NavigationNode, WithRedirect>;
 
-export function hasPointsTo(node: NavigationNode): node is NavigationNodeWithRedirect {
+export function hasPointsTo(node: NavigationNode): node is NavigationNodeWithPointsTo {
     return (
         node.type === "root" ||
         node.type === "product" ||
@@ -38,10 +21,8 @@ export function hasPointsTo(node: NavigationNode): node is NavigationNodeWithRed
 /**
  * Navigation nodes that extend WithRedirect
  */
-export type NavigationNodeWithRedirect = Exact<NavigationNodeWithPointsTo, Extract<NavigationNode, WithRedirect>> &
-    MarkRequired<WithRedirect, "pointsTo">;
 
-export function hasRedirect(node: NavigationNode): node is NavigationNodeWithRedirect {
+export function hasRedirect(node: NavigationNode): node is NavigationNodeWithPointsTo & { pointsTo: Slug } {
     if (!hasPointsTo(node)) {
         return false;
     }
