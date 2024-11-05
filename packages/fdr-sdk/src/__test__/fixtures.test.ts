@@ -97,7 +97,7 @@ function testNavigationConfigConverter(fixtureName: string): void {
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 const node = collector.slugMap.get(slug)!;
                 expect(node).toBeDefined();
-                if (!FernNavigation.isPage(node)) {
+                if (!FernNavigation.isPage(node) || node.hidden) {
                     console.log(node);
                 }
                 expect(FernNavigation.isPage(node), `${slug} is a page`).toBe(true);

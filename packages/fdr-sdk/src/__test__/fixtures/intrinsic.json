@@ -1,0 +1,2754 @@
+{
+  "baseUrl": {
+    "domain": "intrinsic.docs.buildwithfern.com"
+  },
+  "definition": {
+    "config": {
+      "navigation": {
+        "items": [
+          {
+            "type": "section",
+            "title": "Getting started",
+            "urlSlug": "getting-started",
+            "collapsed": false,
+            "hidden": false,
+            "items": [
+              {
+                "type": "page",
+                "id": "docs/pages/welcome.mdx",
+                "title": "Welcome",
+                "urlSlug": "welcome",
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "id": "docs/pages/quickstart.mdx",
+                "title": "Quickstart",
+                "urlSlug": "quickstart",
+                "hidden": false
+              }
+            ],
+            "skipUrlSlug": false
+          },
+          {
+            "type": "section",
+            "title": "SDKs",
+            "urlSlug": "sd-ks",
+            "collapsed": false,
+            "hidden": false,
+            "items": [
+              {
+                "type": "page",
+                "id": "docs/pages/ruby-sdk.mdx",
+                "title": "Ruby SDK",
+                "urlSlug": "ruby-sdk",
+                "hidden": false
+              },
+              {
+                "type": "page",
+                "id": "docs/pages/go-sdk.mdx",
+                "title": "Go SDK",
+                "urlSlug": "go-sdk",
+                "hidden": false
+              }
+            ],
+            "skipUrlSlug": false
+          },
+          {
+            "type": "section",
+            "title": "Okta SSO Integration",
+            "urlSlug": "okta-sso-integration",
+            "collapsed": false,
+            "hidden": false,
+            "items": [
+              {
+                "type": "page",
+                "id": "docs/pages/okta.mdx",
+                "title": "Setup Okta SSO",
+                "urlSlug": "setup-okta-sso",
+                "hidden": false
+              }
+            ],
+            "skipUrlSlug": false
+          },
+          {
+            "type": "api",
+            "title": "API Reference",
+            "api": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+            "showErrors": false,
+            "navigation": {
+              "items": []
+            },
+            "hidden": false,
+            "urlSlug": "api-reference",
+            "skipUrlSlug": false
+          }
+        ]
+      },
+      "logoHeight": 25,
+      "colorsV3": {
+        "type": "darkAndLight",
+        "light": {
+          "accentPrimary": {
+            "r": 19,
+            "g": 160,
+            "b": 108,
+            "a": 1
+          },
+          "logo": "eb4ce0c3-4120-4605-acf8-896ac4fb7db9",
+          "background": {
+            "type": "gradient"
+          }
+        },
+        "dark": {
+          "accentPrimary": {
+            "r": 24,
+            "g": 237,
+            "b": 157,
+            "a": 1
+          },
+          "logo": "80332495-6beb-4e3e-a5a9-0c7f96c9feaa",
+          "background": {
+            "type": "gradient"
+          }
+        }
+      },
+      "navbarLinks": [
+        {
+          "type": "primary",
+          "text": "Contact us",
+          "url": "mailto:support@withintrinsic.com"
+        }
+      ],
+      "title": "Intrinsic | Docs",
+      "favicon": "061db4ea-f96f-4086-a8cf-e8bc732cf84f",
+      "js": {
+        "files": []
+      }
+    },
+    "apis": {
+      "cb72b86f-a3ee-47b4-a201-5aa358a6713b": {
+        "id": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+        "rootPackage": {
+          "endpoints": [],
+          "subpackages": ["subpackage_detections", "subpackage_events", "subpackage_eventTypes"],
+          "types": [
+            "type_:ListEventTypesResponse",
+            "type_:EventTypeObject",
+            "type_:EventTypeFieldType",
+            "type_:PatchEventTypeField",
+            "type_:EventTypeField",
+            "type_:CreateEventSyncRequest",
+            "type_:CreateEventSyncResponse",
+            "type_:CreateEventAsyncRequest",
+            "type_:CreateEventAsyncResponse",
+            "type_:FiredRuleObject",
+            "type_:DetectionObjectStatus",
+            "type_:DetectionObject",
+            "type_:ViolatedPolicyObject",
+            "type_:ErrorSchemaErrorType",
+            "type_:ErrorSchemaErrorCode",
+            "type_:ErrorSchemaError",
+            "type_:ErrorSchema"
+          ],
+          "webhooks": [],
+          "websockets": []
+        },
+        "types": {
+          "type_:ListEventTypesResponse": {
+            "name": "ListEventTypesResponse",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "data",
+                  "valueType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "type_:EventTypeObject"
+                    }
+                  }
+                },
+                {
+                  "key": "object",
+                  "valueType": {
+                    "type": "literal",
+                    "value": {
+                      "type": "stringLiteral",
+                      "value": "list"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:EventTypeObject": {
+            "name": "EventTypeObject",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "ID of the event type",
+                  "key": "id",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "description": "Name of the event type. Must be unique, and can only contain alphanumeric characters and underscores, and be up to 255 characters",
+                  "key": "name",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "description": "Fields of the event type",
+                  "key": "fields",
+                  "valueType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "type_:EventTypeField"
+                    }
+                  }
+                },
+                {
+                  "key": "object",
+                  "valueType": {
+                    "type": "literal",
+                    "value": {
+                      "type": "stringLiteral",
+                      "value": "event_type"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:EventTypeFieldType": {
+            "description": "Type of the field. Can be either strings, numbers, links to JPEG images, or links to video files",
+            "name": "EventTypeFieldType",
+            "shape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "string"
+                },
+                {
+                  "value": "number"
+                },
+                {
+                  "value": "image_url"
+                },
+                {
+                  "value": "video_url"
+                },
+                {
+                  "value": "text_content"
+                }
+              ]
+            }
+          },
+          "type_:PatchEventTypeField": {
+            "name": "PatchEventTypeField",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "Name of the field. Must be unique, and can only contain alphanumeric characters and underscores, and be up to 255 characters",
+                  "key": "field_name",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "description": "Type of the field. Can be either strings, numbers, links to JPEG images, or links to video files",
+                  "key": "type",
+                  "valueType": {
+                    "type": "id",
+                    "value": "type_:EventTypeFieldType"
+                  }
+                }
+              ]
+            }
+          },
+          "type_:EventTypeField": {
+            "name": "EventTypeField",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "Name of the field. Must be unique, and can only contain alphanumeric characters and underscores, and be up to 255 characters",
+                  "key": "field_name",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "description": "Type of the field. Can be either strings, numbers, links to JPEG images, or links to video files",
+                  "key": "type",
+                  "valueType": {
+                    "type": "id",
+                    "value": "type_:EventTypeFieldType"
+                  }
+                },
+                {
+                  "description": "Whether the field is optional or not",
+                  "key": "optional",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:CreateEventSyncRequest": {
+            "description": "Arbitrary JSON payload for the request body",
+            "name": "CreateEventSyncRequest",
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          },
+          "type_:CreateEventSyncResponse": {
+            "name": "CreateEventSyncResponse",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "object",
+                  "valueType": {
+                    "type": "literal",
+                    "value": {
+                      "type": "stringLiteral",
+                      "value": "event"
+                    }
+                  }
+                },
+                {
+                  "description": "ID of the created event",
+                  "key": "id",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "description": "ID of the event type that was created",
+                  "key": "event_type_id",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "description": "Arbitrary JSON payload for the request body",
+                  "key": "content",
+                  "valueType": {
+                    "type": "map",
+                    "keyType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "valueType": {
+                      "type": "unknown"
+                    }
+                  }
+                },
+                {
+                  "description": "Timestamp of when the event was created",
+                  "key": "created_at",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime"
+                    }
+                  }
+                },
+                {
+                  "description": "List of detections created for the event",
+                  "key": "detections",
+                  "valueType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "type_:DetectionObject"
+                    }
+                  }
+                },
+                {
+                  "description": "List of fired rules created for the event",
+                  "key": "fired_rules",
+                  "valueType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "type_:FiredRuleObject"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:CreateEventAsyncRequest": {
+            "description": "JSON payload for the request body",
+            "name": "CreateEventAsyncRequest",
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          },
+          "type_:CreateEventAsyncResponse": {
+            "name": "CreateEventAsyncResponse",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "object",
+                  "valueType": {
+                    "type": "literal",
+                    "value": {
+                      "type": "stringLiteral",
+                      "value": "event"
+                    }
+                  }
+                },
+                {
+                  "description": "ID of the created event",
+                  "key": "id",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "description": "ID of the event type that was created",
+                  "key": "event_type_id",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "description": "Arbitrary JSON payload for the request body",
+                  "key": "content",
+                  "valueType": {
+                    "type": "map",
+                    "keyType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "valueType": {
+                      "type": "unknown"
+                    }
+                  }
+                },
+                {
+                  "description": "Timestamp of when the event was created",
+                  "key": "created_at",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime"
+                    }
+                  }
+                },
+                {
+                  "description": "List of pending detection ids created for the event",
+                  "key": "detections",
+                  "valueType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "type_:DetectionObject"
+                    }
+                  }
+                },
+                {
+                  "description": "List of fired rules created for the event",
+                  "key": "fired_rules",
+                  "valueType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "type_:FiredRuleObject"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:FiredRuleObject": {
+            "name": "FiredRuleObject",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "object",
+                  "valueType": {
+                    "type": "literal",
+                    "value": {
+                      "type": "stringLiteral",
+                      "value": "fired_rule"
+                    }
+                  }
+                },
+                {
+                  "description": "ID of the fired rule",
+                  "key": "rule_id",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "description": "Name of the fired rule",
+                  "key": "rule_name",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:DetectionObjectStatus": {
+            "name": "DetectionObjectStatus",
+            "shape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "PENDING"
+                },
+                {
+                  "value": "COMPLETED"
+                },
+                {
+                  "value": "FAILURE"
+                }
+              ]
+            }
+          },
+          "type_:DetectionObject": {
+            "name": "DetectionObject",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "object",
+                  "valueType": {
+                    "type": "literal",
+                    "value": {
+                      "type": "stringLiteral",
+                      "value": "detection"
+                    }
+                  }
+                },
+                {
+                  "description": "ID of the detection",
+                  "key": "id",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "description": "ID of the event associated with a detection",
+                  "key": "event_id",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "key": "status",
+                  "valueType": {
+                    "type": "id",
+                    "value": "type_:DetectionObjectStatus"
+                  }
+                },
+                {
+                  "description": "Whether any policies were violated",
+                  "key": "violates_policy",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "violated_policies",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_:ViolatedPolicyObject"
+                      }
+                    }
+                  }
+                },
+                {
+                  "description": "Explanation of the detection outcome",
+                  "key": "explanation",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:ViolatedPolicyObject": {
+            "name": "ViolatedPolicyObject",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "object",
+                  "valueType": {
+                    "type": "literal",
+                    "value": {
+                      "type": "stringLiteral",
+                      "value": "violated_policy"
+                    }
+                  }
+                },
+                {
+                  "description": "ID of the policy that was violated",
+                  "key": "id",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "description": "Version of the policy that was violated",
+                  "key": "version_id",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "description": "Name of the policy",
+                  "key": "name",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "description": "Explanation for why policy was violated",
+                  "key": "explanation",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "description": "Confidence score for the violation (not available for all detections). Range is 0-1",
+                  "key": "confidence_score",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "double"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:ErrorSchemaErrorType": {
+            "name": "ErrorSchemaErrorType",
+            "shape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "invalid_request_error"
+                },
+                {
+                  "value": "not_enabled_error"
+                },
+                {
+                  "value": "rate_limit_error"
+                },
+                {
+                  "value": "authentication_error"
+                },
+                {
+                  "value": "not_found_error"
+                },
+                {
+                  "value": "internal_server_error"
+                }
+              ]
+            }
+          },
+          "type_:ErrorSchemaErrorCode": {
+            "name": "ErrorSchemaErrorCode",
+            "shape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "400"
+                },
+                {
+                  "value": "401"
+                },
+                {
+                  "value": "403"
+                },
+                {
+                  "value": "404"
+                },
+                {
+                  "value": "500"
+                },
+                {
+                  "value": "501"
+                }
+              ]
+            }
+          },
+          "type_:ErrorSchemaError": {
+            "name": "ErrorSchemaError",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "type",
+                  "valueType": {
+                    "type": "id",
+                    "value": "type_:ErrorSchemaErrorType"
+                  }
+                },
+                {
+                  "key": "message",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "key": "code",
+                  "valueType": {
+                    "type": "id",
+                    "value": "type_:ErrorSchemaErrorCode"
+                  }
+                },
+                {
+                  "key": "param",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type_:ErrorSchema": {
+            "name": "ErrorSchema",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "error",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "type_:ErrorSchemaError"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "subpackages": {
+          "subpackage_detections": {
+            "subpackageId": "subpackage_detections",
+            "name": "Detections",
+            "endpoints": [
+              {
+                "environments": [
+                  {
+                    "id": "Default",
+                    "baseUrl": "https://intrinsicapi.com"
+                  }
+                ],
+                "defaultEnvironment": "Default",
+                "urlSlug": "get-detection",
+                "migratedFromUrlSlugs": ["get-a-detection-by-id"],
+                "method": "GET",
+                "id": "getDetection",
+                "name": "Get a detection by ID",
+                "path": {
+                  "pathParameters": [
+                    {
+                      "description": "Detection ID",
+                      "key": "id",
+                      "type": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  ],
+                  "parts": [
+                    {
+                      "type": "literal",
+                      "value": ""
+                    },
+                    {
+                      "type": "literal",
+                      "value": "/api/v2/detections/"
+                    },
+                    {
+                      "type": "pathParameter",
+                      "value": "id"
+                    },
+                    {
+                      "type": "literal",
+                      "value": ""
+                    }
+                  ]
+                },
+                "queryParameters": [],
+                "headers": [],
+                "response": {
+                  "type": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "type_:DetectionObject"
+                    }
+                  }
+                },
+                "errors": [
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 400
+                  },
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 404
+                  },
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 500
+                  }
+                ],
+                "errorsV2": [
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 400
+                  },
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 404
+                  },
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 500
+                  }
+                ],
+                "examples": [
+                  {
+                    "path": "/api/v2/detections/detection-id",
+                    "pathParameters": {
+                      "id": "detection-id"
+                    },
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 200,
+                    "responseBody": {
+                      "object": "detection",
+                      "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                      "event_id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                      "status": "COMPLETED",
+                      "violated_policies": [
+                        {
+                          "object": "violated_policy",
+                          "id": "e8352a21-82f9-49d1-a86f-bf52662a23f4",
+                          "version_id": "1a2b3c4d-5e6f-7g8h-9i10-j11k12l13m14",
+                          "name": "No Nudity",
+                          "explanation": "Image contains nudity",
+                          "confidence_score": 0.9
+                        }
+                      ],
+                      "explanation": "Image contains nudity"
+                    },
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.Detections.GetDetection(\n\tcontext.TODO(),\n\t\"detection-id\",\n)\n"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "object": "detection",
+                        "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                        "event_id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                        "status": "COMPLETED",
+                        "violated_policies": [
+                          {
+                            "object": "violated_policy",
+                            "id": "e8352a21-82f9-49d1-a86f-bf52662a23f4",
+                            "version_id": "1a2b3c4d-5e6f-7g8h-9i10-j11k12l13m14",
+                            "name": "No Nudity",
+                            "explanation": "Image contains nudity",
+                            "confidence_score": 0.9
+                          }
+                        ],
+                        "explanation": "Image contains nudity"
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/detections/:id",
+                    "pathParameters": {
+                      "id": ":id"
+                    },
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 400,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.Detections.GetDetection(\n\tcontext.TODO(),\n\t\"detection-id\",\n)\n"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/detections/:id",
+                    "pathParameters": {
+                      "id": ":id"
+                    },
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 404,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.Detections.GetDetection(\n\tcontext.TODO(),\n\t\"detection-id\",\n)\n"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/detections/:id",
+                    "pathParameters": {
+                      "id": ":id"
+                    },
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 500,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.Detections.GetDetection(\n\tcontext.TODO(),\n\t\"detection-id\",\n)\n"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  }
+                ],
+                "authed": true
+              }
+            ],
+            "types": [],
+            "subpackages": [],
+            "urlSlug": "detections",
+            "description": "Given entities, returns Tags whether the entity violates your platform's policies",
+            "webhooks": [],
+            "websockets": [],
+            "displayName": "Detections"
+          },
+          "subpackage_events": {
+            "subpackageId": "subpackage_events",
+            "name": "Events",
+            "endpoints": [
+              {
+                "environments": [
+                  {
+                    "id": "Default",
+                    "baseUrl": "https://intrinsicapi.com"
+                  }
+                ],
+                "defaultEnvironment": "Default",
+                "urlSlug": "create-event-sync",
+                "migratedFromUrlSlugs": ["create-an-event-synchronously"],
+                "method": "POST",
+                "id": "createEventSync",
+                "name": "Create an Event synchronously",
+                "path": {
+                  "pathParameters": [
+                    {
+                      "description": "The type of event being created. To create an event type, see the event types API.",
+                      "key": "event_type_name",
+                      "type": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  ],
+                  "parts": [
+                    {
+                      "type": "literal",
+                      "value": ""
+                    },
+                    {
+                      "type": "literal",
+                      "value": "/api/v2/events/sync/"
+                    },
+                    {
+                      "type": "pathParameter",
+                      "value": "event_type_name"
+                    },
+                    {
+                      "type": "literal",
+                      "value": ""
+                    }
+                  ]
+                },
+                "queryParameters": [],
+                "headers": [],
+                "request": {
+                  "contentType": "application/json",
+                  "type": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "type_:CreateEventSyncRequest"
+                    }
+                  }
+                },
+                "response": {
+                  "type": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "type_:CreateEventSyncResponse"
+                    }
+                  }
+                },
+                "errors": [
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 400
+                  },
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 403
+                  },
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 404
+                  },
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 500
+                  }
+                ],
+                "errorsV2": [
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 400
+                  },
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 403
+                  },
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 404
+                  },
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 500
+                  }
+                ],
+                "examples": [
+                  {
+                    "path": "/api/v2/events/sync/new_user",
+                    "pathParameters": {
+                      "event_type_name": "new_user"
+                    },
+                    "queryParameters": {},
+                    "headers": {},
+                    "requestBody": {
+                      "profle_photo_url": "https://example.com/image.jpg",
+                      "ip_address": "192.158.1.38",
+                      "country": "US"
+                    },
+                    "responseStatusCode": 200,
+                    "responseBody": {
+                      "object": "event",
+                      "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                      "event_type_id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                      "content": {
+                        "profle_photo_url": "https://example.com/image.jpg",
+                        "ip_address": "192.158.1.38",
+                        "country": "US"
+                      },
+                      "created_at": "2023-12-12T03:00:23.648Z",
+                      "detections": [
+                        {
+                          "object": "detection",
+                          "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                          "event_id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                          "status": "PENDING",
+                          "violated_policies": [
+                            {
+                              "object": "violated_policy",
+                              "id": "e8352a21-82f9-49d1-a86f-bf52662a23f4",
+                              "version_id": "1a2b3c4d-5e6f-7g8h-9i10-j11k12l13m14",
+                              "name": "No Nudity",
+                              "explanation": "Image contains nudity",
+                              "confidence_score": 0.9
+                            }
+                          ],
+                          "explanation": "Image contains nudity"
+                        }
+                      ],
+                      "fired_rules": [
+                        {
+                          "object": "fired_rule",
+                          "rule_id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                          "rule_name": "High Risk User"
+                        }
+                      ]
+                    },
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.Events.CreateEventSync(\n\tcontext.TODO(),\n\t\"new_user\",\n\tmap[string]interface{}{\n\t\t\"profle_photo_url\": \"\\\"https://example.com/image.jpg\\\"\",\n\t\t\"ip_address\":       \"\\\"192.158.1.38\\\"\",\n\t\t\"country\":          \"\\\"US\\\"\",\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "profle_photo_url": "https://example.com/image.jpg",
+                        "ip_address": "192.158.1.38",
+                        "country": "US"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "object": "event",
+                        "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                        "event_type_id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                        "content": {
+                          "profle_photo_url": "https://example.com/image.jpg",
+                          "ip_address": "192.158.1.38",
+                          "country": "US"
+                        },
+                        "created_at": "2023-12-12T03:00:23.648Z",
+                        "detections": [
+                          {
+                            "object": "detection",
+                            "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                            "event_id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                            "status": "PENDING",
+                            "violated_policies": [
+                              {
+                                "object": "violated_policy",
+                                "id": "e8352a21-82f9-49d1-a86f-bf52662a23f4",
+                                "version_id": "1a2b3c4d-5e6f-7g8h-9i10-j11k12l13m14",
+                                "name": "No Nudity",
+                                "explanation": "Image contains nudity",
+                                "confidence_score": 0.9
+                              }
+                            ],
+                            "explanation": "Image contains nudity"
+                          }
+                        ],
+                        "fired_rules": [
+                          {
+                            "object": "fired_rule",
+                            "rule_id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                            "rule_name": "High Risk User"
+                          }
+                        ]
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/events/sync/:event_type_name",
+                    "pathParameters": {
+                      "event_type_name": ":event_type_name"
+                    },
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 400,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.Events.CreateEventSync(\n\tcontext.TODO(),\n\t\"new_user\",\n\tmap[string]interface{}{\n\t\t\"profle_photo_url\": \"\\\"https://example.com/image.jpg\\\"\",\n\t\t\"ip_address\":       \"\\\"192.158.1.38\\\"\",\n\t\t\"country\":          \"\\\"US\\\"\",\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "string": {}
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/events/sync/:event_type_name",
+                    "pathParameters": {
+                      "event_type_name": ":event_type_name"
+                    },
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 403,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.Events.CreateEventSync(\n\tcontext.TODO(),\n\t\"new_user\",\n\tmap[string]interface{}{\n\t\t\"profle_photo_url\": \"\\\"https://example.com/image.jpg\\\"\",\n\t\t\"ip_address\":       \"\\\"192.158.1.38\\\"\",\n\t\t\"country\":          \"\\\"US\\\"\",\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "string": {}
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/events/sync/:event_type_name",
+                    "pathParameters": {
+                      "event_type_name": ":event_type_name"
+                    },
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 404,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.Events.CreateEventSync(\n\tcontext.TODO(),\n\t\"new_user\",\n\tmap[string]interface{}{\n\t\t\"profle_photo_url\": \"\\\"https://example.com/image.jpg\\\"\",\n\t\t\"ip_address\":       \"\\\"192.158.1.38\\\"\",\n\t\t\"country\":          \"\\\"US\\\"\",\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "string": {}
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/events/sync/:event_type_name",
+                    "pathParameters": {
+                      "event_type_name": ":event_type_name"
+                    },
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 500,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.Events.CreateEventSync(\n\tcontext.TODO(),\n\t\"new_user\",\n\tmap[string]interface{}{\n\t\t\"profle_photo_url\": \"\\\"https://example.com/image.jpg\\\"\",\n\t\t\"ip_address\":       \"\\\"192.158.1.38\\\"\",\n\t\t\"country\":          \"\\\"US\\\"\",\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "string": {}
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  }
+                ],
+                "description": "Creates an event in a synchronous, blocking matter. Note for long-running tasks, the Asynchronous API is recommended instead. Returns an ID for the event created as well as the set of detections that were run.",
+                "authed": true
+              },
+              {
+                "environments": [
+                  {
+                    "id": "Default",
+                    "baseUrl": "https://intrinsicapi.com"
+                  }
+                ],
+                "defaultEnvironment": "Default",
+                "urlSlug": "create-event-async",
+                "migratedFromUrlSlugs": ["create-an-event-asynchronously"],
+                "method": "POST",
+                "id": "createEventAsync",
+                "name": "Create an Event asynchronously",
+                "path": {
+                  "pathParameters": [
+                    {
+                      "description": "The type of event being created. To create an event type, see the event types API.",
+                      "key": "event_type_name",
+                      "type": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  ],
+                  "parts": [
+                    {
+                      "type": "literal",
+                      "value": ""
+                    },
+                    {
+                      "type": "literal",
+                      "value": "/api/v2/events/async/"
+                    },
+                    {
+                      "type": "pathParameter",
+                      "value": "event_type_name"
+                    },
+                    {
+                      "type": "literal",
+                      "value": ""
+                    }
+                  ]
+                },
+                "queryParameters": [],
+                "headers": [],
+                "request": {
+                  "contentType": "application/json",
+                  "type": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "type_:CreateEventAsyncRequest"
+                    }
+                  }
+                },
+                "response": {
+                  "type": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "type_:CreateEventAsyncResponse"
+                    }
+                  }
+                },
+                "errors": [
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 400
+                  },
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 403
+                  },
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 404
+                  },
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 500
+                  }
+                ],
+                "errorsV2": [
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 400
+                  },
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 403
+                  },
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 404
+                  },
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 500
+                  }
+                ],
+                "examples": [
+                  {
+                    "path": "/api/v2/events/async/new_user",
+                    "pathParameters": {
+                      "event_type_name": "new_user"
+                    },
+                    "queryParameters": {},
+                    "headers": {},
+                    "requestBody": {
+                      "profle_photo_url": "https://example.com/image.jpg",
+                      "ip_address": "192.158.1.38",
+                      "country": "US"
+                    },
+                    "responseStatusCode": 200,
+                    "responseBody": {
+                      "object": "event",
+                      "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                      "event_type_id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                      "content": {
+                        "profle_photo_url": "https://example.com/image.jpg",
+                        "ip_address": "192.158.1.38",
+                        "country": "US"
+                      },
+                      "created_at": "2023-12-12T03:00:23.648Z",
+                      "detections": [
+                        {
+                          "object": "detection",
+                          "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                          "event_id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                          "status": "PENDING"
+                        }
+                      ],
+                      "fired_rules": [
+                        {
+                          "object": "fired_rule",
+                          "rule_id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                          "rule_name": "High Risk User"
+                        }
+                      ]
+                    },
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.Events.CreateEventAsync(\n\tcontext.TODO(),\n\t\"new_user\",\n\tmap[string]interface{}{\n\t\t\"profle_photo_url\": \"\\\"https://example.com/image.jpg\\\"\",\n\t\t\"ip_address\":       \"\\\"192.158.1.38\\\"\",\n\t\t\"country\":          \"\\\"US\\\"\",\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "profle_photo_url": "https://example.com/image.jpg",
+                        "ip_address": "192.158.1.38",
+                        "country": "US"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "object": "event",
+                        "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                        "event_type_id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                        "content": {
+                          "profle_photo_url": "https://example.com/image.jpg",
+                          "ip_address": "192.158.1.38",
+                          "country": "US"
+                        },
+                        "created_at": "2023-12-12T03:00:23.648Z",
+                        "detections": [
+                          {
+                            "object": "detection",
+                            "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                            "event_id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                            "status": "PENDING"
+                          }
+                        ],
+                        "fired_rules": [
+                          {
+                            "object": "fired_rule",
+                            "rule_id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                            "rule_name": "High Risk User"
+                          }
+                        ]
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/events/async/:event_type_name",
+                    "pathParameters": {
+                      "event_type_name": ":event_type_name"
+                    },
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 400,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.Events.CreateEventAsync(\n\tcontext.TODO(),\n\t\"new_user\",\n\tmap[string]interface{}{\n\t\t\"profle_photo_url\": \"\\\"https://example.com/image.jpg\\\"\",\n\t\t\"ip_address\":       \"\\\"192.158.1.38\\\"\",\n\t\t\"country\":          \"\\\"US\\\"\",\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "string": {}
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/events/async/:event_type_name",
+                    "pathParameters": {
+                      "event_type_name": ":event_type_name"
+                    },
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 403,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.Events.CreateEventAsync(\n\tcontext.TODO(),\n\t\"new_user\",\n\tmap[string]interface{}{\n\t\t\"profle_photo_url\": \"\\\"https://example.com/image.jpg\\\"\",\n\t\t\"ip_address\":       \"\\\"192.158.1.38\\\"\",\n\t\t\"country\":          \"\\\"US\\\"\",\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "string": {}
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/events/async/:event_type_name",
+                    "pathParameters": {
+                      "event_type_name": ":event_type_name"
+                    },
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 404,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.Events.CreateEventAsync(\n\tcontext.TODO(),\n\t\"new_user\",\n\tmap[string]interface{}{\n\t\t\"profle_photo_url\": \"\\\"https://example.com/image.jpg\\\"\",\n\t\t\"ip_address\":       \"\\\"192.158.1.38\\\"\",\n\t\t\"country\":          \"\\\"US\\\"\",\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "string": {}
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/events/async/:event_type_name",
+                    "pathParameters": {
+                      "event_type_name": ":event_type_name"
+                    },
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 500,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.Events.CreateEventAsync(\n\tcontext.TODO(),\n\t\"new_user\",\n\tmap[string]interface{}{\n\t\t\"profle_photo_url\": \"\\\"https://example.com/image.jpg\\\"\",\n\t\t\"ip_address\":       \"\\\"192.158.1.38\\\"\",\n\t\t\"country\":          \"\\\"US\\\"\",\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "string": {}
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  }
+                ],
+                "description": "Creates an event in an asynchronous manner. Returns an ID for the event created as well as the set of detection ids associated with the event.",
+                "authed": true
+              }
+            ],
+            "types": [],
+            "subpackages": [],
+            "urlSlug": "events",
+            "description": "Events are the primary way that data is sent to Intrinsic",
+            "webhooks": [],
+            "websockets": [],
+            "displayName": "Events"
+          },
+          "subpackage_eventTypes": {
+            "subpackageId": "subpackage_eventTypes",
+            "name": "Event Types",
+            "endpoints": [
+              {
+                "environments": [
+                  {
+                    "id": "Default",
+                    "baseUrl": "https://intrinsicapi.com"
+                  }
+                ],
+                "defaultEnvironment": "Default",
+                "urlSlug": "get-event-types",
+                "migratedFromUrlSlugs": ["list-all-event-types"],
+                "method": "GET",
+                "id": "getEventTypes",
+                "name": "List all event types",
+                "path": {
+                  "pathParameters": [],
+                  "parts": [
+                    {
+                      "type": "literal",
+                      "value": ""
+                    },
+                    {
+                      "type": "literal",
+                      "value": "/api/v2/event-types"
+                    }
+                  ]
+                },
+                "queryParameters": [],
+                "headers": [],
+                "response": {
+                  "type": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "type_:ListEventTypesResponse"
+                    }
+                  }
+                },
+                "errors": [
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 400
+                  },
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 500
+                  }
+                ],
+                "errorsV2": [
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 400
+                  },
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 500
+                  }
+                ],
+                "examples": [
+                  {
+                    "path": "/api/v2/event-types",
+                    "pathParameters": {},
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 200,
+                    "responseBody": {
+                      "data": [
+                        {
+                          "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                          "name": "new_user",
+                          "fields": [
+                            {
+                              "field_name": "image_src",
+                              "type": "image_url",
+                              "optional": false
+                            }
+                          ],
+                          "object": "event_type"
+                        }
+                      ],
+                      "object": "list"
+                    },
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.EventTypes.GetEventTypes(\n\tcontext.TODO(),\n)\n"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "data": [
+                          {
+                            "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                            "name": "new_user",
+                            "fields": [
+                              {
+                                "field_name": "image_src",
+                                "type": "image_url",
+                                "optional": false
+                              }
+                            ],
+                            "object": "event_type"
+                          }
+                        ],
+                        "object": "list"
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/event-types",
+                    "pathParameters": {},
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 400,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.EventTypes.GetEventTypes(\n\tcontext.TODO(),\n)\n"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/event-types",
+                    "pathParameters": {},
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 500,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.EventTypes.GetEventTypes(\n\tcontext.TODO(),\n)\n"
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  }
+                ],
+                "description": "Get all event types",
+                "authed": true
+              },
+              {
+                "environments": [
+                  {
+                    "id": "Default",
+                    "baseUrl": "https://intrinsicapi.com"
+                  }
+                ],
+                "defaultEnvironment": "Default",
+                "urlSlug": "create-event-type",
+                "migratedFromUrlSlugs": ["create-an-event-type"],
+                "method": "POST",
+                "id": "createEventType",
+                "name": "Create an event type",
+                "path": {
+                  "pathParameters": [],
+                  "parts": [
+                    {
+                      "type": "literal",
+                      "value": ""
+                    },
+                    {
+                      "type": "literal",
+                      "value": "/api/v2/event-types"
+                    }
+                  ]
+                },
+                "queryParameters": [],
+                "headers": [],
+                "request": {
+                  "contentType": "application/json",
+                  "type": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Name of the event type to create.",
+                        "key": "name",
+                        "valueType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "description": "Fields of the event type",
+                        "key": "fields",
+                        "valueType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "id",
+                            "value": "type_:EventTypeField"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "response": {
+                  "type": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "type_:EventTypeObject"
+                    }
+                  }
+                },
+                "errors": [
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 400
+                  },
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 500
+                  }
+                ],
+                "errorsV2": [
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 400
+                  },
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 500
+                  }
+                ],
+                "examples": [
+                  {
+                    "path": "/api/v2/event-types",
+                    "pathParameters": {},
+                    "queryParameters": {},
+                    "headers": {},
+                    "requestBody": {
+                      "name": "new_user",
+                      "fields": [
+                        {
+                          "field_name": "image_src",
+                          "type": "image_url",
+                          "optional": false
+                        }
+                      ]
+                    },
+                    "responseStatusCode": 200,
+                    "responseBody": {
+                      "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                      "name": "new_user",
+                      "fields": [
+                        {
+                          "field_name": "image_src",
+                          "type": "image_url",
+                          "optional": false
+                        }
+                      ],
+                      "object": "event_type"
+                    },
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgo \"github.com/intrinsic-org/intrinsic-go\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.EventTypes.CreateEventType(\n\tcontext.TODO(),\n\t&intrinsicgo.CreateEventTypeRequest{\n\t\tName: \"new_user\",\n\t\tFields: []*intrinsicgo.EventTypeField{\n\t\t\t&intrinsicgo.EventTypeField{\n\t\t\t\tFieldName: \"image_src\",\n\t\t\t\tType:      intrinsicgo.EventTypeFieldTypeImageURL,\n\t\t\t\tOptional:  false,\n\t\t\t},\n\t\t},\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "name": "new_user",
+                        "fields": [
+                          {
+                            "field_name": "image_src",
+                            "type": "image_url",
+                            "optional": false
+                          }
+                        ]
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                        "name": "new_user",
+                        "fields": [
+                          {
+                            "field_name": "image_src",
+                            "type": "image_url",
+                            "optional": false
+                          }
+                        ],
+                        "object": "event_type"
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/event-types",
+                    "pathParameters": {},
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 400,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgo \"github.com/intrinsic-org/intrinsic-go\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.EventTypes.CreateEventType(\n\tcontext.TODO(),\n\t&intrinsicgo.CreateEventTypeRequest{\n\t\tName: \"new_user\",\n\t\tFields: []*intrinsicgo.EventTypeField{\n\t\t\t&intrinsicgo.EventTypeField{\n\t\t\t\tFieldName: \"image_src\",\n\t\t\t\tType:      intrinsicgo.EventTypeFieldTypeImageURL,\n\t\t\t\tOptional:  false,\n\t\t\t},\n\t\t},\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "name": "string",
+                        "fields": [
+                          {
+                            "field_name": "string",
+                            "type": "string",
+                            "optional": true
+                          }
+                        ]
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/event-types",
+                    "pathParameters": {},
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 500,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgo \"github.com/intrinsic-org/intrinsic-go\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.EventTypes.CreateEventType(\n\tcontext.TODO(),\n\t&intrinsicgo.CreateEventTypeRequest{\n\t\tName: \"new_user\",\n\t\tFields: []*intrinsicgo.EventTypeField{\n\t\t\t&intrinsicgo.EventTypeField{\n\t\t\t\tFieldName: \"image_src\",\n\t\t\t\tType:      intrinsicgo.EventTypeFieldTypeImageURL,\n\t\t\t\tOptional:  false,\n\t\t\t},\n\t\t},\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "name": "string",
+                        "fields": [
+                          {
+                            "field_name": "string",
+                            "type": "string",
+                            "optional": true
+                          }
+                        ]
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  }
+                ],
+                "description": "Create a new event type",
+                "authed": true
+              },
+              {
+                "environments": [
+                  {
+                    "id": "Default",
+                    "baseUrl": "https://intrinsicapi.com"
+                  }
+                ],
+                "defaultEnvironment": "Default",
+                "urlSlug": "patch-event-type",
+                "migratedFromUrlSlugs": ["add-fields-to-an-event-type"],
+                "method": "PATCH",
+                "id": "patchEventType",
+                "name": "Add fields to an event type",
+                "path": {
+                  "pathParameters": [],
+                  "parts": [
+                    {
+                      "type": "literal",
+                      "value": ""
+                    },
+                    {
+                      "type": "literal",
+                      "value": "/api/v2/event-types/:id"
+                    }
+                  ]
+                },
+                "queryParameters": [],
+                "headers": [],
+                "request": {
+                  "contentType": "application/json",
+                  "type": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "description": "Fields to add to the event type.",
+                        "key": "fields",
+                        "valueType": {
+                          "type": "list",
+                          "itemType": {
+                            "type": "id",
+                            "value": "type_:PatchEventTypeField"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "response": {
+                  "type": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "type_:EventTypeObject"
+                    }
+                  }
+                },
+                "errors": [
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 400
+                  },
+                  {
+                    "type": {
+                      "type": "id",
+                      "value": "type_:ErrorSchema"
+                    },
+                    "statusCode": 500
+                  }
+                ],
+                "errorsV2": [
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 400
+                  },
+                  {
+                    "type": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "value": "type_:ErrorSchema"
+                      }
+                    },
+                    "statusCode": 500
+                  }
+                ],
+                "examples": [
+                  {
+                    "path": "/api/v2/event-types/:id",
+                    "pathParameters": {},
+                    "queryParameters": {},
+                    "headers": {},
+                    "requestBody": {
+                      "fields": [
+                        {
+                          "field_name": "profile_photo",
+                          "type": "image_url"
+                        }
+                      ]
+                    },
+                    "responseStatusCode": 200,
+                    "responseBody": {
+                      "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                      "name": "new_user",
+                      "fields": [
+                        {
+                          "field_name": "user_id",
+                          "type": "string",
+                          "optional": false
+                        },
+                        {
+                          "field_name": "profile_photo",
+                          "type": "image_url",
+                          "optional": true
+                        }
+                      ],
+                      "object": "event_type"
+                    },
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgo \"github.com/intrinsic-org/intrinsic-go\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.EventTypes.PatchEventType(\n\tcontext.TODO(),\n\t&intrinsicgo.PatchEventTypeRequest{\n\t\tFields: []*intrinsicgo.PatchEventTypeField{\n\t\t\t&intrinsicgo.PatchEventTypeField{\n\t\t\t\tFieldName: \"profile_photo\",\n\t\t\t\tType:      intrinsicgo.EventTypeFieldTypeImageURL,\n\t\t\t},\n\t\t},\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "fields": [
+                          {
+                            "field_name": "profile_photo",
+                            "type": "image_url"
+                          }
+                        ]
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "id": "766d1448-e1a4-4a2e-816c-485f667b2708",
+                        "name": "new_user",
+                        "fields": [
+                          {
+                            "field_name": "user_id",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "field_name": "profile_photo",
+                            "type": "image_url",
+                            "optional": true
+                          }
+                        ],
+                        "object": "event_type"
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/event-types/:id",
+                    "pathParameters": {},
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 400,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgo \"github.com/intrinsic-org/intrinsic-go\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.EventTypes.PatchEventType(\n\tcontext.TODO(),\n\t&intrinsicgo.PatchEventTypeRequest{\n\t\tFields: []*intrinsicgo.PatchEventTypeField{\n\t\t\t&intrinsicgo.PatchEventTypeField{\n\t\t\t\tFieldName: \"profile_photo\",\n\t\t\t\tType:      intrinsicgo.EventTypeFieldTypeImageURL,\n\t\t\t},\n\t\t},\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "fields": [
+                          {
+                            "field_name": "string",
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  },
+                  {
+                    "path": "/api/v2/event-types/:id",
+                    "pathParameters": {},
+                    "queryParameters": {},
+                    "headers": {},
+                    "responseStatusCode": 500,
+                    "codeExamples": {
+                      "nodeAxios": "",
+                      "goSdk": {
+                        "type": "go",
+                        "sdk": {
+                          "githubRepo": "https://github.com/intrinsic-org/intrinsic-go",
+                          "version": "v0.0.2"
+                        },
+                        "client": "import (\n\tcontext \"context\"\n\tintrinsicgo \"github.com/intrinsic-org/intrinsic-go\"\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\toption \"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nclient := intrinsicgoclient.NewClient(\n\toption.WithAPIKey(\n\t\t\"<YOUR_APIKey>\",\n\t),\n)\nresponse, err := client.EventTypes.PatchEventType(\n\tcontext.TODO(),\n\t&intrinsicgo.PatchEventTypeRequest{\n\t\tFields: []*intrinsicgo.PatchEventTypeField{\n\t\t\t&intrinsicgo.PatchEventTypeField{\n\t\t\t\tFieldName: \"profile_photo\",\n\t\t\t\tType:      intrinsicgo.EventTypeFieldTypeImageURL,\n\t\t\t},\n\t\t},\n\t},\n)\n"
+                      }
+                    },
+                    "requestBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "fields": [
+                          {
+                            "field_name": "string",
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    },
+                    "responseBodyV3": {
+                      "type": "json",
+                      "value": {
+                        "error": {
+                          "type": "invalid_request_error",
+                          "message": "string",
+                          "code": "400",
+                          "param": "string"
+                        }
+                      }
+                    },
+                    "codeSamples": []
+                  }
+                ],
+                "description": "Add fields to an existing event type. All added fields will be optional. Existing fields cannot be updated or deleted.",
+                "authed": true
+              }
+            ],
+            "types": [],
+            "subpackages": [],
+            "urlSlug": "event-types",
+            "description": "Configure schemas for events and how they are processed in Intrinsic",
+            "webhooks": [],
+            "websockets": [],
+            "displayName": "Event Types"
+          }
+        },
+        "auth": {
+          "type": "header",
+          "headerWireValue": "X-API-Key",
+          "nameOverride": "apiKey"
+        },
+        "hasMultipleBaseUrls": false,
+        "globalHeaders": []
+      }
+    },
+    "files": {
+      "80332495-6beb-4e3e-a5a9-0c7f96c9feaa": "https://fdr-prod-docs-files.s3.us-east-1.amazonaws.com/intrinsic.docs.buildwithfern.com/2024-11-05T16%3A37%3A35.183Z/docs/assets/logo_white.png",
+      "eb4ce0c3-4120-4605-acf8-896ac4fb7db9": "https://fdr-prod-docs-files.s3.us-east-1.amazonaws.com/intrinsic.docs.buildwithfern.com/2024-11-05T16%3A37%3A35.183Z/docs/assets/logo_black.png",
+      "061db4ea-f96f-4086-a8cf-e8bc732cf84f": "https://fdr-prod-docs-files.s3.us-east-1.amazonaws.com/intrinsic.docs.buildwithfern.com/2024-11-05T16%3A37%3A35.183Z/docs/assets/favicon.png"
+    },
+    "filesV2": {
+      "80332495-6beb-4e3e-a5a9-0c7f96c9feaa": {
+        "type": "image",
+        "width": 1566,
+        "height": 1569,
+        "url": "https://fdr-prod-docs-files-public.s3.amazonaws.com/intrinsic.docs.buildwithfern.com/2024-11-05T16:37:35.183Z/docs/assets/logo_white.png"
+      },
+      "eb4ce0c3-4120-4605-acf8-896ac4fb7db9": {
+        "type": "image",
+        "width": 1572,
+        "height": 1570,
+        "url": "https://fdr-prod-docs-files-public.s3.amazonaws.com/intrinsic.docs.buildwithfern.com/2024-11-05T16:37:35.183Z/docs/assets/logo_black.png"
+      },
+      "061db4ea-f96f-4086-a8cf-e8bc732cf84f": {
+        "type": "image",
+        "width": 32,
+        "height": 32,
+        "url": "https://fdr-prod-docs-files-public.s3.amazonaws.com/intrinsic.docs.buildwithfern.com/2024-11-05T16:37:35.183Z/docs/assets/favicon.png"
+      }
+    },
+    "pages": {
+      "docs/pages/welcome.mdx": {
+        "markdown": "<Callout intent=\"success\">\nIntrinsic is now SOC-2 Compliant\n</Callout>\n\n## Overview\n\nWelcome to our documentation! Here you'll find information to get started as well as our API Reference.\n\n## About Intrinsic\n\nIntrinsic is a unified and modern platform for Trust & Safety. Here you'll find information for how to get started as well as our API reference.\n\n## Getting Started\nTo access to the platform, you need access to the Intrinsic API Key. You can obtain this on the [Dashboard](https://dashboard.intrinsicapi.com/). This API is used to authenticate your access via the Intrinsic API.\n\n## Frequently Visited Resources\n\n<br />\n<Cards>\n  <Card\n    title=\"API Reference\"\n    icon=\"fa-solid fa-code\"\n    href=\"/api-reference\"\n  />\n  <Card\n    title=\"Quickstart Guide\"\n    icon=\"fa-solid fa-code\"\n    href=\"/getting-started/quickstart\"\n  />\n  <Card\n    title=\"Blog\"\n    icon=\"fa-solid fa-signal\"\n    href=\"https://withintrinsic.com/blog\"\n  />\n    <Card\n    title=\"Ruby SDK Guide\"\n    icon=\"fa-solid fa-gem\"\n    href=\"/sd-ks/ruby-sdk\"\n  />\n    <Card\n    title=\"Go SDK Guide\"\n    icon=\"fa-solid fa-cog\"\n    href=\"/sd-ks/go-sdk\"\n  />\n</Cards>\n\n## Why Intrinsic\n\n1. Speed: Integrate new policy types in minutes rather than months. We provide more coverage so you can focus on shipping features, not anti-abuse logic.\n2. Low maintenance: Eliminate policy drift and drifting policy categories. Our policy-aligned AI automatically adjusts itself to match abuse on your platform.\n3. One integration: A single integration for all Trust & Safety resources, from review tooling to detection. And we're constantly adding new integrations to our platform.\n\n\n## Need help? \n\nWe have two channels to help assist!\n\n1. Reach out to us on Slack where you can get help directly from Intrinsic.\n\n3. Email us at [support@withintrinsic.com](mailto:support@withintrinsic.com).\n"
+      },
+      "docs/pages/quickstart.mdx": {
+        "markdown": "The following provides the steps needed to configure Intrinsic and start processing data through the Intrinsic platform.\n\n# Step 1: Configure Event Types\n\nEvents on Intrinsic are categorized into \"event types.\" For a marketplace app, you may have an event type like `new_listing` indicating a user has posted an item for sale. These events have metadata, known as \"event fields.\" Create a `new_listing` event type using the following example:\n\n```bash\ncurl -X POST \\\n     --url \"https://intrinsicapi.com/api/v2/event-types\" \\\n     --header \"Content-Type: application/json\" \\\n     --header \"X-API-Key: <apiKey>\" \\\n     --header \"Accept: application/json\" \\\n     --data '\n{\n  \"name\": \"new_listing\",\n  \"fields\": [\n    {\n      \"field_name\": \"listing_video\",\n      \"type\": \"video_url\",\n      \"optional\": true\n    },\n    {\n      \"field_name\": \"listing_image\",\n      \"type\": \"image_url\",\n      \"optional\": true\n    },\n    {\n      \"field_name\": \"caption\",\n      \"type\": \"text_content\"\n      optional: \"false\"\n    }\n  ]\n}\n'\n```\n<Callout>\nIntrinsic will use that field to trigger a policy-aligned detection. These detection outputs could be used for whether or not a new listing should be permitted.\n</Callout>\n\nAfter sending your request, you will receive the following response.\n```\n{\n  \"object\": \"event_type\",\n  \"fields\": [\n    {\n      \"field_name\": \"listing_video\",\n      \"type\": \"video_url\",\n      \"optional\": true\n    },\n    {\n      \"field_name\": \"listing_image\",\n      \"type\": \"image_url\",\n      \"optional\": true\n    },\n    {\n      \"field_name\": \"caption\",\n      \"type\": \"text_content\",\n      \"optional\": false\n    }\n  ],\n  \"id\": \"<your-event-type-id>\",\n  \"name\": \"new_listing\"\n}\n```\n\n# Step 2: Configure Policies\n\nThe Intrinsic platform automatically acts on events based on \"policies\" that you configure. These policies give you control over\nwhich events to block or allow. For this example, suppose you want to block any `new_listing` with pink houses. To do this, navigate to the \"Policies\"\npage in your Intrinsic Dashboard.\n\nNext, click \"Create New Policy.\"\n\nYou will now be prompted to configure a new policy.\n\n* Select `new_listing` in the event type dropdown\n* Create a policy titled \"no videos of pink houses\" with the description \"block anything that includes videos of pink houses\"\n* Click \"Save\" to view the newly created policy\n\n\n# Step 3: Sending Events\n\nEnforce the policy on `new_listing` events by sending them using the following example:\n\n```bash\ncurl -X POST \\\n     --url \"https://intrinsicapi.com/api/v2/events/sync/new_listing\" \\\n     --header \"Content-Type: application/json\" \\\n     --header \"X-API-Key: <apiKey>\" \\\n     --header \"Accept: application/json\" \\\n     --data '\n{\n  \"listing_video\": \"https://storage.googleapis.com/intrinsic-docs/pink_houses.mp4\",\n  \"listing_image\": \"https://storage.googleapis.com/intrinsic-docs/pink_house.jpeg\",\n  \"caption\": \"New pink house for sale\"\n}\n'\n```\n\n<Callout>\nWhen sending events with image or video fields, the url must point to a valid file. Currently, image \ndetection only supports `.jpeg`. Video detection only supports `.mp4`. More will be added in the future.\n\n</Callout>\n\nUpon sending your request, you will receive a response of the following form.\n\n```bash\n{\n  \"object\": \"event\",\n  \"id\": \"<your-event-id>\",\n  \"event_type_id\": \"<new-listing-event-id>\",\n  \"content\": {\n    \"listing_video\": \"https://storage.googleapis.com/intrinsic-docs/pink_houses.mp4\",\n    \"listing_image\": \"https://storage.googleapis.com/intrinsic-docs/pink_house.jpeg\",\n    \"caption\": \"New pink house for sale\"\n    },\n  \"created_at\": \"<just-now>\",\n  \"detections\": [\n    {\n      \"object\": \"detection\",\n      \"detection_id\": \"<your-detection-id>\",\n      \"event_id\": \"<your-event-id>\",\n      \"status\": \"COMPLETED\",\n      \"violates_policy\": \"true\"\n      \"violated_policies\": [\n        {\n          \"object\": \"violated_policy\",\n          \"id\": \"<your-policy-id>\",\n          \"version_id\": \"<your-policy-version-id>\"\n          \"name\":\"No Pink Houses\"\n          \"explanation\":\"The video shows a house that resembles a pink house, thus violating the policy against pink houses.\"\n        }\n      ],\n      \"explanation\": \"\"\n    }\n  ],\n  \"fired_rules\": []\n}\n```\n\nNote that the exact explanation that you receive may vary.\n\nTo send events whenever a new listing is created, you would add this `POST` request to your current marketplace application code.\nThe above 3 steps detail how to configure event types, set up policies, and send events. These steps can be used to enforce policies\nfor any event."
+      },
+      "docs/pages/ruby-sdk.mdx": {
+        "markdown": "The Intrinsic Ruby SDK provides access to Intrinsic API events, event types, and detections. \nSee the API reference for more information on each of these endpoints.\n\n## Installation\n\nIntrinsic can be installed and added to an application's Gemfile by running:\n```sh\ngem install intrinsic-sdk\n```\n\n## Instantiating the Intrinsic Client\nThe Intrinsic client requires an API key to authenticate requests. \nThe API key is passed to the client as an option when instantiating the client.\n<Callout>\nYou can find your API key in the Intrinsic dashboard. Please contact support@withintrinsic.com if you are having trouble finding your API key.\n</Callout>\n\nWhen importing the Intrinsic client, make sure to use the `intrinsic` package name.\n\n```ruby\nrequire \"intrinsic\"\n\nintrinsic = Intrinsic::Client.new(\n  api_key: 'YOUR_API_KEY',\n)\n```\n\nAt this point, the client SDK is ready to connect to the Intrinsic API.\n\n## Events\n\nWith the client instantiated, you can send events to our API. Events can be used to trigger policy-aligned detections and rules.\nFor synchronous detection, use the `create_event_sync` method. The `create_event_sync` method will block\nuntil a decision is made by Intrinsic. \n\n<Callout>\nNote, this example assumes you have an event type called `new_comment` configured in Intrinsic with a field called `comment`. Please check your Intrinsic dashboard for configured events.\n</Callout>\n\n### Create an Event Synchronously\nThe following example creates an event of type `new_comment` with the fields `comment` and `user_id`.\n```ruby\ncomment = intrinsic.events.create_event_sync(\n  event_type_name: \"new_comment\",\n  request: {\n    \"comment\": \"hello\",\n    \"user_id\": \"bob\"\n})\nputs comment.id\n```\n\n```bash\n9b645c9d-59af-4f68-b12c-41220a663034\n```\n\n## Enforcing Rules\n\nThe Intrinsic Rules Engine supports enforcing custom rules on events. Suppose you want to prevent spam comments\nfrom being posted on your platform. \nOne way to identify spam is by \nlooking for users posting a high volume of comments with a specific keyword (like \"crypto\").\n\n### Creating a Rule\n<Callout>\nRefer to the rule writing guide for more information on how to write rules, or contact the Intrinsic team at support@withintrinsic.com.\n</Callout>\nTo set up a rule for blocking spam users in Intrinsic, follow the below steps.\n* Navigate to [https://dashboard.intrinsicapi.com/events](https://dashboard.intrinsicapi.com/events). \n* Select the `new_comment` event type.\n* Navigate to the `Logic` tab. This shows the logic used to enforce rules on new events.\n* Click `Create New Rule`.\n* Click on the `Add Item` dropdown.\n* Select `Counter`.\n* Define a rule that will block text containing the word `crypto`, posted by a user that has posted more than 2 times in the past hour. \n* Click \"Save Changes\" and then \"Enable Rule.\"\n\n\n### Test a rule\n\nTo test the above rule logic, we will create three comments that contain the word `crypto` and post them within an hour.\n\n```ruby\nrequire 'json'\nfor i in 1..3\n  intrinsicResponse = intrinsic.events.create_event_sync(\n  event_type_name: \"new_comment\",\n  request: {\n    \"comment\": \"Make $1M/month by joining my crypto community here:...\",\n    \"user_id\": \"bob\"\n  })\n  puts \"fired rules for new_comment #{i}: #{JSON.parse(intrinsicResponse.fired_rules.to_json)}\" \nend\n```\n\nThe output should be\n```\nfired rules for new_comment 1: []\nfired rules for new_comment 2: []\nfired rules for new_comment 3: [{\"object\"=>\"fired_rule\", \"rule_id\"=>\"_rule_xx\", \"rule_name\"=>\"Rule Name\"}]\n```\n\n<Callout>\nIf the output you see differs from the above, make sure you enabled your rule in the Intrinsic console.\n</Callout>\n\n\n## Policy-Aligned Detections\nIn addition to enforcing logic-based rules like the above, Intrinsic\nsupports content detection using policies. For example, you could write\nthe policy \"profanity is prohibited\" in new comments.\nTo use this, navigate to the Policies page.\nThen, select \"Create New Policy\" and describe the policy that you want to enforce.\n\n<Callout>\nPolicy-aligned detections only run on one field per event. \nThis field is specified when you create an event type.\nSet the type of the field that you want evaluated to `text_content` if is text.\nUse `video_url` for videos or `image_url` for images.\nFor `new_comment`, the `comment` field should be `text_content`.\n</Callout>\n\n\nNext, use the `create_event_sync` method to check if an event violates the policy.\nSince detections can take a while to finish, the `create_event_async` method is \nalso available. With this, you can pull a detection result later.\n\n```ruby\nintrinsicResponse = intrinsic.events.create_event_sync(\n  event_type_name: \"new_comment\",\n  request: {\n    \"comment\": \"hi\",\n    \"user_id\": \"bob\"  \n})\n\ndetections = intrinsicResponse.detections\n\nif detections.any? { |detection| detection.violates_policy }\n  puts \"blocking this event\"\nelse\n  puts \"not blocking this event because no profanity was detected\"\nend\n```\n```\nnot blocking this event because no profanity was detected\n```\n\nYou can also get additional information about a detection using the `get_detection` method.\n\n```ruby\ndetection = intrinsic.detections.get_detection(id: \"xxx\")\nputs detection.explanation\n```\n\n```\nThe text contains explicit language which is explicitly prohibited according to the stated policy.\n```\n\n\n## Event Types\n\nThe `get_event_types` method returns all the event types that you have configured in Intrinsic.\n\n```ruby\nevent_types = intrinsic.event_types.get_event_types()\nevent_types.data.each do |event_type|\n  puts event_type.name\nend\n```\n\n```bash\nnew_comment\nnew_post\n```\n\n## Async Client\nThe SDK exports an async client that you can use for non-blocking requests. \nIf you are not relying on Intrinsic to make a decision on whether an event will be allowed, the async client is recommended. The async events API can also be used to return a response immediately.\n\n\n```ruby\nrequire \"intrinsic\"\n\nintrinsic = Intrinsic::AsyncClient.new(api_key: 'YOUR_API_KEY')\n\nevent = intrinsic.events.create_event_async(event_type_name: \"new_text\", request: {\"caption\": \"test\"})\n\nputs event.wait.id\n```\n\nWhich should output the new event's ID.\n\n```bash\n49af7589-ab6e-4928-b94d-2ac0a196909d\n```\n\n## Timeouts\n\nThe SDK defaults to a 60 second timeout. Use the `timeout_in_seconds` option to \nconfigure this behavior. \n\n```ruby\ndetection = intrinsic.detections.get_detection(\n  id: \"xxx\",\n  request_options: Intrinsic::RequestOptions.new(timeout_in_seconds: 30)\n)\nputs JSON.detection.to_json\n```\n```\n{\"object\":\"detection\",\"id\":\"xxx\",\"event_id\":\"xxx\",\"status\":\"COMPLETED\",\"violates_policy\":true,\"violated_policies\":[{\"object\":\"violated_policy\",\"id\":\"xxx\",\"version_id\":\"xxx\",\"name\":\"no profanity allowed in comments\",\"explanation\":\"xxx\"}],\"explanation\":\"A violation of this policy was detected\"}\n```\n\n## Retries\n\nThe SDK is instrumented with automatic retries with exponential backoff. A request will be\nretried as long as the request is deemed retriable and the number of retry attempts has not grown larger\nthan the configured retry limit (default: 2).\n\nA request is deemed retriable when any of the following HTTP status codes is returned:\n\n- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)\n- [409](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409) (Conflict)\n- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)\n- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)\n"
+      },
+      "docs/pages/go-sdk.mdx": {
+        "markdown": "The Intrinsic Go library provides convenient access to the Intrinsic API from Go.\n\n## Installation\n\nRun the following command to use the Intrinsic Go library in your module:\n\n```sh\ngo get github.com/intrinsic-org/intrinsic-go\n```\n\n## Usage\n\n```go\n\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n\t\"github.com/intrinsic-org/intrinsic-go/option\"\n)\n\nfunc main() {\n\tclient := intrinsicgoclient.NewClient(\n\t\toption.WithAPIKey(\"<YOUR_API_KEY>\"),\n\t)\n\n\tresponse, err := client.Events.CreateEventSync(\n\t\tcontext.TODO(),\n\t\t\"new_text\",\n\t\tmap[string]interface{}{\n\t\t\t\"caption\": \"text_content\",\n\t\t},\n\t)\n\n\tif err != nil {\n\t\tlog.Fatalf(\"Error creating event: %v\", err)\n\t}\n\n\tlog.Printf(\"Created event : %+v\", response)\n}\n\n```\n\n\n## Instantiating the Intrinsic Client\nThe Intrinsic client requires an API key to authenticate requests. \nThe API key is passed to the client as an option when instantiating the client.\n<Callout intent=\"info\">\nYou can find your API key in the Intrinsic dashboard. Please contact support@withintrinsic.com if you are having trouble finding your API key.\n</Callout>\n\n\n```go\nimport (\n\tintrinsicgoclient \"github.com/intrinsic-org/intrinsic-go/client\"\n)\n\nclient := intrinsicgoclient.NewClient(\n  option.WithAPIKey(\"<YOUR_API_KEY>\"),\n)\n```\n\nAt this point, the client SDK is ready to connect to the Intrinsic API.\n\n## Events\n\nWith the client instantiated, you can send events to our API. Events can be used to trigger policy-aligned detections and rules.\nFor synchronous detection, use the `create_event_sync` method. The `create_event_sync` method will block\nuntil a decision is made by Intrinsic. \n\n<Callout intent=\"warn\">\nNote, this example assumes you have an event type called `new_comment` configured in Intrinsic with a field called `comment`. Please check your Intrinsic dashboard for configured events.\n</Callout>\n\n### Create an Event Synchronously\nThe following example creates an event of type `new_comment` with the fields `comment` and `user_id`.\n```go\nresponse, err := client.Events.CreateEventSync(\n  context.TODO(),\n  \"new_comment\",\n  map[string]interface{}{\n    \"comment\": \"hello\",\n    \"user_id\": \"bob\",\n  },\n)\n\nif err != nil {\n  log.Fatalf(\"Error creating event: %v\", err)\n}\n\nlog.Printf(\"Created event : %+v\", response)\n```\n\n```bash\n2024/03/11 20:21:29 Created event : {\n  \"object\": \"event\",\n  \"id\": \"7b39863a-fbfa-428a-90e9-bb5be7f53d89\",\n  \"event_type_id\": \"8b0f5593-0840-49ba-a0e4-424ff618a4a7\",\n  \"content\": {\n    \"comment\": \"hello\",\n    \"user_id\": \"bob\"\n  },\n  \"created_at\": \"2024-03-12T03:21:29.382418Z\",\n  \"detections\": [],\n  \"fired_rules\": []\n}\n```\n\n## Enforcing Rules\n\nThe Intrinsic Rules Engine supports enforcing custom rules on events. Suppose you want to prevent spam comments\nfrom being posted on your platform. \nOne way to identify spam is by \nlooking for users posting a high volume of comments with a specific keyword (like \"crypto\").\n\n### Creating a Rule\n<Callout intent=\"info\">\nRefer to the rule writing guide for more information on how to write rules, or contact the Intrinsic team at support@withintrinsic.com.\n</Callout>\nTo set up a rule for blocking spam users in Intrinsic, follow the below steps.\n* Navigate to [https://dashboard.intrinsicapi.com/events](https://dashboard.intrinsicapi.com/events). \n* Select the `new_comment` event type.\n* Navigate to the `Logic` tab. This shows the logic used to enforce rules on new events.\n* Click `Create New Rule`.\n* Click on the `Add Item` dropdown.\n* Select `Counter`.\n* Define a rule that will block text containing the word `crypto`, posted by a user that has posted more than 2 times in the past hour. \n* Click \"Save Changes\" and then \"Enable Rule.\"\n\n\n### Test a rule\n\nTo test the above rule logic, we will create three comments that contain the word `crypto` and post them within an hour.\n\n```go\nfor i := 1; i <= 3; i++ {\n  response, err := client.Events.CreateEventSync(\n    context.TODO(),\n    \"new_comment\",\n    map[string]interface{}{\n      \"comment\": \"Make $1M/month by joining my crypto community here:...\",\n      \"user_id\": \"bob\",\n    },\n  )\n  if err != nil {\n    log.Fatalf(\"Error creating event: %v\", err)\n  }\n\n  firedRulesJSON, _ := json.Marshal(response.FiredRules)\n  log.Printf(\"fired rules for new_comment %d: %s\", i, string(firedRulesJSON))\n}\n```\n\nThe output should be\n```\nfired rules for new_comment 1: []\nfired rules for new_comment 2: []\nfired rules for new_comment 3: [{\"rule_id\":\"<rule_id>\",\"rule_name\":\"<rule_name>\",\"object\":\"fired_rule\"}]\n```\n\n<Callout  intent=\"info\">\nIf the output you see differs from the above, make sure you enabled your rule in the Intrinsic console, and you are entering the right field types since some fields could be optional\n</Callout>\n\n\n## Policy-Aligned Detections\nIn addition to enforcing logic-based rules like the above, Intrinsic\nsupports content detection using policies. For example, you could write\nthe policy \"profanity is prohibited\" in new comments.\nTo use this, navigate to the Policies page.\nThen, select \"Create New Policy\" and describe the policy that you want to enforce.\n\n<Callout intent=\"info\">\nPolicy-aligned detections only run on one field per event. \nThis field is specified when you create an event type.\nSet the type of the field that you want evaluated to `text_content` if is text.\nUse `video_url` for videos or `image_url` for images.\nFor `new_comment`, the `comment` field should be `text_content`.\n</Callout>\n\n\nNext, use the `create_event_sync` method to check if an event violates the policy.\nSince detections can take a while to finish, the `create_event_async` method is \nalso available. With this, you can pull a detection result later.\n\n```go\nresponse, err := client.Events.CreateEventSync(\n  context.TODO(),\n  \"new_comment\",\n  map[string]interface{}{\n    \"text\": \"This is a comment with explicit language\",\n    \"user_id\": \"bob\",\n  },\n)\nif err != nil {\n  log.Fatalf(\"Error creating event: %v\", err)\n}\n\ndetections := response.Detections\n\nif len(detections) > 0 {\n  for _, detection := range detections {\n    if *detection.ViolatesPolicy {\n      log.Printf(\"Event violates policy: %+v\", detection)\n    }\n  }\n} else {\n  log.Printf(\"Event does not violate any policies\")\n}\n\nlog.Printf(\"Created event : %+v\", response)\n```\n\n```go\ndetection = intrinsic.detections.get_detection(id: \"6161ec82-43f3-4867-abda-569ba3365889\")\nif err != nil {\n  log.Fatalf(\"Error getting detection: %v\", err)\n}\n\nlog.Printf(\"Got detection: %+v\", *detection.Explanation)\n```\n\n```\nGot detection: The text contains explicit language which is explicitly prohibited according to the stated policy.\n```\n\n\n## Event Types\n\nThe `get_event_types` method returns all the event types that you have configured in Intrinsic.\n\n```go\neventTypes, err := client.EventTypes.GetEventTypes(context.TODO())\n\nif err != nil {\n  log.Fatalf(\"Error getting event types: %v\", err)\n}\n\nfor _, eventType := range eventTypes.Data {\n  log.Printf(\"Got event type: %+v\", eventType.Name)\n}\n```\n\n```bash\n2024/03/11 20:51:50 Got event type: event_type_1\n2024/03/11 20:51:50 Got event type: event_type_2\n2024/03/11 20:51:50 Got event type: event_type_3\n```\n\n\n## Timeouts\n\nSetting a timeout for each individual request is as simple as using the standard\n`context` library. Setting a one second timeout for an individual API call looks\nlike the following:\n\n```go\nctx, cancel := context.WithTimeout(context.TODO(), time.Second)\ndefer cancel()\n\nresponse, err := client.EventTypes.CreateEventType(\n  ctx,\n  &intrinsic.CreateEventTypeRequest{\n    Name: \"example\",\n    Fields: []*intrinsic.EventTypeField{\n      {\n        FieldName: \"field\",\n        Type:      intrinsic.EventTypeFieldTypeString,\n      },\n    },\n  },\n)\n```\n\n## Request Options\n\nA variety of request options are included to adapt the behavior of the library, which includes\nconfiguring authorization tokens, or providing your own instrumented `*http.Client`. Both of\nthese options are shown below:\n\n```go\nclient := intrinsicgoclient.NewClient(\n  option.WithAPIKey(\"<YOUR_API_KEY>\"),\n  option.WithHTTPClient(\n    &http.Client{\n      Timeout: 5 * time.Second,\n    },\n  ),\n)\n```\n\nThese request options can either be specified on the client so that they're applied on _every_\nrequest (shown above), or for an individual request like so:\n\n```go\nresponse, err := client.Events.CreateEventSync(\n\t\tcontext.TODO(),\n\t\t\"new_text\",\n\t\tmap[string]interface{}{\n\t\t\t\"caption\": \"text_content\",\n\t\t},\n  option.WithAPIKey(\"<YOUR_API_KEY>\"),\n)\n```\n\nProviding your own `*http.Client` is recommended. Otherwise, the `http.DefaultClient` will be used,\nand your client will wait indefinitely for a response (unless the per-request, context-based timeout\nis used).\n\n## Automatic Retries\n\nThe Intrinsic Go client is instrumented with automatic retries with exponential backoff. A request will be\nretried as long as the request is deemed retriable and the number of retry attempts has not grown larger\nthan the configured retry limit (default: 2).\n\nA request is deemed retriable when any of the following HTTP status codes is returned:\n\n- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)\n- [409](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409) (Conflict)\n- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)\n- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)\n\nYou can use the `option.WithMaxAttempts` option to configure the maximum retry limit to\nyour liking. For example, if you want to disable retries for the client entirely, you can\nset this value to 1 like so:\n\n```go\nclient := intrinsicgoclient.NewClient(\n  option.WithMaxAttempts(1),\n)\n```\n\nThis can be done for an individual request, too:\n\n```go\n\tresponse, err := client.Events.CreateEventSync(\n\t\tcontext.TODO(),\n\t\t\"new_text\",\n\t\tmap[string]interface{}{\n\t\t\t\"caption\": \"text_content\",\n\t\t},\n  option.WithMaxAttempts(1),\n)\n```\n\n## Errors\n\nStructured error types are returned from API calls that return non-success status codes. For example,\nyou can check if the error was due to a bad request (i.e. status code 400) with the following:\n\n```go\nresponse, err := client.Events.CreateEventSync(\n  context.TODO(),\n  \"not_a_real_event_type\",\n  map[string]interface{}{\n    \"caption\": \"text_content\",\n  },\n)\n\nif err != nil {\n  if notFoundError, ok := err.(*intrinsic.NotFoundError); ok {\n    // Do something with the bad request ...\n    log.Printf(\"Not Found : %+v\", notFoundError)\n  }\n  log.Fatalf(\"Error creating event : %+v\", err)\n}\n```\n\nThese errors are also compatible with the `errors.Is` and `errors.As` APIs, so you can access the error\nlike so:\n\n```go\n\nresponse, err := client.Events.CreateEventSync(\n  context.TODO(),\n  \"not_a_real_event_type\",\n  map[string]interface{}{\n    \"caption\": \"text_content\",\n  },\n)\nif err != nil {\n  var notFoundError *intrinsic.NotFoundError\n  if errors.As(err, &notFoundError) {\n    log.Printf(\"Not Found Error : %+v\", notFoundError)\n  }\n  log.Fatalf(\"Failed to create event : %s\", err)\n}\n```\n"
+      },
+      "docs/pages/okta.mdx": {
+        "markdown": "Intrinsic's Okta Integration provides a seamless Single Sign-On (SSO) experience for users accessing Intrinsic via Okta. This guide outlines the steps to configure the Intrinsic application in Okta and enable SSO for your users.\n\n<Callout intent=\"info\">\nTo setup Okta SSO, follow the steps below. If you encounter any issues, please contact [Intrinsic Support](mailto:support@withintrinsic.com), and we'll be happy to walk thorugh the setup with you over a call. Be sure to invite your Okta Admin.\n</Callout>\n\n## Requirements\n- Administrator access to an Okta organization.\n\n## Supported Features\n- **Service Provider (SP)-Initiated Authentication (Single Sign-On Flow):** This authentication process is triggered when a user attempts to sign in to the application via Intrinsic.\n\n## Configuration Steps\n1. Navigate to **Applications** in your Okta dashboard, select **Browse App Catalog**, then search for and add **Intrinsic**.\n2. Assign the appropriate users or groups that require access to Intrinsic.\n3. In the **Intrinsic App**, navigate to the **Sign On** tab and record the **Client ID** and **Client Secret**.\n4. Email the required details to [support@withintrinsic.com](mailto:support@withintrinsic.com):\n   - Okta Domain (e.g., `acme.okta.com`)\n   - Client ID\n   - Client Secret\n5. Upon receiving your **Intrinsic Account ID**, input this information in the Okta Intrinsic App under **Sign On tab** > **Edit** > **Advanced Sign-On Settings** > **Account ID** field.\n\n## Logging into Intrinsic Using Okta\nUsers affiliated with the Intrinsic account can log in via Okta by following these steps:\n1. Visit [https://intrinsicapi.com](https://intrinsicapi.com).\n2. Select **Login with Okta**.\n\n"
+      }
+    },
+    "search": {
+      "type": "singleAlgoliaIndex",
+      "value": {
+        "type": "unversioned",
+        "indexSegment": {
+          "id": "seg_intrinsic.docs.buildwithfern.com_7c1a0770-8424-4b9f-8d57-a6e74a72416b",
+          "searchApiKey": "ZDk3ODY2OWRmMjcxMDEyMTU4OGFjZTk0ODY5MDA4NmYyZjExM2EyNTdiMzg1ODEwOTUyMTk0YWZhMDZhZGI5MWZpbHRlcnM9aW5kZXhTZWdtZW50SWQlM0FzZWdfaW50cmluc2ljLmRvY3MuYnVpbGR3aXRoZmVybi5jb21fN2MxYTA3NzAtODQyNC00YjlmLThkNTctYTZlNzRhNzI0MTZiJnZhbGlkVW50aWw9MTczMDg1NTI1Nw=="
+        }
+      }
+    },
+    "id": "docs_definition_74e65d6f-2b71-4e83-8877-11417d2d838b"
+  },
+  "lightModeEnabled": true
+}

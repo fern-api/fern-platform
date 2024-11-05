@@ -1,0 +1,1306 @@
+[
+  {
+    "id": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+    "endpoints": {
+      "endpoint_.CreateAppointmentTask": {
+        "id": "endpoint_.CreateAppointmentTask",
+        "namespace": [],
+        "description": "Create an appointment task for a patient.\n\nOnce you create a task, Ferry will asynchronously process the task to find providers with validated availability. You can poll for the status of the task with the [Get Appointment Task](/api-reference/appointment-tasks/get-appointment-task) endpoint.",
+        "method": "POST",
+        "path": [
+          {
+            "type": "literal",
+            "value": "/api/v1/appointment-tasks/create"
+          }
+        ],
+        "auth": [
+          "default"
+        ],
+        "defaultEnvironment": "Default",
+        "environments": [
+          {
+            "id": "Default",
+            "baseUrl": "https://api.ferry.health"
+          }
+        ],
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "patient",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_:AppointmentTaskRequestPatient"
+                  }
+                },
+                "description": "The patient for whom the appointment is being requested."
+              },
+              {
+                "key": "providerSpecialty",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The specialty of the provider that the patient needs to see."
+              },
+              {
+                "key": "providerSubspecialty",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "The subspecialty of the provider that the patient needs to see."
+              },
+              {
+                "key": "reasonForVisit",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The reason for the patient's visit."
+              },
+              {
+                "key": "timeFrame",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "The time frame in which the patient needs to have the appointment. This can be in any reasonable format and Ferry will parse it."
+              },
+              {
+                "key": "distanceInMiles",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "The maximum distance (in miles) from the patient's home where the provider can be located."
+              },
+              {
+                "key": "npis",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "A list of Provider NPIs to search across. Providing this list will limit the search to just these NPIs."
+              }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:CreateAppointmentTaskResponse"
+            }
+          }
+        },
+        "examples": [
+          {
+            "path": "/api/v1/appointment-tasks/create",
+            "responseStatusCode": 200,
+            "name": "Example 1",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "type": "json",
+              "value": {
+                "patient": {
+                  "firstName": "Jane",
+                  "lastName": "Smith",
+                  "sex": "Female",
+                  "dateOfBirth": "1980-01-01T00:00:00Z",
+                  "homeAddress": "123 Happy Lane, New York, NY 11211",
+                  "insurancePlan": "Aetna - Managed Choice Open Access",
+                  "memberId": "123456789"
+                },
+                "providerSpecialty": "Gastroenterologist",
+                "reasonForVisit": "Ulcerative Colitis",
+                "timeFrame": "Within the next month",
+                "distanceInMiles": 5
+              }
+            },
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "appointmentTaskId": "ferry.task-appointment.5d3ebb83-af31-41ca-9f85-e442927b8371"
+              }
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl -X POST https://api.ferry.health/api/v1/appointment-tasks/create \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\n  \"patient\": {\n    \"firstName\": \"Jane\",\n    \"lastName\": \"Smith\",\n    \"sex\": \"Female\",\n    \"dateOfBirth\": \"1980-01-01T00:00:00Z\",\n    \"homeAddress\": \"123 Happy Lane, New York, NY 11211\",\n    \"insurancePlan\": \"Aetna - Managed Choice Open Access\",\n    \"memberId\": \"123456789\"\n  },\n  \"providerSpecialty\": \"Gastroenterologist\",\n  \"reasonForVisit\": \"Ulcerative Colitis\",\n  \"timeFrame\": \"Within the next month\",\n  \"distanceInMiles\": 5\n}'",
+                  "generated": true
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "endpoint_.GetAppointmentTask": {
+        "id": "endpoint_.GetAppointmentTask",
+        "namespace": [],
+        "description": "Load a task by its ID.",
+        "method": "GET",
+        "path": [
+          {
+            "type": "literal",
+            "value": "/api/v1/appointment-tasks/"
+          },
+          {
+            "type": "pathParameter",
+            "value": "appointmentTaskId"
+          }
+        ],
+        "auth": [
+          "default"
+        ],
+        "defaultEnvironment": "Default",
+        "environments": [
+          {
+            "id": "Default",
+            "baseUrl": "https://api.ferry.health"
+          }
+        ],
+        "pathParameters": [
+          {
+            "key": "appointmentTaskId",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The ID of the task to load."
+          }
+        ],
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:GetAppointmentTaskResponse"
+            }
+          }
+        },
+        "examples": [
+          {
+            "path": "/api/v1/appointment-tasks/ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e",
+            "responseStatusCode": 200,
+            "name": "Example 1",
+            "pathParameters": {
+              "appointmentTaskId": "ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "status": "PROCESSING",
+                "appointmentTaskId": "ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e",
+                "patient": {
+                  "firstName": "firstName",
+                  "lastName": "lastName",
+                  "sex": "sex",
+                  "dateOfBirth": "2024-01-15T09:30:00Z",
+                  "homeAddress": "homeAddress",
+                  "insurancePlan": "insurancePlan",
+                  "memberId": "memberId"
+                },
+                "results": {}
+              }
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl https://api.ferry.health/api/v1/appointment-tasks/ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e \\\n     -H \"Authorization: Bearer <token>\"",
+                  "generated": true
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "endpoint_.CancelAppointmentTask": {
+        "id": "endpoint_.CancelAppointmentTask",
+        "namespace": [],
+        "description": "Cancel a task. This stops Ferry from processing the task.",
+        "method": "POST",
+        "path": [
+          {
+            "type": "literal",
+            "value": "/api/v1/appointment-tasks/"
+          },
+          {
+            "type": "pathParameter",
+            "value": "appointmentTaskId"
+          },
+          {
+            "type": "literal",
+            "value": "/cancel"
+          }
+        ],
+        "auth": [
+          "default"
+        ],
+        "defaultEnvironment": "Default",
+        "environments": [
+          {
+            "id": "Default",
+            "baseUrl": "https://api.ferry.health"
+          }
+        ],
+        "pathParameters": [
+          {
+            "key": "appointmentTaskId",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The ID of the task to load."
+          }
+        ],
+        "examples": [
+          {
+            "path": "/api/v1/appointment-tasks/ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e/cancel",
+            "responseStatusCode": 204,
+            "pathParameters": {
+              "appointmentTaskId": "ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl -X POST https://api.ferry.health/api/v1/appointment-tasks/ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e/cancel \\\n     -H \"Authorization: Bearer <token>\"",
+                  "generated": true
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "endpoint_.GetAllAppointmentTasks": {
+        "id": "endpoint_.GetAllAppointmentTasks",
+        "namespace": [],
+        "description": "Get all appointment task IDs. You can load the details of a task using the [Get Appointment Task](/api-reference/appointment-tasks/get-appointment-task) endpoint.",
+        "method": "GET",
+        "path": [
+          {
+            "type": "literal",
+            "value": "/api/v1/appointment-tasks"
+          }
+        ],
+        "auth": [
+          "default"
+        ],
+        "defaultEnvironment": "Default",
+        "environments": [
+          {
+            "id": "Default",
+            "baseUrl": "https://api.ferry.health"
+          }
+        ],
+        "queryParameters": [
+          {
+            "key": "pageSize",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "The size of each page (default 50, maximum 100)."
+          },
+          {
+            "key": "page",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "The number page to load, starting at 0."
+          }
+        ],
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:GetAllAppointmentTasksResponse"
+            }
+          }
+        },
+        "examples": [
+          {
+            "path": "/api/v1/appointment-tasks",
+            "responseStatusCode": 200,
+            "name": "Example 1",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "data": {
+                  "appointmentTaskIds": [
+                    "ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e",
+                    "ferry.task-appointment.8892d1d9-dbd8-4900-81cb-384a85fa2651"
+                  ]
+                },
+                "pagination": {
+                  "page": 1,
+                  "pageSize": 50,
+                  "itemsInPage": 2,
+                  "totalItems": 52
+                }
+              }
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl https://api.ferry.health/api/v1/appointment-tasks \\\n     -H \"Authorization: Bearer <token>\"",
+                  "generated": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "websockets": {},
+    "webhooks": {},
+    "types": {
+      "type_:GetAllTasksForPatientResponse": {
+        "name": "GetAllTasksForPatientResponse",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "appointmentTaskIds",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "description": "The IDs of the appointment tasks associated with this patient."
+            }
+          ]
+        }
+      },
+      "type_:MeResponseOrganization": {
+        "name": "MeResponseOrganization",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "role",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The role of the token making the request."
+            },
+            {
+              "key": "name",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The name of the organization of the token making the request."
+            },
+            {
+              "key": "id",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The organization ID of the token making the request."
+            }
+          ]
+        }
+      },
+      "type_:MeResponse": {
+        "name": "MeResponse",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "organization",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:MeResponseOrganization"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:CreateAppointmentTaskResponse": {
+        "name": "CreateAppointmentTaskResponse",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "appointmentTaskId",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The ID of the newly created appointment task. Ferry will asynchronously process the task before it is ready for the patient to act on it. You can poll for the status of the task with the [Get Appointment Task](/api-reference/get-appointment-task) endpoint."
+            }
+          ]
+        }
+      },
+      "type_:AppointmentTaskRequestPatient": {
+        "name": "AppointmentTaskRequestPatient",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "firstName",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The patient's first name."
+            },
+            {
+              "key": "lastName",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The patient's last name."
+            },
+            {
+              "key": "sex",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The patient's sex."
+            },
+            {
+              "key": "dateOfBirth",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime"
+                  }
+                }
+              },
+              "description": "The patient's date of birth."
+            },
+            {
+              "key": "homeAddress",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The patient's home address. This can be in any reasonable format and Ferry will parse it."
+            },
+            {
+              "key": "insurancePlan",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The name of the patient’s carrier as well as the plan’s specific name. Please be as specific as possible."
+            },
+            {
+              "key": "memberId",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "optional",
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "description": "The member ID for the patient's insurance."
+            }
+          ]
+        }
+      },
+      "type_:GetAllAppointmentTasksForPatientResponse": {
+        "name": "GetAllAppointmentTasksForPatientResponse",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "appointmentTaskIds",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "description": "The IDs of the appointment tasks associated with this patient."
+            }
+          ]
+        }
+      },
+      "type_:Provider": {
+        "name": "Provider",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "npi",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The NPI of the provider."
+            },
+            {
+              "key": "firstName",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The first name of the provider."
+            },
+            {
+              "key": "lastName",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The last name of the provider."
+            }
+          ]
+        }
+      },
+      "type_:Practice": {
+        "name": "Practice",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "name",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "optional",
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "description": "The name of the practice."
+            },
+            {
+              "key": "address",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The address of the provider."
+            }
+          ]
+        }
+      },
+      "type_:ReasonForInclusion": {
+        "name": "ReasonForInclusion",
+        "shape": {
+          "type": "enum",
+          "values": [
+            {
+              "value": "CLOSEST_LOCATION"
+            },
+            {
+              "value": "SOONEST_AVAILIBILITY"
+            },
+            {
+              "value": "BEST_FIT"
+            },
+            {
+              "value": "ON_SPECIFIED_PROVIDER_LIST"
+            }
+          ]
+        }
+      },
+      "type_:AppointmentAvailability": {
+        "name": "AppointmentAvailability",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "provider",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:Provider"
+                }
+              },
+              "description": "The provider for the appointment."
+            },
+            {
+              "key": "practice",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:Practice"
+                }
+              },
+              "description": "The practice (i.e. location) for the appointment."
+            },
+            {
+              "key": "reasonForInclusion",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "optional",
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_:ReasonForInclusion"
+                    }
+                  }
+                }
+              },
+              "description": "The reason this provider is being included as an option."
+            },
+            {
+              "key": "availableTimes",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "datetime"
+                      }
+                    }
+                  }
+                }
+              },
+              "description": "The available appointment times for the patient."
+            },
+            {
+              "key": "availabilityNotes",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "optional",
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "description": "A note on how far out the provider is currently scheduling appointments."
+            }
+          ]
+        }
+      },
+      "type_:AvailableAppointmentTaskResponseResults": {
+        "name": "AvailableAppointmentTaskResponseResults",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "appointmentAvailabilities",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_:AppointmentAvailability"
+                    }
+                  }
+                }
+              },
+              "description": "The best appointment options that Ferry has found for the patient."
+            }
+          ]
+        }
+      },
+      "type_:AvailableAppointmentTaskResponse": {
+        "name": "AvailableAppointmentTaskResponse",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "appointmentTaskId",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The ID of the appointment task."
+            },
+            {
+              "key": "patient",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:AppointmentTaskRequestPatient"
+                }
+              },
+              "description": "The patient for whom the appointment is being requested."
+            },
+            {
+              "key": "results",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:AvailableAppointmentTaskResponseResults"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:CanceledAppointmentTaskResponseResults": {
+        "name": "CanceledAppointmentTaskResponseResults",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": []
+        }
+      },
+      "type_:CanceledAppointmentTaskResponse": {
+        "name": "CanceledAppointmentTaskResponse",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "appointmentTaskId",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The ID of the appointment task."
+            },
+            {
+              "key": "patient",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:AppointmentTaskRequestPatient"
+                }
+              },
+              "description": "The patient for whom the appointment is being requested."
+            },
+            {
+              "key": "results",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:CanceledAppointmentTaskResponseResults"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:FailedAppointmentTaskResponseResults": {
+        "name": "FailedAppointmentTaskResponseResults",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": []
+        }
+      },
+      "type_:FailedAppointmentTaskResponse": {
+        "name": "FailedAppointmentTaskResponse",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "appointmentTaskId",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The ID of the appointment task."
+            },
+            {
+              "key": "patient",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:AppointmentTaskRequestPatient"
+                }
+              },
+              "description": "The patient for whom the appointment is being requested."
+            },
+            {
+              "key": "results",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:FailedAppointmentTaskResponseResults"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:ProcessingAppointmentTaskResponseResults": {
+        "name": "ProcessingAppointmentTaskResponseResults",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": []
+        }
+      },
+      "type_:ProcessingAppointmentTaskResponse": {
+        "name": "ProcessingAppointmentTaskResponse",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "appointmentTaskId",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "The ID of the appointment task."
+            },
+            {
+              "key": "patient",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:AppointmentTaskRequestPatient"
+                }
+              },
+              "description": "The patient for whom the appointment is being requested."
+            },
+            {
+              "key": "results",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:ProcessingAppointmentTaskResponseResults"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:GetAppointmentTaskResponse": {
+        "name": "GetAppointmentTaskResponse",
+        "shape": {
+          "type": "discriminatedUnion",
+          "discriminant": "status",
+          "variants": [
+            {
+              "discriminantValue": "AVAILABLE",
+              "extends": [
+                "type_:AvailableAppointmentTaskResponse"
+              ],
+              "properties": []
+            },
+            {
+              "discriminantValue": "CANCELED",
+              "extends": [
+                "type_:CanceledAppointmentTaskResponse"
+              ],
+              "properties": []
+            },
+            {
+              "discriminantValue": "FAILED",
+              "extends": [
+                "type_:FailedAppointmentTaskResponse"
+              ],
+              "properties": []
+            },
+            {
+              "discriminantValue": "PROCESSING",
+              "extends": [
+                "type_:ProcessingAppointmentTaskResponse"
+              ],
+              "properties": []
+            }
+          ]
+        }
+      },
+      "type_:PaginationResponse": {
+        "name": "PaginationResponse",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "page",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
+                  }
+                }
+              },
+              "description": "The page number of the response, starting with 0."
+            },
+            {
+              "key": "pageSize",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
+                  }
+                }
+              },
+              "description": "The number of items per page."
+            },
+            {
+              "key": "itemsInPage",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
+                  }
+                }
+              },
+              "description": "The number of items in this page."
+            },
+            {
+              "key": "totalItems",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
+                  }
+                }
+              },
+              "description": "The total number of items in the response."
+            }
+          ]
+        }
+      },
+      "type_:GetAllAppointmentTasksResponseData": {
+        "name": "GetAllAppointmentTasksResponseData",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "appointmentTaskIds",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "description": "The IDs of the appointment tasks assocaited with this patient."
+            }
+          ]
+        }
+      },
+      "type_:GetAllAppointmentTasksResponse": {
+        "name": "GetAllAppointmentTasksResponse",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "data",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:GetAllAppointmentTasksResponseData"
+                }
+              }
+            },
+            {
+              "key": "pagination",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:PaginationResponse"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "subpackages": {},
+    "auths": {
+      "default": {
+        "type": "bearerAuth",
+        "tokenName": "token"
+      }
+    }
+  }
+]

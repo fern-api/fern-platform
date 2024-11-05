@@ -1,0 +1,150 @@
+{
+  "child": {
+    "child": {
+      "children": [
+        {
+          "children": [
+            {
+              "hidden": false,
+              "id": "root.uv.getting-started.athena-sdk-quickstart",
+              "pageId": "pages/getting_started.mdx",
+              "slug": "getting-started/athena-sdk-quickstart",
+              "title": "Athena SDK Quickstart",
+              "type": "page"
+            }
+          ],
+          "collapsed": false,
+          "hidden": false,
+          "id": "root.uv.getting-started",
+          "pointsTo": "getting-started/athena-sdk-quickstart",
+          "slug": "getting-started",
+          "title": "Getting Started",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "hidden": false,
+              "id": "root.uv.guides.online-research",
+              "pageId": "pages/examples/research.mdx",
+              "slug": "guides/online-research",
+              "title": "Online Research",
+              "type": "page"
+            },
+            {
+              "hidden": false,
+              "id": "root.uv.guides.online-research-with-open-source-models",
+              "pageId": "pages/examples/research_oss.mdx",
+              "slug": "guides/online-research-with-open-source-models",
+              "title": "Online Research with Open Source Models",
+              "type": "page"
+            },
+            {
+              "hidden": false,
+              "id": "root.uv.guides.structured-output",
+              "pageId": "pages/examples/structured_output.mdx",
+              "slug": "guides/structured-output",
+              "title": "Structured Output",
+              "type": "page"
+            },
+            {
+              "hidden": false,
+              "id": "root.uv.guides.query-and-visualize",
+              "pageId": "pages/examples/query_and_visualize.mdx",
+              "slug": "guides/query-and-visualize",
+              "title": "Query and Visualize",
+              "type": "page"
+            },
+            {
+              "hidden": false,
+              "id": "root.uv.guides.generate-documentation",
+              "pageId": "pages/examples/documentation.mdx",
+              "slug": "guides/generate-documentation",
+              "title": "Generate Documentation",
+              "type": "page"
+            },
+            {
+              "hidden": false,
+              "id": "root.uv.guides.load-data-frames",
+              "pageId": "pages/examples/data_frames.mdx",
+              "slug": "guides/load-data-frames",
+              "title": "Load Data Frames",
+              "type": "page"
+            },
+            {
+              "hidden": false,
+              "id": "root.uv.guides.upload-files",
+              "pageId": "pages/examples/upload_files.mdx",
+              "slug": "guides/upload-files",
+              "title": "Upload Files",
+              "type": "page"
+            }
+          ],
+          "collapsed": false,
+          "hidden": false,
+          "id": "root.uv.guides",
+          "pointsTo": "guides/online-research",
+          "slug": "guides",
+          "title": "Guides",
+          "type": "section"
+        },
+        {
+          "apiDefinitionId": "c173bee9-1794-4364-93d9-780ed8d82ec7",
+          "children": [
+            {
+              "apiDefinitionId": "c173bee9-1794-4364-93d9-780ed8d82ec7",
+              "children": [
+                {
+                  "apiDefinitionId": "c173bee9-1794-4364-93d9-780ed8d82ec7",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_tools._data_frame",
+                  "id": "c173bee9-1794-4364-93d9-780ed8d82ec7:endpoint_tools._data_frame",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/tools/data-frame",
+                  "title": "Get Tabular Data from Object",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "c173bee9-1794-4364-93d9-780ed8d82ec7",
+                  "availability": "Beta",
+                  "endpointId": "endpoint_tools._raw_data",
+                  "id": "c173bee9-1794-4364-93d9-780ed8d82ec7:endpoint_tools._raw_data",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/tools/raw-data",
+                  "title": "Get Raw File Data from Object",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "c173bee9-1794-4364-93d9-780ed8d82ec7:subpackage_tools",
+              "pointsTo": "api-reference/tools/data-frame",
+              "slug": "api-reference/tools",
+              "title": "Tools",
+              "type": "apiPackage"
+            }
+          ],
+          "hideTitle": false,
+          "id": "c173bee9-1794-4364-93d9-780ed8d82ec7",
+          "paginated": false,
+          "pointsTo": "api-reference/tools/data-frame",
+          "showErrors": false,
+          "slug": "api-reference",
+          "title": "API Reference",
+          "type": "apiReference"
+        }
+      ],
+      "id": "root.uv",
+      "type": "sidebarRoot"
+    },
+    "id": "root.uv",
+    "type": "unversioned"
+  },
+  "hidden": false,
+  "id": "root",
+  "pointsTo": "getting-started/athena-sdk-quickstart",
+  "slug": "",
+  "title": "Athena | API Reference Docs",
+  "type": "root",
+  "version": "v2"
+}

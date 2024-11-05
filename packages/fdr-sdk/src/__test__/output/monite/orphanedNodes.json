@@ -1,0 +1,188 @@
+[
+  {
+    "id": "root..v-2024-01-31",
+    "slug": "",
+    "title": "v2024-01-31",
+    "type": "version"
+  },
+  {
+    "id": "root..v-2024-01-31.uv.home",
+    "slug": "",
+    "title": "Home",
+    "type": "tab"
+  },
+  {
+    "id": "root..v-2024-01-31.uv.guides",
+    "slug": "",
+    "title": "Guides",
+    "type": "tab"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63",
+    "slug": "api",
+    "title": "API Reference",
+    "type": "apiReference"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63.section:general",
+    "slug": "api",
+    "title": "General",
+    "type": "apiPackage"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63.section:common",
+    "slug": "api",
+    "title": "Common",
+    "type": "apiPackage"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63.section:accounts-payable",
+    "slug": "api",
+    "title": "Accounts payable",
+    "type": "apiPackage"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63.section:accounts-receivable",
+    "slug": "api",
+    "title": "Accounts receivable",
+    "type": "apiPackage"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63.section:payments",
+    "slug": "api",
+    "title": "Payments",
+    "type": "apiPackage"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63.section:accounting-integration",
+    "slug": "api",
+    "title": "Accounting integration",
+    "type": "apiPackage"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63.section:utilities",
+    "slug": "api",
+    "title": "Utilities",
+    "type": "apiPackage"
+  },
+  {
+    "id": "root..v-2024-01-31.uv.home",
+    "slug": "v-2024-01-31",
+    "title": "Home",
+    "type": "tab"
+  },
+  {
+    "id": "root..v-2024-01-31.uv.guides",
+    "slug": "v-2024-01-31",
+    "title": "Guides",
+    "type": "tab"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63",
+    "slug": "v-2024-01-31/api",
+    "title": "API Reference",
+    "type": "apiReference"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63.section:general",
+    "slug": "v-2024-01-31/api",
+    "title": "General",
+    "type": "apiPackage"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63.section:common",
+    "slug": "v-2024-01-31/api",
+    "title": "Common",
+    "type": "apiPackage"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63.section:accounts-payable",
+    "slug": "v-2024-01-31/api",
+    "title": "Accounts payable",
+    "type": "apiPackage"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63.section:accounts-receivable",
+    "slug": "v-2024-01-31/api",
+    "title": "Accounts receivable",
+    "type": "apiPackage"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63.section:payments",
+    "slug": "v-2024-01-31/api",
+    "title": "Payments",
+    "type": "apiPackage"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63.section:accounting-integration",
+    "slug": "v-2024-01-31/api",
+    "title": "Accounting integration",
+    "type": "apiPackage"
+  },
+  {
+    "id": "11d0fcbe-8e92-4483-bf8c-d3b64e7b0e63.section:utilities",
+    "slug": "v-2024-01-31/api",
+    "title": "Utilities",
+    "type": "apiPackage"
+  },
+  {
+    "id": "root..v2023-09-01.uv.home",
+    "slug": "v2023-09-01",
+    "title": "Home",
+    "type": "tab"
+  },
+  {
+    "id": "root..v2023-09-01.uv.guides",
+    "slug": "v2023-09-01",
+    "title": "Guides",
+    "type": "tab"
+  },
+  {
+    "id": "b3f0d91b-e84e-43b1-ba5d-dade6bfc62d4",
+    "slug": "v2023-09-01/api",
+    "title": "API Reference",
+    "type": "apiReference"
+  },
+  {
+    "id": "b3f0d91b-e84e-43b1-ba5d-dade6bfc62d4.section:general",
+    "slug": "v2023-09-01/api",
+    "title": "General",
+    "type": "apiPackage"
+  },
+  {
+    "id": "b3f0d91b-e84e-43b1-ba5d-dade6bfc62d4.section:common",
+    "slug": "v2023-09-01/api",
+    "title": "Common",
+    "type": "apiPackage"
+  },
+  {
+    "id": "b3f0d91b-e84e-43b1-ba5d-dade6bfc62d4.section:accounts-payable",
+    "slug": "v2023-09-01/api",
+    "title": "Accounts payable",
+    "type": "apiPackage"
+  },
+  {
+    "id": "b3f0d91b-e84e-43b1-ba5d-dade6bfc62d4.section:accounts-receivable",
+    "slug": "v2023-09-01/api",
+    "title": "Accounts receivable",
+    "type": "apiPackage"
+  },
+  {
+    "id": "b3f0d91b-e84e-43b1-ba5d-dade6bfc62d4.section:payments",
+    "slug": "v2023-09-01/api",
+    "title": "Payments",
+    "type": "apiPackage"
+  },
+  {
+    "id": "b3f0d91b-e84e-43b1-ba5d-dade6bfc62d4.section:accounting-integration",
+    "slug": "v2023-09-01/api",
+    "title": "Accounting integration",
+    "type": "apiPackage"
+  },
+  {
+    "id": "b3f0d91b-e84e-43b1-ba5d-dade6bfc62d4.section:utilities",
+    "slug": "v2023-09-01/api",
+    "title": "Utilities",
+    "type": "apiPackage"
+  }
+]

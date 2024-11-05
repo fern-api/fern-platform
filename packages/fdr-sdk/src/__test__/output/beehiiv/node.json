@@ -1,0 +1,757 @@
+{
+  "child": {
+    "child": {
+      "children": [
+        {
+          "children": [
+            {
+              "hidden": false,
+              "id": "root.uv.welcome.getting-started",
+              "pageId": "docs/pages/getting-started/getting-started.mdx",
+              "slug": "welcome/getting-started",
+              "title": "Getting Started",
+              "type": "page"
+            },
+            {
+              "hidden": false,
+              "id": "root.uv.welcome.create-an-api-key",
+              "pageId": "docs/pages/getting-started/create-an-api-key.mdx",
+              "slug": "welcome/create-an-api-key",
+              "title": "Create an API Key",
+              "type": "page"
+            },
+            {
+              "hidden": false,
+              "id": "root.uv.welcome.no-code-integrations",
+              "pageId": "docs/pages/getting-started/no-code-integrations.mdx",
+              "slug": "welcome/no-code-integrations",
+              "title": "No-Code Integrations",
+              "type": "page"
+            }
+          ],
+          "collapsed": false,
+          "hidden": false,
+          "id": "root.uv.welcome",
+          "pointsTo": "welcome/getting-started",
+          "slug": "welcome",
+          "title": "Welcome",
+          "type": "section"
+        },
+        {
+          "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+          "children": [
+            {
+              "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+              "children": [
+                {
+                  "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_post.sent",
+                  "method": "POST",
+                  "slug": "webhooks/post/sent",
+                  "title": "Post Sent",
+                  "type": "webhook",
+                  "webhookId": "subpackage_post.sent"
+                }
+              ],
+              "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_post",
+              "pointsTo": "webhooks/post/sent",
+              "slug": "webhooks/post",
+              "title": "Post",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+              "children": [
+                {
+                  "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_subscription.created",
+                  "method": "POST",
+                  "slug": "webhooks/subscription/created",
+                  "title": "Subscription Created",
+                  "type": "webhook",
+                  "webhookId": "subpackage_subscription.created"
+                },
+                {
+                  "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_subscription.confirmed",
+                  "method": "POST",
+                  "slug": "webhooks/subscription/confirmed",
+                  "title": "Subscription Confirmed",
+                  "type": "webhook",
+                  "webhookId": "subpackage_subscription.confirmed"
+                },
+                {
+                  "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_subscription.deleted",
+                  "method": "POST",
+                  "slug": "webhooks/subscription/deleted",
+                  "title": "Subscription Deleted",
+                  "type": "webhook",
+                  "webhookId": "subpackage_subscription.deleted"
+                },
+                {
+                  "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_subscription.upgraded",
+                  "method": "POST",
+                  "slug": "webhooks/subscription/upgraded",
+                  "title": "Subscription Upgraded",
+                  "type": "webhook",
+                  "webhookId": "subpackage_subscription.upgraded"
+                },
+                {
+                  "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_subscription.downgraded",
+                  "method": "POST",
+                  "slug": "webhooks/subscription/downgraded",
+                  "title": "Subscription Downgraded",
+                  "type": "webhook",
+                  "webhookId": "subpackage_subscription.downgraded"
+                },
+                {
+                  "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_subscription.tier_added",
+                  "method": "POST",
+                  "slug": "webhooks/subscription/tier-added",
+                  "title": "Subscription Tier Added",
+                  "type": "webhook",
+                  "webhookId": "subpackage_subscription.tier_added"
+                },
+                {
+                  "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_subscription.tier_deleted",
+                  "method": "POST",
+                  "slug": "webhooks/subscription/tier-deleted",
+                  "title": "Subscription Tier Deleted",
+                  "type": "webhook",
+                  "webhookId": "subpackage_subscription.tier_deleted"
+                }
+              ],
+              "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_subscription",
+              "pointsTo": "webhooks/subscription/created",
+              "slug": "webhooks/subscription",
+              "title": "Subscription",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+              "children": [
+                {
+                  "apiDefinitionId": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+                  "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_survey.submitted",
+                  "method": "POST",
+                  "slug": "webhooks/survey/submitted",
+                  "title": "Survey Response Submitted",
+                  "type": "webhook",
+                  "webhookId": "subpackage_survey.submitted"
+                }
+              ],
+              "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c:subpackage_survey",
+              "pointsTo": "webhooks/survey/submitted",
+              "slug": "webhooks/survey",
+              "title": "Survey",
+              "type": "apiPackage"
+            }
+          ],
+          "hideTitle": false,
+          "id": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
+          "overviewPageId": "docs/pages/webhooks/webhooks-summary.mdx",
+          "paginated": false,
+          "pointsTo": "webhooks/post/sent",
+          "showErrors": false,
+          "slug": "webhooks",
+          "title": "Webhooks",
+          "type": "apiReference"
+        },
+        {
+          "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+          "children": [
+            {
+              "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+              "children": [
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_automationJourneys.create",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_automationJourneys.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/automation-journeys/create",
+                  "title": "Add subscription to an automation",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_automationJourneys.index",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_automationJourneys.index",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/automation-journeys/index",
+                  "title": "List automation journeys",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_automationJourneys.show",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_automationJourneys.show",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/automation-journeys/show",
+                  "title": "Get automation journey",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:subpackage_automationJourneys",
+              "pointsTo": "api-reference/automation-journeys/create",
+              "slug": "api-reference/automation-journeys",
+              "title": "Automation Journeys",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+              "children": [
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_automations.index",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_automations.index",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/automations/index",
+                  "title": "List automations",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_automations.show",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_automations.show",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/automations/show",
+                  "title": "Get automation",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:subpackage_automations",
+              "pointsTo": "api-reference/automations/index",
+              "slug": "api-reference/automations",
+              "title": "Automations",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+              "children": [
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_bulkSubscriptionUpdates.index",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_bulkSubscriptionUpdates.index",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/bulk-subscription-updates/index",
+                  "title": "List subscription updates",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_bulkSubscriptionUpdates.show",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_bulkSubscriptionUpdates.show",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/bulk-subscription-updates/show",
+                  "title": "Get subscription update",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_bulkSubscriptionUpdates.put",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_bulkSubscriptionUpdates.put",
+                  "isResponseStream": false,
+                  "method": "PUT",
+                  "slug": "api-reference/bulk-subscription-updates/put",
+                  "title": "Update subscriptions",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/bulk-subscription-updates/put",
+                  "endpointId": "endpoint_bulkSubscriptionUpdates.patch",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_bulkSubscriptionUpdates.patch",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/bulk-subscription-updates/patch",
+                  "title": "Update subscriptions",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_bulkSubscriptionUpdates.put-status",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_bulkSubscriptionUpdates.put-status",
+                  "isResponseStream": false,
+                  "method": "PUT",
+                  "slug": "api-reference/bulk-subscription-updates/put-status",
+                  "title": "Update subscriptions' status",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/bulk-subscription-updates/put-status",
+                  "endpointId": "endpoint_bulkSubscriptionUpdates.patch-status",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_bulkSubscriptionUpdates.patch-status",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/bulk-subscription-updates/patch-status",
+                  "title": "Update subscriptions' status",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:subpackage_bulkSubscriptionUpdates",
+              "pointsTo": "api-reference/bulk-subscription-updates/index",
+              "slug": "api-reference/bulk-subscription-updates",
+              "title": "Bulk Subscription Updates",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+              "children": [
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_customFields.create",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_customFields.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/custom-fields/create",
+                  "title": "Create custom field",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_customFields.show",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_customFields.show",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/custom-fields/show",
+                  "title": "Get custom field",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_customFields.index",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_customFields.index",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/custom-fields/index",
+                  "title": "List custom fields",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_customFields.put",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_customFields.put",
+                  "isResponseStream": false,
+                  "method": "PUT",
+                  "slug": "api-reference/custom-fields/put",
+                  "title": "Update custom field",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/custom-fields/put",
+                  "endpointId": "endpoint_customFields.patch",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_customFields.patch",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/custom-fields/patch",
+                  "title": "Update custom field",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_customFields.delete",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_customFields.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/custom-fields/delete",
+                  "title": "Delete custom field",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:subpackage_customFields",
+              "pointsTo": "api-reference/custom-fields/create",
+              "slug": "api-reference/custom-fields",
+              "title": "Custom Fields",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+              "children": [
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_posts.index",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_posts.index",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/posts/index",
+                  "title": "List posts",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_posts.show",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_posts.show",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/posts/show",
+                  "title": "Get post",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_posts.delete",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_posts.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/posts/delete",
+                  "title": "Delete post",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:subpackage_posts",
+              "pointsTo": "api-reference/posts/index",
+              "slug": "api-reference/posts",
+              "title": "Posts",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+              "children": [
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_publications.index",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_publications.index",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/publications/index",
+                  "title": "List publications",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_publications.show",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_publications.show",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/publications/show",
+                  "title": "Get publication",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:subpackage_publications",
+              "pointsTo": "api-reference/publications/index",
+              "slug": "api-reference/publications",
+              "title": "Publications",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+              "children": [
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_referralProgram.show",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_referralProgram.show",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/referral-program/show",
+                  "title": "Get referral program",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:subpackage_referralProgram",
+              "pointsTo": "api-reference/referral-program/show",
+              "slug": "api-reference/referral-program",
+              "title": "Referral Program",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+              "children": [
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_segments.index",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_segments.index",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/segments/index",
+                  "title": "List segments",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_segments.show",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_segments.show",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/segments/show",
+                  "title": "Get segment",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_segments.expand_results",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_segments.expand_results",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/segments/expand-results",
+                  "title": "List segment subscribers",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_segments.delete",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_segments.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/segments/delete",
+                  "title": "Delete segment",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:subpackage_segments",
+              "pointsTo": "api-reference/segments/index",
+              "slug": "api-reference/segments",
+              "title": "Segments",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+              "children": [
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_subscriptions.create",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_subscriptions.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/subscriptions/create",
+                  "title": "Create subscription",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_subscriptions.index",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_subscriptions.index",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/subscriptions/index",
+                  "title": "List subscriptions",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_subscriptions.get-by-email",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_subscriptions.get-by-email",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/subscriptions/get-by-email",
+                  "title": "Get subscription by email",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_subscriptions.get-by-id",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_subscriptions.get-by-id",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/subscriptions/get-by-id",
+                  "title": "Get subscription by ID",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_subscriptions.put",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_subscriptions.put",
+                  "isResponseStream": false,
+                  "method": "PUT",
+                  "slug": "api-reference/subscriptions/put",
+                  "title": "Update subscription",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/subscriptions/put",
+                  "endpointId": "endpoint_subscriptions.patch",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_subscriptions.patch",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/subscriptions/patch",
+                  "title": "Update subscription",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_subscriptions.delete",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_subscriptions.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/subscriptions/delete",
+                  "title": "Delete subscription",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:subpackage_subscriptions",
+              "pointsTo": "api-reference/subscriptions/create",
+              "slug": "api-reference/subscriptions",
+              "title": "Subscriptions",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+              "children": [
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_subscriptionTags.create",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_subscriptionTags.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/subscription-tags/create",
+                  "title": "Add subscription tag",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:subpackage_subscriptionTags",
+              "pointsTo": "api-reference/subscription-tags/create",
+              "slug": "api-reference/subscription-tags",
+              "title": "Subscription Tags",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+              "children": [
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_tiers.create",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_tiers.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/tiers/create",
+                  "title": "Create a tier",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_tiers.index",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_tiers.index",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/tiers/index",
+                  "title": "List tiers",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_tiers.show",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_tiers.show",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/tiers/show",
+                  "title": "Get tier",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_tiers.put",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_tiers.put",
+                  "isResponseStream": false,
+                  "method": "PUT",
+                  "slug": "api-reference/tiers/put",
+                  "title": "Update a tier",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "canonicalSlug": "api-reference/tiers/put",
+                  "endpointId": "endpoint_tiers.patch",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_tiers.patch",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/tiers/patch",
+                  "title": "Update a tier",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:subpackage_tiers",
+              "pointsTo": "api-reference/tiers/create",
+              "slug": "api-reference/tiers",
+              "title": "Tiers",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+              "children": [
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_webhooks.create",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_webhooks.create",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/webhooks/create",
+                  "title": "Create a webhook",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_webhooks.index",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_webhooks.index",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/webhooks/index",
+                  "title": "List webhooks",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_webhooks.show",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_webhooks.show",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/webhooks/show",
+                  "title": "Get webhook",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+                  "endpointId": "endpoint_webhooks.delete",
+                  "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:endpoint_webhooks.delete",
+                  "isResponseStream": false,
+                  "method": "DELETE",
+                  "slug": "api-reference/webhooks/delete",
+                  "title": "Delete a webhook",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc:subpackage_webhooks",
+              "pointsTo": "api-reference/webhooks/create",
+              "slug": "api-reference/webhooks",
+              "title": "Webhooks",
+              "type": "apiPackage"
+            }
+          ],
+          "hideTitle": false,
+          "id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
+          "paginated": false,
+          "pointsTo": "api-reference/automation-journeys/create",
+          "showErrors": true,
+          "slug": "api-reference",
+          "title": "API Reference",
+          "type": "apiReference"
+        }
+      ],
+      "id": "root.uv",
+      "type": "sidebarRoot"
+    },
+    "id": "root.uv",
+    "type": "unversioned"
+  },
+  "hidden": false,
+  "id": "root",
+  "pointsTo": "welcome/getting-started",
+  "slug": "",
+  "title": "beehiiv | Developer Documentation",
+  "type": "root",
+  "version": "v2"
+}

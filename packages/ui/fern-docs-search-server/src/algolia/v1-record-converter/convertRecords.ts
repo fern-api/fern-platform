@@ -1,6 +1,7 @@
 import { Algolia } from "@fern-api/fdr-sdk";
 import { EndpointDefinition, TypeDefinition } from "@fern-api/fdr-sdk/api-definition";
-import { generateEndpointContent, generatePageContent } from "./generateEndpointContent.js";
+import { truncateToBytes } from "@fern-api/ui-core-utils";
+import { generateEndpointContent } from "./generateEndpointContent.js";
 
 export function convertEndpointV4ToV3(
     endpoint: Algolia.AlgoliaRecord.EndpointV4,
@@ -13,7 +14,7 @@ export function convertEndpointV4ToV3(
         endpointPath: endpoint.endpointPath,
         isResponseStream: endpoint.isResponseStream,
         title: endpoint.title,
-        content: generateEndpointContent(endpointDefinition, types),
+        content: truncateToBytes(generateEndpointContent(endpointDefinition, types), 95000),
         breadcrumbs: endpoint.breadcrumbs.map((breadcrumb) => breadcrumb.title),
         slug: endpoint.slug,
         version: endpoint.version,
@@ -21,14 +22,11 @@ export function convertEndpointV4ToV3(
     };
 }
 
-export function convertPageV4ToV3(
-    page: Algolia.AlgoliaRecord.PageV4,
-    rawMarkdown: string,
-): Algolia.AlgoliaRecord.PageV3 {
+export function convertPageV4ToV3(page: Algolia.AlgoliaRecord.PageV4, content: string): Algolia.AlgoliaRecord.PageV3 {
     return {
         type: "page-v3",
         title: page.title,
-        content: generatePageContent(rawMarkdown),
+        content: truncateToBytes(content, 95000),
         breadcrumbs: page.breadcrumbs.map((breadcrumb) => breadcrumb.title),
         slug: page.slug,
         version: page.version,

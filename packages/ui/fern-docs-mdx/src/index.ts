@@ -1,4 +1,5 @@
 export type { MdxJsxAttribute } from "mdast-util-mdx";
+export { visit } from "unist-util-visit";
 export * from "./declarations.js";
 export * from "./frontmatter.js";
 export * from "./handlers/index.js";
@@ -9,4 +10,5 @@ export * from "./parse.js";
 export * from "./position.js";
 export * from "./sanitize/index.js";
 export * from "./split-into-sections.js";
+export * from "./strip-util.js";
 export * from "./toc.js";

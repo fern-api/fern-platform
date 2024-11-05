@@ -1,0 +1,21 @@
+[
+  "",
+  "getting-started",
+  "getting-started/welcome",
+  "getting-started/quickstart",
+  "sd-ks",
+  "sd-ks/ruby-sdk",
+  "sd-ks/go-sdk",
+  "okta-sso-integration",
+  "okta-sso-integration/setup-okta-sso",
+  "api-reference",
+  "api-reference/detections",
+  "api-reference/detections/get-detection",
+  "api-reference/events",
+  "api-reference/events/create-event-sync",
+  "api-reference/events/create-event-async",
+  "api-reference/event-types",
+  "api-reference/event-types/get-event-types",
+  "api-reference/event-types/create-event-type",
+  "api-reference/event-types/patch-event-type"
+]

@@ -1,6 +1,6 @@
 import { Algolia, FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { MarkdownSectionRoot, getFrontmatter, splitMarkdownIntoSections } from "@fern-ui/fern-docs-mdx";
+import { MarkdownSectionRoot, getFrontmatter, splitMarkdownIntoSections, stripUtil } from "@fern-ui/fern-docs-mdx";
 import { convertPageV4ToV3 } from "../v1-record-converter/convertRecords.js";
 
 interface GenerateMarkdownRecordsOptions {
@@ -65,7 +65,7 @@ export function generateMarkdownRecords({
     };
     // we should still insert this record even if there's no content, because
     // the title of the record can still be matched
-    records.push(rootRecord, convertPageV4ToV3(rootRecord, content));
+    records.push(rootRecord, convertPageV4ToV3(rootRecord, stripUtil(content)));
 
     sections.forEach((section, i) => {
         if (section.type === "root") {
@@ -74,6 +74,7 @@ export function generateMarkdownRecords({
         }
 
         const { heading, content, parents } = section;
+        const strippedContent = stripUtil(content);
 
         const breadcrumbs = [
             ...rootBreadcrumbs,
@@ -90,13 +91,13 @@ export function generateMarkdownRecords({
             type: "page-v4",
             title: heading.title,
             slug: FernNavigation.V1.Slug(`${slug}#${heading.anchor}`),
-            description: content,
+            description: strippedContent,
             breadcrumbs,
             version,
             indexSegmentId,
         };
 
-        records.push(record);
+        records.push(record, convertPageV4ToV3(record, strippedContent));
     });
 
     return records;
