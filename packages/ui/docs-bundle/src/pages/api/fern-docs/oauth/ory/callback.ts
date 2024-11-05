@@ -1,4 +1,6 @@
 import { signFernJWT } from "@/server/auth/FernJWT";
+import { OryOAuth2Client } from "@/server/auth/ory";
+import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
@@ -8,7 +10,6 @@ import { FernUser, OryAccessTokenSchema } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_ACCESS_TOKEN, COOKIE_FERN_TOKEN, COOKIE_REFRESH_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
-import { OryOAuth2Client } from "../../../../../server/auth/ory";
 
 export const runtime = "edge";
 
@@ -19,12 +20,13 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
     const domain = getDocsDomainEdge(req);
     const host = getHostEdge(req);
+    const config = await getAuthEdgeConfig(domain);
 
     const code = req.nextUrl.searchParams.get("code");
-    const state = req.nextUrl.searchParams.get("state");
+    const return_to = req.nextUrl.searchParams.get(getReturnToQueryParam(config));
     const error = req.nextUrl.searchParams.get("error");
     const error_description = req.nextUrl.searchParams.get("error_description");
-    const redirectLocation = safeUrl(state) ?? safeUrl(withDefaultProtocol(host));
+    const redirectLocation = safeUrl(return_to) ?? safeUrl(withDefaultProtocol(host));
 
     if (error != null) {
         // eslint-disable-next-line no-console
@@ -41,8 +43,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             "Couldn't login, please try again",
         );
     }
-
-    const config = await getAuthEdgeConfig(domain);
 
     if (config == null || config.type !== "oauth2" || config.partner !== "ory") {
         // eslint-disable-next-line no-console

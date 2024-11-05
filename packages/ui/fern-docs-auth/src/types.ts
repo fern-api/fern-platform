@@ -82,6 +82,12 @@ export const BasicTokenVerificationSchema = z
         issuer: z.string(),
         redirect: z.string(),
         logout: z.string().optional(),
+        returnToQueryParam: z
+            .string()
+            .optional()
+            .describe(
+                "By default, this is 'state' because most auth platforms are able to support carrying over the state query parameter. Override this to `return_to` if the state parameter conflicts with the customer's auth provider in any way.",
+            ),
     })
     .merge(APIPlaygroundEdgeConfigSchema)
     .merge(PathnameViewerRulesSchema);

@@ -24,6 +24,7 @@ import urlJoin from "url-join";
 import { DocsLoader } from "./DocsLoader";
 import { addLeadingSlash } from "./addLeadingSlash";
 import { getAuthState } from "./auth/getAuthState";
+import { getReturnToQueryParam } from "./auth/return-to";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";
@@ -172,7 +173,7 @@ export async function withInitialProps({
     // TODO: This is a hack to add a login button to the navbar. This should be done in a more generic way.
     if (authConfig?.type === "basic_token_verification" && !authState.authed) {
         const redirect = new URL(withDefaultProtocol(authConfig.redirect));
-        redirect.searchParams.set("state", urlJoin(withDefaultProtocol(host), slug));
+        redirect.searchParams.set(getReturnToQueryParam(authConfig), urlJoin(withDefaultProtocol(host), slug));
 
         navbarLinks.push({
             type: "outlined",
@@ -187,7 +188,7 @@ export async function withInitialProps({
     // TODO: This is a hack to add a logout button to the navbar. This should be done in a more generic way.
     if (authState.authed) {
         const logout = new URL(getApiRoute("/api/fern-docs/auth/logout"), withDefaultProtocol(host));
-        logout.searchParams.set("state", urlJoin(withDefaultProtocol(host), slug));
+        logout.searchParams.set(getReturnToQueryParam(authConfig), urlJoin(withDefaultProtocol(host), slug));
 
         navbarLinks.push({
             type: "outlined",
