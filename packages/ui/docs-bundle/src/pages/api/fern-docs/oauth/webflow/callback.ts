@@ -6,6 +6,7 @@ import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { NextRequest, NextResponse } from "next/server";
 import { WebflowClient } from "webflow-api";
+import { getReturnToQueryParam } from "../../auth/return-to";
 
 export const runtime = "edge";
 
@@ -16,12 +17,13 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
     const domain = getDocsDomainEdge(req);
     const host = getHostEdge(req);
+    const config = await getAuthEdgeConfig(domain);
 
     const code = req.nextUrl.searchParams.get("code");
-    const state = req.nextUrl.searchParams.get("state");
+    const return_to = req.nextUrl.searchParams.get(getReturnToQueryParam(config));
     const error = req.nextUrl.searchParams.get("error");
     const error_description = req.nextUrl.searchParams.get("error_description");
-    const redirectLocation = safeUrl(state) ?? safeUrl(withDefaultProtocol(host));
+    const redirectLocation = safeUrl(return_to) ?? safeUrl(withDefaultProtocol(host));
 
     if (error != null) {
         // eslint-disable-next-line no-console
@@ -38,8 +40,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             "Couldn't login, please try again",
         );
     }
-
-    const config = await getAuthEdgeConfig(domain);
 
     if (config == null || config.type !== "oauth2" || config.partner !== "webflow") {
         // eslint-disable-next-line no-console

@@ -5,11 +5,11 @@ import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
+import { getReturnToQueryParam } from "../return-to";
 
 export const runtime = "edge";
 
 const FORWARDED_HOST_QUERY = "forwarded_host";
-const STATE_QUERY = "state";
 const CODE_QUERY = "code";
 const ERROR_DESCRIPTION_QUERY = "error_description";
 const ERROR_QUERY = "error";
@@ -32,12 +32,13 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
     }
 
     // TODO: this is based on an incorrect implementation of the state param— we need to sign it with a JWT.
-    const state = req.nextUrl.searchParams.get(STATE_QUERY);
-    const url = safeUrl(state ?? req.nextUrl.origin);
+    const return_to_param = getReturnToQueryParam();
+    const return_to = req.nextUrl.searchParams.get(return_to_param);
+    const url = safeUrl(return_to ?? req.nextUrl.origin);
 
     if (url == null) {
         // eslint-disable-next-line no-console
-        console.error("Invalid state param provided:", state);
+        console.error(`Invalid ${return_to_param} param provided:`, return_to);
         return new NextResponse(null, { status: 400 });
     }
 

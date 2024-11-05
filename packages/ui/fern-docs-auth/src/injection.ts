@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const APIKeyInjectionConfigDisabledSchema = z.object({
     enabled: z.literal(false),
+    returnToQueryParam: z.string(),
 });
 
 export const APIKeyInjectionConfigUnauthorizedSchema = z.object({
@@ -9,6 +10,7 @@ export const APIKeyInjectionConfigUnauthorizedSchema = z.object({
     authenticated: z.literal(false),
     authorizationUrl: z.string(),
     partner: z.string().optional(),
+    returnToQueryParam: z.string(),
 });
 
 export const APIKeyInjectionConfigAuthorizedSchema = z.object({
@@ -16,6 +18,7 @@ export const APIKeyInjectionConfigAuthorizedSchema = z.object({
     authenticated: z.literal(true),
     access_token: z.string(),
     partner: z.string().optional(),
+    returnToQueryParam: z.string(),
 });
 
 export const APIKeyInjectionConfigSchema = z.union([

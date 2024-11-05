@@ -1,3 +1,4 @@
+import { getReturnToQueryParam } from "@/pages/api/fern-docs/auth/return-to";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig, FernUser } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
@@ -174,7 +175,7 @@ function getAuthorizationUrl(authConfig: AuthEdgeConfig, host: string, pathname?
         const redirectUri = urlJoin(removeTrailingSlash(withDefaultProtocol(host)), "/api/fern-docs/auth/jwt/callback");
         const destination = new URL(authConfig.redirect);
         destination.searchParams.set("redirect_uri", redirectUri);
-        destination.searchParams.set("state", state);
+        destination.searchParams.set(getReturnToQueryParam(authConfig), state);
         return destination.toString();
     } else if (authConfig.type === "sso" && authConfig.partner === "workos") {
         const redirectUri = urlJoin(removeTrailingSlash(withDefaultProtocol(host)), "/api/fern-docs/auth/sso/callback");

@@ -5,6 +5,7 @@ import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
 import { HEADER_X_FERN_HOST } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
+import { getReturnToQueryParam } from "./return-to";
 
 export const runtime = "edge";
 
@@ -15,12 +16,14 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const domain = getDocsDomainEdge(req);
     const host = getHostEdge(req);
 
+    const config = await getAuthEdgeConfig(domain);
+
     // The authorization code returned by AuthKit
     const code = req.nextUrl.searchParams.get("code");
-    const state = req.nextUrl.searchParams.get("state");
+    const return_to = req.nextUrl.searchParams.get(getReturnToQueryParam(config));
     const error = req.nextUrl.searchParams.get("error");
     const error_description = req.nextUrl.searchParams.get("error_description");
-    const redirectLocation = safeUrl(state) ?? safeUrl(withDefaultProtocol(host));
+    const redirectLocation = safeUrl(return_to) ?? safeUrl(withDefaultProtocol(host));
 
     if (error != null) {
         return redirectWithLoginError(redirectLocation, error, error_description);
@@ -33,8 +36,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             "Couldn't login, please try again",
         );
     }
-
-    const config = await getAuthEdgeConfig(domain);
     const nextUrl = req.nextUrl.clone();
 
     // Redirect to x-fern-host domain if it exists

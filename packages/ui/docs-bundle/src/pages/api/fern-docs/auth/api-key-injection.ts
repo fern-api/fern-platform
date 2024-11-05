@@ -11,6 +11,7 @@ import { NextRequest, NextResponse } from "next/server";
 import urlJoin from "url-join";
 import { WebflowClient } from "webflow-api";
 import type { OauthScope } from "webflow-api/api/types/OAuthScope";
+import { getReturnToQueryParam } from "./return-to";
 
 export const runtime = "edge";
 
@@ -19,6 +20,8 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
     const host = getHostEdge(req);
 
     const edgeConfig = await getAuthEdgeConfig(domain);
+
+    const returnToQueryParam = getReturnToQueryParam(edgeConfig);
 
     const fern_token = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
     const access_token = req.cookies.get("access_token")?.value;
@@ -31,18 +34,21 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
             enabled: true,
             authenticated: true,
             access_token: fernUser.api_key,
+            returnToQueryParam,
         });
     }
 
     if (!edgeConfig) {
         return NextResponse.json({
             enabled: false,
+            returnToQueryParam,
         });
     }
 
     if (edgeConfig.type === "sso" || edgeConfig["api-key-injection-enabled"] !== true) {
         return NextResponse.json({
             enabled: false,
+            returnToQueryParam,
         });
     }
 
@@ -50,6 +56,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
         if (!edgeConfig.redirect) {
             return NextResponse.json({
                 enabled: false,
+                returnToQueryParam,
             });
         }
 
@@ -57,12 +64,14 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
             enabled: true,
             authenticated: false,
             authorizationUrl: edgeConfig.redirect,
+            returnToQueryParam,
         });
     }
 
     if (edgeConfig.type !== "oauth2") {
         return NextResponse.json({
             enabled: false,
+            returnToQueryParam,
         });
     }
 
@@ -81,6 +90,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
                 enabled: true,
                 authenticated: false,
                 authorizationUrl,
+                returnToQueryParam,
             });
         }
 
@@ -88,6 +98,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
             enabled: true,
             authenticated: true,
             access_token,
+            returnToQueryParam,
         });
     }
 
@@ -105,6 +116,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
                         "/api/fern-docs/oauth/ory/callback",
                     ),
                 }),
+                returnToQueryParam,
             });
         } else {
             const expires = tokens.exp != null ? new Date(tokens.exp * 1000) : undefined;
@@ -159,5 +171,6 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
 
     return NextResponse.json({
         enabled: false,
+        returnToQueryParam,
     });
 }
