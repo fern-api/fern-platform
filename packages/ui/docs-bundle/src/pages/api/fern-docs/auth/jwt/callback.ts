@@ -32,7 +32,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
 
     const fernUser = await safeVerifyFernJWTConfig(token, edgeConfig);
 
-    if (fernUser) {
+    if (fernUser == null) {
         return redirectWithLoginError(redirectLocation, "unknown_error", "Couldn't login, please try again");
     }
 
