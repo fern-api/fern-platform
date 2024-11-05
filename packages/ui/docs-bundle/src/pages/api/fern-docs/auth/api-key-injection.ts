@@ -147,6 +147,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<AP
                 enabled: true,
                 authenticated: true,
                 access_token,
+                returnToQueryParam,
             });
 
             if (access_token !== req.cookies.get("access_token")?.value) {
