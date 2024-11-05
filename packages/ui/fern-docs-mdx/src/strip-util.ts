@@ -24,6 +24,6 @@ export function stripUtil(markdown: string, format: "md" | "mdx" = "mdx"): strin
         }
     });
 
-    // return this to string
+    // TODO: (andrew), this might have some issues with formatting new lines
     return toString(hast);
 }
