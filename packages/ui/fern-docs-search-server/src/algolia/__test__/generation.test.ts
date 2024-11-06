@@ -59,6 +59,14 @@ for (const fixtureName of [
                 isFieldRecordsEnabled: true,
             });
 
+            records.forEach((record) => {
+                if (record.type === "page-v4" || record.type === "endpoint-v4" || record.type === "endpoint-field-v1") {
+                    expect(record.description?.length).toBeLessThan(95000);
+                }
+                if (record.type === "endpoint-v3" || record.type === "page-v3") {
+                    expect(record.content?.length).toBeLessThan(100000);
+                }
+            });
             expect(records).toMatchFileSnapshot(path.join("__snapshots__", `${fixtureName}.test.ts.snap`));
         });
     });
