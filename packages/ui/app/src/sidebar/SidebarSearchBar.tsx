@@ -20,7 +20,7 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(function 
 
     return (
         <button
-            id="fern-search-bar"
+            id="fern-search-button"
             onClick={openSearchDialog}
             className={cn("fern-search-bar", className)}
             disabled={!searchService.isAvailable}

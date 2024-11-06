@@ -12,7 +12,6 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.685.0",
     "@aws-sdk/s3-request-presigner": "^3.685.0",
-    "@fern-ui/fern-docs-search-server": "workspace:*",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/github": "workspace:*",
     "@fern-api/template-resolver": "workspace:*",
@@ -20,6 +19,7 @@
     "@fern-api/venus-api-sdk": "^0.10.1-5-ged06d22",
     "@fern-fern/fern-docs-sdk": "0.0.5",
     "@fern-fern/revalidation-sdk": "0.0.9",
+    "@fern-ui/fern-docs-search-server": "workspace:*",
     "@prisma/client": "5.13.0",
     "@sentry/cli": "^2.31.0",
     "@sentry/node": "^7.112.2",
@@ -44,6 +44,7 @@
     "path-resolver": "*",
     "redis": "^4.6.13",
     "semver": "^7.6.2",
+    "undici": "^6.20.1",
     "url-join": "5.0.0",
     "uuid": "^9.0.0",
     "winston": "^3.10.0"
