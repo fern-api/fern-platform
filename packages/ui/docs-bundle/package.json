@@ -25,8 +25,8 @@
   },
   "dependencies": {
     "@algolia/requester-fetch": "^5.8.1",
-    "@aws-sdk/client-s3": "^3.335.0",
-    "@aws-sdk/s3-request-presigner": "^3.574.0",
+    "@aws-sdk/client-s3": "^3.685.0",
+    "@aws-sdk/s3-request-presigner": "^3.685.0",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-fern/fern-docs-sdk": "0.0.5",
