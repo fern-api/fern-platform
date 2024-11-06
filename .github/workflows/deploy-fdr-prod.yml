@@ -30,7 +30,7 @@ jobs:
     if: github.ref_type == 'tag' && github.event_name == 'push'  && startsWith(github.ref, 'refs/tags/fdr@')
     environment: Fern Prod
     env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}/fdr?schema=public
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}/fdr?schema=public&pool_timeout=30
       ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
       ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
       ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
