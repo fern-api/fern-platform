@@ -102,7 +102,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://ucarecdn.com/d7fe74ac-65b8-4ade-875f-ccd92759a70f/-/json",
+                  "code": "curl https://ucarecdn.com/d7fe74ac-65b8-4ade-875f-ccd92759a70f/-/json",
                   "generated": true
                 }
               ]
@@ -124,7 +124,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://ucarecdn.com/:uuid/-/json",
+                  "code": "curl https://ucarecdn.com/:uuid/-/json",
                   "generated": true
                 }
               ]
@@ -232,7 +232,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://ucarecdn.com/d7fe74ac-65b8-4ade-875f-ccd92759a70f/-/jsonp",
+                  "code": "curl https://ucarecdn.com/d7fe74ac-65b8-4ade-875f-ccd92759a70f/-/jsonp",
                   "generated": true
                 }
               ]
@@ -254,7 +254,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://ucarecdn.com/:uuid/-/jsonp",
+                  "code": "curl https://ucarecdn.com/:uuid/-/jsonp",
                   "generated": true
                 }
               ]
@@ -342,7 +342,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://ucarecdn.com/d7fe74ac-65b8-4ade-875f-ccd92759a70f/cat.jpg",
+                  "code": "curl https://ucarecdn.com/d7fe74ac-65b8-4ade-875f-ccd92759a70f/cat.jpg",
                   "generated": true
                 }
               ]
@@ -6299,7 +6299,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -6325,7 +6325,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/files/:uuid/metadata \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/files/:uuid/metadata \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -6351,7 +6351,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/files/:uuid/metadata \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/files/:uuid/metadata \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -7991,7 +7991,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/files/03ccf9ab-f266-43fb-973d-a6529c55c2ae \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/files/03ccf9ab-f266-43fb-973d-a6529c55c2ae \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -11710,7 +11710,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/subsystem \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/subsystem \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -11737,7 +11737,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/files/:uuid/metadata/:key \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/files/:uuid/metadata/:key \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -11764,7 +11764,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/files/:uuid/metadata/:key \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/files/:uuid/metadata/:key \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -12689,7 +12689,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/groups/badfc9f7-f88f-4921-9cc0-22e2c08aa2da~12 \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/groups/badfc9f7-f88f-4921-9cc0-22e2c08aa2da~12 \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -12715,7 +12715,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/groups/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/groups/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -12741,7 +12741,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/groups/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/groups/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -12767,7 +12767,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/groups/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/groups/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -12793,7 +12793,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/groups/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/groups/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -13188,7 +13188,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/project \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/project \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -13212,7 +13212,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/project \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/project \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -13236,7 +13236,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/project \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/project \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -13260,7 +13260,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/project \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/project \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -13414,7 +13414,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/webhooks \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/webhooks \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -13438,7 +13438,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/webhooks \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/webhooks \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -13462,7 +13462,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/webhooks \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/webhooks \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -13486,7 +13486,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/webhooks \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/webhooks \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -14288,7 +14288,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/document/86c91c35-58e1-41f7-9b23-2d7652cfcd17 \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/document/86c91c35-58e1-41f7-9b23-2d7652cfcd17 \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -14314,7 +14314,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/document/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/document/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -14340,7 +14340,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/document/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/document/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -14366,7 +14366,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/document/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/document/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -14392,7 +14392,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/document/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/document/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -14418,7 +14418,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/document/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/document/:uuid \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -14871,7 +14871,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/document/status/1 \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/document/status/1 \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -14897,7 +14897,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/document/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/document/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -14923,7 +14923,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/document/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/document/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -14949,7 +14949,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/document/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/document/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -14975,7 +14975,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/document/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/document/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -15001,7 +15001,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/document/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/document/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -15439,7 +15439,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/video/status/1 \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/video/status/1 \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -15465,7 +15465,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/video/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/video/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -15491,7 +15491,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/video/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/video/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -15517,7 +15517,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/video/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/video/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -15543,7 +15543,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/video/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/video/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -15569,7 +15569,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.uploadcare.com/convert/video/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
+                  "code": "curl https://api.uploadcare.com/convert/video/status/0 \\\n     -H \"Accept: string\" \\\n     -H \"Uploadcare: string\" \\\n     -H \"Uploadcare.Simple: string\" \\\n     -H \"Authorization: <apiKey>\"",
                   "generated": true
                 }
               ]

@@ -1787,7 +1787,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/tasks/6298d673f1090f1100476d4c \\\n     -H \"x-api-key: tlk-1234567890\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/tasks/6298d673f1090f1100476d4c \\\n     -H \"x-api-key: tlk-1234567890\"",
                   "generated": true
                 }
               ],
@@ -1829,7 +1829,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/tasks/:task_id \\\n     -H \"x-api-key: string\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/tasks/:task_id \\\n     -H \"x-api-key: string\"",
                   "generated": true
                 }
               ],
@@ -3282,7 +3282,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/tasks/transfers/import/6298d673f1090f1100476d4c/status \\\n     -H \"x-api-key: tlk-1234567890\" \\\n     -H \"Content-Type: application/json\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/tasks/transfers/import/6298d673f1090f1100476d4c/status \\\n     -H \"x-api-key: tlk-1234567890\" \\\n     -H \"Content-Type: application/json\"",
                   "generated": true
                 }
               ]
@@ -3316,7 +3316,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/tasks/transfers/import/:integration-id/status \\\n     -H \"x-api-key: string\" \\\n     -H \"Content-Type: application/json\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/tasks/transfers/import/:integration-id/status \\\n     -H \"x-api-key: string\" \\\n     -H \"Content-Type: application/json\"",
                   "generated": true
                 }
               ]
@@ -3481,7 +3481,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/tasks/transfers/import/6298d673f1090f1100476d4c/logs \\\n     -H \"x-api-key: tlk-1234567890\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/tasks/transfers/import/6298d673f1090f1100476d4c/logs \\\n     -H \"x-api-key: tlk-1234567890\"",
                   "generated": true
                 }
               ]
@@ -3509,7 +3509,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/tasks/transfers/import/:integration-id/logs \\\n     -H \"x-api-key: string\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/tasks/transfers/import/:integration-id/logs \\\n     -H \"x-api-key: string\"",
                   "generated": true
                 }
               ]
@@ -5109,7 +5109,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/indexes/6298d673f1090f1100476d4c \\\n     -H \"x-api-key: tlk-1234567890\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/indexes/6298d673f1090f1100476d4c \\\n     -H \"x-api-key: tlk-1234567890\"",
                   "generated": true
                 }
               ],
@@ -5151,7 +5151,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/indexes/:index-id \\\n     -H \"x-api-key: string\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/indexes/:index-id \\\n     -H \"x-api-key: string\"",
                   "generated": true
                 }
               ],
@@ -9148,7 +9148,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/search/1234567890 \\\n     -H \"x-api-key: tlk-1234567890\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/search/1234567890 \\\n     -H \"x-api-key: tlk-1234567890\"",
                   "generated": true
                 }
               ],
@@ -9189,7 +9189,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/search/:page-token \\\n     -H \"x-api-key: string\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/search/:page-token \\\n     -H \"x-api-key: string\"",
                   "generated": true
                 }
               ],
@@ -11170,7 +11170,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/embed/tasks/663da73b31cdd0c1f638a8e6 \\\n     -H \"x-api-key: tlk-1234567890\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/embed/tasks/663da73b31cdd0c1f638a8e6 \\\n     -H \"x-api-key: tlk-1234567890\"",
                   "generated": true
                 }
               ],
@@ -11212,7 +11212,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/embed/tasks/:task_id \\\n     -H \"x-api-key: string\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/embed/tasks/:task_id \\\n     -H \"x-api-key: string\"",
                   "generated": true
                 }
               ],
@@ -11482,7 +11482,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/embed/tasks/663da73b31cdd0c1f638a8e6/status \\\n     -H \"x-api-key: tlk-1234567890\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/embed/tasks/663da73b31cdd0c1f638a8e6/status \\\n     -H \"x-api-key: tlk-1234567890\"",
                   "generated": true
                 }
               ],
@@ -11524,7 +11524,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/embed/tasks/:task_id/status \\\n     -H \"x-api-key: string\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/embed/tasks/:task_id/status \\\n     -H \"x-api-key: string\"",
                   "generated": true
                 }
               ],
@@ -13089,7 +13089,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/indexes/6298d673f1090f1100476d4c/videos/6298d673f1090f1100476d4c \\\n     -H \"x-api-key: tlk-1234567890\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/indexes/6298d673f1090f1100476d4c/videos/6298d673f1090f1100476d4c \\\n     -H \"x-api-key: tlk-1234567890\"",
                   "generated": true
                 }
               ],
@@ -13132,7 +13132,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.twelvelabs.io/v1.3/indexes/:index-id/videos/:video-id \\\n     -H \"x-api-key: string\"",
+                  "code": "curl https://api.twelvelabs.io/v1.3/indexes/:index-id/videos/:video-id \\\n     -H \"x-api-key: string\"",
                   "generated": true
                 }
               ],

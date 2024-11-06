@@ -65,7 +65,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/accounts/current \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/accounts/current \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -633,7 +633,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/actions/:actionId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/actions/:actionId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1551,7 +1551,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/agents/:agentId/versions \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/agents/:agentId/versions \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1582,7 +1582,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/agents/:agentId/versions \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/agents/:agentId/versions \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1613,7 +1613,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/agents/:agentId/versions \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/agents/:agentId/versions \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1757,7 +1757,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/agents/:agentId/versions/:agentVersionId/revert \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/agents/:agentId/versions/:agentVersionId/revert \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1789,7 +1789,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/agents/:agentId/versions/:agentVersionId/revert \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/agents/:agentId/versions/:agentVersionId/revert \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1821,7 +1821,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/agents/:agentId/versions/:agentVersionId/revert \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/agents/:agentId/versions/:agentVersionId/revert \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1955,7 +1955,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/agents/:agentId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/agents/:agentId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1986,7 +1986,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/agents/:agentId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/agents/:agentId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -2017,7 +2017,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/agents/:agentId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/agents/:agentId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -2048,7 +2048,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/agents/:agentId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/agents/:agentId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -3936,7 +3936,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/apps \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/apps \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -4044,7 +4044,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/apps/us_app_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/apps/us_app_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -4773,7 +4773,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/apps/:appId/constraints/:constraintId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/apps/:appId/constraints/:constraintId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -4895,7 +4895,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/apps/:appId/constraints/:constraintId/versions \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/apps/:appId/constraints/:constraintId/versions \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -5033,7 +5033,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/apps/:appId/constraints/:constraintId/versions/0 \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/apps/:appId/constraints/:constraintId/versions/0 \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -5403,7 +5403,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/prompts \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/prompts \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -5497,7 +5497,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/prompts/us_pr_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/prompts/us_pr_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -5901,7 +5901,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/commits/us_vr_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/commits/us_vr_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -5946,7 +5946,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/commits/:commitId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/commits/:commitId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -5991,7 +5991,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/commits/:commitId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/commits/:commitId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -6925,7 +6925,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/data-retention-policies/us_drp_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/data-retention-policies/us_drp_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -6970,7 +6970,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/data-retention-policies/:id \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/data-retention-policies/:id \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7015,7 +7015,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/data-retention-policies/:id \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/data-retention-policies/:id \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7606,7 +7606,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/spaces/us_sp_YOUR_ID/documents \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/spaces/us_sp_YOUR_ID/documents \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7651,7 +7651,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/spaces/:spaceId/documents \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/spaces/:spaceId/documents \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7696,7 +7696,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/spaces/:spaceId/documents \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/spaces/:spaceId/documents \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -8130,7 +8130,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/spaces/us_sp_YOUR_ID/documents/us_dc_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/spaces/us_sp_YOUR_ID/documents/us_dc_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -8176,7 +8176,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/spaces/:spaceId/documents/:documentId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/spaces/:spaceId/documents/:documentId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -8222,7 +8222,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/spaces/:spaceId/documents/:documentId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/spaces/:spaceId/documents/:documentId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -9046,7 +9046,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/environments \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/environments \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -9512,7 +9512,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/environments/us_env_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/environments/us_env_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -9557,7 +9557,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/environments/:environmentId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/environments/:environmentId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -9602,7 +9602,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/environments/:environmentId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/environments/:environmentId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -10163,7 +10163,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/events \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/events \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -10543,7 +10543,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/events/us_evt_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/events/us_evt_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -10772,7 +10772,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/subscription \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/subscription \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -11033,7 +11033,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/files \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/files \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -11508,7 +11508,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/files/us_fl_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/files/us_fl_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -11553,7 +11553,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/files/:fileId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/files/:fileId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -11598,7 +11598,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/files/:fileId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/files/:fileId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -12234,7 +12234,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/files/:fileId/download \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/files/:fileId/download \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -12265,7 +12265,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/files/:fileId/download \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/files/:fileId/download \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -12296,7 +12296,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/files/:fileId/download \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/files/:fileId/download \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -12655,7 +12655,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/guests/us_g_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/guests/us_g_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -13000,7 +13000,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/guests/us_g_YOUR_ID/token \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/guests/us_g_YOUR_ID/token \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -13144,7 +13144,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/guests/:guestId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/guests/:guestId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -13175,7 +13175,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/guests/:guestId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/guests/:guestId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -13206,7 +13206,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/guests/:guestId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/guests/:guestId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -13237,7 +13237,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/guests/:guestId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/guests/:guestId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -14336,7 +14336,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/jobs/us_jb_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/jobs/us_jb_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -14862,7 +14862,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/jobs/us_jb_YOUR_ID/plan \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/jobs/us_jb_YOUR_ID/plan \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -17800,7 +17800,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/mapping/:programId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/mapping/:programId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -17831,7 +17831,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/mapping/:programId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/mapping/:programId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -17862,7 +17862,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/mapping/:programId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/mapping/:programId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -18899,7 +18899,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/mapping/us_mp_YOUR_ID/rules \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/mapping/us_mp_YOUR_ID/rules \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -18944,7 +18944,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/mapping/:programId/rules \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/mapping/:programId/rules \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -18989,7 +18989,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/mapping/:programId/rules \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/mapping/:programId/rules \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19143,7 +19143,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/mapping/us_mp_YOUR_ID/rules/us_mr_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/mapping/us_mp_YOUR_ID/rules/us_mr_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19189,7 +19189,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/mapping/:programId/rules/:mappingId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/mapping/:programId/rules/:mappingId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19235,7 +19235,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/mapping/:programId/rules/:mappingId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/mapping/:programId/rules/:mappingId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20503,7 +20503,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/sheets/us_sh_YOUR_ID/records \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/sheets/us_sh_YOUR_ID/records \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21764,7 +21764,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -22718,7 +22718,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/sheets/us_sh_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/sheets/us_sh_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -23851,7 +23851,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/sheets/us_sh_YOUR_ID/commits \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/sheets/us_sh_YOUR_ID/commits \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -27222,7 +27222,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/spaces/us_sp_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/spaces/us_sp_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -27267,7 +27267,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/spaces/:spaceId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/spaces/:spaceId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -27312,7 +27312,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/spaces/:spaceId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/spaces/:spaceId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -29081,7 +29081,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/users/us_usr_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/users/us_usr_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -29306,7 +29306,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/users/:userId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/users/:userId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -29337,7 +29337,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/users/:userId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/users/:userId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -29368,7 +29368,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/users/:userId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/users/:userId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -29399,7 +29399,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/users/:userId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/users/:userId/roles \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -30648,7 +30648,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/views/us_vi_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/views/us_vi_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -30693,7 +30693,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/views/:viewId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/views/:viewId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -30738,7 +30738,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/views/:viewId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/views/:viewId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -31868,7 +31868,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/workbooks/us_wb_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/workbooks/us_wb_YOUR_ID \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -31913,7 +31913,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/workbooks/:workbookId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/workbooks/:workbookId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -31958,7 +31958,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/workbooks/:workbookId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/workbooks/:workbookId \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -32614,7 +32614,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.x.flatfile.com/v1/workbooks/us_wb_YOUR_ID/commits \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl https://api.x.flatfile.com/v1/workbooks/us_wb_YOUR_ID/commits \\\n     -H \"X-Disable-Hooks: true\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],

@@ -100,7 +100,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.airtop.ai/api/v1/profiles \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl https://api.airtop.ai/api/v1/profiles \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -2211,7 +2211,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.airtop.ai/api/v1/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl https://api.airtop.ai/api/v1/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -2260,7 +2260,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.airtop.ai/api/v1/sessions/:id \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl https://api.airtop.ai/api/v1/sessions/:id \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -2309,7 +2309,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.airtop.ai/api/v1/sessions/:id \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl https://api.airtop.ai/api/v1/sessions/:id \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -2358,7 +2358,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.airtop.ai/api/v1/sessions/:id \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl https://api.airtop.ai/api/v1/sessions/:id \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],

@@ -11187,7 +11187,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.sandbox.primer.io/client-session \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl https://api.sandbox.primer.io/client-session \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -15759,7 +15759,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.sandbox.primer.io/payments/string \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl https://api.sandbox.primer.io/payments/string \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -15792,7 +15792,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.sandbox.primer.io/payments/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl https://api.sandbox.primer.io/payments/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -17245,7 +17245,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.sandbox.primer.io/loyalty-transactions \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl https://api.sandbox.primer.io/loyalty-transactions \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -29439,7 +29439,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.sandbox.primer.io/client-session \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl https://api.sandbox.primer.io/client-session \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -32896,7 +32896,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.sandbox.primer.io/payments/string \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl https://api.sandbox.primer.io/payments/string \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -32927,7 +32927,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.sandbox.primer.io/payments/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl https://api.sandbox.primer.io/payments/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -46647,7 +46647,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.sandbox.primer.io/client-session \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl https://api.sandbox.primer.io/client-session \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -51431,7 +51431,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.sandbox.primer.io/payments/string \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl https://api.sandbox.primer.io/payments/string \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -51464,7 +51464,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.sandbox.primer.io/payments/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl https://api.sandbox.primer.io/payments/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -52917,7 +52917,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.sandbox.primer.io/loyalty-transactions \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl https://api.sandbox.primer.io/loyalty-transactions \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -68015,7 +68015,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.sandbox.primer.io/payments/string \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl https://api.sandbox.primer.io/payments/string \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -68042,7 +68042,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://api.sandbox.primer.io/payments/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl https://api.sandbox.primer.io/payments/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]

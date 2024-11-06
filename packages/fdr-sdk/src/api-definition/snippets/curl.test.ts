@@ -13,7 +13,7 @@ describe("curl", () => {
                 },
                 { usesApplicationJsonInFormDataValue: false },
             ),
-        ).toMatchInlineSnapshot('"curl -G https://api.example.com/users"');
+        ).toMatchInlineSnapshot('"curl https://api.example.com/users"');
     });
 
     it("generates POST request with JSON body", () => {
@@ -63,7 +63,7 @@ describe("curl", () => {
                 { usesApplicationJsonInFormDataValue: false },
             ),
         ).toMatchInlineSnapshot(`
-          "curl -G https://api.example.com/secure \\
+          "curl https://api.example.com/secure \\
                -u "user:pass123""
         `);
     });

@@ -121,7 +121,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://intrinsicapi.com/api/v2/detections/detection-id \\\n     -H \"X-API-Key: <apiKey>\"",
+                  "code": "curl https://intrinsicapi.com/api/v2/detections/detection-id \\\n     -H \"X-API-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -157,7 +157,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://intrinsicapi.com/api/v2/detections/:id \\\n     -H \"X-API-Key: <apiKey>\"",
+                  "code": "curl https://intrinsicapi.com/api/v2/detections/:id \\\n     -H \"X-API-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -193,7 +193,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://intrinsicapi.com/api/v2/detections/:id \\\n     -H \"X-API-Key: <apiKey>\"",
+                  "code": "curl https://intrinsicapi.com/api/v2/detections/:id \\\n     -H \"X-API-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -229,7 +229,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://intrinsicapi.com/api/v2/detections/:id \\\n     -H \"X-API-Key: <apiKey>\"",
+                  "code": "curl https://intrinsicapi.com/api/v2/detections/:id \\\n     -H \"X-API-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -1025,7 +1025,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://intrinsicapi.com/api/v2/event-types \\\n     -H \"X-API-Key: <apiKey>\"",
+                  "code": "curl https://intrinsicapi.com/api/v2/event-types \\\n     -H \"X-API-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -1059,7 +1059,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://intrinsicapi.com/api/v2/event-types \\\n     -H \"X-API-Key: <apiKey>\"",
+                  "code": "curl https://intrinsicapi.com/api/v2/event-types \\\n     -H \"X-API-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -1093,7 +1093,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl -G https://intrinsicapi.com/api/v2/event-types \\\n     -H \"X-API-Key: <apiKey>\"",
+                  "code": "curl https://intrinsicapi.com/api/v2/event-types \\\n     -H \"X-API-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
