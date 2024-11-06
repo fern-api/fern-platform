@@ -462,7 +462,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl //contracts/:contractID/generic-document/:s3Key/file-url \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G //contracts/:contractID/generic-document/:s3Key/file-url \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -564,7 +564,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl //contracts/eor/:contractID/payslips/:s3Key/fileUrl \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G //contracts/eor/:contractID/payslips/:s3Key/fileUrl \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -666,7 +666,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl //companies/:companyId/contracts/eor/pay-in/:s3Key/file-url \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G //companies/:companyId/contracts/eor/pay-in/:s3Key/file-url \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -885,7 +885,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/accounting/info \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/accounting/info \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -971,7 +971,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/accounting/account-mapping \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/accounting/account-mapping \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1145,7 +1145,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/bank/account \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/bank/account \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1566,7 +1566,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/payment-methods \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/payment-methods \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -2131,7 +2131,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /worker/supported-bank-transfer-currencies \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /worker/supported-bank-transfer-currencies \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -3266,7 +3266,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/workers/:userId/balances \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/workers/:userId/balances \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -3381,7 +3381,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/workers/:userId/transactions \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/workers/:userId/transactions \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -3455,7 +3455,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /workers/withdrawals/delivery-estimate/:withdrawalId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /workers/withdrawals/delivery-estimate/:withdrawalId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -3736,7 +3736,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/pay-ins/:payInId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/pay-ins/:payInId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -5546,7 +5546,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/teams \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/teams \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -5796,7 +5796,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/managers \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/managers \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -6619,7 +6619,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /users/:userId/affiliations \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /users/:userId/affiliations \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -9382,7 +9382,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /contracts/:contractId/payCycle/2023-01-01",
+                  "code": "curl -G /contracts/:contractId/payCycle/2023-01-01",
                   "generated": true
                 }
               ]
@@ -9751,7 +9751,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/w2-payroll/off-cycle-checks \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/w2-payroll/off-cycle-checks \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -9924,7 +9924,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyID/w2-payroll/on-cycle-checks \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyID/w2-payroll/on-cycle-checks \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -10406,7 +10406,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/timeoff-policy/:policyId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/timeoff-policy/:policyId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -10875,7 +10875,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/users/:userId/time-off-history \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/users/:userId/time-off-history \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -10987,7 +10987,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/timeoff-policies/:policyId/contractors-details \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/timeoff-policies/:policyId/contractors-details \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -11099,7 +11099,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/contractors/:userId/timeoff-policies \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/contractors/:userId/timeoff-policies \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -11854,7 +11854,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /naics-codes \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /naics-codes \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -12118,7 +12118,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/fetch-accounts \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/fetch-accounts \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -12211,7 +12211,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/fetch-accounts/:accountId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/fetch-accounts/:accountId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -12430,7 +12430,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/fetch-transactions/:accountId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/fetch-transactions/:accountId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -12548,7 +12548,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl /companies/:companyId/tp-transaction/:transactionId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G /companies/:companyId/tp-transaction/:transactionId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]

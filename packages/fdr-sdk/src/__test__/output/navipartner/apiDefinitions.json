@@ -607,7 +607,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/card/id/123434",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/card/id/123434",
                   "generated": true
                 }
               ]
@@ -794,7 +794,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/card/number/MC1234567890",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/card/number/MC1234567890",
                   "generated": true
                 }
               ]
@@ -1309,7 +1309,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./membership/catalog/EN",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./membership/catalog/EN",
                   "generated": true
                 }
               ]
@@ -1492,7 +1492,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/history",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/history",
                   "generated": true
                 }
               ]
@@ -2045,7 +2045,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/renew/options",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/renew/options",
                   "generated": true
                 }
               ]
@@ -2428,7 +2428,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/upgrade/options",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/upgrade/options",
                   "generated": true
                 }
               ]
@@ -2811,7 +2811,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/extend/options",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/extend/options",
                   "generated": true
                 }
               ]
@@ -3454,7 +3454,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/member/id/4331",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/member/id/4331",
                   "generated": true
                 }
               ]
@@ -3649,7 +3649,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/member/number/M123456789",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/member/number/M123456789",
                   "generated": true
                 }
               ]
@@ -4354,7 +4354,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/member/4331/image",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/member/4331/image",
                   "generated": true
                 }
               ]
@@ -5177,7 +5177,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/id/1224",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/id/1224",
                   "generated": true
                 }
               ]
@@ -5341,7 +5341,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/number/MS-DEMO-00152",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/number/MS-DEMO-00152",
                   "generated": true
                 }
               ]
@@ -5876,7 +5876,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/members",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/members",
                   "generated": true
                 }
               ]
@@ -6042,7 +6042,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/misc/MS-DEMO-00152/resolve",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/misc/MS-DEMO-00152/resolve",
                   "generated": true
                 }
               ]
@@ -6159,7 +6159,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/{company}/companies \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/{company}/companies \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -6278,7 +6278,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./helloworld \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./helloworld \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -6772,7 +6772,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/catalog/EN",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/catalog/EN",
                   "generated": true
                 }
               ]
@@ -7939,7 +7939,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/reservation/ABC123456DEF789GHI",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/reservation/ABC123456DEF789GHI",
                   "generated": true
                 }
               ]
@@ -8015,7 +8015,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/reservation/ABC123456DEF789GHI",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/reservation/ABC123456DEF789GHI",
                   "generated": true
                 }
               ]
@@ -8221,7 +8221,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/reservation/ABC123456DEF789GHI/tickets",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/reservation/ABC123456DEF789GHI/tickets",
                   "generated": true
                 }
               ]
@@ -8415,7 +8415,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/ticket/TICKET123",
+                  "code": "curl -G https://api.npretail.app/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/ticket/TICKET123",
                   "generated": true
                 }
               ]

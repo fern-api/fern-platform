@@ -286,7 +286,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.ferry.health/api/v1/appointment-tasks/ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.ferry.health/api/v1/appointment-tasks/ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -459,7 +459,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.ferry.health/api/v1/appointment-tasks \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.ferry.health/api/v1/appointment-tasks \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]

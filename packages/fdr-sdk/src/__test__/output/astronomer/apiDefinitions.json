@@ -230,7 +230,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -534,7 +534,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/organizationId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/organizationId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1733,7 +1733,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/organizationId/deployment-options \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/organizationId/deployment-options \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -2119,7 +2119,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/organizationId/clusters \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/organizationId/clusters \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -2837,7 +2837,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/organizationId/clusters/clusterId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/organizationId/clusters/clusterId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -2864,7 +2864,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/clusters/:clusterId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/clusters/:clusterId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -2891,7 +2891,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/clusters/:clusterId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/clusters/:clusterId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -2918,7 +2918,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/clusters/:clusterId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/clusters/:clusterId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -2945,7 +2945,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/clusters/:clusterId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/clusters/:clusterId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -2972,7 +2972,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/clusters/:clusterId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/clusters/:clusterId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -3997,7 +3997,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/organizationId/deployments \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/organizationId/deployments \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -4847,7 +4847,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/organizationId/deployments/deploymentId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/organizationId/deployments/deploymentId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -4874,7 +4874,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -4901,7 +4901,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -4928,7 +4928,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -4955,7 +4955,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -4982,7 +4982,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -6301,7 +6301,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/organizationId/deployments/deploymentId/deploys \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/organizationId/deployments/deploymentId/deploys \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -7064,7 +7064,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/organizationId/deployments/deploymentId/deploys/deployId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/organizationId/deployments/deploymentId/deploys/deployId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -7092,7 +7092,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -7120,7 +7120,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -7148,7 +7148,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -7176,7 +7176,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -7204,7 +7204,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -8628,7 +8628,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/organizationId/workspaces \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/organizationId/workspaces \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -9316,7 +9316,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/organizationId/workspaces/workspaceId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/organizationId/workspaces/workspaceId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -9343,7 +9343,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/workspaces/:workspaceId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/workspaces/:workspaceId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -9370,7 +9370,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/workspaces/:workspaceId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/workspaces/:workspaceId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -9397,7 +9397,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/workspaces/:workspaceId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/workspaces/:workspaceId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -9424,7 +9424,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/workspaces/:workspaceId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/workspaces/:workspaceId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -9451,7 +9451,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/workspaces/:workspaceId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/platform/v1beta1/organizations/:organizationId/workspaces/:workspaceId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -18766,7 +18766,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/authorization/permission-groups \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/authorization/permission-groups \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -19684,7 +19684,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/organizationId/role-templates \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/organizationId/role-templates \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -20096,7 +20096,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/organizationId/roles \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/organizationId/roles \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -21619,7 +21619,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/organizationId/roles/roleId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/organizationId/roles/roleId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -21646,7 +21646,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/roles/:roleId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/roles/:roleId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -21673,7 +21673,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/roles/:roleId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/roles/:roleId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -21700,7 +21700,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/roles/:roleId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/roles/:roleId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -21727,7 +21727,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/roles/:roleId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/roles/:roleId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -21754,7 +21754,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/roles/:roleId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/roles/:roleId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -22011,7 +22011,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/organizationId/teams \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/organizationId/teams \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -22776,7 +22776,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/organizationId/teams/teamId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/organizationId/teams/teamId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -22803,7 +22803,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/teams/:teamId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/teams/:teamId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -22830,7 +22830,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/teams/:teamId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/teams/:teamId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -22857,7 +22857,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/teams/:teamId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/teams/:teamId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -22884,7 +22884,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/teams/:teamId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/teams/:teamId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -22911,7 +22911,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/teams/:teamId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/teams/:teamId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -23825,7 +23825,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/organizationId/teams/teamId/members \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/organizationId/teams/teamId/members \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -25352,7 +25352,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/organizationId/tokens \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/organizationId/tokens \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -26147,7 +26147,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/organizationId/tokens/tokenId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/organizationId/tokens/tokenId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -26174,7 +26174,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/tokens/:tokenId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/tokens/:tokenId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -26201,7 +26201,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/tokens/:tokenId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/tokens/:tokenId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -26228,7 +26228,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/tokens/:tokenId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/tokens/:tokenId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -26255,7 +26255,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/tokens/:tokenId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/tokens/:tokenId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -26282,7 +26282,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/tokens/:tokenId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/tokens/:tokenId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -27952,7 +27952,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/organizationId/users \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/organizationId/users \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -28245,7 +28245,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/organizationId/users/userId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/organizationId/users/userId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -28272,7 +28272,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/users/:userId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/users/:userId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -28299,7 +28299,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/users/:userId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/users/:userId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -28326,7 +28326,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/users/:userId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/users/:userId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -28353,7 +28353,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/users/:userId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/users/:userId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -28380,7 +28380,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/users/:userId \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.astronomer.io/iam/v1beta1/organizations/:organizationId/users/:userId \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]

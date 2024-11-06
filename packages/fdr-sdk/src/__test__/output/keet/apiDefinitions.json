@@ -502,7 +502,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/amazon/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/amazon/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -533,7 +533,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/amazon/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/amazon/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -564,7 +564,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/amazon/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/amazon/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -595,7 +595,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/amazon/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/amazon/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -626,7 +626,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/amazon/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/amazon/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -657,7 +657,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/amazon/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/amazon/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -3172,7 +3172,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/amazon-business/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/amazon-business/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -3203,7 +3203,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/amazon-business/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/amazon-business/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -3234,7 +3234,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/amazon-business/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/amazon-business/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -3265,7 +3265,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/amazon-business/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/amazon-business/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -3296,7 +3296,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/amazon-business/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/amazon-business/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -3327,7 +3327,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/amazon-business/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/amazon-business/items/buy-again \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7368,7 +7368,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/dispatch-me/customers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/dispatch-me/customers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7399,7 +7399,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/dispatch-me/customers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/dispatch-me/customers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7430,7 +7430,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/dispatch-me/customers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/dispatch-me/customers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7461,7 +7461,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/dispatch-me/customers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/dispatch-me/customers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7492,7 +7492,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/dispatch-me/customers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/dispatch-me/customers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7523,7 +7523,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/dispatch-me/customers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/dispatch-me/customers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7728,7 +7728,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/dispatch-me/organizations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/dispatch-me/organizations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7759,7 +7759,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/dispatch-me/organizations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/dispatch-me/organizations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7790,7 +7790,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/dispatch-me/organizations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/dispatch-me/organizations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7821,7 +7821,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/dispatch-me/organizations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/dispatch-me/organizations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7852,7 +7852,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/dispatch-me/organizations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/dispatch-me/organizations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -7883,7 +7883,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/dispatch-me/organizations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/dispatch-me/organizations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -12676,7 +12676,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linkedin/invitations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linkedin/invitations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -12707,7 +12707,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linkedin/invitations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linkedin/invitations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -12738,7 +12738,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linkedin/invitations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linkedin/invitations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -12769,7 +12769,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linkedin/invitations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linkedin/invitations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -12800,7 +12800,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linkedin/invitations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linkedin/invitations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -12831,7 +12831,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linkedin/invitations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linkedin/invitations \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19063,7 +19063,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/billing-terms \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/billing-terms \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19094,7 +19094,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/billing-terms \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/billing-terms \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19125,7 +19125,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/billing-terms \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/billing-terms \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19156,7 +19156,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/billing-terms \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/billing-terms \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19187,7 +19187,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/billing-terms \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/billing-terms \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19218,7 +19218,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/billing-terms \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/billing-terms \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19424,7 +19424,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/invoice-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/invoice-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19455,7 +19455,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/invoice-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/invoice-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19486,7 +19486,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/invoice-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/invoice-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19517,7 +19517,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/invoice-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/invoice-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19548,7 +19548,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/invoice-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/invoice-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19579,7 +19579,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/invoice-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/invoice-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19785,7 +19785,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/customer-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/customer-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19816,7 +19816,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/customer-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/customer-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19847,7 +19847,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/customer-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/customer-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19878,7 +19878,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/customer-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/customer-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19909,7 +19909,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/customer-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/customer-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -19940,7 +19940,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/customer-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/customer-types \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20146,7 +20146,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/arrival-window \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/arrival-window \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20177,7 +20177,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/arrival-window \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/arrival-window \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20208,7 +20208,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/arrival-window \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/arrival-window \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20239,7 +20239,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/arrival-window \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/arrival-window \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20270,7 +20270,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/arrival-window \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/arrival-window \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20301,7 +20301,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/arrival-window \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/arrival-window \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20507,7 +20507,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/service-call-type \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/service-call-type \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20538,7 +20538,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/service-call-type \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/service-call-type \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20569,7 +20569,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/service-call-type \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/service-call-type \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20600,7 +20600,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/service-call-type \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/service-call-type \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20631,7 +20631,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/service-call-type \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/service-call-type \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20662,7 +20662,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/service-call-type \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/service-call-type \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20868,7 +20868,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/diagnostic-fee \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/diagnostic-fee \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20899,7 +20899,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/diagnostic-fee \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/diagnostic-fee \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20930,7 +20930,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/diagnostic-fee \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/diagnostic-fee \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20961,7 +20961,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/diagnostic-fee \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/diagnostic-fee \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -20992,7 +20992,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/diagnostic-fee \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/diagnostic-fee \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21023,7 +21023,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/diagnostic-fee \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/diagnostic-fee \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21229,7 +21229,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/service-call-status \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/service-call-status \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21260,7 +21260,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/service-call-status \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/service-call-status \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21291,7 +21291,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/service-call-status \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/service-call-status \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21322,7 +21322,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/service-call-status \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/service-call-status \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21353,7 +21353,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/service-call-status \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/service-call-status \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21384,7 +21384,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/service-call-status \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/service-call-status \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21590,7 +21590,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/lead-source \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/lead-source \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21621,7 +21621,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/lead-source \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/lead-source \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21652,7 +21652,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/lead-source \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/lead-source \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21683,7 +21683,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/lead-source \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/lead-source \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21714,7 +21714,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/lead-source \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/lead-source \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21745,7 +21745,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/lead-source \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/lead-source \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21951,7 +21951,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/board-ids \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/board-ids \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -21982,7 +21982,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/board-ids \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/board-ids \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -22013,7 +22013,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/board-ids \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/board-ids \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -22044,7 +22044,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/board-ids \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/board-ids \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -22075,7 +22075,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/board-ids \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/board-ids \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -22106,7 +22106,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/board-ids \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/board-ids \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -22312,7 +22312,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/technicians \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/technicians \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -22343,7 +22343,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/technicians \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/technicians \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -22374,7 +22374,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/technicians \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/technicians \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -22405,7 +22405,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/technicians \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/technicians \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -22436,7 +22436,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/technicians \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/technicians \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -22467,7 +22467,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/ppp/technicians \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/ppp/technicians \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -23911,7 +23911,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/servicebox/equippes \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/servicebox/equippes \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -23942,7 +23942,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/servicebox/equippes \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/servicebox/equippes \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -23973,7 +23973,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/servicebox/equippes \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/servicebox/equippes \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -24004,7 +24004,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/servicebox/equippes \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/servicebox/equippes \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -24035,7 +24035,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/servicebox/equippes \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/servicebox/equippes \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -24066,7 +24066,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/servicebox/equippes \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/servicebox/equippes \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -25567,7 +25567,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/toast/menus \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/toast/menus \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -25598,7 +25598,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/toast/menus \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/toast/menus \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -25629,7 +25629,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/toast/menus \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/toast/menus \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -25660,7 +25660,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/toast/menus \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/toast/menus \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -25691,7 +25691,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/toast/menus \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/toast/menus \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -25722,7 +25722,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/toast/menus \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/toast/menus \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -27312,7 +27312,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/venmo/transactions \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/venmo/transactions \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -27343,7 +27343,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/venmo/transactions \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/venmo/transactions \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -27374,7 +27374,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/venmo/transactions \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/venmo/transactions \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -27405,7 +27405,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/venmo/transactions \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/venmo/transactions \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -27436,7 +27436,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/venmo/transactions \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/venmo/transactions \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -27467,7 +27467,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/venmo/transactions \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/venmo/transactions \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -29119,7 +29119,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/vin/users \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/vin/users \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -29150,7 +29150,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/vin/users \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/vin/users \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -29181,7 +29181,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/vin/users \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/vin/users \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -29212,7 +29212,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/vin/users \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/vin/users \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -29243,7 +29243,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/vin/users \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/vin/users \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -29274,7 +29274,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/vin/users \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/vin/users \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -29480,7 +29480,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/vin/dealers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/vin/dealers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -29511,7 +29511,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/vin/dealers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/vin/dealers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -29542,7 +29542,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/vin/dealers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/vin/dealers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -29573,7 +29573,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/vin/dealers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/vin/dealers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -29604,7 +29604,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/vin/dealers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/vin/dealers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -29635,7 +29635,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/vin/dealers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/vin/dealers \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -32678,7 +32678,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/whatsapp/messages/:phoneNumber \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/whatsapp/messages/:phoneNumber \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -32711,7 +32711,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/whatsapp/messages/:phoneNumber \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/whatsapp/messages/:phoneNumber \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -32744,7 +32744,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/whatsapp/messages/:phoneNumber \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/whatsapp/messages/:phoneNumber \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -32777,7 +32777,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/whatsapp/messages/:phoneNumber \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/whatsapp/messages/:phoneNumber \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -32810,7 +32810,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/whatsapp/messages/:phoneNumber \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/whatsapp/messages/:phoneNumber \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -32843,7 +32843,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/whatsapp/messages/:phoneNumber \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/whatsapp/messages/:phoneNumber \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -34840,7 +34840,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linked-accounts \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linked-accounts \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -34864,7 +34864,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linked-accounts \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linked-accounts \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -34888,7 +34888,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linked-accounts \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linked-accounts \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -34912,7 +34912,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linked-accounts \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linked-accounts \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -34936,7 +34936,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linked-accounts \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linked-accounts \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -34960,7 +34960,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linked-accounts \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linked-accounts \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -35119,7 +35119,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linked-accounts/:linkedAccountId \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linked-accounts/:linkedAccountId \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -35152,7 +35152,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linked-accounts/:linkedAccountId \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linked-accounts/:linkedAccountId \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -35185,7 +35185,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linked-accounts/:linkedAccountId \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linked-accounts/:linkedAccountId \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -35218,7 +35218,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linked-accounts/:linkedAccountId \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linked-accounts/:linkedAccountId \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -35251,7 +35251,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linked-accounts/:linkedAccountId \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linked-accounts/:linkedAccountId \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],
@@ -35284,7 +35284,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.trykeet.com/v1/linked-accounts/:linkedAccountId \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.trykeet.com/v1/linked-accounts/:linkedAccountId \\\n     -H \"X-Account-Token: string\" \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ],

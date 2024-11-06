@@ -163,7 +163,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.stack-auth.com/api/v1 \\\n     -H \"X-Stack-Project-Id: string\" \\\n     -H \"X-Stack-Access-Type: string\" \\\n     -H \"X-Stack-Access-Token: string\" \\\n     -H \"X-Stack-Refresh-Token: string\" \\\n     -H \"X-Stack-Publishable-Client-Key: string\" \\\n     -H \"X-Stack-Secret-Server-Key: string\" \\\n     -H \"X-Stack-Super-Secret-Admin-Key: string\"",
+                  "code": "curl -G https://api.stack-auth.com/api/v1 \\\n     -H \"X-Stack-Project-Id: string\" \\\n     -H \"X-Stack-Access-Type: string\" \\\n     -H \"X-Stack-Access-Token: string\" \\\n     -H \"X-Stack-Refresh-Token: string\" \\\n     -H \"X-Stack-Publishable-Client-Key: string\" \\\n     -H \"X-Stack-Secret-Server-Key: string\" \\\n     -H \"X-Stack-Super-Secret-Admin-Key: string\"",
                   "generated": true
                 }
               ]
@@ -2895,7 +2895,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.stack-auth.com/api/v1/projects/current",
+                  "code": "curl -G https://api.stack-auth.com/api/v1/projects/current",
                   "generated": true
                 }
               ]
@@ -3398,7 +3398,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.stack-auth.com/api/v1/team-member-profiles",
+                  "code": "curl -G https://api.stack-auth.com/api/v1/team-member-profiles",
                   "generated": true
                 }
               ]
@@ -3481,7 +3481,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.stack-auth.com/api/v1/teams/team_id",
+                  "code": "curl -G https://api.stack-auth.com/api/v1/teams/team_id",
                   "generated": true
                 }
               ]
@@ -4115,7 +4115,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.stack-auth.com/api/v1/team-member-profiles/team_id/3241a285-8329-4d69-8f3d-316e08cf140c",
+                  "code": "curl -G https://api.stack-auth.com/api/v1/team-member-profiles/team_id/3241a285-8329-4d69-8f3d-316e08cf140c",
                   "generated": true
                 }
               ]
@@ -4512,7 +4512,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.stack-auth.com/api/v1/users/me",
+                  "code": "curl -G https://api.stack-auth.com/api/v1/users/me",
                   "generated": true
                 }
               ]
@@ -9707,7 +9707,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.stack-auth.com/api/v1 \\\n     -H \"X-Stack-Project-Id: string\" \\\n     -H \"X-Stack-Access-Type: string\" \\\n     -H \"X-Stack-Access-Token: string\" \\\n     -H \"X-Stack-Refresh-Token: string\" \\\n     -H \"X-Stack-Publishable-Client-Key: string\" \\\n     -H \"X-Stack-Secret-Server-Key: string\" \\\n     -H \"X-Stack-Super-Secret-Admin-Key: string\"",
+                  "code": "curl -G https://api.stack-auth.com/api/v1 \\\n     -H \"X-Stack-Project-Id: string\" \\\n     -H \"X-Stack-Access-Type: string\" \\\n     -H \"X-Stack-Access-Token: string\" \\\n     -H \"X-Stack-Refresh-Token: string\" \\\n     -H \"X-Stack-Publishable-Client-Key: string\" \\\n     -H \"X-Stack-Secret-Server-Key: string\" \\\n     -H \"X-Stack-Super-Secret-Admin-Key: string\"",
                   "generated": true
                 }
               ]
@@ -12914,7 +12914,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.stack-auth.com/api/v1/projects/current",
+                  "code": "curl -G https://api.stack-auth.com/api/v1/projects/current",
                   "generated": true
                 }
               ]
@@ -13631,7 +13631,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.stack-auth.com/api/v1/team-member-profiles",
+                  "code": "curl -G https://api.stack-auth.com/api/v1/team-member-profiles",
                   "generated": true
                 }
               ]
@@ -13718,7 +13718,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.stack-auth.com/api/v1/teams/team_id",
+                  "code": "curl -G https://api.stack-auth.com/api/v1/teams/team_id",
                   "generated": true
                 }
               ]
@@ -14580,7 +14580,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.stack-auth.com/api/v1/team-member-profiles/team_id/3241a285-8329-4d69-8f3d-316e08cf140c",
+                  "code": "curl -G https://api.stack-auth.com/api/v1/team-member-profiles/team_id/3241a285-8329-4d69-8f3d-316e08cf140c",
                   "generated": true
                 }
               ]
@@ -15144,7 +15144,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.stack-auth.com/api/v1/users",
+                  "code": "curl -G https://api.stack-auth.com/api/v1/users",
                   "generated": true
                 }
               ]
@@ -15574,7 +15574,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.stack-auth.com/api/v1/users/me",
+                  "code": "curl -G https://api.stack-auth.com/api/v1/users/me",
                   "generated": true
                 }
               ]
@@ -16100,7 +16100,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.stack-auth.com/api/v1/users/3241a285-8329-4d69-8f3d-316e08cf140c",
+                  "code": "curl -G https://api.stack-auth.com/api/v1/users/3241a285-8329-4d69-8f3d-316e08cf140c",
                   "generated": true
                 }
               ]

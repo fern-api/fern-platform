@@ -206,7 +206,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api-prod.scoutos.com/v2/workflows \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api-prod.scoutos.com/v2/workflows \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -3671,7 +3671,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api-prod.scoutos.com/v2/workflows/workflow_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api-prod.scoutos.com/v2/workflows/workflow_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -3717,7 +3717,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api-prod.scoutos.com/v2/workflows/:workflow_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api-prod.scoutos.com/v2/workflows/:workflow_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -9364,7 +9364,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api-prod.scoutos.com/v2/workflows/workflow_id/environments \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api-prod.scoutos.com/v2/workflows/workflow_id/environments \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -9410,7 +9410,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api-prod.scoutos.com/v2/workflows/:workflow_id/environments \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api-prod.scoutos.com/v2/workflows/:workflow_id/environments \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -10342,7 +10342,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api-prod.scoutos.com/v2/workflows/workflow_id/revisions \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api-prod.scoutos.com/v2/workflows/workflow_id/revisions \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -10388,7 +10388,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api-prod.scoutos.com/v2/workflows/:workflow_id/revisions \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api-prod.scoutos.com/v2/workflows/:workflow_id/revisions \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -11410,7 +11410,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api-prod.scoutos.com/v2/usage \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api-prod.scoutos.com/v2/usage \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -12443,7 +12443,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api-prod.scoutos.com/v2/copilots \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api-prod.scoutos.com/v2/copilots \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -13713,7 +13713,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api-prod.scoutos.com/v2/copilots/copilot_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api-prod.scoutos.com/v2/copilots/copilot_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -13759,7 +13759,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api-prod.scoutos.com/v2/copilots/:copilot_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api-prod.scoutos.com/v2/copilots/:copilot_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -15213,7 +15213,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api-prod.scoutos.com/v2/collections/collection_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api-prod.scoutos.com/v2/collections/collection_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -15259,7 +15259,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api-prod.scoutos.com/v2/collections/:collection_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api-prod.scoutos.com/v2/collections/:collection_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -19534,7 +19534,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api-prod.scoutos.com/v2/collections/collection_id/documents/document_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api-prod.scoutos.com/v2/collections/collection_id/documents/document_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -19581,7 +19581,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api-prod.scoutos.com/v2/collections/:collection_id/documents/:document_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
+                  "code": "curl -G https://api-prod.scoutos.com/v2/collections/:collection_id/documents/:document_id \\\n     -H \"Authorization: Bearer <apiKey>\"",
                   "generated": true
                 }
               ],

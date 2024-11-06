@@ -3222,7 +3222,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.vellum.ai/v1/deployments \\\n     -H \"X_API_KEY: <apiKey>\"",
+                  "code": "curl -G https://api.vellum.ai/v1/deployments \\\n     -H \"X_API_KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -3345,7 +3345,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.vellum.ai/v1/deployments/id \\\n     -H \"X_API_KEY: <apiKey>\"",
+                  "code": "curl -G https://api.vellum.ai/v1/deployments/id \\\n     -H \"X_API_KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -3473,7 +3473,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.vellum.ai/v1/deployments/id/release-tags/name \\\n     -H \"X_API_KEY: <apiKey>\"",
+                  "code": "curl -G https://api.vellum.ai/v1/deployments/id/release-tags/name \\\n     -H \"X_API_KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -4309,7 +4309,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.vellum.ai/v1/document-indexes \\\n     -H \"X_API_KEY: <apiKey>\"",
+                  "code": "curl -G https://api.vellum.ai/v1/document-indexes \\\n     -H \"X_API_KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -4806,7 +4806,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.vellum.ai/v1/document-indexes/id \\\n     -H \"X_API_KEY: <apiKey>\"",
+                  "code": "curl -G https://api.vellum.ai/v1/document-indexes/id \\\n     -H \"X_API_KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -5656,7 +5656,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.vellum.ai/v1/documents \\\n     -H \"X_API_KEY: <apiKey>\"",
+                  "code": "curl -G https://api.vellum.ai/v1/documents \\\n     -H \"X_API_KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -5774,7 +5774,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.vellum.ai/v1/documents/id \\\n     -H \"X_API_KEY: <apiKey>\"",
+                  "code": "curl -G https://api.vellum.ai/v1/documents/id \\\n     -H \"X_API_KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -7790,7 +7790,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.vellum.ai/v1/test-suite-runs/id \\\n     -H \"X_API_KEY: <apiKey>\"",
+                  "code": "curl -G https://api.vellum.ai/v1/test-suite-runs/id \\\n     -H \"X_API_KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -7983,7 +7983,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.vellum.ai/v1/test-suite-runs/id/executions \\\n     -H \"X_API_KEY: <apiKey>\"",
+                  "code": "curl -G https://api.vellum.ai/v1/test-suite-runs/id/executions \\\n     -H \"X_API_KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -8151,7 +8151,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.vellum.ai/v1/test-suites/id/test-cases \\\n     -H \"X_API_KEY: <apiKey>\"",
+                  "code": "curl -G https://api.vellum.ai/v1/test-suites/id/test-cases \\\n     -H \"X_API_KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -8770,7 +8770,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.vellum.ai/v1/workflow-deployments \\\n     -H \"X_API_KEY: <apiKey>\"",
+                  "code": "curl -G https://api.vellum.ai/v1/workflow-deployments \\\n     -H \"X_API_KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -8901,7 +8901,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.vellum.ai/v1/workflow-deployments/id \\\n     -H \"X_API_KEY: <apiKey>\"",
+                  "code": "curl -G https://api.vellum.ai/v1/workflow-deployments/id \\\n     -H \"X_API_KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -9029,7 +9029,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.vellum.ai/v1/workflow-deployments/id/release-tags/name \\\n     -H \"X_API_KEY: <apiKey>\"",
+                  "code": "curl -G https://api.vellum.ai/v1/workflow-deployments/id/release-tags/name \\\n     -H \"X_API_KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -9549,7 +9549,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.vellum.ai/v1/workspace-secrets/id \\\n     -H \"X_API_KEY: <apiKey>\"",
+                  "code": "curl -G https://api.vellum.ai/v1/workspace-secrets/id \\\n     -H \"X_API_KEY: <apiKey>\"",
                   "generated": true
                 }
               ],

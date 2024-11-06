@@ -155,7 +155,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/registry/files \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/registry/files \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -498,7 +498,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/registry/files/id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/registry/files/id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -786,7 +786,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/registry/files/id/predictions \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/registry/files/id/predictions \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -972,7 +972,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/registry/datasets \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/registry/datasets \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -1192,7 +1192,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/registry/datasets/id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/registry/datasets/id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -1587,7 +1587,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/registry/datasets/id/versions \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/registry/datasets/id/versions \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -1770,7 +1770,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/registry/datasets/id/files \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/registry/datasets/id/files \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -1857,7 +1857,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/registry/datasets/version/id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/registry/datasets/version/id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -2040,7 +2040,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/registry/datasets/version/id/files \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/registry/datasets/version/id/files \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -2224,7 +2224,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/registry/models \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/registry/models \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -2336,7 +2336,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/registry/models/id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/registry/models/id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -2633,7 +2633,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/registry/models/version \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/registry/models/version \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -2757,7 +2757,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/registry/models/version/id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/registry/models/version/id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -11253,7 +11253,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/batch/jobs \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/batch/jobs \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -11479,7 +11479,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/batch/jobs/job_id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/batch/jobs/job_id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -11812,7 +11812,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/batch/jobs/job_id/predictions \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/batch/jobs/job_id/predictions \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -11904,7 +11904,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/batch/jobs/id/artifacts \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/batch/jobs/id/artifacts \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -19992,7 +19992,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/evi/tools/00183a3f-79ba-413d-9f3b-609864268bea \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/evi/tools/00183a3f-79ba-413d-9f3b-609864268bea \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -20763,7 +20763,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/evi/tools/00183a3f-79ba-413d-9f3b-609864268bea/version/1 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/evi/tools/00183a3f-79ba-413d-9f3b-609864268bea/version/1 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -20803,7 +20803,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/evi/tools/:id/version/0 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/evi/tools/:id/version/0 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -21839,7 +21839,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/evi/prompts/af699d45-2985-42cc-91b9-af9e5da3bac5 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/evi/prompts/af699d45-2985-42cc-91b9-af9e5da3bac5 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -22564,7 +22564,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/evi/prompts/af699d45-2985-42cc-91b9-af9e5da3bac5/version/0 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/evi/prompts/af699d45-2985-42cc-91b9-af9e5da3bac5/version/0 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -22604,7 +22604,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/evi/prompts/:id/version/0 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/evi/prompts/:id/version/0 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -23162,7 +23162,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/evi/custom_voices \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/evi/custom_voices \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -23514,7 +23514,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/evi/custom_voices/id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/evi/custom_voices/id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -23553,7 +23553,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/evi/custom_voices/:id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/evi/custom_voices/:id \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -25054,7 +25054,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/evi/configs/1b60e1a0-cc59-424a-8d2c-189d354db3f3 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/evi/configs/1b60e1a0-cc59-424a-8d2c-189d354db3f3 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -26092,7 +26092,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/evi/configs/1b60e1a0-cc59-424a-8d2c-189d354db3f3/version/1 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/evi/configs/1b60e1a0-cc59-424a-8d2c-189d354db3f3/version/1 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -26132,7 +26132,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/evi/configs/:id/version/0 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/evi/configs/:id/version/0 \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -27195,7 +27195,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/evi/chats/470a49f6-1dec-4afe-8b61-035d3b2d63b0/audio \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/evi/chats/470a49f6-1dec-4afe-8b61-035d3b2d63b0/audio \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -27234,7 +27234,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.hume.ai/v0/evi/chats/:id/audio \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
+                  "code": "curl -G https://api.hume.ai/v0/evi/chats/:id/audio \\\n     -H \"X-Hume-Api-Key: <apiKey>\"",
                   "generated": true
                 }
               ],

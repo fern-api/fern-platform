@@ -8666,7 +8666,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/datapoints/id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/datapoints/id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -8698,7 +8698,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/datapoints/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/datapoints/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -9052,7 +9052,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/projects/project_id/datasets \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/projects/project_id/datasets \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -9084,7 +9084,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/projects/:project_id/datasets \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/projects/:project_id/datasets \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -9287,7 +9287,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/projects/project_id/evaluations \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/projects/project_id/evaluations \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -9557,7 +9557,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/projects \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/projects \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -9984,7 +9984,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/projects/id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/projects/id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -10016,7 +10016,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/projects/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/projects/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -10551,7 +10551,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/projects/id/configs \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/projects/id/configs \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -11456,7 +11456,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/datasets \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/datasets \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -11486,7 +11486,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/datasets \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/datasets \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -11586,7 +11586,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/datasets/id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/datasets/id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -11618,7 +11618,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/datasets/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/datasets/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -12085,7 +12085,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/datasets/dataset_id/datapoints \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/datasets/dataset_id/datapoints \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -12512,7 +12512,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/evaluations/id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/evaluations/id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -12744,7 +12744,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/evaluations/id/datapoints \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/evaluations/id/datapoints \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -14750,7 +14750,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/evaluators \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/evaluators \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -14780,7 +14780,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/evaluators \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/evaluators \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -15288,7 +15288,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/evaluators/id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/evaluators/id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -15320,7 +15320,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/evaluators/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/evaluators/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -16987,7 +16987,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/logs/id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/logs/id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -17019,7 +17019,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/logs/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/logs/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -17997,7 +17997,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/model-configs/id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/model-configs/id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -18029,7 +18029,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/model-configs/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/model-configs/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -18896,7 +18896,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/sessions/id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/sessions/id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -18928,7 +18928,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/sessions/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/sessions/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -19078,7 +19078,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/projects/id/active-config \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/projects/id/active-config \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -19451,7 +19451,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/projects/id/deployed-configs \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/projects/id/deployed-configs \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -19483,7 +19483,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v4/projects/:id/deployed-configs \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v4/projects/:id/deployed-configs \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ]
@@ -43615,7 +43615,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/prompts/pr_30gco7dx6JDq4200GVOHa \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/prompts/pr_30gco7dx6JDq4200GVOHa \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -46527,7 +46527,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/prompts/pr_30gco7dx6JDq4200GVOHa/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/prompts/pr_30gco7dx6JDq4200GVOHa/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -46573,7 +46573,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/prompts/:id/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/prompts/:id/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -50430,7 +50430,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/tools/tl_789ghi \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/tools/tl_789ghi \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -53120,7 +53120,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/tools/tl_789ghi/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/tools/tl_789ghi/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -53166,7 +53166,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/tools/:id/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/tools/:id/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -58197,7 +58197,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/datasets/id/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/datasets/id/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -58243,7 +58243,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/datasets/:id/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/datasets/:id/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -60612,7 +60612,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/evaluators/ev_890bcd \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/evaluators/ev_890bcd \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -61537,7 +61537,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/evaluators/ev_890bcd/versions \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/evaluators/ev_890bcd/versions \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -62821,7 +62821,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/evaluators/ev_890bcd/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/evaluators/ev_890bcd/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -62867,7 +62867,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/evaluators/:id/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/evaluators/:id/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -65836,7 +65836,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/flows/id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/flows/id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -66962,7 +66962,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/flows \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/flows \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -69949,7 +69949,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/flows/id/versions \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/flows/id/versions \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -71422,7 +71422,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/flows/id/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/flows/id/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -71468,7 +71468,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/flows/:id/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/flows/:id/environments \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -72422,7 +72422,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/files \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/files \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -74063,7 +74063,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/evaluations/ev_567yza \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/evaluations/ev_567yza \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -74109,7 +74109,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/evaluations/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/evaluations/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -75789,7 +75789,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/evaluations/id/stats \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/evaluations/id/stats \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -75835,7 +75835,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/evaluations/:id/stats \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/evaluations/:id/stats \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -76194,7 +76194,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/evaluations/id/logs \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/evaluations/id/logs \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -77329,7 +77329,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/logs/prv_Wu6zx1lAWJRqOyL8nWuZk \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/logs/prv_Wu6zx1lAWJRqOyL8nWuZk \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],
@@ -77375,7 +77375,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.humanloop.com/v5/logs/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
+                  "code": "curl -G https://api.humanloop.com/v5/logs/:id \\\n     -H \"X-API-KEY: <apiKey>\"",
                   "generated": true
                 }
               ],

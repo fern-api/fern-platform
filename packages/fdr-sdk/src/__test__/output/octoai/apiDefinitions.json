@@ -58,7 +58,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/account \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.octoai.cloud/v1/account \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -397,7 +397,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/endpoint/endpoint_name \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.octoai.cloud/v1/endpoint/endpoint_name \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -715,7 +715,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/endpoints \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.octoai.cloud/v1/endpoints \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -810,7 +810,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/endpoint/endpoint_name/container/metadata \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.octoai.cloud/v1/endpoint/endpoint_name/container/metadata \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -893,7 +893,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/endpoint/endpoint_name/volume_token \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.octoai.cloud/v1/endpoint/endpoint_name/volume_token \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1060,7 +1060,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/logs/endpoint_name \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.octoai.cloud/v1/logs/endpoint_name \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1174,7 +1174,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/logs/endpoint_name/stream \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.octoai.cloud/v1/logs/endpoint_name/stream \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1348,7 +1348,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/events/endpoint_name \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.octoai.cloud/v1/events/endpoint_name \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1469,7 +1469,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/events/endpoint_name/stream \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.octoai.cloud/v1/events/endpoint_name/stream \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1624,7 +1624,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/secret/key \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.octoai.cloud/v1/secret/key \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -1874,7 +1874,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/secrets \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.octoai.cloud/v1/secrets \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -2031,7 +2031,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/registry-credential/key \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.octoai.cloud/v1/registry-credential/key \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -2304,7 +2304,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/registry-credentials \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.octoai.cloud/v1/registry-credentials \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -2401,7 +2401,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/public-endpoints \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.octoai.cloud/v1/public-endpoints \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -2474,7 +2474,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/instance-types \\\n     -H \"Authorization: Bearer <token>\"",
+                  "code": "curl -G https://api.octoai.cloud/v1/instance-types \\\n     -H \"Authorization: Bearer <token>\"",
                   "generated": true
                 }
               ]
@@ -6267,7 +6267,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/assets",
+                  "code": "curl -G https://api.octoai.cloud/v1/assets",
                   "generated": true
                 }
               ],
@@ -10609,7 +10609,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/tune/:tune_id",
+                  "code": "curl -G https://api.octoai.cloud/v1/tune/:tune_id",
                   "generated": true
                 }
               ],
@@ -10655,7 +10655,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/tune/:tune_id",
+                  "code": "curl -G https://api.octoai.cloud/v1/tune/:tune_id",
                   "generated": true
                 }
               ],
@@ -11469,7 +11469,7 @@
               "curl": [
                 {
                   "language": "curl",
-                  "code": "curl https://api.octoai.cloud/v1/tunes",
+                  "code": "curl -G https://api.octoai.cloud/v1/tunes",
                   "generated": true
                 }
               ],
