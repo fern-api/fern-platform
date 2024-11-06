@@ -1,7 +1,6 @@
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { Loadable } from "@fern-ui/loadable";
 import { Dispatch, ReactElement, SetStateAction, useDeferredValue } from "react";
-import { PlaygroundAuthorizationFormCard } from "../PlaygroundAuthorizationForm";
 import { PlaygroundEndpointRequestFormState } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import { PlaygroundEndpointContentLayout } from "./PlaygroundEndpointContentLayout";
@@ -9,6 +8,7 @@ import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundEndpointFormButtons } from "./PlaygroundEndpointFormButtons";
 import { PlaygroundEndpointRequestCard } from "./PlaygroundEndpointRequestCard";
 import { PlaygroundResponseCard } from "./PlaygroundResponseCard";
+import { PlaygroundAuthorizationFormCard } from "./auth";
 
 interface PlaygroundEndpointContentProps {
     context: EndpointContext;

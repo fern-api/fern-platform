@@ -21,13 +21,18 @@ export const APIKeyInjectionConfigAuthorizedSchema = z.object({
     returnToQueryParam: z.string(),
 });
 
-export const APIKeyInjectionConfigSchema = z.union([
-    APIKeyInjectionConfigDisabledSchema,
+export const APIKeyInjectionConfigEnabledSchema = z.union([
     APIKeyInjectionConfigUnauthorizedSchema,
     APIKeyInjectionConfigAuthorizedSchema,
 ]);
 
+export const APIKeyInjectionConfigSchema = z.union([
+    APIKeyInjectionConfigDisabledSchema,
+    APIKeyInjectionConfigEnabledSchema,
+]);
+
 export type APIKeyInjectionConfigDisabled = z.infer<typeof APIKeyInjectionConfigDisabledSchema>;
+export type APIKeyInjectionConfigEnabled = z.infer<typeof APIKeyInjectionConfigEnabledSchema>;
 export type APIKeyInjectionConfigUnauthorized = z.infer<typeof APIKeyInjectionConfigUnauthorizedSchema>;
 export type APIKeyInjectionConfigAuthorized = z.infer<typeof APIKeyInjectionConfigAuthorizedSchema>;
 export type APIKeyInjectionConfig = z.infer<typeof APIKeyInjectionConfigSchema>;
