@@ -35,7 +35,7 @@ function getHttpRequest(method: string, url: string, searchParams: Record<string
         return queryParams.length > 0 ? `-X ${method} "${url}?${queryParams}"` : `-X ${method} ${url}`;
     }
     // if the method is GET, we don't need to include the query params in URL, but instead we'll include it as --data-urlencode
-    return queryParams.length > 0 ? `${url}` : url;
+    return queryParams.length > 0 ? `-G ${url}` : url;
 }
 
 function getHeadersString(headers: Record<string, unknown>): string[] {

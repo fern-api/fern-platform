@@ -256,7 +256,7 @@ describe("curl", () => {
             ),
         ).toMatchInlineSnapshot(
             `
-          "curl https://api.example.com/search \\
+          "curl -G https://api.example.com/search \\
                --data-urlencode q="search term with spaces" \\
                -d "filter[]"=category1 \\
                -d "filter[]"=category2 \\
