@@ -182,10 +182,9 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                                 return await fetch(
                                     `https://${docsRegistrationInfo.fernUrl.getFullUrl()}/api/fern-docs/api-definition/${apiDefinition.id}/endpoint/${endpoint.originalEndpointId}`,
                                 );
-                            } catch (e) {
+                            } catch (e: Error | unknown) {
                                 app.logger.error(
-                                    `Error while trying to warm endpoint cache for ${docsRegistrationInfo.fernUrl}`,
-                                    e,
+                                    `Error while trying to warm endpoint cache for ${JSON.stringify(docsRegistrationInfo.fernUrl)} ${e instanceof Error ? e.stack : ""}`,
                                 );
                                 throw e;
                             }
