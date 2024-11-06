@@ -1,4 +1,4 @@
-import { convertToCurl } from "./curl";
+import { convertToCurl, getUrlQueriesGetString } from "./curl";
 
 describe("curl", () => {
     it("generates basic GET request", () => {
@@ -263,5 +263,20 @@ describe("curl", () => {
                --data-urlencode sort="date desc""
         `,
         );
+    });
+
+    it("does not include nulls in urlencoded parameters", () => {
+        expect(getUrlQueriesGetString({ a: null, b: "b" })).toMatchInlineSnapshot(`
+          [
+            "-d b=b",
+          ]
+        `);
+
+        expect(getUrlQueriesGetString({ a: ["b1", null, "b2"] })).toMatchInlineSnapshot(`
+          [
+            "-d "a[]"=b1",
+            "-d "a[]"=b2",
+          ]
+        `);
     });
 });
