@@ -39,7 +39,7 @@ jobs:
       matrix:
         concurrency: [1]
     env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}/fdr?schema=public
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}/fdr?schema=public&connection_limit=6&pool_timeout=30
       ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
       ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
       ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
@@ -85,7 +85,7 @@ jobs:
           cd servers/fdr-deploy
           VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:dev
         env:
-          DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}/fdr?schema=public
+          DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}/fdr?schema=public&connection_limit=6&pool_timeout=30
 
   smoke-test:
     needs: deploy_dev
