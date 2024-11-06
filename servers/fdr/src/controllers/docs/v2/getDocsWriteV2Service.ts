@@ -178,9 +178,17 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 const warmEndpointCachePromises = apiDefinitions.flatMap((apiDefinition) => {
                     return Object.entries(apiDefinition.subpackages).flatMap(([id, subpackage]) => {
                         return subpackage.endpoints.map(async (endpoint) => {
-                            return await fetch(
-                                `https://${docsRegistrationInfo.fernUrl.getFullUrl()}/api/fern-docs/api-definition/${apiDefinition.id}/endpoint/${endpoint.originalEndpointId}`,
-                            );
+                            try {
+                                return await fetch(
+                                    `https://${docsRegistrationInfo.fernUrl.getFullUrl()}/api/fern-docs/api-definition/${apiDefinition.id}/endpoint/${endpoint.originalEndpointId}`,
+                                );
+                            } catch (e) {
+                                app.logger.error(
+                                    `Error while trying to warm endpoint cache for ${docsRegistrationInfo.fernUrl}`,
+                                    e,
+                                );
+                                throw e;
+                            }
                         });
                     });
                 });
