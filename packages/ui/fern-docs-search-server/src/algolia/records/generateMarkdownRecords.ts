@@ -42,7 +42,7 @@ export function generateMarkdownRecords({
     let rootContent: string | undefined;
     if (sections[0]?.type === "root") {
         const rootSection = sections.shift() as MarkdownSectionRoot;
-        rootContent = rootSection.content;
+        rootContent = stripUtil(rootSection.content);
     }
 
     // collect all meta descriptions along with the root content, all of which can be used for string matching

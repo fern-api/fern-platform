@@ -8,29 +8,8 @@
     ],
     "description": "Uploadcare makes simple, powerful, developer-friendly building blocks to handle file uploading, storage, processing, and delivery. You get a complete file handling infrastructure.
 
-<Tabs>
-  <Tab title='Tab 1'>
-    Some explanation
-    <EndpointRequestSnippet endpoint="PUT /files/{uuid}/storage" />
-  </Tab>
-  <Tab title='Tab 2'>
-    <EndpointResponseSnippet endpoint="PUT /files/{uuid}/storage" />
-  </Tab>
-</Tabs>
+Some explanation
 
-<iframe src="https://codesandbox.io/embed/q3m3lm?view=Editor+%2B+Preview"
-    style={{
-      width: "100%",
-      height: "500px",
-      border: 0,
-      borderRadius: "4px",
-      overflow: "hidden",
-      }}
-    title="Cloud Image Editor: Editable images"
-    allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-    sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-   ></iframe>
-{/* style="width:100%; height: 500px; border:0; border-radius: 4px; overflow:hidden;" */}
 
 Uploadcare makes simple, powerful, developer-friendly building blocks to handle file uploading, storage, processing, and delivery. You get a complete file handling infrastructure.",
     "indexSegmentId": "0",
@@ -60,18 +39,7 @@ Uploadcare makes simple, powerful, developer-friendly building blocks to handle 
         "title": "Introduction",
       },
     ],
-    "description": "Uploadcare provides companies with simple, powerful, developer-friendly building blocks to handle file uploading, processing, and delivery. A complete out-of-the-box solution, built for engineers by engineers.
-
-import {
-  Tabs as DocsTabs,
-  Panel as DocsTabPanel,
-  Tab as DocsTab,
-  TabsContainer as DocsTabsContainer,
-  PanelsContainer as DocsPanelsContainer,
-  CdnExample , Messages, WidgetV4V3Warning } from '@uploadcare/docs-components'
-
-import InstallNDP from '@content/uploads/_templates/install-npm.mdx'
-import InstallCDN from '@content/uploads/_templates/install-cdn.mdx'",
+    "description": "Uploadcare provides companies with simple, powerful, developer-friendly building blocks to handle file uploading, processing, and delivery. A complete out-of-the-box solution, built for engineers by engineers.",
     "indexSegmentId": "0",
     "slug": "docs/introduction/start/quickstart",
     "title": "Uploadcare quick start",
@@ -1681,21 +1649,7 @@ If you're interested in custom pricing and annual commitment,
         "title": "Uploading",
       },
     ],
-    "description": "Uploadcare provides Upload API and powerful file uploaders for your website or app with no hassle.
-
-import {
-  LeadParagraph,
-  Tabs as DocsTabs,
-  Panel as DocsTabPanel,
-  Tab as DocsTab,
-  TabsContainer as DocsTabsContainer,
-  PanelsContainer as DocsPanelsContainer } from '@uploadcare/docs-components'
-import UploadApiJs from '@content/uploads/_templates/upload-api-js.mdx'
-import UploadApiPhp from '@content/uploads/_templates/upload-api-php.mdx'
-import UploadApiPython from '@content/uploads/_templates/upload-api-python.mdx'
-import UploadApiRuby from '@content/uploads/_templates/upload-api-ruby.mdx'
-import UploadApiSwift from '@content/uploads/_templates/upload-api-swift.mdx'
-import UploadApiCurl from '@content/uploads/_templates/upload-api-curl.mdx'",
+    "description": "Uploadcare provides Upload API and powerful file uploaders for your website or app with no hassle.",
     "indexSegmentId": "0",
     "slug": "docs/uploading/uploads",
     "title": "File uploading with Uploadcare",
@@ -2001,56 +1955,7 @@ Learn more about [Proxy][delivery-proxy].",
         "title": "Uploading",
       },
     ],
-    "description": "Whether you need to accept user generated content, serve media on your website or app, or collect and prepare files to train your ML model — we’ve got you covered.
-
-import {
-  Tabs as DocsTabs,
-  Panel as DocsTabPanel,
-  Tab as DocsTab,
-  TabsContainer as DocsTabsContainer,
-  PanelsContainer as DocsPanelsContainer } from '@uploadcare/docs-components'
-import PostBaseJs from '@content/uploading-files/_templates/js-post-base.mdx'
-import PostBasePhp from '@content/uploading-files/_templates/php-post-base.mdx'
-import PostBasePython from '@content/uploading-files/_templates/python-post-base.mdx'
-import PostBaseRuby from '@content/uploading-files/_templates/ruby-post-base.mdx'
-import PostBaseSwift from '@content/uploading-files/_templates/swift-post-base.mdx'
-import PostBaseCurl from '@content/uploading-files/_templates/curl-post-base.mdx'
-import PostFromUrlJs from '@content/uploading-files/_templates/js-post-from_url.mdx'
-import PostFromUrlPhp from '@content/uploading-files/_templates/php-post-from_url.mdx'
-import PostFromUrlPython from '@content/uploading-files/_templates/python-post-from_url.mdx'
-import PostFromUrlRuby from '@content/uploading-files/_templates/ruby-post-from_url.mdx'
-import PostFromUrlSwift from '@content/uploading-files/_templates/swift-post-from_url.mdx'
-import PostFromUrlCurl from '@content/uploading-files/_templates/curl-post-from_url.mdx'
-import GetFromUrlStatusJs from '@content/uploading-files/_templates/js-get-from_url-status.mdx'
-import GetFromUrlStatusPhp from '@content/uploading-files/_templates/php-get-from_url-status.mdx'
-import GetFromUrlStatusPython from '@content/uploading-files/_templates/python-get-from_url-status.mdx'
-import GetFromUrlStatusRuby from '@content/uploading-files/_templates/ruby-get-from_url-status.mdx'
-import GetFromUrlStatusSwift from '@content/uploading-files/_templates/swift-get-from_url-status.mdx'
-import GetFromUrlStatusCurl from '@content/uploading-files/_templates/curl-get-from_url-status.mdx'
-import PostFromUrlDuplicateJs from '@content/uploading-files/_templates/js-post-from_url-duplicate.mdx'
-import PostFromUrlDuplicatePhp from '@content/uploading-files/_templates/php-post-from_url-duplicate.mdx'
-import PostFromUrlDuplicatePython from '@content/uploading-files/_templates/python-post-from_url-duplicate.mdx'
-import PostFromUrlDuplicateRuby from '@content/uploading-files/_templates/ruby-post-from_url-duplicate.mdx'
-import PostFromUrlDuplicateSwift from '@content/uploading-files/_templates/swift-post-from_url-duplicate.mdx'
-import PostFromUrlDuplicateCurl from '@content/uploading-files/_templates/curl-post-from_url-duplicate.mdx'
-import PostMultipartAllJs from '@content/uploading-files/_templates/js-post-multipart-all.mdx'
-import PostMultipartAllPhp from '@content/uploading-files/_templates/php-post-multipart-all.mdx'
-import PostMultipartAllPython from '@content/uploading-files/_templates/python-post-multipart-all.mdx'
-import PostMultipartAllRuby from '@content/uploading-files/_templates/ruby-post-multipart-all.mdx'
-import PostMultipartAllSwift from '@content/uploading-files/_templates/swift-post-multipart-all.mdx'
-import PostMultipartAllCurl from '@content/uploading-files/_templates/curl-post-multipart-all.mdx'
-import PostBaseMetadataJs from '@content/uploading-files/_templates/js-post-base-metadata.mdx'
-import PostBaseMetadataPhp from '@content/uploading-files/_templates/php-post-base-metadata.mdx'
-import PostBaseMetadataPython from '@content/uploading-files/_templates/python-post-base-metadata.mdx'
-import PostBaseMetadataRuby from '@content/uploading-files/_templates/ruby-post-base-metadata.mdx'
-import PostBaseMetadataSwift from '@content/uploading-files/_templates/swift-post-base-metadata.mdx'
-import PostBaseMetadataCurl from '@content/uploading-files/_templates/curl-post-base-metadata.mdx'
-import GetInfoJs from '@content/uploading-files/_templates/js-get-info.mdx'
-import GetInfoPhp from '@content/uploading-files/_templates/php-get-info.mdx'
-import GetInfoPython from '@content/uploading-files/_templates/python-get-info.mdx'
-import GetInfoRuby from '@content/uploading-files/_templates/ruby-get-info.mdx'
-import GetInfoSwift from '@content/uploading-files/_templates/swift-get-info.mdx'
-import GetInfoCurl from '@content/uploading-files/_templates/curl-get-info.mdx'",
+    "description": "Whether you need to accept user generated content, serve media on your website or app, or collect and prepare files to train your ML model — we’ve got you covered.",
     "indexSegmentId": "0",
     "slug": "docs/uploading/uploading-files",
     "title": "Uploading files",
@@ -3225,9 +3130,7 @@ Learn more about [Migro][migro-guide].",
         "title": "File Uploader",
       },
     ],
-    "description": "Upload and store files with one secure, reliable and compatible solution. Use our ready-made uploader interface and infrastructure.
-
-import { Messages, WidgetV4V3Warning } from '@uploadcare/docs-components'",
+    "description": "Upload and store files with one secure, reliable and compatible solution. Use our ready-made uploader interface and infrastructure.",
     "indexSegmentId": "0",
     "slug": "docs/uploading/file-uploader/file-uploader",
     "title": "Uploadcare File Uploader | Overview",
@@ -4035,9 +3938,7 @@ If you're a mobile developer, check our Swift and Kotlin integrations:
         "title": "Optimization",
       },
     ],
-    "description": "Uploadcare allows process images on the fly with a set of CDN operations on the fly to alter images the way you need.
-
-import { Video, CdnExample } from "@uploadcare/docs-components"",
+    "description": "Uploadcare allows process images on the fly with a set of CDN operations on the fly to alter images the way you need.",
     "indexSegmentId": "0",
     "slug": "docs/optimization/image-optimization",
     "title": "Image optimization",
@@ -4928,9 +4829,7 @@ fly. Learn more about [animated images optimization][transformations-gif-to-vide
         "title": "Image transformations",
       },
     ],
-    "description": "Uploadcare allows process images on the fly with a set of CDN operations on the fly to alter images the way you need.
-
-import { CdnExample } from "@uploadcare/docs-components"",
+    "description": "Uploadcare allows process images on the fly with a set of CDN operations on the fly to alter images the way you need.",
     "indexSegmentId": "0",
     "slug": "docs/image-transformations/overview",
     "title": "Uploadcare image transformations overview",
@@ -5192,9 +5091,7 @@ Learn more about [image processing limitations][delivery-operations-limits].",
         "title": "Delivery",
       },
     ],
-    "description": "Uploadcare CDN is a fast and reliable content delivery network that optimizes your images and videos for any device and platform.
-
-import { CdnExample, LeadParagraph } from "@uploadcare/docs-components";",
+    "description": "Uploadcare CDN is a fast and reliable content delivery network that optimizes your images and videos for any device and platform.",
     "indexSegmentId": "0",
     "slug": "docs/delivery/overview",
     "title": "File delivery with Uploadcare",
@@ -5486,20 +5383,7 @@ of the URL with operations applied, as in the example above.",
         "title": "File management",
       },
     ],
-    "description": "Implement custom workflows for your uploaded files with Uploadcare REST API.
-
-import { LeadParagraph ,
-  Tabs as DocsTabs,
-  Panel as DocsTabPanel,
-  Tab as DocsTab,
-  TabsContainer as DocsTabsContainer,
-  PanelsContainer as DocsPanelsContainer } from "@uploadcare/docs-components"
-import RestApiCurl from '@content/start/_templates/rest-api-curl.mdx'
-import RestApiJs from '@content/start/_templates/rest-api-js.mdx'
-import RestApiPython from '@content/start/_templates/rest-api-python.mdx'
-import RestApiPhp from '@content/start/_templates/rest-api-php.mdx'
-import RestApiRuby from '@content/start/_templates/rest-api-ruby.mdx'
-import RestApiSwift from '@content/start/_templates/rest-api-swift.mdx'",
+    "description": "Implement custom workflows for your uploaded files with Uploadcare REST API.",
     "indexSegmentId": "0",
     "slug": "docs/file-management/overview",
     "title": "File management with Uploadcare",
@@ -5691,9 +5575,7 @@ JavaScriptPHPPythonRubySwiftcUrl",
   },
   {
     "breadcrumbs": [],
-    "description": "Uploadcare features widgets, API clients, plugins, no-code integrations, and low-code guides for different languages, frameworks and platforms.
-
-import {LibsStyles} from '@uploadcare/docs-components'",
+    "description": "Uploadcare features widgets, API clients, plugins, no-code integrations, and low-code guides for different languages, frameworks and platforms.",
     "indexSegmentId": "0",
     "slug": "docs/integrations/all-integrations",
     "title": "Uploadcare integrations",

@@ -12,32 +12,13 @@ Harness beehiiv's API to enrich your user records with custom fields from extern
 manage lists and segmentation programmatically, and integrate your beehiiv publication
 more closely with advertising platforms.
 
-<Cards>
-    <Card title="API Reference" icon="fa-solid fa-code" href="/api-reference" />
-    <Card
-        title="Create an API Key"
-        icon="fa-solid fa-key"
-        href="/welcome/create-an-api-key"
-    />
-    <Card
-        title="Sign up for beehiiv"
-        icon="fa-solid fa-user-plus"
-        href="https://app.beehiiv.com/signup"
-    />
-    <Card
-        title="Blog"
-        icon="fa-solid fa-newspaper"
-        href="https://blog.beehiiv.com/"
-    />
-</Cards>
-
 Looking for support? Inspiration? Check out our other resources:
 
--   [Knowledge Base](https://support.beehiiv.com/hc/en-us): Product support, documentation, and assistance.
--   [Tutorials](https://www.youtube.com/channel/UCI80tsW3wYNGEJLxwJo42vw): Archive of video tutorials.
--   [Course](https://www.beehiiv.com/courses/newsletter-xp): How to build, scale, and monetize your newsletter.
--   [Blog](https://blog.beehiiv.com/): Best practices to help scale your newsletter.
--   [Submit a support ticket](https://app.beehiiv.com/?new_support_ticket)",
+Knowledge Base: Product support, documentation, and assistance.
+Tutorials: Archive of video tutorials.
+Course: How to build, scale, and monetize your newsletter.
+Blog: Best practices to help scale your newsletter.
+Submit a support ticket",
     "indexSegmentId": "0",
     "slug": "welcome/getting-started",
     "title": "Getting Started",
@@ -77,26 +58,10 @@ Submit a support ticket
 
 The beehiiv API key is used as the Bearer Token for all requests.
 It enables secure account authentication and should be kept secret at all times.
-
-<Steps>
-### Log in to [beehiiv](https://app.beehiiv.com/).
-
-### Navigate to the Integrations page
-
-Click on `Settings` and then `Integrations`
-
-### Click the `New API Key` button
-
-After creating your API key, be sure to copy and safely save the key, as it
+Log in to beehiiv.Navigate to the Integrations pageClick on Settings and then IntegrationsClick the New API Key buttonAfter creating your API key, be sure to copy and safely save the key, as it
 will be inaccessible after leaving the page. You may be prompted to verify
-your identity with Stripe.
-
-<Info>
-  As an alternative to Stripe, you may [contact support](https://app.beehiiv.com/?new_support_ticket) to be verified
-  within 48-72 hours.
-</Info>
-
-</Steps>",
+your identity with Stripe.As an alternative to Stripe, you may contact support to be verified
+within 48-72 hours.",
     "indexSegmentId": "0",
     "slug": "welcome/create-an-api-key",
     "title": "Create an API Key",
@@ -129,8 +94,7 @@ within 48-72 hours.",
     "description": "Not a developer? Not a problem.
 
 If you're wanting to work with the beehiiv API to integrate your publications with other software but don't have the time or resources to build an integration yourself, there's a few options available to you.
-
-The beehiiv team currently maintains a [Zapier integration](https://zapier.com/apps/beehiiv/integrations) and a [Make integration](https://www.make.com/en/integrations/beehiiv). Both offer a no-code way to integrate your publication with other software.",
+The beehiiv team currently maintains a Zapier integration and a Make integration. Both offer a no-code way to integrate your publication with other software.",
     "indexSegmentId": "0",
     "slug": "welcome/no-code-integrations",
     "title": "No-Code Integrations",
@@ -234,10 +198,8 @@ platforms, we may not be able to provide direct support for your integration.",
     "breadcrumbs": [],
     "description": "An easy way to receive real-time notifications when certain events occur on your beehiiv publication.
 
-<Warning>
-  Webhooks are currently only available for paid users on the Scale plan and above. To upgrade your account, click
-  [here](https://app.beehiiv.com/settings/billing).
-</Warning>",
+Webhooks are currently only available for paid users on the Scale plan and above. To upgrade your account, click
+here.",
     "indexSegmentId": "0",
     "slug": "webhooks",
     "title": "Webhooks",

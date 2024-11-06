@@ -9,17 +9,8 @@
     "description": "Learn how to get started with Athena Python SDK.
 
 We recommend using the SDK in Athena Notebooks.
-
-<Steps>
-### Install Athena Python SDK
-
-```python
-!pip install -U athena-intelligence
-```
-
-### Initialize Athena client
-```python
-import os
+Install Athena Python SDK!pip install -U athena-intelligence
+Initialize Athena clientimport os
 
 ATHENA_API_KEY = os.environ["ATHENA_API_KEY"]
 
@@ -29,15 +20,8 @@ from athena.client import Athena
 athena = Athena(
     api_key=ATHENA_API_KEY,
 )
-```
-To get API early access, reach out to team@athenaintelligence.ai
-
-
-### Continue
-Explore examples and sample notebooks of end-to-end workflows with Athena SDK. 
-Click `Athena Notebooks` -> `File Viewer` -> `Sample Notebooks`.
-
-</Steps>",
+To get API early access, reach out to team@athenaintelligence.aiContinueExplore examples and sample notebooks of end-to-end workflows with Athena SDK.
+Click Athena Notebooks -> File Viewer -> Sample Notebooks.",
     "indexSegmentId": "0",
     "slug": "getting-started/athena-sdk-quickstart",
     "title": "Quickstart",
@@ -76,7 +60,6 @@ Click Athena Notebooks -> File Viewer -> Sample Notebooks.",
       },
     ],
     "description": "Athena has the following tools to help you research information online:
-```python
 tools=[
   Tools.SEARCH, 
   Tools.BROWSE, 
@@ -84,15 +67,8 @@ tools=[
   Tools.ENRICH_PERSON, 
   Tools.ENRICH_COMPANY
   ]
-```
 
-
-<Steps>
-### Set up environment 
-```python
-!pip install -U athena-intelligence
-```
-```python
+Set up environment!pip install -U athena-intelligence
 import json
 import pandas as pd
 import os
@@ -106,12 +82,7 @@ athena = AsyncAthena(
     api_key=ATHENA_API_KEY,
 )
 
-```
-
-### Research general topics with `search` & `browse` and `wikipedia` tools.
-Write a reasearch request and add tools you want Athena to use. 
-```python
-team = "KC Chiefs"
+Research general topics with search & browse and wikipedia tools.Write a reasearch request and add tools you want Athena to use.team = "KC Chiefs"
 USER_MESSAGE_INPUT = f"""
 Who plays quarterback in {team}?
 """
@@ -123,12 +94,7 @@ message = await athena.message.submit_and_poll(
 )
 
 print(message.content)
-```
-
-### Research specific person or company with `enrich_person` and `enrich_company` tools.
-Athena data providers APIs to gather information about individuals and companies. However, these tools might not always provide detailed information for some queries. For more consistent results, consider adding the `search` and `browse` tools as fallback options.
-```python
-person = "Patrick Mahomes"
+Research specific person or company with enrich_person and enrich_company tools.Athena data providers APIs to gather information about individuals and companies. However, these tools might not always provide detailed information for some queries. For more consistent results, consider adding the search and browse tools as fallback options.person = "Patrick Mahomes"
 USER_MESSAGE_INPUT = f"""
 Answer the question below using available tools. 
 
@@ -141,9 +107,7 @@ message = await athena.message.submit_and_poll(
     tools=[ Tools.ENRICH_PERSON, Tools. ENRICH_COMPANY, Tools.SEARCH, Tools.BROWSE],
 )
 
-print(message.content)
-```
-</Steps>",
+print(message.content)",
     "indexSegmentId": "0",
     "slug": "guides/online-research",
     "title": "Online Research",
@@ -301,15 +265,8 @@ print(message.content)
         "title": "Guides",
       },
     ],
-    "description": "Athena can leverage open-source models to research web and analyse results using open source models with `tools.tool_first_workflow()`
-
-
-<Steps>
-### Set up environment 
-```python
-!pip install -U athena-intelligence
-```
-```python
+    "description": "Athena can leverage open-source models to research web and analyse results using open source models with tools.tool_first_workflow()
+Set up environment!pip install -U athena-intelligence
 import json
 import pandas as pd
 import os
@@ -323,12 +280,7 @@ athena = AsyncAthena(
     api_key=ATHENA_API_KEY,
 )
 
-```
-
-### Set up search query and instructions for analysing results
-Write a search request and what you want Athena to do with search results. 
-```python
-message = await async_athena.tools.tool_first_workflow(
+Set up search query and instructions for analysing resultsWrite a search request and what you want Athena to do with search results.message = await async_athena.tools.tool_first_workflow(
 
     model=ToolModels.MISTRAL_LARGE_0224,
     tool_name="tavily_search",
@@ -337,9 +289,6 @@ message = await async_athena.tools.tool_first_workflow(
 
 )
 display(Markdown(message.output_message))
-```
-
-```markdown
 Based on the search results, it appears that Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.
 
 Stanford University's 2024 AI Index has charted the meteoric rise of AI tools, and AI is now outperforming humans at basic tasks, necessitating new benchmarks. The power of Gen AI, combined with traditional AI, is expected to provide even more help in the future.
@@ -350,9 +299,7 @@ The Gartner Hype Cycle positions Gen AI at the 'Peak of Inflated Expectations,' 
 
 In terms of regulations, policymakers have been drawing up tough new regulations, with Biden’s executive order coming out in October and the European Union’s AI Act being finally agreed in December.
 
-In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.
-```
-</Steps>",
+In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.",
     "indexSegmentId": "0",
     "slug": "guides/online-research-with-open-source-models",
     "title": "Online Research with Open Source Models",
@@ -412,16 +359,8 @@ In conclusion, while Gen AI holds immense potential, it also presents challenges
         "title": "Guides",
       },
     ],
-    "description": "Athena can return structured output if you pass it the desired schema using `chain.structured_parse()`:
-
-
-
-<Steps>
-### Set up environment 
-```python
-!pip install -U athena-intelligence
-```
-```python
+    "description": "Athena can return structured output if you pass it the desired schema using chain.structured_parse():
+Set up environment!pip install -U athena-intelligence
 import json
 import pandas as pd
 import os
@@ -435,12 +374,7 @@ athena = AsyncAthena(
     api_key=ATHENA_API_KEY,
 )
 
-```
-
-### Set up a sample search query: 
-Write a search request and what you want Athena to do with search results. 
-```python
-message = await async_athena.tools.tool_first_workflow(
+Set up a sample search query:Write a search request and what you want Athena to do with search results.message = await async_athena.tools.tool_first_workflow(
 
     model=ToolModels.MISTRAL_LARGE_0224,
     tool_name="tavily_search",
@@ -449,9 +383,6 @@ message = await async_athena.tools.tool_first_workflow(
 
 )
 display(Markdown(message.output_message))
-```
-
-```markdown
 Based on the search results, it appears that Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.
 
 Stanford University's 2024 AI Index has charted the meteoric rise of AI tools, and AI is now outperforming humans at basic tasks, necessitating new benchmarks. The power of Gen AI, combined with traditional AI, is expected to provide even more help in the future.
@@ -463,29 +394,19 @@ The Gartner Hype Cycle positions Gen AI at the 'Peak of Inflated Expectations,' 
 In terms of regulations, policymakers have been drawing up tough new regulations, with Biden’s executive order coming out in October and the European Union’s AI Act being finally agreed in December.
 
 In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.
-```
-
-### Use structured_parse() to return structured output
-
-```python
-from athena import StructuredParseInParsingModel
+Use structured_parse() to return structured outputfrom athena import StructuredParseInParsingModel
 structured_output = athena.chain.structured_parse(
     text_input=message.output_message, 
     custom_type_dict={"news": {"news_item_1": "news_content_1", "news_item_2": "news_content_2"}},
     parsing_model=StructuredParseInParsingModel.MISTRAL_LARGE_0224,
 )
 structured_output.result
-```
-
-```json
 {'news': {'news_item_1': 'Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.',
   'news_item_2': "Stanford University's 2024 AI Index has charted the meteoric rise of AI tools, and AI is now outperforming humans at basic tasks, necessitating new benchmarks. The power of Gen AI, combined with traditional AI, is expected to provide even more help in the future.",
   'news_item_3': "However, the use of Gen AI in the workplace is not without its challenges. Organizations must have a clear policy around Gen AI and be wary of 'shadow AI' - the unofficial use of AI in the workplace by employees without IT approval or oversight.",
   'news_item_4': "The Gartner Hype Cycle positions Gen AI at the 'Peak of Inflated Expectations,' on the cusp of a slide into the 'Trough of Disillusionment,' indicating a relatively underwhelming transition period. Despite this, many leaders expect substantial transformative impacts in the short term.",
   'news_item_5': 'In terms of regulations, policymakers have been drawing up tough new regulations, with Biden’s executive order coming out in October and the European Union’s AI Act being finally agreed in December.',
-  'news_item_6': 'In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.'}}
-  ```
-</Steps>",
+  'news_item_6': 'In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.'}}",
     "indexSegmentId": "0",
     "slug": "guides/structured-output",
     "title": "Structured Output",
@@ -558,12 +479,7 @@ structured_output.result
         "title": "Guides",
       },
     ],
-    "description": "<Steps>
-### Set up environment 
-```python
-!pip install -U athena-intelligence
-```
-```python
+    "description": "Set up environment!pip install -U athena-intelligence
 import json
 import pandas as pd
 import os
@@ -576,18 +492,9 @@ from athena.client import Athena
 athena = Athena(
     api_key=ATHENA_API_KEY,
 )
-```
-
-### Query SQL with `athena.query.execute()`
-Initialize default database or specify id of another connected database. Ask Athena team if unclear. 
-```python
-# default database id = 9
+Query SQL with athena.query.execute()Initialize default database or specify id of another connected database. Ask Athena team if unclear.# default database id = 9
 default_database_id = 9
-```
-
-Put your query here
-```python
-query = """
+Put your query herequery = """
 WITH RankedCustomers AS (
   SELECT
     r.route_id,
@@ -624,11 +531,7 @@ ORDER BY
   route_id,
   rank;
 """
-```
-
-Run the query and convert to Pandas dataframe for subsequent analysis 
-```python
-query_result = athena.query.execute(
+Run the query and convert to Pandas dataframe for subsequent analysisquery_result = athena.query.execute(
     sql_command = query,
     database_id = default_database_id
     )
@@ -642,22 +545,18 @@ df = pd.DataFrame(data_output)
 # Display the DataFrame to verify the contents
 df
 
-```
+Visualize data using Athena Notebooks SidebarOnce you have an SQL output, you can harness the power and flexibility of visualisations or further analysis using Python. In Athena Notebooks, you can click "Chat" in the top right corner to ask Athena for help writing code for visualizations you need. Copy and paste a dataframe headers and 2-3 rows to give Athena all needed context.
 
-### Visualize data using Athena Notebooks Sidebar
-Once you have an SQL output, you can harness the power and flexibility of visualisations or further analysis using Python. In Athena Notebooks, you can click "Chat" in the top right corner to ask Athena for help writing code for visualizations you need. Copy and paste a dataframe headers and 2-3 rows to give Athena all needed context. 
-
-- Write code to visualize this table: 
- 	route_id 	route_source 	route_destination 	passenger_id 	customer_name 	total_tickets
+Write code to visualize this table:
+route_id 	route_source 	route_destination 	passenger_id 	customer_name 	total_tickets
 0 	1 	West Sylvia 	Williamsshire 	816 	Jaruwan Rogers 	13
 1 	1 	West Sylvia 	Williamsshire 	679 	Karen Tapp 	9
 
-- Sure, here's the code:
+
+Sure, here's the code:
 ...
 
-Copy & run the code in the notebook. 
-```python
-import pandas as pd
+Copy & run the code in the notebook.import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -673,9 +572,7 @@ plt.xlabel('Route ID')
 plt.ylabel('Total Tickets Sold')
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.show()
-```
-</Steps>",
+plt.show()",
     "indexSegmentId": "0",
     "slug": "guides/query-and-visualize",
     "title": "Query and Visualize",
@@ -794,14 +691,7 @@ plt.show()
         "title": "Guides",
       },
     ],
-    "description": "<Steps>
-### Set up environment
-
-```python
-!pip install -U athena-intelligence
-```
-
-```python
+    "description": "Set up environment!pip install -U athena-intelligence
 import json
 import os
 import pandas as pd
@@ -815,33 +705,15 @@ from athena.client import Athena
 athena = Athena(
     api_key=ATHENA_API_KEY,
 )
-```
-
-### Get datasets
-Call `dataset.get` method to get datasets. Use optional pagination parameters to run bulk workflows with datasets.
-```python
-datasets = athena.dataset.get(page=1, page_size=5)
+Get datasetsCall dataset.get method to get datasets. Use optional pagination parameters to run bulk workflows with datasets.datasets = athena.dataset.get(page=1, page_size=5)
 datasets
-```
-
-Athena returns a json object with a list of datasets with the following fields: dataset id, name, database id, schema details (dialect, CREATE statement and first 3 rows), as well as pagination info.
-
-To access raw json, use `.json()`:
-
-```python
-data = json.loads(datasets.json())
+Athena returns a json object with a list of datasets with the following fields: dataset id, name, database id, schema details (dialect, CREATE statement and first 3 rows), as well as pagination info.To access raw json, use .json():data = json.loads(datasets.json())
 datasets_list = data['datasets']
 import pandas as pd
 pd.set_option('display.max_colwidth', None)
 df_datasets = pd.DataFrame(datasets_list)
 df_datasets
-```
-
-### Document individual datasets with `athena.submit_and_poll`
-With datasets loaded, we can proceed with the documentation workflow. We'll start by defining a function that takes a list of datasets and send them one by one to Athena with a documentation prompt. 
-
-```python
-documentation_responses = [] 
+Document individual datasets with athena.submit_and_pollWith datasets loaded, we can proceed with the documentation workflow. We'll start by defining a function that takes a list of datasets and send them one by one to Athena with a documentation prompt.documentation_responses = [] 
 def generate_documentation_for_dataset(dataset_name, dataset_schema_details):
     # Placeholder for the function to submit and poll for documentation generation
     message = athena.message.submit_and_poll(
@@ -902,24 +774,14 @@ Please ensure all information is accurate and up-to-date, reflecting the current
     message_json=json.loads(message.json())
     documentation_responses.append({'dataset_name': dataset_name, 'documentation_message': message_json['content']})
     
-```
-
-Now we can kick off the workflow.
-
-```python
-# Iterate over each row in the DataFrame
+Now we can kick off the workflow.# Iterate over each row in the DataFrame
 for index, row in df_datasets.iterrows():
     dataset_name = row['name']
     dataset_schema_details = row['schema_details']
     
     # Generate documentation for the current dataset
     generate_documentation_for_dataset(dataset_name, dataset_schema_details)
-```
-
-Convert results to markdown to read and copy generated documentation. 
-
-```python
-def json_to_markdown_document(json_list):
+Convert results to markdown to read and copy generated documentation.def json_to_markdown_document(json_list):
     markdown_document = ""
     if not json_list:
         return "No data available"
@@ -936,12 +798,7 @@ markdown_document = json_to_markdown_document(documentation_responses)
 
 # Display the Markdown in the notebook
 display(Markdown(markdown_document))
-```
-
-### Generate documentation and ERD diagrams for multiple datasets
-Now that we documented all individual tables, we can ask Athena to process proccess created documentation and generate a higher-level description of the whole body of data, together with joins and other notable relationships between tables.
-```python
-def generate_high_level_documentation(markdown_document):
+Generate documentation and ERD diagrams for multiple datasetsNow that we documented all individual tables, we can ask Athena to process proccess created documentation and generate a higher-level description of the whole body of data, together with joins and other notable relationships between tables.def generate_high_level_documentation(markdown_document):
     # Placeholder for the function to submit and poll for high-level documentation generation
     message = athena.message.submit_and_poll(
     content=
@@ -1002,14 +859,8 @@ Please ensure all information is accurate and up-to-date, reflecting the current
     print("Generating description for provided dataset-level documentation")
     message_json=json.loads(message.json())
     return message_json['content']
-```
-
-```python
 high_level_documentation = generate_high_level_documentation(markdown_document)
-display(Markdown(high_level_documentation))
-```
-
-</Steps>",
+display(Markdown(high_level_documentation))",
     "indexSegmentId": "0",
     "slug": "guides/generate-documentation",
     "title": "Generate Data Documentation",

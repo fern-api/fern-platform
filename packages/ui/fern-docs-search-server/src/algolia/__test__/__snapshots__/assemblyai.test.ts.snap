@@ -6,18 +6,12 @@
         "title": "API Reference",
       },
     ],
-    "description": "This page describes how to perform common operations with the REST API. Each endpoint is documented individually and grouped by the resource it interacts with, such as [Transcripts](/docs/api-reference/transcripts) and [LeMUR](/docs/api-reference/lemur).
-
-The AssemblyAI API uses [REST](https://en.wikipedia.org/wiki/REST) with [JSON-encoded](https://www.json.org/json-en.html) request bodies and responses, and is available at the following URL:
-
-```plain title="Base URL"
+    "description": "This page describes how to perform common operations with the REST API. Each endpoint is documented individually and grouped by the resource it interacts with, such as Transcripts and LeMUR.
+The AssemblyAI API uses REST with JSON-encoded request bodies and responses, and is available at the following URL:
 https://api.assemblyai.com
-```
 
-<Info title="Streaming Speech-to-Text">
-  This page explains the AssemblyAI REST API. If you want to use Streaming
-  Speech-to-Text, see [Streaming API reference](/docs/api-reference/streaming).
-</Info>",
+This page explains the AssemblyAI REST API. If you want to use Streaming
+Speech-to-Text, see Streaming API reference.",
     "indexSegmentId": "0",
     "slug": "docs/api-reference/overview",
     "title": "Overview",

@@ -618,9 +618,8 @@ Store this account token someplace secure. It is used to make all requests to th
         "title": "Integrations",
       },
     ],
-    "description": "Integrations with Keet are designed to be super simple for you to link a single end-user to many integrations. Every end-user can have multiple Keet integrations and still has the same `accountToken`. <br />
-
-You should store your `accountToken` in your database and use it to link your end-users to their Keet integrations. <br />",
+    "description": "Integrations with Keet are designed to be super simple for you to link a single end-user to many integrations. Every end-user can have multiple Keet integrations and still has the same accountToken. 
+You should store your accountToken in your database and use it to link your end-users to their Keet integrations.",
     "indexSegmentId": "0",
     "slug": "overview/integrations/overview",
     "title": "Overview",
@@ -824,7 +823,7 @@ await browser.close()
         "title": "Integrations",
       },
     ],
-    "description": "Using our API abstractions is extremely simple. Just include the `accountToken` you received from the following the [Link flow](/overview/quick-start) in the `X-Account-Token` header of your requests.",
+    "description": "Using our API abstractions is extremely simple. Just include the accountToken you received from the following the Link flow in the X-Account-Token header of your requests.",
     "indexSegmentId": "0",
     "slug": "overview/integrations/using-our-abstractions",
     "title": "Using Our Abstractions",

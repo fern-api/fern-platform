@@ -1,11 +1,11 @@
 [
   {
     "breadcrumbs": [],
-    "description": "The Ferry Health API provides programmatic access to **Appointment Tasks**.
+    "description": "The Ferry Health API provides programmatic access to Appointment Tasks.
 Use the API to:
 
-- Create **Appointment Tasks**
-- Load **Appointment Tasks**",
+Create Appointment Tasks
+Load Appointment Tasks",
     "indexSegmentId": "0",
     "slug": "",
     "title": "Ferry Health API",

@@ -6,35 +6,9 @@
         "title": "Getting Started",
       },
     ],
-    "description": "<Callout intent="success">**Your security is our business**</Callout>
-<br />
+    "description": "Your security is our business
 
-Welcome to Credal's documentation! Here you'll find information to get started as well as our API Reference.
-
-<Cards>
-  <Card
-    title="Use Cases"
-    icon="fa-solid fa-head-side-brain"
-    href="https://www.credal.ai/use-cases"
-  />
-  <Card
-    title="API Reference"
-    icon="fa-solid fa-code"
-    href="/api-reference"
-  />
-
-</Cards>
-
-<br />
-
-<Cards>
-  <Card title="Blog" icon="fa-solid fa-signal" href="https://credal.ai/blog" />
-  <Card
-    title="Security"
-    icon="fa-solid fa-shield-halved"
-    href="https://www.credal.ai/security"
-  />
-</Cards>",
+Welcome to Credal's documentation! Here you'll find information to get started as well as our API Reference.",
     "indexSegmentId": "0",
     "slug": "getting-started/overview",
     "title": "Overview",
@@ -203,145 +177,54 @@ Supports single tenant deployment.
         "title": "Copilots",
       },
     ],
-    "description": "Credal's AI Copilots empower users to set up **dedicated assistants** for a wide range of use cases, from customer support to contract review.
-
+    "description": "Credal's AI Copilots empower users to set up dedicated assistants for a wide range of use cases, from customer support to contract review.
 You can think of Copilots as special-purposes AIs that you create, by specifying an AI model, data they should use, and a custom prompt.
-
 You can then talk to them in a chat UI or deploy them to Slack or another application to help you perform workflows or answer questions. For example, a Slack Copilot in a channel could listen out for questions about benefits, and answer those. They combine AI with your data to provide accurate, context-aware responses, while citing their sources.
+Create Your CopilotFrom the main screen, click “Copilots” in the navigation menu:Then click “Create Copilot”:Give your copilot a Name and add a Description of its function in the pop-out form. You can always come back and edit these later. Descriptions should be detailed enough to describe what kind of queries the copilot is responsible for.You can click on “Copilots” in your left sidebar anytime to view the full list of Copilots you've created or that have been shared with you.Configure the CopilotNow your copilot is set up, Credal will automatically direct you to the configure page, where you can tune your copilot for your use case. You can return to this page to edit your settings at any time. (For a detailed explanation of all the options, please see our Detailed Copilots User Guide.)
+Your Metadata (Name + Description) will be set already.
+You can use the default Model (GPT-4o) for now, but feel free to experiment with OpenAI o1, Claude or any of the other models too.
+Creativity. We recommend starting with “balanced” or “precise”; “creative” is best for brainstorming, creative writing, or marketing use cases.
 
-<Steps>
-### Create Your Copilot
-
-From the main screen, click “Copilots” in the navigation menu:
-
-<Frame>
-  <img src="file:2e71a59b-098f-49df-95b2-a5ba3eb88240" width="150" />
-</Frame>
-
-Then click “Create Copilot”:
-
-<Frame>
-  <img src="file:43b4da2f-dd93-472a-b538-95eacc24e9b8" />
-</Frame>
-
-Give your copilot a Name and add a Description of its function in the pop-out form. You can always come back and edit these later. _Descriptions should be detailed enough to describe what kind of queries the copilot is responsible for._
-
-<Frame>
-  <img src="file:d047e787-7eb6-42e8-a8c9-a9390b82aff6" width="500" />
-</Frame>
-
-You can click on “Copilots” in your left sidebar anytime to view the full list of Copilots you've created or that have been shared with you.
-
-<Frame>
-  <img src="file:e902dd84-c77d-450a-ae6a-cfbf308d2c30" />
-</Frame>
-
-### Configure the Copilot
-
-Now your copilot is set up, Credal will automatically direct you to the configure page, where you can tune your copilot for your use case. You can return to this page to edit your settings at any time. (For a detailed explanation of all the options, please see our [Detailed Copilots User Guide](https://www.notion.so/AI-Copilots-In-Depth-Guide-73e09c563d9246cca5241890efef5de4?pvs=21).)
-
-1. Your **Metadata** (Name + Description) will be set already.
-2. You can use the default **Model** (GPT-4o) for now, but feel free to experiment with OpenAI o1, Claude or any of the other models too.
-3. **Creativity**. We recommend starting with “balanced” or “precise”; “creative” is best for brainstorming, creative writing, or marketing use cases.
-
-<Frame>
-  <img src="file:1c27d73e-795f-4ecc-9d5e-2aa14d77ed7d" width="400" />
-</Frame>
-
-4. **Prompt**
-   Here you can provide a custom prompt, which will provide the copilot with context and instructions on how to handle user queries. By default, Credal instructs copilots to be helpful, honest, and to the point and to let users know when it is unsure of the answer.
-
-<Frame>
-  <img src="file:540ea695-5df3-45a3-abbb-e04f09368322" />
-</Frame>
-
+Prompt
+Here you can provide a custom prompt, which will provide the copilot with context and instructions on how to handle user queries. By default, Credal instructs copilots to be helpful, honest, and to the point and to let users know when it is unsure of the answer.
 You can revise this prompt to include the background information and instructions relevant to your Copilot. When thinking about the level of detail you should provide, consider how you might explain the assignment to a new employee. Your explanation might include:
+background information on the company;
+the intended users;
+the topics the copilot will be dealing with;
+any relevant guidelines or policies; and
+any other relevant considerations.
+The content and depth of prompts will vary by use case.You are a diligent, objective, detail-oriented, assistant. Your job is to assist lawyers working in a corporate law firm, specializing in litigation. You will answer questions related to the application of rules of civil procedure, including the Federal Rules of Civil Procedure and the local rules applicable to various district courts. You will respond to questions and prompts truthfully.Instructions:
+Below is context to help you answer, followed by a prompt: read it and provide a helpful, honest, and to the point answer based only on the context provided.
+If you're unsure of an answer, you can say "I don't know" or "I'm not sure".
+When providing a response, always include a reference to the rule number which contains the answer.
+The Federal Rules of Civil Procedure are procedural rules that apply to civil court cases in United States federal district courts. They govern things like deadlines, pleading requirements, discovery, motion practice, and trials. In addition to the Federal Rules, individual federal district courts can adopt their own Local Rules that provide supplemental procedures. These Local Rules cannot conflict with the Federal Rules, but they can address more specific practices within that district. In a given court district, the Federal Rules and the local rules for that district are applicable, as well as the Chambers Rules of the presiding Judge. Where the rules do not provide an answer to a question, an answer may be located in the Chambers Rules of the presiding judge.--- Start Context ---
+{{data}}
+--- End Context ---You are a friendly helpful, honest assistant, who helps Credal company employees answer questions and prompts truthfully about information security questionnaires. Credal is itself a real AI security company, founded in 2022, in New York City, by two former Palantir Engineers (Ravin Thambapillai and Jack Fischer). Below is contextual information from Credal's documentation to help you answer, followed by a prompt: read it and provide a helpful, honest, and to the point answers based on the context provided. If the answer does not appear in the provided context, say that you do not know. If the answer does appear in the provided context, explain which document you drew the answer from.--------- Context: ---------
+{{data}}
+--------- End Context ---------
 
-- background information on the company;
-- the intended users;
-- the topics the copilot will be dealing with;
-- any relevant guidelines or policies; and
-- any other relevant considerations.
+Data
+The data you provide will be the source of truth for your copilot. Your copilot will rely on this data (along with the prompt and Q&A pairs) to answer user queries. There are two types of data you can specify here:
 
-The content and depth of prompts will vary by use case.
 
-<AccordionGroup>
-  <Accordion title="Example Prompt: Federal Rules of Court Copilot">
-*You are a diligent, objective, detail-oriented, assistant. Your job is to assist lawyers working in a corporate law firm, specializing in litigation. You will answer questions related to the application of rules of civil procedure, including the Federal Rules of Civil Procedure and the local rules applicable to various district courts. You will respond to questions and prompts truthfully.*
+Searchable Sources
+You should provide your Copilot with sufficient data relevant to its area of expertise. It will search these sources for information relevant to user questions, and pass just the most relevant information to the AI model. Use the toggle to enable searchable sources and use the search bar to add sources.
 
-_Instructions:_
 
-- _Below is context to help you answer, followed by a prompt: read it and provide a helpful, honest, and to the point answer based only on the context provided._
-- _If you're unsure of an answer, you can say "I don't know" or "I'm not sure"._
-- _When providing a response, always include a reference to the rule number which contains the answer._
 
-_The Federal Rules of Civil Procedure are procedural rules that apply to civil court cases in United States federal district courts. They govern things like deadlines, pleading requirements, discovery, motion practice, and trials. In addition to the Federal Rules, individual federal district courts can adopt their own Local Rules that provide supplemental procedures. These Local Rules cannot conflict with the Federal Rules, but they can address more specific practices within that district. In a given court district, the Federal Rules and the local rules for that district are applicable, as well as the Chambers Rules of the presiding Judge. Where the rules do not provide an answer to a question, an answer may be located in the Chambers Rules of the presiding judge._
+Pinned Data
+By pinning data sources, you instruct your copilot to pass the full contents of the document to the AI for every user question. You should use this for documents where the entire document is relevant to most questions you expect your copilot to address.
 
-_--- Start Context ---_
-_{{data}}_
-_--- End Context ---_
 
-  </Accordion>
-  <Accordion title="Example Prompt: Credal's Information Security Copilot">
-    *You are a friendly helpful, honest assistant, who helps Credal company employees answer questions and prompts truthfully about information security questionnaires. Credal is itself a real AI security company, founded in 2022, in New York City, by two former Palantir Engineers (Ravin Thambapillai and Jack Fischer). Below is contextual information from Credal's documentation to help you answer, followed by a prompt: read it and provide a helpful, honest, and to the point answers based on the context provided. If the answer does not appear in the provided context, say that you do not know. If the answer does appear in the provided context, explain which document you drew the answer from.*
 
-_--------- Context: ---------_
-_{{data}}_
-_--------- End Context ---------_
 
-  </Accordion>
-  </AccordionGroup>
-
-5. **Data**
-   The data you provide will be the source of truth for your copilot. Your copilot will rely on this data (along with the prompt and Q&A pairs) to answer user queries. There are two types of data you can specify here:
-
-   - **Searchable Sources**
-     You should provide your Copilot with sufficient data relevant to its area of expertise. It will search these sources for information relevant to user questions, and pass just the most relevant information to the AI model. Use the toggle to enable searchable sources and use the search bar to add sources.
-
-     <Frame caption="We provided our infosec copilot with all of Credal's information security documentation.">
-       <img src="file:be37d063-18f1-4058-a481-6005e0309f65" />
-     </Frame>
-
-   - **Pinned Data**
-     By pinning data sources, you instruct your copilot to pass the full contents of the document to the AI for every user question. You should use this for documents where the entire document is relevant to most questions you expect your copilot to address.
-     <Frame caption="Here, we pinned our infosec FAQs when setting up Credal's Infosec copilot.">
-       <img src="file:79a4b64b-47fc-421b-a1d7-340b5868fa45" />
-     </Frame>
-
-### Deploy Your Copilot to Slack
-
-Once you have a copilot set up, you can use it directly in Credal, or deploy it to Slack or other tools through the API. You can set up a deployment in the “Deploy” tab. For this short guide, we'll cover Slack only; please refer to the detailed guide for the other options.
-
-To deploy a copilot through Slack, simply use the below toggle to turn on Slack deployments and select the channel(s) you want to deploy it to.
-
-<Frame>
-  <img src="file:9eb1bbbf-34ff-4305-beac-2e4e6e952e24" />
-</Frame>
-
-You can choose to have your copilot answer all messages in a given channel or only those that meet certain criteria:
-
-<Frame>
-  <img src="file:9eb1bbbf-34ff-4305-beac-2e4e6e952e24" />
-</Frame>
-
-- **All messages**: will answer all queries in the connected Slack channel.
-- **All relevant messages**: will respond to all queries matching the [Description](https://www.notion.so/Getting-Started-With-AI-Copilots-171cfe73b8df496a9db29f60046eaf06?pvs=21) of the copilot.
-- **All messages matching filter**: will respond to messages that match the filter criteria. In the example in the screenshot, the copilot will only respond to prompts containing “?”.
-
-<Frame>
-  <img src="file:c9450a90-ea05-4664-a224-b1c4cd45ddba" />
-</Frame>
-<Frame>
-  <img src="file:9aae0c35-c98b-472b-a5e0-e3f1ae97031d" />
-</Frame>
-
+Deploy Your Copilot to SlackOnce you have a copilot set up, you can use it directly in Credal, or deploy it to Slack or other tools through the API. You can set up a deployment in the “Deploy” tab. For this short guide, we'll cover Slack only; please refer to the detailed guide for the other options.To deploy a copilot through Slack, simply use the below toggle to turn on Slack deployments and select the channel(s) you want to deploy it to.You can choose to have your copilot answer all messages in a given channel or only those that meet certain criteria:
+All messages: will answer all queries in the connected Slack channel.
+All relevant messages: will respond to all queries matching the Description of the copilot.
+All messages matching filter: will respond to messages that match the filter criteria. In the example in the screenshot, the copilot will only respond to prompts containing “?”.
 If more than one copilot is deployed to a given Slack channel, Credal will triage user requests based on the Description of each copilot to determine which, if any, should answer the question.
-
-   </Steps>
-
-That's all! The [detailed guide](https://www.notion.so/AI-Copilots-In-Depth-Guide-73e09c563d9246cca5241890efef5de4?pvs=21) contains more information, including on deploying this to non-Slack applications, and a more detailed explanation of the options in Copilots.
-
-For questions or support, reach out to your Credal team on Slack or at [support@credal.ai](mailto:support@credal.ai).",
+That's all! The detailed guide contains more information, including on deploying this to non-Slack applications, and a more detailed explanation of the options in Copilots.
+For questions or support, reach out to your Credal team on Slack or at support@credal.ai.",
     "indexSegmentId": "0",
     "slug": "getting-started/copilots/quick-start",
     "title": "Quick Start",
@@ -419,14 +302,10 @@ For questions or support, reach out to your Credal team on Slack or at support@c
       },
     ],
     "description": "Credal's AI copilots empower users to set up dedicated assistants for a wide range of use cases, from customer support to contract review.
-
 Copilots can assist with any task that combines AI and data. Copilots are designed to be experts on the data and context you provide. They combine AI with your data to provide accurate, context-aware responses, while citing their sources.
-
 Copilots can participate in your Slack channels, be directly accessed in Credal, or respond via API in your own app or backend service.
 
-<br />
-
-Visit the [AI Copilots User Guide](https://credalai.notion.site/credalai/AI-Copilots-User-Guide-73e09c563d9246cca5241890efef5de4) for in-depth setup instructions and information.",
+Visit the AI Copilots User Guide for in-depth setup instructions and information.",
     "indexSegmentId": "0",
     "slug": "getting-started/copilots/in-depth-guide",
     "title": "In-Depth Guide",
@@ -456,9 +335,7 @@ Visit the AI Copilots User Guide for in-depth setup instructions and information
         "title": "Getting Started",
       },
     ],
-    "description": "Credal’s Bulk Analysis feature allows users to analyze a collection of documents or rows in a spreadsheet simultaneously, using LLMs or Credal Copilots. Use it to automatically extract fields from, classify or synthesize multiple documents simultaneously.
-
-<br />",
+    "description": "Credal’s Bulk Analysis feature allows users to analyze a collection of documents or rows in a spreadsheet simultaneously, using LLMs or Credal Copilots. Use it to automatically extract fields from, classify or synthesize multiple documents simultaneously.",
     "indexSegmentId": "0",
     "slug": "getting-started/bulk-analysis",
     "title": "Bulk Analysis",
@@ -1085,10 +962,8 @@ Integrating the results into live dashboards like Tableau for continuous visual 
     "description": "Credal's Permission Service seamlessly synchronizes ACL information across a diverse range of data sources, including
 Google Drive, Microsoft Sharepoint, Zendesk, Confluence, and more. We keep track of which users and groups are authorized
 to perform what actions across the various data sources we integrate with.
-
 Our retrieval APIs use this service to performantly return results from only the documents that a user has access to
 in the source system.
-
 The Permission Service API (Beta) gives developers direct access to the synced ACL information, allowing them to build
 custom applications that are connected to multiple data sources while maintaining a unified, access-controlled experience for end users.",
     "indexSegmentId": "0",
@@ -1121,9 +996,7 @@ custom applications that are connected to multiple data sources while maintainin
         "title": "Getting Started",
       },
     ],
-    "description": "<Callout intent="warning">
-  Credal's OAuth flow for API access is in private Beta.  Contact Credal to get started.
-</Callout>",
+    "description": "Credal's OAuth flow for API access is in private Beta.  Contact Credal to get started.",
     "indexSegmentId": "0",
     "slug": "getting-started/o-auth",
     "title": "OAuth",
@@ -1149,13 +1022,12 @@ custom applications that are connected to multiple data sources while maintainin
       },
     ],
     "description": "To ensure that you get the most accurate and helpful responses from Credal, it's crucial to craft your prompts effectively.
-
 Here's why prompt engineering is worth your attention:
 
-1. **Improves Accuracy**: Well-crafted prompts lead to more precise and relevant answers, reducing the likelihood of misinterpretations or general responses.
-2. **Saves Time**: By clearly directing the AI, you can obtain the desired information with fewer attempts.
-3. **Enhances Complexity Handling**: Complex tasks often require nuanced understanding. Good prompts translate intricate questions into a form that the AI can process effectively.
-4. **Facilitates Innovation**: Mastering prompt engineering allows you to push the boundaries of AI’s applications, driving innovation and enabling new solutions to complex problems.
+Improves Accuracy: Well-crafted prompts lead to more precise and relevant answers, reducing the likelihood of misinterpretations or general responses.
+Saves Time: By clearly directing the AI, you can obtain the desired information with fewer attempts.
+Enhances Complexity Handling: Complex tasks often require nuanced understanding. Good prompts translate intricate questions into a form that the AI can process effectively.
+Facilitates Innovation: Mastering prompt engineering allows you to push the boundaries of AI’s applications, driving innovation and enabling new solutions to complex problems.
 
 This guide will provide you with the foundational understanding and practical steps to optimize your interactions with Credal for precise and valuable responses.",
     "indexSegmentId": "0",
