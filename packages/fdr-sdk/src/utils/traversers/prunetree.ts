@@ -34,6 +34,7 @@ export function prunetree<NODE, ROOT extends NODE = NODE, PARENT extends NODE = 
 
     const deleted = new Set<POINTER>();
 
+    // nodes is a stack of nodes in reverse order (the root node is the last element, and the "deepest" leaf node is the first element)
     const nodes: [NODE, readonly PARENT[]][] = [];
 
     bfs(

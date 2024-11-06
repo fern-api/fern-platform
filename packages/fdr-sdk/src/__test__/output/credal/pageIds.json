@@ -1,0 +1,9 @@
+[
+  "docs/pages/guides/overview.mdx",
+  "docs/pages/guides/copilots/quick-start.mdx",
+  "docs/pages/guides/copilots/in-depth-guide.mdx",
+  "docs/pages/guides/bulk-analysis.mdx",
+  "docs/pages/guides/permissions-service.mdx",
+  "docs/pages/guides/oauth.mdx",
+  "docs/pages/guides/prompting.mdx"
+]

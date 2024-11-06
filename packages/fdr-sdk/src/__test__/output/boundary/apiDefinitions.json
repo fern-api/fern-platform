@@ -1,0 +1,712 @@
+[
+  {
+    "id": "eaa1074a-b676-4a6b-93df-43c52a64d62f",
+    "endpoints": {
+      "endpoint_.extractData": {
+        "id": "endpoint_.extractData",
+        "namespace": [],
+        "description": "Upload one or more files along with a prompt to extract data. The API processes the files based on the prompt and returns the extracted information.\n\nA PDF may generate an array of many extracted JSON blobs, 1 per page for example.",
+        "method": "POST",
+        "path": [
+          {
+            "type": "literal",
+            "value": "/extract"
+          }
+        ],
+        "auth": [
+          "default"
+        ],
+        "defaultEnvironment": "Default",
+        "environments": [
+          {
+            "id": "Default",
+            "baseUrl": "https://api2.boundaryml.com/v3"
+          }
+        ],
+        "request": {
+          "contentType": "multipart/form-data",
+          "body": {
+            "type": "formData",
+            "fields": [
+              {
+                "type": "files",
+                "key": "files",
+                "isOptional": false
+              },
+              {
+                "type": "property",
+                "key": "prompt",
+                "description": "Instruction for data extraction. Like \"focus on the colors of the images in this document\" or \"only focus on extracting addresses\"",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "response": {
+          "description": "Successful Response",
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:ExtractResponse"
+            }
+          }
+        },
+        "errors": [
+          {
+            "description": "Invalid Request Parameters",
+            "name": "Bad Request",
+            "statusCode": 400,
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ErrorResponse"
+              }
+            },
+            "examples": [
+              {
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "error": "error"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "description": "Unsupported Media Type",
+            "name": "Unsupported Media Type",
+            "statusCode": 415,
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ErrorResponse"
+              }
+            },
+            "examples": [
+              {
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "error": "error"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "description": "Validation Error",
+            "name": "Unprocessable Entity",
+            "statusCode": 422,
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:HttpValidationError"
+              }
+            },
+            "examples": [
+              {
+                "responseBody": {
+                  "type": "json",
+                  "value": {}
+                }
+              }
+            ]
+          },
+          {
+            "description": "Internal Server Error",
+            "name": "Internal Server Error",
+            "statusCode": 500,
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ErrorResponse"
+              }
+            },
+            "examples": [
+              {
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "error": "error"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "examples": [
+          {
+            "path": "/extract",
+            "responseStatusCode": 200,
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "type": "form",
+              "value": {
+                "files": {
+                  "type": "filenames",
+                  "value": []
+                },
+                "prompt": {
+                  "type": "json"
+                }
+              }
+            },
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "extractions": [
+                  {
+                    "source": {
+                      "type": "type"
+                    },
+                    "output": {
+                      "key": "value"
+                    }
+                  }
+                ],
+                "usage": {
+                  "consumed_chars": 1,
+                  "produced_chars": 1,
+                  "consumed_megapixels": 1.1
+                },
+                "request_id": "request_id"
+              }
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl -X POST https://api2.boundaryml.com/v3/extract \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: multipart/form-data\"",
+                  "generated": true
+                }
+              ]
+            }
+          },
+          {
+            "path": "/extract",
+            "responseStatusCode": 400,
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "type": "form",
+              "value": {
+                "files": {
+                  "type": "filenames",
+                  "value": [
+                    "<filename1>",
+                    "<filename2>"
+                  ]
+                },
+                "prompt": {
+                  "type": "json"
+                }
+              }
+            },
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "error": "string"
+              }
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl -X POST https://api2.boundaryml.com/v3/extract \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -F \"files[]\"=@<filename1> \\\n     -F \"files[]\"=@<filename2>",
+                  "generated": true
+                }
+              ]
+            }
+          },
+          {
+            "path": "/extract",
+            "responseStatusCode": 415,
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "type": "form",
+              "value": {
+                "files": {
+                  "type": "filenames",
+                  "value": [
+                    "<filename1>",
+                    "<filename2>"
+                  ]
+                },
+                "prompt": {
+                  "type": "json"
+                }
+              }
+            },
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "error": "string"
+              }
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl -X POST https://api2.boundaryml.com/v3/extract \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -F \"files[]\"=@<filename1> \\\n     -F \"files[]\"=@<filename2>",
+                  "generated": true
+                }
+              ]
+            }
+          },
+          {
+            "path": "/extract",
+            "responseStatusCode": 422,
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "type": "form",
+              "value": {
+                "files": {
+                  "type": "filenames",
+                  "value": [
+                    "<filename1>",
+                    "<filename2>"
+                  ]
+                },
+                "prompt": {
+                  "type": "json"
+                }
+              }
+            },
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "detail": [
+                  {
+                    "loc": [
+                      "string"
+                    ],
+                    "msg": "string",
+                    "type": "string"
+                  }
+                ]
+              }
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl -X POST https://api2.boundaryml.com/v3/extract \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -F \"files[]\"=@<filename1> \\\n     -F \"files[]\"=@<filename2>",
+                  "generated": true
+                }
+              ]
+            }
+          },
+          {
+            "path": "/extract",
+            "responseStatusCode": 500,
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "type": "form",
+              "value": {
+                "files": {
+                  "type": "filenames",
+                  "value": [
+                    "<filename1>",
+                    "<filename2>"
+                  ]
+                },
+                "prompt": {
+                  "type": "json"
+                }
+              }
+            },
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "error": "string"
+              }
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl -X POST https://api2.boundaryml.com/v3/extract \\\n     -H \"Authorization: Bearer <token>\" \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -F \"files[]\"=@<filename1> \\\n     -F \"files[]\"=@<filename2>",
+                  "generated": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "websockets": {},
+    "webhooks": {},
+    "types": {
+      "type_:ExtractResponse": {
+        "name": "ExtractResponse",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "extractions",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_:Extraction"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "key": "usage",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:Usage"
+                }
+              }
+            },
+            {
+              "key": "request_id",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "Unique identifier for the request."
+            }
+          ]
+        }
+      },
+      "type_:Extraction": {
+        "name": "Extraction",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "source",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:Source"
+                }
+              }
+            },
+            {
+              "key": "output",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "map",
+                  "keyShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              },
+              "description": "Extracted data from the file, in JSON format."
+            }
+          ]
+        }
+      },
+      "type_:Source": {
+        "name": "Source",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "type",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "Media type of the file."
+            },
+            {
+              "key": "name",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "optional",
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "description": "Name of the file."
+            },
+            {
+              "key": "page",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "optional",
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              },
+              "description": "Page number if applicable."
+            }
+          ]
+        }
+      },
+      "type_:Usage": {
+        "name": "Usage",
+        "description": "Usage statistics for the request. A request goes through the BoundaryML pipeline, where documents can be converted into images. In the process, the number of characters consumed, produced, and the number of megapixels consumed are tracked.",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "consumed_chars",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "description": "Number of characters processed."
+            },
+            {
+              "key": "produced_chars",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "description": "Number of characters produced."
+            },
+            {
+              "key": "consumed_megapixels",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
+                  }
+                }
+              },
+              "description": "Number of megapixels processed."
+            }
+          ]
+        }
+      },
+      "type_:ErrorResponse": {
+        "name": "ErrorResponse",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "error",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "Error message detailing the issue."
+            }
+          ]
+        }
+      },
+      "type_:HttpValidationError": {
+        "name": "HttpValidationError",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "detail",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "optional",
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:ValidationError"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:ValidationErrorLocItem": {
+        "name": "ValidationErrorLocItem",
+        "shape": {
+          "type": "undiscriminatedUnion",
+          "variants": [
+            {
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:ValidationError": {
+        "name": "ValidationError",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "loc",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_:ValidationErrorLocItem"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "key": "msg",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "key": "type",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "subpackages": {},
+    "auths": {
+      "default": {
+        "type": "bearerAuth",
+        "tokenName": "token"
+      }
+    }
+  }
+]

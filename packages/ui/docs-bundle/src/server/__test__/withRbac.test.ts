@@ -1,5 +1,12 @@
-import { PageId, RoleId, Slug } from "@fern-api/fdr-sdk/navigation";
-import { Gate, getViewerFilters, matchRoles, withBasicTokenAnonymous, withBasicTokenAnonymousCheck } from "../withRbac";
+import { NodeId, PageId, RoleId, Slug } from "@fern-api/fdr-sdk/navigation";
+import {
+    Gate,
+    getViewerFilters,
+    matchRoles,
+    pruneWithBasicTokenAnonymous,
+    withBasicTokenAnonymous,
+    withBasicTokenAnonymousCheck,
+} from "../withRbac";
 
 describe("withBasicTokenAnonymous", () => {
     it("should deny the request if no rules are provided", () => {
@@ -81,6 +88,245 @@ describe("withBasicTokenAnonymousCheck", () => {
                 overviewPageId: PageId("1.mdx"),
             }),
         ).toBe(Gate.DENY);
+    });
+
+    it("should should mark edge nodes as authed if children are authed", () => {
+        expect(
+            pruneWithBasicTokenAnonymous(
+                {},
+                {
+                    type: "root",
+                    child: {
+                        id: NodeId("1"),
+                        landingPage: undefined,
+                        type: "unversioned",
+                        child: {
+                            type: "sidebarRoot",
+                            id: NodeId("2"),
+                            children: [
+                                {
+                                    type: "sidebarGroup",
+                                    id: NodeId("3"),
+                                    children: [
+                                        {
+                                            type: "page",
+                                            title: "Public",
+                                            slug: Slug("public"),
+                                            pageId: PageId("1.mdx"),
+                                            canonicalSlug: undefined,
+                                            authed: undefined,
+                                            id: NodeId("1"),
+                                            hidden: false,
+                                            icon: undefined,
+                                            viewers: undefined,
+                                            orphaned: undefined,
+                                            noindex: false,
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    },
+                    version: "v2",
+                    title: "Root",
+                    slug: Slug("root"),
+                    canonicalSlug: undefined,
+                    authed: undefined,
+                    icon: undefined,
+                    hidden: false,
+                    id: NodeId("4"),
+                    viewers: undefined,
+                    orphaned: undefined,
+                    pointsTo: undefined,
+                },
+            ).authed,
+        ).toBe(true);
+    });
+
+    it("should should not mark edge nodes as authed if children contain unauthed nodes", () => {
+        expect(
+            pruneWithBasicTokenAnonymous(
+                {},
+                {
+                    type: "root",
+                    child: {
+                        id: NodeId("1"),
+                        landingPage: undefined,
+                        type: "unversioned",
+                        child: {
+                            type: "sidebarRoot",
+                            id: NodeId("2"),
+                            children: [
+                                {
+                                    type: "sidebarGroup",
+                                    id: NodeId("3"),
+                                    children: [
+                                        {
+                                            type: "page",
+                                            title: "Public",
+                                            slug: Slug("public"),
+                                            pageId: PageId("1.mdx"),
+                                            canonicalSlug: undefined,
+                                            authed: undefined,
+                                            id: NodeId("1"),
+                                            hidden: false,
+                                            icon: undefined,
+                                            viewers: [RoleId("everyone")],
+                                            orphaned: undefined,
+                                            noindex: false,
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    },
+                    version: "v2",
+                    title: "Root",
+                    slug: Slug("root"),
+                    canonicalSlug: undefined,
+                    authed: undefined,
+                    icon: undefined,
+                    hidden: false,
+                    id: NodeId("4"),
+                    viewers: undefined,
+                    orphaned: undefined,
+                    pointsTo: undefined,
+                },
+            ).authed,
+        ).not.toBe(true);
+    });
+
+    it("should should mark edge nodes as authed if all children are private", () => {
+        expect(
+            pruneWithBasicTokenAnonymous(
+                {},
+                {
+                    type: "root",
+                    child: {
+                        id: NodeId("1"),
+                        landingPage: undefined,
+                        type: "unversioned",
+                        child: {
+                            type: "sidebarRoot",
+                            id: NodeId("2"),
+                            children: [
+                                {
+                                    type: "section",
+                                    id: NodeId("3"),
+                                    children: [
+                                        {
+                                            type: "page",
+                                            title: "Public",
+                                            slug: Slug("public"),
+                                            pageId: PageId("1.mdx"),
+                                            canonicalSlug: undefined,
+                                            authed: undefined,
+                                            id: NodeId("1"),
+                                            hidden: false,
+                                            icon: undefined,
+                                            // even though this is marked as everyone, it is still authed because
+                                            // the parent section is private
+                                            viewers: [RoleId("everyone")],
+                                            orphaned: undefined,
+                                            noindex: false,
+                                        },
+                                    ],
+                                    title: "Public",
+                                    slug: Slug("public"),
+                                    canonicalSlug: undefined,
+                                    authed: undefined,
+                                    hidden: false,
+                                    icon: undefined,
+                                    viewers: [RoleId("private")],
+                                    orphaned: undefined,
+                                    noindex: false,
+                                    collapsed: false,
+                                    overviewPageId: PageId("1.mdx"),
+                                    pointsTo: undefined,
+                                },
+                            ],
+                        },
+                    },
+                    version: "v2",
+                    title: "Root",
+                    slug: Slug("root"),
+                    canonicalSlug: undefined,
+                    authed: undefined,
+                    icon: undefined,
+                    hidden: false,
+                    id: NodeId("4"),
+                    viewers: undefined,
+                    orphaned: undefined,
+                    pointsTo: undefined,
+                },
+            ).authed,
+        ).toBe(true);
+    });
+
+    it("should should mark edge nodes as authed if some children are public because they are orphaned", () => {
+        expect(
+            pruneWithBasicTokenAnonymous(
+                {},
+                {
+                    type: "root",
+                    child: {
+                        id: NodeId("1"),
+                        landingPage: undefined,
+                        type: "unversioned",
+                        child: {
+                            type: "sidebarRoot",
+                            id: NodeId("2"),
+                            children: [
+                                {
+                                    type: "section",
+                                    id: NodeId("3"),
+                                    children: [
+                                        {
+                                            type: "page",
+                                            title: "Public",
+                                            slug: Slug("public"),
+                                            pageId: PageId("1.mdx"),
+                                            canonicalSlug: undefined,
+                                            authed: undefined,
+                                            id: NodeId("1"),
+                                            hidden: false,
+                                            icon: undefined,
+                                            viewers: [RoleId("everyone")],
+                                            // because this is orphaned, it is not authed
+                                            orphaned: true,
+                                            noindex: false,
+                                        },
+                                    ],
+                                    title: "Public",
+                                    slug: Slug("public"),
+                                    canonicalSlug: undefined,
+                                    authed: undefined,
+                                    hidden: false,
+                                    icon: undefined,
+                                    viewers: [RoleId("private")],
+                                    orphaned: undefined,
+                                    noindex: false,
+                                    collapsed: false,
+                                    overviewPageId: PageId("1.mdx"),
+                                    pointsTo: undefined,
+                                },
+                            ],
+                        },
+                    },
+                    version: "v2",
+                    title: "Root",
+                    slug: Slug("root"),
+                    canonicalSlug: undefined,
+                    authed: undefined,
+                    icon: undefined,
+                    hidden: false,
+                    id: NodeId("4"),
+                    viewers: undefined,
+                    orphaned: undefined,
+                    pointsTo: undefined,
+                },
+            ).authed,
+        ).not.toBe(true);
     });
 });
 

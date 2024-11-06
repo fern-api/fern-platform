@@ -1,0 +1,1030 @@
+[
+  {
+    "id": "c173bee9-1794-4364-93d9-780ed8d82ec7",
+    "endpoints": {
+      "endpoint_tools._data_frame": {
+        "id": "endpoint_tools._data_frame",
+        "namespace": [
+          "subpackage_tools"
+        ],
+        "availability": "Beta",
+        "method": "GET",
+        "path": [
+          {
+            "type": "literal",
+            "value": "/api/v0/tools/file/data-frame"
+          }
+        ],
+        "auth": [
+          "default"
+        ],
+        "defaultEnvironment": "Production",
+        "environments": [
+          {
+            "id": "Production",
+            "baseUrl": "https://api.athenaintel.com"
+          }
+        ],
+        "queryParameters": [
+          {
+            "key": "document_id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "row_limit",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "index_column",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "columns",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_tools:ToolsDataFrameRequestColumnsItem"
+                  }
+                }
+              }
+            },
+            "description": "should be a list of strings or a list of integers"
+          },
+          {
+            "key": "sheet_name",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "only for excel files"
+          },
+          {
+            "key": "separator",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "only for csv files"
+          }
+        ],
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:DataFrameRequestOut"
+            }
+          }
+        },
+        "errors": [
+          {
+            "description": "Not Found",
+            "name": "Not Found",
+            "statusCode": 404,
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:FileFetchError"
+              }
+            },
+            "examples": []
+          },
+          {
+            "description": "Unsupported Media Type",
+            "name": "Unsupported Media Type",
+            "statusCode": 415,
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DataFrameUnknownFormatError"
+              }
+            },
+            "examples": []
+          },
+          {
+            "description": "Validation Error",
+            "name": "Unprocessable Entity",
+            "statusCode": 422,
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:HTTPValidationError"
+              }
+            },
+            "examples": []
+          },
+          {
+            "description": "Internal Server Error",
+            "name": "Internal Server Error",
+            "statusCode": 500,
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DataFrameParsingError"
+              }
+            },
+            "examples": []
+          }
+        ],
+        "examples": [
+          {
+            "path": "/api/v0/tools/file/data-frame",
+            "responseStatusCode": 200,
+            "pathParameters": {},
+            "queryParameters": {
+              "document_id": "document_id"
+            },
+            "headers": {},
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "columns": [
+                  "header1",
+                  "header2"
+                ],
+                "data": [
+                  [
+                    "a",
+                    1
+                  ],
+                  [
+                    "b",
+                    2
+                  ]
+                ],
+                "index": [
+                  0,
+                  1
+                ]
+              }
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl -G https://api.athenaintel.com/api/v0/tools/file/data-frame \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -d document_id=document_id",
+                  "generated": true
+                }
+              ],
+              "python": [
+                {
+                  "language": "python",
+                  "code": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.data_frame(\n    document_id=\"document_id\",\n)\n",
+                  "generated": true
+                }
+              ]
+            }
+          },
+          {
+            "path": "/api/v0/tools/file/data-frame",
+            "responseStatusCode": 404,
+            "pathParameters": {},
+            "queryParameters": {
+              "document_id": "string",
+              "row_limit": 0,
+              "index_column": 0
+            },
+            "headers": {},
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "message": "string",
+                "status_code": 0
+              }
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl -G https://api.athenaintel.com/api/v0/tools/file/data-frame \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -d document_id=string \\\n     -d row_limit=0 \\\n     -d index_column=0",
+                  "generated": true
+                }
+              ],
+              "python": [
+                {
+                  "language": "python",
+                  "code": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.data_frame(\n    document_id=\"document_id\",\n)\n",
+                  "generated": true
+                }
+              ]
+            }
+          },
+          {
+            "path": "/api/v0/tools/file/data-frame",
+            "responseStatusCode": 415,
+            "pathParameters": {},
+            "queryParameters": {
+              "document_id": "string",
+              "row_limit": 0,
+              "index_column": 0
+            },
+            "headers": {},
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "document_id": "string",
+                "media_type": "string",
+                "message": "string"
+              }
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl -G https://api.athenaintel.com/api/v0/tools/file/data-frame \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -d document_id=string \\\n     -d row_limit=0 \\\n     -d index_column=0",
+                  "generated": true
+                }
+              ],
+              "python": [
+                {
+                  "language": "python",
+                  "code": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.data_frame(\n    document_id=\"document_id\",\n)\n",
+                  "generated": true
+                }
+              ]
+            }
+          },
+          {
+            "path": "/api/v0/tools/file/data-frame",
+            "responseStatusCode": 422,
+            "pathParameters": {},
+            "queryParameters": {
+              "document_id": "string",
+              "row_limit": 0,
+              "index_column": 0
+            },
+            "headers": {},
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "detail": [
+                  {
+                    "loc": [
+                      "string"
+                    ],
+                    "msg": "string",
+                    "type": "string"
+                  }
+                ]
+              }
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl -G https://api.athenaintel.com/api/v0/tools/file/data-frame \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -d document_id=string \\\n     -d row_limit=0 \\\n     -d index_column=0",
+                  "generated": true
+                }
+              ],
+              "python": [
+                {
+                  "language": "python",
+                  "code": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.data_frame(\n    document_id=\"document_id\",\n)\n",
+                  "generated": true
+                }
+              ]
+            }
+          },
+          {
+            "path": "/api/v0/tools/file/data-frame",
+            "responseStatusCode": 500,
+            "pathParameters": {},
+            "queryParameters": {
+              "document_id": "string",
+              "row_limit": 0,
+              "index_column": 0
+            },
+            "headers": {},
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "document_id": "string",
+                "message": "string"
+              }
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl -G https://api.athenaintel.com/api/v0/tools/file/data-frame \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -d document_id=string \\\n     -d row_limit=0 \\\n     -d index_column=0",
+                  "generated": true
+                }
+              ],
+              "python": [
+                {
+                  "language": "python",
+                  "code": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.data_frame(\n    document_id=\"document_id\",\n)\n",
+                  "generated": true
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "endpoint_tools._raw_data": {
+        "id": "endpoint_tools._raw_data",
+        "namespace": [
+          "subpackage_tools"
+        ],
+        "description": "Get the raw file data for given asset.",
+        "availability": "Beta",
+        "method": "GET",
+        "path": [
+          {
+            "type": "literal",
+            "value": "/api/v0/tools/file/raw-data"
+          }
+        ],
+        "auth": [
+          "default"
+        ],
+        "defaultEnvironment": "Production",
+        "environments": [
+          {
+            "id": "Production",
+            "baseUrl": "https://api.athenaintel.com"
+          }
+        ],
+        "queryParameters": [
+          {
+            "key": "document_id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "fileDownload"
+          }
+        },
+        "errors": [
+          {
+            "description": "Not Found",
+            "name": "Not Found",
+            "statusCode": 404,
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:FileFetchError"
+              }
+            },
+            "examples": []
+          },
+          {
+            "description": "Validation Error",
+            "name": "Unprocessable Entity",
+            "statusCode": 422,
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:HTTPValidationError"
+              }
+            },
+            "examples": []
+          }
+        ],
+        "examples": [
+          {
+            "path": "/api/v0/tools/file/raw-data",
+            "responseStatusCode": 200,
+            "pathParameters": {},
+            "queryParameters": {
+              "document_id": "string"
+            },
+            "headers": {},
+            "responseBody": {
+              "type": "filename",
+              "value": "<filename>"
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl -G https://api.athenaintel.com/api/v0/tools/file/raw-data \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -d document_id=string",
+                  "generated": true
+                }
+              ],
+              "python": [
+                {
+                  "language": "python",
+                  "code": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.raw_data(\n    document_id=\"string\",\n)\n",
+                  "generated": true
+                }
+              ]
+            }
+          },
+          {
+            "path": "/api/v0/tools/file/raw-data",
+            "responseStatusCode": 404,
+            "pathParameters": {},
+            "queryParameters": {
+              "document_id": "string"
+            },
+            "headers": {},
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "message": "string",
+                "status_code": 0
+              }
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl -G https://api.athenaintel.com/api/v0/tools/file/raw-data \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -d document_id=string",
+                  "generated": true
+                }
+              ],
+              "python": [
+                {
+                  "language": "python",
+                  "code": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.raw_data(\n    document_id=\"string\",\n)\n",
+                  "generated": true
+                }
+              ]
+            }
+          },
+          {
+            "path": "/api/v0/tools/file/raw-data",
+            "responseStatusCode": 422,
+            "pathParameters": {},
+            "queryParameters": {
+              "document_id": "string"
+            },
+            "headers": {},
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "detail": [
+                  {
+                    "loc": [
+                      "string"
+                    ],
+                    "msg": "string",
+                    "type": "string"
+                  }
+                ]
+              }
+            },
+            "snippets": {
+              "curl": [
+                {
+                  "language": "curl",
+                  "code": "curl -G https://api.athenaintel.com/api/v0/tools/file/raw-data \\\n     -H \"X-API-KEY: <apiKey>\" \\\n     -d document_id=string",
+                  "generated": true
+                }
+              ],
+              "python": [
+                {
+                  "language": "python",
+                  "code": "from athena.client import Athena\n\nclient = Athena(\n    api_key=\"YOUR_API_KEY\",\n)\nclient.tools.raw_data(\n    document_id=\"string\",\n)\n",
+                  "generated": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "websockets": {},
+    "webhooks": {},
+    "types": {
+      "type_tools:ToolsDataFrameRequestColumnsItem": {
+        "name": "ToolsDataFrameRequestColumnsItem",
+        "shape": {
+          "type": "undiscriminatedUnion",
+          "variants": [
+            {
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:DataFrameParsingError": {
+        "name": "DataFrameParsingError",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "document_id",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "key": "message",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:DataFrameRequestOutColumnsItem": {
+        "name": "DataFrameRequestOutColumnsItem",
+        "shape": {
+          "type": "undiscriminatedUnion",
+          "variants": [
+            {
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:DataFrameRequestOutDataItemItem": {
+        "name": "DataFrameRequestOutDataItemItem",
+        "shape": {
+          "type": "undiscriminatedUnion",
+          "variants": [
+            {
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:DataFrameRequestOutIndexItem": {
+        "name": "DataFrameRequestOutIndexItem",
+        "shape": {
+          "type": "undiscriminatedUnion",
+          "variants": [
+            {
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:DataFrameRequestOut": {
+        "name": "DataFrameRequestOut",
+        "description": "Response model with JSON dataframe representation.",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "columns",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_:DataFrameRequestOutColumnsItem"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "key": "data",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:DataFrameRequestOutDataItemItem"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "key": "index",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_:DataFrameRequestOutIndexItem"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:DataFrameUnknownFormatError": {
+        "name": "DataFrameUnknownFormatError",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "document_id",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "key": "media_type",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "key": "message",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:FileFetchError": {
+        "name": "FileFetchError",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "message",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "key": "status_code",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "optional",
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:HTTPValidationError": {
+        "name": "HTTPValidationError",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "detail",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "optional",
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:ValidationError"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:ValidationErrorLocItem": {
+        "name": "ValidationErrorLocItem",
+        "shape": {
+          "type": "undiscriminatedUnion",
+          "variants": [
+            {
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "type_:ValidationError": {
+        "name": "ValidationError",
+        "shape": {
+          "type": "object",
+          "extends": [],
+          "properties": [
+            {
+              "key": "loc",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_:ValidationErrorLocItem"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "key": "msg",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "key": "type",
+              "valueShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "subpackages": {
+      "subpackage_tools": {
+        "id": "subpackage_tools",
+        "name": "tools"
+      }
+    },
+    "auths": {
+      "default": {
+        "type": "header",
+        "headerWireValue": "X-API-KEY",
+        "nameOverride": "apiKey"
+      }
+    }
+  }
+]

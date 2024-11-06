@@ -396,7 +396,7 @@ export function PlaygroundAuthorizationFormCard({
             if (state.searchParams.has("error_description")) {
                 state.searchParams.delete("error_description");
             }
-            url.searchParams.set("state", state.toString());
+            url.searchParams.set(apiKeyInjection.returnToQueryParam, state.toString());
             window.location.replace(url);
         } else {
             isOpen.toggleValue();
@@ -484,9 +484,15 @@ export function PlaygroundAuthorizationFormCard({
                                         text="Logout"
                                         intent="none"
                                         onClick={() => {
+                                            if (!apiKeyInjection.authenticated) {
+                                                return;
+                                            }
                                             const url = new URL(urlJoin(window.location.origin, logoutApiRoute));
-                                            const state = new URL(window.location.href);
-                                            url.searchParams.set("state", state.toString());
+                                            const returnTo = new URL(window.location.href);
+                                            url.searchParams.set(
+                                                apiKeyInjection.returnToQueryParam,
+                                                returnTo.toString(),
+                                            );
                                             fetch(url)
                                                 .then(() => {
                                                     window.location.reload();

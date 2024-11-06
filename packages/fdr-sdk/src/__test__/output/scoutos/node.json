@@ -1,0 +1,1474 @@
+{
+  "child": {
+    "child": {
+      "children": [
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.welcome",
+                    "pageId": "pages/welcome.mdx",
+                    "slug": "docs/welcome",
+                    "title": "Welcome",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.quick-start",
+                    "pageId": "pages/quick-start.mdx",
+                    "slug": "docs/quick-start",
+                    "title": "Quick Start",
+                    "type": "page"
+                  }
+                ],
+                "id": "root.uv.docs.docs.group",
+                "type": "sidebarGroup"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.workflows.creating-workflows",
+                    "pageId": "pages/docs/workflows/creating-workflows.mdx",
+                    "slug": "docs/workflows/creating-workflows",
+                    "title": "Creating Workflows",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.workflows.workflow-logic-state",
+                    "pageId": "pages/docs/workflows/workflow-logic-state.mdx",
+                    "slug": "docs/workflows/workflow-logic-state",
+                    "title": "Workflow Logic & State",
+                    "type": "page"
+                  },
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.discord-message",
+                        "pageId": "pages/docs/workflows/blocks/discord_message.mdx",
+                        "slug": "docs/workflows/blocks/discord-message",
+                        "title": "Discord Message",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.save",
+                        "pageId": "pages/docs/workflows/blocks/save.mdx",
+                        "slug": "docs/workflows/blocks/save",
+                        "title": "Save",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.llm",
+                        "pageId": "pages/docs/workflows/blocks/llm.mdx",
+                        "slug": "docs/workflows/blocks/llm",
+                        "title": "Llm",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.scrape",
+                        "pageId": "pages/docs/workflows/blocks/scrape.mdx",
+                        "slug": "docs/workflows/blocks/scrape",
+                        "title": "Scrape",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.copilot-links",
+                        "pageId": "pages/docs/workflows/blocks/copilot_links.mdx",
+                        "slug": "docs/workflows/blocks/copilot-links",
+                        "title": "Copilot Links",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.text",
+                        "pageId": "pages/docs/workflows/blocks/text.mdx",
+                        "slug": "docs/workflows/blocks/text",
+                        "title": "Text",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.copilot-message",
+                        "pageId": "pages/docs/workflows/blocks/copilot_message.mdx",
+                        "slug": "docs/workflows/blocks/copilot-message",
+                        "title": "Copilot Message",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.http",
+                        "pageId": "pages/docs/workflows/blocks/http.mdx",
+                        "slug": "docs/workflows/blocks/http",
+                        "title": "Http",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.slack-message",
+                        "pageId": "pages/docs/workflows/blocks/slack_message.mdx",
+                        "slug": "docs/workflows/blocks/slack-message",
+                        "title": "Slack Message",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.copilot-thinking-text",
+                        "pageId": "pages/docs/workflows/blocks/copilot_thinking_text.mdx",
+                        "slug": "docs/workflows/blocks/copilot-thinking-text",
+                        "title": "Copilot Thinking Text",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.conditional",
+                        "pageId": "pages/docs/workflows/blocks/conditional.mdx",
+                        "slug": "docs/workflows/blocks/conditional",
+                        "title": "Conditional",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.json",
+                        "pageId": "pages/docs/workflows/blocks/json.mdx",
+                        "slug": "docs/workflows/blocks/json",
+                        "title": "Json",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.extract-links",
+                        "pageId": "pages/docs/workflows/blocks/extract_links.mdx",
+                        "slug": "docs/workflows/blocks/extract-links",
+                        "title": "Extract Links",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.input",
+                        "pageId": "pages/docs/workflows/blocks/input.mdx",
+                        "slug": "docs/workflows/blocks/input",
+                        "title": "Input",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.stop",
+                        "pageId": "pages/docs/workflows/blocks/stop.mdx",
+                        "slug": "docs/workflows/blocks/stop",
+                        "title": "Stop",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.collection",
+                        "pageId": "pages/docs/workflows/blocks/collection.mdx",
+                        "slug": "docs/workflows/blocks/collection",
+                        "title": "Collection",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.delay",
+                        "pageId": "pages/docs/workflows/blocks/delay.mdx",
+                        "slug": "docs/workflows/blocks/delay",
+                        "title": "Delay",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.inspect-graph",
+                        "pageId": "pages/docs/workflows/blocks/inspect_graph.mdx",
+                        "slug": "docs/workflows/blocks/inspect-graph",
+                        "title": "Inspect Graph",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.workflows.blocks.postgres",
+                        "pageId": "pages/docs/workflows/blocks/postgres.mdx",
+                        "slug": "docs/workflows/blocks/postgres",
+                        "title": "Postgres",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.workflows.blocks",
+                    "overviewPageId": "pages/docs/workflows/blocks/overview.mdx",
+                    "pointsTo": "docs/workflows/blocks/discord-message",
+                    "slug": "docs/workflows/blocks",
+                    "title": "Blocks",
+                    "type": "section"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.workflows.running-workflows",
+                    "pageId": "pages/docs/workflows/running-workflows.mdx",
+                    "slug": "docs/workflows/running-workflows",
+                    "title": "Running Workflows",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.workflows.console",
+                    "pageId": "pages/docs/workflows/console.mdx",
+                    "slug": "docs/workflows/console",
+                    "title": "Console",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.workflows.history",
+                    "pageId": "pages/docs/workflows/history.mdx",
+                    "slug": "docs/workflows/history",
+                    "title": "History",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.workflows.logs",
+                    "pageId": "pages/docs/workflows/logs.mdx",
+                    "slug": "docs/workflows/logs",
+                    "title": "Logs",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.workflows.environment-variables",
+                    "pageId": "pages/docs/settings/environment-variables.mdx",
+                    "slug": "docs/workflows/environment-variables",
+                    "title": "Environment Variables",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.docs.docs.workflows",
+                "overviewPageId": "pages/docs/workflows/overview.mdx",
+                "pointsTo": "docs/workflows/creating-workflows",
+                "slug": "docs/workflows",
+                "title": "Workflows",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.collections.documents",
+                    "pageId": "pages/docs/collections/documents.mdx",
+                    "slug": "docs/collections/documents",
+                    "title": "Documents",
+                    "type": "page"
+                  },
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.collections.uploading-creating-documents.scraping-a-website",
+                        "pageId": "pages/docs/collections/uploading-creating-documents/web-scraping.mdx",
+                        "slug": "docs/collections/uploading-creating-documents/scraping-a-website",
+                        "title": "Scraping a Website",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.collections.uploading-creating-documents.uploading-files",
+                        "pageId": "pages/docs/collections/uploading-creating-documents/uploading-files.mdx",
+                        "slug": "docs/collections/uploading-creating-documents/uploading-files",
+                        "title": "Uploading Files",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.collections.uploading-creating-documents.creating-documents-directly-in-scout",
+                        "pageId": "pages/docs/collections/uploading-creating-documents/from-scratch.mdx",
+                        "slug": "docs/collections/uploading-creating-documents/creating-documents-directly-in-scout",
+                        "title": "Creating Documents Directly in Scout",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.collections.uploading-creating-documents",
+                    "overviewPageId": "pages/docs/collections/uploading-creating-documents/overview.mdx",
+                    "pointsTo": "docs/collections/uploading-creating-documents/scraping-a-website",
+                    "slug": "docs/collections/uploading-creating-documents",
+                    "title": "Uploading & Creating Documents",
+                    "type": "section"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.docs.docs.collections",
+                "overviewPageId": "pages/docs/collections/overview.mdx",
+                "pointsTo": "docs/collections/documents",
+                "slug": "docs/collections",
+                "title": "Collections",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.settings.api-keys",
+                    "pageId": "pages/docs/settings/api-keys.mdx",
+                    "slug": "docs/settings/api-keys",
+                    "title": "API Keys",
+                    "type": "page"
+                  },
+                  {
+                    "canonicalSlug": "docs/workflows/environment-variables",
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.settings.environment-variables",
+                    "pageId": "pages/docs/settings/environment-variables.mdx",
+                    "slug": "docs/settings/environment-variables",
+                    "title": "Environment Variables",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.docs.docs.settings",
+                "pointsTo": "docs/settings/api-keys",
+                "slug": "docs/settings",
+                "title": "Settings",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.integrations.slack-bot",
+                    "pageId": "pages/docs/integrations/slack-bot.mdx",
+                    "slug": "docs/integrations/slack-bot",
+                    "title": "Slack Bot",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.integrations.scout-copilot",
+                    "pageId": "pages/docs/integrations/scout-copilot.mdx",
+                    "slug": "docs/integrations/scout-copilot",
+                    "title": "Scout Copilot",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.integrations.command-component",
+                    "pageId": "pages/docs/integrations/command-component.mdx",
+                    "slug": "docs/integrations/command-component",
+                    "title": "Command Component",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.docs.docs.integrations",
+                "pointsTo": "docs/integrations/slack-bot",
+                "slug": "docs/integrations",
+                "title": "Integrations",
+                "type": "section"
+              }
+            ],
+            "id": "root.uv.docs.docs",
+            "type": "sidebarRoot"
+          },
+          "icon": "home",
+          "id": "root.uv.docs",
+          "pointsTo": "docs/welcome",
+          "slug": "docs",
+          "title": "Docs",
+          "type": "tab"
+        },
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.workflow-templates.workflow-templates.what-s-your-use-case",
+                    "pageId": "pages/examples/whats-your-use-case.mdx",
+                    "slug": "workflow-templates/what-s-your-use-case",
+                    "title": "What's your use case?",
+                    "type": "page"
+                  }
+                ],
+                "id": "root.uv.workflow-templates.workflow-templates.group",
+                "type": "sidebarGroup"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.customer-support.customer-support-reply-assistant",
+                        "pageId": "pages/examples/customer-support-reply.mdx",
+                        "slug": "workflow-templates/use-cases/customer-support/customer-support-reply-assistant",
+                        "title": "Customer Support Reply Assistant",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.customer-support.customer-query-router",
+                        "pageId": "pages/examples/customer-query-router.mdx",
+                        "slug": "workflow-templates/use-cases/customer-support/customer-query-router",
+                        "title": "Customer Query Router",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.customer-support.automated-support-bot",
+                        "pageId": "pages/examples/automated-support-bot.mdx",
+                        "slug": "workflow-templates/use-cases/customer-support/automated-support-bot",
+                        "title": "Automated Support Bot",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.customer-support.support-ticket-classifier",
+                        "pageId": "pages/examples/support-ticket-classifier.mdx",
+                        "slug": "workflow-templates/use-cases/customer-support/support-ticket-classifier",
+                        "title": "Support Ticket Classifier",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.customer-support.internal-search-wiki",
+                        "pageId": "pages/examples/internal-search-wiki.mdx",
+                        "slug": "workflow-templates/use-cases/customer-support/internal-search-wiki",
+                        "title": "Internal Search Wiki",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.customer-support.customer-issue-escalation-report-builder",
+                        "pageId": "pages/examples/customer-issue-escalation.mdx",
+                        "slug": "workflow-templates/use-cases/customer-support/customer-issue-escalation-report-builder",
+                        "title": "Customer Issue Escalation Report Builder",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "icon": "life-ring",
+                    "id": "root.uv.workflow-templates.workflow-templates.use-cases.customer-support",
+                    "overviewPageId": "pages/examples/customer-support-overview.mdx",
+                    "pointsTo": "workflow-templates/use-cases/customer-support/customer-support-reply-assistant",
+                    "slug": "workflow-templates/use-cases/customer-support",
+                    "title": "Customer Support",
+                    "type": "section"
+                  },
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.sales.responding-to-rf-ps",
+                        "pageId": "pages/examples/responding-to-rfps.mdx",
+                        "slug": "workflow-templates/use-cases/sales/responding-to-rf-ps",
+                        "title": "Responding to RFPs",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.sales.sales-proposal-generator",
+                        "pageId": "pages/examples/sales-proposal-generator.mdx",
+                        "slug": "workflow-templates/use-cases/sales/sales-proposal-generator",
+                        "title": "Sales Proposal Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.sales.sales-outreach-email-assistant",
+                        "pageId": "pages/examples/sales-outreach-email.mdx",
+                        "slug": "workflow-templates/use-cases/sales/sales-outreach-email-assistant",
+                        "title": "Sales Outreach Email Assistant",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.sales.sales-demo-script-generator",
+                        "pageId": "pages/examples/sales-demo-script.mdx",
+                        "slug": "workflow-templates/use-cases/sales/sales-demo-script-generator",
+                        "title": "Sales Demo Script Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.sales.sales-playbook-generator",
+                        "pageId": "pages/examples/sales-playbook-generator.mdx",
+                        "slug": "workflow-templates/use-cases/sales/sales-playbook-generator",
+                        "title": "Sales Playbook Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.sales.sales-objection-handling-guide",
+                        "pageId": "pages/examples/sales-objection-handling.mdx",
+                        "slug": "workflow-templates/use-cases/sales/sales-objection-handling-guide",
+                        "title": "Sales Objection Handling Guide",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.sales.product-feature-request-generator",
+                        "pageId": "pages/examples/product-feature-request.mdx",
+                        "slug": "workflow-templates/use-cases/sales/product-feature-request-generator",
+                        "title": "Product Feature Request Generator",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "icon": "cash-register",
+                    "id": "root.uv.workflow-templates.workflow-templates.use-cases.sales",
+                    "overviewPageId": "pages/examples/sales-overview.mdx",
+                    "pointsTo": "workflow-templates/use-cases/sales/responding-to-rf-ps",
+                    "slug": "workflow-templates/use-cases/sales",
+                    "title": "Sales",
+                    "type": "section"
+                  },
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.marketing-content-creation.writing-blogs-landing-pages",
+                        "pageId": "pages/examples/writing-blogs-landing.mdx",
+                        "slug": "workflow-templates/use-cases/marketing-content-creation/writing-blogs-landing-pages",
+                        "title": "Writing Blogs & Landing Pages",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.marketing-content-creation.creating-personalized-marketing-campaigns",
+                        "pageId": "pages/examples/personalized-marketing-campaigns.mdx",
+                        "slug": "workflow-templates/use-cases/marketing-content-creation/creating-personalized-marketing-campaigns",
+                        "title": "Creating Personalized Marketing Campaigns",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.marketing-content-creation.automating-social-media-content-creation",
+                        "pageId": "pages/examples/social-media-content.mdx",
+                        "slug": "workflow-templates/use-cases/marketing-content-creation/automating-social-media-content-creation",
+                        "title": "Automating Social Media Content Creation",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.marketing-content-creation.seo-content-suggestion-tool",
+                        "pageId": "pages/examples/seo-content-suggestion.mdx",
+                        "slug": "workflow-templates/use-cases/marketing-content-creation/seo-content-suggestion-tool",
+                        "title": "SEO Content Suggestion Tool",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.marketing-content-creation.press-release-drafting-assistant",
+                        "pageId": "pages/examples/press-release-drafting.mdx",
+                        "slug": "workflow-templates/use-cases/marketing-content-creation/press-release-drafting-assistant",
+                        "title": "Press Release Drafting Assistant",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.marketing-content-creation.marketing-campaign-idea-generator",
+                        "pageId": "pages/examples/marketing-campaign-idea.mdx",
+                        "slug": "workflow-templates/use-cases/marketing-content-creation/marketing-campaign-idea-generator",
+                        "title": "Marketing Campaign Idea Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.marketing-content-creation.content-personalization-engine",
+                        "pageId": "pages/examples/content-personalization.mdx",
+                        "slug": "workflow-templates/use-cases/marketing-content-creation/content-personalization-engine",
+                        "title": "Content Personalization Engine",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.marketing-content-creation.content-calendar-builder",
+                        "pageId": "pages/examples/content-calendar.mdx",
+                        "slug": "workflow-templates/use-cases/marketing-content-creation/content-calendar-builder",
+                        "title": "Content Calendar Builder",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.marketing-content-creation.brand-voice-guide-generator",
+                        "pageId": "pages/examples/brand-voice-guide.mdx",
+                        "slug": "workflow-templates/use-cases/marketing-content-creation/brand-voice-guide-generator",
+                        "title": "Brand Voice Guide Generator",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "icon": "newspaper",
+                    "id": "root.uv.workflow-templates.workflow-templates.use-cases.marketing-content-creation",
+                    "overviewPageId": "pages/examples/marketing-content-creation-overview.mdx",
+                    "pointsTo": "workflow-templates/use-cases/marketing-content-creation/writing-blogs-landing-pages",
+                    "slug": "workflow-templates/use-cases/marketing-content-creation",
+                    "title": "Marketing & Content Creation",
+                    "type": "section"
+                  },
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.customer-success.client-onboarding-plan-generator",
+                        "pageId": "pages/examples/client-onboarding-guide.mdx",
+                        "slug": "workflow-templates/use-cases/customer-success/client-onboarding-plan-generator",
+                        "title": "Client Onboarding Plan Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.customer-success.customer-retention-email-sequence-generator",
+                        "pageId": "pages/examples/customer-retention-email.mdx",
+                        "slug": "workflow-templates/use-cases/customer-success/customer-retention-email-sequence-generator",
+                        "title": "Customer Retention Email Sequence Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.customer-success.customer-success-playbook-generator",
+                        "pageId": "pages/examples/customer-success-playbook.mdx",
+                        "slug": "workflow-templates/use-cases/customer-success/customer-success-playbook-generator",
+                        "title": "Customer Success Playbook Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.customer-success.client-satisfaction-feedback-summarizer",
+                        "pageId": "pages/examples/client-feedback-summarizer.mdx",
+                        "slug": "workflow-templates/use-cases/customer-success/client-satisfaction-feedback-summarizer",
+                        "title": "Client Satisfaction Feedback Summarizer",
+                        "type": "page"
+                      },
+                      {
+                        "canonicalSlug": "workflow-templates/use-cases/customer-support/internal-search-wiki",
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.customer-success.internal-search-wiki",
+                        "pageId": "pages/examples/internal-search-wiki.mdx",
+                        "slug": "workflow-templates/use-cases/customer-success/internal-search-wiki",
+                        "title": "Internal Search Wiki",
+                        "type": "page"
+                      },
+                      {
+                        "canonicalSlug": "workflow-templates/use-cases/customer-support/customer-issue-escalation-report-builder",
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.customer-success.customer-issue-escalation-report-builder",
+                        "pageId": "pages/examples/customer-issue-escalation.mdx",
+                        "slug": "workflow-templates/use-cases/customer-success/customer-issue-escalation-report-builder",
+                        "title": "Customer Issue Escalation Report Builder",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "icon": "face-smile",
+                    "id": "root.uv.workflow-templates.workflow-templates.use-cases.customer-success",
+                    "overviewPageId": "pages/examples/customer-success-overview.mdx",
+                    "pointsTo": "workflow-templates/use-cases/customer-success/client-onboarding-plan-generator",
+                    "slug": "workflow-templates/use-cases/customer-success",
+                    "title": "Customer Success",
+                    "type": "section"
+                  },
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.product-management.augmenting-product-feedback-discovery",
+                        "pageId": "pages/examples/product-feedback-discovery.mdx",
+                        "slug": "workflow-templates/use-cases/product-management/augmenting-product-feedback-discovery",
+                        "title": "Augmenting Product Feedback Discovery",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.product-management.product-documentation-generator",
+                        "pageId": "pages/examples/product-documentation-generator.mdx",
+                        "slug": "workflow-templates/use-cases/product-management/product-documentation-generator",
+                        "title": "Product Documentation Generator",
+                        "type": "page"
+                      },
+                      {
+                        "canonicalSlug": "workflow-templates/use-cases/sales/product-feature-request-generator",
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.product-management.product-feature-request-generator",
+                        "pageId": "pages/examples/product-feature-request.mdx",
+                        "slug": "workflow-templates/use-cases/product-management/product-feature-request-generator",
+                        "title": "Product Feature Request Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.product-management.product-roadmap-generator",
+                        "pageId": "pages/examples/product-roadmap-generator.mdx",
+                        "slug": "workflow-templates/use-cases/product-management/product-roadmap-generator",
+                        "title": "Product Roadmap Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.product-management.feature-comparison-matrix-generator",
+                        "pageId": "pages/examples/feature-comparison-matrix.mdx",
+                        "slug": "workflow-templates/use-cases/product-management/feature-comparison-matrix-generator",
+                        "title": "Feature Comparison Matrix Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.product-management.user-manual-generator",
+                        "pageId": "pages/examples/user-manual-generator.mdx",
+                        "slug": "workflow-templates/use-cases/product-management/user-manual-generator",
+                        "title": "User Manual Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.product-management.market-research-report-generator",
+                        "pageId": "pages/examples/market-research-report.mdx",
+                        "slug": "workflow-templates/use-cases/product-management/market-research-report-generator",
+                        "title": "Market Research Report Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.product-management.competitive-analysis-summarizer",
+                        "pageId": "pages/examples/competitive-analysis-summarizer.mdx",
+                        "slug": "workflow-templates/use-cases/product-management/competitive-analysis-summarizer",
+                        "title": "Competitive Analysis Summarizer",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "icon": "binoculars",
+                    "id": "root.uv.workflow-templates.workflow-templates.use-cases.product-management",
+                    "overviewPageId": "pages/examples/product-management-overview.mdx",
+                    "pointsTo": "workflow-templates/use-cases/product-management/augmenting-product-feedback-discovery",
+                    "slug": "workflow-templates/use-cases/product-management",
+                    "title": "Product Management",
+                    "type": "section"
+                  },
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.legal-compliance.responding-to-security-questionnaires",
+                        "pageId": "pages/examples/security-questionnaires.mdx",
+                        "slug": "workflow-templates/use-cases/legal-compliance/responding-to-security-questionnaires",
+                        "title": "Responding to Security Questionnaires",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.legal-compliance.contract-review-assistant",
+                        "pageId": "pages/examples/contract-review-assistant.mdx",
+                        "slug": "workflow-templates/use-cases/legal-compliance/contract-review-assistant",
+                        "title": "Contract Review Assistant",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.legal-compliance.compliance-document-generator",
+                        "pageId": "pages/examples/compliance-doc-generator.mdx",
+                        "slug": "workflow-templates/use-cases/legal-compliance/compliance-document-generator",
+                        "title": "Compliance Document Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.legal-compliance.legal-discovery-document-summarizer",
+                        "pageId": "pages/examples/legal-discovery-doc.mdx",
+                        "slug": "workflow-templates/use-cases/legal-compliance/legal-discovery-document-summarizer",
+                        "title": "Legal Discovery Document Summarizer",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.legal-compliance.internal-compliance-training-faq",
+                        "pageId": "pages/examples/internal-compliance-faq.mdx",
+                        "slug": "workflow-templates/use-cases/legal-compliance/internal-compliance-training-faq",
+                        "title": "Internal Compliance Training FAQ",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.legal-compliance.saas-security-risk-assessment-report-generator",
+                        "pageId": "pages/examples/saas-security-risk.mdx",
+                        "slug": "workflow-templates/use-cases/legal-compliance/saas-security-risk-assessment-report-generator",
+                        "title": "SAAS Security Risk Assessment Report Generator",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "icon": "gavel",
+                    "id": "root.uv.workflow-templates.workflow-templates.use-cases.legal-compliance",
+                    "overviewPageId": "pages/examples/legal-compliance-overview.mdx",
+                    "pointsTo": "workflow-templates/use-cases/legal-compliance/responding-to-security-questionnaires",
+                    "slug": "workflow-templates/use-cases/legal-compliance",
+                    "title": "Legal & Compliance",
+                    "type": "section"
+                  },
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.internal-operations-team-management.enhancing-employee-onboarding",
+                        "pageId": "pages/examples/employee-onboarding.mdx",
+                        "slug": "workflow-templates/use-cases/internal-operations-team-management/enhancing-employee-onboarding",
+                        "title": "Enhancing Employee Onboarding",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.internal-operations-team-management.internal-policy-faq-generator",
+                        "pageId": "pages/examples/internal-policy-faq.mdx",
+                        "slug": "workflow-templates/use-cases/internal-operations-team-management/internal-policy-faq-generator",
+                        "title": "Internal Policy FAQ Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.internal-operations-team-management.team-recognition-reward-plan",
+                        "pageId": "pages/examples/team-recognition-plan.mdx",
+                        "slug": "workflow-templates/use-cases/internal-operations-team-management/team-recognition-reward-plan",
+                        "title": "Team Recognition & Reward Plan",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.internal-operations-team-management.meeting-transcript-summarizer",
+                        "pageId": "pages/examples/meeting-transcript-summarizer.mdx",
+                        "slug": "workflow-templates/use-cases/internal-operations-team-management/meeting-transcript-summarizer",
+                        "title": "Meeting Transcript Summarizer",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.internal-operations-team-management.project-update-summarizer",
+                        "pageId": "pages/examples/project-update-summarizer.mdx",
+                        "slug": "workflow-templates/use-cases/internal-operations-team-management/project-update-summarizer",
+                        "title": "Project Update Summarizer",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.internal-operations-team-management.board-meeting-report-generator",
+                        "pageId": "pages/examples/board-meeting-report.mdx",
+                        "slug": "workflow-templates/use-cases/internal-operations-team-management/board-meeting-report-generator",
+                        "title": "Board Meeting Report Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.internal-operations-team-management.job-description-generator",
+                        "pageId": "pages/examples/job-description-generator.mdx",
+                        "slug": "workflow-templates/use-cases/internal-operations-team-management/job-description-generator",
+                        "title": "Job Description Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.internal-operations-team-management.board-update-summarizer",
+                        "pageId": "pages/examples/board-update-summarizer.mdx",
+                        "slug": "workflow-templates/use-cases/internal-operations-team-management/board-update-summarizer",
+                        "title": "Board Update Summarizer",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "icon": "people-group",
+                    "id": "root.uv.workflow-templates.workflow-templates.use-cases.internal-operations-team-management",
+                    "overviewPageId": "pages/examples/internal-operations-team-management-overview.mdx",
+                    "pointsTo": "workflow-templates/use-cases/internal-operations-team-management/enhancing-employee-onboarding",
+                    "slug": "workflow-templates/use-cases/internal-operations-team-management",
+                    "title": "Internal Operations & Team Management",
+                    "type": "section"
+                  },
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.client-reporting-analysis.take-customer-background-data-and-generate-a-report",
+                        "pageId": "pages/examples/customer-background-report.mdx",
+                        "slug": "workflow-templates/use-cases/client-reporting-analysis/take-customer-background-data-and-generate-a-report",
+                        "title": "Take Customer Background Data and Generate a Report",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.client-reporting-analysis.client-project-proposal-builder",
+                        "pageId": "pages/examples/client-project-proposal.mdx",
+                        "slug": "workflow-templates/use-cases/client-reporting-analysis/client-project-proposal-builder",
+                        "title": "Client Project Proposal Builder",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.client-reporting-analysis.investor-update-summarizer",
+                        "pageId": "pages/examples/investor-update-summarizer.mdx",
+                        "slug": "workflow-templates/use-cases/client-reporting-analysis/investor-update-summarizer",
+                        "title": "Investor Update Summarizer",
+                        "type": "page"
+                      },
+                      {
+                        "canonicalSlug": "workflow-templates/use-cases/customer-success/client-satisfaction-feedback-summarizer",
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.client-reporting-analysis.client-satisfaction-feedback-summarizer",
+                        "pageId": "pages/examples/client-feedback-summarizer.mdx",
+                        "slug": "workflow-templates/use-cases/client-reporting-analysis/client-satisfaction-feedback-summarizer",
+                        "title": "Client Satisfaction Feedback Summarizer",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.client-reporting-analysis.rfp-response-generator",
+                        "pageId": "pages/examples/rfp-response-generator.mdx",
+                        "slug": "workflow-templates/use-cases/client-reporting-analysis/rfp-response-generator",
+                        "title": "RFP Response Generator",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "icon": "magnifying-glass-chart",
+                    "id": "root.uv.workflow-templates.workflow-templates.use-cases.client-reporting-analysis",
+                    "overviewPageId": "pages/examples/client-reporting-analysis-overview.mdx",
+                    "pointsTo": "workflow-templates/use-cases/client-reporting-analysis/take-customer-background-data-and-generate-a-report",
+                    "slug": "workflow-templates/use-cases/client-reporting-analysis",
+                    "title": "Client Reporting & Analysis",
+                    "type": "section"
+                  },
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.startup-toolkit.build-custom-ai-apps",
+                        "pageId": "pages/examples/build-ai-apps.mdx",
+                        "slug": "workflow-templates/use-cases/startup-toolkit/build-custom-ai-apps",
+                        "title": "Build Custom AI Apps",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.startup-toolkit.product-launch-plan-builder",
+                        "pageId": "pages/examples/product-launch-plan.mdx",
+                        "slug": "workflow-templates/use-cases/startup-toolkit/product-launch-plan-builder",
+                        "title": "Product Launch Plan Builder",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.startup-toolkit.knowledge-base-article-generator",
+                        "pageId": "pages/examples/knowledge-base-article.mdx",
+                        "slug": "workflow-templates/use-cases/startup-toolkit/knowledge-base-article-generator",
+                        "title": "Knowledge Base Article Generator",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.startup-toolkit.case-study-generator",
+                        "pageId": "pages/examples/case-study-generator.mdx",
+                        "slug": "workflow-templates/use-cases/startup-toolkit/case-study-generator",
+                        "title": "Case Study Generator",
+                        "type": "page"
+                      },
+                      {
+                        "canonicalSlug": "workflow-templates/use-cases/marketing-content-creation/press-release-drafting-assistant",
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.startup-toolkit.press-release-drafting-assistant",
+                        "pageId": "pages/examples/press-release-drafting.mdx",
+                        "slug": "workflow-templates/use-cases/startup-toolkit/press-release-drafting-assistant",
+                        "title": "Press Release Drafting Assistant",
+                        "type": "page"
+                      },
+                      {
+                        "canonicalSlug": "workflow-templates/use-cases/marketing-content-creation/brand-voice-guide-generator",
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.startup-toolkit.brand-voice-guide-generator",
+                        "pageId": "pages/examples/brand-voice-guide.mdx",
+                        "slug": "workflow-templates/use-cases/startup-toolkit/brand-voice-guide-generator",
+                        "title": "Brand Voice Guide Generator",
+                        "type": "page"
+                      },
+                      {
+                        "canonicalSlug": "workflow-templates/use-cases/marketing-content-creation/seo-content-suggestion-tool",
+                        "hidden": false,
+                        "id": "root.uv.workflow-templates.workflow-templates.use-cases.startup-toolkit.seo-content-suggestion-tool",
+                        "pageId": "pages/examples/seo-content-suggestion.mdx",
+                        "slug": "workflow-templates/use-cases/startup-toolkit/seo-content-suggestion-tool",
+                        "title": "SEO Content Suggestion Tool",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "icon": "toolbox",
+                    "id": "root.uv.workflow-templates.workflow-templates.use-cases.startup-toolkit",
+                    "overviewPageId": "pages/examples/startup-toolkit-overview.mdx",
+                    "pointsTo": "workflow-templates/use-cases/startup-toolkit/build-custom-ai-apps",
+                    "slug": "workflow-templates/use-cases/startup-toolkit",
+                    "title": "Startup Toolkit",
+                    "type": "section"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.workflow-templates.workflow-templates.use-cases",
+                "pointsTo": "workflow-templates/use-cases/customer-support",
+                "slug": "workflow-templates/use-cases",
+                "title": "Use Cases",
+                "type": "section"
+              }
+            ],
+            "id": "root.uv.workflow-templates.workflow-templates",
+            "type": "sidebarRoot"
+          },
+          "icon": "book",
+          "id": "root.uv.workflow-templates",
+          "pointsTo": "workflow-templates/what-s-your-use-case",
+          "slug": "workflow-templates",
+          "title": "Workflow Templates",
+          "type": "tab"
+        },
+        {
+          "child": {
+            "children": [
+              {
+                "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                "children": [
+                  {
+                    "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                    "children": [
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_workflows.list",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_workflows.list",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-sdk/endpoints/workflows/list",
+                        "title": "List all workflows",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_workflows.create",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_workflows.create",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-sdk/endpoints/workflows/create",
+                        "title": "Create a new workflow",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_workflows.get",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_workflows.get",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-sdk/endpoints/workflows/get",
+                        "title": "Get a workflow by ID",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_workflows.update",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_workflows.update",
+                        "isResponseStream": false,
+                        "method": "PUT",
+                        "slug": "api-sdk/endpoints/workflows/update",
+                        "title": "Update a workflow",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_workflows.delete",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_workflows.delete",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "api-sdk/endpoints/workflows/delete",
+                        "title": "Delete a workflow",
+                        "type": "endpoint"
+                      },
+                      {
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_workflows.run+endpoint_workflows.run_stream",
+                        "nonStream": {
+                          "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                          "availability": "Beta",
+                          "endpointId": "endpoint_workflows.run",
+                          "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_workflows.run",
+                          "isResponseStream": false,
+                          "method": "POST",
+                          "slug": "api-sdk/endpoints/workflows/run",
+                          "title": "Execute a workflow.",
+                          "type": "endpoint"
+                        },
+                        "stream": {
+                          "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                          "availability": "Beta",
+                          "canonicalSlug": "api-sdk/endpoints/workflows/run",
+                          "endpointId": "endpoint_workflows.run_stream",
+                          "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_workflows.run_stream",
+                          "isResponseStream": true,
+                          "method": "POST",
+                          "slug": "api-sdk/endpoints/workflows/run-stream",
+                          "title": "Execute a workflow.",
+                          "type": "endpoint"
+                        },
+                        "type": "endpointPair"
+                      }
+                    ],
+                    "id": "cf613558-95cd-4318-99a9-c433d14f2875:subpackage_workflows",
+                    "pointsTo": "api-sdk/endpoints/workflows/list",
+                    "slug": "api-sdk/endpoints/workflows",
+                    "title": "Workflows",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                    "children": [
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_environments.list",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_environments.list",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-sdk/endpoints/environments/list",
+                        "title": "List all environments for a workflow",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_environments.update",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_environments.update",
+                        "isResponseStream": false,
+                        "method": "PUT",
+                        "slug": "api-sdk/endpoints/environments/update",
+                        "title": "Update a workflow environment",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "cf613558-95cd-4318-99a9-c433d14f2875:subpackage_environments",
+                    "pointsTo": "api-sdk/endpoints/environments/list",
+                    "slug": "api-sdk/endpoints/environments",
+                    "title": "Environments",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                    "children": [
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_revisions.list",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_revisions.list",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-sdk/endpoints/revisions/list",
+                        "title": "List all revisions for a workflow",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_revisions.update",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_revisions.update",
+                        "isResponseStream": false,
+                        "method": "PUT",
+                        "slug": "api-sdk/endpoints/revisions/update",
+                        "title": "Make a revision the active revision for a workflow",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_revisions.delete",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_revisions.delete",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "api-sdk/endpoints/revisions/delete",
+                        "title": "Delete a revision",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "cf613558-95cd-4318-99a9-c433d14f2875:subpackage_revisions",
+                    "pointsTo": "api-sdk/endpoints/revisions/list",
+                    "slug": "api-sdk/endpoints/revisions",
+                    "title": "Revisions",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                    "children": [
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_usage.get",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_usage.get",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-sdk/endpoints/usage/get",
+                        "title": "Get usage information for the current organization.",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "cf613558-95cd-4318-99a9-c433d14f2875:subpackage_usage",
+                    "pointsTo": "api-sdk/endpoints/usage/get",
+                    "slug": "api-sdk/endpoints/usage",
+                    "title": "Usage",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                    "children": [
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_workflowLogs.get",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_workflowLogs.get",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-sdk/endpoints/workflow-logs/get",
+                        "title": "Get logs for a workflow",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "cf613558-95cd-4318-99a9-c433d14f2875:subpackage_workflowLogs",
+                    "pointsTo": "api-sdk/endpoints/workflow-logs/get",
+                    "slug": "api-sdk/endpoints/workflow-logs",
+                    "title": "Workflow Logs",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                    "children": [
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_copilots.list",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_copilots.list",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-sdk/endpoints/copilots/list",
+                        "title": "List all copilots",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_copilots.create",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_copilots.create",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-sdk/endpoints/copilots/create",
+                        "title": "Create a new copilot",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_copilots.get",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_copilots.get",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-sdk/endpoints/copilots/get",
+                        "title": "Get a copilot",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_copilots.update",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_copilots.update",
+                        "isResponseStream": false,
+                        "method": "PUT",
+                        "slug": "api-sdk/endpoints/copilots/update",
+                        "title": "Update a copilot",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_copilots.delete",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_copilots.delete",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "api-sdk/endpoints/copilots/delete",
+                        "title": "Delete a copilot",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "cf613558-95cd-4318-99a9-c433d14f2875:subpackage_copilots",
+                    "pointsTo": "api-sdk/endpoints/copilots/list",
+                    "slug": "api-sdk/endpoints/copilots",
+                    "title": "Copilots",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                    "children": [
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_collections.get",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_collections.get",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-sdk/endpoints/collections/get",
+                        "title": "Get a collection by ID.",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_collections.create",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_collections.create",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-sdk/endpoints/collections/create",
+                        "title": "Create a collection.",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_collections.update",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_collections.update",
+                        "isResponseStream": false,
+                        "method": "PUT",
+                        "slug": "api-sdk/endpoints/collections/update",
+                        "title": "Update a collection by ID.",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_collections.delete",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_collections.delete",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "api-sdk/endpoints/collections/delete",
+                        "title": "Delete a collection by ID.",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "cf613558-95cd-4318-99a9-c433d14f2875:subpackage_collections",
+                    "pointsTo": "api-sdk/endpoints/collections/get",
+                    "slug": "api-sdk/endpoints/collections",
+                    "title": "Collections",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                    "children": [
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_documents.get",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_documents.get",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "api-sdk/endpoints/documents/get",
+                        "title": "Get a document by ID.",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_documents.create",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_documents.create",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "api-sdk/endpoints/documents/create",
+                        "title": "Create a document in a collection.",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_documents.update",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_documents.update",
+                        "isResponseStream": false,
+                        "method": "PUT",
+                        "slug": "api-sdk/endpoints/documents/update",
+                        "title": "Update a document by ID.",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "cf613558-95cd-4318-99a9-c433d14f2875",
+                        "availability": "Beta",
+                        "endpointId": "endpoint_documents.delete",
+                        "id": "cf613558-95cd-4318-99a9-c433d14f2875:endpoint_documents.delete",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "api-sdk/endpoints/documents/delete",
+                        "title": "Delete a document by ID.",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "cf613558-95cd-4318-99a9-c433d14f2875:subpackage_documents",
+                    "pointsTo": "api-sdk/endpoints/documents/get",
+                    "slug": "api-sdk/endpoints/documents",
+                    "title": "Documents",
+                    "type": "apiPackage"
+                  }
+                ],
+                "hideTitle": false,
+                "id": "cf613558-95cd-4318-99a9-c433d14f2875",
+                "paginated": false,
+                "pointsTo": "api-sdk/endpoints/workflows/list",
+                "showErrors": false,
+                "slug": "api-sdk/endpoints",
+                "title": "Endpoints",
+                "type": "apiReference"
+              }
+            ],
+            "id": "root.uv.api-sdk.api-sdk",
+            "type": "sidebarRoot"
+          },
+          "icon": "code",
+          "id": "root.uv.api-sdk",
+          "pointsTo": "api-sdk/endpoints/workflows/list",
+          "slug": "api-sdk",
+          "title": "API & SDK",
+          "type": "tab"
+        }
+      ],
+      "id": "root.uv",
+      "type": "tabbed"
+    },
+    "id": "root.uv",
+    "type": "unversioned"
+  },
+  "hidden": false,
+  "id": "root",
+  "pointsTo": "docs/welcome",
+  "slug": "",
+  "title": "Scout | Documentation",
+  "type": "root",
+  "version": "v2"
+}

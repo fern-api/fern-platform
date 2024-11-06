@@ -1,3 +1,4 @@
+import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withDeleteCookie } from "@/server/auth/with-secure-cookie";
 import { revokeSessionForToken } from "@/server/auth/workos-session";
 import { safeUrl } from "@/server/safeUrl";
@@ -21,14 +22,18 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
     const logoutUrl = safeUrl(authConfig?.type === "basic_token_verification" ? authConfig.logout : undefined);
 
+    const return_to_param = getReturnToQueryParam(authConfig);
+
     // if logout url is provided, append the state to it before redirecting
-    if (req.nextUrl.searchParams.has("state")) {
+    if (req.nextUrl.searchParams.has(return_to_param)) {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        logoutUrl?.searchParams.set("state", req.nextUrl.searchParams.get("state")!);
+        logoutUrl?.searchParams.set(return_to_param, req.nextUrl.searchParams.get(return_to_param)!);
     }
 
     const redirectLocation =
-        logoutUrl ?? safeUrl(req.nextUrl.searchParams.get("state")) ?? safeUrl(withDefaultProtocol(getHostEdge(req)));
+        logoutUrl ??
+        safeUrl(req.nextUrl.searchParams.get(return_to_param)) ??
+        safeUrl(withDefaultProtocol(getHostEdge(req)));
 
     const res = redirectLocation ? NextResponse.redirect(redirectLocation) : NextResponse.next();
     res.cookies.delete(withDeleteCookie(COOKIE_FERN_TOKEN, withDefaultProtocol(getHostEdge(req))));
