@@ -1,4 +1,4 @@
-import { isPlainObject, unknownToString } from "@fern-api/ui-core-utils";
+import { isNonNullish, isPlainObject, unknownToString } from "@fern-api/ui-core-utils";
 import { compact } from "es-toolkit/array";
 import { UnreachableCaseError } from "ts-essentials";
 import {
@@ -46,7 +46,7 @@ function getBasicAuthString(basicAuth: { username: string; password: string }): 
     return [`-u "${basicAuth.username}:${basicAuth.password}"`];
 }
 
-function getUrlQueriesGetString(searchParams: Record<string, unknown>): string[] {
+export function getUrlQueriesGetString(searchParams: Record<string, unknown>): string[] {
     return toUrlEncoded(searchParams).map(
         ([key, value]) =>
             `${requiresUrlEncode(value) ? "--data-urlencode" : "-d"} ${key.includes("[") ? `"${key}"` : key}=${value.includes(" ") ? `"${value}"` : value}`,
@@ -196,8 +196,13 @@ function unsafeStringifyHttpRequestExampleToCurl(
 function toUrlEncoded(urlQueries: Record<string, unknown>): Array<[string, string]> {
     return Object.entries(urlQueries).flatMap(([key, value]): [string, string][] => {
         if (Array.isArray(value)) {
-            return value.map((v) => [`${key}[]`, unknownToString(v)]);
+            return value.filter(isNonNullish).map((v) => [`${key}[]`, unknownToString(v)]);
         }
+
+        if (value == null) {
+            return [];
+        }
+
         return [[key, unknownToString(value)]];
     });
 }
