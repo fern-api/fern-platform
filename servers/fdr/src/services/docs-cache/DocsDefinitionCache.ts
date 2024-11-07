@@ -9,6 +9,7 @@ import type { IndexSegment } from "../algolia";
 import { Semaphore } from "../revalidator/Semaphore";
 import LocalDocsDefinitionStore from "./LocalDocsDefinitionStore";
 import RedisDocsDefinitionStore from "./RedisDocsDefinitionStore";
+import { FernRegistry } from "../../api/generated";
 
 const DOCS_DOMAIN_REGX = /^([^.\s]+)/;
 
@@ -46,7 +47,7 @@ export interface DocsDefinitionCache {
  * The semantic version that the current version of FDR expects.
  * Please bump this version if you would like to "clear" the cache.
  */
-const SEMANTIC_VERSION = "v2";
+const SEMANTIC_VERSION = "v3";
 
 /**
  * All modifications to this type must be forward compatible.
@@ -238,10 +239,11 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
                 docsV2: dbDocs,
             });
             return {
-                version: "v2",
+                version: "v3",
                 updatedTime: dbDocs.updatedTime,
                 dbFiles: dbDocs.docsDefinition.files,
                 response: {
+                    orgId: dbDocs.orgId,
                     baseUrl: {
                         domain: dbDocs.domain,
                         basePath: dbDocs.path.trim() === "" ? undefined : dbDocs.path.trim(),
@@ -261,10 +263,11 @@ export class DocsDefinitionCacheImpl implements DocsDefinitionCache {
             }
             const v1Docs = await getDocsForDomain({ app: this.app, domain: v1Domain });
             return {
-                version: "v2",
+                version: "v3",
                 updatedTime: new Date(),
                 dbFiles: v1Docs.dbFiles ?? {},
                 response: {
+                    orgId: FernRegistry.OrgId("dummy"), // TODO(dsinghvi): Stop serving the v1 APIs
                     baseUrl: {
                         domain: url.hostname,
                         basePath: undefined,
