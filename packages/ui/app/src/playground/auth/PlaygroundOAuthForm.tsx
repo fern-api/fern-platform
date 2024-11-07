@@ -9,8 +9,8 @@ import { PLAYGROUND_AUTH_STATE_OAUTH_ATOM, usePlaygroundEndpointFormState } from
 import { useStandardProxyEnvironment } from "../../hooks/useStandardProxyEnvironment";
 import { Callout } from "../../mdx/components/callout";
 import { PasswordInputGroup } from "../PasswordInputGroup";
-import { PlaygroundEndpointForm } from "../endpoint/PlaygroundEndpointForm";
-import { useOAuthEndpointContext } from "../hooks/useOauthEndpointContext";
+import { PlaygroundEndpointForm } from "../endpoint";
+import { useOAuthEndpointContext } from "../hooks";
 import { oAuthClientCredentialReferencedEndpointLoginFlow } from "../utils/oauth";
 import { usePlaygroundBaseUrl } from "../utils/select-environment";
 import { PlaygroundBearerAuthForm } from "./PlaygroundBearerAuthForm";
