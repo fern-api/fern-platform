@@ -16,6 +16,7 @@ import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
 import { DocsV2WriteService } from "../../../api";
 import { FernRegistry } from "../../../api/generated";
+import { OrgId } from "../../../api/generated/api";
 import { DomainBelongsToAnotherOrgError } from "../../../api/generated/api/resources/commons/errors";
 import { DocsRegistrationIdNotFound } from "../../../api/generated/api/resources/docs/resources/v1/resources/write/errors";
 import { LoadDocsForUrlResponse } from "../../../api/generated/api/resources/docs/resources/v2/resources/read";
@@ -383,6 +384,7 @@ async function uploadToAlgolia(
                 }),
             }),
             lightModeEnabled: dbDocsDefinition.config.colorsV3?.type !== "dark",
+            orgId: OrgId("dummy"),
         };
         configSegmentTuples.map(([_, indexSegment]) => {
             const v2Records = generateAlgoliaRecords({
