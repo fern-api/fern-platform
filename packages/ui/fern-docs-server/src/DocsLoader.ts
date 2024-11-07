@@ -49,7 +49,7 @@ export class DocsLoader {
     #loadMetadataForUrl = async (): Promise<FdrAPI.docs.v2.read.DocsUrlMetadata | undefined> => {
         const response = await this.#getClient().docs.v2.read.getDocsUrlMetadata(
             { url: FdrAPI.Url(this.domain) },
-            { timeoutInSeconds: 180 },
+            { timeoutInSeconds: 3 },
         );
         if (!response.ok) {
             return undefined;
