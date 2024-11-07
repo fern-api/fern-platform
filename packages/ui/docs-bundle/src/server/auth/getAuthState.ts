@@ -4,6 +4,7 @@ import { PreviewUrlAuth, getAuthEdgeConfig, getPreviewUrlAuthConfig } from "@fer
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import urlJoin from "url-join";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
+import { getOrgMetadataForDomain } from "./metadata-for-url";
 import { getOryAuthorizationUrl } from "./ory";
 import { getReturnToQueryParam } from "./return-to";
 import { getWebflowAuthorizationUrl } from "./webflow";
@@ -107,7 +108,8 @@ export async function getAuthStateInternal({
                     redirectUri,
                     organization: previewAuthConfig.org,
                 });
-                return { authed: false, ok: true, authorizationUrl, partner: "workos" };
+
+                return { authed: false, ok: false, authorizationUrl, partner: "workos" };
             }
         }
         return { authed: false, ok: true, authorizationUrl: undefined, partner: undefined };
@@ -182,7 +184,7 @@ export async function getAuthState(
     setFernToken?: (token: string) => void,
 ): Promise<AuthState & DomainAndHost> {
     authConfig ??= await getAuthEdgeConfig(domain);
-    const previewAuthConfig = await getPreviewUrlAuthConfig(domain);
+    const orgMetadata = await getOrgMetadataForDomain(domain);
 
     const authState = await getAuthStateInternal({
         host,
@@ -190,7 +192,7 @@ export async function getAuthState(
         pathname,
         authConfig,
         setFernToken,
-        previewAuthConfig,
+        previewAuthConfig: orgMetadata != null ? await getPreviewUrlAuthConfig(orgMetadata) : undefined,
     });
 
     return { ...authState, domain, host };
