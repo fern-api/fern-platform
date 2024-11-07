@@ -2,8 +2,8 @@ import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { DocsDomainKVCache } from "./DocsKVCache";
 
 export interface DocsMetadata {
-    orgId: string | undefined;
-    isPreviewUrl: boolean | undefined;
+    orgId: string;
+    isPreviewUrl: boolean;
 }
 
 export class DocsLoader {
@@ -47,7 +47,10 @@ export class DocsLoader {
 
     #getClient = () => new FdrClient({ environment: this.environment });
     #loadMetadataForUrl = async (): Promise<FdrAPI.docs.v2.read.DocsUrlMetadata | undefined> => {
-        const response = await this.#getClient().docs.v2.read.getDocsUrlMetadata({ url: FdrAPI.Url(this.domain) });
+        const response = await this.#getClient().docs.v2.read.getDocsUrlMetadata(
+            { url: FdrAPI.Url(this.domain) },
+            { timeoutInSeconds: 180 },
+        );
         if (!response.ok) {
             return undefined;
         }
