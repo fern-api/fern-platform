@@ -2,6 +2,7 @@ import { convertDbAPIDefinitionsToRead, convertDbDocsConfigToRead } from "@fern-
 import { Cache } from "../../../Cache";
 import { DocsV2Read, DocsV2ReadService } from "../../../api";
 import { UserNotInOrgError } from "../../../api/generated/api";
+import { DomainNotRegisteredError } from "../../../api/generated/api/resources/docs/resources/v1/resources/read";
 import type { FdrApplication } from "../../../app";
 import { ParsedBaseUrl } from "../../../util/ParsedBaseUrl";
 
@@ -134,6 +135,18 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
                     domainSuffix: app.config.domainSuffix,
                 }),
             );
+        },
+        getDocsUrlMetadata: async (req, res) => {
+            const parsedUrl = ParsedBaseUrl.parse(req.body.url);
+            const metadata = await app.dao.docsV2().loadDocsMetadata(parsedUrl.toURL());
+            if (metadata != null) {
+                return res.send({
+                    isPreviewUrl: metadata.isPreview,
+                    org: metadata.orgId,
+                    url: req.body.url,
+                });
+            }
+            throw new DomainNotRegisteredError();
         },
     });
 }

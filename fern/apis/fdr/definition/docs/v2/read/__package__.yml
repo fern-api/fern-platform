@@ -22,6 +22,18 @@ service:
       response: rootCommons.OrgId
       errors:
         - DomainNotRegisteredError
+    
+    getDocsUrlMetadata: 
+      method: POST
+      path: /metadata-for-url
+      request:
+        name: GetMetadataForUrlRequest
+        body:
+          properties:
+            url: rootCommons.Url
+      response: DocsUrlMetadata
+      errors:
+        - DomainNotRegisteredError
 
     getDocsForUrl:
       method: POST
@@ -94,6 +106,12 @@ service:
         - IndexSegmentNotFoundError 
 
 types:
+  DocsUrlMetadata: 
+    properties: 
+      url: rootCommons.Url
+      org: rootCommons.OrgId
+      isPreviewUrl: boolean
+
   GetDocsConfigByIdResponse:
     properties:
       docsConfig: v1DocsRead.DocsConfig

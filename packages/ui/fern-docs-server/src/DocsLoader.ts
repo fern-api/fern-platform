@@ -1,6 +1,11 @@
 import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { DocsDomainKVCache } from "./DocsKVCache";
 
+export interface DocsMetadata {
+    orgId: string | undefined;
+    isPreviewUrl: boolean | undefined;
+}
+
 export class DocsLoader {
     public static create(domain: string): DocsLoader {
         return new DocsLoader(domain);
@@ -19,29 +24,30 @@ export class DocsLoader {
         this.cache = DocsDomainKVCache.getInstance(xFernHost);
     }
 
-    public getOrgId = async (): Promise<string | undefined> => {
+    public getMetadata = async (): Promise<DocsMetadata | undefined> => {
         // Try to get the org ID from the cache first
-        const cachedOrgId = await this.cache.getOrgId();
-        if (cachedOrgId) {
-            return cachedOrgId;
+        const metadata = await this.cache.getMetadata();
+        if (metadata != null) {
+            return metadata;
         }
 
         // If not in cache, fetch from the API
         try {
-            const response = await this.#loadDocsForUrl();
+            const response = await this.#loadMetadataForUrl();
             if (response == null) {
                 return undefined;
             }
-            await this.cache.setOrgId(response.orgId);
-            return response.orgId;
+            const metadata = { isPreviewUrl: response.isPreviewUrl, orgId: response.org };
+            await this.cache.setMetadata(metadata);
+            return metadata;
         } catch (error) {
             return undefined;
         }
     };
 
     #getClient = () => new FdrClient({ environment: this.environment });
-    #loadDocsForUrl = async (): Promise<FdrAPI.docs.v2.read.LoadDocsForUrlResponse | undefined> => {
-        const response = await this.#getClient().docs.v2.read.getDocsForUrl({ url: FdrAPI.Url(this.domain) });
+    #loadMetadataForUrl = async (): Promise<FdrAPI.docs.v2.read.DocsUrlMetadata | undefined> => {
+        const response = await this.#getClient().docs.v2.read.getDocsUrlMetadata({ url: FdrAPI.Url(this.domain) });
         if (!response.ok) {
             return undefined;
         }

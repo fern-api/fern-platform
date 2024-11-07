@@ -28,6 +28,13 @@ export interface LoadDocsDefinitionByUrlResponse {
     isPreview: boolean;
 }
 
+export interface LoadDocsMetadata {
+    orgId: FdrAPI.OrgId;
+    domain: string;
+    path: string;
+    isPreview: boolean;
+}
+
 export interface LoadDocsConfigResponse {
     docsConfig: DocsV1Db.DocsDbConfig;
     referencedApis: string[];
@@ -48,6 +55,8 @@ export interface DocsV2Dao {
     getOrgIdForDocsConfigInstanceId(docsConfigInstanceId: string): Promise<FdrAPI.OrgId | undefined>;
 
     loadDocsConfigByInstanceId(docsConfigInstanceId: string): Promise<LoadDocsConfigResponse | undefined>;
+
+    loadDocsMetadata(url: URL): Promise<LoadDocsMetadata | undefined>;
 
     storeDocsDefinition({
         docsRegistrationInfo,
@@ -117,6 +126,34 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         return {
             allDomainsOwned,
             unownedDomains,
+        };
+    }
+
+    public async loadDocsMetadata(url: URL): Promise<LoadDocsMetadata | undefined> {
+        const docsDomain = await this.prisma.docsV2.findFirst({
+            where: {
+                domain: url.hostname,
+            },
+            orderBy: {
+                updatedTime: "desc",
+            },
+            select: {
+                orgID: true,
+                isPreview: true,
+                domain: true,
+                path: true,
+            },
+        });
+
+        if (docsDomain == null) {
+            return undefined;
+        }
+
+        return {
+            orgId: FdrAPI.OrgId(docsDomain.orgID),
+            domain: docsDomain.domain,
+            path: docsDomain.path,
+            isPreview: docsDomain.isPreview,
         };
     }
 
