@@ -4,7 +4,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 
-export default async function handler(req: NextRequest): Promise<void> {
+export interface DocsMetadata {
+    orgId: string | undefined;
+    isPreviewUrl: boolean | undefined;
+}
+
+export default async function handler(req: NextRequest): Promise<NextResponse<DocsMetadata>> {
     const domain = getDocsDomainEdge(req);
 
     if (!domain || typeof domain !== "string") {
