@@ -11,13 +11,13 @@ const PreviewUrlAuthSchema = z.discriminatedUnion("type", [
     // Add more auth types here as needed
 ]);
 
+export type PreviewUrlAuth = z.infer<typeof PreviewUrlAuthSchema>;
+
 const PreviewUrlAuthConfigSchema = z.record(PreviewUrlAuthSchema);
 
 type PreviewUrlAuthConfig = z.infer<typeof PreviewUrlAuthConfigSchema>;
 
-export async function getPreviewUrlAuthConfig(
-    currentDomain: string,
-): Promise<z.infer<typeof PreviewUrlAuthSchema> | undefined> {
+export async function getPreviewUrlAuthConfig(currentDomain: string): Promise<PreviewUrlAuth | undefined> {
     const previewDomain = isPreviewDomain(currentDomain);
     const org = extractOrgFromPreview(currentDomain);
     if (!previewDomain || !org) {
