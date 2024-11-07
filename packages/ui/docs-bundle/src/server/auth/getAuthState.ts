@@ -1,6 +1,6 @@
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig, FernUser } from "@fern-ui/fern-docs-auth";
-import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
+import { PreviewUrlAuth, getAuthEdgeConfig, getPreviewUrlAuthConfig } from "@fern-ui/fern-docs-edge-config";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import urlJoin from "url-join";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
@@ -72,16 +72,44 @@ export async function getAuthStateInternal({
     fernToken,
     pathname,
     authConfig,
+    previewAuthConfig,
     setFernToken,
 }: {
     host: string;
     fernToken: string | undefined;
     pathname?: string;
     authConfig?: AuthEdgeConfig;
+    previewAuthConfig?: PreviewUrlAuth;
     setFernToken?: (token: string) => void;
 }): Promise<AuthState> {
     // if the auth type is neither sso nor basic_token_verification, allow the request to pass through
     if (!authConfig) {
+        if (previewAuthConfig != null) {
+            if (previewAuthConfig.type === "workos") {
+                const session = fernToken != null ? await getSessionFromToken(fernToken) : undefined;
+                const workosUserInfo = await toSessionUserInfo(session);
+                if (workosUserInfo.user) {
+                    // TODO: should this be stored in the session itself?
+                    const roles = await getWorkosRbacRoles(previewAuthConfig.org, workosUserInfo.user.email);
+                    return {
+                        authed: true,
+                        ok: true,
+                        user: toFernUser(workosUserInfo, roles),
+                        partner: "workos",
+                    };
+                }
+
+                const redirectUri = urlJoin(
+                    removeTrailingSlash(withDefaultProtocol(host)),
+                    "/api/fern-docs/auth/sso/callback",
+                );
+                const authorizationUrl = getWorkosSSOAuthorizationUrl({
+                    redirectUri,
+                    organization: previewAuthConfig.org,
+                });
+                return { authed: false, ok: true, authorizationUrl, partner: "workos" };
+            }
+        }
         return { authed: false, ok: true, authorizationUrl: undefined, partner: undefined };
     }
 
@@ -154,6 +182,7 @@ export async function getAuthState(
     setFernToken?: (token: string) => void,
 ): Promise<AuthState & DomainAndHost> {
     authConfig ??= await getAuthEdgeConfig(domain);
+    const previewAuthConfig = await getPreviewUrlAuthConfig(domain);
 
     const authState = await getAuthStateInternal({
         host,
@@ -161,6 +190,7 @@ export async function getAuthState(
         pathname,
         authConfig,
         setFernToken,
+        previewAuthConfig,
     });
 
     return { ...authState, domain, host };
