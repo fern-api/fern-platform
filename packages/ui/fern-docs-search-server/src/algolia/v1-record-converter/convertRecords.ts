@@ -1,7 +1,7 @@
 import { Algolia } from "@fern-api/fdr-sdk";
 import { EndpointDefinition, TypeDefinition } from "@fern-api/fdr-sdk/api-definition";
 import { truncateToBytes } from "@fern-api/ui-core-utils";
-import { generateEndpointContent } from "./generateEndpointContent.js";
+import { generateEndpointContent } from "./generateEndpointContent";
 
 export function convertEndpointV4ToV3(
     endpoint: Algolia.AlgoliaRecord.EndpointV4,

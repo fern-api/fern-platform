@@ -69,6 +69,7 @@ function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
 }
 
 function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement {
+    const datestring = format(utc(hit.date), "MMM d, yyyy");
     return (
         <div className="flex flex-col gap-1">
             <Highlight
@@ -79,7 +80,7 @@ function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement
                     highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
                 }}
             />
-            <div className="text-xs text-[#969696] dark:text-white/50">{format(utc(hit.date), "MMM d, yyyy")}</div>
+            <div className="text-xs text-[#969696] dark:text-white/50">{datestring}</div>
             <Snippet
                 attribute={hit._highlightResult?.description ? "description" : "content"}
                 hit={hit}

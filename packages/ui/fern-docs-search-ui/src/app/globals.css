@@ -19,3 +19,13 @@ body {
     background: var(--background);
     font-family: Arial, Helvetica, sans-serif;
 }
+
+@layer components {
+    [cmdk-group-heading] {
+        @apply text-xs font-semibold text-[#969696] dark:text-white/50 px-4 my-1;
+    }
+
+    [cmdk-item] {
+        @apply mx-2 p-2 rounded-md data-[selected=true]:bg-[#CCC]/30 dark:data-[selected=true]:bg-white/10 text-left;
+    }
+}

@@ -1,7 +1,6 @@
 "use client";
 
 import { DesktopInstantSearch } from "@/components/desktop/DesktopInstantSearch";
-import { createDefaultLinkComponent } from "@/components/shared/LinkComponent";
 import { useInitialResults } from "@/hooks/useInitialResults";
 import { ReactElement } from "react";
 import useSWR from "swr";
@@ -11,7 +10,7 @@ export function DesktopInstantSearchClient({ appId, domain }: { appId: string; d
         window.open(`https://${domain}${path}`, "_blank", "noopener,noreferrer");
     };
 
-    const { data: apiKey, isLoading } = useSWR(
+    const { data: apiKey } = useSWR(
         [domain, "api-key"],
         (): Promise<string> =>
             fetch(`/api/search-key?domain=${domain}`)
@@ -19,7 +18,7 @@ export function DesktopInstantSearchClient({ appId, domain }: { appId: string; d
                 .then((data) => data.apiKey),
     );
 
-    const { initialResults, isLoading: initialResultsLoading } = useInitialResults(domain);
+    const { initialResults } = useInitialResults(domain);
 
     if (!apiKey) {
         return false;
@@ -39,9 +38,8 @@ export function DesktopInstantSearchClient({ appId, domain }: { appId: string; d
             <DesktopInstantSearch
                 appId={appId}
                 apiKey={apiKey}
-                LinkComponent={createDefaultLinkComponent(domain)}
                 onSubmit={handleSubmit}
-                disabled={isLoading || initialResultsLoading || !apiKey}
+                // disabled={isLoading || initialResultsLoading || !apiKey}
                 initialResults={initialResults}
             />
         </>

@@ -3,7 +3,7 @@
 import { EndpointDefinition, TypeDefinition, TypeReference, TypeShape } from "@fern-api/fdr-sdk/api-definition";
 import { MarkdownText } from "@fern-api/fdr-sdk/docs";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { convertMarkdownToText } from "./utils.js";
+import { convertMarkdownToText } from "./utils";
 
 function stringifyTypeShape(
     typeShape: TypeShape | undefined,
