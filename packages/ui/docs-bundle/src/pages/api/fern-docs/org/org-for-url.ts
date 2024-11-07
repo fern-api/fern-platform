@@ -1,15 +1,19 @@
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { DocsLoader } from "@fern-ui/fern-docs-server";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+export interface DocsMetadata {
+    orgId: string | undefined;
+    isPreviewUrl: boolean | undefined;
+}
+
+export default async function handler(req: NextRequest): Promise<NextResponse<DocsMetadata>> {
     const domain = getDocsDomainEdge(req);
 
     if (!domain || typeof domain !== "string") {
-        res.status(400).json({ error: "Invalid domain" });
-        return;
+        return new NextResponse(JSON.stringify({ error: "Invalid domain" }), { status: 400 });
     }
 
     try {
@@ -17,11 +21,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const metadata = await docsLoader.getMetadata();
 
         if (metadata) {
-            res.status(200).json(metadata);
+            return new NextResponse(JSON.stringify(metadata), { status: 200 });
         } else {
-            res.status(404).json({ error: "Org not found" });
+            return new NextResponse(JSON.stringify({ error: "Org not found" }), { status: 404 });
         }
     } catch (error) {
-        res.status(500).json({ error: "Internal server error" });
+        return new NextResponse(JSON.stringify({ error: "Internal server error" }), { status: 500 });
     }
 }
