@@ -87,6 +87,7 @@ export async function getAuthStateInternal({
     if (!authConfig) {
         if (previewAuthConfig != null) {
             if (previewAuthConfig.type === "workos") {
+                const state = urlJoin(removeTrailingSlash(withDefaultProtocol(host)), pathname ?? "");
                 const session = fernToken != null ? await getSessionFromToken(fernToken) : undefined;
                 const workosUserInfo = await toSessionUserInfo(session);
                 if (workosUserInfo.user) {
@@ -107,6 +108,7 @@ export async function getAuthStateInternal({
                 const authorizationUrl = getWorkosSSOAuthorizationUrl({
                     redirectUri,
                     organization: previewAuthConfig.org,
+                    state,
                 });
 
                 return { authed: false, ok: false, authorizationUrl, partner: "workos" };
