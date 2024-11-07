@@ -6280,7 +6280,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.assetLibrary.list();\n",
                   "generated": true
@@ -6328,7 +6327,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.assetLibrary.list();\n",
                   "generated": true
@@ -7069,7 +7067,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient, OctoAI } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.assetLibrary.create({\n    assetType: OctoAI.AssetType.File,\n    data: {\n        assetType: \"checkpoint\",\n        dataType: OctoAI.DataType.Fp16,\n        engine: OctoAI.BaseEngine.TextLlama27B,\n        fileFormat: OctoAI.FileFormat.Safetensors\n    },\n    description: \"string\",\n    hfRepo: \"string\",\n    hfTokenSecret: \"string\",\n    isPublic: true,\n    name: \"string\",\n    skipValidation: true,\n    transferApiType: OctoAI.TransferApiType.PresignedUrl,\n    url: \"string\"\n});\n",
                   "generated": true
@@ -7125,7 +7122,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient, OctoAI } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.assetLibrary.create({\n    assetType: OctoAI.AssetType.File,\n    data: {\n        assetType: \"checkpoint\",\n        dataType: OctoAI.DataType.Fp16,\n        engine: OctoAI.BaseEngine.TextLlama27B,\n        fileFormat: OctoAI.FileFormat.Safetensors\n    },\n    description: \"string\",\n    hfRepo: \"string\",\n    hfTokenSecret: \"string\",\n    isPublic: true,\n    name: \"string\",\n    skipValidation: true,\n    transferApiType: OctoAI.TransferApiType.PresignedUrl,\n    url: \"string\"\n});\n",
                   "generated": true
@@ -8662,7 +8658,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.assetLibrary.delete(\"asset_id\");\n",
                   "generated": true
@@ -8709,7 +8704,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.assetLibrary.delete(\"asset_id\");\n",
                   "generated": true
@@ -8945,7 +8939,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.assetLibrary.completeUpload(\"asset_id\");\n",
                   "generated": true
@@ -8996,7 +8989,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.assetLibrary.completeUpload(\"asset_id\");\n",
                   "generated": true
@@ -9298,7 +9290,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient, OctoAI } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.assetLibrary.get(\"string\", {\n    transferApiType: OctoAI.TransferApiType.PresignedUrl\n});\n",
                   "generated": true
@@ -9347,7 +9338,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient, OctoAI } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.assetLibrary.get(\"string\", {\n    transferApiType: OctoAI.TransferApiType.PresignedUrl\n});\n",
                   "generated": true
@@ -9689,7 +9679,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.fineTuning.create({\n    continueOnRejection: true,\n    description: \"string\",\n    details: {\n        tuneType: \"lora_tune\",\n        baseCheckpoint: {},\n        files: [{}],\n        resizeImages: true,\n        seed: 1,\n        steps: 1,\n        triggerWords: [\"string\"]\n    },\n    name: \"string\"\n});\n",
                   "generated": true
@@ -9755,7 +9744,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.fineTuning.create({\n    continueOnRejection: true,\n    description: \"string\",\n    details: {\n        tuneType: \"lora_tune\",\n        baseCheckpoint: {},\n        files: [{}],\n        resizeImages: true,\n        seed: 1,\n        steps: 1,\n        triggerWords: [\"string\"]\n    },\n    name: \"string\"\n});\n",
                   "generated": true
@@ -10634,7 +10622,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.fineTuning.get(\"string\");\n",
                   "generated": true
@@ -10681,7 +10668,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.fineTuning.get(\"string\");\n",
                   "generated": true
@@ -10879,7 +10865,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.fineTuning.delete(\"tune_id\");\n",
                   "generated": true
@@ -10926,7 +10911,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.fineTuning.delete(\"tune_id\");\n",
                   "generated": true
@@ -11157,7 +11141,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.fineTuning.cancel(\"string\");\n",
                   "generated": true
@@ -11204,7 +11187,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.fineTuning.cancel(\"string\");\n",
                   "generated": true
@@ -11500,7 +11482,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.fineTuning.list();\n",
                   "generated": true
@@ -11548,7 +11529,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.fineTuning.list();\n",
                   "generated": true
@@ -11931,7 +11911,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.imageGen.generateSsd({\n    prompt: \"An octopus playing chess, masterpiece, photorealistic\"\n});\n",
                   "generated": true
@@ -11982,7 +11961,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.imageGen.generateSsd({\n    prompt: \"An octopus playing chess, masterpiece, photorealistic\"\n});\n",
                   "generated": true
@@ -13531,7 +13509,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.imageGen.generateControlnetSdxl({\n    prompt: \"An octopus playing chess, masterpiece, photorealistic\"\n});\n",
                   "generated": true
@@ -13582,7 +13559,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.imageGen.generateControlnetSdxl({\n    prompt: \"An octopus playing chess, masterpiece, photorealistic\"\n});\n",
                   "generated": true
@@ -15131,7 +15107,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.imageGen.generateControlnetSd15({\n    prompt: \"An octopus playing chess, masterpiece, photorealistic\"\n});\n",
                   "generated": true
@@ -15182,7 +15157,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.imageGen.generateControlnetSd15({\n    prompt: \"An octopus playing chess, masterpiece, photorealistic\"\n});\n",
                   "generated": true
@@ -16731,7 +16705,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.imageGen.generateSdxl({\n    prompt: \"An octopus playing chess, masterpiece, photorealistic\"\n});\n",
                   "generated": true
@@ -16782,7 +16755,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.imageGen.generateSdxl({\n    prompt: \"An octopus playing chess, masterpiece, photorealistic\"\n});\n",
                   "generated": true
@@ -18331,7 +18303,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.imageGen.generateSd({\n    prompt: \"An octopus playing chess, masterpiece, photorealistic\"\n});\n",
                   "generated": true
@@ -18382,7 +18353,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.imageGen.generateSd({\n    prompt: \"An octopus playing chess, masterpiece, photorealistic\"\n});\n",
                   "generated": true
@@ -20182,7 +20152,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.imageGen.generateSvd({\n    image: \"image\"\n});\n",
                   "generated": true
@@ -20233,7 +20202,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.imageGen.generateSvd({\n    image: \"image\"\n});\n",
                   "generated": true
@@ -21261,7 +21229,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.textGen.createChatCompletion({\n    messages: [{\n            role: \"role\"\n        }],\n    model: \"model\",\n    stream: false\n});\n",
                   "generated": true
@@ -21318,7 +21285,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.textGen.createChatCompletion({\n    messages: [{\n            role: \"role\"\n        }],\n    model: \"model\",\n    stream: false\n});\n",
                   "generated": true
@@ -21374,7 +21340,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.textGen.createChatCompletion({\n    messages: [{\n            role: \"role\"\n        }],\n    model: \"model\",\n    stream: false\n});\n",
                   "generated": true
@@ -23068,7 +23033,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.textGen.createChatCompletion({\n    messages: [{\n            role: \"role\"\n        }],\n    model: \"model\",\n    stream: false\n});\n",
                   "generated": true
@@ -23125,7 +23089,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.textGen.createChatCompletion({\n    messages: [{\n            role: \"role\"\n        }],\n    model: \"model\",\n    stream: false\n});\n",
                   "generated": true
@@ -23181,7 +23144,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.textGen.createChatCompletion({\n    messages: [{\n            role: \"role\"\n        }],\n    model: \"model\",\n    stream: false\n});\n",
                   "generated": true
@@ -24942,7 +24904,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.textGen.createCompletion({\n    model: \"model\",\n    stream: false\n});\n",
                   "generated": true
@@ -24994,7 +24955,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.textGen.createCompletion({\n    model: \"model\",\n    stream: false\n});\n",
                   "generated": true
@@ -25045,7 +25005,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.textGen.createCompletion({\n    model: \"model\",\n    stream: false\n});\n",
                   "generated": true
@@ -26203,7 +26162,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.textGen.createCompletion({\n    model: \"model\",\n    stream: false\n});\n",
                   "generated": true
@@ -26255,7 +26213,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.textGen.createCompletion({\n    model: \"model\",\n    stream: false\n});\n",
                   "generated": true
@@ -26306,7 +26263,6 @@
               ],
               "typescript": [
                 {
-                  "name": "TypeScript SDK",
                   "language": "typescript",
                   "code": "import { OctoAIClient } from \"@octoai/sdk\";\n\nconst octoAi = new OctoAIClient({ apiKey: \"YOUR_API_KEY\" });\nawait octoAi.textGen.createCompletion({\n    model: \"model\",\n    stream: false\n});\n",
                   "generated": true

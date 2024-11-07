@@ -1,0 +1,95 @@
+{
+  "child": {
+    "child": {
+      "children": [
+        {
+          "children": [
+            {
+              "hidden": false,
+              "id": "root.uv.overview",
+              "pageId": "pages/overview.mdx",
+              "slug": "",
+              "title": "Overview",
+              "type": "page"
+            }
+          ],
+          "id": "root.uv.group",
+          "type": "sidebarGroup"
+        },
+        {
+          "apiDefinitionId": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+          "children": [
+            {
+              "apiDefinitionId": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+              "children": [
+                {
+                  "apiDefinitionId": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+                  "endpointId": "endpoint_.CreateAppointmentTask",
+                  "id": "b20d860e-c8a8-4c88-96b3-61f801a57f31.CreateAppointmentTask",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/appointment-tasks/create-appointment-task",
+                  "title": "Create Appointment Task",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+                  "endpointId": "endpoint_.GetAppointmentTask",
+                  "id": "b20d860e-c8a8-4c88-96b3-61f801a57f31.GetAppointmentTask",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/appointment-tasks/get-appointment-task",
+                  "title": "Get Appointment Task",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+                  "endpointId": "endpoint_.CancelAppointmentTask",
+                  "id": "b20d860e-c8a8-4c88-96b3-61f801a57f31.CancelAppointmentTask",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/appointment-tasks/cancel-appointment-task",
+                  "title": "Cancel Appointment Task",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+                  "endpointId": "endpoint_.GetAllAppointmentTasks",
+                  "id": "b20d860e-c8a8-4c88-96b3-61f801a57f31.GetAllAppointmentTasks",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/appointment-tasks/get-all-appointment-tasks",
+                  "title": "Get All Appointment Tasks",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "b20d860e-c8a8-4c88-96b3-61f801a57f31.appointment-tasks",
+              "pointsTo": "api-reference/appointment-tasks/create-appointment-task",
+              "slug": "api-reference/appointment-tasks",
+              "title": "Appointment Tasks",
+              "type": "apiPackage"
+            }
+          ],
+          "hideTitle": true,
+          "id": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+          "paginated": false,
+          "pointsTo": "api-reference/appointment-tasks/create-appointment-task",
+          "showErrors": false,
+          "slug": "api-reference",
+          "title": "API Reference",
+          "type": "apiReference"
+        }
+      ],
+      "id": "root.uv",
+      "type": "sidebarRoot"
+    },
+    "id": "root.uv",
+    "type": "unversioned"
+  },
+  "hidden": false,
+  "id": "root",
+  "slug": "",
+  "title": "Documentation",
+  "type": "root",
+  "version": "v2"
+}

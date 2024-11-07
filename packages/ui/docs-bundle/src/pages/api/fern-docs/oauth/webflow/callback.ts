@@ -1,3 +1,4 @@
+import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
@@ -16,31 +17,34 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
     const domain = getDocsDomainEdge(req);
     const host = getHostEdge(req);
+    const config = await getAuthEdgeConfig(domain);
 
     const code = req.nextUrl.searchParams.get("code");
-    const state = req.nextUrl.searchParams.get("state");
+    const return_to = req.nextUrl.searchParams.get(getReturnToQueryParam(config));
     const error = req.nextUrl.searchParams.get("error");
     const error_description = req.nextUrl.searchParams.get("error_description");
-    const redirectLocation = safeUrl(state) ?? safeUrl(withDefaultProtocol(host));
+    const redirectLocation = safeUrl(return_to) ?? safeUrl(withDefaultProtocol(host));
 
     if (error != null) {
         // eslint-disable-next-line no-console
         console.error(`OAuth2 error: ${error} - ${error_description}`);
-        return redirectWithLoginError(redirectLocation, error_description ?? error);
+        return redirectWithLoginError(redirectLocation, error, error_description);
     }
 
     if (typeof code !== "string") {
         // eslint-disable-next-line no-console
         console.error("Missing code in query params");
-        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+        return redirectWithLoginError(
+            redirectLocation,
+            "missing_authorization_code",
+            "Couldn't login, please try again",
+        );
     }
-
-    const config = await getAuthEdgeConfig(domain);
 
     if (config == null || config.type !== "oauth2" || config.partner !== "webflow") {
         // eslint-disable-next-line no-console
         console.log(`Invalid config for domain ${domain}`);
-        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+        return redirectWithLoginError(redirectLocation, "unknown_error", "Couldn't login, please try again");
     }
 
     try {
@@ -58,6 +62,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     } catch (error) {
         // eslint-disable-next-line no-console
         console.error("Error getting access token", error);
-        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+        return redirectWithLoginError(redirectLocation, "unknown_error", "Couldn't login, please try again");
     }
 }

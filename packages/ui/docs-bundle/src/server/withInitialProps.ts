@@ -23,6 +23,7 @@ import { ComponentProps } from "react";
 import urlJoin from "url-join";
 import { DocsLoader } from "./DocsLoader";
 import { getAuthState } from "./auth/getAuthState";
+import { getReturnToQueryParam } from "./auth/return-to";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";
@@ -115,6 +116,11 @@ export async function withInitialProps({
 
     // if the current node requires authentication and the user is not authenticated, redirect to the auth page
     if (found.node.authed && !authState.authed) {
+        // if the page can be considered an edge node when it's unauthed, then we'll follow the redirect
+        if (FernNavigation.hasRedirect(found.node)) {
+            return withRedirect(found.node.pointsTo);
+        }
+
         // TODO: there's currently no way to express a 401 or 403 in Next.js so we'll redirect to 404.
         // ideally this is handled in the middleware, and this should be a 500 error.
         if (authState.authorizationUrl == null) {
@@ -166,7 +172,7 @@ export async function withInitialProps({
     // TODO: This is a hack to add a login button to the navbar. This should be done in a more generic way.
     if (authConfig?.type === "basic_token_verification" && !authState.authed) {
         const redirect = new URL(withDefaultProtocol(authConfig.redirect));
-        redirect.searchParams.set("state", urlJoin(withDefaultProtocol(host), slug));
+        redirect.searchParams.set(getReturnToQueryParam(authConfig), urlJoin(withDefaultProtocol(host), slug));
 
         navbarLinks.push({
             type: "outlined",
@@ -181,7 +187,7 @@ export async function withInitialProps({
     // TODO: This is a hack to add a logout button to the navbar. This should be done in a more generic way.
     if (authState.authed) {
         const logout = new URL(getApiRoute("/api/fern-docs/auth/logout"), withDefaultProtocol(host));
-        logout.searchParams.set("state", urlJoin(withDefaultProtocol(host), slug));
+        logout.searchParams.set(getReturnToQueryParam(authConfig), urlJoin(withDefaultProtocol(host), slug));
 
         navbarLinks.push({
             type: "outlined",

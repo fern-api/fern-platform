@@ -117,6 +117,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                             rounded={true}
                             size="large"
                             className="max-sm:hidden"
+                            id="fern-search-button"
                         />
                     )}
 

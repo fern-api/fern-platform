@@ -19,3 +19,15 @@ export function withSecureCookie(targetUrl: string, opts?: Partial<ResponseCooki
         domain: url.hostname,
     };
 }
+
+export function withDeleteCookie(name: string, targetUrl: string): Omit<ResponseCookie, "value" | "expires"> {
+    const url = new URL(targetUrl);
+    return {
+        name,
+        path: "/",
+        sameSite: "lax" as const,
+        secure: url.protocol === "https:",
+        httpOnly: true,
+        domain: url.hostname,
+    };
+}

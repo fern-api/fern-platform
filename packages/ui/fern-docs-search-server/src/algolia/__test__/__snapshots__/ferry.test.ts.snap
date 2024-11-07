@@ -1,0 +1,3503 @@
+[
+  {
+    "breadcrumbs": [],
+    "description": "The Ferry Health API provides programmatic access to Appointment Tasks.
+Use the API to:
+
+Create Appointment Tasks
+Load Appointment Tasks",
+    "indexSegmentId": "0",
+    "slug": "",
+    "title": "Ferry Health API",
+    "type": "page-v4",
+    "version": undefined,
+  },
+  {
+    "breadcrumbs": [],
+    "content": "The Ferry Health API provides programmatic access to Appointment Tasks.
+Use the API to:
+
+Create Appointment Tasks
+Load Appointment Tasks
+
+Authentication
+To use the Ferry API, you'll need an API key. If you don't have one already, please
+reach out to get one: support@ferry.health.
+In all API requests, you should provide your token using the Authorization
+header with the "Bearer " prefix:
+"Authorization": "Bearer <YOUR TOKEN>"
+
+Appointment Tasks
+You can create Appointment Tasks to initiate a search for providers. See the
+/create-appointment-task endpoint for the
+available request properties.
+When you create an Appointment Task, we will return an appointmentTaskId, and Ferry will asynchronously
+compile a list of providers with validated availability. You can poll for the status of a task using
+the /get-appointment-task endpoint.
+Once the task is in the "AVAILABLE" state, it will include some appointment availabilities:
+{
+  "appointmentTaskId": "ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e",
+  "status": "AVAILABLE",
+  "patient": {
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "sex": "Female",
+    "dateOfBirth": "1980-01-01",
+    "homeAddress": "123 Happy Lane, New York, NY 11211",
+    "insurancePlan": "Aetna - Managed Choice Open Access",
+    "memberId": "123456"
+  },
+  "results": {
+    "appointmentAvailabilities": [
+      {
+        "provider": {
+          "npi": "1234567890",
+          "firstName": "Jane",
+          "lastName": "Smith"
+        },
+        "location": {
+          "name": "Louisville Health Center",
+          "address": "123 Happy Lane, Louisville KY 01234"
+        },
+        "nextAvailableAppointments": [
+          "2024-09-15T12:00:00.000Z",
+          "2024-09-18T14:00:00.000Z",
+          "2024-09-20T11:45:00.000Z"
+        ],
+        "availabilityNotes": "Scheduling 2 weeks out",
+        "reasonForInclusion": "CLOSEST_LOCATION"
+      }
+    ]
+  }
+}
+",
+    "indexSegmentId": "0",
+    "slug": "",
+    "title": "Ferry Health API",
+    "type": "page-v3",
+    "version": undefined,
+  },
+  {
+    "breadcrumbs": [],
+    "description": "To use the Ferry API, you'll need an API key. If you don't have one already, please
+reach out to get one: support@ferry.health.
+In all API requests, you should provide your token using the Authorization
+header with the "Bearer " prefix:
+"Authorization": "Bearer <YOUR TOKEN>"
+",
+    "indexSegmentId": "0",
+    "slug": "#authentication",
+    "title": "Authentication",
+    "type": "page-v4",
+    "version": undefined,
+  },
+  {
+    "breadcrumbs": [],
+    "content": "To use the Ferry API, you'll need an API key. If you don't have one already, please
+reach out to get one: support@ferry.health.
+In all API requests, you should provide your token using the Authorization
+header with the "Bearer " prefix:
+"Authorization": "Bearer <YOUR TOKEN>"
+",
+    "indexSegmentId": "0",
+    "slug": "#authentication",
+    "title": "Authentication",
+    "type": "page-v3",
+    "version": undefined,
+  },
+  {
+    "breadcrumbs": [],
+    "description": "You can create Appointment Tasks to initiate a search for providers. See the
+/create-appointment-task endpoint for the
+available request properties.
+When you create an Appointment Task, we will return an appointmentTaskId, and Ferry will asynchronously
+compile a list of providers with validated availability. You can poll for the status of a task using
+the /get-appointment-task endpoint.
+Once the task is in the "AVAILABLE" state, it will include some appointment availabilities:
+{
+  "appointmentTaskId": "ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e",
+  "status": "AVAILABLE",
+  "patient": {
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "sex": "Female",
+    "dateOfBirth": "1980-01-01",
+    "homeAddress": "123 Happy Lane, New York, NY 11211",
+    "insurancePlan": "Aetna - Managed Choice Open Access",
+    "memberId": "123456"
+  },
+  "results": {
+    "appointmentAvailabilities": [
+      {
+        "provider": {
+          "npi": "1234567890",
+          "firstName": "Jane",
+          "lastName": "Smith"
+        },
+        "location": {
+          "name": "Louisville Health Center",
+          "address": "123 Happy Lane, Louisville KY 01234"
+        },
+        "nextAvailableAppointments": [
+          "2024-09-15T12:00:00.000Z",
+          "2024-09-18T14:00:00.000Z",
+          "2024-09-20T11:45:00.000Z"
+        ],
+        "availabilityNotes": "Scheduling 2 weeks out",
+        "reasonForInclusion": "CLOSEST_LOCATION"
+      }
+    ]
+  }
+}
+",
+    "indexSegmentId": "0",
+    "slug": "#appointment-tasks",
+    "title": "Appointment Tasks",
+    "type": "page-v4",
+    "version": undefined,
+  },
+  {
+    "breadcrumbs": [],
+    "content": "You can create Appointment Tasks to initiate a search for providers. See the
+/create-appointment-task endpoint for the
+available request properties.
+When you create an Appointment Task, we will return an appointmentTaskId, and Ferry will asynchronously
+compile a list of providers with validated availability. You can poll for the status of a task using
+the /get-appointment-task endpoint.
+Once the task is in the "AVAILABLE" state, it will include some appointment availabilities:
+{
+  "appointmentTaskId": "ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e",
+  "status": "AVAILABLE",
+  "patient": {
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "sex": "Female",
+    "dateOfBirth": "1980-01-01",
+    "homeAddress": "123 Happy Lane, New York, NY 11211",
+    "insurancePlan": "Aetna - Managed Choice Open Access",
+    "memberId": "123456"
+  },
+  "results": {
+    "appointmentAvailabilities": [
+      {
+        "provider": {
+          "npi": "1234567890",
+          "firstName": "Jane",
+          "lastName": "Smith"
+        },
+        "location": {
+          "name": "Louisville Health Center",
+          "address": "123 Happy Lane, Louisville KY 01234"
+        },
+        "nextAvailableAppointments": [
+          "2024-09-15T12:00:00.000Z",
+          "2024-09-18T14:00:00.000Z",
+          "2024-09-20T11:45:00.000Z"
+        ],
+        "availabilityNotes": "Scheduling 2 weeks out",
+        "reasonForInclusion": "CLOSEST_LOCATION"
+      }
+    ]
+  }
+}
+",
+    "indexSegmentId": "0",
+    "slug": "#appointment-tasks",
+    "title": "Appointment Tasks",
+    "type": "page-v3",
+    "version": undefined,
+  },
+  {
+    "breadcrumbs": [
+      "Appointment Tasks",
+    ],
+    "content": "Create an appointment task for a patient.
+
+Once you create a task, Ferry will asynchronously process the task to find providers with validated availability. You can poll for the status of the task with the [Get Appointment Task](/api-reference/appointment-tasks/get-appointment-task) endpoint.
+## Path Parameters
+
+- /api/v1/appointment-tasks/create
+## Request
+
+### Body
+
+- patient=type_:AppointmentTaskRequestPatient: firstName=string The patient's first name.
+lastName=string The patient's last name.
+sex=string The patient's sex.
+dateOfBirth=datetime The patient's date of birth.
+homeAddress=string The patient's home address. This can be in any reasonable format and Ferry will parse it.
+insurancePlan=string The name of the patient’s carrier as well as the plan’s specific name. Please be as specific as possible.
+memberId=unknown? The member ID for the patient's insurance.  The patient for whom the appointment is being requested.
+- providerSpecialty=string The specialty of the provider that the patient needs to see.
+- providerSubspecialty=string? The subspecialty of the provider that the patient needs to see.
+- reasonForVisit=string The reason for the patient's visit.
+- timeFrame=string? The time frame in which the patient needs to have the appointment. This can be in any reasonable format and Ferry will parse it.
+- distanceInMiles=double? The maximum distance (in miles) from the patient's home where the provider can be located.
+- npis=List<string>? A list of Provider NPIs to search across. Providing this list will limit the search to just these NPIs.
+## Response
+
+### Body
+
+type_:CreateAppointmentTaskResponse: appointmentTaskId=string The ID of the newly created appointment task. Ferry will asynchronously process the task before it is ready for the patient to act on it. You can poll for the status of the task with the [Get Appointment Task](/api-reference/get-appointment-task) endpoint. : ",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task",
+    "title": "Create Appointment Task",
+    "type": "endpoint-v3",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+    "title": "Request",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+        "title": "Request",
+      },
+    ],
+    "description": "A list of Provider NPIs to search across. Providing this list will limit the search to just these NPIs.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.npis",
+    "title": "npis",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+        "title": "Request",
+      },
+    ],
+    "description": "A list of Provider NPIs to search across. Providing this list will limit the search to just these NPIs.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.npis",
+    "title": "npis",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+        "title": "Request",
+      },
+    ],
+    "description": "The maximum distance (in miles) from the patient's home where the provider can be located.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.distanceInMiles",
+    "title": "distanceInMiles",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+        "title": "Request",
+      },
+    ],
+    "description": "The time frame in which the patient needs to have the appointment. This can be in any reasonable format and Ferry will parse it.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.timeFrame",
+    "title": "timeFrame",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+        "title": "Request",
+      },
+    ],
+    "description": "The subspecialty of the provider that the patient needs to see.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.providerSubspecialty",
+    "title": "providerSubspecialty",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+        "title": "Request",
+      },
+    ],
+    "description": "The reason for the patient's visit.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.reasonForVisit",
+    "title": "reasonForVisit",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+        "title": "Request",
+      },
+    ],
+    "description": "The specialty of the provider that the patient needs to see.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.providerSpecialty",
+    "title": "providerSpecialty",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+        "title": "Request",
+      },
+    ],
+    "description": "The patient for whom the appointment is being requested.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.patient",
+    "title": "patient",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+        "title": "Request",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The member ID for the patient's insurance.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.patient.memberId",
+    "title": "memberId",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+        "title": "Request",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The name of the patient’s carrier as well as the plan’s specific name. Please be as specific as possible.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.patient.insurancePlan",
+    "title": "insurancePlan",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+        "title": "Request",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's home address. This can be in any reasonable format and Ferry will parse it.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.patient.homeAddress",
+    "title": "homeAddress",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+        "title": "Request",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's date of birth.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.patient.dateOfBirth",
+    "title": "dateOfBirth",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+        "title": "Request",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's sex.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.patient.sex",
+    "title": "sex",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+        "title": "Request",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's last name.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.patient.lastName",
+    "title": "lastName",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request",
+        "title": "Request",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's first name.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#request.body.patient.firstName",
+    "title": "firstName",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#response",
+    "title": "Response",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Create Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task#response",
+        "title": "Response",
+      },
+    ],
+    "description": "The ID of the newly created appointment task. Ferry will asynchronously process the task before it is ready for the patient to act on it. You can poll for the status of the task with the [Get Appointment Task](/api-reference/get-appointment-task) endpoint.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/create",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/create-appointment-task#response.body.appointmentTaskId",
+    "title": "appointmentTaskId",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "breadcrumbs": [
+      "Appointment Tasks",
+    ],
+    "content": "Load a task by its ID.
+## Path Parameters
+
+- /api/v1/appointment-tasks/
+- appointmentTaskId
+## Response
+
+### Body
+
+type_:GetAppointmentTaskResponse: AVAILABLE undefined:   | CANCELED undefined:   | FAILED undefined:   | PROCESSING undefined:   : ",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task",
+    "title": "Get Appointment Task",
+    "type": "endpoint-v3",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#request",
+        "title": "Request",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#request.path",
+        "title": "Path Parameters",
+      },
+    ],
+    "description": "The ID of the task to load.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#request.path.appointmentTaskId",
+    "title": "appointmentTaskId",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#request",
+        "title": "Request",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#request.path",
+        "title": "Path Parameters",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#request.path.appointmentTaskId",
+    "title": "appointmentTaskId",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+    "title": "Response",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing",
+    "title": "Processing",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing",
+        "title": "Processing",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.results",
+    "title": "results",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing",
+        "title": "Processing",
+      },
+    ],
+    "description": "The patient for whom the appointment is being requested.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.patient",
+    "title": "patient",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing",
+        "title": "Processing",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The member ID for the patient's insurance.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.patient.memberId",
+    "title": "memberId",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing",
+        "title": "Processing",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The name of the patient’s carrier as well as the plan’s specific name. Please be as specific as possible.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.patient.insurancePlan",
+    "title": "insurancePlan",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing",
+        "title": "Processing",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's home address. This can be in any reasonable format and Ferry will parse it.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.patient.homeAddress",
+    "title": "homeAddress",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing",
+        "title": "Processing",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's date of birth.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.patient.dateOfBirth",
+    "title": "dateOfBirth",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing",
+        "title": "Processing",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's sex.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.patient.sex",
+    "title": "sex",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing",
+        "title": "Processing",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's last name.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.patient.lastName",
+    "title": "lastName",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing",
+        "title": "Processing",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's first name.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.patient.firstName",
+    "title": "firstName",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing",
+        "title": "Processing",
+      },
+    ],
+    "description": "The ID of the appointment task.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Processing.appointmentTaskId",
+    "title": "appointmentTaskId",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed",
+    "title": "Failed",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed",
+        "title": "Failed",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.results",
+    "title": "results",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed",
+        "title": "Failed",
+      },
+    ],
+    "description": "The patient for whom the appointment is being requested.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.patient",
+    "title": "patient",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed",
+        "title": "Failed",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The member ID for the patient's insurance.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.patient.memberId",
+    "title": "memberId",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed",
+        "title": "Failed",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The name of the patient’s carrier as well as the plan’s specific name. Please be as specific as possible.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.patient.insurancePlan",
+    "title": "insurancePlan",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed",
+        "title": "Failed",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's home address. This can be in any reasonable format and Ferry will parse it.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.patient.homeAddress",
+    "title": "homeAddress",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed",
+        "title": "Failed",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's date of birth.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.patient.dateOfBirth",
+    "title": "dateOfBirth",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed",
+        "title": "Failed",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's sex.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.patient.sex",
+    "title": "sex",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed",
+        "title": "Failed",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's last name.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.patient.lastName",
+    "title": "lastName",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed",
+        "title": "Failed",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's first name.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.patient.firstName",
+    "title": "firstName",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed",
+        "title": "Failed",
+      },
+    ],
+    "description": "The ID of the appointment task.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Failed.appointmentTaskId",
+    "title": "appointmentTaskId",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled",
+    "title": "Canceled",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled",
+        "title": "Canceled",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.results",
+    "title": "results",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled",
+        "title": "Canceled",
+      },
+    ],
+    "description": "The patient for whom the appointment is being requested.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.patient",
+    "title": "patient",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled",
+        "title": "Canceled",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The member ID for the patient's insurance.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.patient.memberId",
+    "title": "memberId",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled",
+        "title": "Canceled",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The name of the patient’s carrier as well as the plan’s specific name. Please be as specific as possible.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.patient.insurancePlan",
+    "title": "insurancePlan",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled",
+        "title": "Canceled",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's home address. This can be in any reasonable format and Ferry will parse it.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.patient.homeAddress",
+    "title": "homeAddress",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled",
+        "title": "Canceled",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's date of birth.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.patient.dateOfBirth",
+    "title": "dateOfBirth",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled",
+        "title": "Canceled",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's sex.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.patient.sex",
+    "title": "sex",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled",
+        "title": "Canceled",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's last name.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.patient.lastName",
+    "title": "lastName",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled",
+        "title": "Canceled",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's first name.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.patient.firstName",
+    "title": "firstName",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled",
+        "title": "Canceled",
+      },
+    ],
+    "description": "The ID of the appointment task.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Canceled.appointmentTaskId",
+    "title": "appointmentTaskId",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available",
+    "title": "Available",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available",
+        "title": "Available",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.results",
+    "title": "results",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available",
+        "title": "Available",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.results",
+        "title": "results",
+      },
+    ],
+    "description": "The best appointment options that Ferry has found for the patient.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.results.appointmentAvailabilities",
+    "title": "appointmentAvailabilities",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available",
+        "title": "Available",
+      },
+    ],
+    "description": "The patient for whom the appointment is being requested.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.patient",
+    "title": "patient",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available",
+        "title": "Available",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The member ID for the patient's insurance.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.patient.memberId",
+    "title": "memberId",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available",
+        "title": "Available",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The name of the patient’s carrier as well as the plan’s specific name. Please be as specific as possible.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.patient.insurancePlan",
+    "title": "insurancePlan",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available",
+        "title": "Available",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's home address. This can be in any reasonable format and Ferry will parse it.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.patient.homeAddress",
+    "title": "homeAddress",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available",
+        "title": "Available",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's date of birth.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.patient.dateOfBirth",
+    "title": "dateOfBirth",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available",
+        "title": "Available",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's sex.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.patient.sex",
+    "title": "sex",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available",
+        "title": "Available",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's last name.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.patient.lastName",
+    "title": "lastName",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available",
+        "title": "Available",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.patient",
+        "title": "patient",
+      },
+    ],
+    "description": "The patient's first name.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.patient.firstName",
+    "title": "firstName",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task",
+        "title": "Get Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available",
+        "title": "Available",
+      },
+    ],
+    "description": "The ID of the appointment task.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-appointment-task#response.body.Available.appointmentTaskId",
+    "title": "appointmentTaskId",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "breadcrumbs": [
+      "Appointment Tasks",
+    ],
+    "content": "Cancel a task. This stops Ferry from processing the task.
+## Path Parameters
+
+- /api/v1/appointment-tasks/
+- appointmentTaskId
+- /cancel",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+      {
+        "type": "literal",
+        "value": "/cancel",
+      },
+    ],
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/cancel-appointment-task",
+    "title": "Cancel Appointment Task",
+    "type": "endpoint-v3",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/cancel-appointment-task",
+        "title": "Cancel Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/cancel-appointment-task#request",
+        "title": "Request",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/cancel-appointment-task#request.path",
+        "title": "Path Parameters",
+      },
+    ],
+    "description": "The ID of the task to load.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+      {
+        "type": "literal",
+        "value": "/cancel",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/cancel-appointment-task#request.path.appointmentTaskId",
+    "title": "appointmentTaskId",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/cancel-appointment-task",
+        "title": "Cancel Appointment Task",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/cancel-appointment-task#request",
+        "title": "Request",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/cancel-appointment-task#request.path",
+        "title": "Path Parameters",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks/",
+      },
+      {
+        "type": "pathParameter",
+        "value": "appointmentTaskId",
+      },
+      {
+        "type": "literal",
+        "value": "/cancel",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "POST",
+    "slug": "api-reference/appointment-tasks/cancel-appointment-task#request.path.appointmentTaskId",
+    "title": "appointmentTaskId",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "breadcrumbs": [
+      "Appointment Tasks",
+    ],
+    "content": "Get all appointment task IDs. You can load the details of a task using the [Get Appointment Task](/api-reference/appointment-tasks/get-appointment-task) endpoint.
+## Path Parameters
+
+- /api/v1/appointment-tasks
+## Query Parameters
+
+- pageSize=double? The size of each page (default 50, maximum 100).
+- page=double? The number page to load, starting at 0.
+## Response
+
+### Body
+
+type_:GetAllAppointmentTasksResponse: data=type_:GetAllAppointmentTasksResponseData: appointmentTaskIds=unknown The IDs of the appointment tasks assocaited with this patient.  
+pagination=type_:PaginationResponse: page=unknown The page number of the response, starting with 0.
+pageSize=unknown The number of items per page.
+itemsInPage=unknown The number of items in this page.
+totalItems=unknown The total number of items in the response.   : ",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks",
+      },
+    ],
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-all-appointment-tasks",
+    "title": "Get All Appointment Tasks",
+    "type": "endpoint-v3",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks",
+        "title": "Get All Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#request",
+        "title": "Request",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#request.query",
+        "title": "Query Parameters",
+      },
+    ],
+    "description": "The size of each page (default 50, maximum 100).",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#request.query.pageSize",
+    "title": "pageSize",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks",
+        "title": "Get All Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#request",
+        "title": "Request",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#request.query",
+        "title": "Query Parameters",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#request.query.pageSize",
+    "title": "pageSize",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks",
+        "title": "Get All Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#request",
+        "title": "Request",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#request.query",
+        "title": "Query Parameters",
+      },
+    ],
+    "description": "The number page to load, starting at 0.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#request.query.page",
+    "title": "page",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks",
+        "title": "Get All Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#request",
+        "title": "Request",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#request.query",
+        "title": "Query Parameters",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#request.query.page",
+    "title": "page",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks",
+        "title": "Get All Appointment Tasks",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response",
+    "title": "Response",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks",
+        "title": "Get All Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response",
+        "title": "Response",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response.body.pagination",
+    "title": "pagination",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks",
+        "title": "Get All Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response.body.pagination",
+        "title": "pagination",
+      },
+    ],
+    "description": "The total number of items in the response.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response.body.pagination.totalItems",
+    "title": "totalItems",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks",
+        "title": "Get All Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response.body.pagination",
+        "title": "pagination",
+      },
+    ],
+    "description": "The number of items in this page.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response.body.pagination.itemsInPage",
+    "title": "itemsInPage",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks",
+        "title": "Get All Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response.body.pagination",
+        "title": "pagination",
+      },
+    ],
+    "description": "The number of items per page.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response.body.pagination.pageSize",
+    "title": "pageSize",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks",
+        "title": "Get All Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response.body.pagination",
+        "title": "pagination",
+      },
+    ],
+    "description": "The page number of the response, starting with 0.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response.body.pagination.page",
+    "title": "page",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks",
+        "title": "Get All Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response",
+        "title": "Response",
+      },
+    ],
+    "description": undefined,
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response.body.data",
+    "title": "data",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks",
+        "title": "Get All Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response.body.data",
+        "title": "data",
+      },
+    ],
+    "description": "The IDs of the appointment tasks assocaited with this patient.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response.body.data.appointmentTaskIds",
+    "title": "appointmentTaskIds",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+  {
+    "availability": undefined,
+    "breadcrumbs": [
+      {
+        "slug": "api-reference/appointment-tasks/create-appointment-task",
+        "title": "Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks",
+        "title": "Get All Appointment Tasks",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response",
+        "title": "Response",
+      },
+      {
+        "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response.body.data",
+        "title": "data",
+      },
+    ],
+    "description": "The IDs of the appointment tasks assocaited with this patient.",
+    "endpointPath": [
+      {
+        "type": "literal",
+        "value": "/api/v1/appointment-tasks",
+      },
+    ],
+    "extends": undefined,
+    "indexSegmentId": "0",
+    "isResponseStream": false,
+    "method": "GET",
+    "slug": "api-reference/appointment-tasks/get-all-appointment-tasks#response.body.data.appointmentTaskIds",
+    "title": "appointmentTaskIds",
+    "type": "endpoint-field-v1",
+    "version": undefined,
+  },
+]

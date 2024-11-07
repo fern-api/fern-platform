@@ -5,12 +5,14 @@ import {
     DocsV1Db,
     DocsV1Read,
     FdrAPI,
+    FernNavigation,
     convertDbAPIDefinitionToRead,
-    convertDbDocsConfigToRead,
+    convertDocsDefinitionToRead,
     migrateDocsDbDefinition,
     visitDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
 import { AuthType, type IndexSegment } from "@prisma/client";
+import { keyBy } from "es-toolkit";
 import { mapValues } from "lodash-es";
 import { DocsV1ReadService } from "../../../api";
 import { UnauthorizedError } from "../../../api/generated/api";
@@ -18,6 +20,7 @@ import { DomainNotRegisteredError } from "../../../api/generated/api/resources/d
 import type { FdrApplication } from "../../../app";
 import { LoadDocsDefinitionByUrlResponse } from "../../../db";
 import { readBuffer } from "../../../util";
+import { getFilesV2 } from "../../../util/getFilesV2";
 
 export function getDocsReadService(app: FdrApplication): DocsV1ReadService {
     return new DocsV1ReadService({
@@ -127,61 +130,22 @@ export async function getDocsDefinition({
         }),
     ]);
 
+    const bufferedApiDefinitionsById = keyBy(apiDefinitions, (def) => DocsV1Db.ApiDefinitionId(def.apiDefinitionId));
+
     const filesV2 = await getFilesV2(docsDbDefinition, app);
 
-    return {
-        algoliaSearchIndex: docsV2?.algoliaIndex ?? undefined,
-        config: convertDbDocsConfigToRead({ dbShape: docsDbDefinition.config }),
-        apis: Object.fromEntries(
-            apiDefinitions.map((apiDefinition) => {
-                const parsedApiDefinition = convertDbApiDefinitionToRead(apiDefinition.definition);
-                return [apiDefinition.apiDefinitionId, parsedApiDefinition];
-            }),
-        ),
-        files: mapValues(filesV2, (fileV2) => fileV2.url),
-        jsFiles: docsDbDefinition.type === "v3" ? docsDbDefinition.jsFiles : undefined,
-        filesV2,
-        pages: docsDbDefinition.pages,
-        search: searchInfo,
-        id: docsV2?.docsConfigInstanceId ?? undefined,
-    };
-}
+    const apiDefinitionsById = mapValues(bufferedApiDefinitionsById, (def) =>
+        convertDbApiDefinitionToRead(def.definition),
+    );
 
-async function getFilesV2(docsDbDefinition: DocsV1Db.DocsDefinitionDb, app: FdrApplication) {
-    let promisedFiles: Promise<[DocsV1Read.FileId, DocsV1Read.File_]>[];
-    if (docsDbDefinition.type === "v3") {
-        promisedFiles = Object.entries(docsDbDefinition.files).map(
-            async ([fileId, fileDbInfo]): Promise<[DocsV1Read.FileId, DocsV1Read.File_]> => {
-                const s3DownloadUrl = await app.services.s3.getPresignedDocsAssetsDownloadUrl({
-                    key: fileDbInfo.s3Key,
-                    isPrivate: true, // for backcompat
-                });
-                const readFile: DocsV1Read.File_ =
-                    fileDbInfo.type === "image"
-                        ? {
-                              type: "image",
-                              url: s3DownloadUrl,
-                              width: fileDbInfo.width,
-                              height: fileDbInfo.height,
-                              blurDataUrl: fileDbInfo.blurDataUrl,
-                              alt: fileDbInfo.alt,
-                          }
-                        : { type: "url", url: s3DownloadUrl };
-                return [DocsV1Read.FileId(fileId), readFile];
-            },
-        );
-    } else {
-        promisedFiles = Object.entries(docsDbDefinition.files).map(
-            async ([fileId, fileDbInfo]): Promise<[DocsV1Read.FileId, DocsV1Read.File_]> => {
-                const s3DownloadUrl = await app.services.s3.getPresignedDocsAssetsDownloadUrl({
-                    key: fileDbInfo.s3Key,
-                    isPrivate: true, // for backcompat
-                });
-                return [DocsV1Read.FileId(fileId), { type: "url", url: s3DownloadUrl }];
-            },
-        );
-    }
-    return Object.fromEntries(await Promise.all(promisedFiles));
+    return convertDocsDefinitionToRead({
+        docsDbDefinition,
+        algoliaSearchIndex: docsV2?.algoliaIndex ?? undefined,
+        filesV2,
+        apis: apiDefinitionsById,
+        id: docsV2?.docsConfigInstanceId ?? undefined,
+        search: searchInfo,
+    });
 }
 
 export async function loadIndexSegmentsAndGetSearchInfo({
@@ -208,7 +172,57 @@ export async function loadIndexSegmentsAndGetSearchInfo({
     });
 }
 
-function getSearchInfoFromDocs({
+function getVersionedSearchInfoFromDocs(activeIndexSegments: IndexSegment[], app: FdrApplication): Algolia.SearchInfo {
+    const indexSegmentsByVersionId = activeIndexSegments.reduce<Record<string, Algolia.IndexSegment>>(
+        (acc, indexSegment) => {
+            const searchApiKey = app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
+                indexSegment.id,
+            );
+            // Since the docs are versioned, all referenced index segments will have a version
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            acc[indexSegment.version!] = {
+                id: FdrAPI.IndexSegmentId(indexSegment.id),
+                searchApiKey,
+            };
+            return acc;
+        },
+        {},
+    );
+    return {
+        type: "singleAlgoliaIndex",
+        value: {
+            type: "versioned",
+            indexSegmentsByVersionId,
+        },
+    };
+}
+
+function getUnversionedSearchInfoFromDocs(
+    activeIndexSegments: IndexSegment[],
+    app: FdrApplication,
+): Algolia.SearchInfo {
+    const indexSegment = activeIndexSegments[0];
+    if (indexSegment == null) {
+        /* preview docs do not have algolia index segments, and should return with an undefined index */
+        return { type: "legacyMultiAlgoliaIndex", algoliaIndex: undefined };
+    }
+    const searchApiKey = app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
+        indexSegment.id,
+    );
+
+    return {
+        type: "singleAlgoliaIndex",
+        value: {
+            type: "unversioned",
+            indexSegment: {
+                id: FdrAPI.IndexSegmentId(indexSegment.id),
+                searchApiKey,
+            },
+        },
+    };
+}
+
+export function getSearchInfoFromDocs({
     algoliaIndex,
     indexSegmentIds,
     activeIndexSegments,
@@ -221,57 +235,42 @@ function getSearchInfoFromDocs({
     docsDbDefinition: DocsV1Db.DocsDefinitionDb;
     app: FdrApplication;
 }): Algolia.SearchInfo {
-    if (indexSegmentIds == null || docsDbDefinition.config.navigation == null) {
+    if (indexSegmentIds == null) {
         return { type: "legacyMultiAlgoliaIndex", algoliaIndex };
     }
-    return visitDbNavigationConfig<Algolia.SearchInfo>(docsDbDefinition.config.navigation, {
-        versioned: () => {
-            const indexSegmentsByVersionId = activeIndexSegments.reduce<Record<string, Algolia.IndexSegment>>(
-                (acc, indexSegment) => {
-                    const searchApiKey =
-                        app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
-                            indexSegment.id,
-                        );
-                    // Since the docs are versioned, all referenced index segments will have a version
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    acc[indexSegment.version!] = {
-                        id: FdrAPI.IndexSegmentId(indexSegment.id),
-                        searchApiKey,
-                    };
-                    return acc;
-                },
-                {},
-            );
-            return {
-                type: "singleAlgoliaIndex",
-                value: {
-                    type: "versioned",
-                    indexSegmentsByVersionId,
-                },
-            };
-        },
-        unversioned: () => {
-            const indexSegment = activeIndexSegments[0];
-            if (indexSegment == null) {
-                /* preview docs do not have algolia index segments, and should return with an undefined index */
-                return { type: "legacyMultiAlgoliaIndex", algoliaIndex: undefined };
-            }
-            const searchApiKey = app.services.algoliaIndexSegmentManager.getOrGenerateSearchApiKeyForIndexSegment(
-                indexSegment.id,
-            );
 
-            return {
-                type: "singleAlgoliaIndex",
-                value: {
-                    type: "unversioned",
-                    indexSegment: {
-                        id: FdrAPI.IndexSegmentId(indexSegment.id),
-                        searchApiKey,
-                    },
-                },
-            };
-        },
-    });
+    if (docsDbDefinition.config.navigation == null && docsDbDefinition.config.root == null) {
+        return { type: "legacyMultiAlgoliaIndex", algoliaIndex };
+    }
+
+    if (docsDbDefinition.config.root != null) {
+        const latestRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(docsDbDefinition.config.root);
+        let searchInfo: Algolia.SearchInfo | undefined;
+        FernNavigation.traverseBF(latestRoot, (node) => {
+            if (node.type === "versioned") {
+                searchInfo = getVersionedSearchInfoFromDocs(activeIndexSegments, app);
+                return false;
+            } else if (node.type === "unversioned") {
+                searchInfo = getUnversionedSearchInfoFromDocs(activeIndexSegments, app);
+                return false;
+            }
+            return true;
+        });
+        if (searchInfo != null) {
+            return searchInfo;
+        }
+    } else if (docsDbDefinition.config.navigation != null) {
+        return visitDbNavigationConfig<Algolia.SearchInfo>(docsDbDefinition.config.navigation, {
+            versioned: () => {
+                return getVersionedSearchInfoFromDocs(activeIndexSegments, app);
+            },
+            unversioned: () => {
+                return getUnversionedSearchInfoFromDocs(activeIndexSegments, app);
+            },
+        });
+    }
+
+    return { type: "legacyMultiAlgoliaIndex", algoliaIndex };
 }
 
 export function convertDbApiDefinitionToRead(buffer: Buffer): APIV1Read.ApiDefinition {

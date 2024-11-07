@@ -6,7 +6,7 @@ import type { NavigationNode } from "./NavigationNode";
  */
 export type NavigationNodeWithMetadata = Extract<NavigationNode, WithNodeMetadata>;
 
-export function hasMetadata(node: NavigationNode): node is NavigationNodeWithMetadata {
+export function hasMetadata(node: Partial<NavigationNode>): node is NavigationNodeWithMetadata {
     return (
         typeof (node as NavigationNodeWithMetadata).title === "string" &&
         typeof (node as NavigationNodeWithMetadata).slug === "string"

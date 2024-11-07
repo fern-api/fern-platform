@@ -1,0 +1,1296 @@
+{
+  "child": {
+    "child": {
+      "children": [
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.home.home.welcome",
+                    "pageId": "pages/welcome.mdx",
+                    "slug": "home",
+                    "title": "Welcome",
+                    "type": "page"
+                  }
+                ],
+                "id": "root.uv.home.home.group",
+                "type": "sidebarGroup"
+              }
+            ],
+            "id": "root.uv.home.home",
+            "type": "sidebarRoot"
+          },
+          "icon": "fa-solid fa-house",
+          "id": "root.uv.home",
+          "pointsTo": "home",
+          "slug": "home",
+          "title": "Home",
+          "type": "tab"
+        },
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-question-circle",
+                    "id": "root.uv.guide.guide.introduction.what-is-baml",
+                    "pageId": "01-guide/what-are-function-definitions.mdx",
+                    "slug": "guide/introduction/what-is-baml",
+                    "title": "What is BAML?",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-folder",
+                    "id": "root.uv.guide.guide.introduction.baml_src",
+                    "pageId": "01-guide/what-is-baml_src.mdx",
+                    "slug": "guide/introduction/baml_src",
+                    "title": "What's the baml_src folder",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-folder-gear",
+                    "id": "root.uv.guide.guide.introduction.baml_client",
+                    "pageId": "01-guide/what-is-baml_client.mdx",
+                    "slug": "guide/introduction/baml_client",
+                    "title": "What's baml_client",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.guide.guide.introduction",
+                "pointsTo": "guide/introduction/what-is-baml",
+                "slug": "guide/introduction",
+                "title": "Introduction",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-brands fa-microsoft",
+                    "id": "root.uv.guide.guide.installation-editors.vs-code-extension",
+                    "pageId": "01-guide/01-editors/vscode.mdx",
+                    "slug": "guide/installation-editors/vs-code-extension",
+                    "title": "VSCode Extension",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-brands fa-microsoft",
+                    "id": "root.uv.guide.guide.installation-editors.cursor-extension",
+                    "pageId": "01-guide/01-editors/cursor.mdx",
+                    "slug": "guide/installation-editors/cursor-extension",
+                    "title": "Cursor Extension",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-brands fa-microsoft",
+                    "id": "root.uv.guide.guide.installation-editors.others",
+                    "pageId": "01-guide/01-editors/others.mdx",
+                    "slug": "guide/installation-editors/others",
+                    "title": "Others",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.guide.guide.installation-editors",
+                "pointsTo": "guide/installation-editors/vs-code-extension",
+                "slug": "guide/installation-editors",
+                "title": "Installation: Editors",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-brands fa-python",
+                    "id": "root.uv.guide.guide.installation-language.python",
+                    "pageId": "01-guide/02-languages/python.mdx",
+                    "slug": "guide/installation-language/python",
+                    "title": "Python",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-brands fa-js",
+                    "id": "root.uv.guide.guide.installation-language.typescript",
+                    "pageId": "01-guide/02-languages/typescript.mdx",
+                    "slug": "guide/installation-language/typescript",
+                    "title": "Typescript",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-gem",
+                    "id": "root.uv.guide.guide.installation-language.ruby",
+                    "pageId": "01-guide/02-languages/ruby.mdx",
+                    "slug": "guide/installation-language/ruby",
+                    "title": "Ruby",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-network-wired",
+                    "id": "root.uv.guide.guide.installation-language.rest-api-other-languages",
+                    "pageId": "01-guide/02-languages/rest.mdx",
+                    "slug": "guide/installation-language/rest-api-other-languages",
+                    "title": "REST API (other languages)",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-brands fa-react",
+                    "id": "root.uv.guide.guide.installation-language.next-js",
+                    "pageId": "01-guide/08-integrations/nextjs.mdx",
+                    "slug": "guide/installation-language/next-js",
+                    "title": "NextJS",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.guide.guide.installation-language",
+                "pointsTo": "guide/installation-language/python",
+                "slug": "guide/installation-language",
+                "title": "Installation: Language",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-cogs",
+                    "id": "root.uv.guide.guide.development.environment-variables",
+                    "pageId": "01-guide/03-development/environment-variables.mdx",
+                    "slug": "guide/development/environment-variables",
+                    "title": "Environment Variables",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-file-lines",
+                    "id": "root.uv.guide.guide.development.terminal-logs",
+                    "pageId": "01-guide/03-development/terminal-logs.mdx",
+                    "slug": "guide/development/terminal-logs",
+                    "title": "Terminal Logs",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-circle-arrow-up",
+                    "id": "root.uv.guide.guide.development.upgrade-baml-versions",
+                    "pageId": "01-guide/03-development/upgrade-baml-versions.mdx",
+                    "slug": "guide/development/upgrade-baml-versions",
+                    "title": "Upgrade BAML versions",
+                    "type": "page"
+                  },
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "icon": "fa-brands fa-aws",
+                        "id": "root.uv.guide.guide.development.deploying.aws",
+                        "pageId": "01-guide/03-development/deploying/aws.mdx",
+                        "slug": "guide/development/deploying/aws",
+                        "title": "AWS",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "icon": "fa-brands fa-react",
+                        "id": "root.uv.guide.guide.development.deploying.next-js",
+                        "pageId": "01-guide/03-development/deploying/nextjs.mdx",
+                        "slug": "guide/development/deploying/next-js",
+                        "title": "NextJs",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "icon": "fa-brands fa-docker",
+                        "id": "root.uv.guide.guide.development.deploying.docker",
+                        "pageId": "01-guide/03-development/deploying/docker.mdx",
+                        "slug": "guide/development/deploying/docker",
+                        "title": "Docker",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "icon": "fa-brands fa-docker",
+                        "id": "root.uv.guide.guide.development.deploying.docker-rest-api",
+                        "pageId": "01-guide/03-development/deploying/openapi.mdx",
+                        "slug": "guide/development/deploying/docker-rest-api",
+                        "title": "Docker (REST API)",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "icon": "fa-regular fa-rocket",
+                    "id": "root.uv.guide.guide.development.deploying",
+                    "pointsTo": "guide/development/deploying/aws",
+                    "slug": "guide/development/deploying",
+                    "title": "Deploying",
+                    "type": "section"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.guide.guide.development",
+                "pointsTo": "guide/development/environment-variables",
+                "slug": "guide/development",
+                "title": "Development",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-solid fa-terminal",
+                    "id": "root.uv.guide.guide.baml-basics.prompting-with-baml",
+                    "pageId": "01-guide/04-baml-basics/my-first-function.mdx",
+                    "slug": "guide/baml-basics/prompting-with-baml",
+                    "title": "Prompting with BAML",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-random",
+                    "id": "root.uv.guide.guide.baml-basics.switching-ll-ms",
+                    "pageId": "01-guide/04-baml-basics/switching-llms.mdx",
+                    "slug": "guide/baml-basics/switching-llms",
+                    "title": "Switching LLMs",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-vial",
+                    "id": "root.uv.guide.guide.baml-basics.testing-functions",
+                    "pageId": "01-guide/04-baml-basics/testing-functions.mdx",
+                    "slug": "guide/baml-basics/testing-functions",
+                    "title": "Testing functions",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-faucet",
+                    "id": "root.uv.guide.guide.baml-basics.streaming",
+                    "pageId": "01-guide/04-baml-basics/streaming.mdx",
+                    "slug": "guide/baml-basics/streaming",
+                    "title": "Streaming",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-image",
+                    "id": "root.uv.guide.guide.baml-basics.multi-modal-images-audio",
+                    "pageId": "01-guide/04-baml-basics/multi-modal.mdx",
+                    "slug": "guide/baml-basics/multi-modal",
+                    "title": "Multi-Modal (Images / Audio)",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-triangle-exclamation",
+                    "id": "root.uv.guide.guide.baml-basics.error-handling",
+                    "pageId": "01-guide/04-baml-basics/error-handling.mdx",
+                    "slug": "guide/baml-basics/error-handling",
+                    "title": "Error Handling",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-clock-rotate-left",
+                    "id": "root.uv.guide.guide.baml-basics.concurrent-calls",
+                    "pageId": "01-guide/04-baml-basics/concurrent-calls.mdx",
+                    "slug": "guide/baml-basics/concurrent-calls",
+                    "title": "Concurrent Calls",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.guide.guide.baml-basics",
+                "pointsTo": "guide/baml-basics/prompting-with-baml",
+                "slug": "guide/baml-basics",
+                "title": "BAML Basics",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-gears",
+                    "id": "root.uv.guide.guide.baml-advanced.llm-client-registry",
+                    "pageId": "01-guide/05-baml-advanced/client-registry.mdx",
+                    "slug": "guide/baml-advanced/llm-client-registry",
+                    "title": "LLM Client Registry",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-solid fa-person-running",
+                    "id": "root.uv.guide.guide.baml-advanced.dynamic-runtime-types",
+                    "pageId": "01-guide/05-baml-advanced/dynamic-types.mdx",
+                    "slug": "guide/baml-advanced/dynamic-runtime-types",
+                    "title": "Dynamic / Runtime Types",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-repeat",
+                    "id": "root.uv.guide.guide.baml-advanced.reusing-prompt-snippets",
+                    "pageId": "01-guide/05-baml-advanced/reusing-prompt-snippets.mdx",
+                    "slug": "guide/baml-advanced/reusing-prompt-snippets",
+                    "title": "Reusing Prompt Snippets",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-database",
+                    "id": "root.uv.guide.guide.baml-advanced.prompt-caching-message-role-metadata",
+                    "pageId": "01-guide/05-baml-advanced/prompt-caching.mdx",
+                    "slug": "guide/baml-advanced/prompt-caching-message-role-metadata",
+                    "title": "Prompt Caching / Message Role Metadata",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-check-circle",
+                    "id": "root.uv.guide.guide.baml-advanced.validations",
+                    "pageId": "01-guide/05-baml-advanced/validations.mdx",
+                    "slug": "guide/baml-advanced/validations",
+                    "title": "Validations",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.guide.guide.baml-advanced",
+                "pointsTo": "guide/baml-advanced/llm-client-registry",
+                "slug": "guide/baml-advanced",
+                "title": "BAML Advanced",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.guide.guide.boundary-cloud.functions.get-started",
+                        "pageId": "01-guide/functions/get-started.mdx",
+                        "slug": "guide/cloud/functions/get-started",
+                        "title": "Get Started",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.guide.guide.boundary-cloud.functions.using-open-api",
+                        "pageId": "01-guide/functions/using-openapi.mdx",
+                        "slug": "guide/cloud/functions/using-openapi",
+                        "title": "Using OpenAPI",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.guide.guide.boundary-cloud.functions.environment-variables",
+                        "pageId": "01-guide/functions/environment-variables.mdx",
+                        "slug": "guide/cloud/functions/environment-variables",
+                        "title": "Environment Variables",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "icon": "fa-cloud",
+                    "id": "root.uv.guide.guide.boundary-cloud.functions",
+                    "pointsTo": "guide/cloud/functions/get-started",
+                    "slug": "guide/boundary-cloud/functions",
+                    "title": "Functions",
+                    "type": "section"
+                  },
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "icon": "fa-regular fa-bar-chart",
+                        "id": "root.uv.guide.guide.boundary-cloud.observability.tracking-usage",
+                        "pageId": "01-guide/07-observability/studio.mdx",
+                        "slug": "guide/boundary-cloud/observability/tracking-usage",
+                        "title": "Tracking Usage",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "icon": "fa-chart-simple",
+                    "id": "root.uv.guide.guide.boundary-cloud.observability",
+                    "pointsTo": "guide/boundary-cloud/observability/tracking-usage",
+                    "slug": "guide/boundary-cloud/observability",
+                    "title": "Observability",
+                    "type": "section"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.guide.guide.boundary-cloud",
+                "pointsTo": "guide/cloud/functions/get-started",
+                "slug": "guide/boundary-cloud",
+                "title": "Boundary Cloud",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-solid fa-magnifying-glass",
+                    "id": "root.uv.guide.guide.comparisons.baml-vs-marvin",
+                    "pageId": "01-guide/09-comparisons/marvin.mdx",
+                    "slug": "guide/comparisons/baml-vs-marvin",
+                    "title": "BAML vs Marvin",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-solid fa-magnifying-glass",
+                    "id": "root.uv.guide.guide.comparisons.baml-vs-pydantic",
+                    "pageId": "01-guide/09-comparisons/pydantic.mdx",
+                    "slug": "guide/comparisons/baml-vs-pydantic",
+                    "title": "BAML vs Pydantic",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.guide.guide.comparisons",
+                "pointsTo": "guide/comparisons/baml-vs-marvin",
+                "slug": "guide/comparisons",
+                "title": "Comparisons",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-envelope",
+                    "id": "root.uv.guide.guide.contact",
+                    "pageId": "01-guide/contact.mdx",
+                    "slug": "guide/contact",
+                    "title": "Contact",
+                    "type": "page"
+                  }
+                ],
+                "id": "root.uv.guide.guide.group",
+                "type": "sidebarGroup"
+              }
+            ],
+            "id": "root.uv.guide.guide",
+            "type": "sidebarRoot"
+          },
+          "icon": "fa-solid fa-book",
+          "id": "root.uv.guide",
+          "pointsTo": "guide/introduction/what-is-baml",
+          "slug": "guide",
+          "title": "Guide",
+          "type": "tab"
+        },
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-solid fa-play",
+                    "id": "root.uv.examples.examples.interactive-examples",
+                    "pageId": "02-examples/interactive-examples.mdx",
+                    "slug": "examples/interactive-examples",
+                    "title": "Interactive Examples",
+                    "type": "page"
+                  }
+                ],
+                "id": "root.uv.examples.examples.group",
+                "type": "sidebarGroup"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-person-fairy",
+                    "id": "root.uv.examples.examples.prompt-engineering.reducing-hallucinations",
+                    "pageId": "01-guide/06-prompt-engineering/hallucinations.mdx",
+                    "slug": "examples/prompt-engineering/reducing-hallucinations",
+                    "title": "Reducing Hallucinations",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-comments",
+                    "id": "root.uv.examples.examples.prompt-engineering.chat",
+                    "pageId": "01-guide/06-prompt-engineering/chat-history.mdx",
+                    "slug": "examples/prompt-engineering/chat",
+                    "title": "Chat",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-wrench",
+                    "id": "root.uv.examples.examples.prompt-engineering.tools-function-calling",
+                    "pageId": "01-guide/06-prompt-engineering/tools.mdx",
+                    "slug": "examples/prompt-engineering/tools-function-calling",
+                    "title": "Tools / Function Calling",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-solid fa-brain",
+                    "id": "root.uv.examples.examples.prompt-engineering.chain-of-thought",
+                    "pageId": "01-guide/06-prompt-engineering/chain-of-thought.mdx",
+                    "slug": "examples/prompt-engineering/chain-of-thought",
+                    "title": "Chain of Thought",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-adjust",
+                    "id": "root.uv.examples.examples.prompt-engineering.symbol-tuning",
+                    "pageId": "01-guide/06-prompt-engineering/symbol-tuning.mdx",
+                    "slug": "examples/prompt-engineering/symbol-tuning",
+                    "title": "Symbol Tuning",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-database",
+                    "id": "root.uv.examples.examples.prompt-engineering.retrieval-augmented-generation",
+                    "pageId": "01-guide/introduction.mdx",
+                    "slug": "examples/prompt-engineering/retrieval-augmented-generation",
+                    "title": "Retrieval Augmented Generation",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.examples.examples.prompt-engineering",
+                "pointsTo": "examples/prompt-engineering/reducing-hallucinations",
+                "slug": "examples/prompt-engineering",
+                "title": "Prompt Engineering",
+                "type": "section"
+              }
+            ],
+            "id": "root.uv.examples.examples",
+            "type": "sidebarRoot"
+          },
+          "icon": "fa-solid fa-grid-2",
+          "id": "root.uv.examples",
+          "pointsTo": "examples/interactive-examples",
+          "slug": "examples",
+          "title": "Examples",
+          "type": "tab"
+        },
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.overview",
+                    "pageId": "03-reference/overview.mdx",
+                    "slug": "ref/overview",
+                    "title": "Overview",
+                    "type": "page"
+                  }
+                ],
+                "id": "root.uv.ref.ref.group",
+                "type": "sidebarGroup"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.baml-cli.init",
+                    "pageId": "03-reference/baml-cli/init.mdx",
+                    "slug": "ref/baml-cli/init",
+                    "title": "init",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.baml-cli.generate",
+                    "pageId": "03-reference/baml-cli/generate.mdx",
+                    "slug": "ref/baml-cli/generate",
+                    "title": "generate",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.baml-cli.serve",
+                    "pageId": "03-reference/baml-cli/serve.mdx",
+                    "slug": "ref/baml-cli/serve",
+                    "title": "serve",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.baml-cli.dev",
+                    "pageId": "03-reference/baml-cli/dev.mdx",
+                    "slug": "ref/baml-cli/dev",
+                    "title": "dev",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.ref.ref.baml-cli",
+                "pointsTo": "ref/baml-cli/init",
+                "slug": "ref/baml-cli",
+                "title": "baml-cli",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.ref.ref.baml.general-baml-syntax.comments",
+                        "pageId": "03-reference/baml/comments.mdx",
+                        "slug": "ref/baml/general-baml-syntax/comments",
+                        "title": "comments",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.ref.ref.baml.general-baml-syntax.enviornment-variables",
+                        "pageId": "03-reference/baml/env-vars.mdx",
+                        "slug": "ref/baml/general-baml-syntax/enviornment-variables",
+                        "title": "Enviornment Variables",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.ref.ref.baml.general-baml-syntax.string",
+                        "pageId": "03-reference/baml/string.mdx",
+                        "slug": "ref/baml/general-baml-syntax/string",
+                        "title": "string",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.ref.ref.baml.general-baml-syntax.int-float",
+                        "pageId": "03-reference/baml/int-float.mdx",
+                        "slug": "ref/baml/general-baml-syntax/int-float",
+                        "title": "int / float",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.ref.ref.baml.general-baml-syntax.bool",
+                        "pageId": "03-reference/baml/bool.mdx",
+                        "slug": "ref/baml/general-baml-syntax/bool",
+                        "title": "bool",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.ref.ref.baml.general-baml-syntax.array-list",
+                        "pageId": "03-reference/baml/array.mdx",
+                        "slug": "ref/baml/general-baml-syntax/array-list",
+                        "title": "array (list)",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.ref.ref.baml.general-baml-syntax.map-dictionary",
+                        "pageId": "03-reference/baml/map.mdx",
+                        "slug": "ref/baml/general-baml-syntax/map-dictionary",
+                        "title": "map (dictionary)",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.baml.general-baml-syntax",
+                    "pointsTo": "ref/baml/general-baml-syntax/comments",
+                    "slug": "ref/baml/general-baml-syntax",
+                    "title": "General BAML Syntax",
+                    "type": "section"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.baml.types",
+                    "pageId": "03-reference/baml/types.mdx",
+                    "slug": "ref/baml/types",
+                    "title": "Types",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.baml.function",
+                    "pageId": "03-reference/baml/function.mdx",
+                    "slug": "ref/baml/function",
+                    "title": "function",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.baml.test",
+                    "pageId": "03-reference/baml/test.mdx",
+                    "slug": "ref/baml/test",
+                    "title": "test",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.baml.template-string",
+                    "pageId": "03-reference/baml/template_string.mdx",
+                    "slug": "ref/baml/template-string",
+                    "title": "template_string",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.baml.client-llm",
+                    "pageId": "03-reference/baml/client-llm.mdx",
+                    "slug": "ref/baml/client-llm",
+                    "title": "client<llm>",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.baml.class",
+                    "pageId": "03-reference/baml/class.mdx",
+                    "slug": "ref/baml/class",
+                    "title": "class",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.baml.enum",
+                    "pageId": "03-reference/baml/enum.mdx",
+                    "slug": "ref/baml/enum",
+                    "title": "enum",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.baml.generator",
+                    "pageId": "03-reference/generator.mdx",
+                    "slug": "ref/baml/generator",
+                    "title": "generator",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.ref.ref.baml",
+                "pointsTo": "ref/baml/general-baml-syntax/comments",
+                "slug": "ref/baml",
+                "title": "Language Reference",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.attributes.what-are-attributes",
+                    "pageId": "03-reference/baml/attributes/attributes-overview.mdx",
+                    "slug": "ref/attributes/what-are-attributes",
+                    "title": "What are attributes?",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.attributes.alias-alias",
+                    "pageId": "03-reference/baml/attributes/alias.mdx",
+                    "slug": "ref/attributes/alias-alias",
+                    "title": "@alias / @@alias",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.attributes.description-description",
+                    "pageId": "03-reference/baml/attributes/description.mdx",
+                    "slug": "ref/attributes/description-description",
+                    "title": "@description / @@description",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.attributes.skip",
+                    "pageId": "03-reference/baml/attributes/skip.mdx",
+                    "slug": "ref/attributes/skip",
+                    "title": "@skip",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.attributes.assert",
+                    "pageId": "03-reference/baml/attributes/assert.mdx",
+                    "slug": "ref/attributes/assert",
+                    "title": "@assert",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.attributes.check",
+                    "pageId": "03-reference/baml/attributes/check.mdx",
+                    "slug": "ref/attributes/check",
+                    "title": "@check",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.attributes.dynamic",
+                    "pageId": "03-reference/baml/attributes/dynamic.mdx",
+                    "slug": "ref/attributes/dynamic",
+                    "title": "@@dynamic",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.ref.ref.attributes",
+                "pointsTo": "ref/attributes/what-are-attributes",
+                "slug": "ref/attributes",
+                "title": "Attributes",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.aws-bedrock",
+                    "pageId": "03-reference/baml/clients/providers/aws-bedrock.mdx",
+                    "slug": "ref/llm-client-providers/aws-bedrock",
+                    "title": "AWS Bedrock",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.anthropic",
+                    "pageId": "03-reference/baml/clients/providers/anthropic.mdx",
+                    "slug": "ref/llm-client-providers/anthropic",
+                    "title": "Anthropic",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.google-ai-gemini",
+                    "pageId": "03-reference/baml/clients/providers/google-ai.mdx",
+                    "slug": "ref/llm-client-providers/google-ai-gemini",
+                    "title": "Google AI: Gemini",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.google-vertex",
+                    "pageId": "03-reference/baml/clients/providers/vertex.mdx",
+                    "slug": "ref/llm-client-providers/google-vertex",
+                    "title": "Google: Vertex",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.open-ai",
+                    "pageId": "03-reference/baml/clients/providers/openai.mdx",
+                    "slug": "ref/llm-client-providers/open-ai",
+                    "title": "OpenAI",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.open-ai-from-azure",
+                    "pageId": "03-reference/baml/clients/providers/azure.mdx",
+                    "slug": "ref/llm-client-providers/open-ai-from-azure",
+                    "title": "OpenAI from Azure",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.openai-generic",
+                    "pageId": "03-reference/baml/clients/providers/openai-generic.mdx",
+                    "slug": "ref/llm-client-providers/openai-generic",
+                    "title": "openai-generic",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.openai-generic-groq",
+                    "pageId": "03-reference/baml/clients/providers/groq.mdx",
+                    "slug": "ref/llm-client-providers/openai-generic-groq",
+                    "title": "openai-generic: Groq",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.openai-generic-hugging-face",
+                    "pageId": "03-reference/baml/clients/providers/huggingface.mdx",
+                    "slug": "ref/llm-client-providers/openai-generic-hugging-face",
+                    "title": "openai-generic: Hugging Face",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.openai-generic-keywords-ai",
+                    "pageId": "03-reference/baml/clients/providers/keywordsai.mdx",
+                    "slug": "ref/llm-client-providers/openai-generic-keywords-ai",
+                    "title": "openai-generic: Keywords AI",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.openai-generic-lm-studio",
+                    "pageId": "03-reference/baml/clients/providers/lmstudio.mdx",
+                    "slug": "ref/llm-client-providers/openai-generic-lm-studio",
+                    "title": "openai-generic: LM Studio",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.openai-generic-ollama",
+                    "pageId": "03-reference/baml/clients/providers/ollama.mdx",
+                    "slug": "ref/llm-client-providers/openai-generic-ollama",
+                    "title": "openai-generic: Ollama",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.openai-generic-open-router",
+                    "pageId": "03-reference/baml/clients/providers/openrouter.mdx",
+                    "slug": "ref/llm-client-providers/openai-generic-open-router",
+                    "title": "openai-generic: OpenRouter",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.openai-generic-together-ai",
+                    "pageId": "03-reference/baml/clients/providers/together.mdx",
+                    "slug": "ref/llm-client-providers/openai-generic-together-ai",
+                    "title": "openai-generic: TogetherAI",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.openai-generic-unify-ai",
+                    "pageId": "03-reference/baml/clients/providers/unify.mdx",
+                    "slug": "ref/llm-client-providers/openai-generic-unify-ai",
+                    "title": "openai-generic: Unify AI",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-providers.openai-generic-v-llm",
+                    "pageId": "03-reference/baml/clients/providers/vllm.mdx",
+                    "slug": "ref/llm-client-providers/openai-generic-v-llm",
+                    "title": "openai-generic: vLLM",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.ref.ref.llm-client-providers",
+                "pointsTo": "ref/llm-client-providers/aws-bedrock",
+                "slug": "ref/llm-client-providers",
+                "title": "LLM Client Providers",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-strategies.retry-policy",
+                    "pageId": "03-reference/baml/clients/strategy/retry.mdx",
+                    "slug": "ref/llm-client-strategies/retry-policy",
+                    "title": "Retry Policy",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-strategies.fallback",
+                    "pageId": "03-reference/baml/clients/strategy/fallback.mdx",
+                    "slug": "ref/llm-client-strategies/fallback",
+                    "title": "Fallback",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.llm-client-strategies.round-robin",
+                    "pageId": "03-reference/baml/clients/strategy/round-robin.mdx",
+                    "slug": "ref/llm-client-strategies/round-robin",
+                    "title": "Round Robin",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.ref.ref.llm-client-strategies",
+                "pointsTo": "ref/llm-client-strategies/retry-policy",
+                "slug": "ref/llm-client-strategies",
+                "title": "LLM Client Strategies",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.baml-client.type-builder",
+                    "pageId": "03-reference/baml_client/typebuilder.mdx",
+                    "slug": "ref/baml-client/type-builder",
+                    "title": "TypeBuilder",
+                    "type": "page"
+                  },
+                  {
+                    "canonicalSlug": "guide/baml-advanced/llm-client-registry",
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.baml-client.client-registry",
+                    "pageId": "01-guide/05-baml-advanced/client-registry.mdx",
+                    "slug": "ref/baml-client/client-registry",
+                    "title": "ClientRegistry",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.ref.ref.baml-client",
+                "pointsTo": "ref/baml-client/type-builder",
+                "slug": "ref/baml-client",
+                "title": "baml_client",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.prompt-syntax.what-is-jinja",
+                    "pageId": "03-reference/baml/prompt-syntax/what-is-jinja.mdx",
+                    "slug": "ref/prompt-syntax/what-is-jinja",
+                    "title": "What is jinja?",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.prompt-syntax.ctx-output-format",
+                    "pageId": "03-reference/baml/prompt-syntax/output-format.mdx",
+                    "slug": "ref/prompt-syntax/ctx-output-format",
+                    "title": "ctx.output_format",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.prompt-syntax.ctx-client",
+                    "pageId": "03-reference/baml/prompt-syntax/ctx.mdx",
+                    "slug": "ref/prompt-syntax/ctx-client",
+                    "title": "ctx.client",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.prompt-syntax.role",
+                    "pageId": "03-reference/baml/prompt-syntax/role.mdx",
+                    "slug": "ref/prompt-syntax/role",
+                    "title": "_.role",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.prompt-syntax.variables",
+                    "pageId": "03-reference/baml/prompt-syntax/variables.mdx",
+                    "slug": "ref/prompt-syntax/variables",
+                    "title": "Variables",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.prompt-syntax.conditionals",
+                    "pageId": "03-reference/baml/prompt-syntax/conditionals.mdx",
+                    "slug": "ref/prompt-syntax/conditionals",
+                    "title": "Conditionals",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.prompt-syntax.loops",
+                    "pageId": "03-reference/baml/prompt-syntax/loops.mdx",
+                    "slug": "ref/prompt-syntax/loops",
+                    "title": "Loops",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.ref.ref.prompt-syntax",
+                "pointsTo": "ref/prompt-syntax/what-is-jinja",
+                "slug": "ref/prompt-syntax",
+                "title": "Prompt Syntax",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.editor-extension-settings.baml-cli-path",
+                    "pageId": "03-reference/vscode-ext/clipath.mdx",
+                    "slug": "ref/editor-extension-settings/baml-cli-path",
+                    "title": "baml.cliPath",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.editor-extension-settings.baml-generate-code-on-save",
+                    "pageId": "03-reference/vscode-ext/generateCodeOnSave.mdx",
+                    "slug": "ref/editor-extension-settings/baml-generate-code-on-save",
+                    "title": "baml.generateCodeOnSave",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.editor-extension-settings.baml-restart-ts-server-on-save",
+                    "pageId": "03-reference/vscode-ext/restartTSServerOnSave.mdx",
+                    "slug": "ref/editor-extension-settings/baml-restart-ts-server-on-save",
+                    "title": "baml.restartTSServerOnSave",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.ref.ref.editor-extension-settings",
+                "pointsTo": "ref/editor-extension-settings/baml-cli-path",
+                "slug": "ref/editor-extension-settings",
+                "title": "Editor Extension Settings",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "apiDefinitionId": "eaa1074a-b676-4a6b-93df-43c52a64d62f",
+                    "children": [
+                      {
+                        "apiDefinitionId": "eaa1074a-b676-4a6b-93df-43c52a64d62f",
+                        "endpointId": "endpoint_.extractData",
+                        "id": "eaa1074a-b676-4a6b-93df-43c52a64d62f.extractData",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "ref/boundary-extraction-api/extract/extract-data",
+                        "title": "Extract",
+                        "type": "endpoint"
+                      },
+                      {
+                        "id": "eaa1074a-b676-4a6b-93df-43c52a64d62f.page:03-reference/extract/examples.mdx",
+                        "pageId": "03-reference/extract/examples.mdx",
+                        "slug": "ref/boundary-extraction-api/extract/extraction-examples",
+                        "title": "Extraction Examples",
+                        "type": "page"
+                      }
+                    ],
+                    "hideTitle": false,
+                    "id": "eaa1074a-b676-4a6b-93df-43c52a64d62f",
+                    "overviewPageId": "03-reference/extract/summary.mdx",
+                    "paginated": false,
+                    "pointsTo": "ref/boundary-extraction-api/extract/extract-data",
+                    "showErrors": true,
+                    "slug": "ref/boundary-extraction-api/extract",
+                    "title": "API Reference",
+                    "type": "apiReference"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.ref.ref.boundary-extraction-api",
+                "pointsTo": "ref/boundary-extraction-api/extract",
+                "slug": "ref/boundary-extraction-api",
+                "title": "Boundary Extraction API",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.ref.ref.boundary-cloud-api.limits",
+                    "pageId": "03-reference/cloud/limits.mdx",
+                    "slug": "ref/cloud/limits",
+                    "title": "Limits",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.ref.ref.boundary-cloud-api",
+                "pointsTo": "ref/cloud/limits",
+                "slug": "ref/boundary-cloud-api",
+                "title": "Boundary Cloud API",
+                "type": "section"
+              }
+            ],
+            "id": "root.uv.ref.ref",
+            "type": "sidebarRoot"
+          },
+          "icon": "fa-solid fa-code",
+          "id": "root.uv.ref",
+          "pointsTo": "ref/overview",
+          "slug": "ref",
+          "title": "BAML Reference",
+          "type": "tab"
+        },
+        {
+          "icon": "fa-solid fa-play",
+          "id": "root.uv.link",
+          "title": "Playground",
+          "type": "link",
+          "url": "https://promptfiddle.com"
+        },
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-history",
+                    "id": "root.uv.changelog.changelog.changelog",
+                    "pageId": "pages/changelog.mdx",
+                    "slug": "changelog/changelog",
+                    "title": "Changelog",
+                    "type": "page"
+                  }
+                ],
+                "id": "root.uv.changelog.changelog.group",
+                "type": "sidebarGroup"
+              }
+            ],
+            "id": "root.uv.changelog.changelog",
+            "type": "sidebarRoot"
+          },
+          "icon": "fa-regular fa-history",
+          "id": "root.uv.changelog",
+          "pointsTo": "changelog/changelog",
+          "slug": "changelog",
+          "title": "Changelog",
+          "type": "tab"
+        }
+      ],
+      "id": "root.uv",
+      "type": "tabbed"
+    },
+    "id": "root.uv",
+    "type": "unversioned"
+  },
+  "hidden": false,
+  "id": "root",
+  "pointsTo": "home",
+  "slug": "",
+  "title": "Boundary Documentation",
+  "type": "root",
+  "version": "v2"
+}

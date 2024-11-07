@@ -82,6 +82,63 @@ export class Read {
     }
 
     /**
+     * @param {FernRegistry.docs.v2.read.GetMetadataForUrlRequest} request
+     * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.docs.v2.read.getDocsUrlMetadata({
+     *         url: FernRegistry.Url("string")
+     *     })
+     */
+    public async getDocsUrlMetadata(
+        request: FernRegistry.docs.v2.read.GetMetadataForUrlRequest,
+        requestOptions?: Read.RequestOptions
+    ): Promise<
+        core.APIResponse<FernRegistry.docs.v2.read.DocsUrlMetadata, FernRegistry.docs.v2.read.getDocsUrlMetadata.Error>
+    > {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/metadata-for-url"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                ok: true,
+                body: _response.body as FernRegistry.docs.v2.read.DocsUrlMetadata,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch ((_response.error.body as FernRegistry.docs.v2.read.getDocsUrlMetadata.Error)?.error) {
+                case "DomainNotRegisteredError":
+                    return {
+                        ok: false,
+                        error: _response.error.body as FernRegistry.docs.v2.read.getDocsUrlMetadata.Error,
+                    };
+            }
+        }
+
+        return {
+            ok: false,
+            error: FernRegistry.docs.v2.read.getDocsUrlMetadata.Error._unknown(_response.error),
+        };
+    }
+
+    /**
      * @param {FernRegistry.docs.v2.read.LoadDocsForUrlRequest} request
      * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
      *

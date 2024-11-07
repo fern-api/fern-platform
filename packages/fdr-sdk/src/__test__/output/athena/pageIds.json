@@ -1,0 +1,10 @@
+[
+  "pages/getting_started.mdx",
+  "pages/examples/research.mdx",
+  "pages/examples/research_oss.mdx",
+  "pages/examples/structured_output.mdx",
+  "pages/examples/query_and_visualize.mdx",
+  "pages/examples/documentation.mdx",
+  "pages/examples/data_frames.mdx",
+  "pages/examples/upload_files.mdx"
+]

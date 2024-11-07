@@ -1,0 +1,194 @@
+{
+  "child": {
+    "child": {
+      "children": [
+        {
+          "children": [
+            {
+              "hidden": false,
+              "id": "root.uv.getting-started.welcome",
+              "pageId": "docs/pages/welcome.mdx",
+              "slug": "getting-started/welcome",
+              "title": "Welcome",
+              "type": "page"
+            },
+            {
+              "hidden": false,
+              "id": "root.uv.getting-started.quickstart",
+              "pageId": "docs/pages/quickstart.mdx",
+              "slug": "getting-started/quickstart",
+              "title": "Quickstart",
+              "type": "page"
+            }
+          ],
+          "collapsed": false,
+          "hidden": false,
+          "id": "root.uv.getting-started",
+          "pointsTo": "getting-started/welcome",
+          "slug": "getting-started",
+          "title": "Getting started",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "hidden": false,
+              "id": "root.uv.sd-ks.ruby-sdk",
+              "pageId": "docs/pages/ruby-sdk.mdx",
+              "slug": "sd-ks/ruby-sdk",
+              "title": "Ruby SDK",
+              "type": "page"
+            },
+            {
+              "hidden": false,
+              "id": "root.uv.sd-ks.go-sdk",
+              "pageId": "docs/pages/go-sdk.mdx",
+              "slug": "sd-ks/go-sdk",
+              "title": "Go SDK",
+              "type": "page"
+            }
+          ],
+          "collapsed": false,
+          "hidden": false,
+          "id": "root.uv.sd-ks",
+          "pointsTo": "sd-ks/ruby-sdk",
+          "slug": "sd-ks",
+          "title": "SDKs",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "hidden": false,
+              "id": "root.uv.okta-sso-integration.setup-okta-sso",
+              "pageId": "docs/pages/okta.mdx",
+              "slug": "okta-sso-integration/setup-okta-sso",
+              "title": "Setup Okta SSO",
+              "type": "page"
+            }
+          ],
+          "collapsed": false,
+          "hidden": false,
+          "id": "root.uv.okta-sso-integration",
+          "pointsTo": "okta-sso-integration/setup-okta-sso",
+          "slug": "okta-sso-integration",
+          "title": "Okta SSO Integration",
+          "type": "section"
+        },
+        {
+          "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+          "children": [
+            {
+              "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+              "children": [
+                {
+                  "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+                  "endpointId": "subpackage_detections.getDetection",
+                  "id": "root.uv.api-reference.subpackage_detections.subpackage_detections.getDetection",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/detections/get-detection",
+                  "title": "Get a detection by ID",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "root.uv.api-reference.subpackage_detections",
+              "pointsTo": "api-reference/detections/get-detection",
+              "slug": "api-reference/detections",
+              "title": "Detections",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+              "children": [
+                {
+                  "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+                  "endpointId": "subpackage_events.createEventSync",
+                  "id": "root.uv.api-reference.subpackage_events.subpackage_events.createEventSync",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/events/create-event-sync",
+                  "title": "Create an Event synchronously",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+                  "endpointId": "subpackage_events.createEventAsync",
+                  "id": "root.uv.api-reference.subpackage_events.subpackage_events.createEventAsync",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/events/create-event-async",
+                  "title": "Create an Event asynchronously",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "root.uv.api-reference.subpackage_events",
+              "pointsTo": "api-reference/events/create-event-sync",
+              "slug": "api-reference/events",
+              "title": "Events",
+              "type": "apiPackage"
+            },
+            {
+              "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+              "children": [
+                {
+                  "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+                  "endpointId": "subpackage_eventTypes.getEventTypes",
+                  "id": "root.uv.api-reference.subpackage_eventTypes.subpackage_eventTypes.getEventTypes",
+                  "isResponseStream": false,
+                  "method": "GET",
+                  "slug": "api-reference/event-types/get-event-types",
+                  "title": "List all event types",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+                  "endpointId": "subpackage_eventTypes.createEventType",
+                  "id": "root.uv.api-reference.subpackage_eventTypes.subpackage_eventTypes.createEventType",
+                  "isResponseStream": false,
+                  "method": "POST",
+                  "slug": "api-reference/event-types/create-event-type",
+                  "title": "Create an event type",
+                  "type": "endpoint"
+                },
+                {
+                  "apiDefinitionId": "cb72b86f-a3ee-47b4-a201-5aa358a6713b",
+                  "endpointId": "subpackage_eventTypes.patchEventType",
+                  "id": "root.uv.api-reference.subpackage_eventTypes.subpackage_eventTypes.patchEventType",
+                  "isResponseStream": false,
+                  "method": "PATCH",
+                  "slug": "api-reference/event-types/patch-event-type",
+                  "title": "Add fields to an event type",
+                  "type": "endpoint"
+                }
+              ],
+              "id": "root.uv.api-reference.subpackage_eventTypes",
+              "pointsTo": "api-reference/event-types/get-event-types",
+              "slug": "api-reference/event-types",
+              "title": "Event Types",
+              "type": "apiPackage"
+            }
+          ],
+          "hidden": false,
+          "id": "root.uv.api-reference",
+          "pointsTo": "api-reference/detections/get-detection",
+          "showErrors": false,
+          "slug": "api-reference",
+          "title": "API Reference",
+          "type": "apiReference"
+        }
+      ],
+      "id": "root.uv",
+      "type": "sidebarRoot"
+    },
+    "id": "root.uv",
+    "type": "unversioned"
+  },
+  "hidden": false,
+  "id": "root",
+  "pointsTo": "getting-started/welcome",
+  "slug": "",
+  "title": "Intrinsic | Docs",
+  "type": "root",
+  "version": "v2"
+}

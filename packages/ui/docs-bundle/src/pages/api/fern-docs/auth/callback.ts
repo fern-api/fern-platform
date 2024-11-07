@@ -1,3 +1,4 @@
+import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
@@ -15,22 +16,26 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const domain = getDocsDomainEdge(req);
     const host = getHostEdge(req);
 
+    const config = await getAuthEdgeConfig(domain);
+
     // The authorization code returned by AuthKit
     const code = req.nextUrl.searchParams.get("code");
-    const state = req.nextUrl.searchParams.get("state");
+    const return_to = req.nextUrl.searchParams.get(getReturnToQueryParam(config));
     const error = req.nextUrl.searchParams.get("error");
     const error_description = req.nextUrl.searchParams.get("error_description");
-    const redirectLocation = safeUrl(state) ?? safeUrl(withDefaultProtocol(host));
+    const redirectLocation = safeUrl(return_to) ?? safeUrl(withDefaultProtocol(host));
 
     if (error != null) {
-        return redirectWithLoginError(redirectLocation, error_description ?? error);
+        return redirectWithLoginError(redirectLocation, error, error_description);
     }
 
     if (typeof code !== "string") {
-        return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+        return redirectWithLoginError(
+            redirectLocation,
+            "missing_authorization_code",
+            "Couldn't login, please try again",
+        );
     }
-
-    const config = await getAuthEdgeConfig(domain);
     const nextUrl = req.nextUrl.clone();
 
     // Redirect to x-fern-host domain if it exists
@@ -52,5 +57,5 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         return NextResponse.redirect(nextUrl);
     }
 
-    return redirectWithLoginError(redirectLocation, "Couldn't login, please try again");
+    return redirectWithLoginError(redirectLocation, "unknown_error", "Couldn't login, please try again");
 }

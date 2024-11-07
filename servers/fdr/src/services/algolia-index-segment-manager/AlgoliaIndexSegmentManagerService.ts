@@ -1,4 +1,4 @@
-import { DocsV1Db, FdrAPI, visitDbNavigationConfig } from "@fern-api/fdr-sdk";
+import { DocsV1Db, FdrAPI, FernNavigation, visitDbNavigationConfig } from "@fern-api/fdr-sdk";
 import { addHours, addMinutes } from "date-fns";
 import { kebabCase } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
@@ -64,38 +64,76 @@ export class AlgoliaIndexSegmentManagerServiceImpl implements AlgoliaIndexSegmen
     }): GenerateNewIndexSegmentsResult {
         const navigationConfig = dbDocsDefinition.config.navigation;
 
-        // TODO: handle root
-        if (navigationConfig == null) {
-            return {
-                type: "versioned",
-                configSegmentTuples: [],
-            };
-        }
+        if (dbDocsDefinition.config.root != null) {
+            const latestRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
+                dbDocsDefinition.config.root,
+            );
 
-        return visitDbNavigationConfig<GenerateNewIndexSegmentsResult>(navigationConfig, {
-            versioned: (config) => {
-                const configSegmentTuples = config.versions.map((v) => {
+            let versionedRootConfigSegmentTuples: ConfigSegmentTuple[] | undefined = undefined;
+            let unversionedRootConfigSegmentTuple: ConfigSegmentTuple | undefined = undefined;
+
+            FernNavigation.traverseBF(latestRoot, (node) => {
+                if (node.type === "version") {
+                    versionedRootConfigSegmentTuples ??= [];
+                    versionedRootConfigSegmentTuples.push([
+                        undefined,
+                        this.generateNewIndexSegmentForUnversionedNavigationConfig({
+                            url,
+                            version: {
+                                id: node.versionId,
+                                urlSlug: node.slug.replace(new RegExp(`^${latestRoot.slug}/`), ""),
+                            },
+                        }),
+                    ]);
+                    return true;
+                } else if (node.type === "unversioned") {
+                    unversionedRootConfigSegmentTuple = [
+                        undefined,
+                        this.generateNewIndexSegmentForUnversionedNavigationConfig({
+                            url,
+                        }),
+                    ];
+                    return false;
+                }
+                return true;
+            });
+
+            if (versionedRootConfigSegmentTuples != null) {
+                return { type: "versioned", configSegmentTuples: versionedRootConfigSegmentTuples };
+            } else if (unversionedRootConfigSegmentTuple != null) {
+                return { type: "unversioned", configSegmentTuple: unversionedRootConfigSegmentTuple };
+            }
+        } else if (navigationConfig != null) {
+            return visitDbNavigationConfig<GenerateNewIndexSegmentsResult>(navigationConfig, {
+                versioned: (config) => {
+                    const configSegmentTuples = config.versions.map((v) => {
+                        const indexSegment = this.generateNewIndexSegmentForUnversionedNavigationConfig({
+                            url,
+                            version: { id: v.version, urlSlug: v.urlSlug },
+                        });
+                        return [v.config, indexSegment] as const;
+                    });
+                    return {
+                        type: "versioned",
+                        configSegmentTuples,
+                    };
+                },
+                unversioned: (config) => {
                     const indexSegment = this.generateNewIndexSegmentForUnversionedNavigationConfig({
                         url,
-                        version: { id: v.version, urlSlug: v.urlSlug },
                     });
-                    return [v.config, indexSegment] as const;
-                });
-                return {
-                    type: "versioned",
-                    configSegmentTuples,
-                };
-            },
-            unversioned: (config) => {
-                const indexSegment = this.generateNewIndexSegmentForUnversionedNavigationConfig({
-                    url,
-                });
-                return {
-                    type: "unversioned",
-                    configSegmentTuple: [config, indexSegment] as const,
-                };
-            },
-        });
+                    return {
+                        type: "unversioned",
+                        configSegmentTuple: [config, indexSegment] as const,
+                    };
+                },
+            });
+        }
+
+        return {
+            type: "versioned",
+            configSegmentTuples: [],
+        };
     }
 
     private generateNewIndexSegmentForUnversionedNavigationConfig({

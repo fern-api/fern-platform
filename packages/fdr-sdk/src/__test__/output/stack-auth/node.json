@@ -1,0 +1,1858 @@
+{
+  "child": {
+    "child": {
+      "children": [
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-globe",
+                    "id": "root.uv.docs.docs.overview",
+                    "pageId": "docs/pages/overview.mdx",
+                    "slug": "overview",
+                    "title": "Overview",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-circle-question",
+                    "id": "root.uv.docs.docs.faq",
+                    "pageId": "docs/pages/faq.mdx",
+                    "slug": "faq",
+                    "title": "FAQ",
+                    "type": "page"
+                  }
+                ],
+                "id": "root.uv.docs.docs.group",
+                "type": "sidebarGroup"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-download",
+                    "id": "root.uv.docs.docs.getting-started.installation-setup",
+                    "pageId": "docs/pages/getting-started/setup.mdx",
+                    "slug": "getting-started/setup",
+                    "title": "Installation & Setup",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-puzzle",
+                    "id": "root.uv.docs.docs.getting-started.components",
+                    "pageId": "docs/pages/getting-started/components.mdx",
+                    "slug": "getting-started/components",
+                    "title": "Components",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-address-book",
+                    "id": "root.uv.docs.docs.getting-started.users",
+                    "pageId": "docs/pages/getting-started/users.mdx",
+                    "slug": "getting-started/users",
+                    "title": "Users",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-rocket",
+                    "id": "root.uv.docs.docs.getting-started.going-to-production",
+                    "pageId": "docs/pages/getting-started/production.mdx",
+                    "slug": "getting-started/production",
+                    "title": "Going to Production",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.docs.docs.getting-started",
+                "pointsTo": "getting-started/setup",
+                "slug": "docs/getting-started",
+                "title": "Getting Started",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-folder-gear",
+                    "id": "root.uv.docs.docs.concepts.the-stack-app-object",
+                    "pageId": "docs/pages/concepts/stack-app.mdx",
+                    "slug": "concepts/stack-app",
+                    "title": "The StackApp Object",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-user-pen",
+                    "id": "root.uv.docs.docs.concepts.custom-user-data",
+                    "pageId": "docs/pages/concepts/custom-user-data.mdx",
+                    "slug": "concepts/custom-user-data",
+                    "title": "Custom User Data",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-user-check",
+                    "id": "root.uv.docs.docs.concepts.user-onboarding",
+                    "pageId": "docs/pages/concepts/user-onboarding.mdx",
+                    "slug": "concepts/user-onboarding",
+                    "title": "User Onboarding",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-link",
+                    "id": "root.uv.docs.docs.concepts.connected-o-auth-accounts",
+                    "pageId": "docs/pages/concepts/oauth.mdx",
+                    "slug": "concepts/oauth",
+                    "title": "Connected OAuth Accounts",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-users",
+                    "id": "root.uv.docs.docs.concepts.teams",
+                    "pageId": "docs/pages/concepts/orgs-and-teams.mdx",
+                    "slug": "concepts/orgs-and-teams",
+                    "title": "Teams",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-exchange",
+                    "id": "root.uv.docs.docs.concepts.selecting-a-team",
+                    "pageId": "docs/pages/concepts/team-selection.mdx",
+                    "slug": "concepts/team-selection",
+                    "title": "Selecting a Team",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-user-lock",
+                    "id": "root.uv.docs.docs.concepts.permissions-rbac",
+                    "pageId": "docs/pages/concepts/permissions.mdx",
+                    "slug": "concepts/permissions",
+                    "title": "Permissions & RBAC",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-webhook",
+                    "id": "root.uv.docs.docs.concepts.webhooks",
+                    "pageId": "docs/pages/concepts/webhooks.mdx",
+                    "slug": "concepts/webhooks",
+                    "title": "Webhooks",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-network-wired",
+                    "id": "root.uv.docs.docs.concepts.backend-integration",
+                    "pageId": "docs/pages/concepts/backend-integration.mdx",
+                    "slug": "concepts/backend-integration",
+                    "title": "Backend Integration",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.docs.docs.concepts",
+                "pointsTo": "concepts/stack-app",
+                "slug": "docs/concepts",
+                "title": "Concepts",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-circle-half-stroke",
+                    "id": "root.uv.docs.docs.customization.dark-light-mode",
+                    "pageId": "docs/pages/customization/dark-mode.mdx",
+                    "slug": "customization/dark-mode",
+                    "title": "Dark/Light Mode",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-paint-brush",
+                    "id": "root.uv.docs.docs.customization.colors-and-styles",
+                    "pageId": "docs/pages/customization/custom-styles.mdx",
+                    "slug": "customization/custom-styles",
+                    "title": "Colors and Styles",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-language",
+                    "id": "root.uv.docs.docs.customization.internationalization",
+                    "pageId": "docs/pages/customization/internationalization.mdx",
+                    "slug": "customization/internationalization",
+                    "title": "Internationalization",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-table-layout",
+                    "id": "root.uv.docs.docs.customization.custom-layouts-and-pages",
+                    "pageId": "docs/pages/customization/custom-pages.mdx",
+                    "slug": "customization/custom-pages",
+                    "title": "Custom Layouts and Pages",
+                    "type": "page"
+                  },
+                  {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.customization.custom-page-examples.sign-in",
+                        "pageId": "docs/pages/customization/page-examples/sign-in.mdx",
+                        "slug": "customization/page-examples/signin",
+                        "title": "Sign In",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.customization.custom-page-examples.sign-up",
+                        "pageId": "docs/pages/customization/page-examples/sign-up.mdx",
+                        "slug": "customization/page-examples/signup",
+                        "title": "Sign Up",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
+                    "hidden": false,
+                    "icon": "fa-regular fa-files",
+                    "id": "root.uv.docs.docs.customization.custom-page-examples",
+                    "pointsTo": "customization/page-examples/signin",
+                    "slug": "docs/customization/custom-page-examples",
+                    "title": "Custom Page Examples",
+                    "type": "section"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.docs.docs.customization",
+                "pointsTo": "customization/dark-mode",
+                "slug": "docs/customization",
+                "title": "Customization",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-bolt",
+                    "id": "root.uv.docs.docs.others.supabase-integration",
+                    "pageId": "docs/pages/others/supabase.mdx",
+                    "slug": "others/supabase",
+                    "title": "Supabase Integration",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-house-laptop",
+                    "id": "root.uv.docs.docs.others.self-hosting",
+                    "pageId": "docs/pages/others/self-host.mdx",
+                    "slug": "others/self-host",
+                    "title": "Self-Hosting",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.docs.docs.others",
+                "pointsTo": "others/supabase",
+                "slug": "docs/others",
+                "title": "Others",
+                "type": "section"
+              }
+            ],
+            "id": "root.uv.docs.docs",
+            "type": "sidebarRoot"
+          },
+          "icon": "fa-solid fa-home",
+          "id": "root.uv.docs",
+          "pointsTo": "overview",
+          "slug": "docs",
+          "title": "Documentation",
+          "type": "tab"
+        },
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.components.components.components.user-button",
+                    "pageId": "docs/pages/components/user-button.mdx",
+                    "slug": "components/user-button",
+                    "title": "<UserButton />",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.components.components.components.selected-team-switcher",
+                    "pageId": "docs/pages/components/selected-team-switcher.mdx",
+                    "slug": "components/selected-team-switcher",
+                    "title": "<SelectedTeamSwitcher />",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.components.components.components.account-settings",
+                    "pageId": "docs/pages/components/account-settings.mdx",
+                    "slug": "components/account-settings",
+                    "title": "<AccountSettings />",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.components.components.components.sign-in",
+                    "pageId": "docs/pages/components/sign-in.mdx",
+                    "slug": "components/sign-in",
+                    "title": "<SignIn />",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.components.components.components.sign-up",
+                    "pageId": "docs/pages/components/sign-up.mdx",
+                    "slug": "components/sign-up",
+                    "title": "<SignUp />",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.components.components.components.credential-sign-in",
+                    "pageId": "docs/pages/components/credential-sign-in.mdx",
+                    "slug": "components/credential-sign-in",
+                    "title": "<CredentialSignIn />",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.components.components.components.credential-sign-up",
+                    "pageId": "docs/pages/components/credential-sign-up.mdx",
+                    "slug": "components/credential-sign-up",
+                    "title": "<CredentialSignUp />",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.components.components.components.o-auth-button",
+                    "pageId": "docs/pages/components/oauth-button.mdx",
+                    "slug": "components/oauth-button",
+                    "title": "<OAuthButton />",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.components.components.components.o-auth-button-group",
+                    "pageId": "docs/pages/components/oauth-button-group.mdx",
+                    "slug": "components/oauth-button-group",
+                    "title": "<OAuthButtonGroup />",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.components.components.components",
+                "pointsTo": "components/user-button",
+                "slug": "components/components",
+                "title": "Components",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.components.components.utilities.stack-handler",
+                    "pageId": "docs/pages/components/stack-handler.mdx",
+                    "slug": "components/stack-handler",
+                    "title": "<StackHandler />",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.components.components.utilities.stack-provider",
+                    "pageId": "docs/pages/components/stack-provider.mdx",
+                    "slug": "components/stack-provider",
+                    "title": "<StackProvider />",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.components.components.utilities.stack-theme",
+                    "pageId": "docs/pages/components/stack-theme.mdx",
+                    "slug": "components/stack-theme",
+                    "title": "<StackTheme />",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.components.components.utilities",
+                "pointsTo": "components/stack-handler",
+                "slug": "components/utilities",
+                "title": "Utilities",
+                "type": "section"
+              }
+            ],
+            "id": "root.uv.components.components",
+            "type": "sidebarRoot"
+          },
+          "icon": "fa-solid fa-puzzle",
+          "id": "root.uv.components",
+          "pointsTo": "components/user-button",
+          "slug": "components",
+          "title": "Components",
+          "type": "tab"
+        },
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.sdk.sdk.classes.user",
+                    "pageId": "docs/pages/sdk/user.mdx",
+                    "slug": "sdk/user",
+                    "title": "User",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.sdk.sdk.classes.stack-app",
+                    "pageId": "docs/pages/sdk/stack-app.mdx",
+                    "slug": "sdk/stack-app",
+                    "title": "StackApp",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.sdk.sdk.classes.team",
+                    "pageId": "docs/pages/sdk/team.mdx",
+                    "slug": "sdk/team",
+                    "title": "Team",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.sdk.sdk.classes.team-user",
+                    "pageId": "docs/pages/sdk/team-user.mdx",
+                    "slug": "sdk/team-user",
+                    "title": "TeamUser",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.sdk.sdk.classes.team-profile",
+                    "pageId": "docs/pages/sdk/team-profile.mdx",
+                    "slug": "sdk/team-profile",
+                    "title": "TeamProfile",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.sdk.sdk.classes.team-permission",
+                    "pageId": "docs/pages/sdk/team-permission.mdx",
+                    "slug": "sdk/team-permission",
+                    "title": "TeamPermission",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.sdk.sdk.classes.project",
+                    "pageId": "docs/pages/sdk/project.mdx",
+                    "slug": "sdk/project",
+                    "title": "Project",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.sdk.sdk.classes.contact-channel",
+                    "pageId": "docs/pages/sdk/contact-channel.mdx",
+                    "slug": "sdk/contact-channel",
+                    "title": "ContactChannel",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.sdk.sdk.classes",
+                "pointsTo": "sdk/user",
+                "slug": "sdk/classes",
+                "title": "Classes",
+                "type": "section"
+              },
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "id": "root.uv.sdk.sdk.hooks.use-user",
+                    "pageId": "docs/pages/sdk/use-user.mdx",
+                    "slug": "sdk/hooks/use-user",
+                    "title": "useUser()",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.sdk.sdk.hooks.use-stack-app",
+                    "pageId": "docs/pages/sdk/use-stack-app.mdx",
+                    "slug": "sdk/use-stack-app",
+                    "title": "useStackApp()",
+                    "type": "page"
+                  }
+                ],
+                "collapsed": false,
+                "hidden": false,
+                "id": "root.uv.sdk.sdk.hooks",
+                "pointsTo": "sdk/hooks/use-user",
+                "slug": "sdk/hooks",
+                "title": "Hooks",
+                "type": "section"
+              }
+            ],
+            "id": "root.uv.sdk.sdk",
+            "type": "sidebarRoot"
+          },
+          "icon": "fa-solid fa-hammer",
+          "id": "root.uv.sdk",
+          "pointsTo": "sdk/user",
+          "slug": "sdk",
+          "title": "SDK Reference",
+          "type": "tab"
+        },
+        {
+          "child": {
+            "children": [
+              {
+                "children": [
+                  {
+                    "hidden": false,
+                    "icon": "fa-regular fa-globe",
+                    "id": "root.uv.rest-api.rest-api.api-overview",
+                    "pageId": "docs/pages/rest-api/auth.mdx",
+                    "slug": "rest-api/auth",
+                    "title": "API Overview",
+                    "type": "page"
+                  }
+                ],
+                "id": "root.uv.rest-api.rest-api.group",
+                "type": "sidebarGroup"
+              },
+              {
+                "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                "children": [
+                  {
+                    "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                    "endpointId": "endpoint_.apiV1",
+                    "id": "root.uv.rest-api.rest-api.client.endpoint_.apiV1",
+                    "isResponseStream": false,
+                    "method": "GET",
+                    "slug": "rest-api/client/api-v-1",
+                    "title": "/api/v1",
+                    "type": "endpoint"
+                  },
+                  {
+                    "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                    "children": [
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_contactChannels.listContactChannels",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_contactChannels.endpoint_contactChannels.listContactChannels",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/client/contact-channels/list-contact-channels",
+                        "title": "List contact channels",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_contactChannels.createAContactChannel",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_contactChannels.endpoint_contactChannels.createAContactChannel",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/contact-channels/create-a-contact-channel",
+                        "title": "Create a contact channel",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_contactChannels.verifyAnEmail",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_contactChannels.endpoint_contactChannels.verifyAnEmail",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/contact-channels/verify-an-email",
+                        "title": "Verify an email",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_contactChannels.checkEmailVerificationCode",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_contactChannels.endpoint_contactChannels.checkEmailVerificationCode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/contact-channels/check-email-verification-code",
+                        "title": "Check email verification code",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_contactChannels.getAContactChannel",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_contactChannels.endpoint_contactChannels.getAContactChannel",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/client/contact-channels/get-a-contact-channel",
+                        "title": "Get a contact channel",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_contactChannels.deleteAContactChannel",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_contactChannels.endpoint_contactChannels.deleteAContactChannel",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "rest-api/client/contact-channels/delete-a-contact-channel",
+                        "title": "Delete a contact channel",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_contactChannels.updateAContactChannel",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_contactChannels.endpoint_contactChannels.updateAContactChannel",
+                        "isResponseStream": false,
+                        "method": "PATCH",
+                        "slug": "rest-api/client/contact-channels/update-a-contact-channel",
+                        "title": "Update a contact channel",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_contactChannels.sendContactChannelVerificationCode",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_contactChannels.endpoint_contactChannels.sendContactChannelVerificationCode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/contact-channels/send-contact-channel-verification-code",
+                        "title": "Send contact channel verification code",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.client.subpackage_contactChannels",
+                    "pointsTo": "rest-api/client/contact-channels/list-contact-channels",
+                    "slug": "rest-api/client/contact-channels",
+                    "title": "Contact Channels",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                    "children": [
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_oauth.oAuthTokenEndpoints",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_oauth.endpoint_oauth.oAuthTokenEndpoints",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/oauth/o-auth-token-endpoints",
+                        "title": "OAuth token endpoints",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_oauth.oAuthAuthorizeEndpoint",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_oauth.endpoint_oauth.oAuthAuthorizeEndpoint",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/client/oauth/o-auth-authorize-endpoint",
+                        "title": "OAuth authorize endpoint",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.client.subpackage_oauth",
+                    "pointsTo": "rest-api/client/oauth/o-auth-token-endpoints",
+                    "slug": "rest-api/client/oauth",
+                    "title": "OAuth",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                    "children": [
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_otp.signInWithACode",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_otp.endpoint_otp.signInWithACode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/otp/sign-in-with-a-code",
+                        "title": "Sign in with a code",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_otp.sendSignInCode",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_otp.endpoint_otp.sendSignInCode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/otp/send-sign-in-code",
+                        "title": "Send sign-in code",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_otp.mfaSignIn",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_otp.endpoint_otp.mfaSignIn",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/otp/mfa-sign-in",
+                        "title": "MFA sign in",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_otp.checkSignInCode",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_otp.endpoint_otp.checkSignInCode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/otp/check-sign-in-code",
+                        "title": "Check sign in code",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.client.subpackage_otp",
+                    "pointsTo": "rest-api/client/otp/sign-in-with-a-code",
+                    "slug": "rest-api/client/otp",
+                    "title": "OTP",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                    "children": [
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_password.updatePassword",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_password.endpoint_password.updatePassword",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/password/update-password",
+                        "title": "Update password",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_password.signUpWithEmailAndPassword",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_password.endpoint_password.signUpWithEmailAndPassword",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/password/sign-up-with-email-and-password",
+                        "title": "Sign up with email and password",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_password.signInWithEmailAndPassword",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_password.endpoint_password.signInWithEmailAndPassword",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/password/sign-in-with-email-and-password",
+                        "title": "Sign in with email and password",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_password.setPassword",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_password.endpoint_password.setPassword",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/password/set-password",
+                        "title": "Set password",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_password.sendResetPasswordCode",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_password.endpoint_password.sendResetPasswordCode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/password/send-reset-password-code",
+                        "title": "Send reset password code",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_password.resetPasswordWithACode",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_password.endpoint_password.resetPasswordWithACode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/password/reset-password-with-a-code",
+                        "title": "Reset password with a code",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_password.checkResetPasswordCode",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_password.endpoint_password.checkResetPasswordCode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/password/check-reset-password-code",
+                        "title": "Check reset password code",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.client.subpackage_password",
+                    "pointsTo": "rest-api/client/password/update-password",
+                    "slug": "rest-api/client/password",
+                    "title": "Password",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                    "children": [
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_permissions.listTeamPermissions",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_permissions.endpoint_permissions.listTeamPermissions",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/client/permissions/list-team-permissions",
+                        "title": "List team permissions",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.client.subpackage_permissions",
+                    "pointsTo": "rest-api/client/permissions/list-team-permissions",
+                    "slug": "rest-api/client/permissions",
+                    "title": "Permissions",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                    "children": [
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_projects.getTheCurrentProject",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_projects.endpoint_projects.getTheCurrentProject",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/client/projects/get-the-current-project",
+                        "title": "Get the current project",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.client.subpackage_projects",
+                    "pointsTo": "rest-api/client/projects/get-the-current-project",
+                    "slug": "rest-api/client/projects",
+                    "title": "Projects",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                    "children": [
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_sessions.signOutOfTheCurrentSession",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_sessions.endpoint_sessions.signOutOfTheCurrentSession",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "rest-api/client/sessions/sign-out-of-the-current-session",
+                        "title": "Sign out of the current session",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_sessions.refreshAccessToken",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_sessions.endpoint_sessions.refreshAccessToken",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/sessions/refresh-access-token",
+                        "title": "Refresh access token",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.client.subpackage_sessions",
+                    "pointsTo": "rest-api/client/sessions/sign-out-of-the-current-session",
+                    "slug": "rest-api/client/sessions",
+                    "title": "Sessions",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                    "children": [
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_teams.listTeams",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_teams.endpoint_teams.listTeams",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/client/teams/list-teams",
+                        "title": "List teams",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_teams.createATeam",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_teams.endpoint_teams.createATeam",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/teams/create-a-team",
+                        "title": "Create a team",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_teams.listTeamMembersProfiles",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_teams.endpoint_teams.listTeamMembersProfiles",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/client/teams/list-team-members-profiles",
+                        "title": "List team members profiles",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_teams.getATeam",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_teams.endpoint_teams.getATeam",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/client/teams/get-a-team",
+                        "title": "Get a team",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_teams.deleteATeam",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_teams.endpoint_teams.deleteATeam",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "rest-api/client/teams/delete-a-team",
+                        "title": "Delete a team",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_teams.updateATeam",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_teams.endpoint_teams.updateATeam",
+                        "isResponseStream": false,
+                        "method": "PATCH",
+                        "slug": "rest-api/client/teams/update-a-team",
+                        "title": "Update a team",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_teams.sendAnEmailToInviteAUserToATeam",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_teams.endpoint_teams.sendAnEmailToInviteAUserToATeam",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/teams/send-an-email-to-invite-a-user-to-a-team",
+                        "title": "Send an email to invite a user to a team",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_teams.inviteAUserToATeam",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_teams.endpoint_teams.inviteAUserToATeam",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/teams/invite-a-user-to-a-team",
+                        "title": "Invite a user to a team",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_teams.removeAUserFromATeam",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_teams.endpoint_teams.removeAUserFromATeam",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "rest-api/client/teams/remove-a-user-from-a-team",
+                        "title": "Remove a user from a team",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_teams.getATeamMemberProfile",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_teams.endpoint_teams.getATeamMemberProfile",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/client/teams/get-a-team-member-profile",
+                        "title": "Get a team member profile",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_teams.updateYourTeamMemberProfile",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_teams.endpoint_teams.updateYourTeamMemberProfile",
+                        "isResponseStream": false,
+                        "method": "PATCH",
+                        "slug": "rest-api/client/teams/update-your-team-member-profile",
+                        "title": "Update your team member profile",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_teams.getTeamInvitationDetails",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_teams.endpoint_teams.getTeamInvitationDetails",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/teams/get-team-invitation-details",
+                        "title": "Get team invitation details",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_teams.checkIfATeamInvitationCodeIsValid",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_teams.endpoint_teams.checkIfATeamInvitationCodeIsValid",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/client/teams/check-if-a-team-invitation-code-is-valid",
+                        "title": "Check if a team invitation code is valid",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.client.subpackage_teams",
+                    "pointsTo": "rest-api/client/teams/list-teams",
+                    "slug": "rest-api/client/teams",
+                    "title": "Teams",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                    "children": [
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_users.getCurrentUser",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_users.endpoint_users.getCurrentUser",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/client/users/get-current-user",
+                        "title": "Get current user",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_users.deleteCurrentUser",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_users.endpoint_users.deleteCurrentUser",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "rest-api/client/users/delete-current-user",
+                        "title": "Delete current user",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
+                        "endpointId": "endpoint_users.updateCurrentUser",
+                        "id": "root.uv.rest-api.rest-api.client.subpackage_users.endpoint_users.updateCurrentUser",
+                        "isResponseStream": false,
+                        "method": "PATCH",
+                        "slug": "rest-api/client/users/update-current-user",
+                        "title": "Update current user",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.client.subpackage_users",
+                    "pointsTo": "rest-api/client/users/get-current-user",
+                    "slug": "rest-api/client/users",
+                    "title": "Users",
+                    "type": "apiPackage"
+                  }
+                ],
+                "hidden": false,
+                "hideTitle": false,
+                "id": "root.uv.rest-api.rest-api.client",
+                "pointsTo": "rest-api/client/api-v-1",
+                "showErrors": false,
+                "slug": "rest-api/client",
+                "title": "Client API",
+                "type": "apiReference"
+              },
+              {
+                "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                "children": [
+                  {
+                    "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                    "canonicalSlug": "rest-api/client/api-v-1",
+                    "endpointId": "endpoint_.apiV1",
+                    "id": "root.uv.rest-api.rest-api.server.endpoint_.apiV1",
+                    "isResponseStream": false,
+                    "method": "GET",
+                    "slug": "rest-api/server/api-v-1",
+                    "title": "/api/v1",
+                    "type": "endpoint"
+                  },
+                  {
+                    "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                    "children": [
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/contact-channels/list-contact-channels",
+                        "endpointId": "endpoint_contactChannels.listContactChannels",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_contactChannels.endpoint_contactChannels.listContactChannels",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/server/contact-channels/list-contact-channels",
+                        "title": "List contact channels",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/contact-channels/create-a-contact-channel",
+                        "endpointId": "endpoint_contactChannels.createAContactChannel",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_contactChannels.endpoint_contactChannels.createAContactChannel",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/contact-channels/create-a-contact-channel",
+                        "title": "Create a contact channel",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/contact-channels/verify-an-email",
+                        "endpointId": "endpoint_contactChannels.verifyAnEmail",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_contactChannels.endpoint_contactChannels.verifyAnEmail",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/contact-channels/verify-an-email",
+                        "title": "Verify an email",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/contact-channels/check-email-verification-code",
+                        "endpointId": "endpoint_contactChannels.checkEmailVerificationCode",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_contactChannels.endpoint_contactChannels.checkEmailVerificationCode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/contact-channels/check-email-verification-code",
+                        "title": "Check email verification code",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/contact-channels/get-a-contact-channel",
+                        "endpointId": "endpoint_contactChannels.getAContactChannel",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_contactChannels.endpoint_contactChannels.getAContactChannel",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/server/contact-channels/get-a-contact-channel",
+                        "title": "Get a contact channel",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/contact-channels/delete-a-contact-channel",
+                        "endpointId": "endpoint_contactChannels.deleteAContactChannel",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_contactChannels.endpoint_contactChannels.deleteAContactChannel",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "rest-api/server/contact-channels/delete-a-contact-channel",
+                        "title": "Delete a contact channel",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/contact-channels/update-a-contact-channel",
+                        "endpointId": "endpoint_contactChannels.updateAContactChannel",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_contactChannels.endpoint_contactChannels.updateAContactChannel",
+                        "isResponseStream": false,
+                        "method": "PATCH",
+                        "slug": "rest-api/server/contact-channels/update-a-contact-channel",
+                        "title": "Update a contact channel",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/contact-channels/send-contact-channel-verification-code",
+                        "endpointId": "endpoint_contactChannels.sendContactChannelVerificationCode",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_contactChannels.endpoint_contactChannels.sendContactChannelVerificationCode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/contact-channels/send-contact-channel-verification-code",
+                        "title": "Send contact channel verification code",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.server.subpackage_contactChannels",
+                    "pointsTo": "rest-api/server/contact-channels/list-contact-channels",
+                    "slug": "rest-api/server/contact-channels",
+                    "title": "Contact Channels",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                    "children": [
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/oauth/o-auth-token-endpoints",
+                        "endpointId": "endpoint_oauth.oAuthTokenEndpoints",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_oauth.endpoint_oauth.oAuthTokenEndpoints",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/oauth/o-auth-token-endpoints",
+                        "title": "OAuth token endpoints",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/oauth/o-auth-authorize-endpoint",
+                        "endpointId": "endpoint_oauth.oAuthAuthorizeEndpoint",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_oauth.endpoint_oauth.oAuthAuthorizeEndpoint",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/server/oauth/o-auth-authorize-endpoint",
+                        "title": "OAuth authorize endpoint",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.server.subpackage_oauth",
+                    "pointsTo": "rest-api/server/oauth/o-auth-token-endpoints",
+                    "slug": "rest-api/server/oauth",
+                    "title": "OAuth",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                    "children": [
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/otp/sign-in-with-a-code",
+                        "endpointId": "endpoint_otp.signInWithACode",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_otp.endpoint_otp.signInWithACode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/otp/sign-in-with-a-code",
+                        "title": "Sign in with a code",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/otp/send-sign-in-code",
+                        "endpointId": "endpoint_otp.sendSignInCode",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_otp.endpoint_otp.sendSignInCode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/otp/send-sign-in-code",
+                        "title": "Send sign-in code",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/otp/mfa-sign-in",
+                        "endpointId": "endpoint_otp.mfaSignIn",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_otp.endpoint_otp.mfaSignIn",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/otp/mfa-sign-in",
+                        "title": "MFA sign in",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/otp/check-sign-in-code",
+                        "endpointId": "endpoint_otp.checkSignInCode",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_otp.endpoint_otp.checkSignInCode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/otp/check-sign-in-code",
+                        "title": "Check sign in code",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.server.subpackage_otp",
+                    "pointsTo": "rest-api/server/otp/sign-in-with-a-code",
+                    "slug": "rest-api/server/otp",
+                    "title": "OTP",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                    "children": [
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/password/update-password",
+                        "endpointId": "endpoint_password.updatePassword",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_password.endpoint_password.updatePassword",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/password/update-password",
+                        "title": "Update password",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/password/sign-up-with-email-and-password",
+                        "endpointId": "endpoint_password.signUpWithEmailAndPassword",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_password.endpoint_password.signUpWithEmailAndPassword",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/password/sign-up-with-email-and-password",
+                        "title": "Sign up with email and password",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/password/sign-in-with-email-and-password",
+                        "endpointId": "endpoint_password.signInWithEmailAndPassword",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_password.endpoint_password.signInWithEmailAndPassword",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/password/sign-in-with-email-and-password",
+                        "title": "Sign in with email and password",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/password/set-password",
+                        "endpointId": "endpoint_password.setPassword",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_password.endpoint_password.setPassword",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/password/set-password",
+                        "title": "Set password",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/password/send-reset-password-code",
+                        "endpointId": "endpoint_password.sendResetPasswordCode",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_password.endpoint_password.sendResetPasswordCode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/password/send-reset-password-code",
+                        "title": "Send reset password code",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/password/reset-password-with-a-code",
+                        "endpointId": "endpoint_password.resetPasswordWithACode",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_password.endpoint_password.resetPasswordWithACode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/password/reset-password-with-a-code",
+                        "title": "Reset password with a code",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/password/check-reset-password-code",
+                        "endpointId": "endpoint_password.checkResetPasswordCode",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_password.endpoint_password.checkResetPasswordCode",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/password/check-reset-password-code",
+                        "title": "Check reset password code",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.server.subpackage_password",
+                    "pointsTo": "rest-api/server/password/update-password",
+                    "slug": "rest-api/server/password",
+                    "title": "Password",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                    "children": [
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "endpointId": "endpoint_permissions.listTeamPermissionsOfAUser",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_permissions.endpoint_permissions.listTeamPermissionsOfAUser",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/server/permissions/list-team-permissions-of-a-user",
+                        "title": "List team permissions of a user",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "endpointId": "endpoint_permissions.grantATeamPermissionToAUser",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_permissions.endpoint_permissions.grantATeamPermissionToAUser",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/permissions/grant-a-team-permission-to-a-user",
+                        "title": "Grant a team permission to a user",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "endpointId": "endpoint_permissions.revokeATeamPermissionFromAUser",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_permissions.endpoint_permissions.revokeATeamPermissionFromAUser",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "rest-api/server/permissions/revoke-a-team-permission-from-a-user",
+                        "title": "Revoke a team permission from a user",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.server.subpackage_permissions",
+                    "pointsTo": "rest-api/server/permissions/list-team-permissions-of-a-user",
+                    "slug": "rest-api/server/permissions",
+                    "title": "Permissions",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                    "children": [
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/projects/get-the-current-project",
+                        "endpointId": "endpoint_projects.getTheCurrentProject",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_projects.endpoint_projects.getTheCurrentProject",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/server/projects/get-the-current-project",
+                        "title": "Get the current project",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.server.subpackage_projects",
+                    "pointsTo": "rest-api/server/projects/get-the-current-project",
+                    "slug": "rest-api/server/projects",
+                    "title": "Projects",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                    "children": [
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "endpointId": "endpoint_sessions.createSession",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_sessions.endpoint_sessions.createSession",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/sessions/create-session",
+                        "title": "Create session",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/sessions/sign-out-of-the-current-session",
+                        "endpointId": "endpoint_sessions.signOutOfTheCurrentSession",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_sessions.endpoint_sessions.signOutOfTheCurrentSession",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "rest-api/server/sessions/sign-out-of-the-current-session",
+                        "title": "Sign out of the current session",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/sessions/refresh-access-token",
+                        "endpointId": "endpoint_sessions.refreshAccessToken",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_sessions.endpoint_sessions.refreshAccessToken",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/sessions/refresh-access-token",
+                        "title": "Refresh access token",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.server.subpackage_sessions",
+                    "pointsTo": "rest-api/server/sessions/create-session",
+                    "slug": "rest-api/server/sessions",
+                    "title": "Sessions",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                    "children": [
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/teams/list-teams",
+                        "endpointId": "endpoint_teams.listTeams",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_teams.endpoint_teams.listTeams",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/server/teams/list-teams",
+                        "title": "List teams",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/teams/create-a-team",
+                        "endpointId": "endpoint_teams.createATeam",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_teams.endpoint_teams.createATeam",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/teams/create-a-team",
+                        "title": "Create a team",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/teams/list-team-members-profiles",
+                        "endpointId": "endpoint_teams.listTeamMembersProfiles",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_teams.endpoint_teams.listTeamMembersProfiles",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/server/teams/list-team-members-profiles",
+                        "title": "List team members profiles",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/teams/get-a-team",
+                        "endpointId": "endpoint_teams.getATeam",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_teams.endpoint_teams.getATeam",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/server/teams/get-a-team",
+                        "title": "Get a team",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/teams/delete-a-team",
+                        "endpointId": "endpoint_teams.deleteATeam",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_teams.endpoint_teams.deleteATeam",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "rest-api/server/teams/delete-a-team",
+                        "title": "Delete a team",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/teams/update-a-team",
+                        "endpointId": "endpoint_teams.updateATeam",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_teams.endpoint_teams.updateATeam",
+                        "isResponseStream": false,
+                        "method": "PATCH",
+                        "slug": "rest-api/server/teams/update-a-team",
+                        "title": "Update a team",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/teams/send-an-email-to-invite-a-user-to-a-team",
+                        "endpointId": "endpoint_teams.sendAnEmailToInviteAUserToATeam",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_teams.endpoint_teams.sendAnEmailToInviteAUserToATeam",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/teams/send-an-email-to-invite-a-user-to-a-team",
+                        "title": "Send an email to invite a user to a team",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/teams/invite-a-user-to-a-team",
+                        "endpointId": "endpoint_teams.inviteAUserToATeam",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_teams.endpoint_teams.inviteAUserToATeam",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/teams/invite-a-user-to-a-team",
+                        "title": "Invite a user to a team",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "endpointId": "endpoint_teams.addAUserToATeam",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_teams.endpoint_teams.addAUserToATeam",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/teams/add-a-user-to-a-team",
+                        "title": "Add a user to a team",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/teams/remove-a-user-from-a-team",
+                        "endpointId": "endpoint_teams.removeAUserFromATeam",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_teams.endpoint_teams.removeAUserFromATeam",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "rest-api/server/teams/remove-a-user-from-a-team",
+                        "title": "Remove a user from a team",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/teams/get-a-team-member-profile",
+                        "endpointId": "endpoint_teams.getATeamMemberProfile",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_teams.endpoint_teams.getATeamMemberProfile",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/server/teams/get-a-team-member-profile",
+                        "title": "Get a team member profile",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "endpointId": "endpoint_teams.updateATeamMemberProfile",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_teams.endpoint_teams.updateATeamMemberProfile",
+                        "isResponseStream": false,
+                        "method": "PATCH",
+                        "slug": "rest-api/server/teams/update-a-team-member-profile",
+                        "title": "Update a team member profile",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/teams/get-team-invitation-details",
+                        "endpointId": "endpoint_teams.getTeamInvitationDetails",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_teams.endpoint_teams.getTeamInvitationDetails",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/teams/get-team-invitation-details",
+                        "title": "Get team invitation details",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/teams/check-if-a-team-invitation-code-is-valid",
+                        "endpointId": "endpoint_teams.checkIfATeamInvitationCodeIsValid",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_teams.endpoint_teams.checkIfATeamInvitationCodeIsValid",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/teams/check-if-a-team-invitation-code-is-valid",
+                        "title": "Check if a team invitation code is valid",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.server.subpackage_teams",
+                    "pointsTo": "rest-api/server/teams/list-teams",
+                    "slug": "rest-api/server/teams",
+                    "title": "Teams",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                    "children": [
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "endpointId": "endpoint_users.listUsers",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_users.endpoint_users.listUsers",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/server/users/list-users",
+                        "title": "List users",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "endpointId": "endpoint_users.createUser",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_users.endpoint_users.createUser",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "rest-api/server/users/create-user",
+                        "title": "Create user",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/users/get-current-user",
+                        "endpointId": "endpoint_users.getCurrentUser",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_users.endpoint_users.getCurrentUser",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/server/users/get-current-user",
+                        "title": "Get current user",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/users/delete-current-user",
+                        "endpointId": "endpoint_users.deleteCurrentUser",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_users.endpoint_users.deleteCurrentUser",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "rest-api/server/users/delete-current-user",
+                        "title": "Delete current user",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "canonicalSlug": "rest-api/client/users/update-current-user",
+                        "endpointId": "endpoint_users.updateCurrentUser",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_users.endpoint_users.updateCurrentUser",
+                        "isResponseStream": false,
+                        "method": "PATCH",
+                        "slug": "rest-api/server/users/update-current-user",
+                        "title": "Update current user",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "endpointId": "endpoint_users.getUser",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_users.endpoint_users.getUser",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "rest-api/server/users/get-user",
+                        "title": "Get user",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "endpointId": "endpoint_users.deleteUser",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_users.endpoint_users.deleteUser",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "rest-api/server/users/delete-user",
+                        "title": "Delete user",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
+                        "endpointId": "endpoint_users.updateUser",
+                        "id": "root.uv.rest-api.rest-api.server.subpackage_users.endpoint_users.updateUser",
+                        "isResponseStream": false,
+                        "method": "PATCH",
+                        "slug": "rest-api/server/users/update-user",
+                        "title": "Update user",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.server.subpackage_users",
+                    "pointsTo": "rest-api/server/users/list-users",
+                    "slug": "rest-api/server/users",
+                    "title": "Users",
+                    "type": "apiPackage"
+                  }
+                ],
+                "hidden": false,
+                "hideTitle": false,
+                "id": "root.uv.rest-api.rest-api.server",
+                "pointsTo": "rest-api/server/api-v-1",
+                "showErrors": false,
+                "slug": "rest-api/server",
+                "title": "Server API",
+                "type": "apiReference"
+              },
+              {
+                "apiDefinitionId": "8c451807-ffb6-4876-9831-21d410bcb716",
+                "children": [
+                  {
+                    "apiDefinitionId": "8c451807-ffb6-4876-9831-21d410bcb716",
+                    "children": [
+                      {
+                        "apiDefinitionId": "8c451807-ffb6-4876-9831-21d410bcb716",
+                        "id": "root.uv.rest-api.rest-api.webhooks.subpackage_users.subpackage_users.user.created",
+                        "method": "POST",
+                        "slug": "rest-api/webhooks/users/user-created",
+                        "title": "user.created",
+                        "type": "webhook",
+                        "webhookId": "subpackage_users.user.created"
+                      },
+                      {
+                        "apiDefinitionId": "8c451807-ffb6-4876-9831-21d410bcb716",
+                        "id": "root.uv.rest-api.rest-api.webhooks.subpackage_users.subpackage_users.user.updated",
+                        "method": "POST",
+                        "slug": "rest-api/webhooks/users/user-updated",
+                        "title": "user.updated",
+                        "type": "webhook",
+                        "webhookId": "subpackage_users.user.updated"
+                      },
+                      {
+                        "apiDefinitionId": "8c451807-ffb6-4876-9831-21d410bcb716",
+                        "id": "root.uv.rest-api.rest-api.webhooks.subpackage_users.subpackage_users.user.deleted",
+                        "method": "POST",
+                        "slug": "rest-api/webhooks/users/user-deleted",
+                        "title": "user.deleted",
+                        "type": "webhook",
+                        "webhookId": "subpackage_users.user.deleted"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.webhooks.subpackage_users",
+                    "pointsTo": "rest-api/webhooks/users/user-created",
+                    "slug": "rest-api/webhooks/users",
+                    "title": "Users",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "8c451807-ffb6-4876-9831-21d410bcb716",
+                    "children": [
+                      {
+                        "apiDefinitionId": "8c451807-ffb6-4876-9831-21d410bcb716",
+                        "id": "root.uv.rest-api.rest-api.webhooks.subpackage_teams.subpackage_teams.team.created",
+                        "method": "POST",
+                        "slug": "rest-api/webhooks/teams/team-created",
+                        "title": "team.created",
+                        "type": "webhook",
+                        "webhookId": "subpackage_teams.team.created"
+                      },
+                      {
+                        "apiDefinitionId": "8c451807-ffb6-4876-9831-21d410bcb716",
+                        "id": "root.uv.rest-api.rest-api.webhooks.subpackage_teams.subpackage_teams.team.updated",
+                        "method": "POST",
+                        "slug": "rest-api/webhooks/teams/team-updated",
+                        "title": "team.updated",
+                        "type": "webhook",
+                        "webhookId": "subpackage_teams.team.updated"
+                      },
+                      {
+                        "apiDefinitionId": "8c451807-ffb6-4876-9831-21d410bcb716",
+                        "id": "root.uv.rest-api.rest-api.webhooks.subpackage_teams.subpackage_teams.team.deleted",
+                        "method": "POST",
+                        "slug": "rest-api/webhooks/teams/team-deleted",
+                        "title": "team.deleted",
+                        "type": "webhook",
+                        "webhookId": "subpackage_teams.team.deleted"
+                      },
+                      {
+                        "apiDefinitionId": "8c451807-ffb6-4876-9831-21d410bcb716",
+                        "id": "root.uv.rest-api.rest-api.webhooks.subpackage_teams.subpackage_teams.team_membership.created",
+                        "method": "POST",
+                        "slug": "rest-api/webhooks/teams/team-membership-created",
+                        "title": "team_membership.created",
+                        "type": "webhook",
+                        "webhookId": "subpackage_teams.team_membership.created"
+                      },
+                      {
+                        "apiDefinitionId": "8c451807-ffb6-4876-9831-21d410bcb716",
+                        "id": "root.uv.rest-api.rest-api.webhooks.subpackage_teams.subpackage_teams.team_membership.deleted",
+                        "method": "POST",
+                        "slug": "rest-api/webhooks/teams/team-membership-deleted",
+                        "title": "team_membership.deleted",
+                        "type": "webhook",
+                        "webhookId": "subpackage_teams.team_membership.deleted"
+                      }
+                    ],
+                    "id": "root.uv.rest-api.rest-api.webhooks.subpackage_teams",
+                    "pointsTo": "rest-api/webhooks/teams/team-created",
+                    "slug": "rest-api/webhooks/teams",
+                    "title": "Teams",
+                    "type": "apiPackage"
+                  }
+                ],
+                "hidden": false,
+                "hideTitle": false,
+                "id": "root.uv.rest-api.rest-api.webhooks",
+                "pointsTo": "rest-api/webhooks/users/user-created",
+                "showErrors": false,
+                "slug": "rest-api/webhooks",
+                "title": "Webhooks",
+                "type": "apiReference"
+              }
+            ],
+            "id": "root.uv.rest-api.rest-api",
+            "type": "sidebarRoot"
+          },
+          "icon": "fa-solid fa-code",
+          "id": "root.uv.rest-api",
+          "pointsTo": "rest-api/auth",
+          "slug": "rest-api",
+          "title": "REST API & Webhooks",
+          "type": "tab"
+        }
+      ],
+      "id": "root.uv",
+      "type": "tabbed"
+    },
+    "id": "root.uv",
+    "type": "unversioned"
+  },
+  "hidden": false,
+  "id": "root",
+  "pointsTo": "overview",
+  "slug": "",
+  "title": "Stack Auth Documentation",
+  "type": "root",
+  "version": "v2"
+}

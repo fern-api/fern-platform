@@ -1,0 +1,488 @@
+[
+  {
+    "id": "root..v2",
+    "slug": "",
+    "title": "v2 API",
+    "type": "version"
+  },
+  {
+    "id": "root",
+    "slug": "",
+    "title": "Cohere",
+    "type": "root"
+  },
+  {
+    "id": "root..v2.uv.docs.docs.models",
+    "slug": "docs/models",
+    "title": "Models",
+    "type": "section"
+  },
+  {
+    "id": "root..v2.uv.docs.docs.fine-tuning",
+    "slug": "docs/fine-tuning",
+    "title": "Fine-Tuning",
+    "type": "section"
+  },
+  {
+    "id": "root..v2.uv.docs.docs.integrations",
+    "slug": "docs/integrations",
+    "title": "Integrations",
+    "type": "section"
+  },
+  {
+    "id": "root..v2.uv.docs.docs.responsible-use",
+    "slug": "docs/responsible-use",
+    "title": "Responsible Use",
+    "type": "section"
+  },
+  {
+    "id": "root..v2.uv.docs.docs.deployment-options-0",
+    "slug": "docs/deployment-options",
+    "title": "Deployment Options",
+    "type": "page"
+  },
+  {
+    "id": "root..v2.uv.docs.docs.oracle-cloud-infrastructure-oci",
+    "slug": "docs/oracle-cloud-infrastructure-oci",
+    "title": "Oracle Cloud Infrastructure (OCI)",
+    "type": "page"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a",
+    "slug": "reference",
+    "title": "Cohere API",
+    "type": "apiReference"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:endpoints",
+    "slug": "reference",
+    "title": "Endpoints",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-2-chat",
+    "slug": "reference",
+    "title": "v2/chat",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-2-rerank",
+    "slug": "reference",
+    "title": "v2/rerank",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-2-embed",
+    "slug": "reference",
+    "title": "v2/embed",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.subpackage_embedJobs",
+    "slug": "reference",
+    "title": "v1/embed-jobs",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-classify",
+    "slug": "reference",
+    "title": "v1/classify",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.subpackage_datasets",
+    "slug": "reference",
+    "title": "v1/datasets",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-tokenize",
+    "slug": "reference",
+    "title": "v1/tokenize",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-detokenize",
+    "slug": "reference",
+    "title": "v1/detokenize",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.subpackage_connectors",
+    "slug": "reference",
+    "title": "v1/connectors",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.subpackage_models",
+    "slug": "reference",
+    "title": "v1/models",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.subpackage_finetuning",
+    "slug": "reference",
+    "title": "v1/finetuning",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-chat",
+    "slug": "reference",
+    "title": "v1/chat",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-generate",
+    "slug": "reference",
+    "title": "v1/generate",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-rerank",
+    "slug": "reference",
+    "title": "v1/rerank",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.rerank-1",
+    "slug": "reference/rerank",
+    "title": "Rerank",
+    "type": "endpoint"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-embed",
+    "slug": "reference",
+    "title": "v1/embed",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.embed-1",
+    "slug": "reference/embed",
+    "title": "Embed",
+    "type": "endpoint"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-summarize",
+    "slug": "reference",
+    "title": "v1/summarize",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-check-api-key",
+    "slug": "reference",
+    "title": "v1/check-api-key",
+    "type": "apiPackage"
+  },
+  {
+    "id": "root..v2",
+    "slug": "v2",
+    "title": "v2 API",
+    "type": "version"
+  },
+  {
+    "id": "root..v2.uv.docs.docs.models",
+    "slug": "v2/docs/models",
+    "title": "Models",
+    "type": "section"
+  },
+  {
+    "id": "root..v2.uv.docs.docs.fine-tuning",
+    "slug": "v2/docs/fine-tuning",
+    "title": "Fine-Tuning",
+    "type": "section"
+  },
+  {
+    "id": "root..v2.uv.docs.docs.integrations",
+    "slug": "v2/docs/integrations",
+    "title": "Integrations",
+    "type": "section"
+  },
+  {
+    "id": "root..v2.uv.docs.docs.responsible-use",
+    "slug": "v2/docs/responsible-use",
+    "title": "Responsible Use",
+    "type": "section"
+  },
+  {
+    "id": "root..v2.uv.docs.docs.deployment-options-0",
+    "slug": "v2/docs/deployment-options",
+    "title": "Deployment Options",
+    "type": "page"
+  },
+  {
+    "id": "root..v2.uv.docs.docs.oracle-cloud-infrastructure-oci",
+    "slug": "v2/docs/oracle-cloud-infrastructure-oci",
+    "title": "Oracle Cloud Infrastructure (OCI)",
+    "type": "page"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a",
+    "slug": "v2/reference",
+    "title": "Cohere API",
+    "type": "apiReference"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:endpoints",
+    "slug": "v2/reference",
+    "title": "Endpoints",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-2-chat",
+    "slug": "v2/reference",
+    "title": "v2/chat",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-2-rerank",
+    "slug": "v2/reference",
+    "title": "v2/rerank",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-2-embed",
+    "slug": "v2/reference",
+    "title": "v2/embed",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.subpackage_embedJobs",
+    "slug": "v2/reference",
+    "title": "v1/embed-jobs",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-classify",
+    "slug": "v2/reference",
+    "title": "v1/classify",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.subpackage_datasets",
+    "slug": "v2/reference",
+    "title": "v1/datasets",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-tokenize",
+    "slug": "v2/reference",
+    "title": "v1/tokenize",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-detokenize",
+    "slug": "v2/reference",
+    "title": "v1/detokenize",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.subpackage_connectors",
+    "slug": "v2/reference",
+    "title": "v1/connectors",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.subpackage_models",
+    "slug": "v2/reference",
+    "title": "v1/models",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.subpackage_finetuning",
+    "slug": "v2/reference",
+    "title": "v1/finetuning",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-chat",
+    "slug": "v2/reference",
+    "title": "v1/chat",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-generate",
+    "slug": "v2/reference",
+    "title": "v1/generate",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-rerank",
+    "slug": "v2/reference",
+    "title": "v1/rerank",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.rerank-1",
+    "slug": "v2/reference/rerank",
+    "title": "Rerank",
+    "type": "endpoint"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-embed",
+    "slug": "v2/reference",
+    "title": "v1/embed",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.embed-1",
+    "slug": "v2/reference/embed",
+    "title": "Embed",
+    "type": "endpoint"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-summarize",
+    "slug": "v2/reference",
+    "title": "v1/summarize",
+    "type": "apiPackage"
+  },
+  {
+    "id": "041fb40b-38b9-4e6c-8c05-1c042441b92a.section:v-1-check-api-key",
+    "slug": "v2/reference",
+    "title": "v1/check-api-key",
+    "type": "apiPackage"
+  },
+  {
+    "id": "root..v1",
+    "slug": "v1",
+    "title": "v1 API",
+    "type": "version"
+  },
+  {
+    "id": "root..v1.uv.docs.docs.models",
+    "slug": "v1/docs/models",
+    "title": "Models",
+    "type": "section"
+  },
+  {
+    "id": "root..v1.uv.docs.docs.fine-tuning",
+    "slug": "v1/docs/fine-tuning",
+    "title": "Fine-Tuning",
+    "type": "section"
+  },
+  {
+    "id": "root..v1.uv.docs.docs.integrations",
+    "slug": "v1/docs/integrations",
+    "title": "Integrations",
+    "type": "section"
+  },
+  {
+    "id": "root..v1.uv.docs.docs.responsible-use",
+    "slug": "v1/docs/responsible-use",
+    "title": "Responsible Use",
+    "type": "section"
+  },
+  {
+    "id": "root..v1.uv.docs.docs.deployment-options-0",
+    "slug": "v1/docs/deployment-options",
+    "title": "Deployment Options",
+    "type": "page"
+  },
+  {
+    "id": "root..v1.uv.docs.docs.oracle-cloud-infrastructure-oci",
+    "slug": "v1/docs/oracle-cloud-infrastructure-oci",
+    "title": "Oracle Cloud Infrastructure (OCI)",
+    "type": "page"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2",
+    "slug": "v1/reference",
+    "title": "Cohere API",
+    "type": "apiReference"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.section:api-reference",
+    "slug": "v1/reference",
+    "title": "API Reference",
+    "type": "apiPackage"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.section:v-1-chat",
+    "slug": "v1/reference",
+    "title": "v1/chat",
+    "type": "apiPackage"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.section:v-1-embed",
+    "slug": "v1/reference",
+    "title": "v1/embed",
+    "type": "apiPackage"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.subpackage_embedJobs",
+    "slug": "v1/reference",
+    "title": "v1/embed-jobs",
+    "type": "apiPackage"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.section:v-1-rerank",
+    "slug": "v1/reference",
+    "title": "v1/rerank",
+    "type": "apiPackage"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.section:v-1-classify",
+    "slug": "v1/reference",
+    "title": "v1/classify",
+    "type": "apiPackage"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.subpackage_datasets",
+    "slug": "v1/reference",
+    "title": "v1/datasets",
+    "type": "apiPackage"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.section:v-1-tokenize",
+    "slug": "v1/reference",
+    "title": "v1/tokenize",
+    "type": "apiPackage"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.section:v-1-detokenize",
+    "slug": "v1/reference",
+    "title": "v1/detokenize",
+    "type": "apiPackage"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.subpackage_connectors",
+    "slug": "v1/reference",
+    "title": "v1/connectors",
+    "type": "apiPackage"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.subpackage_models",
+    "slug": "v1/reference",
+    "title": "v1/models",
+    "type": "apiPackage"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.subpackage_finetuning",
+    "slug": "v1/reference",
+    "title": "v1/finetuning",
+    "type": "apiPackage"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.section:legacy",
+    "slug": "v1/reference",
+    "title": "Legacy",
+    "type": "apiPackage"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.section:v-1-generate",
+    "slug": "v1/reference",
+    "title": "v1/generate",
+    "type": "apiPackage"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.section:v-1-summarize",
+    "slug": "v1/reference",
+    "title": "v1/summarize",
+    "type": "apiPackage"
+  },
+  {
+    "id": "4da1f905-7f16-4192-9e35-61b222317de2.section:v-1-check-api-key",
+    "slug": "v1/reference",
+    "title": "v1/check-api-key",
+    "type": "apiPackage"
+  }
+]

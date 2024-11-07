@@ -1,6 +1,7 @@
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { Language, Prisma, PrismaClient } from "@prisma/client";
 import { DefaultArgs } from "@prisma/client/runtime/library";
+import { LOGGER } from "../../app/FdrApplication";
 import { SdkIdFactory } from "../snippets/SdkIdFactory";
 import { SdkId } from "../types";
 
@@ -165,19 +166,38 @@ export class SdkDaoImpl implements SdkDao {
             }
         }
 
-        const sdkRow = await this.prisma.sdk.findFirst({
+        // Get all SDK rows ordered by creation date
+        const sdkRows = await this.prisma.sdk.findMany({
             select: {
                 id: true,
             },
             where: {
                 package: sdkPackage,
-                version,
                 language,
             },
             orderBy: {
                 createdAt: "desc",
             },
+            take: 10,
         });
+
+        // Find first SDK that has snippets
+        for (const sdkRow of sdkRows) {
+            const hasSnippets = await this.prisma.snippet.findFirst({
+                where: {
+                    sdkId: sdkRow.id,
+                },
+            });
+
+            if (hasSnippets) {
+                return sdkRow?.id;
+            }
+        }
+
+        // If no SDKs have snippets, return the most recent one
+        const sdkRow = sdkRows[0];
+
+        LOGGER.info(`Looking for latest registered SDK ${sdkPackage} and found id ${sdkRow?.id}`);
         return sdkRow?.id;
     }
 }

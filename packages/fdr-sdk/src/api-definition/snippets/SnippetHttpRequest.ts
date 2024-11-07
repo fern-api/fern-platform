@@ -9,18 +9,18 @@ interface SnippetHttpRequestBodyJson {
     value?: unknown;
 }
 
-interface SnippetHttpRequestBodyForm {
+export interface SnippetHttpRequestBodyForm {
     type: "form";
     value: Record<string, SnippetHttpRequestBodyFormValue>;
 }
 
-interface SnippetHttpRequestBodyFormValueFilename {
+export interface SnippetHttpRequestBodyFormValueFilename {
     type: "filename";
     filename: string;
     contentType: string | undefined;
 }
 
-interface SnippetHttpRequestBodyFormValueFilenames {
+export interface SnippetHttpRequestBodyFormValueFilenames {
     type: "filenames";
     files: Omit<SnippetHttpRequestBodyFormValueFilename, "type">[];
 }

@@ -9,6 +9,11 @@ export interface ReadServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }, next: express.NextFunction): void | Promise<void>;
+    getDocsUrlMetadata(req: express.Request<never, FernRegistry.docs.v2.read.DocsUrlMetadata, FernRegistry.docs.v2.read.GetMetadataForUrlRequest, never>, res: {
+        send: (responseBody: FernRegistry.docs.v2.read.DocsUrlMetadata) => Promise<void>;
+        cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+        locals: any;
+    }, next: express.NextFunction): void | Promise<void>;
     getDocsForUrl(req: express.Request<never, FernRegistry.docs.v2.read.LoadDocsForUrlResponse, FernRegistry.docs.v2.read.LoadDocsForUrlRequest, never>, res: {
         send: (responseBody: FernRegistry.docs.v2.read.LoadDocsForUrlResponse) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;

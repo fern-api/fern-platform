@@ -1,0 +1,23 @@
+[
+  "pages/guides/getting-started/what-is-airtop.mdx",
+  "pages/guides/getting-started/quick-start.mdx",
+  "pages/guides/how-to/creating-a-session.mdx",
+  "pages/guides/how-to/saving-a-profile.mdx",
+  "pages/guides/how-to/creating-a-live-view.mdx",
+  "pages/guides/how-to/proxy.mdx",
+  "pages/guides/how-to/remote-debugging.mdx",
+  "pages/guides/how-to/automation-frameworks/puppeteer.mdx",
+  "pages/guides/how-to/automation-frameworks/playwright.mdx",
+  "pages/guides/how-to/automation-frameworks/selenium.mdx",
+  "pages/guides/how-to/ai/scraping-a-page.mdx",
+  "pages/guides/how-to/ai/scrape-and-prompt.mdx",
+  "pages/guides/how-to/ai/ai-costs.mdx",
+  "pages/guides/misc/support.mdx",
+  "pages/guides/misc/faq.mdx",
+  "pages/recipes/summarize.mdx",
+  "pages/recipes/prompt-content.mdx",
+  "pages/recipes/sec-filings.mdx",
+  "pages/api-summary.mdx",
+  "changelog/2024-11-01.mdx",
+  "changelog/2024-10-19.mdx"
+]

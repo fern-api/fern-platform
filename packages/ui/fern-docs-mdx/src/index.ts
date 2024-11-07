@@ -10,4 +10,5 @@ export * from "./parse";
 export * from "./position";
 export * from "./sanitize/index";
 export * from "./split-into-sections";
+export * from "./strip-util";
 export * from "./toc";

@@ -673,7 +673,7 @@ export class ApiDefinitionV1ToLatest {
             codeExamples.typescriptSdk != null
         ) {
             push(jsLang, {
-                name: `${jsLangName} SDK`,
+                name: undefined,
                 language: jsLang,
                 install: codeExamples.typescriptSdk.install,
                 code: codeExamples.typescriptSdk.client,

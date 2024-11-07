@@ -1,4 +1,5 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { OrgId } from "../api/generated/api";
 import { LOGGER } from "../app/FdrApplication";
 import { CachedDocsResponse } from "../services/docs-cache/DocsDefinitionCache";
 import RedisDocsDefinitionStore from "../services/docs-cache/RedisDocsDefinitionStore";
@@ -56,9 +57,10 @@ const HEALTHCHECK_DOCS_RESPONSE: CachedDocsResponse = {
             id: undefined,
         },
         lightModeEnabled: true,
+        orgId: OrgId("fern"),
     },
     updatedTime: new Date(),
-    version: "v2",
+    version: "v3",
 };
 
 export async function checkRedis({ redis }: { redis: RedisDocsDefinitionStore }): Promise<boolean> {

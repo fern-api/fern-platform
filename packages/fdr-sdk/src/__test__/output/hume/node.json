@@ -20,7 +20,7 @@
                     "id": "root.uv.docs.docs.introduction.api-key",
                     "pageId": "docs/pages/documentation/introduction/getting-your-api-key.mdx",
                     "slug": "docs/introduction/api-key",
-                    "title": "Getting your API key",
+                    "title": "Getting your API keys",
                     "type": "page"
                   },
                   {
@@ -30,6 +30,12 @@
                     "slug": "support",
                     "title": "Support",
                     "type": "page"
+                  },
+                  {
+                    "id": "root.uv.docs.docs.introduction.pricing",
+                    "title": "Pricing",
+                    "type": "link",
+                    "url": "https://platform.hume.ai/pricing"
                   }
                 ],
                 "collapsed": false,
@@ -51,25 +57,60 @@
                     "type": "page"
                   },
                   {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.empathic-voice-interface-evi.quickstart.typescript",
+                        "pageId": "docs/pages/documentation/empathic-voice-interface/quickstart/typescript.mdx",
+                        "slug": "docs/empathic-voice-interface-evi/quickstart/typescript",
+                        "title": "TypeScript",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.empathic-voice-interface-evi.quickstart.python",
+                        "pageId": "docs/pages/documentation/empathic-voice-interface/quickstart/python.mdx",
+                        "slug": "docs/empathic-voice-interface-evi/quickstart/python",
+                        "title": "Python",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
                     "hidden": false,
                     "id": "root.uv.docs.docs.empathic-voice-interface-evi.quickstart",
-                    "pageId": "docs/pages/documentation/empathic-voice-interface/quickstart.mdx",
+                    "pointsTo": "docs/empathic-voice-interface-evi/quickstart/typescript",
                     "slug": "docs/empathic-voice-interface-evi/quickstart",
                     "title": "Quickstart",
+                    "type": "section"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.empathic-voice-interface-evi.evi-2",
+                    "pageId": "docs/pages/documentation/empathic-voice-interface/evi-2.mdx",
+                    "slug": "docs/empathic-voice-interface-evi/evi-2",
+                    "title": "EVI 2",
                     "type": "page"
                   },
                   {
                     "hidden": false,
                     "id": "root.uv.docs.docs.empathic-voice-interface-evi.configuration",
-                    "pageId": "docs/pages/documentation/empathic-voice-interface/configuration.mdx",
+                    "pageId": "docs/pages/documentation/empathic-voice-interface/configuration/configuration.mdx",
                     "slug": "docs/empathic-voice-interface-evi/configuration",
                     "title": "Configuration",
                     "type": "page"
                   },
                   {
                     "hidden": false,
+                    "id": "root.uv.docs.docs.empathic-voice-interface-evi.voices",
+                    "pageId": "docs/pages/documentation/empathic-voice-interface/voices/voices.mdx",
+                    "slug": "docs/empathic-voice-interface-evi/voices",
+                    "title": "Voices",
+                    "type": "page"
+                  },
+                  {
+                    "hidden": false,
                     "id": "root.uv.docs.docs.empathic-voice-interface-evi.tool-use",
-                    "pageId": "docs/pages/documentation/empathic-voice-interface/tool-use.mdx",
+                    "pageId": "docs/pages/documentation/empathic-voice-interface/tool-use/tool-use.mdx",
                     "slug": "docs/empathic-voice-interface-evi/tool-use",
                     "title": "Tool use",
                     "type": "page"
@@ -119,104 +160,90 @@
                 "children": [
                   {
                     "hidden": false,
-                    "id": "root.uv.docs.docs.expression-measurement-api.overview",
+                    "id": "root.uv.docs.docs.expression-measurement.overview",
                     "pageId": "docs/pages/documentation/expression-measurement-api/overview.mdx",
-                    "slug": "docs/expression-measurement-api/overview",
+                    "slug": "docs/expression-measurement/overview",
                     "title": "Overview",
                     "type": "page"
                   },
                   {
                     "hidden": false,
-                    "id": "root.uv.docs.docs.expression-measurement-api.rest",
+                    "id": "root.uv.docs.docs.expression-measurement.rest",
                     "pageId": "docs/pages/documentation/expression-measurement-api/rest.mdx",
-                    "slug": "docs/expression-measurement-api/rest",
+                    "slug": "docs/expression-measurement/rest",
                     "title": "Processing batches of media files",
                     "type": "page"
                   },
                   {
                     "hidden": false,
-                    "id": "root.uv.docs.docs.expression-measurement-api.websocket",
+                    "id": "root.uv.docs.docs.expression-measurement.websocket",
                     "pageId": "docs/pages/documentation/expression-measurement-api/websocket.mdx",
-                    "slug": "docs/expression-measurement-api/websocket",
+                    "slug": "docs/expression-measurement/websocket",
                     "title": "Real-time measurement streaming",
                     "type": "page"
                   },
                   {
+                    "children": [
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.expression-measurement.custom-models.overview",
+                        "pageId": "docs/pages/documentation/custom-models-api/overview.mdx",
+                        "slug": "docs/expression-measurement/custom-models/overview",
+                        "title": "Overview",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.expression-measurement.custom-models.creating-your-dataset",
+                        "pageId": "docs/pages/documentation/custom-models-api/creating-your-dataset.mdx",
+                        "slug": "docs/expression-measurement/custom-models/creating-your-dataset",
+                        "title": "Creating your dataset",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.expression-measurement.custom-models.training-a-custom-model",
+                        "pageId": "docs/pages/documentation/custom-models-api/training-your-model.mdx",
+                        "slug": "docs/expression-measurement/custom-models/training-a-custom-model",
+                        "title": "Training a custom model",
+                        "type": "page"
+                      },
+                      {
+                        "hidden": false,
+                        "id": "root.uv.docs.docs.expression-measurement.custom-models.evaluating-your-custom-model",
+                        "pageId": "docs/pages/documentation/custom-models-api/evaluating-your-model.mdx",
+                        "slug": "docs/expression-measurement/custom-models/evaluating-your-custom-model",
+                        "title": "Evaluating your custom model",
+                        "type": "page"
+                      }
+                    ],
+                    "collapsed": false,
                     "hidden": false,
-                    "id": "root.uv.docs.docs.expression-measurement-api.faq",
+                    "id": "root.uv.docs.docs.expression-measurement.custom-models",
+                    "pointsTo": "docs/expression-measurement/custom-models/overview",
+                    "slug": "docs/expression-measurement/custom-models",
+                    "title": "Custom models",
+                    "type": "section"
+                  },
+                  {
+                    "hidden": false,
+                    "id": "root.uv.docs.docs.expression-measurement.faq",
                     "pageId": "docs/pages/documentation/expression-measurement-api/faq.mdx",
-                    "slug": "docs/expression-measurement-api/faq",
+                    "slug": "docs/expression-measurement/faq",
                     "title": "FAQ",
                     "type": "page"
                   }
                 ],
                 "collapsed": false,
                 "hidden": false,
-                "id": "root.uv.docs.docs.expression-measurement-api",
-                "pointsTo": "docs/expression-measurement-api/overview",
-                "slug": "docs/expression-measurement-api",
-                "title": "Expression Measurement API",
+                "id": "root.uv.docs.docs.expression-measurement",
+                "pointsTo": "docs/expression-measurement/overview",
+                "slug": "docs/expression-measurement",
+                "title": "Expression Measurement",
                 "type": "section"
               },
               {
                 "children": [
-                  {
-                    "hidden": false,
-                    "id": "root.uv.docs.docs.custom-models-api.overview",
-                    "pageId": "docs/pages/documentation/custom-models-api/overview.mdx",
-                    "slug": "docs/custom-models-api/overview",
-                    "title": "Overview",
-                    "type": "page"
-                  },
-                  {
-                    "hidden": false,
-                    "id": "root.uv.docs.docs.custom-models-api.creating-your-dataset",
-                    "pageId": "docs/pages/documentation/custom-models-api/creating-your-dataset.mdx",
-                    "slug": "docs/custom-models-api/creating-your-dataset",
-                    "title": "Creating your dataset",
-                    "type": "page"
-                  },
-                  {
-                    "hidden": false,
-                    "id": "root.uv.docs.docs.custom-models-api.training-a-custom-model",
-                    "pageId": "docs/pages/documentation/custom-models-api/training-your-model.mdx",
-                    "slug": "docs/custom-models-api/training-a-custom-model",
-                    "title": "Training a custom model",
-                    "type": "page"
-                  },
-                  {
-                    "hidden": false,
-                    "id": "root.uv.docs.docs.custom-models-api.evaluating-a-custom-model",
-                    "pageId": "docs/pages/documentation/custom-models-api/evaluating-your-model.mdx",
-                    "slug": "docs/custom-models-api/evaluating-a-custom-model",
-                    "title": "Evaluating your custom model",
-                    "type": "page"
-                  },
-                  {
-                    "hidden": false,
-                    "id": "root.uv.docs.docs.custom-models-api.faq",
-                    "pageId": "docs/pages/documentation/custom-models-api/faq.mdx",
-                    "slug": "docs/custom-models-api/faq",
-                    "title": "FAQ",
-                    "type": "page"
-                  }
-                ],
-                "collapsed": false,
-                "hidden": false,
-                "id": "root.uv.docs.docs.custom-models-api",
-                "pointsTo": "docs/custom-models-api/overview",
-                "slug": "docs/custom-models-api",
-                "title": "Custom Models API",
-                "type": "section"
-              },
-              {
-                "children": [
-                  {
-                    "id": "root.uv.docs.docs.resources.pricing",
-                    "title": "Pricing",
-                    "type": "link",
-                    "url": "https://beta.hume.ai/pricing"
-                  },
                   {
                     "hidden": false,
                     "id": "root.uv.docs.docs.resources.billing",
@@ -256,6 +283,18 @@
                     "slug": "docs/resources/privacy",
                     "title": "Privacy",
                     "type": "page"
+                  },
+                  {
+                    "id": "root.uv.docs.docs.resources.status",
+                    "title": "Status",
+                    "type": "link",
+                    "url": "https://status.hume.ai"
+                  },
+                  {
+                    "id": "root.uv.docs.docs.resources.roadmap",
+                    "title": "Roadmap",
+                    "type": "link",
+                    "url": "https://hume.canny.io/"
                   }
                 ],
                 "collapsed": false,
@@ -281,15 +320,15 @@
           "child": {
             "children": [
               {
-                "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                 "children": [
                   {
-                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                     "children": [
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_tools.list-tools",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.list-tools",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.list-tools",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/empathic-voice-interface-evi/tools/list-tools",
@@ -297,9 +336,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_tools.create-tool",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.create-tool",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.create-tool",
                         "isResponseStream": false,
                         "method": "POST",
                         "slug": "reference/empathic-voice-interface-evi/tools/create-tool",
@@ -307,9 +346,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_tools.list-tool-versions",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.list-tool-versions",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.list-tool-versions",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/empathic-voice-interface-evi/tools/list-tool-versions",
@@ -317,9 +356,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_tools.create-tool-version",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.create-tool-version",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.create-tool-version",
                         "isResponseStream": false,
                         "method": "POST",
                         "slug": "reference/empathic-voice-interface-evi/tools/create-tool-version",
@@ -327,9 +366,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_tools.delete-tool",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.delete-tool",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.delete-tool",
                         "isResponseStream": false,
                         "method": "DELETE",
                         "slug": "reference/empathic-voice-interface-evi/tools/delete-tool",
@@ -337,9 +376,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_tools.update-tool-name",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.update-tool-name",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.update-tool-name",
                         "isResponseStream": false,
                         "method": "PATCH",
                         "slug": "reference/empathic-voice-interface-evi/tools/update-tool-name",
@@ -347,9 +386,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_tools.get-tool-version",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.get-tool-version",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.get-tool-version",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/empathic-voice-interface-evi/tools/get-tool-version",
@@ -357,9 +396,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_tools.delete-tool-version",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.delete-tool-version",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.delete-tool-version",
                         "isResponseStream": false,
                         "method": "DELETE",
                         "slug": "reference/empathic-voice-interface-evi/tools/delete-tool-version",
@@ -367,9 +406,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_tools.update-tool-description",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools.endpoint_tools.update-tool-description",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_tools.update-tool-description",
                         "isResponseStream": false,
                         "method": "PATCH",
                         "slug": "reference/empathic-voice-interface-evi/tools/update-tool-description",
@@ -377,19 +416,19 @@
                         "type": "endpoint"
                       }
                     ],
-                    "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_tools",
+                    "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:subpackage_tools",
                     "pointsTo": "reference/empathic-voice-interface-evi/tools/list-tools",
                     "slug": "reference/empathic-voice-interface-evi/tools",
                     "title": "Tools",
                     "type": "apiPackage"
                   },
                   {
-                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                     "children": [
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_prompts.list-prompts",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.list-prompts",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.list-prompts",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/empathic-voice-interface-evi/prompts/list-prompts",
@@ -397,9 +436,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_prompts.create-prompt",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.create-prompt",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.create-prompt",
                         "isResponseStream": false,
                         "method": "POST",
                         "slug": "reference/empathic-voice-interface-evi/prompts/create-prompt",
@@ -407,9 +446,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_prompts.list-prompt-versions",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.list-prompt-versions",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.list-prompt-versions",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/empathic-voice-interface-evi/prompts/list-prompt-versions",
@@ -417,9 +456,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_prompts.create-prompt-verison",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.create-prompt-verison",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.create-prompt-verison",
                         "isResponseStream": false,
                         "method": "POST",
                         "slug": "reference/empathic-voice-interface-evi/prompts/create-prompt-verison",
@@ -427,9 +466,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_prompts.delete-prompt",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.delete-prompt",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.delete-prompt",
                         "isResponseStream": false,
                         "method": "DELETE",
                         "slug": "reference/empathic-voice-interface-evi/prompts/delete-prompt",
@@ -437,9 +476,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_prompts.update-prompt-name",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.update-prompt-name",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.update-prompt-name",
                         "isResponseStream": false,
                         "method": "PATCH",
                         "slug": "reference/empathic-voice-interface-evi/prompts/update-prompt-name",
@@ -447,9 +486,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_prompts.get-prompt-version",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.get-prompt-version",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.get-prompt-version",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/empathic-voice-interface-evi/prompts/get-prompt-version",
@@ -457,9 +496,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_prompts.delete-prompt-version",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.delete-prompt-version",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.delete-prompt-version",
                         "isResponseStream": false,
                         "method": "DELETE",
                         "slug": "reference/empathic-voice-interface-evi/prompts/delete-prompt-version",
@@ -467,9 +506,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_prompts.update-prompt-description",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts.endpoint_prompts.update-prompt-description",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_prompts.update-prompt-description",
                         "isResponseStream": false,
                         "method": "PATCH",
                         "slug": "reference/empathic-voice-interface-evi/prompts/update-prompt-description",
@@ -477,19 +516,89 @@
                         "type": "endpoint"
                       }
                     ],
-                    "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_prompts",
+                    "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:subpackage_prompts",
                     "pointsTo": "reference/empathic-voice-interface-evi/prompts/list-prompts",
                     "slug": "reference/empathic-voice-interface-evi/prompts",
                     "title": "Prompts",
                     "type": "apiPackage"
                   },
                   {
-                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                     "children": [
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "endpointId": "endpoint_customVoices.list-custom-voices",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_customVoices.list-custom-voices",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "reference/empathic-voice-interface-evi/custom-voices/list-custom-voices",
+                        "title": "List custom voices",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "endpointId": "endpoint_customVoices.create-custom-voice",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_customVoices.create-custom-voice",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "reference/empathic-voice-interface-evi/custom-voices/create-custom-voice",
+                        "title": "Create custom voice",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "endpointId": "endpoint_customVoices.get-custom-voice",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_customVoices.get-custom-voice",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "reference/empathic-voice-interface-evi/custom-voices/get-custom-voice",
+                        "title": "Get specific custom voice by ID",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "endpointId": "endpoint_customVoices.create-custom-voice-version",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_customVoices.create-custom-voice-version",
+                        "isResponseStream": false,
+                        "method": "POST",
+                        "slug": "reference/empathic-voice-interface-evi/custom-voices/create-custom-voice-version",
+                        "title": "Create new version of existing custom voice",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "endpointId": "endpoint_customVoices.delete-custom-voice",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_customVoices.delete-custom-voice",
+                        "isResponseStream": false,
+                        "method": "DELETE",
+                        "slug": "reference/empathic-voice-interface-evi/custom-voices/delete-custom-voice",
+                        "title": "Delete a custom voice",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "endpointId": "endpoint_customVoices.update-custom-voice-name",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_customVoices.update-custom-voice-name",
+                        "isResponseStream": false,
+                        "method": "PATCH",
+                        "slug": "reference/empathic-voice-interface-evi/custom-voices/update-custom-voice-name",
+                        "title": "Update custom voice name",
+                        "type": "endpoint"
+                      }
+                    ],
+                    "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:subpackage_customVoices",
+                    "pointsTo": "reference/empathic-voice-interface-evi/custom-voices/list-custom-voices",
+                    "slug": "reference/empathic-voice-interface-evi/custom-voices",
+                    "title": "Custom Voices",
+                    "type": "apiPackage"
+                  },
+                  {
+                    "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                    "children": [
+                      {
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_configs.list-configs",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.list-configs",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.list-configs",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/empathic-voice-interface-evi/configs/list-configs",
@@ -497,9 +606,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_configs.create-config",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.create-config",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.create-config",
                         "isResponseStream": false,
                         "method": "POST",
                         "slug": "reference/empathic-voice-interface-evi/configs/create-config",
@@ -507,9 +616,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_configs.list-config-versions",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.list-config-versions",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.list-config-versions",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/empathic-voice-interface-evi/configs/list-config-versions",
@@ -517,9 +626,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_configs.create-config-version",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.create-config-version",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.create-config-version",
                         "isResponseStream": false,
                         "method": "POST",
                         "slug": "reference/empathic-voice-interface-evi/configs/create-config-version",
@@ -527,9 +636,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_configs.delete-config",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.delete-config",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.delete-config",
                         "isResponseStream": false,
                         "method": "DELETE",
                         "slug": "reference/empathic-voice-interface-evi/configs/delete-config",
@@ -537,9 +646,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_configs.update-config-name",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.update-config-name",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.update-config-name",
                         "isResponseStream": false,
                         "method": "PATCH",
                         "slug": "reference/empathic-voice-interface-evi/configs/update-config-name",
@@ -547,9 +656,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_configs.get-config-version",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.get-config-version",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.get-config-version",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/empathic-voice-interface-evi/configs/get-config-version",
@@ -557,9 +666,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_configs.delete-config-version",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.delete-config-version",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.delete-config-version",
                         "isResponseStream": false,
                         "method": "DELETE",
                         "slug": "reference/empathic-voice-interface-evi/configs/delete-config-version",
@@ -567,9 +676,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_configs.update-config-description",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs.endpoint_configs.update-config-description",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_configs.update-config-description",
                         "isResponseStream": false,
                         "method": "PATCH",
                         "slug": "reference/empathic-voice-interface-evi/configs/update-config-description",
@@ -577,19 +686,19 @@
                         "type": "endpoint"
                       }
                     ],
-                    "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_configs",
+                    "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:subpackage_configs",
                     "pointsTo": "reference/empathic-voice-interface-evi/configs/list-configs",
                     "slug": "reference/empathic-voice-interface-evi/configs",
                     "title": "Configs",
                     "type": "apiPackage"
                   },
                   {
-                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                     "children": [
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_chats.list-chats",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chats.endpoint_chats.list-chats",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_chats.list-chats",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/empathic-voice-interface-evi/chats/list-chats",
@@ -597,29 +706,39 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_chats.list-chat-events",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chats.endpoint_chats.list-chat-events",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_chats.list-chat-events",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/empathic-voice-interface-evi/chats/list-chat-events",
                         "title": "List chat events",
                         "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "endpointId": "endpoint_chats.get-audio",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_chats.get-audio",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "reference/empathic-voice-interface-evi/chats/get-audio",
+                        "title": "Get chat audio",
+                        "type": "endpoint"
                       }
                     ],
-                    "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chats",
+                    "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:subpackage_chats",
                     "pointsTo": "reference/empathic-voice-interface-evi/chats/list-chats",
                     "slug": "reference/empathic-voice-interface-evi/chats",
                     "title": "Chats",
                     "type": "apiPackage"
                   },
                   {
-                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                     "children": [
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_chatGroups.list-chat-groups",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chatGroups.endpoint_chatGroups.list-chat-groups",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_chatGroups.list-chat-groups",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/empathic-voice-interface-evi/chat-groups/list-chat-groups",
@@ -627,44 +746,64 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "endpointId": "endpoint_chatGroups.get-chat-group",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_chatGroups.get-chat-group",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "reference/empathic-voice-interface-evi/chat-groups/get-chat-group",
+                        "title": "Get chat_group",
+                        "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                         "endpointId": "endpoint_chatGroups.list-chat-group-events",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chatGroups.endpoint_chatGroups.list-chat-group-events",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_chatGroups.list-chat-group-events",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/empathic-voice-interface-evi/chat-groups/list-chat-group-events",
                         "title": "List chat events from a specific chat_group",
                         "type": "endpoint"
+                      },
+                      {
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "endpointId": "endpoint_chatGroups.get-audio",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:endpoint_chatGroups.get-audio",
+                        "isResponseStream": false,
+                        "method": "GET",
+                        "slug": "reference/empathic-voice-interface-evi/chat-groups/get-audio",
+                        "title": "Get chat group audio",
+                        "type": "endpoint"
                       }
                     ],
-                    "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chatGroups",
+                    "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:subpackage_chatGroups",
                     "pointsTo": "reference/empathic-voice-interface-evi/chat-groups/list-chat-groups",
                     "slug": "reference/empathic-voice-interface-evi/chat-groups",
                     "title": "Chat Groups",
                     "type": "apiPackage"
                   },
                   {
-                    "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
+                    "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
                     "children": [
                       {
-                        "apiDefinitionId": "8b03e44c-d4e2-4613-a138-e25b8c65c3cb",
-                        "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chat.subpackage_chat.chat",
+                        "apiDefinitionId": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                        "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:subpackage_chat.chat",
                         "slug": "reference/empathic-voice-interface-evi/chat/chat",
                         "title": "Chat",
                         "type": "webSocket",
                         "webSocketId": "subpackage_chat.chat"
                       }
                     ],
-                    "id": "root.uv.reference.reference.empathic-voice-interface-evi.subpackage_chat",
+                    "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c:subpackage_chat",
                     "pointsTo": "reference/empathic-voice-interface-evi/chat/chat",
                     "slug": "reference/empathic-voice-interface-evi/chat",
                     "title": "Chat",
                     "type": "apiPackage"
                   }
                 ],
-                "hidden": false,
                 "hideTitle": false,
-                "id": "root.uv.reference.reference.empathic-voice-interface-evi",
+                "id": "ef70bbc1-c431-4ffd-b24b-e8c845ed1d5c",
+                "paginated": false,
                 "pointsTo": "reference/empathic-voice-interface-evi/tools/list-tools",
                 "showErrors": false,
                 "slug": "reference/empathic-voice-interface-evi",
@@ -672,15 +811,15 @@
                 "type": "apiReference"
               },
               {
-                "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+                "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
                 "children": [
                   {
-                    "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+                    "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
                     "children": [
                       {
-                        "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+                        "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
                         "endpointId": "endpoint_batch.list-jobs",
-                        "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.list-jobs",
+                        "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:endpoint_batch.list-jobs",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/expression-measurement-api/batch/list-jobs",
@@ -688,9 +827,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+                        "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
                         "endpointId": "endpoint_batch.start-inference-job",
-                        "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.start-inference-job",
+                        "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:endpoint_batch.start-inference-job",
                         "isResponseStream": false,
                         "method": "POST",
                         "slug": "reference/expression-measurement-api/batch/start-inference-job",
@@ -698,9 +837,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+                        "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
                         "endpointId": "endpoint_batch.get-job-details",
-                        "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.get-job-details",
+                        "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:endpoint_batch.get-job-details",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/expression-measurement-api/batch/get-job-details",
@@ -708,9 +847,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+                        "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
                         "endpointId": "endpoint_batch.get-job-predictions",
-                        "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.get-job-predictions",
+                        "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:endpoint_batch.get-job-predictions",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/expression-measurement-api/batch/get-job-predictions",
@@ -718,9 +857,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+                        "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
                         "endpointId": "endpoint_batch.get-job-artifacts",
-                        "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.get-job-artifacts",
+                        "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:endpoint_batch.get-job-artifacts",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/expression-measurement-api/batch/get-job-artifacts",
@@ -728,9 +867,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+                        "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
                         "endpointId": "endpoint_batch.start-inference-job-from-local-file",
-                        "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch.endpoint_batch.start-inference-job-from-local-file",
+                        "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:endpoint_batch.start-inference-job-from-local-file",
                         "isResponseStream": false,
                         "method": "POST",
                         "slug": "reference/expression-measurement-api/batch/start-inference-job-from-local-file",
@@ -738,34 +877,34 @@
                         "type": "endpoint"
                       }
                     ],
-                    "id": "root.uv.reference.reference.expression-measurement-api.subpackage_batch",
+                    "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:subpackage_batch",
                     "pointsTo": "reference/expression-measurement-api/batch/list-jobs",
                     "slug": "reference/expression-measurement-api/batch",
                     "title": "Batch",
                     "type": "apiPackage"
                   },
                   {
-                    "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
+                    "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
                     "children": [
                       {
-                        "apiDefinitionId": "e810f56e-df97-4af2-bdaa-659077e1948e",
-                        "id": "root.uv.reference.reference.expression-measurement-api.subpackage_stream.subpackage_stream.stream",
+                        "apiDefinitionId": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
+                        "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:subpackage_stream.Stream",
                         "slug": "reference/expression-measurement-api/stream/stream",
                         "title": "Stream",
                         "type": "webSocket",
-                        "webSocketId": "subpackage_stream.stream"
+                        "webSocketId": "subpackage_stream.Stream"
                       }
                     ],
-                    "id": "root.uv.reference.reference.expression-measurement-api.subpackage_stream",
+                    "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7:subpackage_stream",
                     "pointsTo": "reference/expression-measurement-api/stream/stream",
                     "slug": "reference/expression-measurement-api/stream",
                     "title": "Stream",
                     "type": "apiPackage"
                   }
                 ],
-                "hidden": false,
                 "hideTitle": false,
-                "id": "root.uv.reference.reference.expression-measurement-api",
+                "id": "a14d3798-e567-4432-a6b3-2fa8a50954c7",
+                "paginated": false,
                 "pointsTo": "reference/expression-measurement-api/batch/list-jobs",
                 "showErrors": false,
                 "slug": "reference/expression-measurement-api",
@@ -773,15 +912,15 @@
                 "type": "apiReference"
               },
               {
-                "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                 "children": [
                   {
-                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                     "children": [
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_files.list-files",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.list-files",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_files.list-files",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/custom-models-api/files/list-files",
@@ -789,9 +928,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_files.create-files",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.create-files",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_files.create-files",
                         "isResponseStream": false,
                         "method": "POST",
                         "slug": "reference/custom-models-api/files/create-files",
@@ -799,9 +938,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_files.upload-file",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.upload-file",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_files.upload-file",
                         "isResponseStream": false,
                         "method": "POST",
                         "slug": "reference/custom-models-api/files/upload-file",
@@ -809,9 +948,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_files.get-file",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.get-file",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_files.get-file",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/custom-models-api/files/get-file",
@@ -819,9 +958,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_files.delete-file",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.delete-file",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_files.delete-file",
                         "isResponseStream": false,
                         "method": "DELETE",
                         "slug": "reference/custom-models-api/files/delete-file",
@@ -829,9 +968,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_files.update-file-name",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.update-file-name",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_files.update-file-name",
                         "isResponseStream": false,
                         "method": "PATCH",
                         "slug": "reference/custom-models-api/files/update-file-name",
@@ -839,9 +978,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_files.get-file-predictions",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_files.endpoint_files.get-file-predictions",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_files.get-file-predictions",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/custom-models-api/files/get-file-predictions",
@@ -849,19 +988,19 @@
                         "type": "endpoint"
                       }
                     ],
-                    "id": "root.uv.reference.reference.custom-models-api.subpackage_files",
+                    "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:subpackage_files",
                     "pointsTo": "reference/custom-models-api/files/list-files",
                     "slug": "reference/custom-models-api/files",
                     "title": "Files",
                     "type": "apiPackage"
                   },
                   {
-                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                     "children": [
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_datasets.list-datasets",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-datasets",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.list-datasets",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/custom-models-api/datasets/list-datasets",
@@ -869,9 +1008,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_datasets.create-dataset",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.create-dataset",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.create-dataset",
                         "isResponseStream": false,
                         "method": "POST",
                         "slug": "reference/custom-models-api/datasets/create-dataset",
@@ -879,9 +1018,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_datasets.get-dataset",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.get-dataset",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.get-dataset",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/custom-models-api/datasets/get-dataset",
@@ -889,9 +1028,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_datasets.create-dataset-version",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.create-dataset-version",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.create-dataset-version",
                         "isResponseStream": false,
                         "method": "POST",
                         "slug": "reference/custom-models-api/datasets/create-dataset-version",
@@ -899,9 +1038,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_datasets.delete-dataset",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.delete-dataset",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.delete-dataset",
                         "isResponseStream": false,
                         "method": "DELETE",
                         "slug": "reference/custom-models-api/datasets/delete-dataset",
@@ -909,9 +1048,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_datasets.list-dataset-versions",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-dataset-versions",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.list-dataset-versions",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/custom-models-api/datasets/list-dataset-versions",
@@ -919,9 +1058,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_datasets.list-dataset-files",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-dataset-files",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.list-dataset-files",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/custom-models-api/datasets/list-dataset-files",
@@ -929,9 +1068,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_datasets.get-dataset-version",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.get-dataset-version",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.get-dataset-version",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/custom-models-api/datasets/get-dataset-version",
@@ -939,9 +1078,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_datasets.list-dataset-version-files",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets.endpoint_datasets.list-dataset-version-files",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_datasets.list-dataset-version-files",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/custom-models-api/datasets/list-dataset-version-files",
@@ -949,19 +1088,19 @@
                         "type": "endpoint"
                       }
                     ],
-                    "id": "root.uv.reference.reference.custom-models-api.subpackage_datasets",
+                    "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:subpackage_datasets",
                     "pointsTo": "reference/custom-models-api/datasets/list-datasets",
                     "slug": "reference/custom-models-api/datasets",
                     "title": "Datasets",
                     "type": "apiPackage"
                   },
                   {
-                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                     "children": [
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_models.list-models",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.list-models",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_models.list-models",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/custom-models-api/models/list-models",
@@ -969,9 +1108,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_models.get-model-details",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.get-model-details",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_models.get-model-details",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/custom-models-api/models/get-model-details",
@@ -979,9 +1118,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_models.update-model-name",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.update-model-name",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_models.update-model-name",
                         "isResponseStream": false,
                         "method": "PATCH",
                         "slug": "reference/custom-models-api/models/update-model-name",
@@ -989,9 +1128,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_models.list-model-versions",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.list-model-versions",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_models.list-model-versions",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/custom-models-api/models/list-model-versions",
@@ -999,9 +1138,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_models.get-model-version",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.get-model-version",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_models.get-model-version",
                         "isResponseStream": false,
                         "method": "GET",
                         "slug": "reference/custom-models-api/models/get-model-version",
@@ -1009,9 +1148,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_models.update-model-description",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_models.endpoint_models.update-model-description",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_models.update-model-description",
                         "isResponseStream": false,
                         "method": "PATCH",
                         "slug": "reference/custom-models-api/models/update-model-description",
@@ -1019,19 +1158,19 @@
                         "type": "endpoint"
                       }
                     ],
-                    "id": "root.uv.reference.reference.custom-models-api.subpackage_models",
+                    "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:subpackage_models",
                     "pointsTo": "reference/custom-models-api/models/list-models",
                     "slug": "reference/custom-models-api/models",
                     "title": "Models",
                     "type": "apiPackage"
                   },
                   {
-                    "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                    "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                     "children": [
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_jobs.start-training-job",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_jobs.endpoint_jobs.start-training-job",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_jobs.start-training-job",
                         "isResponseStream": false,
                         "method": "POST",
                         "slug": "reference/custom-models-api/jobs/start-training-job",
@@ -1039,9 +1178,9 @@
                         "type": "endpoint"
                       },
                       {
-                        "apiDefinitionId": "bcb7826e-ffd6-4440-b3de-6bf37440c3e2",
+                        "apiDefinitionId": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
                         "endpointId": "endpoint_jobs.start-custom-models-inference-job",
-                        "id": "root.uv.reference.reference.custom-models-api.subpackage_jobs.endpoint_jobs.start-custom-models-inference-job",
+                        "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:endpoint_jobs.start-custom-models-inference-job",
                         "isResponseStream": false,
                         "method": "POST",
                         "slug": "reference/custom-models-api/jobs/start-custom-models-inference-job",
@@ -1049,16 +1188,16 @@
                         "type": "endpoint"
                       }
                     ],
-                    "id": "root.uv.reference.reference.custom-models-api.subpackage_jobs",
+                    "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256:subpackage_jobs",
                     "pointsTo": "reference/custom-models-api/jobs/start-training-job",
                     "slug": "reference/custom-models-api/jobs",
                     "title": "Jobs",
                     "type": "apiPackage"
                   }
                 ],
-                "hidden": false,
                 "hideTitle": false,
-                "id": "root.uv.reference.reference.custom-models-api",
+                "id": "869ccf90-2c73-42af-9c3f-94ddd28c5256",
+                "paginated": false,
                 "pointsTo": "reference/custom-models-api/files/list-files",
                 "showErrors": false,
                 "slug": "reference/custom-models-api",
@@ -1109,7 +1248,7 @@
           "id": "root.uv.link",
           "title": "Discord",
           "type": "link",
-          "url": "https://discord.gg/WPRSugvAm6"
+          "url": "https://discord.gg/humeai"
         }
       ],
       "id": "root.uv",

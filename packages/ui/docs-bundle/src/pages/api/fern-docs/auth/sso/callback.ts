@@ -1,3 +1,4 @@
+import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { getWorkOSClientId, workos } from "@/server/auth/workos";
 import { encryptSession } from "@/server/auth/workos-session";
@@ -9,28 +10,35 @@ import { NextRequest, NextResponse } from "next/server";
 export const runtime = "edge";
 
 const FORWARDED_HOST_QUERY = "forwarded_host";
-const STATE_QUERY = "state";
 const CODE_QUERY = "code";
+const ERROR_DESCRIPTION_QUERY = "error_description";
+const ERROR_QUERY = "error";
+const ERROR_URI_QUERY = "error_uri";
 
 export default async function handler(req: NextRequest): Promise<NextResponse> {
     if (req.method !== "GET") {
         return new NextResponse(null, { status: 405 });
     }
 
-    const state = req.nextUrl.searchParams.get(STATE_QUERY);
+    const errorDescription = req.nextUrl.searchParams.get(ERROR_DESCRIPTION_QUERY);
+    const error = req.nextUrl.searchParams.get(ERROR_QUERY);
+    const errorUri = req.nextUrl.searchParams.get(ERROR_URI_QUERY); // note: this contains reference to the WorkOS docs
 
-    if (state == null) {
+    if (error != null) {
+        // TODO: store this login attempt in posthog
         // eslint-disable-next-line no-console
-        console.error("No state param provided");
+        console.error(error, errorDescription, errorUri);
         return new NextResponse(null, { status: 400 });
     }
 
     // TODO: this is based on an incorrect implementation of the state param— we need to sign it with a JWT.
-    const url = safeUrl(state);
+    const return_to_param = getReturnToQueryParam();
+    const return_to = req.nextUrl.searchParams.get(return_to_param);
+    const url = safeUrl(return_to ?? req.nextUrl.origin);
 
     if (url == null) {
         // eslint-disable-next-line no-console
-        console.error("Invalid state param provided:", state);
+        console.error(`Invalid ${return_to_param} param provided:`, return_to);
         return new NextResponse(null, { status: 400 });
     }
 

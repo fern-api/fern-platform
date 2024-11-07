@@ -70,7 +70,7 @@
     "stylelint": "^16.1.0",
     "tailwindcss": "^3.4.3",
     "typescript": "5.4.3",
-    "vitest": "^1.5.0",
+    "vitest": "^2.1.4",
     "ws": "^8.17.1"
   },
   "optionalDependencies": {

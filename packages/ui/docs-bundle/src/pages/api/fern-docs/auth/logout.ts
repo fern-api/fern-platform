@@ -1,4 +1,6 @@
-import { getLogoutUrl } from "@/server/auth/workos-session";
+import { getReturnToQueryParam } from "@/server/auth/return-to";
+import { withDeleteCookie } from "@/server/auth/with-secure-cookie";
+import { revokeSessionForToken } from "@/server/auth/workos-session";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
@@ -13,27 +15,29 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
     const authConfig = await getAuthEdgeConfig(domain);
 
-    const logoutUrlRaw =
-        authConfig?.type === "basic_token_verification"
-            ? authConfig.logout
-            : authConfig?.partner === "workos"
-              ? await getLogoutUrl(req.cookies.get(COOKIE_FERN_TOKEN)?.value)
-              : undefined;
+    if (authConfig?.type === "sso" && authConfig.partner === "workos") {
+        // revoke session in WorkOS
+        await revokeSessionForToken(req.cookies.get(COOKIE_FERN_TOKEN)?.value);
+    }
 
-    const logoutUrl = safeUrl(logoutUrlRaw);
+    const logoutUrl = safeUrl(authConfig?.type === "basic_token_verification" ? authConfig.logout : undefined);
+
+    const return_to_param = getReturnToQueryParam(authConfig);
 
     // if logout url is provided, append the state to it before redirecting
-    if (req.nextUrl.searchParams.has("state")) {
+    if (req.nextUrl.searchParams.has(return_to_param)) {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        logoutUrl?.searchParams.set("state", req.nextUrl.searchParams.get("state")!);
+        logoutUrl?.searchParams.set(return_to_param, req.nextUrl.searchParams.get(return_to_param)!);
     }
 
     const redirectLocation =
-        logoutUrl ?? safeUrl(req.nextUrl.searchParams.get("state")) ?? safeUrl(withDefaultProtocol(getHostEdge(req)));
+        logoutUrl ??
+        safeUrl(req.nextUrl.searchParams.get(return_to_param)) ??
+        safeUrl(withDefaultProtocol(getHostEdge(req)));
 
     const res = redirectLocation ? NextResponse.redirect(redirectLocation) : NextResponse.next();
-    res.cookies.delete(COOKIE_FERN_TOKEN);
-    res.cookies.delete(COOKIE_ACCESS_TOKEN);
-    res.cookies.delete(COOKIE_REFRESH_TOKEN);
+    res.cookies.delete(withDeleteCookie(COOKIE_FERN_TOKEN, withDefaultProtocol(getHostEdge(req))));
+    res.cookies.delete(withDeleteCookie(COOKIE_ACCESS_TOKEN, withDefaultProtocol(getHostEdge(req))));
+    res.cookies.delete(withDeleteCookie(COOKIE_REFRESH_TOKEN, withDefaultProtocol(getHostEdge(req))));
     return res;
 }

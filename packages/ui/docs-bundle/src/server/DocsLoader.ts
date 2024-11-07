@@ -100,12 +100,10 @@ export class DocsLoader {
         // if the user is not authenticated, and the page requires authentication, prune the navigation tree
         // to only show pages that are allowed to be viewed without authentication.
         // note: the middleware will not show this page at all if the user is not authenticated.
-        if (root) {
+        if (root && authConfig) {
             try {
-                if (authConfig?.type === "basic_token_verification") {
-                    // TODO: store this in cache
-                    root = pruneWithAuthState(authState, authConfig, root);
-                }
+                // TODO: store this in cache
+                root = pruneWithAuthState(authState, authConfig, root);
             } catch (e) {
                 // TODO: sentry
                 // eslint-disable-next-line no-console

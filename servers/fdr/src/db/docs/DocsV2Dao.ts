@@ -28,6 +28,13 @@ export interface LoadDocsDefinitionByUrlResponse {
     isPreview: boolean;
 }
 
+export interface LoadDocsMetadata {
+    orgId: FdrAPI.OrgId;
+    domain: string;
+    path: string;
+    isPreview: boolean;
+}
+
 export interface LoadDocsConfigResponse {
     docsConfig: DocsV1Db.DocsDbConfig;
     referencedApis: string[];
@@ -48,6 +55,8 @@ export interface DocsV2Dao {
     getOrgIdForDocsConfigInstanceId(docsConfigInstanceId: string): Promise<FdrAPI.OrgId | undefined>;
 
     loadDocsConfigByInstanceId(docsConfigInstanceId: string): Promise<LoadDocsConfigResponse | undefined>;
+
+    loadDocsMetadata(url: URL): Promise<LoadDocsMetadata | undefined>;
 
     storeDocsDefinition({
         docsRegistrationInfo,
@@ -117,6 +126,34 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         return {
             allDomainsOwned,
             unownedDomains,
+        };
+    }
+
+    public async loadDocsMetadata(url: URL): Promise<LoadDocsMetadata | undefined> {
+        const docsDomain = await this.prisma.docsV2.findFirst({
+            where: {
+                domain: url.hostname,
+            },
+            orderBy: {
+                updatedTime: "desc",
+            },
+            select: {
+                orgID: true,
+                isPreview: true,
+                domain: true,
+                path: true,
+            },
+        });
+
+        if (docsDomain == null) {
+            return undefined;
+        }
+
+        return {
+            orgId: FdrAPI.OrgId(docsDomain.orgID),
+            domain: docsDomain.domain,
+            path: docsDomain.path,
+            isPreview: docsDomain.isPreview,
         };
     }
 
@@ -197,50 +234,48 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         dbDocsDefinition: DocsV1Db.DocsDefinitionDb.V3;
         indexSegments: IndexSegment[];
     }): Promise<StoreDocsDefinitionResponse> {
-        return await this.prisma.$transaction(async (tx) => {
-            const bufferDocsDefinition = writeBuffer(dbDocsDefinition);
+        const bufferDocsDefinition = writeBuffer(dbDocsDefinition);
 
-            // Step 1: Create new index segments associated with docs
-            const indexSegmentIds = indexSegments.map((s) => s.id);
-            await tx.indexSegment.createMany({
-                data: indexSegments.map((seg) => ({
-                    id: seg.id,
-                    version: seg.type === "versioned" ? seg.version.id : null,
-                })),
-            });
-
-            // Step 2: Store Docs Config Instance
-            const instanceId = generateDocsDefinitionInstanceId();
-            await tx.docsConfigInstances.create({
-                data: {
-                    docsConfig: writeBuffer(dbDocsDefinition.config),
-                    docsConfigInstanceId: instanceId,
-                    referencedApiDefinitionIds: dbDocsDefinition.referencedApis,
-                },
-            });
-
-            // Step 3: Upsert the fern docs domain + custom domain url with the docs definition + algolia index
-            await Promise.all(
-                [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls].map((url) =>
-                    createOrUpdateDocsDefinition({
-                        tx,
-                        instanceId,
-                        domain: url.hostname,
-                        path: url.path ?? "",
-                        orgId: docsRegistrationInfo.orgId,
-                        bufferDocsDefinition,
-                        indexSegmentIds,
-                        isPreview: docsRegistrationInfo.isPreview,
-                        authType: docsRegistrationInfo.authType,
-                    }),
-                ),
-            );
-
-            return {
-                docsDefinitionId: instanceId,
-                domains: [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls],
-            };
+        // Step 1: Create new index segments associated with docs
+        const indexSegmentIds = indexSegments.map((s) => s.id);
+        await this.prisma.indexSegment.createMany({
+            data: indexSegments.map((seg) => ({
+                id: seg.id,
+                version: seg.type === "versioned" ? seg.version.id : null,
+            })),
         });
+
+        // Step 2: Store Docs Config Instance
+        const instanceId = generateDocsDefinitionInstanceId();
+        await this.prisma.docsConfigInstances.create({
+            data: {
+                docsConfig: writeBuffer(dbDocsDefinition.config),
+                docsConfigInstanceId: instanceId,
+                referencedApiDefinitionIds: dbDocsDefinition.referencedApis,
+            },
+        });
+
+        // Step 3: Upsert the fern docs domain + custom domain url with the docs definition + algolia index
+        await Promise.all(
+            [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls].map((url) =>
+                createOrUpdateDocsDefinition({
+                    tx: this.prisma,
+                    instanceId,
+                    domain: url.hostname,
+                    path: url.path ?? "",
+                    orgId: docsRegistrationInfo.orgId,
+                    bufferDocsDefinition,
+                    indexSegmentIds,
+                    isPreview: docsRegistrationInfo.isPreview,
+                    authType: docsRegistrationInfo.authType,
+                }),
+            ),
+        );
+
+        return {
+            docsDefinitionId: instanceId,
+            domains: [docsRegistrationInfo.fernUrl, ...docsRegistrationInfo.customUrls],
+        };
     }
 
     public async listAllDocsUrls({

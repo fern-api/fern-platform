@@ -25,7 +25,7 @@ async function refreshSession(session: WorkOSSession): Promise<WorkOSSession | u
     }
 }
 
-async function getLogoutUrl(fern_token: string | undefined): Promise<string | undefined> {
+async function revokeSessionForToken(fern_token: string | undefined): Promise<void> {
     if (fern_token == null) {
         return undefined;
     }
@@ -36,12 +36,15 @@ async function getLogoutUrl(fern_token: string | undefined): Promise<string | un
     }
 
     const { sid: sessionId } = decodeJwt<AccessToken>(session.accessToken);
-    return workos().userManagement.getLogoutUrl({ sessionId });
+    return workos().userManagement.revokeSession({ sessionId });
 }
 
 const withJWKS = once(() => createRemoteJWKSet(new URL(workos().userManagement.getJwksUrl(getWorkOSClientId()))));
 
-async function verifyAccessToken(accessToken: string) {
+/**
+ * @internal visible for testing
+ */
+async function verifyAccessToken(accessToken: string): Promise<boolean> {
     try {
         await jwtVerify(accessToken, withJWKS());
         return true;
@@ -86,4 +89,11 @@ async function toSessionUserInfo(session?: WorkOSSession): Promise<WorkOSUserInf
     return { user: null };
 }
 
-export { encryptSession, getLogoutUrl, getSessionFromToken, refreshSession, toSessionUserInfo };
+export {
+    encryptSession,
+    getSessionFromToken,
+    refreshSession,
+    revokeSessionForToken,
+    toSessionUserInfo,
+    verifyAccessToken,
+};
