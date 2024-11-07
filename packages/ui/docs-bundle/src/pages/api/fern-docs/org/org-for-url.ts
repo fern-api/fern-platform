@@ -8,7 +8,7 @@ export default async function handler(req: NextRequest): Promise<void> {
     const domain = getDocsDomainEdge(req);
 
     if (!domain || typeof domain !== "string") {
-        return NextResponse.status(400).json({ error: "Invalid domain" });
+        return new NextResponse(JSON.stringify({ error: "Invalid domain" }), { status: 400 });
     }
 
     try {
@@ -16,11 +16,11 @@ export default async function handler(req: NextRequest): Promise<void> {
         const metadata = await docsLoader.getMetadata();
 
         if (metadata) {
-            return NextResponse.status(200).json(metadata);
+            return new NextResponse(JSON.stringify(metadata), { status: 200 });
         } else {
-            return NextResponse.status(404).json({ error: "Org not found" });
+            return new NextResponse(JSON.stringify({ error: "Org not found" }), { status: 404 });
         }
     } catch (error) {
-        return NextResponse.status(500).json({ error: "Internal server error" });
+        return new NextResponse(JSON.stringify({ error: "Internal server error" }), { status: 500 });
     }
 }
