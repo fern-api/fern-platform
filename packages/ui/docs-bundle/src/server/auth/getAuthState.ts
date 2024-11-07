@@ -90,10 +90,11 @@ export async function getAuthStateInternal({
                 const workosUserInfo = await toSessionUserInfo(session);
                 if (workosUserInfo.user) {
                     // TODO: should this be stored in the session itself?
+                    const roles = await getWorkosRbacRoles(previewAuthConfig.org, workosUserInfo.user.email);
                     return {
                         authed: true,
                         ok: true,
-                        user: toFernUser(workosUserInfo),
+                        user: toFernUser(workosUserInfo, roles),
                         partner: "workos",
                     };
                 }
