@@ -17,7 +17,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse<Do
     }
 
     try {
-        const docsLoader = DocsLoader.create(domain);
+        const docsLoader = DocsLoader.create(domain).withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN);
         const metadata = await docsLoader.getMetadata();
 
         if (metadata) {
