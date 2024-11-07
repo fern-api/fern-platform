@@ -1,4 +1,4 @@
-import { getOrgMetadataForDomain } from "@/server/auth/meta";
+import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { NextRequest, NextResponse } from "next/server";
 
