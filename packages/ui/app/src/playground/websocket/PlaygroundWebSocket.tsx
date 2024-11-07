@@ -4,13 +4,13 @@ import { FernTooltipProvider } from "@fern-ui/components";
 import { usePrevious } from "@fern-ui/react-commons";
 import { Wifi, WifiOff } from "iconoir-react";
 import { FC, ReactElement, useCallback, useEffect, useRef, useState } from "react";
-import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState } from "../atoms";
-import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
+import { PLAYGROUND_AUTH_STATE_ATOM, store, usePlaygroundWebsocketFormState } from "../../atoms";
+import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
+import { PlaygroundEndpointPath } from "../endpoint/PlaygroundEndpointPath";
+import { useWebsocketMessages } from "../hooks/useWebsocketMessages";
+import { buildAuthHeaders } from "../utils";
+import { usePlaygroundBaseUrl } from "../utils/select-environment";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
-import { PlaygroundEndpointPath } from "./endpoint/PlaygroundEndpointPath";
-import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
-import { buildAuthHeaders } from "./utils";
-import { usePlaygroundBaseUrl } from "./utils/select-environment";
 
 // TODO: decide if this should be an env variable, and if we should move REST proxy to the same (or separate) cloudflare worker
 const WEBSOCKET_PROXY_URI = "wss://websocket.proxy.ferndocs.com/ws";

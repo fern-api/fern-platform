@@ -4,12 +4,12 @@ import titleCase from "@fern-api/ui-core-utils/titleCase";
 import { FernButton, FernCard, FernScrollArea } from "@fern-ui/components";
 import cn from "clsx";
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
-import { WebSocketMessagesVirtualized } from "../api-reference/web-socket/WebSocketMessagesVirtualized";
+import { WebSocketMessagesVirtualized } from "../../api-reference/web-socket/WebSocketMessagesVirtualized";
+import { HorizontalSplitPane } from "../VerticalSplitPane";
+import { PlaygroundTypeReferenceForm } from "../form/PlaygroundTypeReferenceForm";
+import { useWebsocketMessages } from "../hooks/useWebsocketMessages";
+import { PlaygroundWebSocketRequestFormState } from "../types";
 import { PlaygroundWebSocketHandshakeForm } from "./PlaygroundWebSocketHandshakeForm";
-import { HorizontalSplitPane } from "./VerticalSplitPane";
-import { PlaygroundTypeReferenceForm } from "./form/PlaygroundTypeReferenceForm";
-import { useWebsocketMessages } from "./hooks/useWebsocketMessages";
-import { PlaygroundWebSocketRequestFormState } from "./types";
 
 interface PlaygroundWebSocketSessionFormProps {
     context: WebSocketContext;

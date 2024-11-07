@@ -2,11 +2,9 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ArrowLeft } from "iconoir-react";
 import { ReactElement } from "react";
 import { usePlaygroundNode } from "../atoms";
-import { PlaygroundWebSocket } from "./PlaygroundWebSocket";
-import { PlaygroundEndpoint } from "./endpoint/PlaygroundEndpoint";
-import { PlaygroundEndpointSkeleton } from "./endpoint/PlaygroundEndpointSkeleton";
-import { useEndpointContext } from "./hooks/useEndpointContext";
-import { useWebSocketContext } from "./hooks/useWebSocketContext";
+import { PlaygroundEndpoint, PlaygroundEndpointSkeleton } from "./endpoint";
+import { useEndpointContext, useWebSocketContext } from "./hooks";
+import { PlaygroundWebSocket } from "./websocket";
 
 const PlaygroundContentForEndpoint = ({ node }: { node: FernNavigation.EndpointNode }) => {
     const { context, isLoading } = useEndpointContext(node);

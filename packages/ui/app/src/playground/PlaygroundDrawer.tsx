@@ -8,20 +8,23 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";
 import { ReactElement, memo, useEffect } from "react";
 import { useCallbackOne } from "use-memo-one";
-import { HEADER_HEIGHT_ATOM, useAtomEffect } from "../atoms";
 import {
+    HEADER_HEIGHT_ATOM,
+    IS_MOBILE_SCREEN_ATOM,
     MAX_PLAYGROUND_HEIGHT_ATOM,
+    MOBILE_SIDEBAR_ENABLED_ATOM,
     PLAYGROUND_NODE_ID,
+    VIEWPORT_HEIGHT_ATOM,
+    useAtomEffect,
     useIsPlaygroundOpen,
     usePlaygroundFormStateAtom,
     usePlaygroundNode,
     useTogglePlayground,
-} from "../atoms/playground";
-import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATOM } from "../atoms/viewport";
+} from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { PlaygroundContent } from "./PlaygroundContent";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
-import { PlaygroundEndpointSelectorContent } from "./endpoint/PlaygroundEndpointSelectorContent";
+import { PlaygroundEndpointSelectorContent } from "./endpoint";
 import { useResizeY } from "./useSplitPlane";
 import { PLAYGROUND_API_GROUPS_ATOM } from "./utils/flatten-apis";
 
