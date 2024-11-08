@@ -11,4 +11,5 @@ export interface AlgoliaPageRecordV3 {
     slug: FernRegistry.navigation.v1.Slug;
     version: FernRegistry.AlgoliaRecordVersionV3 | undefined;
     indexSegmentId: FernRegistry.IndexSegmentId;
+    visible_by: string[] | undefined;
 }

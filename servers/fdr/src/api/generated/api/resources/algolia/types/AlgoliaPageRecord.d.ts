@@ -9,4 +9,5 @@ export interface AlgoliaPageRecord {
     version: FernRegistry.VersionId | undefined;
     versionSlug: string | undefined;
     indexSegmentId: string | undefined;
+    visible_by: string[] | undefined;
 }

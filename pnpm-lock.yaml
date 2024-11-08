@@ -2285,6 +2285,9 @@ importers:
       '@fern-ui/fern-docs-mdx':
         specifier: workspace:*
         version: link:../fern-docs-mdx
+      '@fern-ui/fern-docs-utils':
+        specifier: workspace:*
+        version: link:../fern-docs-utils
       algoliasearch:
         specifier: ^5.8.1
         version: 5.8.1

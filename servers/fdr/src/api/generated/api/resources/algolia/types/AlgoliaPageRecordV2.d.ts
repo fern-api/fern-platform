@@ -8,4 +8,5 @@ export interface AlgoliaPageRecordV2 {
     path: FernRegistry.AlgoliaRecordPath;
     version: FernRegistry.AlgoliaRecordVersion | undefined;
     indexSegmentId: FernRegistry.IndexSegmentId;
+    visible_by: string[] | undefined;
 }

@@ -1,5 +1,7 @@
 import { Algolia, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { createRoleFacet } from "../roles/create-role-facet.js";
+import { flipAndOrToOrAnd, modifyRolesForEveryone } from "../roles/role-utils.js";
 import { convertEndpointV4ToV3 } from "../v1-record-converter/convertRecords.js";
 import { generateEndpointFieldRecords, generateEndpointRecord } from "./generateEndpointRecords.js";
 import { generateMarkdownRecords } from "./generateMarkdownRecords.js";
@@ -73,7 +75,7 @@ export function generateAlgoliaRecords({
                 node,
                 version,
                 markdown,
-            }),
+            }).map((record) => appendVisibility(record, node, parents, isDocsSiteAuthed)),
         );
     });
 
@@ -122,7 +124,7 @@ export function generateAlgoliaRecords({
                         endpointRecord,
                         endpoint,
                         types: apiDefinition.types,
-                    }),
+                    }).map((record) => appendVisibility(record, node, parents, isDocsSiteAuthed)),
                 );
             }
         } else if (node.type === "webSocket") {
@@ -149,7 +151,7 @@ export function generateAlgoliaRecords({
                         channelRecord,
                         channel,
                         types: apiDefinition.types,
-                    }),
+                    }).map((record) => appendVisibility(record, node, parents, isDocsSiteAuthed)),
                 );
             }
         } else if (node.type === "webhook") {
@@ -176,11 +178,46 @@ export function generateAlgoliaRecords({
                         webhookRecord,
                         webhook,
                         types: apiDefinition.types,
-                    }),
+                    }).map((record) => appendVisibility(record, node, parents, isDocsSiteAuthed)),
                 );
             }
         }
     });
 
     return records;
+}
+
+function appendVisibility(
+    record: Algolia.AlgoliaRecord,
+    node: FernNavigation.NavigationNode,
+    parents: readonly FernNavigation.NavigationNodeParent[],
+    isDocsSiteAuthed: boolean,
+): Algolia.AlgoliaRecord {
+    const { roles } = createViewersForNodes([...parents, node], isDocsSiteAuthed);
+    return {
+        ...record,
+        visible_by: [...roles.map(createRoleFacet)],
+    };
+}
+
+function createViewersForNodes(
+    nodes: readonly FernNavigation.NavigationNode[],
+    authed: boolean,
+): {
+    roles: string[][];
+    authed: boolean;
+} {
+    let nodesWithMetadata = nodes.filter(FernNavigation.hasMetadata);
+    const lastOrphanedIdx = nodesWithMetadata.findLastIndex((n) => n.orphaned);
+    if (lastOrphanedIdx >= 0) {
+        nodesWithMetadata = nodesWithMetadata.slice(lastOrphanedIdx);
+    }
+    const viewersHierarchy = nodesWithMetadata
+        .map((node) => node.viewers)
+        .filter(isNonNullish)
+        .filter((viewers) => viewers.length > 0);
+
+    const requiredRoles = flipAndOrToOrAnd(viewersHierarchy);
+
+    return modifyRolesForEveryone(requiredRoles, authed);
 }

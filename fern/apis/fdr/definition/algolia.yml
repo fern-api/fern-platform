@@ -55,6 +55,7 @@ types:
       slug: navigation.Slug
       version: optional<AlgoliaRecordVersionV3>
       indexSegmentId: IndexSegmentId
+      visible_by: optional<list<string>>
 
   AlgoliaPageRecordV3:
     properties:
@@ -64,7 +65,7 @@ types:
       slug: navigation.Slug
       version: optional<AlgoliaRecordVersionV3>
       indexSegmentId: IndexSegmentId
-
+      visible_by: optional<list<string>>
   AlgoliaEndpointRecordV4:
     extends: AlgoliaPageRecordV4
     properties:
@@ -166,6 +167,7 @@ types:
       version: optional<commons.VersionId>
       versionSlug: optional<string>
       indexSegmentId: optional<string>
+      visible_by: optional<list<string>>
 
   AlgoliaPageRecord:
     availability: deprecated
@@ -176,6 +178,7 @@ types:
       version: optional<commons.VersionId>
       versionSlug: optional<string>
       indexSegmentId: optional<string>
+      visible_by: optional<list<string>>
 
   AlgoliaRecordEndpointPath:
     availability: deprecated
@@ -216,6 +219,7 @@ types:
       path: AlgoliaRecordPath
       version: optional<AlgoliaRecordVersion>
       indexSegmentId: IndexSegmentId
+      visible_by: optional<list<string>>
 
   AlgoliaPageRecordV2:
     availability: deprecated
@@ -225,3 +229,4 @@ types:
       path: AlgoliaRecordPath
       version: optional<AlgoliaRecordVersion>
       indexSegmentId: IndexSegmentId
+      visible_by: optional<list<string>>
