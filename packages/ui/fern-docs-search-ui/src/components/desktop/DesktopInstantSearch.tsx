@@ -11,6 +11,7 @@ interface DesktopInstantSearchProps {
     apiKey: string;
     initialResults: InitialResultsResponse;
     onSubmit: (path: string) => void;
+    onAskAI?: () => void;
 }
 
 export function DesktopInstantSearch({
@@ -18,6 +19,7 @@ export function DesktopInstantSearch({
     apiKey,
     initialResults,
     onSubmit,
+    onAskAI,
 }: DesktopInstantSearchProps): ReactElement {
     const ref = useRef(algoliasearch(appId, apiKey));
 
@@ -38,7 +40,7 @@ export function DesktopInstantSearch({
                 attributesToSnippet={["description:24", "content:24"]}
                 ignorePlurals
             />
-            <DesktopCommand initialResults={initialResults} onSubmit={onSubmit} />
+            <DesktopCommand initialResults={initialResults} onSubmit={onSubmit} onAskAI={onAskAI} />
         </InstantSearchNext>
     );
 }

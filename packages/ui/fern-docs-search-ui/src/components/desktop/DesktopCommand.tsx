@@ -1,11 +1,10 @@
 import { InitialResultsResponse } from "@/server/browse-results";
 import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
 import { Command } from "cmdk";
+import { FileText, History, MessageCircle } from "lucide-react";
 import { ReactElement, useDeferredValue } from "react";
 import { useHits, useSearchBox } from "react-instantsearch";
 import { MarkRequired } from "ts-essentials";
-import { RegularCalendarIcon } from "../icons/RegularCalendarIcon";
-import { RegularFileLinesIcon } from "../icons/RegularFileLinesIcon";
 import { RemoteIcon } from "../icons/RemoteIcon";
 import { HitContent } from "../shared/HitContent";
 import { generateHits } from "../shared/hits";
@@ -17,10 +16,12 @@ export function DesktopCommand({
     initialResults,
     placeholder,
     onSubmit,
+    onAskAI,
 }: {
     initialResults: InitialResultsResponse;
     placeholder?: string;
     onSubmit: (path: string) => void;
+    onAskAI?: () => void;
 }): ReactElement {
     const { query, refine } = useSearchBox();
     const { items: rawHits } = useHits<AlgoliaRecord>();
@@ -43,8 +44,24 @@ export function DesktopCommand({
                 No results found
             </Command.Empty>
             <Command.List className="mb-3">
+                <Command.Group className="mt-3">
+                    <Command.Item value="ai-chat" className="flex gap-2 cursor-default" onSelect={() => onAskAI?.()}>
+                        <MessageCircle className={ICON_CLASS} />
+                        <span>
+                            Ask AI
+                            {query.trimStart().length > 0 && (
+                                <>
+                                    <span className="ms-1">&ldquo;</span>
+                                    <span className="font-semibold">{query}</span>
+                                    <span>&rdquo;</span>
+                                </>
+                            )}
+                        </span>
+                    </Command.Item>
+                </Command.Group>
+
                 {groups.map((group, index) => (
-                    <Command.Group key={group.title ?? index} heading={group.title} className="mt-3">
+                    <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} className="mt-3">
                         {group.hits.map((hit) => (
                             <Command.Item
                                 key={hit.path}
@@ -52,13 +69,7 @@ export function DesktopCommand({
                                 onSelect={() => onSubmit(hit.path)}
                                 className="flex gap-2 cursor-default"
                             >
-                                {hit.icon != null ? (
-                                    <RemoteIcon icon={hit.icon} className={ICON_CLASS} />
-                                ) : hit.record?.type === "changelog" ? (
-                                    <RegularCalendarIcon className={ICON_CLASS} />
-                                ) : (
-                                    <RegularFileLinesIcon className={ICON_CLASS} />
-                                )}
+                                <Icon icon={hit.icon} type={hit.record?.type} />
                                 {hit.record != null && (
                                     <HitContent hit={hit.record as MarkRequired<AlgoliaRecordHit, "type">} />
                                 )}
@@ -70,4 +81,16 @@ export function DesktopCommand({
             </Command.List>
         </Command>
     );
+}
+
+function Icon({ icon, type }: { icon: string | undefined; type: string | undefined }): ReactElement {
+    if (icon) {
+        return <RemoteIcon icon={icon} className={ICON_CLASS} />;
+    }
+
+    if (type === "changelog") {
+        return <History className={ICON_CLASS} />;
+    }
+
+    return <FileText className={ICON_CLASS} />;
 }

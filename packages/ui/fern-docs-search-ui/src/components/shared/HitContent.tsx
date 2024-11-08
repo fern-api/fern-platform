@@ -3,7 +3,7 @@ import { ParameterRecord } from "@fern-ui/fern-docs-search-server/types";
 import { HttpMethodTag } from "@fern-ui/fern-http-method-tag";
 import { Hit } from "algoliasearch/lite";
 import { format } from "date-fns";
-import { ReactElement } from "react";
+import { Fragment, ReactElement } from "react";
 import { Highlight, Snippet } from "react-instantsearch";
 import { MarkRequired, UnreachableCaseError } from "ts-essentials";
 import { AlgoliaRecordHit, ApiReferenceRecordHit, ChangelogRecordHit, MarkdownRecordHit } from "../types";
@@ -35,10 +35,10 @@ function HierarchyBreadcrumb({
     return (
         <div className="text-xs text-[#969696] dark:text-white/50">
             {breadcrumb.map((title, idx) => (
-                <>
-                    <span key={title}>{title}</span>
+                <Fragment key={title}>
+                    <span>{title}</span>
                     {idx < breadcrumb.length - 1 && <span>{" / "}</span>}
-                </>
+                </Fragment>
             ))}
         </div>
     );

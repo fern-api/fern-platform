@@ -1,0 +1,4 @@
+{
+  "ignores": ["autoprefixer", "postcss"],
+  "ignore-patterns": ["dist"]
+}

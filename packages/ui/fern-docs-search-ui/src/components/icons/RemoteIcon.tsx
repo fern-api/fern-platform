@@ -1,22 +1,37 @@
-import { ReactElement, SVGProps } from "react";
+import { FileText } from "lucide-react";
+import { SVGProps, forwardRef } from "react";
 import useSWRImmutable from "swr/immutable";
-import { RegularFileLinesIcon } from "./RegularFileLinesIcon";
 
-export function RemoteIcon({ icon, ...props }: { icon: string } & SVGProps<SVGSVGElement>): ReactElement {
-    const { data } = useSWRImmutable(icon, () => fetch(getIconUrl(icon)).then((res) => res.text()));
+export const RemoteIcon = forwardRef<SVGSVGElement, { icon: string } & SVGProps<SVGSVGElement>>(
+    ({ icon, ...props }, ref) => {
+        const { data } = useSWRImmutable(icon, () => fetch(getIconUrl(icon)).then((res) => res.text()));
 
-    if (data == null) {
-        return <RegularFileLinesIcon {...props} />;
-    }
+        if (data == null) {
+            return <FileText ref={ref} {...props} />;
+        }
 
-    // parse the svg
-    const { props: svgProps, body } = parseSvg(data);
-    delete svgProps.class;
-    delete svgProps.className;
-    delete svgProps.hidden;
+        // parse the svg
+        const { props: svgProps, body } = parseSvg(data);
+        delete svgProps.class;
+        delete svgProps.className;
+        delete svgProps.hidden;
 
-    return <svg {...props} {...svgProps} dangerouslySetInnerHTML={{ __html: body }} />;
-}
+        return (
+            <svg
+                ref={ref}
+                xmlns="http://www.w3.org/2000/svg"
+                {...props}
+                {...svgProps}
+                aria-hidden="true"
+                focusable="false"
+                role="img"
+                dangerouslySetInnerHTML={{ __html: body }}
+            />
+        );
+    },
+);
+
+RemoteIcon.displayName = "RemoteIcon";
 
 // parse the svg
 function parseSvg(svg: string): {
