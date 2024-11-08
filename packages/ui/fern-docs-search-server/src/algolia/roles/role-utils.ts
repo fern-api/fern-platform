@@ -20,7 +20,7 @@ import { createRoleFacet } from "./create-role-facet";
  * @param roles is a 2d list of roles, where the outer array represents AND and the inner array represents OR
  * @returns a 2d list of roles where the outer array represents OR and the inner array represents AND
  */
-export function flipAndOrToOrAnd(andOrRoles: string[][]): string[][] {
+export function flipAndOrToOrAnd(andOrRoles: string[][], roleIndexes: Map<string, number>): string[][] {
     if (andOrRoles.length === 0) {
         return [];
     }
@@ -33,7 +33,7 @@ export function flipAndOrToOrAnd(andOrRoles: string[][]): string[][] {
 
     // if a combination is a subset of another, remove the larger one, e.g. [[a, b], [a]] -> [[a]]
     // this is because the larger one is redundant
-    return sortBy(removeSubsets(uniqueCombinations), [createRoleFacet]);
+    return sortBy(removeSubsets(uniqueCombinations), [(role) => createRoleFacet(role, roleIndexes)]);
 }
 
 function combine<T>(arrays: T[][]): T[][] {
@@ -68,7 +68,7 @@ function removeSubsets(arrays: string[][]): string[][] {
 // [a, b] -> [a, b, a|b]
 // [b, a] -> [a, b, a|b]
 // [a, c, b] -> [a, b, c, a|b, a|c, b|c, a|b|c]
-export function createPermutations(roles: string[]): string[][] {
+export function createPermutations(roles: string[], roleIndexes: Map<string, number>): string[][] {
     if (roles.length === 0) {
         return [];
     }
@@ -86,7 +86,10 @@ export function createPermutations(roles: string[]): string[][] {
         });
     }
 
-    return sortBy(uniqBy(result, createRoleFacet), [createRoleFacet]);
+    return sortBy(
+        uniqBy(result, (role) => createRoleFacet(role, roleIndexes)),
+        [(role) => createRoleFacet(role, roleIndexes)],
+    );
 }
 
 function getPermutations(arr: string[], k: number): string[][] {

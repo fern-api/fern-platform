@@ -19,9 +19,14 @@ interface GetSearchApiKeyOptions {
     domain: string;
 
     /**
-     * Roles of the user
+     * All roles
      */
     roles: string[];
+
+    /**
+     * Roles of the user
+     */
+    userRoles: string[];
 
     /**
      * Whether the user is authed or anonymous
@@ -38,6 +43,7 @@ export function getSearchApiKey({
     parentApiKey,
     domain,
     roles,
+    userRoles,
     authed,
     expiresInSeconds,
     searchIndex,
@@ -45,7 +51,7 @@ export function getSearchApiKey({
     return generateSecuredApiKey({
         parentApiKey,
         restrictions: {
-            filters: createSearchFilters({ domain, roles, authed }) + " AND NOT type:navigation",
+            filters: createSearchFilters({ domain, roles, userRoles, authed }) + " AND NOT type:navigation",
             validUntil: Math.floor(Date.now() / 1_000) + expiresInSeconds,
             restrictIndices: [searchIndex],
         },

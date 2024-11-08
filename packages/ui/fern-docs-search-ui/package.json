@@ -29,6 +29,7 @@
     "@date-fns/tz": "^1.1.2",
     "@fern-ui/fern-docs-search-server": "workspace:*",
     "@fern-ui/fern-http-method-tag": "workspace:*",
+    "@vercel/kv": "^2.0.0",
     "ai": "^3.4.33",
     "algoliasearch": "^5.10.2",
     "cmdk": "^1.0.4",

@@ -1,5 +1,7 @@
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { kv } from "@vercel/kv";
+import { createRoleIndexes } from "../roles/create-roles-indexes";
 import { AlgoliaRecord } from "../types";
 import { createApiReferenceRecordHttp } from "./create-api-reference-record-http";
 import { createApiReferenceRecordWebSocket } from "./create-api-reference-record-web-socket";
@@ -21,15 +23,21 @@ interface CreateAlgoliaRecordsOptions {
     authed: boolean;
 }
 
-export function createAlgoliaRecords({
+export async function createAlgoliaRecords({
     root,
     domain,
     org_id,
     pages,
     apis,
     authed,
-}: CreateAlgoliaRecordsOptions): AlgoliaRecord[] {
+}: CreateAlgoliaRecordsOptions): Promise<AlgoliaRecord[]> {
     const collector = FernNavigation.NodeCollector.collect(root);
+
+    if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
+        await kv.set(domain, root.roles, { ex: 60 * 60 * 24 });
+    }
+
+    const roleIndexes = createRoleIndexes(root.roles ?? []);
 
     const indexablePageNodes = collector.indexablePageSlugs
         .map((slug) => collector.slugMap.get(slug))
@@ -64,7 +72,14 @@ export function createAlgoliaRecords({
             return;
         }
 
-        const base = createBaseRecord({ node, parents: collector.getParents(node.id) ?? [], domain, org_id, authed });
+        const base = createBaseRecord({
+            node,
+            parents: collector.getParents(node.id) ?? [],
+            domain,
+            org_id,
+            authed,
+            roleIndexes,
+        });
 
         if (node.type === "changelogEntry") {
             records.push(createChangelogRecord({ base, markdown, date: node.date }));
@@ -84,7 +99,14 @@ export function createAlgoliaRecords({
             return;
         }
 
-        const base = createBaseRecord({ node, parents: collector.getParents(node.id) ?? [], domain, org_id, authed });
+        const base = createBaseRecord({
+            node,
+            parents: collector.getParents(node.id) ?? [],
+            domain,
+            org_id,
+            authed,
+            roleIndexes,
+        });
 
         if (node.type === "endpoint") {
             const endpoint = apiDefinition.endpoints[node.endpointId];
@@ -138,7 +160,14 @@ export function createAlgoliaRecords({
 
         distinctSlugs.add(node.slug);
 
-        const base = createBaseRecord({ node, parents: collector.getParents(node.id) ?? [], domain, org_id, authed });
+        const base = createBaseRecord({
+            node,
+            parents: collector.getParents(node.id) ?? [],
+            domain,
+            org_id,
+            authed,
+            roleIndexes,
+        });
         records.push(createNavigationRecord({ base, node_type: node.type }));
     });
 

@@ -45,13 +45,13 @@ for (const fixtureName of [
 ]) {
     // eslint-disable-next-line vitest/valid-title
     describe(fixtureName, () => {
-        it("should work", () => {
+        it("should work", async () => {
             const fixture = readFixture(fixtureName);
             const root = FernNavigation.utils.toRootNode(fixture);
             const apis = FernNavigation.utils.toApis(fixture);
             const pages = FernNavigation.utils.toPages(fixture);
 
-            const records = createAlgoliaRecords({
+            const records = await createAlgoliaRecords({
                 root,
                 domain: "test.com",
                 org_id: "test",

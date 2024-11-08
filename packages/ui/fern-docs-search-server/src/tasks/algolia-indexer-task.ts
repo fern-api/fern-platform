@@ -65,7 +65,14 @@ export async function algoliaIndexerTask(payload: AlgoliaIndexerPayload): Promis
     const { org_id, root, pages, apis, domain } = await loadDocsWithUrl(payload);
 
     // create new records (this is the target state of the index)
-    const targetRecords = createAlgoliaRecords({ root, domain, org_id, pages, apis, authed: payload.authed ?? false });
+    const targetRecords = await createAlgoliaRecords({
+        root,
+        domain,
+        org_id,
+        pages,
+        apis,
+        authed: payload.authed ?? false,
+    });
 
     // browse the existing records (what is currently in the index)
     const existingObjectIDs = (await browseAllObjectsForDomain(algolia, domain, payload.indexName, ["objectID"]))

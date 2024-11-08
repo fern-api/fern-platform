@@ -2296,6 +2296,9 @@ importers:
       '@fern-ui/fern-docs-utils':
         specifier: workspace:*
         version: link:../fern-docs-utils
+      '@vercel/kv':
+        specifier: ^2.0.0
+        version: 2.0.0
       algoliasearch:
         specifier: ^5.10.2
         version: 5.10.2
@@ -2375,6 +2378,9 @@ importers:
       '@fern-ui/fern-http-method-tag':
         specifier: workspace:*
         version: link:../fern-http-method-tag
+      '@vercel/kv':
+        specifier: ^2.0.0
+        version: 2.0.0
       ai:
         specifier: ^3.4.33
         version: 3.4.33(react@18.3.1)(sswr@2.1.0(svelte@5.1.12))(svelte@5.1.12)(vue@3.5.12(typescript@5.4.3))(zod@3.23.8)

@@ -10,6 +10,7 @@ interface CreateBaseRecordOptions {
     org_id: string;
     parents: readonly FernNavigation.NavigationNodeParent[];
     node: FernNavigation.NavigationNodeWithMetadata;
+    roleIndexes: Map<string, number>;
     authed: boolean;
 }
 
@@ -18,6 +19,7 @@ export function createBaseRecord({
     org_id,
     parents,
     node,
+    roleIndexes,
     authed: isDocsSiteAuthed,
 }: CreateBaseRecordOptions): BaseRecord {
     const productNode = parents.find((n): n is FernNavigation.ProductNode => n.type === "product");
@@ -44,7 +46,7 @@ export function createBaseRecord({
                       pathname: addLeadingSlash(metadata.canonicalSlug ?? metadata.slug),
                   }));
 
-    const { roles, authed } = createViewersForNodes([...parents, node], isDocsSiteAuthed);
+    const { roles, authed } = createViewersForNodes([...parents, node], isDocsSiteAuthed, roleIndexes);
 
     return {
         objectID: `${org_id}:${domain}:${node.id}`,
@@ -74,7 +76,7 @@ export function createBaseRecord({
                   pathname: `/${tabNode.canonicalSlug ?? tabNode.slug}`,
               }
             : undefined,
-        visible_by: roles.map(createRoleFacet),
+        visible_by: roles.map((role) => createRoleFacet(role, roleIndexes)),
         authed,
     };
 }
@@ -87,6 +89,7 @@ export function createBaseRecord({
 function createViewersForNodes(
     nodes: readonly FernNavigation.NavigationNode[],
     authed: boolean,
+    roleIndexes: Map<string, number>,
 ): {
     roles: string[][];
     authed: boolean;
@@ -101,7 +104,7 @@ function createViewersForNodes(
         .filter(isNonNullish)
         .filter((viewers) => viewers.length > 0);
 
-    const requiredRoles = flipAndOrToOrAnd(viewersHierarchy);
+    const requiredRoles = flipAndOrToOrAnd(viewersHierarchy, roleIndexes);
 
     return modifyRolesForEveryone(requiredRoles, authed);
 }

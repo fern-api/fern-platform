@@ -3,25 +3,57 @@ import { createPermutations, flipAndOrToOrAnd, modifyRolesForEveryone } from "..
 
 describe("flipAndOrToOrAnd", () => {
     it("should return []", () => {
-        expect(flipAndOrToOrAnd([])).toEqual([]);
+        expect(flipAndOrToOrAnd([], new Map())).toEqual([]);
     });
 
     it("should return [a]", () => {
-        expect(flipAndOrToOrAnd([["a"]])).toEqual([["a"]]);
-        expect(flipAndOrToOrAnd([["a", "a"]])).toEqual([["a"]]);
-        expect(flipAndOrToOrAnd([["a"], ["a"], ["a"]])).toEqual([["a"]]);
+        expect(flipAndOrToOrAnd([["a"]], new Map([["a", 0]]))).toEqual([["a"]]);
+        expect(flipAndOrToOrAnd([["a", "a"]], new Map([["a", 0]]))).toEqual([["a"]]);
+        expect(flipAndOrToOrAnd([["a"], ["a"], ["a"]], new Map([["a", 0]]))).toEqual([["a"]]);
     });
 
     it("should return [a&b]", () => {
-        expect(flipAndOrToOrAnd([["a"], ["b"]])).toEqual([["a", "b"]]);
+        expect(
+            flipAndOrToOrAnd(
+                [["a"], ["b"]],
+                new Map([
+                    ["a", 0],
+                    ["b", 1],
+                ]),
+            ),
+        ).toEqual([["a", "b"]]);
     });
 
     it("should return [a&e, a&f]", () => {
-        expect(flipAndOrToOrAnd([["a"], ["e", "f"]])).toEqual([
+        expect(
+            flipAndOrToOrAnd(
+                [["a"], ["e", "f"]],
+                new Map([
+                    ["a", 0],
+                    ["b", 1],
+                    ["c", 2],
+                    ["d", 3],
+                    ["e", 4],
+                    ["f", 5],
+                ]),
+            ),
+        ).toEqual([
             ["a", "e"],
             ["a", "f"],
         ]);
-        expect(flipAndOrToOrAnd([["e", "f"], ["a"]])).toEqual([
+        expect(
+            flipAndOrToOrAnd(
+                [["e", "f"], ["a"]],
+                new Map([
+                    ["a", 0],
+                    ["b", 1],
+                    ["c", 2],
+                    ["d", 3],
+                    ["e", 4],
+                    ["f", 5],
+                ]),
+            ),
+        ).toEqual([
             ["a", "e"],
             ["a", "f"],
         ]);
@@ -29,29 +61,53 @@ describe("flipAndOrToOrAnd", () => {
 
     it("should return [a&c, b&d, b&c, b&d]", () => {
         expect(
-            flipAndOrToOrAnd([
-                ["a", "b"],
-                ["c", "d"],
-            ]),
+            flipAndOrToOrAnd(
+                [
+                    ["a", "b"],
+                    ["c", "d"],
+                ],
+                new Map([
+                    ["a", 0],
+                    ["b", 1],
+                    ["c", 2],
+                    ["d", 3],
+                ]),
+            ),
         ).toEqual([
-            ["a", "c"],
-            ["a", "d"],
-            ["b", "c"],
             ["b", "d"],
+            ["a", "c"],
+            ["b", "c"],
+            ["a", "d"],
         ]);
     });
 
     it("should skip redundant combinations", () => {
-        expect(flipAndOrToOrAnd([["a", "b"], ["c"], ["b"]])).toEqual([["b", "c"]]);
+        expect(
+            flipAndOrToOrAnd(
+                [["a", "b"], ["c"], ["b"]],
+                new Map([
+                    ["a", 0],
+                    ["b", 1],
+                    ["c", 2],
+                ]),
+            ),
+        ).toEqual([["b", "c"]]);
     });
 
     it("should return [a&b, a&c, b&c] (skipping a&b&c)", () => {
         expect(
-            flipAndOrToOrAnd([
-                ["a", "b"],
-                ["a", "c"],
-                ["b", "c"],
-            ]),
+            flipAndOrToOrAnd(
+                [
+                    ["a", "b"],
+                    ["a", "c"],
+                    ["b", "c"],
+                ],
+                new Map([
+                    ["a", 0],
+                    ["b", 1],
+                    ["c", 2],
+                ]),
+            ),
         ).toEqual([
             ["a", "b"],
             ["a", "c"],
@@ -60,33 +116,51 @@ describe("flipAndOrToOrAnd", () => {
     });
 
     it("skip all other optional subsets", () => {
-        expect(flipAndOrToOrAnd([[], ["a"], [], ["b", "c", "d"], ["c"], ["a", "b"]])).toEqual([["a", "c"]]);
+        expect(
+            flipAndOrToOrAnd(
+                [[], ["a"], [], ["b", "c", "d"], ["c"], ["a", "b"]],
+                new Map([
+                    ["a", 0],
+                    ["b", 1],
+                    ["c", 2],
+                ]),
+            ),
+        ).toEqual([["a", "c"]]);
     });
 });
 
 describe("createPermutations", () => {
     it("should return []", () => {
-        expect(createPermutations([])).toEqual([]);
+        expect(createPermutations([], new Map())).toEqual([]);
     });
 
     it("should return [a]", () => {
-        expect(createPermutations(["a"])).toEqual([["a"]]);
+        expect(createPermutations(["a"], new Map([["a", 0]]))).toEqual([["a"]]);
     });
 
     it("should return [a, b, a&b]", () => {
-        expect(createPermutations(["a", "b"])).toEqual([["a"], ["a", "b"], ["b"]]);
+        expect(
+            createPermutations(
+                ["a", "b"],
+                new Map([
+                    ["a", 0],
+                    ["b", 1],
+                ]),
+            ),
+        ).toEqual([["a"], ["b"], ["a", "b"]]);
     });
 
     it("should return [a, b, a&b, c, a&c, b&c, a&b&c]", () => {
-        expect(createPermutations(["a", "b", "c"])).toEqual([
-            ["a"],
-            ["a", "b"],
-            ["a", "b", "c"],
-            ["a", "c"],
-            ["b"],
-            ["b", "c"],
-            ["c"],
-        ]);
+        expect(
+            createPermutations(
+                ["a", "b", "c"],
+                new Map([
+                    ["a", 0],
+                    ["b", 1],
+                    ["c", 2],
+                ]),
+            ),
+        ).toEqual([["a"], ["b"], ["a", "b"], ["c"], ["a", "c"], ["b", "c"], ["a", "b", "c"]]);
     });
 });
 

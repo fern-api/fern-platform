@@ -45,6 +45,7 @@
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-ui/fern-docs-mdx": "workspace:*",
     "@fern-ui/fern-docs-utils": "workspace:*",
+    "@vercel/kv": "^2.0.0",
     "algoliasearch": "^5.10.2",
     "date-fns": "^2.30.0",
     "es-toolkit": "^1.24.0",
