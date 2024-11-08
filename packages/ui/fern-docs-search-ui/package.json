@@ -25,9 +25,11 @@
     "typescript": "5.4.3"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^0.0.56",
     "@date-fns/tz": "^1.1.2",
     "@fern-ui/fern-docs-search-server": "workspace:*",
     "@fern-ui/fern-http-method-tag": "workspace:*",
+    "ai": "^3.4.33",
     "algoliasearch": "^5.10.2",
     "cmdk": "^1.0.4",
     "date-fns": "^2.30.0",
@@ -37,6 +39,7 @@
     "react-instantsearch": "7.13.3",
     "react-instantsearch-nextjs": "0.3.16",
     "server-only": "^0.0.1",
-    "ts-essentials": "^10.0.1"
+    "ts-essentials": "^10.0.1",
+    "zod": "^3.23.8"
   }
 }
