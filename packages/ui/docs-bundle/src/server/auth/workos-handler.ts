@@ -58,9 +58,9 @@ export async function handleWorkosAuth({
         }
     }
 
-    const redirectUri = process.env.NEXT_PUBLIC_CDN_URI != null 
-        ? urlJoin(removeTrailingSlash(withDefaultProtocol(process.env.NEXT_PUBLIC_CDN_URI)), "/api/fern-docs/auth/sso/callback")
-        : urlJoin(removeTrailingSlash(withDefaultProtocol(host)), "/api/fern-docs/auth/sso/callback");
+    const redirectUri = String(
+        new URL("/api/fern-docs/auth/sso/callback", withDefaultProtocol(process.env.NEXT_PUBLIC_CDN_URI ?? host)),
+    );
     const authorizationUrlParams = getWorkosSSOAuthorizationUrl({
         redirectUri,
         organization,
