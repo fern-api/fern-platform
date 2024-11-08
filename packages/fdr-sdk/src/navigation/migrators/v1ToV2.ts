@@ -33,6 +33,7 @@ export class FernNavigationV1ToLatest {
             authed: node.authed,
             viewers: node.viewers,
             orphaned: node.orphaned,
+            roles: node.roles,
         };
 
         return latest;

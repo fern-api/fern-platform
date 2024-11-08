@@ -79,6 +79,7 @@ export class NavigationConfigConverter {
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
+                roles: undefined,
             };
 
             // tag all children of hidden nodes as hidden
