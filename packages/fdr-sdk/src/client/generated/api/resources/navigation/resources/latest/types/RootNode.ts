@@ -10,4 +10,5 @@ export interface RootNode
     type: "root";
     version: "v2";
     child: FernRegistry.navigation.latest.RootChild;
+    roles: FernRegistry.RoleId[] | undefined;
 }

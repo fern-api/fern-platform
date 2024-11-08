@@ -70,6 +70,7 @@ export function toRootNode(
             orphaned: undefined,
             id: FernNavigation.V1.NodeId("root"),
             pointsTo: undefined,
+            roles: undefined,
         };
     }
 }

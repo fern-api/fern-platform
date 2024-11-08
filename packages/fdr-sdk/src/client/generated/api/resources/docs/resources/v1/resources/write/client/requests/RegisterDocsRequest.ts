@@ -90,6 +90,9 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             }],
  *                         id: FernRegistry.navigation.v1.NodeId("string")
  *                     },
+ *                     roles: [{
+ *                             "key": "value"
+ *                         }],
  *                     title: "string",
  *                     slug: FernRegistry.navigation.v1.Slug("string"),
  *                     icon: {

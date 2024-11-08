@@ -6,4 +6,5 @@ export interface RootNode extends FernRegistry.navigation.latest.WithNodeMetadat
     type: "root";
     version: "v2";
     child: FernRegistry.navigation.latest.RootChild;
+    roles: FernRegistry.RoleId[] | undefined;
 }
