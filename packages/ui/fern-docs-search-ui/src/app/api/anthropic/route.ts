@@ -57,7 +57,7 @@ export async function POST(request: Request): Promise<Response> {
                 }),
                 async execute({ query }) {
                     const client = algoliasearch(algoliaAppId(), algoliaWriteApiKey());
-                    const filters = createSearchFilters({ domain, roles: [], authed: false });
+                    const filters = createSearchFilters({ domain, roles: [], userRoles: [], authed: false });
                     const { hits } = await client.browse<AlgoliaRecord>({
                         indexName: "fern-docs-search",
                         browseParams: { query, filters },

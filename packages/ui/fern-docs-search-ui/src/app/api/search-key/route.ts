@@ -13,7 +13,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         searchApiKey: algoliaSearchApikey(),
         domain,
         roles: (await kv.get(domain)) ?? [],
-        userRoles: ["employee"],
+        userRoles: [],
         authed: false,
     });
 
