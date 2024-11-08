@@ -1,6 +1,7 @@
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig, FernUser } from "@fern-ui/fern-docs-auth";
 import { PreviewUrlAuth, getAuthEdgeConfig, getPreviewUrlAuthConfig } from "@fern-ui/fern-docs-edge-config";
+import { withoutStaging } from "@fern-ui/fern-docs-utils";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import urlJoin from "url-join";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
@@ -149,7 +150,7 @@ export async function getAuthState(
     setFernToken?: (token: string) => void,
 ): Promise<AuthState & DomainAndHost> {
     authConfig ??= await getAuthEdgeConfig(domain);
-    const orgMetadata = await getOrgMetadataForDomain(domain);
+    const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
 
     const authState = await getAuthStateInternal({
         host,
