@@ -9,8 +9,7 @@ import { getOryAuthorizationUrl } from "./ory";
 import { getReturnToQueryParam } from "./return-to";
 import { getWebflowAuthorizationUrl } from "./webflow";
 import { getWorkosSSOAuthorizationUrl } from "./workos";
-import { encryptSession, getSessionFromToken, refreshSession, toSessionUserInfo } from "./workos-session";
-import { toFernUser } from "./workos-user-to-fern-user";
+import { handleWorkosAuth } from "./workos-handler";
 
 export type AuthPartner = "workos" | "ory" | "webflow" | "custom";
 
@@ -87,31 +86,13 @@ export async function getAuthStateInternal({
     if (!authConfig) {
         if (previewAuthConfig != null) {
             if (previewAuthConfig.type === "workos") {
-                const state = urlJoin(removeTrailingSlash(withDefaultProtocol(host)), pathname ?? "");
-                const session = fernToken != null ? await getSessionFromToken(fernToken) : undefined;
-                const workosUserInfo = await toSessionUserInfo(session);
-                if (workosUserInfo.user) {
-                    // TODO: should this be stored in the session itself?
-                    const roles = await getWorkosRbacRoles(previewAuthConfig.org, workosUserInfo.user.email);
-                    return {
-                        authed: true,
-                        ok: true,
-                        user: toFernUser(workosUserInfo, roles),
-                        partner: "workos",
-                    };
-                }
-
-                const redirectUri = urlJoin(
-                    removeTrailingSlash(withDefaultProtocol(host)),
-                    "/api/fern-docs/auth/sso/callback",
-                );
-                const authorizationUrl = getWorkosSSOAuthorizationUrl({
-                    redirectUri,
+                return handleWorkosAuth({
+                    fernToken,
                     organization: previewAuthConfig.org,
-                    state,
+                    host,
+                    pathname,
+                    setFernToken,
                 });
-
-                return { authed: false, ok: false, authorizationUrl, partner: "workos" };
             }
         }
         return { authed: false, ok: true, authorizationUrl: undefined, partner: undefined };
@@ -132,37 +113,19 @@ export async function getAuthStateInternal({
 
     // check if the user is logged in via WorkOS
     if (authConfig.type === "sso" && authConfig.partner === "workos") {
-        const session = fernToken != null ? await getSessionFromToken(fernToken) : undefined;
-        const workosUserInfo = await toSessionUserInfo(session);
-        if (workosUserInfo.user) {
-            // TODO: should this be stored in the session itself?
-            const roles = await getWorkosRbacRoles(authConfig.organization, workosUserInfo.user.email);
-            return {
-                authed: true,
-                ok: true,
-                user: toFernUser(workosUserInfo, roles),
-                partner: authConfig.partner,
-            };
-        }
-
-        if (session?.refreshToken) {
-            const updatedSession = await refreshSession(session);
-            if (updatedSession) {
-                if (setFernToken) {
-                    setFernToken(await encryptSession(updatedSession));
-                }
-                // TODO: should this be stored in the session itself?
-                const roles = await getWorkosRbacRoles(authConfig.organization, updatedSession.user.email);
-                return {
-                    authed: true,
-                    ok: true,
-                    user: toFernUser(await toSessionUserInfo(updatedSession), roles),
-                    partner: authConfig.partner,
-                };
-            }
-        }
-
-        return { authed: false, ok: false, authorizationUrl, partner: authConfig.partner };
+        return handleWorkosAuth({
+            fernToken,
+            organization: authConfig.organization,
+            host,
+            pathname,
+            setFernToken,
+            authorizationUrl: {
+                connection: authConfig.connection,
+                provider: authConfig.provider,
+                domainHint: authConfig.domainHint,
+                loginHint: authConfig.loginHint,
+            },
+        });
     }
 
     return { authed: false, ok: false, authorizationUrl: undefined, partner: undefined };
