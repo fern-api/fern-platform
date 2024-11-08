@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, type ReactElement } from "react";
 import { useFormStatus } from "react-dom";
@@ -31,15 +33,15 @@ export function DesktopInstantSearchWrapper({ appId }: { appId: string }): React
                         }
                     }}
                 >
-                    <input
+                    <Input
                         name="domain"
-                        className="border rounded-md p-2 dark:bg-black flex-1"
+                        className="border rounded-md p-2 bg-white dark:bg-black flex-1"
                         placeholder="yourdocs.docs.buildwithfern.com"
                         defaultValue={selectedDomain}
                     />
-                    <button type="submit" className="border rounded-md p-2">
+                    <Button type="submit" className="border rounded-md p-2">
                         Set Domain
-                    </button>
+                    </Button>
                 </form>
                 <form action={() => handleReindex(selectedDomain)}>
                     <SubmitButton />
@@ -56,8 +58,8 @@ export function DesktopInstantSearchWrapper({ appId }: { appId: string }): React
 function SubmitButton() {
     const { pending } = useFormStatus();
     return (
-        <button type="submit" disabled={pending} className="border rounded-md p-2 disabled:opacity-50">
+        <Button type="submit" disabled={pending} className="border rounded-md p-2 disabled:opacity-50">
             Reindex
-        </button>
+        </Button>
     );
 }

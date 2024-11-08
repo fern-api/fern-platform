@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "dev:build": "next build",
     "dev:start": "next start",
     "dev:lint": "next lint"
@@ -17,7 +17,9 @@
   "devDependencies": {
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.2.18",
+    "autoprefixer": "^10.4.16",
     "next": "^14",
+    "postcss": "^8.4.33",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "swr": "^2.2.5",
@@ -27,19 +29,26 @@
   "dependencies": {
     "@ai-sdk/anthropic": "^0.0.56",
     "@date-fns/tz": "^1.1.2",
+    "@fern-ui/chatbot": "workspace:*",
     "@fern-ui/fern-docs-search-server": "workspace:*",
     "@fern-ui/fern-http-method-tag": "workspace:*",
     "@vercel/kv": "^2.0.0",
+    "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-slot": "^1.1.0",
     "ai": "^3.4.33",
     "algoliasearch": "^5.10.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
     "cmdk": "^1.0.4",
     "date-fns": "^2.30.0",
     "es-toolkit": "^1.24.0",
     "instantsearch.css": "8.5.1",
     "instantsearch.js": "4.75.3",
+    "lucide-react": "^0.378.0",
     "react-instantsearch": "7.13.3",
     "react-instantsearch-nextjs": "0.3.16",
     "server-only": "^0.0.1",
+    "tailwind-merge": "^2.3.0",
     "ts-essentials": "^10.0.1",
     "zod": "^3.23.8"
   }

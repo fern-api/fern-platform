@@ -98,8 +98,9 @@ export async function POST(request: Request): Promise<Response> {
             const records: string[] = [];
 
             for (const { objectID, ...hit } of allHits.values()) {
-                records.push(`* ObjectID=\`${objectID}\`, Record=\`${JSON.stringify(toContent(hit))}\``);
+                records.push(`${objectID}, ${JSON.stringify(toContent(hit))}`);
             }
+
             const { object } = await generateObject({
                 model: smallModel,
                 system: "You are a reference extractor.",
@@ -114,6 +115,7 @@ export async function POST(request: Request): Promise<Response> {
 ${text}
 
 ## Records
+ObjectID, Record
 ${records.join("\n")}`,
             });
 

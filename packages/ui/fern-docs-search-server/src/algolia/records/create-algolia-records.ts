@@ -34,7 +34,7 @@ export async function createAlgoliaRecords({
     const collector = FernNavigation.NodeCollector.collect(root);
 
     if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
-        await kv.set(domain, root.roles, { ex: 60 * 60 * 24 });
+        await kv.set(domain, root.roles ?? [], { ex: 60 * 60 * 24 });
     }
 
     const roleIndexes = createRoleIndexes(root.roles ?? []);
