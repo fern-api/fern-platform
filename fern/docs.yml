@@ -13,7 +13,7 @@ navigation:
         path: ./docs/pages/configure-custom-domain.mdx
       - page: Configure Segment for a new Customer
         path: ./docs/pages/configure-segment.mdx
-  - api: FDR API Reference
+  - api: FDR API Reference Test
     api-name: fdr
     display-errors: true
   - api: Fern Docs API Reference
