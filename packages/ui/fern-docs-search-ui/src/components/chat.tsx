@@ -3,16 +3,29 @@
 import { useChat } from "ai/react";
 import { ReactElement } from "react";
 
-export default function Chat(): ReactElement {
-    const { messages, input, handleInputChange, handleSubmit } = useChat();
+export default function Chat({ initialInput, domain }: { initialInput?: string; domain: string }): ReactElement {
+    const { messages, data, input, handleInputChange, handleSubmit } = useChat({
+        initialInput,
+        api: `/api/chat?domain=${domain}`,
+    });
+
     return (
         <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
-            {messages.map((m) => (
-                <div key={m.id} className="whitespace-pre-wrap">
-                    {m.role === "user" ? "User: " : "AI: "}
-                    {m.content}
-                </div>
-            ))}
+            {messages
+                .filter((m) => m.content)
+                .map((m) => (
+                    <div key={m.id} className="whitespace-pre-wrap">
+                        {m.role === "user" ? "User: " : "AI: "}
+                        {m.content}
+                    </div>
+                ))}
+
+            {data &&
+                data.map((ref, idx) => (
+                    <div key={idx} className="whitespace-pre-wrap">
+                        {JSON.stringify(ref)}
+                    </div>
+                ))}
 
             <form onSubmit={handleSubmit}>
                 <input

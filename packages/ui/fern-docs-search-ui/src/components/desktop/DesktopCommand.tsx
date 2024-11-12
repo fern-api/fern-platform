@@ -21,7 +21,7 @@ export function DesktopCommand({
     initialResults: InitialResultsResponse;
     placeholder?: string;
     onSubmit: (path: string) => void;
-    onAskAI?: () => void;
+    onAskAI?: ({ initialInput }: { initialInput?: string }) => void;
 }): ReactElement {
     const { query, refine } = useSearchBox();
     const { items: rawHits } = useHits<AlgoliaRecord>();
@@ -45,7 +45,11 @@ export function DesktopCommand({
             </Command.Empty>
             <Command.List className="mb-3">
                 <Command.Group className="mt-3">
-                    <Command.Item value="ai-chat" className="flex gap-2 cursor-default" onSelect={() => onAskAI?.()}>
+                    <Command.Item
+                        value="ai-chat"
+                        className="flex gap-2 cursor-default"
+                        onSelect={() => onAskAI?.({ initialInput: query })}
+                    >
                         <MessageCircle className={ICON_CLASS} />
                         <span>
                             Ask AI

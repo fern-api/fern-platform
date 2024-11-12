@@ -11,7 +11,7 @@ interface DesktopInstantSearchProps {
     apiKey: string;
     initialResults: InitialResultsResponse;
     onSubmit: (path: string) => void;
-    onAskAI?: () => void;
+    onAskAI?: ({ initialInput }: { initialInput?: string }) => void;
 }
 
 export function DesktopInstantSearch({
