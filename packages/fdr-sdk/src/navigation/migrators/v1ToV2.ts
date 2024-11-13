@@ -476,6 +476,7 @@ export class FernNavigationV1ToLatest {
         parents: FernNavigation.V1.NavigationNode[],
     ): FernNavigation.ChangelogEntryNode => {
         const slug = FernNavigation.Slug(node.slug);
+        // NOTE: do NOT use title disambiguation key here, since the title may not always be unique
         const canonicalSlug = this.#getAndSetCanonicalSlug(node.pageId, slug);
         const latest: FernNavigation.ChangelogEntryNode = {
             type: "changelogEntry",
