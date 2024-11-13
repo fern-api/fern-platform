@@ -1,5 +1,4 @@
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
-import { isNonNullish } from "@fern-api/ui-core-utils";
 import { AlgoliaRecord } from "../types";
 import { createApiReferenceRecordHttp } from "./create-api-reference-record-http";
 import { createApiReferenceRecordWebSocket } from "./create-api-reference-record-web-socket";
@@ -31,21 +30,15 @@ export function createAlgoliaRecords({
 }: CreateAlgoliaRecordsOptions): AlgoliaRecord[] {
     const collector = FernNavigation.NodeCollector.collect(root);
 
-    const indexablePageNodes = collector.indexablePageSlugs
-        .map((slug) => collector.slugMap.get(slug))
-        .filter(isNonNullish);
+    const pageNodes = Array.from(collector.slugMap.values())
+        .filter(FernNavigation.isPage)
+        // exclude hidden pages
+        .filter((node) => node.hidden !== true)
+        // exclude pages that are noindexed
+        .filter((node) => (FernNavigation.hasMarkdown(node) ? node.noindex !== true : true));
 
-    if (collector.indexablePageSlugs.length !== indexablePageNodes.length) {
-        // eslint-disable-next-line no-console
-        console.warn(
-            `Some indexable page nodes were not found: ${collector.indexablePageSlugs.filter(
-                (slug) => !collector.slugMap.has(slug),
-            )}`,
-        );
-    }
-
-    const markdownNodes = indexablePageNodes.filter(FernNavigation.hasMarkdown);
-    const apiLeafNodes = indexablePageNodes.filter(FernNavigation.isApiLeaf);
+    const markdownNodes = pageNodes.filter(FernNavigation.hasMarkdown);
+    const apiLeafNodes = pageNodes.filter(FernNavigation.isApiLeaf);
 
     const records: AlgoliaRecord[] = [];
 

@@ -14,7 +14,7 @@ export async function setIndexSettings(
                 ...SEARCHABLE_FACET_ATTRIBUTES.map((attribute) => `afterDistinct(searchable(${attribute}))`),
             ],
             unretrievableAttributes: ["org_id", "visible_by", "authed"],
-            attributeForDistinct: "pathname",
+            attributeForDistinct: "canonicalPathname",
             enableRules: true,
         },
     });

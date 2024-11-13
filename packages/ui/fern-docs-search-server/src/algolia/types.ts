@@ -49,6 +49,7 @@ export const BaseRecordSchema = z.object({
     objectID: z.string().describe("The unique identifier of this record"),
     org_id: z.string().describe("The Fern Organization ID"),
     domain: z.string().describe("The domain where the docs instance is hosted"),
+    canonicalPathname: z.string().describe("The canonical pathname of the page (with leading slash)"),
     pathname: z.string().describe("The pathname of the page (with leading slash)"),
     hash: z.string().optional().describe("The anchor link on the page (with leading #)"),
     icon: z.string().optional(),
