@@ -105,6 +105,7 @@ export const FernNumericInput = forwardRef<HTMLInputElement, FernNumericInputPro
                     }}
                     onMouseLeave={handleClearInterval}
                     tabIndex={-1}
+                    disabled={props.disabled || (props.min != null && value != null && value <= toNumber(props.min))}
                 />
             )}
             <input
@@ -131,8 +132,13 @@ export const FernNumericInput = forwardRef<HTMLInputElement, FernNumericInputPro
                     }}
                     onMouseLeave={handleClearInterval}
                     tabIndex={-1}
+                    disabled={props.disabled || (props.max != null && value != null && value >= toNumber(props.max))}
                 />
             )}
         </div>
     );
 });
+
+function toNumber(value: string | number): number {
+    return typeof value === "string" ? parseFloat(value) : value;
+}

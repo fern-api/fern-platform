@@ -1,4 +1,4 @@
-import { TypeDefinition, TypeShapeOrReference, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
+import { PrimitiveType, TypeDefinition, TypeShapeOrReference, unwrapReference } from "@fern-api/fdr-sdk/api-definition";
 import { unknownToString, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { uniq } from "es-toolkit/array";
 import { ReactNode } from "react";
@@ -24,6 +24,10 @@ export function renderTypeShorthandRoot(
             ) : !isResponse ? (
                 <span className="t-danger">Required</span>
             ) : null}
+            {unwrapped.shape.type === "primitive" &&
+                toPrimitiveTypeLabels({ primitive: unwrapped.shape.value }).map((label, index) => (
+                    <code key={index}>{label}</code>
+                ))}
             {unwrapped.default != null && (
                 <span>
                     {"Defaults to "}
@@ -32,6 +36,80 @@ export function renderTypeShorthandRoot(
             )}
         </span>
     );
+}
+
+function toPrimitiveTypeLabels({ primitive }: { primitive: PrimitiveType }): string[] {
+    switch (primitive.type) {
+        case "integer":
+        case "long":
+        case "double":
+            return toPrimitiveTypeLabelsNumeric(primitive, primitive.type === "double");
+        case "string":
+            return toPrimitiveTypeLabelsString(primitive);
+        default:
+            return [];
+    }
+}
+
+function numberToString(value: number, isDouble: boolean = false): string {
+    return isDouble ? String(value) : String(Math.floor(value));
+}
+
+function toPrimitiveTypeLabelsNumeric(
+    {
+        minimum,
+        maximum,
+    }: {
+        minimum: number | undefined;
+        maximum: number | undefined;
+    },
+    isDouble: boolean,
+): string[] {
+    const labels = [];
+
+    if (minimum != null && maximum != null && minimum === maximum) {
+        labels.push(`=${numberToString(minimum, isDouble)}`);
+    } else {
+        if (minimum != null) {
+            labels.push(`>=${numberToString(minimum, isDouble)}`);
+        }
+
+        if (maximum != null) {
+            labels.push(`<=${numberToString(maximum, isDouble)}`);
+        }
+    }
+
+    return labels;
+}
+
+function toPrimitiveTypeLabelsString({
+    minLength,
+    maxLength,
+    regex,
+}: {
+    minLength: number | undefined;
+    maxLength: number | undefined;
+    regex: string | undefined;
+}): string[] {
+    const labels = [];
+
+    if (regex != null) {
+        labels.push(`format: "${regex}"`);
+    }
+
+    if (minLength != null && maxLength != null && minLength === maxLength) {
+        labels.push(`=${numberToString(minLength)} character${minLength === 1 ? "" : "s"}`);
+    } else {
+        if (minLength != null) {
+            labels.push(`>=${numberToString(minLength)} character${minLength === 1 ? "" : "s"}`);
+        }
+
+        if (maxLength != null) {
+            labels.push(`<=${numberToString(maxLength)} character${maxLength === 1 ? "" : "s"}`);
+        }
+    }
+
+    return labels;
 }
 
 // export function renderTypeShorthandFormDataProperty(

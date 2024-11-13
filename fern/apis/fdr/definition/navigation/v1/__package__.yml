@@ -138,6 +138,7 @@ types:
       type: literal<"root">
       version: literal<"v1">
       child: RootChild
+      roles: optional<list<commons.RoleId>>
 
   ProductNode:
     extends:
