@@ -410,13 +410,7 @@ export class FernNavigationV1ToLatest {
     ): FernNavigation.ChangelogNode => {
         const slug = FernNavigation.Slug(node.slug);
         const overviewPageId = node.overviewPageId ? FernNavigation.PageId(node.overviewPageId) : undefined;
-        const canonicalSlug =
-            overviewPageId != null
-                ? this.#getAndSetCanonicalSlug(
-                      [overviewPageId, this.#createTitleDisambiguationKey(node, parents)],
-                      slug,
-                  )
-                : undefined;
+        const canonicalSlug = overviewPageId != null ? this.#getAndSetCanonicalSlug(overviewPageId, slug) : undefined;
         const latest: FernNavigation.ChangelogNode = {
             type: "changelog",
             id: FernNavigation.NodeId(node.id),
@@ -482,10 +476,7 @@ export class FernNavigationV1ToLatest {
         parents: FernNavigation.V1.NavigationNode[],
     ): FernNavigation.ChangelogEntryNode => {
         const slug = FernNavigation.Slug(node.slug);
-        const canonicalSlug = this.#getAndSetCanonicalSlug(
-            [node.pageId, this.#createTitleDisambiguationKey(node, parents)],
-            slug,
-        );
+        const canonicalSlug = this.#getAndSetCanonicalSlug(node.pageId, slug);
         const latest: FernNavigation.ChangelogEntryNode = {
             type: "changelogEntry",
             id: FernNavigation.NodeId(node.id),
