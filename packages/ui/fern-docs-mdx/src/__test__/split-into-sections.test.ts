@@ -80,7 +80,7 @@ Finished.
                 "id": "custom-anchor",
                 "length": 34,
                 "start": 52,
-                "title": "level 1 heading [#custom-anchor]",
+                "title": "level 1 heading",
               },
               "parents": [],
               "type": "section",
