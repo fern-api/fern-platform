@@ -145,3 +145,30 @@ export function modifyRolesForEveryone(
         };
     }
 }
+
+/**
+ * Converts a binary string to its hexadecimal representation.
+ * The binary string is padded with leading zeros to ensure its length is a multiple of 4.
+ * Each group of 4 bits is converted to a single hex digit.
+ *
+ * @param binaryStr - The binary string to convert (e.g. "1010")
+ * @returns The hexadecimal string representation (e.g. "a")
+ *
+ * @example
+ * binaryStringToHex("1010") // Returns "a"
+ * binaryStringToHex("1") // Returns "1" (padded to "0001" internally)
+ * binaryStringToHex("11111111") // Returns "ff"
+ */
+export function binaryStringToHex(binaryStr: string): string {
+    // Pad with 0s to ensure length is multiple of 4
+    const paddedBinary = binaryStr.padStart(Math.ceil(binaryStr.length / 4) * 4, "0");
+
+    let hexStr = "";
+    // Convert each group of 4 bits to hex
+    for (let i = 0; i < paddedBinary.length; i += 4) {
+        const chunk = paddedBinary.slice(i, i + 4);
+        const decimal = parseInt(chunk, 2);
+        hexStr += decimal.toString(16);
+    }
+    return hexStr;
+}
