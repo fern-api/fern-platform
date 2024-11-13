@@ -138,7 +138,7 @@ export function DesktopCommand({
                         {filterOptions.map((filter) => (
                             <Command.Item
                                 key={`${filter.facet}:${filter.value}`}
-                                className="flex gap-2 cursor-default"
+                                className="flex gap-2 cursor-default items-center"
                                 onSelect={() => {
                                     setFilters?.([...filters, { facet: filter.facet, value: filter.value }]);
                                     bounce();
@@ -154,12 +154,13 @@ export function DesktopCommand({
                                 }}
                             >
                                 <ListFilter className={ICON_CLASS} />
-                                <span>
+                                <span className="flex-1">
                                     Search{" "}
                                     {FACET_DISPLAY_MAP[filter.facet]?.[filter.value] ??
                                         FACET_DISPLAY_NAME_MAP[filter.facet]?.[filter.value] ??
                                         filter.value}
                                 </span>
+                                <span className="text-xs text-[#969696] dark:text-white/50">{filter.count}</span>
                             </Command.Item>
                         ))}
                     </Command.Group>

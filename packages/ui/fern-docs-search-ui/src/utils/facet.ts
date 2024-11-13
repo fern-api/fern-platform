@@ -53,6 +53,7 @@ export async function getFacets({
 interface FilterOption {
     facet: string;
     value: string;
+    count: number;
 }
 
 export const FACET_DISPLAY_NAME_MAP: Record<string, Record<string, string>> = {
@@ -94,7 +95,7 @@ export function toFilterOptions(facets: FacetsResponse | undefined, query: strin
             const displayName = FACET_DISPLAY_NAME_MAP[facet]?.[value];
 
             if (value.toLowerCase().includes(query) || displayName?.toLowerCase().includes(query)) {
-                results.push({ facet, value });
+                results.push({ facet, value, count });
             }
         });
     });
