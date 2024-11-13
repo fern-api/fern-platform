@@ -45,7 +45,7 @@
         @apply h-full rounded-none border-default;
     }
 
-    .fern-numeric-input-group:focus-within .fern-numeric-input-step {
+    .fern-numeric-input-group:focus-within .fern-numeric-input-step:not(:disabled) {
         @apply ring-accent hover:bg-tag-primary t-accent hover:t-accent border-primary;
     }
 
