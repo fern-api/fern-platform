@@ -7,6 +7,7 @@ export const SEARCHABLE_ATTRIBUTES = [
     "unordered(content)",
     "endpoint_path",
     "parameter_name",
+    "keywords",
 
     // types (lower priority)
     "availability",
@@ -25,15 +26,23 @@ export const SEARCHABLE_ATTRIBUTES = [
     "hierarchy.h6.title,hierarchy.h5.title,hierarchy.h4.title,hierarchy.h3.title,hierarchy.h2.title,hierarchy.h1.title",
 ] as const;
 
-export const DISTINCT_FACET_ATTRIBUTES = [
+export const FILTERABLE_FACET_ATTRIBUTES = [
     "org_id",
     "domain",
     "visible_by",
     "authed",
-    "type",
     "node_type",
     "product.id",
     "version.id",
+] as const;
+
+export const SEARCHABLE_FACET_ATTRIBUTES = [
+    "type",
+    "api_type",
+    "method",
+    "status_code",
+    "product.title",
+    "version.title",
 ] as const;
 
 export const BaseRecordSchema = z.object({
@@ -41,8 +50,8 @@ export const BaseRecordSchema = z.object({
     org_id: z.string().describe("The Fern Organization ID"),
     domain: z.string().describe("The domain where the docs instance is hosted"),
     pathname: z.string().describe("The pathname of the page (with leading slash)"),
+    hash: z.string().optional().describe("The anchor link on the page (with leading #)"),
     icon: z.string().optional(),
-    hash: z.string().optional(),
     title: z.string().describe("The title of the page, as specified in the frontmatter or docs.yml"),
     availability: z
         .enum(["Stable", "GenerallyAvailable", "InDevelopment", "PreRelease", "Deprecated", "Beta"])
@@ -60,6 +69,7 @@ export const BaseRecordSchema = z.object({
     product: z.object({ id: z.string(), title: z.string(), pathname: z.string().optional() }).optional(),
     version: z.object({ id: z.string(), title: z.string(), pathname: z.string().optional() }).optional(),
     tab: z.object({ title: z.string(), pathname: z.string().optional() }).optional(),
+    keywords: z.array(z.string()).optional().describe("A list of searchable keywords that are relevant to this record"),
     visible_by: z.array(z.string()).describe("The roles that can view this record"),
     authed: z.boolean().describe("Whether this record requires authentication to view"),
 });

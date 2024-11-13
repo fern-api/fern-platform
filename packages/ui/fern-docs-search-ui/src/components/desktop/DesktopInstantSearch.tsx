@@ -1,27 +1,41 @@
-import { InitialResultsResponse } from "@/server/browse-results";
 import { liteClient as algoliasearch } from "algoliasearch/lite";
 import "instantsearch.css/themes/reset.css";
-import { useEffect, useRef, type ReactElement } from "react";
+import { useEffect, useRef, useState, type ReactElement } from "react";
 import { Configure } from "react-instantsearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
 import { DesktopCommand } from "./DesktopCommand";
 
 interface DesktopInstantSearchProps {
+    domain: string;
     appId: string;
     apiKey: string;
-    initialResults: InitialResultsResponse;
     onSubmit: (path: string) => void;
     onAskAI?: ({ initialInput }: { initialInput?: string }) => void;
+    filters?: {
+        "product.title"?: string;
+        "version.title"?: string;
+    };
 }
 
 export function DesktopInstantSearch({
+    domain,
     appId,
     apiKey,
-    initialResults,
     onSubmit,
     onAskAI,
+    filters: initialFilters,
 }: DesktopInstantSearchProps): ReactElement {
     const ref = useRef(algoliasearch(appId, apiKey));
+    const [filters, setFilters] = useState<{ facet: string; value: string }[]>(() => {
+        const toRet: { facet: string; value: string }[] = [];
+        if (initialFilters?.["product.title"]) {
+            toRet.push({ facet: "product.title", value: initialFilters["product.title"] });
+        }
+        if (initialFilters?.["version.title"]) {
+            toRet.push({ facet: "version.title", value: initialFilters["version.title"] });
+        }
+        return toRet;
+    });
 
     useEffect(() => {
         ref.current.setClientApiKey({ apiKey });
@@ -39,8 +53,23 @@ export function DesktopInstantSearch({
                 distinct={true}
                 attributesToSnippet={["description:24", "content:24"]}
                 ignorePlurals
+                filters={
+                    filters.length === 0
+                        ? undefined
+                        : filters.map((filter) => `${filter.facet}:${filter.value}`).join(" AND ")
+                }
+                maxFacetHits={100}
+                maxValuesPerFacet={1000}
             />
-            <DesktopCommand initialResults={initialResults} onSubmit={onSubmit} onAskAI={onAskAI} />
+            <DesktopCommand
+                domain={domain}
+                appId={appId}
+                apiKey={apiKey}
+                onSubmit={onSubmit}
+                onAskAI={onAskAI}
+                filters={filters}
+                setFilters={setFilters}
+            />
         </InstantSearchNext>
     );
 }

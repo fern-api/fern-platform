@@ -3,7 +3,6 @@
 import Chat from "@/components/chat";
 import { DesktopInstantSearch } from "@/components/desktop/DesktopInstantSearch";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { useInitialResults } from "@/hooks/useInitialResults";
 import { ReactElement, useState } from "react";
 import useSWR from "swr";
 
@@ -23,34 +22,24 @@ export function DesktopInstantSearchClient({ appId, domain }: { appId: string; d
                 .then((data) => data.apiKey),
     );
 
-    const { initialResults } = useInitialResults(domain);
-
     if (!apiKey) {
         return false;
     }
 
     return (
         <>
-            {initialResults.versions.length > 0 && (
-                <select>
-                    {initialResults.versions.map((version) => (
-                        <option key={version.title} value={version.title}>
-                            {version.title}
-                        </option>
-                    ))}
-                </select>
-            )}
-            <DesktopInstantSearch
-                appId={appId}
-                apiKey={apiKey}
-                onSubmit={handleSubmit}
-                onAskAI={({ initialInput }) => {
-                    setInitialInput(initialInput);
-                    setIsChatOpen(true);
-                }}
-                // disabled={isLoading || initialResultsLoading || !apiKey}
-                initialResults={initialResults}
-            />
+            <div className="max-h-[50vh] overflow-hidden flex flex-col">
+                <DesktopInstantSearch
+                    domain={domain}
+                    appId={appId}
+                    apiKey={apiKey}
+                    onSubmit={handleSubmit}
+                    onAskAI={({ initialInput }) => {
+                        setInitialInput(initialInput);
+                        setIsChatOpen(true);
+                    }}
+                />
+            </div>
             <Dialog open={isChatOpen} onOpenChange={setIsChatOpen}>
                 <DialogContent>
                     <Chat initialInput={initialInput} domain={domain} />

@@ -96,7 +96,7 @@
     "micromatch": "4.0.8",
     "postcss": "8.4.31",
     "esbuild": "0.20.2",
-    "instantsearch.js": "4.75.3",
+    "instantsearch.js": "4.75.4",
     "next": "npm:@fern-api/next@14.2.9-fork.2",
     "markdown-to-jsx": "7.4.0",
     "jsonpath-plus": "10.0.0",

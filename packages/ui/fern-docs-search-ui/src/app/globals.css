@@ -81,6 +81,12 @@ body {
     }
 }
 
+@layer utilities {
+    .mask-grad-y-3 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 12px, black calc(100% - 12px), transparent 100%);
+    }
+}
+
 @layer components {
     [cmdk-group-heading] {
         @apply text-xs font-semibold text-[#969696] dark:text-white/50 px-4 my-1;
@@ -88,5 +94,9 @@ body {
 
     [cmdk-item] {
         @apply mx-2 p-2 rounded-md data-[selected=true]:bg-[#CCC]/30 dark:data-[selected=true]:bg-white/10 text-left;
+    }
+
+    [cmdk-group]:not(:first-child) {
+        @apply mt-3;
     }
 }

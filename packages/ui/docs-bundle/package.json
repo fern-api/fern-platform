@@ -24,7 +24,7 @@
     "lint": "pnpm lint:eslint && pnpm lint:style"
   },
   "dependencies": {
-    "@algolia/requester-fetch": "^5.10.2",
+    "@algolia/requester-fetch": "^5.13.0",
     "@aws-sdk/client-s3": "^3.685.0",
     "@aws-sdk/s3-request-presigner": "^3.685.0",
     "@fern-api/fdr-sdk": "workspace:*",
@@ -44,7 +44,7 @@
     "@types/qs": "6.9.14",
     "@vercel/kv": "^2.0.0",
     "@workos-inc/node": "^7.29.0",
-    "algoliasearch": "^5.10.2",
+    "algoliasearch": "^5.13.0",
     "cohere-ai": "^7.9.5",
     "cssnano": "^6.0.3",
     "es-toolkit": "^1.24.0",

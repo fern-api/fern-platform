@@ -1,7 +1,5 @@
 import { tz } from "@date-fns/tz";
-import { ParameterRecord } from "@fern-ui/fern-docs-search-server/types";
 import { HttpMethodTag } from "@fern-ui/fern-http-method-tag";
-import { Hit } from "algoliasearch/lite";
 import { format } from "date-fns";
 import { Fragment, ReactElement } from "react";
 import { Highlight, Snippet } from "react-instantsearch";
@@ -46,7 +44,7 @@ function HierarchyBreadcrumb({
 
 function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
     return (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 min-w-0 shrink">
             <Highlight
                 className="line-clamp-1"
                 attribute="title"
@@ -71,7 +69,7 @@ function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
 function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement {
     const datestring = format(utc(hit.date), "MMM d, yyyy");
     return (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 min-w-0 shrink">
             <Highlight
                 className="line-clamp-1"
                 attribute="title"
@@ -104,7 +102,7 @@ function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactE
               ? "description"
               : undefined;
     return (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 min-w-0 shrink">
             <Highlight
                 className="line-clamp-1"
                 attribute="title"
@@ -113,9 +111,9 @@ function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactE
                     highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
                 }}
             />
-            <div className="flex items-baseline gap-1">
-                <HttpMethodTag method={hit.method} size="sm" />
-                <span className="text-xs font-mono line-clamp-1 text-[#969696] dark:text-white/50">
+            <div className="inline-flex items-baseline gap-1">
+                <HttpMethodTag method={hit.method} size="sm" className="shrink-0" />
+                <span className="text-xs font-mono line-clamp-2 text-[#969696] dark:text-white/50 break-words shrink">
                     {hit.endpoint_path}
                 </span>
             </div>
@@ -133,10 +131,6 @@ function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactE
     );
 }
 
-function ParameterHitContent({ hit }: { hit: MarkRequired<ParameterRecord, "type"> }): ReactElement {
-    return <div>{hit.parameter_name}</div>;
-}
-
 export function HitContent({ hit }: { hit: MarkRequired<AlgoliaRecordHit, "type"> }): ReactElement | false {
     switch (hit.type) {
         case "markdown":
@@ -146,7 +140,6 @@ export function HitContent({ hit }: { hit: MarkRequired<AlgoliaRecordHit, "type"
         case "api-reference":
             return <ApiReferenceHitContent hit={hit as ApiReferenceRecordHit} />;
         case "parameter":
-            return <ParameterHitContent hit={hit as MarkRequired<Hit<ParameterRecord>, "type">} />;
         case "navigation":
             return false;
         default:

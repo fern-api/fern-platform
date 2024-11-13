@@ -8,15 +8,32 @@ interface CreateWebSocketEndpointBaseRecordOptions {
     node: FernNavigation.WebSocketNode;
     base: BaseRecord;
     endpoint: ApiDefinition.WebSocketChannel;
+    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }
 
 export function createEndpointBaseRecordWebSocket({
     base,
     node,
     endpoint,
+    types,
 }: CreateWebSocketEndpointBaseRecordOptions): EndpointBaseRecord {
     const prepared = maybePrepareMdxContent(toDescription(endpoint.description));
     const code_snippets = flatten(compact([base.code_snippets, prepared.code_snippets]));
+
+    const keywords: string[] = [...(base.keywords ?? [])];
+
+    ApiDefinition.Transformer.with({
+        TypeShape: (type) => {
+            if (type.type === "alias" && type.value.type === "id") {
+                const definition = types[type.value.id];
+                if (definition != null) {
+                    keywords.push(definition.name);
+                }
+            }
+            return type;
+        },
+    }).webSocketChannel(endpoint, endpoint.id);
+
     return {
         ...base,
         api_type: "websocket",
@@ -32,5 +49,6 @@ export function createEndpointBaseRecordWebSocket({
             url: environment.baseUrl,
         })),
         default_environment_id: endpoint.defaultEnvironment,
+        keywords: keywords.length > 0 ? keywords : undefined,
     };
 }

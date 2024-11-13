@@ -8,15 +8,32 @@ interface CreateEndpointBaseRecordOptions {
     node: FernNavigation.EndpointNode;
     base: BaseRecord;
     endpoint: ApiDefinition.EndpointDefinition;
+    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }
 
 export function createEndpointBaseRecordHttp({
     base,
     node,
     endpoint,
+    types,
 }: CreateEndpointBaseRecordOptions): EndpointBaseRecord {
     const prepared = maybePrepareMdxContent(toDescription(endpoint.description));
     const code_snippets = flatten(compact([base.code_snippets, prepared.code_snippets]));
+
+    const keywords: string[] = [...(base.keywords ?? [])];
+
+    ApiDefinition.Transformer.with({
+        TypeShape: (type) => {
+            if (type.type === "alias" && type.value.type === "id") {
+                const definition = types[type.value.id];
+                if (definition != null) {
+                    keywords.push(definition.name);
+                }
+            }
+            return type;
+        },
+    }).endpoint(endpoint, endpoint.id);
+
     return {
         ...base,
         api_type: "http",
@@ -36,5 +53,6 @@ export function createEndpointBaseRecordHttp({
             url: environment.baseUrl,
         })),
         default_environment_id: endpoint.defaultEnvironment,
+        keywords: keywords.length > 0 ? keywords : undefined,
     };
 }

@@ -94,7 +94,7 @@ export function createAlgoliaRecords({
                 return;
             }
 
-            const endpointBase = createEndpointBaseRecordHttp({ base, node, endpoint });
+            const endpointBase = createEndpointBaseRecordHttp({ base, node, endpoint, types: apiDefinition.types });
             records.push(createApiReferenceRecordHttp({ endpointBase, endpoint }));
             return;
         }
@@ -107,7 +107,12 @@ export function createAlgoliaRecords({
                 return;
             }
 
-            const endpointBase = createEndpointBaseRecordWebSocket({ base, node, endpoint });
+            const endpointBase = createEndpointBaseRecordWebSocket({
+                base,
+                node,
+                endpoint,
+                types: apiDefinition.types,
+            });
             records.push(createApiReferenceRecordWebSocket({ endpointBase }));
             return;
         }
@@ -120,7 +125,7 @@ export function createAlgoliaRecords({
                 return;
             }
 
-            const endpointBase = createEndpointBaseRecordWebhook({ base, node, endpoint });
+            const endpointBase = createEndpointBaseRecordWebhook({ base, node, endpoint, types: apiDefinition.types });
             records.push(createApiReferenceRecordWebhook({ endpointBase, endpoint }));
             return;
         }

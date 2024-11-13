@@ -1,5 +1,5 @@
 import { Algoliasearch } from "algoliasearch";
-import { DISTINCT_FACET_ATTRIBUTES, SEARCHABLE_ATTRIBUTES } from "./types";
+import { FILTERABLE_FACET_ATTRIBUTES, SEARCHABLE_ATTRIBUTES, SEARCHABLE_FACET_ATTRIBUTES } from "./types";
 
 export async function setIndexSettings(
     client: Algoliasearch,
@@ -9,9 +9,10 @@ export async function setIndexSettings(
         indexName,
         indexSettings: {
             searchableAttributes: [...SEARCHABLE_ATTRIBUTES],
-            attributesForFaceting: DISTINCT_FACET_ATTRIBUTES.map(
-                (attribute) => `afterDistinct(filterOnly(${attribute}))`,
-            ),
+            attributesForFaceting: [
+                ...FILTERABLE_FACET_ATTRIBUTES.map((attribute) => `afterDistinct(filterOnly(${attribute}))`),
+                ...SEARCHABLE_FACET_ATTRIBUTES.map((attribute) => `afterDistinct(searchable(${attribute}))`),
+            ],
             unretrievableAttributes: ["org_id", "visible_by", "authed"],
             attributeForDistinct: "pathname",
             enableRules: true,

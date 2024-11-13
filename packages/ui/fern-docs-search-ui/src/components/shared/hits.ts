@@ -1,5 +1,4 @@
-import { InitialResultsResponse } from "@/server/browse-results";
-import { groupBy, last, uniq } from "es-toolkit/array";
+import { last, uniq } from "es-toolkit/array";
 import { AlgoliaRecordHit } from "../types";
 
 export interface GroupedHits {
@@ -14,36 +13,8 @@ export interface GroupedHits {
 
 const DEFAULT_SEGMENT = "__internal_segment_default__";
 
-export function generateHits(items: AlgoliaRecordHit[], initialResults?: InitialResultsResponse): GroupedHits[] {
-    if (items.length === 0) {
-        if (initialResults == null) {
-            return [];
-        }
-
-        return initialHits(initialResults);
-    }
-
+export function generateHits(items: AlgoliaRecordHit[]): GroupedHits[] {
     return groupHits(items);
-}
-
-function initialHits(initialResults: InitialResultsResponse): GroupedHits[] {
-    if (
-        initialResults.tabs.length === 0 &&
-        initialResults.products.length === 0 &&
-        initialResults.versions.length === 0
-    ) {
-        return [];
-    }
-
-    const sections = Object.entries(groupBy(initialResults.tabs, (tab) => tab.version ?? DEFAULT_SEGMENT));
-    return sections.map(([segment, tabs]) => ({
-        title: segment === DEFAULT_SEGMENT ? undefined : segment,
-        hits: tabs.map((tab) => ({
-            title: tab.title,
-            path: tab.pathname,
-            icon: tab.icon,
-        })),
-    }));
 }
 
 function groupHits(items: AlgoliaRecordHit[]): GroupedHits[] {
