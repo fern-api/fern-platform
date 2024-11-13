@@ -4,7 +4,7 @@ import { HttpMethodTag } from "@fern-ui/fern-http-method-tag";
 import { Command } from "cmdk";
 import { FileText, History, ListFilter, MessageCircle } from "lucide-react";
 import { Dispatch, ReactElement, ReactNode, SetStateAction, useRef } from "react";
-import { useInfiniteHits, useSearchBox } from "react-instantsearch";
+import { useHits, useSearchBox } from "react-instantsearch";
 import useSWRImmutable from "swr/immutable";
 import { MarkRequired } from "ts-essentials";
 import { RemoteIcon } from "../icons/RemoteIcon";
@@ -57,7 +57,7 @@ export function DesktopCommand({
 
     const { query, refine } = useSearchBox();
 
-    const { items } = useInfiniteHits<AlgoliaRecord>();
+    const { items } = useHits<AlgoliaRecord>();
 
     const filtersString =
         filters.length > 0
@@ -71,7 +71,6 @@ export function DesktopCommand({
         getFacets({ appId, apiKey, filters: filtersString }),
     );
 
-    // const items = useDeferredValue(rawHits);
     const groups = generateHits(items);
 
     const filterOptions = toFilterOptions(facets, query);
