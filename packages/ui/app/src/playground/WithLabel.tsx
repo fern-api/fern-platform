@@ -8,10 +8,10 @@ import {
 import { FernButton, FernTooltip } from "@fern-ui/components";
 import cn from "clsx";
 import { HelpCircle, Xmark } from "iconoir-react";
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, ReactNode } from "react";
 import { EndpointAvailabilityTag } from "../api-reference/endpoints/EndpointAvailabilityTag";
 import { Markdown } from "../mdx/Markdown";
-import { renderTypeShorthand } from "../type-shorthand";
+import { renderTypeShorthandRoot } from "../type-shorthand";
 import { shouldRenderInline } from "./utils";
 
 interface WithLabelProps {
@@ -48,7 +48,7 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
             isRequired={!unwrapped.isOptional}
             isList={unwrapped.shape.type === "list"}
             isBoolean={unwrapped.shape.type === "primitive" && unwrapped.shape.value.type === "boolean"}
-            typeShorthand={renderTypeShorthand(unwrapped.shape, undefined, types)}
+            typeShorthand={renderTypeShorthandRoot(unwrapped.shape, types)}
         >
             {children}
         </WithLabelInternal>
@@ -62,7 +62,7 @@ interface WithLabelInternalProps extends WithAvailability, WithDescription {
     onRemove: () => void;
     renderInline?: boolean;
     isRequired: boolean;
-    typeShorthand: string;
+    typeShorthand: ReactNode;
     isList?: boolean;
     isBoolean?: boolean;
 }
@@ -100,7 +100,6 @@ export const WithLabelInternal: FC<PropsWithChildren<WithLabelInternalProps>> = 
 
                     {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
                     <span className="whitespace-nowrap text-xs">
-                        {isRequired && <span className="t-danger">required </span>}
                         <span className="t-muted">{typeShorthand}</span>
                     </span>
 
