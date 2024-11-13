@@ -9,11 +9,6 @@ import { z } from "zod";
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-const requestSchema = z.object({
-    query: z.string(),
-    domain: z.string(),
-});
-
 const system = `You are a helpful assistant acting as the users' second brain.
 Use tools on every request.
 Be sure to search your knowledge base before answering any questions.
@@ -25,8 +20,13 @@ If you are unsure, use the getInformation tool and you can use common sense to r
 Use your abilities as a reasoning machine to answer questions based on the information you do have.`;
 
 export async function POST(request: Request): Promise<Response> {
-    const body = await request.json();
-    const { query, domain } = requestSchema.parse(body);
+    const domain = new URL(request.url).searchParams.get("domain");
+
+    if (!domain) {
+        return new Response("Domain is required", { status: 400 });
+    }
+
+    const { messages } = await request.json();
 
     const anthropic = createAnthropic({
         apiKey: process.env.ANTHROPIC_API_KEY,
@@ -42,7 +42,7 @@ export async function POST(request: Request): Promise<Response> {
     const result = await streamText({
         model: mediumModel,
         system,
-        prompt: query,
+        messages,
         maxSteps: 10,
         maxRetries: 3,
         tools: {

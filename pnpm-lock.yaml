@@ -2376,6 +2376,9 @@ importers:
       '@fern-ui/chatbot':
         specifier: workspace:*
         version: link:../chatbot
+      '@fern-ui/components':
+        specifier: workspace:*
+        version: link:../components
       '@fern-ui/fern-docs-search-server':
         specifier: workspace:*
         version: link:../fern-docs-search-server
@@ -2449,6 +2452,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.19(postcss@8.4.31)
+      cssnano:
+        specifier: ^6.0.3
+        version: 6.1.2(postcss@8.4.31)
       next:
         specifier: npm:@fern-api/next@14.2.9-fork.2
         version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'

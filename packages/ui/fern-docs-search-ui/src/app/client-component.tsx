@@ -1,14 +1,15 @@
 "use client";
 
+import Chat from "@/components/chat";
 import { DesktopInstantSearch } from "@/components/desktop/DesktopInstantSearch";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useInitialResults } from "@/hooks/useInitialResults";
-import { ChatbotModal } from "@fern-ui/chatbot";
 import { ReactElement, useState } from "react";
 import useSWR from "swr";
 
 export function DesktopInstantSearchClient({ appId, domain }: { appId: string; domain: string }): ReactElement | false {
     const [isChatOpen, setIsChatOpen] = useState(false);
+    const [initialInput, setInitialInput] = useState<string | undefined>(undefined);
 
     const handleSubmit = (path: string) => {
         window.open(`https://${domain}${path}`, "_blank", "noopener,noreferrer");
@@ -23,10 +24,6 @@ export function DesktopInstantSearchClient({ appId, domain }: { appId: string; d
     );
 
     const { initialResults } = useInitialResults(domain);
-
-    const chatStream = async (_message: string, _conversationId: string) => {
-        return [undefined, new AbortController()] as const;
-    };
 
     if (!apiKey) {
         return false;
@@ -47,13 +44,16 @@ export function DesktopInstantSearchClient({ appId, domain }: { appId: string; d
                 appId={appId}
                 apiKey={apiKey}
                 onSubmit={handleSubmit}
-                onAskAI={() => setIsChatOpen(true)}
+                onAskAI={({ initialInput }) => {
+                    setInitialInput(initialInput);
+                    setIsChatOpen(true);
+                }}
                 // disabled={isLoading || initialResultsLoading || !apiKey}
                 initialResults={initialResults}
             />
             <Dialog open={isChatOpen} onOpenChange={setIsChatOpen}>
                 <DialogContent>
-                    <ChatbotModal chatStream={chatStream} />
+                    <Chat initialInput={initialInput} domain={domain} />
                 </DialogContent>
             </Dialog>
         </>
