@@ -140,7 +140,6 @@ export function HitContent({ hit }: { hit: MarkRequired<AlgoliaRecordHit, "type"
         case "api-reference":
             return <ApiReferenceHitContent hit={hit as ApiReferenceRecordHit} />;
         case "parameter":
-        case "navigation":
             return false;
         default:
             throw new UnreachableCaseError(hit);
