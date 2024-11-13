@@ -1,1 +1,261 @@
-[]
+[
+  {
+    "authed": false,
+    "breadcrumb": [],
+    "domain": "test.com",
+    "node_type": "root",
+    "objectID": "test:test.com:root__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api",
+    "title": "Documentation",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [],
+    "domain": "test.com",
+    "icon": "icon-1",
+    "node_type": "tab",
+    "objectID": "test:test.com:root.uv.tab-1__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/tab-1",
+    "title": "Tab 1",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [],
+    "domain": "test.com",
+    "node_type": "section",
+    "objectID": "test:test.com:root.uv.tab-1.tab-1.section-1__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/tab-1/section-1",
+    "tab": {
+      "pathname": "/docs/api/tab-1",
+      "title": "Tab 1",
+    },
+    "title": "Section 1",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [
+      {
+        "pathname": "/docs/api/tab-1/section-1",
+        "title": "Section 1",
+      },
+    ],
+    "domain": "test.com",
+    "node_type": "page",
+    "objectID": "test:test.com:root.uv.tab-1.tab-1.section-1.page-1__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/tab-1/section-1/page-1",
+    "tab": {
+      "pathname": "/docs/api/tab-1",
+      "title": "Tab 1",
+    },
+    "title": "Page 1",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [
+      {
+        "pathname": "/docs/api/tab-1/section-1",
+        "title": "Section 1",
+      },
+    ],
+    "domain": "test.com",
+    "node_type": "page",
+    "objectID": "test:test.com:root.uv.tab-1.tab-1.section-1.page-2__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/page-2",
+    "tab": {
+      "pathname": "/docs/api/tab-1",
+      "title": "Tab 1",
+    },
+    "title": "Page 2",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [],
+    "domain": "test.com",
+    "node_type": "section",
+    "objectID": "test:test.com:root.uv.tab-1.tab-1.section-2__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/tab-1/section-2",
+    "tab": {
+      "pathname": "/docs/api/tab-1",
+      "title": "Tab 1",
+    },
+    "title": "Introduction",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [
+      {
+        "pathname": "/docs/api/tab-1/section-2",
+        "title": "Introduction",
+      },
+    ],
+    "domain": "test.com",
+    "node_type": "page",
+    "objectID": "test:test.com:root.uv.tab-1.tab-1.section-2.page-3__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/section-2",
+    "tab": {
+      "pathname": "/docs/api/tab-1",
+      "title": "Tab 1",
+    },
+    "title": "Page 3",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [
+      {
+        "pathname": "/docs/api/tab-1/section-2",
+        "title": "Introduction",
+      },
+    ],
+    "domain": "test.com",
+    "node_type": "page",
+    "objectID": "test:test.com:root.uv.tab-1.tab-1.section-2.page-4__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/tab-1/section-2/page-4",
+    "tab": {
+      "pathname": "/docs/api/tab-1",
+      "title": "Tab 1",
+    },
+    "title": "Page 4",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [
+      {
+        "pathname": "/docs/api/tab-1",
+        "title": "Section 3",
+      },
+    ],
+    "domain": "test.com",
+    "node_type": "page",
+    "objectID": "test:test.com:root.uv.tab-1.tab-1.section-3.page-5__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/tab-1/page-5",
+    "tab": {
+      "pathname": "/docs/api/tab-1",
+      "title": "Tab 1",
+    },
+    "title": "Page 5",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [],
+    "domain": "test.com",
+    "icon": "icon-2",
+    "node_type": "tab",
+    "objectID": "test:test.com:root.uv.tab-2__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/tab-2",
+    "title": "Tab 2",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [
+      {
+        "pathname": "/docs/api/tab-2",
+        "title": "Section 4",
+      },
+    ],
+    "domain": "test.com",
+    "node_type": "page",
+    "objectID": "test:test.com:root.uv.tab-2.tab-2.section-4.page-7__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/tab-2/page-7",
+    "tab": {
+      "pathname": "/docs/api/tab-2",
+      "title": "Tab 2",
+    },
+    "title": "Page 7",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [
+      {
+        "pathname": "/docs/api/tab-2",
+        "title": "Section 4",
+      },
+    ],
+    "domain": "test.com",
+    "node_type": "page",
+    "objectID": "test:test.com:root.uv.tab-2.tab-2.section-4.page-8__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/tab-2/page-8",
+    "tab": {
+      "pathname": "/docs/api/tab-2",
+      "title": "Tab 2",
+    },
+    "title": "Page 8",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [],
+    "domain": "test.com",
+    "node_type": "section",
+    "objectID": "test:test.com:root.uv.tab-2.tab-2.section-5__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/tab-2/section-5",
+    "tab": {
+      "pathname": "/docs/api/tab-2",
+      "title": "Tab 2",
+    },
+    "title": "Section 5",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+]

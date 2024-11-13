@@ -17,15 +17,17 @@ const PreviewUrlAuthConfigSchema = z.record(PreviewUrlAuthSchema);
 
 type PreviewUrlAuthConfig = z.infer<typeof PreviewUrlAuthConfigSchema>;
 
-export async function getPreviewUrlAuthConfig(currentDomain: string): Promise<PreviewUrlAuth | undefined> {
-    const previewDomain = isPreviewDomain(currentDomain);
-    const org = extractOrgFromPreview(currentDomain);
-    if (!previewDomain || !org) {
+export interface Metadata {
+    isPreviewUrl: boolean;
+    orgId: string;
+}
+
+export async function getPreviewUrlAuthConfig(metadata: Metadata): Promise<PreviewUrlAuth | undefined> {
+    if (!metadata.isPreviewUrl) {
         return undefined;
     }
-
     const config = await get<PreviewUrlAuthConfig>("authed-previews");
-    return config?.[org];
+    return config?.[metadata.orgId];
 }
 
 export function isPreviewDomain(domain: string): boolean {

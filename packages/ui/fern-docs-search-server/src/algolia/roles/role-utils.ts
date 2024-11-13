@@ -160,6 +160,10 @@ export function modifyRolesForEveryone(
  * binaryStringToHex("11111111") // Returns "ff"
  */
 export function binaryStringToHex(binaryStr: string): string {
+    if (binaryStr.length === 0) {
+        return "0";
+    }
+
     // Pad with 0s to ensure length is multiple of 4
     const paddedBinary = binaryStr.padStart(Math.ceil(binaryStr.length / 4) * 4, "0");
 
@@ -171,4 +175,8 @@ export function binaryStringToHex(binaryStr: string): string {
         hexStr += decimal.toString(16);
     }
     return hexStr;
+}
+
+export function removeLeadingZeros(hexStr: string): string {
+    return hexStr.replace(/^0+/, "");
 }

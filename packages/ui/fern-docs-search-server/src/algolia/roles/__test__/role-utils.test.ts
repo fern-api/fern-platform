@@ -74,10 +74,10 @@ describe("flipAndOrToOrAnd", () => {
                 ]),
             ),
         ).toEqual([
-            ["b", "d"],
             ["a", "c"],
             ["b", "c"],
             ["a", "d"],
+            ["b", "d"],
         ]);
     });
 

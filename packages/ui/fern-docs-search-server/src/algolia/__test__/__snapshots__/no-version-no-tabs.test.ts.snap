@@ -1,1 +1,139 @@
-[]
+[
+  {
+    "authed": false,
+    "breadcrumb": [],
+    "domain": "test.com",
+    "node_type": "root",
+    "objectID": "test:test.com:root__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api",
+    "title": "Documentation",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [],
+    "domain": "test.com",
+    "node_type": "section",
+    "objectID": "test:test.com:root.uv.section-1__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/section-1",
+    "title": "Section 1",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [
+      {
+        "pathname": "/docs/api/section-1",
+        "title": "Section 1",
+      },
+    ],
+    "domain": "test.com",
+    "node_type": "page",
+    "objectID": "test:test.com:root.uv.section-1.page-1__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/section-1/page-1",
+    "title": "Page 1",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [
+      {
+        "pathname": "/docs/api/section-1",
+        "title": "Section 1",
+      },
+    ],
+    "domain": "test.com",
+    "node_type": "page",
+    "objectID": "test:test.com:root.uv.section-1.page-2__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/page-2",
+    "title": "Page 2",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [],
+    "domain": "test.com",
+    "node_type": "section",
+    "objectID": "test:test.com:root.uv.section-2__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/section-2",
+    "title": "Introduction",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [
+      {
+        "pathname": "/docs/api/section-2",
+        "title": "Introduction",
+      },
+    ],
+    "domain": "test.com",
+    "node_type": "page",
+    "objectID": "test:test.com:root.uv.section-2.page-4__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/section-2/page-4",
+    "title": "Page 4",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [
+      {
+        "pathname": "/docs/api",
+        "title": "Section 3",
+      },
+    ],
+    "domain": "test.com",
+    "node_type": "page",
+    "objectID": "test:test.com:root.uv.section-3.page-5__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/page-5",
+    "title": "Page 5",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [
+      {
+        "pathname": "/docs/api",
+        "title": "Section 3",
+      },
+    ],
+    "domain": "test.com",
+    "node_type": "page",
+    "objectID": "test:test.com:root.uv.section-3.page-6__navigation_record",
+    "org_id": "test",
+    "pathname": "/docs/api/page-6",
+    "title": "Page 6",
+    "type": "navigation",
+    "visible_by": [
+      "0",
+    ],
+  },
+]

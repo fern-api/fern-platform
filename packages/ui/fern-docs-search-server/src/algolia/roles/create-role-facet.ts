@@ -1,14 +1,14 @@
 import { EVERYONE_ROLE } from "@fern-ui/fern-docs-utils";
-import { binaryStringToHex } from "./role-utils";
+import { binaryStringToHex, removeLeadingZeros } from "./role-utils";
 
 /**
  * Create a facet for the given roles.
  *
  * This is used to create the `visible_by` facet in the Algolia record.
  *
- * everyone -> role/everyone
- * a -> role/a
- * [a, b] -> role/a/b
+ * everyone -> 0
+ * a -> 1
+ * [a, b] -> 3
  */
 export function createRoleFacet(roles: string[], roleIndexes: Map<string, number>): string {
     if (roles[0] === EVERYONE_ROLE) {
@@ -27,5 +27,6 @@ export function createRoleFacet(roles: string[], roleIndexes: Map<string, number
         }
     });
 
-    return binaryStringToHex(encodedString);
+    // can add `role/` prefix if needed, but please update tests
+    return removeLeadingZeros(binaryStringToHex(encodedString));
 }
