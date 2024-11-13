@@ -5,6 +5,7 @@ import { Command } from "cmdk";
 import { FileText, History, ListFilter, MessageCircle } from "lucide-react";
 import { Dispatch, ReactElement, ReactNode, SetStateAction, useRef } from "react";
 import { useHits, useSearchBox } from "react-instantsearch";
+import { preload } from "swr";
 import useSWRImmutable from "swr/immutable";
 import { MarkRequired } from "ts-essentials";
 import { RemoteIcon } from "../icons/RemoteIcon";
@@ -30,6 +31,13 @@ function toPlaceholder(filters: { facet: string; value: string }[]): string {
     }
 
     return `Search ${filters.map((filter) => FACET_DISPLAY_NAME_MAP[filter.facet]?.[filter.value] ?? filter.value).join(", ")}`;
+}
+
+function toFiltersString(filters: { facet: string; value: string }[]): string {
+    return filters
+        .map((filter) => `${filter.facet}:"${filter.value}"`)
+        .sort()
+        .join(" AND ");
 }
 
 export function DesktopCommand({
@@ -59,16 +67,8 @@ export function DesktopCommand({
 
     const { items } = useHits<AlgoliaRecord>();
 
-    const filtersString =
-        filters.length > 0
-            ? filters
-                  .map((filter) => `${filter.facet}:"${filter.value}"`)
-                  .sort()
-                  .join(" AND ")
-            : undefined;
-
-    const { data: facets } = useSWRImmutable(`${domain}:${filtersString ?? ""}`, () =>
-        getFacets({ appId, apiKey, filters: filtersString }),
+    const { data: facets } = useSWRImmutable([domain, toFiltersString(filters)], ([_domain, filters]) =>
+        getFacets({ appId, apiKey, filters }),
     );
 
     const groups = generateHits(items);
@@ -140,14 +140,17 @@ export function DesktopCommand({
                                 key={`${filter.facet}:${filter.value}`}
                                 className="flex gap-2 cursor-default"
                                 onSelect={() => {
-                                    setFilters?.([
-                                        ...filters,
-                                        {
-                                            facet: filter.facet,
-                                            value: filter.value,
-                                        },
-                                    ]);
+                                    setFilters?.([...filters, { facet: filter.facet, value: filter.value }]);
                                     bounce();
+                                }}
+                                onMouseOver={() => {
+                                    const filterString = toFiltersString([
+                                        ...filters,
+                                        { facet: filter.facet, value: filter.value },
+                                    ]);
+                                    preload([domain, filterString], ([_domain, filters]) =>
+                                        getFacets({ appId, apiKey, filters }),
+                                    );
                                 }}
                             >
                                 <ListFilter className={ICON_CLASS} />
