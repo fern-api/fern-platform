@@ -62,7 +62,7 @@ export function DesktopCommand({
     const filtersString =
         filters.length > 0
             ? filters
-                  .map((filter) => `${filter.facet}:${filter.value}`)
+                  .map((filter) => `${filter.facet}:"${filter.value}"`)
                   .sort()
                   .join(" AND ")
             : undefined;

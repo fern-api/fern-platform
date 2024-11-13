@@ -9,7 +9,6 @@ import { createEndpointBaseRecordHttp } from "./create-endpoint-record-http";
 import { createEndpointBaseRecordWebSocket } from "./create-endpoint-record-web-socket";
 import { createEndpointBaseRecordWebhook } from "./create-endpoint-record-webhook";
 import { createMarkdownRecords } from "./create-markdown-records";
-import { createNavigationRecord } from "./create-navigation-record";
 
 interface CreateAlgoliaRecordsOptions {
     root: FernNavigation.RootNode;
@@ -124,21 +123,21 @@ export function createAlgoliaRecords({
         }
     });
 
-    const distinctSlugs = new Set<string>();
-    collector.getNodesInOrder().forEach((node) => {
-        if (!FernNavigation.hasMetadata(node)) {
-            return;
-        }
+    // const distinctSlugs = new Set<string>();
+    // collector.getNodesInOrder().forEach((node) => {
+    //     if (!FernNavigation.hasMetadata(node)) {
+    //         return;
+    //     }
 
-        if (distinctSlugs.has(node.slug)) {
-            return;
-        }
+    //     if (distinctSlugs.has(node.slug)) {
+    //         return;
+    //     }
 
-        distinctSlugs.add(node.slug);
+    //     distinctSlugs.add(node.slug);
 
-        const base = createBaseRecord({ node, parents: collector.getParents(node.id) ?? [], domain, org_id, authed });
-        records.push(createNavigationRecord({ base, node_type: node.type }));
-    });
+    //     const base = createBaseRecord({ node, parents: collector.getParents(node.id) ?? [], domain, org_id, authed });
+    //     records.push(createNavigationRecord({ base, node_type: node.type }));
+    // });
 
     // remove all undefined values
     // TODO: trim or filter out any record that is > 100kb

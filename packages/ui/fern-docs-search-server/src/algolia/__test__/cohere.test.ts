@@ -7,6 +7,7 @@ const base: BaseRecord = {
     objectID: "test",
     org_id: "test",
     domain: "test",
+    canonicalPathname: "/test",
     pathname: "/test",
     title: "test",
     breadcrumb: [],

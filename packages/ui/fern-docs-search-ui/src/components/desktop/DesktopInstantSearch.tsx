@@ -56,7 +56,7 @@ export function DesktopInstantSearch({
                 filters={
                     filters.length === 0
                         ? undefined
-                        : filters.map((filter) => `${filter.facet}:${filter.value}`).join(" AND ")
+                        : filters.map((filter) => `${filter.facet}:"${filter.value}"`).join(" AND ")
                 }
                 maxFacetHits={100}
                 maxValuesPerFacet={1000}

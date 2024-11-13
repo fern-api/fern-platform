@@ -89,10 +89,10 @@ const HierarchySchema = z
         "The hierarchy of this record, within a markdown document. This will be useful for nesting markdown records under other markdown records",
     );
 
-export const NavigationRecordSchema = BaseRecordSchema.extend({
-    type: z.literal("navigation"),
-    node_type: z.string(),
-}).describe("A navigation record is a record that doesn't contain searchable content, but is useful for navigation");
+// export const NavigationRecordSchema = BaseRecordSchema.extend({
+//     type: z.literal("navigation"),
+//     node_type: z.string(),
+// }).describe("A navigation record is a record that doesn't contain searchable content, but is useful for navigation");
 
 export const MarkdownRecordSchema = BaseRecordSchema.extend({
     type: z.literal("markdown"),
@@ -166,7 +166,7 @@ export const AlgoliaRecordSchema = z.discriminatedUnion("type", [
     ChangelogRecordSchema,
     ApiReferenceRecordSchema,
     ParameterRecordSchema,
-    NavigationRecordSchema,
+    // NavigationRecordSchema,
 ]);
 
 export type BaseRecord = z.infer<typeof BaseRecordSchema>;
@@ -177,4 +177,4 @@ export type ApiReferenceRecord = z.infer<typeof ApiReferenceRecordSchema>;
 export type ParameterRecord = z.infer<typeof ParameterRecordSchema>;
 export type AlgoliaRecord = z.infer<typeof AlgoliaRecordSchema>;
 export type Hierarchy = z.infer<typeof HierarchySchema>;
-export type NavigationRecord = z.infer<typeof NavigationRecordSchema>;
+// export type NavigationRecord = z.infer<typeof NavigationRecordSchema>;
