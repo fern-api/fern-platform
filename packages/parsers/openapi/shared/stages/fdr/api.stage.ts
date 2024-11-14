@@ -9,7 +9,7 @@ type ApiProcessingStageOutput = {
     webhooks: FdrAPI.api.latest.ApiDefinition["webhooks"];
 };
 
-export class ApiProcessingStage implements FdrStage<OpenAPIV3_1.Document, ApiProcessingStageOutput> {
+export class FdrApiStage implements FdrStage<OpenAPIV3_1.Document, ApiProcessingStageOutput> {
     stageName = "ApiProcessingStage";
     name = "ApiProcessingStage";
     qualifiedId: string;

@@ -2,6 +2,7 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 } from "uuid";
 import { ApiNode, ApiNodeContext } from "../shared/interfaces/api.node.interface";
+import { FdrApiStage } from "../shared/stages/fdr/api.stage";
 
 export class OpenApi3_1Node implements ApiNode<OpenAPIV3_1.Document, FdrAPI.api.latest.ApiDefinition> {
     name = "OpenApi3_1";
