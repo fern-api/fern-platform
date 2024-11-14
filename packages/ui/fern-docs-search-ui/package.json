@@ -36,6 +36,7 @@
     "@fern-ui/fern-http-method-tag": "workspace:*",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-tooltip": "^1.1.2",
     "ai": "^3.4.33",
     "algoliasearch": "^5.13.0",
     "class-variance-authority": "^0.7.0",

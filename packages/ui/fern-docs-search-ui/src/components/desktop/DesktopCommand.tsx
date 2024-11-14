@@ -1,8 +1,9 @@
 import { FACET_DISPLAY_NAME_MAP, getFacets, toFilterOptions } from "@/utils/facet";
 import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
 import { HttpMethodTag } from "@fern-ui/fern-http-method-tag";
+import { TooltipPortal, TooltipTrigger } from "@radix-ui/react-tooltip";
 import { Command } from "cmdk";
-import { FileText, History, ListFilter, MessageCircle } from "lucide-react";
+import { ArrowLeft, FileText, History, ListFilter, MessageCircle } from "lucide-react";
 import { Dispatch, ReactElement, ReactNode, SetStateAction, useRef } from "react";
 import { useHits, useSearchBox } from "react-instantsearch";
 import { preload } from "swr";
@@ -12,6 +13,9 @@ import { RemoteIcon } from "../icons/RemoteIcon";
 import { HitContent } from "../shared/HitContent";
 import { generateHits } from "../shared/hits";
 import { AlgoliaRecordHit } from "../types";
+import { Button } from "../ui/button";
+import { Kbd } from "../ui/kbd";
+import { Tooltip, TooltipContent, TooltipProvider } from "../ui/tooltip";
 
 const ICON_CLASS = "size-4 text-[#969696] dark:text-white/50 shrink-0 my-1";
 
@@ -95,20 +99,89 @@ export function DesktopCommand({
             className="flex flex-col border border-[#DBDBDB] dark:border-white/10 rounded-lg overflow-hidden bg-[#F2F2F2]/30 dark:bg-[#1A1919]/30 backdrop-blur-xl transition-transform duration-100 h-full"
             shouldFilter={false}
         >
-            <Command.Input
-                ref={inputRef}
-                className="p-4 border-b last:border-b-0 border-[#DBDBDB] dark:border-white/10 w-full focus:outline-none bg-transparent text-lg placeholder:text-[#969696] dark:placeholder:text-white/50"
-                autoFocus
-                value={query}
-                placeholder={toPlaceholder(filters)}
-                onValueChange={refine}
-                onKeyDown={(e) => {
-                    if (e.key === "Backspace" && query.length === 0) {
-                        setFilters?.((lastFilters) => lastFilters.slice(0, -1));
-                        bounce();
-                    }
+            <div
+                className="p-4 border-b last:border-b-0 border-[#DBDBDB] dark:border-white/10 flex items-center gap-2 cursor-text"
+                onClickCapture={() => {
+                    inputRef.current?.focus();
                 }}
-            />
+            >
+                {filters.length > 0 && (
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    size="iconSm"
+                                    variant="outline"
+                                    className="shrink-0"
+                                    onClick={(e) => {
+                                        if (e.metaKey) {
+                                            setFilters?.([]);
+                                        } else {
+                                            setFilters?.((lastFilters) => lastFilters.slice(0, -1));
+                                        }
+                                    }}
+                                >
+                                    <ArrowLeft />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipPortal>
+                                <TooltipContent className="shrink-0">
+                                    <p>
+                                        <Kbd className="me-1">del</Kbd>
+                                        <span> to go back or </span>
+                                        <Kbd className="mx-1">⌘</Kbd>
+                                        <Kbd className="me-1">del</Kbd>
+                                        <span> to go to root search</span>
+                                    </p>
+                                </TooltipContent>
+                            </TooltipPortal>
+                        </Tooltip>
+                    </TooltipProvider>
+                )}
+                <Command.Input
+                    ref={inputRef}
+                    className="w-full focus:outline-none bg-transparent text-lg placeholder:text-[#969696] dark:placeholder:text-white/50"
+                    autoFocus
+                    value={query}
+                    placeholder={toPlaceholder(filters)}
+                    onValueChange={refine}
+                    onKeyDown={(e) => {
+                        if (e.key === "Backspace" && query.length === 0) {
+                            if (e.metaKey) {
+                                setFilters?.([]);
+                            } else {
+                                setFilters?.((lastFilters) => lastFilters.slice(0, -1));
+                            }
+                            bounce();
+                        }
+                    }}
+                />
+
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button
+                                size="xs"
+                                variant="outline"
+                                // onClick={(e) => {
+                                //     if (e.metaKey) {
+                                //         setFilters?.([]);
+                                //     } else {
+                                //         setFilters?.((lastFilters) => lastFilters.slice(0, -1));
+                                //     }
+                                // }}
+                            >
+                                <kbd>esc</kbd>
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipPortal>
+                            <TooltipContent>
+                                <p>Close search</p>
+                            </TooltipContent>
+                        </TooltipPortal>
+                    </Tooltip>
+                </TooltipProvider>
+            </div>
             <Command.Empty className="p-4 pb-6 text-center text-[#969696] dark:text-white/50">
                 No results found
             </Command.Empty>

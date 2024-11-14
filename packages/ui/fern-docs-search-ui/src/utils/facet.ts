@@ -20,6 +20,7 @@ export async function getFacets({
             facet,
             type: "facet",
             filters,
+            distinct: true,
         }),
     );
     const testing = await algoliasearch(appId, apiKey).searchForFacets({
