@@ -1,10 +1,11 @@
 import { ApiNode, ApiNodeContext, ComposableApiNode } from "../interfaces/api.node.interface";
 
-export class AvailabilityNode<InputNode extends ApiNode<unknown, object> & { availability: string }>
+export class AvailabilityNode<T, InputNode extends ApiNode<unknown, T> & { availability: string }>
     implements
         ComposableApiNode<
+            T,
             InputNode,
-            ReturnType<InputNode["outputFdrShape"]> & {
+            T & {
                 availability: string;
             }
         >
@@ -22,11 +23,12 @@ export class AvailabilityNode<InputNode extends ApiNode<unknown, object> & { ava
         this.preProcessedInput = this.inputNode.preProcessedInput;
     }
 
-    outputFdrShape(): ReturnType<InputNode["outputFdrShape"]> & {
+    outputFdrShape(): T & {
         availability: string;
     } {
+        const baseShape = this.inputNode.outputFdrShape();
         return {
-            ...this.inputNode.outputFdrShape(),
+            ...baseShape,
             availability: this.inputNode.availability,
         };
     }

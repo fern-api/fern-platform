@@ -18,9 +18,9 @@ export interface ApiNode<InputShape, FdrShape> {
     outputFdrShape: () => FdrShape;
 }
 
-export interface ComposableApiNode<InputNode extends ApiNode<unknown, unknown>, FdrShape>
+export interface ComposableApiNode<T, InputNode extends ApiNode<unknown, T>, FdrShape>
     extends ApiNode<InputNode["preProcessedInput"], FdrShape> {
     inputNode: InputNode;
 
-    outputFdrShape: () => ReturnType<InputNode["outputFdrShape"]> & FdrShape;
+    outputFdrShape: () => T & FdrShape;
 }
