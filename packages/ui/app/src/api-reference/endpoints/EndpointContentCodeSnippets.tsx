@@ -255,24 +255,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
 
 export const EndpointContentCodeSnippets = memo(UnmemoizedEndpointContentCodeSnippets);
 
-// function applyExampleIndex(name: string | undefined, exampleIndex?: number) {
-//     return exampleIndex ? `${name} Example ${exampleIndex}` : name;
-// }
-
-// function renderErrorTitle(errorName: string | undefined, statusCode: number, exampleIndex?: number) {
-//     return renderResponseTitle(
-//         applyExampleIndex(errorName, exampleIndex) ?? ApiDefinition.getMessageForStatus(statusCode),
-//         statusCode,
-//     );
-// }
-
-// function renderExampleTitle(statusCode: number, method?: APIV1Read.HttpMethod, exampleIndex?: number) {
-//     return renderResponseTitle(
-//         applyExampleIndex(ApiDefinition.getMessageForStatus(statusCode, method), exampleIndex) ?? "Response",
-//         statusCode,
-//     );
-// }
-
 function renderResponseTitle(title: string, statusCode: number) {
     return (
         <span className="inline-flex items-center gap-2">
