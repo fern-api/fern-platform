@@ -11,6 +11,7 @@ import {
 import { getRedirectForPath } from "@fern-ui/fern-docs-utils";
 import {
     DocsPage,
+    NavbarLink,
     getApiRouteSupplier,
     getGitHubInfo,
     getGitHubRepo,
@@ -168,7 +169,29 @@ export async function withInitialProps({
             ? encodeURI(addLeadingSlash(found.landingPage.slug))
             : undefined);
 
-    const navbarLinks = docs.definition.config.navbarLinks ?? [];
+    const navbarLinks: NavbarLink[] = [];
+
+    docs.definition.config.navbarLinks?.forEach((link) => {
+        if (link.type === "github") {
+            navbarLinks.push({
+                type: "github",
+                href: link.url,
+                className: undefined,
+                id: undefined,
+            });
+        } else {
+            navbarLinks.push({
+                type: link.type,
+                href: link.url,
+                text: link.text,
+                icon: link.icon,
+                rightIcon: link.rightIcon,
+                rounded: link.rounded,
+                className: undefined,
+                id: undefined,
+            });
+        }
+    });
 
     // TODO: This is a hack to add a login button to the navbar. This should be done in a more generic way.
     if (authConfig?.type === "basic_token_verification" && !authState.authed) {
@@ -178,10 +201,12 @@ export async function withInitialProps({
         navbarLinks.push({
             type: "outlined",
             text: "Login",
-            url: FernNavigation.Url(redirect.toString()),
+            href: redirect.toString(),
             icon: undefined,
             rightIcon: undefined,
             rounded: false,
+            className: undefined,
+            id: "fern-docs-login-button",
         });
     }
 
@@ -193,10 +218,12 @@ export async function withInitialProps({
         navbarLinks.push({
             type: "outlined",
             text: "Logout",
-            url: FernNavigation.Url(logout.toString()),
+            href: logout.toString(),
             icon: undefined,
             rightIcon: undefined,
             rounded: false,
+            className: undefined,
+            id: "fern-docs-logout-button",
         });
     }
 

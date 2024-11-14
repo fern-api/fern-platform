@@ -1,6 +1,6 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
-import cn from "clsx";
+import cn, { clsx } from "clsx";
 import { isEqual } from "es-toolkit/predicate";
 import { ArrowRight, Search } from "iconoir-react";
 import { useAtomValue } from "jotai";
@@ -39,15 +39,25 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
             <FernButtonGroup>
                 {navbarLinks.map((navbarLink, idx) => {
                     if (navbarLink.type === "github") {
-                        const repo = getGitHubRepo(navbarLink.url);
-                        return repo && <GitHubWidget key={idx} repo={repo} />;
+                        const repo = getGitHubRepo(navbarLink.href);
+                        return (
+                            repo && (
+                                <GitHubWidget
+                                    key={idx}
+                                    repo={repo}
+                                    className={navbarLink.className}
+                                    id={navbarLink.id}
+                                />
+                            )
+                        );
                     }
 
                     return (
                         <FernLinkButton
                             key={idx}
-                            className="group cursor-pointer"
-                            href={navbarLink.url}
+                            id={navbarLink.id}
+                            className={clsx("group cursor-pointer", navbarLink.className)}
+                            href={navbarLink.href}
                             icon={navbarLink.icon}
                             intent={navbarLink.type === "primary" || navbarLink.type === "filled" ? "primary" : "none"}
                             rightIcon={
@@ -77,7 +87,7 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
     );
 
     const githubLink = navbarLinks.find((link) => link.type === "github");
-    const githubRepo = githubLink && getGitHubRepo(githubLink.url);
+    const githubRepo = githubLink && getGitHubRepo(githubLink.href);
 
     return (
         <nav aria-label="primary" className={cn("fern-header-content", className)} ref={ref} style={style}>
@@ -101,7 +111,9 @@ const UnmemoizedHeader = forwardRef<HTMLDivElement, PropsWithChildren<Header.Pro
                 {navbarLinksSection}
 
                 <div className="max-lg-menu">
-                    {githubRepo && <GitHubWidget repo={githubRepo} />}
+                    {githubRepo && (
+                        <GitHubWidget repo={githubRepo} className={githubLink?.className} id={githubLink?.id} />
+                    )}
 
                     {colors.dark && colors.light && <ThemeButton size="large" />}
 

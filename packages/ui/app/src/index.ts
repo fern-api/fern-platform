@@ -1,6 +1,6 @@
 export { capturePosthogEvent } from "./analytics/posthog";
 export { type CustomerAnalytics } from "./analytics/types";
-export type { DocsProps } from "./atoms";
+export type { DocsProps, NavbarLink } from "./atoms";
 export * from "./docs/DocsPage";
 export * from "./docs/NextApp";
 export { getApiRouteSupplier } from "./hooks/useApiRoute";

@@ -24,7 +24,7 @@ export function MobileSidebarHeaderLinks(): ReactElement | null {
                     <FernLinkButton
                         key={idx}
                         icon={navbarLink.icon}
-                        href={navbarLink.url}
+                        href={navbarLink.href}
                         text={navbarLink.text}
                         rightIcon={
                             navbarLink.rightIcon ??
@@ -33,9 +33,14 @@ export function MobileSidebarHeaderLinks(): ReactElement | null {
                                 <ArrowRight className="!size-icon" />
                             ) : undefined)
                         }
-                        className={cn("w-full", {
-                            "mt-2": navbarLink.type === "primary" || navbarLink.type === "filled",
-                        })}
+                        id={navbarLink.id}
+                        className={cn(
+                            "w-full",
+                            {
+                                "mt-2": navbarLink.type === "primary" || navbarLink.type === "filled",
+                            },
+                            navbarLink.className,
+                        )}
                         variant={
                             navbarLink.type === "primary"
                                 ? "outlined"
