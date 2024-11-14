@@ -2,33 +2,35 @@ import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
-import { groupBy } from "es-toolkit/array";
-import { mapValues } from "es-toolkit/object";
 import { isEqual } from "es-toolkit/predicate";
 import { useInView } from "framer-motion";
 import { atom, useAtom, useAtomValue } from "jotai";
-import { selectAtom } from "jotai/utils";
+import { RESET, atomWithDefault, selectAtom } from "jotai/utils";
 import dynamic from "next/dynamic";
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useCallbackOne } from "use-memo-one";
+import { SetStateAction, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallbackOne, useMemoOne } from "use-memo-one";
 import {
     ANCHOR_ATOM,
     BREAKPOINT_ATOM,
     CONTENT_HEIGHT_ATOM,
     CURRENT_NODE_ID_ATOM,
+    DEFAULT_LANGUAGE_ATOM,
     FERN_LANGUAGE_ATOM,
     MOBILE_SIDEBAR_ENABLED_ATOM,
     store,
     useAtomEffect,
-    useFeatureFlags,
 } from "../../atoms";
 import { useHref } from "../../hooks/useHref";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
-import { CodeExample, generateCodeExamples } from "../examples/code-example";
-import { ExamplesByClientAndTitleAndStatusCode, Language, SelectedExampleKey } from "../types/EndpointContent";
+import { SelectedExampleKey } from "../types/EndpointContent";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContentHeader } from "./EndpointContentHeader";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
+import {
+    getAvailableLanguages,
+    groupExamplesByLanguageKeyAndStatusCode,
+    selectExampleToRender,
+} from "./example-groups";
 
 const EndpointContentCodeSnippets = dynamic(
     () => import("./EndpointContentCodeSnippets").then((mod) => mod.EndpointContentCodeSnippets),
@@ -101,7 +103,45 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
         [setHoveredResponsePropertyPath],
     );
 
-    const [selectedError, setSelectedError] = useState<ApiDefinition.ErrorResponse>();
+    // We use a string here with the intention that this can be used in a query param to deeplink to a particular example
+    const [internalSelectedExampleKey, setSelectedExampleKey] = useAtom(
+        useMemoOne(() => {
+            const internalAtom = atomWithDefault<SelectedExampleKey>((get) => ({
+                language: get(FERN_LANGUAGE_ATOM) ?? get(DEFAULT_LANGUAGE_ATOM),
+                exampleKey: undefined,
+                statusCode: undefined,
+                responseIndex: undefined,
+            }));
+
+            return atom(
+                (get) => get(internalAtom),
+                (get, set, update: SetStateAction<SelectedExampleKey> | typeof RESET) => {
+                    const prev = get(internalAtom);
+                    const next = typeof update === "function" ? update(prev) : update;
+                    if (next !== RESET) {
+                        set(FERN_LANGUAGE_ATOM, next.language);
+                    }
+                    set(internalAtom, next);
+                },
+            );
+        }, []),
+    );
+
+    const setStatusCode = useCallback(
+        (statusCode: number | string | undefined) => {
+            setSelectedExampleKey((prev) => {
+                if (prev.statusCode === String(statusCode)) {
+                    return prev;
+                }
+                return {
+                    ...prev,
+                    statusCode: statusCode != null ? String(statusCode) : undefined,
+                    responseIndex: 0,
+                };
+            });
+        },
+        [setSelectedExampleKey],
+    );
 
     useAtomEffect(
         useCallbackOne(
@@ -115,222 +155,53 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                             : convertNameToAnchorPart(e.name) === statusCodeOrName,
                     );
                     if (error != null) {
-                        setSelectedError(error);
+                        setStatusCode(error.statusCode);
                     }
                 }
             },
-            [endpoint.errors],
+            [endpoint.errors, setStatusCode],
         ),
     );
 
-    // TODO: remove after pinecone demo
-    const { grpcEndpoints } = useFeatureFlags();
-    const [contentType, setContentType] = useState<string | undefined>(endpoint.request?.contentType);
-    const clients = useMemo(
-        () =>
-            generateCodeExamples(
-                endpoint.examples,
-                grpcEndpoints?.includes(endpoint.id) &&
-                    !(
-                        endpoint.examples != null &&
-                        endpoint.examples.length === 1 &&
-                        endpoint.examples[0]?.snippets?.["curl"] != null &&
-                        endpoint.examples[0]?.snippets["curl"].length > 0
-                    ),
-            ),
-        [endpoint.examples, grpcEndpoints, endpoint.id],
+    const examplesByLanguageKeyAndStatusCode = useMemo(
+        () => groupExamplesByLanguageKeyAndStatusCode(endpoint),
+        [endpoint],
     );
 
-    const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
-    const [selectedClient, setSelectedClient] = useState<CodeExample>(() => {
-        const curlExample = clients[0]?.examples[0];
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        return clients.find((c) => c.language === selectedLanguage)?.examples[0] ?? curlExample!;
-    });
-    useEffect(() => {
-        setSelectedClient((prev) => clients.find((c) => c.language === selectedLanguage)?.examples[0] ?? prev);
-    }, [clients, selectedLanguage]);
+    const defaultLanguage = useAtomValue(DEFAULT_LANGUAGE_ATOM);
 
-    // We use a string here with the intention that this can be used in a query param to deeplink to a particular example
-    const [selectedExampleKey, setSelectedExampleKey] = useState<SelectedExampleKey | undefined>([
-        selectedClient.language,
-        selectedClient.key,
-        selectedClient.exampleCall.responseStatusCode,
-        0,
-    ]);
-
-    useEffect(() => {
-        setSelectedExampleKey([
-            selectedClient.language,
-            selectedClient.key,
-            selectedClient.exampleCall.responseStatusCode,
-            0,
-        ]);
-    }, [selectedClient]);
-
-    const convertErrorResponseToCodeExamples = useCallback(
-        (errorResponse: ApiDefinition.ErrorResponse, language: Language, index: number): CodeExample[] => {
-            return errorResponse.examples
-                ? errorResponse.examples.map((example, j) => ({
-                      key: `error-${j}/${index}`,
-                      exampleIndex: index,
-                      language,
-                      name: example.name ?? errorResponse.name ?? `Error ${index}`,
-                      code: "",
-                      install: null,
-                      exampleCall: {
-                          path: endpoint.path.map((p) => p.value).join("/"),
-                          responseStatusCode: errorResponse.statusCode,
-                          name: example.name ?? errorResponse.name ?? `Error ${index}`,
-                          pathParameters: {},
-                          queryParameters: {},
-                          headers: {},
-                          requestBody: undefined,
-                          responseBody: example.responseBody,
-                          snippets: {},
-                          description: errorResponse.description,
-                      },
-                      globalError: true,
-                  }))
-                : [];
-        },
-        [endpoint.path],
+    const availableLanguages = useMemo(
+        () => getAvailableLanguages(examplesByLanguageKeyAndStatusCode, defaultLanguage),
+        [examplesByLanguageKeyAndStatusCode, defaultLanguage],
     );
 
-    const examplesByClientAndTitleAndStatusCode = useMemo(() => {
-        return clients.reduce<ExamplesByClientAndTitleAndStatusCode>((acc, client) => {
-            acc[client.language] = client.examples
-                ? mapValues(
-                      groupBy(
-                          client.examples.filter(
-                              (e) => e.exampleCall.responseStatusCode >= 200 && e.exampleCall.responseStatusCode < 300,
-                          ),
-                          (e) => e.key,
-                      ),
-                      (examples) => ({
-                          ...groupBy(examples, (e) => e.exampleCall.responseStatusCode),
-                          ...groupBy(
-                              client.examples.filter((e) => e.exampleCall.responseStatusCode >= 400),
-                              (e) => e.exampleCall.responseStatusCode,
-                          ),
-                      }),
-                  )
-                : {};
+    const { selectedExample, examplesByStatusCode, examplesByKeyAndStatusCode, selectedExampleKey } = useMemo(
+        () => selectExampleToRender(examplesByLanguageKeyAndStatusCode, internalSelectedExampleKey, defaultLanguage),
+        [defaultLanguage, examplesByLanguageKeyAndStatusCode, internalSelectedExampleKey],
+    );
 
-            const allGlobalErrors = endpoint.errors
-                ? mapValues(
-                      groupBy(endpoint.errors, (e) => e.statusCode),
-                      (errorResponses) =>
-                          errorResponses.flatMap((e, idx) =>
-                              convertErrorResponseToCodeExamples(e, client.language, idx),
-                          ),
-                  )
-                : {};
-
-            const examplesAcc = acc[client.language];
-            if (examplesAcc != null) {
-                Object.keys(examplesAcc).forEach((exampleId) => {
-                    const examplesByStatusCode = examplesAcc[exampleId];
-                    if (examplesByStatusCode != null) {
-                        Object.keys(allGlobalErrors).forEach((statusCode) => {
-                            const globalErrorCount = allGlobalErrors[Number(statusCode)];
-                            if (globalErrorCount != null && globalErrorCount.length > 0) {
-                                if (examplesByStatusCode[Number(statusCode)] == null) {
-                                    examplesByStatusCode[Number(statusCode)] = [];
-                                }
-                                examplesByStatusCode[Number(statusCode)]?.push(
-                                    ...(allGlobalErrors?.[Number(statusCode)] ?? []),
-                                );
-                            }
-                        });
-                    }
-                });
-            }
-
-            return acc;
-        }, {});
-    }, [clients, endpoint, convertErrorResponseToCodeExamples]);
-
-    useEffect(() => {
-        setSelectedError(undefined);
-        setSelectedExampleKey((selectedExampleKey) => {
-            const [currentLanguage, exampleId, statusCode, exampleIndex] = selectedExampleKey ?? [];
-            if (examplesByClientAndTitleAndStatusCode != null && currentLanguage !== selectedLanguage) {
-                setSelectedError(undefined);
-                const examplesByTitleAndStatusCode = examplesByClientAndTitleAndStatusCode[selectedLanguage];
-                if (
-                    (exampleId != null &&
-                        statusCode != null &&
-                        exampleIndex != null &&
-                        examplesByTitleAndStatusCode?.[exampleId]?.[statusCode]?.[exampleIndex] == null) ||
-                    (statusCode == null && exampleIndex == null && exampleId == null)
-                ) {
-                    const firstExampleKey = Object.keys(examplesByTitleAndStatusCode ?? {})[0];
-                    const examplesByStatusCodes = firstExampleKey
-                        ? examplesByTitleAndStatusCode?.[firstExampleKey]
-                        : undefined;
-                    if (examplesByStatusCodes == null) {
-                        return;
-                    }
-                    const statusCode =
-                        examplesByTitleAndStatusCode != null
-                            ? Number(
-                                  Object.keys(examplesByStatusCodes ?? {})
-                                      .filter((statusCode) => Number(statusCode) >= 200 && Number(statusCode) < 300)
-                                      .sort((statusCode1, statusCode2) => Number(statusCode1) - Number(statusCode2))[0],
-                              )
-                            : 200;
-                    return [selectedLanguage, firstExampleKey, statusCode, 0];
-                } else {
-                    return [selectedLanguage, exampleId, statusCode, exampleIndex];
-                }
-            }
-
-            return selectedExampleKey;
-        });
-    }, [selectedLanguage, examplesByClientAndTitleAndStatusCode]);
+    const selectedError = endpoint.errors?.find(
+        (e) => e.statusCode === (selectedExample?.exampleCall.responseStatusCode ?? selectedExampleKey.statusCode),
+    );
 
     const handleSelectError = useCallback(
         (error: ApiDefinition.ErrorResponse | undefined) => {
-            if (error && error !== selectedError) {
-                const foundExample =
-                    examplesByClientAndTitleAndStatusCode?.[selectedClient.language]?.[selectedClient.key]?.[
-                        error.statusCode
-                    ]?.[0];
-                if (foundExample) {
-                    setSelectedExampleKey((selectedExampleKey) => [
-                        foundExample.language,
-                        selectedExampleKey?.[1],
-                        foundExample.exampleCall.responseStatusCode,
-                        0,
-                    ]);
-                }
-            }
-            setSelectedError(error);
+            setStatusCode(error?.statusCode);
         },
-        [examplesByClientAndTitleAndStatusCode, selectedClient, selectedError],
-    );
-
-    const setSelectedExampleClientAndScrollToTop = useCallback(
-        (nextClient: CodeExample) => {
-            setSelectedClient(nextClient);
-            setSelectedLanguage(nextClient.language);
-        },
-        [setSelectedLanguage],
+        [setStatusCode],
     );
 
     const requestJson =
-        selectedClient.exampleCall.requestBody?.type === "json"
-            ? selectedClient.exampleCall.requestBody.value
+        selectedExample?.exampleCall.requestBody?.type === "json"
+            ? selectedExample.exampleCall.requestBody.value
             : undefined;
-    const responseJson = selectedClient.exampleCall.responseBody?.value;
+    const responseJson = selectedExample?.exampleCall.responseBody?.value;
     // const responseHast = selectedClient.exampleCall.responseHast;
     const responseCodeSnippet = useMemo(() => JSON.stringify(responseJson, undefined, 2), [responseJson]);
 
-    const selectedExampleClientLineCount = selectedClient.code.split("\n").length;
+    const selectedExampleClientLineCount = selectedExample?.code.split("\n").length ?? 0;
 
-    const selectorHeight =
-        (clients.find((c) => c.language === selectedClient.language)?.examples.length ?? 0) > 1 ? GAP_6 + 24 : 0;
+    const selectorHeight = Object.keys(examplesByKeyAndStatusCode).length > 1 ? GAP_6 + 24 : 0;
 
     const jsonLineLength = responseCodeSnippet?.split("\n").length ?? 0;
     const [requestHeight, responseHeight] = useAtomValue(
@@ -352,7 +223,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                         const maxResponseContainerHeight = jsonLineLength * LINE_HEIGHT + CONTENT_PADDING;
                         const containerHeight = contentHeight - PADDING_TOP - PADDING_BOTTOM - selectorHeight;
                         const halfContainerHeight = (containerHeight - GAP_6) / 2;
-                        if (selectedClient.exampleCall?.responseBody == null) {
+                        if (selectedExample?.exampleCall?.responseBody == null) {
                             return [Math.min(maxRequestContainerHeight, containerHeight), 0];
                         }
                         if (
@@ -381,7 +252,12 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                     (v) => v,
                     isEqual,
                 ),
-            [jsonLineLength, selectedClient.exampleCall?.responseBody, selectedExampleClientLineCount, selectorHeight],
+            [
+                jsonLineLength,
+                selectedExample?.exampleCall?.responseBody,
+                selectedExampleClientLineCount,
+                selectorHeight,
+            ],
         ),
     );
 
@@ -415,12 +291,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
     }, [initialExampleHeight]);
 
     return (
-        <section
-            className="fern-endpoint-content"
-            onClick={() => setSelectedError(undefined)}
-            ref={ref}
-            id={useHref(node.slug)}
-        >
+        <section className="fern-endpoint-content" ref={ref} id={useHref(node.slug)}>
             <div
                 className={cn("scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto", {
                     "border-default border-b mb-px pb-12": !last,
@@ -438,14 +309,12 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                         <EndpointContentLeft
                             context={context}
                             // TODO: remove this code call
-                            example={selectedClient.exampleCall}
+                            example={selectedExample?.exampleCall}
                             showErrors={showErrors}
                             onHoverRequestProperty={onHoverRequestProperty}
                             onHoverResponseProperty={onHoverResponseProperty}
                             selectedError={selectedError}
                             setSelectedError={handleSelectError}
-                            contentType={contentType}
-                            setContentType={setContentType}
                         />
                     </div>
 
@@ -458,20 +327,19 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                         {isInViewport && (
                             <EndpointContentCodeSnippets
                                 endpoint={endpoint}
-                                examplesByClientAndTitleAndStatusCode={examplesByClientAndTitleAndStatusCode}
-                                selectedExampleKey={selectedExampleKey}
+                                examplesByStatusCode={examplesByStatusCode}
+                                examplesByKeyAndStatusCode={examplesByKeyAndStatusCode}
+                                selectedLanguage={selectedExampleKey.language}
                                 setSelectedExampleKey={setSelectedExampleKey}
-                                clients={clients}
-                                selectedClient={selectedClient}
-                                onClickClient={setSelectedExampleClientAndScrollToTop}
-                                requestCodeSnippet={selectedClient.code}
+                                languages={availableLanguages}
+                                selectedExample={selectedExample}
+                                requestCodeSnippet={selectedExample?.code ?? ""}
                                 requestCurlJson={requestJson}
                                 hoveredRequestPropertyPath={hoveredRequestPropertyPath}
                                 hoveredResponsePropertyPath={hoveredResponsePropertyPath}
                                 showErrors={showErrors}
                                 selectedError={selectedError}
                                 errors={endpoint.errors}
-                                setSelectedError={setSelectedError}
                                 measureHeight={setExampleHeight}
                                 node={node}
                             />
