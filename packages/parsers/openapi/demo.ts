@@ -1,11 +1,27 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+import { z } from "zod";
 import { ApiNode, ApiNodeContext } from "./shared/interfaces/api.node.interface";
 import { FdrStage } from "./shared/interfaces/fdr.stage.interface";
 
 export class AvailabilityNode implements ApiNode<unknown, FdrAPI.Availability | undefined> {
     id: string;
     availability: FdrAPI.Availability | undefined;
+
+    "x-fern-availability-shape" = z.object({
+        "x-fern-availability": z.enum([
+            "beta",
+            "deprecated",
+            "development",
+            "pre-release",
+            "stable",
+            "generally-available",
+        ]),
+    });
+
+    deprecatedShape = z.object({
+        deprecated: z.boolean(),
+    });
 
     constructor(
         readonly context: ApiNodeContext,
@@ -14,20 +30,20 @@ export class AvailabilityNode implements ApiNode<unknown, FdrAPI.Availability | 
     ) {
         this.id = `${accessPath.map((node) => node.id).join(".")}.AvailabilityNode`;
         if (input && typeof input === "object" && "x-fern-availability" in input) {
-            if (typeof input["x-fern-availability"] !== "string") {
-                context.errorCollector.addError(`Availability is not a string for ${this.id}`);
-                return;
-            }
-            this.availability = this.convertAvailability(input["x-fern-availability"]);
-            if (!this.availability) {
+            const result = this["x-fern-availability-shape"].safeParse(input);
+            if (result.success) {
+                this.availability = this.convertAvailability(result.data["x-fern-availability"]);
+            } else {
                 context.errorCollector.addError(`Availability is not defined for ${this.id}`);
             }
             return;
         }
 
         if (input && typeof input === "object" && "deprecated" in input && typeof input.deprecated === "boolean") {
-            this.availability = input.deprecated ? FdrAPI.Availability.Deprecated : undefined;
-            if (!this.availability) {
+            const result = this.deprecatedShape.safeParse(input);
+            if (result.success) {
+                this.availability = result.data.deprecated ? FdrAPI.Availability.Deprecated : undefined;
+            } else {
                 context.errorCollector.addError(`Availability is not defined for ${this.id}`);
             }
             return;
@@ -44,7 +60,7 @@ export class AvailabilityNode implements ApiNode<unknown, FdrAPI.Availability | 
                 return FdrAPI.Availability.InDevelopment;
             case "pre-release":
                 return FdrAPI.Availability.PreRelease;
-            case "stabel":
+            case "stable":
                 return FdrAPI.Availability.Stable;
             case "generally-available":
                 return FdrAPI.Availability.GenerallyAvailable;
