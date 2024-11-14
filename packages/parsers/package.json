@@ -1,0 +1,34 @@
+{
+  "name": "@fern-ui/parsers",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/parsers"
+  },
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "test": "vitest --run --passWithNoTests --globals",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
+    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
+    "lint:style:fix": "pnpm lint:style --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "organize-imports": "organize-imports-cli tsconfig.json",
+    "depcheck": "depcheck",
+    "docs:dev": "NODE_OPTIONS='--inspect' next dev",
+    "docs:build": "next build",
+    "docs:start": "next start",
+    "lint": "pnpm lint:eslint && pnpm lint:style"
+  },
+  "dependencies": {
+    "@fern-api/fdr-sdk": "workspace:*",
+    "openapi-types": "^12.1.3",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.1"
+  }
+}
