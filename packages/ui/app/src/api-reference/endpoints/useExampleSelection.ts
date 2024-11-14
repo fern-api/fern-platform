@@ -3,7 +3,7 @@ import { SetStateAction, atom, useAtom, useAtomValue } from "jotai";
 import { RESET, atomWithDefault } from "jotai/utils";
 import { useMemo } from "react";
 import { useCallbackOne, useMemoOne } from "use-memo-one";
-import { DEFAULT_LANGUAGE_ATOM, FERN_LANGUAGE_ATOM } from "../../atoms";
+import { DEFAULT_LANGUAGE_ATOM, FERN_LANGUAGE_ATOM, useAtomEffect } from "../../atoms";
 import { CodeExample } from "../examples/code-example";
 import {
     getAvailableLanguages,
@@ -84,6 +84,22 @@ export function useExampleSelection(
                 },
             );
         }, [getInitialExampleKey]),
+    );
+
+    // when the language changes, we'd want to update the selected example key to the new language
+    useAtomEffect(
+        useCallbackOne(
+            (get) => {
+                setSelectedExampleKey((prev) => {
+                    const language = get(FERN_LANGUAGE_ATOM) ?? get(DEFAULT_LANGUAGE_ATOM);
+                    if (prev.language !== language) {
+                        return { ...prev, language };
+                    }
+                    return prev;
+                });
+            },
+            [setSelectedExampleKey],
+        ),
     );
 
     const defaultLanguage = useAtomValue(DEFAULT_LANGUAGE_ATOM);
