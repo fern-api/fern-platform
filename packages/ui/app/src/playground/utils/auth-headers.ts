@@ -15,7 +15,7 @@ export function buildAuthHeaders(
     { redacted }: { redacted: boolean },
     oAuthClientCredentialReferencedEndpointLoginFlowProps?: Omit<
         OAuthClientCredentialReferencedEndpointLoginFlowProps,
-        "oAuthClientCredentialsReferencedEndpoint"
+        "referencedEndpoint"
     >,
 ): Record<string, string> {
     const headers: Record<string, string> = {};
