@@ -4,33 +4,26 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
 import { isEqual } from "es-toolkit/predicate";
 import { useInView } from "framer-motion";
-import { atom, useAtom, useAtomValue } from "jotai";
-import { RESET, atomWithDefault, selectAtom } from "jotai/utils";
+import { atom, useAtomValue } from "jotai";
+import { selectAtom } from "jotai/utils";
 import dynamic from "next/dynamic";
-import { SetStateAction, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useCallbackOne, useMemoOne } from "use-memo-one";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallbackOne } from "use-memo-one";
 import {
     ANCHOR_ATOM,
     BREAKPOINT_ATOM,
     CONTENT_HEIGHT_ATOM,
     CURRENT_NODE_ID_ATOM,
-    DEFAULT_LANGUAGE_ATOM,
-    FERN_LANGUAGE_ATOM,
     MOBILE_SIDEBAR_ENABLED_ATOM,
     store,
     useAtomEffect,
 } from "../../atoms";
 import { useHref } from "../../hooks/useHref";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
-import { SelectedExampleKey } from "../types/EndpointContent";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContentHeader } from "./EndpointContentHeader";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
-import {
-    getAvailableLanguages,
-    groupExamplesByLanguageKeyAndStatusCode,
-    selectExampleToRender,
-} from "./example-groups";
+import { useExampleSelection } from "./useExampleSelection";
 
 const EndpointContentCodeSnippets = dynamic(
     () => import("./EndpointContentCodeSnippets").then((mod) => mod.EndpointContentCodeSnippets),
@@ -103,29 +96,14 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
         [setHoveredResponsePropertyPath],
     );
 
-    // We use a string here with the intention that this can be used in a query param to deeplink to a particular example
-    const [internalSelectedExampleKey, setSelectedExampleKey] = useAtom(
-        useMemoOne(() => {
-            const internalAtom = atomWithDefault<SelectedExampleKey>((get) => ({
-                language: get(FERN_LANGUAGE_ATOM) ?? get(DEFAULT_LANGUAGE_ATOM),
-                exampleKey: undefined,
-                statusCode: undefined,
-                responseIndex: undefined,
-            }));
-
-            return atom(
-                (get) => get(internalAtom),
-                (get, set, update: SetStateAction<SelectedExampleKey> | typeof RESET) => {
-                    const prev = get(internalAtom);
-                    const next = typeof update === "function" ? update(prev) : update;
-                    if (next !== RESET) {
-                        set(FERN_LANGUAGE_ATOM, next.language);
-                    }
-                    set(internalAtom, next);
-                },
-            );
-        }, []),
-    );
+    const {
+        selectedExample,
+        examplesByStatusCode,
+        examplesByKeyAndStatusCode,
+        selectedExampleKey,
+        availableLanguages,
+        setSelectedExampleKey,
+    } = useExampleSelection(endpoint);
 
     const setStatusCode = useCallback(
         (statusCode: number | string | undefined) => {
@@ -161,23 +139,6 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
             },
             [endpoint.errors, setStatusCode],
         ),
-    );
-
-    const examplesByLanguageKeyAndStatusCode = useMemo(
-        () => groupExamplesByLanguageKeyAndStatusCode(endpoint),
-        [endpoint],
-    );
-
-    const defaultLanguage = useAtomValue(DEFAULT_LANGUAGE_ATOM);
-
-    const availableLanguages = useMemo(
-        () => getAvailableLanguages(examplesByLanguageKeyAndStatusCode, defaultLanguage),
-        [examplesByLanguageKeyAndStatusCode, defaultLanguage],
-    );
-
-    const { selectedExample, examplesByStatusCode, examplesByKeyAndStatusCode, selectedExampleKey } = useMemo(
-        () => selectExampleToRender(examplesByLanguageKeyAndStatusCode, internalSelectedExampleKey, defaultLanguage),
-        [defaultLanguage, examplesByLanguageKeyAndStatusCode, internalSelectedExampleKey],
     );
 
     const selectedError = endpoint.errors?.find(
