@@ -27,7 +27,7 @@ function EndpointResponseSnippetInternal({
     method: HttpMethod;
     example: string | undefined;
 }) {
-    const endpoint = useFindEndpoint(method, path);
+    const endpoint = useFindEndpoint(method, path, example);
 
     if (endpoint == null) {
         return null;
