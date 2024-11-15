@@ -31,6 +31,7 @@ export class TypeShapeNode extends OutputApiNode<SchemaObject, FdrAPI.api.latest
             case "object":
                 return {
                     type: "object",
+                    // Figure out a better way to do this
                     ...(typeShape as FdrAPI.api.latest.ObjectType),
                 };
             case "alias":
