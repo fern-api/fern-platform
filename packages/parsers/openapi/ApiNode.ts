@@ -1,4 +1,4 @@
-import { Logger } from "@playwright/test";
+import { Logger } from "@fern-api/logger";
 import { ErrorCollector } from "./ErrorCollector";
 
 export interface ApiNodeContext {
@@ -27,7 +27,7 @@ export abstract class InputApiNode<InputShape, FdrShape> extends ApiNode<InputSh
     constructor(context: ApiNodeContext, input: InputShape, accessPath: string[], pathId?: string) {
         if (pathId) {
             accessPath.push(pathId);
-            context.logger.log("a", "info", `Processing #/${accessPath.join("/")}/${pathId}`);
+            context.logger.info(`Processing #/${accessPath.join("/")}/${pathId}`);
         }
         super(context, input, accessPath);
     }

@@ -970,6 +970,9 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../fdr-sdk
+      '@fern-api/logger':
+        specifier: 0.4.24-rc1
+        version: 0.4.24-rc1
       '@fern-api/ui-core-utils':
         specifier: workspace:*
         version: link:../commons/core-utils
@@ -4399,8 +4402,14 @@ packages:
   '@fern-api/core-utils@0.15.0-rc63':
     resolution: {integrity: sha512-E5g6oPcFLz9ZOTkYH1uF3Le9bw9yFuOft4zNiq0HD2xE/RK2wGn9gYcIgJn/qRT0dB1hBCanHx4KehCMc8Z99w==}
 
+  '@fern-api/core-utils@0.4.24-rc1':
+    resolution: {integrity: sha512-aYu4lQK2qZIKzTF9TeFrICTPJ/zGEZUEWQmZt6pJeHu+R6afrcCBNkUleWU1OpHlDbe+xXUUBOktRg0PM9Hywg==}
+
   '@fern-api/fs-utils@0.15.0-rc63':
     resolution: {integrity: sha512-lDbmFyGs9phjI0ewoijwYLB7dkEc59Gt/tg2l2um5E1Xmgfnt5EKFXNywnmDIXN1xb8aYhmo+N9ZKJje6/a+iw==}
+
+  '@fern-api/logger@0.4.24-rc1':
+    resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
 
   '@fern-api/next@14.2.9-fork.2':
     resolution: {integrity: sha512-6Xg8PDelm0aFqkIttXzyM2aQLDkp1EiKMISc5DmHQ7yTMJOVEmeJNMeuBCeNNWnZee+gRQUO7NVhwLXbwTiK4A==}
@@ -18614,11 +18623,21 @@ snapshots:
       strip-ansi: 7.1.0
       ua-parser-js: 1.0.37
 
+  '@fern-api/core-utils@0.4.24-rc1':
+    dependencies:
+      lodash-es: 4.17.21
+      strip-ansi: 7.1.0
+
   '@fern-api/fs-utils@0.15.0-rc63':
     dependencies:
       '@fern-api/core-utils': 0.15.0-rc63
       json-stream-stringify: 3.1.4
       tmp-promise: 3.0.3
+
+  '@fern-api/logger@0.4.24-rc1':
+    dependencies:
+      '@fern-api/core-utils': 0.4.24-rc1
+      chalk: 5.3.0
 
   '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)':
     dependencies:
