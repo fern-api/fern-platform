@@ -125,7 +125,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                                             />
                                         </span>
                                     )}
-                                    {!showEnvironment && environmentBasepath && (
+                                    {!showEnvironment && environmentBasepath && environmentBasepath !== "/" && (
                                         <span className="t-muted">{environmentBasepath}</span>
                                     )}
                                     {pathParts}
