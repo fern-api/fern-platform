@@ -5,7 +5,7 @@ import { toFiltersString } from "@/utils/to-filter-string";
 import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
 import { TooltipPortal, TooltipTrigger } from "@radix-ui/react-tooltip";
 import { Command } from "cmdk";
-import { ArrowLeft, FileText, History, Laptop, ListFilter, MessageCircle, Moon, Sun } from "lucide-react";
+import { FileText, History, Laptop, ListFilter, MessageCircle, Moon, Sun } from "lucide-react";
 import { Dispatch, ReactElement, ReactNode, SetStateAction, useRef } from "react";
 import { useHits, useSearchBox } from "react-instantsearch";
 import { preload } from "swr";
@@ -15,8 +15,9 @@ import { HitContent } from "../shared/HitContent";
 import { generateHits } from "../shared/hits";
 import { AlgoliaRecordHit } from "../types";
 import { Button } from "../ui/button";
-import { Kbd } from "../ui/kbd";
+import { cn } from "../ui/cn";
 import { Tooltip, TooltipContent, TooltipProvider } from "../ui/tooltip";
+import { BackButton } from "./BackButton";
 import { FilterDropdownMenu } from "./FilterDropdownMenu";
 
 const ICON_CLASS = "size-4 text-[#969696] dark:text-white/50 shrink-0 my-1";
@@ -68,6 +69,12 @@ export function DesktopCommand({
 
     const facetOptions = toFilterOptions(facets, "");
 
+    const focus = () => {
+        setTimeout(() => {
+            inputRef.current?.focus();
+        }, 0);
+    };
+
     return (
         <Command
             ref={ref}
@@ -94,17 +101,13 @@ export function DesktopCommand({
                             filters={filters}
                             removeFilter={() => {
                                 setFilters?.((prev) => prev.filter((f) => f.facet !== filter.facet));
-                                setTimeout(() => {
-                                    inputRef.current?.focus();
-                                }, 0);
+                                focus();
                             }}
                             updateFilter={(value) => {
                                 setFilters?.((prev) =>
                                     prev.map((f) => (f.facet === filter.facet ? { ...f, value } : f)),
                                 );
-                                setTimeout(() => {
-                                    inputRef.current?.focus();
-                                }, 0);
+                                focus();
                             }}
                         />
                     ))}
@@ -112,43 +115,19 @@ export function DesktopCommand({
             )}
             <div
                 className="p-4 border-b last:border-b-0 border-[#DBDBDB] dark:border-white/10 flex items-center gap-2 cursor-text"
-                onClickCapture={() => {
-                    inputRef.current?.focus();
-                }}
+                onClickCapture={focus}
             >
                 {filters.length > 0 && (
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button
-                                    size="iconSm"
-                                    variant="outline"
-                                    className="shrink-0"
-                                    onClick={(e) => {
-                                        if (e.metaKey) {
-                                            setFilters?.([]);
-                                        } else {
-                                            setFilters?.((lastFilters) => lastFilters.slice(0, -1));
-                                        }
-                                        inputRef.current?.focus();
-                                    }}
-                                >
-                                    <ArrowLeft />
-                                </Button>
-                            </TooltipTrigger>
-                            <TooltipPortal>
-                                <TooltipContent className="shrink-0">
-                                    <p>
-                                        <Kbd className="me-1">del</Kbd>
-                                        <span> to go back or </span>
-                                        <Kbd className="mx-1">⌘</Kbd>
-                                        <Kbd className="me-1">del</Kbd>
-                                        <span> to go to root search</span>
-                                    </p>
-                                </TooltipContent>
-                            </TooltipPortal>
-                        </Tooltip>
-                    </TooltipProvider>
+                    <BackButton
+                        pop={() => {
+                            setFilters?.((lastFilters) => lastFilters.slice(0, -1));
+                            focus();
+                        }}
+                        clear={() => {
+                            setFilters?.([]);
+                            focus();
+                        }}
+                    />
                 )}
                 <Command.Input
                     ref={inputRef}
@@ -164,7 +143,7 @@ export function DesktopCommand({
                             } else {
                                 setFilters?.((lastFilters) => lastFilters.slice(0, -1));
                             }
-                            inputRef.current?.focus();
+                            focus();
                         }
                     }}
                 />
@@ -188,14 +167,10 @@ export function DesktopCommand({
                     </TooltipProvider>
                 )}
             </div>
-            <Command.List className="py-3 min-h-0 shrink overflow-auto mask-grad-y-3">
+            <Command.List className="py-3 min-h-0 shrink overflow-auto mask-grad-y-3 overscroll-contain">
                 {onAskAI != null && (
                     <Command.Group forceMount>
-                        <Command.Item
-                            value="ai-chat"
-                            className="flex gap-2 cursor-default"
-                            onSelect={() => onAskAI?.({ initialInput: query })}
-                        >
+                        <CommandItem value="ai-chat" onSelect={() => onAskAI?.({ initialInput: query })}>
                             <MessageCircle className={ICON_CLASS} />
                             <span>
                                 Ask AI
@@ -207,19 +182,19 @@ export function DesktopCommand({
                                     </>
                                 )}
                             </span>
-                        </Command.Item>
+                        </CommandItem>
                     </Command.Group>
                 )}
 
                 {facetOptions.length > 0 && (
                     <Command.Group heading="Filters">
                         {facetOptions.map((filter) => (
-                            <Command.Item
+                            <CommandItem
                                 key={`${filter.facet}:${filter.value}`}
-                                className="flex gap-2 cursor-default items-center"
                                 onSelect={() => {
                                     setFilters?.([...filters, { facet: filter.facet, value: filter.value }]);
-                                    inputRef.current?.focus();
+                                    refine("");
+                                    focus();
                                 }}
                                 onMouseOver={() => {
                                     const filterString = toFiltersString([
@@ -233,8 +208,10 @@ export function DesktopCommand({
                             >
                                 <ListFilter className={ICON_CLASS} />
                                 <span className="flex-1">Search {getFacetDisplay(filter.facet, filter.value)}</span>
-                                <span className="text-xs text-[#969696] dark:text-white/50">{filter.count}</span>
-                            </Command.Item>
+                                <span className="text-xs text-[#969696] dark:text-white/50 self-center">
+                                    {filter.count}
+                                </span>
+                            </CommandItem>
                         ))}
                     </Command.Group>
                 )}
@@ -248,48 +225,31 @@ export function DesktopCommand({
                 {groups.map((group, index) => (
                     <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} forceMount>
                         {group.hits.map((hit) => (
-                            <Command.Item
-                                key={hit.path}
-                                value={hit.path}
-                                onSelect={() => onSubmit(hit.path)}
-                                className="flex gap-2 cursor-default"
-                            >
+                            <CommandItem key={hit.path} value={hit.path} onSelect={() => onSubmit(hit.path)}>
                                 <Icon icon={hit.icon} type={hit.record?.type} />
                                 {hit.record != null && (
                                     <HitContent hit={hit.record as MarkRequired<AlgoliaRecordHit, "type">} />
                                 )}
                                 {hit.record == null && hit.title}
-                            </Command.Item>
+                            </CommandItem>
                         ))}
                     </Command.Group>
                 ))}
 
                 {setTheme != null && (
                     <Command.Group heading="Theme">
-                        <Command.Item
-                            value="light"
-                            className="flex gap-2 cursor-default"
-                            onSelect={() => setTheme?.("light")}
-                        >
+                        <CommandItem value="light" onSelect={() => setTheme?.("light")}>
                             <Sun className={ICON_CLASS} />
                             Light
-                        </Command.Item>
-                        <Command.Item
-                            value="dark"
-                            className="flex gap-2 cursor-default"
-                            onSelect={() => setTheme?.("dark")}
-                        >
+                        </CommandItem>
+                        <CommandItem value="dark" onSelect={() => setTheme?.("dark")}>
                             <Moon className={ICON_CLASS} />
                             Dark
-                        </Command.Item>
-                        <Command.Item
-                            value="system"
-                            className="flex gap-2 cursor-default"
-                            onSelect={() => setTheme?.("system")}
-                        >
+                        </CommandItem>
+                        <CommandItem value="system" onSelect={() => setTheme?.("system")}>
                             <Laptop className={ICON_CLASS} />
                             System
-                        </Command.Item>
+                        </CommandItem>
                     </Command.Group>
                 )}
             </Command.List>
@@ -307,4 +267,16 @@ function Icon({ icon, type }: { icon: string | undefined; type: string | undefin
     }
 
     return <FileText className={ICON_CLASS} />;
+}
+
+function CommandItem({
+    className,
+    children,
+    ...props
+}: React.ComponentPropsWithoutRef<typeof Command.Item>): ReactElement {
+    return (
+        <Command.Item {...props} className={cn("flex gap-2 cursor-default scroll-my-3", className)}>
+            {children}
+        </Command.Item>
+    );
 }

@@ -1,7 +1,7 @@
 import { useFacets } from "@/hooks/useFacets";
 import { FacetName, toFilterLabel } from "@/utils/facet";
 import { getFacetDisplay } from "@/utils/facet-display";
-import { FilterX } from "lucide-react";
+import { Minus } from "lucide-react";
 import { ReactElement } from "react";
 import { Badge } from "../ui/badge";
 import {
@@ -84,7 +84,7 @@ export function FilterDropdownMenu({
                             removeFilter?.();
                         }}
                     >
-                        <FilterX className="size-4" />
+                        <Minus className="size-4" />
                         Remove filter
                         <DropdownMenuShortcut>del</DropdownMenuShortcut>
                     </DropdownMenuItem>
