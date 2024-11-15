@@ -103,11 +103,13 @@ body {
     .fern-search-facet-filter-menu-button:has(.fern-http-method-tag) {
         padding: 0;
         overflow: hidden;
+        border: 0px;
 
         .fern-http-method-tag {
             padding: 0.125rem 0.625rem;
-            height: 20px;
-            border-radius: unset;
+            height: 22px;
+            border-radius: inherit;
+            font-weight: 700;
         }
     }
 }

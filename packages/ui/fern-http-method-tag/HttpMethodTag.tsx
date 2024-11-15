@@ -50,6 +50,20 @@ const SUBTLE_BACKGROUND_COLORS_DARK: Record<ColorScheme, string> = {
     red: redDarkA.redA3,
 };
 
+const SUBTLE_BORDER_COLORS: Record<ColorScheme, string> = {
+    blue: blueA.blueA6,
+    green: greenA.greenA6,
+    amber: amberA.amberA6,
+    red: redA.redA6,
+};
+
+const SUBTLE_BORDER_COLORS_DARK: Record<ColorScheme, string> = {
+    blue: blueDarkA.blueA6,
+    green: greenDarkA.greenA6,
+    amber: amberDarkA.amberA6,
+    red: redDarkA.redA6,
+};
+
 const SOLID_BACKGROUND_COLORS: Record<ColorScheme, string> = {
     blue: blueA.blueA10,
     green: greenA.greenA10,
@@ -94,7 +108,7 @@ const SOLID_TEXT_COLORS_DARK: Record<ColorScheme, string> = {
 
 export interface HttpMethodTagProps extends PropsWithChildren {
     size?: Size;
-    variant?: "subtle" | "solid";
+    variant?: "subtle" | "solid" | "outlined";
     method: HttpMethod;
     className?: string;
     skeleton?: boolean;
@@ -104,18 +118,26 @@ export interface HttpMethodTagProps extends PropsWithChildren {
  * The `FernTag` component is used for items that need to be labeled, categorized, or organized using keywords that describe them.
  */
 export const HttpMethodTag = forwardRef<HTMLSpanElement, HttpMethodTagProps>(
-    ({ children, size = "lg", method, variant = "subtle", className, skeleton }, ref) => {
+    ({ children, size = "lg", method, variant = "outlined", className, skeleton }, ref) => {
         const colorScheme = METHOD_COLOR_SCHEMES[method] ?? "blue";
         children ??= method === "DELETE" ? "DEL" : method;
 
-        const backgroundColor = (variant === "subtle" ? SUBTLE_BACKGROUND_COLORS : SOLID_BACKGROUND_COLORS)[
+        const backgroundColor = (
+            variant === "subtle" || variant === "outlined" ? SUBTLE_BACKGROUND_COLORS : SOLID_BACKGROUND_COLORS
+        )[colorScheme];
+        const backgroundColorDark = (
+            variant === "subtle" || variant === "outlined"
+                ? SUBTLE_BACKGROUND_COLORS_DARK
+                : SOLID_BACKGROUND_COLORS_DARK
+        )[colorScheme];
+        const textColor = (variant === "subtle" || variant === "outlined" ? SUBTLE_TEXT_COLORS : SOLID_TEXT_COLORS)[
             colorScheme
         ];
-        const backgroundColorDark = (
-            variant === "subtle" ? SUBTLE_BACKGROUND_COLORS_DARK : SOLID_BACKGROUND_COLORS_DARK
+        const textColorDark = (
+            variant === "subtle" || variant === "outlined" ? SUBTLE_TEXT_COLORS_DARK : SOLID_TEXT_COLORS_DARK
         )[colorScheme];
-        const textColor = (variant === "subtle" ? SUBTLE_TEXT_COLORS : SOLID_TEXT_COLORS)[colorScheme];
-        const textColorDark = (variant === "subtle" ? SUBTLE_TEXT_COLORS_DARK : SOLID_TEXT_COLORS_DARK)[colorScheme];
+        const borderColor = variant === "outlined" ? SUBTLE_BORDER_COLORS[colorScheme] : undefined;
+        const borderColorDark = variant === "outlined" ? SUBTLE_BORDER_COLORS_DARK[colorScheme] : undefined;
 
         return (
             <span
@@ -127,6 +149,9 @@ export const HttpMethodTag = forwardRef<HTMLSpanElement, HttpMethodTagProps>(
                         "--background-color-dark": backgroundColorDark,
                         color: textColor,
                         "--color-dark": textColorDark,
+                        borderColor,
+                        "--border-color-dark": borderColorDark,
+                        borderWidth: variant === "outlined" ? "1px" : undefined,
                     } as React.CSSProperties
                 }
             >

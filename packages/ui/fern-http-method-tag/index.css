@@ -33,6 +33,7 @@
 
 :is(.dark) .fern-http-method-tag,
 :is([data-theme="dark"]) .fern-http-method-tag {
-    background-color: var(--background-color-dark);
-    color: var(--color-dark);
+    background-color: var(--background-color-dark) !important;
+    color: var(--color-dark) !important;
+    border-color: var(--border-color-dark) !important;
 }
