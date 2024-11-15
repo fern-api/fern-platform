@@ -1,17 +1,10 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { ApiNodeContext, InputApiNode } from "../../../base.node.interface";
 import { SchemaObject } from "../../openapi.types";
 import { FloatNode } from "./number/float.node";
 import { IntegerNode } from "./number/integer.node";
 
-type FdrNumberType =
-    | FdrAPI.api.v1.read.PrimitiveType.Integer
-    | FdrAPI.api.v1.read.PrimitiveType.Long
-    | FdrAPI.api.v1.read.PrimitiveType.Double
-    | FdrAPI.api.v1.read.PrimitiveType.Uint
-    | FdrAPI.api.v1.read.PrimitiveType.Uint64;
-
-export class NumberNode extends InputApiNode<SchemaObject, FdrNumberType> {
+import { FdrFloatType, FdrIntegerType } from "./types/fdr.types";
+export class NumberNode extends InputApiNode<SchemaObject, FdrFloatType | FdrIntegerType> {
     typeNode: IntegerNode | FloatNode | undefined;
     default: number | undefined;
     minimum: number | undefined;
@@ -43,7 +36,7 @@ export class NumberNode extends InputApiNode<SchemaObject, FdrNumberType> {
         this.maximum = input.maximum;
     }
 
-    outputFdrShape = (): FdrNumberType | undefined => {
+    outputFdrShape = (): FdrFloatType | FdrIntegerType | undefined => {
         const typeProperties = this.typeNode?.outputFdrShape();
 
         if (typeProperties === undefined) {

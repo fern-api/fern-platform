@@ -13,12 +13,13 @@ export class TypeShapeNode extends OutputApiNode<SchemaObject, FdrAPI.api.latest
         super(context, input, accessPath);
 
         // For now, we will just support Object and alias nodes, in the future, this will need to be updated to an exhaustive switch
-        if (input.type === "alias") {
-            this.type = "alias";
-            this.typeNode = new TypeReferenceNode(context, input, accessPath);
-        } else if (input.type === "object") {
+
+        if (input.type === "object") {
             this.type = "object";
             this.typeNode = new ObjectNode(context, input, accessPath, accessorKey);
+        } else {
+            this.type = "alias";
+            this.typeNode = new TypeReferenceNode(context, input, accessPath);
         }
     }
 

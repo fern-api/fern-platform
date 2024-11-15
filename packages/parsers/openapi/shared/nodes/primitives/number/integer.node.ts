@@ -2,10 +2,10 @@ import { UnreachableCaseError } from "ts-essentials";
 import { ApiNodeContext, OutputApiNode } from "../../../../base.node.interface";
 import { SchemaObject } from "../../../openapi.types";
 import { FdrIntegerType } from "../types/fdr.types";
-import { OpenApiIntegerTypeFormat } from "../types/format.types";
+import { ConstArrayToType, OPENAPI_INTEGER_TYPE_FORMAT } from "../types/format.types";
 
-function isOpenApiIntegerTypeFormat(format: string | undefined): format is OpenApiIntegerTypeFormat {
-    return format === "int32" || format === "int64" || format === undefined;
+function isOpenApiIntegerTypeFormat(format: unknown): format is ConstArrayToType<typeof OPENAPI_INTEGER_TYPE_FORMAT> {
+    return OPENAPI_INTEGER_TYPE_FORMAT.includes(format as ConstArrayToType<typeof OPENAPI_INTEGER_TYPE_FORMAT>);
 }
 
 export class IntegerNode extends OutputApiNode<SchemaObject, Pick<FdrIntegerType, "type">> {

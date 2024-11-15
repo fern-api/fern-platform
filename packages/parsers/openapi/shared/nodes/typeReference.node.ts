@@ -27,17 +27,20 @@ export class TypeReferenceNode extends OutputApiNode<SchemaObject | ReferenceObj
             this.default = undefined;
         } else {
             this.type = "primitive";
-            this.typeNode = new NumberNode(context, input, accessPath);
+            if (input.type === "integer" || input.type === "number") {
+                this.typeNode = new NumberNode(context, input, accessPath);
+            } else if (input.type === "string") {
+                this.typeNode = new StringNode(context, input, accessPath);
+            }
         }
         // just support primitives and ids for now
     }
 
     outputFdrShape = (): FdrAPI.api.latest.TypeReference | undefined => {
-        const primitiveShape = this.typeNode?.outputFdrShape();
-        if (primitiveShape === undefined || this.ref === undefined) {
-            return undefined;
-        }
         if (this.type === "id") {
+            if (this.ref === undefined) {
+                return undefined;
+            }
             return {
                 type: this.type,
                 id: FdrAPI.TypeId(this.ref),
@@ -45,6 +48,10 @@ export class TypeReferenceNode extends OutputApiNode<SchemaObject | ReferenceObj
             };
         }
         if (this.type === "primitive") {
+            const primitiveShape = this.typeNode?.outputFdrShape();
+            if (primitiveShape === undefined) {
+                return undefined;
+            }
             return {
                 type: this.type,
                 value: primitiveShape,

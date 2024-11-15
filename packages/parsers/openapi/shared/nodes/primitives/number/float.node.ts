@@ -2,10 +2,10 @@ import { UnreachableCaseError } from "ts-essentials";
 import { ApiNodeContext, OutputApiNode } from "../../../../base.node.interface";
 import { SchemaObject } from "../../../openapi.types";
 import { FdrFloatType } from "../types/fdr.types";
-import { OpenApiNumberTypeFormat } from "../types/format.types";
+import { ConstArrayToType, OPENAPI_NUMBER_TYPE_FORMAT } from "../types/format.types";
 
-function isOpenApiNumberTypeFormat(format: string | undefined): format is OpenApiNumberTypeFormat {
-    return format === "float" || format === "double" || format === undefined;
+function isOpenApiNumberTypeFormat(format: unknown): format is ConstArrayToType<typeof OPENAPI_NUMBER_TYPE_FORMAT> {
+    return OPENAPI_NUMBER_TYPE_FORMAT.includes(format as ConstArrayToType<typeof OPENAPI_NUMBER_TYPE_FORMAT>);
 }
 
 export class FloatNode extends OutputApiNode<SchemaObject, Pick<FdrFloatType, "type">> {

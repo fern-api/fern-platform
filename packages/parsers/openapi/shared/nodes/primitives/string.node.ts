@@ -2,7 +2,7 @@ import { UnreachableCaseError } from "ts-essentials";
 import { ApiNodeContext, InputApiNode } from "../../../base.node.interface";
 import { SchemaObject } from "../../openapi.types";
 import { FdrStringType } from "./types/fdr.types";
-import { OpenApiStringTypeFormat } from "./types/format.types";
+import { ConstArrayToType, OPENAPI_STRING_TYPE_FORMAT } from "./types/format.types";
 
 export class StringNode extends InputApiNode<SchemaObject, FdrStringType> {
     type: FdrStringType["type"] | undefined;
@@ -11,7 +11,7 @@ export class StringNode extends InputApiNode<SchemaObject, FdrStringType> {
     minLength: number | undefined;
     maxLength: number | undefined;
 
-    mapToFdrType = (format: OpenApiStringTypeFormat): FdrStringType["type"] | undefined => {
+    mapToFdrType = (format: ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT>): FdrStringType["type"] | undefined => {
         switch (format) {
             case "base64url":
             case "binary":
