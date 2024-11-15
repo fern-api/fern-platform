@@ -47,7 +47,9 @@ export function FilterDropdownMenu({
         <DropdownMenu key={`${filter.facet}:${filter.value}`}>
             <DropdownMenuTrigger asChild>
                 <Badge variant="outline" asChild>
-                    <button>{getFacetDisplay(filter.facet, filter.value, { small: true, titleCase: true })}</button>
+                    <button className="fern-search-facet-filter-menu-button">
+                        {getFacetDisplay(filter.facet, filter.value, { small: true, titleCase: true })}
+                    </button>
                 </Badge>
             </DropdownMenuTrigger>
             <DropdownMenuContent

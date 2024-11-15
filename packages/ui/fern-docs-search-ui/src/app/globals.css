@@ -99,4 +99,15 @@ body {
     [cmdk-group]:not(:first-child) {
         @apply mt-3;
     }
+
+    .fern-search-facet-filter-menu-button:has(.fern-http-method-tag) {
+        padding: 0;
+        overflow: hidden;
+
+        .fern-http-method-tag {
+            padding: 0.125rem 0.625rem;
+            height: 20px;
+            border-radius: unset;
+        }
+    }
 }
