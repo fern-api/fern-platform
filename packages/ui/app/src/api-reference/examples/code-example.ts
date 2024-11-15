@@ -1,15 +1,17 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import titleCase from "@fern-api/ui-core-utils/titleCase";
-import { sortBy } from "es-toolkit/array";
 
 export interface CodeExample {
     key: string;
     exampleIndex: number;
+    snippetIndex: number;
+    exampleKey: string;
     language: string;
-    name: string;
+    name: string | undefined;
     code: string;
     // hast: Root;
     install: string | null | undefined;
+    // TODO: it's a bit excessive to include the full example call here. this should be refactored to include just the relevant properties
     exampleCall: ApiDefinition.ExampleEndpointCall;
     globalError?: boolean;
 }
@@ -21,68 +23,8 @@ export interface CodeExampleGroup {
     examples: CodeExample[];
 }
 
-// key is the language
-export function generateCodeExamples(
-    examples: ApiDefinition.ExampleEndpointCall[] | undefined,
-    grpc: boolean = false,
-): CodeExampleGroup[] {
-    const codeExamples = new Map<string, CodeExample[]>();
-    examples?.forEach((example, i) => {
-        if (example.snippets == null) {
-            return;
-        }
-        Object.values(example.snippets).forEach((snippets) => {
-            snippets.forEach((snippet, j) => {
-                if (!grpc || snippet.language !== "curl") {
-                    codeExamples.set(snippet.language, [
-                        ...(codeExamples.get(snippet.language) ?? []),
-                        {
-                            key: `${snippet.language}-${i}/${j}`,
-                            exampleIndex: i,
-                            language: snippet.language,
-                            name: snippet.name ?? example.name ?? `Example ${i + 1}`,
-                            code: snippet.code,
-                            // hast: snippet.hast,
-                            install: snippet.install,
-                            exampleCall: example,
-                        },
-                    ]);
-                }
-            });
-        });
-    });
-
-    // always keep curl at the top
-    const curlExamples = codeExamples.get("curl");
-    codeExamples.delete("curl");
-
-    // TODO: remove after pinecone examples
-    const examplesByLanguage = grpc
-        ? []
-        : [
-              {
-                  language: "curl",
-                  languageDisplayName: "cURL",
-                  icon: getIconForClient("curl"),
-                  examples: [...(curlExamples ?? [])],
-              },
-          ];
-
-    return examplesByLanguage.concat([
-        ...sortBy(
-            Array.from(codeExamples.entries()).map(([language, examples]) => ({
-                language,
-                languageDisplayName: getLanguageDisplayName(language),
-                icon: getIconForClient(language),
-                examples,
-            })),
-            ["language"],
-        ),
-    ]);
-}
-
-function getIconForClient(clientId: string) {
-    switch (clientId) {
+export function getIconForClient(language: string): string {
+    switch (language) {
         case "curl":
         case "shell":
         case "bash":
@@ -117,8 +59,10 @@ function getIconForClient(clientId: string) {
     }
 }
 
-function getLanguageDisplayName(language: string) {
+export function getLanguageDisplayName(language: string): string {
     switch (language) {
+        case "curl":
+            return "cURL";
         case "go":
         case "golang":
             return "Go";
@@ -131,26 +75,3 @@ function getLanguageDisplayName(language: string) {
             return titleCase(language);
     }
 }
-
-// export interface CodeExampleClientCurl {
-//     id: "curl";
-//     name: string;
-// }
-
-// export interface PythonCodeExample {
-//     id: "python" | "python-async";
-//     name: string;
-//     language: string;
-//     example: string;
-// }
-
-// export interface TypescriptCodeExample {
-//     id: "typescript";
-//     name: string;
-//     language: string;
-//     example: string;
-// }
-
-// export type CodeExampleClient = CodeExampleClientCurl | PythonCodeExample | TypescriptCodeExample;
-
-// export type CodeExampleClientId = CodeExampleClient["id"];
