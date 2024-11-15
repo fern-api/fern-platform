@@ -4,7 +4,11 @@ import { useMemoOne } from "use-memo-one";
 import { READ_APIS_ATOM } from "../../../atoms";
 import { findEndpoint } from "../../../util/processRequestSnippetComponents";
 
-export function useFindEndpoint(method: string, path: string): EndpointDefinition | undefined {
+export function useFindEndpoint(
+    method: string,
+    path: string,
+    example: string | undefined,
+): EndpointDefinition | undefined {
     return useAtomValue(
         useMemoOne(
             () =>
@@ -15,6 +19,7 @@ export function useFindEndpoint(method: string, path: string): EndpointDefinitio
                             apiDefinition,
                             path,
                             method,
+                            example,
                         });
                         if (endpoint) {
                             break;
@@ -22,7 +27,7 @@ export function useFindEndpoint(method: string, path: string): EndpointDefinitio
                     }
                     return endpoint;
                 }),
-            [method, path],
+            [example, method, path],
         ),
     );
 }

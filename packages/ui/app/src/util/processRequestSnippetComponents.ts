@@ -6,19 +6,34 @@ export function findEndpoint({
     apiDefinition,
     method,
     path,
+    example: exampleName,
 }: {
     apiDefinition: ApiDefinition.ApiDefinition;
     method: string;
     path: string;
+    example: string | undefined;
 }): ApiDefinition.EndpointDefinition | undefined {
     path = path.startsWith("/") ? path : `/${path}`;
-    for (const endpoint of Object.values(apiDefinition.endpoints)) {
-        if (endpoint.method === method && getMatchablePermutationsForEndpoint(endpoint).has(path)) {
-            return endpoint;
-        }
+    const matchingEndpoints = Object.values(apiDefinition.endpoints).filter(
+        (e) => e.method === method && getMatchablePermutationsForEndpoint(e).has(path),
+    );
+
+    if (exampleName != null && matchingEndpoints.length > 1) {
+        return (
+            matchingEndpoints.find((e) => e.examples?.some(createExampleNamePredicate(exampleName))) ??
+            matchingEndpoints[0]
+        );
     }
 
-    return undefined;
+    return matchingEndpoints[0];
+}
+
+function createExampleNamePredicate(exampleName: string): (example: ApiDefinition.ExampleEndpointCall) => boolean {
+    return (example) =>
+        example.name === exampleName ||
+        Object.values(example.snippets ?? {})
+            .flat()
+            .some((snippet) => snippet.name === exampleName);
 }
 
 export function getMatchablePermutationsForEndpoint(

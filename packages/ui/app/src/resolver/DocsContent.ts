@@ -47,6 +47,11 @@ export declare namespace DocsContent {
         hasAside: boolean;
         // TODO: downselect apis to only the fields we need
         apis: Record<FernNavigation.ApiDefinitionId, ApiDefinition>;
+        /**
+         * This is a lookup table for the slugs of endpoints referenced in the markdown page.
+         * The Request / Response snippets will use this to link back to the endpoint reference page.
+         */
+        endpointIdsToSlugs: Record<FernNavigation.EndpointId, FernNavigation.Slug>;
     }
 
     interface ApiEndpointPage {
