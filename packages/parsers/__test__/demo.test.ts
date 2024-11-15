@@ -5,7 +5,7 @@ import { ComponentsNode } from "../openapi/demo";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { describe, it } from "vitest";
-import { ApiNodeContext, ErrorCollector } from "../openapi/shared/interfaces/api.node.interface";
+import { ApiNodeContext, ErrorCollector } from "../openapi/base.node.interface";
 
 describe("ComponentsNode", () => {
     describe("outputFdrShape", () => {

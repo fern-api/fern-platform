@@ -1,22 +1,17 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { z } from "zod";
-import { ApiNode, ApiNodeContext } from "./shared/interfaces/api.node.interface";
+import { ApiNodeContext, InputApiNode } from "./base.node.interface";
 import { FdrStage } from "./shared/interfaces/fdr.stage.interface";
 
-export class AvailabilityNode implements ApiNode<unknown, FdrAPI.Availability | undefined> {
+export class AvailabilityNode implements InputApiNode<unknown, FdrAPI.Availability | undefined> {
     id: string;
     availability: FdrAPI.Availability | undefined;
 
     "x-fern-availability-shape" = z.object({
-        "x-fern-availability": z.enum([
-            "beta",
-            "deprecated",
-            "development",
-            "pre-release",
-            "stable",
-            "generally-available",
-        ]),
+        "x-fern-availability": z.optional(
+            z.enum(["beta", "deprecated", "development", "pre-release", "stable", "generally-available"]),
+        ),
     });
 
     deprecatedShape = z.object({
@@ -26,13 +21,13 @@ export class AvailabilityNode implements ApiNode<unknown, FdrAPI.Availability | 
     constructor(
         readonly context: ApiNodeContext,
         readonly input: unknown,
-        readonly accessPath: ApiNode<unknown, unknown>[],
+        readonly accessPath: InputApiNode<unknown, unknown>[],
     ) {
         this.id = `${accessPath.map((node) => node.id).join(".")}.AvailabilityNode`;
         if (input && typeof input === "object" && "x-fern-availability" in input) {
             const result = this["x-fern-availability-shape"].safeParse(input);
             if (result.success) {
-                this.availability = this.convertAvailability(result.data["x-fern-availability"]);
+                this.availability = this.convertAvailability(result.data["x-fern-availability"] ?? "");
             } else {
                 context.errorCollector.addError(`Availability is not defined for ${this.id}`);
             }
@@ -74,7 +69,7 @@ export class AvailabilityNode implements ApiNode<unknown, FdrAPI.Availability | 
     };
 }
 
-export class DemoStringNode implements ApiNode<OpenAPIV3_1.SchemaObject, FdrAPI.api.latest.PrimitiveType> {
+export class DemoStringNode implements InputApiNode<OpenAPIV3_1.SchemaObject, FdrAPI.api.latest.PrimitiveType> {
     id: string;
 
     regex: string | undefined;
@@ -86,7 +81,7 @@ export class DemoStringNode implements ApiNode<OpenAPIV3_1.SchemaObject, FdrAPI.
     constructor(
         readonly context: ApiNodeContext,
         readonly input: OpenAPIV3_1.SchemaObject,
-        readonly accessPath: ApiNode<unknown, unknown>[],
+        readonly accessPath: InputApiNode<unknown, unknown>[],
     ) {
         this.id = `${accessPath.map((node) => node.id).join(".")}.DemoStringNode`;
         this.regex = input.pattern;
@@ -115,7 +110,7 @@ export class DemoTypeShapeStage implements FdrStage<OpenAPIV3_1.SchemaObject, Fd
     constructor(
         readonly context: ApiNodeContext,
         readonly input: OpenAPIV3_1.SchemaObject,
-        readonly accessPath: ApiNode<unknown, unknown>[],
+        readonly accessPath: InputApiNode<unknown, unknown>[],
     ) {
         this.id = `${accessPath.map((node) => node.id).join(".")}.DemoTypeShapeStage`;
 
@@ -151,7 +146,7 @@ export class DemoTypeShapeStage implements FdrStage<OpenAPIV3_1.SchemaObject, Fd
 }
 
 export class DemoPropertyNode
-    implements ApiNode<OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject, FdrAPI.api.latest.ObjectProperty>
+    implements InputApiNode<OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject, FdrAPI.api.latest.ObjectProperty>
 {
     id: string;
 
@@ -162,7 +157,7 @@ export class DemoPropertyNode
         readonly name: string,
         readonly context: ApiNodeContext,
         readonly input: OpenAPIV3_1.SchemaObject,
-        readonly accessPath: ApiNode<unknown, unknown>[],
+        readonly accessPath: InputApiNode<unknown, unknown>[],
     ) {
         this.id = `${accessPath.map((node) => node.id).join(".")}.DemoPropertyNode`;
         if (input.type === "string") {
@@ -186,7 +181,7 @@ export class DemoPropertyNode
     };
 }
 
-export class DemoSchemaNode implements ApiNode<OpenAPIV3_1.SchemaObject, FdrAPI.api.latest.TypeDefinition> {
+export class DemoSchemaNode implements InputApiNode<OpenAPIV3_1.SchemaObject, FdrAPI.api.latest.TypeDefinition> {
     id: string;
 
     shape: DemoTypeShapeStage | undefined = undefined;
@@ -196,7 +191,7 @@ export class DemoSchemaNode implements ApiNode<OpenAPIV3_1.SchemaObject, FdrAPI.
         readonly name: string,
         readonly context: ApiNodeContext,
         readonly input: OpenAPIV3_1.SchemaObject,
-        readonly accessPath: ApiNode<unknown, unknown>[],
+        readonly accessPath: InputApiNode<unknown, unknown>[],
     ) {
         this.id = `${accessPath.map((node) => node.id).join(".")}.DemoTypeDefinitionNode`;
         if (this.input.type === "object") {
@@ -220,7 +215,7 @@ export class DemoSchemaNode implements ApiNode<OpenAPIV3_1.SchemaObject, FdrAPI.
     };
 }
 
-export class ComponentsNode implements ApiNode<OpenAPIV3_1.ComponentsObject, FdrAPI.api.latest.TypeDefinition[]> {
+export class ComponentsNode implements InputApiNode<OpenAPIV3_1.ComponentsObject, FdrAPI.api.latest.TypeDefinition[]> {
     id: string;
 
     schemas: DemoSchemaNode[] = [];
@@ -228,7 +223,7 @@ export class ComponentsNode implements ApiNode<OpenAPIV3_1.ComponentsObject, Fdr
     constructor(
         readonly context: ApiNodeContext,
         readonly input: OpenAPIV3_1.ComponentsObject,
-        readonly accessPath: ApiNode<unknown, unknown>[],
+        readonly accessPath: InputApiNode<unknown, unknown>[],
     ) {
         this.id = `${accessPath.map((node) => node.id).join(".")}.ComponentsNode`;
         this.schemas = Object.entries(this.input.schemas ?? {}).map(([name, schema]) => {
