@@ -1,3 +1,4 @@
+import { FacetName } from "@/utils/facet";
 import { liteClient as algoliasearch } from "algoliasearch/lite";
 import "instantsearch.css/themes/reset.css";
 import { useEffect, useRef, useState, type ReactElement } from "react";
@@ -26,8 +27,8 @@ export function DesktopInstantSearch({
     filters: initialFilters,
 }: DesktopInstantSearchProps): ReactElement {
     const ref = useRef(algoliasearch(appId, apiKey));
-    const [filters, setFilters] = useState<{ facet: string; value: string }[]>(() => {
-        const toRet: { facet: string; value: string }[] = [];
+    const [filters, setFilters] = useState<{ facet: FacetName; value: string }[]>(() => {
+        const toRet: { facet: FacetName; value: string }[] = [];
         if (initialFilters?.["product.title"]) {
             toRet.push({ facet: "product.title", value: initialFilters["product.title"] });
         }

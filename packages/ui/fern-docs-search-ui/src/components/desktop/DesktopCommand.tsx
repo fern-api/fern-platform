@@ -1,13 +1,14 @@
-import { FACET_DISPLAY_NAME_MAP, getFacets, toFilterOptions } from "@/utils/facet";
+import { useFacets } from "@/hooks/useFacets";
+import { FACET_DISPLAY_NAME_MAP, FacetName, getFacets, toFilterOptions } from "@/utils/facet";
+import { getFacetDisplay } from "@/utils/facet-display";
+import { toFiltersString } from "@/utils/to-filter-string";
 import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
-import { HttpMethodTag } from "@fern-ui/fern-http-method-tag";
 import { TooltipPortal, TooltipTrigger } from "@radix-ui/react-tooltip";
 import { Command } from "cmdk";
 import { ArrowLeft, FileText, History, ListFilter, MessageCircle } from "lucide-react";
-import { Dispatch, ReactElement, ReactNode, SetStateAction, useRef } from "react";
+import { Dispatch, ReactElement, SetStateAction, useRef } from "react";
 import { useHits, useSearchBox } from "react-instantsearch";
 import { preload } from "swr";
-import useSWRImmutable from "swr/immutable";
 import { MarkRequired } from "ts-essentials";
 import { RemoteIcon } from "../icons/RemoteIcon";
 import { HitContent } from "../shared/HitContent";
@@ -16,18 +17,9 @@ import { AlgoliaRecordHit } from "../types";
 import { Button } from "../ui/button";
 import { Kbd } from "../ui/kbd";
 import { Tooltip, TooltipContent, TooltipProvider } from "../ui/tooltip";
+import { FilterDropdownMenu } from "./FilterDropdownMenu";
 
 const ICON_CLASS = "size-4 text-[#969696] dark:text-white/50 shrink-0 my-1";
-
-const FACET_DISPLAY_MAP: Record<string, Record<string, ReactNode>> = {
-    method: {
-        GET: <HttpMethodTag method="GET" />,
-        POST: <HttpMethodTag method="POST" />,
-        PUT: <HttpMethodTag method="PUT" />,
-        PATCH: <HttpMethodTag method="PATCH" />,
-        DELETE: <HttpMethodTag method="DELETE" />,
-    },
-} as const;
 
 function toPlaceholder(filters: { facet: string; value: string }[]): string {
     if (filters.length === 0) {
@@ -35,13 +27,6 @@ function toPlaceholder(filters: { facet: string; value: string }[]): string {
     }
 
     return `Search ${filters.map((filter) => FACET_DISPLAY_NAME_MAP[filter.facet]?.[filter.value] ?? filter.value).join(", ")}`;
-}
-
-function toFiltersString(filters: { facet: string; value: string }[]): string {
-    return filters
-        .map((filter) => `${filter.facet}:"${filter.value}"`)
-        .sort()
-        .join(" AND ");
 }
 
 export function DesktopCommand({
@@ -59,10 +44,10 @@ export function DesktopCommand({
     onSubmit: (path: string) => void;
     onAskAI?: ({ initialInput }: { initialInput?: string }) => void;
     filters: {
-        facet: string;
+        facet: FacetName;
         value: string;
     }[];
-    setFilters?: Dispatch<SetStateAction<{ facet: string; value: string }[]>>;
+    setFilters?: Dispatch<SetStateAction<{ facet: FacetName; value: string }[]>>;
 }): ReactElement {
     const ref = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -71,34 +56,46 @@ export function DesktopCommand({
 
     const { items } = useHits<AlgoliaRecord>();
 
-    const { data: facets } = useSWRImmutable([domain, toFiltersString(filters)], ([_domain, filters]) =>
-        getFacets({ appId, apiKey, filters }),
-    );
+    const { data: facets } = useFacets({ appId, apiKey, domain, filters });
 
     const groups = generateHits(items);
 
     const filterOptions = toFilterOptions(facets, query);
 
-    function bounce() {
-        if (ref.current) {
-            ref.current.style.transform = "scale(0.96)";
-            setTimeout(() => {
-                if (ref.current) {
-                    ref.current.style.transform = "";
-                }
-            }, 100);
-
-            refine("");
-            inputRef.current?.focus();
-        }
-    }
-
     return (
         <Command
             ref={ref}
-            className="flex flex-col border border-[#DBDBDB] dark:border-white/10 rounded-lg overflow-hidden bg-[#F2F2F2]/30 dark:bg-[#1A1919]/30 backdrop-blur-xl transition-transform duration-100 h-full"
+            className="flex flex-col border border-[#DBDBDB] dark:border-white/10 rounded-lg overflow-hidden bg-[#F2F2F2]/30 dark:bg-[#1A1919]/30 backdrop-blur-xl h-full"
             shouldFilter={false}
         >
+            {filters.length > 0 && (
+                <div className="flex items-center gap-2 p-4 pb-0 -mb-1">
+                    {filters.map((filter) => (
+                        <FilterDropdownMenu
+                            key={`${filter.facet}:${filter.value}`}
+                            appId={appId}
+                            apiKey={apiKey}
+                            domain={domain}
+                            filter={filter}
+                            filters={filters}
+                            removeFilter={() => {
+                                setFilters?.((prev) => prev.filter((f) => f.facet !== filter.facet));
+                                setTimeout(() => {
+                                    inputRef.current?.focus();
+                                }, 0);
+                            }}
+                            updateFilter={(value) => {
+                                setFilters?.((prev) =>
+                                    prev.map((f) => (f.facet === filter.facet ? { ...f, value } : f)),
+                                );
+                                setTimeout(() => {
+                                    inputRef.current?.focus();
+                                }, 0);
+                            }}
+                        />
+                    ))}
+                </div>
+            )}
             <div
                 className="p-4 border-b last:border-b-0 border-[#DBDBDB] dark:border-white/10 flex items-center gap-2 cursor-text"
                 onClickCapture={() => {
@@ -119,6 +116,7 @@ export function DesktopCommand({
                                         } else {
                                             setFilters?.((lastFilters) => lastFilters.slice(0, -1));
                                         }
+                                        inputRef.current?.focus();
                                     }}
                                 >
                                     <ArrowLeft />
@@ -152,7 +150,7 @@ export function DesktopCommand({
                             } else {
                                 setFilters?.((lastFilters) => lastFilters.slice(0, -1));
                             }
-                            bounce();
+                            inputRef.current?.focus();
                         }
                     }}
                 />
@@ -160,17 +158,7 @@ export function DesktopCommand({
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button
-                                size="xs"
-                                variant="outline"
-                                // onClick={(e) => {
-                                //     if (e.metaKey) {
-                                //         setFilters?.([]);
-                                //     } else {
-                                //         setFilters?.((lastFilters) => lastFilters.slice(0, -1));
-                                //     }
-                                // }}
-                            >
+                            <Button size="xs" variant="outline">
                                 <kbd>esc</kbd>
                             </Button>
                         </TooltipTrigger>
@@ -214,7 +202,7 @@ export function DesktopCommand({
                                 className="flex gap-2 cursor-default items-center"
                                 onSelect={() => {
                                     setFilters?.([...filters, { facet: filter.facet, value: filter.value }]);
-                                    bounce();
+                                    inputRef.current?.focus();
                                 }}
                                 onMouseOver={() => {
                                     const filterString = toFiltersString([
@@ -227,12 +215,7 @@ export function DesktopCommand({
                                 }}
                             >
                                 <ListFilter className={ICON_CLASS} />
-                                <span className="flex-1">
-                                    Search{" "}
-                                    {FACET_DISPLAY_MAP[filter.facet]?.[filter.value] ??
-                                        FACET_DISPLAY_NAME_MAP[filter.facet]?.[filter.value] ??
-                                        filter.value}
-                                </span>
+                                <span className="flex-1">Search {getFacetDisplay(filter.facet, filter.value)}</span>
                                 <span className="text-xs text-[#969696] dark:text-white/50">{filter.count}</span>
                             </Command.Item>
                         ))}

@@ -35,6 +35,8 @@
     "@fern-ui/fern-docs-search-server": "workspace:*",
     "@fern-ui/fern-http-method-tag": "workspace:*",
     "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
     "ai": "^3.4.33",

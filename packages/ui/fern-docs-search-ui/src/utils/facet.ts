@@ -2,8 +2,9 @@ import { liteClient as algoliasearch, SearchForFacets } from "algoliasearch/lite
 import { zip } from "es-toolkit/array";
 
 export const FACET_NAMES = ["product.title", "version.title", "type", "api_type", "method", "status_code"] as const;
+export type FacetName = (typeof FACET_NAMES)[number];
 
-export type FacetsResponse = Record<(typeof FACET_NAMES)[number], { value: string; count: number }[]>;
+export type FacetsResponse = Record<FacetName, { value: string; count: number }[]>;
 
 export async function getFacets({
     appId,
@@ -52,7 +53,7 @@ export async function getFacets({
 }
 
 interface FilterOption {
-    facet: string;
+    facet: FacetName;
     value: string;
     count: number;
 }
@@ -75,6 +76,34 @@ export const FACET_DISPLAY_NAME_MAP: Record<string, Record<string, string>> = {
         changelog: "changelog",
         "api-reference": "endpoints",
     },
+};
+export const FACET_DISPLAY_NAME_TITLE_CASE_MAP: Record<string, Record<string, string>> = {
+    method: {
+        GET: "GET requests",
+        POST: "POST requests",
+        PUT: "PUT requests",
+        PATCH: "PATCH requests",
+        DELETE: "DELETE requests",
+    },
+    api_type: {
+        http: "Rest",
+        webhook: "Webhooks",
+        websocket: "Web sockets",
+    },
+    type: {
+        markdown: "Guides",
+        changelog: "Changelog",
+        "api-reference": "Endpoints",
+    },
+};
+
+export const FACET_DISPLAY_NAME: Record<FacetName, string> = {
+    method: "HTTP method",
+    api_type: "API type",
+    type: "Content type",
+    "product.title": "Product",
+    "version.title": "Version",
+    status_code: "Status code",
 };
 
 export function toFilterOptions(facets: FacetsResponse | undefined, query: string): FilterOption[] {
@@ -102,4 +131,8 @@ export function toFilterOptions(facets: FacetsResponse | undefined, query: strin
     });
 
     return results;
+}
+
+export function toFilterLabel(facet: FacetName): string {
+    return FACET_DISPLAY_NAME[facet];
 }
