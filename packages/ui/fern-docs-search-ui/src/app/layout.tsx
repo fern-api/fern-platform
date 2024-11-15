@@ -1,5 +1,6 @@
 import "@fern-ui/fern-http-method-tag/index.css";
 import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import { ReactElement } from "react";
 import "./globals.css";
 
@@ -14,7 +15,11 @@ export default function RootLayout({
 }>): ReactElement {
     return (
         <html lang="en">
-            <body className="antialiased">{children}</body>
+            <body className="antialiased">
+                <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+                    {children}
+                </ThemeProvider>
+            </body>
         </html>
     );
 }

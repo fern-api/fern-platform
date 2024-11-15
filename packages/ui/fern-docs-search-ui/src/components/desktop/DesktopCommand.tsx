@@ -5,8 +5,8 @@ import { toFiltersString } from "@/utils/to-filter-string";
 import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
 import { TooltipPortal, TooltipTrigger } from "@radix-ui/react-tooltip";
 import { Command } from "cmdk";
-import { ArrowLeft, FileText, History, ListFilter, MessageCircle } from "lucide-react";
-import { Dispatch, ReactElement, SetStateAction, useRef } from "react";
+import { ArrowLeft, FileText, History, Laptop, ListFilter, MessageCircle, Moon, Sun } from "lucide-react";
+import { Dispatch, ReactElement, ReactNode, SetStateAction, useRef } from "react";
 import { useHits, useSearchBox } from "react-instantsearch";
 import { preload } from "swr";
 import { MarkRequired } from "ts-essentials";
@@ -37,6 +37,9 @@ export function DesktopCommand({
     onAskAI,
     filters,
     setFilters,
+    setTheme,
+    CloseTrigger,
+    onClose,
 }: {
     domain: string;
     appId: string;
@@ -48,6 +51,9 @@ export function DesktopCommand({
         value: string;
     }[];
     setFilters?: Dispatch<SetStateAction<{ facet: FacetName; value: string }[]>>;
+    setTheme?: (theme: "light" | "dark" | "system") => void;
+    CloseTrigger?: ({ children }: { children: ReactNode }) => ReactNode;
+    onClose?: () => void;
 }): ReactElement {
     const ref = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -60,13 +66,21 @@ export function DesktopCommand({
 
     const groups = generateHits(items);
 
-    const filterOptions = toFilterOptions(facets, query);
+    const facetOptions = toFilterOptions(facets, "");
 
     return (
         <Command
             ref={ref}
             className="flex flex-col border border-[#DBDBDB] dark:border-white/10 rounded-lg overflow-hidden bg-[#F2F2F2]/30 dark:bg-[#1A1919]/30 backdrop-blur-xl h-full"
-            shouldFilter={false}
+            onKeyDown={
+                onClose != null
+                    ? (e) => {
+                          if (e.key === "Escape") {
+                              onClose?.();
+                          }
+                      }
+                    : undefined
+            }
         >
             {filters.length > 0 && (
                 <div className="flex items-center gap-2 p-4 pb-0 -mb-1">
@@ -155,48 +169,51 @@ export function DesktopCommand({
                     }}
                 />
 
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button size="xs" variant="outline">
-                                <kbd>esc</kbd>
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipPortal>
-                            <TooltipContent>
-                                <p>Close search</p>
-                            </TooltipContent>
-                        </TooltipPortal>
-                    </Tooltip>
-                </TooltipProvider>
+                {CloseTrigger != null && (
+                    <TooltipProvider>
+                        <Tooltip>
+                            <CloseTrigger>
+                                <TooltipTrigger asChild>
+                                    <Button size="xs" variant="outline">
+                                        <kbd>esc</kbd>
+                                    </Button>
+                                </TooltipTrigger>
+                            </CloseTrigger>
+                            <TooltipPortal>
+                                <TooltipContent>
+                                    <p>Close search</p>
+                                </TooltipContent>
+                            </TooltipPortal>
+                        </Tooltip>
+                    </TooltipProvider>
+                )}
             </div>
-            <Command.Empty className="p-4 pb-6 text-center text-[#969696] dark:text-white/50">
-                No results found
-            </Command.Empty>
             <Command.List className="py-3 min-h-0 shrink overflow-auto mask-grad-y-3">
-                <Command.Group>
-                    <Command.Item
-                        value="ai-chat"
-                        className="flex gap-2 cursor-default"
-                        onSelect={() => onAskAI?.({ initialInput: query })}
-                    >
-                        <MessageCircle className={ICON_CLASS} />
-                        <span>
-                            Ask AI
-                            {query.trimStart().length > 0 && (
-                                <>
-                                    <span className="ms-1">&ldquo;</span>
-                                    <span className="font-semibold">{query}</span>
-                                    <span>&rdquo;</span>
-                                </>
-                            )}
-                        </span>
-                    </Command.Item>
-                </Command.Group>
+                {onAskAI != null && (
+                    <Command.Group forceMount>
+                        <Command.Item
+                            value="ai-chat"
+                            className="flex gap-2 cursor-default"
+                            onSelect={() => onAskAI?.({ initialInput: query })}
+                        >
+                            <MessageCircle className={ICON_CLASS} />
+                            <span>
+                                Ask AI
+                                {query.trimStart().length > 0 && (
+                                    <>
+                                        <span className="ms-1">&ldquo;</span>
+                                        <span className="font-semibold">{query}</span>
+                                        <span>&rdquo;</span>
+                                    </>
+                                )}
+                            </span>
+                        </Command.Item>
+                    </Command.Group>
+                )}
 
-                {filterOptions.length > 0 && (
+                {facetOptions.length > 0 && (
                     <Command.Group heading="Filters">
-                        {filterOptions.map((filter) => (
+                        {facetOptions.map((filter) => (
                             <Command.Item
                                 key={`${filter.facet}:${filter.value}`}
                                 className="flex gap-2 cursor-default items-center"
@@ -222,8 +239,14 @@ export function DesktopCommand({
                     </Command.Group>
                 )}
 
+                {groups.length === 0 && (
+                    <Command.Empty className="p-4 pb-6 text-center text-[#969696] dark:text-white/50">
+                        No results found for &ldquo;{query}&rdquo;.
+                    </Command.Empty>
+                )}
+
                 {groups.map((group, index) => (
-                    <Command.Group key={group.title ?? index} heading={group.title ?? "Results"}>
+                    <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} forceMount>
                         {group.hits.map((hit) => (
                             <Command.Item
                                 key={hit.path}
@@ -240,6 +263,35 @@ export function DesktopCommand({
                         ))}
                     </Command.Group>
                 ))}
+
+                {setTheme != null && (
+                    <Command.Group heading="Theme">
+                        <Command.Item
+                            value="light"
+                            className="flex gap-2 cursor-default"
+                            onSelect={() => setTheme?.("light")}
+                        >
+                            <Sun className={ICON_CLASS} />
+                            Light
+                        </Command.Item>
+                        <Command.Item
+                            value="dark"
+                            className="flex gap-2 cursor-default"
+                            onSelect={() => setTheme?.("dark")}
+                        >
+                            <Moon className={ICON_CLASS} />
+                            Dark
+                        </Command.Item>
+                        <Command.Item
+                            value="system"
+                            className="flex gap-2 cursor-default"
+                            onSelect={() => setTheme?.("system")}
+                        >
+                            <Laptop className={ICON_CLASS} />
+                            System
+                        </Command.Item>
+                    </Command.Group>
+                )}
             </Command.List>
         </Command>
     );

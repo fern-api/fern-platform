@@ -1,6 +1,7 @@
 import { FacetName } from "@/utils/facet";
 import { liteClient as algoliasearch } from "algoliasearch/lite";
 import "instantsearch.css/themes/reset.css";
+import { useTheme } from "next-themes";
 import { useEffect, useRef, useState, type ReactElement } from "react";
 import { Configure } from "react-instantsearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
@@ -43,6 +44,8 @@ export function DesktopInstantSearch({
         void ref.current.clearCache();
     }, [apiKey]);
 
+    const { setTheme } = useTheme();
+
     return (
         <InstantSearchNext
             searchClient={ref.current}
@@ -70,6 +73,7 @@ export function DesktopInstantSearch({
                 onAskAI={onAskAI}
                 filters={filters}
                 setFilters={setFilters}
+                setTheme={setTheme}
             />
         </InstantSearchNext>
     );

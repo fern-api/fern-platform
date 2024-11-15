@@ -51,6 +51,7 @@ export function FilterDropdownMenu({
                 </Badge>
             </DropdownMenuTrigger>
             <DropdownMenuContent
+                className="min-w-[200px]"
                 onKeyDownCapture={(e) => {
                     if (e.key === "Backspace") {
                         removeFilter?.();

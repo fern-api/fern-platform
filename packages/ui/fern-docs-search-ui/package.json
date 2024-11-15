@@ -49,6 +49,7 @@
     "instantsearch.css": "8.5.1",
     "instantsearch.js": "4.75.4",
     "lucide-react": "^0.378.0",
+    "next-themes": "^0.4.3",
     "react-instantsearch": "^7.13.7",
     "react-instantsearch-nextjs": "^0.3.17",
     "server-only": "^0.0.1",

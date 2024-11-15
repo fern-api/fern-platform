@@ -1,6 +1,6 @@
 import { FacetsResponse, getFacets } from "@/utils/facet";
 import { toFiltersString } from "@/utils/to-filter-string";
-import { SWRResponse } from "swr";
+import { SWRResponse, preload } from "swr";
 import useSWRImmutable from "swr/immutable";
 
 export function useFacets({
@@ -17,4 +17,17 @@ export function useFacets({
     return useSWRImmutable([domain, toFiltersString(filters)], ([_domain, filters]) =>
         getFacets({ appId, apiKey, filters }),
     );
+}
+
+export function usePreloadFacets({
+    appId,
+    apiKey,
+    domain,
+}: {
+    appId: string;
+    apiKey: string;
+    domain: string;
+}): (filters: { facet: string; value: string }[]) => Promise<FacetsResponse> {
+    return (filters) =>
+        preload([domain, toFiltersString(filters)], ([_domain, filters]) => getFacets({ appId, apiKey, filters }));
 }
