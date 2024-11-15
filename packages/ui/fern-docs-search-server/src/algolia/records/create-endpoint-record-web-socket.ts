@@ -43,7 +43,7 @@ export function createEndpointBaseRecordWebSocket({
         description: prepared.content,
         code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
         availability: endpoint.availability,
-        endpoint_path: endpoint.path.join(""),
+        endpoint_path: ApiDefinition.toColonEndpointPathLiteral(endpoint.path),
         environments: endpoint.environments?.map((environment) => ({
             id: environment.id,
             url: environment.baseUrl,
