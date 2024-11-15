@@ -1,10 +1,13 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
+import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
 import { CodeExampleClientDropdown } from "../../../api-reference/endpoints/CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "../../../api-reference/endpoints/EndpointUrlWithOverflow";
 import { useExampleSelection } from "../../../api-reference/endpoints/useExampleSelection";
 import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
+import { ENDPOINT_ID_TO_SLUG_ATOM } from "../../../atoms";
+import { ApiReferenceButton } from "../../../components/ApiReferenceButton";
 import { usePlaygroundBaseUrl } from "../../../playground/utils/select-environment";
 import { RequestSnippet } from "./types";
 import { useFindEndpoint } from "./useFindEndpoint";
@@ -28,7 +31,7 @@ const EndpointRequestSnippetRenderer: React.FC<React.PropsWithChildren<RequestSn
     path,
     example,
 }) => {
-    const endpoint = useFindEndpoint(method, path);
+    const endpoint = useFindEndpoint(method, path, example);
 
     if (endpoint == null) {
         return null;
@@ -44,6 +47,7 @@ export function EndpointRequestSnippetInternal({
     endpoint: ApiDefinition.EndpointDefinition;
     example: string | undefined;
 }): ReactElement | null {
+    const slug = useAtomValue(ENDPOINT_ID_TO_SLUG_ATOM)[endpoint.id];
     const { selectedExample, selectedExampleKey, availableLanguages, setSelectedExampleKey } = useExampleSelection(
         endpoint,
         example,
@@ -76,8 +80,7 @@ export function EndpointRequestSnippetInternal({
                                 value={selectedExampleKey.language}
                             />
                         )}
-                        {/* TODO: Restore this button */}
-                        {/* <ApiReferenceButton slug={endpoint.slug} /> */}
+                        {slug != null && <ApiReferenceButton slug={slug} />}
                     </>
                 }
                 code={selectedExample.code}

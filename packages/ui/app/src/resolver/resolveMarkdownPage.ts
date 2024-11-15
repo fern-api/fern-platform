@@ -46,9 +46,21 @@ export async function resolveMarkdownPage({
     }
 
     const apiDefinitionIds = new Set<FernNavigation.ApiDefinitionId>();
+    const endpointIdsToSlugs = new Map<FernNavigation.EndpointId, FernNavigation.Slug>();
+
     if (shouldFetchApiRef(markdownPageWithoutApiRefs.content)) {
+        // note: we start from the version node because endpoint Ids can be duplicated across versions
+        // if we introduce versioned sections, and versioned api references, this logic will need to change
         FernNavigation.utils.collectApiReferences(version).forEach((apiRef) => {
             apiDefinitionIds.add(apiRef.apiDefinitionId);
+
+            FernNavigation.traverseDF(apiRef, (node) => {
+                if (node.type !== "endpoint") {
+                    return;
+                }
+                // TODO: handle duplicate endpoint Ids
+                endpointIdsToSlugs.set(node.endpointId, node.canonicalSlug ?? node.slug);
+            });
         });
     }
     const resolvedApis = Object.fromEntries(
@@ -80,6 +92,7 @@ export async function resolveMarkdownPage({
         ...markdownPageWithoutApiRefs,
         type: "markdown-page",
         apis: resolvedApis,
+        endpointIdsToSlugs: Object.fromEntries(endpointIdsToSlugs.entries()),
     };
 }
 
@@ -95,7 +108,9 @@ export async function resolveMarkdownPageWithoutApiRefs({
     breadcrumb,
     neighbors,
     markdownLoader,
-}: ResolveMarkdownPageWithoutApiRefsOptions): Promise<Omit<DocsContent.MarkdownPage, "type" | "apis"> | undefined> {
+}: ResolveMarkdownPageWithoutApiRefsOptions): Promise<
+    Omit<DocsContent.MarkdownPage, "type" | "apis" | "endpointIdsToSlugs"> | undefined
+> {
     const rawMarkdown = markdownLoader.getRawMarkdown(node);
 
     if (!rawMarkdown) {
