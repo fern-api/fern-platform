@@ -28,7 +28,7 @@ export function renderTypeShorthandRoot(
                 toPrimitiveTypeLabels({ primitive: unwrapped.shape.value }).map((label, index) => (
                     <code key={index}>{label}</code>
                 ))}
-            {unwrapped.default != null && (
+            {unwrapped.default != null && unwrapped.isOptional && (
                 <span>
                     {"Defaults to "}
                     <code>{unknownToString(unwrapped.default)}</code>

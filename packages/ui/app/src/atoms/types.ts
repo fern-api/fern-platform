@@ -23,6 +23,26 @@ export interface AnnouncementConfig {
     mdx: FernDocs.MarkdownText;
 }
 
+export interface DefaultNavbarLink {
+    type: "filled" | "outlined" | "minimal" | "primary" | "secondary";
+    href: string;
+    text: string | undefined;
+    icon: string | undefined;
+    rightIcon: string | undefined;
+    rounded: boolean | undefined;
+    className: string | undefined;
+    id: string | undefined;
+}
+
+export interface GithubNavbarLink {
+    type: "github";
+    href: string;
+    className: string | undefined;
+    id: string | undefined;
+}
+
+export type NavbarLink = DefaultNavbarLink | GithubNavbarLink;
+
 export interface DocsProps {
     baseUrl: DocsV2Read.BaseUrl;
     navigation: NavigationProps;
@@ -32,7 +52,7 @@ export interface DocsProps {
     announcement: AnnouncementConfig | undefined;
     layout: DocsV1Read.DocsLayoutConfig | undefined;
     js: DocsV1Read.JsConfig | undefined;
-    navbarLinks: DocsV1Read.NavbarLink[];
+    navbarLinks: NavbarLink[];
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>;

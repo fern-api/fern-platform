@@ -61,6 +61,7 @@ export const EMPTY_DOCS_STATE: DocsProps = {
         neighbors: { prev: null, next: null },
         hasAside: false,
         apis: {},
+        endpointIdsToSlugs: {},
     },
     featureFlags: DEFAULT_FEATURE_FLAGS,
     apis: [],

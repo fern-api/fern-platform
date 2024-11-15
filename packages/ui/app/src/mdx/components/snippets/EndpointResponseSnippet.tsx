@@ -1,9 +1,9 @@
-import { useMemo } from "react";
+import { EndpointDefinition, HttpMethod } from "@fern-api/fdr-sdk/api-definition";
+import { useExampleSelection } from "../../../api-reference/endpoints/useExampleSelection";
 import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
-import { generateCodeExamples } from "../../../api-reference/examples/code-example";
 import { RequestSnippet } from "./types";
 import { useFindEndpoint } from "./useFindEndpoint";
-import { extractEndpointPathAndMethod, useSelectedClient } from "./utils";
+import { extractEndpointPathAndMethod } from "./utils";
 
 export const EndpointResponseSnippet: React.FC<React.PropsWithChildren<RequestSnippet.Props>> = ({
     endpoint: endpointLocator,
@@ -18,21 +18,34 @@ export const EndpointResponseSnippet: React.FC<React.PropsWithChildren<RequestSn
     return <EndpointResponseSnippetInternal method={method} path={path} example={example} />;
 };
 
-const EndpointResponseSnippetInternal: React.FC<React.PropsWithChildren<RequestSnippet.InternalProps>> = ({
+function EndpointResponseSnippetInternal({
     path,
     method,
     example,
-}) => {
-    const endpoint = useFindEndpoint(method, path);
-
-    const clients = useMemo(() => generateCodeExamples(endpoint?.examples ?? []), [endpoint?.examples]);
-    const [selectedClient] = useSelectedClient(clients, example);
+}: {
+    path: string;
+    method: HttpMethod;
+    example: string | undefined;
+}) {
+    const endpoint = useFindEndpoint(method, path, example);
 
     if (endpoint == null) {
         return null;
     }
 
-    const responseJson = selectedClient?.exampleCall.responseBody?.value;
+    return <EndpointResponseSnippetRenderer endpoint={endpoint} example={example} />;
+}
+
+function EndpointResponseSnippetRenderer({
+    endpoint,
+    example,
+}: {
+    endpoint: EndpointDefinition;
+    example: string | undefined;
+}) {
+    const { selectedExample } = useExampleSelection(endpoint, example);
+
+    const responseJson = selectedExample?.exampleCall.responseBody?.value;
 
     if (responseJson == null) {
         return null;
@@ -52,4 +65,4 @@ const EndpointResponseSnippetInternal: React.FC<React.PropsWithChildren<RequestS
             />
         </div>
     );
-};
+}

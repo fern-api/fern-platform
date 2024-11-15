@@ -6,6 +6,7 @@ import { atomFamily } from "jotai/utils";
 import { useEffect } from "react";
 import { useMemoOne } from "use-memo-one";
 import { useIsLocalPreview } from "../contexts/local-preview";
+import { DOCS_ATOM } from "./docs";
 import { FEATURE_FLAGS_ATOM } from "./flags";
 import { RESOLVED_API_DEFINITION_ATOM, RESOLVED_PATH_ATOM } from "./navigation";
 
@@ -82,3 +83,11 @@ export function useIsApiReferenceShallowLink(node: FernNavigation.WithApiDefinit
         ),
     );
 }
+
+export const ENDPOINT_ID_TO_SLUG_ATOM = atom<Record<FernNavigation.EndpointId, FernNavigation.Slug>>((get) => {
+    const { content } = get(DOCS_ATOM);
+    if (content.type === "markdown-page") {
+        return content.endpointIdsToSlugs;
+    }
+    return {};
+});

@@ -17,7 +17,7 @@ import { PlaygroundBearerAuthForm } from "./PlaygroundBearerAuthForm";
 
 function FoundOAuthReferencedEndpointForm({
     context,
-    oAuthClientCredentialsReferencedEndpoint,
+    referencedEndpoint,
     closeContainer,
     disabled,
 }: {
@@ -25,7 +25,7 @@ function FoundOAuthReferencedEndpointForm({
      * this must be the OAuth endpoint.
      */
     context: EndpointContext;
-    oAuthClientCredentialsReferencedEndpoint: APIV1Read.OAuthClientCredentialsReferencedEndpoint;
+    referencedEndpoint: APIV1Read.OAuthClientCredentials.ReferencedEndpoint;
     closeContainer: () => void;
     disabled?: boolean;
 }): ReactElement {
@@ -45,7 +45,7 @@ function FoundOAuthReferencedEndpointForm({
             formState,
             endpoint: context.endpoint,
             proxyEnvironment,
-            oAuthClientCredentialsReferencedEndpoint,
+            referencedEndpoint,
             baseUrl,
             setValue,
             closeContainer,
@@ -150,12 +150,10 @@ function FoundOAuthReferencedEndpointForm({
 
 function OAuthReferencedEndpointForm({
     referencedEndpoint,
-    oAuthClientCredentialsReferencedEndpoint,
     closeContainer,
     disabled,
 }: {
     referencedEndpoint: APIV1Read.OAuthClientCredentials.ReferencedEndpoint;
-    oAuthClientCredentialsReferencedEndpoint: APIV1Read.OAuthClientCredentialsReferencedEndpoint;
     closeContainer: () => void;
     disabled?: boolean;
 }) {
@@ -172,7 +170,7 @@ function OAuthReferencedEndpointForm({
     return (
         <FoundOAuthReferencedEndpointForm
             context={context}
-            oAuthClientCredentialsReferencedEndpoint={oAuthClientCredentialsReferencedEndpoint}
+            referencedEndpoint={referencedEndpoint}
             closeContainer={closeContainer}
             disabled={disabled}
         />
@@ -194,7 +192,6 @@ export function PlaygroundOAuthForm({
                 referencedEndpoint: (referencedEndpoint) => (
                     <OAuthReferencedEndpointForm
                         referencedEndpoint={referencedEndpoint}
-                        oAuthClientCredentialsReferencedEndpoint={referencedEndpoint}
                         closeContainer={closeContainer}
                         disabled={disabled}
                     />

@@ -15,7 +15,7 @@ export function buildAuthHeaders(
     { redacted }: { redacted: boolean },
     oAuthClientCredentialReferencedEndpointLoginFlowProps?: Omit<
         OAuthClientCredentialReferencedEndpointLoginFlowProps,
-        "oAuthClientCredentialsReferencedEndpoint"
+        "referencedEndpoint"
     >,
 ): Record<string, string> {
     const headers: Record<string, string> = {};
@@ -48,7 +48,7 @@ export function buildAuthHeaders(
                 visitDiscriminatedUnion(oAuth.value)._visit({
                     clientCredentials: (oAuthClientCredentials) => {
                         visitDiscriminatedUnion(oAuthClientCredentials.value)._visit({
-                            referencedEndpoint: (oAuthClientCredentialsReferencedEndpoint) => {
+                            referencedEndpoint: (referencedEndpoint) => {
                                 const token =
                                     authState.oauth?.selectedInputMethod === "credentials"
                                         ? authState.oauth?.accessToken
@@ -69,7 +69,7 @@ export function buildAuthHeaders(
                                                 formState,
                                                 endpoint,
                                                 proxyEnvironment,
-                                                oAuthClientCredentialsReferencedEndpoint,
+                                                referencedEndpoint,
                                                 baseUrl,
                                                 setValue: setOAuthValue,
                                             }).catch(noop);

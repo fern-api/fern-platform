@@ -2573,7 +2573,6 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "v2/changelog/v2-api-release",
                           "date": "2024-09-26T00:00:00.000Z",
                           "id": "v2.changelog.2024-9-26-1",
                           "pageId": "pages/changelog/2024-09-26-refresh-models-on-azure.mdx",
@@ -2809,7 +2808,6 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "v2/changelog/command-model-nightly-available",
                           "date": "2023-01-17T00:00:00.000Z",
                           "id": "v2.changelog.2023-1-17-1",
                           "pageId": "pages/changelog/2023-01-17-command-r-is-a-scalable-llm-for-business.mdx",
@@ -2885,7 +2883,6 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "v2/changelog/coclassify-powered-by-our-representational-model-embeddings",
                           "date": "2022-11-03T00:00:00.000Z",
                           "id": "v2.changelog.2022-11-3-1",
                           "pageId": "pages/changelog/2022-11-03-new-logit-bias-experimental-parameter.mdx",
@@ -2979,7 +2976,6 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "v2/changelog/new-extremely-large-model",
                           "date": "2022-04-25T00:00:00.000Z",
                           "id": "v2.changelog.2022-4-25-1",
                           "pageId": "pages/changelog/2022-04-25-updated-small-medium-and-large-generation-models.mdx",
@@ -3005,7 +3001,6 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "v2/changelog/classification-endpoint",
                           "date": "2022-03-08T00:00:00.000Z",
                           "id": "v2.changelog.2022-3-8-1",
                           "pageId": "pages/changelog/2022-03-08-finetuning-available-policy-updates.mdx",
@@ -3014,7 +3009,6 @@
                           "type": "changelogEntry"
                         },
                         {
-                          "canonicalSlug": "v2/changelog/classification-endpoint",
                           "date": "2022-03-08T00:00:00.000Z",
                           "id": "v2.changelog.2022-3-8-2",
                           "pageId": "pages/changelog/2022-03-08-new-improved-generation-models.mdx",
