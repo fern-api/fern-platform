@@ -77,11 +77,11 @@ describe("StringNode", () => {
         });
     });
 
-    describe("outputFdrShape", () => {
+    describe("toFdrShape", () => {
         it("should return undefined when type is undefined", () => {
             const node = new StringNode(mockContext, { type: "string" }, []);
             node.type = undefined;
-            expect(node.outputFdrShape()).toBeUndefined();
+            expect(node.toFdrShape()).toBeUndefined();
         });
 
         it("should return complete shape with all properties", () => {
@@ -98,7 +98,7 @@ describe("StringNode", () => {
                 [],
             );
 
-            expect(node.outputFdrShape()).toEqual({
+            expect(node.toFdrShape()).toEqual({
                 type: "datetime",
                 regex: "^test$",
                 default: "default",

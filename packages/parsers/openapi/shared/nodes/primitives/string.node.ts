@@ -1,7 +1,7 @@
 import { UnreachableCaseError } from "ts-essentials";
-import { ApiNodeContext, InputApiNode } from "../../../base.node.interface";
+import { FdrStringType } from "../../../../fdr/fdr.types";
+import { ApiNodeContext, InputApiNode } from "../../../ApiNode";
 import { SchemaObject } from "../../openapi.types";
-import { FdrStringType } from "./types/fdr.types";
 import { ConstArrayToType, OPENAPI_STRING_TYPE_FORMAT } from "./types/format.types";
 
 export class StringNode extends InputApiNode<SchemaObject, FdrStringType> {
@@ -67,7 +67,6 @@ export class StringNode extends InputApiNode<SchemaObject, FdrStringType> {
             context.errorCollector.addError(
                 `Expected type "string" for primitive, but got "${input.type}"`,
                 accessPath,
-                accessorKey,
             );
             return;
         }
@@ -75,11 +74,7 @@ export class StringNode extends InputApiNode<SchemaObject, FdrStringType> {
         this.type = this.mapToFdrType(input.format);
 
         if (this.type === undefined) {
-            context.errorCollector.addError(
-                `Expected proper "string" format, but got "${input.format}"`,
-                accessPath,
-                accessorKey,
-            );
+            context.errorCollector.addError(`Expected proper "string" format, but got "${input.format}"`, accessPath);
             return;
         }
 
@@ -89,7 +84,7 @@ export class StringNode extends InputApiNode<SchemaObject, FdrStringType> {
         this.maxLength = input.maxLength;
     }
 
-    outputFdrShape = (): FdrStringType | undefined => {
+    toFdrShape = (): FdrStringType | undefined => {
         if (this.type === undefined) {
             return undefined;
         }

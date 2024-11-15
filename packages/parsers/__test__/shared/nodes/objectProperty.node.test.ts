@@ -30,14 +30,14 @@ describe("ObjectPropertyNode", () => {
         });
     });
 
-    describe("outputFdrShape", () => {
+    describe("toFdrShape", () => {
         it("should output shape with primitive type", () => {
             const input: SchemaObject = {
                 type: "string",
                 description: "test description",
             };
             const node = new ObjectPropertyNode("testKey", mockContext, input, []);
-            const shape = node.outputFdrShape();
+            const shape = node.toFdrShape();
             expect(shape).toBeDefined();
             expect(shape?.key).toEqual(FdrAPI.PropertyKey("testKey"));
             expect(shape?.description).toBe("test description");
@@ -49,8 +49,8 @@ describe("ObjectPropertyNode", () => {
                 type: "invalid",
             };
             const node = new ObjectPropertyNode("testKey", mockContext, input, []);
-            vi.spyOn(node.valueShape, "outputFdrShape").mockReturnValue(undefined);
-            expect(node.outputFdrShape()).toBeUndefined();
+            vi.spyOn(node.valueShape, "toFdrShape").mockReturnValue(undefined);
+            expect(node.toFdrShape()).toBeUndefined();
             // this should show up, but since the examples are terse and non-exhaustive, we do not have any validation checking
             // expect(mockContext.errorCollector.addError).toHaveBeenCalledWith(
             //     "Failed to generate shape for property testKey",

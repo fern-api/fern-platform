@@ -1,6 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-import { ApiNodeContext, InputApiNode } from "../../../base.node.interface";
+import { ApiNodeContext, InputApiNode } from "../../../ApiNode";
 
 export class EnumNode extends InputApiNode<OpenAPIV3_1.SchemaObject, FdrAPI.api.v1.read.PrimitiveType.Enum> {
     default: number | undefined;
@@ -19,7 +19,6 @@ export class EnumNode extends InputApiNode<OpenAPIV3_1.SchemaObject, FdrAPI.api.
             context.errorCollector.addError(
                 `Expected type "integer" for primitive, but got "${input.type}"`,
                 accessPath,
-                accessorKey,
             );
         }
         this.format = input.format;
@@ -28,7 +27,7 @@ export class EnumNode extends InputApiNode<OpenAPIV3_1.SchemaObject, FdrAPI.api.
         this.maximum = input.maximum;
     }
 
-    outputFdrShape = (): FdrAPI.api.v1.read.PrimitiveType.Integer => {
+    toFdrShape = (): FdrAPI.api.v1.read.PrimitiveType.Integer => {
         return {
             type: "integer",
             minimum: this.minimum,

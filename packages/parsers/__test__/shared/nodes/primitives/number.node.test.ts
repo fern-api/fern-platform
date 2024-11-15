@@ -56,11 +56,11 @@ describe("NumberNode", () => {
         });
     });
 
-    describe("outputFdrShape", () => {
+    describe("toFdrShape", () => {
         it("should return undefined when typeNode shape is undefined", () => {
             const input = { type: "string" };
             const node = new NumberNode(mockContext, input, []);
-            expect(node.outputFdrShape()).toBeUndefined();
+            expect(node.toFdrShape()).toBeUndefined();
         });
 
         it("should return complete shape for integer type", () => {
@@ -71,7 +71,7 @@ describe("NumberNode", () => {
                 default: 5,
             };
             const node = new NumberNode(mockContext, input, []);
-            const shape = node.outputFdrShape();
+            const shape = node.toFdrShape();
             expect(shape).toEqual({
                 type: "integer",
                 minimum: 1,
@@ -88,7 +88,7 @@ describe("NumberNode", () => {
                 default: 5.5,
             };
             const node = new NumberNode(mockContext, input, []);
-            const shape = node.outputFdrShape();
+            const shape = node.toFdrShape();
             expect(shape).toEqual({
                 type: "double",
                 minimum: 1.5,

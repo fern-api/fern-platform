@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ApiNodeContext } from "../../../../../openapi/base.node.interface";
+import { ApiNodeContext } from "../../../../../openapi/ApiNode";
 import { FloatNode } from "../../../../../openapi/shared/nodes/primitives/number/float.node";
 import { createMockContext } from "../../../../createMockContext.util";
 
@@ -14,7 +14,7 @@ describe("FloatNode", () => {
         const input = { type: "number", format: "float" };
         const node = new FloatNode(mockContext, input, []);
         expect(node.type).toBe("double");
-        expect(node.outputFdrShape()).toEqual({ type: "double" });
+        expect(node.toFdrShape()).toEqual({ type: "double" });
         expect(mockContext.errorCollector.addError).not.toHaveBeenCalled();
     });
 
@@ -22,7 +22,7 @@ describe("FloatNode", () => {
         const input = { type: "number", format: "double" };
         const node = new FloatNode(mockContext, input, []);
         expect(node.type).toBe("double");
-        expect(node.outputFdrShape()).toEqual({ type: "double" });
+        expect(node.toFdrShape()).toEqual({ type: "double" });
         expect(mockContext.errorCollector.addError).not.toHaveBeenCalled();
     });
 
@@ -30,7 +30,7 @@ describe("FloatNode", () => {
         const input = { type: "number" };
         const node = new FloatNode(mockContext, input, []);
         expect(node.type).toBe("double");
-        expect(node.outputFdrShape()).toEqual({ type: "double" });
+        expect(node.toFdrShape()).toEqual({ type: "double" });
         expect(mockContext.errorCollector.addError).not.toHaveBeenCalled();
     });
 
@@ -38,7 +38,7 @@ describe("FloatNode", () => {
         const input = { type: "string" };
         const node = new FloatNode(mockContext, input, []);
         expect(node.type).toBeUndefined();
-        expect(node.outputFdrShape()).toBeUndefined();
+        expect(node.toFdrShape()).toBeUndefined();
         expect(mockContext.errorCollector.addError).toHaveBeenCalledWith(
             'Expected type "number" for numerical primitive, but got "string"',
             [],
@@ -50,7 +50,7 @@ describe("FloatNode", () => {
         const input = { type: "number", format: "invalid" };
         const node = new FloatNode(mockContext as ApiNodeContext, input, []);
         expect(node.type).toBeUndefined();
-        expect(node.outputFdrShape()).toBeUndefined();
+        expect(node.toFdrShape()).toBeUndefined();
         expect(mockContext.errorCollector.addError).toHaveBeenCalledWith(
             'Expected format for number primitive, but got "invalid"',
             [],

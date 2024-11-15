@@ -19,30 +19,30 @@
 //     accessPath: ApiNode<unknown, unknown>[];
 
 //     validate
-//     outputFdrShape = (): FdrAPI.api.latest.ApiDefinition => {
+//     toFdrShape = (): FdrAPI.api.latest.ApiDefinition => {
 //         const { endpoints, websockets, webhooks } = new FdrApiStage(
 //             this.context,
 //             this.preProcessedInput.paths,
 //             this.accessPath,
-//         ).outputFdrShape();
+//         ).toFdrShape();
 
 //         const types = new FdrTypesStage(
 //             this.context,
 //             this.preProcessedInput.components?.schemas,
 //             this.accessPath,
-//         ).outputFdrShape();
+//         ).toFdrShape();
 
 //         const auths = new FdrAuthsStage(
 //             this.context,
 //             this.preProcessedInput.components?.securitySchemes,
 //             this.accessPath,
-//         ).outputFdrShape();
+//         ).toFdrShape();
 
 //         const globalHeaders = new FdrGlobalHeadersStage(
 //             this.context,
 //             this.preProcessedInput.components?.headers,
 //             this.accessPath,
-//         ).outputFdrShape();
+//         ).toFdrShape();
 
 //         return {
 //             id: v4(),

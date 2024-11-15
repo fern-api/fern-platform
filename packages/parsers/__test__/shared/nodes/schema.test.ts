@@ -24,7 +24,7 @@ describe("SchemaNode", () => {
         });
     });
 
-    describe("outputFdrShape", () => {
+    describe("toFdrShape", () => {
         it("should output complete shape", () => {
             const input: SchemaObject = {
                 type: "string",
@@ -32,7 +32,7 @@ describe("SchemaNode", () => {
             };
 
             const node = new SchemaNode("TestType", mockContext, input, []);
-            const shape = node.outputFdrShape();
+            const shape = node.toFdrShape();
 
             expect(shape).toBeDefined();
             expect(shape?.name).toBe("TestType");
@@ -46,9 +46,9 @@ describe("SchemaNode", () => {
             };
 
             const node = new SchemaNode("TestType", mockContext, input, []);
-            vi.spyOn(node.shape, "outputFdrShape").mockReturnValue(undefined);
+            vi.spyOn(node.shape, "toFdrShape").mockReturnValue(undefined);
 
-            expect(node.outputFdrShape()).toBeUndefined();
+            expect(node.toFdrShape()).toBeUndefined();
             // this should show up, but since the examples are terse and non-exhaustive, we do not have any validation checking
             // expect(mockContext.errorCollector.addError).toHaveBeenCalledWith(
             //     "Failed to generate shape for type TestType",

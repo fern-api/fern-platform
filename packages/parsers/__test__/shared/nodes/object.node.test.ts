@@ -54,10 +54,10 @@ describe("ObjectNode", () => {
         });
     });
 
-    describe("outputFdrShape", () => {
+    describe("toFdrShape", () => {
         it("should output shape with no properties", () => {
             const node = new ObjectNode(mockContext, { type: "object" }, []);
-            expect(node.outputFdrShape()).toEqual({
+            expect(node.toFdrShape()).toEqual({
                 extends: [],
                 properties: [],
                 extraProperties: undefined,
@@ -78,7 +78,7 @@ describe("ObjectNode", () => {
                 allOf: [{ $ref: "BaseType" }, { $ref: "PersonType" }],
             };
             const node = new ObjectNode(mockContext, input, []);
-            const shape = node.outputFdrShape();
+            const shape = node.toFdrShape();
             expect(shape?.extends).toEqual([FdrAPI.TypeId("BaseType"), FdrAPI.TypeId("PersonType")]);
             expect(shape?.properties).toHaveLength(6);
             expect(shape?.extraProperties).toBeUndefined();

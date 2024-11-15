@@ -1,5 +1,5 @@
 import { vi } from "vitest";
-import { ApiNodeContext } from "../openapi/base.node.interface";
+import { ApiNodeContext } from "../openapi/ApiNode";
 
 import { Logger } from "@playwright/test";
 

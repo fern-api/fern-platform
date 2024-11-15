@@ -1,5 +1,5 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { ApiNodeContext, OutputApiNode } from "../../base.node.interface";
+import { ApiNodeContext, OutputApiNode } from "../../ApiNode";
 import { SchemaObject } from "../openapi.types";
 import { ObjectNode } from "./object.node";
 import { TypeReferenceNode } from "./typeReference.node";
@@ -23,8 +23,8 @@ export class TypeShapeNode extends OutputApiNode<SchemaObject, FdrAPI.api.latest
         }
     }
 
-    outputFdrShape = (): FdrAPI.api.latest.TypeShape | undefined => {
-        const typeShape = this.typeNode?.outputFdrShape();
+    toFdrShape = (): FdrAPI.api.latest.TypeShape | undefined => {
+        const typeShape = this.typeNode?.toFdrShape();
         if (typeShape === undefined || this.type === undefined) {
             return undefined;
         }

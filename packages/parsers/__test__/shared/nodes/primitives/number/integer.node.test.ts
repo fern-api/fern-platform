@@ -13,7 +13,7 @@ describe("IntegerNode", () => {
         const input = { type: "integer", format: "int32" };
         const node = new IntegerNode(mockContext, input, []);
         expect(node.type).toBe("integer");
-        expect(node.outputFdrShape()).toEqual({ type: "integer" });
+        expect(node.toFdrShape()).toEqual({ type: "integer" });
         expect(mockContext.errorCollector.addError).not.toHaveBeenCalled();
     });
 
@@ -21,7 +21,7 @@ describe("IntegerNode", () => {
         const input = { type: "integer", format: "int64" };
         const node = new IntegerNode(mockContext, input, []);
         expect(node.type).toBe("long");
-        expect(node.outputFdrShape()).toEqual({ type: "long" });
+        expect(node.toFdrShape()).toEqual({ type: "long" });
         expect(mockContext.errorCollector.addError).not.toHaveBeenCalled();
     });
 
@@ -29,7 +29,7 @@ describe("IntegerNode", () => {
         const input = { type: "integer" };
         const node = new IntegerNode(mockContext, input, []);
         expect(node.type).toBe("integer");
-        expect(node.outputFdrShape()).toEqual({ type: "integer" });
+        expect(node.toFdrShape()).toEqual({ type: "integer" });
         expect(mockContext.errorCollector.addError).not.toHaveBeenCalled();
     });
 
@@ -37,7 +37,7 @@ describe("IntegerNode", () => {
         const input = { type: "string" };
         const node = new IntegerNode(mockContext, input, []);
         expect(node.type).toBe("integer"); // Default value
-        expect(node.outputFdrShape()).toEqual({ type: "integer" });
+        expect(node.toFdrShape()).toEqual({ type: "integer" });
         expect(mockContext.errorCollector.addError).toHaveBeenCalledWith(
             'Expected type "integer" for numerical primitive, but got "string"',
             [],
@@ -49,7 +49,7 @@ describe("IntegerNode", () => {
         const input = { type: "integer", format: "invalid" };
         const node = new IntegerNode(mockContext, input, []);
         expect(node.type).toBe("integer"); // Default value
-        expect(node.outputFdrShape()).toEqual({ type: "integer" });
+        expect(node.toFdrShape()).toEqual({ type: "integer" });
         expect(mockContext.errorCollector.addError).toHaveBeenCalledWith(
             'Expected format for integer primitive, but got "invalid"',
             [],
@@ -63,7 +63,7 @@ describe("IntegerNode", () => {
             const input = { type: "integer", format };
             const node = new IntegerNode(mockContext, input, []);
             expect(node.type).toBe("integer");
-            expect(node.outputFdrShape()).toEqual({ type: "integer" });
+            expect(node.toFdrShape()).toEqual({ type: "integer" });
             expect(mockContext.errorCollector.addError).not.toHaveBeenCalled();
         });
     });

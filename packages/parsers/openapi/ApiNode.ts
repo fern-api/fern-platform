@@ -1,18 +1,5 @@
 import { Logger } from "@playwright/test";
-
-export class ErrorCollector {
-    errors: {
-        message: string;
-        path: string;
-    }[] = [];
-
-    addError(error: string, accessPath: string[], pathId?: string): void {
-        this.errors.push({
-            message: error,
-            path: `#/${accessPath.join("/")}${pathId ? `/${pathId}` : ""}`,
-        });
-    }
-}
+import { ErrorCollector } from "./ErrorCollector";
 
 export interface ApiNodeContext {
     orgId: string;
@@ -33,7 +20,7 @@ abstract class ApiNode<InputShape, FdrShape> {
         this.accessPath = accessPath;
     }
 
-    abstract outputFdrShape: () => FdrShape | undefined;
+    abstract toFdrShape: () => FdrShape | undefined;
 }
 
 export abstract class InputApiNode<InputShape, FdrShape> extends ApiNode<InputShape, FdrShape> {

@@ -38,7 +38,7 @@ describe("TypeShapeNode", () => {
         });
     });
 
-    describe("outputFdrShape", () => {
+    describe("toFdrShape", () => {
         it("should output object shape", () => {
             const input: SchemaObject = {
                 type: "object",
@@ -51,9 +51,9 @@ describe("TypeShapeNode", () => {
                 extends: [],
                 extraProperties: undefined,
             };
-            vi.spyOn(node.typeNode as ObjectNode, "outputFdrShape").mockReturnValue(mockObjectShape);
+            vi.spyOn(node.typeNode as ObjectNode, "toFdrShape").mockReturnValue(mockObjectShape);
 
-            const shape = node.outputFdrShape();
+            const shape = node.toFdrShape();
 
             expect(shape).toEqual({
                 type: "object",
@@ -77,9 +77,9 @@ describe("TypeShapeNode", () => {
                     default: undefined,
                 },
             };
-            vi.spyOn(node.typeNode as TypeReferenceNode, "outputFdrShape").mockReturnValue(mockTypeReference);
+            vi.spyOn(node.typeNode as TypeReferenceNode, "toFdrShape").mockReturnValue(mockTypeReference);
 
-            const shape = node.outputFdrShape();
+            const shape = node.toFdrShape();
 
             expect(shape).toEqual({
                 type: "alias",
@@ -94,9 +94,9 @@ describe("TypeShapeNode", () => {
             };
 
             const node = new TypeShapeNode(mockContext, input, []);
-            vi.spyOn(node.typeNode as ObjectNode, "outputFdrShape").mockReturnValue(undefined);
+            vi.spyOn(node.typeNode as ObjectNode, "toFdrShape").mockReturnValue(undefined);
 
-            expect(node.outputFdrShape()).toBeUndefined();
+            expect(node.toFdrShape()).toBeUndefined();
         });
 
         it("should return undefined if type is undefined", () => {
@@ -108,7 +108,7 @@ describe("TypeShapeNode", () => {
             const node = new TypeShapeNode(mockContext, input, []);
             node.type = undefined;
 
-            expect(node.outputFdrShape()).toBeUndefined();
+            expect(node.toFdrShape()).toBeUndefined();
         });
     });
 });

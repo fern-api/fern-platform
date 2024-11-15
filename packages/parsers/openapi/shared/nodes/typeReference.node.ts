@@ -1,11 +1,12 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { ApiNodeContext, OutputApiNode } from "../../base.node.interface";
+import { isNonNullish } from "@fern-api/ui-core-utils";
+import { ApiNodeContext, OutputApiNode } from "../../ApiNode";
 import { ReferenceObject, SchemaObject } from "../openapi.types";
 import { NumberNode } from "./primitives/number.node";
 import { StringNode } from "./primitives/string.node";
 
 export const isReferenceObject = (input: unknown): input is ReferenceObject => {
-    return typeof input === "object" && input != null && "$ref" in input && typeof input.$ref === "string";
+    return typeof input === "object" && isNonNullish(input) && "$ref" in input && typeof input.$ref === "string";
 };
 export const mapReferenceObject = (referenceObject: ReferenceObject): SchemaObject => {
     return referenceObject.$ref as SchemaObject;
@@ -36,7 +37,7 @@ export class TypeReferenceNode extends OutputApiNode<SchemaObject | ReferenceObj
         // just support primitives and ids for now
     }
 
-    outputFdrShape = (): FdrAPI.api.latest.TypeReference | undefined => {
+    toFdrShape = (): FdrAPI.api.latest.TypeReference | undefined => {
         if (this.type === "id") {
             if (this.ref === undefined) {
                 return undefined;
@@ -48,7 +49,7 @@ export class TypeReferenceNode extends OutputApiNode<SchemaObject | ReferenceObj
             };
         }
         if (this.type === "primitive") {
-            const primitiveShape = this.typeNode?.outputFdrShape();
+            const primitiveShape = this.typeNode?.toFdrShape();
             if (primitiveShape === undefined) {
                 return undefined;
             }

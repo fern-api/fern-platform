@@ -1,9 +1,9 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMockContext } from "../../../__test__/createMockContext.util";
+import { FdrStringType } from "../../../fdr/fdr.types";
 import { NumberNode } from "../../../openapi/shared/nodes/primitives/number.node";
 import { StringNode } from "../../../openapi/shared/nodes/primitives/string.node";
-import { FdrStringType } from "../../../openapi/shared/nodes/primitives/types/fdr.types";
 import { TypeReferenceNode, isReferenceObject } from "../../../openapi/shared/nodes/typeReference.node";
 import { ReferenceObject, SchemaObject } from "../../../openapi/shared/openapi.types";
 
@@ -79,14 +79,14 @@ describe("TypeReferenceNode", () => {
         });
     });
 
-    describe("outputFdrShape", () => {
+    describe("toFdrShape", () => {
         it("should output reference shape", () => {
             const input: ReferenceObject = {
                 $ref: "TypeA",
             };
 
             const node = new TypeReferenceNode(mockContext, input, []);
-            const shape = node.outputFdrShape();
+            const shape = node.toFdrShape();
 
             expect(shape).toEqual({
                 type: "id",
@@ -108,9 +108,9 @@ describe("TypeReferenceNode", () => {
                 maxLength: undefined,
                 default: undefined,
             };
-            vi.spyOn(node.typeNode as StringNode, "outputFdrShape").mockReturnValue(mockPrimitiveShape);
+            vi.spyOn(node.typeNode as StringNode, "toFdrShape").mockReturnValue(mockPrimitiveShape);
 
-            const shape = node.outputFdrShape();
+            const shape = node.toFdrShape();
 
             expect(shape).toEqual({
                 type: "primitive",
@@ -122,7 +122,7 @@ describe("TypeReferenceNode", () => {
             const node = new TypeReferenceNode(mockContext, { $ref: "TypeA" }, []);
             node.ref = undefined;
 
-            expect(node.outputFdrShape()).toBeUndefined();
+            expect(node.toFdrShape()).toBeUndefined();
         });
 
         it("should return undefined if primitive shape is undefined", () => {
@@ -131,9 +131,9 @@ describe("TypeReferenceNode", () => {
             };
 
             const node = new TypeReferenceNode(mockContext, input, []);
-            vi.spyOn(node.typeNode as StringNode, "outputFdrShape").mockReturnValue(undefined);
+            vi.spyOn(node.typeNode as StringNode, "toFdrShape").mockReturnValue(undefined);
 
-            expect(node.outputFdrShape()).toBeUndefined();
+            expect(node.toFdrShape()).toBeUndefined();
         });
     });
 });

@@ -1,7 +1,7 @@
 import { UnreachableCaseError } from "ts-essentials";
-import { ApiNodeContext, OutputApiNode } from "../../../../base.node.interface";
+import { FdrFloatType } from "../../../../../fdr/fdr.types";
+import { ApiNodeContext, OutputApiNode } from "../../../../ApiNode";
 import { SchemaObject } from "../../../openapi.types";
-import { FdrFloatType } from "../types/fdr.types";
 import { ConstArrayToType, OPENAPI_NUMBER_TYPE_FORMAT } from "../types/format.types";
 
 function isOpenApiNumberTypeFormat(format: unknown): format is ConstArrayToType<typeof OPENAPI_NUMBER_TYPE_FORMAT> {
@@ -11,14 +11,13 @@ function isOpenApiNumberTypeFormat(format: unknown): format is ConstArrayToType<
 export class FloatNode extends OutputApiNode<SchemaObject, Pick<FdrFloatType, "type">> {
     type: FdrFloatType["type"] | undefined = undefined;
 
-    constructor(context: ApiNodeContext, input: SchemaObject, accessPath: string[], accessorKey?: string) {
+    constructor(context: ApiNodeContext, input: SchemaObject, accessPath: string[]) {
         super(context, input, accessPath);
 
         if (input.type !== "number") {
             context.errorCollector.addError(
                 `Expected type "number" for numerical primitive, but got "${input.type}"`,
                 accessPath,
-                accessorKey,
             );
             return;
         }
@@ -27,7 +26,6 @@ export class FloatNode extends OutputApiNode<SchemaObject, Pick<FdrFloatType, "t
             context.errorCollector.addError(
                 `Expected format for number primitive, but got "${input.format}"`,
                 accessPath,
-                accessorKey,
             );
             return;
         }
@@ -48,7 +46,7 @@ export class FloatNode extends OutputApiNode<SchemaObject, Pick<FdrFloatType, "t
     }
 
     // In this, we pick only the non-shared types, so that we can push up the shared types to the parent for maximum reuse
-    outputFdrShape = (): Pick<FdrFloatType, "type"> | undefined => {
+    toFdrShape = (): Pick<FdrFloatType, "type"> | undefined => {
         if (this.type === undefined) {
             return undefined;
         }
