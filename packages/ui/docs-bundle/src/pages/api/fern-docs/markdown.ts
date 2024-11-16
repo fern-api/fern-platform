@@ -7,8 +7,6 @@ import { getFrontmatter } from "@fern-ui/fern-docs-mdx";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export const revalidate = 60;
-
 function getStringParam(req: NextApiRequest, param: string): string | undefined {
     const value = req.query[param];
     return typeof value === "string" ? value : undefined;
@@ -77,7 +75,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     res.status(200)
         .setHeader("Content-Type", `text/${extension === "mdx" ? "mdx" : "markdown"}`)
-        .setHeader("X-Robots-Tag", "noindex");
+        .setHeader("X-Robots-Tag", "noindex")
+        // cannot guarantee that the content won't change, so we only cache for 60 seconds
+        .setHeader("Cache-Control", "s-maxage=60");
 
     if (node.node.canonicalSlug !== node.node.slug) {
         res.setHeader(
