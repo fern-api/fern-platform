@@ -43,6 +43,7 @@
     "@fern-ui/fdr-utils": "workspace:*",
     "@fern-ui/fern-docs-mdx": "workspace:*",
     "@fern-ui/fern-docs-server": "workspace:*",
+    "@fern-ui/fern-docs-syntax-highlighter": "workspace:*",
     "@fern-ui/fern-docs-utils": "workspace:*",
     "@fern-ui/loadable": "workspace:*",
     "@fern-ui/next-seo": "workspace:*",

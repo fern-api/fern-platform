@@ -112,4 +112,14 @@ body {
             font-weight: 700;
         }
     }
+
+    .fern-chatbot-terminator {
+        @apply bg-black dark:bg-white;
+
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-inline: 8px;
+    }
 }

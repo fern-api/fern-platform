@@ -1,16 +1,15 @@
 import { FernScrollArea } from "@fern-ui/components";
-import { parseStringStyle } from "@fern-ui/fern-docs-mdx";
+import { parseStringStyle, visit } from "@fern-ui/fern-docs-mdx";
 import cn from "clsx";
 import type { Element } from "hast";
 import { forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { ItemProps, TableVirtuoso, TableVirtuosoHandle } from "react-virtuoso";
-import { visit } from "unist-util-visit";
-import { HastToJSX } from "../mdx/common/HastToJsx";
 import {
     FernSyntaxHighlighterTokensProps,
     ScrollToHandle,
     fernSyntaxHighlighterTokenPropsAreEqual,
 } from "./FernSyntaxHighlighterTokens";
+import { HastToJSX } from "./HastToJsx";
 import { flattenHighlightLines, getLineHeight, getMaxHeight } from "./utils";
 
 interface CodeBlockContext {

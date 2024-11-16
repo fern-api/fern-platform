@@ -1,5 +1,4 @@
 import { forwardRef, useMemo } from "react";
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { FernSyntaxHighlighterTokens, ScrollToHandle } from "./FernSyntaxHighlighterTokens";
 import { FernSyntaxHighlighterTokensVirtualized } from "./FernSyntaxHighlighterTokensVirtualized";
 import { createRawTokens, highlightTokens, useHighlighter } from "./fernShiki";
@@ -48,11 +47,7 @@ export const FernSyntaxHighlighter = forwardRef<HTMLPreElement, FernSyntaxHighli
             ? FernSyntaxHighlighterTokens
             : FernSyntaxHighlighterTokensVirtualized;
 
-    return (
-        <FernErrorBoundary>
-            <TokenRenderer ref={ref} tokens={tokens} {...innerProps} />
-        </FernErrorBoundary>
-    );
+    return <TokenRenderer ref={ref} tokens={tokens} {...innerProps} />;
 });
 
 FernSyntaxHighlighter.displayName = "FernSyntaxHighlighter";

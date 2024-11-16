@@ -8,7 +8,8 @@ const config: Config = {
         "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-        path.join(path.dirname(require.resolve("@fern-ui/chatbot")), "**/*.{ts,tsx}"),
+        path.join(path.dirname(require.resolve("@fern-ui/components")), "**/*.{ts,tsx}"),
+        path.join(path.dirname(require.resolve("@fern-ui/fern-docs-syntax-highlighter")), "**/*.{ts,tsx}"),
     ],
     theme: {
         extend: {

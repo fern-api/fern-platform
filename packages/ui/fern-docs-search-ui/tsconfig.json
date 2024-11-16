@@ -26,6 +26,9 @@
     },
     {
       "path": "../fern-http-method-tag"
+    },
+    {
+      "path": "../fern-docs-syntax-highlighter"
     }
   ],
   "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],

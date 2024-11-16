@@ -1,7 +1,7 @@
 import { CopyToClipboardButton } from "@fern-ui/components";
 import cn, { clsx } from "clsx";
 import React, { PropsWithChildren } from "react";
-import { useFeatureFlags } from "../atoms";
+import { useFeatureFlags } from "./SyntaxHighlighterFeatureFlags";
 
 type CodeBlockWithClipboardButtonProps = {
     code: string;

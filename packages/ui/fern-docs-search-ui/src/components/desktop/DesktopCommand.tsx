@@ -90,7 +90,7 @@ export function DesktopCommand({
             }
         >
             {filters.length > 0 && (
-                <div className="flex items-center gap-2 p-4 pb-0 -mb-1">
+                <div className="flex items-center gap-2 p-2 pb-0" onClick={focus}>
                     {filters.map((filter) => (
                         <FilterDropdownMenu
                             key={`${filter.facet}:${filter.value}`}
@@ -111,7 +111,7 @@ export function DesktopCommand({
                 </div>
             )}
             <div
-                className="p-4 border-b last:border-b-0 border-[#DBDBDB] dark:border-white/10 flex items-center gap-2 cursor-text"
+                className="p-2 border-b last:border-b-0 border-[#DBDBDB] dark:border-white/10 flex items-center gap-0 cursor-text"
                 onClickCapture={focus}
             >
                 {filters.length > 0 && (
@@ -128,7 +128,7 @@ export function DesktopCommand({
                 )}
                 <Command.Input
                     ref={inputRef}
-                    className="w-full focus:outline-none bg-transparent text-lg placeholder:text-[#969696] dark:placeholder:text-white/50"
+                    className="px-2 py-1 w-full focus:outline-none bg-transparent text-lg placeholder:text-[#969696] dark:placeholder:text-white/50"
                     autoFocus
                     value={query}
                     placeholder={toPlaceholder(filters)}
