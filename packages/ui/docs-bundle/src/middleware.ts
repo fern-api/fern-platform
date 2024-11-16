@@ -8,6 +8,7 @@ import { withPathname } from "./server/withPathname";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 const CHANGELOG_PATTERN = /\.(rss|atom)$/;
+const MARKDOWN_PATTERN = /\.(md|mdx)$/;
 
 export const middleware: NextMiddleware = async (request) => {
     let pathname = extractNextDataPathname(removeTrailingSlash(request.nextUrl.pathname));
@@ -71,8 +72,23 @@ export const middleware: NextMiddleware = async (request) => {
     const changelogFormat = pathname.match(CHANGELOG_PATTERN)?.[1];
     if (changelogFormat != null) {
         pathname = pathname.replace(new RegExp(`.${changelogFormat}$`), "");
+        if (pathname === "/index") {
+            pathname = "/";
+        }
         const url = new URL("/api/fern-docs/changelog", request.nextUrl.origin);
         url.searchParams.set("format", changelogFormat);
+        url.searchParams.set("path", pathname);
+        return NextResponse.rewrite(String(url));
+    }
+
+    const markdownExtension = pathname.match(MARKDOWN_PATTERN)?.[1];
+    if (markdownExtension != null) {
+        pathname = pathname.replace(new RegExp(`.${markdownExtension}$`), "");
+        if (pathname === "/index") {
+            pathname = "/";
+        }
+        const url = new URL("/api/fern-docs/markdown", request.nextUrl.origin);
+        url.searchParams.set("format", markdownExtension);
         url.searchParams.set("path", pathname);
         return NextResponse.rewrite(String(url));
     }
