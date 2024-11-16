@@ -2,7 +2,6 @@ import { DocsLoader } from "@/server/DocsLoader";
 import { removeLeadingSlash } from "@/server/removeLeadingSlash";
 import { getDocsDomainNode, getHostNode } from "@/server/xfernhost/node";
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getFrontmatter } from "@fern-ui/fern-docs-mdx";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -34,35 +33,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const loader = DocsLoader.for(domain, host, fern_token);
 
     const root = await loader.root();
-    if (!root) {
+    const pages = await loader.pages();
+
+    const pageInfo = getPageInfo(root, FernNavigation.Slug(removeLeadingSlash(path)));
+
+    if (pageInfo == null) {
         return res.status(404).end();
     }
 
-    const node = FernNavigation.utils.findNode(root, FernNavigation.Slug(removeLeadingSlash(path)));
-
-    if (node.type !== "found") {
-        return res.status(404).end();
-    }
-
-    if (!FernNavigation.hasMarkdown(node.node)) {
-        return res.status(404).end();
-    }
-
-    const pageId = FernNavigation.getPageId(node.node);
-
-    if (!pageId) {
-        return res.status(404).end();
-    }
-
-    const extension = pageId.endsWith(".mdx") ? "mdx" : "md";
+    const extension = pageInfo.pageId.endsWith(".mdx") ? "mdx" : "md";
 
     if (format !== extension) {
         return res.status(404).end();
     }
 
-    const pages = await loader.pages();
-
-    const page = pages[pageId];
+    const page = pages[pageInfo.pageId];
 
     if (!page) {
         return res.status(404).end();
@@ -71,20 +56,38 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { data: frontmatter, content } = getFrontmatter(page.markdown);
 
     // TODO: parse the first h1 as the title
-    const title = frontmatter.title ?? node.node.title;
+    const title = frontmatter.title ?? pageInfo.nodeTitle;
 
     res.status(200)
         .setHeader("Content-Type", `text/${extension === "mdx" ? "mdx" : "markdown"}`)
+        // prevent search engines from indexing this page
         .setHeader("X-Robots-Tag", "noindex")
         // cannot guarantee that the content won't change, so we only cache for 60 seconds
         .setHeader("Cache-Control", "s-maxage=60");
 
-    if (node.node.canonicalSlug !== node.node.slug) {
-        res.setHeader(
-            "Link",
-            `<${String(new URL(`/${node.node.canonicalSlug}.${extension}`, withDefaultProtocol(host)))}>; rel="canonical"`,
-        );
+    return res.send(`# ${title}\n\n${content}`);
+}
+
+function getPageInfo(
+    root: FernNavigation.RootNode | undefined,
+    slug: FernNavigation.Slug,
+): { pageId: FernNavigation.PageId; nodeTitle: string } | undefined {
+    if (root == null) {
+        return undefined;
     }
 
-    return res.send(`# ${title}\n\n${content}`);
+    const foundNode = FernNavigation.utils.findNode(root, slug);
+    if (foundNode == null || foundNode.type !== "found" || !FernNavigation.hasMarkdown(foundNode.node)) {
+        return undefined;
+    }
+
+    const pageId = FernNavigation.getPageId(foundNode.node);
+    if (pageId == null) {
+        return undefined;
+    }
+
+    return {
+        pageId,
+        nodeTitle: foundNode.node.title,
+    };
 }
