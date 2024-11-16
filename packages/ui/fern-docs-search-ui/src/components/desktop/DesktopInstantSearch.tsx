@@ -1,16 +1,14 @@
-import { FacetName } from "@/utils/facet";
-import { liteClient as algoliasearch } from "algoliasearch/lite";
+import { usePreloadFacets } from "@/hooks/useFacets";
+import { FacetName } from "@/utils/facet-display";
 import "instantsearch.css/themes/reset.css";
 import { useTheme } from "next-themes";
-import { useEffect, useRef, useState, type ReactElement } from "react";
+import { useMemo, useState, type ReactElement } from "react";
 import { Configure } from "react-instantsearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
+import { useSearchClient } from "../shared/SearchClientProvider";
 import { DesktopCommand } from "./DesktopCommand";
 
 interface DesktopInstantSearchProps {
-    domain: string;
-    appId: string;
-    apiKey: string;
     onSubmit: (path: string) => void;
     onAskAI?: ({ initialInput }: { initialInput?: string }) => void;
     filters?: {
@@ -20,15 +18,14 @@ interface DesktopInstantSearchProps {
 }
 
 export function DesktopInstantSearch({
-    domain,
-    appId,
-    apiKey,
     onSubmit,
     onAskAI,
     filters: initialFilters,
 }: DesktopInstantSearchProps): ReactElement {
-    const ref = useRef(algoliasearch(appId, apiKey));
-    const [filters, setFilters] = useState<{ facet: FacetName; value: string }[]>(() => {
+    const { searchClient } = useSearchClient();
+    const preloadFacets = usePreloadFacets();
+
+    const initialFiltersArray = useMemo(() => {
         const toRet: { facet: FacetName; value: string }[] = [];
         if (initialFilters?.["product.title"]) {
             toRet.push({ facet: "product.title", value: initialFilters["product.title"] });
@@ -37,18 +34,17 @@ export function DesktopInstantSearch({
             toRet.push({ facet: "version.title", value: initialFilters["version.title"] });
         }
         return toRet;
-    });
+    }, [initialFilters]);
 
-    useEffect(() => {
-        ref.current.setClientApiKey({ apiKey });
-        void ref.current.clearCache();
-    }, [apiKey]);
+    const [filters, setFilters] = useState<{ facet: FacetName; value: string }[]>(initialFiltersArray);
+
+    preloadFacets(initialFiltersArray);
 
     const { setTheme } = useTheme();
 
     return (
         <InstantSearchNext
-            searchClient={ref.current}
+            searchClient={searchClient}
             indexName="fern-docs-search"
             future={{ preserveSharedStateOnUnmount: true }}
         >
@@ -66,9 +62,6 @@ export function DesktopInstantSearch({
                 maxValuesPerFacet={1000}
             />
             <DesktopCommand
-                domain={domain}
-                appId={appId}
-                apiKey={apiKey}
                 onSubmit={onSubmit}
                 onAskAI={onAskAI}
                 filters={filters}

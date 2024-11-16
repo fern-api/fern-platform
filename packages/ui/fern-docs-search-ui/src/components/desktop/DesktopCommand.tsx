@@ -1,14 +1,11 @@
-import { useFacets } from "@/hooks/useFacets";
-import { FACET_DISPLAY_NAME_MAP, FacetName, getFacets, toFilterOptions } from "@/utils/facet";
-import { getFacetDisplay } from "@/utils/facet-display";
-import { toFiltersString } from "@/utils/to-filter-string";
+import { useFacets, usePreloadFacets } from "@/hooks/useFacets";
+import { FACET_DISPLAY_NAME_MAP, FacetName, getFacetDisplay, toFilterOptions } from "@/utils/facet-display";
 import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
 import { TooltipPortal, TooltipTrigger } from "@radix-ui/react-tooltip";
 import { Command } from "cmdk";
 import { FileText, History, Laptop, ListFilter, MessageCircle, Moon, Sun } from "lucide-react";
-import { Dispatch, ReactElement, ReactNode, SetStateAction, useRef } from "react";
+import { Dispatch, ReactElement, ReactNode, SetStateAction, useEffect, useRef } from "react";
 import { useHits, useSearchBox } from "react-instantsearch";
-import { preload } from "swr";
 import { MarkRequired } from "ts-essentials";
 import { RemoteIcon } from "../icons/RemoteIcon";
 import { HitContent } from "../shared/HitContent";
@@ -31,9 +28,6 @@ function toPlaceholder(filters: { facet: string; value: string }[]): string {
 }
 
 export function DesktopCommand({
-    domain,
-    appId,
-    apiKey,
     onSubmit,
     onAskAI,
     filters,
@@ -42,9 +36,6 @@ export function DesktopCommand({
     CloseTrigger,
     onClose,
 }: {
-    domain: string;
-    appId: string;
-    apiKey: string;
     onSubmit: (path: string) => void;
     onAskAI?: ({ initialInput }: { initialInput?: string }) => void;
     filters: {
@@ -63,7 +54,16 @@ export function DesktopCommand({
 
     const { items } = useHits<AlgoliaRecord>();
 
-    const { data: facets } = useFacets({ appId, apiKey, domain, filters });
+    const { data: facets, error } = useFacets({ filters });
+
+    useEffect(() => {
+        if (error != null) {
+            // eslint-disable-next-line no-console
+            console.error(error);
+        }
+    }, [error]);
+
+    const preloadFacets = usePreloadFacets();
 
     const groups = generateHits(items);
 
@@ -94,9 +94,6 @@ export function DesktopCommand({
                     {filters.map((filter) => (
                         <FilterDropdownMenu
                             key={`${filter.facet}:${filter.value}`}
-                            appId={appId}
-                            apiKey={apiKey}
-                            domain={domain}
                             filter={filter}
                             filters={filters}
                             removeFilter={() => {
@@ -197,13 +194,7 @@ export function DesktopCommand({
                                     focus();
                                 }}
                                 onMouseOver={() => {
-                                    const filterString = toFiltersString([
-                                        ...filters,
-                                        { facet: filter.facet, value: filter.value },
-                                    ]);
-                                    preload([domain, filterString], ([_domain, filters]) =>
-                                        getFacets({ appId, apiKey, filters }),
-                                    );
+                                    preloadFacets([...filters, { facet: filter.facet, value: filter.value }]);
                                 }}
                             >
                                 <ListFilter className={ICON_CLASS} />

@@ -1,33 +1,26 @@
-import { FacetsResponse, getFacets } from "@/utils/facet";
+import { useSearchClient } from "@/components/shared/SearchClientProvider";
+import { FacetsResponse } from "@/utils/facet-display";
 import { toFiltersString } from "@/utils/to-filter-string";
 import { SWRResponse, preload } from "swr";
 import useSWRImmutable from "swr/immutable";
 
-export function useFacets({
-    appId,
-    apiKey,
-    domain,
+async function fetchFacets({
     filters,
+    domain,
 }: {
-    appId: string;
-    apiKey: string;
+    filters: string | undefined;
     domain: string;
-    filters: { facet: string; value: string }[];
-}): SWRResponse<FacetsResponse> {
-    return useSWRImmutable([domain, toFiltersString(filters)], ([_domain, filters]) =>
-        getFacets({ appId, apiKey, filters }),
-    );
+}): Promise<FacetsResponse> {
+    const res = await fetch(`/api/facet-values?domain=${domain}${filters?.length ? `&filters=${filters}` : ""}`);
+    return await res.json();
 }
 
-export function usePreloadFacets({
-    appId,
-    apiKey,
-    domain,
-}: {
-    appId: string;
-    apiKey: string;
-    domain: string;
-}): (filters: { facet: string; value: string }[]) => Promise<FacetsResponse> {
-    return (filters) =>
-        preload([domain, toFiltersString(filters)], ([_domain, filters]) => getFacets({ appId, apiKey, filters }));
+export function useFacets({ filters }: { filters: { facet: string; value: string }[] }): SWRResponse<FacetsResponse> {
+    const { domain } = useSearchClient();
+    return useSWRImmutable([toFiltersString(filters), domain], ([filters, domain]) => fetchFacets({ filters, domain }));
+}
+
+export function usePreloadFacets(): (filters: { facet: string; value: string }[]) => Promise<FacetsResponse> {
+    const { domain } = useSearchClient();
+    return (filters) => preload([toFiltersString(filters), domain], ([filters]) => fetchFacets({ filters, domain }));
 }

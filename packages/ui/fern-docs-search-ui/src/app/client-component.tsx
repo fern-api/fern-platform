@@ -2,7 +2,9 @@
 
 import Chat from "@/components/chat";
 import { DesktopInstantSearch } from "@/components/desktop/DesktopInstantSearch";
+import { SearchClientProvider } from "@/components/shared/SearchClientProvider";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import Head from "next/head";
 import { ReactElement, useState } from "react";
 import useSWR from "swr";
 
@@ -28,17 +30,25 @@ export function DesktopInstantSearchClient({ appId, domain }: { appId: string; d
 
     return (
         <>
-            <div className="max-h-[50vh] overflow-hidden flex flex-col">
-                <DesktopInstantSearch
-                    domain={domain}
-                    appId={appId}
-                    apiKey={apiKey}
-                    onSubmit={handleSubmit}
-                    onAskAI={({ initialInput }) => {
-                        setInitialInput(initialInput);
-                        setIsChatOpen(true);
-                    }}
+            <Head>
+                <link
+                    key={`preload-facets-${domain}`}
+                    rel="preload"
+                    href={`/api/facet-values?domain=${domain}`}
+                    as="fetch"
+                    crossOrigin="anonymous"
                 />
+            </Head>
+            <div className="max-h-[50vh] overflow-hidden flex flex-col">
+                <SearchClientProvider appId={appId} apiKey={apiKey} domain={domain}>
+                    <DesktopInstantSearch
+                        onSubmit={handleSubmit}
+                        onAskAI={({ initialInput }) => {
+                            setInitialInput(initialInput);
+                            setIsChatOpen(true);
+                        }}
+                    />
+                </SearchClientProvider>
             </div>
             <Dialog open={isChatOpen} onOpenChange={setIsChatOpen}>
                 <DialogContent>

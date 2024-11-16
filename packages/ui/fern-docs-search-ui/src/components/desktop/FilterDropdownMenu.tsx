@@ -1,6 +1,5 @@
 import { useFacets } from "@/hooks/useFacets";
-import { FacetName, toFilterLabel } from "@/utils/facet";
-import { getFacetDisplay } from "@/utils/facet-display";
+import { FacetName, getFacetDisplay, toFilterLabel } from "@/utils/facet-display";
 import { Minus } from "lucide-react";
 import { ReactElement } from "react";
 import { Badge } from "../ui/badge";
@@ -18,17 +17,11 @@ import {
 } from "../ui/dropdown";
 
 export function FilterDropdownMenu({
-    appId,
-    apiKey,
-    domain,
     filter,
     filters,
     removeFilter,
     updateFilter,
 }: {
-    appId: string;
-    apiKey: string;
-    domain: string;
     filter: {
         facet: FacetName;
         value: string;
@@ -39,7 +32,7 @@ export function FilterDropdownMenu({
 }): ReactElement {
     const otherFilters = filters.filter((f) => f.facet !== filter.facet);
 
-    const { data: facets } = useFacets({ appId, apiKey, domain, filters: otherFilters });
+    const { data: facets } = useFacets({ filters: otherFilters });
 
     const options = facets?.[filter.facet] ?? [];
 
