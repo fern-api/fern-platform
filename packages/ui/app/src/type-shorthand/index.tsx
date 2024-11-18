@@ -13,6 +13,7 @@ export function renderTypeShorthandRoot(
     shape: TypeShapeOrReference,
     types: Record<string, TypeDefinition>,
     isResponse: boolean = false,
+    hideOptional: boolean = false,
 ): ReactNode {
     const unwrapped = unwrapReference(shape, types);
     const typeShorthand = renderTypeShorthand(unwrapped.shape, { nullable: isResponse }, types);
@@ -20,10 +21,16 @@ export function renderTypeShorthandRoot(
         <span className="fern-api-property-meta">
             <span>{typeShorthand}</span>
             {unwrapped.isOptional ? (
-                <span>Optional</span>
+                !hideOptional ? (
+                    <span>Optional</span>
+                ) : (
+                    false
+                )
             ) : !isResponse ? (
                 <span className="t-danger">Required</span>
-            ) : null}
+            ) : (
+                false
+            )}
             {unwrapped.shape.type === "primitive" &&
                 toPrimitiveTypeLabels({ primitive: unwrapped.shape.value }).map((label, index) => (
                     <code key={index}>{label}</code>
