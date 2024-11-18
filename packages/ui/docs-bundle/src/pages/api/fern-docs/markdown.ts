@@ -1,15 +1,15 @@
 import { DocsLoader } from "@/server/DocsLoader";
+import { getStringParam } from "@/server/getStringParam";
 import { convertToLlmTxtMarkdown } from "@/server/llm-txt-md";
 import { removeLeadingSlash } from "@/server/removeLeadingSlash";
 import { getDocsDomainNode, getHostNode } from "@/server/xfernhost/node";
-import { FernNavigation } from "@fern-api/fdr-sdk";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextApiRequest, NextApiResponse } from "next";
 
-function getStringParam(req: NextApiRequest, param: string): string | undefined {
-    const value = req.query[param];
-    return typeof value === "string" ? value : undefined;
-}
+/**
+ * This endpoint returns the markdown content of a any page in the docs by adding `.md` or `.mdx` to the end of any docs page.
+ */
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<unknown> {
     const path = getStringParam(req, "path");
@@ -36,6 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const pageInfo = getPageInfo(root, FernNavigation.Slug(removeLeadingSlash(path)));
 
+    // TODO: add support for api reference endpoint pages
     if (pageInfo == null) {
         return res.status(404).end();
     }
@@ -53,6 +54,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // cannot guarantee that the content won't change, so we only cache for 60 seconds
         .setHeader("Cache-Control", "s-maxage=60")
         .send(convertToLlmTxtMarkdown(page.markdown, pageInfo.nodeTitle));
+
+    return;
 }
 
 function getPageInfo(

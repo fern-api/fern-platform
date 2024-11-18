@@ -1,18 +1,35 @@
 import { DocsLoader } from "@/server/DocsLoader";
-import { convertToLlmTxtMarkdown } from "@/server/llm-txt-md";
-import { removeLeadingSlash } from "@/server/removeLeadingSlash";
+import { addLeadingSlash } from "@/server/addLeadingSlash";
+import { getSectionRoot } from "@/server/getSectionRoot";
+import { getStringParam } from "@/server/getStringParam";
+import { convertToLlmTxtMarkdown, getLlmTxtMetadata } from "@/server/llm-txt-md";
 import { getDocsDomainNode, getHostNode } from "@/server/xfernhost/node";
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { CONTINUE, SKIP, STOP } from "@fern-api/fdr-sdk/traversers";
-import { isNonNullish } from "@fern-api/ui-core-utils";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
+import { isNonNullish, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
-import { uniqWith } from "es-toolkit/array";
 import { NextApiRequest, NextApiResponse } from "next";
 
-function getStringParam(req: NextApiRequest, param: string): string | undefined {
-    const value = req.query[param];
-    return typeof value === "string" ? value : undefined;
-}
+/**
+ * This endpoint follows the https://llmstxt.org/ specification for a LLM-friendly markdown-esque page listing all the pages in the docs.
+ * This page is akin to a "table of contents" page or a sitemap, and works at every level of the docs hierarchy.
+ *
+ * I.e.
+ * - /llms.txt
+ * - /docs/llms.txt
+ * - /v1/llms.txt
+ * - /v2/llms.txt
+ * - /v1/api-reference/llms.txt
+ *
+ * Urls to all pages will be appended with `.md` or `.mdx` to indicate that it's a LLM-friendly markdown page.
+ * Otherwise, the original urls will be used.
+ *
+ * Notes:
+ * - API Docs do not currently have `.mdx` equivalents, so the original urls are used for those.
+ * - the breadcrumb is included for all API endpoints because the endpoint title is not always unique or descriptive.
+ * - hidden and noindexed nodes are not included in the list
+ * - should hidden pages be included under an `## Optional` heading?
+ */
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<unknown> {
     if (req.method === "OPTIONS") {
@@ -38,14 +55,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const pageInfos: {
         pageId: FernNavigation.PageId;
+        slug: FernNavigation.Slug;
         nodeTitle: string;
-        // TODO: pages that are canonical should be preferred when deduplicating
-        canonical: boolean;
     }[] = [];
+
+    const endpointPageInfos: {
+        slug: FernNavigation.Slug;
+        breadcrumb: string[];
+        nodeTitle: string;
+        apiDefinitionId: FernNavigation.ApiDefinitionId;
+        endpointId: FernNavigation.EndpointId | undefined;
+        webhookId: FernNavigation.WebhookId | undefined;
+        websocketId: FernNavigation.WebSocketId | undefined;
+    }[] = [];
+
+    const landingPage = getLandingPage(root);
+    const landingPageRawMarkdown = landingPage?.pageId != null ? pages[landingPage.pageId]?.markdown : undefined;
+    const landingPageLlmTxtMarkdown =
+        landingPageRawMarkdown != null
+            ? convertToLlmTxtMarkdown(landingPageRawMarkdown, landingPage?.title ?? root.title)
+            : undefined;
 
     // traverse the tree in a depth-first manner to collect all the nodes that have markdown content
     // in the order that they appear in the sidebar
-    FernNavigation.traverseDF(root, (node) => {
+    FernNavigation.traverseDF(root, (node, parents) => {
+        // don't include the landing page in the list
+        if (landingPage != null && node.id === landingPage.id) {
+            return SKIP;
+        }
+
         // if the node is hidden or authed, don't include it in the list
         // TODO: include "hidden" nodes in `llms-full.txt`
         if (FernNavigation.hasMetadata(node)) {
@@ -66,31 +104,75 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 pageInfos.push({
                     pageId,
                     nodeTitle: node.title,
-                    canonical: node.canonicalSlug == null || node.canonicalSlug === node.slug,
+                    slug: node.slug,
                 });
             }
         }
 
         if (FernNavigation.isApiLeaf(node)) {
-            // TODO: construct a markdown-compatible page for the API reference
+            endpointPageInfos.push({
+                slug: node.slug,
+                nodeTitle: node.title,
+                apiDefinitionId: node.apiDefinitionId,
+                endpointId: node.type === "endpoint" ? node.endpointId : undefined,
+                webhookId: node.type === "webhook" ? node.webhookId : undefined,
+                websocketId: node.type === "webSocket" ? node.webSocketId : undefined,
+                breadcrumb: parents
+                    .slice(parents.findLastIndex((p) => p.type === "apiReference"))
+                    .map((p) => (FernNavigation.hasMetadata(p) ? p.title : undefined))
+                    .filter(isNonNullish),
+            });
         }
 
         return CONTINUE;
     });
 
-    const markdowns = uniqWith(pageInfos, (a, b) => a.pageId === b.pageId)
-        .map((pageInfo) => {
-            const page = pages[pageInfo.pageId];
-            if (page == null) {
-                return undefined;
-            }
-            return convertToLlmTxtMarkdown(page.markdown, pageInfo.nodeTitle);
-        })
-        .filter(isNonNullish);
+    const docs = pageInfos
+        .map(
+            (
+                pageInfo,
+            ): {
+                title: string;
+                description: string | undefined;
+                href: string;
+            } => {
+                if (pageInfo.pageId != null) {
+                    const page = pages[pageInfo.pageId];
+                    if (page != null) {
+                        const { title, description } = getLlmTxtMetadata(page.markdown, pageInfo.nodeTitle);
+                        return {
+                            title,
+                            description,
+                            href: String(
+                                new URL(
+                                    addLeadingSlash(
+                                        pageInfo.slug + (pageInfo.pageId.endsWith(".mdx") ? ".mdx" : ".md"),
+                                    ),
+                                    withDefaultProtocol(domain),
+                                ),
+                            ),
+                        };
+                    }
+                }
 
-    if (markdowns.length === 0) {
-        return res.status(404).end();
-    }
+                return {
+                    title: pageInfo.nodeTitle,
+                    description: undefined,
+                    href: String(new URL(addLeadingSlash(pageInfo.slug), withDefaultProtocol(domain))),
+                };
+            },
+        )
+        .map((doc) => `- [${doc.title}](${doc.href})${doc.description != null ? `: ${doc.description}` : ""}`);
+
+    const endpoints = endpointPageInfos
+        .map((endpointPageInfo) => {
+            return {
+                title: endpointPageInfo.nodeTitle,
+                href: String(new URL(addLeadingSlash(endpointPageInfo.slug), withDefaultProtocol(domain))),
+                breadcrumb: endpointPageInfo.breadcrumb,
+            };
+        })
+        .map((endpoint) => `- ${endpoint.breadcrumb.join(" > ")} [${endpoint.title}](${endpoint.href})`);
 
     res.status(200)
         .setHeader("Content-Type", "text/plain; charset=utf-8")
@@ -98,33 +180,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .setHeader("X-Robots-Tag", "noindex")
         // cannot guarantee that the content won't change, so we only cache for 60 seconds
         .setHeader("Cache-Control", "s-maxage=60")
-        .send(markdowns.join("\n\n"));
+        .send(
+            [landingPageLlmTxtMarkdown ?? `# ${root.title}`, "## Docs", ...docs, "## API Docs", ...endpoints].join(
+                "\n\n",
+            ),
+        );
+
+    return;
 }
 
-function getSectionRoot(
-    root: FernNavigation.RootNode | undefined,
-    path: string,
-): FernNavigation.NavigationNodeWithMetadata | undefined {
-    if (root == null) {
-        return undefined;
-    }
-
-    if (path === "/" || root.slug === removeLeadingSlash(path)) {
-        return root;
-    }
-
-    let foundNode: FernNavigation.NavigationNodeWithMetadata | undefined;
-
-    // traverse the tree in a breadth-first manner because the node we're looking for is likely to be near the root
-    FernNavigation.traverseBF(root, (node) => {
-        if (FernNavigation.hasMetadata(node)) {
-            if (node.slug === removeLeadingSlash(path)) {
-                foundNode = node;
-                return STOP;
-            }
+function getLandingPage(root: FernNavigation.NavigationNodeWithMetadata): FernNavigation.LandingPageNode | undefined {
+    if (root.type === "version") {
+        return root.landingPage;
+    } else if (root.type === "root") {
+        if (root.child.type === "productgroup" || root.child.type === "unversioned") {
+            return root.child.landingPage;
         }
-        return CONTINUE;
-    });
+    }
 
-    return foundNode;
+    return undefined;
 }

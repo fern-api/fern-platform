@@ -63,6 +63,17 @@ export const middleware: NextMiddleware = async (request) => {
     }
 
     /**
+     * Rewrite llms-full.txt
+     */
+    if (pathname.endsWith("/llms-full.txt")) {
+        const leadingPathname = pathname.replace(/\/llms-full\.txt$/, "") || "/";
+        const searchParams = new URLSearchParams(request.nextUrl.searchParams);
+        searchParams.set("path", leadingPathname);
+        pathname = "/api/fern-docs/llms-full.txt";
+        return NextResponse.rewrite(withPathname(request, pathname, `?${String(searchParams)}`));
+    }
+
+    /**
      * Rewrite Posthog analytics ingestion
      */
     if (pathname.includes("/api/fern-docs/analytics/posthog")) {
