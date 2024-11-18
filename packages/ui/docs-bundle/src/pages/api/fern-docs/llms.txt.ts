@@ -70,13 +70,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }[] = [];
 
     const landingPage = getLandingPage(root);
-    const landingPageRawMarkdown = landingPage?.pageId != null ? pages[landingPage.pageId]?.markdown : undefined;
+    const landingPageId = landingPage != null ? FernNavigation.getPageId(landingPage) : undefined;
+    const landingPageRawMarkdown = landingPageId != null ? pages[landingPageId]?.markdown : undefined;
     const landingPageLlmTxtMarkdown =
         landingPageRawMarkdown != null
             ? convertToLlmTxtMarkdown(
                   landingPageRawMarkdown,
                   landingPage?.title ?? root.title,
-                  landingPage?.pageId.endsWith(".mdx") ? "mdx" : "md",
+                  landingPageId?.endsWith(".mdx") ? "mdx" : "md",
               )
             : undefined;
 
@@ -85,7 +86,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     FernNavigation.traverseDF(root, (node, parents) => {
         // don't include the landing page in the list
         if (landingPage != null && node.id === landingPage.id) {
-            return SKIP;
+            return CONTINUE;
         }
 
         // if the node is hidden or authed, don't include it in the list
@@ -198,7 +199,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
 }
 
-function getLandingPage(root: FernNavigation.NavigationNodeWithMetadata): FernNavigation.LandingPageNode | undefined {
+function getLandingPage(
+    root: FernNavigation.NavigationNodeWithMetadata,
+): FernNavigation.LandingPageNode | FernNavigation.NavigationNodeWithMarkdown | undefined {
     if (root.type === "version") {
         return root.landingPage;
     } else if (root.type === "root") {
@@ -208,6 +211,10 @@ function getLandingPage(root: FernNavigation.NavigationNodeWithMetadata): FernNa
             // return the default version's landing page
             return root.child.children.find((c) => c.default)?.landingPage;
         }
+    }
+
+    if (FernNavigation.hasMarkdown(root)) {
+        return root;
     }
 
     return undefined;
