@@ -9,7 +9,56 @@ export const FernUserSchema = z.object({
             "The roles of the token (can be a string or an array of strings) which limits what content users can access",
         )
         .optional(),
+
+    // TODO: deprecate this
     api_key: z.string().optional().describe("For API Playground key injection"),
+
+    /**
+     * when the user logs in, there may be some initial state in the API playground that we can replace
+     * with the user's information (i.e. api key, organization, project id, etc.)
+     * the initial state will be merged into each request if it's compatible with the api endpoint's spec.
+     *
+     * Example claim:
+     * ```
+     * {
+     *     "playground": {
+     *         "initial_state": {
+     *             "auth": {
+     *                 "bearer_token": "abc123"
+     *             }
+     *         }
+     *     }
+     * }
+     */
+    playground: z
+        .object({
+            initial_state: z
+                .object({
+                    auth: z
+                        .object({
+                            bearer_token: z.string().optional().describe("Bearer token to set in the request"),
+                            basic: z
+                                .object({
+                                    username: z.string(),
+                                    password: z.string(),
+                                })
+                                .optional(),
+                        })
+                        .optional(),
+                    headers: z.record(z.string(), z.string()).optional().describe("Headers to set in the request"),
+                    path_parameters: z
+                        .record(z.string(), z.any())
+                        .optional()
+                        .describe("Path parameters to set in the request"),
+                    query_parameters: z
+                        .record(z.string(), z.any())
+                        .optional()
+                        .describe("Query parameters to set in the request"),
+                    // TODO: support body injection (potentially leveraging jsonpath?) — need a way to support different content types, and different spec types
+                })
+                .optional(),
+        })
+        .optional(),
 });
 
 export const PathnameViewerRulesSchema = z.object({

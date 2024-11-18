@@ -1,10 +1,11 @@
-import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
+import { PropertyKey, type EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_ARRAY, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { Dispatch, FC, SetStateAction, useCallback, useMemo } from "react";
 import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";
 import { PlaygroundObjectForm } from "../form/PlaygroundObjectForm";
 import { PlaygroundObjectPropertiesForm } from "../form/PlaygroundObjectPropertyForm";
 import { PlaygroundEndpointRequestFormState, PlaygroundFormStateBody } from "../types";
+import { pascalCaseHeaderKey } from "../utils/header-key-case";
 import { PlaygroundEndpointAliasForm } from "./PlaygroundEndpointAliasForm";
 import { PlaygroundEndpointFormSection } from "./PlaygroundEndpointFormSection";
 import { PlaygroundEndpointMultipartForm } from "./PlaygroundEndpointMultipartForm";
@@ -104,7 +105,10 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Headers">
                     <PlaygroundObjectPropertiesForm
                         id="header"
-                        properties={headers}
+                        properties={headers.map((header) => ({
+                            ...header,
+                            key: PropertyKey(pascalCaseHeaderKey(header.key)),
+                        }))}
                         extraProperties={undefined}
                         onChange={setHeaders}
                         value={formState?.headers}

@@ -6,6 +6,7 @@ import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
 import { PLAYGROUND_AUTH_STATE_ATOM } from "../../atoms";
 import { PlaygroundAuthState } from "../types";
+import { pascalCaseHeaderKey } from "../utils/header-key-case";
 
 interface PlaygroundCardTriggerManualProps {
     auth: APIV1Read.ApiAuth;
@@ -74,7 +75,7 @@ function isAuthed(auth: APIV1Read.ApiAuth, authState: PlaygroundAuthState): bool
         bearerAuth: () => !isEmpty(authState.bearerAuth?.token.trim()),
         basicAuth: () =>
             !isEmpty(authState.basicAuth?.username.trim()) && !isEmpty(authState.basicAuth?.password.trim()),
-        header: (header) => !isEmpty(authState.header?.headers[header.headerWireValue]?.trim()),
+        header: (header) => !isEmpty(authState.header?.headers[pascalCaseHeaderKey(header.headerWireValue)]?.trim()),
         oAuth: () => {
             const authToken =
                 authState.oauth?.selectedInputMethod === "credentials"
