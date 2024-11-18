@@ -28,10 +28,11 @@ import {
     type PlaygroundWebSocketRequestFormState,
 } from "../playground/types";
 import {
-    getInitialEndpointRequestFormState,
     getInitialEndpointRequestFormStateWithExample,
     getInitialWebSocketRequestFormState,
 } from "../playground/utils";
+import { pascalCaseHeaderKeys } from "../playground/utils/header-key-case";
+import { FERN_USER_ATOM } from "./auth";
 import { FEATURE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { HEADER_HEIGHT_ATOM } from "./layout";
@@ -177,7 +178,12 @@ export const PLAYGROUND_AUTH_STATE_ATOM = atomWithStorageValidation<PlaygroundAu
 );
 
 export const PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM = atom(
-    (get) => get(PLAYGROUND_AUTH_STATE_ATOM).bearerAuth ?? PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL,
+    (get) => ({
+        token:
+            get(PLAYGROUND_AUTH_STATE_ATOM).bearerAuth?.token ??
+            get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.bearer_token ??
+            "",
+    }),
     (_get, set, update: SetStateAction<PlaygroundAuthStateBearerToken>) => {
         set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => ({
             ...prev,
@@ -190,7 +196,12 @@ export const PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM = atom(
 );
 
 export const PLAYGROUND_AUTH_STATE_HEADER_ATOM = atom(
-    (get) => get(PLAYGROUND_AUTH_STATE_ATOM).header ?? PLAYGROUND_AUTH_STATE_HEADER_INITIAL,
+    (get) => ({
+        headers: pascalCaseHeaderKeys({
+            ...(get(PLAYGROUND_AUTH_STATE_ATOM).header?.headers ??
+                get(FERN_USER_ATOM)?.playground?.initial_state?.headers),
+        }),
+    }),
     (_get, set, update: SetStateAction<PlaygroundAuthStateHeader>) => {
         set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => ({
             ...prev,
@@ -200,7 +211,16 @@ export const PLAYGROUND_AUTH_STATE_HEADER_ATOM = atom(
 );
 
 export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM = atom(
-    (get) => get(PLAYGROUND_AUTH_STATE_ATOM).basicAuth ?? PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL,
+    (get) => ({
+        username:
+            get(PLAYGROUND_AUTH_STATE_ATOM).basicAuth?.username ??
+            get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic?.username ??
+            "",
+        password:
+            get(PLAYGROUND_AUTH_STATE_ATOM).basicAuth?.password ??
+            get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic?.password ??
+            "",
+    }),
     (_get, set, update: SetStateAction<PlaygroundAuthStateBasicAuth>) => {
         set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => ({
             ...prev,
@@ -265,6 +285,8 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
                     return;
                 }
 
+                const playgroundInitialState = get(FERN_USER_ATOM)?.playground?.initial_state;
+
                 if (node.type === "endpoint") {
                     const context = createEndpointContext(node, definition);
 
@@ -277,7 +299,11 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
 
                     set(
                         formStateAtom,
-                        getInitialEndpointRequestFormStateWithExample(context, context.endpoint.examples?.[0]),
+                        getInitialEndpointRequestFormStateWithExample(
+                            context,
+                            context.endpoint.examples?.[0],
+                            playgroundInitialState,
+                        ),
                     );
                 } else if (node.type === "webSocket") {
                     const context = createWebSocketContext(node, definition);
@@ -290,7 +316,7 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
                         return;
                     }
 
-                    set(formStateAtom, getInitialWebSocketRequestFormState(context));
+                    set(formStateAtom, getInitialWebSocketRequestFormState(context, playgroundInitialState));
                 }
                 playgroundFormStateFamily.remove(node.id);
             },
@@ -304,9 +330,16 @@ export function usePlaygroundEndpointFormState(
 ): [PlaygroundEndpointRequestFormState, Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>] {
     const formStateAtom = playgroundFormStateFamily(ctx.node.id);
     const formState = useAtomValue(formStateAtom);
+    const user = useAtomValue(FERN_USER_ATOM);
 
     return [
-        formState?.type === "endpoint" ? formState : getInitialEndpointRequestFormState(ctx),
+        formState?.type === "endpoint"
+            ? formState
+            : getInitialEndpointRequestFormStateWithExample(
+                  ctx,
+                  ctx.endpoint.examples?.[0],
+                  user?.playground?.initial_state,
+              ),
         useAtomCallback(
             useCallbackOne(
                 (get, set, update: SetStateAction<PlaygroundEndpointRequestFormState>) => {
@@ -316,12 +349,16 @@ export function usePlaygroundEndpointFormState(
                             ? update(
                                   currentFormState?.type === "endpoint"
                                       ? currentFormState
-                                      : getInitialEndpointRequestFormState(ctx),
+                                      : getInitialEndpointRequestFormStateWithExample(
+                                            ctx,
+                                            ctx.endpoint.examples?.[0],
+                                            user?.playground?.initial_state,
+                                        ),
                               )
                             : update;
                     set(formStateAtom, newFormState);
                 },
-                [formStateAtom, ctx],
+                [formStateAtom, ctx, user?.playground?.initial_state],
             ),
         ),
     ];
@@ -332,9 +369,12 @@ export function usePlaygroundWebsocketFormState(
 ): [PlaygroundWebSocketRequestFormState, Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>] {
     const formStateAtom = playgroundFormStateFamily(context.node.id);
     const formState = useAtomValue(playgroundFormStateFamily(context.node.id));
+    const user = useAtomValue(FERN_USER_ATOM);
 
     return [
-        formState?.type === "websocket" ? formState : getInitialWebSocketRequestFormState(context),
+        formState?.type === "websocket"
+            ? formState
+            : getInitialWebSocketRequestFormState(context, user?.playground?.initial_state),
         useAtomCallback(
             useCallbackOne(
                 (get, set, update: SetStateAction<PlaygroundWebSocketRequestFormState>) => {
@@ -344,12 +384,12 @@ export function usePlaygroundWebsocketFormState(
                             ? update(
                                   currentFormState?.type === "websocket"
                                       ? currentFormState
-                                      : getInitialWebSocketRequestFormState(context),
+                                      : getInitialWebSocketRequestFormState(context, user?.playground?.initial_state),
                               )
                             : update;
                     set(formStateAtom, newFormState);
                 },
-                [formStateAtom, context],
+                [formStateAtom, context, user?.playground?.initial_state],
             ),
         ),
     ];

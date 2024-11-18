@@ -48,7 +48,7 @@ export const WithLabel: FC<PropsWithChildren<WithLabelProps>> = ({
             isRequired={!unwrapped.isOptional}
             isList={unwrapped.shape.type === "list"}
             isBoolean={unwrapped.shape.type === "primitive" && unwrapped.shape.value.type === "boolean"}
-            typeShorthand={renderTypeShorthandRoot(unwrapped.shape, types)}
+            typeShorthand={renderTypeShorthandRoot(property.valueShape, types, false, true)}
         >
             {children}
         </WithLabelInternal>
