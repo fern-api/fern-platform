@@ -99,6 +99,5 @@
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "test:local": "dotenv -e .env.test -- vitest src/__test__/local --globals --config src/__test__/local/vitest.config.ts --no-file-parallelism",
     "test:ete": "dotenv -e .env.ete -- vitest src/__test__/ete --globals --config src/__test__/ete/vitest.config.ts",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org buildwithfern --project fdr ./dist && sentry-cli sourcemaps upload --org buildwithfern --project fdr ./dist"
   }
 }
