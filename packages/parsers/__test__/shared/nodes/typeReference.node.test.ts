@@ -2,9 +2,9 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMockContext } from "../../../__test__/createMockContext.util";
 import { FdrStringType } from "../../../fdr/fdr.types";
-import { NumberNode } from "../../../openapi/shared/nodes/primitives/number.node";
-import { StringNode } from "../../../openapi/shared/nodes/primitives/string.node";
-import { TypeReferenceNode, isReferenceObject } from "../../../openapi/shared/nodes/typeReference.node";
+import { NumberNode } from "../../../openapi/shared/temporary/v2/primitives/number.node";
+import { StringNode } from "../../../openapi/shared/temporary/v2/primitives/string.node";
+import { TypeReferenceNode, isReferenceObject } from "../../../openapi/shared/temporary/v2/typeReference.node";
 import { ReferenceObject, SchemaObject } from "../../../openapi/shared/openapi.types";
 
 // This will be broken up into multiple tests, but for now, this is a start. We will need to errors for invalid inputs

@@ -1,9 +1,9 @@
 import { expect } from "vitest";
 
 import { beforeEach, describe, it, vi } from "vitest";
-import { NumberNode } from "../../../../openapi/shared/nodes/primitives/number.node";
-import { FloatNode } from "../../../../openapi/shared/nodes/primitives/number/float.node";
-import { IntegerNode } from "../../../../openapi/shared/nodes/primitives/number/integer.node";
+import { NumberNode } from "../../../../openapi/shared/temporary/v2/primitives/number.node";
+import { FloatNode } from "../../../../openapi/shared/temporary/v2/primitives/number/float.node";
+import { IntegerNode } from "../../../../openapi/shared/temporary/v2/primitives/number/integer.node";
 import { createMockContext } from "../../../createMockContext.util";
 
 describe("NumberNode", () => {

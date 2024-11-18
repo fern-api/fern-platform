@@ -1,6 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ObjectPropertyNode } from "../../../openapi/shared/nodes/objectProperty.node";
+import { ObjectPropertyNode } from "../../../openapi/shared/temporary/v2/objectProperty.node";
 import { ReferenceObject, SchemaObject } from "../../../openapi/shared/openapi.types";
 import { createMockContext } from "../../createMockContext.util";
 

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ApiNodeContext } from "../../../../../openapi/ApiNode";
-import { FloatNode } from "../../../../../openapi/shared/nodes/primitives/number/float.node";
+import { FloatNode } from "../../../../../openapi/shared/temporary/v2/primitives/number/float.node";
 import { createMockContext } from "../../../../createMockContext.util";
 
 describe("FloatNode", () => {

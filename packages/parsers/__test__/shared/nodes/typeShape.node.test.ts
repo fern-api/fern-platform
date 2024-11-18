@@ -1,9 +1,9 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMockContext } from "../../../__test__/createMockContext.util";
-import { ObjectNode } from "../../../openapi/shared/nodes/object.node";
-import { TypeReferenceNode } from "../../../openapi/shared/nodes/typeReference.node";
-import { TypeShapeNode } from "../../../openapi/shared/nodes/typeShape.node";
+import { ObjectNode } from "../../../openapi/shared/temporary/v2/object.node";
+import { TypeReferenceNode } from "../../../openapi/shared/temporary/v2/typeReference.node";
+import { TypeShapeNode } from "../../../openapi/shared/temporary/v2/typeShape.node";
 import { SchemaObject } from "../../../openapi/shared/openapi.types";
 
 describe("TypeShapeNode", () => {

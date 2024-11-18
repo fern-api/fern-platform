@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMockContext } from "../../../__test__/createMockContext.util";
-import { SchemaNode } from "../../../openapi/shared/nodes/schema.node";
+import { SchemaNode } from "../../../openapi/shared/temporary/v2/schema.node";
 import { SchemaObject } from "../../../openapi/shared/openapi.types";
 
 describe("SchemaNode", () => {

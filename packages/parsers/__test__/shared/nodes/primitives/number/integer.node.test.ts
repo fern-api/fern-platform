@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { IntegerNode } from "../../../../../openapi/shared/nodes/primitives/number/integer.node";
+import { IntegerNode } from "../../../../../openapi/shared/temporary/v2/primitives/number/integer.node";
 import { createMockContext } from "../../../../createMockContext.util";
 
 describe("IntegerNode", () => {

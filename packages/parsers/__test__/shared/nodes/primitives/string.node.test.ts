@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 
 import { beforeEach, describe, vi } from "vitest";
-import { StringNode } from "../../../../openapi/shared/nodes/primitives/string.node";
+import { StringNode } from "../../../../openapi/shared/temporary/v2/primitives/string.node";
 import { SchemaObject } from "../../../../openapi/shared/openapi.types";
 import { createMockContext } from "../../../createMockContext.util";
 
