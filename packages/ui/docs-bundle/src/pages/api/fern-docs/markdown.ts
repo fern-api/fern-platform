@@ -53,7 +53,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .setHeader("X-Robots-Tag", "noindex")
         // cannot guarantee that the content won't change, so we only cache for 60 seconds
         .setHeader("Cache-Control", "s-maxage=60")
-        .send(convertToLlmTxtMarkdown(page.markdown, pageInfo.nodeTitle));
+        .send(
+            convertToLlmTxtMarkdown(page.markdown, pageInfo.nodeTitle, pageInfo.pageId.endsWith(".mdx") ? "mdx" : "md"),
+        );
 
     return;
 }

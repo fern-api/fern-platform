@@ -73,7 +73,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const landingPageRawMarkdown = landingPage?.pageId != null ? pages[landingPage.pageId]?.markdown : undefined;
     const landingPageLlmTxtMarkdown =
         landingPageRawMarkdown != null
-            ? convertToLlmTxtMarkdown(landingPageRawMarkdown, landingPage?.title ?? root.title)
+            ? convertToLlmTxtMarkdown(
+                  landingPageRawMarkdown,
+                  landingPage?.title ?? root.title,
+                  landingPage?.pageId.endsWith(".mdx") ? "mdx" : "md",
+              )
             : undefined;
 
     // traverse the tree in a depth-first manner to collect all the nodes that have markdown content
@@ -181,9 +185,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // cannot guarantee that the content won't change, so we only cache for 60 seconds
         .setHeader("Cache-Control", "s-maxage=60")
         .send(
-            [landingPageLlmTxtMarkdown ?? `# ${root.title}`, "## Docs", ...docs, "## API Docs", ...endpoints].join(
-                "\n\n",
-            ),
+            [
+                // if there's a landing page, use the llm-friendly markdown version instead of the ${root.title}
+                landingPageLlmTxtMarkdown ?? `# ${root.title}`,
+                docs.length > 0 ? `## Docs\n\n${docs.join("\n")}` : undefined,
+                endpoints.length > 0 ? `## API Docs\n\n${endpoints.join("\n")}` : undefined,
+            ]
+                .filter(isNonNullish)
+                .join("\n\n"),
         );
 
     return;
@@ -195,6 +204,9 @@ function getLandingPage(root: FernNavigation.NavigationNodeWithMetadata): FernNa
     } else if (root.type === "root") {
         if (root.child.type === "productgroup" || root.child.type === "unversioned") {
             return root.child.landingPage;
+        } else if (root.child.type === "versioned") {
+            // return the default version's landing page
+            return root.child.children.find((c) => c.default)?.landingPage;
         }
     }
 

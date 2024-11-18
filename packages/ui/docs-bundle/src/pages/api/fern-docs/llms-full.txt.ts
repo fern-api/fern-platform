@@ -86,7 +86,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             if (page == null) {
                 return undefined;
             }
-            return convertToLlmTxtMarkdown(page.markdown, pageInfo.nodeTitle);
+            return convertToLlmTxtMarkdown(
+                page.markdown,
+                pageInfo.nodeTitle,
+                pageInfo.pageId.endsWith(".mdx") ? "mdx" : "md",
+            );
         })
         .filter(isNonNullish);
 
