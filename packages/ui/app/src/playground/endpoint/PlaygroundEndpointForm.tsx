@@ -107,7 +107,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                         properties={headers}
                         extraProperties={undefined}
                         onChange={setHeaders}
-                        value={headers}
+                        value={formState?.headers}
                         types={types}
                     />
                 </PlaygroundEndpointFormSection>

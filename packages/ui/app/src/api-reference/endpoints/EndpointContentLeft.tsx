@@ -3,7 +3,7 @@ import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { sortBy } from "es-toolkit/array";
 import { camelCase, upperFirst } from "es-toolkit/string";
-import { memo, useMemo } from "react";
+import { memo, useEffect, useRef } from "react";
 import { useFeatureFlags } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
@@ -21,14 +21,14 @@ export interface HoveringProps {
 export declare namespace EndpointContentLeft {
     export interface Props {
         context: EndpointContext;
-        example: ApiDefinition.ExampleEndpointCall;
+        example: ApiDefinition.ExampleEndpointCall | undefined;
         showErrors: boolean;
         onHoverRequestProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         onHoverResponseProperty: (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void;
         selectedError: ApiDefinition.ErrorResponse | undefined;
         setSelectedError: (idx: ApiDefinition.ErrorResponse | undefined) => void;
-        contentType: string | undefined;
-        setContentType: (contentType: string) => void;
+        // contentType: string | undefined;
+        // setContentType: (contentType: string) => void;
     }
 }
 
@@ -52,6 +52,40 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     // contentType,
     // setContentType,
 }) => {
+    // if the user clicks outside of the error, clear the selected error
+    const errorRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        if (selectedError == null || errorRef.current == null) {
+            return;
+        }
+        const handleClick = (event: MouseEvent) => {
+            if (event.target == null) {
+                return;
+            }
+
+            if (event.target instanceof Node && errorRef.current?.contains(event.target)) {
+                return;
+            }
+
+            // check that target is not inside of ".fern-endpoint-code-snippets"
+            if (event.target instanceof HTMLElement && event.target.closest(".fern-endpoint-code-snippets") != null) {
+                return;
+            }
+
+            // if the target is the body, then the event propagation was prevented by a radix button
+            if (event.target === window.document.body) {
+                return;
+            }
+
+            setSelectedError(undefined);
+        };
+
+        window.addEventListener("click", handleClick);
+        return () => {
+            window.removeEventListener("click", handleClick);
+        };
+    }, [selectedError, setSelectedError]);
+
     const { isAuthEnabledInDocs } = useFeatureFlags();
 
     let authHeader: ApiDefinition.ObjectProperty | undefined;
@@ -115,15 +149,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
         });
     }
 
-    const headers = useMemo(() => {
-        return [...(authHeader ? [authHeader] : []), ...globalHeaders, ...(endpoint.requestHeaders ?? [])];
-    }, [authHeader, endpoint.requestHeaders, globalHeaders]);
-
-    // let headers = [...globalHeaders, ...(endpoint.requestHeaders ?? [])];
-
-    // if (authHeaders) {
-    //     headers = [authHeaders, ...headers];
-    // }
+    const headers = [...(authHeader ? [authHeader] : []), ...globalHeaders, ...(endpoint.requestHeaders ?? [])];
 
     return (
         <div className="flex max-w-full flex-1 flex-col gap-12">
@@ -280,7 +306,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 <EndpointSection title="Response" anchorIdParts={RESPONSE} slug={node.slug}>
                     <EndpointResponseSection
                         response={endpoint.response}
-                        exampleResponseBody={example.responseBody}
+                        exampleResponseBody={example?.responseBody}
                         onHoverProperty={onHoverResponseProperty}
                         anchorIdParts={RESPONSE_BODY}
                         slug={node.slug}
@@ -290,7 +316,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
             )}
             {showErrors && endpoint.errors && endpoint.errors.length > 0 && (
                 <EndpointSection title="Errors" anchorIdParts={RESPONSE_ERROR} slug={node.slug}>
-                    <div className="border-default flex flex-col overflow-visible rounded-lg border">
+                    <div className="border-default flex flex-col overflow-visible rounded-lg border" ref={errorRef}>
                         {sortBy(endpoint.errors, [(e) => e.statusCode, (e) => e.name]).map((error, idx) => {
                             return (
                                 <EndpointError

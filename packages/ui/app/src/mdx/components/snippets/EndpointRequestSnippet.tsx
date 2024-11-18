@@ -1,14 +1,17 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
-import { ReactElement, useMemo } from "react";
+import { useAtomValue } from "jotai";
+import { ReactElement } from "react";
 import { CodeExampleClientDropdown } from "../../../api-reference/endpoints/CodeExampleClientDropdown";
 import { EndpointUrlWithOverflow } from "../../../api-reference/endpoints/EndpointUrlWithOverflow";
+import { useExampleSelection } from "../../../api-reference/endpoints/useExampleSelection";
 import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
-import { generateCodeExamples } from "../../../api-reference/examples/code-example";
+import { ENDPOINT_ID_TO_SLUG_ATOM } from "../../../atoms";
+import { ApiReferenceButton } from "../../../components/ApiReferenceButton";
 import { usePlaygroundBaseUrl } from "../../../playground/utils/select-environment";
 import { RequestSnippet } from "./types";
 import { useFindEndpoint } from "./useFindEndpoint";
-import { extractEndpointPathAndMethod, useSelectedClient } from "./utils";
+import { extractEndpointPathAndMethod } from "./utils";
 
 export const EndpointRequestSnippet: React.FC<React.PropsWithChildren<RequestSnippet.Props>> = ({
     endpoint: endpointLocator,
@@ -28,7 +31,7 @@ const EndpointRequestSnippetRenderer: React.FC<React.PropsWithChildren<RequestSn
     path,
     example,
 }) => {
-    const endpoint = useFindEndpoint(method, path);
+    const endpoint = useFindEndpoint(method, path, example);
 
     if (endpoint == null) {
         return null;
@@ -44,11 +47,15 @@ export function EndpointRequestSnippetInternal({
     endpoint: ApiDefinition.EndpointDefinition;
     example: string | undefined;
 }): ReactElement | null {
-    const clients = useMemo(() => generateCodeExamples(endpoint.examples), [endpoint.examples]);
-    const [selectedClient, setSelectedClient] = useSelectedClient(clients, example);
+    const slug = useAtomValue(ENDPOINT_ID_TO_SLUG_ATOM)[endpoint.id];
+    const { selectedExample, selectedExampleKey, availableLanguages, setSelectedExampleKey } = useExampleSelection(
+        endpoint,
+        example,
+    );
+
     const [baseUrl, selectedEnvironmentId] = usePlaygroundBaseUrl(endpoint);
 
-    if (selectedClient == null) {
+    if (selectedExample == null) {
         return null;
     }
 
@@ -66,19 +73,18 @@ export function EndpointRequestSnippetInternal({
                 }
                 actions={
                     <>
-                        {clients.length > 1 && (
+                        {availableLanguages.length > 1 && (
                             <CodeExampleClientDropdown
-                                clients={clients}
-                                onClickClient={setSelectedClient}
-                                selectedClient={selectedClient}
+                                languages={availableLanguages}
+                                onValueChange={(language) => setSelectedExampleKey((prev) => ({ ...prev, language }))}
+                                value={selectedExampleKey.language}
                             />
                         )}
-                        {/* TODO: Restore this button */}
-                        {/* <ApiReferenceButton slug={endpoint.slug} /> */}
+                        {slug != null && <ApiReferenceButton slug={slug} />}
                     </>
                 }
-                code={selectedClient.code}
-                language={selectedClient.language}
+                code={selectedExample.code}
+                language={selectedExampleKey.language}
                 json={EMPTY_OBJECT}
                 scrollAreaStyle={{ maxHeight: "500px" }}
             />

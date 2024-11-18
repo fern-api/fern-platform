@@ -3,7 +3,7 @@ import { FernButton, FernCollapse } from "@fern-ui/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 import { useSetAtom } from "jotai/react";
 import { ReactElement } from "react";
-import { PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM } from "../../atoms";
+import { PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM, PLAYGROUND_AUTH_STATE_OAUTH_ATOM } from "../../atoms";
 import { useApiKeyInjectionConfig } from "../../services/useApiKeyInjectionConfig";
 import { PlaygroundAuthorizationForm } from "./PlaygroundAuthorizationForm";
 import { PlaygroundCardTriggerApiKeyInjected } from "./PlaygroundCardTriggerApiKeyInjected";
@@ -18,12 +18,14 @@ export function PlaygroundAuthorizationFormCard({
     disabled,
 }: PlaygroundAuthorizationFormCardProps): ReactElement | null {
     const setBearerAuth = useSetAtom(PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM);
+    const setOAuth = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
     const isOpen = useBooleanState(false);
     const apiKeyInjection = useApiKeyInjectionConfig();
     const apiKey = apiKeyInjection.enabled && apiKeyInjection.authenticated ? apiKeyInjection.access_token : null;
 
     const handleResetBearerAuth = () => {
         setBearerAuth({ token: apiKey ?? "" });
+        setOAuth((prev) => ({ ...prev, userSuppliedAccessToken: "" }));
     };
 
     return (

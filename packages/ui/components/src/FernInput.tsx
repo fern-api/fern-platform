@@ -21,6 +21,10 @@ export const FernInput = forwardRef<HTMLInputElement, FernInputProps>(function F
                 className={cn("fern-input", inputClassName)}
                 value={value}
                 onChange={(e) => {
+                    if (props.maxLength != null && e.target.value.length > props.maxLength) {
+                        return;
+                    }
+
                     onChange?.(e);
                     onValueChange?.(e.target.value);
                 }}

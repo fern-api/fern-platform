@@ -71,6 +71,19 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
         return elements;
     }, [path]);
 
+    // if the environment is hidden, but it contains a basepath, we need to show the basepath
+    const environmentBasepath = useMemo(() => {
+        const url = baseUrl ?? options?.find((option) => option.id === environmentId)?.baseUrl;
+        if (url == null) {
+            return undefined;
+        }
+        try {
+            return new URL(url, "http://n").pathname;
+        } catch (error) {
+            return undefined;
+        }
+    }, [options, environmentId, baseUrl]);
+
     return (
         <div ref={ref} className={cn("flex items-center gap-1 pr-2", className)}>
             <HttpMethodTag method={method} />
@@ -111,6 +124,9 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                                                 editable
                                             />
                                         </span>
+                                    )}
+                                    {!showEnvironment && environmentBasepath && environmentBasepath !== "/" && (
+                                        <span className="t-muted">{environmentBasepath}</span>
                                     )}
                                     {pathParts}
                                 </span>

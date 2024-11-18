@@ -5,6 +5,7 @@ import { SidebarTab } from "@fern-ui/fdr-utils";
 import { DEFAULT_FEATURE_FLAGS, getRedirectForPath, type FeatureFlags } from "@fern-ui/fern-docs-utils";
 import {
     DocsPage,
+    NavbarLink,
     getGitHubInfo,
     getGitHubRepo,
     getSeoProps,
@@ -118,6 +119,30 @@ export async function getDocsPageProps(
             };
         });
 
+    const navbarLinks: NavbarLink[] = [];
+
+    docs.definition.config.navbarLinks?.forEach((link) => {
+        if (link.type === "github") {
+            navbarLinks.push({
+                type: "github",
+                href: link.url,
+                className: undefined,
+                id: undefined,
+            });
+        } else {
+            navbarLinks.push({
+                type: link.type,
+                href: link.url,
+                text: link.text,
+                icon: link.icon,
+                rightIcon: link.rightIcon,
+                rounded: link.rounded,
+                className: undefined,
+                id: undefined,
+            });
+        }
+    });
+
     const props: ComponentProps<typeof DocsPage> = {
         baseUrl: docs.baseUrl,
         layout: docs.definition.config.layout,
@@ -125,7 +150,7 @@ export async function getDocsPageProps(
         favicon: docs.definition.config.favicon,
         colors,
         js: docs.definition.config.js,
-        navbarLinks: docs.definition.config.navbarLinks ?? [],
+        navbarLinks,
         logoHeight: docs.definition.config.logoHeight,
         logoHref: docs.definition.config.logoHref,
         files: docs.definition.filesV2,

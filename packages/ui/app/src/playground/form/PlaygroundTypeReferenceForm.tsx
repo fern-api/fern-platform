@@ -102,6 +102,11 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                                 onValueChange={onChange}
                                 disabled={disabled}
                                 placeholder={string.default}
+                                defaultValue={string.default}
+                                maxLength={string.maxLength}
+                                minLength={string.minLength}
+                                // TODO: add validation UX feedback
+                                pattern={string.regex}
                             />
                         )}
                     </WithLabel>
@@ -148,7 +153,7 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                         />
                     </WithLabel>
                 ),
-                long: () => (
+                long: (long) => (
                     <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
                         <FernNumericInput
                             id={id}
@@ -157,6 +162,9 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             onValueChange={onChange}
                             disallowFloat={true}
                             disabled={disabled}
+                            defaultValue={long.default}
+                            max={long.maximum}
+                            min={long.minimum}
                         />
                     </WithLabel>
                 ),
