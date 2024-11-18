@@ -1,21 +1,20 @@
 import { DocsLoader } from "@/server/DocsLoader";
+import { getStringParam } from "@/server/getStringParam";
+import { convertToLlmTxtMarkdown } from "@/server/llm-txt-md";
 import { removeLeadingSlash } from "@/server/removeLeadingSlash";
 import { getDocsDomainNode, getHostNode } from "@/server/xfernhost/node";
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { getFrontmatter } from "@fern-ui/fern-docs-mdx";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextApiRequest, NextApiResponse } from "next";
 
-function getStringParam(req: NextApiRequest, param: string): string | undefined {
-    const value = req.query[param];
-    return typeof value === "string" ? value : undefined;
-}
+/**
+ * This endpoint returns the markdown content of a any page in the docs by adding `.md` or `.mdx` to the end of any docs page.
+ */
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<unknown> {
     const path = getStringParam(req, "path");
-    const format = getStringParam(req, "format");
 
-    if (path == null || format == null) {
+    if (path == null) {
         return res.status(400).end();
     }
 
@@ -37,13 +36,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const pageInfo = getPageInfo(root, FernNavigation.Slug(removeLeadingSlash(path)));
 
+    // TODO: add support for api reference endpoint pages
     if (pageInfo == null) {
-        return res.status(404).end();
-    }
-
-    const extension = pageInfo.pageId.endsWith(".mdx") ? "mdx" : "md";
-
-    if (format !== extension) {
         return res.status(404).end();
     }
 
@@ -53,19 +47,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(404).end();
     }
 
-    const { data: frontmatter, content } = getFrontmatter(page.markdown);
-
-    // TODO: parse the first h1 as the title
-    const title = frontmatter.title ?? pageInfo.nodeTitle;
-
     res.status(200)
-        .setHeader("Content-Type", `text/${extension === "mdx" ? "mdx" : "markdown"}`)
+        .setHeader("Content-Type", `text/${pageInfo.pageId.endsWith(".mdx") ? "mdx" : "markdown"}`)
         // prevent search engines from indexing this page
         .setHeader("X-Robots-Tag", "noindex")
         // cannot guarantee that the content won't change, so we only cache for 60 seconds
-        .setHeader("Cache-Control", "s-maxage=60");
+        .setHeader("Cache-Control", "s-maxage=60")
+        .send(
+            convertToLlmTxtMarkdown(page.markdown, pageInfo.nodeTitle, pageInfo.pageId.endsWith(".mdx") ? "mdx" : "md"),
+        );
 
-    return res.send(`# ${title}\n\n${content}`);
+    return;
 }
 
 function getPageInfo(
