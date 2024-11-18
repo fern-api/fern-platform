@@ -173,6 +173,8 @@ types:
     properties:
       endpointId: rootCommons.EndpointId
       accessTokenLocator: rootCommons.JqString
+      headerKey: optional<string>
+      tokenPrefix: optional<string>
 
   EndpointExampleGenerationErrorBody:
     properties:
