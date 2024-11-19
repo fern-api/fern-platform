@@ -10,6 +10,7 @@ import { FeatureId } from "./FeatureId";
 export const FeatureSpec: core.serialization.ObjectSchema<serializers.FeatureSpec.Raw, FernGeneratorCli.FeatureSpec> =
     core.serialization.object({
         id: FeatureId,
+        title: core.serialization.string().optional(),
         description: core.serialization.string().optional(),
         addendum: core.serialization.string().optional(),
         advanced: core.serialization.boolean().optional(),
@@ -18,6 +19,7 @@ export const FeatureSpec: core.serialization.ObjectSchema<serializers.FeatureSpe
 export declare namespace FeatureSpec {
     interface Raw {
         id: FeatureId.Raw;
+        title?: string | null;
         description?: string | null;
         addendum?: string | null;
         advanced?: boolean | null;

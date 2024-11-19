@@ -1,0 +1,59 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`title-merged > title-merged > generate readme 1`] = `
+"# Title Go Library
+
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Title%2FGo)
+[![go shield](https://img.shields.io/badge/go-docs-blue)](https://pkg.go.dev/github.com/basic/basic-go)
+
+The Title Go library provides convenient access to the Title API from Go.
+
+Starting merge process
+Comparing blocks: original[0] vs updated[0]
+Processing original blocks
+Skipping original block: MY_CUSTOM_TITLE
+Comparing blocks: original[1] vs updated[0]
+Adding updated block: INSTALLATION
+Comparing blocks: original[1] vs updated[1]
+Processing original blocks
+Adding original block: MY_CUSTOM_SECTION
+Adding original block: CONTRIBUTING
+Processing remaining original blocks
+Processing remaining updated blocks
+Adding remaining updated block: My custom title!!!
+Adding remaining updated block: contributing
+Merge process completed
+## Installation
+
+\`\`\`sh
+go get github.com/basic/basic-go
+\`\`\`
+
+## My custom section!!
+
+This is a custom section that should stay between the usage and contributing sections.
+
+## Contributing
+
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!
+
+## My custom title!!!
+
+This section has now changed!!
+
+## Contributing
+
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!"
+`;

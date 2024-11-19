@@ -10,6 +10,29 @@ exports[`cohere-go-merged > cohere-go-merged > generate readme 1`] = `
 
 The Cohere Go library provides convenient access to the Cohere API from Go.
 
+Starting merge process
+Comparing blocks: original[0] vs updated[0]
+Matched blocks: DOCUMENTATION
+Comparing blocks: original[1] vs updated[1]
+Matched blocks: INSTALLATION
+Comparing blocks: original[2] vs updated[2]
+Matched blocks: USAGE
+Comparing blocks: original[3] vs updated[3]
+Processing original blocks
+Adding original block: CUSTOM
+Adding original block: ONE
+Adding original block: TWO
+Skipping original block: ERRORS
+Comparing blocks: original[7] vs updated[3]
+Adding updated block: ERRORS
+Comparing blocks: original[7] vs updated[4]
+Matched blocks: ADVANCED
+Comparing blocks: original[8] vs updated[5]
+Adding updated block: contributing
+Processing remaining original blocks
+Adding remaining original block: CONTRIBUTING
+Processing remaining updated blocks
+Merge process completed
 ## Documentation
 
 API reference documentation is available [here](https://docs.cohere.com).
@@ -105,5 +128,15 @@ otherwise they would be overwritten upon the next generated release. Feel free t
 a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
 an issue first to discuss with us!
 
-On the other hand, contributions to the README are always very welcome!"
+On the other hand, contributions to the README are always very welcome!
+## Contributing
+
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!
+"
 `;
