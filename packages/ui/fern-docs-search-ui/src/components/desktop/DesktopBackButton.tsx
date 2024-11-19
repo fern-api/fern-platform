@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { Kbd } from "../ui/kbd";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
-export function BackButton({ pop, clear }: { pop: () => void; clear: () => void }): React.ReactNode {
+export function DesktopBackButton({ pop, clear }: { pop: () => void; clear: () => void }): React.ReactNode {
     return (
         <TooltipProvider>
             <Tooltip>

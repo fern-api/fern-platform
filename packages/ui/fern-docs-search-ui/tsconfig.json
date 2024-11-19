@@ -25,6 +25,9 @@
       "path": "./tsconfig.server.json"
     },
     {
+      "path": "../../commons/core-utils"
+    },
+    {
       "path": "../fern-http-method-tag"
     },
     {

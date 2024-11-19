@@ -10,7 +10,7 @@ export interface FacetFilter {
 }
 
 export interface FacetOpts {
-    filters: FacetFilter[];
+    filters: readonly FacetFilter[];
 }
 
 async function fetchFacets({
@@ -59,6 +59,7 @@ export function useInitialFilters({
     initialFilters?: { "product.title"?: string; "version.title"?: string };
 }): {
     filters: FacetFilter[];
+    filtersString: string | undefined;
     setFilters: Dispatch<SetStateAction<FacetFilter[]>>;
 } {
     const preload = usePreloadFacets();
@@ -81,5 +82,6 @@ export function useInitialFilters({
     return {
         filters,
         setFilters,
+        filtersString: filters.length === 0 ? undefined : toFiltersString({ filters }),
     };
 }

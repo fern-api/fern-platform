@@ -1,5 +1,5 @@
-import { useFacets } from "@/hooks/useFacets";
-import { FacetName, getFacetDisplay, toFilterLabel } from "@/utils/facet-display";
+import { FacetFilter, useFacets } from "@/hooks/useFacets";
+import { getFacetDisplay, toFilterLabel } from "@/utils/facet-display";
 import { Minus } from "lucide-react";
 import { ReactElement } from "react";
 import { Badge } from "../ui/badge";
@@ -22,13 +22,10 @@ export function DesktopFilterDropdownMenu({
     removeFilter,
     updateFilter,
 }: {
-    filter: {
-        facet: FacetName;
-        value: string;
-    };
+    filter: FacetFilter;
     removeFilter?: () => void;
     updateFilter?: (value: string) => void;
-    filters: { facet: FacetName; value: string }[];
+    filters: readonly FacetFilter[];
 }): ReactElement {
     const otherFilters = filters.filter((f) => f.facet !== filter.facet);
 

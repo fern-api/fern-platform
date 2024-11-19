@@ -43,6 +43,7 @@
   "dependencies": {
     "@ai-sdk/anthropic": "^0.0.56",
     "@date-fns/tz": "^1.1.2",
+    "@fern-api/ui-core-utils": "workspace:*",
     "@fern-ui/chatbot": "workspace:*",
     "@fern-ui/components": "workspace:*",
     "@fern-ui/fern-docs-search-server": "workspace:*",

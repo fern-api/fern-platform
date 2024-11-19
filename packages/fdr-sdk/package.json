@@ -55,9 +55,9 @@
     "url-join": "5.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.9",
-    "@babel/preset-env": "^7.24.3",
-    "@babel/preset-typescript": "^7.24.1",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-typescript": "^7.26.0",
     "@fern-api/eslint-config": "workspace:*",
     "@fern-platform/configs": "workspace:*",
     "@types/node-fetch": "2.6.9",

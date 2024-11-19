@@ -40,18 +40,20 @@ export function DesktopInstantSearchClient({ appId, domain }: { appId: string; d
 
     return (
         <>
-            <div className="max-h-[50vh] overflow-hidden flex flex-col">
-                <SearchClientProvider appId={appId} apiKey={apiKey} domain={domain}>
-                    <DesktopInstantSearch
-                        onSubmit={handleSubmit}
-                        onAskAI={({ initialInput }) => {
-                            setInitialInput(initialInput);
-                            setIsChatOpen(true);
-                        }}
-                        userToken={userToken}
-                    />
-                </SearchClientProvider>
-            </div>
+            <SearchClientProvider appId={appId} apiKey={apiKey} domain={domain} indexName="fern-docs-search">
+                <DesktopInstantSearch
+                    onSelect={handleSubmit}
+                    onAskAI={({ initialInput }) => {
+                        setInitialInput(initialInput);
+                        setIsChatOpen(true);
+                    }}
+                    userToken={userToken}
+                    accentForegroundColor="#0851BE"
+                    accentBackgroundColor="#EAF3FF"
+                    accentForegroundColorDark="#5495F8"
+                    accentBackgroundColorDark="#092148"
+                />
+            </SearchClientProvider>
             <Dialog open={isChatOpen} onOpenChange={setIsChatOpen}>
                 <DialogContent>
                     <Chat initialInput={initialInput} domain={domain} />

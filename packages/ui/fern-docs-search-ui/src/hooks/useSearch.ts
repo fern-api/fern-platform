@@ -4,7 +4,7 @@ import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
 import { useHits, useSearchBox } from "react-instantsearch";
 import { FacetOpts, useFacets, usePreloadFacets } from "./useFacets";
 
-interface UseSearch {
+export interface UseSearch {
     query: string;
     refine: (query: string) => void;
     clear: () => void;
