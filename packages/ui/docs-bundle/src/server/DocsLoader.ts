@@ -64,6 +64,11 @@ export class DocsLoader {
         ];
     }
 
+    public async isAuthed(): Promise<boolean> {
+        const [authState] = await this.loadAuth();
+        return authState.authed;
+    }
+
     #loadForDocsUrlResponse: DocsV2Read.LoadDocsForUrlResponse | undefined;
     #error: DocsV2Read.getDocsForUrl.Error | undefined;
 
