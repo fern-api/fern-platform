@@ -167,7 +167,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .map((endpointPageInfo) => {
             return {
                 title: endpointPageInfo.nodeTitle,
-                href: String(new URL(addLeadingSlash(endpointPageInfo.slug), withDefaultProtocol(domain))),
+                href: String(
+                    new URL(
+                        addLeadingSlash(endpointPageInfo.slug) + (endpointPageInfo.endpointId != null ? ".mdx" : ""),
+                        withDefaultProtocol(domain),
+                    ),
+                ),
                 breadcrumb: endpointPageInfo.breadcrumb,
             };
         })
