@@ -105,19 +105,21 @@ export class ChangelogNavigationConverter {
         entries: FernNavigation.V1.ChangelogEntryNode[],
         parentSlug: SlugGenerator,
     ): FernNavigation.V1.ChangelogMonthNode[] {
-        const months = new Map<number, FernNavigation.V1.ChangelogEntryNode[]>();
+        const months = new Map<number, [number, FernNavigation.V1.ChangelogEntryNode[]]>();
         for (const entry of entries) {
-            const month = dayjs.utc(entry.date).month() + 1;
-            const monthEntries = months.get(month) ?? [];
-            monthEntries.push(entry);
+            const date = dayjs.utc(entry.date);
+            const month = date.month() + 1;
+            const year = date.year();
+            const monthEntries = months.get(month) ?? [year, []];
+            monthEntries[1].push(entry);
             months.set(month, monthEntries);
         }
         return orderBy(
-            Array.from(months.entries()).map(([month, entries]) =>
+            Array.from(months.entries()).map(([month, [year, entries]]) =>
                 this.#idgen.with(month.toString(), (id) => ({
                     id,
                     type: "changelogMonth" as const,
-                    title: dayjs(new Date(0, month - 1)).format("MMMM YYYY"),
+                    title: dayjs(new Date(year, month - 1)).format("MMMM YYYY"),
                     month,
                     slug: parentSlug.append(month.toString()).get(),
                     icon: undefined,
