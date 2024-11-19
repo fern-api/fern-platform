@@ -80,9 +80,11 @@ export function buildAuthHeaders(
                                     } catch {}
                                 }
 
-                                const tokenPrefix = authState.oauth?.tokenPrefix || "Bearer";
+                                const tokenPrefix = oAuthClientCredentials.value.tokenPrefix ?? "Bearer";
 
-                                headers["Authorization"] =
+                                headers[
+                                    pascalCaseHeaderKey(oAuthClientCredentials.value.headerName || "Authorization")
+                                ] =
                                     `${tokenPrefix.length ? `${tokenPrefix} ` : ""}${redacted ? obfuscateSecret(token) : token}`;
                             },
                         });
