@@ -16,7 +16,7 @@ import {
     DropdownMenuTrigger,
 } from "../ui/dropdown";
 
-export function FilterDropdownMenu({
+export function DesktopFilterDropdownMenu({
     filter,
     filters,
     removeFilter,

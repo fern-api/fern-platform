@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/fern.json
 
 imports:
   commons: ./commons.yml
@@ -24,6 +24,13 @@ types:
       "twitter:card": optional<TwitterCardSetting>
       "noindex": optional<boolean>
       "nofollow": optional<boolean>
+      "keywords": optional<StringOrStringList>
+
+  StringOrStringList:
+    discriminated: false
+    union:
+      - string
+      - list<string>
 
   WithJsonLdBreadcrumbs:
     properties:

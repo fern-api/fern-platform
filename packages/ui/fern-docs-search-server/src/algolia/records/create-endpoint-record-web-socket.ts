@@ -1,4 +1,5 @@
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { compact, flatten } from "es-toolkit";
 import { BaseRecord, EndpointBaseRecord } from "../types";
 import { maybePrepareMdxContent } from "./prepare-mdx-content";
@@ -34,6 +35,9 @@ export function createEndpointBaseRecordWebSocket({
         },
     }).webSocketChannel(endpoint, endpoint.id);
 
+    const endpoint_path = ApiDefinition.toColonEndpointPathLiteral(endpoint.path);
+    const endpoint_path_curly = ApiDefinition.toCurlyBraceEndpointPathLiteral(endpoint.path);
+
     return {
         ...base,
         api_type: "websocket",
@@ -43,7 +47,16 @@ export function createEndpointBaseRecordWebSocket({
         description: prepared.content,
         code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
         availability: endpoint.availability,
-        endpoint_path: ApiDefinition.toColonEndpointPathLiteral(endpoint.path),
+        endpoint_path,
+        endpoint_path_alternates: [
+            endpoint_path_curly,
+            ...(endpoint.environments?.map((environment) =>
+                String(new URL(endpoint_path, withDefaultProtocol(environment.baseUrl))),
+            ) ?? []),
+            ...(endpoint.environments?.map((environment) =>
+                String(new URL(endpoint_path_curly, withDefaultProtocol(environment.baseUrl))),
+            ) ?? []),
+        ],
         environments: endpoint.environments?.map((environment) => ({
             id: environment.id,
             url: environment.baseUrl,

@@ -1,4 +1,5 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
+import { WithJsonLdBreadcrumbs, WithMetadataConfig } from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { assertNonNullish, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { getFrontmatter, markdownToString } from "@fern-ui/fern-docs-mdx";
@@ -7,11 +8,12 @@ import { getToHref } from "../hooks/useHref";
 import { getFontExtension } from "../themes/stylesheet/getFontVariables";
 import { getBreadcrumbList } from "./getBreadcrumbList";
 
-const EMPTY_METADATA_CONFIG: DocsV1Read.MetadataConfig = {
+const EMPTY_METADATA_CONFIG: WithMetadataConfig & WithJsonLdBreadcrumbs = {
     "og:image": undefined,
     "og:image:width": undefined,
     "og:image:height": undefined,
     "og:title": undefined,
+    "jsonld:breadcrumb": undefined,
     "og:description": undefined,
     "og:locale": undefined,
     "og:url": undefined,
@@ -26,6 +28,7 @@ const EMPTY_METADATA_CONFIG: DocsV1Read.MetadataConfig = {
     "og:logo": undefined,
     noindex: false,
     nofollow: false,
+    keywords: undefined,
 };
 
 function getFile(fileOrUrl: DocsV1Read.FileIdOrUrl, files: Record<string, DocsV1Read.File_>): DocsV1Read.File_ {
@@ -62,7 +65,7 @@ export function getSeoProps(
         twitter,
         additionalMetaTags,
         additionalLinkTags,
-        breadcrumbList: getBreadcrumbList(domain, pages, parents, node),
+        breadcrumbList: undefined,
     };
 
     /**
@@ -75,13 +78,28 @@ export function getSeoProps(
 
     const pageId = FernNavigation.getPageId(node);
 
-    let ogMetadata: DocsV1Read.MetadataConfig = metadata ?? EMPTY_METADATA_CONFIG;
+    let ogMetadata: WithMetadataConfig & WithJsonLdBreadcrumbs = {
+        ...EMPTY_METADATA_CONFIG,
+        ...metadata,
+    };
+
+    if (ogMetadata.keywords != null) {
+        additionalMetaTags.push({
+            name: "keywords",
+            content: Array.isArray(ogMetadata.keywords) ? ogMetadata.keywords.join(", ") : ogMetadata.keywords,
+        });
+    }
 
     const page = pageId != null ? pages[pageId] : undefined;
     if (page != null) {
         const { data: frontmatter, content } = getFrontmatter(page.markdown);
         ogMetadata = { ...ogMetadata, ...frontmatter };
 
+        // add breadcrumb list if it exists, otherwise compute it
+        seo.breadcrumbList ??=
+            ogMetadata["jsonld:breadcrumb"] ?? getBreadcrumbList(domain, parents, node, frontmatter.title);
+
+        // add canonical url if frontmatter has it
         if (frontmatter["canonical-url"] != null) {
             seo.canonical = frontmatter["canonical-url"];
         }

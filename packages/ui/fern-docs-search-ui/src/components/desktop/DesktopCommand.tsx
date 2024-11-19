@@ -14,8 +14,11 @@ import { AlgoliaRecordHit } from "../types";
 import { Button } from "../ui/button";
 import { cn } from "../ui/cn";
 import { Tooltip, TooltipContent, TooltipProvider } from "../ui/tooltip";
-import { BackButton } from "./BackButton";
-import { FilterDropdownMenu } from "./FilterDropdownMenu";
+import { BackButton } from "./DesktopBackButton";
+import { DesktopFilterDropdownMenu } from "./DesktopFilterDropdownMenu";
+import type { Metadata, ResolvingMetadata } from "next";
+
+interface S extends Metadata {}
 
 const ICON_CLASS = "size-4 text-[#969696] dark:text-white/50 shrink-0 my-1";
 
@@ -92,7 +95,7 @@ export function DesktopCommand({
             {filters.length > 0 && (
                 <div className="flex items-center gap-2 p-2 pb-0" onClick={focus}>
                     {filters.map((filter) => (
-                        <FilterDropdownMenu
+                        <DesktopFilterDropdownMenu
                             key={`${filter.facet}:${filter.value}`}
                             filter={filter}
                             filters={filters}

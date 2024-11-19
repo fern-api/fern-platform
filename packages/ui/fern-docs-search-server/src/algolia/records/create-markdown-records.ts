@@ -61,6 +61,7 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
         content: root_content,
         code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
         title,
+        keywords: data.keywords,
     });
 
     sections.forEach((section, i) => {
@@ -106,6 +107,7 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
             code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
             hierarchy,
             level: `h${heading.depth}`,
+            keywords: data.keywords,
         };
 
         records.push(record);

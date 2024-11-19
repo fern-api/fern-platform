@@ -6,6 +6,7 @@ export const SEARCHABLE_ATTRIBUTES = [
     "description,payload_description,request_description,response_description",
     "unordered(content)",
     "endpoint_path",
+    "endpoint_path_alternates",
     "parameter_name",
     "keywords",
 
@@ -70,7 +71,10 @@ export const BaseRecordSchema = z.object({
     product: z.object({ id: z.string(), title: z.string(), pathname: z.string().optional() }).optional(),
     version: z.object({ id: z.string(), title: z.string(), pathname: z.string().optional() }).optional(),
     tab: z.object({ title: z.string(), pathname: z.string().optional() }).optional(),
-    keywords: z.array(z.string()).optional().describe("A list of searchable keywords that are relevant to this record"),
+    keywords: z
+        .union([z.string(), z.array(z.string())])
+        .optional()
+        .describe("A list of searchable keywords that are relevant to this record"),
     visible_by: z.array(z.string()).describe("The roles that can view this record"),
     authed: z.boolean().describe("Whether this record requires authentication to view"),
 });
@@ -129,6 +133,7 @@ const EndpointBaseRecordSchema = BaseRecordSchema.extend({
     api_type: z.enum(["http", "webhook", "websocket"]),
     method: z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]),
     endpoint_path: z.string(),
+    endpoint_path_alternates: z.array(z.string()).optional(),
     response_type: z.enum(["stream"]).optional(),
     environments: z.array(z.object({ id: z.string(), url: z.string() })).optional(),
     default_environment_id: z.string().optional(),

@@ -93,7 +93,13 @@ body {
     }
 
     [cmdk-item] {
-        @apply mx-2 p-2 rounded-md data-[selected=true]:bg-[#CCC]/30 dark:data-[selected=true]:bg-white/10 text-left;
+        @apply mx-2 p-2 rounded-md text-left;
+
+        @media (hover: hover) and (pointer: fine) {
+            & {
+                @apply data-[selected=true]:bg-[#CCC]/30 dark:data-[selected=true]:bg-white/10;
+            }
+        }
     }
 
     [cmdk-group]:not(:first-child) {
