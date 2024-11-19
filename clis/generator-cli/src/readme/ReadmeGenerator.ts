@@ -156,7 +156,7 @@ export class ReadmeGenerator {
         }
         writer.writeLine();
         return new Block({
-            id: feature.id,
+            id: feature.title ?? feature.id,
             content: writer.toString(),
         });
     }
