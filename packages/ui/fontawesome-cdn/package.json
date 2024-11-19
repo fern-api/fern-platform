@@ -35,14 +35,14 @@
     "@fortawesome/sharp-regular-svg-icons": "^6.5.2",
     "@fortawesome/sharp-solid-svg-icons": "^6.5.2",
     "@fortawesome/sharp-thin-svg-icons": "^6.5.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18",
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@next/bundle-analyzer": "14.2.9",
     "@types/node": "^18.7.18",
-    "@types/react": "^18.0.20",
+    "@types/react": "^18",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
     "next": "^14",

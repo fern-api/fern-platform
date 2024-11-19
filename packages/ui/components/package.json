@@ -53,8 +53,8 @@
     "copyfiles": "^2.4.1",
     "iconoir-react": "^7.7.0",
     "moment": "^2.30.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18",
+    "react-dom": "^18",
     "sonner": "^1.5.0",
     "ts-extras": "^0.11.0"
   },
@@ -75,8 +75,8 @@
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.1",
     "@types/node": "^18.7.18",
-    "@types/react": "^18.0.20",
-    "@types/react-dom": "^18.2.18",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
     "@types/react-test-renderer": "^18.0.7",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
@@ -88,7 +88,7 @@
     "organize-imports-cli": "^0.10.0",
     "postcss-import": "^16.0.1",
     "prettier": "^3.3.2",
-    "react-test-renderer": "^18.2.0",
+    "react-test-renderer": "^18",
     "sass": "^1.74.1",
     "storybook": "^8.4.1",
     "stylelint": "^16.1.0",
@@ -98,8 +98,8 @@
     "vitest": "^2.1.4"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18",
+    "react-dom": "^18",
     "sass": "^1.74.1"
   },
   "eslintConfig": {

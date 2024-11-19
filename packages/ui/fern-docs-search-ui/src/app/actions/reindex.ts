@@ -8,9 +8,15 @@ export const handleReindex = async (domain: string): Promise<string | undefined>
     if (process.env.VERCEL && process.env.VERCEL_ENV !== "development") {
         const client = new Client({ token: qstashToken() });
 
+        const domain =
+            process.env.VERCEL_ENV === "production"
+                ? process.env.VERCEL_PROJECT_PRODUCTION_URL
+                : process.env.VERCEL_PROJECT_PREVIEW_URL;
+
         const res = await client.publish({
-            url: `https://${process.env.VERCEL_URL}/api/reindex?domain=${domain}`,
-            method: "GET",
+            url: `https://${domain}/api/reindex`,
+            method: "POST",
+            body: JSON.stringify({ domain }),
         });
 
         return res.messageId;

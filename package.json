@@ -75,7 +75,7 @@
     "organize-imports-cli": "^0.10.0",
     "playwright": "^1.47.1",
     "prettier": "^3.3.2",
-    "react": "^18.2.0",
+    "react": "^18",
     "rollup": "^4.22.4",
     "styled-jsx": "^5.1.2",
     "stylelint": "^16.1.0",

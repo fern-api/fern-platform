@@ -6,8 +6,8 @@
   "main": "index.ts",
   "peerDependencies": {
     "next": "^14",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18",
+    "react-dom": "^18"
   },
   "exports": {
     "./index.css": "./index.css",
@@ -15,13 +15,13 @@
   },
   "devDependencies": {
     "@types/node": "^18.7.18",
-    "@types/react": "^18.0.20",
-    "@types/react-dom": "^18.2.18",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
     "eslint": "^8.56.0",
     "eslint-config-next": "14.2.15",
     "postcss": "^8.4.33",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18",
+    "react-dom": "^18",
     "typescript": "5.4.3"
   },
   "dependencies": {

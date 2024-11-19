@@ -24,6 +24,14 @@ export function qstashToken(): string {
     return getEnvVariable("QSTASH_TOKEN");
 }
 
+export function qstashCurrentSigningKey(): string {
+    return getEnvVariable("QSTASH_CURRENT_SIGNING_KEY");
+}
+
+export function qstashNextSigningKey(): string {
+    return getEnvVariable("QSTASH_NEXT_SIGNING_KEY");
+}
+
 function assertNonNullable<T>(value: T, key: string): asserts value is NonNullable<T> {
     if (value == null) {
         throw new Error(`${key} is not defined`);
