@@ -9,7 +9,7 @@ import { BlockMerger } from "./BlockMerger";
 import { ReadmeParser } from "./ReadmeParser";
 
 export class ReadmeGenerator {
-    private ADVANCED_FEATURE_ID = "ADVANCED";
+    private static readonly ADVANCED_FEATURE_ID = "advanced";
     private ADVANCED_FEATURES: Set<FernGeneratorCli.FeatureId> = new Set([
         FernGeneratorCli.StructuredFeatureId.Retries,
         FernGeneratorCli.StructuredFeatureId.Timeouts,
@@ -82,8 +82,7 @@ export class ReadmeGenerator {
             );
         }
 
-        const advancedFeatureBlock = this.generateNestedFeatureBlock({
-            featureId: this.ADVANCED_FEATURE_ID,
+        const advancedFeatureBlock = this.generateAdvancedFeatureBlock({
             features: advancedFeatures,
         });
         if (advancedFeatureBlock != null) {
@@ -102,11 +101,9 @@ export class ReadmeGenerator {
         return feat.advanced ?? false;
     }
 
-    private generateNestedFeatureBlock({
-        featureId,
+    private generateAdvancedFeatureBlock({
         features,
     }: {
-        featureId: string;
         features: FernGeneratorCli.ReadmeFeature[];
     }): Block | undefined {
         if (!this.shouldGenerateFeatures({ features })) {
@@ -114,7 +111,7 @@ export class ReadmeGenerator {
         }
 
         const writer = new StringWriter();
-        writer.writeLine(`## ${featureIDToTitle(featureId)}`);
+        writer.writeLine(`## ${featureIDToTitle(ReadmeGenerator.ADVANCED_FEATURE_ID)}`);
         writer.writeLine();
 
         for (const feature of features) {
@@ -128,7 +125,7 @@ export class ReadmeGenerator {
             });
         }
         return new Block({
-            id: featureId,
+            id: ReadmeGenerator.ADVANCED_FEATURE_ID,
             content: writer.toString(),
         });
     }
@@ -143,7 +140,7 @@ export class ReadmeGenerator {
         maybeWriter?: StringWriter;
     }): Block {
         const writer = maybeWriter ?? new StringWriter();
-        writer.writeLine(`${heading} ${featureIDToTitle(feature.id)}`);
+        writer.writeLine(`${heading} ${feature.title ?? featureIDToTitle(feature.id)}`);
         writer.writeLine();
         if (feature.description != null) {
             writer.writeLine(feature.description);

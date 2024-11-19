@@ -41,6 +41,7 @@ types:
       included in the README.md.
     properties:
       id: FeatureId
+      title: optional<string>
       description: optional<string>
       addendum: optional<string>
       advanced: optional<boolean>

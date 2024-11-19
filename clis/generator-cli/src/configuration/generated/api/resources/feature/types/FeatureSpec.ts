@@ -11,6 +11,7 @@ import * as FernGeneratorCli from "../../../index";
  */
 export interface FeatureSpec {
     id: FernGeneratorCli.FeatureId;
+    title?: string;
     description?: string;
     addendum?: string;
     advanced?: boolean;
