@@ -9,7 +9,7 @@ import { BlockMerger } from "./BlockMerger";
 import { ReadmeParser } from "./ReadmeParser";
 
 export class ReadmeGenerator {
-    private static readonly ADVANCED_FEATURE_ID = "advanced";
+    private static readonly ADVANCED_FEATURE_ID = "ADVANCED";
     private ADVANCED_FEATURES: Set<FernGeneratorCli.FeatureId> = new Set([
         FernGeneratorCli.StructuredFeatureId.Retries,
         FernGeneratorCli.StructuredFeatureId.Timeouts,

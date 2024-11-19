@@ -105,37 +105,5 @@ otherwise they would be overwritten upon the next generated release. Feel free t
 a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
 an issue first to discuss with us!
 
-On the other hand, contributions to the README are always very welcome!
-## Advanced
-
-### Timeouts
-
-Setting a timeout for each individual request is as simple as
-using the standard \`context\` library. Setting a one second timeout
-for an individual API call looks like the following:
-
-\`\`\`go
-ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-defer cancel()
-
-response, err := client.Chat(
-	ctx,
-	&fern.ChatRequest{
-		Message: "Can you give me a global market overview of solar panels?",
-	},
-)
-\`\`\`
-
-\`\`\`go
-ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-defer cancel()
-
-response, err := client.Generate(
-	ctx,
-	&fern.GenerateRequest{
-		Prompt: "Please explain to me how LLMs work",
-	},
-)
-\`\`\`
-"
+On the other hand, contributions to the README are always very welcome!"
 `;
