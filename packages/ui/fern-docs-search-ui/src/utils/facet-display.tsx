@@ -5,7 +5,7 @@ export const FACET_NAMES = ["product.title", "version.title", "type", "api_type"
 export type FacetName = (typeof FACET_NAMES)[number];
 export type FacetsResponse = Record<FacetName, { value: string; count: number }[]>;
 
-interface FilterOption {
+export interface FilterOption {
     facet: FacetName;
     value: string;
     count: number;

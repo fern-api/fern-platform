@@ -1,0 +1,1 @@
+export { DesktopInstantSearch } from "./DesktopInstantSearch";

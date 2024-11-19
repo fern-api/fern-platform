@@ -1,24 +1,17 @@
-import { useFacets, usePreloadFacets } from "@/hooks/useFacets";
-import { FACET_DISPLAY_NAME_MAP, FacetName, getFacetDisplay, toFilterOptions } from "@/utils/facet-display";
-import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
-import { TooltipPortal, TooltipTrigger } from "@radix-ui/react-tooltip";
+import { FacetFilter } from "@/hooks/useFacets";
+import { useSearch } from "@/hooks/useSearch";
+import { FACET_DISPLAY_NAME_MAP, getFacetDisplay } from "@/utils/facet-display";
 import { Command } from "cmdk";
-import { FileText, History, Laptop, ListFilter, MessageCircle, Moon, Sun } from "lucide-react";
-import { Dispatch, ReactElement, ReactNode, SetStateAction, useEffect, useRef } from "react";
-import { useHits, useSearchBox } from "react-instantsearch";
+import { Laptop, ListFilter, MessageCircle, Moon, Sun } from "lucide-react";
+import { Dispatch, ReactElement, ReactNode, SetStateAction, useRef } from "react";
 import { MarkRequired } from "ts-essentials";
-import { RemoteIcon } from "../icons/RemoteIcon";
+import { PageIcon } from "../icons/PageIcon";
 import { HitContent } from "../shared/HitContent";
-import { generateHits } from "../shared/hits";
 import { AlgoliaRecordHit } from "../types";
-import { Button } from "../ui/button";
 import { cn } from "../ui/cn";
-import { Tooltip, TooltipContent, TooltipProvider } from "../ui/tooltip";
 import { BackButton } from "./DesktopBackButton";
+import { DesktopCloseTrigger } from "./DesktopCloseTrigger";
 import { DesktopFilterDropdownMenu } from "./DesktopFilterDropdownMenu";
-import type { Metadata, ResolvingMetadata } from "next";
-
-interface S extends Metadata {}
 
 const ICON_CLASS = "size-4 text-[#969696] dark:text-white/50 shrink-0 my-1";
 
@@ -31,46 +24,27 @@ function toPlaceholder(filters: { facet: string; value: string }[]): string {
 }
 
 export function DesktopCommand({
+    filters,
     onSubmit,
     onAskAI,
-    filters,
     setFilters,
     setTheme,
     CloseTrigger,
     onClose,
 }: {
+    filters: FacetFilter[];
     onSubmit: (path: string) => void;
     onAskAI?: ({ initialInput }: { initialInput?: string }) => void;
-    filters: {
-        facet: FacetName;
-        value: string;
-    }[];
-    setFilters?: Dispatch<SetStateAction<{ facet: FacetName; value: string }[]>>;
+    setFilters?: Dispatch<SetStateAction<FacetFilter[]>>;
     setTheme?: (theme: "light" | "dark" | "system") => void;
     CloseTrigger?: ({ children }: { children: ReactNode }) => ReactNode;
     onClose?: () => void;
-}): ReactElement {
+}): ReactNode {
     const ref = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const scrollRef = useRef<HTMLDivElement>(null);
 
-    const { query, refine } = useSearchBox();
-
-    const { items } = useHits<AlgoliaRecord>();
-
-    const { data: facets, error } = useFacets({ filters });
-
-    useEffect(() => {
-        if (error != null) {
-            // eslint-disable-next-line no-console
-            console.error(error);
-        }
-    }, [error]);
-
-    const preloadFacets = usePreloadFacets();
-
-    const groups = generateHits(items);
-
-    const facetOptions = toFilterOptions(facets, "");
+    const { query, refine, clear, groups, facets, preload } = useSearch({ filters });
 
     const focus = () => {
         setTimeout(() => {
@@ -82,15 +56,11 @@ export function DesktopCommand({
         <Command
             ref={ref}
             className="flex flex-col border border-[#DBDBDB] dark:border-white/10 rounded-lg overflow-hidden bg-[#F2F2F2]/30 dark:bg-[#1A1919]/30 backdrop-blur-xl h-full"
-            onKeyDown={
-                onClose != null
-                    ? (e) => {
-                          if (e.key === "Escape") {
-                              onClose?.();
-                          }
-                      }
-                    : undefined
-            }
+            onKeyDown={(e) => {
+                if (e.key === "Escape") {
+                    onClose?.();
+                }
+            }}
         >
             {filters.length > 0 && (
                 <div className="flex items-center gap-2 p-2 pb-0" onClick={focus}>
@@ -135,7 +105,10 @@ export function DesktopCommand({
                     autoFocus
                     value={query}
                     placeholder={toPlaceholder(filters)}
-                    onValueChange={refine}
+                    onValueChange={(value) => {
+                        refine(value);
+                        scrollRef.current?.scrollTo({ top: 0 });
+                    }}
                     onKeyDown={(e) => {
                         if (e.key === "Backspace" && query.length === 0) {
                             if (e.metaKey) {
@@ -148,26 +121,12 @@ export function DesktopCommand({
                     }}
                 />
 
-                {CloseTrigger != null && (
-                    <TooltipProvider>
-                        <Tooltip>
-                            <CloseTrigger>
-                                <TooltipTrigger asChild>
-                                    <Button size="xs" variant="outline">
-                                        <kbd>esc</kbd>
-                                    </Button>
-                                </TooltipTrigger>
-                            </CloseTrigger>
-                            <TooltipPortal>
-                                <TooltipContent>
-                                    <p>Close search</p>
-                                </TooltipContent>
-                            </TooltipPortal>
-                        </Tooltip>
-                    </TooltipProvider>
-                )}
+                <DesktopCloseTrigger CloseTrigger={CloseTrigger} />
             </div>
-            <Command.List className="py-3 min-h-0 shrink overflow-auto mask-grad-y-3 overscroll-contain">
+            <Command.List
+                className="py-3 min-h-0 shrink overflow-auto mask-grad-y-3 overscroll-contain"
+                ref={scrollRef}
+            >
                 {onAskAI != null && (
                     <Command.Group forceMount>
                         <CommandItem value="ai-chat" onSelect={() => onAskAI?.({ initialInput: query })}>
@@ -186,18 +145,18 @@ export function DesktopCommand({
                     </Command.Group>
                 )}
 
-                {facetOptions.length > 0 && (
+                {facets.length > 0 && (
                     <Command.Group heading="Filters">
-                        {facetOptions.map((filter) => (
+                        {facets.map((filter) => (
                             <CommandItem
                                 key={`${filter.facet}:${filter.value}`}
                                 onSelect={() => {
                                     setFilters?.([...filters, { facet: filter.facet, value: filter.value }]);
-                                    refine("");
+                                    clear();
                                     focus();
                                 }}
                                 onMouseOver={() => {
-                                    preloadFacets([...filters, { facet: filter.facet, value: filter.value }]);
+                                    preload({ filters: [...filters, { facet: filter.facet, value: filter.value }] });
                                 }}
                             >
                                 <ListFilter className={ICON_CLASS} />
@@ -220,7 +179,7 @@ export function DesktopCommand({
                     <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} forceMount>
                         {group.hits.map((hit) => (
                             <CommandItem key={hit.path} value={hit.path} onSelect={() => onSubmit(hit.path)}>
-                                <Icon icon={hit.icon} type={hit.record?.type} />
+                                <PageIcon icon={hit.icon} type={hit.record?.type} className={ICON_CLASS} />
                                 {hit.record != null && (
                                     <HitContent hit={hit.record as MarkRequired<AlgoliaRecordHit, "type">} />
                                 )}
@@ -249,18 +208,6 @@ export function DesktopCommand({
             </Command.List>
         </Command>
     );
-}
-
-function Icon({ icon, type }: { icon: string | undefined; type: string | undefined }): ReactElement {
-    if (icon) {
-        return <RemoteIcon icon={icon} className={ICON_CLASS} />;
-    }
-
-    if (type === "changelog") {
-        return <History className={ICON_CLASS} />;
-    }
-
-    return <FileText className={ICON_CLASS} />;
 }
 
 function CommandItem({

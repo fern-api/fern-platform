@@ -1,8 +1,7 @@
-import { usePreloadFacets } from "@/hooks/useFacets";
-import { FacetName } from "@/utils/facet-display";
+import { useInitialFilters } from "@/hooks/useFacets";
 import "instantsearch.css/themes/reset.css";
 import { useTheme } from "next-themes";
-import { useMemo, useState, type ReactElement } from "react";
+import { type ReactElement } from "react";
 import { Configure } from "react-instantsearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
 import { useSearchClient } from "../shared/SearchClientProvider";
@@ -23,22 +22,8 @@ export function DesktopInstantSearch({
     filters: initialFilters,
 }: DesktopInstantSearchProps): ReactElement {
     const { searchClient } = useSearchClient();
-    const preloadFacets = usePreloadFacets();
 
-    const initialFiltersArray = useMemo(() => {
-        const toRet: { facet: FacetName; value: string }[] = [];
-        if (initialFilters?.["product.title"]) {
-            toRet.push({ facet: "product.title", value: initialFilters["product.title"] });
-        }
-        if (initialFilters?.["version.title"]) {
-            toRet.push({ facet: "version.title", value: initialFilters["version.title"] });
-        }
-        return toRet;
-    }, [initialFilters]);
-
-    const [filters, setFilters] = useState<{ facet: FacetName; value: string }[]>(initialFiltersArray);
-
-    preloadFacets(initialFiltersArray);
+    const { filters, setFilters } = useInitialFilters({ initialFilters });
 
     const { setTheme } = useTheme();
 
