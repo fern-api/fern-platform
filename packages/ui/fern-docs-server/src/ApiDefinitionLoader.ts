@@ -64,8 +64,8 @@ export class ApiDefinitionLoader {
     }
 
     private flags: FeatureFlags = DEFAULT_FEATURE_FLAGS;
-    public withFlags = (flags: FeatureFlags): ApiDefinitionLoader => {
-        this.flags = flags;
+    public withFlags = (flags: Partial<FeatureFlags>): ApiDefinitionLoader => {
+        this.flags = { ...this.flags, ...flags };
         return this;
     };
 
@@ -238,7 +238,7 @@ export class ApiDefinitionLoader {
 
             if (code != null) {
                 pushSnippet({
-                    name: "HTTP Request",
+                    name: undefined,
                     language: targetId,
                     install: undefined,
                     code,

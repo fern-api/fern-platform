@@ -1,9 +1,8 @@
 import { DocsLoader } from "@/server/DocsLoader";
+import { getMarkdownForPath, getPageNodeForPath } from "@/server/getMarkdownForPath";
 import { getStringParam } from "@/server/getStringParam";
-import { convertToLlmTxtMarkdown } from "@/server/llm-txt-md";
-import { removeLeadingSlash } from "@/server/removeLeadingSlash";
 import { getDocsDomainNode, getHostNode } from "@/server/xfernhost/node";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -29,57 +28,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const domain = getDocsDomainNode(req);
     const host = getHostNode(req) ?? domain;
     const fern_token = req.cookies[COOKIE_FERN_TOKEN];
-    const loader = DocsLoader.for(domain, host, fern_token);
+    const featureFlags = await getFeatureFlags(domain);
+    const loader = DocsLoader.for(domain, host, fern_token).withFeatureFlags(featureFlags);
 
-    const root = await loader.root();
-    const pages = await loader.pages();
-
-    const pageInfo = getPageInfo(root, FernNavigation.Slug(removeLeadingSlash(path)));
-
-    // TODO: add support for api reference endpoint pages
-    if (pageInfo == null) {
+    const node = getPageNodeForPath(await loader.root(), path);
+    if (node == null) {
         return res.status(404).end();
     }
 
-    const page = pages[pageInfo.pageId];
-
-    if (!page) {
+    const markdown = await getMarkdownForPath(node, loader, featureFlags);
+    if (markdown == null) {
         return res.status(404).end();
     }
 
     res.status(200)
-        .setHeader("Content-Type", `text/${pageInfo.pageId.endsWith(".mdx") ? "mdx" : "markdown"}`)
+        .setHeader("Content-Type", `text/${markdown.contentType}`)
         // prevent search engines from indexing this page
         .setHeader("X-Robots-Tag", "noindex")
         // cannot guarantee that the content won't change, so we only cache for 60 seconds
         .setHeader("Cache-Control", "s-maxage=60")
-        .send(
-            convertToLlmTxtMarkdown(page.markdown, pageInfo.nodeTitle, pageInfo.pageId.endsWith(".mdx") ? "mdx" : "md"),
-        );
+        .send(markdown.content);
 
     return;
-}
-
-function getPageInfo(
-    root: FernNavigation.RootNode | undefined,
-    slug: FernNavigation.Slug,
-): { pageId: FernNavigation.PageId; nodeTitle: string } | undefined {
-    if (root == null) {
-        return undefined;
-    }
-
-    const foundNode = FernNavigation.utils.findNode(root, slug);
-    if (foundNode == null || foundNode.type !== "found" || !FernNavigation.hasMarkdown(foundNode.node)) {
-        return undefined;
-    }
-
-    const pageId = FernNavigation.getPageId(foundNode.node);
-    if (pageId == null) {
-        return undefined;
-    }
-
-    return {
-        pageId,
-        nodeTitle: foundNode.node.title,
-    };
 }

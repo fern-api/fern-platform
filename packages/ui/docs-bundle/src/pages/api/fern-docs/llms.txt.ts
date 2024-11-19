@@ -1,12 +1,14 @@
 import { DocsLoader } from "@/server/DocsLoader";
 import { addLeadingSlash } from "@/server/addLeadingSlash";
+import { getMarkdownForPath } from "@/server/getMarkdownForPath";
 import { getSectionRoot } from "@/server/getSectionRoot";
 import { getStringParam } from "@/server/getStringParam";
-import { convertToLlmTxtMarkdown, getLlmTxtMetadata } from "@/server/llm-txt-md";
+import { getLlmTxtMetadata } from "@/server/llm-txt-md";
 import { getDocsDomainNode, getHostNode } from "@/server/xfernhost/node";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish, withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -44,7 +46,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const domain = getDocsDomainNode(req);
     const host = getHostNode(req) ?? domain;
     const fern_token = req.cookies[COOKIE_FERN_TOKEN];
-    const loader = DocsLoader.for(domain, host, fern_token);
+    const featureFlags = await getFeatureFlags(domain);
+    const loader = DocsLoader.for(domain, host, fern_token).withFeatureFlags(featureFlags);
 
     const root = getSectionRoot(await loader.root(), path);
     const pages = await loader.pages();
@@ -70,16 +73,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }[] = [];
 
     const landingPage = getLandingPage(root);
-    const landingPageId = landingPage != null ? FernNavigation.getPageId(landingPage) : undefined;
-    const landingPageRawMarkdown = landingPageId != null ? pages[landingPageId]?.markdown : undefined;
-    const landingPageLlmTxtMarkdown =
-        landingPageRawMarkdown != null
-            ? convertToLlmTxtMarkdown(
-                  landingPageRawMarkdown,
-                  landingPage?.title ?? root.title,
-                  landingPageId?.endsWith(".mdx") ? "mdx" : "md",
-              )
-            : undefined;
+    const markdown = landingPage != null ? await getMarkdownForPath(landingPage, loader, featureFlags) : undefined;
 
     // traverse the tree in a depth-first manner to collect all the nodes that have markdown content
     // in the order that they appear in the sidebar
@@ -173,7 +167,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .map((endpointPageInfo) => {
             return {
                 title: endpointPageInfo.nodeTitle,
-                href: String(new URL(addLeadingSlash(endpointPageInfo.slug), withDefaultProtocol(domain))),
+                href: String(
+                    new URL(
+                        addLeadingSlash(endpointPageInfo.slug) + (endpointPageInfo.endpointId != null ? ".mdx" : ""),
+                        withDefaultProtocol(domain),
+                    ),
+                ),
                 breadcrumb: endpointPageInfo.breadcrumb,
             };
         })
@@ -188,7 +187,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .send(
             [
                 // if there's a landing page, use the llm-friendly markdown version instead of the ${root.title}
-                landingPageLlmTxtMarkdown ?? `# ${root.title}`,
+                markdown?.content ?? `# ${root.title}`,
                 docs.length > 0 ? `## Docs\n\n${docs.join("\n")}` : undefined,
                 endpoints.length > 0 ? `## API Docs\n\n${endpoints.join("\n")}` : undefined,
             ]
@@ -201,7 +200,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 function getLandingPage(
     root: FernNavigation.NavigationNodeWithMetadata,
-): FernNavigation.LandingPageNode | FernNavigation.NavigationNodeWithMarkdown | undefined {
+): FernNavigation.LandingPageNode | FernNavigation.NavigationNodePage | undefined {
     if (root.type === "version") {
         return root.landingPage;
     } else if (root.type === "root") {
@@ -213,7 +212,7 @@ function getLandingPage(
         }
     }
 
-    if (FernNavigation.hasMarkdown(root)) {
+    if (FernNavigation.isPage(root)) {
         return root;
     }
 

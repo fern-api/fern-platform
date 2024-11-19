@@ -1,13 +1,14 @@
 import { DocsLoader } from "@/server/DocsLoader";
+import { getMarkdownForPath } from "@/server/getMarkdownForPath";
 import { getSectionRoot } from "@/server/getSectionRoot";
 import { getStringParam } from "@/server/getStringParam";
-import { convertToLlmTxtMarkdown } from "@/server/llm-txt-md";
 import { getDocsDomainNode, getHostNode } from "@/server/xfernhost/node";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
-import { uniqWith } from "es-toolkit/array";
+import { uniqBy } from "es-toolkit/array";
 import { NextApiRequest, NextApiResponse } from "next";
 
 /**
@@ -32,19 +33,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const domain = getDocsDomainNode(req);
     const host = getHostNode(req) ?? domain;
     const fern_token = req.cookies[COOKIE_FERN_TOKEN];
-    const loader = DocsLoader.for(domain, host, fern_token);
+    const featureFlags = await getFeatureFlags(domain);
+    const loader = DocsLoader.for(domain, host, fern_token).withFeatureFlags(featureFlags);
 
     const root = getSectionRoot(await loader.root(), path);
-    const pages = await loader.pages();
 
     if (root == null) {
         return res.status(404).end();
     }
 
-    const pageInfos: {
-        pageId: FernNavigation.PageId;
-        nodeTitle: string;
-    }[] = [];
+    const nodes: FernNavigation.NavigationNodePage[] = [];
 
     // traverse the tree in a depth-first manner to collect all the nodes that have markdown content
     // in the order that they appear in the sidebar
@@ -57,42 +55,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         }
 
-        if (FernNavigation.hasMarkdown(node)) {
-            // if the node is noindexed, don't include it in the list
-            // TODO: include "noindexed" nodes in `llms-full.txt`
-            if (node.noindex) {
-                return SKIP;
-            }
-
-            const pageId = FernNavigation.getPageId(node);
-            if (pageId != null) {
-                pageInfos.push({
-                    pageId,
-                    nodeTitle: node.title,
-                });
-            }
-        }
-
-        if (FernNavigation.isApiLeaf(node)) {
-            // TODO: construct a markdown-compatible page for the API reference
+        if (FernNavigation.isPage(node)) {
+            nodes.push(node);
         }
 
         return CONTINUE;
     });
 
-    const markdowns = uniqWith(pageInfos, (a, b) => a.pageId === b.pageId)
-        .map((pageInfo) => {
-            const page = pages[pageInfo.pageId];
-            if (page == null) {
-                return undefined;
-            }
-            return convertToLlmTxtMarkdown(
-                page.markdown,
-                pageInfo.nodeTitle,
-                pageInfo.pageId.endsWith(".mdx") ? "mdx" : "md",
-            );
-        })
-        .filter(isNonNullish);
+    const markdowns = (
+        await Promise.all(
+            uniqBy(nodes, (a) => FernNavigation.getPageId(a) ?? a.canonicalSlug ?? a.slug).map(async (node) => {
+                const markdown = await getMarkdownForPath(node, loader, featureFlags);
+                if (markdown == null) {
+                    return undefined;
+                }
+                return markdown.content;
+            }),
+        )
+    ).filter(isNonNullish);
 
     if (markdowns.length === 0) {
         return res.status(404).end();
