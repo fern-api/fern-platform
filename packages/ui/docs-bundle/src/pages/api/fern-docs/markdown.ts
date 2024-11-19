@@ -36,6 +36,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(404).end();
     }
 
+    // If the page is authed, but the user is not authed, return a 403
+    if (node.authed && !(await loader.isAuthed())) {
+        return res.status(403).end();
+    }
+
     const markdown = await getMarkdownForPath(node, loader, featureFlags);
     if (markdown == null) {
         return res.status(404).end();
