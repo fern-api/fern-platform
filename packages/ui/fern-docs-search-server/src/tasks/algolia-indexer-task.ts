@@ -48,7 +48,7 @@ interface AlgoliaIndexerPayload {
     usesApplicationJsonInFormDataValue?: boolean;
 }
 
-interface AlgoliaIndexerTaskResponse {
+export interface AlgoliaIndexerTaskResponse {
     taskID: number;
     deletedObjectIDs: string[];
     addedObjectIDs: string[];

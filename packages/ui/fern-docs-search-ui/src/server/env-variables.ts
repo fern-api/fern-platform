@@ -20,6 +20,10 @@ export function fdrEnvironment(): string {
     return getEnvVariable("FDR_ENVIRONMENT");
 }
 
+export function qstashToken(): string {
+    return getEnvVariable("QSTASH_TOKEN");
+}
+
 function assertNonNullable<T>(value: T, key: string): asserts value is NonNullable<T> {
     if (value == null) {
         throw new Error(`${key} is not defined`);
