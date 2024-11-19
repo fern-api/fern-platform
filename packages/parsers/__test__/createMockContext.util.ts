@@ -1,16 +1,12 @@
-import { vi } from "vitest";
-import { ApiNodeContext } from "../openapi/ApiNode";
-
 import { createLogger } from "@fern-api/logger";
+import { BaseAPIConverterNodeContext } from "../BaseApiConverter.node";
+import { ErrorCollector } from "../ErrorCollector";
 
-export function createMockContext(): ApiNodeContext {
+export function createMockContext(): BaseAPIConverterNodeContext {
     return {
         orgId: "orgId",
         apiId: "apiId",
         logger: createLogger(() => undefined),
-        errorCollector: {
-            addError: vi.fn(),
-            errors: [],
-        },
+        errors: new ErrorCollector(),
     };
 }

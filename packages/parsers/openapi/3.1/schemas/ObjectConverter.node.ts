@@ -3,7 +3,6 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { BaseAPIConverterNodeContext } from "../../../BaseApiConverter.node";
 import { BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
-import { ObjectPropertyConverterNode } from "./ObjectPropertyConverter.node";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export declare namespace ObjectConverterNode {
@@ -31,7 +30,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1Node<
     FdrAPI.api.latest.TypeShape.Object_
 > {
     extends: string[] = [];
-    properties: ObjectPropertyConverterNode[] = [];
+    properties: Record<string, SchemaConverterNode>;
     extraProperties: ReturnType<typeof convertExtraPropertiesBoolean> | SchemaConverterNode | undefined;
 
     constructor(
@@ -52,9 +51,11 @@ export class ObjectConverterNode extends BaseOpenApiV3_1Node<
         //         .filter(isNonNullish);
         // }
 
-        this.properties = Object.entries(input.properties ?? {}).map(([key, property]) => {
-            return new ObjectPropertyConverterNode(key, property, context, accessPath, pathId);
-        });
+        this.properties = Object.fromEntries(
+            Object.entries(input.properties ?? {}).map(([key, property]) => {
+                return [key, new SchemaConverterNode(property, context, accessPath, pathId)];
+            }),
+        );
 
         this.extraProperties =
             input.additionalProperties != null
@@ -73,7 +74,21 @@ export class ObjectConverterNode extends BaseOpenApiV3_1Node<
             // extends: this.extends
             type: "object",
             extends: this.extends.map((id) => FdrAPI.TypeId(id)),
-            properties: this.properties.map((node) => node.convert()).filter(isNonNullish),
+            properties: Object.entries(this.properties)
+                .map(([key, node]) => {
+                    const convertedShape = node.convert();
+                    if (convertedShape == null) {
+                        return undefined;
+                    }
+                    return {
+                        key: FdrAPI.PropertyKey(key),
+                        valueShape: convertedShape,
+                        description: node.description,
+                        // use Availability extension here
+                        availability: undefined,
+                    };
+                })
+                .filter(isNonNullish),
             extraProperties: extraProperties && extraProperties.type === "alias" ? extraProperties.value : undefined,
         };
     }

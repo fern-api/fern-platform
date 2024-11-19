@@ -16,15 +16,13 @@ function isOpenApiStringTypeFormat(format: unknown): format is ConstArrayToType<
 }
 
 export class StringConverterNode extends BaseOpenApiV3_1Node<StringConverterNode.Input, FdrStringType> {
-    type: FdrStringType["type"] | undefined;
+    type: FdrStringType["type"] = "string";
     regex: string | undefined;
     default: string | undefined;
     minLength: number | undefined;
     maxLength: number | undefined;
 
-    private mapToFdrType = (
-        format: ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT>,
-    ): FdrStringType["type"] | undefined => {
+    private mapToFdrType = (format: ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT>): FdrStringType["type"] => {
         switch (format) {
             case "base64url":
             case "binary":
@@ -101,10 +99,6 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<StringConverterNode
     }
 
     public convert(): FdrStringType | undefined {
-        if (this.type == null) {
-            return undefined;
-        }
-
         return {
             type: this.type,
             regex: this.regex,
