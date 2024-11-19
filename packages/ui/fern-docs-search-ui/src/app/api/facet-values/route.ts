@@ -1,5 +1,4 @@
-import { algoliaAppId, algoliaSearchApikey } from "@/server/env-variables";
-import { withSearchApiKey } from "@/server/with-search-api-key";
+import { algoliaAppId } from "@/server/env-variables";
 import { FACET_NAMES, FacetsResponse } from "@/utils/facet-display";
 import { algoliasearch } from "algoliasearch";
 import { zip } from "es-toolkit/array";
@@ -8,15 +7,14 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest): Promise<NextResponse> {
     const domain = request.nextUrl.searchParams.get("domain");
     const filters = request.nextUrl.searchParams.get("filters") ?? undefined;
+    const apiKey = request.nextUrl.searchParams.get("x-algolia-api-key") ?? undefined;
     if (!domain) {
         return NextResponse.json({ error: "Domain is required" }, { status: 400 });
     }
-    const apiKey = withSearchApiKey({
-        searchApiKey: algoliaSearchApikey(),
-        domain,
-        roles: [],
-        authed: false,
-    });
+
+    if (!apiKey) {
+        return NextResponse.json({ error: "x-algolia-api-key is required" }, { status: 400 });
+    }
 
     const { results } = await algoliasearch(algoliaAppId(), apiKey).searchForFacets({
         requests: FACET_NAMES.map((facet) => ({

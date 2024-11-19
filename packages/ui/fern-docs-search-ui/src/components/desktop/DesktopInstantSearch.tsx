@@ -14,12 +14,16 @@ interface DesktopInstantSearchProps {
         "product.title"?: string;
         "version.title"?: string;
     };
+    userToken?: string;
+    authenticatedUserToken?: string;
 }
 
 export function DesktopInstantSearch({
     onSubmit,
     onAskAI,
     filters: initialFilters,
+    userToken,
+    authenticatedUserToken,
 }: DesktopInstantSearchProps): ReactElement {
     const { searchClient } = useSearchClient();
 
@@ -32,6 +36,9 @@ export function DesktopInstantSearch({
             searchClient={searchClient}
             indexName="fern-docs-search"
             future={{ preserveSharedStateOnUnmount: true }}
+            insights={{
+                insightsInitParams: [{ userToken, authenticatedUserToken }],
+            }}
         >
             <Configure
                 restrictHighlightAndSnippetArrays={true}

@@ -32,6 +32,11 @@ interface GetSearchApiKeyOptions {
      * Number of seconds from now until the key expires
      */
     expiresInSeconds: number;
+
+    /**
+     * User token
+     */
+    userToken: string;
 }
 
 export function getSearchApiKey({
@@ -41,6 +46,7 @@ export function getSearchApiKey({
     authed,
     expiresInSeconds,
     searchIndex,
+    userToken,
 }: GetSearchApiKeyOptions): string {
     return generateSecuredApiKey({
         parentApiKey,
@@ -48,6 +54,7 @@ export function getSearchApiKey({
             filters: createSearchFilters({ domain, roles, authed }) + " AND NOT type:navigation",
             validUntil: Math.floor(Date.now() / 1_000) + expiresInSeconds,
             restrictIndices: [searchIndex],
+            userToken,
         },
     });
 }

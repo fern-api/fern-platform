@@ -16,22 +16,34 @@ export interface FacetOpts {
 async function fetchFacets({
     filters,
     domain,
+    apiKey,
 }: {
     filters: string | undefined;
     domain: string;
+    apiKey: string;
 }): Promise<FacetsResponse> {
-    const res = await fetch(`/api/facet-values?domain=${domain}${filters?.length ? `&filters=${filters}` : ""}`);
+    const searchParams = new URLSearchParams();
+    searchParams.set("domain", domain);
+    if (filters?.length) {
+        searchParams.set("filters", filters);
+    }
+    searchParams.set("x-algolia-api-key", apiKey);
+    const search = String(searchParams);
+
+    const res = await fetch(`/api/facet-values?${search}`);
     return await res.json();
 }
 
 export function useFacets(opts: FacetOpts): SWRResponse<FacetsResponse> {
-    const { domain } = useSearchClient();
-    return useSWRImmutable([toFiltersString(opts), domain], ([filters, domain]) => fetchFacets({ filters, domain }));
+    const { domain, apiKey } = useSearchClient();
+    return useSWRImmutable([toFiltersString(opts), domain], ([filters, domain]) =>
+        fetchFacets({ filters, domain, apiKey }),
+    );
 }
 
 export function usePreloadFacets(): (opts: FacetOpts) => Promise<FacetsResponse> {
-    const { domain } = useSearchClient();
-    return (opts) => preload([toFiltersString(opts), domain], ([filters]) => fetchFacets({ filters, domain }));
+    const { domain, apiKey } = useSearchClient();
+    return (opts) => preload([toFiltersString(opts), domain], ([filters]) => fetchFacets({ filters, domain, apiKey }));
 }
 
 function toFiltersString({ filters }: FacetOpts): string {

@@ -5,9 +5,10 @@ interface WithSearchApiKeyOptions {
     domain: string;
     roles: string[];
     authed: boolean;
+    userToken: string;
 }
 
-export function withSearchApiKey({ searchApiKey, domain, roles, authed }: WithSearchApiKeyOptions): string {
+export function withSearchApiKey({ searchApiKey, domain, roles, authed, userToken }: WithSearchApiKeyOptions): string {
     return getSearchApiKey({
         parentApiKey: searchApiKey,
         domain,
@@ -15,5 +16,6 @@ export function withSearchApiKey({ searchApiKey, domain, roles, authed }: WithSe
         authed,
         expiresInSeconds: 60 * 60 * 24,
         searchIndex: "fern-docs-search",
+        userToken,
     });
 }
