@@ -1,0 +1,447 @@
+{
+  "Order": {
+    "name": "Order",
+    "shape": {
+      "type": "object",
+      "extends": [],
+      "properties": [
+        {
+          "key": "id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "long"
+              }
+            }
+          }
+        },
+        {
+          "key": "petId",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "long"
+              }
+            }
+          }
+        },
+        {
+          "key": "quantity",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        {
+          "key": "shipDate",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "datetime"
+              }
+            }
+          }
+        },
+        {
+          "key": "status",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Order Status"
+        },
+        {
+          "key": "complete",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "Customer": {
+    "name": "Customer",
+    "shape": {
+      "type": "object",
+      "extends": [],
+      "properties": [
+        {
+          "key": "id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "long"
+              }
+            }
+          }
+        },
+        {
+          "key": "username",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "Address": {
+    "name": "Address",
+    "shape": {
+      "type": "object",
+      "extends": [],
+      "properties": [
+        {
+          "key": "street",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "key": "city",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "key": "state",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "key": "zip",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "Category": {
+    "name": "Category",
+    "shape": {
+      "type": "object",
+      "extends": [],
+      "properties": [
+        {
+          "key": "id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "long"
+              }
+            }
+          }
+        },
+        {
+          "key": "name",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "User": {
+    "name": "User",
+    "shape": {
+      "type": "object",
+      "extends": [],
+      "properties": [
+        {
+          "key": "id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "long"
+              }
+            }
+          }
+        },
+        {
+          "key": "username",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "key": "firstName",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "key": "lastName",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "key": "email",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "key": "password",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "key": "phone",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "key": "userStatus",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          "description": "User Status"
+        }
+      ]
+    }
+  },
+  "Tag": {
+    "name": "Tag",
+    "shape": {
+      "type": "object",
+      "extends": [],
+      "properties": [
+        {
+          "key": "id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "long"
+              }
+            }
+          }
+        },
+        {
+          "key": "name",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "Pet": {
+    "name": "Pet",
+    "shape": {
+      "type": "object",
+      "extends": [],
+      "properties": [
+        {
+          "key": "id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "long"
+              }
+            }
+          }
+        },
+        {
+          "key": "name",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "key": "category",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Category"
+            }
+          }
+        },
+        {
+          "key": "status",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "pet status in the store"
+        }
+      ]
+    }
+  },
+  "ApiResponse": {
+    "name": "ApiResponse",
+    "shape": {
+      "type": "object",
+      "extends": [],
+      "properties": [
+        {
+          "key": "code",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        {
+          "key": "type",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "key": "message",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

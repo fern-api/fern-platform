@@ -9,10 +9,10 @@ import { ComponentsConverterNode } from "../openapi/3.1/schemas/ComponentsConver
 
 describe("OpenAPI snapshot tests", () => {
     const fixturesDir = path.join(__dirname, "fixtures");
-    const files = fs.readdirSync(fixturesDir).filter((file) => file.endsWith(".yml"));
+    const files = fs.readdirSync(fixturesDir);
 
     files.forEach((directory) => {
-        it(`generates snapshot for ${directory}`, () => {
+        it(`generates snapshot for ${directory}`, async () => {
             // Read and parse YAML file
             const filePath = path.join(fixturesDir, directory, "openapi.yml");
             const fileContents = fs.readFileSync(filePath, "utf8");
@@ -50,7 +50,9 @@ describe("OpenAPI snapshot tests", () => {
                 // eslint-disable-next-line no-console
                 console.warn(warnings);
             }
-            expect(JSON.stringify(converted, null, 2)).toMatchSnapshot();
+            await expect(JSON.stringify(converted, null, 2)).toMatchFileSnapshot(
+                `./__snapshots__/openapi/${directory}.json`,
+            );
         });
     });
 });
