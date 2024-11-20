@@ -100,7 +100,7 @@ function MobileFacetFilterRadio({
                         htmlFor={`${facet}-${option.value}`}
                         className="flex flex-row items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                     >
-                        {getFacetDisplay(facet, option.value, { small: true, titleCase: true })}
+                        {getFacetDisplay(facet, option.value, { small: false, titleCase: true })}
                         <span className="text-muted-foreground">{String(option.count)}</span>
                     </Label>
                 </div>
