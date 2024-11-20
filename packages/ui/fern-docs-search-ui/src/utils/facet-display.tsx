@@ -39,19 +39,19 @@ const FACET_DISPLAY_MAP: Record<string, Record<string, ReactNode>> = {
 
 const FACET_SMALL_DISPLAY_MAP: Record<string, Record<string, ReactNode>> = {
     method: {
-        GET: <HttpMethodBadge method="GET" size="sm" />,
-        POST: <HttpMethodBadge method="POST" size="sm" />,
-        PUT: <HttpMethodBadge method="PUT" size="sm" />,
-        PATCH: <HttpMethodBadge method="PATCH" size="sm" />,
-        DELETE: <HttpMethodBadge method="DELETE" size="sm" />,
+        GET: <HttpMethodBadge method="GET" size="sm" variant="outlined" interactive />,
+        POST: <HttpMethodBadge method="POST" size="sm" variant="outlined" interactive />,
+        PUT: <HttpMethodBadge method="PUT" size="sm" variant="outlined" interactive />,
+        PATCH: <HttpMethodBadge method="PATCH" size="sm" variant="outlined" interactive />,
+        DELETE: <HttpMethodBadge method="DELETE" size="sm" variant="outlined" interactive />,
     },
     availability: {
-        Stable: <AvailabilityBadge availability="Stable" size="sm" />,
-        GenerallyAvailable: <AvailabilityBadge availability="GenerallyAvailable" size="sm" />,
-        InDevelopment: <AvailabilityBadge availability="InDevelopment" size="sm" />,
-        PreRelease: <AvailabilityBadge availability="PreRelease" size="sm" />,
-        Deprecated: <AvailabilityBadge availability="Deprecated" size="sm" />,
-        Beta: <AvailabilityBadge availability="Beta" size="sm" />,
+        Stable: <AvailabilityBadge availability="Stable" size="sm" variant="outlined" />,
+        GenerallyAvailable: <AvailabilityBadge availability="GenerallyAvailable" size="sm" variant="outlined" />,
+        InDevelopment: <AvailabilityBadge availability="InDevelopment" size="sm" variant="outlined" />,
+        PreRelease: <AvailabilityBadge availability="PreRelease" size="sm" variant="outlined" />,
+        Deprecated: <AvailabilityBadge availability="Deprecated" size="sm" variant="outlined" />,
+        Beta: <AvailabilityBadge availability="Beta" size="sm" variant="outlined" />,
     },
 } as const;
 

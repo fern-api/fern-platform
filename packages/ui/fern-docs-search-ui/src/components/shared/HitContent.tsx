@@ -118,7 +118,7 @@ function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactE
     return (
         <HitContentWithTitle hit={hit}>
             <div className="inline-flex items-baseline gap-1">
-                <HttpMethodBadge method={hit.method} size="sm" className="shrink-0" />
+                <HttpMethodBadge method={hit.method} size="sm" className="shrink-0" variant="outlined" />
                 <span className="fern-search-hit-endpoint-path shrink">{hit.endpoint_path}</span>
             </div>
             {attribute && (
