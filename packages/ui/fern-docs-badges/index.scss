@@ -33,8 +33,6 @@
     padding: 0.25rem 0.5rem;
 }
 
-// force the font-family to be ui-monospace so that it's consistent across docs instances
-// (other monospace fonts may render poorly in this context)
 .fern-docs-badge[data-badge-type="http-method"],
 .fern-docs-badge[data-badge-type="status-code"] {
     font-family:
@@ -48,11 +46,9 @@
         monospace !important;
     font-variant-numeric: slashed-zero;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 700;
 }
 
-// PATCH and TRACE cannot be abbreviated (PAT, TRA doesn't make sense)
-// so we need to squeeze the letter spacing to make them fit
 .fern-docs-badge.small[data-http-method="PATCH"],
 .fern-docs-badge.small[data-http-method="TRACE"] {
     letter-spacing: -0.025em;
