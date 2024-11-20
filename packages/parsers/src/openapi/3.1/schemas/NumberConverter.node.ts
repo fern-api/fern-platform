@@ -31,7 +31,7 @@ export class NumberConverterNode extends BaseOpenApiV3_1Node<NumberConverterNode
 
         this.minimum = input.minimum;
         this.maximum = input.maximum;
-        if (typeof input.default !== "number") {
+        if (input.default != null && typeof input.default !== "number") {
             this.context.errors.warning({
                 message: "The default value for an number type should be an number",
                 path: this.accessPath,

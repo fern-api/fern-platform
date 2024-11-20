@@ -27,7 +27,7 @@ describe("ReferenceConverterNode", () => {
             expect(node.schemaId).toBeUndefined();
             expect(mockContext.errors.error).toHaveBeenCalledWith({
                 message: "Unprocessable reference: invalid-ref",
-                path: [],
+                path: ["test"],
             });
         });
     });

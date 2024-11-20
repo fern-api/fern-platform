@@ -31,7 +31,7 @@ export class IntegerConverterNode extends BaseOpenApiV3_1Node<IntegerConverterNo
 
         this.minimum = input.minimum;
         this.maximum = input.maximum;
-        if (typeof input.default !== "number") {
+        if (input.default != null && typeof input.default !== "number") {
             this.context.errors.warning({
                 message: "The default value for an integer type should be an integer",
                 path: this.accessPath,

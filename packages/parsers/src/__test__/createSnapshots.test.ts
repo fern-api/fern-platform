@@ -11,36 +11,46 @@ describe("OpenAPI snapshot tests", () => {
     const fixturesDir = path.join(__dirname, "fixtures");
     const files = fs.readdirSync(fixturesDir).filter((file) => file.endsWith(".yml"));
 
-    files.forEach((file) => {
-        it(`generates snapshot for ${file}`, () => {
+    files.forEach((directory) => {
+        it(`generates snapshot for ${directory}`, () => {
             // Read and parse YAML file
-            const filePath = path.join(fixturesDir, file);
+            const filePath = path.join(fixturesDir, directory, "openapi.yml");
             const fileContents = fs.readFileSync(filePath, "utf8");
             const parsed = yaml.load(fileContents) as OpenAPIV3_1.Document;
 
             // Create converter context
             const context: BaseAPIConverterNodeContext = {
                 logger: {
-                    info: () => {},
-                    warn: () => {},
-                    error: () => {},
-                    debug: () => {},
-                    log: () => {},
+                    info: () => undefined,
+                    warn: () => undefined,
+                    error: () => undefined,
+                    debug: () => undefined,
+                    log: () => undefined,
                 },
                 errors: new ErrorCollector(),
             };
 
             // Convert components if they exist
             let converted;
+            const errors = [];
+            const warnings = [];
+
+            expect(parsed.components?.schemas).toBeDefined();
+
             if (parsed.components?.schemas) {
                 const converter = new ComponentsConverterNode(parsed.components, context, [], "test");
-                console.log("errors", converter.errors());
-                // console.log("warnings", converter.warnings());
+                errors.push(...converter.errors());
+                warnings.push(...converter.warnings());
                 converted = converter.convert();
             }
 
             // Create snapshot
-            expect(converted).toMatchSnapshot();
+            expect(errors).toHaveLength(0);
+            if (warnings.length > 0) {
+                // eslint-disable-next-line no-console
+                console.warn(warnings);
+            }
+            expect(JSON.stringify(converted, null, 2)).toMatchSnapshot();
         });
     });
 });

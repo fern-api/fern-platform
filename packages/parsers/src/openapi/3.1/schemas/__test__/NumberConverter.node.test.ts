@@ -51,7 +51,7 @@ describe("NumberConverterNode", () => {
 
             expect(mockContext.errors.warning).toHaveBeenCalledWith({
                 message: "The default value for an number type should be an number",
-                path: [],
+                path: ["test"],
             });
         });
 
@@ -75,7 +75,7 @@ describe("NumberConverterNode", () => {
 
                 expect(mockContext.errors.warning).toHaveBeenCalledWith({
                     message: "The format for an number type should be int64, int8, int16, int32, uint8, or sf-number",
-                    path: [],
+                    path: ["test"],
                 });
             });
         });

@@ -85,7 +85,7 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<StringConverterNode
     ) {
         super(input, context, accessPath, pathId);
 
-        if (typeof input.default !== "string") {
+        if (input.default != null && typeof input.default !== "string") {
             this.context.errors.warning({
                 message: "The default value for an string type should be an string",
                 path: this.accessPath,

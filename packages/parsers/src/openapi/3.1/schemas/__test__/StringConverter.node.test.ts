@@ -25,11 +25,11 @@ describe("StringConverterNode", () => {
             const input = {
                 type: "string",
                 default: 123,
-            } as any;
+            } as const;
             new StringConverterNode(input, mockContext, [], "test");
             expect(mockContext.errors.warning).toHaveBeenCalledWith({
                 message: "The default value for an string type should be an string",
-                path: [],
+                path: ["test"],
             });
         });
     });
@@ -75,7 +75,7 @@ describe("StringConverterNode", () => {
             const input = {
                 type: "string",
                 format: "invalid-format",
-            } as any;
+            } as const;
             new StringConverterNode(input, mockContext, [], "test");
             expect(mockContext.errors.warning).toHaveBeenCalled();
         });

@@ -51,7 +51,7 @@ describe("IntegerConverterNode", () => {
 
             expect(mockContext.errors.warning).toHaveBeenCalledWith({
                 message: "The default value for an integer type should be an integer",
-                path: [],
+                path: ["test"],
             });
         });
 
@@ -88,7 +88,7 @@ describe("IntegerConverterNode", () => {
 
                 expect(mockContext.errors.warning).toHaveBeenCalledWith({
                     message: "The format for an integer type should be int64, int8, int16, int32, uint8, or sf-integer",
-                    path: [],
+                    path: ["test"],
                 });
             });
         });

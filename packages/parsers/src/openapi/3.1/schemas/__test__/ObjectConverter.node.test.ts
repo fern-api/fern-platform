@@ -1,9 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
-import { IntegerConverterNode } from "../IntegerConverter.node";
 import { ObjectConverterNode } from "../ObjectConverter.node";
 import { SchemaConverterNode } from "../SchemaConverter.node";
-import { StringConverterNode } from "../StringConverter.node";
 
 describe("ObjectConverterNode", () => {
     const mockContext = createMockContext();
@@ -33,8 +31,8 @@ describe("ObjectConverterNode", () => {
             };
             const node = new ObjectConverterNode(input, mockContext, [], "test");
             expect(Object.keys(node.properties)).toEqual(["name", "age"]);
-            expect(node.properties.name).toBeInstanceOf(StringConverterNode);
-            expect(node.properties.age).toBeInstanceOf(IntegerConverterNode);
+            expect(node.properties.name).toBeInstanceOf(SchemaConverterNode);
+            expect(node.properties.age).toBeInstanceOf(SchemaConverterNode);
         });
 
         it("should handle additionalProperties as boolean true", () => {

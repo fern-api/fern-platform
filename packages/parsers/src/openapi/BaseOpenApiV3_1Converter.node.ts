@@ -9,7 +9,7 @@ export abstract class BaseOpenApiV3_1Node<Input, Output> extends BaseAPIConverte
         pathId: string,
     ) {
         super(input, context);
-        if (pathId) {
+        if (pathId && pathId !== accessPath[accessPath.length - 1]) {
             accessPath.push(pathId);
             context.logger.info(`Processing ${toOpenApiPath(accessPath)}`);
         }
