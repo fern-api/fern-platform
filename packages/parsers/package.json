@@ -8,7 +8,9 @@
   },
   "private": true,
   "sideEffects": false,
+  "type": "module",
   "scripts": {
+    "compile": "tsc --build",
     "test": "vitest --run --passWithNoTests --globals",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
@@ -31,5 +33,9 @@
     "ts-essentials": "^10.0.1",
     "vitest": "^2.1.4",
     "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@fern-platform/configs": "workspace:*",
+    "fs": "0.0.1-security"
   }
 }

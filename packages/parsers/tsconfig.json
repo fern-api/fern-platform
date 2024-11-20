@@ -9,5 +9,5 @@
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules"],
-  "references": [{ "path": "../commons/core-utils" }]
+  "references": []
 }

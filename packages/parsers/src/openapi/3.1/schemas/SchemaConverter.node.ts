@@ -22,6 +22,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1Node<
 > {
     typeShapeNode: { convert: () => FdrAPI.api.latest.TypeShape | undefined } | undefined;
     description: string | undefined;
+    name: string | undefined;
 
     convertPrimitive(input: BaseOpenApiV3_1Node<PrimitiveType, FdrAPI.api.latest.PrimitiveType | undefined>): {
         convert: () => FdrAPI.api.latest.TypeShape.Alias | undefined;
@@ -126,6 +127,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1Node<
         }
 
         this.description = input.description;
+        this.name = input.title;
     }
 
     convert(): FdrAPI.api.latest.TypeShape | undefined {

@@ -1,12 +1,10 @@
-import { Logger } from "@fern-api/logger";
+import type { Logger } from "@fern-api/logger";
 import { ErrorCollector } from "./ErrorCollector";
 /**
  * Base context class for API converter nodes.
  * Provides logging and error collection capabilities.
  */
 export abstract class BaseAPIConverterNodeContext {
-    public abstract readonly orgId: string;
-    public abstract readonly apiId: string;
     public abstract readonly logger: Logger;
     public readonly errors: ErrorCollector = new ErrorCollector();
 }
@@ -29,4 +27,12 @@ export abstract class BaseAPIConverterNode<Input, Output> {
      * @returns The converted API definition in the target output format
      */
     public abstract convert(): Output | undefined;
+
+    public errors(): ErrorCollector.ValidationError[] {
+        return this.context.errors.errors;
+    }
+
+    public warnings(): ErrorCollector.ValidationWarning[] {
+        return this.context.errors.warnings;
+    }
 }

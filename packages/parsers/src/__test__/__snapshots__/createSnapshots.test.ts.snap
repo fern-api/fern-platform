@@ -1,0 +1,642 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OpenAPI snapshot tests > generates snapshot for petstore-components.yml 1`] = `
+{
+  "Address": {
+    "availability": undefined,
+    "description": undefined,
+    "name": undefined,
+    "shape": {
+      "extends": [],
+      "extraProperties": undefined,
+      "properties": [
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "street",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "city",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "state",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "zip",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+  "ApiResponse": {
+    "availability": undefined,
+    "description": undefined,
+    "name": undefined,
+    "shape": {
+      "extends": [],
+      "extraProperties": undefined,
+      "properties": [
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "code",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "integer",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "type",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "message",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+  "Category": {
+    "availability": undefined,
+    "description": undefined,
+    "name": undefined,
+    "shape": {
+      "extends": [],
+      "extraProperties": undefined,
+      "properties": [
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "long",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "name",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+  "Customer": {
+    "availability": undefined,
+    "description": undefined,
+    "name": undefined,
+    "shape": {
+      "extends": [],
+      "extraProperties": undefined,
+      "properties": [
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "long",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "username",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+  "Order": {
+    "availability": undefined,
+    "description": undefined,
+    "name": undefined,
+    "shape": {
+      "extends": [],
+      "extraProperties": undefined,
+      "properties": [
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "long",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "petId",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "long",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "quantity",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "integer",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "shipDate",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "datetime",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": "Order Status",
+          "key": "status",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "complete",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "type": "boolean",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+  "Pet": {
+    "availability": undefined,
+    "description": undefined,
+    "name": undefined,
+    "shape": {
+      "extends": [],
+      "extraProperties": undefined,
+      "properties": [
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "long",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "name",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "category",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "default": undefined,
+              "id": "Category",
+              "type": "id",
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": "pet status in the store",
+          "key": "status",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+  "Tag": {
+    "availability": undefined,
+    "description": undefined,
+    "name": undefined,
+    "shape": {
+      "extends": [],
+      "extraProperties": undefined,
+      "properties": [
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "long",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "name",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+  "User": {
+    "availability": undefined,
+    "description": undefined,
+    "name": undefined,
+    "shape": {
+      "extends": [],
+      "extraProperties": undefined,
+      "properties": [
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "long",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "username",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "firstName",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "lastName",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "email",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "password",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": undefined,
+          "key": "phone",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+        {
+          "availability": undefined,
+          "description": "User Status",
+          "key": "userStatus",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "integer",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+}
+`;

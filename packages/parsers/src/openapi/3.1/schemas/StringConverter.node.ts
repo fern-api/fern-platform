@@ -1,9 +1,9 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
-import { BaseAPIConverterNodeContext } from "../../../../BaseApiConverter.node";
-import { ConstArrayToType, OPENAPI_STRING_TYPE_FORMAT } from "../../../src/openapi/types/format.types";
-import { FdrStringType } from "../../../src/types/fdr.types";
+import { BaseAPIConverterNodeContext } from "../../../BaseApiConverter.node";
+import { FdrStringType } from "../../../types/fdr.types";
 import { BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
+import { ConstArrayToType, OPENAPI_STRING_TYPE_FORMAT } from "../../types/format.types";
 
 export declare namespace StringConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {

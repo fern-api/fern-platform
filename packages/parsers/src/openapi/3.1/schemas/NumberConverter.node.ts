@@ -1,9 +1,9 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
-import { BaseAPIConverterNodeContext } from "../../../../BaseApiConverter.node";
-import { ConstArrayToType, OPENAPI_NUMBER_TYPE_FORMAT } from "../../../src/openapi/types/format.types";
-import { FdrNumberType } from "../../../src/types/fdr.types";
+import { BaseAPIConverterNodeContext } from "../../../BaseApiConverter.node";
+import { FdrNumberType } from "../../../types/fdr.types";
 import { BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
+import { ConstArrayToType, OPENAPI_NUMBER_TYPE_FORMAT } from "../../types/format.types";
 
 export declare namespace NumberConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
@@ -22,10 +22,10 @@ export class NumberConverterNode extends BaseOpenApiV3_1Node<NumberConverterNode
     default: number | undefined;
 
     constructor(
-        readonly input: NumberConverterNode.Input,
-        readonly context: BaseAPIConverterNodeContext,
-        readonly accessPath: string[],
-        readonly pathId: string,
+        input: NumberConverterNode.Input,
+        context: BaseAPIConverterNodeContext,
+        accessPath: string[],
+        pathId: string,
     ) {
         super(input, context, accessPath, pathId);
 
