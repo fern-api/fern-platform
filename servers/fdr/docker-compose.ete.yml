@@ -30,9 +30,9 @@ services:
       postgres:
         condition: service_healthy
       s3-mock:
-        condition: service_healthy
+        condition: service_started
       redis_0:
-        condition: service_healthy
+        condition: service_started
   postgres:
     image: postgres:10.3
     restart: always
@@ -46,6 +46,7 @@ services:
       retries: 5
     ports:
       - "5434:5432"
+
   s3-mock:
     image: adobe/s3mock
     ports:
