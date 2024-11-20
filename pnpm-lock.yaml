@@ -989,9 +989,6 @@ importers:
       '@fern-platform/configs':
         specifier: workspace:*
         version: link:../configs
-      fs:
-        specifier: 0.0.1-security
-        version: 0.0.1-security
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -10821,9 +10818,6 @@ packages:
   fs2@0.3.9:
     resolution: {integrity: sha512-WsOqncODWRlkjwll+73bAxVW3JPChDgaPX3DT4iTTm73UmG4VgALa7LaFblP232/DN60itkOrPZ8kaP1feksGQ==}
     engines: {node: '>=6'}
-
-  fs@0.0.1-security:
-    resolution: {integrity: sha512-3XY9e1pP0CVEUCdj5BmfIZxRBTSDycnbqhIOGec9QYtmVH2fbLpj86CFWkrNOkt/Fvty4KZG5lTglL9j/gJ87w==}
 
   fsevents@2.3.2:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
@@ -27639,8 +27633,6 @@ snapshots:
       ignore: 5.3.1
       memoizee: 0.4.15
       type: 2.7.2
-
-  fs@0.0.1-security: {}
 
   fsevents@2.3.2:
     optional: true
