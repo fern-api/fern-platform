@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
-import { Badge, BadgeProps, ConfigurableColorScheme } from "./badge";
+import { Badge, BadgeProps } from "./badge";
+import { UIColor } from "./colors";
 
 export type HttpMethod = "GET" | "DELETE" | "POST" | "PUT" | "PATCH" | "HEAD" | "OPTIONS" | "CONNECT" | "TRACE";
 export const HttpMethodOrder = [
@@ -14,7 +15,7 @@ export const HttpMethodOrder = [
     "TRACE",
 ] as const;
 
-const METHOD_COLOR_SCHEMES: Record<HttpMethod, ConfigurableColorScheme> = {
+const METHOD_COLOR_SCHEMES: Record<HttpMethod, UIColor> = {
     GET: "green",
     DELETE: "red",
     POST: "blue",
@@ -26,6 +27,9 @@ const METHOD_COLOR_SCHEMES: Record<HttpMethod, ConfigurableColorScheme> = {
     TRACE: "purple",
 };
 
+/**
+ * Abbreviated method names for smaller (fixed-width) badges.
+ */
 const ABBREVIATED_METHODS: Record<HttpMethod, string> = {
     GET: "GET",
     DELETE: "DEL",
@@ -52,7 +56,7 @@ export const HttpMethodBadge = forwardRef<HTMLSpanElement, HttpMethodBadgeProps>
             data-http-method={method}
             color={METHOD_COLOR_SCHEMES[method]}
         >
-            {props.children ?? ABBREVIATED_METHODS[method]}
+            {props.children ?? (rest.size === "sm" ? ABBREVIATED_METHODS[method] : method)}
         </Badge>
     );
 });

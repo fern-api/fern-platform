@@ -1,13 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 
-import { Badge } from "./badge";
-import { UIColorOrder } from "./colors";
+import { SemanticColorOrder } from "./colors";
+import { SemanticBadge } from "./semantic-badge";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
-const meta: Meta<typeof Badge> = {
-    title: "Badges/Badge",
-    component: Badge,
+const meta: Meta<typeof SemanticBadge> = {
+    title: "Badges/SemanticBadge",
+    component: SemanticBadge,
     parameters: {
         // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
         layout: "centered",
@@ -16,11 +15,11 @@ const meta: Meta<typeof Badge> = {
     tags: ["autodocs"],
     // More on argTypes: https://storybook.js.org/docs/api/argtypes
     argTypes: {
-        color: {
+        intent: {
             control: {
                 type: "select",
             },
-            options: UIColorOrder,
+            options: SemanticColorOrder,
         },
         grayscale: {
             control: {
@@ -73,15 +72,11 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Primary: Story = {
     argTypes: {
-        children: {
+        intent: {
             control: {
-                type: "text",
+                disable: true,
             },
         },
-    },
-    args: {
-        color: "gray",
-        children: "Badge",
     },
     render: (args) => (
         <div style={{ display: "flex", gap: "1rem" }}>
@@ -98,7 +93,19 @@ export const Primary: Story = {
                     border: "1px solid #e0e0e0",
                 }}
             >
-                <Badge {...args}>{args.children}</Badge>
+                <SemanticBadge {...args}>None</SemanticBadge>
+                <SemanticBadge {...args} intent="info">
+                    Info
+                </SemanticBadge>
+                <SemanticBadge {...args} intent="success">
+                    Success
+                </SemanticBadge>
+                <SemanticBadge {...args} intent="warning">
+                    Warning
+                </SemanticBadge>
+                <SemanticBadge {...args} intent="error">
+                    Error
+                </SemanticBadge>
             </div>
             <div
                 className="dark"
@@ -112,16 +119,20 @@ export const Primary: Story = {
                     borderRadius: "0.5rem",
                 }}
             >
-                <Badge {...args}>{args.children}</Badge>
+                <SemanticBadge {...args}>None</SemanticBadge>
+                <SemanticBadge {...args} intent="info">
+                    Info
+                </SemanticBadge>
+                <SemanticBadge {...args} intent="success">
+                    Success
+                </SemanticBadge>
+                <SemanticBadge {...args} intent="warning">
+                    Warning
+                </SemanticBadge>
+                <SemanticBadge {...args} intent="error">
+                    Error
+                </SemanticBadge>
             </div>
         </div>
     ),
-};
-
-export const Interactive: Story = {
-    args: {
-        onClick: fn(),
-        interactive: true,
-    },
-    render: (args) => <Badge {...args}>Badge</Badge>,
 };

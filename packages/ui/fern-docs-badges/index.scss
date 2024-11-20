@@ -1,63 +1,3 @@
-@import "@radix-ui/colors/gray.css";
-@import "@radix-ui/colors/mauve.css";
-@import "@radix-ui/colors/slate.css";
-@import "@radix-ui/colors/sage.css";
-@import "@radix-ui/colors/olive.css";
-@import "@radix-ui/colors/sand.css";
-@import "@radix-ui/colors/blue.css";
-@import "@radix-ui/colors/green.css";
-@import "@radix-ui/colors/amber.css";
-@import "@radix-ui/colors/red.css";
-@import "@radix-ui/colors/sky.css";
-@import "@radix-ui/colors/bronze.css";
-@import "@radix-ui/colors/purple.css";
-@import "@radix-ui/colors/orange.css";
-
-@import "@radix-ui/colors/gray-alpha.css";
-@import "@radix-ui/colors/mauve-alpha.css";
-@import "@radix-ui/colors/slate-alpha.css";
-@import "@radix-ui/colors/sage-alpha.css";
-@import "@radix-ui/colors/olive-alpha.css";
-@import "@radix-ui/colors/sand-alpha.css";
-@import "@radix-ui/colors/blue-alpha.css";
-@import "@radix-ui/colors/green-alpha.css";
-@import "@radix-ui/colors/amber-alpha.css";
-@import "@radix-ui/colors/red-alpha.css";
-@import "@radix-ui/colors/sky-alpha.css";
-@import "@radix-ui/colors/bronze-alpha.css";
-@import "@radix-ui/colors/purple-alpha.css";
-@import "@radix-ui/colors/orange-alpha.css";
-
-@import "@radix-ui/colors/gray-dark.css";
-@import "@radix-ui/colors/mauve-dark.css";
-@import "@radix-ui/colors/slate-dark.css";
-@import "@radix-ui/colors/sage-dark.css";
-@import "@radix-ui/colors/olive-dark.css";
-@import "@radix-ui/colors/sand-dark.css";
-@import "@radix-ui/colors/blue-dark.css";
-@import "@radix-ui/colors/green-dark.css";
-@import "@radix-ui/colors/amber-dark.css";
-@import "@radix-ui/colors/red-dark.css";
-@import "@radix-ui/colors/sky-dark.css";
-@import "@radix-ui/colors/bronze-dark.css";
-@import "@radix-ui/colors/purple-dark.css";
-@import "@radix-ui/colors/orange-dark.css";
-
-@import "@radix-ui/colors/gray-dark-alpha.css";
-@import "@radix-ui/colors/mauve-dark-alpha.css";
-@import "@radix-ui/colors/slate-dark-alpha.css";
-@import "@radix-ui/colors/sage-dark-alpha.css";
-@import "@radix-ui/colors/olive-dark-alpha.css";
-@import "@radix-ui/colors/sand-dark-alpha.css";
-@import "@radix-ui/colors/blue-dark-alpha.css";
-@import "@radix-ui/colors/green-dark-alpha.css";
-@import "@radix-ui/colors/amber-dark-alpha.css";
-@import "@radix-ui/colors/red-dark-alpha.css";
-@import "@radix-ui/colors/sky-dark-alpha.css";
-@import "@radix-ui/colors/bronze-dark-alpha.css";
-@import "@radix-ui/colors/purple-dark-alpha.css";
-@import "@radix-ui/colors/orange-dark-alpha.css";
-
 .fern-docs-badge {
     align-items: center;
     display: inline-flex;
@@ -65,6 +5,7 @@
     line-height: 1rem;
     box-sizing: border-box;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 .fern-docs-badge.interactive:hover {
@@ -87,42 +28,6 @@
 
         &.interactive:hover {
             background-color: var(--accent-a4, var(--gray-a4));
-        }
-    }
-
-    &.blue {
-        color: var(--blue-a11);
-        background-color: var(--blue-a3);
-
-        &.interactive:hover {
-            background-color: var(--blue-a4);
-        }
-    }
-
-    &.green {
-        color: var(--green-a11);
-        background-color: var(--green-a3);
-
-        &.interactive:hover {
-            background-color: var(--green-a4);
-        }
-    }
-
-    &.amber {
-        color: var(--amber-a11);
-        background-color: var(--amber-a3);
-
-        &.interactive:hover {
-            background-color: var(--amber-a4);
-        }
-    }
-
-    &.red {
-        color: var(--red-a11);
-        background-color: var(--red-a3);
-
-        &.interactive:hover {
-            background-color: var(--red-a4);
         }
     }
 
@@ -180,21 +85,57 @@
         }
     }
 
-    &.sky {
-        color: var(--sky-a11);
-        background-color: var(--sky-a3);
+    &.tomato {
+        color: var(--tomato-a11);
+        background-color: var(--tomato-a3);
 
         &.interactive:hover {
-            background-color: var(--sky-a4);
+            background-color: var(--tomato-a4);
         }
     }
 
-    &.bronze {
-        color: var(--bronze-a11);
-        background-color: var(--bronze-a3);
+    &.red {
+        color: var(--red-a11);
+        background-color: var(--red-a3);
 
         &.interactive:hover {
-            background-color: var(--bronze-a4);
+            background-color: var(--red-a4);
+        }
+    }
+
+    &.ruby {
+        color: var(--ruby-a11);
+        background-color: var(--ruby-a3);
+
+        &.interactive:hover {
+            background-color: var(--ruby-a4);
+        }
+    }
+
+    &.crimson {
+        color: var(--crimson-a11);
+        background-color: var(--crimson-a3);
+
+        &.interactive:hover {
+            background-color: var(--crimson-a4);
+        }
+    }
+
+    &.pink {
+        color: var(--pink-a11);
+        background-color: var(--pink-a3);
+
+        &.interactive:hover {
+            background-color: var(--pink-a4);
+        }
+    }
+
+    &.plum {
+        color: var(--plum-a11);
+        background-color: var(--plum-a3);
+
+        &.interactive:hover {
+            background-color: var(--plum-a4);
         }
     }
 
@@ -207,12 +148,165 @@
         }
     }
 
+    &.violet {
+        color: var(--violet-a11);
+        background-color: var(--violet-a3);
+
+        &.interactive:hover {
+            background-color: var(--violet-a4);
+        }
+    }
+
+    &.iris {
+        color: var(--iris-a11);
+        background-color: var(--iris-a3);
+
+        &.interactive:hover {
+            background-color: var(--iris-a4);
+        }
+    }
+
+    &.indigo {
+        color: var(--indigo-a11);
+        background-color: var(--indigo-a3);
+
+        &.interactive:hover {
+            background-color: var(--indigo-a4);
+        }
+    }
+
+    &.blue {
+        color: var(--blue-a11);
+        background-color: var(--blue-a3);
+
+        &.interactive:hover {
+            background-color: var(--blue-a4);
+        }
+    }
+
+    &.cyan {
+        color: var(--cyan-a11);
+        background-color: var(--cyan-a3);
+
+        &.interactive:hover {
+            background-color: var(--cyan-a4);
+        }
+    }
+
+    &.teal {
+        color: var(--teal-a11);
+        background-color: var(--teal-a3);
+
+        &.interactive:hover {
+            background-color: var(--teal-a4);
+        }
+    }
+
+    &.jade {
+        color: var(--jade-a11);
+        background-color: var(--jade-a3);
+
+        &.interactive:hover {
+            background-color: var(--jade-a4);
+        }
+    }
+
+    &.green {
+        color: var(--green-a11);
+        background-color: var(--green-a3);
+
+        &.interactive:hover {
+            background-color: var(--green-a4);
+        }
+    }
+
+    &.grass {
+        color: var(--grass-a11);
+        background-color: var(--grass-a3);
+
+        &.interactive:hover {
+            background-color: var(--grass-a4);
+        }
+    }
+
+    &.bronze {
+        color: var(--bronze-a11);
+        background-color: var(--bronze-a3);
+
+        &.interactive:hover {
+            background-color: var(--bronze-a4);
+        }
+    }
+
+    &.gold {
+        color: var(--gold-a11);
+        background-color: var(--gold-a3);
+
+        &.interactive:hover {
+            background-color: var(--gold-a4);
+        }
+    }
+
+    &.brown {
+        color: var(--brown-a11);
+        background-color: var(--brown-a3);
+
+        &.interactive:hover {
+            background-color: var(--brown-a4);
+        }
+    }
+
     &.orange {
         color: var(--orange-a11);
         background-color: var(--orange-a3);
 
         &.interactive:hover {
             background-color: var(--orange-a4);
+        }
+    }
+
+    &.amber {
+        color: var(--amber-a11);
+        background-color: var(--amber-a3);
+
+        &.interactive:hover {
+            background-color: var(--amber-a4);
+        }
+    }
+
+    &.yellow {
+        color: var(--yellow-a11);
+        background-color: var(--yellow-a3);
+
+        &.interactive:hover {
+            background-color: var(--yellow-a4);
+        }
+    }
+
+    &.lime {
+        color: var(--lime-a11);
+        background-color: var(--lime-a3);
+
+        &.interactive:hover {
+            background-color: var(--lime-a4);
+        }
+    }
+
+    &.mint {
+        color: var(--mint-a11);
+        background-color: var(--mint-a3);
+
+        &.interactive:hover {
+            background-color: var(--mint-a4);
+        }
+    }
+
+    &.sky {
+        color: var(--sky-a11);
+        background-color: var(--sky-a3);
+
+        &.interactive:hover {
+            background-color: var(--sky-a4);
         }
     }
 }
@@ -222,22 +316,6 @@
 
     &.accent {
         border-color: var(--accent-a6, var(--gray-a6));
-    }
-
-    &.blue {
-        border-color: var(--blue-a6);
-    }
-
-    &.green {
-        border-color: var(--green-a6);
-    }
-
-    &.amber {
-        border-color: var(--amber-a6);
-    }
-
-    &.red {
-        border-color: var(--red-a6);
     }
 
     &.gray {
@@ -264,20 +342,104 @@
         border-color: var(--sand-a6);
     }
 
-    &.sky {
-        border-color: var(--sky-a6);
+    &.tomato {
+        border-color: var(--tomato-a6);
     }
 
-    &.bronze {
-        border-color: var(--bronze-a6);
+    &.red {
+        border-color: var(--red-a6);
+    }
+
+    &.ruby {
+        border-color: var(--ruby-a6);
+    }
+
+    &.crimson {
+        border-color: var(--crimson-a6);
+    }
+
+    &.pink {
+        border-color: var(--pink-a6);
+    }
+
+    &.plum {
+        border-color: var(--plum-a6);
     }
 
     &.purple {
         border-color: var(--purple-a6);
     }
 
+    &.violet {
+        border-color: var(--violet-a6);
+    }
+
+    &.iris {
+        border-color: var(--iris-a6);
+    }
+
+    &.indigo {
+        border-color: var(--indigo-a6);
+    }
+
+    &.blue {
+        border-color: var(--blue-a6);
+    }
+
+    &.cyan {
+        border-color: var(--cyan-a6);
+    }
+
+    &.teal {
+        border-color: var(--teal-a6);
+    }
+
+    &.jade {
+        border-color: var(--jade-a6);
+    }
+
+    &.green {
+        border-color: var(--green-a6);
+    }
+
+    &.grass {
+        border-color: var(--grass-a6);
+    }
+
+    &.bronze {
+        border-color: var(--bronze-a6);
+    }
+
+    &.gold {
+        border-color: var(--gold-a6);
+    }
+
+    &.brown {
+        border-color: var(--brown-a6);
+    }
+
     &.orange {
         border-color: var(--orange-a6);
+    }
+
+    &.amber {
+        border-color: var(--amber-a6);
+    }
+
+    &.yellow {
+        border-color: var(--yellow-a6);
+    }
+
+    &.lime {
+        border-color: var(--lime-a6);
+    }
+
+    &.mint {
+        border-color: var(--mint-a6);
+    }
+
+    &.sky {
+        border-color: var(--sky-a6);
     }
 }
 
@@ -299,42 +461,6 @@
 
         &.interactive:hover {
             background-color: var(--accent-10, var(--gray-10));
-        }
-    }
-
-    &.blue {
-        color: var(--blue-1);
-        background-color: var(--blue-9);
-
-        &.interactive:hover {
-            background-color: var(--blue-10);
-        }
-    }
-
-    &.green {
-        color: var(--green-1);
-        background-color: var(--green-9);
-
-        &.interactive:hover {
-            background-color: var(--green-10);
-        }
-    }
-
-    &.amber {
-        color: var(--amber-a12);
-        background-color: var(--amber-9);
-
-        &.interactive:hover {
-            background-color: var(--amber-10);
-        }
-    }
-
-    &.red {
-        color: var(--red-1);
-        background-color: var(--red-9);
-
-        &.interactive:hover {
-            background-color: var(--red-10);
         }
     }
 
@@ -392,21 +518,57 @@
         }
     }
 
-    &.sky {
-        color: var(--sky-a12);
-        background-color: var(--sky-9);
+    &.tomato {
+        color: var(--tomato-1);
+        background-color: var(--tomato-9);
 
         &.interactive:hover {
-            background-color: var(--sky-10);
+            background-color: var(--tomato-10);
         }
     }
 
-    &.bronze {
-        color: var(--bronze-1);
-        background-color: var(--bronze-9);
+    &.red {
+        color: var(--red-1);
+        background-color: var(--red-9);
 
         &.interactive:hover {
-            background-color: var(--bronze-10);
+            background-color: var(--red-10);
+        }
+    }
+
+    &.ruby {
+        color: var(--ruby-1);
+        background-color: var(--ruby-9);
+
+        &.interactive:hover {
+            background-color: var(--ruby-10);
+        }
+    }
+
+    &.crimson {
+        color: var(--crimson-1);
+        background-color: var(--crimson-9);
+
+        &.interactive:hover {
+            background-color: var(--crimson-10);
+        }
+    }
+
+    &.pink {
+        color: var(--pink-1);
+        background-color: var(--pink-9);
+
+        &.interactive:hover {
+            background-color: var(--pink-10);
+        }
+    }
+
+    &.plum {
+        color: var(--plum-1);
+        background-color: var(--plum-9);
+
+        &.interactive:hover {
+            background-color: var(--plum-10);
         }
     }
 
@@ -419,6 +581,114 @@
         }
     }
 
+    &.violet {
+        color: var(--violet-1);
+        background-color: var(--violet-9);
+
+        &.interactive:hover {
+            background-color: var(--violet-10);
+        }
+    }
+
+    &.iris {
+        color: var(--iris-1);
+        background-color: var(--iris-9);
+
+        &.interactive:hover {
+            background-color: var(--iris-10);
+        }
+    }
+
+    &.indigo {
+        color: var(--indigo-1);
+        background-color: var(--indigo-9);
+
+        &.interactive:hover {
+            background-color: var(--indigo-10);
+        }
+    }
+
+    &.blue {
+        color: var(--blue-1);
+        background-color: var(--blue-9);
+
+        &.interactive:hover {
+            background-color: var(--blue-10);
+        }
+    }
+
+    &.cyan {
+        color: var(--cyan-1);
+        background-color: var(--cyan-9);
+
+        &.interactive:hover {
+            background-color: var(--cyan-10);
+        }
+    }
+
+    &.teal {
+        color: var(--teal-1);
+        background-color: var(--teal-9);
+
+        &.interactive:hover {
+            background-color: var(--teal-10);
+        }
+    }
+
+    &.jade {
+        color: var(--jade-1);
+        background-color: var(--jade-9);
+
+        &.interactive:hover {
+            background-color: var(--jade-10);
+        }
+    }
+
+    &.green {
+        color: var(--green-1);
+        background-color: var(--green-9);
+
+        &.interactive:hover {
+            background-color: var(--green-10);
+        }
+    }
+
+    &.grass {
+        color: var(--grass-1);
+        background-color: var(--grass-9);
+
+        &.interactive:hover {
+            background-color: var(--grass-10);
+        }
+    }
+
+    &.bronze {
+        color: var(--bronze-1);
+        background-color: var(--bronze-9);
+
+        &.interactive:hover {
+            background-color: var(--bronze-10);
+        }
+    }
+
+    &.gold {
+        color: var(--gold-1);
+        background-color: var(--gold-9);
+
+        &.interactive:hover {
+            background-color: var(--gold-10);
+        }
+    }
+
+    &.brown {
+        color: var(--brown-1);
+        background-color: var(--brown-9);
+
+        &.interactive:hover {
+            background-color: var(--brown-10);
+        }
+    }
+
     &.orange {
         color: var(--orange-1);
         background-color: var(--orange-9);
@@ -428,18 +698,77 @@
         }
     }
 
+    &.amber {
+        color: var(--amber-12);
+        background-color: var(--amber-9);
+
+        &.interactive:hover {
+            background-color: var(--amber-10);
+        }
+    }
+
+    &.yellow {
+        color: var(--yellow-12);
+        background-color: var(--yellow-9);
+
+        &.interactive:hover {
+            background-color: var(--yellow-10);
+        }
+    }
+
+    &.lime {
+        color: var(--lime-12);
+        background-color: var(--lime-9);
+
+        &.interactive:hover {
+            background-color: var(--lime-10);
+        }
+    }
+
+    &.mint {
+        color: var(--mint-12);
+        background-color: var(--mint-9);
+
+        &.interactive:hover {
+            background-color: var(--mint-10);
+        }
+    }
+
+    &.sky {
+        color: var(--sky-12);
+        background-color: var(--sky-9);
+
+        &.interactive:hover {
+            background-color: var(--sky-10);
+        }
+    }
+
     &.accent,
-    &.blue,
-    &.green,
-    &.red,
     &.gray,
     &.mauve,
     &.slate,
     &.sage,
     &.olive,
     &.sand,
-    &.bronze,
+    &.tomato,
+    &.red,
+    &.ruby,
+    &.crimson,
+    &.pink,
+    &.plum,
     &.purple,
+    &.violet,
+    &.iris,
+    &.indigo,
+    &.blue,
+    &.cyan,
+    &.teal,
+    &.jade,
+    &.green,
+    &.grass,
+    &.bronze,
+    &.gold,
+    &.brown,
     &.orange {
         &:is(.dark *) {
             color: white;
@@ -447,7 +776,10 @@
     }
 
     &.amber,
-    &.sky {
+    &.sky,
+    &.mint,
+    &.lime,
+    &.yellow {
         &:is(.dark *) {
             color: black;
         }

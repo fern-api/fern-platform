@@ -69,9 +69,12 @@ export const Primary: Story = {
         return (
             <div style={{ display: "flex", gap: "1rem" }}>
                 <div
+                    className="light"
                     style={{
                         padding: "3rem",
                         display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
                         gap: "0.5rem",
                         backgroundColor: "#f5f5f5",
                         borderRadius: "0.5rem",
@@ -87,6 +90,8 @@ export const Primary: Story = {
                     style={{
                         padding: "3rem",
                         display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
                         gap: "0.5rem",
                         backgroundColor: "#222425",
                         borderRadius: "0.5rem",

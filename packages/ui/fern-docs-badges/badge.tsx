@@ -1,13 +1,6 @@
 import { VariantProps, cva } from "class-variance-authority";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 
-export type IntentColorScheme = "blue" | "green" | "amber" | "red";
-export type AdditionalColorScheme = "sky" | "bronze" | "purple" | "orange";
-export type GrayscaleColorScheme = "gray" | "mauve" | "slate" | "sage" | "olive" | "sand";
-export type AccentColorScheme = "accent";
-export type ColorScheme = IntentColorScheme | GrayscaleColorScheme | AdditionalColorScheme | AccentColorScheme;
-export type ConfigurableColorScheme = IntentColorScheme | AdditionalColorScheme | AccentColorScheme | "gray";
-
 const badgeVariants = cva("fern-docs-badge", {
     variants: {
         size: {
@@ -16,15 +9,32 @@ const badgeVariants = cva("fern-docs-badge", {
         },
         color: {
             accent: "accent",
-            blue: "blue",
-            green: "green",
-            amber: "amber",
-            red: "red",
             gray: "gray",
-            sky: "sky",
-            bronze: "bronze",
+            tomato: "tomato",
+            red: "red",
+            ruby: "ruby",
+            crimson: "crimson",
+            pink: "pink",
+            plum: "plum",
             purple: "purple",
+            violet: "violet",
+            iris: "iris",
+            indigo: "indigo",
+            blue: "blue",
+            cyan: "cyan",
+            teal: "teal",
+            jade: "jade",
+            green: "green",
+            grass: "grass",
+            bronze: "bronze",
+            gold: "gold",
+            brown: "brown",
             orange: "orange",
+            amber: "amber",
+            yellow: "yellow",
+            lime: "lime",
+            mint: "mint",
+            sky: "sky",
         },
         variant: {
             subtle: "subtle",
@@ -81,6 +91,7 @@ const badgeVariants = cva("fern-docs-badge", {
     defaultVariants: {
         size: "lg",
         variant: "subtle",
+        color: "gray",
     },
 });
 

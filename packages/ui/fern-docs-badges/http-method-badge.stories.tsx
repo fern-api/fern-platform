@@ -66,10 +66,11 @@ export const Primary: Story = {
     },
     render: ({ ref, ...args }) => {
         return (
-            <div style={{ display: "flex", gap: "1rem" }}>
+            <div style={{ display: "flex", gap: "1rem", flexDirection: "column" }}>
                 <div
+                    className="light"
                     style={{
-                        padding: "3rem",
+                        padding: "2rem",
                         display: "flex",
                         gap: "0.5rem",
                         backgroundColor: "#f5f5f5",
@@ -84,7 +85,7 @@ export const Primary: Story = {
                 <div
                     className="dark"
                     style={{
-                        padding: "3rem",
+                        padding: "2rem",
                         display: "flex",
                         gap: "0.5rem",
                         backgroundColor: "#222425",
