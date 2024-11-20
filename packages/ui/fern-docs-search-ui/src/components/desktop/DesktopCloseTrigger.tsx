@@ -3,25 +3,15 @@ import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { ReactNode } from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
-export function DesktopCloseTrigger({
-    CloseTrigger,
-}: {
-    CloseTrigger?: ({ children }: { children: ReactNode }) => ReactNode;
-}): ReactNode {
-    if (CloseTrigger == null) {
-        return false;
-    }
-
+export function DesktopCloseTrigger({ onClose }: { onClose: () => void }): ReactNode {
     return (
         <TooltipProvider>
             <Tooltip>
-                <CloseTrigger>
-                    <TooltipTrigger asChild>
-                        <Button size="xs" variant="outline">
-                            <kbd>esc</kbd>
-                        </Button>
-                    </TooltipTrigger>
-                </CloseTrigger>
+                <TooltipTrigger asChild>
+                    <Button size="xs" variant="outline" onClick={onClose}>
+                        <kbd>esc</kbd>
+                    </Button>
+                </TooltipTrigger>
                 <TooltipPortal>
                     <TooltipContent>
                         <p>Close search</p>

@@ -1,10 +1,10 @@
 import { FacetName } from "@/utils/facet-display";
 import "instantsearch.css/themes/reset.css";
-import { type ReactElement } from "react";
+import { PropsWithChildren, type ReactElement } from "react";
 import { FernDocsInstantSearch } from "../shared/FernDocsInstantSearch";
-import { DesktopCommandController } from "./DesktopCommandController";
+import { MobileCommandController } from "./MobileCommandController";
 
-interface DesktopInstantSearchProps {
+interface MobileInstantSearchProps {
     /**
      * Callback for when a search result is selected.
      */
@@ -18,10 +18,6 @@ interface DesktopInstantSearchProps {
      */
     onAskAI?: ({ initialInput }: { initialInput?: string }) => void;
     /**
-     * Callback for when the command is closed (i.e. when the user presses escape).
-     */
-    onClose?: () => void;
-    /**
      * Pre-fill facet filters as soon as the component mounts.
      */
     initialFilters?: Partial<Record<FacetName, string>>;
@@ -33,25 +29,30 @@ interface DesktopInstantSearchProps {
     /**
      * This must be a user ID that uniquely identifies the user,
      * and will only be used for Algolia Insights.
+     * This could be workos ID, email address, or something similar.
+     * @format [A-Za-z0-9_=+/-]{1,129}
      */
     authenticatedUserToken?: string;
 }
 
-export function DesktopInstantSearch({
+export function MobileInstantSearch({
     onSelect,
     setTheme,
     onAskAI,
     initialFilters,
     userToken,
     authenticatedUserToken,
-}: DesktopInstantSearchProps): ReactElement {
+    children,
+}: PropsWithChildren<MobileInstantSearchProps>): ReactElement {
     return (
         <FernDocsInstantSearch
             initialFilters={initialFilters}
             userToken={userToken}
             authenticatedUserToken={authenticatedUserToken}
         >
-            <DesktopCommandController onSelect={onSelect} onAskAI={onAskAI} setTheme={setTheme} />
+            <MobileCommandController onSelect={onSelect} onAskAI={onAskAI} setTheme={setTheme}>
+                {children}
+            </MobileCommandController>
         </FernDocsInstantSearch>
     );
 }

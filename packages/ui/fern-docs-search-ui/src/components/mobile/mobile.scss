@@ -1,0 +1,79 @@
+[data-fern-docs-search-ui="mobile"][cmdk-root] {
+    overflow: hidden;
+
+    [data-cmdk-fern-header] {
+        padding: 0.5rem;
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    [cmdk-list] {
+        overflow: auto;
+        overscroll-behavior: contain;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    [cmdk-item] {
+        border-radius: calc(0.5rem - 2px);
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        padding: 0.5rem;
+        text-align: left;
+        display: flex;
+        gap: 0.5rem;
+        cursor: default;
+        scroll-margin: 0.75rem 0;
+
+        svg:first-child {
+            width: 1rem;
+            height: 1rem;
+            opacity: 0.7;
+            pointer-events: none;
+            flex-shrink: 0;
+            margin: 0.25rem 0;
+        }
+
+        mark {
+            background: transparent !important;
+            color: inherit;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            &[data-selected="true"] {
+                background-color: hsl(var(--accent-background));
+                color: hsl(var(--accent-foreground));
+
+                .fern-search-hit-breadcrumb,
+                .fern-search-hit-snippet,
+                .fern-search-hit-endpoint-path {
+                    color: hsl(var(--accent-foreground) / 0.8);
+                }
+            }
+        }
+    }
+
+    [cmdk-empty] {
+        color: hsl(var(--muted-text-color));
+
+        padding: 2rem;
+        text-align: center;
+        hyphens: auto;
+        overflow-wrap: break-word;
+    }
+
+    [cmdk-group-heading] {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: hsl(var(--muted-text-color));
+
+        padding: 0 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    [cmdk-group] {
+        margin-top: 0.75rem;
+    }
+}

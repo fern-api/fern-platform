@@ -1,5 +1,5 @@
 import { useSearchClient } from "@/components/shared/SearchClientProvider";
-import { FacetName, FacetsResponse } from "@/utils/facet-display";
+import { FacetName, FacetsResponse, isFacetName } from "@/utils/facet-display";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { SWRResponse, preload } from "swr";
 import useSWRImmutable from "swr/immutable";
@@ -53,11 +53,7 @@ function toFiltersString({ filters }: FacetOpts): string {
         .join(" AND ");
 }
 
-export function useInitialFilters({
-    initialFilters,
-}: {
-    initialFilters?: { "product.title"?: string; "version.title"?: string };
-}): {
+export function useInitialFilters({ initialFilters }: { initialFilters?: Partial<Record<FacetName, string>> }): {
     filters: FacetFilter[];
     filtersString: string | undefined;
     setFilters: Dispatch<SetStateAction<FacetFilter[]>>;
@@ -66,12 +62,13 @@ export function useInitialFilters({
 
     const initialFiltersArray = useMemo(() => {
         const toRet: FacetFilter[] = [];
-        if (initialFilters?.["product.title"]) {
-            toRet.push({ facet: "product.title", value: initialFilters["product.title"] });
-        }
-        if (initialFilters?.["version.title"]) {
-            toRet.push({ facet: "version.title", value: initialFilters["version.title"] });
-        }
+
+        Object.entries(initialFilters ?? {}).forEach(([facet, value]) => {
+            if (isFacetName(facet)) {
+                toRet.push({ facet, value });
+            }
+        });
+
         return toRet;
     }, [initialFilters]);
 

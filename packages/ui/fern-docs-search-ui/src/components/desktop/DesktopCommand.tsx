@@ -1,13 +1,15 @@
 import { FacetFilter } from "@/hooks/useFacets";
 import { UseSearch } from "@/hooks/useSearch";
 import { FACET_DISPLAY_NAME_MAP, getFacetDisplay } from "@/utils/facet-display";
-import { Command } from "cmdk";
+import { composeEventHandlers } from "@radix-ui/primitive";
+import { Command, useCommandState } from "cmdk";
 import { Laptop, ListFilter, MessageCircle, Moon, Sun } from "lucide-react";
-import { ComponentProps, Dispatch, ReactNode, SetStateAction, forwardRef, useRef } from "react";
+import { ComponentProps, Dispatch, SetStateAction, forwardRef, useRef } from "react";
 import { MarkRequired } from "ts-essentials";
 import { PageIcon } from "../icons/PageIcon";
 import { AskAIText } from "../shared/AskAIText";
 import { HitContent } from "../shared/HitContent";
+import "../shared/common.scss";
 import { AlgoliaRecordHit } from "../types";
 import { DesktopBackButton } from "./DesktopBackButton";
 import { DesktopCloseTrigger } from "./DesktopCloseTrigger";
@@ -20,12 +22,14 @@ export interface DesktopCommandProps extends Omit<ComponentProps<typeof Command>
     onAskAI?: ({ initialInput }: { initialInput?: string }) => void;
     setFilters?: Dispatch<SetStateAction<FacetFilter[]>>;
     setTheme?: (theme: "light" | "dark" | "system") => void;
-    CloseTrigger?: ({ children }: { children: ReactNode }) => ReactNode;
     onClose?: () => void;
 }
 
 interface InternalDesktopCommandProps extends DesktopCommandProps, UseSearch {}
 
+/**
+ * The desktop command is intended to be used within a dialog component.
+ */
 export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandProps>((props, ref) => {
     const {
         filters = [],
@@ -33,7 +37,6 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
         onAskAI,
         setFilters,
         setTheme,
-        CloseTrigger,
         onClose,
         query,
         refine,
@@ -56,15 +59,20 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
 
     return (
         <Command
-            data-cmdk-fern-desktop
+            data-fern-docs-search-ui="desktop"
             ref={ref}
             {...rest}
-            onKeyDown={(e) => {
-                if (e.key === "Escape") {
-                    onClose?.();
-                }
-                rest.onKeyDown?.(e);
-            }}
+            onKeyDown={composeEventHandlers(
+                rest.onKeyDown,
+                onClose != null
+                    ? (e) => {
+                          if (e.key === "Escape") {
+                              onClose();
+                          }
+                      }
+                    : undefined,
+                { checkForDefaultPrevented: true },
+            )}
         >
             {filters.length > 0 && (
                 <div className="flex items-center gap-2 p-2 pb-0" onClick={focus}>
@@ -107,7 +115,9 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                     placeholder={toPlaceholder(filters)}
                     onValueChange={(value) => {
                         refine(value);
-                        scrollRef.current?.scrollTo({ top: 0 });
+                        setTimeout(() => {
+                            scrollRef.current?.scrollTo({ top: 0 });
+                        }, 0);
                     }}
                     onKeyDown={(e) => {
                         if (e.key === "Backspace" && query.length === 0) {
@@ -122,7 +132,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                     maxLength={100}
                 />
 
-                <DesktopCloseTrigger CloseTrigger={CloseTrigger} />
+                {onClose != null && <DesktopCloseTrigger onClose={onClose} />}
             </div>
             <Command.List
                 ref={scrollRef}
@@ -130,19 +140,18 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                 tabIndex={-1}
             >
                 {onAskAI != null && (
-                    <Command.Group forceMount>
-                        <Command.Item value="ai-chat" onSelect={() => onAskAI?.({ initialInput: query })}>
-                            <MessageCircle />
-                            <AskAIText query={query} />
-                        </Command.Item>
-                    </Command.Group>
+                    <Command.Item value="Ask AI" onSelect={() => onAskAI?.({ initialInput: query })} forceMount>
+                        <MessageCircle />
+                        <AskAIText query={query} />
+                    </Command.Item>
                 )}
 
                 {facets.length > 0 && (
                     <Command.Group heading="Filters">
                         {facets.map((filter) => (
                             <Command.Item
-                                key={`${filter.facet}:${filter.value}`}
+                                key={`${filter.facet}:"${filter.value}"`}
+                                value={`${filter.facet}:"${filter.value}"`}
                                 onSelect={() => {
                                     setFilters?.([...filters, { facet: filter.facet, value: filter.value }]);
                                     clear();
@@ -164,9 +173,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                     </Command.Group>
                 )}
 
-                {groups.length === 0 && query.length > 0 && (
-                    <Command.Empty>No results found for &ldquo;{query}&rdquo;.</Command.Empty>
-                )}
+                {groups.length === 0 && query.length > 0 && <CommandEmpty />}
 
                 {groups.map((group, index) => (
                     <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} forceMount>
@@ -216,6 +223,13 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
 });
 
 DesktopCommand.displayName = "DesktopCommand";
+
+function CommandEmpty(props: ComponentProps<typeof Command.Empty>) {
+    const query = useCommandState((state) => state.search);
+    return (
+        <Command.Empty {...props}>{props.children ?? <>No results found for &ldquo;{query}&rdquo;.</>}</Command.Empty>
+    );
+}
 
 function toPlaceholder(filters: readonly FacetFilter[]): string {
     if (filters.length === 0) {

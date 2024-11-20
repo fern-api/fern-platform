@@ -17,7 +17,7 @@
     --accent-background: 127deg 71.6% 27.6% / 10%;
 }
 
-[data-cmdk-fern-desktop][cmdk-root] {
+[data-fern-docs-search-ui="desktop"][cmdk-root] {
     overflow: hidden;
     border: 1px solid hsl(var(--border-color));
     background-color: hsl(var(--background-color));
@@ -72,8 +72,8 @@
         font-weight: 600;
         color: hsl(var(--muted-text-color));
 
-        padding: 0 1rem;
-        margin: 0.5rem 0;
+        margin-bottom: 0.5rem;
+        padding: 0 0.5rem;
     }
 
     [cmdk-list] {
@@ -98,52 +98,11 @@
     }
 
     [cmdk-list-sizer] {
-        padding: 0.75rem 0;
-    }
-
-    .fern-search-hit-title {
-        overflow: hidden;
-        display: -webkit-box;
-        line-clamp: 1;
-        -webkit-box-orient: vertical;
-    }
-
-    .fern-search-hit-title.deprecated {
-        opacity: 0.7;
-        text-decoration: line-through;
-    }
-
-    .fern-search-hit-breadcrumb,
-    .fern-search-hit-snippet,
-    .fern-search-hit-endpoint-path {
-        overflow: hidden;
-        line-height: 1;
-        overflow-wrap: break-word;
-        color: hsl(var(--muted-text-color));
-        line-clamp: 2;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        overflow-wrap: break-word;
-    }
-
-    .fern-search-hit-snippet {
-        font-size: 0.875rem;
-        line-height: 1.375;
-    }
-
-    .fern-search-hit-breadcrumb,
-    .fern-search-hit-endpoint-path {
-        font-size: 0.75rem;
-    }
-
-    .fern-search-hit-endpoint-path {
-        font-family: var(--font-mono);
+        padding: 0.75rem 0.5rem;
     }
 
     [cmdk-item] {
         border-radius: calc(0.5rem - 2px);
-        margin-left: 0.5rem;
-        margin-right: 0.5rem;
         padding: 0.5rem;
         text-align: left;
         display: flex;

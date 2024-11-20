@@ -1,4 +1,5 @@
 import { FacetFilter, useInitialFilters } from "@/hooks/useFacets";
+import { FacetName } from "@/utils/facet-display";
 import "instantsearch.css/themes/reset.css";
 import React, { Dispatch, SetStateAction, type ReactElement } from "react";
 import { Configure } from "react-instantsearch";
@@ -6,10 +7,7 @@ import { InstantSearchNext } from "react-instantsearch-nextjs";
 import { useSearchClient } from "../shared/SearchClientProvider";
 
 interface FernDocsInstantSearchProps {
-    initialFilters?: {
-        "product.title"?: string;
-        "version.title"?: string;
-    };
+    initialFilters?: Partial<Record<FacetName, string>>;
     userToken?: string;
     authenticatedUserToken?: string;
     children: ReactElement<{

@@ -13,6 +13,10 @@ export const FACET_NAMES = [
 export type FacetName = (typeof FACET_NAMES)[number];
 export type FacetsResponse = Record<FacetName, { value: string; count: number }[]>;
 
+export function isFacetName(facet: string): facet is FacetName {
+    return FACET_NAMES.includes(facet as FacetName);
+}
+
 export interface FilterOption {
     facet: FacetName;
     value: string;

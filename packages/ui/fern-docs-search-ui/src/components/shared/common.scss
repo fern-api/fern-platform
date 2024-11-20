@@ -1,0 +1,50 @@
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.fern-search-hit-title {
+    overflow: hidden;
+    display: -webkit-box;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.fern-search-hit-title.deprecated {
+    opacity: 0.7;
+    text-decoration: line-through;
+}
+
+.fern-search-hit-breadcrumb,
+.fern-search-hit-snippet,
+.fern-search-hit-endpoint-path {
+    overflow: hidden;
+    line-height: 1;
+    overflow-wrap: break-word;
+    color: hsl(var(--muted-text-color));
+    line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow-wrap: break-word;
+}
+
+.fern-search-hit-snippet {
+    font-size: 0.875rem;
+    line-height: 1.375;
+}
+
+.fern-search-hit-breadcrumb,
+.fern-search-hit-endpoint-path {
+    font-size: 0.75rem;
+}
+
+.fern-search-hit-endpoint-path {
+    font-family: var(--font-mono);
+}
