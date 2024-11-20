@@ -33,6 +33,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         status_code: [],
         "product.title": [],
         "version.title": [],
+        availability: [],
     };
 
     zip(results, FACET_NAMES).forEach(([{ facetHits }, attribute]) => {

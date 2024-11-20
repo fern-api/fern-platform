@@ -44,6 +44,7 @@ export const SEARCHABLE_FACET_ATTRIBUTES = [
     "status_code",
     "product.title",
     "version.title",
+    "availability",
 ] as const;
 
 export const BaseRecordSchema = z.object({

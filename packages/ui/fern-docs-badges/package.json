@@ -1,0 +1,54 @@
+{
+  "name": "@fern-ui/fern-docs-badges",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "peerDependencies": {
+    "next": "^14",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "exports": {
+    "./index.scss": "./index.scss",
+    ".": "./index.ts"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.2",
+    "@storybook/addon-essentials": "^8.4.4",
+    "@storybook/addon-interactions": "^8.4.4",
+    "@storybook/addon-onboarding": "^8.4.4",
+    "@storybook/blocks": "^8.4.4",
+    "@storybook/react": "^8.4.4",
+    "@storybook/react-vite": "^8.4.4",
+    "@storybook/test": "^8.4.4",
+    "@types/node": "^18.7.18",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "14.2.15",
+    "eslint-plugin-storybook": "^0.8.0",
+    "postcss": "^8.4.33",
+    "react": "^18",
+    "react-dom": "^18",
+    "storybook": "^8.4.4",
+    "typescript": "5.4.3",
+    "vite": "^5.4.11"
+  },
+  "dependencies": {
+    "@radix-ui/colors": "^3.0.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "ts-essentials": "^10.0.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
+  },
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  }
+}

@@ -12,8 +12,7 @@ import { AlgoliaRecordHit } from "../types";
 import { DesktopBackButton } from "./DesktopBackButton";
 import { DesktopCloseTrigger } from "./DesktopCloseTrigger";
 import { DesktopFilterDropdownMenu } from "./DesktopFilterDropdownMenu";
-
-const ICON_CLASS = "size-4 shrink-0 my-1";
+import "./desktop.scss";
 
 export interface DesktopCommandProps extends Omit<ComponentProps<typeof Command>, "onSelect"> {
     filters?: readonly FacetFilter[];
@@ -42,6 +41,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
         groups,
         facets,
         preload,
+        isLoading,
         ...rest
     } = props;
 
@@ -127,11 +127,12 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
             <Command.List
                 ref={scrollRef}
                 data-empty={groups.length === 0 && query.length === 0 && onAskAI == null && setTheme == null}
+                tabIndex={-1}
             >
                 {onAskAI != null && (
                     <Command.Group forceMount>
                         <Command.Item value="ai-chat" onSelect={() => onAskAI?.({ initialInput: query })}>
-                            <MessageCircle className={ICON_CLASS} />
+                            <MessageCircle />
                             <AskAIText query={query} />
                         </Command.Item>
                     </Command.Group>
@@ -153,7 +154,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                                     });
                                 }}
                             >
-                                <ListFilter className={ICON_CLASS} />
+                                <ListFilter />
                                 <span className="flex-1">Search {getFacetDisplay(filter.facet, filter.value)}</span>
                                 <span className="text-xs text-[#969696] dark:text-white/50 self-center">
                                     {filter.count}
@@ -171,7 +172,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                     <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} forceMount>
                         {group.hits.map((hit) => (
                             <Command.Item key={hit.path} value={hit.path} onSelect={() => onSelect(hit.path)}>
-                                <PageIcon icon={hit.icon} type={hit.record?.type} className={ICON_CLASS} />
+                                <PageIcon icon={hit.icon} type={hit.record?.type} />
                                 {hit.record != null && (
                                     <HitContent hit={hit.record as MarkRequired<AlgoliaRecordHit, "type">} />
                                 )}
@@ -188,7 +189,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                             onSelect={() => setTheme?.("light")}
                             keywords={["light mode", "light theme"]}
                         >
-                            <Sun className={ICON_CLASS} />
+                            <Sun />
                             Light
                         </Command.Item>
                         <Command.Item
@@ -196,7 +197,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                             onSelect={() => setTheme?.("dark")}
                             keywords={["dark mode", "dark theme"]}
                         >
-                            <Moon className={ICON_CLASS} />
+                            <Moon />
                             Dark
                         </Command.Item>
                         <Command.Item
@@ -204,7 +205,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                             onSelect={() => setTheme?.("system")}
                             keywords={["system mode", "system theme"]}
                         >
-                            <Laptop className={ICON_CLASS} />
+                            <Laptop />
                             System
                         </Command.Item>
                     </Command.Group>

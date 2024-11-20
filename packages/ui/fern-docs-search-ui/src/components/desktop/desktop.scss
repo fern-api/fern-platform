@@ -1,0 +1,185 @@
+:root {
+    --border-color: 120deg 100% 3.92% / 15.7%; // 6
+    --background-color: 120deg 100% 14.3% / 2.75%; // 2
+    --muted-text-color: 108deg 100% 1.96% / 62.7%; // 11
+    --accent-foreground: 127deg 71.6% 27.6%;
+    --accent-background: 127deg 71.6% 27.6% / 10%;
+
+    --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Source Code Pro", "Fira Mono", "Droid Sans Mono",
+        "Courier New", monospace;
+}
+
+.dark {
+    --border-color: 87.7deg 56.5% 95.5% / 17.3%; // 6
+    --background-color: 90deg 7.14% 94.5% / 3.14%; // 2
+    --muted-text-color: 108deg 83.3% 97.6% / 69%; // 11
+    --accent-foreground: 126deg 69.8% 49.4%;
+    --accent-background: 127deg 71.6% 27.6% / 10%;
+}
+
+[data-cmdk-fern-desktop][cmdk-root] {
+    overflow: hidden;
+    border: 1px solid hsl(var(--border-color));
+    background-color: hsl(var(--background-color));
+    backdrop-filter: blur(24px);
+    border-radius: 0.5rem;
+
+    [data-cmdk-fern-header] {
+        border-bottom: 1px solid hsl(var(--border-color));
+
+        padding: 0.5rem;
+        gap: 0;
+        display: flex;
+        align-items: center;
+        cursor: text;
+    }
+
+    [cmdk-list][data-empty="true"] {
+        height: 0;
+    }
+
+    [data-cmdk-fern-header]:has(+ [cmdk-list][data-empty="true"]) {
+        border-bottom: none;
+    }
+
+    [cmdk-input] {
+        padding: 0.25rem 0.5rem;
+        width: 100%;
+        background: transparent;
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+
+        &:focus {
+            outline: none;
+        }
+
+        &::placeholder {
+            color: hsl(var(--muted-text-color));
+        }
+    }
+
+    [cmdk-empty] {
+        color: hsl(var(--muted-text-color));
+
+        padding: 2rem;
+        text-align: center;
+        hyphens: auto;
+        overflow-wrap: break-word;
+    }
+
+    [cmdk-group-heading] {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: hsl(var(--muted-text-color));
+
+        padding: 0 1rem;
+        margin: 0.5rem 0;
+    }
+
+    [cmdk-list] {
+        mask-image: linear-gradient(
+            to bottom,
+            transparent 0,
+            black 0.75rem,
+            black calc(100% - 0.75rem),
+            transparent 100%
+        );
+
+        height: min(400px, var(--cmdk-list-height));
+        max-height: 400px;
+        overflow: auto;
+        overscroll-behavior: contain;
+        transition: 100ms ease;
+        transition-property: height;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    [cmdk-list-sizer] {
+        padding: 0.75rem 0;
+    }
+
+    .fern-search-hit-title {
+        overflow: hidden;
+        display: -webkit-box;
+        line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+
+    .fern-search-hit-title.deprecated {
+        opacity: 0.7;
+        text-decoration: line-through;
+    }
+
+    .fern-search-hit-breadcrumb,
+    .fern-search-hit-snippet,
+    .fern-search-hit-endpoint-path {
+        overflow: hidden;
+        line-height: 1;
+        overflow-wrap: break-word;
+        color: hsl(var(--muted-text-color));
+        line-clamp: 2;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow-wrap: break-word;
+    }
+
+    .fern-search-hit-snippet {
+        font-size: 0.875rem;
+        line-height: 1.375;
+    }
+
+    .fern-search-hit-breadcrumb,
+    .fern-search-hit-endpoint-path {
+        font-size: 0.75rem;
+    }
+
+    .fern-search-hit-endpoint-path {
+        font-family: var(--font-mono);
+    }
+
+    [cmdk-item] {
+        border-radius: calc(0.5rem - 2px);
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        padding: 0.5rem;
+        text-align: left;
+        display: flex;
+        gap: 0.5rem;
+        cursor: default;
+        scroll-margin: 0.75rem 0;
+
+        svg:first-child {
+            width: 1rem;
+            height: 1rem;
+            opacity: 0.7;
+            pointer-events: none;
+            flex-shrink: 0;
+            margin: 0.25rem 0;
+        }
+
+        mark {
+            background: transparent !important;
+            color: inherit;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            &[data-selected="true"] {
+                background-color: hsl(var(--accent-background));
+                color: hsl(var(--accent-foreground));
+
+                .fern-search-hit-breadcrumb,
+                .fern-search-hit-snippet,
+                .fern-search-hit-endpoint-path {
+                    color: hsl(var(--accent-foreground) / 0.8);
+                }
+            }
+        }
+    }
+
+    [cmdk-group]:not(:first-child) {
+        margin-top: 0.75rem;
+    }
+}

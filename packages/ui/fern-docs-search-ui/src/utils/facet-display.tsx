@@ -1,7 +1,15 @@
-import { HttpMethodTag } from "@fern-ui/fern-http-method-tag";
+import { AvailabilityBadge, HttpMethodBadge } from "@fern-ui/fern-docs-badges";
 import { ReactNode } from "react";
 
-export const FACET_NAMES = ["product.title", "version.title", "type", "api_type", "method", "status_code"] as const;
+export const FACET_NAMES = [
+    "product.title",
+    "version.title",
+    "type",
+    "api_type",
+    "method",
+    "status_code",
+    "availability",
+] as const;
 export type FacetName = (typeof FACET_NAMES)[number];
 export type FacetsResponse = Record<FacetName, { value: string; count: number }[]>;
 
@@ -13,21 +21,37 @@ export interface FilterOption {
 
 const FACET_DISPLAY_MAP: Record<string, Record<string, ReactNode>> = {
     method: {
-        GET: <HttpMethodTag method="GET" />,
-        POST: <HttpMethodTag method="POST" />,
-        PUT: <HttpMethodTag method="PUT" />,
-        PATCH: <HttpMethodTag method="PATCH" />,
-        DELETE: <HttpMethodTag method="DELETE" />,
+        GET: <HttpMethodBadge method="GET" variant="subtle" />,
+        POST: <HttpMethodBadge method="POST" variant="subtle" />,
+        PUT: <HttpMethodBadge method="PUT" variant="subtle" />,
+        PATCH: <HttpMethodBadge method="PATCH" variant="subtle" />,
+        DELETE: <HttpMethodBadge method="DELETE" variant="subtle" />,
+    },
+    availability: {
+        Stable: <AvailabilityBadge availability="Stable" rounded variant="subtle" />,
+        GenerallyAvailable: <AvailabilityBadge availability="GenerallyAvailable" rounded variant="subtle" />,
+        InDevelopment: <AvailabilityBadge availability="InDevelopment" rounded variant="subtle" />,
+        PreRelease: <AvailabilityBadge availability="PreRelease" rounded variant="subtle" />,
+        Deprecated: <AvailabilityBadge availability="Deprecated" rounded variant="subtle" />,
+        Beta: <AvailabilityBadge availability="Beta" rounded variant="subtle" />,
     },
 } as const;
 
 const FACET_SMALL_DISPLAY_MAP: Record<string, Record<string, ReactNode>> = {
     method: {
-        GET: <HttpMethodTag method="GET" size="sm" />,
-        POST: <HttpMethodTag method="POST" size="sm" />,
-        PUT: <HttpMethodTag method="PUT" size="sm" />,
-        PATCH: <HttpMethodTag method="PATCH" size="sm" />,
-        DELETE: <HttpMethodTag method="DELETE" size="sm" />,
+        GET: <HttpMethodBadge method="GET" size="sm" />,
+        POST: <HttpMethodBadge method="POST" size="sm" />,
+        PUT: <HttpMethodBadge method="PUT" size="sm" />,
+        PATCH: <HttpMethodBadge method="PATCH" size="sm" />,
+        DELETE: <HttpMethodBadge method="DELETE" size="sm" />,
+    },
+    availability: {
+        Stable: <AvailabilityBadge availability="Stable" size="sm" />,
+        GenerallyAvailable: <AvailabilityBadge availability="GenerallyAvailable" size="sm" />,
+        InDevelopment: <AvailabilityBadge availability="InDevelopment" size="sm" />,
+        PreRelease: <AvailabilityBadge availability="PreRelease" size="sm" />,
+        Deprecated: <AvailabilityBadge availability="Deprecated" size="sm" />,
+        Beta: <AvailabilityBadge availability="Beta" size="sm" />,
     },
 } as const;
 
@@ -40,14 +64,22 @@ export const FACET_DISPLAY_NAME_MAP: Record<string, Record<string, string>> = {
         DELETE: "DELETE requests",
     },
     api_type: {
-        http: "rest",
+        http: "HTTP",
         webhook: "webhooks",
-        websocket: "web sockets",
+        websocket: "WebSockets",
     },
     type: {
         markdown: "guides",
         changelog: "changelog",
-        "api-reference": "endpoints",
+        "api-reference": "APIs",
+    },
+    availability: {
+        Stable: "stable",
+        GenerallyAvailable: "generally available",
+        InDevelopment: "in development",
+        PreRelease: "pre-release",
+        Deprecated: "deprecated",
+        Beta: "beta",
     },
 };
 export const FACET_DISPLAY_NAME_TITLE_CASE_MAP: Record<string, Record<string, string>> = {
@@ -59,14 +91,22 @@ export const FACET_DISPLAY_NAME_TITLE_CASE_MAP: Record<string, Record<string, st
         DELETE: "DELETE requests",
     },
     api_type: {
-        http: "Rest",
+        http: "HTTP",
         webhook: "Webhooks",
-        websocket: "Web sockets",
+        websocket: "WebSockets",
     },
     type: {
         markdown: "Guides",
         changelog: "Changelog",
-        "api-reference": "Endpoints",
+        "api-reference": "API Reference",
+    },
+    availability: {
+        Stable: "Stable",
+        GenerallyAvailable: "Generally available",
+        InDevelopment: "In development",
+        PreRelease: "Pre-release",
+        Deprecated: "Deprecated",
+        Beta: "Beta",
     },
 };
 
@@ -77,6 +117,7 @@ export const FACET_DISPLAY_NAME: Record<FacetName, string> = {
     "product.title": "Product",
     "version.title": "Version",
     status_code: "Status code",
+    availability: "Availability",
 };
 
 export function toFilterOptions(facets: FacetsResponse | undefined, query: string): FilterOption[] {

@@ -28,7 +28,7 @@
       "path": "../../commons/core-utils"
     },
     {
-      "path": "../fern-http-method-tag"
+      "path": "../fern-docs-badges"
     },
     {
       "path": "../fern-docs-syntax-highlighter"

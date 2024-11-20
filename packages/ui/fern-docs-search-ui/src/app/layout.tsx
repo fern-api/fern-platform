@@ -1,4 +1,3 @@
-import "@fern-ui/fern-http-method-tag/index.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { ReactElement } from "react";

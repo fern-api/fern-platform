@@ -1,7 +1,8 @@
 import { tz } from "@date-fns/tz";
-import { HttpMethodTag } from "@fern-ui/fern-http-method-tag";
+import { AvailabilityBadge, HttpMethodBadge } from "@fern-ui/fern-docs-badges";
+import clsx from "clsx";
 import { format } from "date-fns";
-import { Fragment, ReactElement } from "react";
+import { Fragment, ReactElement, ReactNode } from "react";
 import { Highlight, Snippet } from "react-instantsearch";
 import { MarkRequired, UnreachableCaseError } from "ts-essentials";
 import { AlgoliaRecordHit, ApiReferenceRecordHit, ChangelogRecordHit, MarkdownRecordHit } from "../types";
@@ -18,7 +19,7 @@ function HierarchyBreadcrumb({
     level: (typeof headingLevels)[number] | undefined;
 }) {
     if (!level) {
-        return null;
+        return false;
     }
 
     const breadcrumb: string[] = [];
@@ -30,8 +31,12 @@ function HierarchyBreadcrumb({
         }
     });
 
+    if (breadcrumb.length === 0) {
+        return false;
+    }
+
     return (
-        <div className="text-xs text-[#969696] dark:text-white/50">
+        <div className="fern-search-hit-breadcrumb">
             {breadcrumb.map((title, idx) => (
                 <Fragment key={title}>
                     <span>{title}</span>
@@ -42,52 +47,60 @@ function HierarchyBreadcrumb({
     );
 }
 
+function HitContentWithTitle({ hit, children }: { hit: AlgoliaRecordHit; children: ReactNode }): ReactElement {
+    return (
+        <div className="space-y-1.5 flex-1">
+            <div className="flex items-baseline gap-1 justify-between">
+                <Highlight
+                    attribute="title"
+                    hit={hit}
+                    classNames={{
+                        root: clsx("fern-search-hit-title", {
+                            deprecated: hit.availability === "Deprecated",
+                        }),
+                        highlighted: "fern-search-hit-highlighted",
+                        nonHighlighted: "fern-search-hit-non-highlighted",
+                    }}
+                />
+                {hit.availability && <AvailabilityBadge availability={hit.availability} size="sm" rounded />}
+            </div>
+            {children}
+        </div>
+    );
+}
+
 function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
     return (
-        <div className="flex flex-col gap-1 min-w-0 shrink">
-            <Highlight
-                className="line-clamp-1"
-                attribute="title"
-                hit={hit}
-                classNames={{
-                    highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
-                }}
-            />
+        <HitContentWithTitle hit={hit}>
             <HierarchyBreadcrumb hierarchy={hit.hierarchy} level={hit.level} />
             <Snippet
                 attribute={hit._highlightResult?.description ? "description" : "content"}
                 hit={hit}
-                className="text-sm leading-snug line-clamp-2 text-black/50 dark:text-white/50"
                 classNames={{
-                    highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
+                    root: "fern-search-hit-snippet",
+                    highlighted: "fern-search-hit-highlighted",
+                    nonHighlighted: "fern-search-hit-non-highlighted",
                 }}
             />
-        </div>
+        </HitContentWithTitle>
     );
 }
 
 function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement {
     const datestring = format(utc(hit.date), "MMM d, yyyy");
     return (
-        <div className="flex flex-col gap-1 min-w-0 shrink">
-            <Highlight
-                className="line-clamp-1"
-                attribute="title"
-                hit={hit}
-                classNames={{
-                    highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
-                }}
-            />
-            <div className="text-xs text-[#969696] dark:text-white/50">{datestring}</div>
+        <HitContentWithTitle hit={hit}>
+            <div className="fern-search-hit-breadcrumb">{datestring}</div>
             <Snippet
                 attribute={hit._highlightResult?.description ? "description" : "content"}
                 hit={hit}
-                className="text-sm leading-snug line-clamp-2 text-black/50 dark:text-white/50"
                 classNames={{
-                    highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
+                    root: "fern-search-hit-snippet",
+                    highlighted: "fern-search-hit-highlighted",
+                    nonHighlighted: "fern-search-hit-non-highlighted",
                 }}
             />
-        </div>
+        </HitContentWithTitle>
     );
 }
 
@@ -101,33 +114,25 @@ function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactE
             : hit._highlightResult?.description
               ? "description"
               : undefined;
+
     return (
-        <div className="flex flex-col gap-1 min-w-0 shrink">
-            <Highlight
-                className="line-clamp-1"
-                attribute="title"
-                hit={hit}
-                classNames={{
-                    highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
-                }}
-            />
+        <HitContentWithTitle hit={hit}>
             <div className="inline-flex items-baseline gap-1">
-                <HttpMethodTag method={hit.method} size="sm" className="shrink-0" />
-                <span className="text-xs font-mono line-clamp-2 text-[#969696] dark:text-white/50 break-words shrink">
-                    {hit.endpoint_path}
-                </span>
+                <HttpMethodBadge method={hit.method} size="sm" className="shrink-0" />
+                <span className="fern-search-hit-endpoint-path shrink">{hit.endpoint_path}</span>
             </div>
             {attribute && (
                 <Snippet
                     attribute={attribute}
                     hit={hit}
-                    className="text-sm leading-snug line-clamp-2"
                     classNames={{
-                        highlighted: "font-bold bg-transparent dark:bg-transparent dark:text-white",
+                        root: "fern-search-hit-snippet",
+                        highlighted: "fern-search-hit-highlighted",
+                        nonHighlighted: "fern-search-hit-non-highlighted",
                     }}
                 />
             )}
-        </div>
+        </HitContentWithTitle>
     );
 }
 
