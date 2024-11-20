@@ -41,7 +41,7 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1Node<
         return Object.fromEntries(
             Object.entries(this.typeSchemas)
                 .map(([key, value]) => {
-                    const name = value.name;
+                    const name = value.name ?? key;
                     const shape = value.convert();
 
                     if (name == null || shape == null) {

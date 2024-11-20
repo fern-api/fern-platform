@@ -35,7 +35,7 @@ describe("OpenAPI snapshot tests", () => {
             if (parsed.components?.schemas) {
                 const converter = new ComponentsConverterNode(parsed.components, context, [], "test");
                 console.log("errors", converter.errors());
-                console.log("warnings", converter.warnings());
+                // console.log("warnings", converter.warnings());
                 converted = converter.convert();
             }
 

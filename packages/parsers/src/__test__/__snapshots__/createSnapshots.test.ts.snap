@@ -5,7 +5,7 @@ exports[`OpenAPI snapshot tests > generates snapshot for petstore-components.yml
   "Address": {
     "availability": undefined,
     "description": undefined,
-    "name": undefined,
+    "name": "Address",
     "shape": {
       "extends": [],
       "extraProperties": undefined,
@@ -89,7 +89,7 @@ exports[`OpenAPI snapshot tests > generates snapshot for petstore-components.yml
   "ApiResponse": {
     "availability": undefined,
     "description": undefined,
-    "name": undefined,
+    "name": "ApiResponse",
     "shape": {
       "extends": [],
       "extraProperties": undefined,
@@ -154,7 +154,7 @@ exports[`OpenAPI snapshot tests > generates snapshot for petstore-components.yml
   "Category": {
     "availability": undefined,
     "description": undefined,
-    "name": undefined,
+    "name": "Category",
     "shape": {
       "extends": [],
       "extraProperties": undefined,
@@ -201,7 +201,7 @@ exports[`OpenAPI snapshot tests > generates snapshot for petstore-components.yml
   "Customer": {
     "availability": undefined,
     "description": undefined,
-    "name": undefined,
+    "name": "Customer",
     "shape": {
       "extends": [],
       "extraProperties": undefined,
@@ -248,7 +248,7 @@ exports[`OpenAPI snapshot tests > generates snapshot for petstore-components.yml
   "Order": {
     "availability": undefined,
     "description": undefined,
-    "name": undefined,
+    "name": "Order",
     "shape": {
       "extends": [],
       "extraProperties": undefined,
@@ -362,7 +362,7 @@ exports[`OpenAPI snapshot tests > generates snapshot for petstore-components.yml
   "Pet": {
     "availability": undefined,
     "description": undefined,
-    "name": undefined,
+    "name": "Pet",
     "shape": {
       "extends": [],
       "extraProperties": undefined,
@@ -440,7 +440,7 @@ exports[`OpenAPI snapshot tests > generates snapshot for petstore-components.yml
   "Tag": {
     "availability": undefined,
     "description": undefined,
-    "name": undefined,
+    "name": "Tag",
     "shape": {
       "extends": [],
       "extraProperties": undefined,
@@ -487,7 +487,7 @@ exports[`OpenAPI snapshot tests > generates snapshot for petstore-components.yml
   "User": {
     "availability": undefined,
     "description": undefined,
-    "name": undefined,
+    "name": "User",
     "shape": {
       "extends": [],
       "extraProperties": undefined,
