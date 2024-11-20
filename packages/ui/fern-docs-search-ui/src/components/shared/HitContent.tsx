@@ -56,7 +56,10 @@ function HitContentWithTitle({ hit, children }: { hit: AlgoliaRecordHit; childre
                     hit={hit}
                     classNames={{
                         root: clsx("fern-search-hit-title", {
-                            deprecated: hit.availability === "Deprecated",
+                            deprecated:
+                                hit.availability === "Deprecated" ||
+                                hit.availability === "Sunset" ||
+                                hit.availability === "Retired",
                         }),
                         highlighted: "fern-search-hit-highlighted",
                         nonHighlighted: "fern-search-hit-non-highlighted",

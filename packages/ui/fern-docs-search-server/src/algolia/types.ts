@@ -57,7 +57,25 @@ export const BaseRecordSchema = z.object({
     icon: z.string().optional(),
     title: z.string().describe("The title of the page, as specified in the frontmatter or docs.yml"),
     availability: z
-        .enum(["Stable", "GenerallyAvailable", "InDevelopment", "PreRelease", "Deprecated", "Beta"])
+        .enum([
+            "Stable",
+            "GenerallyAvailable", // also known as "GA" or "Graduated"
+            "ReleaseCandidate", // also known as "RC"
+            "PublicBeta",
+            "Beta",
+            "PrivateBeta",
+            "LimitedAvailability", // also known as "Limited"
+            "CanaryRelease", // also known as "Canary"
+            "Preview", // also known as "Early Access"
+            "PreRelease",
+            "Alpha",
+            "Experimental",
+            "Internal",
+            "InDevelopment",
+            "Sunset",
+            "Deprecated",
+            "Retired",
+        ])
         .optional(),
     description: z
         .string()
