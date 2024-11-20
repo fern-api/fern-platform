@@ -1,9 +1,11 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
+import { BaseOpenApiV3_1Node } from "../../../BaseOpenApiV3_1Converter.node";
 import { ObjectConverterNode } from "../ObjectConverter.node";
 import { ReferenceConverterNode } from "../ReferenceConverter.node";
-import { SchemaConverterNode } from "../SchemaConverter.node";
+import { PrimitiveType, SchemaConverterNode } from "../SchemaConverter.node";
 
 describe("SchemaConverterNode", () => {
     const mockContext = createMockContext();
@@ -95,7 +97,7 @@ describe("SchemaConverterNode", () => {
 
         it("should return undefined if typeShapeNode is undefined", () => {
             const input: OpenAPIV3_1.SchemaObject = {
-                type: "unknown" as any,
+                type: "unknown" as OpenAPIV3_1.NonArraySchemaObjectType,
             };
             const node = new SchemaConverterNode(input, mockContext, [], "test");
             expect(node.convert()).toBeUndefined();
@@ -106,7 +108,7 @@ describe("SchemaConverterNode", () => {
         it("should handle undefined conversion result", () => {
             const mockInput = {
                 convert: () => undefined,
-            } as any;
+            } as BaseOpenApiV3_1Node<PrimitiveType, FdrAPI.api.latest.PrimitiveType | undefined>;
             const node = new SchemaConverterNode({ type: "string" }, mockContext, [], "test");
             const converter = node.convertPrimitive(mockInput);
             expect(converter.convert()).toBeUndefined();
@@ -115,7 +117,7 @@ describe("SchemaConverterNode", () => {
         it("should convert primitive type correctly", () => {
             const mockInput = {
                 convert: () => ({ type: "string" as const }),
-            } as any;
+            } as BaseOpenApiV3_1Node<PrimitiveType, FdrAPI.api.latest.PrimitiveType | undefined>;
             const node = new SchemaConverterNode({ type: "string" }, mockContext, [], "test");
             const converter = node.convertPrimitive(mockInput);
             expect(converter.convert()).toEqual({

@@ -10,7 +10,7 @@ import { ObjectConverterNode } from "./ObjectConverter.node";
 import { ReferenceConverterNode } from "./ReferenceConverter.node";
 import { StringConverterNode } from "./StringConverter.node";
 
-type PrimitiveType =
+export type PrimitiveType =
     | NumberConverterNode.Input
     | IntegerConverterNode.Input
     | BooleanConverterNode.Input
