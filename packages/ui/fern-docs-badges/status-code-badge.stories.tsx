@@ -118,3 +118,54 @@ export const Primary: Story = {
         </div>
     ),
 };
+
+export const Zeros: Story = {
+    argTypes: {
+        statusCode: {
+            control: {
+                disable: true,
+            },
+        },
+    },
+    render: (args) => (
+        <div style={{ display: "flex", gap: "1rem" }}>
+            <div
+                className="light"
+                style={{
+                    padding: "3rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    backgroundColor: "#f5f5f5",
+                    borderRadius: "0.5rem",
+                    border: "1px solid #e0e0e0",
+                }}
+            >
+                <StatusCodeBadge {...args} statusCode="100" />
+                <StatusCodeBadge {...args} statusCode="200" />
+                <StatusCodeBadge {...args} statusCode="307" />
+                <StatusCodeBadge {...args} statusCode="404" />
+                <StatusCodeBadge {...args} statusCode="500" />
+            </div>
+            <div
+                className="dark"
+                style={{
+                    padding: "3rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    backgroundColor: "#222425",
+                    borderRadius: "0.5rem",
+                }}
+            >
+                <StatusCodeBadge {...args} statusCode="100" />
+                <StatusCodeBadge {...args} statusCode="200" />
+                <StatusCodeBadge {...args} statusCode="307" />
+                <StatusCodeBadge {...args} statusCode="404" />
+                <StatusCodeBadge {...args} statusCode="500" />
+            </div>
+        </div>
+    ),
+};

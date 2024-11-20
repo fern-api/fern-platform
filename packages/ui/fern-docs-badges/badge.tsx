@@ -98,7 +98,24 @@ const badgeVariants = cva("fern-docs-badge", {
 export type BadgeProps = VariantProps<typeof badgeVariants> & ComponentPropsWithoutRef<"span"> & { skeleton?: boolean };
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
-    const { className, size, variant, color, grayscale, rounded, children, interactive, skeleton, ...rest } = props;
+    const {
+        className,
+        size,
+        variant,
+        color,
+        grayscale,
+        rounded,
+        children,
+        interactive: _interactive,
+        skeleton,
+        ...rest
+    } = props;
+
+    let interactive = _interactive;
+
+    if (props.onClick || props.onClickCapture || props.onDoubleClick || props.onDoubleClickCapture) {
+        interactive ??= true;
+    }
 
     return (
         <span
