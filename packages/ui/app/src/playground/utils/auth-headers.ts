@@ -3,6 +3,7 @@ import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedU
 import { decodeJwt } from "jose";
 import { noop } from "ts-essentials";
 import { PlaygroundAuthState } from "../types";
+import { pascalCaseHeaderKey } from "./header-key-case";
 import {
     OAuthClientCredentialReferencedEndpointLoginFlowProps,
     oAuthClientCredentialReferencedEndpointLoginFlow,
@@ -30,11 +31,13 @@ export function buildAuthHeaders(
                 headers["Authorization"] = `Bearer ${token}`;
             },
             header: (header) => {
-                let value = authState.header?.headers[header.headerWireValue] ?? "";
+                // pluck the value from the headers object (avoid inheriting all the other headers)
+                let value = authState.header?.headers[pascalCaseHeaderKey(header.headerWireValue)] ?? "";
                 if (redacted) {
                     value = obfuscateSecret(value);
                 }
-                headers[header.headerWireValue] = header.prefix != null ? `${header.prefix} ${value}` : value;
+                headers[pascalCaseHeaderKey(header.headerWireValue)] =
+                    header.prefix != null ? `${header.prefix} ${value}` : value;
             },
             basicAuth: () => {
                 const username = authState.basicAuth?.username ?? "";
@@ -77,14 +80,12 @@ export function buildAuthHeaders(
                                     } catch {}
                                 }
 
-                                const tokenPrefix = authState.oauth?.tokenPrefix?.length
-                                    ? authState.oauth.tokenPrefix
-                                    : "Bearer";
-                                if (redacted) {
-                                    headers["Authorization"] = `${tokenPrefix} ${obfuscateSecret(token)}`;
-                                } else {
-                                    headers["Authorization"] = `${tokenPrefix} ${token}`;
-                                }
+                                const tokenPrefix = oAuthClientCredentials.value.tokenPrefix ?? "Bearer";
+
+                                headers[
+                                    pascalCaseHeaderKey(oAuthClientCredentials.value.headerName || "Authorization")
+                                ] =
+                                    `${tokenPrefix.length ? `${tokenPrefix} ` : ""}${redacted ? obfuscateSecret(token) : token}`;
                             },
                         });
                     },

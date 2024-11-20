@@ -1,7 +1,9 @@
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
+import { ApiDefinition, ApiDefinitionV1ToLatest } from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { AuthEdgeConfig } from "@fern-ui/fern-docs-auth";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
+import { ApiDefinitionLoader } from "@fern-ui/fern-docs-server";
 import { getAuthState, type AuthState } from "./auth/getAuthState";
 import { loadWithUrl } from "./loadWithUrl";
 import { pruneWithAuthState } from "./withRbac";
@@ -9,6 +11,11 @@ import { pruneWithAuthState } from "./withRbac";
 interface DocsLoaderFlags {
     isBatchStreamToggleDisabled: boolean;
     isApiScrollingDisabled: boolean;
+
+    // for api definition:
+    useJavaScriptAsTypeScript: boolean;
+    alwaysEnableJavaScriptFetch: boolean;
+    usesApplicationJsonInFormDataValue: boolean;
 }
 
 export class DocsLoader {
@@ -25,6 +32,9 @@ export class DocsLoader {
     private featureFlags: DocsLoaderFlags = {
         isBatchStreamToggleDisabled: false,
         isApiScrollingDisabled: false,
+        useJavaScriptAsTypeScript: false,
+        alwaysEnableJavaScriptFetch: false,
+        usesApplicationJsonInFormDataValue: false,
     };
     public withFeatureFlags(featureFlags: DocsLoaderFlags): DocsLoader {
         this.featureFlags = featureFlags;
@@ -54,6 +64,11 @@ export class DocsLoader {
         ];
     }
 
+    public async isAuthed(): Promise<boolean> {
+        const [authState] = await this.loadAuth();
+        return authState.authed;
+    }
+
     #loadForDocsUrlResponse: DocsV2Read.LoadDocsForUrlResponse | undefined;
     #error: DocsV2Read.getDocsForUrl.Error | undefined;
 
@@ -64,6 +79,24 @@ export class DocsLoader {
     public withLoadDocsForUrlResponse(loadForDocsUrlResponse: DocsV2Read.LoadDocsForUrlResponse): DocsLoader {
         this.#loadForDocsUrlResponse = loadForDocsUrlResponse;
         return this;
+    }
+
+    public async getApiDefinition(key: FernNavigation.ApiDefinitionId): Promise<ApiDefinition | undefined> {
+        const res = await this.loadDocs();
+        if (!res) {
+            return undefined;
+        }
+        const v1 = res.definition.apis[key];
+        if (!v1) {
+            return undefined;
+        }
+        const latest = ApiDefinitionV1ToLatest.from(v1, this.featureFlags).migrate();
+        return ApiDefinitionLoader.create(this.domain, key)
+            .withApiDefinition(latest)
+            .withFlags(this.featureFlags)
+            .withResolveDescriptions(false)
+            .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
+            .load();
     }
 
     private async loadDocs(): Promise<DocsV2Read.LoadDocsForUrlResponse | undefined> {

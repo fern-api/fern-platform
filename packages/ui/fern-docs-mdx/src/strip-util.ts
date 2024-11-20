@@ -16,12 +16,15 @@ export function stripUtil(markdown: string, format: "md" | "mdx" = "mdx"): strin
         // mdast image, and hast img
         if (node.type === "element" && TAG_NAMES_TO_STRIP.includes(node.tagName)) {
             parent.children.splice(idx, 1);
+            return idx;
         }
 
         // jsx img
         if (isMdxJsxElementHast(node) && node.name && TAG_NAMES_TO_STRIP.includes(node.name)) {
             parent.children.splice(idx, 1);
+            return idx;
         }
+        return;
     });
 
     // TODO: (andrew), this might have some issues with formatting new lines

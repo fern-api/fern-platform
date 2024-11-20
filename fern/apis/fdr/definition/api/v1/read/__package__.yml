@@ -119,6 +119,8 @@ types:
     properties:
       endpointId: rootCommons.EndpointId
       accessTokenLocator: rootCommons.JqString
+      headerName: optional<string>
+      tokenPrefix: optional<string>
 
 errors:
   ApiDoesNotExistError:
