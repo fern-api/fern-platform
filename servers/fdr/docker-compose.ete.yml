@@ -29,6 +29,10 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      s3-mock:
+        condition: service_healthy
+      redis_0:
+        condition: service_healthy
   postgres:
     image: postgres:10.3
     restart: always
