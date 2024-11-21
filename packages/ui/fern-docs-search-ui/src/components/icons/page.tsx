@@ -1,4 +1,4 @@
-import { ChevronsLeftRight, ChevronsLeftRightEllipsis, FileText, Hash, History, Webhook } from "lucide-react";
+import { ChevronsLeftRight, FileText, Hash, History, Webhook } from "lucide-react";
 import { SVGProps, forwardRef } from "react";
 import { RemoteIcon } from "./remote";
 
@@ -18,11 +18,11 @@ export const PageIcon = forwardRef<
         return <Webhook ref={ref} {...props} />;
     }
 
-    if (type === "websocket") {
-        return <ChevronsLeftRightEllipsis ref={ref} {...props} />;
-    }
+    // if (type === "websocket") {
+    //     return <ChevronsLeftRightEllipsis ref={ref} {...props} />;
+    // }
 
-    if (type === "http" || type === "webhook") {
+    if (type === "http" || type === "webhook" || type === "websocket") {
         return <ChevronsLeftRight ref={ref} {...props} />;
     }
 

@@ -1,5 +1,6 @@
 import { cn } from "@/components/ui/cn";
 import * as Dialog from "@radix-ui/react-dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { SearchIcon } from "lucide-react";
 import { Kbd } from "../ui/kbd";
 
@@ -30,6 +31,12 @@ export function DesktopSearchDialog({
             </Dialog.Trigger>
             <Dialog.Portal>
                 <Dialog.Overlay className="fixed inset-0 bg-background/80 backdrop-blur-md" />
+
+                <VisuallyHidden>
+                    <Dialog.Title>Search</Dialog.Title>
+                    <Dialog.Description>Search our documentation.</Dialog.Description>
+                </VisuallyHidden>
+
                 <Dialog.Content
                     className="fixed top-[15%] left-1/2 w-[640px] -translate-x-1/2 shadow-xl overflow-hidden origin-left outline-none"
                     asChild

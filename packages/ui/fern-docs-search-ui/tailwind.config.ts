@@ -70,9 +70,17 @@ const config: Config = {
                 md: "calc(var(--radius) - 2px)",
                 sm: "calc(var(--radius) - 4px)",
             },
+            typography: {
+                DEFAULT: {
+                    css: {
+                        maxWidth: "unset",
+                    },
+                },
+            },
         },
     },
     plugins: [
+        require("@tailwindcss/typography"),
         plugin(({ addBase }) => {
             addBase({
                 '[type="search"]::-webkit-search-decoration': { display: "none" },

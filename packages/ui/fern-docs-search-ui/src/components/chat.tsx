@@ -6,7 +6,7 @@ import { CodeBlock } from "./code-block";
 import { MarkdownContent } from "./md-content";
 
 export default function Chat({ initialInput, domain }: { initialInput?: string; domain: string }): ReactElement {
-    const { messages, data, input, handleInputChange, handleSubmit, isLoading } = useChat({
+    const { messages, data, input, handleInputChange, handleSubmit } = useChat({
         initialInput,
         api: `/api/chat?domain=${domain}`,
     });
@@ -15,11 +15,10 @@ export default function Chat({ initialInput, domain }: { initialInput?: string; 
 
     return (
         <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
-            {messagesWithContent.map((m, idx) => (
+            {messagesWithContent.map((m) => (
                 <div key={m.id} className="whitespace-pre-wrap">
                     {m.role === "user" ? "User: " : "AI: "}
                     <MarkdownContent
-                        terminator={isLoading && idx === messagesWithContent.length - 1}
                         components={{
                             pre(props) {
                                 if (isValidElement(props.children) && props.children.type === "code") {

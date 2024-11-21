@@ -15,7 +15,7 @@ export const CodeBlockWithClipboardButton: React.FC<PropsWithChildren<CodeBlockW
     return (
         <div
             className={clsx(
-                "not-prose group/cb-container bg-card relative mb-6 mt-4 flex w-full rounded-lg shadow-sm ring-card-border ring-1 ring-inset",
+                "not-prose group/cb-container bg-card relative mb-6 mt-4 flex w-full rounded-lg shadow-sm ring-[var(--border-color-card)] ring-1 ring-inset",
                 {
                     "dark bg-card-solid": isDarkCodeEnabled,
                 },

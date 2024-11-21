@@ -1,6 +1,7 @@
 "use client";
 
 import { ChatbotDialog } from "@/components/chatbot/chatbot-dialog";
+import { CodeBlock } from "@/components/code-block";
 import { AppSidebar, AppSidebarContent } from "@/components/demo/app-sidebar";
 import { DesktopSearchDialog } from "@/components/demo/desktop-search-dialog";
 import { DesktopInstantSearch } from "@/components/desktop/desktop-instant-search";
@@ -9,7 +10,7 @@ import { SearchClientProvider } from "@/components/shared/search-client-provider
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useTheme } from "next-themes";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, isValidElement, useEffect, useState } from "react";
 import useSWR from "swr";
 import { z } from "zod";
 
@@ -22,7 +23,7 @@ const ApiKeySchema = z.object({
 export function DemoInstantSearchClient({ appId, domain }: { appId: string; domain: string }): ReactElement | false {
     const [desktopDialogOpen, setDesktopDialogOpen] = useState(false);
     const [isChatOpen, setIsChatOpen] = useState(false);
-    const [_initialInput, setInitialInput] = useState<string | undefined>(undefined);
+    const [initialInput, setInitialInput] = useState<string | undefined>(undefined);
     const { setTheme } = useTheme();
     const isMobile = useIsMobile();
 
@@ -62,6 +63,10 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
 
     const { apiKey, userToken } = data;
 
+    const headers: Record<string, string> = {
+        "X-Fern-Docs-Domain": domain,
+    };
+
     return (
         <SearchClientProvider appId={appId} apiKey={apiKey} domain={domain} indexName="fern-docs-search">
             {isMobile ? (
@@ -96,7 +101,27 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                     />
                 </DesktopSearchDialog>
             )}
-            <ChatbotDialog open={isChatOpen} onOpenChange={setIsChatOpen} />
+            <ChatbotDialog
+                open={isChatOpen}
+                onOpenChange={setIsChatOpen}
+                headers={headers}
+                initialInput={initialInput}
+                components={{
+                    pre(props) {
+                        if (isValidElement(props.children) && props.children.type === "code") {
+                            const { children, className } = props.children.props as {
+                                children: string;
+                                className: string;
+                            };
+                            if (typeof children === "string") {
+                                const match = /language-(\w+)/.exec(className || "")?.[1] ?? "plaintext";
+                                return <CodeBlock code={children} language={match} />;
+                            }
+                        }
+                        return <pre {...props} />;
+                    },
+                }}
+            />
         </SearchClientProvider>
     );
 }

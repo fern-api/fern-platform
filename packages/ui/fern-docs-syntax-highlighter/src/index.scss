@@ -38,7 +38,8 @@
     }
 
     .code-block-line-gutter > span {
-        @apply pl-3 text-faded;
+        @apply pl-3;
+        color: var(--grayscale-a9, var(--gray-a9));
     }
 
     .code-block-line-content {
@@ -58,7 +59,8 @@
     }
 
     .code-block-line-group:not(.highlight-focus) .code-block-line.highlight {
-        @apply bg-accent-highlight-faded transition-[background,shadow] shadow-transparent;
+        @apply transition-[background,shadow] shadow-transparent;
+        background-color: var(--accent-2);
     }
 
     .code-block-line-group:not(.highlight-focus) .code-block-line:not(.highlight) + .code-block-line.highlight,

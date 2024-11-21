@@ -1,10 +1,32 @@
 import { algoliaAppId, algoliaWriteApiKey } from "@/server/env-variables";
 import { createAnthropic } from "@ai-sdk/anthropic";
+import { createCohere } from "@ai-sdk/cohere";
+import { createOpenAI } from "@ai-sdk/openai";
 import { createSearchFilters } from "@fern-ui/fern-docs-search-server/algolia";
 import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
-import { StreamData, generateObject, streamText, tool } from "ai";
+import { StreamData, streamText, tool } from "ai";
 import { Hit, algoliasearch } from "algoliasearch";
 import { z } from "zod";
+
+const anthropic = createAnthropic({
+    apiKey: process.env.ANTHROPIC_API_KEY,
+});
+const openai = createOpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});
+const cohere = createCohere({
+    apiKey: process.env.COHERE_API_KEY,
+});
+
+const models = {
+    "gpt-4o": openai.languageModel("gpt-4o"),
+    "gpt-4o-mini": openai.languageModel("gpt-4o-mini"),
+    "command-r-plus": cohere.languageModel("command-r-plus"),
+    "command-r": cohere.languageModel("command-r"),
+    "claude-3-opus": anthropic.languageModel("claude-3-opus-latest"),
+    "claude-3-5-sonnet": anthropic.languageModel("claude-3-5-sonnet-latest"),
+    "claude-3-5-haiku": anthropic.languageModel("claude-3-5-haiku-latest"),
+} as const;
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -20,33 +42,37 @@ If you are unsure, use the getInformation tool and you can use common sense to r
 Use your abilities as a reasoning machine to answer questions based on the information you do have.`;
 
 export async function POST(request: Request): Promise<Response> {
-    const domain = new URL(request.url).searchParams.get("domain");
+    const domain = request.headers.get("X-Fern-Docs-Domain");
+    const modelId = request.headers.get("X-Fern-Docs-Model");
 
     if (!domain) {
         return new Response("Domain is required", { status: 400 });
     }
 
+    if (!modelId) {
+        return new Response("Model is required", { status: 400 });
+    }
+
+    const model = models[modelId as keyof typeof models];
+
+    if (!model) {
+        return new Response(`Invalid model: ${modelId}`, { status: 400 });
+    }
+
     const { messages } = await request.json();
-
-    const anthropic = createAnthropic({
-        apiKey: process.env.ANTHROPIC_API_KEY,
-    });
-
-    const mediumModel = anthropic.languageModel("claude-3-5-sonnet-latest");
-    const smallModel = anthropic.languageModel("claude-3-5-haiku-latest");
 
     const data = new StreamData();
 
     const allHits: Map<string, Hit<AlgoliaRecord>> = new Map();
 
     const result = await streamText({
-        model: mediumModel,
+        model,
         system,
         messages,
         maxSteps: 10,
         maxRetries: 3,
         tools: {
-            search: tool({
+            bm25search: tool({
                 description: "query the knowledge base's search index",
                 parameters: z.object({
                     query: z
@@ -68,69 +94,44 @@ export async function POST(request: Request): Promise<Response> {
                     return hits.map(toContent);
                 },
             }),
-            understandQuery: tool({
-                description: "understand the users query. use this tool on every prompt.",
-                parameters: z.object({
-                    query: z.string().describe("the users query"),
-                    toolsToCallInOrder: z
-                        .array(z.string())
-                        .describe(
-                            "these are the tools you need to call in the order necessary to respond to the users query",
-                        ),
-                }),
-                execute: async ({ query }) => {
-                    const { object } = await generateObject({
-                        model: smallModel,
-                        system: "You are a query understanding assistant. Analyze the user query and generate similar questions.",
-                        schema: z.object({
-                            questions: z
-                                .array(z.string())
-                                .max(3)
-                                .describe("similar questions to the user's query. be concise."),
-                        }),
-                        prompt: `Analyze this query: "${query}". Provide the following: 3 similar questions that could help answer the user's query`,
-                    });
-                    return object.questions;
-                },
-            }),
         },
-        onFinish: async ({ text }) => {
-            const records: string[] = [];
+        //         onFinish: async ({ text }) => {
+        //             const records: string[] = [];
 
-            for (const { objectID, ...hit } of allHits.values()) {
-                records.push(`${objectID}, ${JSON.stringify(toContent(hit))}`);
-            }
+        //             for (const { objectID, ...hit } of allHits.values()) {
+        //                 records.push(`${objectID}, ${JSON.stringify(toContent(hit))}`);
+        //             }
 
-            const { object } = await generateObject({
-                model: smallModel,
-                system: "You are a reference extractor.",
-                schema: z.object({
-                    relevantObjectIDs: z
-                        .array(z.string())
-                        .describe("the objectIDs of the hits that are relevant to the text"),
-                }),
-                prompt: `Is the following reference relevant to the text?
+        //             const { object } = await generateObject({
+        //                 model,
+        //                 system: "You are a reference extractor.",
+        //                 schema: z.object({
+        //                     relevantObjectIDs: z
+        //                         .array(z.string())
+        //                         .describe("the objectIDs of the hits that are relevant to the text"),
+        //                 }),
+        //                 prompt: `Is the following reference relevant to the text?
 
-## Text
-${text}
+        // ## Text
+        // ${text}
 
-## Records
-ObjectID, Record
-${records.join("\n")}`,
-            });
+        // ## Records
+        // ObjectID, Record
+        // ${records.join("\n")}`,
+        //             });
 
-            object.relevantObjectIDs.forEach((objectID) => {
-                const hit = allHits.get(objectID);
-                if (hit) {
-                    data.append({
-                        type: "reference",
-                        title: hit.title,
-                        path: `${hit.pathname}${hit.hash ?? ""}`,
-                    });
-                }
-            });
-            await data.close();
-        },
+        //             object.relevantObjectIDs.forEach((objectID) => {
+        //                 const hit = allHits.get(objectID);
+        //                 if (hit) {
+        //                     data.append({
+        //                         type: "reference",
+        //                         title: hit.title,
+        //                         path: `${hit.pathname}${hit.hash ?? ""}`,
+        //                     });
+        //                 }
+        //             });
+        //             await data.close();
+        //         },
     });
 
     return result.toDataStreamResponse({ data });

@@ -122,6 +122,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                 )}
                 <Command.Input
                     ref={inputRef}
+                    inputMode="search"
                     autoFocus
                     value={query}
                     placeholder={toPlaceholder(filters)}
