@@ -3,14 +3,11 @@ import { z } from "zod";
 // in order of priority:
 export const SEARCHABLE_ATTRIBUTES = [
     "title",
-    "description,payload_description,request_description,response_description",
-    "unordered(content)",
     "endpoint_path",
     "endpoint_path_alternates",
     "parameter_name",
-    "keywords",
+    "unordered(keywords)",
 
-    // types (lower priority)
     "availability",
     "api_type",
     "method",
@@ -19,6 +16,9 @@ export const SEARCHABLE_ATTRIBUTES = [
     "response_type",
     "status_code",
     "parameter_type",
+
+    "description,payload_description,request_description,response_description",
+    "unordered(content)",
 
     // make code snippets searchable
     "unordered(code_snippets.code)",
@@ -153,7 +153,7 @@ const EndpointBaseRecordSchema = BaseRecordSchema.extend({
     method: z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]),
     endpoint_path: z.string(),
     endpoint_path_alternates: z.array(z.string()).optional(),
-    response_type: z.enum(["stream"]).optional(),
+    response_type: z.enum(["stream", "file", "json"]).optional(),
     environments: z.array(z.object({ id: z.string(), url: z.string() })).optional(),
     default_environment_id: z.string().optional(),
 });

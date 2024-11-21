@@ -23,6 +23,8 @@ export function createEndpointBaseRecordWebSocket({
 
     const keywords: string[] = [...(base.keywords ?? [])];
 
+    keywords.push("endpoint", "api", "websocket", "web socket", "stream");
+
     ApiDefinition.Transformer.with({
         TypeShape: (type) => {
             if (type.type === "alias" && type.value.type === "id") {

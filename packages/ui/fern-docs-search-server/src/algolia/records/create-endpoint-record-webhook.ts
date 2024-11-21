@@ -22,6 +22,8 @@ export function createEndpointBaseRecordWebhook({
 
     const keywords: string[] = [...(base.keywords ?? [])];
 
+    keywords.push("endpoint", "api", "webhook");
+
     ApiDefinition.Transformer.with({
         TypeShape: (type) => {
             if (type.type === "alias" && type.value.type === "id") {

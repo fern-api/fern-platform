@@ -23,6 +23,21 @@ export function createEndpointBaseRecordHttp({
 
     const keywords: string[] = [...(base.keywords ?? [])];
 
+    keywords.push("endpoint", "api", "http", "rest", "openapi");
+
+    const response_type =
+        endpoint.response?.body.type === "streamingText" || endpoint.response?.body.type === "stream"
+            ? "stream"
+            : endpoint.response?.body.type === "fileDownload"
+              ? "file"
+              : endpoint.response?.body != null
+                ? "json"
+                : undefined;
+
+    if (response_type != null) {
+        keywords.push(response_type);
+    }
+
     ApiDefinition.Transformer.with({
         TypeShape: (type) => {
             if (type.type === "alias" && type.value.type === "id") {
@@ -54,10 +69,7 @@ export function createEndpointBaseRecordHttp({
                 String(new URL(endpoint_path_curly, withDefaultProtocol(environment.baseUrl))),
             ) ?? []),
         ],
-        response_type:
-            endpoint.response?.body.type === "streamingText" || endpoint.response?.body.type === "stream"
-                ? "stream"
-                : undefined,
+        response_type,
         description: prepared.content,
         code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
         availability: endpoint.availability,
