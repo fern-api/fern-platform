@@ -30,9 +30,9 @@ describe("ObjectConverterNode", () => {
                 },
             };
             const node = new ObjectConverterNode(input, mockContext, [], "test");
-            expect(Object.keys(node.properties)).toEqual(["name", "age"]);
-            expect(node.properties.name).toBeInstanceOf(SchemaConverterNode);
-            expect(node.properties.age).toBeInstanceOf(SchemaConverterNode);
+            expect(Object.keys(node.properties ?? {})).toEqual(["name", "age"]);
+            expect(node.properties?.name).toBeInstanceOf(SchemaConverterNode);
+            expect(node.properties?.age).toBeInstanceOf(SchemaConverterNode);
         });
 
         it("should handle additionalProperties as boolean true", () => {
