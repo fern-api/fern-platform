@@ -1,62 +1,31 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { type ReactElement } from "react";
+import { useEffect, type ReactElement } from "react";
+import { handleReindex } from "./actions/reindex";
 import { DemoInstantSearchClient } from "./client-component";
 
 export function DesktopInstantSearchWrapper({ appId }: { appId: string }): ReactElement {
     const searchParams = useSearchParams();
     const selectedDomain = searchParams.get("domain") ?? "buildwithfern.com";
-    // const router = useRouter();
-    // const [selectedDomain, setSelectedDomain] = useState(() => searchParams.get("domain") ?? "buildwithfern.com");
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.metaKey && e.shiftKey && e.key === "k") {
+                e.preventDefault();
+                e.stopPropagation();
+
+                alert("Reindexing...");
+                void handleReindex(selectedDomain);
+            }
+        };
+        document.addEventListener("keydown", handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
+    }, [selectedDomain]);
 
     return (
-        <>
-            {/* <div className="flex gap-4 w-full">
-                <form
-                    className="flex gap-4 flex-1"
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        try {
-                            const url = new URL(
-                                e.currentTarget.domain.value.startsWith("http")
-                                    ? e.currentTarget.domain.value
-                                    : `https://${e.currentTarget.domain.value}`,
-                            );
-                            setSelectedDomain(url.hostname);
-                            router.replace(`?domain=${url.hostname}`);
-                        } catch (_error) {
-                            alert(`Invalid domain: ${e.currentTarget.domain.value}`);
-                        }
-                    }}
-                >
-                    <Input
-                        name="domain"
-                        className="border rounded-md p-2 bg-white dark:bg-black flex-1"
-                        placeholder="yourdocs.docs.buildwithfern.com"
-                        defaultValue={selectedDomain}
-                    />
-                    <Button type="submit" className="border rounded-md p-2">
-                        Set Domain
-                    </Button>
-                </form>
-                <form action={() => handleReindex(selectedDomain)}>
-                    <SubmitButton />
-                </form>
-            </div> */}
-
-            <div className="w-[500px]">
-                <DemoInstantSearchClient appId={appId} domain={selectedDomain} />
-            </div>
-        </>
+        <div className="w-[500px]">
+            <DemoInstantSearchClient appId={appId} domain={selectedDomain} />
+        </div>
     );
 }
-
-// function SubmitButton() {
-//     const { pending } = useFormStatus();
-//     return (
-//         <Button type="submit" disabled={pending} className="border rounded-md p-2 disabled:opacity-50">
-//             Reindex
-//         </Button>
-//     );
-// }
