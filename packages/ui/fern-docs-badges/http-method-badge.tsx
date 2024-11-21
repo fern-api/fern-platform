@@ -5,10 +5,10 @@ import { UIColor } from "./colors";
 export type HttpMethod = "GET" | "DELETE" | "POST" | "PUT" | "PATCH" | "HEAD" | "OPTIONS" | "CONNECT" | "TRACE";
 export const HttpMethodOrder = [
     "GET",
-    "DELETE",
     "POST",
     "PUT",
     "PATCH",
+    "DELETE",
     "HEAD",
     "OPTIONS",
     "CONNECT",
