@@ -45,6 +45,7 @@ export function FernDocsInstantSearch({
                 facetingAfterDistinct
                 maxFacetHits={100}
                 maxValuesPerFacet={1000}
+                userToken={authenticatedUserToken ?? userToken}
             />
             {React.cloneElement(children, { filters, setFilters })}
         </InstantSearchNext>

@@ -6,16 +6,9 @@ export const SEARCHABLE_ATTRIBUTES = [
     "endpoint_path",
     "endpoint_path_alternates",
     "parameter_name",
-    "unordered(keywords)",
 
-    "availability",
-    "api_type",
-    "method",
-    "section_type",
-    "subsection_type",
-    "response_type",
-    "status_code",
-    "parameter_type",
+    "unordered(keywords)",
+    "availability,api_type,method,section_type,subsection_type,response_type,status_code,parameter_type",
 
     "description,payload_description,request_description,response_description",
     "unordered(content)",
