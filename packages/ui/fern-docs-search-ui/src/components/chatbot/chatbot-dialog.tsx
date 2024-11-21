@@ -73,13 +73,13 @@ const Composer = forwardRef<HTMLTextAreaElement>((_, ref) => {
 
     return (
         <div
-            className="flex w-full cursor-text flex-col rounded-3xl px-2.5 py-1 transition-colors contain-inline-size bg-[var(--gray-a2)]"
+            className="flex w-full cursor-text flex-col rounded-3xl px-2.5 py-1 transition-colors contain-inline-size bg-[var(--olive-a3)]"
             onClick={() => inputRef.current?.focus()}
         >
             <div className="flex min-h-[44px] items-center px-2">
                 <TextArea
                     ref={composeRefs(ref, inputRef)}
-                    className="w-full px-0 py-2 m-0 resize-none text-grayscale-12 placeholder:text-grayscale-a10 border-0 bg-transparent focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 max-h-52"
+                    className="w-full px-0 py-2 m-0 resize-none text-grayscale-12 placeholder:text-grayscale-a10 border-0 bg-transparent focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 max-h-52 placeholder:text-[var(--olive-a9)]"
                     placeholder="Ask AI anything about our documentation"
                     onKeyDown={(e) => {
                         if (e.key === "Enter" && !e.shiftKey) {
