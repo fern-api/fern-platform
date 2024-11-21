@@ -1,6 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
+import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
 import { getSchemaIdFromReference } from "../../utils/3.1/getSchemaIdFromReference";
 
 export class ReferenceConverterNode extends BaseOpenApiV3_1Node<
@@ -9,15 +9,13 @@ export class ReferenceConverterNode extends BaseOpenApiV3_1Node<
 > {
     schemaId: string | undefined;
 
-    constructor(
-        input: OpenAPIV3_1.ReferenceObject,
-        context: BaseOpenApiV3_1ConverterNodeContext,
-        accessPath: string[],
-        pathId: string,
-    ) {
-        super(input, context, accessPath, pathId);
+    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.ReferenceObject>) {
+        super(...args);
+        this.safeParse();
+    }
 
-        this.schemaId = getSchemaIdFromReference(input);
+    parse(): void {
+        this.schemaId = getSchemaIdFromReference(this.input);
 
         if (this.schemaId == null) {
             this.context.errors.error({

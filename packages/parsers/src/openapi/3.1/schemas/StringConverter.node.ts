@@ -2,7 +2,7 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import { FdrStringType } from "../../../types/fdr.types";
-import { BaseOpenApiV3_1ConverterNodeContext, BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
+import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
 import { ConstArrayToType, OPENAPI_STRING_TYPE_FORMAT } from "../../types/format.types";
 
 export declare namespace StringConverterNode {
@@ -29,7 +29,12 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<StringConverterNode
     minLength: number | undefined;
     maxLength: number | undefined;
 
-    private mapToFdrType = (format: ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT>): FdrStringType["type"] => {
+    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<StringConverterNode.Input>) {
+        super(...args);
+        this.safeParse();
+    }
+
+    mapToFdrType(format: ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT>): FdrStringType["type"] {
         switch (format) {
             case "base64url":
             case "binary":
@@ -83,30 +88,23 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<StringConverterNode
                 new UnreachableCaseError(format);
                 return "string";
         }
-    };
+    }
 
-    constructor(
-        input: StringConverterNode.Input,
-        context: BaseOpenApiV3_1ConverterNodeContext,
-        accessPath: string[],
-        pathId: string,
-    ) {
-        super(input, context, accessPath, pathId);
-
-        if (input.default != null && typeof input.default !== "string") {
+    parse(): void {
+        if (this.input.default != null && typeof this.input.default !== "string") {
             this.context.errors.warning({
                 message: "The default value for an string type should be an string",
                 path: this.accessPath,
             });
         }
-        this.default = input.default;
+        this.default = this.input.default;
 
-        if (input.format != null && isOpenApiStringTypeFormat(input.format)) {
-            this.type = this.mapToFdrType(input.format);
+        if (this.input.format != null && isOpenApiStringTypeFormat(this.input.format)) {
+            this.type = this.mapToFdrType(this.input.format);
         }
     }
 
-    public convert(): StringConverterNode.Output | undefined {
+    convert(): StringConverterNode.Output | undefined {
         return {
             type: "alias",
             value: {

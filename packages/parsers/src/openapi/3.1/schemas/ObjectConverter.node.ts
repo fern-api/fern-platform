@@ -1,7 +1,7 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1ConverterNodeContext, BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
+import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
 import { getSchemaIdFromReference } from "../../utils/3.1/getSchemaIdFromReference";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { SchemaConverterNode } from "./SchemaConverter.node";
@@ -18,37 +18,40 @@ export class ObjectConverterNode extends BaseOpenApiV3_1Node<
 > {
     description: string | undefined;
     extends: string[] = [];
-    properties: Record<string, SchemaConverterNode>;
+    properties: Record<string, SchemaConverterNode> | undefined;
     extraProperties: string | SchemaConverterNode | undefined;
 
-    constructor(
-        input: ObjectConverterNode.Input,
-        context: BaseOpenApiV3_1ConverterNodeContext,
-        accessPath: string[],
-        pathId: string,
-    ) {
-        super(input, context, accessPath, pathId);
+    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<ObjectConverterNode.Input>) {
+        super(...args);
+        this.safeParse();
+    }
 
+    parse(): void {
         this.extends = [];
 
         this.properties = Object.fromEntries(
-            Object.entries(input.properties ?? {}).map(([key, property]) => {
-                return [key, new SchemaConverterNode(property, context, accessPath, pathId)];
+            Object.entries(this.input.properties ?? {}).map(([key, property]) => {
+                return [key, new SchemaConverterNode(property, this.context, this.accessPath, this.pathId)];
             }),
         );
 
         this.extraProperties =
-            input.additionalProperties != null
-                ? typeof input.additionalProperties === "boolean"
-                    ? input.additionalProperties
-                        ? input.title
+            this.input.additionalProperties != null
+                ? typeof this.input.additionalProperties === "boolean"
+                    ? this.input.additionalProperties
+                        ? this.input.title
                         : undefined
-                    : new SchemaConverterNode(input.additionalProperties, context, accessPath, pathId)
+                    : new SchemaConverterNode(
+                          this.input.additionalProperties,
+                          this.context,
+                          this.accessPath,
+                          this.pathId,
+                      )
                 : undefined;
 
-        if (input.allOf != null) {
+        if (this.input.allOf != null) {
             this.extends = this.extends.concat(
-                input.allOf
+                this.input.allOf
                     .map((type) => {
                         if (isReferenceObject(type)) {
                             return getSchemaIdFromReference(type);
@@ -56,8 +59,16 @@ export class ObjectConverterNode extends BaseOpenApiV3_1Node<
                             this.properties = {
                                 ...this.properties,
                                 ...Object.fromEntries(
-                                    Object.entries(input.properties ?? {}).map(([key, property]) => {
-                                        return [key, new SchemaConverterNode(property, context, accessPath, pathId)];
+                                    Object.entries(this.input.properties ?? {}).map(([key, property]) => {
+                                        return [
+                                            key,
+                                            new SchemaConverterNode(
+                                                property,
+                                                this.context,
+                                                this.accessPath,
+                                                this.pathId,
+                                            ),
+                                        ];
                                     }),
                                 ),
                             };
@@ -68,10 +79,14 @@ export class ObjectConverterNode extends BaseOpenApiV3_1Node<
             );
         }
 
-        this.description = input.description;
+        this.description = this.input.description;
     }
 
-    convertProperties(): FdrAPI.api.latest.ObjectProperty[] {
+    convertProperties(): FdrAPI.api.latest.ObjectProperty[] | undefined {
+        if (this.properties == null) {
+            return undefined;
+        }
+
         return Object.entries(this.properties)
             .map(([key, node]) => {
                 const convertedShape = node.convert();
@@ -111,10 +126,15 @@ export class ObjectConverterNode extends BaseOpenApiV3_1Node<
     }
 
     convert(): FdrAPI.api.latest.TypeShape.Object_ | undefined {
+        const properties = this.convertProperties();
+        if (properties == null) {
+            return undefined;
+        }
+
         return {
             type: "object",
             extends: this.extends.map((id) => FdrAPI.TypeId(id)),
-            properties: this.convertProperties(),
+            properties,
             extraProperties: this.convertExtraProperties(),
         };
     }

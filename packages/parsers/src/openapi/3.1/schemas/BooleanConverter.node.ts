@@ -1,6 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1ConverterNodeContext, BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
+import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
 
 export declare namespace BooleanConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
@@ -18,24 +18,22 @@ export declare namespace BooleanConverterNode {
 export class BooleanConverterNode extends BaseOpenApiV3_1Node<BooleanConverterNode.Input, BooleanConverterNode.Output> {
     default: boolean | undefined;
 
-    constructor(
-        input: BooleanConverterNode.Input,
-        context: BaseOpenApiV3_1ConverterNodeContext,
-        accessPath: string[],
-        pathId: string,
-    ) {
-        super(input, context, accessPath, pathId);
+    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<BooleanConverterNode.Input>) {
+        super(...args);
+        this.safeParse();
+    }
 
-        if (input.default != null && typeof input.default !== "boolean") {
+    parse(): void {
+        if (this.input.default != null && typeof this.input.default !== "boolean") {
             this.context.errors.warning({
                 message: "The default value for a boolean type should be a boolean",
                 path: this.accessPath,
             });
         }
-        this.default = input.default;
+        this.default = this.input.default;
     }
 
-    public convert(): BooleanConverterNode.Output | undefined {
+    convert(): BooleanConverterNode.Output | undefined {
         return {
             type: "alias",
             value: {

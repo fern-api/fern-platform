@@ -1,7 +1,11 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1ConverterNodeContext, BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
+import {
+    BaseOpenApiV3_1ConverterNodeContext,
+    BaseOpenApiV3_1Node,
+    BaseOpenApiV3_1NodeConstructorArgs,
+} from "../../BaseOpenApiV3_1Converter.node";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { SchemaConverterNode } from "./SchemaConverter.node";
@@ -22,14 +26,17 @@ export class OneOfConverterNode extends BaseOpenApiV3_1Node<
 
     undiscriminatedMapping: SchemaConverterNode[] | undefined;
 
-    constructor(
+    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<OneOfConverterNode.Input>) {
+        super(...args);
+        this.safeParse();
+    }
+
+    parse(
         input: OneOfConverterNode.Input,
         context: BaseOpenApiV3_1ConverterNodeContext,
         accessPath: string[],
         pathId: string,
-    ) {
-        super(input, context, accessPath, pathId);
-
+    ): void {
         if (input.oneOf != null) {
             if (input.discriminator == null) {
                 this.discriminated = false;
@@ -46,14 +53,15 @@ export class OneOfConverterNode extends BaseOpenApiV3_1Node<
                     })
                     .filter(isNonNullish);
             } else {
-                this.discriminated = true;
-                this.discriminant = input.discriminator.propertyName;
-                this.discriminatedMapping = {};
-
-                const discriminatedMapping = this.discriminatedMapping;
-
                 const maybeMapping = input.discriminator.mapping;
                 if (maybeMapping != null) {
+                    this.discriminated = true;
+
+                    this.discriminant = input.discriminator.propertyName;
+                    this.discriminatedMapping = {};
+
+                    const discriminatedMapping = this.discriminatedMapping;
+
                     Object.entries(maybeMapping).map(([key, value]) => {
                         discriminatedMapping[key] = new SchemaConverterNode(
                             resolveSchemaReference(
@@ -67,14 +75,12 @@ export class OneOfConverterNode extends BaseOpenApiV3_1Node<
                             pathId,
                         );
                     });
-                } else {
-                    // TODO: deeply visit the schemas to find the discriminant values. For now we assume all schemas are not references
                 }
             }
         }
     }
 
-    public convert():
+    convert():
         | FdrAPI.api.latest.TypeShape.DiscriminatedUnion
         | FdrAPI.api.latest.TypeShape.UndiscriminatedUnion
         | undefined {

@@ -1,7 +1,7 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1ConverterNodeContext, BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
+import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
 
 export declare namespace EnumConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
@@ -13,16 +13,14 @@ export class EnumConverterNode extends BaseOpenApiV3_1Node<EnumConverterNode.Inp
     default: string | undefined;
     values: string[] = [];
 
-    constructor(
-        input: EnumConverterNode.Input,
-        context: BaseOpenApiV3_1ConverterNodeContext,
-        accessPath: string[],
-        pathId: string,
-    ) {
-        super(input, context, accessPath, pathId);
+    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<EnumConverterNode.Input>) {
+        super(...args);
+        this.safeParse();
+    }
 
-        if (input.enum != null) {
-            this.values = input.enum
+    parse(): void {
+        if (this.input.enum != null) {
+            this.values = this.input.enum
                 .map((value) => {
                     // TODO: Support { name?: .., description?: .., casing?: .. } here as well
                     if (typeof value !== "string") {
@@ -38,10 +36,10 @@ export class EnumConverterNode extends BaseOpenApiV3_1Node<EnumConverterNode.Inp
             this.values = Array.from(new Set(this.values));
         }
 
-        this.default = input.default;
+        this.default = this.input.default;
     }
 
-    public convert(): FdrAPI.api.latest.TypeShape.Enum | undefined {
+    convert(): FdrAPI.api.latest.TypeShape.Enum | undefined {
         return {
             type: "enum",
             values: this.values.map((value) => ({

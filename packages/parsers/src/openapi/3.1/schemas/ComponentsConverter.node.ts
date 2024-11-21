@@ -1,7 +1,7 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1ConverterNodeContext, BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
+import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export class ComponentsConverterNode extends BaseOpenApiV3_1Node<
@@ -10,29 +10,27 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1Node<
 > {
     typeSchemas: Record<string, SchemaConverterNode> | undefined;
 
-    constructor(
-        input: OpenAPIV3_1.ComponentsObject,
-        context: BaseOpenApiV3_1ConverterNodeContext,
-        accessPath: string[],
-        pathId: string,
-    ) {
-        super(input, context, accessPath, pathId);
+    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.ComponentsObject>) {
+        super(...args);
+        this.safeParse();
+    }
 
-        if (input.schemas == null) {
+    parse(): void {
+        if (this.input.schemas == null) {
             this.context.errors.error({
                 message: "No schemas found in components",
-                path: accessPath,
+                path: this.accessPath,
             });
         } else {
             this.typeSchemas = Object.fromEntries(
-                Object.entries(input.schemas).map(([key, value]) => {
-                    return [key, new SchemaConverterNode(value, context, accessPath, pathId)];
+                Object.entries(this.input.schemas).map(([key, value]) => {
+                    return [key, new SchemaConverterNode(value, this.context, this.accessPath, this.pathId)];
                 }),
             );
         }
     }
 
-    public convert(): FdrAPI.api.latest.ApiDefinition["types"] | undefined {
+    convert(): FdrAPI.api.latest.ApiDefinition["types"] | undefined {
         if (this.typeSchemas == null) {
             return undefined;
         }
