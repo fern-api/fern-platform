@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { fn } from "@storybook/test";
-import { DesktopCommand } from "./DesktopCommand";
+import { DesktopCommand } from "./desktop-command";
 const meta: Meta<typeof DesktopCommand> = {
     title: "Desktop/DesktopCommand",
     component: DesktopCommand,

@@ -1,6 +1,6 @@
 import { FileText, History } from "lucide-react";
 import { SVGProps, forwardRef } from "react";
-import { RemoteIcon } from "./RemoteIcon";
+import { RemoteIcon } from "./remote";
 
 export const PageIcon = forwardRef<
     SVGSVGElement,

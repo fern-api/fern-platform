@@ -11,26 +11,7 @@ const utc = tz("UTC");
 
 const headingLevels = ["h0", "h1", "h2", "h3", "h4", "h5", "h6"] as const;
 
-function HierarchyBreadcrumb({
-    hierarchy,
-    level,
-}: {
-    hierarchy: Partial<Record<(typeof headingLevels)[number], { title?: string; id?: string }>> | undefined;
-    level: (typeof headingLevels)[number] | undefined;
-}) {
-    if (!level) {
-        return false;
-    }
-
-    const breadcrumb: string[] = [];
-
-    headingLevels.slice(0, headingLevels.indexOf(level)).forEach((headingLevel) => {
-        const title = hierarchy?.[headingLevel]?.title;
-        if (title) {
-            breadcrumb.push(title);
-        }
-    });
-
+function Breadcrumb({ breadcrumb }: { breadcrumb: string[] }): ReactNode {
     if (breadcrumb.length === 0) {
         return false;
     }
@@ -49,7 +30,7 @@ function HierarchyBreadcrumb({
 
 function HitContentWithTitle({ hit, children }: { hit: AlgoliaRecordHit; children: ReactNode }): ReactElement {
     return (
-        <div className="space-y-1.5 flex-1">
+        <div className="space-y-1 flex-1">
             <div className="flex items-baseline gap-1 justify-between">
                 <Highlight
                     attribute="title"
@@ -75,7 +56,7 @@ function HitContentWithTitle({ hit, children }: { hit: AlgoliaRecordHit; childre
 function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
     return (
         <HitContentWithTitle hit={hit}>
-            <HierarchyBreadcrumb hierarchy={hit.hierarchy} level={hit.level} />
+            <Breadcrumb breadcrumb={createHierarchyBreadcrumb(hit.breadcrumb, hit.hierarchy, hit.level)} />
             <Snippet
                 attribute={hit._highlightResult?.description ? "description" : "content"}
                 hit={hit}
@@ -93,7 +74,7 @@ function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement
     const datestring = format(utc(hit.date), "MMM d, yyyy");
     return (
         <HitContentWithTitle hit={hit}>
-            <div className="fern-search-hit-breadcrumb">{datestring}</div>
+            <Breadcrumb breadcrumb={[...hit.breadcrumb.map((crumb) => crumb.title), datestring]} />
             <Snippet
                 attribute={hit._highlightResult?.description ? "description" : "content"}
                 hit={hit}
@@ -152,4 +133,25 @@ export function HitContent({ hit }: { hit: MarkRequired<AlgoliaRecordHit, "type"
         default:
             throw new UnreachableCaseError(hit);
     }
+}
+
+function createHierarchyBreadcrumb(
+    breadcrumb: { title: string; pathname?: string }[],
+    hierarchy: Partial<Record<(typeof headingLevels)[number], { title?: string; id?: string }>> | undefined,
+    level: (typeof headingLevels)[number] | undefined,
+) {
+    const combinedBreadcrumb: string[] = [];
+
+    combinedBreadcrumb.push(...breadcrumb.map((crumb) => crumb.title));
+
+    if (level) {
+        headingLevels.slice(0, headingLevels.indexOf(level)).forEach((headingLevel) => {
+            const title = hierarchy?.[headingLevel]?.title;
+            if (title) {
+                combinedBreadcrumb.push(title);
+            }
+        });
+    }
+
+    return combinedBreadcrumb;
 }

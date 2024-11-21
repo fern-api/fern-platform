@@ -19,7 +19,7 @@ export function useSearch({ filters }: FacetOpts): UseSearch {
     const { query, refine, clear } = useSearchBox();
 
     const { items } = useHits<AlgoliaRecord>();
-    const groups = generateHits(items);
+    const groups = generateHits(query.trimStart().length > 0 || filters.length > 0 ? items : []);
 
     const { data: facetsResponse, error, isLoading } = useFacets({ filters });
     const facets = toFilterOptions(facetsResponse, "");

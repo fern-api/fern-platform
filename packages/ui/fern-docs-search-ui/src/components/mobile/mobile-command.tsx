@@ -5,14 +5,14 @@ import { Command } from "cmdk";
 import { Laptop, ListFilter, MessageCircle, Moon, Sun } from "lucide-react";
 import { ComponentProps, Dispatch, SetStateAction, forwardRef, useRef, useState } from "react";
 import { MarkRequired } from "ts-essentials";
-import { PageIcon } from "../icons/PageIcon";
-import { AskAIText } from "../shared/AskAIText";
-import { HitContent } from "../shared/HitContent";
+import { PageIcon } from "../icons/page";
+import { AskAIText } from "../shared/askai-text";
 import "../shared/common.scss";
+import { HitContent } from "../shared/hit-content";
 import { AlgoliaRecordHit } from "../types";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { MobileFacetDialog } from "./MobileFacetDialog";
+import { MobileFacetDialog } from "./mobile-facet-dialog";
 import "./mobile.scss";
 
 export interface MobileCommandProps extends Omit<ComponentProps<typeof Command>, "onSelect"> {

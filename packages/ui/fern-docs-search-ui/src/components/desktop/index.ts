@@ -1,1 +1,1 @@
-export { DesktopInstantSearch } from "./DesktopInstantSearch";
+export { DesktopInstantSearch } from "./desktop-instant-search";

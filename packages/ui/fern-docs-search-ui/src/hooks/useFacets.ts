@@ -1,4 +1,4 @@
-import { useSearchClient } from "@/components/shared/SearchClientProvider";
+import { useSearchClient } from "@/components/shared/search-client-provider";
 import { FacetName, FacetsResponse, isFacetName } from "@/utils/facet-display";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { SWRResponse, preload } from "swr";

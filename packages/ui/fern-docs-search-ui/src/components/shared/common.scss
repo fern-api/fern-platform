@@ -26,13 +26,23 @@
 .fern-search-hit-snippet,
 .fern-search-hit-endpoint-path {
     overflow: hidden;
-    line-height: 1;
     overflow-wrap: break-word;
     color: hsl(var(--muted-text-color));
-    line-clamp: 2;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow-wrap: break-word;
+    text-overflow: ellipsis;
+}
+
+.fern-search-hit-snippet {
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+}
+
+.fern-search-hit-breadcrumb,
+.fern-search-hit-endpoint-path {
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
 }
 
 .fern-search-hit-snippet {

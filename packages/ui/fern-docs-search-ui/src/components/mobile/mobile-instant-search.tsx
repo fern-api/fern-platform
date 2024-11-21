@@ -1,8 +1,8 @@
 import { FacetName } from "@/utils/facet-display";
 import "instantsearch.css/themes/reset.css";
 import { PropsWithChildren, type ReactElement } from "react";
-import { FernDocsInstantSearch } from "../shared/FernDocsInstantSearch";
-import { MobileCommandController } from "./MobileCommandController";
+import { FernDocsInstantSearch } from "../shared/fern-docs-instant-search";
+import { MobileCommandController } from "./mobile-command-controller";
 
 interface MobileInstantSearchProps {
     /**

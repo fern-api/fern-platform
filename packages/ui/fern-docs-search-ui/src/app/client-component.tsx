@@ -1,12 +1,13 @@
 "use client";
 
-import { DesktopInstantSearch } from "@/components/desktop/DesktopInstantSearch";
-import { MobileInstantSearch } from "@/components/mobile/MobileInstantSearch";
-import { SearchClientProvider } from "@/components/shared/SearchClientProvider";
+import { ChatbotDialog } from "@/components/chatbot/chatbot-dialog";
+import { DesktopInstantSearch } from "@/components/desktop/desktop-instant-search";
+import { MobileInstantSearch } from "@/components/mobile/mobile-instant-search";
+import { SearchClientProvider } from "@/components/shared/search-client-provider";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTheme } from "next-themes";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import useSWR from "swr";
 import { z } from "zod";
 
@@ -17,8 +18,8 @@ const ApiKeySchema = z.object({
 });
 
 export function DesktopInstantSearchClient({ appId, domain }: { appId: string; domain: string }): ReactElement | false {
-    // const [isChatOpen, setIsChatOpen] = useState(false);
-    // const [initialInput, setInitialInput] = useState<string | undefined>(undefined);
+    const [isChatOpen, setIsChatOpen] = useState(false);
+    const [_initialInput, setInitialInput] = useState<string | undefined>(undefined);
     const { setTheme } = useTheme();
 
     const handleSubmit = (path: string) => {
@@ -52,17 +53,25 @@ export function DesktopInstantSearchClient({ appId, domain }: { appId: string; d
                     <TabsContent value="desktop">
                         <DesktopInstantSearch
                             onSelect={handleSubmit}
-                            // onAskAI={({ initialInput }) => {
-                            //     setInitialInput(initialInput);
-                            //     setIsChatOpen(true);
-                            // }}
+                            onAskAI={({ initialInput }) => {
+                                setInitialInput(initialInput);
+                                setIsChatOpen(true);
+                            }}
                             userToken={userToken}
                             setTheme={setTheme}
                         />
                     </TabsContent>
                     <TabsContent value="mobile">
                         <div className="border border-border rounded-lg">
-                            <MobileInstantSearch onSelect={handleSubmit} userToken={userToken} setTheme={setTheme}>
+                            <MobileInstantSearch
+                                onSelect={handleSubmit}
+                                userToken={userToken}
+                                setTheme={setTheme}
+                                onAskAI={({ initialInput }) => {
+                                    setInitialInput(initialInput);
+                                    setIsChatOpen(true);
+                                }}
+                            >
                                 <div className="px-2 pb-2">
                                     <Alert>
                                         <AlertTitle>Mobile Menu</AlertTitle>
@@ -77,6 +86,7 @@ export function DesktopInstantSearchClient({ appId, domain }: { appId: string; d
                     </TabsContent>
                 </Tabs>
             </SearchClientProvider>
+            <ChatbotDialog open={isChatOpen} onOpenChange={setIsChatOpen} />
             {/* <Dialog open={isChatOpen} onOpenChange={setIsChatOpen}>
                 <DialogContent>
                     <Chat initialInput={initialInput} domain={domain} />

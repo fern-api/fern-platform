@@ -4,7 +4,7 @@ import "instantsearch.css/themes/reset.css";
 import React, { Dispatch, SetStateAction, type ReactElement } from "react";
 import { Configure } from "react-instantsearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
-import { useSearchClient } from "../shared/SearchClientProvider";
+import { useSearchClient } from "./search-client-provider";
 
 interface FernDocsInstantSearchProps {
     initialFilters?: Partial<Record<FacetName, string>>;
@@ -39,7 +39,7 @@ export function FernDocsInstantSearch({
             <Configure
                 restrictHighlightAndSnippetArrays={true}
                 distinct={true}
-                attributesToSnippet={["description:24", "content:24"]}
+                attributesToSnippet={["description:20", "content:20"]}
                 ignorePlurals
                 filters={filtersString}
                 maxFacetHits={100}

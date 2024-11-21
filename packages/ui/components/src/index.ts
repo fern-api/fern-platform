@@ -1,3 +1,4 @@
+export * from "./BuiltWithFern";
 export * from "./CopyToClipboardButton";
 export * from "./Empty";
 export * from "./FernAudioPlayer";

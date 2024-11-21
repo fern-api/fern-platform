@@ -76,15 +76,11 @@
         padding: 0 0.5rem;
     }
 
-    [cmdk-list] {
-        mask-image: linear-gradient(
-            to bottom,
-            transparent 0,
-            black 0.75rem,
-            black calc(100% - 0.75rem),
-            transparent 100%
-        );
+    [cmdk-group]:not(:last-child) {
+        margin-bottom: 0.5rem;
+    }
 
+    [cmdk-list] {
         height: min(400px, var(--cmdk-list-height));
         max-height: 400px;
         overflow: auto;
@@ -136,9 +132,5 @@
                 }
             }
         }
-    }
-
-    [cmdk-group]:not(:first-child) {
-        margin-top: 0.75rem;
     }
 }

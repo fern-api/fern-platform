@@ -3,17 +3,17 @@ import { UseSearch } from "@/hooks/useSearch";
 import { FACET_DISPLAY_NAME_MAP, getFacetDisplay } from "@/utils/facet-display";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { Command, useCommandState } from "cmdk";
-import { Laptop, ListFilter, MessageCircle, Moon, Sun } from "lucide-react";
+import { Laptop, ListFilter, Moon, Sparkles, Sun } from "lucide-react";
 import { ComponentProps, Dispatch, SetStateAction, forwardRef, useRef } from "react";
 import { MarkRequired } from "ts-essentials";
-import { PageIcon } from "../icons/PageIcon";
-import { AskAIText } from "../shared/AskAIText";
-import { HitContent } from "../shared/HitContent";
+import { PageIcon } from "../icons/page";
+import { AskAIText } from "../shared/askai-text";
 import "../shared/common.scss";
+import { HitContent } from "../shared/hit-content";
 import { AlgoliaRecordHit } from "../types";
-import { DesktopBackButton } from "./DesktopBackButton";
-import { DesktopCloseTrigger } from "./DesktopCloseTrigger";
-import { DesktopFilterDropdownMenu } from "./DesktopFilterDropdownMenu";
+import { DesktopBackButton } from "./desktop-back-button";
+import { DesktopCloseTrigger } from "./desktop-close-trigger";
+import { DesktopFilterDropdownMenu } from "./desktop-filter-dropdown-menu";
 import "./desktop.scss";
 
 export interface DesktopCommandProps extends Omit<ComponentProps<typeof Command>, "onSelect"> {
@@ -140,10 +140,12 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                 tabIndex={-1}
             >
                 {onAskAI != null && (
-                    <Command.Item value="Ask AI" onSelect={() => onAskAI?.({ initialInput: query })} forceMount>
-                        <MessageCircle />
-                        <AskAIText query={query} />
-                    </Command.Item>
+                    <Command.Group>
+                        <Command.Item onSelect={() => onAskAI?.({ initialInput: query })} forceMount>
+                            <Sparkles />
+                            <AskAIText query={query} />
+                        </Command.Item>
+                    </Command.Group>
                 )}
 
                 {facets.length > 0 && (
@@ -178,7 +180,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                 {groups.map((group, index) => (
                     <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} forceMount>
                         {group.hits.map((hit) => (
-                            <Command.Item key={hit.path} value={hit.path} onSelect={() => onSelect(hit.path)}>
+                            <Command.Item key={hit.path} value={hit.title} onSelect={() => onSelect(hit.path)}>
                                 <PageIcon icon={hit.icon} type={hit.record?.type} />
                                 {hit.record != null && (
                                     <HitContent hit={hit.record as MarkRequired<AlgoliaRecordHit, "type">} />

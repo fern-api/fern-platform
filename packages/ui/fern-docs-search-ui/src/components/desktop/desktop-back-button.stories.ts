@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 
-import { DesktopBackButton } from "./DesktopBackButton";
+import { DesktopBackButton } from "./desktop-back-button";
 
 const meta: Meta<typeof DesktopBackButton> = {
     title: "Desktop/DesktopBackButton",

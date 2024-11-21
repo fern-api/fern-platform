@@ -1,8 +1,8 @@
 import { FacetName } from "@/utils/facet-display";
 import "instantsearch.css/themes/reset.css";
 import { type ReactElement } from "react";
-import { FernDocsInstantSearch } from "../shared/FernDocsInstantSearch";
-import { DesktopCommandController } from "./DesktopCommandController";
+import { FernDocsInstantSearch } from "../shared/fern-docs-instant-search";
+import { DesktopCommandController } from "./desktop-command-controller";
 
 interface DesktopInstantSearchProps {
     /**
