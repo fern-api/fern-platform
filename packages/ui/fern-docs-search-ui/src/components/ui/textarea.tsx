@@ -28,6 +28,8 @@ function useAutosizeTextArea(textAreaRef: RefObject<HTMLTextAreaElement>, minLin
             textArea.style.height = Math.max(minHeight, scrollHeight) + "px";
         };
 
+        handleInput();
+
         textArea.addEventListener("input", handleInput);
         return () => {
             textArea.removeEventListener("input", handleInput);

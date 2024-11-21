@@ -1,7 +1,8 @@
 import { FacetName } from "@/utils/facet-display";
 import "instantsearch.css/themes/reset.css";
-import { type ReactElement } from "react";
+import { forwardRef } from "react";
 import { FernDocsInstantSearch } from "../shared/fern-docs-instant-search";
+import { DesktopCommandSharedProps } from "./desktop-command";
 import { DesktopCommandController } from "./desktop-command-controller";
 
 interface DesktopInstantSearchProps {
@@ -37,21 +38,25 @@ interface DesktopInstantSearchProps {
     authenticatedUserToken?: string;
 }
 
-export function DesktopInstantSearch({
-    onSelect,
-    setTheme,
-    onAskAI,
-    initialFilters,
-    userToken,
-    authenticatedUserToken,
-}: DesktopInstantSearchProps): ReactElement {
-    return (
-        <FernDocsInstantSearch
-            initialFilters={initialFilters}
-            userToken={userToken}
-            authenticatedUserToken={authenticatedUserToken}
-        >
-            <DesktopCommandController onSelect={onSelect} onAskAI={onAskAI} setTheme={setTheme} />
-        </FernDocsInstantSearch>
-    );
-}
+export const DesktopInstantSearch = forwardRef<HTMLDivElement, DesktopInstantSearchProps & DesktopCommandSharedProps>(
+    (props, ref) => {
+        const { onSelect, setTheme, onAskAI, initialFilters, userToken, authenticatedUserToken, ...rest } = props;
+        return (
+            <FernDocsInstantSearch
+                initialFilters={initialFilters}
+                userToken={userToken}
+                authenticatedUserToken={authenticatedUserToken}
+            >
+                <DesktopCommandController
+                    ref={ref}
+                    onSelect={onSelect}
+                    onAskAI={onAskAI}
+                    setTheme={setTheme}
+                    {...rest}
+                />
+            </FernDocsInstantSearch>
+        );
+    },
+);
+
+DesktopInstantSearch.displayName = "DesktopInstantSearch";

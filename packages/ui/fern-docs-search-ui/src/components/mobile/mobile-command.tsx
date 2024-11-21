@@ -1,5 +1,5 @@
-import { FacetFilter } from "@/hooks/useFacets";
-import { UseSearch } from "@/hooks/useSearch";
+import { FacetFilter } from "@/hooks/use-facets";
+import { UseSearch } from "@/hooks/use-search";
 import { FACET_DISPLAY_NAME_MAP, getFacetDisplay } from "@/utils/facet-display";
 import { Command } from "cmdk";
 import { Laptop, ListFilter, MessageCircle, Moon, Sun } from "lucide-react";
@@ -55,7 +55,7 @@ export const MobileCommand = forwardRef<HTMLDivElement, InternalMobileCommandPro
     };
 
     return (
-        <Command data-fern-docs-search-ui="mobile" ref={ref} {...rest}>
+        <Command data-fern-docs-search-ui="mobile" ref={ref} {...rest} className="flex flex-col">
             <div data-cmdk-fern-header>
                 <Command.Input
                     ref={inputRef}
@@ -74,7 +74,6 @@ export const MobileCommand = forwardRef<HTMLDivElement, InternalMobileCommandPro
                 >
                     <Input />
                 </Command.Input>
-                <MobileFacetDialog filters={filters} setFilters={setFilters} />
                 {isSearchOpen && (
                     <Button onClick={() => setIsSearchOpen(false)} className="shrink-0" variant="secondary">
                         Cancel
@@ -86,7 +85,9 @@ export const MobileCommand = forwardRef<HTMLDivElement, InternalMobileCommandPro
                     ref={scrollRef}
                     data-empty={groups.length === 0 && query.length === 0 && onAskAI == null && setTheme == null}
                     tabIndex={-1}
+                    className="flex-1"
                 >
+                    <MobileFacetDialog filters={filters} setFilters={setFilters} />
                     {onAskAI != null && (
                         <Command.Group forceMount>
                             <Command.Item value="ai-chat" onSelect={() => onAskAI?.({ initialInput: query })}>

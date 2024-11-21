@@ -1,8 +1,9 @@
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, X } from "lucide-react";
 import { PropsWithChildren, ReactElement, forwardRef, useEffect, useRef } from "react";
+import { Button } from "../ui/button";
 import { TextArea } from "../ui/textarea";
 
 interface ChatbotDialogProps {
@@ -56,6 +57,11 @@ export function ChatbotDialog({
                     <div className="relative w-full p-2 text-center text-xs text-muted-foreground empty:hidden md:px-[60px]">
                         <div className="h-2" />
                     </div>
+                    <Dialog.Close asChild className="fixed top-2 right-2 z-10">
+                        <Button variant="outline" size="icon" className="rounded-full">
+                            <X />
+                        </Button>
+                    </Dialog.Close>
                 </Dialog.Content>
             </Dialog.Portal>
         </Dialog.Root>

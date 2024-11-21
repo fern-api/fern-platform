@@ -1,5 +1,5 @@
-import { FacetFilter } from "@/hooks/useFacets";
-import { UseSearch } from "@/hooks/useSearch";
+import { FacetFilter } from "@/hooks/use-facets";
+import { UseSearch } from "@/hooks/use-search";
 import { FACET_DISPLAY_NAME_MAP, getFacetDisplay } from "@/utils/facet-display";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { Command, useCommandState } from "cmdk";
@@ -16,7 +16,9 @@ import { DesktopCloseTrigger } from "./desktop-close-trigger";
 import { DesktopFilterDropdownMenu } from "./desktop-filter-dropdown-menu";
 import "./desktop.scss";
 
-export interface DesktopCommandProps extends Omit<ComponentProps<typeof Command>, "onSelect"> {
+export type DesktopCommandSharedProps = Omit<ComponentProps<typeof Command>, "onSelect" | "children">;
+
+export interface DesktopCommandProps extends DesktopCommandSharedProps {
     filters?: readonly FacetFilter[];
     onSelect: (path: string) => void;
     onAskAI?: ({ initialInput }: { initialInput?: string }) => void;

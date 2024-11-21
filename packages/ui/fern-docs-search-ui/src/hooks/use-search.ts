@@ -2,7 +2,7 @@ import { GroupedHits, generateHits } from "@/components/shared/hits";
 import { FilterOption, toFilterOptions } from "@/utils/facet-display";
 import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
 import { useHits, useSearchBox } from "react-instantsearch";
-import { FacetOpts, useFacets, usePreloadFacets } from "./useFacets";
+import { FacetOpts, useFacets, usePreloadFacets } from "./use-facets";
 
 export interface UseSearch {
     query: string;

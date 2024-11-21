@@ -1,4 +1,4 @@
-import { FacetFilter, useFacets } from "@/hooks/useFacets";
+import { FacetFilter, useFacets } from "@/hooks/use-facets";
 import { getFacetDisplay, toFilterLabel } from "@/utils/facet-display";
 import { Minus } from "lucide-react";
 import { ReactElement } from "react";

@@ -1,4 +1,4 @@
-import { FacetFilter, useInitialFilters } from "@/hooks/useFacets";
+import { FacetFilter, useInitialFilters } from "@/hooks/use-facets";
 import { FacetName } from "@/utils/facet-display";
 import "instantsearch.css/themes/reset.css";
 import React, { Dispatch, SetStateAction, type ReactElement } from "react";

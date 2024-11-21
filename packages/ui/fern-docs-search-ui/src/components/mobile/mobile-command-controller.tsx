@@ -1,4 +1,4 @@
-import { useSearch } from "@/hooks/useSearch";
+import { useSearch } from "@/hooks/use-search";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { forwardRef } from "react";
 import { MobileCommand, MobileCommandProps } from "./mobile-command";

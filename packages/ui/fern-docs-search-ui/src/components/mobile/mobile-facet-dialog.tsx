@@ -1,11 +1,13 @@
-import { FacetFilter, useFacets } from "@/hooks/useFacets";
+import { FacetFilter, useFacets } from "@/hooks/use-facets";
 import { FacetName, getFacetDisplay, toFilterLabel } from "@/utils/facet-display";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
-import { FilterIcon, Minus } from "lucide-react";
+import { Minus, SlidersHorizontal } from "lucide-react";
 import { Dispatch, ReactElement, SetStateAction } from "react";
+import { Alert, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from "../ui/dialog";
+import { DialogHeader } from "../ui/dialog";
 import { Label } from "../ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 export function MobileFacetDialog({
@@ -24,14 +26,21 @@ export function MobileFacetDialog({
     const { data: facetsResponse } = useFacets({ filters: filters ?? EMPTY_ARRAY });
 
     return (
-        <Dialog>
-            <DialogTrigger asChild>
-                <Button size="icon" className="shrink-0" variant={filters?.length ? "default" : "outline"}>
-                    <FilterIcon />
-                </Button>
-            </DialogTrigger>
-            <DialogContent>
+        <Popover>
+            <div className="px-2">
+                <PopoverTrigger asChild>
+                    <Button className="w-full" variant="secondary">
+                        <SlidersHorizontal />
+                        Refine your results
+                    </Button>
+                </PopoverTrigger>
+            </div>
+            <PopoverContent>
                 <DialogHeader className="text-lg font-semibold">Filters</DialogHeader>
+
+                <Alert variant="destructive">
+                    <AlertTitle>This is WIP</AlertTitle>
+                </Alert>
 
                 {filters?.map((filter) => (
                     <MobileFacetFilterRadio
@@ -60,13 +69,8 @@ export function MobileFacetDialog({
                             }}
                         />
                     ))}
-                <DialogFooter>
-                    <DialogClose asChild>
-                        <Button>Apply filters</Button>
-                    </DialogClose>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
+            </PopoverContent>
+        </Popover>
     );
 }
 
