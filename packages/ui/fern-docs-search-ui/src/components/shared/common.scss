@@ -32,17 +32,12 @@
     -webkit-box-orient: vertical;
     overflow-wrap: break-word;
     text-overflow: ellipsis;
-}
-
-.fern-search-hit-snippet {
     line-clamp: 1;
     -webkit-line-clamp: 1;
 }
 
-.fern-search-hit-breadcrumb,
-.fern-search-hit-endpoint-path {
-    line-clamp: 1;
-    -webkit-line-clamp: 1;
+.fern-search-hit-highlighted {
+    font-weight: 600;
 }
 
 .fern-search-hit-snippet {

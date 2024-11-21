@@ -76,10 +76,6 @@
         padding: 0 0.5rem;
     }
 
-    [cmdk-group]:not(:last-child) {
-        margin-bottom: 0.5rem;
-    }
-
     [cmdk-list] {
         height: min(400px, var(--cmdk-list-height));
         max-height: 400px;
@@ -95,6 +91,10 @@
 
     [cmdk-list-sizer] {
         padding: 0.75rem 0.5rem;
+
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
     }
 
     [cmdk-item] {
@@ -109,7 +109,7 @@
         svg:first-child {
             width: 1rem;
             height: 1rem;
-            opacity: 0.7;
+            opacity: 0.6;
             pointer-events: none;
             flex-shrink: 0;
             margin: 0.25rem 0;
@@ -118,6 +118,10 @@
         mark {
             background: transparent !important;
             color: inherit;
+        }
+
+        .fern-search-hit-snippet {
+            display: none;
         }
 
         @media (hover: hover) and (pointer: fine) {
@@ -129,6 +133,10 @@
                 .fern-search-hit-snippet,
                 .fern-search-hit-endpoint-path {
                     color: hsl(var(--accent-foreground) / 0.8);
+                }
+
+                .fern-search-hit-snippet {
+                    display: -webkit-box;
                 }
             }
         }

@@ -1,7 +1,8 @@
+import { composeRefs } from "@radix-ui/react-compose-refs";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { ArrowUp } from "lucide-react";
-import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
+import { PropsWithChildren, ReactElement, forwardRef, useEffect, useRef } from "react";
 import { TextArea } from "../ui/textarea";
 
 interface ChatbotDialogProps {
@@ -50,26 +51,7 @@ export function ChatbotDialog({
                         <div className="max-w-3xl w-screen mx-auto"></div>
                     </div>
                     <div className="max-w-3xl w-screen mx-auto shrink-0">
-                        <div className="flex w-full cursor-text flex-col rounded-3xl px-2.5 py-1 transition-colors contain-inline-size bg-[var(--gray-a2)]">
-                            <div className="flex min-h-[44px] items-center px-2">
-                                <TextArea
-                                    ref={inputRef}
-                                    className="w-full px-0 py-2 m-0 resize-none text-grayscale-12 placeholder:text-grayscale-a10 border-0 bg-transparent focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 max-h-52"
-                                    placeholder="Ask AI anything about our documentation"
-                                    onKeyDown={(e) => {
-                                        if (e.key === "Enter" && !e.shiftKey) {
-                                            // submit the form
-                                        }
-                                    }}
-                                />
-                            </div>
-                            <div className="flex h-[44px] items-center justify-between">
-                                <div></div>
-                                <button className="p-1 rounded-full hover:bg-[var(--gray-a4)] transition-colors">
-                                    <ArrowUp />
-                                </button>
-                            </div>
-                        </div>
+                        <Composer ref={inputRef} />
                     </div>
                     <div className="relative w-full p-2 text-center text-xs text-muted-foreground empty:hidden md:px-[60px]">
                         <div className="h-2" />
@@ -79,3 +61,35 @@ export function ChatbotDialog({
         </Dialog.Root>
     );
 }
+
+const Composer = forwardRef<HTMLTextAreaElement>((_, ref) => {
+    const inputRef = useRef<HTMLTextAreaElement>(null);
+
+    return (
+        <div
+            className="flex w-full cursor-text flex-col rounded-3xl px-2.5 py-1 transition-colors contain-inline-size bg-[var(--gray-a2)]"
+            onClick={() => inputRef.current?.focus()}
+        >
+            <div className="flex min-h-[44px] items-center px-2">
+                <TextArea
+                    ref={composeRefs(ref, inputRef)}
+                    className="w-full px-0 py-2 m-0 resize-none text-grayscale-12 placeholder:text-grayscale-a10 border-0 bg-transparent focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 max-h-52"
+                    placeholder="Ask AI anything about our documentation"
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                            // submit the form
+                        }
+                    }}
+                />
+            </div>
+            <div className="flex h-[44px] items-center justify-between">
+                <div></div>
+                <button className="p-1 rounded-full hover:bg-[var(--gray-a4)] transition-colors">
+                    <ArrowUp />
+                </button>
+            </div>
+        </div>
+    );
+});
+
+Composer.displayName = "Composer";

@@ -140,8 +140,8 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                 tabIndex={-1}
             >
                 {onAskAI != null && (
-                    <Command.Group>
-                        <Command.Item onSelect={() => onAskAI?.({ initialInput: query })} forceMount>
+                    <Command.Group forceMount>
+                        <Command.Item onSelect={() => onAskAI?.({ initialInput: query })}>
                             <Sparkles />
                             <AskAIText query={query} />
                         </Command.Item>
@@ -180,8 +180,12 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                 {groups.map((group, index) => (
                     <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} forceMount>
                         {group.hits.map((hit) => (
-                            <Command.Item key={hit.path} value={hit.title} onSelect={() => onSelect(hit.path)}>
-                                <PageIcon icon={hit.icon} type={hit.record?.type} />
+                            <Command.Item key={hit.path} value={hit.path} onSelect={() => onSelect(hit.path)}>
+                                <PageIcon
+                                    icon={hit.icon}
+                                    type={hit.record?.type === "api-reference" ? hit.record.api_type : hit.record?.type}
+                                    isSubPage={hit.record?.hash != null}
+                                />
                                 {hit.record != null && (
                                     <HitContent hit={hit.record as MarkRequired<AlgoliaRecordHit, "type">} />
                                 )}
