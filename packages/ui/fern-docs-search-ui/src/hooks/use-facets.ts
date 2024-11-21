@@ -18,15 +18,13 @@ async function fetchFacets({
     domain,
     apiKey,
 }: {
-    filters: string | undefined;
+    filters: string[];
     domain: string;
     apiKey: string;
 }): Promise<FacetsResponse> {
     const searchParams = new URLSearchParams();
     searchParams.set("domain", domain);
-    if (filters?.length) {
-        searchParams.set("filters", filters);
-    }
+    filters.forEach((filter) => searchParams.append("filters", filter));
     searchParams.set("x-algolia-api-key", apiKey);
     const search = String(searchParams);
 
@@ -46,16 +44,13 @@ export function usePreloadFacets(): (opts: FacetOpts) => Promise<FacetsResponse>
     return (opts) => preload([toFiltersString(opts), domain], ([filters]) => fetchFacets({ filters, domain, apiKey }));
 }
 
-function toFiltersString({ filters }: FacetOpts): string {
-    return filters
-        .map((filter) => `${filter.facet}:"${filter.value}"`)
-        .sort()
-        .join(" AND ");
+function toFiltersString({ filters }: FacetOpts): string[] {
+    return filters.map((filter) => `${filter.facet}:${filter.value}`).sort();
 }
 
 export function useInitialFilters({ initialFilters }: { initialFilters?: Partial<Record<FacetName, string>> }): {
     filters: FacetFilter[];
-    filtersString: string | undefined;
+    facetFilters: string[];
     setFilters: Dispatch<SetStateAction<FacetFilter[]>>;
 } {
     const preload = usePreloadFacets();
@@ -79,6 +74,6 @@ export function useInitialFilters({ initialFilters }: { initialFilters?: Partial
     return {
         filters,
         setFilters,
-        filtersString: filters.length === 0 ? undefined : toFiltersString({ filters }),
+        facetFilters: filters.length === 0 ? [] : toFiltersString({ filters }),
     };
 }

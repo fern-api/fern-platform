@@ -135,7 +135,7 @@
                     color: hsl(var(--accent-foreground) / 0.8);
                 }
 
-                .fern-search-hit-snippet {
+                .fern-search-hit-snippet:not(:empty) {
                     display: -webkit-box;
                 }
             }

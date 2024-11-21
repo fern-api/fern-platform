@@ -59,6 +59,12 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
         }, 0);
     };
 
+    const scrollTop = () => {
+        setTimeout(() => {
+            scrollRef.current?.scrollTo({ top: 0 });
+        }, 0);
+    };
+
     return (
         <Command
             data-fern-docs-search-ui="desktop"
@@ -86,12 +92,14 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                             removeFilter={() => {
                                 setFilters?.((prev) => prev.filter((f) => f.facet !== filter.facet));
                                 focus();
+                                scrollTop();
                             }}
                             updateFilter={(value) => {
                                 setFilters?.((prev) =>
                                     prev.map((f) => (f.facet === filter.facet ? { ...f, value } : f)),
                                 );
                                 focus();
+                                scrollTop();
                             }}
                         />
                     ))}
@@ -103,10 +111,12 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                         pop={() => {
                             setFilters?.((lastFilters) => lastFilters.slice(0, -1));
                             focus();
+                            scrollTop();
                         }}
                         clear={() => {
                             setFilters?.([]);
                             focus();
+                            scrollTop();
                         }}
                     />
                 )}
@@ -117,9 +127,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                     placeholder={toPlaceholder(filters)}
                     onValueChange={(value) => {
                         refine(value);
-                        setTimeout(() => {
-                            scrollRef.current?.scrollTo({ top: 0 });
-                        }, 0);
+                        scrollTop();
                     }}
                     onKeyDown={(e) => {
                         if (e.key === "Backspace" && query.length === 0) {
@@ -160,6 +168,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                                     setFilters?.([...filters, { facet: filter.facet, value: filter.value }]);
                                     clear();
                                     focus();
+                                    scrollTop();
                                 }}
                                 onMouseOver={() => {
                                     preload({

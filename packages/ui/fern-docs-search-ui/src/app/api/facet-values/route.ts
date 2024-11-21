@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
     const domain = request.nextUrl.searchParams.get("domain");
-    const filters = request.nextUrl.searchParams.get("filters") ?? undefined;
+    const filters = request.nextUrl.searchParams.getAll("filters");
     const apiKey = request.nextUrl.searchParams.get("x-algolia-api-key") ?? undefined;
     if (!domain) {
         return NextResponse.json({ error: "Domain is required" }, { status: 400 });
@@ -15,16 +15,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     if (!apiKey) {
         return NextResponse.json({ error: "x-algolia-api-key is required" }, { status: 400 });
     }
-
-    const { results } = await algoliasearch(algoliaAppId(), apiKey).searchForFacets({
-        requests: FACET_NAMES.map((facet) => ({
-            indexName: "fern-docs-search",
-            facet,
-            filters,
-            type: "facet",
-            distinct: true,
-        })),
-    });
 
     const response: FacetsResponse = {
         type: [],
@@ -35,6 +25,26 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         "version.title": [],
         availability: [],
     };
+
+    const { results } = await algoliasearch(algoliaAppId(), apiKey)
+        .searchForFacets({
+            requests: FACET_NAMES.map((facet) => ({
+                indexName: "fern-docs-search",
+                facet,
+                facetFilters: filters,
+                type: "facet",
+                distinct: true,
+            })),
+        })
+        .catch((err) => {
+            // eslint-disable-next-line no-console
+            console.error(err);
+            return { results: [] };
+        });
+
+    if (results.length === 0) {
+        return NextResponse.json(response);
+    }
 
     zip(results, FACET_NAMES).forEach(([{ facetHits }, attribute]) => {
         const filteredFacets = facetHits.filter((hit) => hit.count > 0);

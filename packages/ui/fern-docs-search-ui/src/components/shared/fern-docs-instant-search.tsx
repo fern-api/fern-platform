@@ -23,7 +23,7 @@ export function FernDocsInstantSearch({
     children,
 }: FernDocsInstantSearchProps): ReactElement {
     const { searchClient, indexName } = useSearchClient();
-    const { filtersString, filters, setFilters } = useInitialFilters({ initialFilters });
+    const { facetFilters, filters, setFilters } = useInitialFilters({ initialFilters });
 
     return (
         <InstantSearchNext
@@ -41,7 +41,8 @@ export function FernDocsInstantSearch({
                 distinct={true}
                 attributesToSnippet={["description:20", "content:20"]}
                 ignorePlurals
-                filters={filtersString}
+                facetFilters={facetFilters}
+                facetingAfterDistinct
                 maxFacetHits={100}
                 maxValuesPerFacet={1000}
             />

@@ -2,6 +2,7 @@ import { tz } from "@date-fns/tz";
 import { AvailabilityBadge, HttpMethodBadge } from "@fern-ui/fern-docs-badges";
 import clsx from "clsx";
 import { format } from "date-fns";
+import { last } from "es-toolkit";
 import { Fragment, ReactElement, ReactNode } from "react";
 import { Highlight, Snippet } from "react-instantsearch";
 import { MarkRequired, UnreachableCaseError } from "ts-essentials";
@@ -28,7 +29,15 @@ function Breadcrumb({ breadcrumb }: { breadcrumb: string[] }): ReactNode {
     );
 }
 
-function HitContentWithTitle({ hit, children }: { hit: AlgoliaRecordHit; children: ReactNode }): ReactElement {
+function HitContentWithTitle({
+    hit,
+    children,
+    rightContent,
+}: {
+    hit: AlgoliaRecordHit;
+    children: ReactNode;
+    rightContent?: ReactNode;
+}): ReactElement {
     return (
         <div className="space-y-1 flex-1">
             <div className="flex items-baseline gap-1 justify-between">
@@ -47,6 +56,7 @@ function HitContentWithTitle({ hit, children }: { hit: AlgoliaRecordHit; childre
                     }}
                 />
                 {hit.availability && <AvailabilityBadge availability={hit.availability} size="sm" rounded />}
+                {rightContent}
             </div>
             {children}
         </div>
@@ -57,15 +67,7 @@ function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
     return (
         <HitContentWithTitle hit={hit}>
             <Breadcrumb breadcrumb={createHierarchyBreadcrumb(hit.breadcrumb, hit.hierarchy, hit.level)} />
-            <Snippet
-                attribute={hit._highlightResult?.description ? "description" : "content"}
-                hit={hit}
-                classNames={{
-                    root: "fern-search-hit-snippet",
-                    highlighted: "fern-search-hit-highlighted",
-                    nonHighlighted: "fern-search-hit-non-highlighted",
-                }}
-            />
+            <HitSnippet hit={hit} attribute={hit._highlightResult?.description ? "description" : "content"} />
         </HitContentWithTitle>
     );
 }
@@ -75,15 +77,7 @@ function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement
     return (
         <HitContentWithTitle hit={hit}>
             <Breadcrumb breadcrumb={[...hit.breadcrumb.map((crumb) => crumb.title), datestring]} />
-            <Snippet
-                attribute={hit._highlightResult?.description ? "description" : "content"}
-                hit={hit}
-                classNames={{
-                    root: "fern-search-hit-snippet",
-                    highlighted: "fern-search-hit-highlighted",
-                    nonHighlighted: "fern-search-hit-non-highlighted",
-                }}
-            />
+            <HitSnippet hit={hit} attribute={hit._highlightResult?.description ? "description" : "content"} />
         </HitContentWithTitle>
     );
 }
@@ -99,24 +93,43 @@ function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactE
               ? "description"
               : undefined;
 
+    const rightTitle = last(hit.breadcrumb)?.title;
+
     return (
-        <HitContentWithTitle hit={hit}>
+        <HitContentWithTitle
+            hit={hit}
+            rightContent={rightTitle && <span className="text-muted-foreground text-sm">{rightTitle}</span>}
+        >
             <div className="inline-flex items-baseline gap-1">
                 <HttpMethodBadge method={hit.method} size="sm" className="shrink-0" variant="outlined" />
                 <span className="fern-search-hit-endpoint-path shrink">{hit.endpoint_path}</span>
             </div>
-            {attribute && (
-                <Snippet
-                    attribute={attribute}
-                    hit={hit}
-                    classNames={{
-                        root: "fern-search-hit-snippet",
-                        highlighted: "fern-search-hit-highlighted",
-                        nonHighlighted: "fern-search-hit-non-highlighted",
-                    }}
-                />
-            )}
+            <HitSnippet hit={hit} attribute={attribute} />
         </HitContentWithTitle>
+    );
+}
+
+export function HitSnippet({
+    hit,
+    attribute,
+}: {
+    hit: AlgoliaRecordHit;
+    attribute?: keyof AlgoliaRecordHit;
+}): ReactNode {
+    if (!attribute) {
+        return false;
+    }
+
+    return (
+        <Snippet
+            attribute={attribute}
+            hit={hit}
+            classNames={{
+                root: "fern-search-hit-snippet",
+                highlighted: "fern-search-hit-highlighted",
+                nonHighlighted: "fern-search-hit-non-highlighted",
+            }}
+        />
     );
 }
 
