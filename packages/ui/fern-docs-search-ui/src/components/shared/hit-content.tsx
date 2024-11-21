@@ -56,7 +56,7 @@ function HitContentWithTitle({
                     }}
                 />
                 {hit.availability && <AvailabilityBadge availability={hit.availability} size="sm" rounded />}
-                {rightContent}
+                {!hit.availability && rightContent}
             </div>
             {children}
         </div>
