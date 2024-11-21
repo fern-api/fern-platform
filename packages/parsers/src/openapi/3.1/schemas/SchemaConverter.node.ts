@@ -51,13 +51,8 @@ export class SchemaConverterNode extends BaseOpenApiV3_1Node<
                         this.accessPath,
                         this.pathId,
                     );
-                } else if (this.input.type === "object" && this.input.enum != null) {
-                    this.typeShapeNode = new EnumConverterNode(
-                        this.input as EnumConverterNode.Input,
-                        this.context,
-                        this.accessPath,
-                        this.pathId,
-                    );
+                } else if (this.input.type !== "array" && this.input.enum != null) {
+                    this.typeShapeNode = new EnumConverterNode(this.input, this.context, this.accessPath, this.pathId);
                 } else {
                     switch (this.input.type) {
                         case "object":

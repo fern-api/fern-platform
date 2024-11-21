@@ -4,6 +4,7 @@ import { UnreachableCaseError } from "ts-essentials";
 import { FdrStringType } from "../../../types/fdr.types";
 import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
 import { ConstArrayToType, OPENAPI_STRING_TYPE_FORMAT } from "../../types/format.types";
+import { EnumConverterNode } from "./EnumConverter.node";
 
 export declare namespace StringConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
@@ -22,12 +23,16 @@ function isOpenApiStringTypeFormat(format: unknown): format is ConstArrayToType<
     return OPENAPI_STRING_TYPE_FORMAT.includes(format as ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT>);
 }
 
-export class StringConverterNode extends BaseOpenApiV3_1Node<StringConverterNode.Input, StringConverterNode.Output> {
+export class StringConverterNode extends BaseOpenApiV3_1Node<
+    StringConverterNode.Input,
+    StringConverterNode.Output | FdrAPI.api.latest.TypeShape.Enum
+> {
     type: FdrStringType["type"] = "string";
     regex: string | undefined;
     default: string | undefined;
     minLength: number | undefined;
     maxLength: number | undefined;
+    enum: EnumConverterNode | undefined;
 
     constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<StringConverterNode.Input>) {
         super(...args);
@@ -102,9 +107,16 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<StringConverterNode
         if (this.input.format != null && isOpenApiStringTypeFormat(this.input.format)) {
             this.type = this.mapToFdrType(this.input.format);
         }
+
+        if (this.input.enum != null) {
+            this.enum = new EnumConverterNode(this.input, this.context, this.accessPath, "enum");
+        }
     }
 
-    convert(): StringConverterNode.Output | undefined {
+    convert(): StringConverterNode.Output | FdrAPI.api.latest.TypeShape.Enum | undefined {
+        if (this.enum != null) {
+            return this.enum.convert();
+        }
         return {
             type: "alias",
             value: {

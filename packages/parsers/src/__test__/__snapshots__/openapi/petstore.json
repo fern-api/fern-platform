@@ -56,13 +56,18 @@
         {
           "key": "status",
           "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+            "type": "enum",
+            "values": [
+              {
+                "value": "placed"
+              },
+              {
+                "value": "approved"
+              },
+              {
+                "value": "delivered"
               }
-            }
+            ]
           },
           "description": "Order Status"
         },
@@ -436,13 +441,18 @@
         {
           "key": "status",
           "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+            "type": "enum",
+            "values": [
+              {
+                "value": "available"
+              },
+              {
+                "value": "pending"
+              },
+              {
+                "value": "sold"
               }
-            }
+            ]
           },
           "description": "pet status in the store"
         }

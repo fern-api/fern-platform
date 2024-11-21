@@ -1,11 +1,7 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
-import {
-    BaseOpenApiV3_1ConverterNodeContext,
-    BaseOpenApiV3_1Node,
-    BaseOpenApiV3_1NodeConstructorArgs,
-} from "../../BaseOpenApiV3_1Converter.node";
+import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { SchemaConverterNode } from "./SchemaConverter.node";
@@ -31,33 +27,28 @@ export class OneOfConverterNode extends BaseOpenApiV3_1Node<
         this.safeParse();
     }
 
-    parse(
-        input: OneOfConverterNode.Input,
-        context: BaseOpenApiV3_1ConverterNodeContext,
-        accessPath: string[],
-        pathId: string,
-    ): void {
-        if (input.oneOf != null) {
-            if (input.discriminator == null) {
+    parse(): void {
+        if (this.input.oneOf != null) {
+            if (this.input.discriminator == null) {
                 this.discriminated = false;
-                this.undiscriminatedMapping = input.oneOf
+                this.undiscriminatedMapping = this.input.oneOf
                     ?.map((schema) => {
                         if (!isReferenceObject(schema) && schema.type !== "object") {
-                            context.errors.error({
+                            this.context.errors.error({
                                 message: "oneOf schema is not an object",
-                                path: accessPath,
+                                path: this.accessPath,
                             });
                             return undefined;
                         }
-                        return new SchemaConverterNode(schema, context, accessPath, pathId);
+                        return new SchemaConverterNode(schema, this.context, this.accessPath, this.pathId);
                     })
                     .filter(isNonNullish);
             } else {
-                const maybeMapping = input.discriminator.mapping;
+                const maybeMapping = this.input.discriminator.mapping;
                 if (maybeMapping != null) {
                     this.discriminated = true;
 
-                    this.discriminant = input.discriminator.propertyName;
+                    this.discriminant = this.input.discriminator.propertyName;
                     this.discriminatedMapping = {};
 
                     const discriminatedMapping = this.discriminatedMapping;
@@ -68,11 +59,11 @@ export class OneOfConverterNode extends BaseOpenApiV3_1Node<
                                 {
                                     $ref: value,
                                 },
-                                context.document,
+                                this.context.document,
                             ),
-                            context,
-                            accessPath,
-                            pathId,
+                            this.context,
+                            this.accessPath,
+                            this.pathId,
                         );
                     });
                 }

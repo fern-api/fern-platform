@@ -1,3 +1,4 @@
+import { OpenAPIV3_1 } from "openapi-types";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { EnumConverterNode } from "../EnumConverter.node";
@@ -11,7 +12,7 @@ describe("EnumConverterNode", () => {
 
     describe("constructor", () => {
         it("should handle enum schema with no values", () => {
-            const input: EnumConverterNode.Input = {
+            const input: OpenAPIV3_1.NonArraySchemaObject = {
                 type: "object",
             };
             const node = new EnumConverterNode(input, mockContext, [], "test");
@@ -20,7 +21,7 @@ describe("EnumConverterNode", () => {
         });
 
         it("should handle enum schema with valid string values", () => {
-            const input: EnumConverterNode.Input = {
+            const input: OpenAPIV3_1.NonArraySchemaObject = {
                 type: "object",
                 enum: ["ONE", "TWO", "THREE"],
             };
@@ -29,7 +30,7 @@ describe("EnumConverterNode", () => {
         });
 
         it("should deduplicate enum values", () => {
-            const input: EnumConverterNode.Input = {
+            const input: OpenAPIV3_1.NonArraySchemaObject = {
                 type: "object",
                 enum: ["ONE", "TWO", "ONE", "THREE"],
             };
@@ -41,7 +42,7 @@ describe("EnumConverterNode", () => {
             const input = {
                 type: "object",
                 enum: ["ONE", 2, "THREE"],
-            } as EnumConverterNode.Input;
+            } as OpenAPIV3_1.NonArraySchemaObject;
 
             new EnumConverterNode(input, mockContext, [], "test");
 
@@ -54,7 +55,7 @@ describe("EnumConverterNode", () => {
 
     describe("convert", () => {
         it("should convert enum schema with values", () => {
-            const input: EnumConverterNode.Input = {
+            const input: OpenAPIV3_1.NonArraySchemaObject = {
                 type: "object",
                 enum: ["ONE", "TWO"],
                 default: "ONE",
@@ -71,7 +72,7 @@ describe("EnumConverterNode", () => {
         });
 
         it("should convert empty enum schema", () => {
-            const input: EnumConverterNode.Input = {
+            const input: OpenAPIV3_1.NonArraySchemaObject = {
                 type: "object",
             };
             const node = new EnumConverterNode(input, mockContext, [], "test");
