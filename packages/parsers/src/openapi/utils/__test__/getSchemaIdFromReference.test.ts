@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { describe, expect, it } from "vitest";
-import { getSchemaIdFromReference } from "../getSchemaIdFromReference";
+import { getSchemaIdFromReference } from "../3.1/getSchemaIdFromReference";
 
 describe("getSchemaIdFromReference", () => {
     it("should extract schema ID from valid reference", () => {

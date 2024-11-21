@@ -1,13 +1,20 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
-import { BaseAPIConverterNodeContext } from "../../../BaseApiConverter.node";
 import { FdrStringType } from "../../../types/fdr.types";
-import { BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
+import { BaseOpenApiV3_1ConverterNodeContext, BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
 import { ConstArrayToType, OPENAPI_STRING_TYPE_FORMAT } from "../../types/format.types";
 
 export declare namespace StringConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
         type: "string";
+    }
+    export interface Output extends FdrAPI.api.latest.TypeShape.Alias {
+        type: "alias";
+        value: {
+            type: "primitive";
+            value: FdrStringType;
+        };
     }
 }
 
@@ -15,7 +22,7 @@ function isOpenApiStringTypeFormat(format: unknown): format is ConstArrayToType<
     return OPENAPI_STRING_TYPE_FORMAT.includes(format as ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT>);
 }
 
-export class StringConverterNode extends BaseOpenApiV3_1Node<StringConverterNode.Input, FdrStringType> {
+export class StringConverterNode extends BaseOpenApiV3_1Node<StringConverterNode.Input, StringConverterNode.Output> {
     type: FdrStringType["type"] = "string";
     regex: string | undefined;
     default: string | undefined;
@@ -77,9 +84,10 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<StringConverterNode
                 return "string";
         }
     };
+
     constructor(
         input: StringConverterNode.Input,
-        context: BaseAPIConverterNodeContext,
+        context: BaseOpenApiV3_1ConverterNodeContext,
         accessPath: string[],
         pathId: string,
     ) {
@@ -98,13 +106,19 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<StringConverterNode
         }
     }
 
-    public convert(): FdrStringType | undefined {
+    public convert(): StringConverterNode.Output | undefined {
         return {
-            type: this.type,
-            regex: this.regex,
-            minLength: this.minLength,
-            maxLength: this.maxLength,
-            default: this.default,
+            type: "alias",
+            value: {
+                type: "primitive",
+                value: {
+                    type: this.type,
+                    regex: this.regex,
+                    minLength: this.minLength,
+                    maxLength: this.maxLength,
+                    default: this.default,
+                },
+            },
         };
     }
 }

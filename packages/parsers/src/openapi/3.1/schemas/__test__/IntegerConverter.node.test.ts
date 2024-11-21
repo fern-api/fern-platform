@@ -105,10 +105,16 @@ describe("IntegerConverterNode", () => {
             };
             const node = new IntegerConverterNode(input, mockContext, [], "test");
             expect(node.convert()).toEqual({
-                type: "long",
-                minimum: 0,
-                maximum: 100,
-                default: 50,
+                type: "alias",
+                value: {
+                    type: "primitive",
+                    value: {
+                        type: "long",
+                        minimum: 0,
+                        maximum: 100,
+                        default: 50,
+                    },
+                },
             });
         });
 
@@ -118,10 +124,16 @@ describe("IntegerConverterNode", () => {
             };
             const node = new IntegerConverterNode(input, mockContext, [], "test");
             expect(node.convert()).toEqual({
-                type: "integer",
-                minimum: undefined,
-                maximum: undefined,
-                default: undefined,
+                type: "alias",
+                value: {
+                    type: "primitive",
+                    value: {
+                        type: "integer",
+                        minimum: undefined,
+                        maximum: undefined,
+                        default: undefined,
+                    },
+                },
             });
         });
     });

@@ -1,8 +1,7 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseAPIConverterNodeContext } from "../../../BaseApiConverter.node";
-import { BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
+import { BaseOpenApiV3_1ConverterNodeContext, BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export class ComponentsConverterNode extends BaseOpenApiV3_1Node<
@@ -13,7 +12,7 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1Node<
 
     constructor(
         input: OpenAPIV3_1.ComponentsObject,
-        context: BaseAPIConverterNodeContext,
+        context: BaseOpenApiV3_1ConverterNodeContext,
         accessPath: string[],
         pathId: string,
     ) {

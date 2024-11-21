@@ -1,10 +1,15 @@
+import { OpenAPIV3_1 } from "openapi-types";
 import { BaseAPIConverterNode, BaseAPIConverterNodeContext } from "../BaseApiConverter.node";
 import { toOpenApiPath } from "./utils/toOpenApiPath";
+
+export abstract class BaseOpenApiV3_1ConverterNodeContext extends BaseAPIConverterNodeContext {
+    public abstract document: OpenAPIV3_1.Document;
+}
 
 export abstract class BaseOpenApiV3_1Node<Input, Output> extends BaseAPIConverterNode<Input, Output> {
     constructor(
         input: Input,
-        context: BaseAPIConverterNodeContext,
+        context: BaseOpenApiV3_1ConverterNodeContext,
         readonly accessPath: string[],
         pathId: string,
     ) {

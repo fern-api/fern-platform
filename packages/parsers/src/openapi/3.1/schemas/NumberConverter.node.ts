@@ -1,13 +1,20 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
-import { BaseAPIConverterNodeContext } from "../../../BaseApiConverter.node";
 import { FdrNumberType } from "../../../types/fdr.types";
-import { BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
+import { BaseOpenApiV3_1ConverterNodeContext, BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
 import { ConstArrayToType, OPENAPI_NUMBER_TYPE_FORMAT } from "../../types/format.types";
 
 export declare namespace NumberConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
         type: "number";
+    }
+    export interface Output extends FdrAPI.api.latest.TypeShape.Alias {
+        type: "alias";
+        value: {
+            type: "primitive";
+            value: FdrNumberType;
+        };
     }
 }
 
@@ -15,7 +22,7 @@ function isOpenApiNumberTypeFormat(format: unknown): format is ConstArrayToType<
     return OPENAPI_NUMBER_TYPE_FORMAT.includes(format as ConstArrayToType<typeof OPENAPI_NUMBER_TYPE_FORMAT>);
 }
 
-export class NumberConverterNode extends BaseOpenApiV3_1Node<NumberConverterNode.Input, FdrNumberType> {
+export class NumberConverterNode extends BaseOpenApiV3_1Node<NumberConverterNode.Input, NumberConverterNode.Output> {
     type: FdrNumberType["type"] = "double";
     minimum: number | undefined;
     maximum: number | undefined;
@@ -23,7 +30,7 @@ export class NumberConverterNode extends BaseOpenApiV3_1Node<NumberConverterNode
 
     constructor(
         input: NumberConverterNode.Input,
-        context: BaseAPIConverterNodeContext,
+        context: BaseOpenApiV3_1ConverterNodeContext,
         accessPath: string[],
         pathId: string,
     ) {
@@ -63,12 +70,18 @@ export class NumberConverterNode extends BaseOpenApiV3_1Node<NumberConverterNode
         }
     }
 
-    public convert(): FdrNumberType | undefined {
+    public convert(): NumberConverterNode.Output | undefined {
         return {
-            type: this.type,
-            minimum: this.minimum,
-            maximum: this.maximum,
-            default: this.default,
+            type: "alias",
+            value: {
+                type: "primitive",
+                value: {
+                    type: this.type,
+                    minimum: this.minimum,
+                    maximum: this.maximum,
+                    default: this.default,
+                },
+            },
         };
     }
 }

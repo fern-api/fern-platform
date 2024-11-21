@@ -110,6 +110,22 @@
               }
             }
           }
+        },
+        {
+          "key": "address",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "Address"
+                }
+              }
+            }
+          }
         }
       ]
     }
@@ -380,6 +396,40 @@
             "value": {
               "type": "id",
               "id": "Category"
+            }
+          }
+        },
+        {
+          "key": "photoUrls",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "key": "tags",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "Tag"
+                }
+              }
             }
           }
         },

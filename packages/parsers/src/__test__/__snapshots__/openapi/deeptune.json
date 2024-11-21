@@ -1,0 +1,371 @@
+{
+  "TextToSpeechRequest": {
+    "name": "TextToSpeechRequest",
+    "shape": {
+      "type": "object",
+      "extends": [],
+      "properties": [
+        {
+          "key": "text",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "The text to be converted to speech."
+        },
+        {
+          "key": "voice",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Voice ID to be used, you can use the API or https://app.deeptune.com to browse voices and clone your own."
+        },
+        {
+          "key": "language_code",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Language code used to specify language/accent for the model, see supported languages. If not specified, language is auto-detected."
+        },
+        {
+          "key": "seed",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          "description": "Assuming all other properties didn't change, a fixed seed should always generate the exact same audio file."
+        }
+      ]
+    }
+  },
+  "TextToSpeechResponse": {
+    "name": "TextToSpeechResponse",
+    "shape": {
+      "type": "object",
+      "extends": [],
+      "properties": [
+        {
+          "key": "file",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "base64"
+              }
+            }
+          },
+          "description": "The generated audio file"
+        }
+      ]
+    }
+  },
+  "TextToSpeechFromPromptRequest": {
+    "name": "TextToSpeechFromPromptRequest",
+    "shape": {
+      "type": "object",
+      "extends": [],
+      "properties": [
+        {
+          "key": "text",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "The text to be converted to speech."
+        },
+        {
+          "key": "prompt_audio",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "The audio of the voice prompt to clone. This can be the url of a publicly accessible audio file or base64 encoded byte string.\n\nThe audio file should have a duration ranging from 3 to 30 seconds (quality does not improve with more than 30 seconds of reference audio). It can be in any audio format, as long as it is less than 50 MB.\n"
+        },
+        {
+          "key": "language_code",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Language code used to specify language/accent for the model, see supported languages. If not specified, language is auto-detected."
+        },
+        {
+          "key": "seed",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          "description": "Assuming all other properties didn't change, a fixed seed should always generate the exact same audio file."
+        }
+      ]
+    }
+  },
+  "TextToSpeechFromPromptResponse": {
+    "name": "TextToSpeechFromPromptResponse",
+    "shape": {
+      "type": "object",
+      "extends": [],
+      "properties": [
+        {
+          "key": "file",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "base64"
+              }
+            }
+          },
+          "description": "The generated audio file"
+        }
+      ]
+    }
+  },
+  "ListVoicesResponse": {
+    "name": "ListVoicesResponse",
+    "shape": {
+      "type": "alias",
+      "value": {
+        "type": "list",
+        "itemShape": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "Voice"
+          }
+        }
+      }
+    }
+  },
+  "GetVoiceByIdResponse": {
+    "name": "GetVoiceByIdResponse",
+    "shape": {
+      "type": "alias",
+      "value": {
+        "type": "id",
+        "id": "Voice"
+      }
+    }
+  },
+  "Voice": {
+    "name": "Voice",
+    "shape": {
+      "type": "object",
+      "extends": [],
+      "properties": [
+        {
+          "key": "id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "uuid"
+              }
+            }
+          },
+          "description": "Unique identifier for the voice."
+        },
+        {
+          "key": "name",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Name of the voice."
+        },
+        {
+          "key": "description",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Description of the voice. This field is required but can be an empty string."
+        },
+        {
+          "key": "is_public",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          "description": "Indicates whether the voice is publicly accessible or not."
+        }
+      ]
+    }
+  },
+  "CreateVoiceRequest": {
+    "name": "CreateVoiceRequest",
+    "shape": {
+      "type": "object",
+      "extends": [],
+      "properties": [
+        {
+          "key": "name",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "The name of the new voice."
+        },
+        {
+          "key": "file",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "base64"
+              }
+            }
+          },
+          "description": "The audio file for the voice."
+        },
+        {
+          "key": "description",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Optional description of the voice."
+        }
+      ]
+    }
+  },
+  "CreateVoiceResponse": {
+    "name": "CreateVoiceResponse",
+    "shape": {
+      "type": "alias",
+      "value": {
+        "type": "id",
+        "id": "Voice"
+      }
+    }
+  },
+  "UpdateVoiceRequest": {
+    "name": "UpdateVoiceRequest",
+    "shape": {
+      "type": "object",
+      "extends": [],
+      "properties": [
+        {
+          "key": "name",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "The name of the new voice."
+        },
+        {
+          "key": "file",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "base64"
+              }
+            }
+          },
+          "description": "The audio file for the voice."
+        },
+        {
+          "key": "description",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Optional description of the voice."
+        }
+      ]
+    }
+  },
+  "UpdateVoiceResponse": {
+    "name": "UpdateVoiceResponse",
+    "shape": {
+      "type": "alias",
+      "value": {
+        "type": "id",
+        "id": "Voice"
+      }
+    }
+  }
+}

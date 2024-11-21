@@ -43,13 +43,10 @@ describe("ObjectConverterNode", () => {
             };
             const node = new ObjectConverterNode(input, mockContext, [], "test");
             expect(node.extraProperties).toBeDefined();
-            const converted = node.extraProperties?.convert();
+            const converted = node.convert()?.extraProperties;
             expect(converted).toEqual({
-                type: "alias",
-                value: {
-                    type: "unknown",
-                    displayName: "TestObject",
-                },
+                type: "unknown",
+                displayName: "TestObject",
             });
         });
 

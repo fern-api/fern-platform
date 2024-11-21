@@ -92,10 +92,16 @@ describe("NumberConverterNode", () => {
             };
             const node = new NumberConverterNode(input, mockContext, [], "test");
             expect(node.convert()).toEqual({
-                type: "double",
-                minimum: 0.5,
-                maximum: 100.5,
-                default: 50.5,
+                type: "alias",
+                value: {
+                    type: "primitive",
+                    value: {
+                        type: "double",
+                        minimum: 0.5,
+                        maximum: 100.5,
+                        default: 50.5,
+                    },
+                },
             });
         });
 
@@ -105,10 +111,16 @@ describe("NumberConverterNode", () => {
             };
             const node = new NumberConverterNode(input, mockContext, [], "test");
             expect(node.convert()).toEqual({
-                type: "double",
-                minimum: undefined,
-                maximum: undefined,
-                default: undefined,
+                type: "alias",
+                value: {
+                    type: "primitive",
+                    value: {
+                        type: "double",
+                        minimum: undefined,
+                        maximum: undefined,
+                        default: undefined,
+                    },
+                },
             });
         });
     });

@@ -1,8 +1,7 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseAPIConverterNodeContext } from "../../../BaseApiConverter.node";
 import { BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
-import { getSchemaIdFromReference } from "../../utils/getSchemaIdFromReference";
+import { getSchemaIdFromReference } from "../../utils/3.1/getSchemaIdFromReference";
 
 export class ReferenceConverterNode extends BaseOpenApiV3_1Node<
     OpenAPIV3_1.ReferenceObject,
@@ -12,7 +11,7 @@ export class ReferenceConverterNode extends BaseOpenApiV3_1Node<
 
     constructor(
         input: OpenAPIV3_1.ReferenceObject,
-        context: BaseAPIConverterNodeContext,
+        context: BaseOpenApiV3_1ConverterNodeContext,
         accessPath: string[],
         pathId: string,
     ) {

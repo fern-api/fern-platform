@@ -1,7 +1,6 @@
 import { vi } from "vitest";
-import { BaseAPIConverterNodeContext } from "../BaseApiConverter.node";
 
-export function createMockContext(): BaseAPIConverterNodeContext {
+export function createMockContext(): BaseOpenApiV3_1ConverterNodeContext {
     return {
         logger: {
             info: vi.fn(),

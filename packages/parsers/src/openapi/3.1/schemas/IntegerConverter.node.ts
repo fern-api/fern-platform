@@ -1,13 +1,20 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
-import { BaseAPIConverterNodeContext } from "../../../BaseApiConverter.node";
 import { FdrIntegerType } from "../../../types/fdr.types";
-import { BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
+import { BaseOpenApiV3_1ConverterNodeContext, BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
 import { ConstArrayToType, OPENAPI_INTEGER_TYPE_FORMAT } from "../../types/format.types";
 
 export declare namespace IntegerConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
         type: "integer";
+    }
+    export interface Output extends FdrAPI.api.latest.TypeShape.Alias {
+        type: "alias";
+        value: {
+            type: "primitive";
+            value: FdrIntegerType;
+        };
     }
 }
 
@@ -15,7 +22,7 @@ function isOpenApiIntegerTypeFormat(format: unknown): format is ConstArrayToType
     return OPENAPI_INTEGER_TYPE_FORMAT.includes(format as ConstArrayToType<typeof OPENAPI_INTEGER_TYPE_FORMAT>);
 }
 
-export class IntegerConverterNode extends BaseOpenApiV3_1Node<IntegerConverterNode.Input, FdrIntegerType> {
+export class IntegerConverterNode extends BaseOpenApiV3_1Node<IntegerConverterNode.Input, IntegerConverterNode.Output> {
     type: FdrIntegerType["type"] = "integer";
     minimum: number | undefined;
     maximum: number | undefined;
@@ -23,7 +30,7 @@ export class IntegerConverterNode extends BaseOpenApiV3_1Node<IntegerConverterNo
 
     constructor(
         input: IntegerConverterNode.Input,
-        context: BaseAPIConverterNodeContext,
+        context: BaseOpenApiV3_1ConverterNodeContext,
         accessPath: string[],
         pathId: string,
     ) {
@@ -65,12 +72,18 @@ export class IntegerConverterNode extends BaseOpenApiV3_1Node<IntegerConverterNo
         }
     }
 
-    public convert(): FdrIntegerType | undefined {
+    public convert(): IntegerConverterNode.Output | undefined {
         return {
-            type: this.type,
-            minimum: this.minimum,
-            maximum: this.maximum,
-            default: this.default,
+            type: "alias",
+            value: {
+                type: "primitive",
+                value: {
+                    type: this.type,
+                    minimum: this.minimum,
+                    maximum: this.maximum,
+                    default: this.default,
+                },
+            },
         };
     }
 }
