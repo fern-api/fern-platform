@@ -22,7 +22,7 @@ export function MarkdownContent({
             remarkRehypeOptions={{}}
             className={clsx("prose dark:prose-invert", className)}
         >
-            {children}
+            {children.replaceAll("```[^", "```\n[^")}
         </Markdown>
     );
 }
@@ -30,10 +30,21 @@ export function MarkdownContent({
 function remarkTest() {
     return (tree: Root) => {
         visit(tree, "text", (node) => {
+            // Remove footnote references that aren't parsed
             const match = node.value.matchAll(/\[\^[0-9]+\]/g);
             if (match) {
                 for (const m of match) {
                     node.value = node.value.replace(m[0], "");
+                }
+            }
+
+            // remove all partial brackets
+            const bracketMatch = node.value.matchAll(/\[.*$|!\[.*$/g);
+            if (bracketMatch) {
+                for (const m of bracketMatch) {
+                    if (!m[0].endsWith("]")) {
+                        node.value = node.value.replace(m[0], "");
+                    }
                 }
             }
         });

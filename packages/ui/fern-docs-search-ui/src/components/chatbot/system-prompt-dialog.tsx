@@ -6,7 +6,6 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog";
 import { ReactElement } from "react";
 import { Button } from "../ui/button";
@@ -16,20 +15,18 @@ export const SystemPromptDialog = ({
     open,
     onOpenChange,
     children,
-    asChild,
     value,
     onValueChange,
 }: {
     open?: boolean;
     onOpenChange?: (open: boolean) => void;
     children: React.ReactNode;
-    asChild?: boolean;
     value?: string;
     onValueChange?: (value: string) => void;
 }): ReactElement => {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogTrigger asChild={asChild}>{children}</DialogTrigger>
+            {children}
             <DialogContent className=" max-w-screen-lg">
                 <DialogHeader>
                     <DialogTitle>Update System Prompt</DialogTitle>

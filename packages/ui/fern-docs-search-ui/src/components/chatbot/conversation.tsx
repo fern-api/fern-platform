@@ -127,7 +127,7 @@ export function ChatbotConversation({
 
                 {isLoading && messages[messages.length - 1]?.role !== "assistant" && (
                     <ChatbotTurn role="assistant" id="thinking">
-                        <div className="animate-pulse bg-muted rounded-full size-4" />
+                        <p className="text-[var(--grayscale-a10)]">Thinking...</p>
                     </ChatbotTurn>
                 )}
 

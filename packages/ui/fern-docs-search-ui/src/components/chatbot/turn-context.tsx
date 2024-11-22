@@ -1,7 +1,7 @@
 import { PrimitiveAtom, atom } from "jotai";
 import { ReactElement, ReactNode, createContext, useContext, useRef } from "react";
 
-interface Footnote {
+export interface Footnote {
     ids: string[];
     url: string;
     title?: string;
