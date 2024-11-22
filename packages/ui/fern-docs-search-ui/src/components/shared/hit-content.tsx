@@ -41,11 +41,11 @@ const SEGMENT_DISPLAY_NAMES: Record<SegmentType, string> = {
 function HitContentWithTitle({
     hit,
     children,
-    rightContent,
+    // rightContent,
 }: {
     hit: AlgoliaRecordHit;
     children: ReactNode;
-    rightContent?: ReactNode;
+    // rightContent?: ReactNode;
 }): ReactElement {
     return (
         <div className="space-y-1 flex-1 shrink min-w-0">
