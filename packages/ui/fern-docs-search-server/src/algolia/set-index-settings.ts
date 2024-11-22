@@ -18,6 +18,19 @@ export async function setIndexSettings(
             enableRules: true,
             customRanking: ["desc(date_timestamp)"],
             removeWordsIfNoResults: "allOptional",
+            optionalWords: [
+                "endpoint",
+                "api",
+                "guide",
+                "documentation",
+                "doc",
+                "parameter",
+                "webhook",
+                "websocket",
+                "http",
+                "code",
+                "snippet",
+            ],
         },
     });
 }

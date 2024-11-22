@@ -47,7 +47,6 @@ export function FernDocsInstantSearch({
                 maxFacetHits={100}
                 maxValuesPerFacet={1000}
                 userToken={authenticatedUserToken ?? userToken}
-                optionalWords={["endpoint", "api", "guide", "parameter", "webhook", "websocket"]}
             />
             {React.cloneElement(children, { filters, setFilters, resetFilters })}
         </InstantSearchNext>
