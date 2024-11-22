@@ -1,10 +1,23 @@
+import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { ComponentProps, RefObject, forwardRef, useEffect, useRef } from "react";
 
-export const TextArea = forwardRef<HTMLTextAreaElement, ComponentProps<"textarea">>((props, forwardedRef) => {
+export const TextArea = forwardRef<
+    HTMLTextAreaElement,
+    ComponentProps<"textarea"> & {
+        onValueChange?: (value: string) => void;
+        minLines?: number;
+    }
+>(({ onValueChange, minLines, ...props }, forwardedRef) => {
     const inputRef = useRef<HTMLTextAreaElement>(null);
-    useAutosizeTextArea(inputRef);
-    return <textarea ref={composeRefs(inputRef, forwardedRef)} {...props} />;
+    useAutosizeTextArea(inputRef, minLines);
+    return (
+        <textarea
+            ref={composeRefs(inputRef, forwardedRef)}
+            {...props}
+            onChange={composeEventHandlers(props.onChange, (e) => onValueChange?.(e.target.value))}
+        />
+    );
 });
 
 TextArea.displayName = "TextArea";

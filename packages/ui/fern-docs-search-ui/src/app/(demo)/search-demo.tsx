@@ -103,7 +103,12 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
             )}
             <ChatbotModelProvider
                 models={
-                    domain.includes("cohere") ? CHATBOT_MODELS.filter((m) => m.provider === "cohere") : CHATBOT_MODELS
+                    domain.includes("cohere")
+                        ? [
+                              ...CHATBOT_MODELS.filter((m) => m.provider === "cohere"),
+                              ...CHATBOT_MODELS.filter((m) => m.provider !== "cohere"),
+                          ]
+                        : CHATBOT_MODELS
                 }
             >
                 <ChatbotDialog

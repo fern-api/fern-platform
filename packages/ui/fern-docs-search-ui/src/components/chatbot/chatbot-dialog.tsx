@@ -1,7 +1,8 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useChat } from "ai/react";
-import { SquarePen, X } from "lucide-react";
+import { atom, useAtom } from "jotai";
+import { Cog, SquarePen, X } from "lucide-react";
 import {
     ComponentPropsWithoutRef,
     PropsWithChildren,
@@ -19,6 +20,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/
 import { Composer } from "./composer";
 import { ChatbotConversation } from "./conversation";
 import { ChatbotModelSelect, useChatbotModels } from "./model-select";
+import { DEFAULT_SYSTEM_PROMPT } from "./system-prompt";
+import { SystemPromptDialog } from "./system-prompt-dialog";
 import { combineSearchResults, squeezeMessages } from "./utils";
 
 interface ChatbotDialogProps {
@@ -57,6 +60,9 @@ export function ChatbotDialog({
     );
 }
 
+const systemAtom = atom(DEFAULT_SYSTEM_PROMPT);
+const modelAtom = atom<string | undefined>(undefined);
+
 const ChatbotInterface = forwardRef<
     HTMLDivElement,
     ComponentPropsWithoutRef<"div"> & {
@@ -76,12 +82,16 @@ const ChatbotInterface = forwardRef<
         }, 0);
     };
 
-    const [model, setModel] = useState(useChatbotModels()[0]?.model);
+    const defaultModel = useChatbotModels()[0]?.model;
+    const [model = defaultModel, setModel] = useAtom(modelAtom);
+    const [system, setSystem] = useAtom(systemAtom);
+    const [systemDialogOpen, setSystemDialogOpen] = useState(false);
 
     const { messages, input, handleInputChange, handleSubmit, setInput, setMessages, isLoading } = useChat({
         initialInput,
         api,
         headers: { ...(_headers ?? {}), "X-Fern-Docs-Model": model },
+        body: { system },
     });
 
     useEffect(() => {
@@ -96,6 +106,10 @@ const ChatbotInterface = forwardRef<
             ref={ref}
             {...props}
             onKeyDown={(e) => {
+                if (systemDialogOpen) {
+                    return;
+                }
+
                 if (e.altKey || e.metaKey || e.ctrlKey) {
                     return;
                 }
@@ -109,7 +123,9 @@ const ChatbotInterface = forwardRef<
                     focus();
                 }
             }}
-            onFocus={focus}
+            onFocus={() => {
+                focus();
+            }}
         >
             <div className="absolute top-0 inset-x-0 z-50">
                 <div className="px-6 py-4 max-md:px-3 fixed top-0 left-0">
@@ -130,7 +146,24 @@ const ChatbotInterface = forwardRef<
                                 <p>New chat</p>
                             </TooltipContent>
                         </Tooltip>
-
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <SystemPromptDialog
+                                    asChild
+                                    value={system}
+                                    onValueChange={setSystem}
+                                    open={systemDialogOpen}
+                                    onOpenChange={setSystemDialogOpen}
+                                >
+                                    <Button variant="outline" size="icon" className="rounded-full">
+                                        <Cog />
+                                    </Button>
+                                </SystemPromptDialog>
+                            </TooltipTrigger>
+                            <TooltipContent collisionPadding={10}>
+                                <p>Update System Prompt</p>
+                            </TooltipContent>
+                        </Tooltip>
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <Dialog.Close asChild>

@@ -1,3 +1,4 @@
+import { DEFAULT_SYSTEM_PROMPT } from "@/components/chatbot/system-prompt";
 import { algoliaAppId } from "@/server/env-variables";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createCohere } from "@ai-sdk/cohere";
@@ -30,18 +31,6 @@ const models = {
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-const system = `You are an AI RAG assistant.
-ONLY respond to questions using information from the knowledge base search tool.
-Do not rely on your own knowledge.
-Include links to the relevant pages in your responses.
-If no relevant information is found in the tool calls, respond, "Sorry, I don't know."
-Keep responses short and concise. Always use markdown formatting, and always include markdown footnotes with links to the relevant pages.
-Use [^1] for inline annotations, and then provide the URL in the footnote like this:
-[^1]: https://<docs-url>/<path>
-If a footnote is added to the end of a code block, it should be preceded by a blank line.
-Do not refer to the user as "the user", just respond to the user's question in the first person.
-`;
-
 export async function POST(request: Request): Promise<Response> {
     const modelId = request.headers.get("X-Fern-Docs-Model");
     const searchKey = request.headers.get("X-Algolia-Search-Key");
@@ -57,7 +46,9 @@ export async function POST(request: Request): Promise<Response> {
         return new Response(`Invalid model: ${modelId}`, { status: 400 });
     }
 
-    const { messages } = await request.json();
+    const { messages, system: _system } = await request.json();
+
+    const system = typeof _system === "string" ? _system.trim() + "\n" : DEFAULT_SYSTEM_PROMPT;
 
     const result = await streamText({
         model,
