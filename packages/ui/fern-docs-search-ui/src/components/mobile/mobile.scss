@@ -2,7 +2,7 @@
     overflow: hidden;
 
     [data-cmdk-fern-header] {
-        padding: 0.5rem;
+        padding: 0 0.5rem;
         display: flex;
         gap: 0.5rem;
     }
@@ -14,6 +14,12 @@
         &:focus {
             outline: none;
         }
+    }
+
+    [cmdk-list-sizer] {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
     }
 
     [cmdk-item] {
@@ -73,7 +79,8 @@
         margin-bottom: 0.5rem;
     }
 
-    [cmdk-group] {
-        margin-top: 0.75rem;
+    .fern-search-hit-snippet {
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
     }
 }

@@ -7,7 +7,6 @@ import { DesktopSearchDialog } from "@/components/demo/desktop-search-dialog";
 import { DesktopInstantSearch } from "@/components/desktop/desktop-instant-search";
 import { MobileInstantSearch } from "@/components/mobile/mobile-instant-search";
 import { SearchClientProvider } from "@/components/shared/search-client-provider";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useTheme } from "next-themes";
 import { ReactElement, isValidElement, useEffect, useState } from "react";
@@ -21,7 +20,7 @@ const ApiKeySchema = z.object({
 });
 
 export function DemoInstantSearchClient({ appId, domain }: { appId: string; domain: string }): ReactElement | false {
-    const [desktopDialogOpen, setDesktopDialogOpen] = useState(false);
+    const [open, setOpen] = useState(false);
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [initialInput, setInitialInput] = useState<string | undefined>(undefined);
     const { setTheme } = useTheme();
@@ -34,7 +33,7 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
             }
 
             if (event.metaKey && (event.key === "k" || event.key === "/")) {
-                setDesktopDialogOpen(true);
+                setOpen(true);
             }
         };
         window.addEventListener("keydown", handleKeyDown);
@@ -65,29 +64,29 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
 
     const headers: Record<string, string> = {
         "X-Fern-Docs-Domain": domain,
+        "X-Algolia-Search-Key": apiKey,
+        "X-User-Token": userToken,
     };
 
     return (
         <SearchClientProvider appId={appId} apiKey={apiKey} domain={domain} indexName="fern-docs-search">
             {isMobile ? (
-                <SidebarProvider>
-                    <SidebarTrigger className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-                    <AppSidebar>
-                        <MobileInstantSearch
-                            onSelect={handleSubmit}
-                            userToken={userToken}
-                            setTheme={setTheme}
-                            onAskAI={({ initialInput }) => {
-                                setInitialInput(initialInput);
-                                setIsChatOpen(true);
-                            }}
-                        >
-                            <AppSidebarContent />
-                        </MobileInstantSearch>
-                    </AppSidebar>
-                </SidebarProvider>
+                <AppSidebar>
+                    <MobileInstantSearch
+                        onSelect={handleSubmit}
+                        userToken={userToken}
+                        setTheme={setTheme}
+                        onAskAI={({ initialInput }) => {
+                            setInitialInput(initialInput);
+                            setIsChatOpen(true);
+                            setOpen(false);
+                        }}
+                    >
+                        <AppSidebarContent />
+                    </MobileInstantSearch>
+                </AppSidebar>
             ) : (
-                <DesktopSearchDialog desktopDialogOpen={desktopDialogOpen} setDesktopDialogOpen={setDesktopDialogOpen}>
+                <DesktopSearchDialog open={open} onOpenChange={setOpen}>
                     <DesktopInstantSearch
                         onSelect={handleSubmit}
                         userToken={userToken}
@@ -95,9 +94,9 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                         onAskAI={({ initialInput }) => {
                             setInitialInput(initialInput);
                             setIsChatOpen(true);
-                            setDesktopDialogOpen(false);
+                            setOpen(false);
                         }}
-                        onClose={() => setDesktopDialogOpen(false)}
+                        onClose={() => setOpen(false)}
                     />
                 </DesktopSearchDialog>
             )}

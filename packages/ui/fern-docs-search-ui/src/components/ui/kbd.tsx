@@ -12,7 +12,7 @@ export const Kbd: ForwardRefExoticComponent<KbdProps & RefAttributes<HTMLSpanEle
             ref={ref}
             {...props}
             className={cn(
-                "bg-[#E5E5E5] dark:bg-[#2A2A2A] rounded-sm px-1 py-0.5 text-xs font-semibold font-mono",
+                "bg-[var(--grayscale-a3)] text-[var(--grayscale-a10)] rounded-sm px-1 py-0.5 text-xs font-semibold font-mono",
                 props.className,
             )}
         >

@@ -42,6 +42,10 @@ export const Availability: Record<Availability, Availability> = {
     Retired: "Retired",
 } as const;
 
+export function isAvailability(value: string): value is Availability {
+    return Availability[value as keyof typeof Availability] != null;
+}
+
 /**
  * The order of availability levels from most stable to most unstable.
  */
@@ -112,13 +116,15 @@ interface AvailabilityBadgeProps extends Omit<BadgeProps, "color"> {
     availability: Availability;
 }
 
-export const AvailabilityBadge = forwardRef<HTMLSpanElement, AvailabilityBadgeProps>((props, ref) => {
-    const { availability, ...rest } = props;
-    return (
-        <Badge ref={ref} {...rest} color={AvailabilityColorScheme[availability]} data-badge-type="availability">
-            {props.children ?? AvailabilityDisplayNames[availability]}
-        </Badge>
-    );
-});
+export const AvailabilityBadge = forwardRef<HTMLSpanElement & HTMLButtonElement, AvailabilityBadgeProps>(
+    (props, ref) => {
+        const { availability, ...rest } = props;
+        return (
+            <Badge ref={ref} {...rest} color={AvailabilityColorScheme[availability]} data-badge-type="availability">
+                {props.children ?? AvailabilityDisplayNames[availability]}
+            </Badge>
+        );
+    },
+);
 
 AvailabilityBadge.displayName = "AvailabilityBadge";

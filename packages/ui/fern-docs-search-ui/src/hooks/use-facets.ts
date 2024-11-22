@@ -52,6 +52,7 @@ export function useInitialFilters({ initialFilters }: { initialFilters?: Partial
     filters: FacetFilter[];
     facetFilters: string[];
     setFilters: Dispatch<SetStateAction<FacetFilter[]>>;
+    resetFilters: () => void;
 } {
     const preload = usePreloadFacets();
 
@@ -75,5 +76,6 @@ export function useInitialFilters({ initialFilters }: { initialFilters?: Partial
         filters,
         setFilters,
         facetFilters: filters.length === 0 ? [] : toFiltersString({ filters }),
+        resetFilters: () => setFilters(initialFiltersArray),
     };
 }

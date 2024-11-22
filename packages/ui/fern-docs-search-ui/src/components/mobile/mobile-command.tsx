@@ -1,18 +1,19 @@
 import { FacetFilter } from "@/hooks/use-facets";
 import { UseSearch } from "@/hooks/use-search";
-import { FACET_DISPLAY_NAME_MAP, getFacetDisplay } from "@/utils/facet-display";
+import { FACET_DISPLAY_NAME_MAP } from "@/utils/facet-display";
 import { Command } from "cmdk";
-import { Laptop, ListFilter, MessageCircle, Moon, Sun } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { ComponentProps, Dispatch, SetStateAction, forwardRef, useRef, useState } from "react";
-import { MarkRequired } from "ts-essentials";
-import { PageIcon } from "../icons/page";
 import { AskAIText } from "../shared/askai-text";
+import { CommandEmpty } from "../shared/command-empty";
+import { CommandGroupFilters } from "../shared/command-filters";
+import { CommandGroupSearchHits } from "../shared/command-hits";
+import { CommandGroupTheme } from "../shared/command-theme";
 import "../shared/common.scss";
-import { HitContent } from "../shared/hit-content";
-import { AlgoliaRecordHit } from "../types";
 import { Button } from "../ui/button";
+import { cn } from "../ui/cn";
 import { Input } from "../ui/input";
-import { MobileFacetDialog } from "./mobile-facet-dialog";
+import { MobileFacetMenuBar } from "./mobile-facet-menu-bar";
 import "./mobile.scss";
 
 export interface MobileCommandProps extends Omit<ComponentProps<typeof Command>, "onSelect"> {
@@ -21,6 +22,7 @@ export interface MobileCommandProps extends Omit<ComponentProps<typeof Command>,
     onSelect: (path: string) => void;
     onAskAI?: ({ initialInput }: { initialInput?: string }) => void;
     setTheme?: (theme: "light" | "dark" | "system") => void;
+    resetFilters?: () => void;
 }
 
 interface InternalMobileCommandProps extends MobileCommandProps, UseSearch {}
@@ -31,11 +33,12 @@ export const MobileCommand = forwardRef<HTMLDivElement, InternalMobileCommandPro
         onSelect,
         onAskAI,
         setFilters,
+        resetFilters,
         setTheme,
         query,
         refine,
         clear,
-        groups,
+        items,
         facets,
         preload,
         isLoading,
@@ -45,8 +48,15 @@ export const MobileCommand = forwardRef<HTMLDivElement, InternalMobileCommandPro
 
     const inputRef = useRef<HTMLInputElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
+    const [masked, setMasked] = useState(false);
 
     const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+    const scrollTop = () => {
+        setTimeout(() => {
+            scrollRef.current?.scrollTo({ top: 0 });
+        }, 0);
+    };
 
     const focus = () => {
         setTimeout(() => {
@@ -75,104 +85,78 @@ export const MobileCommand = forwardRef<HTMLDivElement, InternalMobileCommandPro
                     <Input />
                 </Command.Input>
                 {isSearchOpen && (
-                    <Button onClick={() => setIsSearchOpen(false)} className="shrink-0" variant="secondary">
+                    <Button
+                        onClick={() => {
+                            setIsSearchOpen(false);
+                            resetFilters?.();
+                        }}
+                        className="shrink-0"
+                        variant="secondary"
+                    >
                         Cancel
                     </Button>
                 )}
             </div>
-            {isSearchOpen ? (
-                <Command.List
-                    ref={scrollRef}
-                    data-empty={groups.length === 0 && query.length === 0 && onAskAI == null && setTheme == null}
-                    tabIndex={-1}
-                    className="flex-1"
-                >
-                    <MobileFacetDialog filters={filters} setFilters={setFilters} />
-                    {onAskAI != null && (
-                        <Command.Group forceMount>
-                            <Command.Item value="ai-chat" onSelect={() => onAskAI?.({ initialInput: query })}>
-                                <MessageCircle />
-                                <AskAIText query={query} />
-                            </Command.Item>
-                        </Command.Group>
-                    )}
-
-                    {facets.length > 0 && (
-                        <Command.Group heading="Filters">
-                            {facets.map((filter) => (
-                                <Command.Item
-                                    key={`${filter.facet}:${filter.value}`}
-                                    onSelect={() => {
-                                        setFilters?.([...filters, { facet: filter.facet, value: filter.value }]);
-                                        clear();
-                                        focus();
-                                    }}
-                                    onMouseOver={() => {
-                                        preload({
-                                            filters: [...filters, { facet: filter.facet, value: filter.value }],
-                                        });
-                                    }}
-                                >
-                                    <ListFilter />
-                                    <span className="flex-1">Search {getFacetDisplay(filter.facet, filter.value)}</span>
-                                    <span className="text-xs text-[#969696] dark:text-white/50 self-center">
-                                        {filter.count}
-                                    </span>
-                                </Command.Item>
-                            ))}
-                        </Command.Group>
-                    )}
-
-                    {groups.length === 0 && query.length > 0 && (
-                        <Command.Empty>No results found for &ldquo;{query}&rdquo;.</Command.Empty>
-                    )}
-
-                    {groups.map((group, index) => (
-                        <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} forceMount>
-                            {group.hits.map((hit) => (
-                                <Command.Item key={hit.path} value={hit.path} onSelect={() => onSelect(hit.path)}>
-                                    <PageIcon icon={hit.icon} type={hit.record?.type} />
-                                    {hit.record != null && (
-                                        <HitContent hit={hit.record as MarkRequired<AlgoliaRecordHit, "type">} />
-                                    )}
-                                    {hit.record == null && hit.title}
-                                </Command.Item>
-                            ))}
-                        </Command.Group>
-                    ))}
-
-                    {setTheme != null && (
-                        <Command.Group heading="Theme">
-                            <Command.Item
-                                value="light"
-                                onSelect={() => setTheme?.("light")}
-                                keywords={["light mode", "light theme"]}
-                            >
-                                <Sun />
-                                Light
-                            </Command.Item>
-                            <Command.Item
-                                value="dark"
-                                onSelect={() => setTheme?.("dark")}
-                                keywords={["dark mode", "dark theme"]}
-                            >
-                                <Moon />
-                                Dark
-                            </Command.Item>
-                            <Command.Item
-                                value="system"
-                                onSelect={() => setTheme?.("system")}
-                                keywords={["system mode", "system theme"]}
-                            >
-                                <Laptop />
-                                System
-                            </Command.Item>
-                        </Command.Group>
-                    )}
-                </Command.List>
-            ) : (
-                <Command.List>{children}</Command.List>
+            {isSearchOpen && (
+                <MobileFacetMenuBar
+                    filters={filters}
+                    setFilters={(filters) => {
+                        setFilters?.(filters);
+                        focus();
+                        scrollTop();
+                    }}
+                />
             )}
+            <Command.List
+                ref={scrollRef}
+                data-empty={items.length === 0 && query.length === 0 && onAskAI == null && setTheme == null}
+                tabIndex={-1}
+                className={cn("flex-1", {
+                    "mask-grad-top-3": masked,
+                })}
+                onScroll={(e) => {
+                    if (!(e.target instanceof HTMLElement)) {
+                        return;
+                    }
+                    setMasked(e.target.scrollTop > 0);
+                }}
+            >
+                {isSearchOpen ? (
+                    <>
+                        {onAskAI != null && (
+                            <Command.Group forceMount>
+                                <Command.Item value="ai-chat" onSelect={() => onAskAI?.({ initialInput: query })}>
+                                    <MessageCircle />
+                                    <AskAIText query={query} />
+                                </Command.Item>
+                            </Command.Group>
+                        )}
+
+                        <CommandGroupFilters
+                            facets={facets}
+                            onSelect={(filter) => {
+                                setFilters?.([...filters, filter]);
+                                clear();
+                                focus();
+                                scrollTop();
+                            }}
+                            preload={(filter) => {
+                                preload({ filters: [...filters, filter] });
+                            }}
+                        />
+
+                        {items.length === 0 && <CommandEmpty />}
+
+                        {(query.trimStart().length > 0 || filters.length > 0) && (
+                            <CommandGroupSearchHits items={items} onSelect={onSelect} />
+                        )}
+
+                        <CommandGroupTheme setTheme={setTheme} />
+                    </>
+                ) : (
+                    children
+                )}
+            </Command.List>
         </Command>
     );
 });

@@ -3,6 +3,7 @@
 .fern-docs-badge {
     align-items: center;
     display: inline-flex;
+    gap: 0.25rem;
     justify-content: center;
     line-height: 1rem;
     box-sizing: border-box;
@@ -10,9 +11,15 @@
     white-space: nowrap;
 }
 
-.fern-docs-badge.interactive:hover {
+.fern-docs-badge.interactive:not(:disabled):hover,
+.fern-docs-badge[data-state="open"]:not(:disabled) {
     cursor: pointer;
     transition: background-color 150ms ease-in-out;
+}
+
+.fern-docs-badge:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .fern-docs-badge.rounded {
@@ -61,4 +68,9 @@
 
 .fern-docs-badge[data-badge-type="http-method"].large {
     font-size: 0.75rem;
+}
+
+.fern-docs-badge > svg {
+    width: 1.25em;
+    height: 1.25em;
 }

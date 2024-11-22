@@ -9,6 +9,7 @@ import {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
+    DropdownMenuPortal,
     DropdownMenuRadioGroup,
     DropdownMenuRadioItem,
     DropdownMenuSeparator,
@@ -21,11 +22,13 @@ export function DesktopFilterDropdownMenu({
     filters,
     removeFilter,
     updateFilter,
+    onClose,
 }: {
     filter: FacetFilter;
     removeFilter?: () => void;
     updateFilter?: (value: string) => void;
     filters: readonly FacetFilter[];
+    onClose?: () => void;
 }): ReactElement {
     const otherFilters = filters.filter((f) => f.facet !== filter.facet);
 
@@ -34,54 +37,63 @@ export function DesktopFilterDropdownMenu({
     const options = facets?.[filter.facet] ?? [];
 
     return (
-        <DropdownMenu key={`${filter.facet}:${filter.value}`}>
+        <DropdownMenu
+            key={`${filter.facet}:${filter.value}`}
+            onOpenChange={(open) => {
+                if (!open) {
+                    onClose?.();
+                }
+            }}
+        >
             <DropdownMenuTrigger asChild>
                 <Badge variant="outline" asChild>
-                    <button className="fern-search-facet-filter-menu-button" onClick={(e) => e.stopPropagation()}>
+                    <button className="fern-search-facet-filter-menu-button">
                         {getFacetDisplay(filter.facet, filter.value, { small: true, titleCase: true })}
                     </button>
                 </Badge>
             </DropdownMenuTrigger>
-            <DropdownMenuContent
-                className="min-w-[200px]"
-                onKeyDownCapture={(e) => {
-                    if (e.key === "Backspace") {
-                        removeFilter?.();
-                    }
-                }}
-            >
-                <DropdownMenuLabel>{toFilterLabel(filter.facet)}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                {options.length > 0 && (
-                    <>
-                        <DropdownMenuRadioGroup
-                            value={filter.value}
-                            onValueChange={(value) => {
-                                updateFilter?.(value);
+            <DropdownMenuPortal>
+                <DropdownMenuContent
+                    className="min-w-[200px]"
+                    onKeyDownCapture={(e) => {
+                        if (e.key === "Backspace") {
+                            removeFilter?.();
+                        }
+                    }}
+                >
+                    <DropdownMenuLabel>{toFilterLabel(filter.facet)}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {options.length > 0 && (
+                        <>
+                            <DropdownMenuRadioGroup
+                                value={filter.value}
+                                onValueChange={(value) => {
+                                    updateFilter?.(value);
+                                }}
+                            >
+                                {options.map((option) => (
+                                    <DropdownMenuRadioItem key={option.value} value={option.value}>
+                                        {getFacetDisplay(filter.facet, option.value, { small: true, titleCase: true })}
+                                        <DropdownMenuShortcut>{option.count}</DropdownMenuShortcut>
+                                    </DropdownMenuRadioItem>
+                                ))}
+                            </DropdownMenuRadioGroup>
+                            <DropdownMenuSeparator />
+                        </>
+                    )}
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem
+                            onSelect={() => {
+                                removeFilter?.();
                             }}
                         >
-                            {options.map((option) => (
-                                <DropdownMenuRadioItem key={option.value} value={option.value}>
-                                    {getFacetDisplay(filter.facet, option.value, { small: true, titleCase: true })}
-                                    <DropdownMenuShortcut>{option.count}</DropdownMenuShortcut>
-                                </DropdownMenuRadioItem>
-                            ))}
-                        </DropdownMenuRadioGroup>
-                        <DropdownMenuSeparator />
-                    </>
-                )}
-                <DropdownMenuGroup>
-                    <DropdownMenuItem
-                        onSelect={() => {
-                            removeFilter?.();
-                        }}
-                    >
-                        <Minus className="size-4" />
-                        Remove filter
-                        <DropdownMenuShortcut>del</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                </DropdownMenuGroup>
-            </DropdownMenuContent>
+                            <Minus className="size-4" />
+                            Remove filter
+                            <DropdownMenuShortcut>del</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                </DropdownMenuContent>
+            </DropdownMenuPortal>
         </DropdownMenu>
     );
 }

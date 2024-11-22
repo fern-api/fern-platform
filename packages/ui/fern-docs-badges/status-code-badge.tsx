@@ -14,18 +14,20 @@ const STATIC_CODE_INTENTS: Record<string, SemanticColor> = {
     5: "error",
 };
 
-export const StatusCodeBadge = forwardRef<HTMLSpanElement, StatusCodeBadgeProps>(({ statusCode, ...props }, ref) => {
-    const statusCodeString = String(statusCode);
-    return (
-        <SemanticBadge
-            {...props}
-            ref={ref}
-            data-badge-type="status-code"
-            intent={STATIC_CODE_INTENTS[statusCodeString[0] ?? ""]}
-        >
-            {props.children ?? statusCodeString}
-        </SemanticBadge>
-    );
-});
+export const StatusCodeBadge = forwardRef<HTMLSpanElement & HTMLButtonElement, StatusCodeBadgeProps>(
+    ({ statusCode, ...props }, ref) => {
+        const statusCodeString = String(statusCode);
+        return (
+            <SemanticBadge
+                {...props}
+                ref={ref}
+                data-badge-type="status-code"
+                intent={STATIC_CODE_INTENTS[statusCodeString[0] ?? ""]}
+            >
+                {props.children ?? statusCodeString}
+            </SemanticBadge>
+        );
+    },
+);
 
 StatusCodeBadge.displayName = "StatusCodeBadge";

@@ -5,21 +5,21 @@ import { SearchIcon } from "lucide-react";
 import { Kbd } from "../ui/kbd";
 
 export function DesktopSearchDialog({
-    desktopDialogOpen,
-    setDesktopDialogOpen,
+    open,
+    onOpenChange,
     children,
 }: {
-    desktopDialogOpen: boolean;
-    setDesktopDialogOpen: (open: boolean) => void;
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
     children: React.ReactNode;
 }): React.ReactElement {
     return (
-        <Dialog.Root open={desktopDialogOpen} onOpenChange={setDesktopDialogOpen}>
+        <Dialog.Root open={open} onOpenChange={onOpenChange}>
             <Dialog.Trigger asChild>
                 <button
                     className={cn(
                         "inline-flex items-center justify-start gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
-                        "border border-input bg-background hover:bg-accent",
+                        "border border-input bg-background hover:bg-accent text-[var(--grayscale-a10)]",
                         "h-9 px-2 py-2",
                         "w-full",
                     )}

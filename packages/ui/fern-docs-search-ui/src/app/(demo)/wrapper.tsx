@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, type ReactElement } from "react";
 import { handleReindex } from "./actions/reindex";
-import { DemoInstantSearchClient } from "./client-component";
+import { DemoInstantSearchClient } from "./search-demo";
 
 export function DesktopInstantSearchWrapper({ appId }: { appId: string }): ReactElement {
     const searchParams = useSearchParams();
@@ -23,9 +23,5 @@ export function DesktopInstantSearchWrapper({ appId }: { appId: string }): React
         return () => document.removeEventListener("keydown", handleKeyDown);
     }, [selectedDomain]);
 
-    return (
-        <div className="w-[500px]">
-            <DemoInstantSearchClient appId={appId} domain={selectedDomain} />
-        </div>
-    );
+    return <DemoInstantSearchClient appId={appId} domain={selectedDomain} />;
 }

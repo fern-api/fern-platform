@@ -1,20 +1,5 @@
+import { useSearchParams } from "next/navigation";
 import * as React from "react";
-
-import {
-    Sidebar,
-    SidebarContent,
-    SidebarGroup,
-    SidebarGroupContent,
-    SidebarGroupLabel,
-    SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-    SidebarRail,
-    useSidebar,
-} from "@/components/ui/sidebar";
-import { X } from "lucide-react";
-import { Button } from "../ui/button";
 
 // This is sample data.
 const data = {
@@ -148,52 +133,39 @@ const data = {
     ],
 };
 
-export function AppSidebar({ children, ...props }: React.ComponentProps<typeof Sidebar>): React.JSX.Element {
-    const { setOpenMobile } = useSidebar();
+export function AppSidebar({ children, ...props }: React.ComponentProps<"div">): React.JSX.Element {
+    const params = useSearchParams();
+    const domain = params.get("domain");
     return (
-        <Sidebar {...props}>
-            <SidebarHeader>
-                <div className="p-2">
-                    <h2 className="font-semibold">Search Demo</h2>
-                </div>
-                <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => setOpenMobile(false)}
-                    className="absolute right-2 top-2 rounded-full"
-                >
-                    <X />
-                </Button>
-            </SidebarHeader>
+        <div {...props} className="inset-0 fixed flex flex-col">
+            <div className="p-2 px-4 shrink-0">
+                <h2 className="font-semibold">{domain ?? "buildwithfern.com"} Search Demo</h2>
+            </div>
             {children}
-            <SidebarRail />
-        </Sidebar>
+        </div>
     );
 }
 
-export const AppSidebarContent = React.forwardRef<HTMLDivElement, React.ComponentProps<typeof SidebarContent>>(
-    (props, ref) => {
-        return (
-            <SidebarContent ref={ref} {...props}>
-                {/* We create a SidebarGroup for each parent. */}
-                {data.navMain.map((item) => (
-                    <SidebarGroup key={item.title}>
-                        <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
-                        <SidebarGroupContent>
-                            <SidebarMenu>
-                                {item.items.map((item) => (
-                                    <SidebarMenuItem key={item.title}>
-                                        <SidebarMenuButton asChild isActive={item.isActive}>
-                                            <a href={item.url}>{item.title}</a>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                ))}
-                            </SidebarMenu>
-                        </SidebarGroupContent>
-                    </SidebarGroup>
-                ))}
-            </SidebarContent>
-        );
-    },
-);
+export const AppSidebarContent = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>((props, ref) => {
+    return (
+        <div ref={ref} {...props} className="px-2 py-4">
+            {data.navMain.map((item) => (
+                <div key={item.title} className="mb-4">
+                    <h5 className="font-semibold mx-2 h-[36px] flex items-center">{item.title}</h5>
+                    <div>
+                        {item.items.map((item) => (
+                            <a
+                                href={item.url}
+                                key={item.title}
+                                className="flex items-center px-2 h-[36px] rounded-md hover:bg-[var(--accent-a3)] hover:text-[var(--accent-a11)] transition-colors hover:transition-none"
+                            >
+                                {item.title}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+});
 AppSidebarContent.displayName = "AppSidebarContent";

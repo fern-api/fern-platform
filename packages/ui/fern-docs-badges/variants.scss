@@ -1,18 +1,20 @@
 .fern-docs-badge.subtle,
 .fern-docs-badge.outlined {
-    color: var(--gray-a11);
-    background-color: var(--gray-a3);
+    color: var(--grayscale-a11);
+    background-color: var(--grayscale-a3);
 
-    &.interactive:hover {
-        background-color: var(--gray-a4);
+    &.interactive:not(:disabled):hover,
+    &[data-state="open"]:not(:disabled) {
+        background-color: var(--grayscale-a4);
     }
 
     &.accent {
-        color: var(--accent-a11, var(--gray-a11));
-        background-color: var(--accent-a3, var(--gray-a3));
+        color: var(--accent-a11, var(--grayscale-a11));
+        background-color: var(--accent-a3, var(--grayscale-a3));
 
-        &.interactive:hover {
-            background-color: var(--accent-a4, var(--gray-a4));
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--accent-a4, var(--grayscale-a4));
         }
     }
 
@@ -20,7 +22,8 @@
         color: var(--gray-a11);
         background-color: var(--gray-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--gray-a4);
         }
     }
@@ -29,7 +32,8 @@
         color: var(--mauve-a11);
         background-color: var(--mauve-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--mauve-a4);
         }
     }
@@ -38,7 +42,8 @@
         color: var(--slate-a11);
         background-color: var(--slate-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--slate-a4);
         }
     }
@@ -47,7 +52,8 @@
         color: var(--sage-a11);
         background-color: var(--sage-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--sage-a4);
         }
     }
@@ -56,7 +62,8 @@
         color: var(--olive-a11);
         background-color: var(--olive-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--olive-a4);
         }
     }
@@ -65,7 +72,8 @@
         color: var(--sand-a11);
         background-color: var(--sand-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--sand-a4);
         }
     }
@@ -74,7 +82,8 @@
         color: var(--tomato-a11);
         background-color: var(--tomato-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--tomato-a4);
         }
     }
@@ -83,7 +92,8 @@
         color: var(--red-a11);
         background-color: var(--red-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--red-a4);
         }
     }
@@ -92,7 +102,8 @@
         color: var(--ruby-a11);
         background-color: var(--ruby-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--ruby-a4);
         }
     }
@@ -101,7 +112,8 @@
         color: var(--crimson-a11);
         background-color: var(--crimson-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--crimson-a4);
         }
     }
@@ -110,7 +122,8 @@
         color: var(--pink-a11);
         background-color: var(--pink-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--pink-a4);
         }
     }
@@ -119,7 +132,8 @@
         color: var(--plum-a11);
         background-color: var(--plum-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--plum-a4);
         }
     }
@@ -128,7 +142,8 @@
         color: var(--purple-a11);
         background-color: var(--purple-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--purple-a4);
         }
     }
@@ -137,7 +152,8 @@
         color: var(--violet-a11);
         background-color: var(--violet-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--violet-a4);
         }
     }
@@ -146,7 +162,8 @@
         color: var(--iris-a11);
         background-color: var(--iris-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--iris-a4);
         }
     }
@@ -155,7 +172,8 @@
         color: var(--indigo-a11);
         background-color: var(--indigo-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--indigo-a4);
         }
     }
@@ -164,7 +182,8 @@
         color: var(--blue-a11);
         background-color: var(--blue-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--blue-a4);
         }
     }
@@ -173,7 +192,8 @@
         color: var(--cyan-a11);
         background-color: var(--cyan-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--cyan-a4);
         }
     }
@@ -182,7 +202,8 @@
         color: var(--teal-a11);
         background-color: var(--teal-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--teal-a4);
         }
     }
@@ -191,7 +212,8 @@
         color: var(--jade-a11);
         background-color: var(--jade-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--jade-a4);
         }
     }
@@ -200,7 +222,8 @@
         color: var(--green-a11);
         background-color: var(--green-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--green-a4);
         }
     }
@@ -209,7 +232,8 @@
         color: var(--grass-a11);
         background-color: var(--grass-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--grass-a4);
         }
     }
@@ -218,7 +242,8 @@
         color: var(--bronze-a11);
         background-color: var(--bronze-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--bronze-a4);
         }
     }
@@ -227,7 +252,8 @@
         color: var(--gold-a11);
         background-color: var(--gold-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--gold-a4);
         }
     }
@@ -236,7 +262,8 @@
         color: var(--brown-a11);
         background-color: var(--brown-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--brown-a4);
         }
     }
@@ -245,7 +272,8 @@
         color: var(--orange-a11);
         background-color: var(--orange-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--orange-a4);
         }
     }
@@ -254,7 +282,8 @@
         color: var(--amber-a11);
         background-color: var(--amber-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--amber-a4);
         }
     }
@@ -263,7 +292,8 @@
         color: var(--yellow-a11);
         background-color: var(--yellow-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--yellow-a4);
         }
     }
@@ -272,7 +302,8 @@
         color: var(--lime-a11);
         background-color: var(--lime-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--lime-a4);
         }
     }
@@ -281,7 +312,8 @@
         color: var(--mint-a11);
         background-color: var(--mint-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--mint-a4);
         }
     }
@@ -290,17 +322,18 @@
         color: var(--sky-a11);
         background-color: var(--sky-a3);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--sky-a4);
         }
     }
 }
 
 .fern-docs-badge.outlined {
-    border: 1px solid var(--gray-a6);
+    border: 1px solid var(--grayscale-a6);
 
     &.accent {
-        border-color: var(--accent-a6, var(--gray-a6));
+        border-color: var(--accent-a6, var(--grayscale-a6));
     }
 
     &.gray {
@@ -429,22 +462,24 @@
 }
 
 .fern-docs-badge.solid {
-    color: var(--gray-1);
-    background-color: var(--gray-9);
+    color: var(--grayscale-1);
+    background-color: var(--grayscale-9);
 
     &:is(.dark *) {
         color: white;
     }
 
-    &.interactive:hover {
-        background-color: var(--gray-10);
+    &.interactive:not(:disabled):hover,
+    &[data-state="open"]:not(:disabled) {
+        background-color: var(--grayscale-10);
     }
 
     &.accent {
         color: var(--accent-1, var(--gray-1));
         background-color: var(--accent-9, var(--gray-9));
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--accent-10, var(--gray-10));
         }
     }
@@ -453,7 +488,8 @@
         color: var(--gray-1);
         background-color: var(--gray-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--gray-10);
         }
     }
@@ -462,7 +498,8 @@
         color: var(--mauve-1);
         background-color: var(--mauve-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--mauve-10);
         }
     }
@@ -471,7 +508,8 @@
         color: var(--slate-1);
         background-color: var(--slate-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--slate-10);
         }
     }
@@ -480,7 +518,8 @@
         color: var(--sage-1);
         background-color: var(--sage-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--sage-10);
         }
     }
@@ -489,7 +528,8 @@
         color: var(--olive-1);
         background-color: var(--olive-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--olive-10);
         }
     }
@@ -498,7 +538,8 @@
         color: var(--sand-1);
         background-color: var(--sand-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--sand-10);
         }
     }
@@ -507,7 +548,8 @@
         color: var(--tomato-1);
         background-color: var(--tomato-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--tomato-10);
         }
     }
@@ -516,7 +558,8 @@
         color: var(--red-1);
         background-color: var(--red-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--red-10);
         }
     }
@@ -525,7 +568,8 @@
         color: var(--ruby-1);
         background-color: var(--ruby-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--ruby-10);
         }
     }
@@ -534,7 +578,8 @@
         color: var(--crimson-1);
         background-color: var(--crimson-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--crimson-10);
         }
     }
@@ -543,7 +588,8 @@
         color: var(--pink-1);
         background-color: var(--pink-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--pink-10);
         }
     }
@@ -552,7 +598,8 @@
         color: var(--plum-1);
         background-color: var(--plum-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--plum-10);
         }
     }
@@ -561,7 +608,8 @@
         color: var(--purple-1);
         background-color: var(--purple-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--purple-10);
         }
     }
@@ -570,7 +618,8 @@
         color: var(--violet-1);
         background-color: var(--violet-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--violet-10);
         }
     }
@@ -579,7 +628,8 @@
         color: var(--iris-1);
         background-color: var(--iris-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--iris-10);
         }
     }
@@ -588,7 +638,8 @@
         color: var(--indigo-1);
         background-color: var(--indigo-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--indigo-10);
         }
     }
@@ -597,7 +648,8 @@
         color: var(--blue-1);
         background-color: var(--blue-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--blue-10);
         }
     }
@@ -606,7 +658,8 @@
         color: var(--cyan-1);
         background-color: var(--cyan-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--cyan-10);
         }
     }
@@ -615,7 +668,8 @@
         color: var(--teal-1);
         background-color: var(--teal-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--teal-10);
         }
     }
@@ -624,7 +678,8 @@
         color: var(--jade-1);
         background-color: var(--jade-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--jade-10);
         }
     }
@@ -633,7 +688,8 @@
         color: var(--green-1);
         background-color: var(--green-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--green-10);
         }
     }
@@ -642,7 +698,8 @@
         color: var(--grass-1);
         background-color: var(--grass-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--grass-10);
         }
     }
@@ -651,7 +708,8 @@
         color: var(--bronze-1);
         background-color: var(--bronze-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--bronze-10);
         }
     }
@@ -660,7 +718,8 @@
         color: var(--gold-1);
         background-color: var(--gold-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--gold-10);
         }
     }
@@ -669,7 +728,8 @@
         color: var(--brown-1);
         background-color: var(--brown-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--brown-10);
         }
     }
@@ -678,7 +738,8 @@
         color: var(--orange-1);
         background-color: var(--orange-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--orange-10);
         }
     }
@@ -687,7 +748,8 @@
         color: var(--amber-12);
         background-color: var(--amber-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--amber-10);
         }
     }
@@ -696,7 +758,8 @@
         color: var(--yellow-12);
         background-color: var(--yellow-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--yellow-10);
         }
     }
@@ -705,7 +768,8 @@
         color: var(--lime-12);
         background-color: var(--lime-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--lime-10);
         }
     }
@@ -714,7 +778,8 @@
         color: var(--mint-12);
         background-color: var(--mint-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--mint-10);
         }
     }
@@ -723,7 +788,8 @@
         color: var(--sky-12);
         background-color: var(--sky-9);
 
-        &.interactive:hover {
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
             background-color: var(--sky-10);
         }
     }

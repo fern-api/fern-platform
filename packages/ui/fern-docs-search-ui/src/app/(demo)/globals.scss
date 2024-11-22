@@ -1,0 +1,121 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import "@fern-ui/fern-docs-badges/index.scss";
+@import "@fern-ui/fern-docs-badges/colors.scss";
+@import "@fern-ui/fern-docs-syntax-highlighter/src/index.scss";
+
+body {
+    font-family:
+        -apple-system,
+        blinkmacsystemfont,
+        segoe ui,
+        roboto,
+        oxygen,
+        ubuntu,
+        cantarell,
+        open sans,
+        helvetica neue,
+        sans-serif;
+}
+
+@layer base {
+    :root {
+        --grayscale-1: var(--olive-1);
+        --grayscale-2: var(--olive-2);
+        --grayscale-3: var(--olive-3);
+        --grayscale-4: var(--olive-4);
+        --grayscale-5: var(--olive-5);
+        --grayscale-6: var(--olive-6);
+        --grayscale-7: var(--olive-7);
+        --grayscale-8: var(--olive-8);
+        --grayscale-9: var(--olive-9);
+        --grayscale-10: var(--olive-10);
+        --grayscale-11: var(--olive-11);
+        --grayscale-12: var(--olive-12);
+        --grayscale-a1: var(--olive-a1);
+        --grayscale-a2: var(--olive-a2);
+        --grayscale-a3: var(--olive-a3);
+        --grayscale-a4: var(--olive-a4);
+        --grayscale-a5: var(--olive-a5);
+        --grayscale-a6: var(--olive-a6);
+        --grayscale-a7: var(--olive-a7);
+        --grayscale-a8: var(--olive-a8);
+        --grayscale-a9: var(--olive-a9);
+        --grayscale-a10: var(--olive-a10);
+        --grayscale-a11: var(--olive-a11);
+        --grayscale-a12: var(--olive-a12);
+
+        --background: var(--grayscale-1);
+        --foreground: var(--grayscale-12);
+        --card: var(--grayscale-1);
+        --card-foreground: var(--accent-12);
+        --popover: var(--grayscale-1);
+        --popover-foreground: var(--accent-12);
+        --primary: var(--accent-6);
+        --primary-foreground: var(--accent-12);
+        --secondary: var(--grayscale-a3);
+        --secondary-foreground: var(--accent-12);
+        --muted: var(--grayscale-a3);
+        --muted-foreground: var(--accent-12);
+        --accent: var(--grayscale-a3);
+        --accent-foreground: var(--accent-12);
+        --destructive: var(--red-10);
+        --destructive-foreground: var(--red-12);
+        --border: var(--grayscale-a6);
+        --input: var(--grayscale-a6);
+        --ring: var(--accent-6);
+        --chart-1: var(--accent-6);
+        --chart-2: var(--accent-6);
+        --chart-3: var(--accent-6);
+        --chart-4: var(--accent-6);
+        --chart-5: var(--accent-6);
+        --radius: 0.5rem;
+
+        --sidebar-background: var(--grayscale-1);
+        --sidebar-foreground: var(--grayscale-12);
+        --sidebar-primary: var(--grayscale-1);
+        --sidebar-primary-foreground: var(--accent-12);
+        --sidebar-accent: var(--grayscale-1);
+        --sidebar-accent-foreground: var(--accent-12);
+        --sidebar-border: var(--grayscale-a7);
+        --sidebar-ring: var(--accent-6);
+
+        --border-color-card: var(--grayscale-a7);
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+@layer utilities {
+    .mask-grad-top-3 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 12px);
+    }
+
+    .mask-grad-y-3 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 12px, black calc(100% - 12px), transparent 100%);
+    }
+}
+
+@layer components {
+    .fern-search-facet-filter-menu-button:has(.fern-docs-badge) {
+        padding: 0;
+        overflow: hidden;
+        border: 0px;
+
+        .fern-docs-badge {
+            padding: 0.125rem 0.625rem;
+            height: 22px;
+            border-radius: inherit;
+            width: unset !important;
+        }
+    }
+}

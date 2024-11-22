@@ -1,3 +1,4 @@
+import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 
@@ -95,9 +96,10 @@ const badgeVariants = cva("fern-docs-badge", {
     },
 });
 
-export type BadgeProps = VariantProps<typeof badgeVariants> & ComponentPropsWithoutRef<"span"> & { skeleton?: boolean };
+export type BadgeProps = VariantProps<typeof badgeVariants> &
+    ComponentPropsWithoutRef<"span" | "button"> & { skeleton?: boolean; asChild?: boolean };
 
-export const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
+export const Badge = forwardRef<HTMLSpanElement & HTMLButtonElement, BadgeProps>((props, ref) => {
     const {
         className,
         size,
@@ -108,6 +110,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
         children,
         interactive: _interactive,
         skeleton,
+        asChild,
         ...rest
     } = props;
 
@@ -117,14 +120,16 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>((props, ref) => {
         interactive ??= true;
     }
 
+    const Comp = asChild ? Slot : interactive ? "button" : "span";
+
     return (
-        <span
+        <Comp
             ref={ref}
             {...rest}
             className={badgeVariants({ size, variant, color, grayscale, rounded, interactive, className })}
         >
             {skeleton ? <span style={{ visibility: "hidden", display: "contents" }}>{children}</span> : children}
-        </span>
+        </Comp>
     );
 });
 

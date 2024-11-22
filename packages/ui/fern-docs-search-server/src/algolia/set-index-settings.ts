@@ -16,6 +16,7 @@ export async function setIndexSettings(
             unretrievableAttributes: ["org_id", "visible_by", "authed"],
             attributeForDistinct: "canonicalPathname",
             enableRules: true,
+            customRanking: ["desc(date_timestamp)"],
         },
     });
 }

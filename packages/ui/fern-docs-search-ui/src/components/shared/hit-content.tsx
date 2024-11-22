@@ -39,7 +39,7 @@ function HitContentWithTitle({
     rightContent?: ReactNode;
 }): ReactElement {
     return (
-        <div className="space-y-1 flex-1">
+        <div className="space-y-1 flex-1 shrink min-w-0">
             <div className="flex items-baseline gap-1 justify-between">
                 <Highlight
                     attribute="title"
@@ -100,7 +100,7 @@ function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactE
             hit={hit}
             rightContent={rightTitle && <span className="text-muted-foreground text-sm">{rightTitle}</span>}
         >
-            <div className="inline-flex items-baseline gap-1">
+            <div className="inline-flex items-baseline gap-1 max-w-full">
                 <HttpMethodBadge method={hit.method} size="sm" className="shrink-0" variant="outlined" />
                 <span className="fern-search-hit-endpoint-path shrink">{hit.endpoint_path}</span>
             </div>

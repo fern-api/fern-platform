@@ -1,4 +1,4 @@
-import { GroupedHits, generateHits } from "@/components/shared/hits";
+import { AlgoliaRecordHit } from "@/components/types";
 import { FilterOption, toFilterOptions } from "@/utils/facet-display";
 import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
 import { useHits, useSearchBox } from "react-instantsearch";
@@ -8,7 +8,7 @@ export interface UseSearch {
     query: string;
     refine: (query: string) => void;
     clear: () => void;
-    groups: GroupedHits[];
+    items: AlgoliaRecordHit[];
     facets: FilterOption[];
     preload: ({ filters }: FacetOpts) => Promise<FilterOption[]>;
     error: Error | null;
@@ -19,7 +19,6 @@ export function useSearch({ filters }: FacetOpts): UseSearch {
     const { query, refine, clear } = useSearchBox();
 
     const { items } = useHits<AlgoliaRecord>();
-    const groups = generateHits(query.trimStart().length > 0 || filters.length > 0 ? items : []);
 
     const { data: facetsResponse, error, isLoading } = useFacets({ filters });
     const facets = toFilterOptions(facetsResponse, "");
@@ -35,7 +34,7 @@ export function useSearch({ filters }: FacetOpts): UseSearch {
         query,
         refine,
         clear,
-        groups,
+        items,
         facets,
         preload,
         error,

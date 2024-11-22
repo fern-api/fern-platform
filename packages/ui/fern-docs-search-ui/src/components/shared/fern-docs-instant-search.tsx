@@ -13,6 +13,7 @@ interface FernDocsInstantSearchProps {
     children: ReactElement<{
         filters: FacetFilter[];
         setFilters?: Dispatch<SetStateAction<FacetFilter[]>>;
+        resetFilters?: () => void;
     }>;
 }
 
@@ -23,7 +24,7 @@ export function FernDocsInstantSearch({
     children,
 }: FernDocsInstantSearchProps): ReactElement {
     const { searchClient, indexName } = useSearchClient();
-    const { facetFilters, filters, setFilters } = useInitialFilters({ initialFilters });
+    const { facetFilters, filters, setFilters, resetFilters } = useInitialFilters({ initialFilters });
 
     return (
         <InstantSearchNext
@@ -47,7 +48,7 @@ export function FernDocsInstantSearch({
                 maxValuesPerFacet={1000}
                 userToken={authenticatedUserToken ?? userToken}
             />
-            {React.cloneElement(children, { filters, setFilters })}
+            {React.cloneElement(children, { filters, setFilters, resetFilters })}
         </InstantSearchNext>
     );
 }

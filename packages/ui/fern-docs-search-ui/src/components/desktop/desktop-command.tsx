@@ -1,16 +1,16 @@
 import { FacetFilter } from "@/hooks/use-facets";
 import { UseSearch } from "@/hooks/use-search";
-import { FACET_DISPLAY_NAME_MAP, getFacetDisplay } from "@/utils/facet-display";
+import { FACET_DISPLAY_NAME_MAP } from "@/utils/facet-display";
 import { composeEventHandlers } from "@radix-ui/primitive";
-import { Command, useCommandState } from "cmdk";
-import { Laptop, ListFilter, Moon, Sparkles, Sun } from "lucide-react";
+import { Command } from "cmdk";
+import { Sparkles } from "lucide-react";
 import { ComponentProps, Dispatch, SetStateAction, forwardRef, useRef } from "react";
-import { MarkRequired } from "ts-essentials";
-import { PageIcon } from "../icons/page";
 import { AskAIText } from "../shared/askai-text";
+import { CommandEmpty } from "../shared/command-empty";
+import { CommandGroupFilters } from "../shared/command-filters";
+import { CommandGroupSearchHits } from "../shared/command-hits";
+import { CommandGroupTheme } from "../shared/command-theme";
 import "../shared/common.scss";
-import { HitContent } from "../shared/hit-content";
-import { AlgoliaRecordHit } from "../types";
 import { DesktopBackButton } from "./desktop-back-button";
 import { DesktopCloseTrigger } from "./desktop-close-trigger";
 import { DesktopFilterDropdownMenu } from "./desktop-filter-dropdown-menu";
@@ -43,7 +43,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
         query,
         refine,
         clear,
-        groups,
+        items,
         facets,
         preload,
         isLoading,
@@ -83,7 +83,12 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
             )}
         >
             {filters.length > 0 && (
-                <div className="flex items-center gap-2 p-2 pb-0" onClick={focus}>
+                <div
+                    className="flex items-center gap-2 p-2 pb-0"
+                    onClick={() => {
+                        focus();
+                    }}
+                >
                     {filters.map((filter) => (
                         <DesktopFilterDropdownMenu
                             key={`${filter.facet}:${filter.value}`}
@@ -91,13 +96,13 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                             filters={filters}
                             removeFilter={() => {
                                 setFilters?.((prev) => prev.filter((f) => f.facet !== filter.facet));
-                                focus();
-                                scrollTop();
                             }}
                             updateFilter={(value) => {
                                 setFilters?.((prev) =>
                                     prev.map((f) => (f.facet === filter.facet ? { ...f, value } : f)),
                                 );
+                            }}
+                            onClose={() => {
                                 focus();
                                 scrollTop();
                             }}
@@ -147,7 +152,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
             </div>
             <Command.List
                 ref={scrollRef}
-                data-empty={groups.length === 0 && query.length === 0 && onAskAI == null && setTheme == null}
+                data-empty={items.length === 0 && query.length === 0 && onAskAI == null && setTheme == null}
                 tabIndex={-1}
             >
                 {onAskAI != null && (
@@ -159,95 +164,32 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                     </Command.Group>
                 )}
 
-                {facets.length > 0 && (
-                    <Command.Group heading="Filters">
-                        {facets.map((filter) => (
-                            <Command.Item
-                                key={`${filter.facet}:"${filter.value}"`}
-                                value={`${filter.facet}:"${filter.value}"`}
-                                onSelect={() => {
-                                    setFilters?.([...filters, { facet: filter.facet, value: filter.value }]);
-                                    clear();
-                                    focus();
-                                    scrollTop();
-                                }}
-                                onMouseOver={() => {
-                                    preload({
-                                        filters: [...filters, { facet: filter.facet, value: filter.value }],
-                                    });
-                                }}
-                            >
-                                <ListFilter />
-                                <span className="flex-1">Search {getFacetDisplay(filter.facet, filter.value)}</span>
-                                <span className="text-xs text-[#969696] dark:text-white/50 self-center">
-                                    {filter.count}
-                                </span>
-                            </Command.Item>
-                        ))}
-                    </Command.Group>
+                <CommandGroupFilters
+                    facets={facets}
+                    onSelect={(filter) => {
+                        setFilters?.([...filters, filter]);
+                        clear();
+                        focus();
+                        scrollTop();
+                    }}
+                    preload={(filter) => {
+                        preload({ filters: [...filters, filter] });
+                    }}
+                />
+
+                {items.length === 0 && <CommandEmpty />}
+
+                {(query.trimStart().length > 0 || filters.length > 0) && (
+                    <CommandGroupSearchHits items={items} onSelect={onSelect} />
                 )}
 
-                {groups.length === 0 && query.length > 0 && <CommandEmpty />}
-
-                {groups.map((group, index) => (
-                    <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} forceMount>
-                        {group.hits.map((hit) => (
-                            <Command.Item key={hit.path} value={hit.path} onSelect={() => onSelect(hit.path)}>
-                                <PageIcon
-                                    icon={hit.icon}
-                                    type={hit.record?.type === "api-reference" ? hit.record.api_type : hit.record?.type}
-                                    isSubPage={hit.record?.hash != null}
-                                />
-                                {hit.record != null && (
-                                    <HitContent hit={hit.record as MarkRequired<AlgoliaRecordHit, "type">} />
-                                )}
-                                {hit.record == null && hit.title}
-                            </Command.Item>
-                        ))}
-                    </Command.Group>
-                ))}
-
-                {setTheme != null && (
-                    <Command.Group heading="Theme">
-                        <Command.Item
-                            value="light"
-                            onSelect={() => setTheme?.("light")}
-                            keywords={["light mode", "light theme"]}
-                        >
-                            <Sun />
-                            Light
-                        </Command.Item>
-                        <Command.Item
-                            value="dark"
-                            onSelect={() => setTheme?.("dark")}
-                            keywords={["dark mode", "dark theme"]}
-                        >
-                            <Moon />
-                            Dark
-                        </Command.Item>
-                        <Command.Item
-                            value="system"
-                            onSelect={() => setTheme?.("system")}
-                            keywords={["system mode", "system theme"]}
-                        >
-                            <Laptop />
-                            System
-                        </Command.Item>
-                    </Command.Group>
-                )}
+                <CommandGroupTheme setTheme={setTheme} />
             </Command.List>
         </Command>
     );
 });
 
 DesktopCommand.displayName = "DesktopCommand";
-
-function CommandEmpty(props: ComponentProps<typeof Command.Empty>) {
-    const query = useCommandState((state) => state.search);
-    return (
-        <Command.Empty {...props}>{props.children ?? <>No results found for &ldquo;{query}&rdquo;.</>}</Command.Empty>
-    );
-}
 
 function toPlaceholder(filters: readonly FacetFilter[]): string {
     if (filters.length === 0) {

@@ -3,6 +3,18 @@ import { Badge, BadgeProps } from "./badge";
 import { UIColor } from "./colors";
 
 export type HttpMethod = "GET" | "DELETE" | "POST" | "PUT" | "PATCH" | "HEAD" | "OPTIONS" | "CONNECT" | "TRACE";
+export const HttpMethod: Record<HttpMethod, HttpMethod> = {
+    GET: "GET",
+    DELETE: "DELETE",
+    POST: "POST",
+    PUT: "PUT",
+    PATCH: "PATCH",
+    HEAD: "HEAD",
+    OPTIONS: "OPTIONS",
+    CONNECT: "CONNECT",
+    TRACE: "TRACE",
+} as const;
+
 export const HttpMethodOrder = [
     "GET",
     "POST",
@@ -14,6 +26,10 @@ export const HttpMethodOrder = [
     "CONNECT",
     "TRACE",
 ] as const;
+
+export function isHttpMethod(value: string): value is HttpMethod {
+    return HttpMethod[value as keyof typeof HttpMethod] != null;
+}
 
 const METHOD_COLOR_SCHEMES: Record<HttpMethod, UIColor> = {
     GET: "green",
@@ -46,7 +62,7 @@ export interface HttpMethodBadgeProps extends Omit<BadgeProps, "color"> {
     method: HttpMethod;
 }
 
-export const HttpMethodBadge = forwardRef<HTMLSpanElement, HttpMethodBadgeProps>((props, ref) => {
+export const HttpMethodBadge = forwardRef<HTMLSpanElement & HTMLButtonElement, HttpMethodBadgeProps>((props, ref) => {
     const { method, ...rest } = props;
     return (
         <Badge
