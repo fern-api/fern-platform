@@ -17,6 +17,7 @@ export async function setIndexSettings(
             attributeForDistinct: "canonicalPathname",
             enableRules: true,
             customRanking: ["desc(date_timestamp)"],
+            removeWordsIfNoResults: "allOptional",
         },
     });
 }

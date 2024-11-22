@@ -11,7 +11,7 @@ const meta: Meta<typeof DesktopCommand> = {
         refine: fn(),
         query: "",
         clear: fn(),
-        groups: [],
+        items: [],
         facets: [],
         preload: fn(),
         error: null,
