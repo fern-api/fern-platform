@@ -30,12 +30,12 @@ function Breadcrumb({ breadcrumb }: { breadcrumb: string[] }): ReactNode {
 
 type SegmentType = "markdown" | "changelog" | "parameter" | "http" | "webhook" | "websocket";
 const SEGMENT_DISPLAY_NAMES: Record<SegmentType, string> = {
-    markdown: "Guides",
+    markdown: "Guide",
     changelog: "Changelog",
-    parameter: "Parameters",
-    http: "Endpoints",
-    webhook: "Webhooks",
-    websocket: "WebSockets",
+    parameter: "Parameter",
+    http: "Endpoint",
+    webhook: "Webhook",
+    websocket: "WebSocket",
 };
 
 function HitContentWithTitle({
