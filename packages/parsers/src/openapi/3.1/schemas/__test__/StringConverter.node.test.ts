@@ -8,7 +8,12 @@ describe("StringConverterNode", () => {
     describe("constructor", () => {
         it("should initialize with default string type", () => {
             const input: StringConverterNode.Input = { type: "string" };
-            const node = new StringConverterNode(input, mockContext, [], "test");
+            const node = new StringConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.type).toBe("string");
         });
 
@@ -17,7 +22,12 @@ describe("StringConverterNode", () => {
                 type: "string",
                 default: "test-default",
             };
-            const node = new StringConverterNode(input, mockContext, [], "test");
+            const node = new StringConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.default).toBe("test-default");
         });
 
@@ -26,7 +36,12 @@ describe("StringConverterNode", () => {
                 type: "string",
                 default: 123,
             } as const;
-            new StringConverterNode(input, mockContext, [], "test");
+            new StringConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(mockContext.errors.warning).toHaveBeenCalledWith({
                 message: "The default value for an string type should be an string",
                 path: ["test"],
@@ -40,7 +55,12 @@ describe("StringConverterNode", () => {
                 type: "string",
                 format: "base64url",
             };
-            const node = new StringConverterNode(input, mockContext, [], "test");
+            const node = new StringConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.type).toBe("base64");
         });
 
@@ -49,7 +69,12 @@ describe("StringConverterNode", () => {
                 type: "string",
                 format: "date-time",
             };
-            const node = new StringConverterNode(input, mockContext, [], "test");
+            const node = new StringConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.type).toBe("datetime");
         });
 
@@ -58,7 +83,12 @@ describe("StringConverterNode", () => {
                 type: "string",
                 format: "uuid",
             };
-            const node = new StringConverterNode(input, mockContext, [], "test");
+            const node = new StringConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.type).toBe("uuid");
         });
 
@@ -67,7 +97,12 @@ describe("StringConverterNode", () => {
                 type: "string",
                 format: "email",
             };
-            const node = new StringConverterNode(input, mockContext, [], "test");
+            const node = new StringConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.type).toBe("string");
         });
 
@@ -76,7 +111,12 @@ describe("StringConverterNode", () => {
                 type: "string",
                 format: "invalid-format",
             } as const;
-            new StringConverterNode(input, mockContext, [], "test");
+            new StringConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(mockContext.errors.warning).toHaveBeenCalled();
         });
     });
@@ -88,7 +128,12 @@ describe("StringConverterNode", () => {
                 format: "uuid",
                 default: "test-default",
             };
-            const node = new StringConverterNode(input, mockContext, [], "test");
+            const node = new StringConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.convert()).toEqual({
                 type: "alias",
                 value: {

@@ -15,7 +15,12 @@ describe("ReferenceConverterNode", () => {
             const input: OpenAPIV3_1.ReferenceObject = {
                 $ref: "#/components/schemas/Pet",
             };
-            const node = new ReferenceConverterNode(input, mockContext, [], "test");
+            const node = new ReferenceConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.schemaId).toBe("Pet");
         });
 
@@ -23,7 +28,12 @@ describe("ReferenceConverterNode", () => {
             const input: OpenAPIV3_1.ReferenceObject = {
                 $ref: "invalid-ref",
             };
-            const node = new ReferenceConverterNode(input, mockContext, [], "test");
+            const node = new ReferenceConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.schemaId).toBeUndefined();
             expect(mockContext.errors.error).toHaveBeenCalledWith({
                 message: "Unprocessable reference: invalid-ref",
@@ -37,7 +47,12 @@ describe("ReferenceConverterNode", () => {
             const input: OpenAPIV3_1.ReferenceObject = {
                 $ref: "#/components/schemas/Pet",
             };
-            const node = new ReferenceConverterNode(input, mockContext, [], "test");
+            const node = new ReferenceConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.convert()).toEqual({
                 type: "alias",
                 value: {
@@ -52,7 +67,12 @@ describe("ReferenceConverterNode", () => {
             const input: OpenAPIV3_1.ReferenceObject = {
                 $ref: "invalid-ref",
             };
-            const node = new ReferenceConverterNode(input, mockContext, [], "test");
+            const node = new ReferenceConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.convert()).toBeUndefined();
         });
     });

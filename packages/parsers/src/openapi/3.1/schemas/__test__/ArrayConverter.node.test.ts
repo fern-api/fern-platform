@@ -17,7 +17,12 @@ describe("ArrayConverterNode", () => {
                 type: "array",
                 items: { type: "string" },
             };
-            const node = new ArrayConverterNode(input, mockContext, [], "test");
+            const node = new ArrayConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.innerSchema?.typeShapeNode).toBeInstanceOf(StringConverterNode);
         });
 
@@ -25,7 +30,12 @@ describe("ArrayConverterNode", () => {
             const input = {
                 type: "array",
             } as ArrayConverterNode.Input;
-            new ArrayConverterNode(input, mockContext, [], "test");
+            new ArrayConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(mockContext.errors.error).toHaveBeenCalledWith({
                 message: "No items found in array",
                 path: ["test", "items"],
@@ -39,7 +49,12 @@ describe("ArrayConverterNode", () => {
                 type: "array",
                 items: { type: "string" },
             };
-            const node = new ArrayConverterNode(input, mockContext, [], "test");
+            const node = new ArrayConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             const converted = node.convert();
             expect(converted).toEqual({
                 type: "alias",
@@ -63,7 +78,12 @@ describe("ArrayConverterNode", () => {
                 type: "array",
                 items: { type: "invalid" as OpenAPIV3_1.NonArraySchemaObjectType },
             };
-            const node = new ArrayConverterNode(input, mockContext, [], "test");
+            const node = new ArrayConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             const converted = node.convert();
             expect(mockContext.errors.error).toHaveBeenCalledWith({
                 message: "No type shape node found",

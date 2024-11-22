@@ -6,26 +6,28 @@ export abstract class BaseOpenApiV3_1ConverterNodeContext extends BaseAPIConvert
     public abstract document: OpenAPIV3_1.Document;
 }
 
-export type BaseOpenApiV3_1NodeConstructorArgs<Input> = ConstructorParameters<
-    typeof BaseOpenApiV3_1Node<Input, unknown>
->;
+export type BaseOpenApiV3_1NodeConstructorArgs<Input> = {
+    input: Input;
+    context: BaseOpenApiV3_1ConverterNodeContext;
+    readonly accessPath: string[];
+    readonly pathId: string;
+};
 
 export abstract class BaseOpenApiV3_1Node<Input, Output> extends BaseAPIConverterNode<Input, Output> {
-    protected override context: BaseOpenApiV3_1ConverterNodeContext;
+    protected override readonly context: BaseOpenApiV3_1ConverterNodeContext;
+    protected readonly accessPath: string[];
+    protected readonly pathId: string;
 
-    constructor(
-        input: Input,
-        context: BaseOpenApiV3_1ConverterNodeContext,
-        protected readonly accessPath: string[],
-        protected readonly pathId: string,
-    ) {
+    constructor({ input, context, accessPath, pathId }: BaseOpenApiV3_1NodeConstructorArgs<Input>) {
         super(input, context);
 
         this.context = context;
+        this.accessPath = accessPath;
+        this.pathId = pathId;
 
-        if (pathId && pathId !== accessPath[accessPath.length - 1]) {
-            accessPath.push(pathId);
-            context.logger.info(`Processing ${toOpenApiPath(accessPath)}`);
+        if (this.pathId && this.pathId !== this.accessPath[this.accessPath.length - 1]) {
+            this.accessPath.push(this.pathId);
+            context.logger.info(`Processing ${toOpenApiPath(this.accessPath)}`);
         }
     }
 

@@ -22,8 +22,8 @@ export class OneOfConverterNode extends BaseOpenApiV3_1Node<
 
     undiscriminatedMapping: SchemaConverterNode[] | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<OneOfConverterNode.Input>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<OneOfConverterNode.Input>) {
+        super(args);
         this.safeParse();
     }
 
@@ -40,7 +40,12 @@ export class OneOfConverterNode extends BaseOpenApiV3_1Node<
                             });
                             return undefined;
                         }
-                        return new SchemaConverterNode(schema, this.context, this.accessPath, this.pathId);
+                        return new SchemaConverterNode({
+                            input: schema,
+                            context: this.context,
+                            accessPath: this.accessPath,
+                            pathId: this.pathId,
+                        });
                     })
                     .filter(isNonNullish);
             } else {
@@ -54,17 +59,17 @@ export class OneOfConverterNode extends BaseOpenApiV3_1Node<
                     const discriminatedMapping = this.discriminatedMapping;
 
                     Object.entries(maybeMapping).map(([key, value]) => {
-                        discriminatedMapping[key] = new SchemaConverterNode(
-                            resolveSchemaReference(
+                        discriminatedMapping[key] = new SchemaConverterNode({
+                            input: resolveSchemaReference(
                                 {
                                     $ref: value,
                                 },
                                 this.context.document,
                             ),
-                            this.context,
-                            this.accessPath,
-                            this.pathId,
-                        );
+                            context: this.context,
+                            accessPath: this.accessPath,
+                            pathId: this.pathId,
+                        });
                     });
                 }
             }

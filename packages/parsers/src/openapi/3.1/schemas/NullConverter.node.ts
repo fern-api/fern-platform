@@ -16,8 +16,8 @@ export declare namespace NullConverterNode {
 export class NullConverterNode extends BaseOpenApiV3_1Node<NullConverterNode.Input, NullConverterNode.Output> {
     displayName: string | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<NullConverterNode.Input>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<NullConverterNode.Input>) {
+        super(args);
         this.safeParse();
     }
 

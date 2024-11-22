@@ -12,7 +12,12 @@ describe("ComponentsConverterNode", () => {
 
     it("should handle empty/null schemas", () => {
         const input: OpenAPIV3_1.ComponentsObject = {};
-        const converter = new ComponentsConverterNode(input, mockContext, [], "test");
+        const converter = new ComponentsConverterNode({
+            input,
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
+        });
 
         expect(converter.typeSchemas).toBeUndefined();
         expect(mockContext.errors.error).toHaveBeenCalledWith({
@@ -33,13 +38,23 @@ describe("ComponentsConverterNode", () => {
             },
         };
 
-        const converter = new ComponentsConverterNode(input, mockContext, [], "test");
+        const converter = new ComponentsConverterNode({
+            input,
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
+        });
         expect(converter.typeSchemas).toBeDefined();
         expect(Object.keys(converter.typeSchemas ?? {})).toContain("Pet");
     });
 
     it("should filter out undefined values in convert()", () => {
-        const converter = new ComponentsConverterNode({}, mockContext, [], "test");
+        const converter = new ComponentsConverterNode({
+            input: {},
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
+        });
         const result = converter.convert();
         expect(result).toBeUndefined();
     });
@@ -55,7 +70,12 @@ describe("ComponentsConverterNode", () => {
             },
         };
 
-        const converter = new ComponentsConverterNode(input, mockContext, [], "test");
+        const converter = new ComponentsConverterNode({
+            input,
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
+        });
         const result = converter.convert() ?? {};
 
         expect(result).toBeDefined();

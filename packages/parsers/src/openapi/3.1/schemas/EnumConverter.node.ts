@@ -10,8 +10,8 @@ export class EnumConverterNode extends BaseOpenApiV3_1Node<
     default: string | undefined;
     values: string[] = [];
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.NonArraySchemaObject>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.NonArraySchemaObject>) {
+        super(args);
         this.safeParse();
     }
 

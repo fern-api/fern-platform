@@ -17,7 +17,12 @@ describe("SchemaConverterNode", () => {
             const input: OpenAPIV3_1.ReferenceObject = {
                 $ref: "#/components/schemas/Pet",
             };
-            const node = new SchemaConverterNode(input, mockContext, [], "test");
+            const node = new SchemaConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.typeShapeNode).toBeInstanceOf(ReferenceConverterNode);
         });
 
@@ -28,7 +33,12 @@ describe("SchemaConverterNode", () => {
                     name: { type: "string" },
                 },
             };
-            const node = new SchemaConverterNode(input, mockContext, [], "test");
+            const node = new SchemaConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.typeShapeNode).toBeInstanceOf(ObjectConverterNode);
         });
 
@@ -36,7 +46,12 @@ describe("SchemaConverterNode", () => {
             const input: OpenAPIV3_1.SchemaObject = {
                 type: "boolean",
             };
-            const node = new SchemaConverterNode(input, mockContext, [], "test");
+            const node = new SchemaConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.typeShapeNode).toBeDefined();
         });
 
@@ -44,7 +59,12 @@ describe("SchemaConverterNode", () => {
             const input: OpenAPIV3_1.SchemaObject = {
                 type: "integer",
             };
-            const node = new SchemaConverterNode(input, mockContext, [], "test");
+            const node = new SchemaConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.typeShapeNode).toBeDefined();
         });
 
@@ -52,7 +72,12 @@ describe("SchemaConverterNode", () => {
             const input: OpenAPIV3_1.SchemaObject = {
                 type: "number",
             };
-            const node = new SchemaConverterNode(input, mockContext, [], "test");
+            const node = new SchemaConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.typeShapeNode).toBeDefined();
         });
 
@@ -60,7 +85,12 @@ describe("SchemaConverterNode", () => {
             const input: OpenAPIV3_1.SchemaObject = {
                 type: "string",
             };
-            const node = new SchemaConverterNode(input, mockContext, [], "test");
+            const node = new SchemaConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.typeShapeNode).toBeDefined();
         });
 
@@ -69,7 +99,12 @@ describe("SchemaConverterNode", () => {
                 type: "string",
                 description: "test description",
             };
-            const node = new SchemaConverterNode(input, mockContext, [], "test");
+            const node = new SchemaConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.description).toBe("test description");
         });
     });
@@ -79,7 +114,12 @@ describe("SchemaConverterNode", () => {
             const input: OpenAPIV3_1.SchemaObject = {
                 type: "string",
             };
-            const node = new SchemaConverterNode(input, mockContext, [], "test");
+            const node = new SchemaConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             const result = node.convert();
             expect(result).toEqual({
                 type: "alias",
@@ -97,7 +137,12 @@ describe("SchemaConverterNode", () => {
             const input: OpenAPIV3_1.SchemaObject = {
                 type: "unknown" as OpenAPIV3_1.NonArraySchemaObjectType,
             };
-            const node = new SchemaConverterNode(input, mockContext, [], "test");
+            const node = new SchemaConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.convert()).toBeUndefined();
         });
     });

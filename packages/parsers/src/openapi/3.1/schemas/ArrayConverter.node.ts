@@ -19,13 +19,18 @@ export class ArrayConverterNode extends BaseOpenApiV3_1Node<
 > {
     innerSchema: SchemaConverterNode | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<ArrayConverterNode.Input>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<ArrayConverterNode.Input>) {
+        super(args);
         this.safeParse();
     }
 
     parse(): void {
-        this.innerSchema = new SchemaConverterNode(this.input.items, this.context, this.accessPath, "items");
+        this.innerSchema = new SchemaConverterNode({
+            input: this.input.items,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "items",
+        });
 
         if (this.input.items == null) {
             this.context.errors.error({

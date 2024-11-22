@@ -28,8 +28,8 @@ export class NumberConverterNode extends BaseOpenApiV3_1Node<NumberConverterNode
     maximum: number | undefined;
     default: number | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<NumberConverterNode.Input>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<NumberConverterNode.Input>) {
+        super(args);
         this.safeParse();
     }
 

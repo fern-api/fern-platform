@@ -18,8 +18,8 @@ export declare namespace BooleanConverterNode {
 export class BooleanConverterNode extends BaseOpenApiV3_1Node<BooleanConverterNode.Input, BooleanConverterNode.Output> {
     default: boolean | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<BooleanConverterNode.Input>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<BooleanConverterNode.Input>) {
+        super(args);
         this.safeParse();
     }
 

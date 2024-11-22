@@ -9,8 +9,8 @@ export class ReferenceConverterNode extends BaseOpenApiV3_1Node<
 > {
     schemaId: string | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.ReferenceObject>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.ReferenceObject>) {
+        super(args);
         this.safeParse();
     }
 

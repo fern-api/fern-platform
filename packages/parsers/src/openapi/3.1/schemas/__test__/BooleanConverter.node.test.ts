@@ -14,7 +14,12 @@ describe("BooleanConverterNode", () => {
             const input: BooleanConverterNode.Input = {
                 type: "boolean",
             };
-            const node = new BooleanConverterNode(input, mockContext, [], "test");
+            const node = new BooleanConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.default).toBeUndefined();
         });
 
@@ -23,7 +28,12 @@ describe("BooleanConverterNode", () => {
                 type: "boolean",
                 default: true,
             };
-            const node = new BooleanConverterNode(input, mockContext, [], "test");
+            const node = new BooleanConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.default).toBe(true);
         });
 
@@ -33,7 +43,12 @@ describe("BooleanConverterNode", () => {
                 default: "not-a-boolean",
             } as BooleanConverterNode.Input;
 
-            new BooleanConverterNode(input, mockContext, [], "test");
+            new BooleanConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
 
             expect(mockContext.errors.warning).toHaveBeenCalledWith({
                 message: "The default value for a boolean type should be a boolean",
@@ -47,7 +62,12 @@ describe("BooleanConverterNode", () => {
             const input: BooleanConverterNode.Input = {
                 type: "boolean",
             };
-            const node = new BooleanConverterNode(input, mockContext, [], "test");
+            const node = new BooleanConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.convert()).toEqual({
                 type: "alias",
                 value: {
@@ -65,7 +85,12 @@ describe("BooleanConverterNode", () => {
                 type: "boolean",
                 default: false,
             };
-            const node = new BooleanConverterNode(input, mockContext, [], "test");
+            const node = new BooleanConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.convert()).toEqual({
                 type: "alias",
                 value: {

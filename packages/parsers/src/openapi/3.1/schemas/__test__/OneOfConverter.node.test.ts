@@ -29,7 +29,12 @@ describe("OneOfConverterNode", () => {
                     { type: "object", properties: { b: { type: "string" } } },
                 ],
             };
-            const node = new OneOfConverterNode(input, mockContext, [], "test");
+            const node = new OneOfConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.discriminated).toBe(false);
             expect(node.undiscriminatedMapping?.length).toBe(2);
         });
@@ -45,7 +50,12 @@ describe("OneOfConverterNode", () => {
                     },
                 },
             };
-            const node = new OneOfConverterNode(input, mockContext, [], "test");
+            const node = new OneOfConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.discriminated).toBe(true);
             expect(node.discriminant).toBe("type");
             expect(Object.keys(node.discriminatedMapping || {})).toContain("dog");
@@ -64,7 +74,12 @@ describe("OneOfConverterNode", () => {
                     },
                 },
             };
-            const node = new OneOfConverterNode(input, mockContext, [], "test");
+            const node = new OneOfConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             const result = node.convert();
             expect(result?.type).toBe("discriminatedUnion");
             expect(result?.variants.length).toEqual(1);
@@ -78,7 +93,12 @@ describe("OneOfConverterNode", () => {
                     { type: "object", properties: { b: { type: "string" } } },
                 ],
             };
-            const node = new OneOfConverterNode(input, mockContext, [], "test");
+            const node = new OneOfConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             const result = node.convert();
             expect(result?.type).toBe("undiscriminatedUnion");
             expect(result).toEqual({
@@ -132,7 +152,12 @@ describe("OneOfConverterNode", () => {
             const input: OneOfConverterNode.Input = {
                 type: "object",
             };
-            const node = new OneOfConverterNode(input, mockContext, [], "test");
+            const node = new OneOfConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             const result = node.convert();
             expect(result).toBeUndefined();
         });

@@ -10,7 +10,12 @@ describe("NullConverterNode", () => {
             const input: NullConverterNode.Input = {
                 type: "null",
             };
-            const node = new NullConverterNode(input, mockContext, [], "test");
+            const node = new NullConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             const result = node.convert();
 
             expect(result).toEqual({
@@ -27,7 +32,12 @@ describe("NullConverterNode", () => {
                 type: "null",
                 title: "NullType",
             };
-            const node = new NullConverterNode(input, mockContext, [], "test");
+            const node = new NullConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             const result = node.convert();
 
             expect(result).toEqual({

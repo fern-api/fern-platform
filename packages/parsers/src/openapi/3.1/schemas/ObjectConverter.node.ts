@@ -21,8 +21,8 @@ export class ObjectConverterNode extends BaseOpenApiV3_1Node<
     properties: Record<string, SchemaConverterNode> | undefined;
     extraProperties: string | SchemaConverterNode | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<ObjectConverterNode.Input>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<ObjectConverterNode.Input>) {
+        super(args);
         this.safeParse();
     }
 
@@ -31,7 +31,15 @@ export class ObjectConverterNode extends BaseOpenApiV3_1Node<
 
         this.properties = Object.fromEntries(
             Object.entries(this.input.properties ?? {}).map(([key, property]) => {
-                return [key, new SchemaConverterNode(property, this.context, this.accessPath, this.pathId)];
+                return [
+                    key,
+                    new SchemaConverterNode({
+                        input: property,
+                        context: this.context,
+                        accessPath: this.accessPath,
+                        pathId: this.pathId,
+                    }),
+                ];
             }),
         );
 
@@ -41,12 +49,12 @@ export class ObjectConverterNode extends BaseOpenApiV3_1Node<
                     ? this.input.additionalProperties
                         ? this.input.title
                         : undefined
-                    : new SchemaConverterNode(
-                          this.input.additionalProperties,
-                          this.context,
-                          this.accessPath,
-                          this.pathId,
-                      )
+                    : new SchemaConverterNode({
+                          input: this.input.additionalProperties,
+                          context: this.context,
+                          accessPath: this.accessPath,
+                          pathId: this.pathId,
+                      })
                 : undefined;
 
         if (this.input.allOf != null) {
@@ -62,12 +70,12 @@ export class ObjectConverterNode extends BaseOpenApiV3_1Node<
                                     Object.entries(this.input.properties ?? {}).map(([key, property]) => {
                                         return [
                                             key,
-                                            new SchemaConverterNode(
-                                                property,
-                                                this.context,
-                                                this.accessPath,
-                                                this.pathId,
-                                            ),
+                                            new SchemaConverterNode({
+                                                input: property,
+                                                context: this.context,
+                                                accessPath: this.accessPath,
+                                                pathId: this.pathId,
+                                            }),
                                         ];
                                     }),
                                 ),

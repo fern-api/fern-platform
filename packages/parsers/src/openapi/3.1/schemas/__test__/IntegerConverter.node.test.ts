@@ -14,7 +14,12 @@ describe("IntegerConverterNode", () => {
             const input: IntegerConverterNode.Input = {
                 type: "integer",
             };
-            const node = new IntegerConverterNode(input, mockContext, [], "test");
+            const node = new IntegerConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.type).toBe("integer");
             expect(node.minimum).toBeUndefined();
             expect(node.maximum).toBeUndefined();
@@ -27,7 +32,12 @@ describe("IntegerConverterNode", () => {
                 minimum: 0,
                 maximum: 100,
             };
-            const node = new IntegerConverterNode(input, mockContext, [], "test");
+            const node = new IntegerConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.minimum).toBe(0);
             expect(node.maximum).toBe(100);
         });
@@ -37,7 +47,12 @@ describe("IntegerConverterNode", () => {
                 type: "integer",
                 default: 42,
             };
-            const node = new IntegerConverterNode(input, mockContext, [], "test");
+            const node = new IntegerConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.default).toBe(42);
         });
 
@@ -47,7 +62,12 @@ describe("IntegerConverterNode", () => {
                 default: "not-a-number",
             } as IntegerConverterNode.Input;
 
-            new IntegerConverterNode(input, mockContext, [], "test");
+            new IntegerConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
 
             expect(mockContext.errors.warning).toHaveBeenCalledWith({
                 message: "The default value for an integer type should be an integer",
@@ -61,7 +81,12 @@ describe("IntegerConverterNode", () => {
                     type: "integer",
                     format: "int64",
                 };
-                const node = new IntegerConverterNode(input, mockContext, [], "test");
+                const node = new IntegerConverterNode({
+                    input,
+                    context: mockContext,
+                    accessPath: [],
+                    pathId: "test",
+                });
                 expect(node.type).toBe("long");
             });
 
@@ -73,7 +98,12 @@ describe("IntegerConverterNode", () => {
                         type: "integer",
                         format,
                     };
-                    const node = new IntegerConverterNode(input, mockContext, [], "test");
+                    const node = new IntegerConverterNode({
+                        input,
+                        context: mockContext,
+                        accessPath: [],
+                        pathId: "test",
+                    });
                     expect(node.type).toBe("integer");
                 });
             });
@@ -84,7 +114,12 @@ describe("IntegerConverterNode", () => {
                     format: "invalid-format",
                 };
 
-                new IntegerConverterNode(input, mockContext, [], "test");
+                new IntegerConverterNode({
+                    input,
+                    context: mockContext,
+                    accessPath: [],
+                    pathId: "test",
+                });
 
                 expect(mockContext.errors.warning).toHaveBeenCalledWith({
                     message: "The format for an integer type should be int64, int8, int16, int32, uint8, or sf-integer",
@@ -103,7 +138,12 @@ describe("IntegerConverterNode", () => {
                 default: 50,
                 format: "int64",
             };
-            const node = new IntegerConverterNode(input, mockContext, [], "test");
+            const node = new IntegerConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.convert()).toEqual({
                 type: "alias",
                 value: {
@@ -122,7 +162,12 @@ describe("IntegerConverterNode", () => {
             const input: IntegerConverterNode.Input = {
                 type: "integer",
             };
-            const node = new IntegerConverterNode(input, mockContext, [], "test");
+            const node = new IntegerConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.convert()).toEqual({
                 type: "alias",
                 value: {

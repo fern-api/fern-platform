@@ -29,15 +29,20 @@ export class SchemaConverterNode extends BaseOpenApiV3_1Node<
     description: string | undefined;
     name: string | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>) {
+        super(args);
         this.safeParse();
     }
 
     parse(): void {
         // Check if the input is a reference object
         if (isReferenceObject(this.input)) {
-            this.typeShapeNode = new ReferenceConverterNode(this.input, this.context, this.accessPath, this.pathId);
+            this.typeShapeNode = new ReferenceConverterNode({
+                input: this.input,
+                context: this.context,
+                accessPath: this.accessPath,
+                pathId: this.pathId,
+            });
         } else {
             // If the object is not a reference object, then it is a schema object, gather all appropriate variables
             this.name = this.input.title;
@@ -45,71 +50,76 @@ export class SchemaConverterNode extends BaseOpenApiV3_1Node<
             // We assume that if one of is defined, it is an object node
             if (typeof this.input.type === "string") {
                 if (this.input.type === "object" && this.input.oneOf != null) {
-                    this.typeShapeNode = new OneOfConverterNode(
-                        this.input as OneOfConverterNode.Input,
-                        this.context,
-                        this.accessPath,
-                        this.pathId,
-                    );
+                    this.typeShapeNode = new OneOfConverterNode({
+                        input: this.input as OneOfConverterNode.Input,
+                        context: this.context,
+                        accessPath: this.accessPath,
+                        pathId: this.pathId,
+                    });
                 } else if (this.input.type !== "array" && this.input.enum != null) {
-                    this.typeShapeNode = new EnumConverterNode(this.input, this.context, this.accessPath, this.pathId);
+                    this.typeShapeNode = new EnumConverterNode({
+                        input: this.input,
+                        context: this.context,
+                        accessPath: this.accessPath,
+                        pathId: this.pathId,
+                    });
                 } else {
                     switch (this.input.type) {
                         case "object":
-                            this.typeShapeNode = new ObjectConverterNode(
-                                this.input as ObjectConverterNode.Input,
-                                this.context,
-                                this.accessPath,
-                                this.pathId,
-                            );
+                            this.typeShapeNode = new ObjectConverterNode({
+                                input: this.input as ObjectConverterNode.Input,
+                                context: this.context,
+                                accessPath: this.accessPath,
+                                pathId: this.pathId,
+                            });
                             break;
                         case "array":
-                            this.typeShapeNode = new ArrayConverterNode(
-                                this.input as ArrayConverterNode.Input,
-                                this.context,
-                                this.accessPath,
-                                this.pathId,
-                            );
+                            this.typeShapeNode = new ArrayConverterNode({
+                                input: this.input as ArrayConverterNode.Input,
+                                context: this.context,
+                                accessPath: this.accessPath,
+                                pathId: this.pathId,
+                            });
                             break;
                         case "boolean":
-                            this.typeShapeNode = new BooleanConverterNode(
-                                this.input as BooleanConverterNode.Input,
-                                this.context,
-                                this.accessPath,
-                                this.pathId,
-                            );
+                            this.typeShapeNode = new BooleanConverterNode({
+                                input: this.input as BooleanConverterNode.Input,
+                                context: this.context,
+                                accessPath: this.accessPath,
+                                pathId: this.pathId,
+                            });
                             break;
                         case "integer":
-                            this.typeShapeNode = new IntegerConverterNode(
-                                this.input as IntegerConverterNode.Input,
-                                this.context,
-                                this.accessPath,
-                                this.pathId,
-                            );
+                            this.typeShapeNode = new IntegerConverterNode({
+                                input: this.input as IntegerConverterNode.Input,
+                                context: this.context,
+                                accessPath: this.accessPath,
+                                pathId: this.pathId,
+                            });
                             break;
                         case "number":
-                            this.typeShapeNode = new NumberConverterNode(
-                                this.input as NumberConverterNode.Input,
-                                this.context,
-                                this.accessPath,
-                                this.pathId,
-                            );
+                            this.typeShapeNode = new NumberConverterNode({
+                                input: this.input as NumberConverterNode.Input,
+                                context: this.context,
+                                accessPath: this.accessPath,
+                                pathId: this.pathId,
+                            });
                             break;
                         case "string":
-                            this.typeShapeNode = new StringConverterNode(
-                                this.input as StringConverterNode.Input,
-                                this.context,
-                                this.accessPath,
-                                this.pathId,
-                            );
+                            this.typeShapeNode = new StringConverterNode({
+                                input: this.input as StringConverterNode.Input,
+                                context: this.context,
+                                accessPath: this.accessPath,
+                                pathId: this.pathId,
+                            });
                             break;
                         case "null":
-                            this.typeShapeNode = new NullConverterNode(
-                                this.input as NullConverterNode.Input,
-                                this.context,
-                                this.accessPath,
-                                this.pathId,
-                            );
+                            this.typeShapeNode = new NullConverterNode({
+                                input: this.input as NullConverterNode.Input,
+                                context: this.context,
+                                accessPath: this.accessPath,
+                                pathId: this.pathId,
+                            });
                             break;
                         default:
                             new UnreachableCaseError(this.input.type);

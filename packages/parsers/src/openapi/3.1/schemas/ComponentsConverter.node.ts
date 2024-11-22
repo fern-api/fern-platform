@@ -10,8 +10,8 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1Node<
 > {
     typeSchemas: Record<string, SchemaConverterNode> | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.ComponentsObject>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.ComponentsObject>) {
+        super(args);
         this.safeParse();
     }
 
@@ -24,7 +24,15 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1Node<
         } else {
             this.typeSchemas = Object.fromEntries(
                 Object.entries(this.input.schemas).map(([key, value]) => {
-                    return [key, new SchemaConverterNode(value, this.context, this.accessPath, this.pathId)];
+                    return [
+                        key,
+                        new SchemaConverterNode({
+                            input: value,
+                            context: this.context,
+                            accessPath: this.accessPath,
+                            pathId: this.pathId,
+                        }),
+                    ];
                 }),
             );
         }
