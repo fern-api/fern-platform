@@ -1,9 +1,64 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { ComponentPropsWithoutRef, ReactElement, ReactNode, createContext, forwardRef, useContext } from "react";
 import { Anthropic } from "../icons/anthropic";
 import { Cohere } from "../icons/cohere";
 import { OpenAI } from "../icons/openai";
 import { cn } from "../ui/cn";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+
+interface ChatbotModel {
+    provider: "anthropic" | "openai" | "cohere";
+    model: string;
+    displayName: string;
+}
+
+export const CHATBOT_MODELS: ChatbotModel[] = [
+    {
+        provider: "anthropic",
+        model: "claude-3-5-haiku",
+        displayName: "Claude 3.5 Haiku",
+    },
+    {
+        provider: "anthropic",
+        model: "claude-3-5-sonnet",
+        displayName: "Claude 3.5 Sonnet",
+    },
+    {
+        provider: "openai",
+        model: "gpt-4o-mini",
+        displayName: "GPT-4o Mini",
+    },
+    {
+        provider: "openai",
+        model: "gpt-4o",
+        displayName: "GPT-4o",
+    },
+    {
+        provider: "cohere",
+        model: "command-r-plus",
+        displayName: "Cohere Command R+",
+    },
+    {
+        provider: "cohere",
+        model: "command-r",
+        displayName: "Cohere Command R",
+    },
+];
+
+const ChatbotModelContext = createContext<ChatbotModel[]>(CHATBOT_MODELS);
+
+export function ChatbotModelProvider({
+    children,
+    models,
+}: {
+    children: ReactNode;
+    models: ChatbotModel[];
+}): ReactElement {
+    return <ChatbotModelContext.Provider value={models}>{children}</ChatbotModelContext.Provider>;
+}
+
+export function useChatbotModels(): ChatbotModel[] {
+    return useContext(ChatbotModelContext);
+}
 
 export const ChatbotModelSelect = forwardRef<
     HTMLButtonElement,
@@ -18,10 +73,11 @@ export const ChatbotModelSelect = forwardRef<
         required?: boolean;
     }
 >(({ value, defaultValue, onValueChange, open, defaultOpen, onOpenChange, disabled, required, ...props }, ref) => {
+    const models = useChatbotModels();
     return (
         <Select
             name="model"
-            defaultValue={defaultValue ?? "claude-3-5-haiku"}
+            defaultValue={defaultValue ?? models[0]?.model}
             value={value}
             onValueChange={onValueChange}
             open={open}
@@ -35,24 +91,11 @@ export const ChatbotModelSelect = forwardRef<
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>
-                    <SelectItem value="claude-3-5-haiku">
-                        <Anthropic /> Claude 3.5 Haiku
-                    </SelectItem>
-                    <SelectItem value="claude-3-5-sonnet">
-                        <Anthropic /> Claude 3.5 Sonnet
-                    </SelectItem>
-                    <SelectItem value="gpt-4o-mini">
-                        <OpenAI /> GPT-4o Mini
-                    </SelectItem>
-                    <SelectItem value="gpt-4o">
-                        <OpenAI /> GPT-4o
-                    </SelectItem>
-                    <SelectItem value="command-r-plus">
-                        <Cohere /> Cohere Command R+
-                    </SelectItem>
-                    <SelectItem value="command-r">
-                        <Cohere /> Cohere Command R
-                    </SelectItem>
+                    {models.map(({ provider, model, displayName }) => (
+                        <SelectItem key={model} value={model}>
+                            <Icon provider={provider} /> {displayName}
+                        </SelectItem>
+                    ))}
                 </SelectGroup>
             </SelectContent>
         </Select>
@@ -60,3 +103,16 @@ export const ChatbotModelSelect = forwardRef<
 });
 
 ChatbotModelSelect.displayName = "ChatbotModelSelect";
+
+function Icon({ provider }: { provider: "anthropic" | "openai" | "cohere" }) {
+    if (provider === "anthropic") {
+        return <Anthropic />;
+    }
+    if (provider === "openai") {
+        return <OpenAI />;
+    }
+    if (provider === "cohere") {
+        return <Cohere />;
+    }
+    return null;
+}

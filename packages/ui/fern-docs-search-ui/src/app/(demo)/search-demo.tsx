@@ -1,6 +1,7 @@
 "use client";
 
 import { ChatbotDialog } from "@/components/chatbot/chatbot-dialog";
+import { CHATBOT_MODELS, ChatbotModelProvider } from "@/components/chatbot/model-select";
 import { CodeBlock } from "@/components/code-block";
 import { AppSidebar, AppSidebarContent } from "@/components/demo/app-sidebar";
 import { DesktopSearchDialog } from "@/components/demo/desktop-search-dialog";
@@ -100,27 +101,33 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                     />
                 </DesktopSearchDialog>
             )}
-            <ChatbotDialog
-                open={isChatOpen}
-                onOpenChange={setIsChatOpen}
-                headers={headers}
-                initialInput={initialInput}
-                components={{
-                    pre(props) {
-                        if (isValidElement(props.children) && props.children.type === "code") {
-                            const { children, className } = props.children.props as {
-                                children: string;
-                                className: string;
-                            };
-                            if (typeof children === "string") {
-                                const match = /language-(\w+)/.exec(className || "")?.[1] ?? "plaintext";
-                                return <CodeBlock code={children} language={match} />;
+            <ChatbotModelProvider
+                models={
+                    domain.includes("cohere") ? CHATBOT_MODELS.filter((m) => m.provider === "cohere") : CHATBOT_MODELS
+                }
+            >
+                <ChatbotDialog
+                    open={isChatOpen}
+                    onOpenChange={setIsChatOpen}
+                    headers={headers}
+                    initialInput={initialInput}
+                    components={{
+                        pre(props) {
+                            if (isValidElement(props.children) && props.children.type === "code") {
+                                const { children, className } = props.children.props as {
+                                    children: string;
+                                    className: string;
+                                };
+                                if (typeof children === "string") {
+                                    const match = /language-(\w+)/.exec(className || "")?.[1] ?? "plaintext";
+                                    return <CodeBlock code={children} language={match} />;
+                                }
                             }
-                        }
-                        return <pre {...props} />;
-                    },
-                }}
-            />
+                            return <pre {...props} />;
+                        },
+                    }}
+                />
+            </ChatbotModelProvider>
         </SearchClientProvider>
     );
 }

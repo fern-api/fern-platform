@@ -18,7 +18,7 @@ import { Kbd } from "../ui/kbd";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { Composer } from "./composer";
 import { ChatbotConversation } from "./conversation";
-import { ChatbotModelSelect } from "./model-select";
+import { ChatbotModelSelect, useChatbotModels } from "./model-select";
 import { combineSearchResults, squeezeMessages } from "./utils";
 
 interface ChatbotDialogProps {
@@ -80,7 +80,7 @@ const ChatbotInterface = forwardRef<
         focus();
     }, []);
 
-    const [model, setModel] = useState("claude-3-5-haiku");
+    const [model, setModel] = useState(useChatbotModels()[0]?.model);
 
     const { messages, input, handleInputChange, handleSubmit, setInput, setMessages, isLoading } = useChat({
         initialInput,
