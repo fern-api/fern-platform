@@ -122,7 +122,7 @@ export function getHarRequest(
                             referencedEndpoint: () => {
                                 request.headers.push({
                                     name: clientCredentials.value.headerName || "Authorization",
-                                    value: `${clientCredentials.value.tokenPrefix ?? "Bearer"} <token>`,
+                                    value: `${clientCredentials.value.tokenPrefix ? `${clientCredentials.value.tokenPrefix ?? "Bearer"} ` : ""}<token>.`,
                                 });
                             },
                         });

@@ -140,7 +140,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                 key: ApiDefinition.PropertyKey(
                                     clientCredentialsValue.value.headerName || "Authorization",
                                 ),
-                                description: `OAuth authentication of the form ${clientCredentialsValue.value.tokenPrefix ?? "Bearer"} <token>.`,
+                                description: `OAuth authentication of the form ${clientCredentialsValue.value.tokenPrefix ? `${clientCredentialsValue.value.tokenPrefix ?? "Bearer"} ` : ""}<token>.`,
                                 hidden: false,
                                 valueShape: stringShape,
                                 availability: undefined,
