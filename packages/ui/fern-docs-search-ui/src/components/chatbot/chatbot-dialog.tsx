@@ -109,15 +109,16 @@ const ChatbotInterface = forwardRef<
                     focus();
                 }
             }}
+            onFocus={focus}
         >
-            <div>
-                <div className="px-6 py-4 max-md:px-4 fixed top-0 left-0">
+            <div className="absolute top-0 inset-x-0 z-50">
+                <div className="px-6 py-4 max-md:px-3 fixed top-0 left-0">
                     <Dialog.Title className="text-xl font-semibold">Ask AI</Dialog.Title>
                     <VisuallyHidden asChild>
                         <Dialog.Description>Ask AI any questions you have about our documentation.</Dialog.Description>
                     </VisuallyHidden>
                 </div>
-                <div className="p-4 max-md:px-2 flex gap-2 fixed right-0 top-0">
+                <div className="p-4 max-md:p-3 flex gap-2 fixed right-0 top-0">
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger asChild>
@@ -125,7 +126,7 @@ const ChatbotInterface = forwardRef<
                                     <SquarePen />
                                 </Button>
                             </TooltipTrigger>
-                            <TooltipContent>
+                            <TooltipContent collisionPadding={10}>
                                 <p>New chat</p>
                             </TooltipContent>
                         </Tooltip>
@@ -145,7 +146,7 @@ const ChatbotInterface = forwardRef<
                                     </Button>
                                 </Dialog.Close>
                             </TooltipTrigger>
-                            <TooltipContent className="flex items-center gap-2">
+                            <TooltipContent className="flex items-center gap-2" collisionPadding={10}>
                                 <p>Close</p>
                                 <Kbd>Esc</Kbd>
                             </TooltipContent>
@@ -159,7 +160,7 @@ const ChatbotInterface = forwardRef<
                 components={components}
                 searchResults={searchResults}
             />
-            <div className="max-w-3xl w-screen m-auto shrink-0 max-md:px-4">
+            <div className="max-w-3xl w-screen m-auto shrink-0 max-md:px-3">
                 <Composer value={input} onChange={handleInputChange} onSubmit={handleSubmit} autoFocus ref={inputRef}>
                     <ChatbotModelSelect value={model} onValueChange={setModel} />
                 </Composer>

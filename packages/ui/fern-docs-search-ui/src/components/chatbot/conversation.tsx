@@ -20,6 +20,7 @@ export function ChatbotConversation({
         createdAt?: Date | undefined;
         role: "assistant" | "user";
         content: string;
+        isThinking?: boolean;
     }[];
     components: Components | undefined;
     searchResults: SearchResult[];
@@ -63,7 +64,7 @@ export function ChatbotConversation({
 
         const id = messages.findLast((m) => m.role === "user")?.id;
         if (id) {
-            const el = ref.current?.querySelector(`#${id}`);
+            const el = ref.current?.querySelector(`#_${id}`);
             if (el) {
                 el.scrollIntoView({ behavior: "smooth" });
             }
@@ -90,9 +91,9 @@ export function ChatbotConversation({
                 );
             }}
         >
-            <div ref={sizerRef}>
+            <div ref={sizerRef} className="pt-6 max-md:pt-12">
                 {messages.map((m) => (
-                    <ChatbotTurn key={m.id} role={m.role} id={m.id}>
+                    <ChatbotTurn key={m.id} role={m.role} id={`_${m.id}`}>
                         <ChatbotTurnContextProvider>
                             <MarkdownContent
                                 components={{
@@ -119,6 +120,7 @@ export function ChatbotConversation({
                             >
                                 {m.content}
                             </MarkdownContent>
+                            {m.isThinking && <p className="text-[var(--grayscale-a10)]">Thinking...</p>}
                         </ChatbotTurnContextProvider>
                     </ChatbotTurn>
                 ))}

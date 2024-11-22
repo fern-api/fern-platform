@@ -4,7 +4,7 @@ import { createCohere } from "@ai-sdk/cohere";
 import { createOpenAI } from "@ai-sdk/openai";
 import { searchClient } from "@algolia/client-search";
 import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
-import { StreamData, streamText, tool } from "ai";
+import { streamText, tool } from "ai";
 import { z } from "zod";
 
 const anthropic = createAnthropic({
@@ -35,10 +35,11 @@ ONLY respond to questions using information from the knowledge base search tool.
 Do not rely on your own knowledge.
 Include links to the relevant pages in your responses.
 If no relevant information is found in the tool calls, respond, "Sorry, I don't know."
-Do not explain your tool calls or thoughts.
 Keep responses short and concise. Always use markdown formatting, and always include markdown footnotes with links to the relevant pages.
 Use [^1] for inline annotations, and then provide the URL in the footnote like this:
 [^1]: https://<docs-url>/<path>
+If a footnote is added to the end of a code block, it should be preceded by a blank line.
+Do not refer to the user as "the user", just respond to the user's question in the first person.
 `;
 
 export async function POST(request: Request): Promise<Response> {
@@ -57,10 +58,6 @@ export async function POST(request: Request): Promise<Response> {
     }
 
     const { messages } = await request.json();
-
-    const data = new StreamData();
-
-    // const allHits: Map<string, Hit<AlgoliaRecord>> = new Map();
 
     const result = await streamText({
         model,
@@ -96,5 +93,5 @@ export async function POST(request: Request): Promise<Response> {
         },
     });
 
-    return result.toDataStreamResponse({ data });
+    return result.toDataStreamResponse({});
 }
