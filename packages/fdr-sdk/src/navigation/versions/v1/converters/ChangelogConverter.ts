@@ -70,13 +70,7 @@ export class ChangelogNavigationConverter {
         entries: FernNavigation.V1.ChangelogEntryNode[],
         parentSlug: SlugGenerator,
     ): FernNavigation.V1.ChangelogYearNode[] {
-        const years = new Map<number, FernNavigation.V1.ChangelogEntryNode[]>();
-        for (const entry of entries) {
-            const year = dayjs.utc(entry.date).year();
-            const yearEntries = years.get(year) ?? [];
-            yearEntries.push(entry);
-            years.set(year, yearEntries);
-        }
+        const years = groupByYear(entries);
         return orderBy(
             Array.from(years.entries()).map(([year, entries]) =>
                 this.#idgen.with(year.toString(), (id) => {
@@ -105,19 +99,13 @@ export class ChangelogNavigationConverter {
         entries: FernNavigation.V1.ChangelogEntryNode[],
         parentSlug: SlugGenerator,
     ): FernNavigation.V1.ChangelogMonthNode[] {
-        const months = new Map<number, FernNavigation.V1.ChangelogEntryNode[]>();
-        for (const entry of entries) {
-            const month = dayjs.utc(entry.date).month() + 1;
-            const monthEntries = months.get(month) ?? [];
-            monthEntries.push(entry);
-            months.set(month, monthEntries);
-        }
+        const months = groupByMonth(entries);
         return orderBy(
-            Array.from(months.entries()).map(([month, entries]) =>
+            Array.from(months.entries()).map(([month, [year, entries]]) =>
                 this.#idgen.with(month.toString(), (id) => ({
                     id,
                     type: "changelogMonth" as const,
-                    title: dayjs(new Date(0, month - 1)).format("MMMM YYYY"),
+                    title: dayjs(new Date(year, month - 1)).format("MMMM YYYY"),
                     month,
                     slug: parentSlug.append(month.toString()).get(),
                     icon: undefined,
@@ -180,4 +168,28 @@ function orderBy<K extends string, T extends Record<K, string | number>>(
         }
         return 0;
     });
+}
+
+export function groupByYear(entries: FernNavigation.V1.ChangelogEntryNode[]) {
+    const years = new Map<number, FernNavigation.V1.ChangelogEntryNode[]>();
+    for (const entry of entries) {
+        const year = dayjs.utc(entry.date).year();
+        const yearEntries = years.get(year) ?? [];
+        yearEntries.push(entry);
+        years.set(year, yearEntries);
+    }
+    return years;
+}
+
+export function groupByMonth(entries: FernNavigation.V1.ChangelogEntryNode[]) {
+    const months = new Map<number, [number, FernNavigation.V1.ChangelogEntryNode[]]>();
+    for (const entry of entries) {
+        const date = dayjs.utc(entry.date);
+        const month = date.month() + 1;
+        const year = date.year();
+        const monthEntries = months.get(month) ?? [year, []];
+        monthEntries[1].push(entry);
+        months.set(month, monthEntries);
+    }
+    return months;
 }

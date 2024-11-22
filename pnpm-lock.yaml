@@ -6,6 +6,7 @@ settings:
 
 overrides:
   cookie: 0.7.0
+  cross-spawn: 7.0.5
   micromatch: 4.0.8
   postcss: 8.4.31
   esbuild: 0.20.2
@@ -964,6 +965,34 @@ importers:
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
+
+  packages/parsers:
+    dependencies:
+      '@fern-api/fdr-sdk':
+        specifier: workspace:*
+        version: link:../fdr-sdk
+      '@fern-api/logger':
+        specifier: 0.4.24-rc1
+        version: 0.4.24-rc1
+      '@fern-api/ui-core-utils':
+        specifier: workspace:*
+        version: link:../commons/core-utils
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
+      ts-essentials:
+        specifier: ^10.0.1
+        version: 10.0.1(typescript@5.4.3)
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.4(@edge-runtime/vm@3.2.0)(@types/node@22.5.5)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
+    devDependencies:
+      '@fern-platform/configs':
+        specifier: workspace:*
+        version: link:../configs
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
 
   packages/scripts:
     dependencies:
@@ -4378,8 +4407,14 @@ packages:
   '@fern-api/core-utils@0.15.0-rc63':
     resolution: {integrity: sha512-E5g6oPcFLz9ZOTkYH1uF3Le9bw9yFuOft4zNiq0HD2xE/RK2wGn9gYcIgJn/qRT0dB1hBCanHx4KehCMc8Z99w==}
 
+  '@fern-api/core-utils@0.4.24-rc1':
+    resolution: {integrity: sha512-aYu4lQK2qZIKzTF9TeFrICTPJ/zGEZUEWQmZt6pJeHu+R6afrcCBNkUleWU1OpHlDbe+xXUUBOktRg0PM9Hywg==}
+
   '@fern-api/fs-utils@0.15.0-rc63':
     resolution: {integrity: sha512-lDbmFyGs9phjI0ewoijwYLB7dkEc59Gt/tg2l2um5E1Xmgfnt5EKFXNywnmDIXN1xb8aYhmo+N9ZKJje6/a+iw==}
+
+  '@fern-api/logger@0.4.24-rc1':
+    resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
 
   '@fern-api/next@14.2.9-fork.2':
     resolution: {integrity: sha512-6Xg8PDelm0aFqkIttXzyM2aQLDkp1EiKMISc5DmHQ7yTMJOVEmeJNMeuBCeNNWnZee+gRQUO7NVhwLXbwTiK4A==}
@@ -9427,8 +9462,8 @@ packages:
   create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
 
-  cross-spawn@7.0.3:
-    resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
+  cross-spawn@7.0.5:
+    resolution: {integrity: sha512-ZVJrKKYunU38/76t0RMOulHOnUcbU9GbpWKAOZ0mhjr7CX6FVrH+4FrAapSOekrgFQ3f/8gwMEuIft0aKq6Hug==}
     engines: {node: '>= 8'}
 
   crosspath@2.0.0:
@@ -13034,6 +13069,9 @@ packages:
   open@8.4.2:
     resolution: {integrity: sha512-7x81NCL719oNbsq/3mh+hVrAWmFuEYUqrq/Iw3kUzH8ReypT9QQ0BLoJS7/G9k6N81XjW4qHWtjWwe/9eLy1EQ==}
     engines: {node: '>=12'}
+
+  openapi-types@12.1.3:
+    resolution: {integrity: sha512-N4YtSYJqghVu4iek2ZUvcN/0aqH1kRDuNqzcycDxhOUpg7GdvLa2F3DgS6yBNhInhv2r/6I0Flkn7CqL8+nIcw==}
 
   opener@1.5.2:
     resolution: {integrity: sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==}
@@ -18772,11 +18810,21 @@ snapshots:
       strip-ansi: 7.1.0
       ua-parser-js: 1.0.37
 
+  '@fern-api/core-utils@0.4.24-rc1':
+    dependencies:
+      lodash-es: 4.17.21
+      strip-ansi: 7.1.0
+
   '@fern-api/fs-utils@0.15.0-rc63':
     dependencies:
       '@fern-api/core-utils': 0.15.0-rc63
       json-stream-stringify: 3.1.4
       tmp-promise: 3.0.3
+
+  '@fern-api/logger@0.4.24-rc1':
+    dependencies:
+      '@fern-api/core-utils': 0.4.24-rc1
+      chalk: 5.3.0
 
   '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)':
     dependencies:
@@ -19425,7 +19473,7 @@ snapshots:
   '@jridgewell/gen-mapping@0.3.5':
     dependencies:
       '@jridgewell/set-array': 1.2.1
-      '@jridgewell/sourcemap-codec': 1.4.15
+      '@jridgewell/sourcemap-codec': 1.5.0
       '@jridgewell/trace-mapping': 0.3.25
 
   '@jridgewell/resolve-uri@3.1.2': {}
@@ -19444,7 +19492,7 @@ snapshots:
   '@jridgewell/trace-mapping@0.3.25':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.4.15
+      '@jridgewell/sourcemap-codec': 1.5.0
 
   '@jridgewell/trace-mapping@0.3.9':
     dependencies:
@@ -23562,7 +23610,7 @@ snapshots:
       chalk: 3.0.0
       ci-info: 3.9.0
       clipanion: 4.0.0-rc.3(typanion@3.14.0)
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       diff: 5.2.0
       dotenv: 16.4.5
       fast-glob: 3.3.2
@@ -23642,7 +23690,7 @@ snapshots:
       '@yarnpkg/parsers': 3.0.2
       chalk: 3.0.0
       clipanion: 4.0.0-rc.3(typanion@3.14.0)
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       fast-glob: 3.3.2
       micromatch: 4.0.8
       tslib: 2.8.0
@@ -25731,7 +25779,7 @@ snapshots:
 
   create-require@1.1.1: {}
 
-  cross-spawn@7.0.3:
+  cross-spawn@7.0.5:
     dependencies:
       path-key: 3.1.1
       shebang-command: 2.0.0
@@ -26385,7 +26433,7 @@ snapshots:
 
   dotenv-cli@6.0.0:
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       dotenv: 16.4.5
       dotenv-expand: 8.0.3
       minimist: 1.2.8
@@ -26993,7 +27041,7 @@ snapshots:
       '@ungap/structured-clone': 1.2.0
       ajv: 6.12.6
       chalk: 4.1.2
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       debug: 4.3.4(supports-color@5.5.0)
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
@@ -27128,7 +27176,7 @@ snapshots:
 
   execa@5.1.1:
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       get-stream: 6.0.1
       human-signals: 2.1.0
       is-stream: 2.0.1
@@ -27140,7 +27188,7 @@ snapshots:
 
   execa@7.2.0:
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       get-stream: 6.0.1
       human-signals: 4.3.1
       is-stream: 3.0.0
@@ -27152,7 +27200,7 @@ snapshots:
 
   execa@8.0.1:
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       get-stream: 8.0.1
       human-signals: 5.0.0
       is-stream: 3.0.0
@@ -27165,7 +27213,7 @@ snapshots:
   execa@9.5.1:
     dependencies:
       '@sindresorhus/merge-streams': 4.0.0
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       figures: 6.1.0
       get-stream: 9.0.1
       human-signals: 8.0.0
@@ -27465,7 +27513,7 @@ snapshots:
 
   foreground-child@3.1.1:
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       signal-exit: 4.1.0
 
   fork-ts-checker-webpack-plugin@8.0.0(typescript@5.4.3)(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.20.2)):
@@ -30706,6 +30754,8 @@ snapshots:
       define-lazy-prop: 2.0.0
       is-docker: 2.2.1
       is-wsl: 2.2.0
+
+  openapi-types@12.1.3: {}
 
   opener@1.5.2: {}
 
