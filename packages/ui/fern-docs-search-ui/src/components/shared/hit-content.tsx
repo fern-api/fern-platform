@@ -2,7 +2,6 @@ import { tz } from "@date-fns/tz";
 import { AvailabilityBadge, HttpMethodBadge } from "@fern-ui/fern-docs-badges";
 import clsx from "clsx";
 import { format } from "date-fns";
-import { last } from "es-toolkit";
 import { Fragment, ReactElement, ReactNode } from "react";
 import { Highlight, Snippet } from "react-instantsearch";
 import { MarkRequired, UnreachableCaseError } from "ts-essentials";
@@ -28,6 +27,16 @@ function Breadcrumb({ breadcrumb }: { breadcrumb: string[] }): ReactNode {
         </div>
     );
 }
+
+type SegmentType = "markdown" | "changelog" | "parameter" | "http" | "webhook" | "websocket";
+const SEGMENT_DISPLAY_NAMES: Record<SegmentType, string> = {
+    markdown: "Guides",
+    changelog: "Changelog",
+    parameter: "Parameters",
+    http: "Endpoints",
+    webhook: "Webhooks",
+    websocket: "WebSockets",
+};
 
 function HitContentWithTitle({
     hit,
@@ -56,7 +65,11 @@ function HitContentWithTitle({
                     }}
                 />
                 {hit.availability && <AvailabilityBadge availability={hit.availability} size="sm" rounded />}
-                {!hit.availability && rightContent}
+                {!hit.availability && (
+                    <span className="text-[var(--grayscale-a10)] text-sm">
+                        {SEGMENT_DISPLAY_NAMES[hit.type === "api-reference" ? hit.api_type : hit.type]}
+                    </span>
+                )}
             </div>
             {children}
         </div>
@@ -93,12 +106,12 @@ function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactE
               ? "description"
               : undefined;
 
-    const rightTitle = last(hit.breadcrumb)?.title;
+    // const rightTitle = last(hit.breadcrumb)?.title;
 
     return (
         <HitContentWithTitle
             hit={hit}
-            rightContent={rightTitle && <span className="text-muted-foreground text-sm">{rightTitle}</span>}
+            // rightContent={rightTitle && <span className="text-muted-foreground text-sm">{rightTitle}</span>}
         >
             <div className="inline-flex items-baseline gap-1 max-w-full">
                 <HttpMethodBadge method={hit.method} size="sm" className="shrink-0" variant="outlined" />
