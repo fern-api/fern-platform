@@ -76,10 +76,6 @@ const ChatbotInterface = forwardRef<
         }, 0);
     };
 
-    useEffect(() => {
-        focus();
-    }, []);
-
     const [model, setModel] = useState(useChatbotModels()[0]?.model);
 
     const { messages, input, handleInputChange, handleSubmit, setInput, setMessages, isLoading } = useChat({

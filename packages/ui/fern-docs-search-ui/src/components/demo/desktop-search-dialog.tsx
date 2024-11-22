@@ -19,7 +19,7 @@ export function DesktopSearchDialog({
                 <button
                     className={cn(
                         "inline-flex items-center justify-start gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
-                        "border border-input bg-background hover:bg-accent text-[var(--grayscale-a10)]",
+                        "border border-input bg-[var(--grayscale-a1)] hover:bg-[var(--grayscale-a2)] text-[var(--grayscale-a10)]",
                         "h-9 px-2 py-2",
                         "w-full",
                     )}

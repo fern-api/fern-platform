@@ -11,7 +11,15 @@ import {
 } from "@fern-ui/fern-docs-badges";
 import * as Menubar from "@radix-ui/react-menubar";
 import { Check, ChevronDown, Minus } from "lucide-react";
-import { ComponentPropsWithoutRef, Dispatch, ReactElement, ReactNode, SetStateAction, forwardRef } from "react";
+import {
+    ComponentPropsWithoutRef,
+    Dispatch,
+    Fragment,
+    ReactElement,
+    ReactNode,
+    SetStateAction,
+    forwardRef,
+} from "react";
 import { cn } from "../ui/cn";
 
 export function MobileFacetMenuBar({
@@ -91,15 +99,16 @@ function MobileFacetMenu({
                 <Menubar.Content
                     sideOffset={5}
                     side="bottom"
+                    avoidCollisions
                     align="start"
                     className="min-w-[220px] rounded-lg bg-[var(--grayscale-a1)] backdrop-blur-lg border border-[var(--grayscale-a5)] p-0 shadow-lg z-50 absolute overflow-hidden"
                     hidden={isLoading || optionsWithCurrent.length === 0}
                 >
                     <Menubar.RadioGroup value={value} onValueChange={updateFilter}>
                         {optionsWithCurrent.map(({ value, count }, idx) => (
-                            <>
+                            <Fragment key={value}>
                                 {idx > 0 && <Menubar.Separator className="h-px bg-[var(--grayscale-a5)]" />}
-                                <Menubar.RadioItem key={value} value={value} id={`${facet}-${value}`} asChild>
+                                <Menubar.RadioItem value={value} id={`${facet}-${value}`} asChild>
                                     <MenubarItem>
                                         <span className="inline-flex gap-1 items-baseline">
                                             {getFacetDisplay(facet, value, { titleCase: true })}
@@ -113,7 +122,7 @@ function MobileFacetMenu({
                                         </Menubar.ItemIndicator>
                                     </MenubarItem>
                                 </Menubar.RadioItem>
-                            </>
+                            </Fragment>
                         ))}
                         {value != null && (
                             <Menubar.Group>

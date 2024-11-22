@@ -21,6 +21,7 @@ export type DesktopCommandSharedProps = Omit<ComponentProps<typeof Command>, "on
 export interface DesktopCommandProps extends DesktopCommandSharedProps {
     filters?: readonly FacetFilter[];
     onSelect: (path: string) => void;
+    resetFilters?: () => void;
     onAskAI?: ({ initialInput }: { initialInput?: string }) => void;
     setFilters?: Dispatch<SetStateAction<FacetFilter[]>>;
     setTheme?: (theme: "light" | "dark" | "system") => void;
@@ -38,6 +39,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
         onSelect,
         onAskAI,
         setFilters,
+        resetFilters,
         setTheme,
         onClose,
         query,
@@ -72,23 +74,25 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
             {...rest}
             onKeyDown={composeEventHandlers(
                 rest.onKeyDown,
-                onClose != null
-                    ? (e) => {
-                          if (e.key === "Escape") {
-                              onClose();
-                          }
-                      }
-                    : undefined,
+                (e) => {
+                    if (e.key === "Escape") {
+                        onClose?.();
+                    }
+
+                    if (document.activeElement === inputRef.current) {
+                        return;
+                    }
+
+                    if (/^[a-zA-Z0-9]$/.test(e.key)) {
+                        refine(query + e.key);
+                        focus();
+                    }
+                },
                 { checkForDefaultPrevented: true },
             )}
         >
             {filters.length > 0 && (
-                <div
-                    className="flex items-center gap-2 p-2 pb-0"
-                    onClick={() => {
-                        focus();
-                    }}
-                >
+                <div className="flex items-center gap-2 p-2 pb-0 cursor-text" onClick={focus}>
                     {filters.map((filter) => (
                         <DesktopFilterDropdownMenu
                             key={`${filter.facet}:${filter.value}`}
@@ -110,7 +114,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                     ))}
                 </div>
             )}
-            <div data-cmdk-fern-header onClickCapture={focus}>
+            <div data-cmdk-fern-header onClick={focus}>
                 {filters.length > 0 && (
                     <DesktopBackButton
                         pop={() => {

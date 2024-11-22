@@ -72,8 +72,15 @@ export function DesktopFilterDropdownMenu({
                                 }}
                             >
                                 {options.map((option) => (
-                                    <DropdownMenuRadioItem key={option.value} value={option.value}>
-                                        {getFacetDisplay(filter.facet, option.value, { small: true, titleCase: true })}
+                                    <DropdownMenuRadioItem
+                                        key={option.value}
+                                        value={option.value}
+                                        autoFocus={option.value === filter.value}
+                                    >
+                                        {getFacetDisplay(filter.facet, option.value, {
+                                            small: true,
+                                            titleCase: true,
+                                        })}
                                         <DropdownMenuShortcut>{option.count}</DropdownMenuShortcut>
                                     </DropdownMenuRadioItem>
                                 ))}

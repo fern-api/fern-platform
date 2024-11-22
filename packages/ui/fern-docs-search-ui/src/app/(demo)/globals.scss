@@ -1,9 +1,9 @@
+@import "@fern-ui/fern-docs-badges/colors.scss";
+
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
 @import "@fern-ui/fern-docs-badges/index.scss";
-@import "@fern-ui/fern-docs-badges/colors.scss";
 @import "@fern-ui/fern-docs-syntax-highlighter/src/index.scss";
 
 body {
@@ -91,7 +91,8 @@ body {
         @apply border-border;
     }
     body {
-        @apply bg-background text-foreground;
+        @apply text-foreground;
+        background-color: var(--color-background);
     }
 }
 
