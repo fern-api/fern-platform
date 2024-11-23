@@ -15,5 +15,9 @@
         &.elevated {
             @apply shadow-card-elevated border-primary;
         }
+        
+        li {
+            @apply list-inside;
+        }
     }
 }
