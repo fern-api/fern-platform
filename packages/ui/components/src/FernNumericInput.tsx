@@ -18,10 +18,11 @@ export interface FernNumericInputProps extends ComponentProps<"input"> {
     onValueChange?: (value: number) => void;
     value?: number;
     disallowFloat?: boolean;
+    rightElement?: React.ReactNode;
 }
 
 export const FernNumericInput = forwardRef<HTMLInputElement, FernNumericInputProps>(function FernInput(
-    { className, inputClassName, value, onChange, onValueChange, disallowFloat, ...props },
+    { className, inputClassName, value, onChange, onValueChange, rightElement, disallowFloat, ...props },
     ref,
 ) {
     const inputRef = useRef<HTMLInputElement>(null);
@@ -119,6 +120,7 @@ export const FernNumericInput = forwardRef<HTMLInputElement, FernNumericInputPro
                 }}
                 {...props}
             />
+            {rightElement}
             {onValueChange && (
                 <FernButton
                     className="fern-numeric-input-step"
