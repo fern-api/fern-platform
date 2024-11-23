@@ -1,7 +1,5 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { unknownToString } from "@fern-api/ui-core-utils";
-import { FernButton } from "@fern-ui/components";
-import { Xmark } from "iconoir-react";
 import { atom } from "jotai";
 import { useAtom, useAtomValue } from "jotai/react";
 import { RESET } from "jotai/utils";
@@ -72,11 +70,8 @@ export function PlaygroundHeaderAuthForm({
                     autoComplete="off"
                     data-1p-ignore="true"
                     disabled={disabled}
-                    rightElement={
-                        isResettable ? (
-                            <FernButton icon={<Xmark />} variant="minimal" onClick={() => setValue(RESET)} />
-                        ) : undefined
-                    }
+                    resettable={isResettable}
+                    onClickReset={() => setValue(RESET)}
                 />
             </div>
         </li>

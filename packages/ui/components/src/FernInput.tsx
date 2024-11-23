@@ -3,7 +3,7 @@ import { composeRefs } from "@radix-ui/react-compose-refs";
 import cn from "clsx";
 import { isEqual } from "es-toolkit/predicate";
 import { Undo2 } from "lucide-react";
-import { ComponentPropsWithoutRef, forwardRef, useEffect, useRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef, useRef } from "react";
 import { Button } from "./FernButtonV2";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 
@@ -32,20 +32,17 @@ export interface FernInputProps extends Omit<ComponentPropsWithoutRef<"input">, 
      * @default false
      */
     resettable?: boolean;
+    /**
+     * Callback to call when the reset button is clicked
+     */
+    onClickReset?: () => void;
 }
 
 export const FernInput = forwardRef<HTMLInputElement, FernInputProps>(function FernInput(
-    { className, inputClassName, onValueChange, leftIcon, rightElement, resettable, ...props },
+    { className, inputClassName, onValueChange, leftIcon, rightElement, resettable, onClickReset, ...props },
     forwardedRef,
 ) {
     const inputRef = useRef<HTMLInputElement>(null);
-
-    // Set the value to the default value if the value is undefined
-    useEffect(() => {
-        if (props.value == null && props.defaultValue != null) {
-            onValueChange?.(props.defaultValue);
-        }
-    }, [onValueChange, props.defaultValue, props.value]);
 
     return (
         <div className={cn("fern-input-group", className)}>
@@ -70,12 +67,15 @@ export const FernInput = forwardRef<HTMLInputElement, FernInputProps>(function F
             <FernInputRightElement
                 value={props.value}
                 defaultValue={props.defaultValue}
-                onReset={() => {
-                    if (props.defaultValue != null) {
-                        onValueChange?.(props.defaultValue);
-                        inputRef.current?.focus();
-                    }
-                }}
+                onReset={
+                    onClickReset ??
+                    (() => {
+                        if (props.defaultValue != null) {
+                            onValueChange?.(props.defaultValue);
+                            inputRef.current?.focus();
+                        }
+                    })
+                }
                 resettable={resettable}
             >
                 {rightElement}

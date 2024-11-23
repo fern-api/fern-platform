@@ -1,6 +1,6 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { FernButton, FernInput } from "@fern-ui/components";
-import { Undo, User } from "iconoir-react";
+import { FernInput } from "@fern-ui/components";
+import { User } from "iconoir-react";
 import { useAtom, useAtomValue } from "jotai/react";
 import { RESET } from "jotai/utils";
 import { ReactElement } from "react";
@@ -34,14 +34,10 @@ export function PlaygroundBasicAuthForm({
                         onValueChange={setUsername}
                         value={username}
                         leftIcon={<User className="size-icon" />}
-                        rightElement={
-                            isUsernameResettable ? (
-                                <FernButton icon={<Undo />} variant="minimal" onClick={() => setUsername(RESET)} />
-                            ) : (
-                                <span className="t-muted text-xs">{"string"}</span>
-                            )
-                        }
+                        rightElement={<span className="t-muted text-xs">{"string"}</span>}
                         disabled={disabled}
+                        resettable={isUsernameResettable}
+                        onClickReset={() => setUsername(RESET)}
                     />
                 </div>
             </li>
@@ -56,11 +52,8 @@ export function PlaygroundBasicAuthForm({
                         onValueChange={setPassword}
                         value={password}
                         disabled={disabled}
-                        rightElement={
-                            isPasswordResettable ? (
-                                <FernButton icon={<Undo />} variant="minimal" onClick={() => setPassword(RESET)} />
-                            ) : undefined
-                        }
+                        resettable={isPasswordResettable}
+                        onClickReset={() => setPassword(RESET)}
                     />
                 </div>
             </li>

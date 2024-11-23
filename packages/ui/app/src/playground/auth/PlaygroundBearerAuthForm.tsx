@@ -1,6 +1,4 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { FernButton } from "@fern-ui/components";
-import { Undo } from "iconoir-react";
 import { useAtom, useAtomValue } from "jotai/react";
 import { RESET } from "jotai/utils";
 import { ReactElement } from "react";
@@ -33,11 +31,8 @@ export function PlaygroundBearerAuthForm({
                     autoComplete="off"
                     data-1p-ignore="true"
                     disabled={disabled}
-                    rightElement={
-                        isBearerTokenResettable ? (
-                            <FernButton icon={<Undo />} variant="minimal" onClick={() => setValue(RESET)} />
-                        ) : undefined
-                    }
+                    resettable={isBearerTokenResettable}
+                    onClickReset={() => setValue(RESET)}
                 />
             </div>
         </li>
