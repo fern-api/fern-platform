@@ -5,8 +5,7 @@ import {
     unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { FernButton, FernInput, FernNumericInput, FernSwitch, FernTextarea } from "@fern-ui/components";
-import { Undo } from "iconoir-react";
+import { FernInput, FernNumericInput, FernSwitch, FernTextarea } from "@fern-ui/components";
 import { ReactElement, memo, useCallback } from "react";
 import { useFeatureFlags } from "../../atoms";
 import { WithLabel } from "../WithLabel";
@@ -109,16 +108,11 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                                 disabled={disabled}
                                 placeholder={string.default}
                                 defaultValue={typeof defaultValue === "string" ? defaultValue : string.default}
+                                resettable={typeof defaultValue === "string"}
                                 maxLength={string.maxLength}
                                 minLength={string.minLength}
                                 // TODO: add validation UX feedback
                                 pattern={string.regex}
-                                // TODO: clean up this mess
-                                rightElement={withDefaultValue(
-                                    value,
-                                    typeof defaultValue === "string" ? defaultValue : string.default,
-                                    onChange,
-                                )}
                             />
                         )}
                     </WithLabel>
@@ -131,7 +125,13 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                                 {/* <label className="t-muted font-mono text-sm leading-none">
                                     {checked == null ? "undefined" : checked ? "true" : "false"}
                                 </label> */}
-                                <FernSwitch checked={checked} onCheckedChange={onChange} id={id} disabled={disabled} />
+                                <FernSwitch
+                                    checked={checked}
+                                    onCheckedChange={onChange}
+                                    defaultChecked={typeof defaultValue === "boolean" ? defaultValue : undefined}
+                                    id={id}
+                                    disabled={disabled}
+                                />
                             </div>
                         </WithLabel>
                     );
@@ -146,13 +146,9 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             disallowFloat={true}
                             disabled={disabled}
                             defaultValue={typeof defaultValue === "number" ? defaultValue : integer.default}
+                            // resettable={typeof defaultValue === "number"}
                             max={integer.maximum}
                             min={integer.minimum}
-                            rightElement={withDefaultValue(
-                                value,
-                                typeof defaultValue === "number" ? defaultValue : integer.default,
-                                onChange,
-                            )}
                         />
                     </WithLabel>
                 ),
@@ -165,13 +161,9 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             onValueChange={onChange}
                             disabled={disabled}
                             defaultValue={typeof defaultValue === "number" ? defaultValue : double.default}
+                            // resettable={typeof defaultValue === "number"}
                             max={double.maximum}
                             min={double.minimum}
-                            rightElement={withDefaultValue(
-                                value,
-                                typeof defaultValue === "number" ? defaultValue : double.default,
-                                onChange,
-                            )}
                         />
                     </WithLabel>
                 ),
@@ -184,14 +176,10 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             onValueChange={onChange}
                             disallowFloat={true}
                             disabled={disabled}
-                            defaultValue={long.default}
+                            defaultValue={typeof defaultValue === "number" ? defaultValue : long.default}
+                            // resettable={typeof defaultValue === "number"}
                             max={long.maximum}
                             min={long.minimum}
-                            rightElement={withDefaultValue(
-                                value,
-                                typeof defaultValue === "number" ? defaultValue : long.default,
-                                onChange,
-                            )}
                         />
                     </WithLabel>
                 ),
@@ -201,14 +189,11 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             id={id}
                             className="w-full"
                             value={typeof value === "number" ? value : undefined}
+                            defaultValue={typeof defaultValue === "number" ? defaultValue : undefined}
+                            // resettable={typeof defaultValue === "number"}
                             onValueChange={onChange}
                             disallowFloat={true}
                             disabled={disabled}
-                            rightElement={withDefaultValue(
-                                value,
-                                typeof defaultValue === "number" ? defaultValue : undefined,
-                                onChange,
-                            )}
                         />
                     </WithLabel>
                 ),
@@ -218,14 +203,11 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             id={id}
                             className="w-full"
                             value={typeof value === "number" ? value : undefined}
+                            defaultValue={typeof defaultValue === "number" ? defaultValue : undefined}
+                            // resettable={typeof defaultValue === "number"}
                             onValueChange={onChange}
                             disallowFloat={true}
                             disabled={disabled}
-                            rightElement={withDefaultValue(
-                                value,
-                                typeof defaultValue === "number" ? defaultValue : undefined,
-                                onChange,
-                            )}
                         />
                     </WithLabel>
                 ),
@@ -237,13 +219,10 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             className="w-full"
                             placeholder="MM/DD/YYYY HH:MM"
                             value={typeof value === "string" ? value : undefined}
+                            defaultValue={typeof defaultValue === "string" ? defaultValue : undefined}
+                            resettable={typeof defaultValue === "string"}
                             onValueChange={onChange}
                             disabled={disabled}
-                            rightElement={withDefaultValue(
-                                value,
-                                typeof defaultValue === "string" ? defaultValue : undefined,
-                                onChange,
-                            )}
                         />
                     </WithLabel>
                 ),
@@ -253,14 +232,11 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             id={id}
                             className="w-full"
                             value={typeof value === "string" ? value : ""}
+                            defaultValue={typeof defaultValue === "string" ? defaultValue : undefined}
+                            resettable={typeof defaultValue === "string"}
                             placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
                             onValueChange={onChange}
                             disabled={disabled}
-                            rightElement={withDefaultValue(
-                                value,
-                                typeof defaultValue === "string" ? defaultValue : undefined,
-                                onChange,
-                            )}
                         />
                     </WithLabel>
                 ),
@@ -270,9 +246,10 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             id={id}
                             className="w-full"
                             value={typeof value === "string" ? value : ""}
+                            defaultValue={typeof defaultValue === "string" ? defaultValue : undefined}
+                            // resettable={typeof defaultValue === "string"}
                             onValueChange={onChange}
                             disabled={disabled}
-                            // TODO: render reset button
                         />
                     </WithLabel>
                 ),
@@ -284,13 +261,10 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             className="w-full"
                             placeholder="MM/DD/YYYY"
                             value={typeof value === "string" ? value : undefined}
+                            defaultValue={typeof defaultValue === "string" ? defaultValue : undefined}
+                            resettable={typeof defaultValue === "string"}
                             onValueChange={onChange}
                             disabled={disabled}
-                            rightElement={withDefaultValue(
-                                value,
-                                typeof defaultValue === "string" ? defaultValue : undefined,
-                                onChange,
-                            )}
                         />
                     </WithLabel>
                 ),
@@ -300,9 +274,10 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             id={id}
                             className="w-full"
                             value={typeof value === "string" ? value : ""}
+                            defaultValue={typeof defaultValue === "string" ? defaultValue : undefined}
+                            // resettable={typeof defaultValue === "string"}
                             onValueChange={onChange}
                             disabled={disabled}
-                            // TODO: render reset button
                         />
                     </WithLabel>
                 ),
@@ -370,15 +345,3 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
 });
 
 PlaygroundTypeReferenceForm.displayName = "PlaygroundTypeReferenceForm";
-
-function withDefaultValue<T>(value: T, defaultValue: T | undefined, onChange: (value: T | undefined) => void) {
-    if (defaultValue == null || value === defaultValue) {
-        return undefined;
-    }
-
-    return (
-        <FernButton variant="minimal" size="small" onClick={() => onChange(defaultValue)}>
-            <Undo className="size-4" />
-        </FernButton>
-    );
-}
