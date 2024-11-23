@@ -5,7 +5,7 @@ import { cn } from "./cn";
 
 const buttonVariants = cva(
     cn(
-        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors",
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors hover:transition-none",
         "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
         "disabled:pointer-events-none disabled:opacity-50",
         "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
@@ -18,7 +18,7 @@ const buttonVariants = cva(
                 outline:
                     "border border-input bg-background shadow-sm hover:bg-[var(--grayscale-2)] hover:text-[var(--accent-12)]",
                 secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-                ghost: "hover:bg-[var(--accent-a3)] hover:text-[var(--accent-11)]",
+                ghost: "text-[var(--grayscale-11)] hover:bg-[var(--accent-a3)] hover:text-[var(--accent-11)]",
                 link: "text-primary underline-offset-4 hover:underline",
             },
             size: {
