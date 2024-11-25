@@ -1,6 +1,9 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../../BaseOpenApiV3_1Converter.node";
 
 export declare namespace BooleanConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
@@ -15,10 +18,13 @@ export declare namespace BooleanConverterNode {
     }
 }
 
-export class BooleanConverterNode extends BaseOpenApiV3_1Node<BooleanConverterNode.Input, BooleanConverterNode.Output> {
+export class BooleanConverterNode extends BaseOpenApiV3_1ConverterNode<
+    BooleanConverterNode.Input,
+    BooleanConverterNode.Output
+> {
     default: boolean | undefined;
 
-    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<BooleanConverterNode.Input>) {
+    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<BooleanConverterNode.Input>) {
         super(args);
         this.safeParse();
     }

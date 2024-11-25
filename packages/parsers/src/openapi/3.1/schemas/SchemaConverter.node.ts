@@ -1,7 +1,10 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../BaseOpenApiV3_1Converter.node";
 import { isArraySchema } from "../guards/isArraySchema";
 import { isBooleanSchema } from "../guards/isBooleanSchema";
 import { isIntegerSchema } from "../guards/isIntegerSchema";
@@ -27,16 +30,18 @@ export type PrimitiveType =
     | BooleanConverterNode.Input
     | StringConverterNode.Input;
 
-export class SchemaConverterNode extends BaseOpenApiV3_1Node<
+export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject,
     FdrAPI.api.latest.TypeShape | undefined
 > {
-    typeShapeNode: BaseOpenApiV3_1Node<unknown, FdrAPI.api.latest.TypeShape | undefined> | undefined;
+    typeShapeNode: BaseOpenApiV3_1ConverterNode<unknown, FdrAPI.api.latest.TypeShape | undefined> | undefined;
 
     description: string | undefined;
     name: string | undefined;
 
-    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>,
+    ) {
         super(args);
         this.safeParse();
     }

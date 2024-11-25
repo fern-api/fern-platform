@@ -1,7 +1,6 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMockContext } from "../../../../../__test__/createMockContext.util";
 import { OPENAPI_NUMBER_TYPE_FORMAT } from "../../../../types/format.types";
-import { NumberConverterNode } from "../../../schemas/primitives/NumberConverter.node";
+import { NumberConverterNode } from "../NumberConverter.node";
 
 describe("NumberConverterNode", () => {
     const mockContext = createMockContext();

@@ -2,7 +2,10 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import { FdrIntegerType } from "../../../../types/fdr.types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../../BaseOpenApiV3_1Converter.node";
 import { ConstArrayToType, OPENAPI_INTEGER_TYPE_FORMAT } from "../../../types/format.types";
 
 export declare namespace IntegerConverterNode {
@@ -22,13 +25,16 @@ function isOpenApiIntegerTypeFormat(format: unknown): format is ConstArrayToType
     return OPENAPI_INTEGER_TYPE_FORMAT.includes(format as ConstArrayToType<typeof OPENAPI_INTEGER_TYPE_FORMAT>);
 }
 
-export class IntegerConverterNode extends BaseOpenApiV3_1Node<IntegerConverterNode.Input, IntegerConverterNode.Output> {
+export class IntegerConverterNode extends BaseOpenApiV3_1ConverterNode<
+    IntegerConverterNode.Input,
+    IntegerConverterNode.Output
+> {
     format: ConstArrayToType<typeof OPENAPI_INTEGER_TYPE_FORMAT> | undefined;
     minimum: number | undefined;
     maximum: number | undefined;
     default: number | undefined;
 
-    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<IntegerConverterNode.Input>) {
+    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<IntegerConverterNode.Input>) {
         super(args);
         this.safeParse();
     }

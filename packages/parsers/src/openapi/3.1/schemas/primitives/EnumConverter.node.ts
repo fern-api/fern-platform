@@ -1,16 +1,19 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../../BaseOpenApiV3_1Converter.node";
 
-export class EnumConverterNode extends BaseOpenApiV3_1Node<
+export class EnumConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.NonArraySchemaObject,
     FdrAPI.api.latest.TypeShape.Enum
 > {
     default: string | undefined;
     values: string[] = [];
 
-    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.NonArraySchemaObject>) {
+    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.NonArraySchemaObject>) {
         super(args);
         this.safeParse();
     }

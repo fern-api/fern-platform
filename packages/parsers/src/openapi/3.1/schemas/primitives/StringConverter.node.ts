@@ -2,7 +2,10 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import { FdrStringType } from "../../../../types/fdr.types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../../BaseOpenApiV3_1Converter.node";
 import { ConstArrayToType, OPENAPI_STRING_TYPE_FORMAT } from "../../../types/format.types";
 import { EnumConverterNode } from "./EnumConverter.node";
 
@@ -23,7 +26,7 @@ function isOpenApiStringTypeFormat(format: unknown): format is ConstArrayToType<
     return OPENAPI_STRING_TYPE_FORMAT.includes(format as ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT>);
 }
 
-export class StringConverterNode extends BaseOpenApiV3_1Node<
+export class StringConverterNode extends BaseOpenApiV3_1ConverterNode<
     StringConverterNode.Input,
     StringConverterNode.Output | FdrAPI.api.latest.TypeShape.Enum
 > {
@@ -34,7 +37,7 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<
     maxLength: number | undefined;
     enum: EnumConverterNode | undefined;
 
-    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<StringConverterNode.Input>) {
+    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<StringConverterNode.Input>) {
         super(args);
         this.safeParse();
     }

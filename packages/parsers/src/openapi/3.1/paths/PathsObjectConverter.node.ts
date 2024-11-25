@@ -2,19 +2,22 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 } from "uuid";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
 import { PathItemObjectConverterNode } from "./PathItemObjectConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
-export class PathsObjectConverterNode extends BaseOpenApiV3_1Node<
+export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.PathsObject,
     Record<FdrAPI.EndpointId, FdrAPI.api.latest.EndpointDefinition>
 > {
     paths: PathItemObjectConverterNode[] | undefined;
 
     constructor(
-        args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.PathsObject>,
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.PathsObject>,
         protected readonly servers: ServerObjectConverterNode[] | undefined,
     ) {
         super(args);

@@ -1,5 +1,5 @@
 import { createMockContext } from "../../../../__test__/createMockContext.util";
-import { OneOfConverterNode } from "../../schemas/OneOfConverter.node";
+import { OneOfConverterNode } from "../OneOfConverter.node";
 
 describe("OneOfConverterNode", () => {
     const mockContext = createMockContext({

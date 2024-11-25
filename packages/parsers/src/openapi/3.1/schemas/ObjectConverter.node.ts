@@ -1,7 +1,10 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../BaseOpenApiV3_1Converter.node";
 import { getSchemaIdFromReference } from "../../utils/3.1/getSchemaIdFromReference";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { SchemaConverterNode } from "./SchemaConverter.node";
@@ -36,7 +39,7 @@ export function convertProperties(
         .filter(isNonNullish);
 }
 
-export class ObjectConverterNode extends BaseOpenApiV3_1Node<
+export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     ObjectConverterNode.Input,
     FdrAPI.api.latest.TypeShape.Object_
 > {
@@ -45,7 +48,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1Node<
     properties: Record<string, SchemaConverterNode> | undefined;
     extraProperties: string | SchemaConverterNode | undefined;
 
-    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<ObjectConverterNode.Input>) {
+    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<ObjectConverterNode.Input>) {
         super(args);
         this.safeParse();
     }

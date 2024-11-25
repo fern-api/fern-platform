@@ -1,16 +1,19 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../BaseOpenApiV3_1Converter.node";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
-export class ComponentsConverterNode extends BaseOpenApiV3_1Node<
+export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.ComponentsObject,
     FdrAPI.api.latest.ApiDefinition["types"]
 > {
     typeSchemas: Record<string, SchemaConverterNode> | undefined;
 
-    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.ComponentsObject>) {
+    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ComponentsObject>) {
         super(args);
         this.safeParse();
     }

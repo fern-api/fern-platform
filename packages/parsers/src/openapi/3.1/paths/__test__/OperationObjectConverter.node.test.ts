@@ -1,8 +1,7 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-import { describe, expect, it } from "vitest";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
-import { OperationObjectConverterNode } from "../../paths/OperationObjectConverter.node";
+import { OperationObjectConverterNode } from "../OperationObjectConverter.node";
 
 describe("OperationObjectConverterNode", () => {
     const mockContext = createMockContext();

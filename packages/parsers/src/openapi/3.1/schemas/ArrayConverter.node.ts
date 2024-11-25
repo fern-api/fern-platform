@@ -1,6 +1,9 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../BaseOpenApiV3_1Converter.node";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export declare namespace ArrayConverterNode {
@@ -13,13 +16,13 @@ export declare namespace ArrayConverterNode {
     }
 }
 
-export class ArrayConverterNode extends BaseOpenApiV3_1Node<
+export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNode<
     ArrayConverterNode.Input,
     ArrayConverterNode.Output | undefined
 > {
     item: SchemaConverterNode | undefined;
 
-    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<ArrayConverterNode.Input>) {
+    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<ArrayConverterNode.Input>) {
         super(args);
         this.safeParse();
     }
