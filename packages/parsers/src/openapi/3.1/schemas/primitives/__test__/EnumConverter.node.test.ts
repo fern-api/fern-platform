@@ -1,7 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
-import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMockContext } from "../../../../../__test__/createMockContext.util";
-import { EnumConverterNode } from "../../../schemas/primitives/EnumConverter.node";
+import { EnumConverterNode } from "../EnumConverter.node";
 
 describe("EnumConverterNode", () => {
     const mockContext = createMockContext();

@@ -1,6 +1,5 @@
-import { describe, expect, it } from "vitest";
 import { createMockContext } from "../../../../../__test__/createMockContext.util";
-import { NullConverterNode } from "../../../schemas/primitives/NullConverter.node";
+import { NullConverterNode } from "../NullConverter.node";
 
 describe("NullConverterNode", () => {
     const mockContext = createMockContext();

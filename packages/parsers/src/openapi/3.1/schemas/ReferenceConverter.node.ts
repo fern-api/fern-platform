@@ -1,15 +1,18 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../BaseOpenApiV3_1Converter.node";
 import { getSchemaIdFromReference } from "../../utils/3.1/getSchemaIdFromReference";
 
-export class ReferenceConverterNode extends BaseOpenApiV3_1Node<
+export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.ReferenceObject,
     FdrAPI.api.latest.TypeShape.Alias
 > {
     schemaId: string | undefined;
 
-    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.ReferenceObject>) {
+    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ReferenceObject>) {
         super(args);
         this.safeParse();
     }

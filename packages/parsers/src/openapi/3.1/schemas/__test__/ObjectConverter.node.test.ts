@@ -1,7 +1,6 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
-import { ObjectConverterNode } from "../../schemas/ObjectConverter.node";
-import { SchemaConverterNode } from "../../schemas/SchemaConverter.node";
+import { ObjectConverterNode } from "../ObjectConverter.node";
+import { SchemaConverterNode } from "../SchemaConverter.node";
 
 describe("ObjectConverterNode", () => {
     const mockContext = createMockContext();
