@@ -137,8 +137,10 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     clientCredentials: (clientCredentialsValue) =>
                         visitDiscriminatedUnion(clientCredentialsValue.value, "type")._visit({
                             referencedEndpoint: () => ({
-                                key: ApiDefinition.PropertyKey("Authorization"),
-                                description: "OAuth authentication of the form Bearer <token>.",
+                                key: ApiDefinition.PropertyKey(
+                                    clientCredentialsValue.value.headerName || "Authorization",
+                                ),
+                                description: `OAuth authentication of the form ${clientCredentialsValue.value.tokenPrefix ? `${clientCredentialsValue.value.tokenPrefix ?? "Bearer"} ` : ""}<token>.`,
                                 hidden: false,
                                 valueShape: stringShape,
                                 availability: undefined,

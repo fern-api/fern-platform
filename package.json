@@ -93,6 +93,7 @@
   },
   "resolutions": {
     "cookie": "0.7.0",
+    "cross-spawn": "7.0.5",
     "micromatch": "4.0.8",
     "postcss": "8.4.31",
     "esbuild": "0.20.2",

@@ -170,10 +170,20 @@ function getAuthorizationUrl(authConfig: AuthEdgeConfig, host: string, pathname?
     const state = urlJoin(removeTrailingSlash(withDefaultProtocol(host)), pathname ?? "");
 
     if (authConfig.type === "basic_token_verification") {
-        const redirectUri = urlJoin(removeTrailingSlash(withDefaultProtocol(host)), "/api/fern-docs/auth/jwt/callback");
         const destination = new URL(authConfig.redirect);
-        destination.searchParams.set("redirect_uri", redirectUri);
-        destination.searchParams.set(getReturnToQueryParam(authConfig), state);
+
+        // note: `redirect` is allowed to override the default redirect uri, and the `return_to` param
+        if (!destination.searchParams.has("redirect_uri")) {
+            const redirectUri = urlJoin(
+                removeTrailingSlash(withDefaultProtocol(host)),
+                "/api/fern-docs/auth/jwt/callback",
+            );
+
+            destination.searchParams.set("redirect_uri", redirectUri);
+        }
+        if (!destination.searchParams.has(getReturnToQueryParam(authConfig))) {
+            destination.searchParams.set(getReturnToQueryParam(authConfig), state);
+        }
         return destination.toString();
     } else if (authConfig.type === "sso" && authConfig.partner === "workos") {
         const redirectUri = urlJoin(removeTrailingSlash(withDefaultProtocol(host)), "/api/fern-docs/auth/sso/callback");

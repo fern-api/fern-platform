@@ -1,9 +1,15 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernInput } from "@fern-ui/components";
 import { User } from "iconoir-react";
-import { useAtom } from "jotai/react";
-import { ReactElement, useCallback } from "react";
-import { PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM } from "../../atoms";
+import { useAtom, useAtomValue } from "jotai/react";
+import { RESET } from "jotai/utils";
+import { ReactElement } from "react";
+import {
+    PLAYGROUND_AUTH_STATE_BASIC_AUTH_PASSWORD_ATOM,
+    PLAYGROUND_AUTH_STATE_BASIC_AUTH_PASSWORD_IS_RESETTABLE_ATOM,
+    PLAYGROUND_AUTH_STATE_BASIC_AUTH_USERNAME_ATOM,
+    PLAYGROUND_AUTH_STATE_BASIC_AUTH_USERNAME_IS_RESETTABLE_ATOM,
+} from "../../atoms";
 import { PasswordInputGroup } from "../PasswordInputGroup";
 
 export function PlaygroundBasicAuthForm({
@@ -13,15 +19,10 @@ export function PlaygroundBasicAuthForm({
     basicAuth: APIV1Read.BasicAuth;
     disabled?: boolean;
 }): ReactElement {
-    const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM);
-    const handleChangeUsername = useCallback(
-        (newValue: string) => setValue((prev) => ({ ...prev, username: newValue })),
-        [setValue],
-    );
-    const handleChangePassword = useCallback(
-        (newValue: string) => setValue((prev) => ({ ...prev, password: newValue })),
-        [setValue],
-    );
+    const [username, setUsername] = useAtom(PLAYGROUND_AUTH_STATE_BASIC_AUTH_USERNAME_ATOM);
+    const [password, setPassword] = useAtom(PLAYGROUND_AUTH_STATE_BASIC_AUTH_PASSWORD_ATOM);
+    const isUsernameResettable = useAtomValue(PLAYGROUND_AUTH_STATE_BASIC_AUTH_USERNAME_IS_RESETTABLE_ATOM);
+    const isPasswordResettable = useAtomValue(PLAYGROUND_AUTH_STATE_BASIC_AUTH_PASSWORD_IS_RESETTABLE_ATOM);
     return (
         <>
             <li className="-mx-4 space-y-2 p-4">
@@ -30,11 +31,13 @@ export function PlaygroundBasicAuthForm({
                 </label>
                 <div>
                     <FernInput
-                        onValueChange={handleChangeUsername}
-                        value={value.username}
+                        onValueChange={setUsername}
+                        value={username}
                         leftIcon={<User className="size-icon" />}
                         rightElement={<span className="t-muted text-xs">{"string"}</span>}
                         disabled={disabled}
+                        resettable={isUsernameResettable}
+                        onClickReset={() => setUsername(RESET)}
                     />
                 </div>
             </li>
@@ -46,9 +49,11 @@ export function PlaygroundBasicAuthForm({
 
                 <div>
                     <PasswordInputGroup
-                        onValueChange={handleChangePassword}
-                        value={value.password}
+                        onValueChange={setPassword}
+                        value={password}
                         disabled={disabled}
+                        resettable={isPasswordResettable}
+                        onClickReset={() => setPassword(RESET)}
                     />
                 </div>
             </li>
