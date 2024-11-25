@@ -90,11 +90,17 @@ describe("StringConverterNode", () => {
             };
             const node = new StringConverterNode(input, mockContext, [], "test");
             expect(node.convert()).toEqual({
-                type: "uuid",
-                regex: undefined,
-                minLength: undefined,
-                maxLength: undefined,
-                default: "test-default",
+                type: "alias",
+                value: {
+                    type: "primitive",
+                    value: {
+                        type: "uuid",
+                        regex: undefined,
+                        minLength: undefined,
+                        maxLength: undefined,
+                        default: "test-default",
+                    },
+                },
             });
         });
     });

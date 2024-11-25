@@ -3,9 +3,9 @@ import yaml from "js-yaml";
 import { OpenAPIV3_1 } from "openapi-types";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
-import { BaseAPIConverterNodeContext } from "../BaseApiConverter.node";
 import { ErrorCollector } from "../ErrorCollector";
 import { ComponentsConverterNode } from "../openapi/3.1/schemas/ComponentsConverter.node";
+import { BaseOpenApiV3_1ConverterNodeContext } from "../openapi/BaseOpenApiV3_1Converter.node";
 
 describe("OpenAPI snapshot tests", () => {
     const fixturesDir = path.join(__dirname, "fixtures");
@@ -19,7 +19,8 @@ describe("OpenAPI snapshot tests", () => {
             const parsed = yaml.load(fileContents) as OpenAPIV3_1.Document;
 
             // Create converter context
-            const context: BaseAPIConverterNodeContext = {
+            const context: BaseOpenApiV3_1ConverterNodeContext = {
+                document: parsed,
                 logger: {
                     info: () => undefined,
                     warn: () => undefined,

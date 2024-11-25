@@ -1,12 +1,16 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseAPIConverterNodeContext } from "../../../BaseApiConverter.node";
-import { BaseOpenApiV3_1Node } from "../../BaseOpenApiV3_1Converter.node";
+import { UnreachableCaseError } from "ts-essentials";
+import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
 import { isReferenceObject } from "../guards/isReferenceObject";
+import { ArrayConverterNode } from "./ArrayConverter.node";
 import { BooleanConverterNode } from "./BooleanConverter.node";
+import { EnumConverterNode } from "./EnumConverter.node";
 import { IntegerConverterNode } from "./IntegerConverter.node";
+import { NullConverterNode } from "./NullConverter.node";
 import { NumberConverterNode } from "./NumberConverter.node";
 import { ObjectConverterNode } from "./ObjectConverter.node";
+import { OneOfConverterNode } from "./OneOfConverter.node";
 import { ReferenceConverterNode } from "./ReferenceConverter.node";
 import { StringConverterNode } from "./StringConverter.node";
 
@@ -20,114 +24,109 @@ export class SchemaConverterNode extends BaseOpenApiV3_1Node<
     OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject,
     FdrAPI.api.latest.TypeShape | undefined
 > {
-    typeShapeNode: { convert: () => FdrAPI.api.latest.TypeShape | undefined } | undefined;
+    typeShapeNode: BaseOpenApiV3_1Node<unknown, FdrAPI.api.latest.TypeShape | undefined> | undefined;
+
     description: string | undefined;
     name: string | undefined;
 
-    convertPrimitive(input: BaseOpenApiV3_1Node<PrimitiveType, FdrAPI.api.latest.PrimitiveType | undefined>): {
-        convert: () => FdrAPI.api.latest.TypeShape.Alias | undefined;
-    } {
-        return {
-            convert: () => {
-                const convertedShape = input.convert();
-                if (convertedShape == null) {
-                    return undefined;
-                }
-                return {
-                    type: "alias",
-                    value: {
-                        type: "primitive",
-                        value: convertedShape,
-                    },
-                };
-            },
-        };
+    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>) {
+        super(...args);
+        this.safeParse();
     }
 
-    constructor(
-        input: OpenAPIV3_1.SchemaObject,
-        context: BaseAPIConverterNodeContext,
-        accessPath: string[],
-        pathId: string,
-    ) {
-        super(input, context, accessPath, pathId);
+    parse(): void {
+        // Check if the input is a reference object
+        if (isReferenceObject(this.input)) {
+            this.typeShapeNode = new ReferenceConverterNode(this.input, this.context, this.accessPath, this.pathId);
+        } else {
+            // If the object is not a reference object, then it is a schema object, gather all appropriate variables
+            this.name = this.input.title;
 
-        // if (input.anyOf != null) {
-        //     this.typeNode = new AnyOfConverterNode(input, this.context, this.accessPath);
-        //     break;
-        // } else if (input.oneOf != null) {
-        //     this.typeNode = new OneOfConverterNode(input, this.context, this.accessPath);
-        //     break;
-        // } else if (input.allOf != null) {
-        //     this.typeNode = new AllOfConverterNode(input, this.context, this.accessPath);
-        //     break;
-        // }
-        if (isReferenceObject(input)) {
-            this.typeShapeNode = new ReferenceConverterNode(input, this.context, this.accessPath, pathId);
-        } else if (typeof input.type === "string") {
-            switch (input.type) {
-                case "object":
-                    this.typeShapeNode = new ObjectConverterNode(
-                        input as ObjectConverterNode.Input,
+            // We assume that if one of is defined, it is an object node
+            if (typeof this.input.type === "string") {
+                if (this.input.type === "object" && this.input.oneOf != null) {
+                    this.typeShapeNode = new OneOfConverterNode(
+                        this.input as OneOfConverterNode.Input,
                         this.context,
                         this.accessPath,
-                        pathId,
+                        this.pathId,
                     );
-                    break;
-                // case "array":
-                //     this.typeNode = new ArrayConverterNode(input, this.context, this.accessPath, pathId);
-                //     break;
-                case "boolean":
-                    this.typeShapeNode = this.convertPrimitive(
-                        new BooleanConverterNode(
-                            input as BooleanConverterNode.Input,
-                            this.context,
-                            this.accessPath,
-                            pathId,
-                        ),
-                    );
-                    break;
-                case "integer":
-                    this.typeShapeNode = this.convertPrimitive(
-                        new IntegerConverterNode(
-                            input as IntegerConverterNode.Input,
-                            this.context,
-                            this.accessPath,
-                            pathId,
-                        ),
-                    );
-                    break;
-                case "number":
-                    this.typeShapeNode = this.convertPrimitive(
-                        new NumberConverterNode(
-                            input as NumberConverterNode.Input,
-                            this.context,
-                            this.accessPath,
-                            pathId,
-                        ),
-                    );
-                    break;
-                case "string":
-                    this.typeShapeNode = this.convertPrimitive(
-                        new StringConverterNode(
-                            input as StringConverterNode.Input,
-                            this.context,
-                            this.accessPath,
-                            pathId,
-                        ),
-                    );
-                    break;
-                // case "null":
-                //     this.typeNode = new NullConverterNode(input, this.context, this.accessPath, pathId);
-                //     break;
-                default:
-                    // new UnreachableCaseError(input);
-                    break;
+                } else if (this.input.type !== "array" && this.input.enum != null) {
+                    this.typeShapeNode = new EnumConverterNode(this.input, this.context, this.accessPath, this.pathId);
+                } else {
+                    switch (this.input.type) {
+                        case "object":
+                            this.typeShapeNode = new ObjectConverterNode(
+                                this.input as ObjectConverterNode.Input,
+                                this.context,
+                                this.accessPath,
+                                this.pathId,
+                            );
+                            break;
+                        case "array":
+                            this.typeShapeNode = new ArrayConverterNode(
+                                this.input as ArrayConverterNode.Input,
+                                this.context,
+                                this.accessPath,
+                                this.pathId,
+                            );
+                            break;
+                        case "boolean":
+                            this.typeShapeNode = new BooleanConverterNode(
+                                this.input as BooleanConverterNode.Input,
+                                this.context,
+                                this.accessPath,
+                                this.pathId,
+                            );
+                            break;
+                        case "integer":
+                            this.typeShapeNode = new IntegerConverterNode(
+                                this.input as IntegerConverterNode.Input,
+                                this.context,
+                                this.accessPath,
+                                this.pathId,
+                            );
+                            break;
+                        case "number":
+                            this.typeShapeNode = new NumberConverterNode(
+                                this.input as NumberConverterNode.Input,
+                                this.context,
+                                this.accessPath,
+                                this.pathId,
+                            );
+                            break;
+                        case "string":
+                            this.typeShapeNode = new StringConverterNode(
+                                this.input as StringConverterNode.Input,
+                                this.context,
+                                this.accessPath,
+                                this.pathId,
+                            );
+                            break;
+                        case "null":
+                            this.typeShapeNode = new NullConverterNode(
+                                this.input as NullConverterNode.Input,
+                                this.context,
+                                this.accessPath,
+                                this.pathId,
+                            );
+                            break;
+                        default:
+                            new UnreachableCaseError(this.input.type);
+                            break;
+                    }
+                }
             }
         }
 
-        this.description = input.description;
-        this.name = input.title;
+        this.description = this.input.description;
+
+        if (this.typeShapeNode == null) {
+            this.context.errors.error({
+                message: "No type shape node found",
+                path: this.accessPath,
+            });
+        }
     }
 
     convert(): FdrAPI.api.latest.TypeShape | undefined {

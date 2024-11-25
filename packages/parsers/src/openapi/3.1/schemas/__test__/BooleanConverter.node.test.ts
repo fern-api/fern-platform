@@ -49,8 +49,14 @@ describe("BooleanConverterNode", () => {
             };
             const node = new BooleanConverterNode(input, mockContext, [], "test");
             expect(node.convert()).toEqual({
-                type: "boolean",
-                default: undefined,
+                type: "alias",
+                value: {
+                    type: "primitive",
+                    value: {
+                        type: "boolean",
+                        default: undefined,
+                    },
+                },
             });
         });
 
@@ -61,8 +67,14 @@ describe("BooleanConverterNode", () => {
             };
             const node = new BooleanConverterNode(input, mockContext, [], "test");
             expect(node.convert()).toEqual({
-                type: "boolean",
-                default: false,
+                type: "alias",
+                value: {
+                    type: "primitive",
+                    value: {
+                        type: "boolean",
+                        default: false,
+                    },
+                },
             });
         });
     });
