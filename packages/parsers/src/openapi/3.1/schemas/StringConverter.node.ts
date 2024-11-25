@@ -27,7 +27,7 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<
     StringConverterNode.Input,
     StringConverterNode.Output | FdrAPI.api.latest.TypeShape.Enum
 > {
-    type: FdrStringType["type"] = "string";
+    format: ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT> | undefined;
     regex: string | undefined;
     default: string | undefined;
     minLength: number | undefined;
@@ -84,12 +84,6 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<
             case undefined:
                 return "string";
             default:
-                this.context.errors.warning({
-                    message:
-                        "The format for an string type should be one of the following: " +
-                        OPENAPI_STRING_TYPE_FORMAT.join(", "),
-                    path: this.accessPath,
-                });
                 new UnreachableCaseError(format);
                 return "string";
         }
@@ -104,8 +98,17 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<
         }
         this.default = this.input.default;
 
-        if (this.input.format != null && isOpenApiStringTypeFormat(this.input.format)) {
-            this.type = this.mapToFdrType(this.input.format);
+        if (this.input.format != null) {
+            if (!isOpenApiStringTypeFormat(this.input.format)) {
+                this.context.errors.warning({
+                    message:
+                        "The format for an string type should be one of the following: " +
+                        OPENAPI_STRING_TYPE_FORMAT.join(", "),
+                    path: this.accessPath,
+                });
+            } else {
+                this.format = this.input.format;
+            }
         }
 
         if (this.input.enum != null) {
@@ -122,12 +125,18 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<
         if (this.enum != null) {
             return this.enum.convert();
         }
+
+        let type: FdrStringType["type"] = "string";
+        if (this.format != null) {
+            type = this.mapToFdrType(this.format);
+        }
+
         return {
             type: "alias",
             value: {
                 type: "primitive",
                 value: {
-                    type: this.type,
+                    type,
                     regex: this.regex,
                     minLength: this.minLength,
                     maxLength: this.maxLength,

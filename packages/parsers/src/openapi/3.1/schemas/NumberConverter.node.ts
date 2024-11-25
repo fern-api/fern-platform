@@ -23,7 +23,7 @@ function isOpenApiNumberTypeFormat(format: unknown): format is ConstArrayToType<
 }
 
 export class NumberConverterNode extends BaseOpenApiV3_1Node<NumberConverterNode.Input, NumberConverterNode.Output> {
-    type: FdrNumberType["type"] = "double";
+    format: ConstArrayToType<typeof OPENAPI_NUMBER_TYPE_FORMAT> | undefined;
     minimum: number | undefined;
     maximum: number | undefined;
     default: number | undefined;
@@ -51,30 +51,35 @@ export class NumberConverterNode extends BaseOpenApiV3_1Node<NumberConverterNode
                     path: this.accessPath,
                 });
             } else {
-                switch (this.input.format) {
-                    case "decimal":
-                    case "decimal128":
-                    case "double-int":
-                    case "double":
-                    case "float":
-                    case "sf-decimal":
-                    case undefined:
-                        this.type = "double";
-                        break;
-                    default:
-                        new UnreachableCaseError(this.input.format);
-                }
+                this.format = this.input.format;
             }
         }
     }
 
     convert(): NumberConverterNode.Output | undefined {
+        let type: FdrNumberType["type"] = "double";
+        if (this.format != null) {
+            switch (this.format) {
+                case "decimal":
+                case "decimal128":
+                case "double-int":
+                case "double":
+                case "float":
+                case "sf-decimal":
+                case undefined:
+                    type = "double";
+                    break;
+                default:
+                    new UnreachableCaseError(this.format);
+                    break;
+            }
+        }
         return {
             type: "alias",
             value: {
                 type: "primitive",
                 value: {
-                    type: this.type,
+                    type,
                     minimum: this.minimum,
                     maximum: this.maximum,
                     default: this.default,

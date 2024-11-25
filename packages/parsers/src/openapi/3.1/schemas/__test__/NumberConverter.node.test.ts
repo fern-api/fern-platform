@@ -10,22 +10,6 @@ describe("NumberConverterNode", () => {
     });
 
     describe("constructor", () => {
-        it("should handle number schema with no properties", () => {
-            const input: NumberConverterNode.Input = {
-                type: "number",
-            };
-            const node = new NumberConverterNode({
-                input,
-                context: mockContext,
-                accessPath: [],
-                pathId: "test",
-            });
-            expect(node.type).toBe("double");
-            expect(node.minimum).toBeUndefined();
-            expect(node.maximum).toBeUndefined();
-            expect(node.default).toBeUndefined();
-        });
-
         it("should handle number schema with min/max", () => {
             const input: NumberConverterNode.Input = {
                 type: "number",
@@ -76,20 +60,6 @@ describe("NumberConverterNode", () => {
         });
 
         describe("format handling", () => {
-            it("should handle decimal format", () => {
-                const input: NumberConverterNode.Input = {
-                    type: "number",
-                    format: "decimal",
-                };
-                const node = new NumberConverterNode({
-                    input,
-                    context: mockContext,
-                    accessPath: [],
-                    pathId: "test",
-                });
-                expect(node.type).toBe("double");
-            });
-
             it("should warn for invalid format", () => {
                 const input: NumberConverterNode.Input = {
                     type: "number",

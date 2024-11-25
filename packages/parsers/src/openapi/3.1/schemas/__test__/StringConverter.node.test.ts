@@ -6,17 +6,6 @@ describe("StringConverterNode", () => {
     const mockContext = createMockContext();
 
     describe("constructor", () => {
-        it("should initialize with default string type", () => {
-            const input: StringConverterNode.Input = { type: "string" };
-            const node = new StringConverterNode({
-                input,
-                context: mockContext,
-                accessPath: [],
-                pathId: "test",
-            });
-            expect(node.type).toBe("string");
-        });
-
         it("should handle default value", () => {
             const input: StringConverterNode.Input = {
                 type: "string",
@@ -50,62 +39,6 @@ describe("StringConverterNode", () => {
     });
 
     describe("mapToFdrType", () => {
-        it("should map base64 formats correctly", () => {
-            const input: StringConverterNode.Input = {
-                type: "string",
-                format: "base64url",
-            };
-            const node = new StringConverterNode({
-                input,
-                context: mockContext,
-                accessPath: [],
-                pathId: "test",
-            });
-            expect(node.type).toBe("base64");
-        });
-
-        it("should map date-time format correctly", () => {
-            const input: StringConverterNode.Input = {
-                type: "string",
-                format: "date-time",
-            };
-            const node = new StringConverterNode({
-                input,
-                context: mockContext,
-                accessPath: [],
-                pathId: "test",
-            });
-            expect(node.type).toBe("datetime");
-        });
-
-        it("should map uuid format correctly", () => {
-            const input: StringConverterNode.Input = {
-                type: "string",
-                format: "uuid",
-            };
-            const node = new StringConverterNode({
-                input,
-                context: mockContext,
-                accessPath: [],
-                pathId: "test",
-            });
-            expect(node.type).toBe("uuid");
-        });
-
-        it("should default to string for standard string formats", () => {
-            const input: StringConverterNode.Input = {
-                type: "string",
-                format: "email",
-            };
-            const node = new StringConverterNode({
-                input,
-                context: mockContext,
-                accessPath: [],
-                pathId: "test",
-            });
-            expect(node.type).toBe("string");
-        });
-
         it("should warn on invalid format", () => {
             const input = {
                 type: "string",

@@ -22,7 +22,7 @@ export abstract class BaseOpenApiV3_1Node<Input, Output> extends BaseAPIConverte
         super(input, context);
 
         this.context = context;
-        this.accessPath = accessPath;
+        this.accessPath = [...accessPath];
         this.pathId = pathId;
 
         if (this.pathId && this.pathId !== this.accessPath[this.accessPath.length - 1]) {

@@ -1,10 +1,10 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-import { v4 } from "uuid";
 import { isNonNullish } from "../../../../../commons/core-utils/src/isNonNullish";
 import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
 import { isReferenceObject } from "../guards/isReferenceObject";
+import { convertProperties } from "./ObjectConverter.node";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
@@ -13,6 +13,9 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1Node<
     FdrAPI.api.latest.EndpointDefinition
 > {
     description: string | undefined;
+    pathParameters: Record<string, SchemaConverterNode> | undefined;
+    queryParameters: Record<string, SchemaConverterNode> | undefined;
+    requestHeaders: Record<string, SchemaConverterNode> | undefined;
     // availability: AvailabilityConverterNode | undefined;
 
     constructor(
@@ -31,27 +34,43 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1Node<
 
         this.input.parameters?.map((parameter, index) => {
             if (isReferenceObject(parameter)) {
-                return new SchemaConverterNode({
-                    input: parameter,
-                    context: this.context,
-                    accessPath: this.accessPath,
-                    pathId: `parameters[${index}]`,
-                });
-            } else if (parameter.in === "path") {
-                // return new SchemaConverterNode({
-                //     input: {
-                //         type: "object",
-                //         ...parameter,
-                //     },
+                // return new ParameterReferenceConverterNode({
+                //     input: parameter,
                 //     context: this.context,
                 //     accessPath: this.accessPath,
                 //     pathId: `parameters[${index}]`,
                 // });
+            } else if (parameter.in === "path") {
+                if (parameter.schema != null) {
+                    this.pathParameters ??= {};
+                    this.pathParameters[parameter.name] = new SchemaConverterNode({
+                        input: parameter.schema,
+                        context: this.context,
+                        accessPath: this.accessPath,
+                        pathId: `parameters[${index}]`,
+                    });
+                }
                 // this.pathParameters.push(parameter.name);
             } else if (parameter.in === "query") {
-                // this.queryParameters.push(parameter.name);
+                if (parameter.schema != null) {
+                    this.queryParameters ??= {};
+                    this.queryParameters[parameter.name] = new SchemaConverterNode({
+                        input: parameter.schema,
+                        context: this.context,
+                        accessPath: this.accessPath,
+                        pathId: `parameters[${index}]`,
+                    });
+                }
             } else if (parameter.in === "header") {
-                // this.requestHeaders.push(parameter.name);
+                if (parameter.schema != null) {
+                    this.requestHeaders ??= {};
+                    this.requestHeaders[parameter.name] = new SchemaConverterNode({
+                        input: parameter.schema,
+                        context: this.context,
+                        accessPath: this.accessPath,
+                        pathId: `parameters[${index}]`,
+                    });
+                }
             }
         });
         // validate path parts
@@ -76,8 +95,12 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1Node<
         });
     }
 
-    public convert(): FdrAPI.api.latest.EndpointDefinition | undefined {
-        const endpointId = v4();
+    convert(): FdrAPI.api.latest.EndpointDefinition | undefined {
+        if (this.path == null) {
+            return undefined;
+        }
+
+        const endpointId = this.path;
 
         const environments = this.servers?.map((server) => server.convert()).filter(isNonNullish);
         const pathParts = this.convertPathToPathParts();
@@ -98,9 +121,9 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1Node<
             // TODO: environments
             defaultEnvironment: environments?.[0]?.id,
             environments,
-            pathParameters: [],
-            queryParameters: [],
-            requestHeaders: [],
+            pathParameters: convertProperties(this.pathParameters),
+            queryParameters: convertProperties(this.queryParameters),
+            requestHeaders: convertProperties(this.requestHeaders),
             responseHeaders: [],
             request: undefined,
             response: undefined,

@@ -12,6 +12,30 @@ export declare namespace ObjectConverterNode {
     }
 }
 
+export function convertProperties(
+    properties: Record<string, SchemaConverterNode> | undefined,
+): FdrAPI.api.latest.ObjectProperty[] | undefined {
+    if (properties == null) {
+        return undefined;
+    }
+
+    return Object.entries(properties)
+        .map(([key, node]) => {
+            const convertedShape = node.convert();
+            if (convertedShape == null) {
+                return undefined;
+            }
+            return {
+                key: FdrAPI.PropertyKey(key),
+                valueShape: convertedShape,
+                description: node.description,
+                // use Availability extension here
+                availability: undefined,
+            };
+        })
+        .filter(isNonNullish);
+}
+
 export class ObjectConverterNode extends BaseOpenApiV3_1Node<
     ObjectConverterNode.Input,
     FdrAPI.api.latest.TypeShape.Object_
@@ -90,28 +114,6 @@ export class ObjectConverterNode extends BaseOpenApiV3_1Node<
         this.description = this.input.description;
     }
 
-    convertProperties(): FdrAPI.api.latest.ObjectProperty[] | undefined {
-        if (this.properties == null) {
-            return undefined;
-        }
-
-        return Object.entries(this.properties)
-            .map(([key, node]) => {
-                const convertedShape = node.convert();
-                if (convertedShape == null) {
-                    return undefined;
-                }
-                return {
-                    key: FdrAPI.PropertyKey(key),
-                    valueShape: convertedShape,
-                    description: node.description,
-                    // use Availability extension here
-                    availability: undefined,
-                };
-            })
-            .filter(isNonNullish);
-    }
-
     convertExtraProperties(): FdrAPI.api.latest.TypeReference | undefined {
         if (this.extraProperties == null) {
             return undefined;
@@ -134,7 +136,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1Node<
     }
 
     convert(): FdrAPI.api.latest.TypeShape.Object_ | undefined {
-        const properties = this.convertProperties();
+        const properties = convertProperties(this.properties);
         if (properties == null) {
             return undefined;
         }

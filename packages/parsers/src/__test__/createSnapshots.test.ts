@@ -4,7 +4,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
 import { ErrorCollector } from "../ErrorCollector";
-import { ComponentsConverterNode } from "../openapi/3.1/schemas/ComponentsConverter.node";
+import { OpenApiConverterNode } from "../openapi/3.1/schemas/OpenApiConverter.node";
 import { BaseOpenApiV3_1ConverterNodeContext } from "../openapi/BaseOpenApiV3_1Converter.node";
 
 describe("OpenAPI snapshot tests", () => {
@@ -39,7 +39,12 @@ describe("OpenAPI snapshot tests", () => {
             expect(parsed.components?.schemas).toBeDefined();
 
             if (parsed.components?.schemas) {
-                const converter = new ComponentsConverterNode(parsed.components, context, [], "test");
+                const converter = new OpenApiConverterNode({
+                    input: parsed,
+                    context,
+                    accessPath: [],
+                    pathId: "test",
+                });
                 errors.push(...converter.errors());
                 warnings.push(...converter.warnings());
                 converted = converter.convert();
@@ -49,8 +54,10 @@ describe("OpenAPI snapshot tests", () => {
             expect(errors).toHaveLength(0);
             if (warnings.length > 0) {
                 // eslint-disable-next-line no-console
-                console.warn(warnings);
+                console.warn("warnings:", warnings);
             }
+            // @ts-expect-error id is not part of the expected output
+            converted.id = "test-uuid-replacement";
             await expect(JSON.stringify(converted, null, 2)).toMatchFileSnapshot(
                 `./__snapshots__/openapi/${directory}.json`,
             );

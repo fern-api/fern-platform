@@ -37,7 +37,7 @@ describe("ArrayConverterNode", () => {
                 pathId: "test",
             });
             expect(mockContext.errors.error).toHaveBeenCalledWith({
-                message: "No items found in array",
+                message: "Error converting node. Please contact support if the error persists.",
                 path: ["test", "items"],
             });
         });
