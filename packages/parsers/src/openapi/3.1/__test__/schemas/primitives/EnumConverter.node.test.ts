@@ -1,7 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { createMockContext } from "../../../../__test__/createMockContext.util";
-import { EnumConverterNode } from "../EnumConverter.node";
+import { createMockContext } from "../../../../../__test__/createMockContext.util";
+import { EnumConverterNode } from "../../../schemas/primitives/EnumConverter.node";
 
 describe("EnumConverterNode", () => {
     const mockContext = createMockContext();
@@ -15,7 +15,12 @@ describe("EnumConverterNode", () => {
             const input: OpenAPIV3_1.NonArraySchemaObject = {
                 type: "object",
             };
-            const node = new EnumConverterNode(input, mockContext, [], "test");
+            const node = new EnumConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.values).toEqual([]);
             expect(node.default).toBeUndefined();
         });
@@ -25,7 +30,12 @@ describe("EnumConverterNode", () => {
                 type: "object",
                 enum: ["ONE", "TWO", "THREE"],
             };
-            const node = new EnumConverterNode(input, mockContext, [], "test");
+            const node = new EnumConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.values).toEqual(["ONE", "TWO", "THREE"]);
         });
 
@@ -34,7 +44,12 @@ describe("EnumConverterNode", () => {
                 type: "object",
                 enum: ["ONE", "TWO", "ONE", "THREE"],
             };
-            const node = new EnumConverterNode(input, mockContext, [], "test");
+            const node = new EnumConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.values).toEqual(["ONE", "TWO", "THREE"]);
         });
 
@@ -44,10 +59,15 @@ describe("EnumConverterNode", () => {
                 enum: ["ONE", 2, "THREE"],
             } as OpenAPIV3_1.NonArraySchemaObject;
 
-            new EnumConverterNode(input, mockContext, [], "test");
+            new EnumConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
 
             expect(mockContext.errors.error).toHaveBeenCalledWith({
-                message: "The values in an enum type should be strings",
+                message: "Expected enum values to be strings. Received 2",
                 path: ["test"],
             });
         });
@@ -60,7 +80,12 @@ describe("EnumConverterNode", () => {
                 enum: ["ONE", "TWO"],
                 default: "ONE",
             };
-            const node = new EnumConverterNode(input, mockContext, [], "test");
+            const node = new EnumConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.convert()).toEqual({
                 type: "enum",
                 values: [
@@ -75,7 +100,12 @@ describe("EnumConverterNode", () => {
             const input: OpenAPIV3_1.NonArraySchemaObject = {
                 type: "object",
             };
-            const node = new EnumConverterNode(input, mockContext, [], "test");
+            const node = new EnumConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.convert()).toEqual({
                 type: "enum",
                 values: [],

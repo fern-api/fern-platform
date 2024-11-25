@@ -1,6 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
+import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
 
 export declare namespace NullConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
@@ -16,8 +16,8 @@ export declare namespace NullConverterNode {
 export class NullConverterNode extends BaseOpenApiV3_1Node<NullConverterNode.Input, NullConverterNode.Output> {
     displayName: string | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<NullConverterNode.Input>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<NullConverterNode.Input>) {
+        super(args);
         this.safeParse();
     }
 

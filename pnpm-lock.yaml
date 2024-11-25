@@ -983,6 +983,9 @@ importers:
       ts-essentials:
         specifier: ^10.0.1
         version: 10.0.1(typescript@5.4.3)
+      uuid:
+        specifier: ^9.0.0
+        version: 9.0.1
       vitest:
         specifier: ^2.1.4
         version: 2.1.4(@edge-runtime/vm@3.2.0)(@types/node@22.5.5)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
@@ -990,6 +993,9 @@ importers:
       '@fern-platform/configs':
         specifier: workspace:*
         version: link:../configs
+      '@types/uuid':
+        specifier: ^9.0.1
+        version: 9.0.8
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0

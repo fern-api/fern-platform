@@ -1,9 +1,9 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
-import { FdrIntegerType } from "../../../types/fdr.types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
-import { ConstArrayToType, OPENAPI_INTEGER_TYPE_FORMAT } from "../../types/format.types";
+import { FdrIntegerType } from "../../../../types/fdr.types";
+import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
+import { ConstArrayToType, OPENAPI_INTEGER_TYPE_FORMAT } from "../../../types/format.types";
 
 export declare namespace IntegerConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
@@ -23,13 +23,13 @@ function isOpenApiIntegerTypeFormat(format: unknown): format is ConstArrayToType
 }
 
 export class IntegerConverterNode extends BaseOpenApiV3_1Node<IntegerConverterNode.Input, IntegerConverterNode.Output> {
-    type: FdrIntegerType["type"] = "integer";
+    format: ConstArrayToType<typeof OPENAPI_INTEGER_TYPE_FORMAT> | undefined;
     minimum: number | undefined;
     maximum: number | undefined;
     default: number | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<IntegerConverterNode.Input>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<IntegerConverterNode.Input>) {
+        super(args);
         this.safeParse();
     }
 
@@ -38,7 +38,7 @@ export class IntegerConverterNode extends BaseOpenApiV3_1Node<IntegerConverterNo
         this.maximum = this.input.maximum;
         if (this.input.default != null && typeof this.input.default !== "number") {
             this.context.errors.warning({
-                message: "The default value for an integer type should be an integer",
+                message: `Expected default value to be an integer. Received ${this.input.default}`,
                 path: this.accessPath,
             });
         }
@@ -47,36 +47,41 @@ export class IntegerConverterNode extends BaseOpenApiV3_1Node<IntegerConverterNo
         if (this.input.format != null) {
             if (!isOpenApiIntegerTypeFormat(this.input.format)) {
                 this.context.errors.warning({
-                    message: "The format for an integer type should be int64, int8, int16, int32, uint8, or sf-integer",
+                    message: `Expected format to be one of ${OPENAPI_INTEGER_TYPE_FORMAT.join(", ")}. Received ${this.input.format}`,
                     path: this.accessPath,
                 });
             } else {
-                switch (this.input.format) {
-                    case "int64":
-                        this.type = "long";
-                        break;
-                    case "int8":
-                    case "int16":
-                    case "int32":
-                    case "uint8":
-                    case "sf-integer":
-                    case undefined:
-                        this.type = "integer";
-                        break;
-                    default:
-                        new UnreachableCaseError(this.input.format);
-                }
+                this.format = this.input.format;
             }
         }
     }
 
     convert(): IntegerConverterNode.Output | undefined {
+        let type: FdrIntegerType["type"] = "integer";
+        if (this.format != null) {
+            switch (this.format) {
+                case "int64":
+                    type = "long";
+                    break;
+                case "int8":
+                case "int16":
+                case "int32":
+                case "uint8":
+                case "sf-integer":
+                case undefined:
+                    type = "integer";
+                    break;
+                default:
+                    new UnreachableCaseError(this.format);
+                    break;
+            }
+        }
         return {
             type: "alias",
             value: {
                 type: "primitive",
                 value: {
-                    type: this.type,
+                    type,
                     minimum: this.minimum,
                     maximum: this.maximum,
                     default: this.default,

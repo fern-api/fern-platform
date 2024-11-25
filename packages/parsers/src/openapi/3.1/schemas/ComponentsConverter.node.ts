@@ -10,21 +10,29 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1Node<
 > {
     typeSchemas: Record<string, SchemaConverterNode> | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.ComponentsObject>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.ComponentsObject>) {
+        super(args);
         this.safeParse();
     }
 
     parse(): void {
         if (this.input.schemas == null) {
-            this.context.errors.error({
-                message: "No schemas found in components",
+            this.context.errors.warning({
+                message: "Expected 'schemas' property to be specified",
                 path: this.accessPath,
             });
         } else {
             this.typeSchemas = Object.fromEntries(
                 Object.entries(this.input.schemas).map(([key, value]) => {
-                    return [key, new SchemaConverterNode(value, this.context, this.accessPath, this.pathId)];
+                    return [
+                        key,
+                        new SchemaConverterNode({
+                            input: value,
+                            context: this.context,
+                            accessPath: this.accessPath,
+                            pathId: key,
+                        }),
+                    ];
                 }),
             );
         }

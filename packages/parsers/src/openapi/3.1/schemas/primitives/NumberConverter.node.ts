@@ -1,9 +1,9 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
-import { FdrNumberType } from "../../../types/fdr.types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
-import { ConstArrayToType, OPENAPI_NUMBER_TYPE_FORMAT } from "../../types/format.types";
+import { FdrNumberType } from "../../../../types/fdr.types";
+import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
+import { ConstArrayToType, OPENAPI_NUMBER_TYPE_FORMAT } from "../../../types/format.types";
 
 export declare namespace NumberConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
@@ -23,13 +23,13 @@ function isOpenApiNumberTypeFormat(format: unknown): format is ConstArrayToType<
 }
 
 export class NumberConverterNode extends BaseOpenApiV3_1Node<NumberConverterNode.Input, NumberConverterNode.Output> {
-    type: FdrNumberType["type"] = "double";
+    format: ConstArrayToType<typeof OPENAPI_NUMBER_TYPE_FORMAT> | undefined;
     minimum: number | undefined;
     maximum: number | undefined;
     default: number | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<NumberConverterNode.Input>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<NumberConverterNode.Input>) {
+        super(args);
         this.safeParse();
     }
 
@@ -38,7 +38,7 @@ export class NumberConverterNode extends BaseOpenApiV3_1Node<NumberConverterNode
         this.maximum = this.input.maximum;
         if (this.input.default != null && typeof this.input.default !== "number") {
             this.context.errors.warning({
-                message: "The default value for an number type should be an number",
+                message: `Expected default value to be a number. Received ${this.input.default}`,
                 path: this.accessPath,
             });
         }
@@ -47,34 +47,39 @@ export class NumberConverterNode extends BaseOpenApiV3_1Node<NumberConverterNode
         if (this.input.format != null) {
             if (!isOpenApiNumberTypeFormat(this.input.format)) {
                 this.context.errors.warning({
-                    message: "The format for an number type should be int64, int8, int16, int32, uint8, or sf-number",
+                    message: `Expected format to be one of ${OPENAPI_NUMBER_TYPE_FORMAT.join(", ")}. Received ${this.input.format}`,
                     path: this.accessPath,
                 });
             } else {
-                switch (this.input.format) {
-                    case "decimal":
-                    case "decimal128":
-                    case "double-int":
-                    case "double":
-                    case "float":
-                    case "sf-decimal":
-                    case undefined:
-                        this.type = "double";
-                        break;
-                    default:
-                        new UnreachableCaseError(this.input.format);
-                }
+                this.format = this.input.format;
             }
         }
     }
 
     convert(): NumberConverterNode.Output | undefined {
+        let type: FdrNumberType["type"] = "double";
+        if (this.format != null) {
+            switch (this.format) {
+                case "decimal":
+                case "decimal128":
+                case "double-int":
+                case "double":
+                case "float":
+                case "sf-decimal":
+                case undefined:
+                    type = "double";
+                    break;
+                default:
+                    new UnreachableCaseError(this.format);
+                    break;
+            }
+        }
         return {
             type: "alias",
             value: {
                 type: "primitive",
                 value: {
-                    type: this.type,
+                    type,
                     minimum: this.minimum,
                     maximum: this.maximum,
                     default: this.default,

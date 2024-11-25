@@ -1,7 +1,7 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
-import { ComponentsConverterNode } from "../ComponentsConverter.node";
+import { ComponentsConverterNode } from "../../schemas/ComponentsConverter.node";
 
 describe("ComponentsConverterNode", () => {
     const mockContext = createMockContext();
@@ -12,11 +12,16 @@ describe("ComponentsConverterNode", () => {
 
     it("should handle empty/null schemas", () => {
         const input: OpenAPIV3_1.ComponentsObject = {};
-        const converter = new ComponentsConverterNode(input, mockContext, [], "test");
+        const converter = new ComponentsConverterNode({
+            input,
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
+        });
 
         expect(converter.typeSchemas).toBeUndefined();
-        expect(mockContext.errors.error).toHaveBeenCalledWith({
-            message: "No schemas found in components",
+        expect(mockContext.errors.warning).toHaveBeenCalledWith({
+            message: "Expected 'schemas' property to be specified",
             path: ["test"],
         });
     });
@@ -33,13 +38,23 @@ describe("ComponentsConverterNode", () => {
             },
         };
 
-        const converter = new ComponentsConverterNode(input, mockContext, [], "test");
+        const converter = new ComponentsConverterNode({
+            input,
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
+        });
         expect(converter.typeSchemas).toBeDefined();
         expect(Object.keys(converter.typeSchemas ?? {})).toContain("Pet");
     });
 
     it("should filter out undefined values in convert()", () => {
-        const converter = new ComponentsConverterNode({}, mockContext, [], "test");
+        const converter = new ComponentsConverterNode({
+            input: {},
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
+        });
         const result = converter.convert();
         expect(result).toBeUndefined();
     });
@@ -55,7 +70,12 @@ describe("ComponentsConverterNode", () => {
             },
         };
 
-        const converter = new ComponentsConverterNode(input, mockContext, [], "test");
+        const converter = new ComponentsConverterNode({
+            input,
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
+        });
         const result = converter.convert() ?? {};
 
         expect(result).toBeDefined();

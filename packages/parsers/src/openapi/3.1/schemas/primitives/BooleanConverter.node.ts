@@ -1,6 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
+import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
 
 export declare namespace BooleanConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
@@ -18,15 +18,15 @@ export declare namespace BooleanConverterNode {
 export class BooleanConverterNode extends BaseOpenApiV3_1Node<BooleanConverterNode.Input, BooleanConverterNode.Output> {
     default: boolean | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<BooleanConverterNode.Input>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<BooleanConverterNode.Input>) {
+        super(args);
         this.safeParse();
     }
 
     parse(): void {
         if (this.input.default != null && typeof this.input.default !== "boolean") {
             this.context.errors.warning({
-                message: "The default value for a boolean type should be a boolean",
+                message: `Expected default value to be a boolean. Received ${this.input.default}`,
                 path: this.accessPath,
             });
         }

@@ -1,9 +1,9 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
-import { FdrStringType } from "../../../types/fdr.types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
-import { ConstArrayToType, OPENAPI_STRING_TYPE_FORMAT } from "../../types/format.types";
+import { FdrStringType } from "../../../../types/fdr.types";
+import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
+import { ConstArrayToType, OPENAPI_STRING_TYPE_FORMAT } from "../../../types/format.types";
 import { EnumConverterNode } from "./EnumConverter.node";
 
 export declare namespace StringConverterNode {
@@ -27,15 +27,15 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<
     StringConverterNode.Input,
     StringConverterNode.Output | FdrAPI.api.latest.TypeShape.Enum
 > {
-    type: FdrStringType["type"] = "string";
+    format: ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT> | undefined;
     regex: string | undefined;
     default: string | undefined;
     minLength: number | undefined;
     maxLength: number | undefined;
     enum: EnumConverterNode | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<StringConverterNode.Input>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<StringConverterNode.Input>) {
+        super(args);
         this.safeParse();
     }
 
@@ -84,12 +84,6 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<
             case undefined:
                 return "string";
             default:
-                this.context.errors.warning({
-                    message:
-                        "The format for an string type should be one of the following: " +
-                        OPENAPI_STRING_TYPE_FORMAT.join(", "),
-                    path: this.accessPath,
-                });
                 new UnreachableCaseError(format);
                 return "string";
         }
@@ -98,18 +92,30 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<
     parse(): void {
         if (this.input.default != null && typeof this.input.default !== "string") {
             this.context.errors.warning({
-                message: "The default value for an string type should be an string",
+                message: `Expected default value to be a string. Received ${this.input.default}`,
                 path: this.accessPath,
             });
         }
         this.default = this.input.default;
 
-        if (this.input.format != null && isOpenApiStringTypeFormat(this.input.format)) {
-            this.type = this.mapToFdrType(this.input.format);
+        if (this.input.format != null) {
+            if (!isOpenApiStringTypeFormat(this.input.format)) {
+                this.context.errors.warning({
+                    message: `Expected format to be one of ${OPENAPI_STRING_TYPE_FORMAT.join(", ")}. Received ${this.input.format}`,
+                    path: this.accessPath,
+                });
+            } else {
+                this.format = this.input.format;
+            }
         }
 
         if (this.input.enum != null) {
-            this.enum = new EnumConverterNode(this.input, this.context, this.accessPath, "enum");
+            this.enum = new EnumConverterNode({
+                input: this.input,
+                context: this.context,
+                accessPath: this.accessPath,
+                pathId: "enum",
+            });
         }
     }
 
@@ -117,12 +123,18 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<
         if (this.enum != null) {
             return this.enum.convert();
         }
+
+        let type: FdrStringType["type"] = "string";
+        if (this.format != null) {
+            type = this.mapToFdrType(this.format);
+        }
+
         return {
             type: "alias",
             value: {
                 type: "primitive",
                 value: {
-                    type: this.type,
+                    type,
                     regex: this.regex,
                     minLength: this.minLength,
                     maxLength: this.maxLength,

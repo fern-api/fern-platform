@@ -17,28 +17,33 @@ export class ArrayConverterNode extends BaseOpenApiV3_1Node<
     ArrayConverterNode.Input,
     ArrayConverterNode.Output | undefined
 > {
-    innerSchema: SchemaConverterNode | undefined;
+    item: SchemaConverterNode | undefined;
 
-    constructor(...args: BaseOpenApiV3_1NodeConstructorArgs<ArrayConverterNode.Input>) {
-        super(...args);
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<ArrayConverterNode.Input>) {
+        super(args);
         this.safeParse();
     }
 
     parse(): void {
-        this.innerSchema = new SchemaConverterNode(this.input.items, this.context, this.accessPath, "items");
+        this.item = new SchemaConverterNode({
+            input: this.input.items,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "items",
+        });
 
         if (this.input.items == null) {
             this.context.errors.error({
-                message: "No items found in array",
+                message: "Expected 'items' property to be specified",
                 path: this.accessPath,
             });
         }
     }
 
     convert(): ArrayConverterNode.Output | undefined {
-        const innerSchema = this.innerSchema?.convert();
+        const itemShape = this.item?.convert();
 
-        if (innerSchema == null) {
+        if (itemShape == null) {
             return undefined;
         }
 
@@ -46,7 +51,7 @@ export class ArrayConverterNode extends BaseOpenApiV3_1Node<
             type: "alias",
             value: {
                 type: "list",
-                itemShape: innerSchema,
+                itemShape,
             },
         };
     }

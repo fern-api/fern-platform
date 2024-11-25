@@ -4,8 +4,12 @@ import { OpenAPIV3_1 } from "openapi-types";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
 import { ErrorCollector } from "../ErrorCollector";
-import { ComponentsConverterNode } from "../openapi/3.1/schemas/ComponentsConverter.node";
+import { OpenApiDocumentConverterNode } from "../openapi/3.1/OpenApiDocumentConverter.node";
 import { BaseOpenApiV3_1ConverterNodeContext } from "../openapi/BaseOpenApiV3_1Converter.node";
+
+function replaceEndpointUUIDs(json: string): string {
+    return json.replace(/"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"/g, '"test-uuid-replacement"');
+}
 
 describe("OpenAPI snapshot tests", () => {
     const fixturesDir = path.join(__dirname, "fixtures");
@@ -39,7 +43,12 @@ describe("OpenAPI snapshot tests", () => {
             expect(parsed.components?.schemas).toBeDefined();
 
             if (parsed.components?.schemas) {
-                const converter = new ComponentsConverterNode(parsed.components, context, [], "test");
+                const converter = new OpenApiDocumentConverterNode({
+                    input: parsed,
+                    context,
+                    accessPath: [],
+                    pathId: "test",
+                });
                 errors.push(...converter.errors());
                 warnings.push(...converter.warnings());
                 converted = converter.convert();
@@ -49,9 +58,11 @@ describe("OpenAPI snapshot tests", () => {
             expect(errors).toHaveLength(0);
             if (warnings.length > 0) {
                 // eslint-disable-next-line no-console
-                console.warn(warnings);
+                console.warn("warnings:", warnings);
             }
-            await expect(JSON.stringify(converted, null, 2)).toMatchFileSnapshot(
+            // @ts-expect-error id is not part of the expected output
+            converted.id = "test-uuid-replacement";
+            await expect(replaceEndpointUUIDs(JSON.stringify(converted, null, 2))).toMatchFileSnapshot(
                 `./__snapshots__/openapi/${directory}.json`,
             );
         });
