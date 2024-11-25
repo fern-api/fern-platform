@@ -67,7 +67,7 @@ describe("EnumConverterNode", () => {
             });
 
             expect(mockContext.errors.error).toHaveBeenCalledWith({
-                message: "The values in an enum type should be strings",
+                message: "Expected enum values to be strings. Received 2",
                 path: ["test"],
             });
         });

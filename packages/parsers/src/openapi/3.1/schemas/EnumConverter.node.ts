@@ -22,7 +22,7 @@ export class EnumConverterNode extends BaseOpenApiV3_1Node<
                     // TODO: Support { name?: .., description?: .., casing?: .. } here as well
                     if (typeof value !== "string") {
                         this.context.errors.error({
-                            message: "The values in an enum type should be strings",
+                            message: `Expected enum values to be strings. Received ${value}`,
                             path: this.accessPath,
                         });
                         return undefined;

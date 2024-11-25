@@ -38,7 +38,7 @@ export class IntegerConverterNode extends BaseOpenApiV3_1Node<IntegerConverterNo
         this.maximum = this.input.maximum;
         if (this.input.default != null && typeof this.input.default !== "number") {
             this.context.errors.warning({
-                message: "The default value for an integer type should be an integer",
+                message: `Expected default value to be an integer. Received ${this.input.default}`,
                 path: this.accessPath,
             });
         }
@@ -47,7 +47,7 @@ export class IntegerConverterNode extends BaseOpenApiV3_1Node<IntegerConverterNo
         if (this.input.format != null) {
             if (!isOpenApiIntegerTypeFormat(this.input.format)) {
                 this.context.errors.warning({
-                    message: "The format for an integer type should be int64, int8, int16, int32, uint8, or sf-integer",
+                    message: `Expected format to be one of ${OPENAPI_INTEGER_TYPE_FORMAT.join(", ")}. Received ${this.input.format}`,
                     path: this.accessPath,
                 });
             } else {

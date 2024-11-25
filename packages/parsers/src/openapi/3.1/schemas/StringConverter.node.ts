@@ -92,7 +92,7 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<
     parse(): void {
         if (this.input.default != null && typeof this.input.default !== "string") {
             this.context.errors.warning({
-                message: "The default value for an string type should be an string",
+                message: `Expected default value to be a string. Received ${this.input.default}`,
                 path: this.accessPath,
             });
         }
@@ -101,9 +101,7 @@ export class StringConverterNode extends BaseOpenApiV3_1Node<
         if (this.input.format != null) {
             if (!isOpenApiStringTypeFormat(this.input.format)) {
                 this.context.errors.warning({
-                    message:
-                        "The format for an string type should be one of the following: " +
-                        OPENAPI_STRING_TYPE_FORMAT.join(", "),
+                    message: `Expected format to be one of ${OPENAPI_STRING_TYPE_FORMAT.join(", ")}. Received ${this.input.format}`,
                     path: this.accessPath,
                 });
             } else {

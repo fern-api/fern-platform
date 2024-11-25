@@ -51,7 +51,7 @@ describe("BooleanConverterNode", () => {
             });
 
             expect(mockContext.errors.warning).toHaveBeenCalledWith({
-                message: "The default value for a boolean type should be a boolean",
+                message: "Expected default value to be a boolean. Received not-a-boolean",
                 path: ["test"],
             });
         });

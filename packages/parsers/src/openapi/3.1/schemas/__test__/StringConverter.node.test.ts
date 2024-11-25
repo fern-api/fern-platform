@@ -32,7 +32,7 @@ describe("StringConverterNode", () => {
                 pathId: "test",
             });
             expect(mockContext.errors.warning).toHaveBeenCalledWith({
-                message: "The default value for an string type should be an string",
+                message: "Expected default value to be a string. Received 123",
                 path: ["test"],
             });
         });

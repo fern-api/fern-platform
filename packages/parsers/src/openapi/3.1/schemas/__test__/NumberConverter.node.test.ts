@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
+import { OPENAPI_NUMBER_TYPE_FORMAT } from "../../../types/format.types";
 import { NumberConverterNode } from "../NumberConverter.node";
 
 describe("NumberConverterNode", () => {
@@ -54,7 +55,7 @@ describe("NumberConverterNode", () => {
             });
 
             expect(mockContext.errors.warning).toHaveBeenCalledWith({
-                message: "The default value for an number type should be an number",
+                message: "Expected default value to be a number. Received not-a-number",
                 path: ["test"],
             });
         });
@@ -74,7 +75,7 @@ describe("NumberConverterNode", () => {
                 });
 
                 expect(mockContext.errors.warning).toHaveBeenCalledWith({
-                    message: "The format for an number type should be int64, int8, int16, int32, uint8, or sf-number",
+                    message: `Expected format to be one of ${OPENAPI_NUMBER_TYPE_FORMAT.join(", ")}. Received invalid-format`,
                     path: ["test"],
                 });
             });

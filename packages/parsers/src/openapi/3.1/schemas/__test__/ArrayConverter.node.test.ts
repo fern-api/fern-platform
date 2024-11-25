@@ -23,7 +23,7 @@ describe("ArrayConverterNode", () => {
                 accessPath: [],
                 pathId: "test",
             });
-            expect(node.innerSchema?.typeShapeNode).toBeInstanceOf(StringConverterNode);
+            expect(node.item?.typeShapeNode).toBeInstanceOf(StringConverterNode);
         });
 
         it("should error when items is null", () => {

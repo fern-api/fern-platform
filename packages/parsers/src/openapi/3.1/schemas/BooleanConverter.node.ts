@@ -26,7 +26,7 @@ export class BooleanConverterNode extends BaseOpenApiV3_1Node<BooleanConverterNo
     parse(): void {
         if (this.input.default != null && typeof this.input.default !== "boolean") {
             this.context.errors.warning({
-                message: "The default value for a boolean type should be a boolean",
+                message: `Expected default value to be a boolean. Received ${this.input.default}`,
                 path: this.accessPath,
             });
         }

@@ -35,7 +35,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1Node<
                     ?.map((schema) => {
                         if (!isReferenceObject(schema) && schema.type !== "object") {
                             this.context.errors.error({
-                                message: "oneOf schema is not an object",
+                                message: `Expected 'oneOf' schema to be an object. Received ${schema.type}`,
                                 path: this.accessPath,
                             });
                             return undefined;

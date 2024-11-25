@@ -34,7 +34,7 @@ export class ArrayConverterNode extends BaseOpenApiV3_1Node<
 
         if (this.input.items == null) {
             this.context.errors.error({
-                message: "No items found in array",
+                message: "Expected 'items' property to be specified",
                 path: this.accessPath,
             });
         }

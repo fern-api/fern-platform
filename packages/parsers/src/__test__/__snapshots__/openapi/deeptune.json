@@ -1,15 +1,11 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "0d12e3f5-674a-45c6-81b1-462aa8dfaf5c": {
+    "fb4d310f-a28a-48bc-a28e-107aca042e73": {
       "description": "API that converts text into lifelike speech with best-in-class latency & uses the most advanced AI audio model ever. Create voiceovers for your videos, audiobooks, or create AI chatbots for free.",
       "id": "/v1/text-to-speech",
       "method": "POST",
       "path": [
-        {
-          "type": "literal",
-          "value": ""
-        },
         {
           "type": "literal",
           "value": "v1"
@@ -30,15 +26,11 @@
       "errors": [],
       "examples": []
     },
-    "cf64299b-f342-44be-a9d1-c0799b4f1161": {
+    "2a42df38-ed55-44ff-ac50-48edf9c946ec": {
       "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
       "id": "/v1/text-to-speech/from-prompt",
       "method": "POST",
       "path": [
-        {
-          "type": "literal",
-          "value": ""
-        },
         {
           "type": "literal",
           "value": "v1"
@@ -63,17 +55,13 @@
       "errors": [],
       "examples": []
     },
-    "118b6cd0-2136-42c1-b531-eef5c0be5927": {
+    "d9bfdd31-a43d-4b83-be89-6b5fb90af10f": {
       "description": "Retrieve all voices associated with the current workspace.",
       "id": "/v1/voices",
       "method": "GET",
       "path": [
         {
           "type": "literal",
-          "value": ""
-        },
-        {
-          "type": "literal",
           "value": "v1"
         },
         {
@@ -92,17 +80,13 @@
       "errors": [],
       "examples": []
     },
-    "2c8707c2-4240-4a30-8330-547f7cea273e": {
+    "0d5dcf6e-d0fd-4451-9301-449149e8bbf6": {
       "description": "Create a new voice with a name, optional description, and audio file.",
       "id": "/v1/voices",
       "method": "POST",
       "path": [
         {
           "type": "literal",
-          "value": ""
-        },
-        {
-          "type": "literal",
           "value": "v1"
         },
         {
@@ -121,17 +105,13 @@
       "errors": [],
       "examples": []
     },
-    "e42113a4-0c53-43f8-bf6e-cb7ddc19138c": {
+    "e6924cec-7bef-402c-b4e8-877ec5b5aec0": {
       "description": "Retrieve a specific voice by its ID.",
       "id": "/v1/voices/{voice_id}",
       "method": "GET",
       "path": [
         {
           "type": "literal",
-          "value": ""
-        },
-        {
-          "type": "literal",
           "value": "v1"
         },
         {
@@ -168,17 +148,13 @@
       "errors": [],
       "examples": []
     },
-    "6b25b562-d277-4ac0-b6f8-d4a4f61053b1": {
+    "07e0d9f4-1441-49b0-b1c9-220ad8e4817c": {
       "description": "Update an existing voice with new name, description, or audio file.",
       "id": "/v1/voices/{voice_id}",
       "method": "PUT",
       "path": [
         {
           "type": "literal",
-          "value": ""
-        },
-        {
-          "type": "literal",
           "value": "v1"
         },
         {
@@ -215,15 +191,11 @@
       "errors": [],
       "examples": []
     },
-    "a01b5dc3-033e-469e-a478-4431f12f7787": {
+    "0a998cfb-f18b-4caf-9085-366eef563c60": {
       "description": "Delete an existing voice by its ID.",
       "id": "/v1/voices/{voice_id}",
       "method": "DELETE",
       "path": [
-        {
-          "type": "literal",
-          "value": ""
-        },
         {
           "type": "literal",
           "value": "v1"

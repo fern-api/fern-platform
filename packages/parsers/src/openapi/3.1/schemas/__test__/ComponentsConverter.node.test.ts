@@ -21,7 +21,7 @@ describe("ComponentsConverterNode", () => {
 
         expect(converter.typeSchemas).toBeUndefined();
         expect(mockContext.errors.error).toHaveBeenCalledWith({
-            message: "No schemas found in components",
+            message: "Expected 'schemas' property to be specified",
             path: ["test"],
         });
     });

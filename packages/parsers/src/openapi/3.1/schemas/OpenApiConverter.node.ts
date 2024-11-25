@@ -23,7 +23,7 @@ export class OpenApiConverterNode extends BaseOpenApiV3_1Node<OpenAPIV3_1.Docume
 
         if (this.input.paths == null) {
             this.context.errors.warning({
-                message: "No paths found in OpenAPI document",
+                message: "Expected 'paths' property to be specified",
                 path: this.accessPath,
             });
         } else {
@@ -42,7 +42,7 @@ export class OpenApiConverterNode extends BaseOpenApiV3_1Node<OpenAPIV3_1.Docume
 
         if (this.input.components == null) {
             this.context.errors.warning({
-                message: "No components found in OpenAPI document",
+                message: "Expected 'components' property to be specified",
                 path: this.accessPath,
             });
         } else {

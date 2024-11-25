@@ -6,7 +6,6 @@ export class ServerObjectConverterNode extends BaseOpenApiV3_1Node<
     OpenAPIV3_1.ServerObject,
     FdrAPI.api.latest.Environment
 > {
-    id: string | undefined;
     url: string | undefined;
 
     constructor(args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.ServerObject>) {
@@ -16,19 +15,16 @@ export class ServerObjectConverterNode extends BaseOpenApiV3_1Node<
 
     parse(): void {
         this.url = this.input.url;
-
-        // TODO: url validation here
-
-        // x-fern-server-name here
-        this.id = "";
     }
     convert(): FdrAPI.api.latest.Environment | undefined {
-        if (this.id == null || this.url == null) {
+        if (this.url == null) {
             return undefined;
         }
 
         return {
-            id: FdrAPI.EnvironmentId(this.id),
+            // TODO: url validation here
+            // x-fern-server-name here
+            id: FdrAPI.EnvironmentId(""),
             baseUrl: this.url,
         };
     }

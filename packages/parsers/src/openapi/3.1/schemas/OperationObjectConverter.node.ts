@@ -81,7 +81,9 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1Node<
             return undefined;
         }
 
-        return this.path.split("/").map((part) => {
+        const path = this.path.startsWith("/") ? this.path.slice(1) : this.path;
+
+        return path.split("/").map((part) => {
             if (part.startsWith("{") && part.endsWith("}")) {
                 return {
                     type: "pathParameter" as const,
