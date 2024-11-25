@@ -12,9 +12,8 @@
 
 .fern-search-hit-title {
     overflow: hidden;
-    display: -webkit-box;
-    line-clamp: 1;
-    -webkit-box-orient: vertical;
+    display: block;
+    text-overflow: ellipsis;
 }
 
 .fern-search-hit-title.deprecated {
@@ -28,12 +27,9 @@
     overflow: hidden;
     overflow-wrap: break-word;
     color: var(--grayscale-a11);
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow-wrap: break-word;
+    display: block;
     text-overflow: ellipsis;
-    line-clamp: 1;
-    -webkit-line-clamp: 1;
+    white-space: nowrap;
 }
 
 .fern-search-hit-highlighted {

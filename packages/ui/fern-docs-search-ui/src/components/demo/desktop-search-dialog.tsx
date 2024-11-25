@@ -26,7 +26,7 @@ export function DesktopSearchDialog({
                 >
                     <SearchIcon />
                     Search
-                    <Kbd className="ml-auto">⌘K</Kbd>
+                    <Kbd className="ml-auto tracking-widest">⌘+K</Kbd>
                 </button>
             </Dialog.Trigger>
             <Dialog.Portal>

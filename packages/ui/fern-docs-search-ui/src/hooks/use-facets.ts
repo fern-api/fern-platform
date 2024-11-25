@@ -1,5 +1,6 @@
 import { useSearchClient } from "@/components/shared/search-client-provider";
 import { FacetName, FacetsResponse, isFacetName } from "@/utils/facet-display";
+import { uniq } from "es-toolkit";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { SWRResponse, preload } from "swr";
 import useSWRImmutable from "swr/immutable";
@@ -45,7 +46,7 @@ export function usePreloadFacets(): (opts: FacetOpts) => Promise<FacetsResponse>
 }
 
 function toFiltersString({ filters }: FacetOpts): string[] {
-    return filters.map((filter) => `${filter.facet}:${filter.value}`).sort();
+    return uniq(filters.map((filter) => `${filter.facet}:${filter.value}`)).sort();
 }
 
 export function useInitialFilters({ initialFilters }: { initialFilters?: Partial<Record<FacetName, string>> }): {

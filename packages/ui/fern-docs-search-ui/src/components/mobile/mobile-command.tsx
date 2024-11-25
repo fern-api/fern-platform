@@ -1,15 +1,15 @@
 import { FacetFilter } from "@/hooks/use-facets";
-import { UseSearch } from "@/hooks/use-search";
 import { FACET_DISPLAY_NAME_MAP } from "@/utils/facet-display";
+import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { Command } from "cmdk";
-import { MessageCircle } from "lucide-react";
 import { ComponentProps, Dispatch, SetStateAction, forwardRef, useRef, useState } from "react";
-import { AskAIText } from "../shared/askai-text";
+import { CommandAskAIGroup } from "../shared/command-ask-ai";
 import { CommandEmpty } from "../shared/command-empty";
 import { CommandGroupFilters } from "../shared/command-filters";
 import { CommandGroupSearchHits } from "../shared/command-hits";
 import { CommandGroupTheme } from "../shared/command-theme";
 import "../shared/common.scss";
+import { useSearchContext } from "../shared/search-context-provider";
 import { Button } from "../ui/button";
 import { cn } from "../ui/cn";
 import { Input } from "../ui/input";
@@ -25,26 +25,9 @@ export interface MobileCommandProps extends Omit<ComponentProps<typeof Command>,
     resetFilters?: () => void;
 }
 
-interface InternalMobileCommandProps extends MobileCommandProps, UseSearch {}
-
-export const MobileCommand = forwardRef<HTMLDivElement, InternalMobileCommandProps>((props, ref) => {
-    const {
-        filters = [],
-        onSelect,
-        onAskAI,
-        setFilters,
-        resetFilters,
-        setTheme,
-        query,
-        refine,
-        clear,
-        items,
-        facets,
-        preload,
-        isLoading,
-        children,
-        ...rest
-    } = props;
+export const MobileCommand = forwardRef<HTMLDivElement, MobileCommandProps>((props, ref) => {
+    const { filters = EMPTY_ARRAY, onSelect, onAskAI, setFilters, resetFilters, setTheme, children, ...rest } = props;
+    const { query, refine, clear, items, facets } = useSearchContext();
 
     const inputRef = useRef<HTMLInputElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -123,14 +106,7 @@ export const MobileCommand = forwardRef<HTMLDivElement, InternalMobileCommandPro
             >
                 {isSearchOpen ? (
                     <>
-                        {onAskAI != null && (
-                            <Command.Group forceMount>
-                                <Command.Item value="ai-chat" onSelect={() => onAskAI?.({ initialInput: query })}>
-                                    <MessageCircle />
-                                    <AskAIText query={query} />
-                                </Command.Item>
-                            </Command.Group>
-                        )}
+                        {onAskAI != null && <CommandAskAIGroup query={query} onAskAI={onAskAI} forceMount />}
 
                         <CommandGroupFilters
                             facets={facets}
@@ -139,9 +115,6 @@ export const MobileCommand = forwardRef<HTMLDivElement, InternalMobileCommandPro
                                 clear();
                                 focus();
                                 scrollTop();
-                            }}
-                            preload={(filter) => {
-                                preload({ filters: [...filters, filter] });
                             }}
                         />
 

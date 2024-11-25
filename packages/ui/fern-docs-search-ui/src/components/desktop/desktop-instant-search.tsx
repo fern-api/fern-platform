@@ -2,8 +2,7 @@ import { FacetName } from "@/utils/facet-display";
 import "instantsearch.css/themes/reset.css";
 import { forwardRef } from "react";
 import { FernDocsInstantSearch } from "../shared/fern-docs-instant-search";
-import { DesktopCommandSharedProps } from "./desktop-command";
-import { DesktopCommandController } from "./desktop-command-controller";
+import { DesktopCommand, DesktopCommandSharedProps } from "./desktop-command";
 
 interface DesktopInstantSearchProps {
     /**
@@ -47,13 +46,7 @@ export const DesktopInstantSearch = forwardRef<HTMLDivElement, DesktopInstantSea
                 userToken={userToken}
                 authenticatedUserToken={authenticatedUserToken}
             >
-                <DesktopCommandController
-                    ref={ref}
-                    onSelect={onSelect}
-                    onAskAI={onAskAI}
-                    setTheme={setTheme}
-                    {...rest}
-                />
+                <DesktopCommand ref={ref} onSelect={onSelect} onAskAI={onAskAI} setTheme={setTheme} {...rest} />
             </FernDocsInstantSearch>
         );
     },

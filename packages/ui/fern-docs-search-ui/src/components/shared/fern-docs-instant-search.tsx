@@ -5,6 +5,7 @@ import React, { Dispatch, SetStateAction, type ReactElement } from "react";
 import { Configure } from "react-instantsearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
 import { useSearchClient } from "./search-client-provider";
+import { SearchContextProvider } from "./search-context-provider";
 
 interface FernDocsInstantSearchProps {
     initialFilters?: Partial<Record<FacetName, string>>;
@@ -48,7 +49,9 @@ export function FernDocsInstantSearch({
                 maxValuesPerFacet={1000}
                 userToken={authenticatedUserToken ?? userToken}
             />
-            {React.cloneElement(children, { filters, setFilters, resetFilters })}
+            <SearchContextProvider filters={filters}>
+                {React.cloneElement(children, { filters, setFilters, resetFilters })}
+            </SearchContextProvider>
         </InstantSearchNext>
     );
 }

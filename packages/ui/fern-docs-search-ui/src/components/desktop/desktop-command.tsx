@@ -1,16 +1,16 @@
 import { FacetFilter } from "@/hooks/use-facets";
-import { UseSearch } from "@/hooks/use-search";
 import { FACET_DISPLAY_NAME_MAP } from "@/utils/facet-display";
+import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { Command } from "cmdk";
-import { Sparkles } from "lucide-react";
 import { ComponentProps, Dispatch, SetStateAction, forwardRef, useRef } from "react";
-import { AskAIText } from "../shared/askai-text";
+import { CommandAskAIGroup } from "../shared/command-ask-ai";
 import { CommandEmpty } from "../shared/command-empty";
 import { CommandGroupFilters } from "../shared/command-filters";
 import { CommandGroupSearchHits } from "../shared/command-hits";
 import { CommandGroupTheme } from "../shared/command-theme";
 import "../shared/common.scss";
+import { useSearchContext } from "../shared/search-context-provider";
 import { DesktopBackButton } from "./desktop-back-button";
 import { DesktopCloseTrigger } from "./desktop-close-trigger";
 import { DesktopFilterDropdownMenu } from "./desktop-filter-dropdown-menu";
@@ -28,29 +28,12 @@ export interface DesktopCommandProps extends DesktopCommandSharedProps {
     onClose?: () => void;
 }
 
-interface InternalDesktopCommandProps extends DesktopCommandProps, UseSearch {}
-
 /**
  * The desktop command is intended to be used within a dialog component.
  */
-export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandProps>((props, ref) => {
-    const {
-        filters = [],
-        onSelect,
-        onAskAI,
-        setFilters,
-        resetFilters,
-        setTheme,
-        onClose,
-        query,
-        refine,
-        clear,
-        items,
-        facets,
-        preload,
-        isLoading,
-        ...rest
-    } = props;
+export const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps>((props, ref) => {
+    const { filters = EMPTY_ARRAY, onSelect, onAskAI, setFilters, resetFilters, setTheme, onClose, ...rest } = props;
+    const { query, refine, clear, items, facets } = useSearchContext();
 
     const inputRef = useRef<HTMLInputElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -159,14 +142,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                 data-empty={items.length === 0 && query.length === 0 && onAskAI == null && setTheme == null}
                 tabIndex={-1}
             >
-                {onAskAI != null && (
-                    <Command.Group forceMount>
-                        <Command.Item onSelect={() => onAskAI?.({ initialInput: query })}>
-                            <Sparkles />
-                            <AskAIText query={query} />
-                        </Command.Item>
-                    </Command.Group>
-                )}
+                {onAskAI != null && <CommandAskAIGroup query={query} onAskAI={onAskAI} forceMount />}
 
                 <CommandGroupFilters
                     facets={facets}
@@ -175,9 +151,6 @@ export const DesktopCommand = forwardRef<HTMLDivElement, InternalDesktopCommandP
                         clear();
                         focus();
                         scrollTop();
-                    }}
-                    preload={(filter) => {
-                        preload({ filters: [...filters, filter] });
                     }}
                 />
 

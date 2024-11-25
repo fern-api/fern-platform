@@ -81,6 +81,7 @@ const config: Config = {
     },
     plugins: [
         require("@tailwindcss/typography"),
+        require("tailwindcss-animate"),
         plugin(({ addBase }) => {
             addBase({
                 '[type="search"]::-webkit-search-decoration': { display: "none" },

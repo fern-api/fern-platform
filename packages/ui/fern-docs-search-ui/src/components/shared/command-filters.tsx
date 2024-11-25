@@ -3,15 +3,17 @@ import { FilterOption, getFacetDisplay } from "@/utils/facet-display";
 import { Command } from "cmdk";
 import { ListFilter } from "lucide-react";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { useSearchContext } from "./search-context-provider";
 
 export const CommandGroupFilters = forwardRef<
     HTMLDivElement,
     Omit<ComponentPropsWithoutRef<typeof Command.Group>, "onSelect"> & {
         facets: FilterOption[];
         onSelect?: (filter: FacetFilter) => void;
-        preload?: (filter: FacetFilter) => void;
     }
->(({ facets, onSelect, preload, ...props }, ref) => {
+>(({ facets, onSelect, ...props }, ref) => {
+    const { preload } = useSearchContext();
+
     if (facets.length === 0) {
         return false;
     }
@@ -26,12 +28,12 @@ export const CommandGroupFilters = forwardRef<
                         onSelect?.(filter);
                     }}
                     onMouseOver={() => {
-                        preload?.(filter);
+                        void preload({ filters: [filter] });
                     }}
                 >
                     <ListFilter />
                     <span className="flex-1">Search {getFacetDisplay(filter.facet, filter.value)}</span>
-                    <span className="text-xs text-[#969696] dark:text-white/50 self-center">{filter.count}</span>
+                    <span className="text-xs text-[var(--grayscale-a9)] self-center">{filter.count}</span>
                 </Command.Item>
             ))}
         </Command.Group>
