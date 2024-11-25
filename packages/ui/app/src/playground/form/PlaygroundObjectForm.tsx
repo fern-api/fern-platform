@@ -10,9 +10,17 @@ interface PlaygroundObjectFormProps {
     indent?: boolean;
     types: Record<string, TypeDefinition>;
     disabled?: boolean;
+    defaultValue?: unknown;
 }
 
-export function PlaygroundObjectForm({ id, shape, onChange, value, types }: PlaygroundObjectFormProps): ReactElement {
+export function PlaygroundObjectForm({
+    id,
+    shape,
+    onChange,
+    value,
+    types,
+    defaultValue,
+}: PlaygroundObjectFormProps): ReactElement {
     const { properties, extraProperties } = useMemo(() => unwrapObjectType(shape, types), [shape, types]);
     return (
         <PlaygroundObjectPropertiesForm
@@ -21,6 +29,7 @@ export function PlaygroundObjectForm({ id, shape, onChange, value, types }: Play
             extraProperties={extraProperties}
             onChange={onChange}
             value={value}
+            defaultValue={defaultValue}
             types={types}
         />
     );
