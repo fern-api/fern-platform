@@ -17,7 +17,7 @@ export class ArrayConverterNode extends BaseOpenApiV3_1Node<
     ArrayConverterNode.Input,
     ArrayConverterNode.Output | undefined
 > {
-    innerSchema: SchemaConverterNode | undefined;
+    item: SchemaConverterNode | undefined;
 
     constructor(args: BaseOpenApiV3_1NodeConstructorArgs<ArrayConverterNode.Input>) {
         super(args);
@@ -25,7 +25,7 @@ export class ArrayConverterNode extends BaseOpenApiV3_1Node<
     }
 
     parse(): void {
-        this.innerSchema = new SchemaConverterNode({
+        this.item = new SchemaConverterNode({
             input: this.input.items,
             context: this.context,
             accessPath: this.accessPath,
@@ -41,9 +41,9 @@ export class ArrayConverterNode extends BaseOpenApiV3_1Node<
     }
 
     convert(): ArrayConverterNode.Output | undefined {
-        const innerSchema = this.innerSchema?.convert();
+        const itemShape = this.item?.convert();
 
-        if (innerSchema == null) {
+        if (itemShape == null) {
             return undefined;
         }
 
@@ -51,7 +51,7 @@ export class ArrayConverterNode extends BaseOpenApiV3_1Node<
             type: "alias",
             value: {
                 type: "list",
-                itemShape: innerSchema,
+                itemShape,
             },
         };
     }
