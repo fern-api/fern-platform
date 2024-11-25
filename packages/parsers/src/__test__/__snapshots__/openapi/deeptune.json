@@ -1,7 +1,7 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "fb4d310f-a28a-48bc-a28e-107aca042e73": {
+    "106e436d-ab32-49f2-8bd1-d2d98edbc0ae": {
       "description": "API that converts text into lifelike speech with best-in-class latency & uses the most advanced AI audio model ever. Create voiceovers for your videos, audiobooks, or create AI chatbots for free.",
       "id": "/v1/text-to-speech",
       "method": "POST",
@@ -26,7 +26,7 @@
       "errors": [],
       "examples": []
     },
-    "2a42df38-ed55-44ff-ac50-48edf9c946ec": {
+    "55ad4b37-c96f-4bbd-86dd-1b88662e9630": {
       "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
       "id": "/v1/text-to-speech/from-prompt",
       "method": "POST",
@@ -55,7 +55,7 @@
       "errors": [],
       "examples": []
     },
-    "d9bfdd31-a43d-4b83-be89-6b5fb90af10f": {
+    "9185140f-867c-437a-b700-e0a73e821cb2": {
       "description": "Retrieve all voices associated with the current workspace.",
       "id": "/v1/voices",
       "method": "GET",
@@ -80,7 +80,7 @@
       "errors": [],
       "examples": []
     },
-    "0d5dcf6e-d0fd-4451-9301-449149e8bbf6": {
+    "4d565e18-a70f-40b3-b21f-437c865d6b49": {
       "description": "Create a new voice with a name, optional description, and audio file.",
       "id": "/v1/voices",
       "method": "POST",
@@ -105,7 +105,7 @@
       "errors": [],
       "examples": []
     },
-    "e6924cec-7bef-402c-b4e8-877ec5b5aec0": {
+    "5af43714-7ac5-41dc-8bb3-e65e67eb366a": {
       "description": "Retrieve a specific voice by its ID.",
       "id": "/v1/voices/{voice_id}",
       "method": "GET",
@@ -148,7 +148,7 @@
       "errors": [],
       "examples": []
     },
-    "07e0d9f4-1441-49b0-b1c9-220ad8e4817c": {
+    "6de12d25-24a0-4c7d-b6fe-67d9ba74309d": {
       "description": "Update an existing voice with new name, description, or audio file.",
       "id": "/v1/voices/{voice_id}",
       "method": "PUT",
@@ -191,7 +191,7 @@
       "errors": [],
       "examples": []
     },
-    "0a998cfb-f18b-4caf-9085-366eef563c60": {
+    "2cbdf47f-543b-4808-904a-714be5471ccf": {
       "description": "Delete an existing voice by its ID.",
       "id": "/v1/voices/{voice_id}",
       "method": "DELETE",
