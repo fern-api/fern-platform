@@ -7,7 +7,7 @@ import {
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { WritableAtom, atom, useAtom, useAtomValue, useSetAtom } from "jotai";
-import { atomFamily, atomWithStorage, useAtomCallback } from "jotai/utils";
+import { RESET, atomFamily, atomWithStorage, useAtomCallback } from "jotai/utils";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useCallbackOne } from "use-memo-one";
 import { selectHref } from "../hooks/useHref";
@@ -184,16 +184,30 @@ export const PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM = atom(
             get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.bearer_token ??
             "",
     }),
-    (_get, set, update: SetStateAction<PlaygroundAuthStateBearerToken>) => {
-        set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => ({
-            ...prev,
-            bearerAuth:
+    (_get, set, update: SetStateAction<PlaygroundAuthStateBearerToken> | typeof RESET) => {
+        set(PLAYGROUND_AUTH_STATE_ATOM, ({ bearerAuth: prevBearerAuth, ...rest }) => {
+            const nextBearerAuth =
                 typeof update === "function"
-                    ? update(prev.bearerAuth ?? PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL)
-                    : update,
-        }));
+                    ? update(prevBearerAuth ?? PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL)
+                    : update;
+
+            if (nextBearerAuth === RESET) {
+                return rest;
+            }
+
+            return { ...rest, bearerAuth: nextBearerAuth };
+        });
     },
 );
+
+/**
+ * If an injected bearer token is provided, the input bearer token should be resettable if it's not empty.
+ */
+export const PLAYGROUND_AUTH_STATE_BEARER_TOKEN_IS_RESETTABLE_ATOM = atom((get) => {
+    const inputBearerAuth = get(PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM).token;
+    const injectedBearerAuth = get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.bearer_token;
+    return injectedBearerAuth != null && inputBearerAuth !== injectedBearerAuth;
+});
 
 export const PLAYGROUND_AUTH_STATE_HEADER_ATOM = atom(
     (get) => ({
@@ -202,11 +216,17 @@ export const PLAYGROUND_AUTH_STATE_HEADER_ATOM = atom(
                 get(FERN_USER_ATOM)?.playground?.initial_state?.headers),
         }),
     }),
-    (_get, set, update: SetStateAction<PlaygroundAuthStateHeader>) => {
-        set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => ({
-            ...prev,
-            header: typeof update === "function" ? update(prev.header ?? PLAYGROUND_AUTH_STATE_HEADER_INITIAL) : update,
-        }));
+    (_get, set, update: SetStateAction<PlaygroundAuthStateHeader> | typeof RESET) => {
+        set(PLAYGROUND_AUTH_STATE_ATOM, ({ header: prevHeader, ...rest }) => {
+            const nextHeader =
+                typeof update === "function" ? update(prevHeader ?? PLAYGROUND_AUTH_STATE_HEADER_INITIAL) : update;
+
+            if (nextHeader === RESET) {
+                return rest;
+            }
+
+            return { ...rest, header: nextHeader };
+        });
     },
 );
 
@@ -214,31 +234,88 @@ export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM = atom(
     (get) => ({
         username:
             get(PLAYGROUND_AUTH_STATE_ATOM).basicAuth?.username ??
-            get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic?.username ??
-            "",
+            get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic?.username,
         password:
             get(PLAYGROUND_AUTH_STATE_ATOM).basicAuth?.password ??
-            get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic?.password ??
-            "",
+            get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic?.password,
     }),
-    (_get, set, update: SetStateAction<PlaygroundAuthStateBasicAuth>) => {
-        set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => ({
-            ...prev,
-            basicAuth:
+    (_get, set, update: SetStateAction<Partial<PlaygroundAuthStateBasicAuth>> | typeof RESET) => {
+        set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => {
+            if (prev == null) {
+                return {};
+            }
+
+            const { basicAuth: prevBasicAuth, ...rest } = prev;
+
+            const nextBasicAuth =
                 typeof update === "function"
-                    ? update(prev.basicAuth ?? PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL)
-                    : update,
-        }));
+                    ? update(prevBasicAuth ?? PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL)
+                    : update;
+
+            if (nextBasicAuth === RESET) {
+                return rest;
+            }
+
+            return { ...rest, basicAuth: { username: "", password: "", ...prevBasicAuth, ...nextBasicAuth } };
+        });
     },
 );
 
+export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_USERNAME_ATOM = atom(
+    (get) => get(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM).username,
+    (_get, set, update: SetStateAction<string> | typeof RESET) => {
+        set(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM, ({ username: prevUsername, ...rest }) => {
+            const nextUsername = typeof update === "function" ? update(prevUsername ?? "") : update;
+
+            if (nextUsername === RESET) {
+                return rest;
+            }
+
+            return { ...rest, username: nextUsername };
+        });
+    },
+);
+
+export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_PASSWORD_ATOM = atom(
+    (get) => get(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM).password,
+    (_get, set, update: SetStateAction<string> | typeof RESET) => {
+        set(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM, ({ password: prevPassword, ...rest }) => {
+            const nextPassword = typeof update === "function" ? update(prevPassword ?? "") : update;
+
+            if (nextPassword === RESET) {
+                return rest;
+            }
+
+            return { ...rest, password: nextPassword };
+        });
+    },
+);
+
+export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_USERNAME_IS_RESETTABLE_ATOM = atom((get) => {
+    const inputBasicAuth = get(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM);
+    const injectedBasicAuth = get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic;
+    return injectedBasicAuth != null && inputBasicAuth.username !== injectedBasicAuth.username;
+});
+
+export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_PASSWORD_IS_RESETTABLE_ATOM = atom((get) => {
+    const inputBasicAuth = get(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM);
+    const injectedBasicAuth = get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic;
+    return injectedBasicAuth != null && inputBasicAuth.password !== injectedBasicAuth.password;
+});
+
 export const PLAYGROUND_AUTH_STATE_OAUTH_ATOM = atom(
     (get) => get(PLAYGROUND_AUTH_STATE_ATOM).oauth ?? PLAYGROUND_AUTH_STATE_OAUTH_INITIAL,
-    (_get, set, update: SetStateAction<PlaygroundAuthStateOAuth>) => {
-        set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => ({
-            ...prev,
-            oauth: typeof update === "function" ? update(prev.oauth ?? PLAYGROUND_AUTH_STATE_OAUTH_INITIAL) : update,
-        }));
+    (_get, set, update: SetStateAction<PlaygroundAuthStateOAuth> | typeof RESET) => {
+        set(PLAYGROUND_AUTH_STATE_ATOM, ({ oauth: prevOauth, ...rest }) => {
+            const nextOauth =
+                typeof update === "function" ? update(prevOauth ?? PLAYGROUND_AUTH_STATE_OAUTH_INITIAL) : update;
+
+            if (nextOauth === RESET) {
+                return rest;
+            }
+
+            return { ...rest, oauth: nextOauth };
+        });
     },
 );
 

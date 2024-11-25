@@ -20,9 +20,6 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "docs:dev": "NODE_OPTIONS='--inspect' next dev",
-    "docs:build": "next build",
-    "docs:start": "next start",
     "lint": "pnpm lint:eslint && pnpm lint:style"
   },
   "dependencies": {
