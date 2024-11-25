@@ -7,7 +7,10 @@ import { ComponentsConverterNode } from "./ComponentsConverter.node";
 import { PathsObjectConverterNode } from "./PathsObjectConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
-export class OpenApiConverterNode extends BaseOpenApiV3_1Node<OpenAPIV3_1.Document, FdrAPI.api.latest.ApiDefinition> {
+export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1Node<
+    OpenAPIV3_1.Document,
+    FdrAPI.api.latest.ApiDefinition
+> {
     paths: PathsObjectConverterNode | undefined;
     // webhooks: WebhooksObjectConverterNode | undefined;
     components: ComponentsConverterNode | undefined;

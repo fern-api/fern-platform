@@ -4,7 +4,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
 import { ErrorCollector } from "../ErrorCollector";
-import { OpenApiConverterNode } from "../openapi/3.1/schemas/OpenApiConverter.node";
+import { OpenApiDocumentConverterNode } from "../openapi/3.1/schemas/OpenApiDocumentConverter.node";
 import { BaseOpenApiV3_1ConverterNodeContext } from "../openapi/BaseOpenApiV3_1Converter.node";
 
 describe("OpenAPI snapshot tests", () => {
@@ -39,7 +39,7 @@ describe("OpenAPI snapshot tests", () => {
             expect(parsed.components?.schemas).toBeDefined();
 
             if (parsed.components?.schemas) {
-                const converter = new OpenApiConverterNode({
+                const converter = new OpenApiDocumentConverterNode({
                     input: parsed,
                     context,
                     accessPath: [],
