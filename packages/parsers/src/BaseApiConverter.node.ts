@@ -4,7 +4,7 @@ import { ErrorCollector } from "./ErrorCollector";
  * Base context class for API converter nodes.
  * Provides logging and error collection capabilities.
  */
-export abstract class BaseAPIConverterNodeContext {
+export abstract class BaseApiConverterNodeContext {
     public abstract readonly logger: Logger;
     public readonly errors: ErrorCollector = new ErrorCollector();
 }
@@ -17,10 +17,10 @@ export abstract class BaseAPIConverterNodeContext {
  * @typeparam Input - The type from the source format
  * @typeparam Output - The type from the target format
  */
-export abstract class BaseAPIConverterNode<Input, Output> {
+export abstract class BaseApiConverterNode<Input, Output> {
     constructor(
         protected readonly input: Input,
-        protected readonly context: BaseAPIConverterNodeContext,
+        protected readonly context: BaseApiConverterNodeContext,
     ) {}
 
     /**

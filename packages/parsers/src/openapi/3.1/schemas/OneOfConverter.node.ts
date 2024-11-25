@@ -1,7 +1,10 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../BaseOpenApiV3_1Converter.node";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { SchemaConverterNode } from "./SchemaConverter.node";
@@ -12,7 +15,7 @@ export declare namespace OneOfConverterNode {
     }
 }
 
-export class OneOfConverterNode extends BaseOpenApiV3_1Node<
+export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
     OneOfConverterNode.Input,
     FdrAPI.api.latest.TypeShape.DiscriminatedUnion | FdrAPI.api.latest.TypeShape.UndiscriminatedUnion
 > {
@@ -22,7 +25,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1Node<
 
     undiscriminatedMapping: SchemaConverterNode[] | undefined;
 
-    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<OneOfConverterNode.Input>) {
+    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OneOfConverterNode.Input>) {
         super(args);
         this.safeParse();
     }

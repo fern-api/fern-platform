@@ -1,13 +1,16 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 } from "uuid";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../BaseOpenApiV3_1Converter.node";
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../utils/3.1/coalesceServers";
 import { PathsObjectConverterNode } from "./paths/PathsObjectConverter.node";
 import { ServerObjectConverterNode } from "./paths/ServerObjectConverter.node";
 import { ComponentsConverterNode } from "./schemas/ComponentsConverter.node";
 
-export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1Node<
+export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.Document,
     FdrAPI.api.latest.ApiDefinition
 > {
@@ -16,7 +19,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1Node<
     components: ComponentsConverterNode | undefined;
     servers: ServerObjectConverterNode[] | undefined;
 
-    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.Document>) {
+    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.Document>) {
         super(args);
         this.safeParse();
     }

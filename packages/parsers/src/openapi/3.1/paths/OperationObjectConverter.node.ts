@@ -1,14 +1,17 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { convertProperties } from "../schemas/ObjectConverter.node";
 import { SchemaConverterNode } from "../schemas/SchemaConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
-export class OperationObjectConverterNode extends BaseOpenApiV3_1Node<
+export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.OperationObject,
     FdrAPI.api.latest.EndpointDefinition
 > {
@@ -19,7 +22,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1Node<
     // availability: AvailabilityConverterNode | undefined;
 
     constructor(
-        args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.OperationObject>,
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.OperationObject>,
         protected servers: ServerObjectConverterNode[] | undefined,
         protected path: string | undefined,
         protected method: "GET" | "POST" | "PUT" | "DELETE",

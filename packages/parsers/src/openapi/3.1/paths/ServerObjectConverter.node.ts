@@ -1,14 +1,17 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../BaseOpenApiV3_1Converter.node";
 
-export class ServerObjectConverterNode extends BaseOpenApiV3_1Node<
+export class ServerObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.ServerObject,
     FdrAPI.api.latest.Environment
 > {
     url: string | undefined;
 
-    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<OpenAPIV3_1.ServerObject>) {
+    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ServerObject>) {
         super(args);
         this.safeParse();
     }
