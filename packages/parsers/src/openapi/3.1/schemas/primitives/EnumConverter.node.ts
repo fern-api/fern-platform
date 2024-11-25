@@ -17,14 +17,20 @@ export class EnumConverterNode extends BaseOpenApiV3_1Node<
 
     parse(): void {
         if (this.input.enum != null) {
+            let continueParsing = true;
             this.values = this.input.enum
                 .map((value) => {
+                    if (!continueParsing) {
+                        return undefined;
+                    }
+
                     // TODO: Support { name?: .., description?: .., casing?: .. } here as well
                     if (typeof value !== "string") {
                         this.context.errors.error({
                             message: `Expected enum values to be strings. Received ${value}`,
                             path: this.accessPath,
                         });
+                        continueParsing = false;
                         return undefined;
                     }
                     return value;

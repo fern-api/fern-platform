@@ -86,7 +86,7 @@ describe("ArrayConverterNode", () => {
             });
             const converted = node.convert();
             expect(mockContext.errors.error).toHaveBeenCalledWith({
-                message: "No type shape node found",
+                message: "Expected type declaration. Received: null",
                 path: ["test", "items"],
             });
             expect(converted).toBeUndefined();

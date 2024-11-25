@@ -1,3 +1,156 @@
+openapi: 3.1.0
+info:
+  title: Swagger Petstore - OpenAPI 3.1
+  description: |-
+    This is a sample Pet Store Server based on the OpenAPI 3.1 specification.
+    You can find out more about
+    Swagger at [http://swagger.io](http://swagger.io).
+  summary: Pet Store 3.1
+  version: 1.0.0
+servers:
+  - url: /api/v31
+tags:
+  - name: pet
+    description: Everything about your Pets
+  - name: store
+    description: Access to Petstore orders
+  - name: user
+    description: Operations about user
+paths:
+  /pet:
+    put:
+      tags:
+        - pet
+      summary: Update an existing pet
+      description: Update an existing pet by Id
+      operationId: updatePet
+      requestBody:
+        description: Pet object that needs to be updated in the store
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Pet"
+              description: A Pet in JSON Format
+              required:
+                - id
+              writeOnly: true
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/Pet"
+              description: A Pet in XML Format
+              required:
+                - id
+              writeOnly: true
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Pet"
+                description: A Pet in XML Format
+                readOnly: true
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+                description: A Pet in JSON Format
+                readOnly: true
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Pet not found
+        "405":
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - "write:pets"
+            - "read:pets"
+    post:
+      tags:
+        - pet
+      summary: Add a new pet to the store
+      description: Add a new pet to the store
+      operationId: addPet
+      requestBody:
+        description: Create a new pet in the store
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Pet"
+              description: A Pet in JSON Format
+              required:
+                - id
+              writeOnly: true
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/Pet"
+              description: A Pet in XML Format
+              required:
+                - id
+              writeOnly: true
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Pet"
+                description: A Pet in XML Format
+                readOnly: true
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+                description: A Pet in JSON Format
+                readOnly: true
+        "405":
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - "write:pets"
+            - "read:pets"
+  "/pet/{petId}":
+    get:
+      tags:
+        - pets
+      summary: Find pet by ID
+      description: >-
+        Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate
+        API error conditions
+      operationId: getPetById
+      parameters:
+        - name: petId
+          in: path
+          description: ID of pet that needs to be fetched
+          required: true
+          schema:
+            type: integer
+            format: int64
+            description: param ID of pet that needs to be fetched
+            exclusiveMaximum: 10
+            exclusiveMinimum: 1
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Pet not found
+        default:
+          description: The pet
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+                description: A Pet in JSON format
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Pet"
+                description: A Pet in XML format
+      security:
+        - petstore_auth:
+            - "write:pets"
+            - "read:pets"
+        - api_key: []
 components:
   schemas:
     Order:

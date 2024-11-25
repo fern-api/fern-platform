@@ -1,6 +1,89 @@
 {
   "id": "test-uuid-replacement",
-  "endpoints": {},
+  "endpoints": {
+    "test-uuid-replacement": {
+      "description": "Add a new pet to the store",
+      "id": "/pet",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "pet"
+        }
+      ],
+      "defaultEnvironment": "",
+      "environments": [
+        {
+          "id": "",
+          "baseUrl": "/api/v31"
+        }
+      ],
+      "responseHeaders": [],
+      "errors": [],
+      "examples": []
+    },
+    "test-uuid-replacement": {
+      "description": "Update an existing pet by Id",
+      "id": "/pet",
+      "method": "PUT",
+      "path": [
+        {
+          "type": "literal",
+          "value": "pet"
+        }
+      ],
+      "defaultEnvironment": "",
+      "environments": [
+        {
+          "id": "",
+          "baseUrl": "/api/v31"
+        }
+      ],
+      "responseHeaders": [],
+      "errors": [],
+      "examples": []
+    },
+    "test-uuid-replacement": {
+      "description": "Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate API error conditions",
+      "id": "/pet/{petId}",
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "pet"
+        },
+        {
+          "type": "pathParameter",
+          "value": "petId"
+        }
+      ],
+      "defaultEnvironment": "",
+      "environments": [
+        {
+          "id": "",
+          "baseUrl": "/api/v31"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "petId",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "long"
+              }
+            }
+          },
+          "description": "param ID of pet that needs to be fetched"
+        }
+      ],
+      "responseHeaders": [],
+      "errors": [],
+      "examples": []
+    }
+  },
   "websockets": {},
   "webhooks": {},
   "types": {

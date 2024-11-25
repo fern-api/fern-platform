@@ -30,7 +30,7 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1Node<
                             input: value,
                             context: this.context,
                             accessPath: this.accessPath,
-                            pathId: this.pathId,
+                            pathId: key,
                         }),
                     ];
                 }),
