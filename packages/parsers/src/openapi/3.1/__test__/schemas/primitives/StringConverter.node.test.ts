@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { createMockContext } from "../../../../__test__/createMockContext.util";
-import { StringConverterNode } from "../StringConverter.node";
+import { createMockContext } from "../../../../../__test__/createMockContext.util";
+import { StringConverterNode } from "../../../schemas/primitives/StringConverter.node";
 
 describe("StringConverterNode", () => {
     const mockContext = createMockContext();

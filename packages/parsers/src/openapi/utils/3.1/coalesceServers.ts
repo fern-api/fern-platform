@@ -1,5 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
-import { ServerObjectConverterNode } from "../../3.1/schemas/ServerObjectConverter.node";
+import { ServerObjectConverterNode } from "../../3.1/paths/ServerObjectConverter.node";
 import { BaseOpenApiV3_1ConverterNodeContext } from "../../BaseOpenApiV3_1Converter.node";
 
 export function coalesceServers(

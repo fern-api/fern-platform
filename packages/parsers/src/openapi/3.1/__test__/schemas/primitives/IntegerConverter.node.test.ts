@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { createMockContext } from "../../../../__test__/createMockContext.util";
-import { OPENAPI_NUMBER_TYPE_FORMAT } from "../../../types/format.types";
-import { NumberConverterNode } from "../NumberConverter.node";
+import { createMockContext } from "../../../../../__test__/createMockContext.util";
+import { OPENAPI_INTEGER_TYPE_FORMAT } from "../../../../types/format.types";
+import { IntegerConverterNode } from "../../../schemas/primitives/IntegerConverter.node";
 
-describe("NumberConverterNode", () => {
+describe("IntegerConverterNode", () => {
     const mockContext = createMockContext();
 
     beforeEach(() => {
@@ -11,43 +11,43 @@ describe("NumberConverterNode", () => {
     });
 
     describe("constructor", () => {
-        it("should handle number schema with min/max", () => {
-            const input: NumberConverterNode.Input = {
-                type: "number",
-                minimum: 0.5,
-                maximum: 100.5,
+        it("should handle integer schema with min/max", () => {
+            const input: IntegerConverterNode.Input = {
+                type: "integer",
+                minimum: 0,
+                maximum: 100,
             };
-            const node = new NumberConverterNode({
+            const node = new IntegerConverterNode({
                 input,
                 context: mockContext,
                 accessPath: [],
                 pathId: "test",
             });
-            expect(node.minimum).toBe(0.5);
-            expect(node.maximum).toBe(100.5);
+            expect(node.minimum).toBe(0);
+            expect(node.maximum).toBe(100);
         });
 
-        it("should handle number schema with valid default", () => {
-            const input: NumberConverterNode.Input = {
-                type: "number",
-                default: 42.5,
+        it("should handle integer schema with valid default", () => {
+            const input: IntegerConverterNode.Input = {
+                type: "integer",
+                default: 42,
             };
-            const node = new NumberConverterNode({
+            const node = new IntegerConverterNode({
                 input,
                 context: mockContext,
                 accessPath: [],
                 pathId: "test",
             });
-            expect(node.default).toBe(42.5);
+            expect(node.default).toBe(42);
         });
 
         it("should warn when default value is not a number", () => {
             const input = {
-                type: "number",
-                default: "not-a-number",
-            } as NumberConverterNode.Input;
+                type: "integer",
+                default: "not-an-integer",
+            } as IntegerConverterNode.Input;
 
-            new NumberConverterNode({
+            new IntegerConverterNode({
                 input,
                 context: mockContext,
                 accessPath: [],
@@ -55,19 +55,19 @@ describe("NumberConverterNode", () => {
             });
 
             expect(mockContext.errors.warning).toHaveBeenCalledWith({
-                message: "Expected default value to be a number. Received not-a-number",
+                message: "Expected default value to be an integer. Received not-an-integer",
                 path: ["test"],
             });
         });
 
         describe("format handling", () => {
             it("should warn for invalid format", () => {
-                const input: NumberConverterNode.Input = {
-                    type: "number",
+                const input: IntegerConverterNode.Input = {
+                    type: "integer",
                     format: "invalid-format",
                 };
 
-                new NumberConverterNode({
+                new IntegerConverterNode({
                     input,
                     context: mockContext,
                     accessPath: [],
@@ -75,7 +75,7 @@ describe("NumberConverterNode", () => {
                 });
 
                 expect(mockContext.errors.warning).toHaveBeenCalledWith({
-                    message: `Expected format to be one of ${OPENAPI_NUMBER_TYPE_FORMAT.join(", ")}. Received invalid-format`,
+                    message: `Expected format to be one of ${OPENAPI_INTEGER_TYPE_FORMAT.join(", ")}. Received invalid-format`,
                     path: ["test"],
                 });
             });
@@ -83,15 +83,15 @@ describe("NumberConverterNode", () => {
     });
 
     describe("convert", () => {
-        it("should convert number schema with all properties", () => {
-            const input: NumberConverterNode.Input = {
-                type: "number",
-                minimum: 0.5,
-                maximum: 100.5,
-                default: 50.5,
-                format: "double",
+        it("should convert integer schema with all properties", () => {
+            const input: IntegerConverterNode.Input = {
+                type: "integer",
+                minimum: 0,
+                maximum: 100,
+                default: 50,
+                format: "int64",
             };
-            const node = new NumberConverterNode({
+            const node = new IntegerConverterNode({
                 input,
                 context: mockContext,
                 accessPath: [],
@@ -102,20 +102,20 @@ describe("NumberConverterNode", () => {
                 value: {
                     type: "primitive",
                     value: {
-                        type: "double",
-                        minimum: 0.5,
-                        maximum: 100.5,
-                        default: 50.5,
+                        type: "long",
+                        minimum: 0,
+                        maximum: 100,
+                        default: 50,
                     },
                 },
             });
         });
 
-        it("should convert basic number schema", () => {
-            const input: NumberConverterNode.Input = {
-                type: "number",
+        it("should convert basic integer schema", () => {
+            const input: IntegerConverterNode.Input = {
+                type: "integer",
             };
-            const node = new NumberConverterNode({
+            const node = new IntegerConverterNode({
                 input,
                 context: mockContext,
                 accessPath: [],
@@ -126,7 +126,7 @@ describe("NumberConverterNode", () => {
                 value: {
                     type: "primitive",
                     value: {
-                        type: "double",
+                        type: "integer",
                         minimum: undefined,
                         maximum: undefined,
                         default: undefined,

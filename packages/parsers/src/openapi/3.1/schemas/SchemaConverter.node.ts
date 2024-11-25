@@ -4,15 +4,15 @@ import { UnreachableCaseError } from "ts-essentials";
 import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { ArrayConverterNode } from "./ArrayConverter.node";
-import { BooleanConverterNode } from "./BooleanConverter.node";
-import { EnumConverterNode } from "./EnumConverter.node";
-import { IntegerConverterNode } from "./IntegerConverter.node";
-import { NullConverterNode } from "./NullConverter.node";
-import { NumberConverterNode } from "./NumberConverter.node";
 import { ObjectConverterNode } from "./ObjectConverter.node";
 import { OneOfConverterNode } from "./OneOfConverter.node";
 import { ReferenceConverterNode } from "./ReferenceConverter.node";
-import { StringConverterNode } from "./StringConverter.node";
+import { BooleanConverterNode } from "./primitives/BooleanConverter.node";
+import { EnumConverterNode } from "./primitives/EnumConverter.node";
+import { IntegerConverterNode } from "./primitives/IntegerConverter.node";
+import { NullConverterNode } from "./primitives/NullConverter.node";
+import { NumberConverterNode } from "./primitives/NumberConverter.node";
+import { StringConverterNode } from "./primitives/StringConverter.node";
 
 export type PrimitiveType =
     | NumberConverterNode.Input

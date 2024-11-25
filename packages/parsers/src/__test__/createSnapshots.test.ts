@@ -4,8 +4,12 @@ import { OpenAPIV3_1 } from "openapi-types";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
 import { ErrorCollector } from "../ErrorCollector";
-import { OpenApiDocumentConverterNode } from "../openapi/3.1/schemas/OpenApiDocumentConverter.node";
+import { OpenApiDocumentConverterNode } from "../openapi/3.1/OpenApiDocumentConverter.node";
 import { BaseOpenApiV3_1ConverterNodeContext } from "../openapi/BaseOpenApiV3_1Converter.node";
+
+function replaceEndpointUUIDs(json: string): string {
+    return json.replace(/"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"/g, '"test-uuid-replacement"');
+}
 
 describe("OpenAPI snapshot tests", () => {
     const fixturesDir = path.join(__dirname, "fixtures");
@@ -58,7 +62,7 @@ describe("OpenAPI snapshot tests", () => {
             }
             // @ts-expect-error id is not part of the expected output
             converted.id = "test-uuid-replacement";
-            await expect(JSON.stringify(converted, null, 2)).toMatchFileSnapshot(
+            await expect(replaceEndpointUUIDs(JSON.stringify(converted, null, 2))).toMatchFileSnapshot(
                 `./__snapshots__/openapi/${directory}.json`,
             );
         });

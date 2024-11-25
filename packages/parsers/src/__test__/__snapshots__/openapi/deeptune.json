@@ -1,7 +1,7 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "106e436d-ab32-49f2-8bd1-d2d98edbc0ae": {
+    "test-uuid-replacement": {
       "description": "API that converts text into lifelike speech with best-in-class latency & uses the most advanced AI audio model ever. Create voiceovers for your videos, audiobooks, or create AI chatbots for free.",
       "id": "/v1/text-to-speech",
       "method": "POST",
@@ -26,7 +26,7 @@
       "errors": [],
       "examples": []
     },
-    "55ad4b37-c96f-4bbd-86dd-1b88662e9630": {
+    "test-uuid-replacement": {
       "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
       "id": "/v1/text-to-speech/from-prompt",
       "method": "POST",
@@ -55,7 +55,7 @@
       "errors": [],
       "examples": []
     },
-    "9185140f-867c-437a-b700-e0a73e821cb2": {
+    "test-uuid-replacement": {
       "description": "Retrieve all voices associated with the current workspace.",
       "id": "/v1/voices",
       "method": "GET",
@@ -80,7 +80,7 @@
       "errors": [],
       "examples": []
     },
-    "4d565e18-a70f-40b3-b21f-437c865d6b49": {
+    "test-uuid-replacement": {
       "description": "Create a new voice with a name, optional description, and audio file.",
       "id": "/v1/voices",
       "method": "POST",
@@ -105,7 +105,7 @@
       "errors": [],
       "examples": []
     },
-    "5af43714-7ac5-41dc-8bb3-e65e67eb366a": {
+    "test-uuid-replacement": {
       "description": "Retrieve a specific voice by its ID.",
       "id": "/v1/voices/{voice_id}",
       "method": "GET",
@@ -148,7 +148,7 @@
       "errors": [],
       "examples": []
     },
-    "6de12d25-24a0-4c7d-b6fe-67d9ba74309d": {
+    "test-uuid-replacement": {
       "description": "Update an existing voice with new name, description, or audio file.",
       "id": "/v1/voices/{voice_id}",
       "method": "PUT",
@@ -191,7 +191,7 @@
       "errors": [],
       "examples": []
     },
-    "2cbdf47f-543b-4808-904a-714be5471ccf": {
+    "test-uuid-replacement": {
       "description": "Delete an existing voice by its ID.",
       "id": "/v1/voices/{voice_id}",
       "method": "DELETE",

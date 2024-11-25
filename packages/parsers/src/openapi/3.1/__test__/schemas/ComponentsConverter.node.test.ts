@@ -1,7 +1,7 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
-import { ComponentsConverterNode } from "../ComponentsConverter.node";
+import { ComponentsConverterNode } from "../../schemas/ComponentsConverter.node";
 
 describe("ComponentsConverterNode", () => {
     const mockContext = createMockContext();

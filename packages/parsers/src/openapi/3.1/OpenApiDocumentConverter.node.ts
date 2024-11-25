@@ -1,11 +1,11 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 } from "uuid";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
-import { coalesceServers } from "../../utils/3.1/coalesceServers";
-import { ComponentsConverterNode } from "./ComponentsConverter.node";
-import { PathsObjectConverterNode } from "./PathsObjectConverter.node";
-import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
+import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../BaseOpenApiV3_1Converter.node";
+import { coalesceServers } from "../utils/3.1/coalesceServers";
+import { PathsObjectConverterNode } from "./paths/PathsObjectConverter.node";
+import { ServerObjectConverterNode } from "./paths/ServerObjectConverter.node";
+import { ComponentsConverterNode } from "./schemas/ComponentsConverter.node";
 
 export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1Node<
     OpenAPIV3_1.Document,

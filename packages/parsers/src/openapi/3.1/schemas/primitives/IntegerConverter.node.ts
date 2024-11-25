@@ -1,34 +1,34 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
-import { FdrNumberType } from "../../../types/fdr.types";
-import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
-import { ConstArrayToType, OPENAPI_NUMBER_TYPE_FORMAT } from "../../types/format.types";
+import { FdrIntegerType } from "../../../../types/fdr.types";
+import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
+import { ConstArrayToType, OPENAPI_INTEGER_TYPE_FORMAT } from "../../../types/format.types";
 
-export declare namespace NumberConverterNode {
+export declare namespace IntegerConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
-        type: "number";
+        type: "integer";
     }
     export interface Output extends FdrAPI.api.latest.TypeShape.Alias {
         type: "alias";
         value: {
             type: "primitive";
-            value: FdrNumberType;
+            value: FdrIntegerType;
         };
     }
 }
 
-function isOpenApiNumberTypeFormat(format: unknown): format is ConstArrayToType<typeof OPENAPI_NUMBER_TYPE_FORMAT> {
-    return OPENAPI_NUMBER_TYPE_FORMAT.includes(format as ConstArrayToType<typeof OPENAPI_NUMBER_TYPE_FORMAT>);
+function isOpenApiIntegerTypeFormat(format: unknown): format is ConstArrayToType<typeof OPENAPI_INTEGER_TYPE_FORMAT> {
+    return OPENAPI_INTEGER_TYPE_FORMAT.includes(format as ConstArrayToType<typeof OPENAPI_INTEGER_TYPE_FORMAT>);
 }
 
-export class NumberConverterNode extends BaseOpenApiV3_1Node<NumberConverterNode.Input, NumberConverterNode.Output> {
-    format: ConstArrayToType<typeof OPENAPI_NUMBER_TYPE_FORMAT> | undefined;
+export class IntegerConverterNode extends BaseOpenApiV3_1Node<IntegerConverterNode.Input, IntegerConverterNode.Output> {
+    format: ConstArrayToType<typeof OPENAPI_INTEGER_TYPE_FORMAT> | undefined;
     minimum: number | undefined;
     maximum: number | undefined;
     default: number | undefined;
 
-    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<NumberConverterNode.Input>) {
+    constructor(args: BaseOpenApiV3_1NodeConstructorArgs<IntegerConverterNode.Input>) {
         super(args);
         this.safeParse();
     }
@@ -38,16 +38,16 @@ export class NumberConverterNode extends BaseOpenApiV3_1Node<NumberConverterNode
         this.maximum = this.input.maximum;
         if (this.input.default != null && typeof this.input.default !== "number") {
             this.context.errors.warning({
-                message: `Expected default value to be a number. Received ${this.input.default}`,
+                message: `Expected default value to be an integer. Received ${this.input.default}`,
                 path: this.accessPath,
             });
         }
         this.default = this.input.default;
 
         if (this.input.format != null) {
-            if (!isOpenApiNumberTypeFormat(this.input.format)) {
+            if (!isOpenApiIntegerTypeFormat(this.input.format)) {
                 this.context.errors.warning({
-                    message: `Expected format to be one of ${OPENAPI_NUMBER_TYPE_FORMAT.join(", ")}. Received ${this.input.format}`,
+                    message: `Expected format to be one of ${OPENAPI_INTEGER_TYPE_FORMAT.join(", ")}. Received ${this.input.format}`,
                     path: this.accessPath,
                 });
             } else {
@@ -56,18 +56,20 @@ export class NumberConverterNode extends BaseOpenApiV3_1Node<NumberConverterNode
         }
     }
 
-    convert(): NumberConverterNode.Output | undefined {
-        let type: FdrNumberType["type"] = "double";
+    convert(): IntegerConverterNode.Output | undefined {
+        let type: FdrIntegerType["type"] = "integer";
         if (this.format != null) {
             switch (this.format) {
-                case "decimal":
-                case "decimal128":
-                case "double-int":
-                case "double":
-                case "float":
-                case "sf-decimal":
+                case "int64":
+                    type = "long";
+                    break;
+                case "int8":
+                case "int16":
+                case "int32":
+                case "uint8":
+                case "sf-integer":
                 case undefined:
-                    type = "double";
+                    type = "integer";
                     break;
                 default:
                     new UnreachableCaseError(this.format);

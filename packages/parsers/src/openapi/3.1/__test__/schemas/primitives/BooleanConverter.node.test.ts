@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { createMockContext } from "../../../../__test__/createMockContext.util";
-import { BooleanConverterNode } from "../BooleanConverter.node";
+import { createMockContext } from "../../../../../__test__/createMockContext.util";
+import { BooleanConverterNode } from "../../../schemas/primitives/BooleanConverter.node";
 
 describe("BooleanConverterNode", () => {
     const mockContext = createMockContext();

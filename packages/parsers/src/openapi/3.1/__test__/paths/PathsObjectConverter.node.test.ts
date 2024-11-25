@@ -1,7 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { describe, expect, it } from "vitest";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
-import { PathsObjectConverterNode } from "../PathsObjectConverter.node";
+import { PathsObjectConverterNode } from "../../paths/PathsObjectConverter.node";
 
 describe("PathsObjectConverterNode", () => {
     const mockContext = createMockContext();

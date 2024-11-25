@@ -1,9 +1,9 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
-import { ObjectConverterNode } from "../ObjectConverter.node";
-import { ReferenceConverterNode } from "../ReferenceConverter.node";
-import { SchemaConverterNode } from "../SchemaConverter.node";
+import { ObjectConverterNode } from "../../schemas/ObjectConverter.node";
+import { ReferenceConverterNode } from "../../schemas/ReferenceConverter.node";
+import { SchemaConverterNode } from "../../schemas/SchemaConverter.node";
 
 describe("SchemaConverterNode", () => {
     const mockContext = createMockContext();

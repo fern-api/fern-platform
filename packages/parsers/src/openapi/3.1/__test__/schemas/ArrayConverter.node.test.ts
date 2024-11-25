@@ -1,8 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
-import { ArrayConverterNode } from "../ArrayConverter.node";
-import { StringConverterNode } from "../StringConverter.node";
+import { ArrayConverterNode } from "../../schemas/ArrayConverter.node";
+import { StringConverterNode } from "../../schemas/primitives/StringConverter.node";
 
 describe("ArrayConverterNode", () => {
     const mockContext = createMockContext();

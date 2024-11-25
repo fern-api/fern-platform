@@ -4,8 +4,8 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
 import { isReferenceObject } from "../guards/isReferenceObject";
-import { convertProperties } from "./ObjectConverter.node";
-import { SchemaConverterNode } from "./SchemaConverter.node";
+import { convertProperties } from "../schemas/ObjectConverter.node";
+import { SchemaConverterNode } from "../schemas/SchemaConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
 export class OperationObjectConverterNode extends BaseOpenApiV3_1Node<
