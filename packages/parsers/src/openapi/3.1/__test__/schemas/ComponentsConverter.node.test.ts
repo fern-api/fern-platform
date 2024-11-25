@@ -20,7 +20,7 @@ describe("ComponentsConverterNode", () => {
         });
 
         expect(converter.typeSchemas).toBeUndefined();
-        expect(mockContext.errors.error).toHaveBeenCalledWith({
+        expect(mockContext.errors.warning).toHaveBeenCalledWith({
             message: "Expected 'schemas' property to be specified",
             path: ["test"],
         });

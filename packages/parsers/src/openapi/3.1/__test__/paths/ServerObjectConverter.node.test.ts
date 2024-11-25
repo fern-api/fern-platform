@@ -35,7 +35,7 @@ describe("ServerObjectConverterNode", () => {
             });
             const result = node.convert();
             expect(result).toEqual({
-                id: FdrAPI.EnvironmentId(""),
+                id: FdrAPI.EnvironmentId("x-fern-server-name"),
                 baseUrl: "https://api.example.com",
             });
         });

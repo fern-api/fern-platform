@@ -11,10 +11,10 @@
           "value": "pet"
         }
       ],
-      "defaultEnvironment": "",
+      "defaultEnvironment": "x-fern-server-name",
       "environments": [
         {
-          "id": "",
+          "id": "x-fern-server-name",
           "baseUrl": "/api/v31"
         }
       ],
@@ -32,10 +32,10 @@
           "value": "pet"
         }
       ],
-      "defaultEnvironment": "",
+      "defaultEnvironment": "x-fern-server-name",
       "environments": [
         {
-          "id": "",
+          "id": "x-fern-server-name",
           "baseUrl": "/api/v31"
         }
       ],
@@ -57,10 +57,10 @@
           "value": "petId"
         }
       ],
-      "defaultEnvironment": "",
+      "defaultEnvironment": "x-fern-server-name",
       "environments": [
         {
-          "id": "",
+          "id": "x-fern-server-name",
           "baseUrl": "/api/v31"
         }
       ],

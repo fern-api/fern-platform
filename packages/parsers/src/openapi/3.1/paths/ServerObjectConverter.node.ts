@@ -24,7 +24,7 @@ export class ServerObjectConverterNode extends BaseOpenApiV3_1Node<
         return {
             // TODO: url validation here
             // x-fern-server-name here
-            id: FdrAPI.EnvironmentId(""),
+            id: FdrAPI.EnvironmentId("x-fern-server-name"),
             baseUrl: this.url,
         };
     }
