@@ -1,6 +1,6 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
-import { isNonNullish } from "../../../../../commons/core-utils/src/isNonNullish";
 import { BaseOpenApiV3_1Node, BaseOpenApiV3_1NodeConstructorArgs } from "../../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
 import { isReferenceObject } from "../guards/isReferenceObject";
