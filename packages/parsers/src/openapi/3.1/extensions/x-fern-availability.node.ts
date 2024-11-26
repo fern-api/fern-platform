@@ -1,4 +1,5 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import {
     BaseOpenApiV3_1ConverterNode,
@@ -10,26 +11,33 @@ import { extendType } from "../../utils/extendType";
 const AVAILABILITY = ["pre-release", "in-development", "generally-available", "deprecated"] as const;
 type Availability = ConstArrayToType<typeof AVAILABILITY>;
 
-export class AvailabilityNode extends BaseOpenApiV3_1ConverterNode<unknown, FdrAPI.Availability | undefined> {
+export class AvailabilityNode extends BaseOpenApiV3_1ConverterNode<
+    OpenAPIV3_1.SchemaObject,
+    FdrAPI.Availability | undefined
+> {
     availability?: Availability;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
+    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.SchemaObject>) {
         super(args);
         this.safeParse();
     }
 
     parse(): void {
-        const maybeAvailability = extendType<{
-            "x-fern-availability"?: Availability;
-        }>(this.input)["x-fern-availability"];
-        if (maybeAvailability != null && AVAILABILITY.includes(maybeAvailability)) {
-            this.availability = maybeAvailability;
+        if (this.input.deprecated) {
+            this.availability = "deprecated";
         } else {
-            this.context.errors.warning({
-                message: `Expected one of: ${AVAILABILITY.join(", ")}. Received: ${maybeAvailability}`,
-                path: this.accessPath,
-            });
-            this.availability = undefined;
+            const maybeAvailability = extendType<{
+                "x-fern-availability"?: Availability;
+            }>(this.input)["x-fern-availability"];
+            if (maybeAvailability != null && AVAILABILITY.includes(maybeAvailability)) {
+                this.availability = maybeAvailability;
+            } else {
+                this.context.errors.warning({
+                    message: `Expected one of: ${AVAILABILITY.join(", ")}. Received: ${maybeAvailability}`,
+                    path: this.accessPath,
+                });
+                this.availability = undefined;
+            }
         }
     }
 
