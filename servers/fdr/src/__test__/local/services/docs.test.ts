@@ -92,7 +92,7 @@ it("oneleet domain manipulation", async () => {
         await fdr.docs.v2.write.startDocsRegister({
             orgId: FdrAPI.OrgId(`plantstore-oneleet2024-test${Math.random()}`),
             apiId: FdrAPI.ApiId(""),
-            domain: domain,
+            domain,
             customDomains: [],
             filepaths: [
                 DocsV1Write.FilePath("logo.png"),
