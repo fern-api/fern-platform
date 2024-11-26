@@ -1,4 +1,3 @@
-
 const HAS_HTTPS_REGEX = /^https?:\/\//i;
 
 export class ParsedBaseUrl {
@@ -31,7 +30,12 @@ export class ParsedBaseUrl {
             return new ParsedBaseUrl({
                 hostname: parsedURL.hostname,
                 // clean up any special-character-only (no alphanumeric) paths
-                path: !(/^.*([a-z0-9]).*$/.test(parsedURL.pathname)) || parsedURL.pathname === "/" || parsedURL.pathname === "" ? undefined : parsedURL.pathname,
+                path:
+                    !/^.*([a-z0-9]).*$/.test(parsedURL.pathname) ||
+                    parsedURL.pathname === "/" ||
+                    parsedURL.pathname === ""
+                        ? undefined
+                        : parsedURL.pathname,
             });
         } catch (e) {
             throw new Error(`Failed to parse URL: ${url}. The error was ${(e as Error)?.message}`);
