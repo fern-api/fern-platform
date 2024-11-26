@@ -7,7 +7,7 @@ import {
 import { ConstArrayToType } from "../../types/format.types";
 import { extendType } from "../../utils/extendType";
 
-const AVAILABILITY = ["beta", "in-development", "deprecated"] as const;
+const AVAILABILITY = ["pre-release", "in-development", "generally-available", "deprecated"] as const;
 type Availability = ConstArrayToType<typeof AVAILABILITY>;
 
 export class AvailabilityNode extends BaseOpenApiV3_1ConverterNode<unknown, FdrAPI.Availability | undefined> {
@@ -35,10 +35,12 @@ export class AvailabilityNode extends BaseOpenApiV3_1ConverterNode<unknown, FdrA
 
     convert(): FdrAPI.Availability | undefined {
         switch (this.availability) {
-            case "beta":
+            case "pre-release":
                 return FdrAPI.Availability.Beta;
             case "in-development":
                 return FdrAPI.Availability.InDevelopment;
+            case "generally-available":
+                return FdrAPI.Availability.GenerallyAvailable;
             case "deprecated":
                 return FdrAPI.Availability.Deprecated;
             case undefined:
