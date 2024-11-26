@@ -1,4 +1,3 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { ObjectConverterNode } from "../ObjectConverter.node";
 import { SchemaConverterNode } from "../SchemaConverter.node";
@@ -15,7 +14,12 @@ describe("ObjectConverterNode", () => {
             const input: ObjectConverterNode.Input = {
                 type: "object",
             };
-            const node = new ObjectConverterNode(input, mockContext, [], "test");
+            const node = new ObjectConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.extends).toEqual([]);
             expect(node.properties).toEqual({});
             expect(node.extraProperties).toBeUndefined();
@@ -29,10 +33,15 @@ describe("ObjectConverterNode", () => {
                     age: { type: "integer" },
                 },
             };
-            const node = new ObjectConverterNode(input, mockContext, [], "test");
-            expect(Object.keys(node.properties)).toEqual(["name", "age"]);
-            expect(node.properties.name).toBeInstanceOf(SchemaConverterNode);
-            expect(node.properties.age).toBeInstanceOf(SchemaConverterNode);
+            const node = new ObjectConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
+            expect(Object.keys(node.properties ?? {})).toEqual(["name", "age"]);
+            expect(node.properties?.name).toBeInstanceOf(SchemaConverterNode);
+            expect(node.properties?.age).toBeInstanceOf(SchemaConverterNode);
         });
 
         it("should handle additionalProperties as boolean true", () => {
@@ -41,15 +50,17 @@ describe("ObjectConverterNode", () => {
                 additionalProperties: true,
                 title: "TestObject",
             };
-            const node = new ObjectConverterNode(input, mockContext, [], "test");
+            const node = new ObjectConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.extraProperties).toBeDefined();
-            const converted = node.extraProperties?.convert();
+            const converted = node.convert()?.extraProperties;
             expect(converted).toEqual({
-                type: "alias",
-                value: {
-                    type: "unknown",
-                    displayName: "TestObject",
-                },
+                type: "unknown",
+                displayName: "TestObject",
             });
         });
 
@@ -58,7 +69,12 @@ describe("ObjectConverterNode", () => {
                 type: "object",
                 additionalProperties: false,
             };
-            const node = new ObjectConverterNode(input, mockContext, [], "test");
+            const node = new ObjectConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.extraProperties).toBeUndefined();
         });
 
@@ -67,7 +83,12 @@ describe("ObjectConverterNode", () => {
                 type: "object",
                 additionalProperties: { type: "string" },
             };
-            const node = new ObjectConverterNode(input, mockContext, [], "test");
+            const node = new ObjectConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.extraProperties).toBeInstanceOf(SchemaConverterNode);
         });
     });
@@ -80,7 +101,12 @@ describe("ObjectConverterNode", () => {
                     name: { type: "string" },
                 },
             };
-            const node = new ObjectConverterNode(input, mockContext, [], "test");
+            const node = new ObjectConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             const converted = node.convert();
             expect(converted).toEqual({
                 type: "object",
@@ -103,7 +129,12 @@ describe("ObjectConverterNode", () => {
                 additionalProperties: true,
                 title: "TestObject",
             };
-            const node = new ObjectConverterNode(input, mockContext, [], "test");
+            const node = new ObjectConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             const converted = node.convert();
             expect(converted).toEqual({
                 type: "object",

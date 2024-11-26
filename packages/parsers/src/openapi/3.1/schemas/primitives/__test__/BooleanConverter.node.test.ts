@@ -1,5 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
-import { createMockContext } from "../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../../../__test__/createMockContext.util";
 import { BooleanConverterNode } from "../BooleanConverter.node";
 
 describe("BooleanConverterNode", () => {
@@ -14,7 +13,12 @@ describe("BooleanConverterNode", () => {
             const input: BooleanConverterNode.Input = {
                 type: "boolean",
             };
-            const node = new BooleanConverterNode(input, mockContext, [], "test");
+            const node = new BooleanConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.default).toBeUndefined();
         });
 
@@ -23,7 +27,12 @@ describe("BooleanConverterNode", () => {
                 type: "boolean",
                 default: true,
             };
-            const node = new BooleanConverterNode(input, mockContext, [], "test");
+            const node = new BooleanConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.default).toBe(true);
         });
 
@@ -33,10 +42,15 @@ describe("BooleanConverterNode", () => {
                 default: "not-a-boolean",
             } as BooleanConverterNode.Input;
 
-            new BooleanConverterNode(input, mockContext, [], "test");
+            new BooleanConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
 
             expect(mockContext.errors.warning).toHaveBeenCalledWith({
-                message: "The default value for a boolean type should be a boolean",
+                message: "Expected default value to be a boolean. Received not-a-boolean",
                 path: ["test"],
             });
         });
@@ -47,10 +61,21 @@ describe("BooleanConverterNode", () => {
             const input: BooleanConverterNode.Input = {
                 type: "boolean",
             };
-            const node = new BooleanConverterNode(input, mockContext, [], "test");
+            const node = new BooleanConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.convert()).toEqual({
-                type: "boolean",
-                default: undefined,
+                type: "alias",
+                value: {
+                    type: "primitive",
+                    value: {
+                        type: "boolean",
+                        default: undefined,
+                    },
+                },
             });
         });
 
@@ -59,10 +84,21 @@ describe("BooleanConverterNode", () => {
                 type: "boolean",
                 default: false,
             };
-            const node = new BooleanConverterNode(input, mockContext, [], "test");
+            const node = new BooleanConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
             expect(node.convert()).toEqual({
-                type: "boolean",
-                default: false,
+                type: "alias",
+                value: {
+                    type: "primitive",
+                    value: {
+                        type: "boolean",
+                        default: false,
+                    },
+                },
             });
         });
     });
