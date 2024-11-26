@@ -90,8 +90,8 @@ it("oneleet domain manipulation", async () => {
     // register docs
     const startDocsRegisterResponse = getAPIResponse(
         await fdr.docs.v2.write.startDocsRegister({
-            orgId: `plantstore-oneleet2024-test${Math.random()}`,
-            apiId: "",
+            orgId: FdrAPI.OrgId(`plantstore-oneleet2024-test${Math.random()}`),
+            apiId: FdrAPI.ApiId(""),
             domain: domain,
             customDomains: [],
             filepaths: [
@@ -104,11 +104,10 @@ it("oneleet domain manipulation", async () => {
     await fdr.docs.v2.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {
         docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
     });
-    // expect (startDocsRegisterResponse).toEqual("Domain belongs to another org")
 
     const startDocsRegisterResponse2 = await fdr.docs.v2.write.startDocsRegister({
-        orgId: `plantstore-oneleet2024-test${Math.random()}`,
-        apiId: "",
+        orgId: FdrAPI.OrgId(`plantstore-oneleet2024-test${Math.random()}`),
+        apiId: FdrAPI.ApiId(""),
         domain: domain + '//',
         customDomains: [],
         filepaths: [
@@ -119,7 +118,7 @@ it("oneleet domain manipulation", async () => {
     });
     
     // expecting an error, because adding // to the domain should not bypass domain check
-    expect (startDocsRegisterResponse2.error.content).toEqual({
+    expect ((startDocsRegisterResponse2 as any).error.content).toEqual({
         body: `The following domains belong to another organization: ${domain.replace('https://', '')}`,
         reason: "status-code",
         statusCode: 403,
