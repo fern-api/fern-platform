@@ -9,9 +9,9 @@ import { ConstArrayToType } from "../../types/format.types";
 import { extendType } from "../../utils/extendType";
 
 const AVAILABILITY = ["pre-release", "in-development", "generally-available", "deprecated"] as const;
-type Availability = ConstArrayToType<typeof AVAILABILITY>;
+export type Availability = ConstArrayToType<typeof AVAILABILITY>;
 
-export class AvailabilityNode extends BaseOpenApiV3_1ConverterNode<
+export class AvailabilityConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.SchemaObject,
     FdrAPI.Availability | undefined
 > {
