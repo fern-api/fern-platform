@@ -84,13 +84,13 @@ it("docs register", async () => {
     });
 });
 
-it("oneleet domain manipulation", async () => {
+it("test domain special character permissions", async () => {
     const fdr = getClient({ authed: true, url: inject("url") });
     const domain = `https://fern-${Math.random()}.docs.buildwithfern.com`;
     // register docs
     const startDocsRegisterResponse = getAPIResponse(
         await fdr.docs.v2.write.startDocsRegister({
-            orgId: FdrAPI.OrgId(`plantstore-oneleet2024-test${Math.random()}`),
+            orgId: FdrAPI.OrgId(`plantstore-2024-test${Math.random()}`),
             apiId: FdrAPI.ApiId(""),
             domain,
             customDomains: [],
@@ -106,7 +106,7 @@ it("oneleet domain manipulation", async () => {
     });
 
     const startDocsRegisterResponse2 = await fdr.docs.v2.write.startDocsRegister({
-        orgId: FdrAPI.OrgId(`plantstore-oneleet2024-test${Math.random()}`),
+        orgId: FdrAPI.OrgId(`plantstore-2024-test${Math.random()}`),
         apiId: FdrAPI.ApiId(""),
         domain: domain + "//",
         customDomains: [],
