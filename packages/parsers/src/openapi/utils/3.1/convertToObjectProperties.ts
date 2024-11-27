@@ -1,5 +1,5 @@
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { isNonNullish } from "../../../../../commons/core-utils/src/isNonNullish";
+import { isNonNullish } from "@fern-api/ui-core-utils";
 import { AvailabilityConverterNode } from "../../3.1/extensions/AvailabilityConverter.node";
 
 export function convertToObjectProperties(
