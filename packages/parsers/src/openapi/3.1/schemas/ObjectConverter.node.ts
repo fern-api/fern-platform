@@ -12,7 +12,7 @@ import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export declare namespace ObjectConverterNode {
     interface Input extends OpenAPIV3_1.NonArraySchemaObject {
-        type: "object";
+        type?: "object";
     }
 }
 

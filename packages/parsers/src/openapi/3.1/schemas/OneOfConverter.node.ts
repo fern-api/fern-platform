@@ -6,7 +6,6 @@ import {
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
-import { isReferenceObject } from "../guards/isReferenceObject";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
@@ -30,13 +29,13 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
                 this.discriminated = false;
                 this.undiscriminatedMapping = this.input.oneOf
                     ?.map((schema) => {
-                        if (!isReferenceObject(schema) && schema.type !== "object") {
-                            this.context.errors.error({
-                                message: `Expected 'oneOf' schema to be an object. Received ${schema.type}`,
-                                path: this.accessPath,
-                            });
-                            return undefined;
-                        }
+                        // if (!isReferenceObject(schema) && schema.type !== "object") {
+                        //     this.context.errors.error({
+                        //         message: `Expected 'oneOf' schema to be an object. Received ${schema.type}`,
+                        //         path: this.accessPath,
+                        //     });
+                        //     return undefined;
+                        // }
                         return new SchemaConverterNode({
                             input: schema,
                             context: this.context,

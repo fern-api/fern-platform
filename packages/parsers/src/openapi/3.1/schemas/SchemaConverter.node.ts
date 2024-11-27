@@ -77,6 +77,15 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
                     accessPath: this.accessPath,
                     pathId: this.pathId,
                 });
+                // here, isObjectSchema also supports null type
+            } else if (isObjectSchema(this.input) && this.input.allOf != null) {
+                // Object Converter Node encapsulates allOf logic, so we use that
+                this.typeShapeNode = new ObjectConverterNode({
+                    input: this.input,
+                    context: this.context,
+                    accessPath: this.accessPath,
+                    pathId: this.pathId,
+                });
             } else if (isNonArraySchema(this.input) && this.input.enum != null) {
                 this.typeShapeNode = new EnumConverterNode({
                     input: this.input,
@@ -174,7 +183,6 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
         }
 
         if (this.typeShapeNode == null) {
-            console.log(JSON.stringify(this.input, null, 2));
             this.context.errors.error({
                 message: "Expected type declaration. Received: null",
                 path: this.accessPath,

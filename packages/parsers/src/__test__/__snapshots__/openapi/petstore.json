@@ -130,7 +130,32 @@
         },
         "description": "The pet"
       },
-      "errors": [],
+      "errors": [
+        {
+          "statusCode": 400,
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "Invalid ID supplied",
+          "name": "dummy error"
+        },
+        {
+          "statusCode": 404,
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "Pet not found",
+          "name": "dummy error"
+        }
+      ],
       "examples": []
     }
   },
