@@ -29,6 +29,7 @@ export const CommandGroupSearchHits = ({
                                 icon={hit.icon}
                                 type={hit.record?.type === "api-reference" ? hit.record?.api_type : hit.record?.type}
                                 isSubPage={hit.record?.hash != null}
+                                className="self-start"
                             />
                             {hit.record != null && (
                                 <HitContent hit={hit.record as MarkRequired<AlgoliaRecordHit, "type">} />

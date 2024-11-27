@@ -48,28 +48,31 @@ function HitContentWithTitle({
     // rightContent?: ReactNode;
 }): ReactElement {
     return (
-        <div className="space-y-1 flex-1 shrink min-w-0">
+        <div className="flex-1 shrink min-w-0">
             <div className="flex items-baseline gap-1 justify-between">
-                <Highlight
-                    attribute="title"
-                    hit={hit}
-                    classNames={{
-                        root: clsx("fern-search-hit-title", {
-                            deprecated:
-                                hit.availability === "Deprecated" ||
-                                hit.availability === "Sunset" ||
-                                hit.availability === "Retired",
-                        }),
-                        highlighted: "fern-search-hit-highlighted",
-                        nonHighlighted: "fern-search-hit-non-highlighted",
-                    }}
-                />
-                {hit.availability && <AvailabilityBadge availability={hit.availability} size="sm" rounded />}
-                {!hit.availability && (
-                    <span className="text-[var(--grayscale-a10)] text-sm">
-                        {SEGMENT_DISPLAY_NAMES[hit.type === "api-reference" ? hit.api_type : hit.type]}
-                    </span>
-                )}
+                <span
+                    className={clsx("fern-search-hit-title", {
+                        deprecated:
+                            hit.availability === "Deprecated" ||
+                            hit.availability === "Sunset" ||
+                            hit.availability === "Retired",
+                    })}
+                >
+                    <Highlight
+                        attribute="title"
+                        hit={hit}
+                        classNames={{
+                            highlighted: "fern-search-hit-highlighted",
+                            nonHighlighted: "fern-search-hit-non-highlighted",
+                        }}
+                    />
+                    {hit.availability && (
+                        <AvailabilityBadge availability={hit.availability} size="sm" rounded className="ml-1" />
+                    )}
+                </span>
+                <span className="text-[var(--grayscale-a10)] text-sm">
+                    {SEGMENT_DISPLAY_NAMES[hit.type === "api-reference" ? hit.api_type : hit.type]}
+                </span>
             </div>
             {children}
         </div>
@@ -80,7 +83,7 @@ function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
     return (
         <HitContentWithTitle hit={hit}>
             <Breadcrumb breadcrumb={createHierarchyBreadcrumb(hit.breadcrumb, hit.hierarchy, hit.level)} />
-            <HitSnippet hit={hit} attribute={hit._highlightResult?.description ? "description" : "content"} />
+            {/* <HitSnippet hit={hit} attribute={hit._highlightResult?.description ? "description" : "content"} /> */}
         </HitContentWithTitle>
     );
 }
@@ -90,21 +93,21 @@ function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement
     return (
         <HitContentWithTitle hit={hit}>
             <Breadcrumb breadcrumb={[...hit.breadcrumb.map((crumb) => crumb.title), datestring]} />
-            <HitSnippet hit={hit} attribute={hit._highlightResult?.description ? "description" : "content"} />
+            {/* <HitSnippet hit={hit} attribute={hit._highlightResult?.description ? "description" : "content"} /> */}
         </HitContentWithTitle>
     );
 }
 
 function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactElement {
-    const attribute = hit._highlightResult?.request_description
-        ? "request_description"
-        : hit._highlightResult?.response_description
-          ? "response_description"
-          : hit._highlightResult?.payload_description
-            ? "payload_description"
-            : hit._highlightResult?.description
-              ? "description"
-              : undefined;
+    // const attribute = hit._highlightResult?.request_description
+    //     ? "request_description"
+    //     : hit._highlightResult?.response_description
+    //       ? "response_description"
+    //       : hit._highlightResult?.payload_description
+    //         ? "payload_description"
+    //         : hit._highlightResult?.description
+    //           ? "description"
+    //           : undefined;
 
     // const rightTitle = last(hit.breadcrumb)?.title;
 
@@ -117,7 +120,7 @@ function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactE
                 <HttpMethodBadge method={hit.method} size="sm" className="shrink-0" variant="outlined" />
                 <span className="fern-search-hit-endpoint-path shrink">{hit.endpoint_path}</span>
             </div>
-            <HitSnippet hit={hit} attribute={attribute} />
+            {/* <HitSnippet hit={hit} attribute={attribute} /> */}
         </HitContentWithTitle>
     );
 }

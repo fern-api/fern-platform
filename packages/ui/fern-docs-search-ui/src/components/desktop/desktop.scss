@@ -84,11 +84,15 @@
     }
 
     [cmdk-item] {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+
         border-radius: calc(0.5rem - 2px);
         padding: 0.5rem;
         text-align: left;
         display: flex;
-        gap: 0.5rem;
+        gap: 1rem;
+        align-items: center;
         cursor: default;
         scroll-margin: 0.75rem 0;
 
@@ -106,10 +110,6 @@
             color: inherit;
         }
 
-        .fern-search-hit-snippet {
-            display: none;
-        }
-
         @media (hover: hover) and (pointer: fine) {
             &[data-selected="true"] {
                 background-color: var(--accent-a3);
@@ -120,10 +120,6 @@
                 .fern-search-hit-endpoint-path {
                     color: var(--accent-a11);
                     opacity: 0.8;
-                }
-
-                .fern-search-hit-snippet:not(:empty) {
-                    display: block;
                 }
             }
         }

@@ -32,7 +32,7 @@ export const CommandGroupFilters = forwardRef<
                     }}
                 >
                     <ListFilter />
-                    <span className="flex-1">Search {getFacetDisplay(filter.facet, filter.value)}</span>
+                    <span className="flex-1">Filter to {getFacetDisplay(filter.facet, filter.value)}</span>
                     <span className="text-xs text-[var(--grayscale-a9)] self-center">{filter.count}</span>
                 </Command.Item>
             ))}

@@ -1,5 +1,4 @@
 import { FacetFilter } from "@/hooks/use-facets";
-import { FACET_DISPLAY_NAME_MAP } from "@/utils/facet-display";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { Command } from "cmdk";
@@ -117,7 +116,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps>((p
                     inputMode="search"
                     autoFocus
                     value={query}
-                    placeholder={toPlaceholder(filters)}
+                    placeholder="Search"
                     onValueChange={(value) => {
                         refine(value);
                         scrollTop();
@@ -160,7 +159,7 @@ export const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps>((p
                     <CommandGroupSearchHits items={items} onSelect={onSelect} />
                 )}
 
-                <CommandGroupTheme setTheme={setTheme} />
+                {filters.length === 0 && <CommandGroupTheme setTheme={setTheme} />}
             </Command.List>
         </Command>
     );
@@ -168,10 +167,10 @@ export const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps>((p
 
 DesktopCommand.displayName = "DesktopCommand";
 
-function toPlaceholder(filters: readonly FacetFilter[]): string {
-    if (filters.length === 0) {
-        return "Search";
-    }
+// function toPlaceholder(filters: readonly FacetFilter[]): string {
+//     if (filters.length === 0) {
+//         return "Search";
+//     }
 
-    return `Search ${filters.map((filter) => FACET_DISPLAY_NAME_MAP[filter.facet]?.[filter.value] ?? filter.value).join(", ")}`;
-}
+//     return `Search ${filters.map((filter) => FACET_DISPLAY_NAME_MAP[filter.facet]?.[filter.value] ?? filter.value).join(", ")}`;
+// }
