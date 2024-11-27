@@ -55,7 +55,7 @@ function pathnameIsMalformed(pathname: string): boolean {
 function validateAndParseFernDomainUrl({ app, url }: { app: FdrApplication; url: string }): ParsedBaseUrl {
     const baseUrl = ParsedBaseUrl.parse(url);
     if (baseUrl.path != null && pathnameIsMalformed(baseUrl.path)) {
-        throw new InvalidUrlError("Domain URL is malformed");
+        throw new InvalidUrlError(`Domain URL is malformed: https://${baseUrl.hostname + baseUrl.path}`);
     }
     if (!baseUrl.hostname.endsWith(app.config.domainSuffix)) {
         throw new InvalidDomainError();

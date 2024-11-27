@@ -84,7 +84,7 @@ it("docs register", async () => {
     });
 });
 
-it("test domain special character permissions", async () => {
+it("test invalid domain URL - special characters", async () => {
     const fdr = getClient({ authed: true, url: inject("url") });
     const domain = `https://fern-${Math.random()}.docs.buildwithfern.com`;
     // register docs
@@ -119,7 +119,7 @@ it("test domain special character permissions", async () => {
 
     // expecting an error, because adding // to the domain should not bypass domain check
     expect((startDocsRegisterResponse2 as any).error.content).toEqual({
-        body: "Domain URL is malformed",
+        body: `Domain URL is malformed: ${domain + "//"}`,
         reason: "status-code",
         statusCode: 400,
     });
