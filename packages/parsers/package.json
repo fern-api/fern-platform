@@ -6,7 +6,6 @@
     "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/parsers"
   },
-  "private": true,
   "sideEffects": false,
   "type": "module",
   "scripts": {
