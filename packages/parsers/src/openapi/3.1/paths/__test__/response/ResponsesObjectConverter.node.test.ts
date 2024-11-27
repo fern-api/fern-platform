@@ -1,156 +1,142 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { createMockContext } from "../../../../../__test__/createMockContext.util";
-import { ReferenceConverterNode } from "../../../schemas/ReferenceConverter.node";
-import { RequestMediaTypeObjectConverterNode } from "../../request/RequestMediaTypeObjectConverter.node";
+import { ResponsesObjectConverterNode } from "../../response/ResponsesObjectConverter.node";
 
-describe("RequestMediaTypeObjectConverterNode", () => {
+describe("ResponsesObjectConverterNode", () => {
     const mockContext = createMockContext();
 
-    it("should handle application/json content type", () => {
-        const input: OpenAPIV3_1.MediaTypeObject = {
-            schema: {
-                type: "object",
-                properties: {
-                    name: { type: "string" },
-                },
-            },
-        };
-
-        const converter = new RequestMediaTypeObjectConverterNode(
-            {
-                input,
-                context: mockContext,
-                accessPath: [],
-                pathId: "test",
-            },
-            "application/json",
-        );
-
-        expect(converter.contentType).toBe("application/json");
-        expect(converter.schema).toBeDefined();
-    });
-
-    it("should handle application/octet-stream content type", () => {
-        const input: OpenAPIV3_1.MediaTypeObject = {
-            schema: {
-                type: "object",
-                required: ["data"],
-            },
-        };
-
-        const converter = new RequestMediaTypeObjectConverterNode(
-            {
-                input,
-                context: mockContext,
-                accessPath: [],
-                pathId: "test",
-            },
-            "application/octet-stream",
-        );
-
-        expect(converter.contentType).toBe("application/octet-stream");
-        expect(converter.isOptional).toBe(false);
-    });
-
-    it("should handle multipart/form-data content type", () => {
-        const input: OpenAPIV3_1.MediaTypeObject = {
-            schema: {
-                type: "object",
-                properties: {
-                    file: {
-                        type: "string",
-                        format: "binary",
+    it("should handle success responses", () => {
+        const input: OpenAPIV3_1.ResponsesObject = {
+            "200": {
+                description: "Success response",
+                content: {
+                    "application/json": {
+                        schema: {
+                            type: "object",
+                            properties: {
+                                data: { type: "string" },
+                            },
+                        },
                     },
                 },
-                required: ["file"],
             },
         };
 
-        const converter = new RequestMediaTypeObjectConverterNode(
-            {
-                input,
-                context: mockContext,
-                accessPath: [],
-                pathId: "test",
-            },
-            "multipart/form-data",
-        );
+        const converter = new ResponsesObjectConverterNode({
+            input,
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
+        });
 
-        expect(converter.contentType).toBe("multipart/form-data");
-        expect(converter.fields).toBeDefined();
-        expect(converter.requiredFields).toContain("file");
+        const result = converter.convert();
+        expect(result?.responses).toBeDefined();
+        expect(result?.responses[0]?.response.statusCode).toBe(200);
+        expect(result?.responses[0]?.response.description).toBe("Success response");
     });
 
-    it("should handle reference objects", () => {
-        const input: OpenAPIV3_1.MediaTypeObject = {
-            schema: {
-                $ref: "#/components/schemas/Request",
-            },
-        };
-
-        mockContext.document.components ??= {};
-        mockContext.document.components.schemas = {
-            Request: {
-                type: "object",
-                properties: {
-                    data: { type: "string" },
+    it("should handle error responses", () => {
+        const input: OpenAPIV3_1.ResponsesObject = {
+            "400": {
+                description: "Bad request",
+                content: {
+                    "application/json": {
+                        schema: {
+                            type: "object",
+                            properties: {
+                                error: { type: "string" },
+                            },
+                        },
+                    },
                 },
             },
         };
 
-        const converter = new RequestMediaTypeObjectConverterNode(
-            {
-                input,
-                context: mockContext,
-                accessPath: [],
-                pathId: "test",
-            },
-            "application/json",
-        );
-
-        expect(converter.schema).toBeDefined();
-        expect(converter.schema instanceof ReferenceConverterNode).toBe(true);
-    });
-
-    it("should warn when schema is missing", () => {
-        const input: OpenAPIV3_1.MediaTypeObject = {};
-
-        new RequestMediaTypeObjectConverterNode(
-            {
-                input,
-                context: mockContext,
-                accessPath: [],
-                pathId: "test",
-            },
-            "application/json",
-        );
-
-        expect(mockContext.errors.warning).toHaveBeenCalledWith({
-            message: expect.stringContaining("Expected media type schema"),
-            path: ["test"],
+        const converter = new ResponsesObjectConverterNode({
+            input,
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
         });
+
+        const result = converter.convert();
+        expect(result?.errors).toBeDefined();
+        expect(result?.errors[0]?.statusCode).toBe(400);
+        expect(result?.errors[0]?.description).toBe("Bad request");
     });
 
-    it("should warn for unsupported content types", () => {
-        const input: OpenAPIV3_1.MediaTypeObject = {
-            schema: {
-                type: "object",
+    it("should handle responses with headers", () => {
+        const input: OpenAPIV3_1.ResponsesObject = {
+            "200": {
+                description: "Success with headers",
+                headers: {
+                    "X-Rate-Limit": {
+                        schema: {
+                            type: "integer",
+                        },
+                    },
+                },
+                content: {
+                    "application/json": {
+                        schema: {
+                            type: "object",
+                        },
+                    },
+                },
             },
         };
 
-        new RequestMediaTypeObjectConverterNode(
-            {
-                input,
-                context: mockContext,
-                accessPath: [],
-                pathId: "test",
-            },
-            "text/plain",
-        );
-
-        expect(mockContext.errors.warning).toHaveBeenCalledWith({
-            message: expect.stringContaining("Expected request body"),
-            path: ["test"],
+        const converter = new ResponsesObjectConverterNode({
+            input,
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
         });
+
+        const result = converter.convert();
+        expect(result?.responses[0]?.headers).toBeDefined();
+    });
+
+    it("should handle default responses", () => {
+        const input: OpenAPIV3_1.ResponsesObject = {
+            default: {
+                description: "Default response",
+                content: {
+                    "application/json": {
+                        schema: {
+                            type: "object",
+                        },
+                    },
+                },
+            },
+            "200": {
+                description: "Success",
+            },
+        };
+
+        const converter = new ResponsesObjectConverterNode({
+            input,
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
+        });
+
+        const result = converter.convert();
+        expect(result?.responses).toBeDefined();
+    });
+
+    it("should handle empty responses", () => {
+        const input: OpenAPIV3_1.ResponsesObject = {};
+
+        const converter = new ResponsesObjectConverterNode({
+            input,
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
+        });
+
+        const result = converter.convert();
+        expect(result?.responses).toEqual([]);
+        expect(result?.errors).toEqual([]);
     });
 });
