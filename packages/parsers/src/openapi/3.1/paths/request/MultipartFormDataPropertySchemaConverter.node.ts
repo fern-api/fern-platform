@@ -17,6 +17,7 @@ export class MultipartFormDataPropertySchemaConverterNode extends SchemaConverte
         super(args);
         this.safeParse();
     }
+
     override parse(): void {
         super.parse();
         const propertyObject = isReferenceObject(this.input)

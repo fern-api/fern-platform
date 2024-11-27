@@ -29,7 +29,11 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
             : this.input;
 
         if (requestBody == null) {
-            return;
+            this.context.errors.error({
+                message: "Expected request body. Received: null",
+                path: this.accessPath,
+            });
+            return undefined;
         }
 
         Object.entries(requestBody.content).forEach(([contentType, contentTypeObject]) => {

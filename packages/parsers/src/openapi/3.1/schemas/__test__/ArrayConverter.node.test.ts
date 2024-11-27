@@ -36,7 +36,7 @@ describe("ArrayConverterNode", () => {
                 pathId: "test",
             });
             expect(mockContext.errors.error).toHaveBeenCalledWith({
-                message: "Error converting node. Please contact support if the error persists.",
+                message: "Error converting node. Please contact support if the error persists",
                 path: ["test", "items"],
             });
         });

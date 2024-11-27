@@ -1,7 +1,9 @@
 import { OpenAPIV3_1 } from "openapi-types";
-import { resolveSchemaReference } from "../../3.1/resolveSchemaReference";
+import { resolveReference } from "../../3.1/resolveReference";
 
-describe("resolveSchemaReference", () => {
+const defaultOutput = ["out"];
+
+describe("resolveReference", () => {
     it("should resolve a simple schema reference", () => {
         const document: OpenAPIV3_1.Document = {
             openapi: "3.1.0",
@@ -23,7 +25,7 @@ describe("resolveSchemaReference", () => {
             $ref: "#/components/schemas/Pet",
         };
 
-        const result = resolveSchemaReference(reference, document);
+        const result = resolveReference(reference, document, defaultOutput);
         expect(result).toEqual({
             type: "object",
             properties: {
@@ -50,7 +52,7 @@ describe("resolveSchemaReference", () => {
             $ref: "#/components/schemas/namespace~1type",
         };
 
-        const result = resolveSchemaReference(reference, document);
+        const result = resolveReference(reference, document, defaultOutput);
         expect(result).toEqual({
             type: "string",
         });
@@ -70,10 +72,7 @@ describe("resolveSchemaReference", () => {
             $ref: "#/components/schemas/NonExistent",
         };
 
-        const result = resolveSchemaReference(reference, document);
-        expect(result).toEqual({
-            "x-fern-type": "unknown",
-            additionalProperties: true,
-        });
+        const result = resolveReference(reference, document, defaultOutput);
+        expect(result).toEqual(defaultOutput);
     });
 });

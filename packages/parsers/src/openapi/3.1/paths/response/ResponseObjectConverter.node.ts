@@ -33,7 +33,7 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
         if (input == null) {
             this.context.errors.error({
-                message: "Expected response to be defined. Received null.",
+                message: "Expected response to be defined. Received null",
                 path: this.accessPath,
             });
             return;

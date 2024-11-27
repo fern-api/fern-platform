@@ -46,7 +46,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
             if (this.input.schema == null) {
                 if (streamingFormat == null || streamingFormat === "json") {
                     this.context.errors.error({
-                        message: "Expected schema for JSON response body. Received null.",
+                        message: "Expected schema for JSON response body. Received null",
                         path: this.accessPath,
                     });
                 }

@@ -54,7 +54,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                     parameter = resolvedParameter;
                 } else {
                     this.context.errors.warning({
-                        message: "Expected parameter reference to resolve to a parameter object. Received undefined",
+                        message: "Expected parameter reference to resolve to a parameter object. Received null",
                         path: this.accessPath,
                     });
                     return undefined;

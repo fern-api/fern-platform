@@ -58,9 +58,10 @@ export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNo
                 });
                 this.required = this.input.required;
             } else {
-                this.context.logger.error(
-                    `Expected reference or schema for parameter. Received: ${JSON.stringify(this.input)}`,
-                );
+                this.context.errors.error({
+                    message: `Expected reference or schema for parameter. Received: ${JSON.stringify(this.input)}`,
+                    path: this.accessPath,
+                });
             }
         }
     }
