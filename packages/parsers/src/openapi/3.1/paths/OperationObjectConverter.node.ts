@@ -151,7 +151,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         }
 
         // TODO: revisit fdr shape to suport multiple responses
-        const response = this.responses?.convert()?.[0];
+        const { responses, errors } = this.responses?.convert() ?? { responses: undefined, errors: undefined };
 
         return {
             description: this.description,
@@ -167,13 +167,11 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             pathParameters: convertToObjectProperties(this.pathParameters),
             queryParameters: convertToObjectProperties(this.queryParameters),
             requestHeaders: convertToObjectProperties(this.requestHeaders),
-            responseHeaders: convertToObjectProperties(
-                this.responses?.responsesByStatusCode?.[response?.statusCode ?? ""]?.headers,
-            ),
+            responseHeaders: responses?.[0]?.headers,
             // TODO: revisit fdr shape to suport multiple requests
             request: this.requests?.convert()[0],
-            response,
-            errors: [],
+            response: responses?.[0]?.response,
+            errors,
             examples: [],
             snippetTemplates: undefined,
         };

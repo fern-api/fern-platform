@@ -5,13 +5,21 @@ import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
+import { convertToObjectProperties } from "../../../utils/3.1/convertToObjectProperties";
 import { ResponseObjectConverterNode } from "./ResponseObjectConverter.node";
 
 export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.ResponsesObject,
-    FdrAPI.api.latest.HttpResponse[]
+    {
+        responses: {
+            headers: FdrAPI.api.latest.ObjectProperty[] | undefined;
+            response: FdrAPI.api.latest.HttpResponse;
+        }[];
+        errors: FdrAPI.api.latest.ErrorResponse[];
+    }
 > {
     responsesByStatusCode: Record<string, ResponseObjectConverterNode> | undefined;
+    errorsByStatusCode: Record<string, ResponseObjectConverterNode> | undefined;
 
     constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ResponsesObject>) {
         super(args);
@@ -19,22 +27,31 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     parse(): void {
-        this.responsesByStatusCode = Object.fromEntries(
-            Object.entries(this.input).map(([statusCode, response]) => {
-                return [
-                    statusCode,
-                    new ResponseObjectConverterNode({
-                        input: response,
-                        context: this.context,
-                        accessPath: this.accessPath,
-                        pathId: "responses",
-                    }),
-                ];
-            }),
-        );
+        Object.entries(this.input).forEach(([statusCode, response]) => {
+            if (parseInt(statusCode) >= 400) {
+                this.errorsByStatusCode ??= {};
+                this.errorsByStatusCode[statusCode] = new ResponseObjectConverterNode({
+                    input: response,
+                    context: this.context,
+                    accessPath: this.accessPath,
+                    pathId: "errors",
+                });
+            } else {
+                this.responsesByStatusCode ??= {};
+                this.responsesByStatusCode[statusCode] = new ResponseObjectConverterNode({
+                    input: response,
+                    context: this.context,
+                    accessPath: this.accessPath,
+                    pathId: "responses",
+                });
+            }
+        });
     }
 
-    convertResponseObjectToHttpResponses(): FdrAPI.api.latest.HttpResponse[] {
+    convertResponseObjectToHttpResponses(): {
+        headers: FdrAPI.api.latest.ObjectProperty[] | undefined;
+        response: FdrAPI.api.latest.HttpResponse;
+    }[] {
         return Object.entries(this.responsesByStatusCode ?? {})
             .map(([statusCode, response]) => {
                 // TODO: support multiple response types per response status code
@@ -43,15 +60,50 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                     return undefined;
                 }
                 return {
-                    statusCode: parseInt(statusCode),
-                    body,
-                    description: response.description,
+                    headers: convertToObjectProperties(response.headers),
+                    response: {
+                        statusCode: parseInt(statusCode),
+                        body,
+                        description: response.description,
+                    },
                 };
             })
             .filter(isNonNullish);
     }
 
-    convert(): FdrAPI.api.latest.HttpResponse[] | undefined {
-        return this.convertResponseObjectToHttpResponses();
+    convertResponseObjectToErrors(): FdrAPI.api.latest.ErrorResponse[] {
+        return Object.entries(this.errorsByStatusCode ?? {})
+            .map(([statusCode, response]) => {
+                const schema = response.responses?.[0]?.schema;
+                const shape = schema?.convert();
+
+                if (shape == null || schema == null) {
+                    return undefined;
+                }
+                return {
+                    statusCode: parseInt(statusCode),
+                    shape,
+                    description: response.description ?? schema.description,
+                    availability: schema.availability?.convert(),
+                    name: "dummy error",
+                    examples: undefined,
+                };
+            })
+            .filter(isNonNullish);
+    }
+
+    convert():
+        | {
+              responses: {
+                  headers: FdrAPI.api.latest.ObjectProperty[] | undefined;
+                  response: FdrAPI.api.latest.HttpResponse;
+              }[];
+              errors: FdrAPI.api.latest.ErrorResponse[];
+          }
+        | undefined {
+        return {
+            responses: this.convertResponseObjectToHttpResponses(),
+            errors: this.convertResponseObjectToErrors(),
+        };
     }
 }

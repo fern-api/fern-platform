@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { createMockContext } from "../../../../../__test__/createMockContext.util";
-import { ReferenceConverterNode } from "../../../schemas/ReferenceConverter.node";
+import { SchemaConverterNode } from "../../../schemas/SchemaConverter.node";
 import { ResponseMediaTypeObjectConverterNode } from "../../response/ResponseMediaTypeObjectConverter.node";
 
 describe("ResponseMediaTypeObjectConverterNode", () => {
@@ -148,6 +148,6 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
         );
 
         expect(converter.schema).toBeDefined();
-        expect(converter.schema instanceof ReferenceConverterNode).toBe(true);
+        expect(converter.schema instanceof SchemaConverterNode).toBe(true);
     });
 });

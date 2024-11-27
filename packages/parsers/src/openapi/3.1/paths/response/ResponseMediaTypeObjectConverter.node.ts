@@ -13,7 +13,6 @@ import {
 import { resolveSchemaReference } from "../../../utils/3.1/resolveSchemaReference";
 import { MediaType } from "../../../utils/MediaType";
 import { isReferenceObject } from "../../guards/isReferenceObject";
-import { ReferenceConverterNode } from "../../schemas/ReferenceConverter.node";
 import { SchemaConverterNode } from "../../schemas/SchemaConverter.node";
 
 export type ResponseContentType = ConstArrayToType<typeof SUPPORTED_RESPONSE_CONTENT_TYPES>;
@@ -23,7 +22,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     OpenAPIV3_1.MediaTypeObject,
     FdrAPI.api.latest.HttpResponseBodyShape
 > {
-    schema: SchemaConverterNode | ReferenceConverterNode | undefined;
+    schema: SchemaConverterNode | undefined;
     contentType: ResponseContentType | undefined;
     contentSubtype: string | undefined;
     streamingFormat: ResponseStreamingFormat | undefined;
@@ -52,7 +51,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
                 }
             } else {
                 if (isReferenceObject(this.input.schema)) {
-                    this.schema = new ReferenceConverterNode({
+                    this.schema = new SchemaConverterNode({
                         input: this.input.schema,
                         context: this.context,
                         accessPath: this.accessPath,
