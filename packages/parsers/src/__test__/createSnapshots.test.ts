@@ -47,7 +47,7 @@ describe("OpenAPI snapshot tests", () => {
                     input: parsed,
                     context,
                     accessPath: [],
-                    pathId: "test",
+                    pathId: directory,
                 });
                 errors.push(...converter.errors());
                 warnings.push(...converter.warnings());

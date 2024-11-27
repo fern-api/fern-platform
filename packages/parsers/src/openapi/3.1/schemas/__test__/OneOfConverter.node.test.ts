@@ -1,3 +1,4 @@
+import { OpenAPIV3_1 } from "openapi-types";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { OneOfConverterNode } from "../OneOfConverter.node";
 
@@ -22,7 +23,7 @@ describe("OneOfConverterNode", () => {
 
     describe("constructor", () => {
         it("handles undiscriminated oneOf", () => {
-            const input: OneOfConverterNode.Input = {
+            const input: OpenAPIV3_1.NonArraySchemaObject = {
                 type: "object",
                 oneOf: [
                     { type: "object", properties: { a: { type: "string" } } },
@@ -40,7 +41,7 @@ describe("OneOfConverterNode", () => {
         });
 
         it("handles discriminated oneOf", () => {
-            const input: OneOfConverterNode.Input = {
+            const input: OpenAPIV3_1.NonArraySchemaObject = {
                 type: "object",
                 oneOf: [{ $ref: "#/components/schemas/Dog" }],
                 discriminator: {
@@ -64,7 +65,7 @@ describe("OneOfConverterNode", () => {
 
     describe("convert", () => {
         it("converts discriminated union", () => {
-            const input: OneOfConverterNode.Input = {
+            const input: OpenAPIV3_1.NonArraySchemaObject = {
                 type: "object",
                 oneOf: [{ $ref: "#/components/schemas/Dog" }],
                 discriminator: {
@@ -86,7 +87,7 @@ describe("OneOfConverterNode", () => {
         });
 
         it("converts undiscriminated union", () => {
-            const input: OneOfConverterNode.Input = {
+            const input: OpenAPIV3_1.NonArraySchemaObject = {
                 type: "object",
                 oneOf: [
                     { type: "object", properties: { a: { type: "string" } } },
@@ -149,7 +150,7 @@ describe("OneOfConverterNode", () => {
         });
 
         it("returns undefined for invalid state", () => {
-            const input: OneOfConverterNode.Input = {
+            const input: OpenAPIV3_1.NonArraySchemaObject = {
                 type: "object",
             };
             const node = new OneOfConverterNode({

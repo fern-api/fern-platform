@@ -9,14 +9,8 @@ import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
-export declare namespace OneOfConverterNode {
-    export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
-        type?: "object";
-    }
-}
-
 export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
-    OneOfConverterNode.Input,
+    OpenAPIV3_1.NonArraySchemaObject,
     FdrAPI.api.latest.TypeShape.DiscriminatedUnion | FdrAPI.api.latest.TypeShape.UndiscriminatedUnion
 > {
     discriminated: boolean | undefined;
@@ -25,7 +19,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     undiscriminatedMapping: SchemaConverterNode[] | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OneOfConverterNode.Input>) {
+    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.NonArraySchemaObject>) {
         super(args);
         this.safeParse();
     }

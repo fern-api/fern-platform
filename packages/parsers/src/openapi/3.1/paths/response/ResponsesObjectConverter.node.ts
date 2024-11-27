@@ -80,6 +80,7 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 if (shape == null || schema == null) {
                     return undefined;
                 }
+                // console.log(JSON.stringify(response, null, 2));
                 return {
                     statusCode: parseInt(statusCode),
                     shape,
