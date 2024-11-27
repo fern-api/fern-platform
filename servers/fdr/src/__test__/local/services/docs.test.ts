@@ -119,7 +119,7 @@ it("test domain special character permissions", async () => {
 
     // expecting an error, because adding // to the domain should not bypass domain check
     expect((startDocsRegisterResponse2 as any).error.content).toEqual({
-        body: 'Domain URL is malformed',
+        body: "Domain URL is malformed",
         reason: "status-code",
         statusCode: 400,
     });

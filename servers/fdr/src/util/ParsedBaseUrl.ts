@@ -29,11 +29,7 @@ export class ParsedBaseUrl {
             const parsedURL = new URL(urlWithHttpsPrefix);
             return new ParsedBaseUrl({
                 hostname: parsedURL.hostname,
-                path:
-                    parsedURL.pathname === "/" ||
-                    parsedURL.pathname === ""
-                        ? undefined
-                        : parsedURL.pathname,
+                path: parsedURL.pathname === "/" || parsedURL.pathname === "" ? undefined : parsedURL.pathname,
             });
         } catch (e) {
             throw new Error(`Failed to parse URL: ${url}. The error was ${(e as Error)?.message}`);

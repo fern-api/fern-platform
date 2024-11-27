@@ -42,8 +42,11 @@ export interface DocsRegistrationInfo {
 }
 
 function pathnameIsMalformed(pathname: string): boolean {
-    if (pathname === "" || pathname === "/") { return false; }
-    if (!/^.*([a-z0-9]).*$/.test(pathname)) { // does the pathname only contain special characters?
+    if (pathname === "" || pathname === "/") {
+        return false;
+    }
+    if (!/^.*([a-z0-9]).*$/.test(pathname)) {
+        // does the pathname only contain special characters?
         return true;
     }
     return false;
