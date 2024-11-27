@@ -76,7 +76,6 @@ describe("PathItemObjectConverterNode", () => {
                         },
                     },
                 ],
-                responseHeaders: [],
                 errors: [],
                 examples: [],
             });
@@ -95,7 +94,6 @@ describe("PathItemObjectConverterNode", () => {
                     },
                 ],
                 environments: [],
-                responseHeaders: [],
                 errors: [],
                 examples: [],
             });

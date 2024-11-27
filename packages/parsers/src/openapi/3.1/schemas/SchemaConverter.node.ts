@@ -5,6 +5,7 @@ import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
+import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.node";
 import { isArraySchema } from "../guards/isArraySchema";
 import { isBooleanSchema } from "../guards/isBooleanSchema";
 import { isIntegerSchema } from "../guards/isIntegerSchema";
@@ -38,6 +39,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     description: string | undefined;
     name: string | undefined;
+    availability: AvailabilityConverterNode | undefined;
 
     constructor(
         args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>,
@@ -47,6 +49,14 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     parse(): void {
+        this.description = this.input.description;
+        this.availability = new AvailabilityConverterNode({
+            input: this.input,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "x-fern-availability",
+        });
+
         // Check if the input is a reference object
         if (isReferenceObject(this.input)) {
             this.typeShapeNode = new ReferenceConverterNode({
@@ -161,8 +171,6 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
                 });
             }
         }
-
-        this.description = this.input.description;
 
         if (this.typeShapeNode == null) {
             this.context.errors.error({

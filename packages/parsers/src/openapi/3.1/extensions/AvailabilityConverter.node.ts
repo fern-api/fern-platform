@@ -5,38 +5,47 @@ import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
-import { ConstArrayToType } from "../../types/format.types";
+import { ConstArrayToType, SUPPORTED_X_FERN_AVAILABILITY_VALUES } from "../../types/format.types";
+import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
 import { extendType } from "../../utils/extendType";
+import { isReferenceObject } from "../guards/isReferenceObject";
 
-const AVAILABILITY = ["pre-release", "in-development", "generally-available", "deprecated"] as const;
-export type Availability = ConstArrayToType<typeof AVAILABILITY>;
+export type Availability = ConstArrayToType<typeof SUPPORTED_X_FERN_AVAILABILITY_VALUES>;
 
 export class AvailabilityConverterNode extends BaseOpenApiV3_1ConverterNode<
-    OpenAPIV3_1.SchemaObject,
+    { deprecated?: boolean } | OpenAPIV3_1.ReferenceObject,
     FdrAPI.Availability | undefined
 > {
     availability?: Availability;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.SchemaObject>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<{ deprecated?: boolean } | OpenAPIV3_1.ReferenceObject>,
+    ) {
         super(args);
         this.safeParse();
     }
 
     parse(): void {
-        if (this.input.deprecated) {
+        const input = isReferenceObject(this.input)
+            ? resolveSchemaReference(this.input, this.context.document)
+            : this.input;
+
+        if (input.deprecated) {
             this.availability = "deprecated";
         } else {
             const maybeAvailability = extendType<{
                 "x-fern-availability"?: Availability;
             }>(this.input)["x-fern-availability"];
-            if (maybeAvailability != null && AVAILABILITY.includes(maybeAvailability)) {
-                this.availability = maybeAvailability;
-            } else {
-                this.context.errors.warning({
-                    message: `Expected one of: ${AVAILABILITY.join(", ")}. Received: ${maybeAvailability}`,
-                    path: this.accessPath,
-                });
-                this.availability = undefined;
+            if (maybeAvailability != null) {
+                if (SUPPORTED_X_FERN_AVAILABILITY_VALUES.includes(maybeAvailability)) {
+                    this.availability = maybeAvailability;
+                } else {
+                    this.context.errors.warning({
+                        message: `Expected one of: ${SUPPORTED_X_FERN_AVAILABILITY_VALUES.join(", ")}. Received: ${maybeAvailability}`,
+                        path: this.accessPath,
+                    });
+                    this.availability = undefined;
+                }
             }
         }
     }

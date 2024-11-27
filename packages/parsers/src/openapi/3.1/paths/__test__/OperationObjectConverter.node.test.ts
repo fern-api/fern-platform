@@ -56,7 +56,6 @@ describe("OperationObjectConverterNode", () => {
                         },
                     },
                 ],
-                responseHeaders: [],
                 errors: [],
                 examples: [],
             });
