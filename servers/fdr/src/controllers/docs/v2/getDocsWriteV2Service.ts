@@ -17,7 +17,7 @@ import { v4 as uuidv4 } from "uuid";
 import { DocsV2WriteService } from "../../../api";
 import { FernRegistry } from "../../../api/generated";
 import { OrgId } from "../../../api/generated/api";
-import { DomainBelongsToAnotherOrgError, InvalidURLError } from "../../../api/generated/api/resources/commons/errors";
+import { DomainBelongsToAnotherOrgError, InvalidUrlError } from "../../../api/generated/api/resources/commons/errors";
 import { DocsRegistrationIdNotFound } from "../../../api/generated/api/resources/docs/resources/v1/resources/write/errors";
 import { LoadDocsForUrlResponse } from "../../../api/generated/api/resources/docs/resources/v2/resources/read";
 import {
@@ -51,8 +51,8 @@ function pathnameIsMalformed(pathname: string): boolean {
 
 function validateAndParseFernDomainUrl({ app, url }: { app: FdrApplication; url: string }): ParsedBaseUrl {
     const baseUrl = ParsedBaseUrl.parse(url);
-    if (pathnameIsMalformed(baseUrl.path)) {
-        throw new InvalidURLError("Domain URL is malformed");
+    if (baseUrl.path != null && pathnameIsMalformed(baseUrl.path)) {
+        throw new InvalidUrlError("Domain URL is malformed");
     }
     if (!baseUrl.hostname.endsWith(app.config.domainSuffix)) {
         throw new InvalidDomainError();
