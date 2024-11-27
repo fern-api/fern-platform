@@ -38,6 +38,7 @@ service:
         - InvalidDomainError
         - InvalidCustomDomainError
         - rootCommons.DomainBelongsToAnotherOrgError
+        - rootCommons.InvalidURLError
 
     startDocsPreviewRegister:
       auth: true
