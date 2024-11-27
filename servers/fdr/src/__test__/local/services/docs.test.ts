@@ -119,9 +119,9 @@ it("test domain special character permissions", async () => {
 
     // expecting an error, because adding // to the domain should not bypass domain check
     expect((startDocsRegisterResponse2 as any).error.content).toEqual({
-        body: `The following domains belong to another organization: ${domain.replace("https://", "")}`,
+        body: 'Domain URL is malformed',
         reason: "status-code",
-        statusCode: 403,
+        statusCode: 400,
     });
 });
 
