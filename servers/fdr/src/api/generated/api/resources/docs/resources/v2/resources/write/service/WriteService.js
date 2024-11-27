@@ -44,6 +44,7 @@ export class WriteService {
                         case "InvalidDomainError":
                         case "InvalidCustomDomainError":
                         case "DomainBelongsToAnotherOrgError":
+                        case "InvalidUrlError":
                             break;
                         default:
                             console.warn(`Endpoint 'startDocsRegister' unexpectedly threw ${error.constructor.name}.` +

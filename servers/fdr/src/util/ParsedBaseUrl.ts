@@ -1,5 +1,3 @@
-import { LOGGER } from "../app/FdrApplication";
-
 const HAS_HTTPS_REGEX = /^https?:\/\//i;
 
 export class ParsedBaseUrl {

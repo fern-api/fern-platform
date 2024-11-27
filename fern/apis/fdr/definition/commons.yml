@@ -98,6 +98,10 @@ errors:
     status-code: 403
     type: string
 
+  InvalidURLError:
+    status-code: 400
+    type: string
+
   InternalError:
     status-code: 500
     type: string
