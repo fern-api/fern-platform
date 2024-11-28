@@ -106,8 +106,8 @@
         }
 
         mark {
-            background: transparent !important;
-            color: inherit;
+            background: var(--accent-a3);
+            color: var(--accent-a11);
         }
 
         @media (hover: hover) and (pointer: fine) {

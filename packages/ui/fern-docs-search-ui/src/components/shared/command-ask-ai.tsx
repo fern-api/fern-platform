@@ -1,19 +1,21 @@
 import { Sparkles } from "lucide-react";
 
+import { Badge } from "@fern-ui/fern-docs-badges";
 import { Command } from "cmdk";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 
 export const CommandAskAIGroup = forwardRef<
     HTMLDivElement,
-    { query: string; onAskAI: ({ initialInput }: { initialInput: string }) => void } & ComponentPropsWithoutRef<
-        typeof Command.Group
-    >
+    { query: string; onAskAI: (initialInput: string) => void } & ComponentPropsWithoutRef<typeof Command.Group>
 >(({ query, onAskAI, ...props }, ref) => {
     return (
         <Command.Group ref={ref} {...props}>
-            <Command.Item onSelect={() => onAskAI?.({ initialInput: query })}>
+            <Command.Item onSelect={() => onAskAI(query)}>
                 <Sparkles />
                 <AskAIText query={query} />
+                <Badge rounded className="ml-auto" size="sm">
+                    Experimental
+                </Badge>
             </Command.Item>
         </Command.Group>
     );

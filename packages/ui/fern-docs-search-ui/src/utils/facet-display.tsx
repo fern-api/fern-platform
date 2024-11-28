@@ -58,15 +58,15 @@ const FACET_DISPLAY_MAP: Record<string, Record<string, ReactNode>> = {
 
 const FACET_SMALL_DISPLAY_MAP: Record<string, Record<string, ReactNode>> = {
     method: {
-        GET: <HttpMethodBadge method="GET" size="sm" variant="outlined" interactive />,
-        POST: <HttpMethodBadge method="POST" size="sm" variant="outlined" interactive />,
-        PUT: <HttpMethodBadge method="PUT" size="sm" variant="outlined" interactive />,
-        PATCH: <HttpMethodBadge method="PATCH" size="sm" variant="outlined" interactive />,
-        DELETE: <HttpMethodBadge method="DELETE" size="sm" variant="outlined" interactive />,
-        HEAD: <HttpMethodBadge method="HEAD" size="sm" variant="outlined" interactive />,
-        OPTIONS: <HttpMethodBadge method="OPTIONS" size="sm" variant="outlined" interactive />,
-        CONNECT: <HttpMethodBadge method="CONNECT" size="sm" variant="outlined" interactive />,
-        TRACE: <HttpMethodBadge method="TRACE" size="sm" variant="outlined" interactive />,
+        GET: <HttpMethodBadge method="GET" size="sm" variant="outlined" />,
+        POST: <HttpMethodBadge method="POST" size="sm" variant="outlined" />,
+        PUT: <HttpMethodBadge method="PUT" size="sm" variant="outlined" />,
+        PATCH: <HttpMethodBadge method="PATCH" size="sm" variant="outlined" />,
+        DELETE: <HttpMethodBadge method="DELETE" size="sm" variant="outlined" />,
+        HEAD: <HttpMethodBadge method="HEAD" size="sm" variant="outlined" />,
+        OPTIONS: <HttpMethodBadge method="OPTIONS" size="sm" variant="outlined" />,
+        CONNECT: <HttpMethodBadge method="CONNECT" size="sm" variant="outlined" />,
+        TRACE: <HttpMethodBadge method="TRACE" size="sm" variant="outlined" />,
     },
     availability: {
         Stable: <AvailabilityBadge availability="Stable" size="sm" variant="outlined" />,
@@ -105,7 +105,7 @@ export const FACET_DISPLAY_NAME_MAP: Record<string, Record<string, string>> = {
     type: {
         markdown: "guides",
         changelog: "changelog",
-        "api-reference": "APIs",
+        "api-reference": "API endpoints",
     },
     availability: {
         Stable: "stable",
@@ -176,12 +176,10 @@ export const FACET_DISPLAY_NAME: Record<FacetName, string> = {
     availability: "Availability",
 };
 
-export function toFilterOptions(facets: FacetsResponse | undefined, query: string): FilterOption[] {
+export function toFilterOptions(facets: FacetsResponse | undefined): FilterOption[] {
     if (facets == null) {
         return [];
     }
-
-    query = query.trim().toLowerCase();
 
     const results: FilterOption[] = [];
 
@@ -192,11 +190,7 @@ export function toFilterOptions(facets: FacetsResponse | undefined, query: strin
                 return;
             }
 
-            const displayName = FACET_DISPLAY_NAME_MAP[facet]?.[value];
-
-            if (value.toLowerCase().includes(query) || displayName?.toLowerCase().includes(query)) {
-                results.push({ facet, value, count });
-            }
+            results.push({ facet, value, count });
         });
     });
 

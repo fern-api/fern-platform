@@ -2,11 +2,11 @@ import { ArrowDown } from "lucide-react";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { Components } from "react-markdown";
 import { MarkdownContent } from "../md-content";
+import { AlgoliaRecordHit } from "../types";
 import { Button } from "../ui/button";
 import { FootnoteSup, FootnotesSection } from "./footnote";
 import { ChatbotTurn } from "./turn";
 import { ChatbotTurnContextProvider } from "./turn-context";
-import { SearchResult } from "./utils";
 
 export function ChatbotConversation({
     isLoading,
@@ -23,7 +23,7 @@ export function ChatbotConversation({
         isThinking?: boolean;
     }[];
     components: Components | undefined;
-    searchResults: SearchResult[];
+    searchResults: AlgoliaRecordHit[];
 }): ReactNode {
     const ref = useRef<HTMLDivElement>(null);
     const sizerRef = useRef<HTMLDivElement>(null);

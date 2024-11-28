@@ -35,7 +35,7 @@
     "@fern-ui/components": "workspace:*",
     "@fern-ui/fern-docs-mdx": "workspace:*",
     "clsx": "^2.1.1",
-    "es-toolkit": "^1.24.0",
+    "es-toolkit": "^1.27.0",
     "hast-util-to-jsx-runtime": "^2.3.0",
     "hastscript": "^9.0.0",
     "react-virtuoso": "^4.7.7",

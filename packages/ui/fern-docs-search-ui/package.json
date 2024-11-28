@@ -46,6 +46,7 @@
     "@ai-sdk/anthropic": "^0.0.56",
     "@ai-sdk/cohere": "^1.0.3",
     "@ai-sdk/openai": "^1.0.4",
+    "@ai-sdk/provider": "^1.0.1",
     "@algolia/client-search": "^5.15.0",
     "@date-fns/tz": "^1.1.2",
     "@fern-api/ui-core-utils": "workspace:*",
@@ -73,7 +74,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.4",
     "date-fns": "^2.30.0",
-    "es-toolkit": "^1.24.0",
+    "es-toolkit": "^1.27.0",
     "instantsearch.css": "8.5.1",
     "instantsearch.js": "4.75.4",
     "jotai": "^2.8.1",
@@ -87,7 +88,6 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "ts-essentials": "^10.0.1",
-    "tunnel-rat": "^0.1.2",
     "unist-util-visit": "^5.0.0",
     "zod": "^3.23.8"
   }

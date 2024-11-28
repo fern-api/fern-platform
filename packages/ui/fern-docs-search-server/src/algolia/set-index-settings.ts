@@ -5,6 +5,11 @@ export async function setIndexSettings(
     client: Algoliasearch,
     indexName: string,
 ): Promise<{ taskID: number; updatedAt: string }> {
+    await client.saveRules({
+        indexName: "fern-docs-search-index",
+        rules: [],
+    });
+
     return client.setSettings({
         indexName,
         indexSettings: {

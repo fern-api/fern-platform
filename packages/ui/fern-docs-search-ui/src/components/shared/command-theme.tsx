@@ -14,17 +14,29 @@ export const CommandGroupTheme = forwardRef<
 
     return (
         <Command.Group heading="Theme" ref={ref} {...props}>
-            <Command.Item value="light" onSelect={() => setTheme("light")} keywords={["light mode", "light theme"]}>
+            <Command.Item
+                value="change theme to light"
+                onSelect={() => setTheme("light")}
+                keywords={["light mode", "light theme"]}
+            >
                 <Sun />
-                Light
+                Change theme to light
             </Command.Item>
-            <Command.Item value="dark" onSelect={() => setTheme("dark")} keywords={["dark mode", "dark theme"]}>
+            <Command.Item
+                value="change theme to dark"
+                onSelect={() => setTheme("dark")}
+                keywords={["dark mode", "dark theme"]}
+            >
                 <Moon />
-                Dark
+                Change theme to dark
             </Command.Item>
-            <Command.Item value="system" onSelect={() => setTheme("system")} keywords={["system mode", "system theme"]}>
+            <Command.Item
+                value="change theme to system"
+                onSelect={() => setTheme("system")}
+                keywords={["system mode", "system theme"]}
+            >
                 <Laptop />
-                System
+                Change theme to system
             </Command.Item>
         </Command.Group>
     );

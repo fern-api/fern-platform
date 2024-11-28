@@ -7,9 +7,9 @@ import { useAtom, useAtomValue } from "jotai";
 import { ReactElement, useEffect } from "react";
 import { EXIT, visit } from "unist-util-visit";
 import { PageIcon } from "../icons/page";
+import { AlgoliaRecordHit } from "../types";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { useChatbotTurnContext } from "./turn-context";
-import { SearchResult } from "./utils";
 
 export function FootnoteSup({ node }: { node?: HastElement }): ReactElement | null {
     const { footnotesAtom } = useChatbotTurnContext();
@@ -101,7 +101,7 @@ export function FootnotesSection({
     searchResults,
 }: {
     node: HastElement;
-    searchResults: SearchResult[];
+    searchResults: AlgoliaRecordHit[];
 }): ReactElement | null {
     const { footnotesAtom } = useChatbotTurnContext();
     const [footnotes, setFootnotes] = useAtom(footnotesAtom);

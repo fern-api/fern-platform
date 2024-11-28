@@ -2,6 +2,8 @@ import { tz } from "@date-fns/tz";
 import { AvailabilityBadge, HttpMethodBadge } from "@fern-ui/fern-docs-badges";
 import clsx from "clsx";
 import { format } from "date-fns";
+import { uniq } from "es-toolkit/array";
+import { ChevronRight } from "lucide-react";
 import { Fragment, ReactElement, ReactNode } from "react";
 import { Highlight, Snippet } from "react-instantsearch";
 import { MarkRequired, UnreachableCaseError } from "ts-essentials";
@@ -18,12 +20,14 @@ function Breadcrumb({ breadcrumb }: { breadcrumb: string[] }): ReactNode {
 
     return (
         <div className="fern-search-hit-breadcrumb">
-            {breadcrumb.map((title, idx) => (
-                <Fragment key={title}>
-                    <span>{title}</span>
-                    {idx < breadcrumb.length - 1 && <span>{" / "}</span>}
-                </Fragment>
-            ))}
+            <span className="inline-flex items-center gap-0.5">
+                {uniq(breadcrumb).map((title, idx) => (
+                    <Fragment key={title}>
+                        <span>{title}</span>
+                        {idx < breadcrumb.length - 1 && <ChevronRight className="size-3 shrink-0 -mb-px" />}
+                    </Fragment>
+                ))}
+            </span>
         </div>
     );
 }

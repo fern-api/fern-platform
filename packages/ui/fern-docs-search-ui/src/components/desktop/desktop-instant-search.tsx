@@ -1,6 +1,7 @@
 import { FacetName } from "@/utils/facet-display";
 import "instantsearch.css/themes/reset.css";
 import { forwardRef } from "react";
+import { Components } from "react-markdown";
 import { FernDocsInstantSearch } from "../shared/fern-docs-instant-search";
 import { DesktopCommand, DesktopCommandSharedProps } from "./desktop-command";
 
@@ -35,18 +36,33 @@ interface DesktopInstantSearchProps {
      * and will only be used for Algolia Insights.
      */
     authenticatedUserToken?: string;
+
+    /**
+     * Headers to send to the ask ai api
+     */
+    headers?: Record<string, string>;
+
+    /**
+     * Custom components for the search results
+     */
+    components?: Components;
+
+    /**
+     * System context for the AI Ask feature
+     */
+    systemContext?: Record<string, string>;
 }
 
 export const DesktopInstantSearch = forwardRef<HTMLDivElement, DesktopInstantSearchProps & DesktopCommandSharedProps>(
     (props, ref) => {
-        const { onSelect, setTheme, onAskAI, initialFilters, userToken, authenticatedUserToken, ...rest } = props;
+        const { initialFilters, userToken, authenticatedUserToken, ...rest } = props;
         return (
             <FernDocsInstantSearch
                 initialFilters={initialFilters}
                 userToken={userToken}
                 authenticatedUserToken={authenticatedUserToken}
             >
-                <DesktopCommand ref={ref} onSelect={onSelect} onAskAI={onAskAI} setTheme={setTheme} {...rest} />
+                <DesktopCommand ref={ref} {...rest} />
             </FernDocsInstantSearch>
         );
     },

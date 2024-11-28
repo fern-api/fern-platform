@@ -1,8 +1,9 @@
 import { FacetFilter, useFacets } from "@/hooks/use-facets";
 import { getFacetDisplay, toFilterLabel } from "@/utils/facet-display";
 import { Minus } from "lucide-react";
-import { ReactElement } from "react";
-import { Badge } from "../ui/badge";
+import { ReactElement, cloneElement, isValidElement } from "react";
+// import { Badge } from "../ui/badge";
+import { Badge } from "@fern-ui/fern-docs-badges";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -36,6 +37,8 @@ export function DesktopFilterDropdownMenu({
 
     const options = facets?.[filter.facet] ?? [];
 
+    const facetDisplay = getFacetDisplay(filter.facet, filter.value, { small: true, titleCase: true });
+
     return (
         <DropdownMenu
             key={`${filter.facet}:${filter.value}`}
@@ -46,11 +49,18 @@ export function DesktopFilterDropdownMenu({
             }}
         >
             <DropdownMenuTrigger asChild>
-                <Badge variant="outline" asChild>
-                    <button className="fern-search-facet-filter-menu-button">
-                        {getFacetDisplay(filter.facet, filter.value, { small: true, titleCase: true })}
-                    </button>
-                </Badge>
+                {isValidElement<{ interactive?: boolean }>(facetDisplay) ? (
+                    cloneElement(facetDisplay, { interactive: true })
+                ) : (
+                    <Badge
+                        variant="outlined-subtle"
+                        size="sm"
+                        className="fern-search-facet-filter-menu-button"
+                        interactive
+                    >
+                        {facetDisplay}
+                    </Badge>
+                )}
             </DropdownMenuTrigger>
             <DropdownMenuPortal>
                 <DropdownMenuContent
@@ -81,7 +91,9 @@ export function DesktopFilterDropdownMenu({
                                             small: true,
                                             titleCase: true,
                                         })}
-                                        <DropdownMenuShortcut>{option.count}</DropdownMenuShortcut>
+                                        <Badge size="sm" rounded className="ml-auto">
+                                            {option.count}
+                                        </Badge>
                                     </DropdownMenuRadioItem>
                                 ))}
                             </DropdownMenuRadioGroup>

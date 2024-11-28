@@ -1,7 +1,5 @@
 "use client";
 
-import { ChatbotDialog } from "@/components/chatbot/chatbot-dialog";
-import { CHATBOT_MODELS, ChatbotModelProvider } from "@/components/chatbot/model-select";
 import { CodeBlock } from "@/components/code-block";
 import { AppSidebar, AppSidebarContent } from "@/components/demo/app-sidebar";
 import { DesktopSearchDialog } from "@/components/demo/desktop-search-dialog";
@@ -22,8 +20,8 @@ const ApiKeySchema = z.object({
 
 export function DemoInstantSearchClient({ appId, domain }: { appId: string; domain: string }): ReactElement | false {
     const [open, setOpen] = useState(false);
-    const [isChatOpen, setIsChatOpen] = useState(false);
-    const [initialInput, setInitialInput] = useState<string | undefined>(undefined);
+    // const [isChatOpen, setIsChatOpen] = useState(false);
+    // const [initialInput, setInitialInput] = useState<string | undefined>(undefined);
     const { setTheme } = useTheme();
     const isMobile = useIsMobile();
 
@@ -64,7 +62,6 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
     const { apiKey, userToken } = data;
 
     const headers: Record<string, string> = {
-        "X-Fern-Docs-Domain": domain,
         "X-Algolia-Search-Key": apiKey,
         "X-User-Token": userToken,
     };
@@ -77,31 +74,48 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                         onSelect={handleSubmit}
                         userToken={userToken}
                         setTheme={setTheme}
-                        onAskAI={({ initialInput }) => {
-                            setInitialInput(initialInput);
-                            setIsChatOpen(true);
-                            setOpen(false);
-                        }}
+                        // onAskAI={({ }) => {
+                        //     // setInitialInput(initialInput);
+                        //     setIsChatOpen(true);
+                        //     setOpen(false);
+                        // }}
                     >
                         <AppSidebarContent />
                     </MobileInstantSearch>
                 </AppSidebar>
             ) : (
-                <DesktopSearchDialog open={open} onOpenChange={setOpen}>
+                <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild>
                     <DesktopInstantSearch
                         onSelect={handleSubmit}
                         userToken={userToken}
                         setTheme={setTheme}
-                        onAskAI={({ initialInput }) => {
-                            setInitialInput(initialInput);
-                            setIsChatOpen(true);
-                            setOpen(false);
-                        }}
+                        // onAskAI={({ initialInput }) => {
+                        //     setInitialInput(initialInput);
+                        //     setIsChatOpen(true);
+                        //     setOpen(false);
+                        // }}
                         onClose={() => setOpen(false)}
+                        headers={headers}
+                        components={{
+                            pre(props) {
+                                if (isValidElement(props.children) && props.children.type === "code") {
+                                    const { children, className } = props.children.props as {
+                                        children: string;
+                                        className: string;
+                                    };
+                                    if (typeof children === "string") {
+                                        const match = /language-(\w+)/.exec(className || "")?.[1] ?? "plaintext";
+                                        return <CodeBlock code={children} language={match} />;
+                                    }
+                                }
+                                return <pre {...props} />;
+                            },
+                        }}
+                        systemContext={{ domain }}
                     />
                 </DesktopSearchDialog>
             )}
-            <ChatbotModelProvider
+            {/* <ChatbotModelProvider
                 models={
                     domain.includes("cohere")
                         ? [
@@ -115,6 +129,7 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                     open={isChatOpen}
                     onOpenChange={setIsChatOpen}
                     headers={headers}
+                    systemContext={{ domain }}
                     initialInput={initialInput}
                     components={{
                         pre(props) {
@@ -132,7 +147,7 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                         },
                     }}
                 />
-            </ChatbotModelProvider>
+            </ChatbotModelProvider> */}
         </SearchClientProvider>
     );
 }

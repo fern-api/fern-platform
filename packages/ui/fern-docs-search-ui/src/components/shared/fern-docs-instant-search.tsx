@@ -39,15 +39,17 @@ export function FernDocsInstantSearch({
             }
         >
             <Configure
-                restrictHighlightAndSnippetArrays={true}
-                distinct={true}
-                attributesToSnippet={["description:20", "content:20"]}
-                ignorePlurals
+                attributesToSnippet={["description:32", "content:32"]}
                 facetFilters={facetFilters}
-                facetingAfterDistinct
                 maxFacetHits={100}
                 maxValuesPerFacet={1000}
                 userToken={authenticatedUserToken ?? userToken}
+                facetingAfterDistinct
+                restrictHighlightAndSnippetArrays
+                distinct
+                ignorePlurals
+                enableRules
+                decompoundQuery
             />
             <SearchContextProvider filters={filters}>
                 {React.cloneElement(children, { filters, setFilters, resetFilters })}

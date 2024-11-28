@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import type { Root } from "mdast";
 import { ReactElement } from "react";
 import Markdown, { type Components } from "react-markdown";
@@ -7,12 +6,14 @@ import { visit } from "unist-util-visit";
 
 export function MarkdownContent({
     children,
-    className,
+    // className,
     components,
+    // small,
 }: {
     children: string;
-    className?: string;
+    // className?: string;
     components?: Components;
+    // small?: boolean;
 }): ReactElement {
     return (
         <Markdown
@@ -20,7 +21,7 @@ export function MarkdownContent({
             remarkPlugins={[remarkGfm, remarkTest]}
             // rehypePlugins={[rehypeThinking]}
             remarkRehypeOptions={{}}
-            className={clsx("prose dark:prose-invert", className)}
+            // className={clsx("prose dark:prose-invert", className, small && "prose-sm")}
         >
             {children.replaceAll("```[^", "```\n[^")}
         </Markdown>

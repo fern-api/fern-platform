@@ -1,7 +1,6 @@
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import * as Dialog from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { useChat } from "ai/react";
 import { atom, useAtom } from "jotai";
 import { Cog, SquarePen, X } from "lucide-react";
 import {
@@ -23,8 +22,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/
 import { Composer } from "./composer";
 import { ChatbotConversation } from "./conversation";
 import { ChatbotModelSelect, useChatbotModels } from "./model-select";
-import { DEFAULT_SYSTEM_PROMPT } from "./system-prompt";
 import { SystemPromptDialog } from "./system-prompt-dialog";
+import { useAskAI, useSystemPrompt } from "./use-ask-ai";
 import { combineSearchResults, squeezeMessages } from "./utils";
 
 interface ChatbotDialogProps {
@@ -35,6 +34,7 @@ interface ChatbotDialogProps {
     modal?: boolean;
     api?: string;
     headers?: Record<string, string>;
+    systemContext?: Record<string, string>;
     components?: Components;
 }
 
@@ -47,6 +47,7 @@ export function ChatbotDialog({
     initialInput,
     api,
     headers,
+    systemContext,
     components,
 }: PropsWithChildren<ChatbotDialogProps>): ReactElement {
     return (
@@ -56,14 +57,19 @@ export function ChatbotDialog({
                 <Dialog.Overlay className="fixed inset-0 bg-background/80 backdrop-blur-md" />
 
                 <Dialog.Content className="fixed inset-0 flex flex-col items-stretch" asChild>
-                    <ChatbotInterface initialInput={initialInput} api={api} headers={headers} components={components} />
+                    <ChatbotInterface
+                        initialInput={initialInput}
+                        api={api}
+                        headers={headers}
+                        systemContext={systemContext}
+                        components={components}
+                    />
                 </Dialog.Content>
             </Dialog.Portal>
         </Dialog.Root>
     );
 }
 
-const systemAtom = atom(DEFAULT_SYSTEM_PROMPT);
 const modelAtom = atom<string | undefined>(undefined);
 
 const ChatbotInterface = forwardRef<
@@ -73,12 +79,23 @@ const ChatbotInterface = forwardRef<
         aboveContent?: ReactNode;
         api?: string;
         headers?: Record<string, string>;
+        systemContext?: Record<string, string>;
         components?: Components;
         inputRef?: RefObject<HTMLTextAreaElement>;
     }
 >(
     (
-        { initialInput, children, aboveContent, api, headers: _headers, components, inputRef: _inputRef, ...props },
+        {
+            initialInput,
+            children,
+            aboveContent,
+            api,
+            headers,
+            systemContext,
+            components,
+            inputRef: _inputRef,
+            ...props
+        },
         ref,
     ) => {
         const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -92,14 +109,15 @@ const ChatbotInterface = forwardRef<
 
         const defaultModel = useChatbotModels()[0]?.model;
         const [model = defaultModel, setModel] = useAtom(modelAtom);
-        const [system, setSystem] = useAtom(systemAtom);
+        const [system, setSystem] = useSystemPrompt();
         const [systemDialogOpen, setSystemDialogOpen] = useState(false);
 
-        const { messages, input, handleInputChange, handleSubmit, setInput, setMessages, isLoading } = useChat({
-            initialInput,
+        const { messages, input, handleInputChange, handleSubmit, setInput, setMessages, isLoading } = useAskAI({
             api,
-            headers: { ...(_headers ?? {}), "X-Fern-Docs-Model": model },
-            body: { system },
+            initialInput,
+            headers,
+            model,
+            systemContext,
         });
 
         useEffect(() => {

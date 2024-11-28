@@ -1,5 +1,6 @@
 import { FacetFilter } from "@/hooks/use-facets";
-import { FilterOption, getFacetDisplay } from "@/utils/facet-display";
+import { FACET_DISPLAY_NAME_MAP, FilterOption, getFacetDisplay } from "@/utils/facet-display";
+import { Badge } from "@fern-ui/fern-docs-badges";
 import { Command } from "cmdk";
 import { ListFilter } from "lucide-react";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
@@ -23,17 +24,20 @@ export const CommandGroupFilters = forwardRef<
             {facets.map((filter) => (
                 <Command.Item
                     key={`${filter.facet}:"${filter.value}"`}
-                    value={`${filter.facet}:"${filter.value}"`}
+                    value={`filter ${filter.facet} to ${filter.value}`}
                     onSelect={() => {
                         onSelect?.(filter);
                     }}
                     onMouseOver={() => {
                         void preload({ filters: [filter] });
                     }}
+                    keywords={[FACET_DISPLAY_NAME_MAP[filter.facet]?.[filter.value] ?? filter.value]}
                 >
                     <ListFilter />
                     <span className="flex-1">Filter to {getFacetDisplay(filter.facet, filter.value)}</span>
-                    <span className="text-xs text-[var(--grayscale-a9)] self-center">{filter.count}</span>
+                    <Badge size="sm" rounded>
+                        {filter.count}
+                    </Badge>
                 </Command.Item>
             ))}
         </Command.Group>

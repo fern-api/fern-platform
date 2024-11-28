@@ -41,14 +41,14 @@ export function SearchContextProvider({
 
     const { data: facetsResponse, error, isLoading } = useFacets({ filters });
 
-    const facets = toFilterOptions(facetsResponse, "");
+    const facets = toFilterOptions(facetsResponse);
 
     const preloadFacets = usePreloadFacets();
     const preload = async (opts: FacetOpts) => {
         const preloadedFacetResponse = await preloadFacets({
             filters: [...filters, ...opts.filters],
         });
-        return toFilterOptions(preloadedFacetResponse, "");
+        return toFilterOptions(preloadedFacetResponse);
     };
 
     // note: since hits change on every keystroke, theres no need to memoize

@@ -1,6 +1,139 @@
 .fern-docs-badge.subtle,
-.fern-docs-badge.outlined {
+.fern-docs-badge.outlined,
+.fern-docs-badge.outlined-subtle {
     color: var(--grayscale-a11);
+
+    &.accent {
+        color: var(--accent-a11, var(--grayscale-a11));
+    }
+
+    &.gray {
+        color: var(--gray-a11);
+    }
+
+    &.mauve {
+        color: var(--mauve-a11);
+    }
+
+    &.slate {
+        color: var(--slate-a11);
+    }
+
+    &.sage {
+        color: var(--sage-a11);
+    }
+
+    &.olive {
+        color: var(--olive-a11);
+    }
+
+    &.sand {
+        color: var(--sand-a11);
+    }
+
+    &.tomato {
+        color: var(--tomato-a11);
+    }
+
+    &.red {
+        color: var(--red-a11);
+    }
+
+    &.ruby {
+        color: var(--ruby-a11);
+    }
+
+    &.crimson {
+        color: var(--crimson-a11);
+    }
+
+    &.pink {
+        color: var(--pink-a11);
+    }
+
+    &.plum {
+        color: var(--plum-a11);
+    }
+
+    &.purple {
+        color: var(--purple-a11);
+    }
+
+    &.violet {
+        color: var(--violet-a11);
+    }
+
+    &.iris {
+        color: var(--iris-a11);
+    }
+
+    &.indigo {
+        color: var(--indigo-a11);
+    }
+
+    &.blue {
+        color: var(--blue-a11);
+    }
+
+    &.cyan {
+        color: var(--cyan-a11);
+    }
+
+    &.teal {
+        color: var(--teal-a11);
+    }
+
+    &.jade {
+        color: var(--jade-a11);
+    }
+
+    &.green {
+        color: var(--green-a11);
+    }
+
+    &.grass {
+        color: var(--grass-a11);
+    }
+
+    &.bronze {
+        color: var(--bronze-a11);
+    }
+
+    &.gold {
+        color: var(--gold-a11);
+    }
+
+    &.brown {
+        color: var(--brown-a11);
+    }
+
+    &.orange {
+        color: var(--orange-a11);
+    }
+
+    &.amber {
+        color: var(--amber-a11);
+    }
+
+    &.yellow {
+        color: var(--yellow-a11);
+    }
+
+    &.lime {
+        color: var(--lime-a11);
+    }
+
+    &.mint {
+        color: var(--mint-a11);
+    }
+
+    &.sky {
+        color: var(--sky-a11);
+    }
+}
+
+.fern-docs-badge.subtle,
+.fern-docs-badge.outlined {
     background-color: var(--grayscale-a3);
 
     &.interactive:not(:disabled):hover,
@@ -9,7 +142,6 @@
     }
 
     &.accent {
-        color: var(--accent-a11, var(--grayscale-a11));
         background-color: var(--accent-a3, var(--grayscale-a3));
 
         &.interactive:not(:disabled):hover,
@@ -19,7 +151,6 @@
     }
 
     &.gray {
-        color: var(--gray-a11);
         background-color: var(--gray-a3);
 
         &.interactive:not(:disabled):hover,
@@ -29,7 +160,6 @@
     }
 
     &.mauve {
-        color: var(--mauve-a11);
         background-color: var(--mauve-a3);
 
         &.interactive:not(:disabled):hover,
@@ -39,7 +169,6 @@
     }
 
     &.slate {
-        color: var(--slate-a11);
         background-color: var(--slate-a3);
 
         &.interactive:not(:disabled):hover,
@@ -49,7 +178,6 @@
     }
 
     &.sage {
-        color: var(--sage-a11);
         background-color: var(--sage-a3);
 
         &.interactive:not(:disabled):hover,
@@ -59,7 +187,6 @@
     }
 
     &.olive {
-        color: var(--olive-a11);
         background-color: var(--olive-a3);
 
         &.interactive:not(:disabled):hover,
@@ -69,7 +196,6 @@
     }
 
     &.sand {
-        color: var(--sand-a11);
         background-color: var(--sand-a3);
 
         &.interactive:not(:disabled):hover,
@@ -79,7 +205,6 @@
     }
 
     &.tomato {
-        color: var(--tomato-a11);
         background-color: var(--tomato-a3);
 
         &.interactive:not(:disabled):hover,
@@ -89,7 +214,6 @@
     }
 
     &.red {
-        color: var(--red-a11);
         background-color: var(--red-a3);
 
         &.interactive:not(:disabled):hover,
@@ -99,7 +223,6 @@
     }
 
     &.ruby {
-        color: var(--ruby-a11);
         background-color: var(--ruby-a3);
 
         &.interactive:not(:disabled):hover,
@@ -109,7 +232,6 @@
     }
 
     &.crimson {
-        color: var(--crimson-a11);
         background-color: var(--crimson-a3);
 
         &.interactive:not(:disabled):hover,
@@ -119,7 +241,6 @@
     }
 
     &.pink {
-        color: var(--pink-a11);
         background-color: var(--pink-a3);
 
         &.interactive:not(:disabled):hover,
@@ -129,7 +250,6 @@
     }
 
     &.plum {
-        color: var(--plum-a11);
         background-color: var(--plum-a3);
 
         &.interactive:not(:disabled):hover,
@@ -139,7 +259,6 @@
     }
 
     &.purple {
-        color: var(--purple-a11);
         background-color: var(--purple-a3);
 
         &.interactive:not(:disabled):hover,
@@ -149,7 +268,6 @@
     }
 
     &.violet {
-        color: var(--violet-a11);
         background-color: var(--violet-a3);
 
         &.interactive:not(:disabled):hover,
@@ -159,7 +277,6 @@
     }
 
     &.iris {
-        color: var(--iris-a11);
         background-color: var(--iris-a3);
 
         &.interactive:not(:disabled):hover,
@@ -169,7 +286,6 @@
     }
 
     &.indigo {
-        color: var(--indigo-a11);
         background-color: var(--indigo-a3);
 
         &.interactive:not(:disabled):hover,
@@ -179,7 +295,6 @@
     }
 
     &.blue {
-        color: var(--blue-a11);
         background-color: var(--blue-a3);
 
         &.interactive:not(:disabled):hover,
@@ -189,7 +304,6 @@
     }
 
     &.cyan {
-        color: var(--cyan-a11);
         background-color: var(--cyan-a3);
 
         &.interactive:not(:disabled):hover,
@@ -199,7 +313,6 @@
     }
 
     &.teal {
-        color: var(--teal-a11);
         background-color: var(--teal-a3);
 
         &.interactive:not(:disabled):hover,
@@ -209,7 +322,6 @@
     }
 
     &.jade {
-        color: var(--jade-a11);
         background-color: var(--jade-a3);
 
         &.interactive:not(:disabled):hover,
@@ -219,7 +331,6 @@
     }
 
     &.green {
-        color: var(--green-a11);
         background-color: var(--green-a3);
 
         &.interactive:not(:disabled):hover,
@@ -229,7 +340,6 @@
     }
 
     &.grass {
-        color: var(--grass-a11);
         background-color: var(--grass-a3);
 
         &.interactive:not(:disabled):hover,
@@ -239,7 +349,6 @@
     }
 
     &.bronze {
-        color: var(--bronze-a11);
         background-color: var(--bronze-a3);
 
         &.interactive:not(:disabled):hover,
@@ -249,7 +358,6 @@
     }
 
     &.gold {
-        color: var(--gold-a11);
         background-color: var(--gold-a3);
 
         &.interactive:not(:disabled):hover,
@@ -259,7 +367,6 @@
     }
 
     &.brown {
-        color: var(--brown-a11);
         background-color: var(--brown-a3);
 
         &.interactive:not(:disabled):hover,
@@ -269,7 +376,6 @@
     }
 
     &.orange {
-        color: var(--orange-a11);
         background-color: var(--orange-a3);
 
         &.interactive:not(:disabled):hover,
@@ -279,7 +385,6 @@
     }
 
     &.amber {
-        color: var(--amber-a11);
         background-color: var(--amber-a3);
 
         &.interactive:not(:disabled):hover,
@@ -289,7 +394,6 @@
     }
 
     &.yellow {
-        color: var(--yellow-a11);
         background-color: var(--yellow-a3);
 
         &.interactive:not(:disabled):hover,
@@ -299,7 +403,6 @@
     }
 
     &.lime {
-        color: var(--lime-a11);
         background-color: var(--lime-a3);
 
         &.interactive:not(:disabled):hover,
@@ -309,7 +412,6 @@
     }
 
     &.mint {
-        color: var(--mint-a11);
         background-color: var(--mint-a3);
 
         &.interactive:not(:disabled):hover,
@@ -319,7 +421,6 @@
     }
 
     &.sky {
-        color: var(--sky-a11);
         background-color: var(--sky-a3);
 
         &.interactive:not(:disabled):hover,
@@ -329,7 +430,305 @@
     }
 }
 
-.fern-docs-badge.outlined {
+.fern-docs-badge.outlined-subtle {
+    background-color: var(--grayscale-a1);
+
+    &.interactive:not(:disabled):hover,
+    &[data-state="open"]:not(:disabled) {
+        background-color: var(--grayscale-a2);
+    }
+
+    &.accent {
+        background-color: var(--accent-a1, var(--grayscale-a1));
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--accent-a2, var(--grayscale-a2));
+        }
+    }
+
+    &.gray {
+        background-color: var(--gray-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--gray-a2);
+        }
+    }
+
+    &.mauve {
+        background-color: var(--mauve-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--mauve-a2);
+        }
+    }
+
+    &.slate {
+        background-color: var(--slate-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--slate-a2);
+        }
+    }
+
+    &.sage {
+        background-color: var(--sage-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--sage-a2);
+        }
+    }
+
+    &.olive {
+        background-color: var(--olive-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--olive-a2);
+        }
+    }
+
+    &.sand {
+        background-color: var(--sand-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--sand-a2);
+        }
+    }
+
+    &.tomato {
+        background-color: var(--tomato-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--tomato-a2);
+        }
+    }
+
+    &.red {
+        background-color: var(--red-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--red-a2);
+        }
+    }
+
+    &.ruby {
+        background-color: var(--ruby-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--ruby-a2);
+        }
+    }
+
+    &.crimson {
+        background-color: var(--crimson-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--crimson-a2);
+        }
+    }
+
+    &.pink {
+        background-color: var(--pink-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--pink-a2);
+        }
+    }
+
+    &.plum {
+        background-color: var(--plum-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--plum-a2);
+        }
+    }
+
+    &.purple {
+        background-color: var(--purple-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--purple-a2);
+        }
+    }
+
+    &.violet {
+        background-color: var(--violet-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--violet-a2);
+        }
+    }
+
+    &.iris {
+        background-color: var(--iris-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--iris-a2);
+        }
+    }
+
+    &.indigo {
+        background-color: var(--indigo-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--indigo-a2);
+        }
+    }
+
+    &.blue {
+        background-color: var(--blue-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--blue-a2);
+        }
+    }
+
+    &.cyan {
+        background-color: var(--cyan-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--cyan-a2);
+        }
+    }
+
+    &.teal {
+        background-color: var(--teal-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--teal-a2);
+        }
+    }
+
+    &.jade {
+        background-color: var(--jade-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--jade-a2);
+        }
+    }
+
+    &.green {
+        background-color: var(--green-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--green-a2);
+        }
+    }
+
+    &.grass {
+        background-color: var(--grass-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--grass-a2);
+        }
+    }
+
+    &.bronze {
+        background-color: var(--bronze-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--bronze-a2);
+        }
+    }
+
+    &.gold {
+        background-color: var(--gold-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--gold-a2);
+        }
+    }
+
+    &.brown {
+        background-color: var(--brown-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--brown-a2);
+        }
+    }
+
+    &.orange {
+        background-color: var(--orange-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--orange-a2);
+        }
+    }
+
+    &.amber {
+        background-color: var(--amber-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--amber-a2);
+        }
+    }
+
+    &.yellow {
+        background-color: var(--yellow-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--yellow-a2);
+        }
+    }
+
+    &.lime {
+        background-color: var(--lime-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--lime-a2);
+        }
+    }
+
+    &.mint {
+        background-color: var(--mint-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--mint-a2);
+        }
+    }
+
+    &.sky {
+        background-color: var(--sky-a1);
+
+        &.interactive:not(:disabled):hover,
+        &[data-state="open"]:not(:disabled) {
+            background-color: var(--sky-a2);
+        }
+    }
+}
+
+.fern-docs-badge.outlined,
+.fern-docs-badge.outlined-subtle {
     border: 1px solid var(--grayscale-a6);
 
     &.accent {

@@ -45,7 +45,7 @@
     "@types/mdast": "^4.0.3",
     "@types/unist": "^3.0.3",
     "collapse-white-space": "^2.1.0",
-    "es-toolkit": "^1.24.0",
+    "es-toolkit": "^1.27.0",
     "estree-util-value-to-estree": "^3.1.2",
     "estree-walker": "^3.0.3",
     "github-slugger": "^2.0.0",

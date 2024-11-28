@@ -8,10 +8,12 @@ export function DesktopSearchDialog({
     open,
     onOpenChange,
     children,
+    asChild,
 }: {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     children: React.ReactNode;
+    asChild?: boolean;
 }): React.ReactElement {
     return (
         <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -39,7 +41,10 @@ export function DesktopSearchDialog({
 
                 <Dialog.Content
                     className="fixed top-[15%] left-1/2 w-[640px] -translate-x-1/2 shadow-xl overflow-hidden origin-left outline-none"
-                    asChild
+                    asChild={asChild}
+                    onEscapeKeyDown={(e) => {
+                        e.preventDefault();
+                    }}
                 >
                     {children}
                 </Dialog.Content>

@@ -2,6 +2,7 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { ToolInvocation } from "ai";
 import { Message } from "ai/react";
 import { z } from "zod";
+import { AlgoliaRecordHit } from "../types";
 
 const SearchResult = z.object({
     title: z.string(),
@@ -13,9 +14,13 @@ const SearchResult = z.object({
 
 export type SearchResult = z.infer<typeof SearchResult>;
 
-export function squeezeMessages(
-    messages: Message[],
-): { id: string; createdAt?: Date; role: "assistant" | "user"; content: string; isThinking?: boolean }[] {
+export function squeezeMessages(messages: Message[]): {
+    id: string;
+    createdAt?: Date;
+    role: "assistant" | "user";
+    content: string;
+    toolInvocations?: ToolInvocation[];
+}[] {
     const squeezed: {
         id: string;
         createdAt?: Date;
@@ -25,7 +30,7 @@ export function squeezeMessages(
     }[] = [];
 
     for (const message of messages) {
-        if (message.role === "assistant" && message.content.trimStart().length > 0) {
+        if (message.role === "assistant") {
             if (squeezed.length > 0 && squeezed[squeezed.length - 1].role === "assistant") {
                 const lastContent = squeezed[squeezed.length - 1].content;
                 squeezed[squeezed.length - 1].content = [lastContent, message.content]
@@ -58,20 +63,19 @@ export function squeezeMessages(
         }
     }
 
-    return squeezed.map(({ toolInvocations, ...message }) => ({
-        ...message,
-        isThinking: toolInvocations?.some((invocation) => invocation.state !== "result"),
-    }));
+    return squeezed;
 }
 
-export function combineSearchResults(messages: Message[]): SearchResult[] {
-    return messages
-        .flatMap((message) => message.toolInvocations ?? [])
-        .flatMap((invocation) =>
-            invocation.state === "result" && invocation.toolName === "search" && Array.isArray(invocation.result)
-                ? invocation.result
-                : [],
-        )
-        .map((result) => SearchResult.safeParse(result).data)
-        .filter(isNonNullish);
+export function combineSearchResults(messages: Message[]): AlgoliaRecordHit[] {
+    return (
+        messages
+            .flatMap((message) => message.toolInvocations ?? [])
+            .flatMap((invocation) =>
+                invocation.state === "result" && invocation.toolName === "search" && Array.isArray(invocation.result)
+                    ? invocation.result
+                    : [],
+            )
+            // .map((result) => SearchResult.safeParse(result).data)
+            .filter(isNonNullish)
+    );
 }
