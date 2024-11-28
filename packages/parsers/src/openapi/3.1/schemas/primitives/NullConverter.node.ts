@@ -1,4 +1,4 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import {
     BaseOpenApiV3_1ConverterNode,
@@ -10,9 +10,9 @@ export declare namespace NullConverterNode {
         type: "null";
     }
 
-    export interface Output extends FdrAPI.api.latest.TypeShape.Alias {
+    export interface Output extends FernRegistry.api.latest.TypeShape.Alias {
         type: "alias";
-        value: FdrAPI.api.latest.TypeReference.Unknown;
+        value: FernRegistry.api.latest.TypeReference.Unknown;
     }
 }
 

@@ -1,5 +1,5 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import {
@@ -19,7 +19,7 @@ export type RequestContentType = ConstArrayToType<typeof SUPPORTED_REQUEST_CONTE
 
 export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.MediaTypeObject,
-    FdrAPI.api.latest.HttpRequestBodyShape
+    FernRegistry.api.latest.HttpRequestBodyShape
 > {
     description: string | undefined;
 
@@ -110,7 +110,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
         }
     }
 
-    convert(): FdrAPI.api.latest.HttpRequestBodyShape | undefined {
+    convert(): FernRegistry.api.latest.HttpRequestBodyShape | undefined {
         switch (this.contentType) {
             case "application/json":
                 return this.schema?.convert();
@@ -129,7 +129,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
                                 case "file":
                                     return {
                                         type: field.multipartType,
-                                        key: FdrAPI.PropertyKey(key),
+                                        key: FernRegistry.PropertyKey(key),
                                         isOptional: this.requiredFields?.includes(key) == null,
                                         contentType: field.contentType,
                                         description: field.description,
@@ -138,7 +138,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
                                 case "files":
                                     return {
                                         type: field.multipartType,
-                                        key: FdrAPI.PropertyKey(key),
+                                        key: FernRegistry.PropertyKey(key),
                                         isOptional: this.requiredFields?.includes(key) == null,
                                         contentType: field.contentType,
                                         description: field.description,
@@ -151,7 +151,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
                                     }
                                     return {
                                         type: field.multipartType,
-                                        key: FdrAPI.PropertyKey(key),
+                                        key: FernRegistry.PropertyKey(key),
                                         contentType: field.contentType,
                                         valueShape,
                                         description: field.description,

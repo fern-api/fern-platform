@@ -1,4 +1,4 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import { FdrNumberType } from "../../../../types/fdr.types";
@@ -12,7 +12,7 @@ export declare namespace NumberConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
         type: "number";
     }
-    export interface Output extends FdrAPI.api.latest.TypeShape.Alias {
+    export interface Output extends FernRegistry.api.latest.TypeShape.Alias {
         type: "alias";
         value: {
             type: "primitive";

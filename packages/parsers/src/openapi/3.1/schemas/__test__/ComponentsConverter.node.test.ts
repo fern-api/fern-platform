@@ -1,4 +1,4 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { ComponentsConverterNode } from "../ComponentsConverter.node";
@@ -79,7 +79,7 @@ describe("ComponentsConverterNode", () => {
         const result = converter.convert() ?? {};
 
         expect(result).toBeDefined();
-        const firstKey = FdrAPI.TypeId(Object.keys(result)[0] ?? "");
+        const firstKey = FernRegistry.TypeId(Object.keys(result)[0] ?? "");
         expect(result[firstKey]?.name).toBe("User");
     });
 });

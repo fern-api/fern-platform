@@ -1,4 +1,4 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import {
@@ -34,9 +34,9 @@ export type PrimitiveType =
 
 export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject,
-    FdrAPI.api.latest.TypeShape | undefined
+    FernRegistry.api.latest.TypeShape | undefined
 > {
-    typeShapeNode: BaseOpenApiV3_1ConverterNode<unknown, FdrAPI.api.latest.TypeShape | undefined> | undefined;
+    typeShapeNode: BaseOpenApiV3_1ConverterNode<unknown, FernRegistry.api.latest.TypeShape | undefined> | undefined;
 
     description: string | undefined;
     name: string | undefined;
@@ -190,7 +190,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
         }
     }
 
-    convert(): FdrAPI.api.latest.TypeShape | undefined {
+    convert(): FernRegistry.api.latest.TypeShape | undefined {
         return this.typeShapeNode?.convert();
     }
 }

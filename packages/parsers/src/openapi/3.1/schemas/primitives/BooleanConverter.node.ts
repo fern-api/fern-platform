@@ -1,4 +1,4 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import {
     BaseOpenApiV3_1ConverterNode,
@@ -9,11 +9,11 @@ export declare namespace BooleanConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
         type: "boolean";
     }
-    export interface Output extends FdrAPI.api.latest.TypeShape.Alias {
+    export interface Output extends FernRegistry.api.latest.TypeShape.Alias {
         type: "alias";
         value: {
             type: "primitive";
-            value: FdrAPI.api.v1.read.PrimitiveType.Boolean;
+            value: FernRegistry.api.v1.read.PrimitiveType.Boolean;
         };
     }
 }

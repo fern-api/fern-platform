@@ -1,5 +1,5 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import {
     BaseOpenApiV3_1ConverterNode,
@@ -8,7 +8,7 @@ import {
 
 export class EnumConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.NonArraySchemaObject,
-    FdrAPI.api.latest.TypeShape.Enum
+    FernRegistry.api.latest.TypeShape.Enum
 > {
     default: string | undefined;
     values: string[] = [];
@@ -45,7 +45,7 @@ export class EnumConverterNode extends BaseOpenApiV3_1ConverterNode<
         this.default = this.input.default;
     }
 
-    convert(): FdrAPI.api.latest.TypeShape.Enum | undefined {
+    convert(): FernRegistry.api.latest.TypeShape.Enum | undefined {
         return {
             type: "enum",
             values: this.values.map((value) => ({

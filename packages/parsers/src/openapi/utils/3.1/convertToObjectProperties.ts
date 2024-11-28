@@ -1,5 +1,5 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { AvailabilityConverterNode } from "../../3.1/extensions/AvailabilityConverter.node";
 
 export function convertToObjectProperties(
@@ -9,11 +9,11 @@ export function convertToObjectProperties(
               {
                   availability?: AvailabilityConverterNode;
                   description?: string;
-                  convert: () => FdrAPI.api.latest.TypeShape | undefined;
+                  convert: () => FernRegistry.api.latest.TypeShape | undefined;
               }
           >
         | undefined,
-): FdrAPI.api.latest.ObjectProperty[] | undefined {
+): FernRegistry.api.latest.ObjectProperty[] | undefined {
     if (properties == null) {
         return undefined;
     }
@@ -24,7 +24,7 @@ export function convertToObjectProperties(
                 return undefined;
             }
             return {
-                key: FdrAPI.PropertyKey(key),
+                key: FernRegistry.PropertyKey(key),
                 valueShape,
                 description: node.description,
                 availability: node.availability?.convert(),

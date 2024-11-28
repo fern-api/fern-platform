@@ -1,4 +1,4 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 } from "uuid";
 import {
@@ -12,7 +12,7 @@ import { ComponentsConverterNode } from "./schemas/ComponentsConverter.node";
 
 export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.Document,
-    FdrAPI.api.latest.ApiDefinition
+    FernRegistry.api.latest.ApiDefinition
 > {
     paths: PathsObjectConverterNode | undefined;
     // webhooks: WebhooksObjectConverterNode | undefined;
@@ -61,7 +61,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
         }
     }
 
-    convert(): FdrAPI.api.latest.ApiDefinition | undefined {
+    convert(): FernRegistry.api.latest.ApiDefinition | undefined {
         const apiDefinitionId = v4();
 
         const endpoints = this.paths?.convert();
@@ -74,18 +74,18 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
         }
 
         return {
-            id: FdrAPI.ApiDefinitionId(apiDefinitionId),
+            id: FernRegistry.ApiDefinitionId(apiDefinitionId),
             endpoints: endpoints ?? {},
             // Websockets are not implemented in OAS, but are in AsyncAPI
-            websockets: {} as Record<FdrAPI.WebSocketId, FdrAPI.api.latest.WebSocketChannel>,
+            websockets: {} as Record<FernRegistry.WebSocketId, FernRegistry.api.latest.WebSocketChannel>,
             // TODO: implement webhooks
             // webhooks,
-            webhooks: {} as Record<FdrAPI.WebhookId, FdrAPI.api.latest.WebhookDefinition>,
+            webhooks: {} as Record<FernRegistry.WebhookId, FernRegistry.api.latest.WebhookDefinition>,
             types,
             // TODO: check if we ever have subpackages
-            subpackages: {} as Record<FdrAPI.api.latest.SubpackageId, FdrAPI.api.latest.SubpackageMetadata>,
+            subpackages: {} as Record<FernRegistry.api.latest.SubpackageId, FernRegistry.api.latest.SubpackageMetadata>,
             // TODO: Implement auths
-            auths: {} as Record<FdrAPI.api.latest.AuthSchemeId, FdrAPI.api.latest.AuthScheme>,
+            auths: {} as Record<FernRegistry.api.latest.AuthSchemeId, FernRegistry.api.latest.AuthScheme>,
             // TODO: Implement globalHeaders
             globalHeaders: undefined,
         };

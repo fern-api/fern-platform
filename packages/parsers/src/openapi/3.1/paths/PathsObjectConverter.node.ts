@@ -1,5 +1,5 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 } from "uuid";
 import {
@@ -12,7 +12,7 @@ import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
 export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.PathsObject,
-    Record<FdrAPI.EndpointId, FdrAPI.api.latest.EndpointDefinition>
+    Record<FernRegistry.EndpointId, FernRegistry.api.latest.EndpointDefinition>
 > {
     paths: PathItemObjectConverterNode[] | undefined;
 
@@ -42,7 +42,7 @@ export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             .filter(isNonNullish);
     }
 
-    convert(): Record<FdrAPI.EndpointId, FdrAPI.api.latest.EndpointDefinition> | undefined {
+    convert(): Record<FernRegistry.EndpointId, FernRegistry.api.latest.EndpointDefinition> | undefined {
         if (this.paths == null) {
             return undefined;
         }
@@ -56,7 +56,7 @@ export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                     }
 
                     return endpointDefinitions.map((endpointDefinition) => [
-                        FdrAPI.EndpointId(v4()),
+                        FernRegistry.EndpointId(v4()),
                         endpointDefinition,
                     ]);
                 })

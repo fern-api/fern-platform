@@ -1,4 +1,4 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import {
@@ -20,7 +20,7 @@ export type ResponseStreamingFormat = ConstArrayToType<typeof SUPPORTED_STREAMIN
 
 export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.MediaTypeObject,
-    FdrAPI.api.latest.HttpResponseBodyShape
+    FernRegistry.api.latest.HttpResponseBodyShape
 > {
     schema: SchemaConverterNode | undefined;
     contentType: ResponseContentType | undefined;
@@ -74,7 +74,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
         }
     }
 
-    convertStreamingFormat(): FdrAPI.api.latest.HttpResponseBodyShape | undefined {
+    convertStreamingFormat(): FernRegistry.api.latest.HttpResponseBodyShape | undefined {
         switch (this.streamingFormat) {
             case "json": {
                 const shape = this.schema?.convert();
@@ -98,7 +98,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
         }
     }
 
-    convert(): FdrAPI.api.latest.HttpResponseBodyShape | undefined {
+    convert(): FernRegistry.api.latest.HttpResponseBodyShape | undefined {
         switch (this.contentType) {
             case "application/json":
                 if (this.streamingFormat == null) {

@@ -1,4 +1,4 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { ServerObjectConverterNode } from "../ServerObjectConverter.node";
@@ -34,7 +34,7 @@ describe("ServerObjectConverterNode", () => {
             });
             const result = node.convert();
             expect(result).toEqual({
-                id: FdrAPI.EnvironmentId("x-fern-server-name"),
+                id: FernRegistry.EnvironmentId("x-fern-server-name"),
                 baseUrl: "https://api.example.com",
             });
         });

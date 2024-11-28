@@ -1,5 +1,5 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import {
     BaseOpenApiV3_1ConverterNode,
@@ -10,7 +10,7 @@ import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.NonArraySchemaObject,
-    FdrAPI.api.latest.TypeShape.DiscriminatedUnion | FdrAPI.api.latest.TypeShape.UndiscriminatedUnion
+    FernRegistry.api.latest.TypeShape.DiscriminatedUnion | FernRegistry.api.latest.TypeShape.UndiscriminatedUnion
 > {
     discriminated: boolean | undefined;
     discriminant: string | undefined;
@@ -73,8 +73,8 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     convert():
-        | FdrAPI.api.latest.TypeShape.DiscriminatedUnion
-        | FdrAPI.api.latest.TypeShape.UndiscriminatedUnion
+        | FernRegistry.api.latest.TypeShape.DiscriminatedUnion
+        | FernRegistry.api.latest.TypeShape.UndiscriminatedUnion
         | undefined {
         if (
             // If no decision has been made, bail
@@ -89,7 +89,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
         return this.discriminated && this.discriminant != null && this.discriminatedMapping != null
             ? {
                   type: "discriminatedUnion",
-                  discriminant: FdrAPI.PropertyKey(this.discriminant),
+                  discriminant: FernRegistry.PropertyKey(this.discriminant),
                   variants: Object.entries(this.discriminatedMapping)
                       .map(([key, node]) => {
                           const convertedShape = node.convert();
