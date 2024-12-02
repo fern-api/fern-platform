@@ -1,6 +1,6 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
+import { FernRegistry } from "../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -9,7 +9,7 @@ import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.ComponentsObject,
-    FdrAPI.api.latest.ApiDefinition["types"]
+    FernRegistry.api.latest.ApiDefinition["types"]
 > {
     typeSchemas: Record<string, SchemaConverterNode> | undefined;
 
@@ -41,7 +41,7 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
         }
     }
 
-    convert(): FdrAPI.api.latest.ApiDefinition["types"] | undefined {
+    convert(): FernRegistry.api.latest.ApiDefinition["types"] | undefined {
         if (this.typeSchemas == null) {
             return undefined;
         }
@@ -57,7 +57,7 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
                     }
 
                     return [
-                        FdrAPI.TypeId(key),
+                        FernRegistry.TypeId(key),
                         {
                             name,
                             shape,

@@ -1,6 +1,6 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
+import { FernRegistry } from "../../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -12,7 +12,7 @@ import { ResponseMediaTypeObjectConverterNode, ResponseStreamingFormat } from ".
 
 export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.ResponseObject | OpenAPIV3_1.ReferenceObject,
-    FdrAPI.api.latest.HttpResponseBodyShape[]
+    FernRegistry.api.latest.HttpResponseBodyShape[]
 > {
     headers: Record<string, ParameterBaseObjectConverterNode> | undefined;
     responses: ResponseMediaTypeObjectConverterNode[] | undefined;
@@ -65,7 +65,7 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         });
     }
 
-    convert(): FdrAPI.api.latest.HttpResponseBodyShape[] | undefined {
+    convert(): FernRegistry.api.latest.HttpResponseBodyShape[] | undefined {
         return this.responses?.map((response) => response.convert()).filter(isNonNullish);
     }
 }

@@ -1,6 +1,6 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
+import { FernRegistry } from "../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -17,7 +17,7 @@ import { ResponsesObjectConverterNode } from "./response/ResponsesObjectConverte
 
 export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.OperationObject,
-    FdrAPI.api.latest.EndpointDefinition
+    FernRegistry.api.latest.EndpointDefinition
 > {
     description: string | undefined;
     pathParameters: Record<string, ParameterBaseObjectConverterNode> | undefined;
@@ -116,7 +116,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 : undefined;
     }
 
-    convertPathToPathParts(): FdrAPI.api.latest.PathPart[] | undefined {
+    convertPathToPathParts(): FernRegistry.api.latest.PathPart[] | undefined {
         if (this.path === undefined) {
             return undefined;
         }
@@ -127,7 +127,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             if (part.startsWith("{") && part.endsWith("}")) {
                 return {
                     type: "pathParameter" as const,
-                    value: FdrAPI.PropertyKey(part.slice(1, -1).trim()),
+                    value: FernRegistry.PropertyKey(part.slice(1, -1).trim()),
                 };
             }
             return {
@@ -137,7 +137,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         });
     }
 
-    convert(): FdrAPI.api.latest.EndpointDefinition | undefined {
+    convert(): FernRegistry.api.latest.EndpointDefinition | undefined {
         if (this.path == null) {
             return undefined;
         }
@@ -157,7 +157,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             description: this.description,
             availability: this.availability?.convert(),
             namespace: undefined,
-            id: FdrAPI.EndpointId(endpointId),
+            id: FernRegistry.EndpointId(endpointId),
             method: this.method,
             path: pathParts,
             // TODO: auth

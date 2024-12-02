@@ -968,9 +968,6 @@ importers:
 
   packages/parsers:
     dependencies:
-      '@fern-api/fdr-sdk':
-        specifier: workspace:*
-        version: link:../fdr-sdk
       '@fern-api/logger':
         specifier: 0.4.24-rc1
         version: 0.4.24-rc1

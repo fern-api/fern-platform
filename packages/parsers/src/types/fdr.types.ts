@@ -1,15 +1,15 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "../client/generated";
 
-export type FdrNumberType = FdrAPI.api.v1.read.PrimitiveType.Double;
+export type FdrNumberType = FernRegistry.api.v1.read.PrimitiveType.Double;
 export type FdrIntegerType =
-    | FdrAPI.api.v1.read.PrimitiveType.Integer
-    | FdrAPI.api.v1.read.PrimitiveType.Long
-    | FdrAPI.api.v1.read.PrimitiveType.Uint
-    | FdrAPI.api.v1.read.PrimitiveType.Uint64;
+    | FernRegistry.api.v1.read.PrimitiveType.Integer
+    | FernRegistry.api.v1.read.PrimitiveType.Long
+    | FernRegistry.api.v1.read.PrimitiveType.Uint
+    | FernRegistry.api.v1.read.PrimitiveType.Uint64;
 export type FdrStringType =
-    | FdrAPI.api.v1.read.PrimitiveType.String
-    | FdrAPI.api.v1.read.PrimitiveType.BigInteger
-    | FdrAPI.api.v1.read.PrimitiveType.Datetime
-    | FdrAPI.api.v1.read.PrimitiveType.Uuid
-    | FdrAPI.api.v1.read.PrimitiveType.Base64
-    | FdrAPI.api.v1.read.PrimitiveType.Date_;
+    | FernRegistry.api.v1.read.PrimitiveType.String
+    | FernRegistry.api.v1.read.PrimitiveType.BigInteger
+    | FernRegistry.api.v1.read.PrimitiveType.Datetime
+    | FernRegistry.api.v1.read.PrimitiveType.Uuid
+    | FernRegistry.api.v1.read.PrimitiveType.Base64
+    | FernRegistry.api.v1.read.PrimitiveType.Date_;

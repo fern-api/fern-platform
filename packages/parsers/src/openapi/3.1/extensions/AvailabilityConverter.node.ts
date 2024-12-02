@@ -1,6 +1,6 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
+import { FernRegistry } from "../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -14,7 +14,7 @@ export type Availability = ConstArrayToType<typeof SUPPORTED_X_FERN_AVAILABILITY
 
 export class AvailabilityConverterNode extends BaseOpenApiV3_1ConverterNode<
     { deprecated?: boolean } | OpenAPIV3_1.ReferenceObject,
-    FdrAPI.Availability | undefined
+    FernRegistry.Availability | undefined
 > {
     availability?: Availability;
 
@@ -50,16 +50,16 @@ export class AvailabilityConverterNode extends BaseOpenApiV3_1ConverterNode<
         }
     }
 
-    convert(): FdrAPI.Availability | undefined {
+    convert(): FernRegistry.Availability | undefined {
         switch (this.availability) {
             case "pre-release":
-                return FdrAPI.Availability.Beta;
+                return FernRegistry.Availability.Beta;
             case "in-development":
-                return FdrAPI.Availability.InDevelopment;
+                return FernRegistry.Availability.InDevelopment;
             case "generally-available":
-                return FdrAPI.Availability.GenerallyAvailable;
+                return FernRegistry.Availability.GenerallyAvailable;
             case "deprecated":
-                return FdrAPI.Availability.Deprecated;
+                return FernRegistry.Availability.Deprecated;
             case undefined:
                 return undefined;
             default:

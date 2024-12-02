@@ -1,6 +1,6 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
+import { FernRegistry } from "../../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -12,10 +12,10 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.ResponsesObject,
     {
         responses: {
-            headers: FdrAPI.api.latest.ObjectProperty[] | undefined;
-            response: FdrAPI.api.latest.HttpResponse;
+            headers: FernRegistry.api.latest.ObjectProperty[] | undefined;
+            response: FernRegistry.api.latest.HttpResponse;
         }[];
-        errors: FdrAPI.api.latest.ErrorResponse[];
+        errors: FernRegistry.api.latest.ErrorResponse[];
     }
 > {
     responsesByStatusCode: Record<string, ResponseObjectConverterNode> | undefined;
@@ -56,8 +56,8 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     convertResponseObjectToHttpResponses(): {
-        headers: FdrAPI.api.latest.ObjectProperty[] | undefined;
-        response: FdrAPI.api.latest.HttpResponse;
+        headers: FernRegistry.api.latest.ObjectProperty[] | undefined;
+        response: FernRegistry.api.latest.HttpResponse;
     }[] {
         return Object.entries(this.responsesByStatusCode ?? {})
             .map(([statusCode, response]) => {
@@ -78,7 +78,7 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             .filter(isNonNullish);
     }
 
-    convertResponseObjectToErrors(): FdrAPI.api.latest.ErrorResponse[] {
+    convertResponseObjectToErrors(): FernRegistry.api.latest.ErrorResponse[] {
         return Object.entries(this.errorsByStatusCode ?? {})
             .map(([statusCode, response]) => {
                 const schema = response.responses?.[0]?.schema;
@@ -103,10 +103,10 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     convert():
         | {
               responses: {
-                  headers: FdrAPI.api.latest.ObjectProperty[] | undefined;
-                  response: FdrAPI.api.latest.HttpResponse;
+                  headers: FernRegistry.api.latest.ObjectProperty[] | undefined;
+                  response: FernRegistry.api.latest.HttpResponse;
               }[];
-              errors: FdrAPI.api.latest.ErrorResponse[];
+              errors: FernRegistry.api.latest.ErrorResponse[];
           }
         | undefined {
         return {

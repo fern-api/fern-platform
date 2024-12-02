@@ -1,5 +1,5 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+import { FernRegistry } from "../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -8,7 +8,7 @@ import { getSchemaIdFromReference } from "../../utils/3.1/getSchemaIdFromReferen
 
 export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.ReferenceObject,
-    FdrAPI.api.latest.TypeShape.Alias
+    FernRegistry.api.latest.TypeShape.Alias
 > {
     schemaId: string | undefined;
 
@@ -28,7 +28,7 @@ export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNode<
         }
     }
 
-    convert(): FdrAPI.api.latest.TypeShape.Alias | undefined {
+    convert(): FernRegistry.api.latest.TypeShape.Alias | undefined {
         if (this.schemaId == null) {
             return undefined;
         }
@@ -37,7 +37,7 @@ export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNode<
             type: "alias",
             value: {
                 type: "id",
-                id: FdrAPI.TypeId(this.schemaId),
+                id: FernRegistry.TypeId(this.schemaId),
                 // TODO: figure out how to handle default
                 default: undefined,
             },

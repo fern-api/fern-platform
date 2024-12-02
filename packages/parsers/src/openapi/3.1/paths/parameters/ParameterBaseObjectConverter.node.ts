@@ -1,5 +1,5 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+import { FernRegistry } from "../../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -10,7 +10,7 @@ import { SchemaConverterNode } from "../../schemas/SchemaConverter.node";
 
 export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.ParameterBaseObject | OpenAPIV3_1.ReferenceObject,
-    FdrAPI.api.latest.TypeShape
+    FernRegistry.api.latest.TypeShape
 > {
     availability: AvailabilityConverterNode | undefined;
     required: boolean | undefined;
@@ -66,7 +66,7 @@ export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNo
         }
     }
 
-    convert(): FdrAPI.api.latest.TypeShape | undefined {
+    convert(): FernRegistry.api.latest.TypeShape | undefined {
         return this.schema?.convert();
     }
 }

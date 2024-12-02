@@ -1,4 +1,4 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
+import { FernRegistry } from "../../../../client/generated";
 import { AvailabilityConverterNode } from "../../../3.1/extensions/AvailabilityConverter.node";
 import { convertToObjectProperties } from "../../3.1/convertToObjectProperties";
 
@@ -8,7 +8,7 @@ describe("convertToObjectProperties", () => {
     });
 
     it("should convert properties to object properties", () => {
-        const mockTypeShape: FdrAPI.api.latest.TypeShape = {
+        const mockTypeShape: FernRegistry.api.latest.TypeShape = {
             type: "alias",
             value: {
                 type: "primitive",
@@ -22,7 +22,7 @@ describe("convertToObjectProperties", () => {
             },
         };
 
-        const mockAvailabilityShape: FdrAPI.Availability = "Deprecated";
+        const mockAvailabilityShape: FernRegistry.Availability = "Deprecated";
 
         const properties = {
             name: {
@@ -41,13 +41,13 @@ describe("convertToObjectProperties", () => {
 
         expect(result).toEqual([
             {
-                key: FdrAPI.PropertyKey("name"),
+                key: FernRegistry.PropertyKey("name"),
                 valueShape: mockTypeShape,
                 description: "The name",
                 availability: mockAvailabilityShape,
             },
             {
-                key: FdrAPI.PropertyKey("age"),
+                key: FernRegistry.PropertyKey("age"),
                 valueShape: mockTypeShape,
                 description: undefined,
                 availability: undefined,
@@ -56,7 +56,7 @@ describe("convertToObjectProperties", () => {
     });
 
     it("should filter out properties with null value shapes", () => {
-        const mockTypeShape: FdrAPI.api.latest.TypeShape = {
+        const mockTypeShape: FernRegistry.api.latest.TypeShape = {
             type: "alias",
             value: {
                 type: "primitive",
@@ -83,7 +83,7 @@ describe("convertToObjectProperties", () => {
 
         expect(result).toEqual([
             {
-                key: FdrAPI.PropertyKey("valid"),
+                key: FernRegistry.PropertyKey("valid"),
                 valueShape: mockTypeShape,
                 description: undefined,
                 availability: undefined,

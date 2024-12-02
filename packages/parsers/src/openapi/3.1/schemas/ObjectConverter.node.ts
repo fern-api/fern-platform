@@ -1,6 +1,6 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
+import { FernRegistry } from "../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -18,7 +18,7 @@ export declare namespace ObjectConverterNode {
 
 export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     ObjectConverterNode.Input,
-    FdrAPI.api.latest.TypeShape.Object_
+    FernRegistry.api.latest.TypeShape.Object_
 > {
     description: string | undefined;
     extends: string[] = [];
@@ -94,7 +94,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         this.description = this.input.description;
     }
 
-    convertProperties(): FdrAPI.api.latest.ObjectProperty[] | undefined {
+    convertProperties(): FernRegistry.api.latest.ObjectProperty[] | undefined {
         if (this.properties == null) {
             return undefined;
         }
@@ -102,7 +102,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         return convertToObjectProperties(this.properties);
     }
 
-    convertExtraProperties(): FdrAPI.api.latest.TypeReference | undefined {
+    convertExtraProperties(): FernRegistry.api.latest.TypeReference | undefined {
         if (this.extraProperties == null) {
             return undefined;
         }
@@ -123,7 +123,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         return undefined;
     }
 
-    convert(): FdrAPI.api.latest.TypeShape.Object_ | undefined {
+    convert(): FernRegistry.api.latest.TypeShape.Object_ | undefined {
         const properties = this.convertProperties();
         if (properties == null) {
             return undefined;
@@ -131,7 +131,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
         return {
             type: "object",
-            extends: this.extends.map((id) => FdrAPI.TypeId(id)),
+            extends: this.extends.map((id) => FernRegistry.TypeId(id)),
             properties,
             extraProperties: this.convertExtraProperties(),
         };

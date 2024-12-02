@@ -1,6 +1,6 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
+import { FernRegistry } from "../../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -11,7 +11,7 @@ import { RequestMediaTypeObjectConverterNode } from "./RequestMediaTypeObjectCon
 
 export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.RequestBodyObject | OpenAPIV3_1.ReferenceObject,
-    FdrAPI.api.latest.HttpRequest[]
+    FernRegistry.api.latest.HttpRequest[]
 > {
     description: string | undefined;
     requestBodiesByContentType: Record<string, RequestMediaTypeObjectConverterNode> | undefined;
@@ -50,7 +50,7 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
         });
     }
 
-    convert(): FdrAPI.api.latest.HttpRequest[] {
+    convert(): FernRegistry.api.latest.HttpRequest[] {
         return Object.entries(this.requestBodiesByContentType ?? {})
             .map(([contentType, mediaTypeObject]) => {
                 const body = mediaTypeObject.convert();

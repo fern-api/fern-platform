@@ -1,6 +1,6 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
+import { FernRegistry } from "../../../../client/generated";
 import { FdrStringType } from "../../../../types/fdr.types";
 import {
     BaseOpenApiV3_1ConverterNode,
@@ -13,7 +13,7 @@ export declare namespace StringConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
         type: "string";
     }
-    export interface Output extends FdrAPI.api.latest.TypeShape.Alias {
+    export interface Output extends FernRegistry.api.latest.TypeShape.Alias {
         type: "alias";
         value: {
             type: "primitive";
@@ -28,7 +28,7 @@ function isOpenApiStringTypeFormat(format: unknown): format is ConstArrayToType<
 
 export class StringConverterNode extends BaseOpenApiV3_1ConverterNode<
     StringConverterNode.Input,
-    StringConverterNode.Output | FdrAPI.api.latest.TypeShape.Enum
+    StringConverterNode.Output | FernRegistry.api.latest.TypeShape.Enum
 > {
     format: ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT> | undefined;
     regex: string | undefined;
@@ -122,7 +122,7 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNode<
         }
     }
 
-    convert(): StringConverterNode.Output | FdrAPI.api.latest.TypeShape.Enum | undefined {
+    convert(): StringConverterNode.Output | FernRegistry.api.latest.TypeShape.Enum | undefined {
         if (this.enum != null) {
             return this.enum.convert();
         }
