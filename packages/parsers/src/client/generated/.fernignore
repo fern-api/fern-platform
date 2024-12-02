@@ -3,6 +3,8 @@ Client.ts
 index.ts
 api/resources/api/client/
 api/resources/api/index.ts
+api/resources/api/resources/v1/client/
+api/resources/api/resources/v1/index.ts
 api/resources/api/resources/v1/resources/read/client/
 api/resources/api/resources/v1/resources/read/index.ts
 api/resources/api/resources/v1/resources/register/client/
@@ -28,6 +30,8 @@ api/resources/docs/resources/v2/resources/write/index.ts
 api/resources/docsCache/
 api/resources/generators/client/
 api/resources/generators/index.ts
+api/resources/generators/resources/client/
+api/resources/generators/resources/index.ts
 api/resources/generators/resources/cli/client/
 api/resources/generators/resources/cli/index.ts
 api/resources/generators/resources/versions/client/
@@ -36,6 +40,10 @@ api/resources/git/client/
 api/resources/git/index.ts
 api/resources/sdks/client/
 api/resources/sdks/index.ts
+api/resources/sdks/resources/client/
+api/resources/sdks/resources/index.ts
+api/resources/sdks/resources/versions/client/
+api/resources/sdks/resources/versions/index.ts
 api/resources/sdks/versions/client/
 api/resources/sdks/versions/index.ts
 api/resources/snippets/client/
