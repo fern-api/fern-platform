@@ -1,8 +1,12 @@
+import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { FernRegistry } from "../../../../client/generated";
+import { SchemaConverterNode } from "../../../3.1";
 import { AvailabilityConverterNode } from "../../../3.1/extensions/AvailabilityConverter.node";
 import { convertToObjectProperties } from "../../3.1/convertToObjectProperties";
 
 describe("convertToObjectProperties", () => {
+    const mockContext = createMockContext();
+
     it("should return undefined when properties is undefined", () => {
         expect(convertToObjectProperties(undefined)).toBeUndefined();
     });
@@ -24,17 +28,34 @@ describe("convertToObjectProperties", () => {
 
         const mockAvailabilityShape: FernRegistry.Availability = "Deprecated";
 
-        const properties = {
-            name: {
+        const nameSchemaConverterNode = new SchemaConverterNode({
+            input: {
+                type: "string",
                 description: "The name",
-                availability: {
-                    convert: () => mockAvailabilityShape,
-                } as AvailabilityConverterNode,
-                convert: () => mockTypeShape,
             },
-            age: {
-                convert: () => mockTypeShape,
+            context: mockContext,
+            accessPath: [],
+            pathId: "",
+        });
+        nameSchemaConverterNode.availability = new AvailabilityConverterNode({
+            input: {
+                deprecated: true,
             },
+            context: mockContext,
+            accessPath: [],
+            pathId: "",
+        });
+
+        const properties = {
+            name: nameSchemaConverterNode,
+            age: new SchemaConverterNode({
+                input: {
+                    type: "string",
+                },
+                context: mockContext,
+                accessPath: [],
+                pathId: "",
+            }),
         };
 
         const result = convertToObjectProperties(properties);
@@ -70,13 +91,20 @@ describe("convertToObjectProperties", () => {
             },
         };
 
-        const properties = {
-            valid: {
-                convert: () => mockTypeShape,
+        const validSchemaConverterNode = new SchemaConverterNode({
+            input: {
+                type: "string",
             },
+            context: mockContext,
+            accessPath: [],
+            pathId: "",
+        });
+
+        const properties = {
+            valid: validSchemaConverterNode,
             invalid: {
                 convert: () => undefined,
-            },
+            } as unknown as SchemaConverterNode,
         };
 
         const result = convertToObjectProperties(properties);

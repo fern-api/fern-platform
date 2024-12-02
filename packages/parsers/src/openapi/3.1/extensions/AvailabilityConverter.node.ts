@@ -13,7 +13,7 @@ import { isReferenceObject } from "../guards/isReferenceObject";
 export type Availability = ConstArrayToType<typeof SUPPORTED_X_FERN_AVAILABILITY_VALUES>;
 
 export class AvailabilityConverterNode extends BaseOpenApiV3_1ConverterNode<
-    { deprecated?: boolean } | OpenAPIV3_1.ReferenceObject,
+    { deprecated?: boolean } | OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject,
     FernRegistry.Availability | undefined
 > {
     availability?: Availability;
