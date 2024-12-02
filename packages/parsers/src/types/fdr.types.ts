@@ -1,4 +1,4 @@
-import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
+import { FernRegistry } from "../client/generated";
 
 export type FdrNumberType = FernRegistry.api.v1.read.PrimitiveType.Double;
 export type FdrIntegerType =

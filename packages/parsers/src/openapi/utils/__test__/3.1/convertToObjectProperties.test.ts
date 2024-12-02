@@ -1,4 +1,4 @@
-import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
+import { FernRegistry } from "../../../../client/generated";
 import { AvailabilityConverterNode } from "../../../3.1/extensions/AvailabilityConverter.node";
 import { convertToObjectProperties } from "../../3.1/convertToObjectProperties";
 

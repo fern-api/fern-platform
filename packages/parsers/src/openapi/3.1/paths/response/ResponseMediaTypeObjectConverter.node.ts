@@ -1,6 +1,6 @@
-import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
+import { FernRegistry } from "../../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,

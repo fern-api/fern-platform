@@ -1,7 +1,7 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 } from "uuid";
+import { FernRegistry } from "../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,

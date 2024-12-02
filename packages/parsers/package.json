@@ -29,7 +29,6 @@
   "dependencies": {
     "@fern-api/logger": "0.4.24-rc1",
     "@fern-api/ui-core-utils": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.116.5-873e41db0",
     "openapi-types": "^12.1.3",
     "ts-essentials": "^10.0.1",
     "uuid": "^9.0.0",
@@ -41,8 +40,5 @@
     "@types/uuid": "^9.0.1",
     "@types/whatwg-mimetype": "^3.0.2",
     "js-yaml": "^4.1.0"
-  },
-  "peerDependencies": {
-    "@fern-fern/fdr-cjs-sdk": "0.116.5-873e41db0"
   }
 }
