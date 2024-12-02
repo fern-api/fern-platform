@@ -29,41 +29,33 @@ export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNo
     parse(): void {
         this.description = this.input.description;
 
+        let schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined;
         if (isReferenceObject(this.input)) {
-            this.schema = new SchemaConverterNode({
-                input: this.input,
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId: "schema",
-            });
-            this.availability = new AvailabilityConverterNode({
-                input: this.input,
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId: "availability",
-            });
+            schema = this.input;
         } else {
             if (this.input.schema != null) {
-                this.availability = new AvailabilityConverterNode({
-                    input: this.input.schema,
-                    context: this.context,
-                    accessPath: this.accessPath,
-                    pathId: "availability",
-                });
-                this.schema = new SchemaConverterNode({
-                    input: this.input.schema,
-                    context: this.context,
-                    accessPath: this.accessPath,
-                    pathId: "schema",
-                });
+                schema = this.input.schema;
                 this.required = this.input.required;
             } else {
-                this.context.errors.error({
-                    message: `Expected reference or schema for parameter. Received: ${JSON.stringify(this.input)}`,
-                    path: this.accessPath,
-                });
+                schema = {
+                    type: "string",
+                };
+                this.required = false;
             }
         }
+
+        this.availability = new AvailabilityConverterNode({
+            input: schema,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "availability",
+        });
+        this.schema = new SchemaConverterNode({
+            input: schema,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "schema",
+        });
     }
 
     convert(): FernRegistry.api.latest.TypeShape | undefined {

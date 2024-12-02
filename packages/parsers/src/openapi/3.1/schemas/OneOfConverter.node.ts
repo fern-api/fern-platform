@@ -27,23 +27,14 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
         if (this.input.oneOf != null) {
             if (this.input.discriminator == null) {
                 this.discriminated = false;
-                this.undiscriminatedMapping = this.input.oneOf
-                    ?.map((schema) => {
-                        // if (!isReferenceObject(schema) && schema.type !== "object") {
-                        //     this.context.errors.error({
-                        //         message: `Expected 'oneOf' schema to be an object. Received ${schema.type}`,
-                        //         path: this.accessPath,
-                        //     });
-                        //     return undefined;
-                        // }
-                        return new SchemaConverterNode({
-                            input: schema,
-                            context: this.context,
-                            accessPath: this.accessPath,
-                            pathId: this.pathId,
-                        });
-                    })
-                    .filter(isNonNullish);
+                this.undiscriminatedMapping = this.input.oneOf?.map((schema) => {
+                    return new SchemaConverterNode({
+                        input: schema,
+                        context: this.context,
+                        accessPath: this.accessPath,
+                        pathId: this.pathId,
+                    });
+                });
             } else {
                 const maybeMapping = this.input.discriminator.mapping;
                 if (maybeMapping != null) {
@@ -55,13 +46,16 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
                     const discriminatedMapping = this.discriminatedMapping;
 
                     Object.entries(maybeMapping).map(([key, value]) => {
+                        const schema = resolveSchemaReference({ $ref: value }, this.context.document);
+                        if (schema == null) {
+                            this.context.errors.warning({
+                                message: `Expected schema reference. Received undefined reference: ${value}`,
+                                path: this.accessPath,
+                            });
+                            return;
+                        }
                         discriminatedMapping[key] = new SchemaConverterNode({
-                            input: resolveSchemaReference(
-                                {
-                                    $ref: value,
-                                },
-                                this.context.document,
-                            ),
+                            input: schema,
                             context: this.context,
                             accessPath: this.accessPath,
                             pathId: this.pathId,

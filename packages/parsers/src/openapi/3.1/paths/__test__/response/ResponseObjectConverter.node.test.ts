@@ -98,7 +98,8 @@ describe("ResponseObjectConverterNode", () => {
         });
 
         expect(mockContext.errors.error).toHaveBeenCalledWith({
-            message: "Expected response to be defined. Received null",
+            message:
+                "Expected response reference to resolve to an object. Received undefined reference: #/components/responses/NonExistent",
             path: ["test"],
         });
     });

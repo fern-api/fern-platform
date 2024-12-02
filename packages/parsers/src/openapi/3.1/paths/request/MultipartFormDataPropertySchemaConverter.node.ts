@@ -20,22 +20,26 @@ export class MultipartFormDataPropertySchemaConverterNode extends SchemaConverte
 
     override parse(): void {
         super.parse();
-        const propertyObject = isReferenceObject(this.input)
-            ? resolveSchemaReference(this.input, this.context.document)
-            : this.input;
+        const propertyObject = resolveSchemaReference(this.input, this.context.document);
+        if (propertyObject == null) {
+            this.context.errors.error({
+                message: `Expected multipart form data property definition. ${isReferenceObject(this.input) ? `Received undefined reference: ${this.input.$ref}` : ""}`,
+                path: this.accessPath,
+            });
+            return;
+        }
         if (propertyObject.type === "string" && propertyObject.format === "binary") {
             this.multipartType = "file";
             this.contentType = propertyObject.contentMediaType;
         } else if (propertyObject.type === "array") {
-            const items = isReferenceObject(propertyObject.items)
-                ? resolveSchemaReference(propertyObject.items, this.context.document)
-                : propertyObject.items;
+            const items = resolveSchemaReference(propertyObject.items, this.context.document);
             if (items?.type === "string" && items?.format === "binary") {
                 this.multipartType = "files";
                 this.contentType = items?.contentMediaType;
             } else {
                 this.context.errors.warning({
-                    message: `Expected multipart form data files definition with array type with internal string type and binary format. Received: ${JSON.stringify(propertyObject)}`,
+                    message:
+                        "Expected multipart form data files definition with array type with internal string type and binary format.",
                     path: this.accessPath,
                 });
                 this.multipartType = undefined;

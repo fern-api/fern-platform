@@ -55,11 +55,7 @@ export const SUPPORTED_X_FERN_AVAILABILITY_VALUES = [
     "generally-available",
     "deprecated",
 ] as const;
-export const SUPPORTED_REQUEST_CONTENT_TYPES = [
-    "application/json",
-    "multipart/form-data",
-    "application/octet-stream",
-] as const;
+export const SUPPORTED_REQUEST_CONTENT_TYPES = ["json", "form-data", "stream"] as const;
 export const SUPPORTED_RESPONSE_CONTENT_TYPES = [
     "application/json",
     "text/event-stream",

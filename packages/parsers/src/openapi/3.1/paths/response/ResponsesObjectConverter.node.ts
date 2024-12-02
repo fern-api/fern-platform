@@ -62,6 +62,7 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         return Object.entries(this.responsesByStatusCode ?? {})
             .map(([statusCode, response]) => {
                 // TODO: support multiple response types per response status code
+                this.context.logger.info("Accessing first response from ResponsesObjectConverterNode conversion.");
                 const body = response.convert()?.[0];
                 if (body == null) {
                     return undefined;
@@ -81,13 +82,16 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     convertResponseObjectToErrors(): FernRegistry.api.latest.ErrorResponse[] {
         return Object.entries(this.errorsByStatusCode ?? {})
             .map(([statusCode, response]) => {
+                this.context.logger.info(
+                    "Accessing first response from ResponseMediaTypeObjectConverterNode conversion.",
+                );
                 const schema = response.responses?.[0]?.schema;
                 const shape = schema?.convert();
 
                 if (shape == null || schema == null) {
                     return undefined;
                 }
-                // console.log(JSON.stringify(response, null, 2));
+
                 return {
                     statusCode: parseInt(statusCode),
                     shape,

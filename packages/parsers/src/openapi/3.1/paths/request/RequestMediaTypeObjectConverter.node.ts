@@ -55,8 +55,8 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
             } else if (isObjectSchema(this.input.schema)) {
                 const mediaType = MediaType.parse(contentType);
                 // An exhaustive switch cannot be used here, because contentType is an unbounded string
-                if (mediaType?.isJSON()) {
-                    this.contentType = "application/json" as const;
+                if (mediaType?.containsJSON()) {
+                    this.contentType = "json" as const;
                     this.schema = new ObjectConverterNode({
                         input: this.input.schema,
                         context: this.context,
@@ -64,10 +64,10 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
                         pathId: "schema",
                     });
                 } else if (mediaType?.isOctetStream()) {
-                    this.contentType = "application/octet-stream" as const;
+                    this.contentType = "stream" as const;
                     this.isOptional = this.input.schema.required == null;
                 } else if (mediaType?.isMultiPartFormData()) {
-                    this.contentType = "multipart/form-data" as const;
+                    this.contentType = "form-data" as const;
                     this.description = this.input.schema.description;
                     this.availability = new AvailabilityConverterNode({
                         input: this.input.schema,
@@ -97,14 +97,14 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
                     );
                 } else {
                     this.context.errors.warning({
-                        message: `Expected request body of reference or object with content type "application/json", "application/octet-stream" or "multipart/form-data". Received: ${JSON.stringify(this.input.schema)}`,
+                        message: `Expected request body of reference or object with json, streaming or form-data content types. Received: ${contentType}`,
                         path: this.accessPath,
                     });
                 }
             }
         } else {
             this.context.errors.warning({
-                message: `Expected media type schema. Received ${JSON.stringify(this.input.schema)}`,
+                message: "Expected media type schema or reference.",
                 path: this.accessPath,
             });
         }
@@ -112,15 +112,15 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
 
     convert(): FernRegistry.api.latest.HttpRequestBodyShape | undefined {
         switch (this.contentType) {
-            case "application/json":
+            case "json":
                 return this.schema?.convert();
-            case "application/octet-stream":
+            case "stream":
                 return {
                     type: "bytes",
                     isOptional: this.isOptional ?? false,
                     contentType: this.contentType,
                 };
-            case "multipart/form-data":
+            case "form-data":
                 return {
                     type: "formData",
                     fields: Object.entries(this.fields ?? {})

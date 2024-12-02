@@ -62,16 +62,22 @@ describe("ParameterBaseObjectConverterNode", () => {
             in: "path",
         } as OpenAPIV3_1.ParameterBaseObject;
 
-        const converter = new ParameterBaseObjectConverterNode({
+        const converted = new ParameterBaseObjectConverterNode({
             input,
             context: mockContext,
             accessPath: [],
             pathId: "test",
-        });
+        }).convert();
 
-        expect(mockContext.errors.error).toHaveBeenCalled();
-        expect(converter.schema).toBeUndefined();
-        expect(converter.availability).toBeUndefined();
+        expect(converted).toEqual({
+            type: "alias",
+            value: {
+                type: "primitive",
+                value: {
+                    type: "string",
+                },
+            },
+        });
     });
 
     it("should return schema conversion result in convert()", () => {

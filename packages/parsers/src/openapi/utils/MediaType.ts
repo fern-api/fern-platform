@@ -102,6 +102,10 @@ export class MediaType {
         return this.isApplication() && this.subtype === "json";
     }
 
+    public containsJSON(): boolean {
+        return this.isApplication() && this.subtype.includes("json");
+    }
+
     public isURLEncoded(): boolean {
         return this.isApplication() && this.subtype === "x-www-form-urlencoded";
     }

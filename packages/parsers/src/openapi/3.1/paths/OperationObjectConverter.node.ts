@@ -54,7 +54,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                     parameter = resolvedParameter;
                 } else {
                     this.context.errors.warning({
-                        message: "Expected parameter reference to resolve to a parameter object. Received null",
+                        message: `Expected parameter reference to resolve to an object. Received undefined reference: ${parameter.$ref}`,
                         path: this.accessPath,
                     });
                     return undefined;
@@ -153,6 +153,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         // TODO: revisit fdr shape to suport multiple responses
         const { responses, errors } = this.responses?.convert() ?? { responses: undefined, errors: undefined };
 
+        this.context.logger.info("Accessing first request and response from OperationObjectConverterNode conversion.");
         return {
             description: this.description,
             availability: this.availability?.convert(),

@@ -25,7 +25,7 @@ describe("RequestMediaTypeObjectConverterNode", () => {
             "application/json",
         );
 
-        expect(converter.contentType).toBe("application/json");
+        expect(converter.contentType).toBe("json");
         expect(converter.schema).toBeDefined();
     });
 
@@ -46,7 +46,7 @@ describe("RequestMediaTypeObjectConverterNode", () => {
             "application/octet-stream",
         );
 
-        expect(converter.contentType).toBe("application/octet-stream");
+        expect(converter.contentType).toBe("stream");
         expect(converter.isOptional).toBe(true);
     });
 
@@ -74,7 +74,7 @@ describe("RequestMediaTypeObjectConverterNode", () => {
             "multipart/form-data",
         );
 
-        expect(converter.contentType).toBe("multipart/form-data");
+        expect(converter.contentType).toBe("form-data");
         expect(converter.fields).toBeDefined();
         expect(converter.requiredFields).toEqual(["file"]);
     });

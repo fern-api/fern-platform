@@ -33,7 +33,9 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
         if (input == null) {
             this.context.errors.error({
-                message: "Expected response to be defined. Received null",
+                message: isReferenceObject(this.input)
+                    ? `Expected response reference to resolve to an object. Received undefined reference: ${this.input.$ref}`
+                    : "Expected response to be defined. Received null",
                 path: this.accessPath,
             });
             return;

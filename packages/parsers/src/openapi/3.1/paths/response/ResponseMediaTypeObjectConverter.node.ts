@@ -68,9 +68,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
             }
         } else if (mediaType?.isOctetStream()) {
             this.contentType = "application/octet-stream" as const;
-            this.contentSubtype = isReferenceObject(this.input.schema)
-                ? resolveSchemaReference(this.input.schema, this.context.document).contentMediaType
-                : this.input.schema?.contentMediaType;
+            this.contentSubtype = resolveSchemaReference(this.input.schema, this.context.document)?.contentMediaType;
         }
     }
 
