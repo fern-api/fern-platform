@@ -50,15 +50,15 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
                         if (schema == null) {
                             this.context.errors.warning({
                                 message: `Expected schema reference. Received undefined reference: ${value}`,
-                                path: this.accessPath,
+                                path: [...this.accessPath, "discriminator", "mapping", key],
                             });
                             return;
                         }
                         discriminatedMapping[key] = new SchemaConverterNode({
                             input: schema,
                             context: this.context,
-                            accessPath: this.accessPath,
-                            pathId: this.pathId,
+                            accessPath: [...this.accessPath, "discriminator", "mapping", key],
+                            pathId: key,
                         });
                     });
                 }

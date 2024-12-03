@@ -22,7 +22,7 @@ export class EnumConverterNode extends BaseOpenApiV3_1ConverterNode<
         if (this.input.enum != null) {
             let continueParsing = true;
             this.values = this.input.enum
-                .map((value) => {
+                .map((value, index) => {
                     if (!continueParsing) {
                         return undefined;
                     }
@@ -31,7 +31,7 @@ export class EnumConverterNode extends BaseOpenApiV3_1ConverterNode<
                     if (typeof value !== "string") {
                         this.context.errors.error({
                             message: `Expected enum values to be strings. Received ${value}`,
-                            path: this.accessPath,
+                            path: [...this.accessPath, `enum[${index}]`],
                         });
                         continueParsing = false;
                         return undefined;

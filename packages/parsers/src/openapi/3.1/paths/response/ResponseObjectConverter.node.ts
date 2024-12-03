@@ -27,15 +27,13 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     parse(streamingFormat: ResponseStreamingFormat | undefined): void {
         this.description = this.input.description;
-        const input = isReferenceObject(this.input)
-            ? resolveResponseReference(this.input, this.context.document)
-            : this.input;
+        const input = resolveResponseReference(this.input, this.context.document);
 
         if (input == null) {
             this.context.errors.error({
                 message: isReferenceObject(this.input)
-                    ? `Expected response reference to resolve to an object. Received undefined reference: ${this.input.$ref}`
-                    : "Expected response to be defined. Received null",
+                    ? `Undefined reference: ${this.input.$ref}`
+                    : "Expected response, received null",
                 path: this.accessPath,
             });
             return;
