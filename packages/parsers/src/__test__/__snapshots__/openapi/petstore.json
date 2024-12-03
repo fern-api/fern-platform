@@ -18,7 +18,27 @@
           "baseUrl": "/api/v31"
         }
       ],
-      "responseHeaders": [],
+      "request": {
+        "contentType": "application/json",
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "Pet"
+          }
+        }
+      },
+      "response": {
+        "statusCode": 200,
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "Pet"
+          }
+        },
+        "description": "Successful operation"
+      },
       "errors": [],
       "examples": []
     },
@@ -39,7 +59,27 @@
           "baseUrl": "/api/v31"
         }
       ],
-      "responseHeaders": [],
+      "request": {
+        "contentType": "application/json",
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "Pet"
+          }
+        }
+      },
+      "response": {
+        "statusCode": 200,
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "Pet"
+          }
+        },
+        "description": "Successful operation"
+      },
       "errors": [],
       "examples": []
     },
@@ -76,11 +116,46 @@
               }
             }
           },
-          "description": "param ID of pet that needs to be fetched"
+          "description": "ID of pet that needs to be fetched"
         }
       ],
-      "responseHeaders": [],
-      "errors": [],
+      "response": {
+        "statusCode": null,
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "Pet"
+          }
+        },
+        "description": "The pet"
+      },
+      "errors": [
+        {
+          "statusCode": 400,
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "Invalid ID supplied",
+          "name": "dummy error"
+        },
+        {
+          "statusCode": 404,
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "Pet not found",
+          "name": "dummy error"
+        }
+      ],
       "examples": []
     }
   },

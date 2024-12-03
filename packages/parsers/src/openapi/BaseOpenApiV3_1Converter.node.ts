@@ -38,7 +38,7 @@ export abstract class BaseOpenApiV3_1ConverterNode<Input, Output> extends BaseAp
             this.parse(...additionalArgs);
         } catch (error: Error | unknown) {
             this.context.errors.error({
-                message: "Error converting node. Please contact support if the error persists.",
+                message: "Error converting node. Please contact support if the error persists",
                 path: this.accessPath,
             });
         }

@@ -1,6 +1,6 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
+import { FernRegistry } from "../../../../client/generated";
 import { Availability, AvailabilityConverterNode } from "../AvailabilityConverter.node";
 
 describe("AvailabilityConverterNode", () => {
@@ -47,7 +47,7 @@ describe("AvailabilityConverterNode", () => {
                 accessPath: [],
                 pathId: "",
             });
-            expect(converter.convert()).toBe(FdrAPI.Availability.Beta);
+            expect(converter.convert()).toBe(FernRegistry.Availability.Beta);
         });
 
         it("converts in-development to InDevelopment", () => {
@@ -57,7 +57,7 @@ describe("AvailabilityConverterNode", () => {
                 accessPath: [],
                 pathId: "",
             });
-            expect(converter.convert()).toBe(FdrAPI.Availability.InDevelopment);
+            expect(converter.convert()).toBe(FernRegistry.Availability.InDevelopment);
         });
 
         it("converts generally-available to GenerallyAvailable", () => {
@@ -67,7 +67,7 @@ describe("AvailabilityConverterNode", () => {
                 accessPath: [],
                 pathId: "",
             });
-            expect(converter.convert()).toBe(FdrAPI.Availability.GenerallyAvailable);
+            expect(converter.convert()).toBe(FernRegistry.Availability.GenerallyAvailable);
         });
 
         it("converts deprecated to Deprecated", () => {
@@ -77,7 +77,7 @@ describe("AvailabilityConverterNode", () => {
                 accessPath: [],
                 pathId: "",
             });
-            expect(converter.convert()).toBe(FdrAPI.Availability.Deprecated);
+            expect(converter.convert()).toBe(FernRegistry.Availability.Deprecated);
         });
 
         it("returns undefined when availability is undefined", () => {

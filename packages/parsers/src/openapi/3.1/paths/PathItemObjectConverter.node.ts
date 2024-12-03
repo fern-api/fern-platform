@@ -1,6 +1,6 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
+import { FernRegistry } from "../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -11,7 +11,7 @@ import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
 export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.PathItemObject,
-    FdrAPI.api.latest.EndpointDefinition[]
+    FernRegistry.api.latest.EndpointDefinition[]
 > {
     description: string | undefined;
     // TODO: Implement this
@@ -94,7 +94,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         // validate if path parts and path parameters match
     }
 
-    convert(): FdrAPI.api.latest.EndpointDefinition[] | undefined {
+    convert(): FernRegistry.api.latest.EndpointDefinition[] | undefined {
         return [this.get?.convert(), this.post?.convert(), this.put?.convert(), this.delete?.convert()].filter(
             isNonNullish,
         );

@@ -48,3 +48,18 @@ export const OPENAPI_STRING_TYPE_FORMAT = [
     "uri",
     "uuid",
 ] as const;
+
+export const SUPPORTED_X_FERN_AVAILABILITY_VALUES = [
+    "pre-release",
+    "in-development",
+    "generally-available",
+    "deprecated",
+] as const;
+export const SUPPORTED_REQUEST_CONTENT_TYPES = ["json", "form-data", "stream"] as const;
+export const SUPPORTED_RESPONSE_CONTENT_TYPES = [
+    "application/json",
+    "text/event-stream",
+    "application/octet-stream",
+] as const;
+export const SUPPORTED_STREAMING_FORMATS = ["json", "sse"] as const;
+export const SUPPORTED_MULTIPART_TYPES = ["file", "files", "property"] as const;

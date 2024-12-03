@@ -1,5 +1,5 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+import { FernRegistry } from "../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -10,9 +10,9 @@ export declare namespace ArrayConverterNode {
     interface Input extends OpenAPIV3_1.ArraySchemaObject {
         type: "array";
     }
-    interface Output extends FdrAPI.api.latest.TypeShape.Alias {
+    interface Output extends FernRegistry.api.latest.TypeShape.Alias {
         type: "alias";
-        value: FdrAPI.api.latest.TypeReference.List;
+        value: FernRegistry.api.latest.TypeReference.List;
     }
 }
 

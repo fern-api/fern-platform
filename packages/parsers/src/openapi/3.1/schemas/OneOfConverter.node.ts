@@ -1,23 +1,16 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
+import { FernRegistry } from "../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
-import { isReferenceObject } from "../guards/isReferenceObject";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
-export declare namespace OneOfConverterNode {
-    export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
-        type?: "object";
-    }
-}
-
 export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
-    OneOfConverterNode.Input,
-    FdrAPI.api.latest.TypeShape.DiscriminatedUnion | FdrAPI.api.latest.TypeShape.UndiscriminatedUnion
+    OpenAPIV3_1.NonArraySchemaObject,
+    FernRegistry.api.latest.TypeShape.DiscriminatedUnion | FernRegistry.api.latest.TypeShape.UndiscriminatedUnion
 > {
     discriminated: boolean | undefined;
     discriminant: string | undefined;
@@ -25,7 +18,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     undiscriminatedMapping: SchemaConverterNode[] | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OneOfConverterNode.Input>) {
+    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.NonArraySchemaObject>) {
         super(args);
         this.safeParse();
     }
@@ -34,23 +27,14 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
         if (this.input.oneOf != null) {
             if (this.input.discriminator == null) {
                 this.discriminated = false;
-                this.undiscriminatedMapping = this.input.oneOf
-                    ?.map((schema) => {
-                        if (!isReferenceObject(schema) && schema.type !== "object") {
-                            this.context.errors.error({
-                                message: `Expected 'oneOf' schema to be an object. Received ${schema.type}`,
-                                path: this.accessPath,
-                            });
-                            return undefined;
-                        }
-                        return new SchemaConverterNode({
-                            input: schema,
-                            context: this.context,
-                            accessPath: this.accessPath,
-                            pathId: this.pathId,
-                        });
-                    })
-                    .filter(isNonNullish);
+                this.undiscriminatedMapping = this.input.oneOf?.map((schema) => {
+                    return new SchemaConverterNode({
+                        input: schema,
+                        context: this.context,
+                        accessPath: this.accessPath,
+                        pathId: this.pathId,
+                    });
+                });
             } else {
                 const maybeMapping = this.input.discriminator.mapping;
                 if (maybeMapping != null) {
@@ -62,16 +46,19 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
                     const discriminatedMapping = this.discriminatedMapping;
 
                     Object.entries(maybeMapping).map(([key, value]) => {
+                        const schema = resolveSchemaReference({ $ref: value }, this.context.document);
+                        if (schema == null) {
+                            this.context.errors.warning({
+                                message: `Expected schema reference. Received undefined reference: ${value}`,
+                                path: [...this.accessPath, "discriminator", "mapping", key],
+                            });
+                            return;
+                        }
                         discriminatedMapping[key] = new SchemaConverterNode({
-                            input: resolveSchemaReference(
-                                {
-                                    $ref: value,
-                                },
-                                this.context.document,
-                            ),
+                            input: schema,
                             context: this.context,
-                            accessPath: this.accessPath,
-                            pathId: this.pathId,
+                            accessPath: [...this.accessPath, "discriminator", "mapping", key],
+                            pathId: key,
                         });
                     });
                 }
@@ -80,8 +67,8 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     convert():
-        | FdrAPI.api.latest.TypeShape.DiscriminatedUnion
-        | FdrAPI.api.latest.TypeShape.UndiscriminatedUnion
+        | FernRegistry.api.latest.TypeShape.DiscriminatedUnion
+        | FernRegistry.api.latest.TypeShape.UndiscriminatedUnion
         | undefined {
         if (
             // If no decision has been made, bail
@@ -96,7 +83,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
         return this.discriminated && this.discriminant != null && this.discriminatedMapping != null
             ? {
                   type: "discriminatedUnion",
-                  discriminant: FdrAPI.PropertyKey(this.discriminant),
+                  discriminant: FernRegistry.PropertyKey(this.discriminant),
                   variants: Object.entries(this.discriminatedMapping)
                       .map(([key, node]) => {
                           const convertedShape = node.convert();

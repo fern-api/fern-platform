@@ -1,5 +1,5 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
+import { FernRegistry } from "../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -7,7 +7,7 @@ import {
 
 export class ServerObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.ServerObject,
-    FdrAPI.api.latest.Environment
+    FernRegistry.api.latest.Environment
 > {
     url: string | undefined;
 
@@ -19,7 +19,7 @@ export class ServerObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     parse(): void {
         this.url = this.input.url;
     }
-    convert(): FdrAPI.api.latest.Environment | undefined {
+    convert(): FernRegistry.api.latest.Environment | undefined {
         if (this.url == null) {
             return undefined;
         }
@@ -27,7 +27,7 @@ export class ServerObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         return {
             // TODO: url validation here
             // x-fern-server-name here
-            id: FdrAPI.EnvironmentId("x-fern-server-name"),
+            id: FernRegistry.EnvironmentId("x-fern-server-name"),
             baseUrl: this.url,
         };
     }

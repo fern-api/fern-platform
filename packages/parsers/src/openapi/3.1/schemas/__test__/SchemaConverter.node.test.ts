@@ -93,6 +93,65 @@ describe("SchemaConverterNode", () => {
             expect(node.typeShapeNode).toBeDefined();
         });
 
+        it("should handle array type", () => {
+            const input: OpenAPIV3_1.SchemaObject = {
+                type: "array",
+                items: {
+                    type: "string",
+                },
+            };
+            const node = new SchemaConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
+            expect(node.typeShapeNode).toBeDefined();
+        });
+
+        it("should handle enum type", () => {
+            const input: OpenAPIV3_1.SchemaObject = {
+                type: "string",
+                enum: ["RED", "GREEN", "BLUE"],
+            };
+            const node = new SchemaConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
+            expect(node.typeShapeNode).toBeDefined();
+        });
+
+        it("should handle oneOf type", () => {
+            const input: OpenAPIV3_1.SchemaObject = {
+                oneOf: [{ type: "string" }, { type: "number" }],
+            };
+            const node = new SchemaConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
+            expect(node.typeShapeNode).toBeDefined();
+        });
+
+        it("should handle allOf type", () => {
+            const input: OpenAPIV3_1.SchemaObject = {
+                allOf: [
+                    { type: "object", properties: { name: { type: "string" } } },
+                    { type: "object", properties: { age: { type: "number" } } },
+                ],
+            };
+            const node = new SchemaConverterNode({
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            });
+            expect(node.typeShapeNode).toBeDefined();
+        });
+
         it("should set description", () => {
             const input: OpenAPIV3_1.SchemaObject = {
                 type: "string",

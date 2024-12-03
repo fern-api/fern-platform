@@ -1,6 +1,6 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
+import { FernRegistry } from "../../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -8,7 +8,7 @@ import {
 
 export class EnumConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.NonArraySchemaObject,
-    FdrAPI.api.latest.TypeShape.Enum
+    FernRegistry.api.latest.TypeShape.Enum
 > {
     default: string | undefined;
     values: string[] = [];
@@ -22,7 +22,7 @@ export class EnumConverterNode extends BaseOpenApiV3_1ConverterNode<
         if (this.input.enum != null) {
             let continueParsing = true;
             this.values = this.input.enum
-                .map((value) => {
+                .map((value, index) => {
                     if (!continueParsing) {
                         return undefined;
                     }
@@ -31,7 +31,7 @@ export class EnumConverterNode extends BaseOpenApiV3_1ConverterNode<
                     if (typeof value !== "string") {
                         this.context.errors.error({
                             message: `Expected enum values to be strings. Received ${value}`,
-                            path: this.accessPath,
+                            path: [...this.accessPath, `enum[${index}]`],
                         });
                         continueParsing = false;
                         return undefined;
@@ -45,7 +45,7 @@ export class EnumConverterNode extends BaseOpenApiV3_1ConverterNode<
         this.default = this.input.default;
     }
 
-    convert(): FdrAPI.api.latest.TypeShape.Enum | undefined {
+    convert(): FernRegistry.api.latest.TypeShape.Enum | undefined {
         return {
             type: "enum",
             values: this.values.map((value) => ({

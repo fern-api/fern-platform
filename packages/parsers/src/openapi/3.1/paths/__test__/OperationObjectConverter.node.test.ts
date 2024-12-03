@@ -1,6 +1,6 @@
-import { FdrAPI } from "@fern-api/fdr-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { createMockContext } from "../../../../__test__/createMockContext.util";
+import { FernRegistry } from "../../../../client/generated";
 import { OperationObjectConverterNode } from "../OperationObjectConverter.node";
 
 describe("OperationObjectConverterNode", () => {
@@ -35,16 +35,16 @@ describe("OperationObjectConverterNode", () => {
 
             expect(result).toEqual({
                 description: "Get a pet",
-                id: FdrAPI.EndpointId("/pets/{petId}"),
+                id: FernRegistry.EndpointId("/pets/{petId}"),
                 method: "GET",
                 path: [
                     { type: "literal", value: "pets" },
-                    { type: "pathParameter", value: FdrAPI.PropertyKey("petId") },
+                    { type: "pathParameter", value: FernRegistry.PropertyKey("petId") },
                 ],
                 environments: [],
                 pathParameters: [
                     {
-                        key: FdrAPI.PropertyKey("petId"),
+                        key: FernRegistry.PropertyKey("petId"),
                         valueShape: {
                             type: "alias",
                             value: {
@@ -56,8 +56,6 @@ describe("OperationObjectConverterNode", () => {
                         },
                     },
                 ],
-                responseHeaders: [],
-                errors: [],
                 examples: [],
             });
         });
@@ -102,9 +100,9 @@ describe("OperationObjectConverterNode", () => {
 
             expect(result).toEqual([
                 { type: "literal", value: "users" },
-                { type: "pathParameter", value: FdrAPI.PropertyKey("userId") },
+                { type: "pathParameter", value: FernRegistry.PropertyKey("userId") },
                 { type: "literal", value: "posts" },
-                { type: "pathParameter", value: FdrAPI.PropertyKey("postId") },
+                { type: "pathParameter", value: FernRegistry.PropertyKey("postId") },
             ]);
         });
     });

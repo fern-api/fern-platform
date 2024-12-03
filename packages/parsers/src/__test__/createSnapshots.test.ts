@@ -47,7 +47,7 @@ describe("OpenAPI snapshot tests", () => {
                     input: parsed,
                     context,
                     accessPath: [],
-                    pathId: "test",
+                    pathId: directory,
                 });
                 errors.push(...converter.errors());
                 warnings.push(...converter.warnings());
@@ -55,6 +55,10 @@ describe("OpenAPI snapshot tests", () => {
             }
 
             // Create snapshot
+            if (errors.length > 0) {
+                // eslint-disable-next-line no-console
+                console.error("errors:", errors);
+            }
             expect(errors).toHaveLength(0);
             if (warnings.length > 0) {
                 // eslint-disable-next-line no-console

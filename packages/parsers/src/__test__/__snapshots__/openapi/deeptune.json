@@ -22,7 +22,16 @@
           "baseUrl": "https://api.deeptune.com"
         }
       ],
-      "responseHeaders": [],
+      "request": {
+        "contentType": "application/json",
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "TextToSpeechRequest"
+          }
+        }
+      },
       "errors": [],
       "examples": []
     },
@@ -51,7 +60,16 @@
           "baseUrl": "https://api.deeptune.com"
         }
       ],
-      "responseHeaders": [],
+      "request": {
+        "contentType": "application/json",
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "TextToSpeechFromPromptRequest"
+          }
+        }
+      },
       "errors": [],
       "examples": []
     },
@@ -76,7 +94,17 @@
           "baseUrl": "https://api.deeptune.com"
         }
       ],
-      "responseHeaders": [],
+      "response": {
+        "statusCode": 200,
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "ListVoicesResponse"
+          }
+        },
+        "description": "Successful response"
+      },
       "errors": [],
       "examples": []
     },
@@ -101,7 +129,27 @@
           "baseUrl": "https://api.deeptune.com"
         }
       ],
-      "responseHeaders": [],
+      "request": {
+        "contentType": "multipart/form-data",
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "CreateVoiceRequest"
+          }
+        }
+      },
+      "response": {
+        "statusCode": 200,
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "CreateVoiceResponse"
+          }
+        },
+        "description": "Successful response"
+      },
       "errors": [],
       "examples": []
     },
@@ -141,10 +189,21 @@
                 "type": "string"
               }
             }
-          }
+          },
+          "description": "The ID of the voice to retrieve"
         }
       ],
-      "responseHeaders": [],
+      "response": {
+        "statusCode": 200,
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "GetVoiceByIdResponse"
+          }
+        },
+        "description": "Successful response"
+      },
       "errors": [],
       "examples": []
     },
@@ -184,10 +243,31 @@
                 "type": "string"
               }
             }
-          }
+          },
+          "description": "The ID of the voice to update"
         }
       ],
-      "responseHeaders": [],
+      "request": {
+        "contentType": "multipart/form-data",
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "UpdateVoiceRequest"
+          }
+        }
+      },
+      "response": {
+        "statusCode": 200,
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "UpdateVoiceResponse"
+          }
+        },
+        "description": "Successful response"
+      },
       "errors": [],
       "examples": []
     },
@@ -227,10 +307,10 @@
                 "type": "string"
               }
             }
-          }
+          },
+          "description": "The ID of the voice to delete"
         }
       ],
-      "responseHeaders": [],
       "errors": [],
       "examples": []
     }
