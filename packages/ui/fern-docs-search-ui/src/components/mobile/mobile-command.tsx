@@ -3,7 +3,6 @@ import { FACET_DISPLAY_NAME_MAP } from "@/utils/facet-display";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { Command } from "cmdk";
 import { ComponentProps, Dispatch, SetStateAction, forwardRef, useRef, useState } from "react";
-import { CommandAskAIGroup } from "../shared/command-ask-ai";
 import { CommandEmpty } from "../shared/command-empty";
 import { CommandGroupFilters } from "../shared/command-filters";
 import { CommandGroupSearchHits } from "../shared/command-hits";
@@ -20,13 +19,12 @@ export interface MobileCommandProps extends Omit<ComponentProps<typeof Command>,
     filters?: readonly FacetFilter[];
     setFilters?: Dispatch<SetStateAction<FacetFilter[]>>;
     onSelect: (path: string) => void;
-    onAskAI?: ({ initialInput }: { initialInput?: string }) => void;
     setTheme?: (theme: "light" | "dark" | "system") => void;
     resetFilters?: () => void;
 }
 
 export const MobileCommand = forwardRef<HTMLDivElement, MobileCommandProps>((props, ref) => {
-    const { filters = EMPTY_ARRAY, onSelect, onAskAI, setFilters, resetFilters, setTheme, children, ...rest } = props;
+    const { filters = EMPTY_ARRAY, onSelect, setFilters, resetFilters, setTheme, children, ...rest } = props;
     const { query, refine, clear, items, facets } = useSearchContext();
 
     const inputRef = useRef<HTMLInputElement>(null);
@@ -49,7 +47,7 @@ export const MobileCommand = forwardRef<HTMLDivElement, MobileCommandProps>((pro
 
     return (
         <Command data-fern-docs-search-ui="mobile" ref={ref} {...rest} className="flex flex-col">
-            <div data-cmdk-fern-header>
+            <div data-cmdk-fern-header="">
                 <Command.Input
                     ref={inputRef}
                     autoFocus={false}
@@ -92,7 +90,7 @@ export const MobileCommand = forwardRef<HTMLDivElement, MobileCommandProps>((pro
             )}
             <Command.List
                 ref={scrollRef}
-                data-empty={items.length === 0 && query.length === 0 && onAskAI == null && setTheme == null}
+                data-empty={items.length === 0 && query.length === 0 && setTheme == null}
                 tabIndex={-1}
                 className={cn("flex-1", {
                     "mask-grad-top-3": masked,
@@ -106,8 +104,6 @@ export const MobileCommand = forwardRef<HTMLDivElement, MobileCommandProps>((pro
             >
                 {isSearchOpen ? (
                     <>
-                        {onAskAI != null && <CommandAskAIGroup query={query} onAskAI={onAskAI} forceMount />}
-
                         <CommandGroupFilters
                             facets={facets}
                             onSelect={(filter) => {

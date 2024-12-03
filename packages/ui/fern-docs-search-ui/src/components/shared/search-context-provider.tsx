@@ -1,7 +1,7 @@
 import { FacetFilter, FacetOpts, useFacets, usePreloadFacets } from "@/hooks/use-facets";
 import { FilterOption, toFilterOptions } from "@/utils/facet-display";
 import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
-import { ReactNode, createContext, useContext } from "react";
+import { ReactNode, createContext, useContext, useDeferredValue } from "react";
 import { useHits, useSearchBox } from "react-instantsearch";
 import { noop } from "ts-essentials";
 import { AlgoliaRecordHit } from "../types";
@@ -37,7 +37,8 @@ export function SearchContextProvider({
 }): ReactNode {
     const { query, refine, clear } = useSearchBox();
 
-    const { items } = useHits<AlgoliaRecord>();
+    const { items: _items } = useHits<AlgoliaRecord>();
+    const items = useDeferredValue(_items);
 
     const { data: facetsResponse, error, isLoading } = useFacets({ filters });
 

@@ -1,19 +1,20 @@
 import { FacetFilter } from "@/hooks/use-facets";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
-import { Badge } from "@fern-ui/fern-docs-badges";
 import { composeEventHandlers } from "@radix-ui/primitive";
-import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { Message } from "ai";
 import { Command } from "cmdk";
-import { useAtomValue } from "jotai";
-import { CircleStop, Copy, CornerDownLeft, RefreshCcw, Sparkles, User } from "lucide-react";
-import { ComponentProps, Dispatch, ReactElement, SetStateAction, forwardRef, useRef, useState } from "react";
+import { CircleStop, CornerDownLeft } from "lucide-react";
+import {
+    ComponentProps,
+    Dispatch,
+    KeyboardEvent,
+    ReactElement,
+    SetStateAction,
+    forwardRef,
+    useRef,
+    useState,
+} from "react";
 import { Components } from "react-markdown";
-import { FootnoteSup, FootnotesSection } from "../chatbot/footnote";
-import { ChatbotTurnContextProvider, useChatbotTurnContext } from "../chatbot/turn-context";
 import { useAskAI } from "../chatbot/use-ask-ai";
-import { combineSearchResults, squeezeMessages } from "../chatbot/utils";
-import { MarkdownContent } from "../md-content";
 import { CommandAskAIGroup } from "../shared/command-ask-ai";
 import { CommandEmpty } from "../shared/command-empty";
 import { CommandGroupFilters } from "../shared/command-filters";
@@ -22,13 +23,12 @@ import { CommandGroupTheme } from "../shared/command-theme";
 import "../shared/common.scss";
 import { useSearchContext } from "../shared/search-context-provider";
 import { Button } from "../ui/button";
-import { CopyToClipboard } from "../ui/copy-to-clipboard";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import { AskAICommandItems } from "./desktop-ask-ai-conversation";
 import { DesktopBackButton } from "./desktop-back-button";
 import { DesktopCloseTrigger } from "./desktop-close-trigger";
-import { DesktopFilterDropdownMenu } from "./desktop-filter-dropdown-menu";
+import { DesktopCommandBadges } from "./desktop-command-badges";
+import { DesktopCommandInput } from "./desktop-command-input";
 import "./desktop.scss";
-import { Suggestions } from "./suggestions";
 
 export type DesktopCommandSharedProps = Omit<ComponentProps<typeof Command>, "onSelect" | "children">;
 
@@ -36,13 +36,13 @@ export interface DesktopCommandProps extends DesktopCommandSharedProps {
     filters?: readonly FacetFilter[];
     onSelect: (path: string) => void;
     resetFilters?: () => void;
-    // onAskAI?: ({ initialInput }: { initialInput?: string }) => void;
     setFilters?: Dispatch<SetStateAction<FacetFilter[]>>;
     setTheme?: (theme: "light" | "dark" | "system") => void;
     onClose?: () => void;
     headers?: Record<string, string>;
     components?: Components;
     systemContext?: Record<string, string>;
+    isAskAIEnabled?: boolean;
 }
 
 /**
@@ -60,11 +60,13 @@ export const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps>((p
         headers,
         components,
         systemContext,
+        isAskAIEnabled = false,
         ...rest
     } = props;
     const { query, refine, clear, items } = useSearchContext();
     const [inputError, setInputError] = useState<string | null>(null);
-    const [isAskAI, setIsAskAI] = useState(false);
+    const [isAskAIInternal, setIsAskAI] = useState(false);
+    const isAskAI = isAskAIEnabled && isAskAIInternal;
     const chat = useAskAI({
         initialInput: query,
         headers,
@@ -107,6 +109,29 @@ export const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps>((p
         focus();
     };
 
+    const onEsc = (e: KeyboardEvent<HTMLDivElement>) => {
+        if (isAskAI) {
+            setIsAskAI(false);
+            focus();
+            scrollTop();
+        } else if (query.length > 0) {
+            clear();
+            focus();
+            scrollTop();
+        } else if (filters.length > 0) {
+            if (e.metaKey) {
+                setFilters?.([]);
+            } else {
+                setFilters?.((lastFilters) => lastFilters.slice(0, -1));
+            }
+            focus();
+            scrollTop();
+        } else {
+            onClose?.();
+        }
+        e.stopPropagation();
+    };
+
     return (
         <Command
             data-fern-docs-search-ui="desktop"
@@ -115,35 +140,22 @@ export const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps>((p
             onKeyDownCapture={composeEventHandlers(
                 rest.onKeyDownCapture,
                 (e) => {
+                    // on keydown, clear input error
                     setInputError(null);
+
+                    // if escape, handle it
                     if (e.key === "Escape") {
-                        if (isAskAI) {
-                            setIsAskAI(false);
-                            focus();
-                            scrollTop();
-                        } else if (query.length > 0) {
-                            clear();
-                            focus();
-                            scrollTop();
-                        } else if (filters.length > 0) {
-                            if (e.metaKey) {
-                                setFilters?.([]);
-                            } else {
-                                setFilters?.((lastFilters) => lastFilters.slice(0, -1));
-                            }
-                            focus();
-                            scrollTop();
-                        } else {
-                            onClose?.();
-                        }
-                        e.stopPropagation();
-                        return;
+                        return onEsc(e);
                     }
 
+                    // if input is focused, do nothing
                     if (document.activeElement === inputRef.current) {
                         return;
                     }
 
+                    // if input is alphanumeric, focus input
+                    // note: this func is onKeyDownCapture so it will fire before the input
+                    // which is important so that the first character typed isn't swallowed
                     if (/^[a-zA-Z0-9]$/.test(e.key)) {
                         focus();
                     }
@@ -151,36 +163,19 @@ export const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps>((p
                 { checkForDefaultPrevented: false },
             )}
         >
-            {(filters.length > 0 || isAskAI) && (
-                <div className="flex items-center gap-2 p-2 pb-0 cursor-text" onClick={focus}>
-                    {filters.map((filter) => (
-                        <DesktopFilterDropdownMenu
-                            key={`${filter.facet}:${filter.value}`}
-                            filter={filter}
-                            filters={filters}
-                            removeFilter={() => {
-                                setFilters?.((prev) => prev.filter((f) => f.facet !== filter.facet));
-                            }}
-                            updateFilter={(value) => {
-                                setFilters?.((prev) =>
-                                    prev.map((f) => (f.facet === filter.facet ? { ...f, value } : f)),
-                                );
-                            }}
-                            onClose={() => {
-                                focus();
-                                scrollTop();
-                            }}
-                        />
-                    ))}
+            <DesktopCommandBadges
+                filters={filters}
+                isAskAI={isAskAI}
+                setFilters={setFilters}
+                onClick={focus}
+                onDropdownClose={() => {
+                    focus();
+                    scrollTop();
+                }}
+            />
 
-                    {isAskAI && (
-                        <Badge size="sm" variant="outlined-subtle">
-                            Ask AI
-                        </Badge>
-                    )}
-                </div>
-            )}
-            <div data-cmdk-fern-header onClick={focus}>
+            {/* header */}
+            <div data-cmdk-fern-header="" onClick={focus}>
                 {(filters.length > 0 || isAskAI) && (
                     <DesktopBackButton
                         pop={() => {
@@ -201,49 +196,36 @@ export const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps>((p
                     />
                 )}
 
-                <TooltipProvider>
-                    <Tooltip open={inputError != null}>
-                        <TooltipTrigger asChild>
-                            <Command.Input
-                                ref={inputRef}
-                                inputMode="search"
-                                autoFocus
-                                value={query}
-                                placeholder={isAskAI ? "Ask AI" : "Search"}
-                                onValueChange={(value) => {
-                                    refine(value);
-                                    scrollTop();
-                                }}
-                                onKeyDown={(e) => {
-                                    if (e.key === "Enter" && isAskAI) {
-                                        e.preventDefault();
-                                        askAI(query);
-                                        return;
-                                    }
+                <DesktopCommandInput
+                    ref={inputRef}
+                    inputError={inputError}
+                    query={query}
+                    placeholder={isAskAI ? "Ask AI" : "Search"}
+                    onValueChange={(value) => {
+                        refine(value);
+                        scrollTop();
+                    }}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" && isAskAI) {
+                            e.preventDefault();
+                            askAI(query);
+                            return;
+                        }
 
-                                    if (e.key === "Backspace" && query.length === 0) {
-                                        if (isAskAI) {
-                                            setIsAskAI(false);
-                                            focus();
-                                            scrollTop();
-                                        } else if (e.metaKey) {
-                                            setFilters?.([]);
-                                        } else {
-                                            setFilters?.((lastFilters) => lastFilters.slice(0, -1));
-                                        }
-                                        focus();
-                                    }
-                                }}
-                                maxLength={100}
-                            />
-                        </TooltipTrigger>
-                        <TooltipPortal>
-                            <TooltipContent side="bottom" align="start">
-                                <p>{inputError}</p>
-                            </TooltipContent>
-                        </TooltipPortal>
-                    </Tooltip>
-                </TooltipProvider>
+                        if (e.key === "Backspace" && query.length === 0) {
+                            if (isAskAI) {
+                                setIsAskAI(false);
+                                focus();
+                                scrollTop();
+                            } else if (e.metaKey) {
+                                setFilters?.([]);
+                            } else {
+                                setFilters?.((lastFilters) => lastFilters.slice(0, -1));
+                            }
+                            focus();
+                        }
+                    }}
+                />
 
                 {onClose != null && !isAskAI && <DesktopCloseTrigger onClose={onClose} />}
                 {isAskAI && !chat.isLoading && (
@@ -257,12 +239,14 @@ export const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps>((p
                     </Button>
                 )}
             </div>
+
+            {/* body */}
             <Command.List
                 ref={scrollRef}
-                data-empty={items.length === 0 && query.length === 0 && setTheme == null}
+                data-empty={items.length === 0 && query.length === 0 && setTheme == null ? "" : undefined}
                 tabIndex={-1}
             >
-                {!isAskAI && (
+                {!isAskAI && isAskAIEnabled && (
                     <CommandAskAIGroup
                         query={query.trim().split(/\s+/).length < 2 ? "" : query.trim()}
                         onAskAI={askAI}
@@ -336,116 +320,3 @@ const SearchResultsCommandItems = ({
         </>
     );
 };
-
-const AskAICommandItems = ({
-    messages,
-    headers,
-    askAI,
-    onSelectHit,
-    components,
-    isLoading,
-    refreshLastMessage,
-}: {
-    messages: Message[];
-    headers?: Record<string, string>;
-    askAI: (message: string) => void;
-    onSelectHit: (path: string) => void;
-    components?: Components;
-    isLoading?: boolean;
-    refreshLastMessage?: () => void;
-}): ReactElement => {
-    const squeezedMessages = squeezeMessages(messages);
-    if (squeezedMessages.length === 0) {
-        return (
-            <>
-                <div className="flex gap-4 p-2">
-                    <Sparkles className="size-4 shrink-0 my-1" />
-                    <div className="space-y-2">
-                        <p>Hi, I&apos;m an AI assistant with access to documentation and other content.</p>
-                    </div>
-                </div>
-
-                <Suggestions headers={headers} askAI={askAI} />
-            </>
-        );
-    }
-
-    return (
-        <>
-            {squeezedMessages.map((message, idx) => {
-                const searchResults = combineSearchResults([message]);
-                const Icon = message.role === "assistant" ? Sparkles : User;
-                return (
-                    <ChatbotTurnContextProvider key={message.id}>
-                        <article id={`_${message.id}`}>
-                            <div className="flex gap-4 px-2">
-                                <Icon className="size-4 shrink-0 my-1" />
-                                <section className="prose prose-sm dark:prose-invert">
-                                    <MarkdownContent
-                                        components={{
-                                            ...components,
-                                            sup: FootnoteSup,
-                                            a: ({ children, node, ...props }) => (
-                                                <a
-                                                    {...props}
-                                                    className="hover:text-[var(--accent-a10)] font-semibold decoration-[var(--accent-a10)] hover:decoration-2"
-                                                    target="_blank"
-                                                    rel="noreferrer"
-                                                >
-                                                    {children}
-                                                </a>
-                                            ),
-                                            section: ({ children, node, ...props }) => {
-                                                if (node?.properties["dataFootnotes"]) {
-                                                    return (
-                                                        <FootnotesSection node={node} searchResults={searchResults} />
-                                                    );
-                                                }
-
-                                                return <section {...props}>{children}</section>;
-                                            },
-                                        }}
-                                    >
-                                        {message.content}
-                                    </MarkdownContent>
-                                    {isLoading &&
-                                        message.toolInvocations?.some(
-                                            (invocation) => invocation.state !== "result",
-                                        ) && <p className="text-[var(--grayscale-a10)]">Thinking...</p>}
-                                </section>
-                            </div>
-                            {!isLoading && message.role === "assistant" && idx === squeezedMessages.length - 1 && (
-                                <div className="flex gap-1 ml-auto px-2">
-                                    <CopyToClipboard content={message.content}>
-                                        <Button variant="ghost" size="iconSm">
-                                            <Copy />
-                                        </Button>
-                                    </CopyToClipboard>
-                                    <Button variant="ghost" size="iconSm" onClick={refreshLastMessage}>
-                                        <RefreshCcw />
-                                    </Button>
-                                </div>
-                            )}
-                        </article>
-                        <FootnoteCommands onSelect={onSelectHit} />
-                    </ChatbotTurnContextProvider>
-                );
-            })}
-        </>
-    );
-};
-
-function FootnoteCommands({ onSelect }: { onSelect: (path: string) => void }) {
-    const { footnotesAtom } = useChatbotTurnContext();
-    const footnotes = useAtomValue(footnotesAtom);
-    return (
-        <>
-            {footnotes.map((footnote, idx) => (
-                <Command.Item key={footnote.ids.join("-")} onSelect={() => onSelect(footnote.url)}>
-                    <Badge rounded>{String(idx + 1)}</Badge>
-                    <span>{footnote.title}</span>
-                </Command.Item>
-            ))}
-        </>
-    );
-}
