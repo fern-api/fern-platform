@@ -43,12 +43,22 @@ export class SlackServiceImpl implements SlackService {
     }
 
     async notifyGeneratedDocs(request: GeneratingDocsNotification): Promise<void> {
-        if (this.config.enableCustomerNotifications) {
-            try {
-                await this.client.chat.postMessage({
-                    channel: "#customer-notifs",
-                    text: `:herb: ${request.orgId} is generating docs for urls [${request.urls.join(", ")}]`,
-                    blocks: [],
+    if (this.config.enableCustomerNotifications) {
+        try {
+            const urls = request.urls.join(", ");
+            await this.client.chat.postMessage({
+                channel: "#customer-notifs",
+                text: `:herb: ${request.orgId} is generating docs for URLs: ${urls}`,
+                blocks: [
+                    {
+                        type: "section",
+                        text: {
+                            type: "plain_text",
+                            text: `:herb: ${request.orgId} is generating docs for URLs: ${urls}`,
+                            emoji: true,
+                            },
+                        },
+                    ],
                 });
             } catch (err) {
                 this.logger.debug("Failed to send slack message: ", err);
