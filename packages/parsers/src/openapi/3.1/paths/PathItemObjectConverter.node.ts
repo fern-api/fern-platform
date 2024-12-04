@@ -6,6 +6,7 @@ import {
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
+import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter.node";
 import { OperationObjectConverterNode } from "./OperationObjectConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
@@ -21,12 +22,12 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     put: OperationObjectConverterNode | undefined;
     patch: OperationObjectConverterNode | undefined;
     delete: OperationObjectConverterNode | undefined;
-
     path: string | undefined;
 
     constructor(
         args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.PathItemObject>,
         protected servers: ServerObjectConverterNode[] | undefined,
+        protected basePath: XFernBasePathConverterNode | undefined
     ) {
         super(args);
         this.safeParse();
@@ -47,6 +48,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 this.servers,
                 this.pathId,
                 "GET",
+                this.basePath
             );
         }
         if (this.input.post != null) {
@@ -60,6 +62,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 this.servers,
                 this.pathId,
                 "POST",
+                this.basePath
             );
         }
         if (this.input.put != null) {
@@ -73,6 +76,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 this.servers,
                 this.pathId,
                 "PUT",
+                this.basePath
             );
         }
         if (this.input.delete != null) {
@@ -86,6 +90,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 this.servers,
                 this.pathId,
                 "DELETE",
+                this.basePath
             );
         }
 

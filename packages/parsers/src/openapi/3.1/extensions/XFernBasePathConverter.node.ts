@@ -15,19 +15,20 @@ export class XFernBasePathConverterNode extends BaseOpenApiV3_1ConverterNode<Ope
   }
   
   parse(): void {
-    // check base path is valid
     this.basePath = extendType<{ "x-fern-base-path"?: string; }>(this.input)["x-fern-base-path"];
+    
+    if (this.basePath) {
+      if (this.basePath.startsWith("/")) {
+        this.basePath = this.basePath.slice(1);
+      }
+      
+      if (this.basePath.endsWith("/")) {
+        this.basePath = this.basePath.slice(0, -1)
+      }
+    }
   }
   
   convert(): string | undefined {
-    switch (this.basePath) {
-      case this.basePath: 
-        return this.basePath;
-      case undefined: 
-        return undefined;
-      // default:
-      //   new UnreachableCaseError(this.basePath);
-      //   return undefined;
-    }
+    return this.basePath;
   }
 }

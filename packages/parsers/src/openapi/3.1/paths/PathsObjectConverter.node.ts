@@ -7,6 +7,7 @@ import {
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
+import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter.node";
 import { PathItemObjectConverterNode } from "./PathItemObjectConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
@@ -19,11 +20,12 @@ export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     constructor(
         args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.PathsObject>,
         protected readonly servers: ServerObjectConverterNode[] | undefined,
+        protected readonly basePath: XFernBasePathConverterNode | undefined
     ) {
         super(args);
         this.safeParse();
     }
-    parse(): void {
+    parse(): void {        
         this.paths = Object.entries(this.input)
             .map(([path, pathItem]) => {
                 if (pathItem == null) {
@@ -37,6 +39,7 @@ export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                         pathId: path,
                     },
                     coalesceServers(this.servers, pathItem.servers, this.context, this.accessPath),
+                    this.basePath
                 );
             })
             .filter(isNonNullish);
