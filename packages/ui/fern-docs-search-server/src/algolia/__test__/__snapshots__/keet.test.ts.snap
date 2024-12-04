@@ -595,7 +595,7 @@ Store this account token someplace secure. It is used to make all requests to th
   },
   {
     "breadcrumbs": [],
-    "description": "",
+    "description": undefined,
     "indexSegmentId": "0",
     "slug": "overview/quick-start#check-out-how-to-use-your-integrations",
     "title": "Check out how to use your integrations",
@@ -883,7 +883,7 @@ Check out more of our built in abstractions
         "title": "Integrations",
       },
     ],
-    "description": "",
+    "description": undefined,
     "indexSegmentId": "0",
     "slug": "overview/integrations/using-our-abstractions#check-out-more-of-our-built-in-abstractions",
     "title": "Check out more of our built in abstractions",

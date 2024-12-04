@@ -1,4 +1,5 @@
 import { Algolia, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
+import { truncateToBytes } from "@fern-api/ui-core-utils";
 import { convertNameToAnchorPart, toBreadcrumbs, toDescription } from "./utils.js";
 
 interface GenerateEndpointRecordsOptions {
@@ -16,17 +17,18 @@ export function generateEndpointRecord({
     endpoint,
     version,
 }: GenerateEndpointRecordsOptions): Algolia.AlgoliaRecord.EndpointV4 {
+    const description = toDescription([
+        endpoint.description,
+        endpoint.request?.description,
+        endpoint.response?.description,
+    ]);
     const endpointRecord: Algolia.AlgoliaRecord.EndpointV4 = {
         type: "endpoint-v4",
         method: endpoint.method,
         endpointPath: endpoint.path,
         isResponseStream: endpoint.response?.body.type === "stream" || endpoint.response?.body.type === "streamingText",
         title: node.title,
-        description: toDescription([
-            endpoint.description,
-            endpoint.request?.description,
-            endpoint.response?.description,
-        ]),
+        description: description?.length ? truncateToBytes(description, 50 * 1000) : undefined,
         breadcrumbs: breadcrumb.map((breadcrumb) => ({
             title: breadcrumb.title,
             slug: breadcrumb.pointsTo ?? "",
@@ -61,11 +63,13 @@ export function generateEndpointFieldRecords({
                 throw new Error("Breadcrumb should have at least 1");
             }
 
+            const description = toDescription(item.descriptions);
+
             fieldRecords.push({
                 ...endpointRecord,
                 type: "endpoint-field-v1",
                 title: last.title,
-                description: toDescription(item.descriptions),
+                description: description?.length ? truncateToBytes(description, 50 * 1000) : undefined,
                 breadcrumbs: breadcrumbs.slice(0, breadcrumbs.length - 1),
                 slug: FernNavigation.V1.Slug(last.slug),
                 availability: item.availability,
