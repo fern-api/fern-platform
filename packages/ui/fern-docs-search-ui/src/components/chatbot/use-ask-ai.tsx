@@ -11,19 +11,21 @@ export function useSystemPrompt(): [string, Dispatch<SetStateAction<string>>] {
     return useAtom(systemAtom);
 }
 
+export interface UseAskAIOpts {
+    api?: string;
+    initialInput?: string;
+    headers?: Record<string, string>;
+    model?: string;
+    systemContext?: Record<string, string>;
+}
+
 export function useAskAI({
     api,
     initialInput,
     headers,
     model = "gpt-4o-mini",
     systemContext,
-}: {
-    api?: string;
-    initialInput?: string;
-    headers?: Record<string, string>;
-    systemContext?: Record<string, string>;
-    model?: string;
-}): ReturnType<typeof useChat> {
+}: UseAskAIOpts): ReturnType<typeof useChat> {
     const system = useAtomValue(systemAtom);
     const compiled = template(system, {
         interpolate: /{{([^}]+)}}/g,

@@ -31,7 +31,7 @@ export const CommandGroupFilters = forwardRef<HTMLDivElement, ComponentPropsWith
                             focus();
                             scrollTop();
                         }}
-                        onMouseOver={() => {
+                        onPointerOver={() => {
                             void preloadFacets([filter]);
                         }}
                         keywords={[FACET_DISPLAY_NAME_MAP[filter.facet]?.[filter.value] ?? filter.value]}

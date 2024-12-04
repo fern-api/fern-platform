@@ -14,13 +14,7 @@ import "./desktop.scss";
 export type DesktopCommandSharedProps = Omit<ComponentProps<typeof Command>, "onSelect">;
 
 export interface DesktopCommandProps {
-    // onSelect: (path: string) => void;
-    // setTheme?: (theme: "light" | "dark" | "system") => void;
     onClose?: () => void;
-    // headers?: Record<string, string>;
-    // components?: Components;
-    // systemContext?: Record<string, string>;
-    // isAskAIEnabled?: boolean;
 }
 
 /**
@@ -34,14 +28,6 @@ export const DesktopCommand = forwardRef<
     const { query, refine, clear } = useSearchBox();
     const { filters, popFilter, clearFilters } = useFacetFilters();
     const [inputError, setInputError] = useState<string | null>(null);
-
-    // const [isAskAIInternal, setIsAskAI] = useState(false);
-    // const isAskAI = isAskAIEnabled && isAskAIInternal;
-    // const chat = useAskAI({
-    //     initialInput: query,
-    //     headers,
-    //     systemContext,
-    // });
 
     const inputRef = useRef<HTMLInputElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -59,27 +45,6 @@ export const DesktopCommand = forwardRef<
             scrollRef.current?.scrollTo({ top: 0 });
         }, 0);
     };
-
-    // const askAI = (message: string) => {
-    //     setIsAskAI(true);
-
-    //     if (message.trim().split(/\s+/).length < 2) {
-    //         if (message.length > 0) {
-    //             setInputError("Enter at least 2 words");
-    //         }
-    //         focus();
-    //         return;
-    //     } else {
-    //         setInputError(null);
-    //     }
-
-    //     void chat.append({
-    //         role: "user",
-    //         content: message,
-    //     });
-    //     clear();
-    //     focus();
-    // };
 
     const onEsc = (e: KeyboardEvent<HTMLDivElement>) => {
         if (query.length > 0) {
@@ -191,39 +156,8 @@ export const DesktopCommand = forwardRef<
 
             {/* body */}
             <Command.List ref={scrollRef} tabIndex={-1}>
-                <CommandUxProvider focus={focus} scrollTop={scrollTop}>
+                <CommandUxProvider focus={focus} scrollTop={scrollTop} setInputError={setInputError}>
                     {children}
-                    {/* {!isAskAI && isAskAIEnabled && (
-                        <CommandAskAIGroup
-                            query={query.trim().split(/\s+/).length < 2 ? "" : query.trim()}
-                            onAskAI={askAI}
-                            forceMount
-                        />
-                    )}
-
-                    {isAskAI ? (
-                        <AskAICommandItems
-                            messages={chat.messages}
-                            headers={headers}
-                            askAI={(message) => {
-                                askAI(message);
-                                focus();
-                                scrollTop();
-                            }}
-                            onSelectHit={onSelect}
-                            components={components}
-                            isLoading={chat.isLoading}
-                            refreshLastMessage={() => {
-                                void chat.reload();
-                                focus();
-                                scrollTop();
-                            }}
-                        />
-                    ) : (
-                        false
-                    )}
-
-                    {!isAskAI ? <SearchResultsCommandItems onSelectHit={onSelect} setTheme={setTheme} /> : false} */}
                 </CommandUxProvider>
             </Command.List>
         </Command>

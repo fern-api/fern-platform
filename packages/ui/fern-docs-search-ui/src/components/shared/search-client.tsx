@@ -32,15 +32,39 @@ function SearchClientRoot({
     authenticatedUserToken,
     ...props
 }: PropsWithChildren<{
-    children: ReactNode;
+    /**
+     * Algolia App ID
+     */
     appId: string;
+    /**
+     * Algolia API Key
+     */
     apiKey: string;
+    /**
+     * Fern Docs Domain
+     */
     domain: string;
+    /**
+     * Algolia Index Name
+     */
     indexName: string;
+    /**
+     * Initial facet filters
+     */
     initialFilters?: Partial<Record<FacetName, string>>;
+    /**
+     * Function to fetch facets
+     */
     fetchFacets: (filters: readonly string[]) => Promise<FacetsResponse>;
+    /**
+     * Anonymous user token (for algolia insights)
+     */
     userToken?: string;
+    /**
+     * Authenticated user token (for algolia insights)
+     */
     authenticatedUserToken?: string;
+    children: ReactNode;
 }>): ReactNode {
     return (
         <SearchClientProvider {...props}>

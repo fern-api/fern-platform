@@ -10,7 +10,13 @@ import { HitContent } from "./hit-content";
 import { generateHits } from "./hits";
 import { useFacetFilters } from "./search-client";
 
-export const CommandSearchHits = ({ onSelect }: { onSelect: (path: string) => void }): ReactNode => {
+export const CommandSearchHits = ({
+    onSelect,
+    prefetch,
+}: {
+    onSelect: (path: string) => void;
+    prefetch?: (path: string) => Promise<void>;
+}): ReactNode => {
     const isQueryEmpty = useCommandState((state) => state.search.trimStart().length === 0) as boolean;
     const items = useSearchHits();
     const { filters } = useFacetFilters();
@@ -19,11 +25,19 @@ export const CommandSearchHits = ({ onSelect }: { onSelect: (path: string) => vo
         return false;
     }
 
-    return <MemoizedCommandSearchHits items={items} onSelect={onSelect} />;
+    return <MemoizedCommandSearchHits items={items} onSelect={onSelect} prefetch={prefetch} />;
 };
 
 const MemoizedCommandSearchHits = memo(
-    ({ items, onSelect }: { items: AlgoliaRecordHit[]; onSelect: (path: string) => void }) => {
+    ({
+        items,
+        onSelect,
+        prefetch,
+    }: {
+        items: AlgoliaRecordHit[];
+        onSelect: (path: string) => void;
+        prefetch?: (path: string) => Promise<void>;
+    }) => {
         const groups = generateHits(items);
 
         return (
@@ -41,6 +55,9 @@ const MemoizedCommandSearchHits = memo(
                                         value={hit.path}
                                         onSelect={() => onSelect(hit.path)}
                                         keywords={[hit.record.title]}
+                                        onPointerOver={() => {
+                                            void prefetch?.(hit.path);
+                                        }}
                                     >
                                         <PageIcon
                                             icon={hit.icon}

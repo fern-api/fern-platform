@@ -111,25 +111,7 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                 </AppSidebar>
             ) : (
                 <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild>
-                    <DesktopCommand
-                        onClose={() => setOpen(false)}
-                        // components={{
-                        //     pre(props) {
-                        //         if (isValidElement(props.children) && props.children.type === "code") {
-                        //             const { children, className } = props.children.props as {
-                        //                 children: string;
-                        //                 className: string;
-                        //             };
-                        //             if (typeof children === "string") {
-                        //                 const match = /language-(\w+)/.exec(className || "")?.[1] ?? "plaintext";
-                        //                 return <CodeBlock code={children} language={match} />;
-                        //             }
-                        //         }
-                        //         return <pre {...props} />;
-                        //     },
-                        // }}
-                        // systemContext={{ domain }}
-                    >
+                    <DesktopCommand onClose={() => setOpen(false)}>
                         <CommandGroupFilters />
                         <CommandEmpty />
                         <CommandSearchHits onSelect={handleSubmit} />
