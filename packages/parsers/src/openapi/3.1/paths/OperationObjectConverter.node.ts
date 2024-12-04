@@ -127,7 +127,6 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         const basePath = this.basePath?.convert();
         const pathParts = basePath ? [basePath].concat(path.split("/")) : path.split("/");
 
-        // if base path is present, prepend to the list
         return pathParts.map((part) => {
             if (part.startsWith("{") && part.endsWith("}")) {
                 return {
