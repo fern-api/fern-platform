@@ -49,7 +49,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
                     pathId: "paths",
                 },
                 this.servers,
-                this.basePath
+                this.basePath,
             );
         }
 

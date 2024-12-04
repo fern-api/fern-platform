@@ -20,12 +20,12 @@ export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     constructor(
         args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.PathsObject>,
         protected readonly servers: ServerObjectConverterNode[] | undefined,
-        protected readonly basePath: XFernBasePathConverterNode | undefined
+        protected readonly basePath: XFernBasePathConverterNode | undefined,
     ) {
         super(args);
         this.safeParse();
     }
-    parse(): void {        
+    parse(): void {
         this.paths = Object.entries(this.input)
             .map(([path, pathItem]) => {
                 if (pathItem == null) {
@@ -39,7 +39,7 @@ export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                         pathId: path,
                     },
                     coalesceServers(this.servers, pathItem.servers, this.context, this.accessPath),
-                    this.basePath
+                    this.basePath,
                 );
             })
             .filter(isNonNullish);

@@ -27,7 +27,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     constructor(
         args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.PathItemObject>,
         protected servers: ServerObjectConverterNode[] | undefined,
-        protected basePath: XFernBasePathConverterNode | undefined
+        protected basePath: XFernBasePathConverterNode | undefined,
     ) {
         super(args);
         this.safeParse();
@@ -48,7 +48,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 this.servers,
                 this.pathId,
                 "GET",
-                this.basePath
+                this.basePath,
             );
         }
         if (this.input.post != null) {
@@ -62,7 +62,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 this.servers,
                 this.pathId,
                 "POST",
-                this.basePath
+                this.basePath,
             );
         }
         if (this.input.put != null) {
@@ -76,7 +76,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 this.servers,
                 this.pathId,
                 "PUT",
-                this.basePath
+                this.basePath,
             );
         }
         if (this.input.delete != null) {
@@ -90,7 +90,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 this.servers,
                 this.pathId,
                 "DELETE",
-                this.basePath
+                this.basePath,
             );
         }
 

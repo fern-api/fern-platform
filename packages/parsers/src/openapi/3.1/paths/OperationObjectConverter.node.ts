@@ -33,7 +33,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         protected servers: ServerObjectConverterNode[] | undefined,
         protected path: string | undefined,
         protected method: "GET" | "POST" | "PUT" | "DELETE",
-        protected basePath: XFernBasePathConverterNode | undefined
+        protected basePath: XFernBasePathConverterNode | undefined,
     ) {
         super(args);
         this.safeParse();
@@ -125,9 +125,9 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
         const path = this.path.startsWith("/") ? this.path.slice(1) : this.path;
         const basePath = this.basePath?.convert();
-        const pathParts = basePath ? [basePath].concat(path.split("/")) : path.split("/")
+        const pathParts = basePath ? [basePath].concat(path.split("/")) : path.split("/");
 
-        // if base path is present, prepend to the list 
+        // if base path is present, prepend to the list
         return pathParts.map((part) => {
             if (part.startsWith("{") && part.endsWith("}")) {
                 return {

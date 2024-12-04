@@ -14,20 +14,20 @@ describe("XFernGroupNameConverterNode", () => {
             });
             expect(converter.basePath).toBe("v1");
         });
-        
+
         it("properly formats x-fern-base-path with slashes", () => {
-          const converter = new XFernBasePathConverterNode({
-              input: { "x-fern-base-path": "/v1/" },
-              context: mockContext,
-              accessPath: [],
-              pathId: "",
-          });
-          expect(converter.basePath).toBe("v1");
-      });
+            const converter = new XFernBasePathConverterNode({
+                input: { "x-fern-base-path": "/v1/" },
+                context: mockContext,
+                accessPath: [],
+                pathId: "",
+            });
+            expect(converter.basePath).toBe("v1");
+        });
 
         it("sets basePath to undefined when x-fern-base-path is not present", () => {
             const converter = new XFernBasePathConverterNode({
-                input: {"": ""},
+                input: { "": "" },
                 context: mockContext,
                 accessPath: [],
                 pathId: "",
