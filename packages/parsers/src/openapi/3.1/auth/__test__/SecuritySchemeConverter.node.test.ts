@@ -185,7 +185,7 @@ describe("SecuritySchemeConverterNode", () => {
                         scopes: {},
                     },
                 },
-                "x-fern-access-token-locator": ".body.access_token",
+                "x-fern-access-token-locator": "$.body.access_token",
             } as OpenAPIV3_1.OAuth2SecurityScheme;
 
             const node = new SecuritySchemeConverterNode({
@@ -203,7 +203,7 @@ describe("SecuritySchemeConverterNode", () => {
                     value: {
                         type: "referencedEndpoint",
                         endpointId: "post-https-api-example-com-oauth-token",
-                        accessTokenLocator: ".body.access_token",
+                        accessTokenLocator: "$.body.access_token",
                         headerName: "Authorization",
                     },
                 },

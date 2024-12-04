@@ -7,7 +7,7 @@ describe("XFernBasicAuthNode", () => {
 
     it("should parse basic auth with username and password", () => {
         const input = {
-            "x-bearer-format": {
+            "x-fern-basic": {
                 username: {
                     type: "basic",
                     value: "testuser",
@@ -70,7 +70,7 @@ describe("XFernBasicAuthNode", () => {
 
     it("should handle partial auth scheme", () => {
         const input = {
-            "x-bearer-format": {
+            "x-fern-basic": {
                 username: {
                     type: "basic",
                     value: "testuser",

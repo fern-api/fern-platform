@@ -1,3 +1,4 @@
+import jp from "jsonpath";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -26,12 +27,13 @@ export class XFernAccessTokenLocatorConverterNode extends BaseOpenApiV3_1Convert
         ];
         if (this.accessTokenLocator != null) {
             try {
-                this.accessTokenLocator = JSON.parse(this.accessTokenLocator);
+                jp.parse(this.accessTokenLocator);
             } catch (e) {
                 this.context.errors.error({
-                    message: "Invalid access token locator",
+                    message: "Invalid access token locator, must be a valid jq path",
                     path: this.accessPath,
                 });
+                this.accessTokenLocator = undefined;
             }
         }
     }
