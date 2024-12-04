@@ -1,8 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 // import { UnreachableCaseError } from "ts-essentials";
 import {
-    BaseOpenApiV3_1ConverterNode,
-    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+  BaseOpenApiV3_1ConverterNode,
+  BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../utils/extendType";
 
@@ -17,7 +17,7 @@ export class XFernBasePathConverterNode extends BaseOpenApiV3_1ConverterNode<Ope
     parse(): void {
         this.basePath = extendType<{ "x-fern-base-path"?: string }>(this.input)["x-fern-base-path"];
 
-        if (this.basePath) {
+        if (this.basePath != null) {
             if (this.basePath.startsWith("/")) {
                 this.basePath = this.basePath.slice(1);
             }
