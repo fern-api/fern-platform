@@ -1,4 +1,5 @@
 import { Algolia, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
+import { truncateToBytes } from "@fern-api/ui-core-utils";
 import { toBreadcrumbs, toDescription } from "./utils.js";
 
 interface GenerateWebhookRecordsOptions {
@@ -16,12 +17,13 @@ export function generateWebhookRecord({
     webhook,
     version,
 }: GenerateWebhookRecordsOptions): Algolia.AlgoliaRecord.WebhookV4 {
+    const description = toDescription([webhook.description, webhook.payload?.description]);
     const webhookRecord: Algolia.AlgoliaRecord.WebhookV4 = {
         type: "webhook-v4",
         method: webhook.method,
         endpointPath: webhook.path.map((part) => ({ type: "literal", value: part })),
         title: node.title,
-        description: toDescription([webhook.description, webhook.payload?.description]),
+        description: description?.length ? truncateToBytes(description, 10 * 1024) : undefined,
         breadcrumbs: breadcrumb.map((breadcrumb) => ({
             title: breadcrumb.title,
             slug: breadcrumb.pointsTo ?? "",

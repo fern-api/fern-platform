@@ -1,4 +1,5 @@
 import { Algolia, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
+import { truncateToBytes } from "@fern-api/ui-core-utils";
 import { toBreadcrumbs, toDescription } from "./utils.js";
 
 interface GenerateWebSocketRecordOptions {
@@ -16,10 +17,11 @@ export function generateWebSocketRecord({
     channel,
     version,
 }: GenerateWebSocketRecordOptions): Algolia.AlgoliaRecord.WebsocketV4 {
+    const description = toDescription([channel.description]);
     const channelRecord: Algolia.AlgoliaRecord.WebsocketV4 = {
         type: "websocket-v4",
         title: node.title,
-        description: toDescription([channel.description]),
+        description: description?.length ? truncateToBytes(description, 10 * 1024) : undefined,
         breadcrumbs: breadcrumb.map((breadcrumb) => ({
             title: breadcrumb.title,
             slug: breadcrumb.pointsTo ?? "",

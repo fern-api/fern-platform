@@ -111,7 +111,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                 type: "page-v4",
                 objectID: uuid(),
                 title: frontmatter.title ?? title,
-                description: truncateToBytes(markdownTree.content, 9_500),
+                description: truncateToBytes(markdownTree.content, 10 * 1024),
                 breadcrumbs,
                 slug: fdrSlug,
                 version,
@@ -165,7 +165,7 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                 title: page.title, // TODO: parse from frontmatter?
                 // TODO: Set to something more than 10kb on prod
                 // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
-                content: truncateToBytes(processedContent, 10_000 - 1),
+                content: truncateToBytes(processedContent, 10 * 1024),
                 path: {
                     parts: pageContext.pathParts,
                 },
@@ -1746,7 +1746,7 @@ export function getMarkdownSections(
                       type: "markdown-section-v1",
                       objectID: uuid(),
                       title: markdownSection.heading.trim(),
-                      content: truncateToBytes(sanitizeText(markdownSection.content.trim()), 50000),
+                      content: truncateToBytes(sanitizeText(markdownSection.content.trim()), 10 * 1024),
                       breadcrumbs: sectionBreadcrumbs,
                       indexSegmentId,
                       slug: markdownSlug,

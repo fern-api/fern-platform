@@ -1,5 +1,5 @@
 import { Algolia, FernNavigation } from "@fern-api/fdr-sdk";
-import { isNonNullish } from "@fern-api/ui-core-utils";
+import { isNonNullish, truncateToBytes } from "@fern-api/ui-core-utils";
 import { MarkdownSectionRoot, getFrontmatter, splitMarkdownIntoSections, stripUtil } from "@fern-ui/fern-docs-mdx";
 import { convertPageV4ToV3 } from "../v1-record-converter/convertRecords.js";
 
@@ -58,7 +58,7 @@ export function generateMarkdownRecords({
         type: "page-v4",
         title,
         slug,
-        description: rootContent.length > 0 ? rootContent : undefined,
+        description: rootContent.length > 0 ? truncateToBytes(rootContent, 10 * 1024) : undefined,
         breadcrumbs: rootBreadcrumbs,
         version,
         indexSegmentId,
@@ -91,7 +91,7 @@ export function generateMarkdownRecords({
             type: "page-v4",
             title: heading.title,
             slug: FernNavigation.V1.Slug(`${slug}#${heading.anchor}`),
-            description: strippedContent,
+            description: strippedContent.length > 0 ? truncateToBytes(strippedContent, 10 * 1024) : undefined,
             breadcrumbs,
             version,
             indexSegmentId,
