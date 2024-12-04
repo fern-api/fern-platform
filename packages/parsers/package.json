@@ -16,6 +16,7 @@
     "compile": "tsc --build",
     "clean": "rm -rf dist node_modules",
     "test": "vitest --run --passWithNoTests --globals",
+    "test:update": "vitest -u --run --passWithNoTests --globals",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
@@ -29,6 +30,7 @@
   "dependencies": {
     "@fern-api/logger": "0.4.24-rc1",
     "@fern-api/ui-core-utils": "workspace:*",
+    "es-toolkit": "^1.24.0",
     "openapi-types": "^12.1.3",
     "ts-essentials": "^10.0.1",
     "uuid": "^9.0.0",

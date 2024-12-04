@@ -3,7 +3,7 @@
   "endpoints": {
     "test-uuid-replacement": {
       "description": "Generates a text response to a user message.\nTo learn how to use the Chat API and RAG follow our [Text Generation guides](https://docs.cohere.com/docs/chat-api).\n",
-      "id": "/v1/chat",
+      "id": "post-v-1-chat",
       "method": "POST",
       "path": [
         {
@@ -701,7 +701,7 @@
     },
     "test-uuid-replacement": {
       "description": "Generates a text response to a user message and streams it down, token by token. To learn how to use the Chat API with streaming follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).\n\nFollow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.\n",
-      "id": "/v2/chat",
+      "id": "post-v-2-chat",
       "method": "POST",
       "path": [
         {
@@ -1252,7 +1252,7 @@
     },
     "test-uuid-replacement": {
       "description": "<Warning>\nThis API is marked as \"Legacy\" and is no longer maintained. Follow the [migration guide](https://docs.cohere.com/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.\n</Warning>\nGenerates realistic text conditioned on a given input.\n",
-      "id": "/v1/generate",
+      "id": "post-v-1-generate",
       "method": "POST",
       "path": [
         {
@@ -1838,7 +1838,7 @@
     },
     "test-uuid-replacement": {
       "description": "This endpoint returns text and image embeddings. An embedding is a list of floating point numbers that captures semantic information about the content that it represents.\n\nEmbeddings can be used to create classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.\n\nIf you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](https://docs.cohere.com/docs/semantic-search).",
-      "id": "/v1/embed",
+      "id": "post-v-1-embed",
       "method": "POST",
       "path": [
         {
@@ -2248,7 +2248,7 @@
     },
     "test-uuid-replacement": {
       "description": "This endpoint returns text embeddings. An embedding is a list of floating point numbers that captures semantic information about the text that it represents.\n\nEmbeddings can be used to create text classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.\n\nIf you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](https://docs.cohere.com/docs/semantic-search).",
-      "id": "/v2/embed",
+      "id": "post-v-2-embed",
       "method": "POST",
       "path": [
         {
@@ -2684,7 +2684,7 @@
     },
     "test-uuid-replacement": {
       "description": "The list embed job endpoint allows users to view all embed jobs history for that specific user.",
-      "id": "/v1/embed-jobs",
+      "id": "get-v-1-embed-jobs",
       "method": "GET",
       "path": [
         {
@@ -3014,7 +3014,7 @@
     },
     "test-uuid-replacement": {
       "description": "This API launches an async Embed job for a [Dataset](https://docs.cohere.com/docs/datasets) of type `embed-input`. The result of a completed embed job is new Dataset of type `embed-output`, which contains the original text entries and the corresponding embeddings.",
-      "id": "/v1/embed-jobs",
+      "id": "post-v-1-embed-jobs",
       "method": "POST",
       "path": [
         {
@@ -3354,7 +3354,7 @@
     },
     "test-uuid-replacement": {
       "description": "This API retrieves the details about an embed job started by the same user.",
-      "id": "/v1/embed-jobs/{id}",
+      "id": "get-v-1-embed-jobs-id",
       "method": "GET",
       "path": [
         {
@@ -3703,7 +3703,7 @@
     },
     "test-uuid-replacement": {
       "description": "This API allows users to cancel an active embed job. Once invoked, the embedding process will be terminated, and users will be charged for the embeddings processed up to the cancellation point. It's important to note that partial results will not be available to users after cancellation.",
-      "id": "/v1/embed-jobs/{id}/cancel",
+      "id": "post-v-1-embed-jobs-id-cancel",
       "method": "POST",
       "path": [
         {
@@ -4030,7 +4030,7 @@
     },
     "test-uuid-replacement": {
       "description": "This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.",
-      "id": "/v1/rerank",
+      "id": "post-v-1-rerank",
       "method": "POST",
       "path": [
         {
@@ -4541,7 +4541,7 @@
     },
     "test-uuid-replacement": {
       "description": "This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.",
-      "id": "/v2/rerank",
+      "id": "post-v-2-rerank",
       "method": "POST",
       "path": [
         {
@@ -5000,7 +5000,7 @@
     },
     "test-uuid-replacement": {
       "description": "This endpoint makes a prediction about which label fits the specified text inputs best. To make a prediction, Classify uses the provided `examples` of text + label pairs as a reference.\nNote: [Fine-tuned models](https://docs.cohere.com/docs/classify-fine-tuning) trained on classification examples don't require the `examples` parameter to be passed in explicitly.",
-      "id": "/v1/classify",
+      "id": "post-v-1-classify",
       "method": "POST",
       "path": [
         {
@@ -5571,7 +5571,7 @@
     },
     "test-uuid-replacement": {
       "description": "List datasets that have been created.",
-      "id": "/v1/datasets",
+      "id": "get-v-1-datasets",
       "method": "GET",
       "path": [
         {
@@ -5979,7 +5979,7 @@
     },
     "test-uuid-replacement": {
       "description": "Create a dataset by uploading a file. See ['Dataset Creation'](https://docs.cohere.com/docs/datasets#dataset-creation) for more information.",
-      "id": "/v1/datasets",
+      "id": "post-v-1-datasets",
       "method": "POST",
       "path": [
         {
@@ -6442,7 +6442,7 @@
     },
     "test-uuid-replacement": {
       "description": "View the dataset storage usage for your Organization. Each Organization can have up to 10GB of storage across all their users.",
-      "id": "/v1/datasets/usage",
+      "id": "get-v-1-datasets-usage",
       "method": "GET",
       "path": [
         {
@@ -6773,7 +6773,7 @@
     },
     "test-uuid-replacement": {
       "description": "Retrieve a dataset by ID. See ['Datasets'](https://docs.cohere.com/docs/datasets) for more information.",
-      "id": "/v1/datasets/{id}",
+      "id": "get-v-1-datasets-id",
       "method": "GET",
       "path": [
         {
@@ -7115,7 +7115,7 @@
     },
     "test-uuid-replacement": {
       "description": "Delete a dataset by ID. Datasets are automatically deleted after 30 days, but they can also be deleted manually.",
-      "id": "/v1/datasets/{id}",
+      "id": "delete-v-1-datasets-id",
       "method": "DELETE",
       "path": [
         {
@@ -7446,7 +7446,7 @@
     },
     "test-uuid-replacement": {
       "description": "<Warning>\nThis API is marked as \"Legacy\" and is no longer maintained. Follow the [migration guide](https://docs.cohere.com/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.\n</Warning>\nGenerates a summary in English for a given text.\n",
-      "id": "/v1/summarize",
+      "id": "post-v-1-summarize",
       "method": "POST",
       "path": [
         {
@@ -7929,7 +7929,7 @@
     },
     "test-uuid-replacement": {
       "description": "This endpoint splits input text into smaller units called tokens using byte-pair encoding (BPE). To learn more about tokenization and byte pair encoding, see the tokens page.",
-      "id": "/v1/tokenize",
+      "id": "post-v-1-tokenize",
       "method": "POST",
       "path": [
         {
@@ -8340,7 +8340,7 @@
     },
     "test-uuid-replacement": {
       "description": "This endpoint takes tokens using byte-pair encoding and returns their text representation. To learn more about tokenization and byte pair encoding, see the tokens page.",
-      "id": "/v1/detokenize",
+      "id": "post-v-1-detokenize",
       "method": "POST",
       "path": [
         {
@@ -8733,7 +8733,7 @@
     },
     "test-uuid-replacement": {
       "description": "Returns a list of connectors ordered by descending creation date (newer first). See ['Managing your Connector'](https://docs.cohere.com/docs/managing-your-connector) for more information.",
-      "id": "/v1/connectors",
+      "id": "get-v-1-connectors",
       "method": "GET",
       "path": [
         {
@@ -9078,7 +9078,7 @@
     },
     "test-uuid-replacement": {
       "description": "Creates a new connector. The connector is tested during registration and will cancel registration when the test is unsuccessful. See ['Creating and Deploying a Connector'](https://docs.cohere.com/v1/docs/creating-and-deploying-a-connector) for more information.",
-      "id": "/v1/connectors",
+      "id": "post-v-1-connectors",
       "method": "POST",
       "path": [
         {
@@ -9403,7 +9403,7 @@
     },
     "test-uuid-replacement": {
       "description": "Retrieve a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connectors) for more information.",
-      "id": "/v1/connectors/{id}",
+      "id": "get-v-1-connectors-id",
       "method": "GET",
       "path": [
         {
@@ -9737,7 +9737,7 @@
     },
     "test-uuid-replacement": {
       "description": "Delete a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connectors) for more information.",
-      "id": "/v1/connectors/{id}",
+      "id": "delete-v-1-connectors-id",
       "method": "DELETE",
       "path": [
         {
@@ -10071,7 +10071,7 @@
     },
     "test-uuid-replacement": {
       "description": "Authorize the connector with the given ID for the connector oauth app.  See ['Connector Authentication'](https://docs.cohere.com/docs/connector-authentication) for more information.",
-      "id": "/v1/connectors/{id}/oauth/authorize",
+      "id": "post-v-1-connectors-id-oauth-authorize",
       "method": "POST",
       "path": [
         {
@@ -10428,7 +10428,7 @@
     },
     "test-uuid-replacement": {
       "description": "Returns the details of a model, provided its name.",
-      "id": "/v1/models/{model}",
+      "id": "get-v-1-models-model",
       "method": "GET",
       "path": [
         {
@@ -10776,7 +10776,7 @@
     },
     "test-uuid-replacement": {
       "description": "Returns a list of models available for use. The list contains models from Cohere as well as your fine-tuned models.",
-      "id": "/v1/models",
+      "id": "get-v-1-models",
       "method": "GET",
       "path": [
         {
@@ -11128,7 +11128,7 @@
     },
     "test-uuid-replacement": {
       "description": "Checks that the api key in the Authorization header is valid and active\n",
-      "id": "/v1/check-api-key",
+      "id": "post-v-1-check-api-key",
       "method": "POST",
       "path": [
         {
@@ -11477,7 +11477,7 @@
       "examples": []
     },
     "test-uuid-replacement": {
-      "id": "/v1/finetuning/finetuned-models",
+      "id": "get-v-1-finetuning-finetuned-models",
       "method": "GET",
       "path": [
         {
@@ -11644,7 +11644,7 @@
       "examples": []
     },
     "test-uuid-replacement": {
-      "id": "/v1/finetuning/finetuned-models",
+      "id": "post-v-1-finetuning-finetuned-models",
       "method": "POST",
       "path": [
         {
@@ -11780,7 +11780,7 @@
       "examples": []
     },
     "test-uuid-replacement": {
-      "id": "/v1/finetuning/finetuned-models/{id}",
+      "id": "get-v-1-finetuning-finetuned-models-id",
       "method": "GET",
       "path": [
         {
@@ -11925,7 +11925,7 @@
       "examples": []
     },
     "test-uuid-replacement": {
-      "id": "/v1/finetuning/finetuned-models/{id}",
+      "id": "delete-v-1-finetuning-finetuned-models-id",
       "method": "DELETE",
       "path": [
         {
@@ -12070,7 +12070,7 @@
       "examples": []
     },
     "test-uuid-replacement": {
-      "id": "/v1/finetuning/finetuned-models/{finetuned_model_id}/events",
+      "id": "get-v-1-finetuning-finetuned-models-finetuned-model-id-events",
       "method": "GET",
       "path": [
         {
@@ -12260,7 +12260,7 @@
       "examples": []
     },
     "test-uuid-replacement": {
-      "id": "/v1/finetuning/finetuned-models/{finetuned_model_id}/training-step-metrics",
+      "id": "get-v-1-finetuning-finetuned-models-finetuned-model-id-training-step-metrics",
       "method": "GET",
       "path": [
         {
@@ -20069,5 +20069,9 @@
     }
   },
   "subpackages": {},
-  "auths": {}
+  "auths": {
+    "bearerAuth": {
+      "type": "bearerAuth"
+    }
+  }
 }

@@ -8,6 +8,8 @@ import {
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
 import { convertToObjectProperties } from "../../utils/3.1/convertToObjectProperties";
 import { resolveParameterReference } from "../../utils/3.1/resolveParameterReference";
+import { getEndpointId } from "../../utils/getEndpointId";
+import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
 import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.node";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
@@ -26,6 +28,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     requests: RequestBodyObjectConverterNode | undefined;
     responses: ResponsesObjectConverterNode | undefined;
     availability: AvailabilityConverterNode | undefined;
+    auth: SecurityRequirementObjectConverterNode | undefined;
 
     constructor(
         args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.OperationObject>,
@@ -93,7 +96,15 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 }
             }
         });
-        // validate path parts
+
+        for (const pathParameterId of this.extractPathParameterIds() ?? []) {
+            if (this.pathParameters?.[pathParameterId] == null) {
+                this.context.errors.warning({
+                    message: `Path parameter not defined: ${pathParameterId}`,
+                    path: [...this.accessPath, "parameters"],
+                });
+            }
+        }
 
         this.requests =
             this.input.requestBody != null
@@ -114,6 +125,31 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                       pathId: "responses",
                   })
                 : undefined;
+
+        if (this.input.security != null) {
+            this.auth = new SecurityRequirementObjectConverterNode({
+                input: this.input.security,
+                context: this.context,
+                accessPath: this.accessPath,
+                pathId: "security",
+            });
+        }
+    }
+
+    extractPathParameterIds(): string[] | undefined {
+        if (this.path == null) {
+            return undefined;
+        }
+
+        return this.path
+            .split("/")
+            .map((part) => {
+                if (part.startsWith("{") && part.endsWith("}")) {
+                    return part.slice(1, -1).trim();
+                }
+                return undefined;
+            })
+            .filter(isNonNullish);
     }
 
     convertPathToPathParts(): FernRegistry.api.latest.PathPart[] | undefined {
@@ -142,12 +178,18 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             return undefined;
         }
 
-        const endpointId = this.path;
+        const endpointId = getEndpointId(this.method, this.path);
 
         const environments = this.servers?.map((server) => server.convert()).filter(isNonNullish);
         const pathParts = this.convertPathToPathParts();
         if (pathParts == null) {
             return undefined;
+        }
+
+        let authIds: string[] | undefined;
+        const auth = this.auth?.convert();
+        if (auth != null) {
+            authIds = Object.keys(auth);
         }
 
         // TODO: revisit fdr shape to suport multiple responses
@@ -161,8 +203,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             id: FernRegistry.EndpointId(endpointId),
             method: this.method,
             path: pathParts,
-            // TODO: auth
-            auth: undefined,
+            auth: authIds?.map((id) => FernRegistry.api.latest.AuthSchemeId(id)),
             defaultEnvironment: environments?.[0]?.id,
             environments,
             pathParameters: convertToObjectProperties(this.pathParameters),

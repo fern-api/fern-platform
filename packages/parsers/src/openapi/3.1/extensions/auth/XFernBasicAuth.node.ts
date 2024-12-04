@@ -1,0 +1,46 @@
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../../BaseOpenApiV3_1Converter.node";
+import { extendType } from "../../../utils/extendType";
+import { TokenSecurityScheme } from "./types/TokenSecurityScheme";
+
+const basicAuthExtensionKey = "x-fern-basic";
+
+export declare namespace XFernBasicAuthNode {
+    export interface Input {
+        [basicAuthExtensionKey]?: {
+            username?: TokenSecurityScheme;
+            password?: TokenSecurityScheme;
+        };
+    }
+
+    export interface Output {
+        username?: TokenSecurityScheme;
+        password?: TokenSecurityScheme;
+    }
+}
+
+export class XFernBasicAuthNode extends BaseOpenApiV3_1ConverterNode<unknown, XFernBasicAuthNode.Output> {
+    username: TokenSecurityScheme | undefined;
+    password: TokenSecurityScheme | undefined;
+
+    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
+        super(args);
+        this.safeParse();
+    }
+
+    // This would be used to set a member on the node
+    parse(): void {
+        const basicAuthScheme = extendType<XFernBasicAuthNode.Input>(this.input)[basicAuthExtensionKey];
+        this.username = basicAuthScheme?.username;
+        this.password = basicAuthScheme?.password;
+    }
+
+    convert(): XFernBasicAuthNode.Output | undefined {
+        return {
+            username: this.username,
+            password: this.password,
+        };
+    }
+}

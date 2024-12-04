@@ -14,8 +14,6 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     FernRegistry.api.latest.EndpointDefinition[]
 > {
     description: string | undefined;
-    // TODO: Implement this
-    // availability: AvailabilityConverterNode | undefined;
     get: OperationObjectConverterNode | undefined;
     post: OperationObjectConverterNode | undefined;
     put: OperationObjectConverterNode | undefined;

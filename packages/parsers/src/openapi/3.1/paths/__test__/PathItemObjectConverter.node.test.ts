@@ -49,7 +49,7 @@ describe("PathItemObjectConverterNode", () => {
             expect(result).toHaveLength(2);
             expect(result?.[0]).toEqual({
                 description: "Get a pet",
-                id: "/pets/{petId}",
+                id: "get-pets-pet-id",
                 method: "GET",
                 path: [
                     {
@@ -81,7 +81,7 @@ describe("PathItemObjectConverterNode", () => {
             });
             expect(result?.[1]).toEqual({
                 description: "Create a pet",
-                id: "/pets/{petId}",
+                id: "post-pets-pet-id",
                 method: "POST",
                 path: [
                     {
