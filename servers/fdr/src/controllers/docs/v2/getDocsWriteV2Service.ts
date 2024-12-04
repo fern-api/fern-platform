@@ -366,12 +366,21 @@ async function uploadToAlgolia(
 
     let searchRecords: AlgoliaSearchRecord[] = [];
     if (dbDocsDefinition.config.root == null) {
-        searchRecords = await app.services.algolia.generateSearchRecords({
-            url: url.getFullUrl(),
-            docsDefinition: dbDocsDefinition,
-            apiDefinitionsById,
-            configSegmentTuples,
-        });
+        try {
+            searchRecords = await app.services.algolia.generateSearchRecords({
+                url: url.getFullUrl(),
+                docsDefinition: dbDocsDefinition,
+                apiDefinitionsById,
+                configSegmentTuples,
+            });
+        } catch (e) {
+            app.logger.error(`Error while trying to generate search records for ${url.getFullUrl()}`, e);
+            await app.services.slack.notify(
+                `Fatal error thrown while generating search records for ${url.getFullUrl()}. Search may not be available for this docs instance.`,
+                e,
+            );
+            throw e;
+        }
     } else {
         const loadDocsForUrlResponse: LoadDocsForUrlResponse = {
             baseUrl: {
@@ -400,21 +409,32 @@ async function uploadToAlgolia(
             lightModeEnabled: dbDocsDefinition.config.colorsV3?.type !== "dark",
             orgId: OrgId("dummy"),
         };
-        configSegmentTuples.map(([_, indexSegment]) => {
-            const v2Records = generateAlgoliaRecords({
-                indexSegmentId: indexSegment.id,
-                nodes: FernNavigation.utils.toRootNode(loadDocsForUrlResponse),
-                pages: FernNavigation.utils.toPages(loadDocsForUrlResponse),
-                apis: FernNavigation.utils.toApis(loadDocsForUrlResponse),
-                isFieldRecordsEnabled: true,
-            });
-            searchRecords.push(
-                ...v2Records.map((record) => ({
-                    ...record,
-                    objectID: uuidv4(),
-                })),
-            );
-        });
+        await Promise.all(
+            configSegmentTuples.map(async ([_, indexSegment]) => {
+                try {
+                    const v2Records = generateAlgoliaRecords({
+                        indexSegmentId: indexSegment.id,
+                        nodes: FernNavigation.utils.toRootNode(loadDocsForUrlResponse),
+                        pages: FernNavigation.utils.toPages(loadDocsForUrlResponse),
+                        apis: FernNavigation.utils.toApis(loadDocsForUrlResponse),
+                        isFieldRecordsEnabled: true,
+                    });
+                    searchRecords.push(
+                        ...v2Records.map((record) => ({
+                            ...record,
+                            objectID: uuidv4(),
+                        })),
+                    );
+                } catch (e) {
+                    app.logger.error(`Error while trying to generate search records for ${url.getFullUrl()}`, e);
+                    await app.services.slack.notify(
+                        `Fatal error thrown while generating search records for ${url.getFullUrl()}. Search may not be available for this docs instance.`,
+                        e,
+                    );
+                    throw e;
+                }
+            }),
+        );
     }
 
     app.logger.debug(`[${url.getFullUrl()}] Uploading search records to Algolia`);
