@@ -1,9 +1,9 @@
-import jp from "jsonpath";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../../utils/extendType";
+import { isValidJsonPath } from "../../../utils/isValidJsonPath";
 
 const headerVariableNameExtensionKey = "x-fern-access-token-locator";
 
@@ -26,9 +26,7 @@ export class XFernAccessTokenLocatorConverterNode extends BaseOpenApiV3_1Convert
             headerVariableNameExtensionKey
         ];
         if (this.accessTokenLocator != null) {
-            try {
-                jp.parse(this.accessTokenLocator);
-            } catch (e) {
+            if (!isValidJsonPath(this.accessTokenLocator)) {
                 this.context.errors.error({
                     message: "Invalid access token locator, must be a valid jq path",
                     path: this.accessPath,
