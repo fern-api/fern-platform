@@ -24,8 +24,8 @@ export const DesktopSearchDialog = memo(
                 <Dialog.Trigger asChild>
                     <button
                         className={cn(
-                            "inline-flex items-center justify-start gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
-                            "border border-input bg-[var(--grayscale-a1)] hover:bg-[var(--grayscale-a2)] text-[var(--grayscale-a10)]",
+                            "inline-flex items-center justify-start gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent-6)] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+                            "border border-[var(--grayscale-a6)] bg-[var(--grayscale-a1)] hover:bg-[var(--grayscale-a2)] text-[var(--grayscale-a10)]",
                             "h-9 px-2 py-2",
                             "w-full",
                         )}
@@ -36,7 +36,7 @@ export const DesktopSearchDialog = memo(
                     </button>
                 </Dialog.Trigger>
                 <Dialog.Portal>
-                    <Dialog.Overlay className="fixed inset-0 bg-background/80 backdrop-blur-md" />
+                    <Dialog.Overlay className="fixed inset-0 bg-[var(--grayscale-1)]/80 backdrop-blur-md" />
 
                     <VisuallyHidden>
                         <Dialog.Title>Search</Dialog.Title>

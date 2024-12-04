@@ -1,22 +1,23 @@
 "use client";
 
 import { AppSidebar, AppSidebarContent } from "@/app/(demo)/app-sidebar";
-import { DesktopBackButton } from "@/components/desktop/desktop-back-button";
 import {
+    CommandActions,
+    CommandEmpty,
+    CommandGroupFilters,
+    CommandGroupTheme,
+    CommandSearchHits,
+    DesktopBackButton,
     DesktopCommand,
     DesktopCommandAboveInput,
+    DesktopCommandBadges,
     DesktopCommandBeforeInput,
-} from "@/components/desktop/desktop-command";
-import { DesktopCommandBadges } from "@/components/desktop/desktop-command-badges";
-import { DesktopSearchDialog } from "@/components/desktop/desktop-search-dialog";
-import { MobileCommand } from "@/components/mobile/mobile-command";
-import { SearchClientRoot, useFacetFilters } from "@/components/search-client";
-import { CommandActions } from "@/components/shared/command-actions";
-import { CommandEmpty } from "@/components/shared/command-empty";
-import { CommandGroupFilters } from "@/components/shared/command-filters";
-import { CommandSearchHits } from "@/components/shared/command-hits";
-import { CommandGroupTheme } from "@/components/shared/command-theme";
-import { useCommandUx } from "@/components/shared/command-ux";
+    DesktopSearchDialog,
+    MobileCommand,
+    SearchClientRoot,
+    useCommandUx,
+    useFacetFilters,
+} from "@/components";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { FacetsResponse } from "@/utils/facet-display";
 import { useTheme } from "next-themes";

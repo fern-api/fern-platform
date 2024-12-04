@@ -54,7 +54,7 @@ export function ChatbotDialog({
         <Dialog.Root open={open} onOpenChange={onOpenChange} defaultOpen={defaultOpen} modal={modal}>
             {children && <Dialog.Trigger asChild>{children}</Dialog.Trigger>}
             <Dialog.Portal>
-                <Dialog.Overlay className="fixed inset-0 bg-background/80 backdrop-blur-md" />
+                <Dialog.Overlay className="fixed inset-0 bg-[var(--grayscale-1)]/80 backdrop-blur-md" />
 
                 <Dialog.Content className="fixed inset-0 flex flex-col items-stretch" asChild>
                     <ChatbotInterface
@@ -235,7 +235,7 @@ const ChatbotInterface = forwardRef<
                         <ChatbotModelSelect value={model} onValueChange={setModel} />
                     </Composer>
                 </div>
-                <div className="relative w-full p-2 text-center text-xs text-muted-foreground empty:hidden md:px-[60px]">
+                <div className="relative w-full p-2 text-center text-xs text-[var(--grayscale-a3)] empty:hidden md:px-[60px]">
                     <div className="h-2" />
                 </div>
             </div>

@@ -47,21 +47,16 @@ body {
         --grayscale-a11: var(--olive-a11);
         --grayscale-a12: var(--olive-a12);
 
-        --chart-1: var(--accent-6);
-        --chart-2: var(--accent-6);
-        --chart-3: var(--accent-6);
-        --chart-4: var(--accent-6);
-        --chart-5: var(--accent-6);
         --radius: 0.5rem;
     }
 }
 
 @layer base {
     * {
-        @apply border-border;
+        @apply border-[var(--grayscale-a6)];
     }
     body {
-        @apply text-foreground;
+        @apply text-[var(--grayscale-12)];
         background-color: var(--color-background);
     }
 }

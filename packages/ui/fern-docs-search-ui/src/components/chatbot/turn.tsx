@@ -9,7 +9,7 @@ export const ChatbotTurn = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<"
                 ref={ref}
                 {...props}
                 className={cn(
-                    "w-full scroll-mb-[var(--thread-trailing-height,150px)] text-token-text-primary focus-visible:outline-2 focus-visible:outline-offset-[-4px]",
+                    "w-full scroll-mb-[var(--thread-trailing-height,150px)] text-[var(--grayscale-12)] focus-visible:outline-2 focus-visible:outline-offset-[-4px]",
                     props.className,
                 )}
             >

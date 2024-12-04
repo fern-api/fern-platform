@@ -13,58 +13,6 @@ const config: Config = {
     ],
     theme: {
         extend: {
-            colors: {
-                background: "var(--grayscale-1)",
-                foreground: "var(--grayscale-12)",
-                card: {
-                    DEFAULT: "var(--grayscale-1)",
-                    foreground: "var(--accent-12)",
-                },
-                popover: {
-                    DEFAULT: "var(--grayscale-1)",
-                    foreground: "var(--accent-12)",
-                },
-                primary: {
-                    DEFAULT: "var(--accent-6)",
-                    foreground: "var(--accent-12)",
-                },
-                secondary: {
-                    DEFAULT: "var(--grayscale-a3)",
-                    foreground: "var(--accent-12)",
-                },
-                muted: {
-                    DEFAULT: "var(--grayscale-a3)",
-                    foreground: "var(--accent-12)",
-                },
-                accent: {
-                    DEFAULT: "var(--grayscale-a3)",
-                    foreground: "var(--accent-12)",
-                },
-                destructive: {
-                    DEFAULT: "var(--red-10)",
-                    foreground: "var(--red-12)",
-                },
-                border: "var(--grayscale-a6)",
-                input: "var(--grayscale-a6)",
-                ring: "var(--accent-6)",
-                chart: {
-                    "1": "var(--accent-6)",
-                    "2": "var(--accent-6)",
-                    "3": "var(--accent-6)",
-                    "4": "var(--accent-6)",
-                    "5": "var(--accent-6)",
-                },
-                sidebar: {
-                    DEFAULT: "var(--grayscale-1)",
-                    foreground: "var(--grayscale-12)",
-                    primary: "var(--grayscale-1)",
-                    "primary-foreground": "var(--accent-12)",
-                    accent: "var(--grayscale-1)",
-                    "accent-foreground": "var(--accent-12)",
-                    border: "var(--grayscale-a6)",
-                    ring: "var(--accent-6)",
-                },
-            },
             borderRadius: {
                 lg: "var(--radius)",
                 md: "calc(var(--radius) - 2px)",
