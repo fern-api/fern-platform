@@ -11,7 +11,7 @@ const CommandUxContext = createContext<{
     setInputError: noop,
 });
 
-export function CommandUxProvider({
+function CommandUxProvider({
     focus,
     scrollTop,
     setInputError,
@@ -22,19 +22,16 @@ export function CommandUxProvider({
     setInputError: (error: string | null) => void;
     children: React.ReactNode;
 }): ReactElement {
-    return (
-        <CommandUxContext.Provider
-            value={useMemo(() => ({ focus, scrollTop, setInputError }), [focus, scrollTop, setInputError])}
-        >
-            {children}
-        </CommandUxContext.Provider>
-    );
+    const value = useMemo(() => ({ focus, scrollTop, setInputError }), [focus, scrollTop, setInputError]);
+    return <CommandUxContext.Provider value={value}>{children}</CommandUxContext.Provider>;
 }
 
-export function useCommandUx(): {
+function useCommandUx(): {
     focus: () => void;
     scrollTop: () => void;
     setInputError: (error: string | null) => void;
 } {
     return useContext(CommandUxContext);
 }
+
+export { CommandUxProvider, useCommandUx };
