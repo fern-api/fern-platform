@@ -1,7 +1,7 @@
 /**
  * Chunks a string into an array of strings, each of the specified byte size.
  * @param str - The string to chunk.
- * @param byteSize - The byte size of each chunk. i.e. 10KB = 10 * 1024
+ * @param byteSize - The byte size of each chunk. i.e. 10KB = 50 * 1000
  * @returns An array of strings, each of the specified byte size.
  */
 export function chunkToBytes(str: string, byteSize: number): string[] {
@@ -22,7 +22,7 @@ export function chunkToBytes(str: string, byteSize: number): string[] {
 /**
  * Truncates a string to the specified byte length.
  * @param str - The string to truncate.
- * @param byteSize - The byte size of the truncated string. i.e. 10KB = 10 * 1024
+ * @param byteSize - The byte size of the truncated string. i.e. 10KB = 50 * 1000
  * @returns The truncated string.
  */
 export function truncateToBytes(str: string, byteSize: number): string {

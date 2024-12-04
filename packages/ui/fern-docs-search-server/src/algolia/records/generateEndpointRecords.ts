@@ -28,7 +28,7 @@ export function generateEndpointRecord({
         endpointPath: endpoint.path,
         isResponseStream: endpoint.response?.body.type === "stream" || endpoint.response?.body.type === "streamingText",
         title: node.title,
-        description: description?.length ? truncateToBytes(description, 10 * 1024) : undefined,
+        description: description?.length ? truncateToBytes(description, 50 * 1000) : undefined,
         breadcrumbs: breadcrumb.map((breadcrumb) => ({
             title: breadcrumb.title,
             slug: breadcrumb.pointsTo ?? "",
@@ -69,7 +69,7 @@ export function generateEndpointFieldRecords({
                 ...endpointRecord,
                 type: "endpoint-field-v1",
                 title: last.title,
-                description: description?.length ? truncateToBytes(description, 10 * 1024) : undefined,
+                description: description?.length ? truncateToBytes(description, 50 * 1000) : undefined,
                 breadcrumbs: breadcrumbs.slice(0, breadcrumbs.length - 1),
                 slug: FernNavigation.V1.Slug(last.slug),
                 availability: item.availability,

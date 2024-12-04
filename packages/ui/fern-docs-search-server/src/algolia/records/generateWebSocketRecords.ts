@@ -21,7 +21,7 @@ export function generateWebSocketRecord({
     const channelRecord: Algolia.AlgoliaRecord.WebsocketV4 = {
         type: "websocket-v4",
         title: node.title,
-        description: description?.length ? truncateToBytes(description, 10 * 1024) : undefined,
+        description: description?.length ? truncateToBytes(description, 50 * 1000) : undefined,
         breadcrumbs: breadcrumb.map((breadcrumb) => ({
             title: breadcrumb.title,
             slug: breadcrumb.pointsTo ?? "",

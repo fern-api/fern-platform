@@ -23,7 +23,7 @@ export function generateWebhookRecord({
         method: webhook.method,
         endpointPath: webhook.path.map((part) => ({ type: "literal", value: part })),
         title: node.title,
-        description: description?.length ? truncateToBytes(description, 10 * 1024) : undefined,
+        description: description?.length ? truncateToBytes(description, 50 * 1000) : undefined,
         breadcrumbs: breadcrumb.map((breadcrumb) => ({
             title: breadcrumb.title,
             slug: breadcrumb.pointsTo ?? "",
