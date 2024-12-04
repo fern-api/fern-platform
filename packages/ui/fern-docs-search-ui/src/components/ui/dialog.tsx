@@ -1,9 +1,8 @@
-"use client";
-
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { X } from "lucide-react";
 import * as React from "react";
+
 import { cn } from "./cn";
 
 const Dialog = DialogPrimitive.Root;

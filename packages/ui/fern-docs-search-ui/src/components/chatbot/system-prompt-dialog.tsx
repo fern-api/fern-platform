@@ -1,3 +1,5 @@
+import { ReactElement } from "react";
+import { Button } from "../ui/button";
 import {
     Dialog,
     DialogClose,
@@ -6,9 +8,7 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from "@/components/ui/dialog";
-import { ReactElement } from "react";
-import { Button } from "../ui/button";
+} from "../ui/dialog";
 import { TextArea } from "../ui/textarea";
 
 export const SystemPromptDialog = ({

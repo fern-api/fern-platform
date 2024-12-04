@@ -1,12 +1,12 @@
-import { cn } from "@/components/ui/cn";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import * as Dialog from "@radix-ui/react-dialog";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { SearchIcon } from "lucide-react";
 import { ComponentPropsWithoutRef, PropsWithChildren, memo } from "react";
 import { Button } from "../ui/button";
+import { cn } from "../ui/cn";
 import { Kbd } from "../ui/kbd";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { DesktopCommandAfterInput } from "./desktop-command";
 
 export const DesktopSearchDialog = memo(

@@ -1,36 +1,6 @@
+import { FACET_NAMES, FacetName, FacetsResponse, FilterOption } from "../types";
 import { AvailabilityBadge, HttpMethodBadge } from "@fern-ui/fern-docs-badges";
 import { ReactNode } from "react";
-
-export const FACET_NAMES = [
-    "product.title",
-    "version.title",
-    "type",
-    "api_type",
-    "method",
-    "status_code",
-    "availability",
-] as const;
-export type FacetName = (typeof FACET_NAMES)[number];
-export type FacetsResponse = Record<FacetName, { value: string; count: number }[]>;
-export const EMPTY_FACETS_RESPONSE: FacetsResponse = {
-    "product.title": [],
-    "version.title": [],
-    type: [],
-    api_type: [],
-    method: [],
-    status_code: [],
-    availability: [],
-} as const;
-
-export function isFacetName(facet: string): facet is FacetName {
-    return FACET_NAMES.includes(facet as FacetName);
-}
-
-export interface FilterOption {
-    facet: FacetName;
-    value: string;
-    count: number;
-}
 
 const FACET_DISPLAY_MAP: Record<string, Record<string, ReactNode>> = {
     method: {

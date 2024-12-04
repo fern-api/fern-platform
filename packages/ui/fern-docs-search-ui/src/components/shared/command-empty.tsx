@@ -1,6 +1,7 @@
-import { useSearchHits } from "@/hooks/use-search-hits";
 import { Command, useCommandState } from "cmdk";
 import { ComponentProps, forwardRef } from "react";
+
+import { useSearchHits } from "../../hooks/use-search-hits";
 
 export const CommandEmpty = forwardRef<HTMLDivElement, ComponentProps<typeof Command.Empty>>(
     ({ children, ...props }, ref) => {

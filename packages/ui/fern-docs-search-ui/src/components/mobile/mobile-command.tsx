@@ -1,8 +1,9 @@
-import { FacetFilter } from "@/hooks/use-facets";
-import { FACET_DISPLAY_NAME_MAP } from "@/utils/facet-display";
 import { Command } from "cmdk";
 import { ComponentPropsWithoutRef, forwardRef, useRef, useState } from "react";
 import { useSearchBox } from "react-instantsearch";
+
+import { FacetFilter } from "../../types";
+import { FACET_DISPLAY_NAME_MAP } from "../../utils/facet-display";
 import { useFacetFilters } from "../search-client";
 import "../shared/common.scss";
 import { Button } from "../ui/button";

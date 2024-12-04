@@ -1,11 +1,12 @@
-import { useSearchHits } from "@/hooks/use-search-hits";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { Command, useCommandState } from "cmdk";
 import { PropsWithChildren, ReactNode, memo } from "react";
 import { Snippet } from "react-instantsearch";
+
+import { useSearchHits } from "../../hooks/use-search-hits";
+import { AlgoliaRecordHit } from "../../types";
 import { PageIcon } from "../icons/page";
 import { useFacetFilters } from "../search-client";
-import { AlgoliaRecordHit } from "../types";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { HitContent } from "./hit-content";
 import { generateHits } from "./hits";

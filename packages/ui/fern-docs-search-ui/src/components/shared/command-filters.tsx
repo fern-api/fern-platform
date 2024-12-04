@@ -1,9 +1,10 @@
-import { FACET_DISPLAY_NAME_MAP, getFacetDisplay, toFilterOptions } from "@/utils/facet-display";
 import { Badge } from "@fern-ui/fern-docs-badges";
 import { Command } from "cmdk";
 import { ListFilter } from "lucide-react";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { useSearchBox } from "react-instantsearch";
+
+import { FACET_DISPLAY_NAME_MAP, getFacetDisplay, toFilterOptions } from "../../utils/facet-display";
 import { useFacetFilters, useFacets, usePreloadFacets } from "../search-client";
 import { useCommandUx } from "./command-ux";
 

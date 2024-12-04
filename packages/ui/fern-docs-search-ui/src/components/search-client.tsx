@@ -1,7 +1,3 @@
-import { useDeepCompareEffectNoCheck } from "@/hooks/use-deep-compare-callback";
-import { FacetFilter } from "@/hooks/use-facets";
-import { EMPTY_FACETS_RESPONSE, FacetName, FacetsResponse, isFacetName } from "@/utils/facet-display";
-import { toAlgoliaFacetFilters } from "@/utils/facet-filters";
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { LiteClient, liteClient } from "algoliasearch/lite";
 import { useAtom } from "jotai";
@@ -23,6 +19,10 @@ import { Configure } from "react-instantsearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
 import { preload } from "swr";
 import useSWRImmutable from "swr/immutable";
+
+import { useDeepCompareEffectNoCheck } from "../hooks/use-deep-compare-callback";
+import { EMPTY_FACETS_RESPONSE, FacetFilter, FacetName, FacetsResponse, isFacetName } from "../types";
+import { toAlgoliaFacetFilters } from "../utils/facet-filters";
 
 function SearchClientRoot({
     children,

@@ -1,8 +1,9 @@
 "use server";
 
+import { Client } from "@upstash/qstash";
+
 import { qstashToken } from "@/server/env-variables";
 import { runReindex } from "@/server/run-reindex";
-import { Client } from "@upstash/qstash";
 
 export const handleReindex = async (domain: string): Promise<string | undefined> => {
     if (process.env.VERCEL && process.env.VERCEL_ENV !== "development") {

@@ -1,5 +1,3 @@
-import { FacetFilter } from "@/hooks/use-facets";
-import { FacetName, getFacetDisplay, toFilterLabel } from "@/utils/facet-display";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import {
     AvailabilityBadge,
@@ -12,6 +10,9 @@ import {
 import * as Menubar from "@radix-ui/react-menubar";
 import { Check, ChevronDown, Minus } from "lucide-react";
 import { ComponentPropsWithoutRef, Fragment, ReactElement, ReactNode, forwardRef } from "react";
+
+import { FacetFilter, FacetName } from "../../types";
+import { getFacetDisplay, toFilterLabel } from "../../utils/facet-display";
 import { useFacetFilters, useFacets } from "../search-client";
 import { cn } from "../ui/cn";
 

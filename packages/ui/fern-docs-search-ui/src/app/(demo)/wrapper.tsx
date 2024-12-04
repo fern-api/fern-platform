@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useEffect, type ReactElement } from "react";
+
 import { handleReindex } from "./actions/reindex";
 import { DemoInstantSearchClient } from "./search-demo";
 

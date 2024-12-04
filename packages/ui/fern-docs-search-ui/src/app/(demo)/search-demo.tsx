@@ -1,5 +1,10 @@
 "use client";
 
+import { useTheme } from "next-themes";
+import { ReactElement, useCallback, useEffect, useState } from "react";
+import useSWR from "swr";
+import { z } from "zod";
+
 import { AppSidebar, AppSidebarContent } from "@/app/(demo)/app-sidebar";
 import {
     CommandActions,
@@ -19,11 +24,7 @@ import {
     useFacetFilters,
 } from "@/components";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { FacetsResponse } from "@/utils/facet-display";
-import { useTheme } from "next-themes";
-import { ReactElement, useCallback, useEffect, useState } from "react";
-import useSWR from "swr";
-import { z } from "zod";
+import { FacetsResponse } from "@/types";
 
 const USER_TOKEN_KEY = "user-token";
 
