@@ -4,9 +4,13 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import titleCase from "@fern-api/ui-core-utils/titleCase";
 import cn from "clsx";
 import { compact } from "es-toolkit/array";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { capturePosthogEvent } from "../../../analytics/posthog";
+import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
+import { FernAnchor } from "../../../components/FernAnchor";
+import { useHref } from "../../../hooks/useHref";
 import { Markdown } from "../../../mdx/Markdown";
+import { getAnchorId } from "../../../util/anchor";
 import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {
     TypeDefinitionContext,
@@ -33,6 +37,21 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
     types,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
+
+    const anchorId = getAnchorId(anchorIdParts);
+    const ref = useRef<HTMLDivElement>(null);
+
+    const [isActive, setIsActive] = useState(false);
+    const isPaginated = useIsApiReferencePaginated();
+    useRouteListener(slug, (anchor) => {
+        const isActive = anchor === anchorId;
+        setIsActive(isActive);
+        if (isActive) {
+            setTimeout(() => {
+                ref.current?.scrollIntoView({ block: "start", behavior: isPaginated ? "smooth" : "instant" });
+            }, 450);
+        }
+    });
 
     const [shape, additionalDescriptions] = useMemo((): [ApiDefinition.TypeShape.Object_, FernDocs.MarkdownText[]] => {
         const unwrapped = ApiDefinition.unwrapDiscriminatedUnionVariant({ discriminant }, unionVariant, types);
@@ -63,6 +82,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
         [contextValue, discriminant, unionVariant.discriminantValue],
     );
 
+    const href = useHref(slug, anchorId);
     const descriptions = compact([unionVariant.description, ...additionalDescriptions]);
 
     useEffect(() => {
@@ -81,13 +101,21 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
 
     return (
         <div
-            className={cn("flex flex-col py-3 gap-2", {
+            ref={ref}
+            id={href}
+            className={cn("scroll-mt-content-padded flex flex-col py-3 gap-2", {
                 "px-3": !isRootTypeDefinition,
+                "outline-accent outline-1 outline outline-offset-4 rounded-sm": isActive,
             })}
         >
-            <span className="fern-api-property-key">
-                {unionVariant.displayName ?? titleCase(unionVariant.discriminantValue)}
-            </span>
+            <div className="fern-api-property-header">
+                <FernAnchor href={href} sideOffset={6}>
+                    <span className="fern-api-property-key">
+                        {unionVariant.displayName ?? titleCase(unionVariant.discriminantValue)}
+                    </span>
+                </FernAnchor>
+            </div>
+
             {unionVariant.availability != null && (
                 <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
             )}
