@@ -4,13 +4,13 @@ import { Command } from "cmdk";
 import { ListFilter } from "lucide-react";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { useSearchBox } from "react-instantsearch";
+import { useFacetFilters, useFacets, usePreloadFacets } from "../search-client";
 import { useCommandUx } from "./command-ux";
-import { useFacetFilters, useFacets, usePreloadFacets } from "./search-client";
 
 export const CommandGroupFilters = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<typeof Command.Group>>(
     (props, ref) => {
         const { clear } = useSearchBox();
-        const { focus, scrollTop } = useCommandUx();
+        const { focusAndScrollTop } = useCommandUx();
         const { filters, setFilters } = useFacetFilters();
         const options = toFilterOptions(useFacets(filters).facets);
         const preloadFacets = usePreloadFacets();
@@ -28,8 +28,7 @@ export const CommandGroupFilters = forwardRef<HTMLDivElement, ComponentPropsWith
                         onSelect={() => {
                             setFilters((prev) => [...prev, filter]);
                             clear();
-                            focus();
-                            scrollTop();
+                            focusAndScrollTop();
                         }}
                         onPointerOver={() => {
                             void preloadFacets([filter]);

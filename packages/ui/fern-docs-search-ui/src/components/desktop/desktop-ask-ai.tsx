@@ -19,7 +19,7 @@ export function DesktopAskAI({
     } & UseAskAIOpts
 >): ReactNode {
     const { query, clear } = useSearchBox();
-    const { scrollTop, focus, setInputError } = useCommandUx();
+    const { focusAndScrollTop, setInputError } = useCommandUx();
     const chat = useAskAI({
         initialInput: query,
         ...opts,
@@ -32,7 +32,7 @@ export function DesktopAskAI({
             if (message.length > 0) {
                 setInputError("Enter at least 2 words");
             }
-            focus();
+            focusAndScrollTop();
             return;
         } else {
             setInputError(null);
@@ -43,8 +43,7 @@ export function DesktopAskAI({
             content: message,
         });
         clear();
-        focus();
-        scrollTop();
+        focusAndScrollTop();
     };
 
     return (
@@ -81,8 +80,7 @@ export function DesktopAskAI({
                     isLoading={chat.isLoading}
                     refreshLastMessage={() => {
                         void chat.reload();
-                        focus();
-                        scrollTop();
+                        focusAndScrollTop();
                     }}
                 />
             )}

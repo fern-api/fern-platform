@@ -12,7 +12,7 @@ import {
 import * as Menubar from "@radix-ui/react-menubar";
 import { Check, ChevronDown, Minus } from "lucide-react";
 import { ComponentPropsWithoutRef, Fragment, ReactElement, ReactNode, forwardRef } from "react";
-import { useFacetFilters, useFacets } from "../shared/search-client";
+import { useFacetFilters, useFacets } from "../search-client";
 import { cn } from "../ui/cn";
 
 export function MobileFacetMenuBar({ onUpdateFilters }: { onUpdateFilters?: () => void }): ReactNode {

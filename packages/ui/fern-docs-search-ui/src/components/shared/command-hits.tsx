@@ -4,11 +4,11 @@ import { Command, useCommandState } from "cmdk";
 import { PropsWithChildren, ReactNode, memo } from "react";
 import { Snippet } from "react-instantsearch";
 import { PageIcon } from "../icons/page";
+import { useFacetFilters } from "../search-client";
 import { AlgoliaRecordHit } from "../types";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { HitContent } from "./hit-content";
 import { generateHits } from "./hits";
-import { useFacetFilters } from "./search-client";
 
 export const CommandSearchHits = ({
     onSelect,

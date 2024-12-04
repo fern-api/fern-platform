@@ -12,6 +12,7 @@
   "exports": {
     "./index.scss": "./index.scss",
     "./colors.scss": "./colors.scss",
+    "./fern-accent.scss": "./fern-accent.scss",
     ".": "./index.ts"
   },
   "devDependencies": {

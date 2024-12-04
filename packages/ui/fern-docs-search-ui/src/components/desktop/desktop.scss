@@ -3,7 +3,7 @@
         "Courier New", monospace;
 }
 
-[data-fern-docs-search-ui="desktop"][cmdk-root] {
+#fern-search-desktop-command[cmdk-root] {
     overflow: hidden;
     border: 1px solid var(--grayscale-a6);
     background-color: var(--grayscale-a2);
@@ -69,6 +69,8 @@
         overscroll-behavior: contain;
         transition: 100ms ease;
         transition-property: height;
+        scroll-padding-block-start: 0.75rem;
+        scroll-padding-block-end: 0.75rem;
 
         &:focus {
             outline: none;
@@ -94,7 +96,6 @@
         gap: 1rem;
         align-items: center;
         cursor: default;
-        scroll-margin: 0.75rem 0;
 
         svg:first-child {
             width: 1rem;

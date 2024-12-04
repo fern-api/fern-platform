@@ -3,7 +3,7 @@ import { getFacetDisplay, toFilterLabel } from "@/utils/facet-display";
 import { Badge } from "@fern-ui/fern-docs-badges";
 import { Minus } from "lucide-react";
 import { ReactElement, cloneElement, isValidElement } from "react";
-import { useFacets } from "../shared/search-client";
+import { useFacets } from "../search-client";
 import {
     DropdownMenu,
     DropdownMenuContent,

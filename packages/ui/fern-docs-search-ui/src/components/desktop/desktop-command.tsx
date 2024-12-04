@@ -2,12 +2,10 @@ import { composeEventHandlers } from "@radix-ui/primitive";
 import { Command } from "cmdk";
 import { ComponentProps, ComponentPropsWithoutRef, KeyboardEvent, forwardRef, useRef, useState } from "react";
 import { useSearchBox } from "react-instantsearch";
+import tunnel from "tunnel-rat";
+import { useFacetFilters } from "../search-client";
 import { CommandUxProvider } from "../shared/command-ux";
 import "../shared/common.scss";
-import { useFacetFilters } from "../shared/search-client";
-import { DesktopBackButton } from "./desktop-back-button";
-import { DesktopCommandAction } from "./desktop-command-action";
-import { DesktopCommandBadges } from "./desktop-command-badges";
 import { DesktopCommandInput } from "./desktop-command-input";
 import "./desktop.scss";
 
@@ -17,13 +15,20 @@ export interface DesktopCommandProps {
     onClose?: () => void;
 }
 
+const aboveInput = tunnel();
+const beforeInput = tunnel();
+const afterInput = tunnel();
+
 /**
  * The desktop command is intended to be used within a dialog component.
  */
-export const DesktopCommand = forwardRef<
+const DesktopCommand = forwardRef<
     HTMLDivElement,
-    DesktopCommandProps & ComponentPropsWithoutRef<typeof Command>
->((props, ref) => {
+    DesktopCommandProps &
+        ComponentPropsWithoutRef<typeof Command> & {
+            onEscape?: (e: KeyboardEvent<HTMLDivElement>) => void;
+        }
+>(({ onEscape: onEscape_, ...props }, ref) => {
     const { onClose, children, ...rest } = props;
     const { query, refine, clear } = useSearchBox();
     const { filters, popFilter, clearFilters } = useFacetFilters();
@@ -32,45 +37,41 @@ export const DesktopCommand = forwardRef<
     const inputRef = useRef<HTMLInputElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
 
-    const focus = () => {
+    const focusAndScrollTop = () => {
         // add a slight delay so that the focus doesn't get stolen
         setTimeout(() => {
             inputRef.current?.focus();
-        }, 0);
-    };
-
-    const scrollTop = () => {
-        // add a slight delay so that the scroll doesn't get stolen
-        setTimeout(() => {
             scrollRef.current?.scrollTo({ top: 0 });
         }, 0);
     };
 
-    const onEsc = (e: KeyboardEvent<HTMLDivElement>) => {
-        if (query.length > 0) {
-            clear();
-            focus();
-            scrollTop();
-        } else if (filters.length > 0) {
-            if (e.metaKey) {
-                clearFilters();
+    const onEscape = composeEventHandlers(
+        onEscape_,
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            if (query.length > 0) {
+                clear();
+                focusAndScrollTop();
+            } else if (filters.length > 0) {
+                if (e.metaKey) {
+                    clearFilters();
+                } else {
+                    popFilter();
+                }
+                focusAndScrollTop();
             } else {
-                popFilter();
+                onClose?.();
             }
-            focus();
-            scrollTop();
-        } else {
-            onClose?.();
-        }
-        e.stopPropagation();
-    };
+            e.stopPropagation();
+        },
+        { checkForDefaultPrevented: false },
+    );
 
     return (
         <Command
-            data-fern-docs-search-ui="desktop"
             label="Search"
             ref={ref}
             {...rest}
+            id="fern-search-desktop-command"
             onKeyDownCapture={composeEventHandlers(
                 rest.onKeyDownCapture,
                 (e) => {
@@ -79,7 +80,7 @@ export const DesktopCommand = forwardRef<
 
                     // if escape, handle it
                     if (e.key === "Escape") {
-                        return onEsc(e);
+                        return onEscape(e);
                     }
 
                     // if input is focused, do nothing
@@ -98,70 +99,52 @@ export const DesktopCommand = forwardRef<
                 { checkForDefaultPrevented: false },
             )}
         >
-            <DesktopCommandBadges
-                // isAskAI={isAskAI}
-                onClick={focus}
-                onDropdownClose={() => {
-                    focus();
-                    scrollTop();
-                }}
-            />
+            <CommandUxProvider focusAndScrollTop={focusAndScrollTop} setInputError={setInputError}>
+                <div onClick={focus}>
+                    <aboveInput.Out />
 
-            {/* header */}
-            <div data-cmdk-fern-header="" onClick={focus}>
-                {filters.length > 0 && (
-                    <DesktopBackButton
-                        pop={() => {
-                            popFilter();
-                            focus();
-                            scrollTop();
-                        }}
-                        clear={() => {
-                            clearFilters();
-                            focus();
-                            scrollTop();
-                        }}
-                    />
-                )}
+                    {/* header */}
+                    <div data-cmdk-fern-header="">
+                        <beforeInput.Out />
 
-                <DesktopCommandInput
-                    ref={inputRef}
-                    inputError={inputError}
-                    query={query}
-                    placeholder="Search"
-                    onValueChange={(value) => {
-                        refine(value);
-                        scrollTop();
-                    }}
-                    onKeyDown={(e) => {
-                        if (e.key === "Backspace" && query.length === 0) {
-                            if (e.metaKey) {
-                                clearFilters();
-                            } else {
-                                popFilter();
-                            }
-                            focus();
-                        }
-                    }}
-                />
+                        <DesktopCommandInput
+                            ref={inputRef}
+                            inputError={inputError}
+                            query={query}
+                            placeholder="Search"
+                            onValueChange={(value) => {
+                                refine(value);
+                                focusAndScrollTop();
+                            }}
+                            onKeyDown={(e) => {
+                                if (e.key === "Backspace" && query.length === 0) {
+                                    if (e.metaKey) {
+                                        clearFilters();
+                                    } else {
+                                        popFilter();
+                                    }
+                                    focusAndScrollTop();
+                                }
+                            }}
+                        />
 
-                <DesktopCommandAction
-                    onClose={onClose}
-                    // isAskAI={isAskAI}
-                    // isAskAILoading={chat.isLoading}
-                    // onClickAskAI={() => askAI(query)}
-                    // onStopAskAI={() => chat.stop()}
-                />
-            </div>
+                        <afterInput.Out />
+                    </div>
+                </div>
 
-            {/* body */}
-            <Command.List ref={scrollRef} tabIndex={-1}>
-                <CommandUxProvider focus={focus} scrollTop={scrollTop} setInputError={setInputError}>
+                {/* body */}
+                <Command.List ref={scrollRef} tabIndex={-1}>
                     {children}
-                </CommandUxProvider>
-            </Command.List>
+                </Command.List>
+            </CommandUxProvider>
         </Command>
     );
 });
 
 DesktopCommand.displayName = "DesktopCommand";
+
+const DesktopCommandBeforeInput = beforeInput.In;
+const DesktopCommandAfterInput = afterInput.In;
+const DesktopCommandAboveInput = aboveInput.In;
+
+export { DesktopCommand, DesktopCommandAboveInput, DesktopCommandAfterInput, DesktopCommandBeforeInput };

@@ -1,15 +1,22 @@
 "use client";
 
-import { AppSidebar, AppSidebarContent } from "@/components/demo/app-sidebar";
-import { DesktopSearchDialog } from "@/components/demo/desktop-search-dialog";
-import { DesktopCommand } from "@/components/desktop/desktop-command";
+import { AppSidebar, AppSidebarContent } from "@/app/(demo)/app-sidebar";
+import { DesktopBackButton } from "@/components/desktop/desktop-back-button";
+import {
+    DesktopCommand,
+    DesktopCommandAboveInput,
+    DesktopCommandBeforeInput,
+} from "@/components/desktop/desktop-command";
+import { DesktopCommandBadges } from "@/components/desktop/desktop-command-badges";
+import { DesktopSearchDialog } from "@/components/desktop/desktop-search-dialog";
 import { MobileCommand } from "@/components/mobile/mobile-command";
+import { SearchClientRoot, useFacetFilters } from "@/components/search-client";
 import { CommandActions } from "@/components/shared/command-actions";
 import { CommandEmpty } from "@/components/shared/command-empty";
 import { CommandGroupFilters } from "@/components/shared/command-filters";
 import { CommandSearchHits } from "@/components/shared/command-hits";
 import { CommandGroupTheme } from "@/components/shared/command-theme";
-import { SearchClientRoot } from "@/components/shared/search-client";
+import { useCommandUx } from "@/components/shared/command-ux";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { FacetsResponse } from "@/utils/facet-display";
 import { useTheme } from "next-themes";
@@ -112,6 +119,14 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
             ) : (
                 <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild>
                     <DesktopCommand onClose={() => setOpen(false)}>
+                        <DesktopCommandAboveInput>
+                            <DesktopCommandBadges />
+                        </DesktopCommandAboveInput>
+
+                        <DesktopCommandBeforeInput>
+                            <BackButton />
+                        </DesktopCommandBeforeInput>
+
                         <CommandGroupFilters />
                         <CommandEmpty />
                         <CommandSearchHits onSelect={handleSubmit} />
@@ -155,6 +170,27 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                 />
             </ChatbotModelProvider> */}
         </SearchClientRoot>
+    );
+}
+
+function BackButton() {
+    const { filters, popFilter, clearFilters } = useFacetFilters();
+    const { focusAndScrollTop } = useCommandUx();
+    if (filters.length === 0) {
+        return false;
+    }
+
+    return (
+        <DesktopBackButton
+            pop={() => {
+                popFilter();
+                focusAndScrollTop();
+            }}
+            clear={() => {
+                clearFilters();
+                focusAndScrollTop();
+            }}
+        />
     );
 }
 

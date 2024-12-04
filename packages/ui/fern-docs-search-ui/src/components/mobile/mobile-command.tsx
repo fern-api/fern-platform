@@ -3,8 +3,8 @@ import { FACET_DISPLAY_NAME_MAP } from "@/utils/facet-display";
 import { Command } from "cmdk";
 import { ComponentPropsWithoutRef, forwardRef, useRef, useState } from "react";
 import { useSearchBox } from "react-instantsearch";
+import { useFacetFilters } from "../search-client";
 import "../shared/common.scss";
-import { useFacetFilters } from "../shared/search-client";
 import { Button } from "../ui/button";
 import { cn } from "../ui/cn";
 import { Input } from "../ui/input";
@@ -40,9 +40,9 @@ export const MobileCommand = forwardRef<HTMLDivElement, MobileCommandProps & Com
 
         return (
             <Command
-                data-fern-docs-search-ui="mobile"
                 ref={ref}
                 {...rest}
+                id="fern-search-mobile-command"
                 className={cn("flex flex-col", rest.className)}
             >
                 <div data-cmdk-fern-header="">

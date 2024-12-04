@@ -42,15 +42,7 @@ const SEGMENT_DISPLAY_NAMES: Record<SegmentType, string> = {
     websocket: "WebSocket",
 };
 
-function HitContentWithTitle({
-    hit,
-    children,
-    // rightContent,
-}: {
-    hit: AlgoliaRecordHit;
-    children: ReactNode;
-    // rightContent?: ReactNode;
-}): ReactElement {
+function HitContentWithTitle({ hit, children }: { hit: AlgoliaRecordHit; children: ReactNode }): ReactElement {
     return (
         <div className="flex-1 shrink min-w-0">
             <div className="flex items-baseline gap-1 justify-between">
@@ -87,7 +79,6 @@ function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
     return (
         <HitContentWithTitle hit={hit}>
             <Breadcrumb breadcrumb={createHierarchyBreadcrumb(hit.breadcrumb, hit.hierarchy, hit.level)} />
-            {/* <HitSnippet hit={hit} attribute={hit._highlightResult?.description ? "description" : "content"} /> */}
         </HitContentWithTitle>
     );
 }
@@ -97,45 +88,22 @@ function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement
     return (
         <HitContentWithTitle hit={hit}>
             <Breadcrumb breadcrumb={[...hit.breadcrumb.map((crumb) => crumb.title), datestring]} />
-            {/* <HitSnippet hit={hit} attribute={hit._highlightResult?.description ? "description" : "content"} /> */}
         </HitContentWithTitle>
     );
 }
 
 function ApiReferenceHitContent({ hit }: { hit: ApiReferenceRecordHit }): ReactElement {
-    // const attribute = hit._highlightResult?.request_description
-    //     ? "request_description"
-    //     : hit._highlightResult?.response_description
-    //       ? "response_description"
-    //       : hit._highlightResult?.payload_description
-    //         ? "payload_description"
-    //         : hit._highlightResult?.description
-    //           ? "description"
-    //           : undefined;
-
-    // const rightTitle = last(hit.breadcrumb)?.title;
-
     return (
-        <HitContentWithTitle
-            hit={hit}
-            // rightContent={rightTitle && <span className="text-muted-foreground text-sm">{rightTitle}</span>}
-        >
+        <HitContentWithTitle hit={hit}>
             <div className="inline-flex items-baseline gap-1 max-w-full">
                 <HttpMethodBadge method={hit.method} size="sm" className="shrink-0" variant="outlined" />
                 <span className="fern-search-hit-endpoint-path shrink">{hit.endpoint_path}</span>
             </div>
-            {/* <HitSnippet hit={hit} attribute={attribute} /> */}
         </HitContentWithTitle>
     );
 }
 
-export function HitSnippet({
-    hit,
-    attribute,
-}: {
-    hit: AlgoliaRecordHit;
-    attribute?: keyof AlgoliaRecordHit;
-}): ReactNode {
+function HitSnippet({ hit, attribute }: { hit: AlgoliaRecordHit; attribute?: keyof AlgoliaRecordHit }): ReactNode {
     if (!attribute) {
         return false;
     }
@@ -153,7 +121,7 @@ export function HitSnippet({
     );
 }
 
-export function HitContent({ hit }: { hit: MarkRequired<AlgoliaRecordHit, "type"> }): ReactElement | false {
+export function HitContent({ hit }: { hit: MarkRequired<AlgoliaRecordHit, "type"> }): ReactNode {
     switch (hit.type) {
         case "markdown":
             return <MarkdownHitContent hit={hit as MarkdownRecordHit} />;
@@ -164,7 +132,9 @@ export function HitContent({ hit }: { hit: MarkRequired<AlgoliaRecordHit, "type"
         case "parameter":
             return false;
         default:
-            throw new UnreachableCaseError(hit);
+            // eslint-disable-next-line no-console
+            console.error(new UnreachableCaseError(hit));
+            return false;
     }
 }
 
@@ -188,3 +158,5 @@ function createHierarchyBreadcrumb(
 
     return combinedBreadcrumb;
 }
+
+export { HitSnippet };

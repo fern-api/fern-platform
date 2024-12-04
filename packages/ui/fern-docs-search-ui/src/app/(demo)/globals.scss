@@ -1,5 +1,5 @@
 @import "@fern-ui/fern-docs-badges/colors.scss";
-
+@import "@fern-ui/fern-docs-badges/fern-accent.scss";
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
@@ -47,42 +47,12 @@ body {
         --grayscale-a11: var(--olive-a11);
         --grayscale-a12: var(--olive-a12);
 
-        --background: var(--grayscale-1);
-        --foreground: var(--grayscale-12);
-        --card: var(--grayscale-1);
-        --card-foreground: var(--accent-12);
-        --popover: var(--grayscale-1);
-        --popover-foreground: var(--accent-12);
-        --primary: var(--accent-6);
-        --primary-foreground: var(--accent-12);
-        --secondary: var(--grayscale-a3);
-        --secondary-foreground: var(--accent-12);
-        --muted: var(--grayscale-a3);
-        --muted-foreground: var(--accent-12);
-        --accent: var(--grayscale-a3);
-        --accent-foreground: var(--accent-12);
-        --destructive: var(--red-10);
-        --destructive-foreground: var(--red-12);
-        --border: var(--grayscale-a6);
-        --input: var(--grayscale-a6);
-        --ring: var(--accent-6);
         --chart-1: var(--accent-6);
         --chart-2: var(--accent-6);
         --chart-3: var(--accent-6);
         --chart-4: var(--accent-6);
         --chart-5: var(--accent-6);
         --radius: 0.5rem;
-
-        --sidebar-background: var(--grayscale-1);
-        --sidebar-foreground: var(--grayscale-12);
-        --sidebar-primary: var(--grayscale-1);
-        --sidebar-primary-foreground: var(--accent-12);
-        --sidebar-accent: var(--grayscale-1);
-        --sidebar-accent-foreground: var(--accent-12);
-        --sidebar-border: var(--grayscale-a7);
-        --sidebar-ring: var(--accent-6);
-
-        --border-color-card: var(--grayscale-a7);
     }
 }
 
@@ -93,30 +63,5 @@ body {
     body {
         @apply text-foreground;
         background-color: var(--color-background);
-    }
-}
-
-@layer utilities {
-    .mask-grad-top-3 {
-        mask-image: linear-gradient(to bottom, transparent 0, black 12px);
-    }
-
-    .mask-grad-y-3 {
-        mask-image: linear-gradient(to bottom, transparent 0, black 12px, black calc(100% - 12px), transparent 100%);
-    }
-}
-
-@layer components {
-    .fern-search-facet-filter-menu-button:has(.fern-docs-badge) {
-        padding: 0;
-        overflow: hidden;
-        border: 0px;
-
-        .fern-docs-badge {
-            padding: 0.125rem 0.625rem;
-            height: 22px;
-            border-radius: inherit;
-            width: unset !important;
-        }
     }
 }
