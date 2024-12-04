@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
-    "dev": "next dev",
-    "dev:build": "next build",
-    "dev:start": "next start",
-    "dev:lint": "next lint",
+    "demo:dev": "next dev",
+    "demo:build": "next build",
+    "demo:start": "next start",
+    "demo:lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
