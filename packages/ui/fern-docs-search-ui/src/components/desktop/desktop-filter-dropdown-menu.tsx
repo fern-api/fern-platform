@@ -1,9 +1,9 @@
-import { FacetFilter, useFacets } from "@/hooks/use-facets";
+import { FacetFilter } from "@/hooks/use-facets";
 import { getFacetDisplay, toFilterLabel } from "@/utils/facet-display";
+import { Badge } from "@fern-ui/fern-docs-badges";
 import { Minus } from "lucide-react";
 import { ReactElement, cloneElement, isValidElement } from "react";
-// import { Badge } from "../ui/badge";
-import { Badge } from "@fern-ui/fern-docs-badges";
+import { useFacets } from "../shared/search-client";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -33,7 +33,7 @@ export function DesktopFilterDropdownMenu({
 }): ReactElement {
     const otherFilters = filters.filter((f) => f.facet !== filter.facet);
 
-    const { data: facets } = useFacets({ filters: otherFilters });
+    const { facets } = useFacets(otherFilters);
 
     const options = facets?.[filter.facet] ?? [];
 
@@ -48,7 +48,7 @@ export function DesktopFilterDropdownMenu({
                 }
             }}
         >
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
                 {isValidElement<{ interactive?: boolean }>(facetDisplay) ? (
                     cloneElement(facetDisplay, { interactive: true })
                 ) : (

@@ -1,12 +1,8 @@
-import { FacetFilter } from "@/hooks/use-facets";
-import { Badge } from "@fern-ui/fern-docs-badges";
-import { ComponentPropsWithoutRef, Dispatch, SetStateAction, forwardRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { useFacetFilters } from "../shared/search-client";
 import { DesktopFilterDropdownMenu } from "./desktop-filter-dropdown-menu";
 
 interface DesktopCommandBadgesProps {
-    filters?: readonly FacetFilter[];
-    isAskAI: boolean;
-    setFilters?: Dispatch<SetStateAction<FacetFilter[]>>;
     onDropdownClose?: () => void;
 }
 
@@ -14,9 +10,10 @@ export const DesktopCommandBadges = forwardRef<
     HTMLDivElement,
     DesktopCommandBadgesProps & ComponentPropsWithoutRef<"div">
 >((props, ref) => {
-    const { filters, isAskAI, setFilters, onDropdownClose, ...rest } = props;
+    const { onDropdownClose, ...rest } = props;
+    const { filters, setFilters } = useFacetFilters();
 
-    if ((filters == null || filters.length === 0) && !isAskAI) {
+    if (filters == null || filters.length === 0) {
         return false;
     }
 
@@ -37,11 +34,11 @@ export const DesktopCommandBadges = forwardRef<
                 />
             ))}
 
-            {isAskAI && (
+            {/* {isAskAI && (
                 <Badge size="sm" variant="outlined-subtle">
                     Ask AI
                 </Badge>
-            )}
+            )} */}
         </div>
     );
 });

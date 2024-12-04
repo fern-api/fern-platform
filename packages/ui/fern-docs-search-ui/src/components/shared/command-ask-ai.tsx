@@ -1,7 +1,6 @@
-import { Sparkles } from "lucide-react";
-
 import { Badge } from "@fern-ui/fern-docs-badges";
 import { Command } from "cmdk";
+import { Sparkles } from "lucide-react";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 
 export const CommandAskAIGroup = forwardRef<

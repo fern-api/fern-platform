@@ -1,4 +1,4 @@
-import { FacetFilter, useFacets } from "@/hooks/use-facets";
+import { FacetFilter } from "@/hooks/use-facets";
 import { FacetName, getFacetDisplay, toFilterLabel } from "@/utils/facet-display";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import {
@@ -11,31 +11,13 @@ import {
 } from "@fern-ui/fern-docs-badges";
 import * as Menubar from "@radix-ui/react-menubar";
 import { Check, ChevronDown, Minus } from "lucide-react";
-import {
-    ComponentPropsWithoutRef,
-    Dispatch,
-    Fragment,
-    ReactElement,
-    ReactNode,
-    SetStateAction,
-    forwardRef,
-} from "react";
+import { ComponentPropsWithoutRef, Fragment, ReactElement, ReactNode, forwardRef } from "react";
+import { useFacetFilters, useFacets } from "../shared/search-client";
 import { cn } from "../ui/cn";
 
-export function MobileFacetMenuBar({
-    filters,
-    setFilters,
-}: {
-    /**
-     * Filters already applied to the search.
-     */
-    filters?: readonly FacetFilter[];
-    /**
-     * Function to update the filters.
-     */
-    setFilters?: Dispatch<SetStateAction<FacetFilter[]>>;
-}): ReactNode {
-    const { data: facetsResponse } = useFacets({ filters: EMPTY_ARRAY });
+export function MobileFacetMenuBar({ onUpdateFilters }: { onUpdateFilters?: () => void }): ReactNode {
+    const { filters, setFilters } = useFacetFilters();
+    const { facets: facetsResponse } = useFacets(EMPTY_ARRAY);
     const facets = (Object.keys(facetsResponse ?? {}) as FacetName[]).filter(
         (facet) => facetsResponse?.[facet]?.length,
     );
@@ -55,13 +37,14 @@ export function MobileFacetMenuBar({
                         value={value}
                         filters={filters ?? EMPTY_ARRAY}
                         removeFilter={() => setFilters?.((prev) => prev.filter((f) => f.facet !== facet))}
-                        updateFilter={(value) =>
+                        updateFilter={(value) => {
                             setFilters?.((prev) => {
                                 const newFilters = prev.filter((f) => f.facet !== facet);
                                 newFilters.push({ facet, value });
                                 return newFilters;
-                            })
-                        }
+                            });
+                            onUpdateFilters?.();
+                        }}
                     />
                 );
             })}
@@ -84,7 +67,7 @@ function MobileFacetMenu({
 }): ReactElement {
     const otherFilters = filters.filter((f) => f.facet !== facet);
 
-    const { data: facets, isLoading } = useFacets({ filters: otherFilters });
+    const { facets, isLoading } = useFacets(otherFilters);
 
     const options = facets?.[facet] ?? EMPTY_ARRAY;
     const optionsWithCurrent =

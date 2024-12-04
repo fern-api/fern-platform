@@ -12,6 +12,15 @@ export const FACET_NAMES = [
 ] as const;
 export type FacetName = (typeof FACET_NAMES)[number];
 export type FacetsResponse = Record<FacetName, { value: string; count: number }[]>;
+export const EMPTY_FACETS_RESPONSE: FacetsResponse = {
+    "product.title": [],
+    "version.title": [],
+    type: [],
+    api_type: [],
+    method: [],
+    status_code: [],
+    availability: [],
+} as const;
 
 export function isFacetName(facet: string): facet is FacetName {
     return FACET_NAMES.includes(facet as FacetName);
@@ -185,7 +194,7 @@ export function toFilterOptions(facets: FacetsResponse | undefined): FilterOptio
 
     FACET_NAMES.forEach((facet) => {
         const values = facets[facet];
-        values.forEach(({ value, count }) => {
+        values?.forEach(({ value, count }) => {
             if (count === 0) {
                 return;
             }

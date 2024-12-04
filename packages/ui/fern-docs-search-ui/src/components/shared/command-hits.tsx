@@ -1,103 +1,129 @@
+import { useSearchHits } from "@/hooks/use-search-hits";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { Command, useCommandState } from "cmdk";
-import { ReactNode } from "react";
+import { PropsWithChildren, ReactNode, memo } from "react";
 import { Snippet } from "react-instantsearch";
-import { MarkRequired } from "ts-essentials";
 import { PageIcon } from "../icons/page";
 import { AlgoliaRecordHit } from "../types";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { HitContent } from "./hit-content";
 import { generateHits } from "./hits";
+import { useFacetFilters } from "./search-client";
 
-export const CommandGroupSearchHits = ({
-    items,
-    onSelect,
-}: {
-    items: AlgoliaRecordHit[];
-    onSelect: (path: string) => void;
-}): ReactNode => {
-    const value = useCommandState((state) => state.value);
+export const CommandSearchHits = ({ onSelect }: { onSelect: (path: string) => void }): ReactNode => {
+    const isQueryEmpty = useCommandState((state) => state.search.trimStart().length === 0) as boolean;
+    const items = useSearchHits();
+    const { filters } = useFacetFilters();
 
-    if (items.length === 0) {
+    if ((filters.length === 0 && isQueryEmpty) || items.length === 0) {
         return false;
     }
 
-    const groups = generateHits(items);
-
-    return (
-        <TooltipProvider>
-            {groups.map((group, index) => (
-                <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} forceMount>
-                    {group.hits.map((hit) => (
-                        <Tooltip key={hit.path} open={value === hit.path}>
-                            <TooltipTrigger asChild>
-                                <Command.Item
-                                    key={hit.path}
-                                    value={hit.path}
-                                    onSelect={() => onSelect(hit.path)}
-                                    keywords={[hit.title]}
-                                >
-                                    <PageIcon
-                                        icon={hit.icon}
-                                        type={
-                                            hit.record?.type === "api-reference"
-                                                ? hit.record?.api_type
-                                                : hit.record?.type
-                                        }
-                                        isSubPage={hit.record?.hash != null}
-                                        className="self-start"
-                                    />
-                                    {hit.record != null && (
-                                        <HitContent hit={hit.record as MarkRequired<AlgoliaRecordHit, "type">} />
-                                    )}
-                                    {hit.record == null && hit.title}
-                                </Command.Item>
-                            </TooltipTrigger>
-                            {hit.record &&
-                                (hit.record._snippetResult?.description || hit.record._snippetResult?.content) && (
-                                    <TooltipPortal>
-                                        <TooltipContent
-                                            side="right"
-                                            sideOffset={16}
-                                            align="start"
-                                            className="max-w-[var(--radix-tooltip-content-available-width)] max-h-[var(--radix-tooltip-content-available-height)] [&_mark]:bg-[var(--accent-a3)] [&_mark]:text-[var(--accent-a11)] space-y-2"
-                                            avoidCollisions
-                                            animate={false}
-                                            collisionPadding={10}
-                                        >
-                                            {hit.record._snippetResult?.description && (
-                                                <p className="text-sm">
-                                                    <Snippet
-                                                        attribute="description"
-                                                        hit={hit.record}
-                                                        classNames={{
-                                                            highlighted: "fern-search-hit-highlighted",
-                                                            nonHighlighted: "fern-search-hit-non-highlighted",
-                                                        }}
-                                                    />
-                                                </p>
-                                            )}
-                                            {hit.record._snippetResult?.content && (
-                                                <p className="text-sm">
-                                                    <Snippet
-                                                        attribute="content"
-                                                        hit={hit.record}
-                                                        classNames={{
-                                                            highlighted: "fern-search-hit-highlighted",
-                                                            nonHighlighted: "fern-search-hit-non-highlighted",
-                                                        }}
-                                                    />
-                                                </p>
-                                            )}
-                                        </TooltipContent>
-                                    </TooltipPortal>
-                                )}
-                        </Tooltip>
-                    ))}
-                </Command.Group>
-            ))}
-        </TooltipProvider>
-    );
+    return <MemoizedCommandSearchHits items={items} onSelect={onSelect} />;
 };
 
-CommandGroupSearchHits.displayName = "CommandGroupSearchHits";
+const MemoizedCommandSearchHits = memo(
+    ({ items, onSelect }: { items: AlgoliaRecordHit[]; onSelect: (path: string) => void }) => {
+        const groups = generateHits(items);
+
+        return (
+            <TooltipProvider>
+                {groups.map((group, index) => (
+                    <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} forceMount>
+                        {group.hits.map((hit) => {
+                            if (!hit.record) {
+                                return false;
+                            }
+
+                            return (
+                                <CommandGroupSearchHitTooltip key={hit.path} hit={hit.record} path={hit.path}>
+                                    <Command.Item
+                                        value={hit.path}
+                                        onSelect={() => onSelect(hit.path)}
+                                        keywords={[hit.record.title]}
+                                    >
+                                        <PageIcon
+                                            icon={hit.icon}
+                                            type={
+                                                hit.record.type === "api-reference"
+                                                    ? hit.record.api_type
+                                                    : hit.record.type
+                                            }
+                                            isSubPage={hit.record.hash != null}
+                                            className="self-start"
+                                        />
+                                        <HitContent hit={hit.record} />
+                                    </Command.Item>
+                                </CommandGroupSearchHitTooltip>
+                            );
+                        })}
+                    </Command.Group>
+                ))}
+            </TooltipProvider>
+        );
+    },
+);
+
+MemoizedCommandSearchHits.displayName = "MemoizedCommandSearchHits";
+
+function CommandGroupSearchHitTooltip({
+    hit,
+    path,
+    children,
+}: PropsWithChildren<{ hit: AlgoliaRecordHit; path: string }>) {
+    const open = useCommandState((state) => state.value === path) as boolean;
+
+    if (hit._snippetResult?.content == null && hit._snippetResult?.description == null) {
+        return children;
+    }
+
+    return (
+        <MemoizedTooltip hit={hit} open={open}>
+            {children}
+        </MemoizedTooltip>
+    );
+}
+
+const MemoizedTooltip = memo(({ children, hit, open }: PropsWithChildren<{ hit: AlgoliaRecordHit; open: boolean }>) => (
+    <Tooltip open={open}>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
+        <TooltipPortal>
+            <TooltipContent
+                side="right"
+                sideOffset={16}
+                align="start"
+                className="max-w-[var(--radix-tooltip-content-available-width)] max-h-[var(--radix-tooltip-content-available-height)] [&_mark]:bg-[var(--accent-a3)] [&_mark]:text-[var(--accent-a11)] space-y-2"
+                avoidCollisions
+                animate={false}
+                collisionPadding={10}
+            >
+                {hit._snippetResult?.description && (
+                    <p className="text-sm">
+                        <Snippet
+                            attribute="description"
+                            hit={hit}
+                            classNames={{
+                                highlighted: "fern-search-hit-highlighted",
+                                nonHighlighted: "fern-search-hit-non-highlighted",
+                            }}
+                        />
+                    </p>
+                )}
+                {hit._snippetResult?.content && (
+                    <p className="text-sm">
+                        <Snippet
+                            attribute="content"
+                            hit={hit}
+                            classNames={{
+                                highlighted: "fern-search-hit-highlighted",
+                                nonHighlighted: "fern-search-hit-non-highlighted",
+                            }}
+                        />
+                    </p>
+                )}
+            </TooltipContent>
+        </TooltipPortal>
+    </Tooltip>
+));
+
+MemoizedTooltip.displayName = "MemoizedTooltip";
