@@ -1746,7 +1746,7 @@ export function getMarkdownSections(
                       type: "markdown-section-v1",
                       objectID: uuid(),
                       title: markdownSection.heading.trim(),
-                      content: sanitizeText(markdownSection.content.trim()),
+                      content: truncateToBytes(sanitizeText(markdownSection.content.trim()), 50000),
                       breadcrumbs: sectionBreadcrumbs,
                       indexSegmentId,
                       slug: markdownSlug,
