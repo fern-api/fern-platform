@@ -1,6 +1,6 @@
 {
   "name": "@fern-api/docs-parsers",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
@@ -14,7 +14,7 @@
   "type": "module",
   "scripts": {
     "compile": "tsc --build",
-    "clean": "rm -rf dist node_modules",
+    "clean": "rm -rf dist node_modules tsconfig.tsbuildinfo",
     "test": "vitest --run --passWithNoTests --globals",
     "test:update": "vitest -u --run --passWithNoTests --globals",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
