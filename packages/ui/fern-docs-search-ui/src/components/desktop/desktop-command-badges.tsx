@@ -13,14 +13,14 @@ export const DesktopCommandBadges = forwardRef<
 >((props, ref) => {
     const { onDropdownClose, ...rest } = props;
     const { filters, setFilters } = useFacetFilters();
-    const { focusAndScrollTop } = useCommandUx();
+    const { focus } = useCommandUx();
 
     if (filters == null || filters.length === 0) {
         return false;
     }
 
     return (
-        <div ref={ref} className="flex items-center gap-2 p-2 pb-0 cursor-text" {...rest}>
+        <div ref={ref} className="flex items-center gap-2 p-2 pb-0" {...rest}>
             {filters?.map((filter) => (
                 <DesktopFilterDropdownMenu
                     key={`${filter.facet}:${filter.value}`}
@@ -32,15 +32,12 @@ export const DesktopCommandBadges = forwardRef<
                     updateFilter={(value) => {
                         setFilters?.((prev) => prev.map((f) => (f.facet === filter.facet ? { ...f, value } : f)));
                     }}
-                    onClose={focusAndScrollTop}
+                    onCloseAutoFocus={(e) => {
+                        e.preventDefault();
+                        focus({ scrollToTop: false });
+                    }}
                 />
             ))}
-
-            {/* {isAskAI && (
-                <Badge size="sm" variant="outlined-subtle">
-                    Ask AI
-                </Badge>
-            )} */}
         </div>
     );
 });

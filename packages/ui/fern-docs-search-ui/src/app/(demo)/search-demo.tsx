@@ -88,11 +88,6 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
 
     const { apiKey, userToken } = data;
 
-    // const headers: Record<string, string> = {
-    //     "X-Algolia-Search-Key": apiKey,
-    //     "X-User-Token": userToken,
-    // };
-
     return (
         <SearchClientRoot
             appId={appId}
@@ -136,46 +131,13 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                     </DesktopCommand>
                 </DesktopSearchDialog>
             )}
-            {/* <ChatbotModelProvider
-                models={
-                    domain.includes("cohere")
-                        ? [
-                              ...CHATBOT_MODELS.filter((m) => m.provider === "cohere"),
-                              ...CHATBOT_MODELS.filter((m) => m.provider !== "cohere"),
-                          ]
-                        : CHATBOT_MODELS
-                }
-            >
-                <ChatbotDialog
-                    open={isChatOpen}
-                    onOpenChange={setIsChatOpen}
-                    headers={headers}
-                    systemContext={{ domain }}
-                    initialInput={initialInput}
-                    components={{
-                        pre(props) {
-                            if (isValidElement(props.children) && props.children.type === "code") {
-                                const { children, className } = props.children.props as {
-                                    children: string;
-                                    className: string;
-                                };
-                                if (typeof children === "string") {
-                                    const match = /language-(\w+)/.exec(className || "")?.[1] ?? "plaintext";
-                                    return <CodeBlock code={children} language={match} />;
-                                }
-                            }
-                            return <pre {...props} />;
-                        },
-                    }}
-                />
-            </ChatbotModelProvider> */}
         </SearchClientRoot>
     );
 }
 
 function BackButton() {
     const { filters, popFilter, clearFilters } = useFacetFilters();
-    const { focusAndScrollTop } = useCommandUx();
+    const { focus } = useCommandUx();
     if (filters.length === 0) {
         return false;
     }
@@ -184,11 +146,11 @@ function BackButton() {
         <DesktopBackButton
             pop={() => {
                 popFilter();
-                focusAndScrollTop();
+                focus();
             }}
             clear={() => {
                 clearFilters();
-                focusAndScrollTop();
+                focus();
             }}
         />
     );

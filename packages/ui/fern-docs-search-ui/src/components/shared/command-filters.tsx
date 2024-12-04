@@ -10,7 +10,7 @@ import { useCommandUx } from "./command-ux";
 export const CommandGroupFilters = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<typeof Command.Group>>(
     (props, ref) => {
         const { clear } = useSearchBox();
-        const { focusAndScrollTop } = useCommandUx();
+        const { focus } = useCommandUx();
         const { filters, setFilters } = useFacetFilters();
         const options = toFilterOptions(useFacets(filters).facets);
         const preloadFacets = usePreloadFacets();
@@ -28,7 +28,7 @@ export const CommandGroupFilters = forwardRef<HTMLDivElement, ComponentPropsWith
                         onSelect={() => {
                             setFilters((prev) => [...prev, filter]);
                             clear();
-                            focusAndScrollTop();
+                            focus();
                         }}
                         onPointerOver={() => {
                             void preloadFacets([filter]);

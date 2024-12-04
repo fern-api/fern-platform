@@ -2,28 +2,28 @@ import { ReactElement, createContext, useContext, useMemo } from "react";
 import { noop } from "ts-essentials";
 
 const CommandUxContext = createContext<{
-    focusAndScrollTop: () => void;
+    focus: (opts?: { scrollToTop?: boolean }) => void;
     setInputError: (error: string | null) => void;
 }>({
-    focusAndScrollTop: noop,
+    focus: noop,
     setInputError: noop,
 });
 
 function CommandUxProvider({
-    focusAndScrollTop,
+    focus,
     setInputError,
     children,
 }: {
-    focusAndScrollTop: () => void;
+    focus: (opts?: { scrollToTop?: boolean }) => void;
     setInputError: (error: string | null) => void;
     children: React.ReactNode;
 }): ReactElement {
-    const value = useMemo(() => ({ focusAndScrollTop, setInputError }), [focusAndScrollTop, setInputError]);
+    const value = useMemo(() => ({ focus, setInputError }), [focus, setInputError]);
     return <CommandUxContext.Provider value={value}>{children}</CommandUxContext.Provider>;
 }
 
 function useCommandUx(): {
-    focusAndScrollTop: () => void;
+    focus: (opts?: { scrollToTop?: boolean }) => void;
     setInputError: (error: string | null) => void;
 } {
     return useContext(CommandUxContext);

@@ -1,27 +1,21 @@
 import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { Command } from "cmdk";
 import { forwardRef } from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
-interface DesktopCommandInputProps extends React.ComponentPropsWithoutRef<typeof Command.Input> {
+interface DesktopCommandInputProps extends React.ComponentPropsWithoutRef<typeof TooltipTrigger> {
     inputError: string | null;
-    query: string;
 }
 
-export const DesktopCommandInput = forwardRef<HTMLInputElement, DesktopCommandInputProps>(
-    ({ inputError, query, ...props }, ref) => {
+export const DesktopCommandInputError = forwardRef<HTMLButtonElement, DesktopCommandInputProps>(
+    ({ inputError, children, ...props }, ref) => {
+        if (inputError == null) {
+            return children;
+        }
         return (
             <TooltipProvider>
-                <Tooltip open={inputError != null}>
-                    <TooltipTrigger asChild>
-                        <Command.Input
-                            ref={ref}
-                            inputMode="search"
-                            autoFocus
-                            value={query}
-                            maxLength={100}
-                            {...props}
-                        />
+                <Tooltip open={true}>
+                    <TooltipTrigger asChild {...props} ref={ref}>
+                        {children}
                     </TooltipTrigger>
                     <TooltipPortal>
                         <TooltipContent side="bottom" align="start">
@@ -34,4 +28,4 @@ export const DesktopCommandInput = forwardRef<HTMLInputElement, DesktopCommandIn
     },
 );
 
-DesktopCommandInput.displayName = "DesktopCommandInput";
+DesktopCommandInputError.displayName = "DesktopCommandInputError";

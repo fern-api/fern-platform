@@ -6,7 +6,7 @@ import tunnel from "tunnel-rat";
 import { useFacetFilters } from "../search-client";
 import { CommandUxProvider } from "../shared/command-ux";
 import "../shared/common.scss";
-import { DesktopCommandInput } from "./desktop-command-input";
+import { DesktopCommandInputError } from "./desktop-command-input";
 import "./desktop.scss";
 
 export type DesktopCommandSharedProps = Omit<ComponentProps<typeof Command>, "onSelect">;
@@ -37,12 +37,23 @@ const DesktopCommand = forwardRef<
     const inputRef = useRef<HTMLInputElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
 
-    const focusAndScrollTop = () => {
+    const focus = ({ scrollToTop = true }: { scrollToTop?: boolean } = {}) => {
         // add a slight delay so that the focus doesn't get stolen
         setTimeout(() => {
             inputRef.current?.focus();
-            scrollRef.current?.scrollTo({ top: 0 });
+            if (scrollToTop) {
+                scrollRef.current?.scrollTo({ top: 0 });
+            }
         }, 0);
+    };
+
+    const popOrClearFilters = (e: KeyboardEvent<HTMLDivElement>) => {
+        if (e.metaKey) {
+            clearFilters();
+        } else {
+            popFilter();
+        }
+        focus();
     };
 
     const onEscape = composeEventHandlers(
@@ -50,14 +61,9 @@ const DesktopCommand = forwardRef<
         (e: KeyboardEvent<HTMLDivElement>) => {
             if (query.length > 0) {
                 clear();
-                focusAndScrollTop();
+                focus();
             } else if (filters.length > 0) {
-                if (e.metaKey) {
-                    clearFilters();
-                } else {
-                    popFilter();
-                }
-                focusAndScrollTop();
+                popOrClearFilters(e);
             } else {
                 onClose?.();
             }
@@ -83,6 +89,10 @@ const DesktopCommand = forwardRef<
                         return onEscape(e);
                     }
 
+                    if (e.key === "Backspace" && query.length === 0) {
+                        return popOrClearFilters(e);
+                    }
+
                     // if input is focused, do nothing
                     if (document.activeElement === inputRef.current) {
                         return;
@@ -99,40 +109,37 @@ const DesktopCommand = forwardRef<
                 { checkForDefaultPrevented: false },
             )}
         >
-            <CommandUxProvider focusAndScrollTop={focusAndScrollTop} setInputError={setInputError}>
-                <div onClick={focus}>
+            <CommandUxProvider focus={focus} setInputError={setInputError}>
+                <div
+                    className="cursor-text"
+                    onClick={() => {
+                        inputRef.current?.focus();
+                    }}
+                >
                     <aboveInput.Out />
 
-                    {/* header */}
                     <div data-cmdk-fern-header="">
                         <beforeInput.Out />
 
-                        <DesktopCommandInput
-                            ref={inputRef}
-                            inputError={inputError}
-                            query={query}
-                            placeholder="Search"
-                            onValueChange={(value) => {
-                                refine(value);
-                                focusAndScrollTop();
-                            }}
-                            onKeyDown={(e) => {
-                                if (e.key === "Backspace" && query.length === 0) {
-                                    if (e.metaKey) {
-                                        clearFilters();
-                                    } else {
-                                        popFilter();
-                                    }
-                                    focusAndScrollTop();
-                                }
-                            }}
-                        />
+                        <DesktopCommandInputError inputError={inputError} asChild>
+                            <Command.Input
+                                ref={inputRef}
+                                inputMode="search"
+                                autoFocus
+                                value={query}
+                                maxLength={100}
+                                placeholder="Search"
+                                onValueChange={(value) => {
+                                    refine(value);
+                                    focus();
+                                }}
+                            />
+                        </DesktopCommandInputError>
 
                         <afterInput.Out />
                     </div>
                 </div>
 
-                {/* body */}
                 <Command.List ref={scrollRef} tabIndex={-1}>
                     {children}
                 </Command.List>

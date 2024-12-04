@@ -23,13 +23,13 @@ export function DesktopFilterDropdownMenu({
     filters,
     removeFilter,
     updateFilter,
-    onClose,
+    onCloseAutoFocus,
 }: {
     filter: FacetFilter;
     removeFilter?: () => void;
     updateFilter?: (value: string) => void;
     filters: readonly FacetFilter[];
-    onClose?: () => void;
+    onCloseAutoFocus?: (event: Event) => void;
 }): ReactElement {
     const otherFilters = filters.filter((f) => f.facet !== filter.facet);
 
@@ -40,14 +40,7 @@ export function DesktopFilterDropdownMenu({
     const facetDisplay = getFacetDisplay(filter.facet, filter.value, { small: true, titleCase: true });
 
     return (
-        <DropdownMenu
-            key={`${filter.facet}:${filter.value}`}
-            onOpenChange={(open) => {
-                if (!open) {
-                    onClose?.();
-                }
-            }}
-        >
+        <DropdownMenu>
             <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
                 {isValidElement<{ interactive?: boolean }>(facetDisplay) ? (
                     cloneElement(facetDisplay, { interactive: true })
@@ -70,6 +63,7 @@ export function DesktopFilterDropdownMenu({
                             removeFilter?.();
                         }
                     }}
+                    onCloseAutoFocus={onCloseAutoFocus}
                 >
                     <DropdownMenuLabel>{toFilterLabel(filter.facet)}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
