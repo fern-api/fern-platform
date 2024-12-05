@@ -996,9 +996,6 @@ importers:
       '@fern-platform/configs':
         specifier: workspace:*
         version: link:../configs
-      '@types/jsonpath':
-        specifier: ^0.2.4
-        version: 0.2.4
       '@types/uuid':
         specifier: ^9.0.1
         version: 9.0.8
