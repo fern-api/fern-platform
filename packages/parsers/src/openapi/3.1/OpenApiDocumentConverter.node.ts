@@ -7,8 +7,10 @@ import {
 } from "../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../utils/3.1/coalesceServers";
 import { SecurityRequirementObjectConverterNode } from "./auth/SecurityRequirementObjectConverter.node";
+import { XFernGroupsConverterNode } from "./extensions/XFernGroupsConverter.node";
 import { PathsObjectConverterNode } from "./paths/PathsObjectConverter.node";
 import { ServerObjectConverterNode } from "./paths/ServerObjectConverter.node";
+import { WebhooksObjectConverterNode } from "./paths/WebhooksObjectConverter.node";
 import { ComponentsConverterNode } from "./schemas/ComponentsConverter.node";
 
 export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
@@ -16,10 +18,11 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
     FernRegistry.api.latest.ApiDefinition
 > {
     paths: PathsObjectConverterNode | undefined;
-    // webhooks: WebhooksObjectConverterNode | undefined;
+    webhooks: WebhooksObjectConverterNode | undefined;
     components: ComponentsConverterNode | undefined;
     servers: ServerObjectConverterNode[] | undefined;
     auth: SecurityRequirementObjectConverterNode | undefined;
+    fernGroups: XFernGroupsConverterNode | undefined;
 
     constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.Document>) {
         super(args);
@@ -29,12 +32,14 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
     parse(): void {
         this.servers = coalesceServers(this.servers, this.input.servers, this.context, this.accessPath);
 
-        if (this.input.paths == null) {
+        if (this.input.paths == null && this.input.webhooks == null) {
             this.context.errors.warning({
-                message: "Expected 'paths' property to be specified",
+                message: "Expected 'paths' or 'webhooks' property to be specified",
                 path: this.accessPath,
             });
-        } else {
+        }
+
+        if (this.input.paths != null) {
             this.paths = new PathsObjectConverterNode(
                 {
                     input: this.input.paths,
@@ -46,7 +51,14 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
             );
         }
 
-        // TODO: Webhook disambiguation
+        if (this.input.webhooks != null) {
+            this.webhooks = new WebhooksObjectConverterNode({
+                input: this.input.webhooks,
+                context: this.context,
+                accessPath: this.accessPath,
+                pathId: "webhooks",
+            });
+        }
 
         if (this.input.components == null) {
             this.context.errors.warning({
@@ -70,14 +82,19 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
                 pathId: "security",
             });
         }
+
+        this.fernGroups = new XFernGroupsConverterNode({
+            input: this.input,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "x-fern-groups",
+        });
     }
 
     convert(): FernRegistry.api.latest.ApiDefinition | undefined {
         const apiDefinitionId = v4();
 
-        const endpoints = this.paths?.convert();
-        // TODO: Implement webhooks
-        // const webhooks = this.webhooks?.convert();
+        const { webhookEndpoints, endpoints } = this.paths?.convert() ?? {};
         const types = this.components?.convert();
 
         if (types == null) {
@@ -89,13 +106,9 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
             endpoints: endpoints ?? {},
             // Websockets are not implemented in OAS, but are in AsyncAPI
             websockets: {} as Record<FernRegistry.WebSocketId, FernRegistry.api.latest.WebSocketChannel>,
-            // TODO: implement webhooks
-            // webhooks,
-            webhooks: {} as Record<FernRegistry.WebhookId, FernRegistry.api.latest.WebhookDefinition>,
+            webhooks: { ...(this.webhooks?.convert() ?? {}), ...(webhookEndpoints ?? {}) },
             types,
-            // TODO: check if we ever have subpackages
-            subpackages: {} as Record<FernRegistry.api.latest.SubpackageId, FernRegistry.api.latest.SubpackageMetadata>,
-            // TODO: Implement auths
+            subpackages: undefined,
             auths: this.auth?.convert() ?? {},
             // TODO: Implement globalHeaders
             globalHeaders: undefined,
