@@ -6,7 +6,6 @@ import {
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
-import { convertToObjectProperties } from "../../utils/3.1/convertToObjectProperties";
 import { resolveParameterReference } from "../../utils/3.1/resolveParameterReference";
 import { getEndpointId } from "../../utils/getEndpointId";
 import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
@@ -14,7 +13,10 @@ import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.n
 import { XFernGroupNameConverterNode } from "../extensions/XFernGroupNameConverter.node";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
-import { ParameterBaseObjectConverterNode } from "./parameters/ParameterBaseObjectConverter.node";
+import {
+    ParameterBaseObjectConverterNode,
+    convertOperationObjectProperties,
+} from "./parameters/ParameterBaseObjectConverter.node";
 import { RequestBodyObjectConverterNode } from "./request/RequestBodyObjectConverter.node";
 import { ResponsesObjectConverterNode } from "./response/ResponsesObjectConverter.node";
 
@@ -209,7 +211,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 method: this.method,
                 // This is a little bit weird, consider changing the shape of fdr
                 path: this.convertPathToPathParts()?.map((part) => part.value.toString()) ?? [],
-                headers: convertToObjectProperties(this.requestHeaders),
+                headers: convertOperationObjectProperties(this.requestHeaders),
                 // TODO: figure out what this looks like to be able to parse
                 payload: undefined,
                 examples: undefined,
@@ -244,9 +246,9 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             auth: authIds?.map((id) => FernRegistry.api.latest.AuthSchemeId(id)),
             defaultEnvironment: environments?.[0]?.id,
             environments,
-            pathParameters: convertToObjectProperties(this.pathParameters),
-            queryParameters: convertToObjectProperties(this.queryParameters),
-            requestHeaders: convertToObjectProperties(this.requestHeaders),
+            pathParameters: convertOperationObjectProperties(this.pathParameters),
+            queryParameters: convertOperationObjectProperties(this.queryParameters),
+            requestHeaders: convertOperationObjectProperties(this.requestHeaders),
             responseHeaders: responses?.[0]?.headers,
             // TODO: revisit fdr shape to suport multiple requests
             request: this.requests?.convert()[0],

@@ -541,9 +541,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "long"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "long"
+                    }
+                  }
                 }
               }
             }
@@ -565,8 +571,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "Category"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Category"
+                  }
+                }
               }
             }
           },
@@ -593,12 +605,18 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "list",
-                "itemShape": {
+                "type": "optional",
+                "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "id",
-                    "id": "Tag"
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Tag"
+                      }
+                    }
                   }
                 }
               }
@@ -607,18 +625,24 @@
           {
             "key": "status",
             "valueShape": {
-              "type": "enum",
-              "values": [
-                {
-                  "value": "available"
-                },
-                {
-                  "value": "pending"
-                },
-                {
-                  "value": "sold"
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "enum",
+                  "values": [
+                    {
+                      "value": "available"
+                    },
+                    {
+                      "value": "pending"
+                    },
+                    {
+                      "value": "sold"
+                    }
+                  ]
                 }
-              ]
+              }
             },
             "description": "pet status in the store"
           }
