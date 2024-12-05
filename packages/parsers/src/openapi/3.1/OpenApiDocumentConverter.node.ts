@@ -105,10 +105,11 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
             id: FernRegistry.ApiDefinitionId(apiDefinitionId),
             endpoints: endpoints ?? {},
             // Websockets are not implemented in OAS, but are in AsyncAPI
-            websockets: {} as Record<FernRegistry.WebSocketId, FernRegistry.api.latest.WebSocketChannel>,
+            websockets: {},
             webhooks: { ...(this.webhooks?.convert() ?? {}), ...(webhookEndpoints ?? {}) },
             types,
-            subpackages: undefined,
+            // This is not necessary and will be removed
+            subpackages: {},
             auths: this.auth?.convert() ?? {},
             // TODO: Implement globalHeaders
             globalHeaders: undefined,
