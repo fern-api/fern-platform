@@ -1,6 +1,7 @@
 import { algoliaAppId } from "@/server/env-variables";
 import { models } from "@/server/models";
 import { searchClient } from "@algolia/client-search";
+import { SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
 import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
 import { streamText, tool } from "ai";
 import { z } from "zod";
@@ -43,7 +44,7 @@ export async function POST(request: Request): Promise<Response> {
 
                     const client = searchClient(algoliaAppId(), searchKey);
                     const response = await client.searchSingleIndex<AlgoliaRecord>({
-                        indexName: "fern-docs-search",
+                        indexName: SEARCH_INDEX,
                         searchParams: {
                             query,
                             userToken,

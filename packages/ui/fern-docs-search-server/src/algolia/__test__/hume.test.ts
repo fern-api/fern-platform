@@ -13,7 +13,6 @@ describe("hume", () => {
             org_id: "hume",
             pages,
             apis,
-            authed: false,
         });
 
         const objectIDs = records.map((record) => record.objectID);

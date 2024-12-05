@@ -9,7 +9,7 @@ interface GetSearchApiKeyOptions {
     parentApiKey: string;
 
     /**
-     * This should be "fern-docs-search"
+     * This should be "fern_docs_search"
      */
     searchIndex: string;
 

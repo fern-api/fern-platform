@@ -57,7 +57,6 @@ for (const fixtureName of [
                 org_id: "test",
                 pages,
                 apis,
-                authed: false,
             });
 
             records.forEach((record) => {

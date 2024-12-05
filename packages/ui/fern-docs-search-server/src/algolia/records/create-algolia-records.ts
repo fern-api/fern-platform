@@ -1,4 +1,5 @@
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
+import { NavigationNodePage } from "@fern-api/fdr-sdk/navigation";
 import { AlgoliaRecord } from "../types";
 import { createApiReferenceRecordHttp } from "./create-api-reference-record-http";
 import { createApiReferenceRecordWebSocket } from "./create-api-reference-record-web-socket";
@@ -16,7 +17,7 @@ interface CreateAlgoliaRecordsOptions {
     org_id: string;
     pages: Record<FernNavigation.PageId, string>;
     apis: Record<ApiDefinition.ApiDefinitionId, ApiDefinition.ApiDefinition>;
-    authed: boolean;
+    authed?: (node: NavigationNodePage) => boolean;
 }
 
 export function createAlgoliaRecords({
@@ -56,7 +57,13 @@ export function createAlgoliaRecords({
             return;
         }
 
-        const base = createBaseRecord({ node, parents: collector.getParents(node.id) ?? [], domain, org_id, authed });
+        const base = createBaseRecord({
+            node,
+            parents: collector.getParents(node.id) ?? [],
+            domain,
+            org_id,
+            authed: authed?.(node) ?? false,
+        });
 
         if (node.type === "changelogEntry") {
             records.push(createChangelogRecord({ base, markdown, date: node.date }));
@@ -76,7 +83,13 @@ export function createAlgoliaRecords({
             return;
         }
 
-        const base = createBaseRecord({ node, parents: collector.getParents(node.id) ?? [], domain, org_id, authed });
+        const base = createBaseRecord({
+            node,
+            parents: collector.getParents(node.id) ?? [],
+            domain,
+            org_id,
+            authed: authed?.(node) ?? false,
+        });
 
         if (node.type === "endpoint") {
             const endpoint = apiDefinition.endpoints[node.endpointId];

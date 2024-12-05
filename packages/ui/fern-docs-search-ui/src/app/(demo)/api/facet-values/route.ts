@@ -1,5 +1,6 @@
 import { algoliaAppId } from "@/server/env-variables";
-import { FACET_NAMES, FacetsResponse } from "@/utils/facet-display";
+import { FACET_NAMES, FacetsResponse } from "@/types";
+import { SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
 import { algoliasearch } from "algoliasearch";
 import { zip } from "es-toolkit/array";
 import { NextRequest, NextResponse } from "next/server";
@@ -29,7 +30,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { results } = await algoliasearch(algoliaAppId(), apiKey)
         .searchForFacets({
             requests: FACET_NAMES.map((facet) => ({
-                indexName: "fern-docs-search",
+                indexName: SEARCH_INDEX,
                 facet,
                 facetFilters: filters,
                 type: "facet",

@@ -1,3 +1,4 @@
+import { NavigationNodePage } from "@fern-api/fdr-sdk/navigation";
 import { algoliasearch } from "algoliasearch";
 import { assert } from "ts-essentials";
 import { browseAllObjectsForDomain } from "../algolia/browse-all-objects";
@@ -36,9 +37,9 @@ interface AlgoliaIndexerPayload {
     indexName: string;
 
     /**
-     * Whether the docs are authed or not.
+     * Whether the page is authed or not.
      */
-    authed?: boolean;
+    authed?: (node: NavigationNodePage) => boolean;
 
     // feature flags for v1 -> v2 migration
     isBatchStreamToggleDisabled?: boolean;
@@ -65,7 +66,14 @@ export async function algoliaIndexerTask(payload: AlgoliaIndexerPayload): Promis
     const { org_id, root, pages, apis, domain } = await loadDocsWithUrl(payload);
 
     // create new records (this is the target state of the index)
-    const targetRecords = createAlgoliaRecords({ root, domain, org_id, pages, apis, authed: payload.authed ?? false });
+    const targetRecords = createAlgoliaRecords({
+        root,
+        domain,
+        org_id,
+        pages,
+        apis,
+        authed: payload.authed,
+    });
 
     // browse the existing records (what is currently in the index)
     const existingObjectIDs = (await browseAllObjectsForDomain(algolia, domain, payload.indexName, ["objectID"]))

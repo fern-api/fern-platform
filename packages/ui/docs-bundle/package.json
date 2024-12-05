@@ -39,6 +39,7 @@
     "@fern-ui/fern-docs-mdx": "workspace:*",
     "@fern-ui/fern-docs-server": "workspace:*",
     "@fern-ui/fern-docs-utils": "workspace:*",
+    "@fern-ui/fern-docs-search-server": "workspace:*",
     "@fern-ui/search-utils": "workspace:*",
     "@fern-ui/ui": "workspace:*",
     "@types/qs": "6.9.14",

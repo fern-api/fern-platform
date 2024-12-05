@@ -112,6 +112,13 @@ function getPermutations(arr: string[], k: number): string[][] {
     return result;
 }
 
+/**
+ * Returns true if the roles list contains a single "everyone" role.
+ *
+ * If a [["everyone", "private"]] -> everyone AND private -> private
+ *
+ * @param roles - a 2d list of roles where the outer array represents OR and the inner array represents AND
+ */
 export function isVisibleByEveryone(roles: string[][]): boolean {
     return roles.some((roles) => roles.length === 1 && roles[0] === EVERYONE_ROLE);
 }

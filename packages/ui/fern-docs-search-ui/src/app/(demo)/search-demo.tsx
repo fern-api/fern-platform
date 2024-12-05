@@ -25,6 +25,7 @@ import {
 } from "@/components";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { FacetsResponse } from "@/types";
+import { SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
 
 const USER_TOKEN_KEY = "user-token";
 
@@ -95,7 +96,7 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
             appId={appId}
             apiKey={apiKey}
             domain={domain}
-            indexName="fern-docs-search"
+            indexName={SEARCH_INDEX}
             fetchFacets={facetFetcher}
             userToken={userToken}
         >
