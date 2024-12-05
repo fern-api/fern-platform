@@ -11,6 +11,7 @@ import { resolveParameterReference } from "../../utils/3.1/resolveParameterRefer
 import { getEndpointId } from "../../utils/getEndpointId";
 import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
 import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.node";
+import { XFernGroupNameConverterNode } from "../extensions/XFernGroupNameConverter.node";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 import { ParameterBaseObjectConverterNode } from "./parameters/ParameterBaseObjectConverter.node";
@@ -19,7 +20,7 @@ import { ResponsesObjectConverterNode } from "./response/ResponsesObjectConverte
 
 export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.OperationObject,
-    FernRegistry.api.latest.EndpointDefinition
+    FernRegistry.api.latest.EndpointDefinition | FernRegistry.api.latest.WebhookDefinition
 > {
     description: string | undefined;
     pathParameters: Record<string, ParameterBaseObjectConverterNode> | undefined;
@@ -29,18 +30,28 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     responses: ResponsesObjectConverterNode | undefined;
     availability: AvailabilityConverterNode | undefined;
     auth: SecurityRequirementObjectConverterNode | undefined;
+    namespace: XFernGroupNameConverterNode | undefined;
 
     constructor(
         args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.OperationObject>,
         protected servers: ServerObjectConverterNode[] | undefined,
         protected path: string | undefined,
         protected method: "GET" | "POST" | "PUT" | "DELETE",
+        protected isWebhook?: boolean,
     ) {
         super(args);
         this.safeParse();
     }
 
     parse(): void {
+        if (this.isWebhook && this.method !== "POST" && this.method !== "GET") {
+            this.context.errors.error({
+                message: `Webhook method must be POST or GET. Received: ${this.method}`,
+                path: this.accessPath,
+            });
+            return;
+        }
+
         this.description = this.input.description;
         this.availability = new AvailabilityConverterNode({
             input: this.input,
@@ -134,6 +145,13 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 pathId: "security",
             });
         }
+
+        this.namespace = new XFernGroupNameConverterNode({
+            input: this.input,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "x-fern-group-name",
+        });
     }
 
     extractPathParameterIds(): string[] | undefined {
@@ -173,9 +191,29 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         });
     }
 
-    convert(): FernRegistry.api.latest.EndpointDefinition | undefined {
+    convert(): FernRegistry.api.latest.EndpointDefinition | FernRegistry.api.latest.WebhookDefinition | undefined {
         if (this.path == null) {
             return undefined;
+        }
+
+        if (this.isWebhook) {
+            if (this.method !== "POST" && this.method !== "GET") {
+                return undefined;
+            }
+
+            return {
+                description: this.description,
+                availability: this.availability?.convert(),
+                namespace: this.namespace?.convert(),
+                id: FernRegistry.WebhookId("x-fern-webhook-name"),
+                method: this.method,
+                // This is a little bit weird, consider changing the shape of fdr
+                path: this.convertPathToPathParts()?.map((part) => part.value.toString()) ?? [],
+                headers: convertToObjectProperties(this.requestHeaders),
+                // TODO: figure out what this looks like to be able to parse
+                payload: undefined,
+                examples: undefined,
+            };
         }
 
         const endpointId = getEndpointId(this.method, this.path);
@@ -199,7 +237,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         return {
             description: this.description,
             availability: this.availability?.convert(),
-            namespace: undefined,
+            namespace: this.namespace?.convert(),
             id: FernRegistry.EndpointId(endpointId),
             method: this.method,
             path: pathParts,
@@ -214,6 +252,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             request: this.requests?.convert()[0],
             response: responses?.[0]?.response,
             errors,
+            // TODO: examples
             examples: [],
             snippetTemplates: undefined,
         };

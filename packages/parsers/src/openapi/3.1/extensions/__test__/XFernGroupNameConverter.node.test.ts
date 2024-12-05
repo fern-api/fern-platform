@@ -7,12 +7,12 @@ describe("XFernGroupNameConverterNode", () => {
     describe("parse", () => {
         it("sets groupName from x-fern-group-name when present", () => {
             const converter = new XFernGroupNameConverterNode({
-                input: { "x-fern-group-name": "test-group" },
+                input: { "x-fern-sdk-group-name": "test-group" },
                 context: mockContext,
                 accessPath: [],
                 pathId: "",
             });
-            expect(converter.groupName).toBe("test-group");
+            expect(converter.groupName).toEqual("test-group");
         });
 
         it("sets groupName to undefined when x-fern-group-name is not present", () => {
@@ -29,12 +29,12 @@ describe("XFernGroupNameConverterNode", () => {
     describe("convert", () => {
         it("returns the groupName value", () => {
             const converter = new XFernGroupNameConverterNode({
-                input: { "x-fern-group-name": "test-group" },
+                input: { "x-fern-sdk-group-name": "test-group" },
                 context: mockContext,
                 accessPath: [],
                 pathId: "",
             });
-            expect(converter.convert()).toBe("test-group");
+            expect(converter.convert()).toEqual(["test-group"]);
         });
 
         it("returns undefined when groupName is not set", () => {

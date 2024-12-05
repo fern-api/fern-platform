@@ -1,7 +1,10 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
-import { BaseOpenApiV3_1ConverterNode, BaseOpenApiV3_1ConverterNodeConstructorArgs } from "../..";
 import { FernRegistry } from "../../../client/generated";
+import {
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../BaseOpenApiV3_1Converter.node";
 import { XFernBasicAuthNode } from "../extensions/auth/XFernBasicAuth.node";
 import { XFernBasicPasswordVariableNameConverterNode } from "../extensions/auth/XFernBasicPasswordVariableNameConverter.node";
 import { XFernBasicUsernameVariableNameConverterNode } from "../extensions/auth/XFernBasicUsernameVariableNameConverter.node";

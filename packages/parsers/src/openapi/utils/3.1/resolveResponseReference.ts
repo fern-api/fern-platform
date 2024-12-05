@@ -7,7 +7,14 @@ export function resolveResponseReference(
     document: OpenAPIV3_1.Document,
 ): OpenAPIV3_1.ResponseObject | undefined {
     if (isReferenceObject(referenceObject)) {
-        return resolveReference<OpenAPIV3_1.ResponseObject | undefined>(referenceObject, document, undefined);
+        const resolved = resolveReference<OpenAPIV3_1.ResponseObject | undefined>(referenceObject, document, undefined);
+        if (resolved == null) {
+            return undefined;
+        }
+        return {
+            ...resolved,
+            ...referenceObject,
+        } as OpenAPIV3_1.ResponseObject;
     }
 
     return referenceObject;
