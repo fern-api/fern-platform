@@ -10,7 +10,7 @@ export declare namespace XFernGroupNameConverterNode {
     }
 }
 
-export class XFernGroupNameConverterNode extends BaseOpenApiV3_1ConverterNode<unknown, string | undefined> {
+export class XFernGroupNameConverterNode extends BaseOpenApiV3_1ConverterNode<unknown, string> {
     groupName?: string;
 
     constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
@@ -20,7 +20,7 @@ export class XFernGroupNameConverterNode extends BaseOpenApiV3_1ConverterNode<un
 
     // This would be used to set a member on the node
     parse(): void {
-        this.groupName = extendType<{ "x-fern-group-name"?: string }>(this.input)["x-fern-group-name"];
+        this.groupName = extendType<XFernGroupNameConverterNode.Input>(this.input)["x-fern-group-name"];
     }
 
     convert(): string | undefined {

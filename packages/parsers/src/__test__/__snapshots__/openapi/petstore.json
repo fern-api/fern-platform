@@ -3,7 +3,7 @@
   "endpoints": {
     "test-uuid-replacement": {
       "description": "Add a new pet to the store",
-      "id": "/pet",
+      "id": "post-pet",
       "method": "POST",
       "path": [
         {
@@ -11,6 +11,7 @@
           "value": "pet"
         }
       ],
+      "auth": [],
       "defaultEnvironment": "x-fern-server-name",
       "environments": [
         {
@@ -44,7 +45,7 @@
     },
     "test-uuid-replacement": {
       "description": "Update an existing pet by Id",
-      "id": "/pet",
+      "id": "put-pet",
       "method": "PUT",
       "path": [
         {
@@ -52,6 +53,7 @@
           "value": "pet"
         }
       ],
+      "auth": [],
       "defaultEnvironment": "x-fern-server-name",
       "environments": [
         {
@@ -85,7 +87,7 @@
     },
     "test-uuid-replacement": {
       "description": "Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate API error conditions",
-      "id": "/pet/{petId}",
+      "id": "get-pet-pet-id",
       "method": "GET",
       "path": [
         {
@@ -97,6 +99,7 @@
           "value": "petId"
         }
       ],
+      "auth": [],
       "defaultEnvironment": "x-fern-server-name",
       "environments": [
         {

@@ -6,6 +6,7 @@ import {
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../utils/3.1/coalesceServers";
+import { SecurityRequirementObjectConverterNode } from "./auth/SecurityRequirementObjectConverter.node";
 import { PathsObjectConverterNode } from "./paths/PathsObjectConverter.node";
 import { ServerObjectConverterNode } from "./paths/ServerObjectConverter.node";
 import { ComponentsConverterNode } from "./schemas/ComponentsConverter.node";
@@ -18,6 +19,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
     // webhooks: WebhooksObjectConverterNode | undefined;
     components: ComponentsConverterNode | undefined;
     servers: ServerObjectConverterNode[] | undefined;
+    auth: SecurityRequirementObjectConverterNode | undefined;
 
     constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.Document>) {
         super(args);
@@ -59,6 +61,15 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
                 pathId: "components",
             });
         }
+
+        if (this.input.security != null) {
+            this.auth = new SecurityRequirementObjectConverterNode({
+                input: this.input.security,
+                context: this.context,
+                accessPath: this.accessPath,
+                pathId: "security",
+            });
+        }
     }
 
     convert(): FernRegistry.api.latest.ApiDefinition | undefined {
@@ -85,7 +96,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
             // TODO: check if we ever have subpackages
             subpackages: {} as Record<FernRegistry.api.latest.SubpackageId, FernRegistry.api.latest.SubpackageMetadata>,
             // TODO: Implement auths
-            auths: {} as Record<FernRegistry.api.latest.AuthSchemeId, FernRegistry.api.latest.AuthScheme>,
+            auths: this.auth?.convert() ?? {},
             // TODO: Implement globalHeaders
             globalHeaders: undefined,
         };
