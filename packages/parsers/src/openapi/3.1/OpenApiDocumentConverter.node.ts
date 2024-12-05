@@ -5,6 +5,7 @@ import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../BaseOpenApiV3_1Converter.node";
+import { basePathExtensionKey } from "../types/extension.types";
 import { coalesceServers } from "../utils/3.1/coalesceServers";
 import { XFernBasePathConverterNode } from "./extensions/XFernBasePathConverter.node";
 import { PathsObjectConverterNode } from "./paths/PathsObjectConverter.node";
@@ -32,7 +33,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
             input: this.input,
             context: this.context,
             accessPath: this.accessPath,
-            pathId: "x-fern-base-path",
+            pathId: basePathExtensionKey,
         });
 
         if (this.input.paths == null) {
