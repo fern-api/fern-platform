@@ -1,5 +1,4 @@
 import { OpenAPIV3_1 } from "openapi-types";
-// import { UnreachableCaseError } from "ts-essentials";
 import {
   BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
