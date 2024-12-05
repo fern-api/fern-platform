@@ -9,6 +9,7 @@ import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.n
 import { isArraySchema } from "../guards/isArraySchema";
 import { isBooleanSchema } from "../guards/isBooleanSchema";
 import { isIntegerSchema } from "../guards/isIntegerSchema";
+import { isMixedSchema } from "../guards/isMixedSchema";
 import { isNonArraySchema } from "../guards/isNonArraySchema";
 import { isNullSchema } from "../guards/isNullSchema";
 import { isNumberSchema } from "../guards/isNumberSchema";
@@ -17,6 +18,7 @@ import { isReferenceObject } from "../guards/isReferenceObject";
 import { isStringSchema } from "../guards/isStringSchema";
 import { ArrayConverterNode } from "./ArrayConverter.node";
 import { ConstConverterNode } from "./ConstConverter.node";
+import { MixedSchemaConverterNode } from "./MixedSchemaConverter.node";
 import { ObjectConverterNode } from "./ObjectConverter.node";
 import { OneOfConverterNode } from "./OneOfConverter.node";
 import { ReferenceConverterNode } from "./ReferenceConverter.node";
@@ -73,10 +75,17 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
 
             if (this.input.const != null) {
                 this.typeShapeNode = new ConstConverterNode({
-                    input: this.input.const,
+                    input: this.input,
                     context: this.context,
                     accessPath: this.accessPath,
-                    pathId: "const",
+                    pathId: this.pathId,
+                });
+            } else if (isMixedSchema(this.input)) {
+                this.typeShapeNode = new MixedSchemaConverterNode({
+                    input: this.input,
+                    context: this.context,
+                    accessPath: this.accessPath,
+                    pathId: this.pathId,
                 });
             } else if (isNonArraySchema(this.input) && this.input.oneOf != null) {
                 this.typeShapeNode = new OneOfConverterNode({
