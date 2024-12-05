@@ -1,8 +1,10 @@
-import type {
-    AlgoliaRecord,
-    ApiReferenceRecord,
-    ChangelogRecord,
-    MarkdownRecord,
+import {
+    SEARCHABLE_FACET_ATTRIBUTES,
+    type AlgoliaRecord,
+    type ApiReferenceRecord,
+    type ChangelogRecord,
+    type FacetName,
+    type MarkdownRecord,
 } from "@fern-ui/fern-docs-search-server/types";
 import type { BaseHit, Hit } from "instantsearch.js";
 import { MarkRequired } from "ts-essentials";
@@ -17,33 +19,8 @@ export interface FacetFilter {
     value: string;
 }
 
-export interface FacetOpts {
-    filters: readonly FacetFilter[];
-}
-
-export const FACET_NAMES = [
-    "product.title",
-    "version.title",
-    "type",
-    "api_type",
-    "method",
-    "status_code",
-    "availability",
-] as const;
-export type FacetName = (typeof FACET_NAMES)[number];
-export type FacetsResponse = Record<FacetName, { value: string; count: number }[]>;
-export const EMPTY_FACETS_RESPONSE: FacetsResponse = {
-    "product.title": [],
-    "version.title": [],
-    type: [],
-    api_type: [],
-    method: [],
-    status_code: [],
-    availability: [],
-} as const;
-
 export function isFacetName(facet: string): facet is FacetName {
-    return FACET_NAMES.includes(facet as FacetName);
+    return SEARCHABLE_FACET_ATTRIBUTES.includes(facet as FacetName);
 }
 
 export interface FilterOption {

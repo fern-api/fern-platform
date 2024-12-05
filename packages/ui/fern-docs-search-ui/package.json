@@ -43,6 +43,7 @@
     "storybook": "^8.4.4",
     "swr": "^2.2.5",
     "tailwindcss": "^3.4.3",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "5.4.3"
   },
   "dependencies": {
@@ -54,7 +55,6 @@
     "@date-fns/tz": "^1.1.2",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-ui/components": "workspace:*",
-    "@fern-ui/fern-docs-badges": "workspace:*",
     "@fern-ui/fern-docs-search-server": "workspace:*",
     "@fern-ui/fern-docs-syntax-highlighter": "workspace:*",
     "@radix-ui/primitive": "^1.1.0",
@@ -89,7 +89,6 @@
     "remark-gfm": "^4.0.0",
     "server-only": "^0.0.1",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7",
     "ts-essentials": "^10.0.1",
     "tunnel-rat": "^0.1.2",
     "unist-util-visit": "^5.0.0",

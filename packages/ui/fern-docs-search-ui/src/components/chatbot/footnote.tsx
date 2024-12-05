@@ -1,13 +1,13 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { Badge } from "@fern-ui/fern-docs-badges";
+import { Badge } from "@fern-ui/components/badges";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { groupBy } from "es-toolkit/array";
 import type { Element as HastElement } from "hast";
 import { useAtom, useAtomValue } from "jotai";
 import { ReactElement, useEffect } from "react";
 import { EXIT, visit } from "unist-util-visit";
+import { AlgoliaRecordHit } from "../../types";
 import { PageIcon } from "../icons/page";
-import { AlgoliaRecordHit } from "../types";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { useChatbotTurnContext } from "./turn-context";
 

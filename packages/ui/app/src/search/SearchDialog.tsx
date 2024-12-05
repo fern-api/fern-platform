@@ -1,12 +1,13 @@
 import { createSearchPlaceholderWithVersion } from "@fern-ui/search-utils";
 import { useAtomValue, useSetAtom } from "jotai";
 import dynamic from "next/dynamic";
-import { PropsWithChildren, ReactElement, useMemo, useRef } from "react";
+import { PropsWithChildren, ReactNode, useMemo, useRef } from "react";
 import { Configure, InstantSearch } from "react-instantsearch";
 import {
     CURRENT_VERSION_ATOM,
     IS_MOBILE_SCREEN_ATOM,
     SEARCH_DIALOG_OPEN_ATOM,
+    useFeatureFlag,
     useFeatureFlags,
     useIsSearchDialogOpen,
     useSidebarNodes,
@@ -27,7 +28,15 @@ const CohereChatButton = dynamic(
     { ssr: false },
 );
 
-export const SearchDialog = (): ReactElement | null => {
+export const SearchDialog = (): ReactNode => {
+    const isSearchV2Enabled = useFeatureFlag("isSearchV2Enabled");
+    if (isSearchV2Enabled) {
+        return false;
+    }
+    return <InternalSearchDialog />;
+};
+
+const InternalSearchDialog = (): ReactNode => {
     const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
     useSearchTrigger(setSearchDialogState);
     const isSearchDialogOpen = useIsSearchDialogOpen();

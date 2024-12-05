@@ -20,6 +20,7 @@ export const CommandSearchHits = ({
 }): ReactNode => {
     const isQueryEmpty = useCommandState((state) => state.search.trimStart().length === 0) as boolean;
     const items = useSearchHits();
+
     const { filters } = useFacetFilters();
 
     if ((filters.length === 0 && isQueryEmpty) || items.length === 0) {

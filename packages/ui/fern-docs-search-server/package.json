@@ -14,7 +14,7 @@
   "exports": {
     "./types": {
       "types": "./dist/algolia/types.d.ts",
-      "default": "./dist/algolia/index.js"
+      "default": "./dist/algolia/types.js"
     },
     "./algolia": {
       "types": "./dist/algolia/index.d.ts",

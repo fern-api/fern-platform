@@ -24,8 +24,7 @@ import {
     useFacetFilters,
 } from "@/components";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { FacetsResponse } from "@/types";
-import { SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
+import { FacetsResponse, SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
 
 const USER_TOKEN_KEY = "user-token";
 
@@ -49,7 +48,7 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                     return prev;
                 }
 
-                if (event.key === "/" || (event.metaKey && event.key === "k")) {
+                if (event.key === "/" || ((event.metaKey || event.ctrlKey) && event.key === "k")) {
                     event.preventDefault();
                     return true;
                 }
@@ -70,26 +69,24 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
         [domain],
     );
 
-    const { data } = useSWR([domain, "api-key"], async (): Promise<{ apiKey: string; userToken: string }> => {
+    const { data: apiKey } = useSWR([domain, "api-key"], async (): Promise<string> => {
         const userToken = window.sessionStorage.getItem(USER_TOKEN_KEY) ?? `anonymous-user-${crypto.randomUUID()}`;
         window.sessionStorage.setItem(USER_TOKEN_KEY, userToken);
         const res = await fetch(`/api/search-key?domain=${domain}`, {
             headers: { "X-User-Token": userToken },
         });
         const { apiKey } = ApiKeySchema.parse(await res.json());
-        return { apiKey, userToken };
+        return apiKey;
     });
 
     const facetFetcher = useCallback(
-        async (filters: readonly string[]) => fetchFacets({ filters, domain, apiKey: data?.apiKey || "" }),
-        [domain, data?.apiKey],
+        async (filters: readonly string[]) => fetchFacets({ filters, domain, apiKey: apiKey || "" }),
+        [domain, apiKey],
     );
 
-    if (!data) {
+    if (!apiKey) {
         return false;
     }
-
-    const { apiKey, userToken } = data;
 
     return (
         <SearchClientRoot
@@ -98,7 +95,6 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
             domain={domain}
             indexName={SEARCH_INDEX}
             fetchFacets={facetFetcher}
-            userToken={userToken}
         >
             {isMobile ? (
                 <AppSidebar>

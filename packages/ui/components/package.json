@@ -10,7 +10,11 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./src/index.scss": "./src/index.scss"
+    "./src/index.scss": "./src/index.scss",
+    "./badges": "./src/badges/index.ts",
+    "./src/colors.css": "./src/colors.css",
+    "./src/fern-accent.scss": "./src/fern-accent.scss",
+    "./src/badges/index.scss": "./src/badges/index.scss"
   },
   "sideEffects": [
     "*.css",
@@ -45,11 +49,13 @@
     "@radix-ui/react-radio-group": "^1.2.1",
     "@radix-ui/react-scroll-area": "^1.2.1",
     "@radix-ui/react-select": "^2.1.2",
+    "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.1",
     "@radix-ui/react-tabs": "^1.1.1",
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.4",
     "@storybook/client-api": "^7.6.17",
+    "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "copyfiles": "^2.4.1",
     "iconoir-react": "^7.7.0",

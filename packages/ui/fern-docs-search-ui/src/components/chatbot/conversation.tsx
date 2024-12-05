@@ -1,8 +1,9 @@
 import { ArrowDown } from "lucide-react";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { Components } from "react-markdown";
+
+import { AlgoliaRecordHit } from "../../types";
 import { MarkdownContent } from "../md-content";
-import { AlgoliaRecordHit } from "../types";
 import { Button } from "../ui/button";
 import { FootnoteSup, FootnotesSection } from "./footnote";
 import { ChatbotTurn } from "./turn";

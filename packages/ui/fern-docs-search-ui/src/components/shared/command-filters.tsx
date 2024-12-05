@@ -1,4 +1,4 @@
-import { Badge } from "@fern-ui/fern-docs-badges";
+import { Badge } from "@fern-ui/components/badges";
 import { Command } from "cmdk";
 import { ListFilter } from "lucide-react";
 import { ComponentPropsWithoutRef, forwardRef } from "react";

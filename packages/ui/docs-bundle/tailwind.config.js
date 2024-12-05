@@ -13,5 +13,6 @@ module.exports = {
         path.join(path.dirname(require.resolve("@fern-ui/components")), "**/*.{ts,tsx}"),
         path.join(path.dirname(require.resolve("@fern-ui/chatbot")), "**/*.{ts,tsx}"),
         path.join(path.dirname(require.resolve("@fern-ui/fern-docs-syntax-highlighter")), "**/*.{ts,tsx}"),
+        path.join(path.dirname(require.resolve("@fern-ui/fern-docs-search-ui")), "**/*.{ts,tsx}"),
     ],
 };

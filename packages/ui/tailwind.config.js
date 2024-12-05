@@ -343,9 +343,16 @@ module.exports = {
     plugins: [
         require("@tailwindcss/typography"),
         require("@tailwindcss/forms"),
+        // require("tailwindcss-animate"),
         // Defining the classes here to get proper intellisense
         // https://github.com/tailwindlabs/tailwindcss-intellisense/issues/227#issuecomment-1269592872
-        plugin(({ addComponents }) => {
+        plugin(({ addBase, addComponents }) => {
+            addBase({
+                '[type="search"]::-webkit-search-decoration': { display: "none" },
+                '[type="search"]::-webkit-search-cancel-button': { display: "none" },
+                '[type="search"]::-webkit-search-results-button': { display: "none" },
+                '[type="search"]::-webkit-search-results-decoration': { display: "none" },
+            });
             addComponents({
                 // Text
                 ".t-default": {

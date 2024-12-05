@@ -47,6 +47,8 @@ export const SEARCHABLE_FACET_ATTRIBUTES = [
     "availability",
 ] as const;
 
+export type FacetName = (typeof SEARCHABLE_FACET_ATTRIBUTES)[number];
+
 export const BaseRecordSchema = z.object({
     objectID: z.string().describe("The unique identifier of this record"),
     org_id: z.string().describe("The Fern Organization ID"),

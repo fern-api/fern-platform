@@ -1,6 +1,9 @@
-import { FACET_NAMES, FacetName, FacetsResponse, FilterOption } from "../types";
-import { AvailabilityBadge, HttpMethodBadge } from "@fern-ui/fern-docs-badges";
+import { AvailabilityBadge, HttpMethodBadge } from "@fern-ui/components/badges";
+import { FacetsResponse } from "@fern-ui/fern-docs-search-server/algolia";
+import { SEARCHABLE_FACET_ATTRIBUTES, type FacetName } from "@fern-ui/fern-docs-search-server/types";
 import { ReactNode } from "react";
+
+import { FilterOption } from "../types";
 
 const FACET_DISPLAY_MAP: Record<string, Record<string, ReactNode>> = {
     method: {
@@ -162,7 +165,7 @@ export function toFilterOptions(facets: FacetsResponse | undefined): FilterOptio
 
     const results: FilterOption[] = [];
 
-    FACET_NAMES.forEach((facet) => {
+    SEARCHABLE_FACET_ATTRIBUTES.forEach((facet) => {
         const values = facets[facet];
         values?.forEach(({ value, count }) => {
             if (count === 0) {

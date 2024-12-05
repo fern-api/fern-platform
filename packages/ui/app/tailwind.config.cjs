@@ -8,6 +8,7 @@ module.exports = {
         "./src/**/*.{ts,tsx}",
         "../tailwind.config.cjs",
         path.join(path.dirname(require.resolve("@fern-ui/components")), "**/*.{ts,tsx}"),
-        path.join(path.dirname(require.resolve("@fern-ui/chatbot")), "**/*.{ts,tsx}")
+        path.join(path.dirname(require.resolve("@fern-ui/chatbot")), "**/*.{ts,tsx}"),
+        path.join(path.dirname(require.resolve("@fern-ui/fern-docs-search-ui")), "src/components/**/*.{ts,tsx}")
     ]
 };

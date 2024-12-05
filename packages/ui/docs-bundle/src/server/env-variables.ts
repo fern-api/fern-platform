@@ -1,5 +1,3 @@
-import "server-only";
-
 export function algoliaAppId(): string {
     return getEnvVariable("ALGOLIA_APP_ID");
 }
@@ -17,7 +15,7 @@ export function fernToken(): string {
 }
 
 export function fdrEnvironment(): string {
-    return getEnvVariable("FDR_ENVIRONMENT");
+    return getEnvVariable("NEXT_PUBLIC_FDR_ORIGIN");
 }
 
 export function qstashToken(): string {

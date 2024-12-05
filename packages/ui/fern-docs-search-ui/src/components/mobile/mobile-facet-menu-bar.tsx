@@ -6,12 +6,13 @@ import {
     HttpMethodBadge,
     isAvailability,
     isHttpMethod,
-} from "@fern-ui/fern-docs-badges";
+} from "@fern-ui/components/badges";
+import { FacetName } from "@fern-ui/fern-docs-search-server/types";
 import * as Menubar from "@radix-ui/react-menubar";
 import { Check, ChevronDown, Minus } from "lucide-react";
 import { ComponentPropsWithoutRef, Fragment, ReactElement, ReactNode, forwardRef } from "react";
 
-import { FacetFilter, FacetName } from "../../types";
+import { FacetFilter } from "../../types";
 import { getFacetDisplay, toFilterLabel } from "../../utils/facet-display";
 import { useFacetFilters, useFacets } from "../search-client";
 import { cn } from "../ui/cn";

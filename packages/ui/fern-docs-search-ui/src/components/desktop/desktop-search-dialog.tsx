@@ -1,40 +1,27 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { SearchIcon } from "lucide-react";
-import { ComponentPropsWithoutRef, PropsWithChildren, memo } from "react";
+import { ComponentPropsWithoutRef, PropsWithChildren, ReactNode, memo } from "react";
 import { Button } from "../ui/button";
-import { cn } from "../ui/cn";
-import { Kbd } from "../ui/kbd";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { DesktopCommandAfterInput } from "./desktop-command";
+import { DesktopSearchButton } from "./desktop-search-button";
 
 export const DesktopSearchDialog = memo(
     ({
         children,
         asChild,
+        trigger,
         ...rest
     }: PropsWithChildren<
         {
+            trigger?: ReactNode;
             asChild?: boolean;
         } & ComponentPropsWithoutRef<typeof Dialog.Root>
     >) => {
         return (
             <Dialog.Root {...rest}>
-                <Dialog.Trigger asChild>
-                    <button
-                        className={cn(
-                            "inline-flex items-center justify-start gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent-6)] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
-                            "border border-[var(--grayscale-a6)] bg-[var(--grayscale-a1)] hover:bg-[var(--grayscale-a2)] text-[var(--grayscale-a10)]",
-                            "h-9 px-2 py-2",
-                            "w-full",
-                        )}
-                    >
-                        <SearchIcon />
-                        Search
-                        <Kbd className="ml-auto tracking-widest">⌘+K</Kbd>
-                    </button>
-                </Dialog.Trigger>
+                <Dialog.Trigger asChild>{trigger ?? <DesktopSearchButton />}</Dialog.Trigger>
                 <Dialog.Portal>
                     <Dialog.Overlay className="fixed inset-0 bg-[var(--grayscale-1)]/80 backdrop-blur-md" />
 
@@ -66,6 +53,9 @@ export const DesktopSearchDialog = memo(
                         className="fixed top-[15%] left-1/2 w-[640px] -translate-x-1/2 shadow-xl overflow-hidden origin-left outline-none"
                         asChild={asChild}
                         onEscapeKeyDown={(e) => {
+                            e.preventDefault();
+                        }}
+                        onOpenAutoFocus={(e) => {
                             e.preventDefault();
                         }}
                     >

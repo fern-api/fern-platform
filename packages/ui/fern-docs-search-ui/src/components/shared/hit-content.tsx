@@ -1,5 +1,5 @@
 import { tz } from "@date-fns/tz";
-import { AvailabilityBadge, HttpMethodBadge } from "@fern-ui/fern-docs-badges";
+import { AvailabilityBadge, HttpMethodBadge } from "@fern-ui/components/badges";
 import clsx from "clsx";
 import { format } from "date-fns";
 import { uniq } from "es-toolkit/array";

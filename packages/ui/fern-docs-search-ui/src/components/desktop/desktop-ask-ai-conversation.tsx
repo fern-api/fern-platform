@@ -1,4 +1,4 @@
-import { Badge } from "@fern-ui/fern-docs-badges";
+import { Badge } from "@fern-ui/components/badges";
 import { Message } from "ai";
 import { Command } from "cmdk";
 import { useAtomValue } from "jotai";

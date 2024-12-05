@@ -1,4 +1,6 @@
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
+import { FacetsResponse } from "@fern-ui/fern-docs-search-server/algolia";
+import { FacetName } from "@fern-ui/fern-docs-search-server/types";
 import { LiteClient, liteClient } from "algoliasearch/lite";
 import { useAtom } from "jotai";
 import { RESET, atomWithDefault } from "jotai/utils";
@@ -21,14 +23,13 @@ import { preload } from "swr";
 import useSWRImmutable from "swr/immutable";
 
 import { useDeepCompareEffectNoCheck } from "../hooks/use-deep-compare-callback";
-import { EMPTY_FACETS_RESPONSE, FacetFilter, FacetName, FacetsResponse, isFacetName } from "../types";
+import { FacetFilter, isFacetName } from "../types";
 import { toAlgoliaFacetFilters } from "../utils/facet-filters";
 
 function SearchClientRoot({
     children,
     fetchFacets,
     initialFilters,
-    userToken,
     authenticatedUserToken,
     ...props
 }: PropsWithChildren<{
@@ -57,10 +58,6 @@ function SearchClientRoot({
      */
     fetchFacets: (filters: readonly string[]) => Promise<FacetsResponse>;
     /**
-     * Anonymous user token (for algolia insights)
-     */
-    userToken?: string;
-    /**
      * Authenticated user token (for algolia insights)
      */
     authenticatedUserToken?: string;
@@ -69,9 +66,7 @@ function SearchClientRoot({
     return (
         <SearchClientProvider {...props}>
             <FacetFiltersProvider fetchFacets={fetchFacets} initialFilters={initialFilters}>
-                <InstantSearchWrapper userToken={userToken} authenticatedUserToken={authenticatedUserToken}>
-                    {children}
-                </InstantSearchWrapper>
+                <InstantSearchWrapper authenticatedUserToken={authenticatedUserToken}>{children}</InstantSearchWrapper>
             </FacetFiltersProvider>
         </SearchClientProvider>
     );
@@ -127,8 +122,8 @@ function useSearchClient(): {
 
 const FacetFiltersContext = createContext({
     atom: atomWithDefault<readonly FacetFilter[]>(() => []),
-    preloadFacets: (_: readonly FacetFilter[]) => Promise.resolve(EMPTY_FACETS_RESPONSE),
-    fetchFacets: (_: readonly string[]) => Promise.resolve(EMPTY_FACETS_RESPONSE),
+    preloadFacets: (_: readonly FacetFilter[]): Promise<FacetsResponse> => Promise.resolve({}),
+    fetchFacets: (_: readonly string[]): Promise<FacetsResponse> => Promise.resolve({}),
 });
 
 /**
@@ -201,7 +196,7 @@ function useFacets(filters: readonly FacetFilter[]): {
         fetchFacets(filters),
     );
     return {
-        facets: res.data ?? EMPTY_FACETS_RESPONSE,
+        facets: res.data ?? {},
         isLoading: res.isLoading,
     };
 }
@@ -225,13 +220,9 @@ function toFacetFilters(initialFilters: Partial<Record<FacetName, string>> = EMP
  * Wraps the InstantSearchNext component
  */
 function InstantSearchWrapper({
-    userToken,
     authenticatedUserToken,
     children,
-}: PropsWithChildren<{
-    userToken?: string;
-    authenticatedUserToken?: string;
-}>): ReactElement {
+}: PropsWithChildren<{ authenticatedUserToken?: string }>): ReactElement {
     const { searchClient, indexName } = useSearchClient();
     const { filters } = useFacetFilters();
 
@@ -240,18 +231,13 @@ function InstantSearchWrapper({
             searchClient={searchClient}
             indexName={indexName}
             future={{ preserveSharedStateOnUnmount: true }}
-            insights={
-                userToken || authenticatedUserToken
-                    ? { insightsInitParams: [{ userToken, authenticatedUserToken }] }
-                    : undefined
-            }
+            insights={authenticatedUserToken ? { insightsInitParams: [{ authenticatedUserToken }] } : undefined}
         >
             <Configure
                 attributesToSnippet={["description:32", "content:32"]}
                 facetFilters={toAlgoliaFacetFilters(filters)}
                 maxFacetHits={100}
                 maxValuesPerFacet={1000}
-                userToken={authenticatedUserToken ?? userToken}
                 facetingAfterDistinct
                 restrictHighlightAndSnippetArrays
                 distinct

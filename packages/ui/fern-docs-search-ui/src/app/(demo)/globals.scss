@@ -1,9 +1,9 @@
-@import "@fern-ui/fern-docs-badges/colors.scss";
-@import "@fern-ui/fern-docs-badges/fern-accent.scss";
+@import "@fern-ui/components/src/colors.css";
+@import "@fern-ui/components/src/fern-accent.scss";
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import "@fern-ui/fern-docs-badges/index.scss";
+@import "@fern-ui/components/src/badges/index.scss";
 @import "@fern-ui/fern-docs-syntax-highlighter/src/index.scss";
 
 body {

@@ -28,7 +28,7 @@
       "path": "../../commons/core-utils"
     },
     {
-      "path": "../fern-docs-badges"
+      "path": "../components"
     },
     {
       "path": "../fern-docs-syntax-highlighter"

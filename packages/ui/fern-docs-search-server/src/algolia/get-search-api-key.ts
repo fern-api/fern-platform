@@ -36,7 +36,7 @@ interface GetSearchApiKeyOptions {
     /**
      * User token
      */
-    userToken: string;
+    userToken: string | undefined;
 }
 
 export function getSearchApiKey({

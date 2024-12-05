@@ -1,42 +1,47 @@
-import { FileText } from "lucide-react";
-import { SVGProps, forwardRef } from "react";
+import { ElementType, SVGProps, forwardRef } from "react";
 import useSWRImmutable from "swr/immutable";
 
-export const RemoteIcon = forwardRef<SVGSVGElement, { icon: string } & SVGProps<SVGSVGElement>>(
-    ({ icon, ...props }, ref) => {
-        const { data } = useSWRImmutable(icon, () => fetch(getIconUrl(icon)).then((res) => res.text()));
+export const RemoteIcon = forwardRef<
+    SVGSVGElement,
+    { icon: string; fallback?: ElementType<SVGProps<SVGSVGElement>> } & SVGProps<SVGSVGElement>
+>(({ icon, fallback: Fallback = "svg", ...props }, ref) => {
+    const { data } = useSWRImmutable(icon, () => fetch(getIconUrl(icon)).then((res) => res.text()));
 
-        if (data == null) {
-            return <FileText ref={ref} {...props} />;
-        }
+    if (data == null) {
+        return <Fallback ref={ref} aria-hidden="true" focusable="false" role="img" {...props} />;
+    }
 
-        // parse the svg
-        const { props: svgProps, body } = parseSvg(data);
-        delete svgProps.class;
-        delete svgProps.className;
-        delete svgProps.hidden;
+    // parse the svg
+    const { props: svgProps, body } = parseSvg(data);
 
-        return (
-            <svg
-                ref={ref}
-                xmlns="http://www.w3.org/2000/svg"
-                {...props}
-                {...svgProps}
-                aria-hidden="true"
-                focusable="false"
-                role="img"
-                dangerouslySetInnerHTML={{ __html: body }}
-            />
-        );
-    },
-);
+    if (body == null) {
+        return <Fallback ref={ref} aria-hidden="true" focusable="false" role="img" {...props} />;
+    }
+
+    delete svgProps.class;
+    delete svgProps.className;
+    delete svgProps.hidden;
+
+    return (
+        <svg
+            ref={ref}
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+            {...svgProps}
+            aria-hidden="true"
+            focusable="false"
+            role="img"
+            dangerouslySetInnerHTML={{ __html: body }}
+        />
+    );
+});
 
 RemoteIcon.displayName = "RemoteIcon";
 
 // parse the svg
 function parseSvg(svg: string): {
     props: Record<string, string>;
-    body: string;
+    body: string | undefined;
 } {
     const props: Record<string, string> = {};
     const match = svg.match(/<svg[^>]*>([\s\S]*)<\/svg>/);
@@ -49,9 +54,11 @@ function parseSvg(svg: string): {
     const propsMatch = svg.match(/<svg([^>]*)>/);
     if (propsMatch) {
         const propsStr = propsMatch[1];
-        const propMatches = propsStr.matchAll(/(\w+)="([^"]*)"/g);
+        const propMatches = propsStr?.matchAll(/(\w+)="([^"]*)"/g) ?? [];
         for (const [_, key, value] of propMatches) {
-            props[key] = value;
+            if (key && value) {
+                props[key] = value;
+            }
         }
     }
     return { props, body };

@@ -28,6 +28,7 @@ export interface FeatureFlags {
     is404PageHidden: boolean;
     isNewSearchExperienceEnabled: boolean;
     isAuthenticatedPagesDiscoverable: boolean;
+    isSearchV2Enabled: boolean;
     // TODO: remove this after pinecone demo, this is a temporary flag
     grpcEndpoints: readonly string[];
 }
@@ -62,6 +63,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     is404PageHidden: false,
     isNewSearchExperienceEnabled: false,
     isAuthenticatedPagesDiscoverable: false,
+    isSearchV2Enabled: false,
     // TODO: remove this after pinecone demo, this is a temporary flag
     grpcEndpoints: [],
 };

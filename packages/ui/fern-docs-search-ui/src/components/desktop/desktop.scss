@@ -1,13 +1,8 @@
-:root {
-    --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Source Code Pro", "Fira Mono", "Droid Sans Mono",
-        "Courier New", monospace;
-}
-
 #fern-search-desktop-command[cmdk-root] {
     overflow: hidden;
     border: 1px solid var(--grayscale-a6);
     background-color: var(--grayscale-a2);
-    backdrop-filter: blur(24px);
+    backdrop-filter: blur(40px);
     border-radius: 0.5rem;
 
     [data-cmdk-fern-header] {
@@ -34,9 +29,12 @@
         background: transparent;
         font-size: 1.125rem;
         line-height: 1.75rem;
+        border: none;
 
-        &:focus {
+        &:focus,
+        &:focus-visible {
             outline: none;
+            box-shadow: none;
         }
 
         &::placeholder {

@@ -1,15 +1,21 @@
 import { track } from "@/server/analytics/posthog";
 import { algoliaAppId, algoliaWriteApiKey, fdrEnvironment, fernToken } from "@/server/env-variables";
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
-import { getDocsDomainEdge } from "@/server/xfernhost/edge";
+import { getDocsDomainNode } from "@/server/xfernhost/node";
 import { getAuthEdgeConfig, getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
 import { SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
 import { algoliaIndexSettingsTask, algoliaIndexerTask } from "@fern-ui/fern-docs-search-server/tasks";
 import { addLeadingSlash } from "@fern-ui/fern-docs-utils";
-import { NextRequest, NextResponse } from "next/server";
+import { NextApiRequest, NextApiResponse } from "next/types";
 
-export async function POST(request: NextRequest): Promise<NextResponse> {
-    const domain = getDocsDomainEdge(request);
+export const maxDuration = 900; // 15 minutes
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+    if (req.method !== "POST") {
+        return res.status(405).send("Method not allowed");
+    }
+
+    const domain = getDocsDomainNode(req);
 
     try {
         const start = Date.now();
@@ -49,7 +55,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             deleted: response.deletedObjectIDs.length,
         });
 
-        return NextResponse.json(response);
+        return res.status(200).json(response);
     } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
@@ -60,6 +66,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             error: String(error),
         });
 
-        return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+        return res.status(500).send("Internal server error");
     }
 }

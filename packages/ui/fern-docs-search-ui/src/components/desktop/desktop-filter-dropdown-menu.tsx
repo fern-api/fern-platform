@@ -1,4 +1,4 @@
-import { Badge } from "@fern-ui/fern-docs-badges";
+import { Badge } from "@fern-ui/components/badges";
 import { Minus } from "lucide-react";
 import { ReactElement, cloneElement, isValidElement } from "react";
 import { FacetFilter } from "../../types";
