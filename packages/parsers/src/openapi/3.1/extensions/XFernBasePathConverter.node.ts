@@ -1,7 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import {
-  BaseOpenApiV3_1ConverterNode,
-  BaseOpenApiV3_1ConverterNodeConstructorArgs,
+    BaseOpenApiV3_1ConverterNode,
+    BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { basePathExtensionKey } from "../../types/extension.types";
 import { extendType } from "../../utils/extendType";

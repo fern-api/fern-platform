@@ -29,23 +29,23 @@ describe("XFernGroupNameConverterNode", () => {
 
         it(`sets basePath to undefined when ${basePathExtensionKey} is not present`, () => {
             const converter = new XFernBasePathConverterNode({
-                input: { } as unknown as OpenAPIV3_1.Document,
+                input: {} as unknown as OpenAPIV3_1.Document,
                 context: mockContext,
                 accessPath: [],
                 pathId: "",
             });
             expect(converter.basePath).toBeUndefined();
         });
-        
+
         it(`sets basePath to undefined when ${basePathExtensionKey} is explicitly null`, () => {
-          const converter = new XFernBasePathConverterNode({
-              input: { [basePathExtensionKey]: null } as unknown as OpenAPIV3_1.Document,
-              context: mockContext,
-              accessPath: [],
-              pathId: "",
-          });
-          expect(converter.basePath).toBeUndefined();
-      });
+            const converter = new XFernBasePathConverterNode({
+                input: { [basePathExtensionKey]: null } as unknown as OpenAPIV3_1.Document,
+                context: mockContext,
+                accessPath: [],
+                pathId: "",
+            });
+            expect(converter.basePath).toBeUndefined();
+        });
     });
 
     describe("convert", () => {

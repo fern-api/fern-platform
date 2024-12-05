@@ -42,6 +42,7 @@ describe("PathItemObjectConverterNode", () => {
                     pathId: "/pets/{petId}",
                 },
                 undefined,
+                undefined,
             );
 
             const result = node.convert();
@@ -112,6 +113,7 @@ describe("PathItemObjectConverterNode", () => {
                     pathId: "/empty",
                 },
                 undefined,
+                undefined,
             );
 
             const result = node.convert();
@@ -142,6 +144,7 @@ describe("PathItemObjectConverterNode", () => {
                     accessPath: [],
                     pathId: "/test",
                 },
+                undefined,
                 undefined,
             );
 
