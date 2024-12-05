@@ -146,6 +146,9 @@ const nextConfig = {
         }
         return config;
     },
+    compiler: {
+        removeConsole: true,
+    },
 };
 
 function withVercelEnv(config) {
