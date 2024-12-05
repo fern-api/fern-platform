@@ -5,8 +5,8 @@ import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
-import { convertToObjectProperties } from "../../../utils/3.1/convertToObjectProperties";
 import { STATUS_CODE_MESSAGES } from "../../../utils/statusCodes";
+import { convertOperationObjectProperties } from "../parameters/ParameterBaseObjectConverter.node";
 import { ResponseObjectConverterNode } from "./ResponseObjectConverter.node";
 
 export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
@@ -69,7 +69,7 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                     return undefined;
                 }
                 return {
-                    headers: convertToObjectProperties(response.headers),
+                    headers: convertOperationObjectProperties(response.headers),
                     response: {
                         statusCode: parseInt(statusCode),
                         body,

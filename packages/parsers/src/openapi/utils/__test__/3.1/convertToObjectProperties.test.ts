@@ -8,7 +8,7 @@ describe("convertToObjectProperties", () => {
     const mockContext = createMockContext();
 
     it("should return undefined when properties is undefined", () => {
-        expect(convertToObjectProperties(undefined)).toBeUndefined();
+        expect(convertToObjectProperties(undefined, undefined)).toBeUndefined();
     });
 
     it("should convert properties to object properties", () => {
@@ -58,7 +58,7 @@ describe("convertToObjectProperties", () => {
             }),
         };
 
-        const result = convertToObjectProperties(properties);
+        const result = convertToObjectProperties(properties, undefined);
 
         expect(result).toEqual([
             {
@@ -107,7 +107,7 @@ describe("convertToObjectProperties", () => {
             } as unknown as SchemaConverterNode,
         };
 
-        const result = convertToObjectProperties(properties);
+        const result = convertToObjectProperties(properties, undefined);
 
         expect(result).toEqual([
             {
