@@ -1,6 +1,6 @@
 [
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.welcome-to-hume-ai-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.welcome-to-hume-ai-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/intro",
@@ -25,7 +25,7 @@
     "content": "EVI 2 is now available! Visit platform.hume.ai to chat with Hume's new voice-language foundation model and craft a custom empathic voice for your application.\nHume AI builds AI models that enable technology to communicate with empathy and learn to make people happy.\nSo much of human communication—in-person, text, audio, or video—is shaped by emotional expression. These cues allow us to attend to each other's well-being. Our platform provides the APIs needed to ensure that technology, too, is guided by empathy and the pursuit of human well-being."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.welcome-to-hume-ai-empathic-voice-interface-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.welcome-to-hume-ai-empathic-voice-interface-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/intro",
@@ -60,7 +60,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.welcome-to-hume-ai-expression-measurement-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.welcome-to-hume-ai-expression-measurement-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/intro",
@@ -95,7 +95,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.welcome-to-hume-ai-api-reference-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.welcome-to-hume-ai-api-reference-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/intro",
@@ -130,7 +130,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.welcome-to-hume-ai-example-code-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.welcome-to-hume-ai-example-code-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/intro",
@@ -165,7 +165,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.welcome-to-hume-ai-get-support-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.welcome-to-hume-ai-get-support-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/intro",
@@ -224,7 +224,7 @@
     "description": "Learn how to obtain your API keys and understand the supported authentication strategies for securely accessing Hume APIs."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.api-key-api-keys-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.api-key-api-keys-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/introduction/api-key",
@@ -259,7 +259,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.api-key-authentication-strategies-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.api-key-authentication-strategies-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/introduction/api-key",
@@ -294,7 +294,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.api-key-api-key-authentication-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.api-key-api-key-authentication-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/introduction/api-key",
@@ -367,7 +367,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.api-key-token-authentication-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.api-key-token-authentication-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/introduction/api-key",
@@ -448,7 +448,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.api-key-regenerating-api-keys-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.api-key-regenerating-api-keys-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/introduction/api-key",
@@ -511,7 +511,7 @@
     "description": "Get help from the team at Hume"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.support-discord-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.support-discord-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/support",
@@ -546,7 +546,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.support-legal-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.support-legal-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/support",
@@ -581,7 +581,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.support-billing-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.support-billing-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/support",
@@ -616,7 +616,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.support-contact-us-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.introduction.support-contact-us-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/support",
@@ -651,7 +651,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.overview-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.overview-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/overview",
@@ -676,7 +676,7 @@
     "content": "EVI 2 is now available! See the EVI 2 page to learn more and visit platform.hume.ai to start building with the latest features today.\nHume's Empathic Voice Interface (EVI) is the world’s first emotionally intelligent voice AI. It accepts live audio input and returns both generated audio and transcripts augmented with measures of vocal expression. By processing the tune, rhythm, and timbre of speech, EVI unlocks a variety of new capabilities, like knowing when to speak and generating more empathic language with the right tone of voice. These features enable smoother and more satisfying voice-based interactions between humans and AI, opening new possibilities for personal AI, customer service, accessibility, robotics, immersive gaming, VR experiences, and much more.\nWe provide a suite of tools to integrate and customize EVI for your application, including a WebSocket API that handles audio and text transport, a REST API, and SDKs for TypeScript and Python to simplify integration into web and Python-based projects. Additionally, we provide open-source examples and a web widget as practical starting points for developers to explore and implement EVI's capabilities within their own projects."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.overview-building-with-evi-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.overview-building-with-evi-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/overview",
@@ -711,7 +711,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.overview-overview-of-evi-features-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.overview-overview-of-evi-features-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/overview",
@@ -746,7 +746,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.overview-api-limits-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.overview-api-limits-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/overview",
@@ -781,7 +781,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.quickstart.typescript-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.quickstart.typescript-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/quickstart/typescript",
@@ -908,7 +908,7 @@
     "content": "This guide provides instructions for integrating EVI into your TypeScript projects. It includes detailed steps for using EVI with Next.js (App Router),\nNext.js (Pages Router), and a standalone setup without any framework.\n\n\nKickstart your project with our pre-configured Vercel template for the Empathic Voice\nInterface. Install\nwith one click to instantly set up a ready-to-use project and start building with\nTypeScript right away!\n\n\n\n\nThis tutorial utilizes Hume’s React SDK to interact with EVI. It includes detailed steps for both the\nApp Router in Next.js and is broken down into four key components:\nAuthentication: Generate and use an access token to authenticate with EVI.\n\nSetting up context provider: Set up the <VoiceProvider/>.\n\nStarting a chat and display messages: Implement the functionality to start a chat with EVI and display messages.\n\nThat's it!: Audio playback and interruptions are handled for you.\n\n\n\n\nThe Hume React SDK abstracts much of the logic for managing the WebSocket connection, as\nwell as capturing and preparing audio for processing. For a closer look at how the React\npackage manages these aspects of the integration, we invite you to explore the source code\nhere: @humeai/voice-react\nTo see this code fully implemented within a frontend web application using the App Router from Next.js, visit this GitHub repository:\nevi-nextjs-app-router.\n\n\nPrerequisites\nBefore you begin, you will need to have an existing Next.js project set up using the App Router.\nAuthenticate\nIn order to make an authenticated connection we will first need to generate an access token. Doing so will\nrequire your API key and Secret key. These keys can be obtained by logging into the portal and visiting the\nAPI keys page.\n\n\nIn the sample code below, the API key and Secret key have been saved to\nenvironment variables. Avoid hard coding these values in your project to\nprevent them from being leaked.\n\n\nSetup Context Provider\nAfter fetching our access token we can pass it to our ClientComponent. First we set up the <VoiceProvider/> so that our Messages and Controls components can access the context. We also pass the access token to the auth prop of the <VoiceProvider/> for setting up the WebSocket connection.\n\n\nAudio input\n<VoiceProvider/> will handle the microphone and playback logic.\nStarting session\nIn order to start a session, you can use the connect function. It is important that this event is attached to a user interaction event (like a click) so that the browser is capable of playing Audio.\n\n\nDisplaying message history\nTo display the message history, we can use the useVoice hook to access the messages array. We can then map over the messages array to display the role (Assistant or User) and content of each message.\n\n\nInterrupt\nThis Next.js example will handle interruption events automatically!\n\n\nThis tutorial utilizes Hume’s React SDK to interact with EVI. It includes detailed steps for both the\nPages Router in Next.js and is broken down into four key components:\nAuthentication: Generate and use an access token to authenticate with EVI.\n\nSetting up context provider: Set up the <VoiceProvider/>.\n\nStarting a chat and display messages: Implement the functionality to start a chat with EVI and display messages.\n\nThat's it!: Audio playback and interruptions are handled for you.\n\n\n\n\nThe Hume React SDK abstracts much of the logic for managing the WebSocket connection, as\nwell as capturing and preparing audio for processing. For a closer look at how the React\npackage manages these aspects of the integration, we invite you to explore the source code\nhere: @humeai/voice-react\nTo see this code fully implemented within a frontend web application using the Pages Router from Next.js, visit this GitHub repository: evi-nextjs-pages-router.\n\n\nPrerequisites\nBefore you begin, you will need to have an existing Next.js project set up using the Pages Router.\nAuthenticate and Setup Context Provider\nIn order to make an authenticated connection we will first need to generate an access token. Doing so will\nrequire your API key and Secret key. These keys can be obtained by logging into the portal and visiting the\nAPI keys page.\n\n\nIn the sample code below, the API key and Secret key have been saved to\nenvironment variables. Avoid hard coding these values in your project to\nprevent them from being leaked.\n\n\nAudio input\n<VoiceProvider/> is designed to manage microphone inputs and audio playback. It abstracts the complexities of audio processing to allow developers to focus on developing interactive voice-driven functionalities.\nFor a closer look at how <VoiceProvider/> processes audio inputs and controls playback, you can view the source code here.\nStarting session\nIn order to start a session, you can use the connect function. It is important that this event is attached to a user interaction event (like a click) so that the browser is capable of playing Audio.\n\n\nDisplaying message history\nTo display the message history, we can use the useVoice hook to access the messages array. We can then map over the messages array to display the role (Assistant or User) and content of each message.\n\n\nInterrupt\nThis Next.js example will handle interruption events automatically!\n\n\nThis tutorial provides step-by-step instructions for implementing EVI using Hume’s\nTypeScript SDK. This guide is divided into five key components:\nAuthentication: Authenticate your application with EVI using your credentials.\n\nConnecting to EVI: Set up a secure WebSocket connection to interact with EVI.\n\nCapturing & recording audio: Capture audio input and prepare it for processing.\n\nAudio playback: Play back the processed audio output to the user.\n\nInterruption: Manage and handle interruptions during the chat.\n\n\nTo see the full implementation within a frontend web application, visit our API examples repository on GitHub: hume-evi-typescript-example.\n\n\nAuthenticate\nIn order to establish an authenticated connection we will first need to instantiate the Hume client with our API key and Secret key.\nThese keys can be obtained by logging into the portal and visiting the API keys page.\n\n\nIn the sample code below, the API key and Secret key have been saved to environment\nvariables. Avoid hard coding these values in your project to prevent them from being\nleaked.\n\n\nWhen using our TypeScript SDK, the Access Token necessary to establish an authenticated connection with EVI is fetched and applied under the hood\nafter the Hume client is instantiated with your credientials.\nConnect\nWith the Hume client instantiated with our credentials, we can now establish an authenticated WebSocket connection with EVI and define our WebSocket event handlers.\nFor now we will include placeholder event handlers to be updated in later steps.\n\n\nAudio input\nTo capture audio and send it through the socket as an audio input, several steps are necessary. First, we need to handle user permissions\nto access the microphone. Next, we'll use the Media Stream API to capture the audio, and the MediaRecorder API to record the captured audio.\nWe then base64 encode the recording audio Blob, and finally send the encoded audio through the WebSocket using the sendAudioInputmethod.\n\n\n\n\nAccepted audio formats include: mp3, wav, aac, ogg, flac, webm, avr, cdda,\ncvs/vms, aiff, au, amr, mp2, mp4, ac3, avi, wmv, mpeg, ircam.\nAudio output\nThe response will comprise multiple messages, detailed as follows:\nuser_message: This message encapsulates the transcription of the audio input. Additionally, it\nincludes expression measurement predictions related to the speaker's vocal prosody.\n\nassistant_message: For every sentence within the response, an AssistantMessage is dispatched.\nThis message not only relays the content of the response but also features predictions regarding the\nexpressive qualities of the generated audio response.\n\naudio_output: Accompanying each AssistantMessage, an AudioOutput message will be provided.\nThis contains the actual audio (binary) response corresponding to an AssistantMessage.\n\nassistant_end: Signifying the conclusion of the response to the audio input, an AssistantEnd\nmessage is delivered as the final piece of the communication.\n\n\nHere we'll focus on playing the received audio output. To play the audio output from the response we\nneed to define our logic for converting the received binary to a Blob, and creating an HTMLAudioInput\nto play the audio.\nWe then need to update the client's on message WebSocket event handler to invoke\nthe logic to playback the audio when receiving the audio output. To manage playback for the incoming\naudio here we'll implement a queue and sequentially play the audio back.\n\n\nInterrupt\nInterruptibility is a distinguishing feature of the Empathic Voice Interface. If an audio input is sent\nthrough the WebSocket while receiving response messages for a previous audio input, the response to\nthe previous audio input will stop being sent. Additionally the interface will send back a\nuser_interruption message, and begin responding to the new audio input."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.quickstart.python-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.quickstart.python-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/quickstart/python",
@@ -1087,7 +1087,7 @@
     "content": "This guide provides detailed instructions for integrating EVI into your Python projects using Hume's Python SDK. It is divided into seven key components:\nEnvironment setup: Download package and system dependencies to run EVI.\n\nDependency imports: Import all necessary dependencies into your script.\n\nDefining a WebSocketHandler class: Create a class to manage the WebSocket connection.\n\nAuthentication: Use your API credentials to authenticate your EVI application.\n\nConnecting to EVI: Set up a secure WebSocket connection to interact with EVI.\n\nHandling audio: Capture audio data from an input device, and play audio produced by EVI.\n\nAsynchronous event loop: Initiate and manage an asynchronous event loop that handles simultaneous, real-time execution of message processing and audio playback.\n\n\nTo see a full implementation within a terminal application, visit our API examples repository on GitHub: evi-python-example\n\n\nHume's Python SDK supports EVI using Python versions 3.9, 3.10, and 3.11 on macOS and Linux platforms. The full specification be found on the Python SDK GitHub page.\n\n\nEnvironment setup\nBefore starting the project, it is essential to set up the development environment.\nCreating a virtual environment (optional)\nSetting up a virtual environment is a best practice to isolate your project's dependencies from your global Python installation, avoiding potential conflicts.\nYou can create a virtual environment using either Python's built-in venv module or the conda environment manager. See instructions for both below:\n\n\n\n\nCreate the virtual environment.\n\n\nNote that when you create a virtual environment using Python's built-in venv tool, the virtual environment will use the same Python version as the global Python installation that you used to create it.\n\n\nActivate the virtual environment using the appropriate command for your system platform.\n\n\n\n\n\n\nThe code above demonstrates virtual environment activation on a POSIX platform with a bash/zsh shell. Visit the venv documentation to learn more about using venv on your platform.\n\n\nInstall conda from Miniconda or Anaconda Distribution.\n\nCreate the virtual environment.\n\n\nconda allows developers to set the version of their Python interpreter when creating a virtual environment. In the example below, Python version 3.11 is specified:\n\n\nActivate the virtual environment using the appropriate command for your system platform.\n\n\n\n\n\n\nVisit the conda documentation to learn more about managing Python environments with conda.\nPackage dependenices\nThere are two package dependencies for using EVI:\nHume Python SDK (required)\n\n\nThe hume[microphone] package contains the Hume Python SDK. This guide employs EVI's WebSocket and message handling infrastructure as well as various asynchronous programming and audio utilities.\n\n\nEnvironment variables (recommended)\n\n\nThe python-dotenv package contains the logic for using environment variables to store and load sensitive variables such as API credentials from a .env file.\n\n\nIn sample code snippets below, the API key, Secret key, and an EVI configuration id have been saved to environment variables.\n\n\nWhile not strictly required, using environment variables is considered best practice because it keeps sensitive information like API keys and configuration settings separate from your codebase. This not only enhances security but also makes your application more flexible and easier to manage across different environments.\nSystem dependencies\nFor audio playback and processing, additional system-level dependencies are required. Below are download instructions for each supported operating system:\n\n\n\n\nTo ensure audio playback functionality, macOS users will need to install ffmpeg, a powerful multimedia framework that handles audio and video processing.\nA common way to install ffmpeg on macOS is by using a package manager such as Homebrew. To do so, follow these steps:\nInstall Homebrew onto your system according to the instructions on the Homebrew website.\n\nOnce Homebrew is installed, you can install ffmpeg with brew:\n\n\n\n\n\n\nIf you prefer not to use Homebrew, you can download a pre-built ffmpeg binary from the ffmpeg website or use other package managers like MacPorts.\n\n\nLinux users will need to install the following packages to support audio input/output and playback:\nlibasound2-dev: This package contains development files for the ALSA (Advanced Linux Sound Architecture) sound system.\n\nlibportaudio2: PortAudio is a cross-platform audio I/O library that is essential for handling audio streams.\n\nffmpeg: Required for processing audio and video files.\n\n\nTo install these dependencies, use the following commands:\n\n\nDependency imports\nThe following import statements are used in the example project to handle asynchronous operations, environment variables, audio processing, and communication with the Hume API:\n\n\n\n\n\n\n\n\nModule/Class/Method Description \nasyncio Provides support for asynchronous programming, allowing the code to handle multiple tasks concurrently. \nbase64 Used to encode and decode audio data in base64 format, essential for processing audio streams. \nos Allows interaction with the operating system, particularly for accessing environment variables. \ndatetime Used to generate timestamps for logging events. \nload_dotenv Loads environment variables from a .env file, which are used for API key management and EVI configuration. \nAsyncHumeClient Provides an asynchronous client for connecting to the Hume API, which powers the empathic voice interface. \nChatConnectOptions, ChatWebsocketConnection These classes manage WebSocket connections and configuration options for the Hume Empathic Voice Interface (EVI). \nSubscribeEvent Represents different types of messages received through the WebSocket connection. \nUserInput, AudioConfiguration, SessionSettings These types define the structure of messages and settings sent to the Hume API, such as user input and audio configurations. \nStream Manages streams of asynchronous data, particularly useful for handling audio streams. \nMicrophoneInterface Manages audio capture and playback from a specified input and output device. \nApiError Defines custom error handling for API-related issues, ensuring graceful error management within the application. \n\nDefining a WebSocketHandler class\nNext, we define a WebSocketHandler class to encapsulate WebSocket functionality in one organized component. The handler allows us to implement application-specific behavior upon the socket opening, closing, receiving messages, and handling errors. It also manages the continuous audio stream from a microphone.\nBy using a class, you can maintain the WebSocket connection and audio stream state in one place, making it simpler to manage both real-time communication and audio processing.\nBelow are the key methods:\nMethod Description \n__init__() Initializes the handler, setting up placeholders for the WebSocket connection. \nset_socket(socket: ChatWebsocketConnection) Associates the WebSocket connection with the handler. \non_open() Called when the WebSocket connection is established, enabling any necessary initialization. \non_message(data: SubscribeEvent) Handles incoming messages from the WebSocket, processing different types of messages. \non_close() Invoked when the WebSocket connection is closed, allowing for cleanup operations. \non_error(error: Exception) Manages errors that occur during WebSocket communication, providing basic error logging. \n\n\n\nBelow is an example of what the WebSocketHandler class may look like.\nRefer to the evi-python-example for a complete example implementation.\n\n\nAuthentication\nIn order to establish an authenticated connection, we instantiate the Hume client with our API key and include our Secret key in the query parameters passed into the WebSocket connection.\n\n\nYou can obtain your API credentials by logging into the Hume Platform and visiting the API keys page.\n\n\nConnecting to EVI\nWith the Hume client instantiated with our credentials, we can now establish an authenticated WebSocket connection with EVI and pass in our handlers.\n\n\nHandling audio\nThe MicrophoneInterface class captures audio input from the user's device and streams it over the WebSocket connection.\nAudio playback occurs when the WebSocketHandler receives audio data over the WebSocket connection in its asynchronous byte stream from an audio_output message.\nIn this example, byte_strs is a stream of audio data that the WebSocket connection populates.\n\n\nSpecifying a microphone device\nYou can specify your microphone device using the device parameter in the MicrophoneInterface object's start method.\nTo view a list of available audio devices, run the following command:\n\n\npython -c \"import sounddevice; print(sounddevice.query_devices())\"\nBelow is an example output:\n\n\nIf the MacBook Pro Microphone is the desired device, specify device 4 in the Microphone context. For example:\n\n\nFor troubleshooting faulty device detection - particularly with systems using ALSA, the Advanced Linux Sound Architecture, the device may also be directly specified using the sounddevice library:\n\n\nAllowing interruption\nThe allow_interrupt parameter in the MicrophoneInterface class allows control over whether the user can send a message while the assistant is speaking:\n\n\nallow_interrupt=True: Allows the user to send microphone input even when the assistant is speaking. This enables more fluid, overlapping conversation.\n\nallow_interrupt=False: Prevents the user from sending microphone input while the assistant is speaking, ensuring that the user does not interrupt the assistant. This is useful in scenarios where clear, uninterrupted communication is important.\n\n\nAsynchronous event loop\nInitialize, execute, and manage the lifecycle of the asynchronous event loop, making sure that the main() coroutine and its runs effectively and that the application shuts down cleanly after the coroutine finishes executing."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.evi-2-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.evi-2-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/evi-2",
@@ -1112,7 +1112,7 @@
     "content": "The Empathic Voice Interface 2 (EVI 2) introduces a new architecture that seamlessly integrates voice and language processing. This multimodal approach allows EVI 2 to understand and generate both language and voice, dramatically enhancing key features over EVI 1 while also enabling new capabilities.\nEVI 2 can converse rapidly and fluently with users, understand a user's tone of voice, generate any tone of voice, and can even handle niche requests like rapping, changing its style, or speeding up its speech. The model specifically excels at emulating a wide range of personalities, including their accents and speaking styles. It is exceptional at maintaining personalities that are fun and interesting to interact with. Ultimately, EVI 2 is capable of emulating the ideal personality for every application and user.\nIn addition, EVI 2 allows developers to create custom voices by using a new voice modulation method. Developers can adjust EVI 2's base voices along a number of continuous scales, including gender, nasality, and pitch. This first-of-its-kind feature enables creating voices that are unique to an application or even a single user. Further, this feature does not rely on voice cloning, which currently invokes more risks than any other capability of this technology.\n\n\nThe EVI 2 API is currently in beta. We are still making ongoing\nimprovements to the model. In the coming weeks and months, EVI 2 will sound\nbetter, speak more languages, follow more complex instructions, and use a\nwider range of tools."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.evi-2-key-improvements-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.evi-2-key-improvements-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/evi-2",
@@ -1147,7 +1147,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.evi-2-building-with-evi-2-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.evi-2-building-with-evi-2-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/evi-2",
@@ -1188,7 +1188,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.evi-2-evi-2-timeline-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.evi-2-evi-2-timeline-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/evi-2",
@@ -1223,7 +1223,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.evi-2-feature-comparison-evi-1-vs-evi-2-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.evi-2-feature-comparison-evi-1-vs-evi-2-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/evi-2",
@@ -1258,7 +1258,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.evi-2-frequently-asked-questions-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.evi-2-frequently-asked-questions-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/evi-2",
@@ -1293,7 +1293,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.configuration-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.configuration-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/configuration",
@@ -1318,7 +1318,7 @@
     "content": "The Empathic Voice Interface (EVI) is designed to be highly configurable, allowing developers to customize the interface to align with their specific requirements.\nConfiguration of EVI can be managed through two primary methods: an EVI configuration and session settings."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.configuration-configuration-options-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.configuration-configuration-options-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/configuration",
@@ -1353,7 +1353,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.configuration-default-configuration-options-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.configuration-default-configuration-options-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/configuration",
@@ -1388,7 +1388,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.configuration-create-a-configuration-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.configuration-create-a-configuration-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/configuration",
@@ -1441,7 +1441,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.configuration-session-settings-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.configuration-session-settings-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/configuration",
@@ -1486,7 +1486,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.configuration-dynamic-variables-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.configuration-dynamic-variables-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/configuration",
@@ -1543,7 +1543,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.voices-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.voices-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/voices",
@@ -1568,7 +1568,7 @@
     "content": "The Empathic Voice Interface (EVI) can be configured with any of our 8 base voices. You can also customize these voices by adjusting specific attributes. This guide explains each attribute and provides a tutorial for creating a custom voice.\nVisit the Playground to test the base voices.\n\n\nThe custom voices feature is experimental and under active development. Regular updates will focus on improving stability and expanding attribute options."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.voices-voice-attributes-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.voices-voice-attributes-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/voices",
@@ -1603,7 +1603,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.voices-crafting-custom-voices-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.voices-crafting-custom-voices-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/voices",
@@ -1638,7 +1638,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/tool-use",
@@ -1663,7 +1663,7 @@
     "content": "EVI simplifies the integration of external APIs through function calling. Developers can integrate custom functions that are invoked dynamically based on the user’s\ninput, enabling more useful conversations. There are two key concepts for using function calling with EVI: Tools and Configurations (Configs):\nTools are resources that EVI uses to do things, like search the web or call external APIs. For example, tools can check the weather, update databases, schedule appointments, or take\nactions based on what occurs in the conversation. While the tools can be user-defined, Hume also offers natively implemented tools, like web search, which are labeled as “built-in” tools.\n\nConfigurations enable developers to customize an EVI’s behavior and incorporate these custom tools. Setting up an EVI configuration allows developers to seamlessly integrate\ntheir tools into the voice interface. A configuration includes prompts, user-defined tools, and other settings.\n\n\n\n\n\n\n\n\nCurrently, our function calling feature only supports\nOpenAI and Anthropic models.\nFor the best results, we suggest choosing a fast and intelligent LLM that performs well on function calling benchmarks.\nOn account of its speed and intelligence, we recommend Claude 3.5 Haiku as the supplemental LLM in your EVI configuration when using tools.\nFunction calling is not available if you are using your own custom language\nmodel. We plan to\nsupport more function calling LLMs in the future.\nThe focus of this guide is on creating a Tool and a Configuration that allows EVI to use the Tool. Additionally, this guide details the message flow of function calls within a\nsession, and outlines the expected responses when function calls fail. Refer to our Configuration Guide for detailed,\nstep-by-step instructions on how to create and use an EVI Configuration.\n\n\nExplore these sample projects to see how Tool use can be implemented in TypeScript,\nNext.js, and Python."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-setup-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-setup-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/tool-use",
@@ -1740,7 +1740,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-function-calling-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-function-calling-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/tool-use",
@@ -1865,7 +1865,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-using-built-in-tools-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-using-built-in-tools-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/tool-use",
@@ -1926,7 +1926,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-interruptibility-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-interruptibility-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/tool-use",
@@ -1961,7 +1961,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-canceling-a-function-call-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-canceling-a-function-call-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/tool-use",
@@ -2010,7 +2010,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-updating-a-function-call-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-updating-a-function-call-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/tool-use",
@@ -2059,7 +2059,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-handling-errors-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-handling-errors-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/tool-use",
@@ -2094,7 +2094,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-specifying-fallback-content-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-specifying-fallback-content-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/tool-use",
@@ -2151,7 +2151,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-failure-message-flow-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.tool-use-failure-message-flow-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/tool-use",
@@ -2224,7 +2224,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.phone-calling-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.phone-calling-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/phone-calling",
@@ -2249,7 +2249,7 @@
     "content": "This guide details how to integrate Twilio with the Empathic Voice Interface (EVI) to enable voice-to-voice interactions with EVI over the phone.\n\n\nTo comply with our Terms of\nUse, always make it clear\nthat the Empathic Voice Interface (EVI) is an AI. Do not mislead individuals\ninto thinking they are interacting with a human. In addition, developers must\ncomply with the FCC\nregulation under\nthe Telephone Consumer Protection Act (TCPA), which requires obtaining prior\nexpress written consent before calling consumers."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.phone-calling-inbound-phone-calling-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.phone-calling-inbound-phone-calling-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/phone-calling",
@@ -2284,7 +2284,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.phone-calling-outbound-phone-calling-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.phone-calling-outbound-phone-calling-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/phone-calling",
@@ -2341,7 +2341,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.phone-calling-troubleshooting-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.phone-calling-troubleshooting-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/phone-calling",
@@ -2376,7 +2376,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/prompting",
@@ -2401,7 +2401,7 @@
     "content": "Creating an effective system prompt is an essential part of customizing an EVI's behavior. For the most part, prompting EVI is the same as prompting any LLM, but there are some important differences. Prompting for EVIs is different for two main reasons:\nPrompts are for a voice-only interaction with the user, rather than a text-based chat.\n\nEVIs can respond to the user’s emotional expressions in their tone of voice, not just the text content of their messages.\n\n\nFurther, EVI is interoperable with any supplemental LLM, allowing developers to select the best model for their use case. For fast, conversational, relatively simple interactions, Hume's voice-language model EVI 2 can handle text generation. However, frontier LLMs will perform better for more complex use cases involving reasoning, long or nuanced prompts, tool use, and other requirements.\nIf you select a supplemental LLM, your system prompt is sent to this LLM, which then generates all of the language in the chat while EVI generates the voice. EVI's voice-language model will still take into account the previous language and audio context to generate the appropriate tone of voice. It can also still be prompted in the chat to change its behavior (e.g. \"speak faster\").\nPrompt engineering allows developers to customize EVI’s response style for any use case, from voice AIs for mental health support to customer service agents and beyond.\n\n\nThe system prompt is a powerful and flexible way to guide EVI's responses, but\nit cannot dictate AI responses with absolute precision. See the limits of\nprompting section for more information. Careful\nprompt design and testing will help EVI behave as intended. If you need more\ncontrol over EVI's responses, try using our custom language\nmodel feature for complete control of text\ngeneration."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-evi-specific-prompting-instructions-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-evi-specific-prompting-instructions-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/prompting",
@@ -2436,7 +2436,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-prompt-for-voice-conversations-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-prompt-for-voice-conversations-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/prompting",
@@ -2485,7 +2485,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-expressive-prompt-engineering-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-expressive-prompt-engineering-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/prompting",
@@ -2542,7 +2542,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-using-dynamic-variables-in-your-prompt-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-using-dynamic-variables-in-your-prompt-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/prompting",
@@ -2599,7 +2599,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-using-a-website-as-evis-knowledge-base-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-using-a-website-as-evis-knowledge-base-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/prompting",
@@ -2648,7 +2648,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-general-llm-prompting-guidelines-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-general-llm-prompting-guidelines-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/prompting",
@@ -2693,7 +2693,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-test-and-evaluate-prompts-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-test-and-evaluate-prompts-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/prompting",
@@ -2732,7 +2732,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-understand-your-llms-capabilities-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-understand-your-llms-capabilities-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/prompting",
@@ -2771,7 +2771,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-use-sections-to-divide-your-prompt-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-use-sections-to-divide-your-prompt-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/prompting",
@@ -2820,7 +2820,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-give-few-shot-examples-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-give-few-shot-examples-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/prompting",
@@ -2869,7 +2869,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-the-limits-of-prompting-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-the-limits-of-prompting-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/prompting",
@@ -2908,7 +2908,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-additional-resources-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-additional-resources-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/prompting",
@@ -2943,7 +2943,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-frequently-asked-questions-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.prompting-frequently-asked-questions-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/prompting",
@@ -2988,7 +2988,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/custom-language-model",
@@ -3013,7 +3013,7 @@
     "content": "The information on this page lays out how our custom language model\nfunctionality works at a high level; however, for detailed instructions and\ncommented code, please see our example GitHub\nrepository."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-overview-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-overview-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/custom-language-model",
@@ -3048,7 +3048,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-setup-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-setup-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/custom-language-model",
@@ -3083,7 +3083,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-payload-structure-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-payload-structure-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/custom-language-model",
@@ -3124,7 +3124,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-custom-session-id-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-custom-session-id-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/custom-language-model",
@@ -3163,7 +3163,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-assistant-input-and-end-payload-format-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-assistant-input-and-end-payload-format-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/custom-language-model",
@@ -3198,7 +3198,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-assistant_input-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-assistant_input-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/custom-language-model",
@@ -3237,7 +3237,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-assistant_end-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-assistant_end-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/custom-language-model",
@@ -3276,7 +3276,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-streaming-text-to-the-assistant-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-streaming-text-to-the-assistant-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/custom-language-model",
@@ -3311,7 +3311,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-summary-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.custom-language-model-summary-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/custom-language-model",
@@ -3346,7 +3346,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.faq-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.empathic-voice-interface-evi.faq-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/empathic-voice-interface-evi/faq",
@@ -3516,7 +3516,7 @@
     "description": "Hume's state of the art expression measurement models for the voice, face, and language."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.overview-intro-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.overview-intro-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/overview",
@@ -3551,7 +3551,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.overview-measurements-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.overview-measurements-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/overview",
@@ -3590,7 +3590,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.overview-model-training-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.overview-model-training-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/overview",
@@ -3629,7 +3629,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.overview-try-out-the-models-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.overview-try-out-the-models-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/overview",
@@ -3664,7 +3664,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.overview-specific-expressions-by-modality-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.overview-specific-expressions-by-modality-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/overview",
@@ -3699,7 +3699,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.overview-train-your-own-custom-model-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.overview-train-your-own-custom-model-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/overview",
@@ -3734,7 +3734,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.rest-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.rest-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/rest",
@@ -3758,7 +3758,7 @@
     "content": "Hume’s Expression Measurement API is designed to facilitate large-scale processing of files using Hume's advanced models through an asynchronous, job-based interface. This API allows developers to submit jobs for parallel processing of various files, enabling efficient handling of multiple data points simultaneously, and receiving notifications when results are available."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.rest-key-features-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.rest-key-features-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/rest",
@@ -3793,7 +3793,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.rest-applications-and-use-cases-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.rest-applications-and-use-cases-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/rest",
@@ -3828,7 +3828,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.rest-using-humes-expression-measurement-api-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.rest-using-humes-expression-measurement-api-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/rest",
@@ -3937,7 +3937,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.rest-api-limits-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.rest-api-limits-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/rest",
@@ -3976,7 +3976,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.rest-providing-urls-and-files-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.rest-providing-urls-and-files-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/rest",
@@ -4015,7 +4015,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/websocket",
@@ -4039,7 +4039,7 @@
     "content": "WebSocket-based streaming facilitates continuous data flow between your application and Hume's models, providing immediate feedback and insights."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-key-features-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-key-features-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/websocket",
@@ -4074,7 +4074,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-applications-and-use-cases-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-applications-and-use-cases-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/websocket",
@@ -4109,7 +4109,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-getting-started-with-websocket-streaming-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-getting-started-with-websocket-streaming-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/websocket",
@@ -4144,7 +4144,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-install-the-hume-python-sdk-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-install-the-hume-python-sdk-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/websocket",
@@ -4193,7 +4193,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-emotional-language-from-text-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-emotional-language-from-text-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/websocket",
@@ -4250,7 +4250,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-facial-expressions-from-an-image-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-facial-expressions-from-an-image-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/websocket",
@@ -4299,7 +4299,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-speech-prosody-from-an-audio-or-video-file-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-speech-prosody-from-an-audio-or-video-file-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/websocket",
@@ -4348,7 +4348,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-streaming-with-your-own-websockets-client-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-streaming-with-your-own-websockets-client-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/websocket",
@@ -4409,7 +4409,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-sending-images-or-audio-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-sending-images-or-audio-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/websocket",
@@ -4458,7 +4458,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-api-limits-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-api-limits-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/websocket",
@@ -4493,7 +4493,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-faq-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.websocket-faq-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/websocket",
@@ -4528,7 +4528,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.custom-models.overview-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.custom-models.overview-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/custom-models/overview",
@@ -4557,7 +4557,7 @@
     "content": "Combined with words, expressions provide a wealth of information about our state of mind in any given context like customer satisfaction or frustration, patient health and well-being, student comprehension and confusion, and so much more.\nHume’s Custom Models API unlocks these insights at the click of a button, integrating patterns of facial expression, vocal expression, and language into a single custom model to predict whatever outcome you specify. This works by taking advantage not only of our state-of-the-art expression AI models, but also specialized language-expression embeddings that we have trained on conversational data.\nThe algorithm that drives our Custom Models API is pretrained on huge volumes of data. That means it already recognizes most patterns of expression and language that people form. All you have to do is add your labels.\nYou can access our Custom Models API through our no code platform detailed in the next section or through our API. Once you create your initial labeled dataset, your labels will be used to train a custom model that you own and only your account can access. You’ll be able to run the model on any new file through our Playground and Custom Models API. You’ll also get statistics on the accuracy of your custom model."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.custom-models.creating-your-dataset-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.custom-models.creating-your-dataset-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/custom-models/creating-your-dataset",
@@ -4585,7 +4585,7 @@
     "content": "In this guide, we'll walk you through the process of creating a dataset used for training your custom model.\n\n\nPrepare your dataset\nChoose a dataset of image, video, or audio files for your custom model to learn from—ideally, one that captures the different states, preferences, or outcomes important to your application.\n\n\nEach dataset must contain files of a single media type, such as all images, all videos, or all audio files.\nThen, begin by organizing your files into labeled subfolders.\nIn this tutorial, we'll put together a dataset of images with facial expressions classified as negative, neutral, or positive. This dataset can then be used to train a custom model for sentiment analysis.\nStart by creating a main folder called 'User Sentiment' with subfolders labeled 'Negative,' 'Neutral or Ambiguous,' and 'Positive.'\nOur platform will interpret these as labels for the images they contain.\n\n\n\n\n\n\nThe amount of data you'll need to build an accurate model depends on your goal's complexity. Generally, it's good practice to have a similar number of samples for each label you want to predict. You'll also want to consider other forms of imbalance or bias in your dataset. The length of file, number of speakers, and language spoken can also impact the model's predictive accuracy.\nTo learn more, see our FAQ on building datasets.\nNavigate to our Portal\nOnce you've assembled your dataset, it's time to visit our Portal.\nIn the Portal, navigate to the Expression Measurement page. Then, continue to the Custom Models section.\nOnce there, click the View Datasets button at the top right of the page.\n\n\n\n\nNext, find the Create Dataset button.\nClicking this button will allow you to add your dataset to our Portal.\n\n\n\n\nCreate your dataset\nProvide a title for your dataset. Then, add a column named after the category you are predicting and specify the data type for this column (categorical or numerical).\nIn our example, we can name the column 'User Sentiment' and select 'Categorical' as the data type.\n\n\n\n\nUpload the folder containing your dataset\nNow, drag-and-drop the folder containing your dataset.\n\n\nRemember, the folder should include subfolders for each label containing the corresponding samples.\n\n\n\n\nIn the pop-up window, assign a name to the label column, which represents the overall category you are predicting.\nIn our example, we can assign ‘User Sentiment’ as the name. Then, click the Save Labels and Continue button and subsequently approve the uploading process.\n\n\n\n\nVerify your uploads\nCheck the total file count and address any detected issues.\nOnce you're ready, hit the Save button on the top right of the page.\n\n\n\n\n\n\nIf you accidentally uploaded a mixed-media dataset, a pop-up window will ask you to select the single file type you would like to keep.\nNow, you’re ready to train your custom model!"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.custom-models.training-a-custom-model-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.custom-models.training-a-custom-model-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/custom-models/training-a-custom-model",
@@ -4613,7 +4613,7 @@
     "content": "In this guide, we will walk you through training your own custom model.\n\n\nCreate a custom model\nIn the Portal under Expression Measurement, navigate to the Custom Models section.\nOnce there, you can click Create Custom Model to begin.\n\n\n\n\nSelect a training dataset\nSelect a dataset to train your custom model on. If you have not created one already, see our guide on creating your dataset.\nFor the purposes of this tutorial, we will train the model on a dataset of images labeled as negative, neutral, or positive.\nThese labels will allow our model to classify facial expressions in images.\n\n\n\n\nSelect a dataset column to predict\nNext, choose the dataset column you want to predict and hit Continue.\nFor this tutorial, you’ll select the 'User Sentiment' column, which represents the predicted emotional tone of each image.\nThis column contains the labels 'Negative', 'Neutral or Ambiguous,' and 'Positive.'\n\n\n\n\nSelect a task type\nBased on your data, we'll recommend either classification or regression as the task type for your custom model.\nClassification requires categorical label values like strings or integers, while regression requires numeric label values like integers or floats.\nThen, select the specific type of model you want to create. There are three available model types:\nMulticlass classification: Predict a categorical variable where all labels are equal in importance (e.g. \"sunny\", \"rainy\", \"cloudy\")\n\nBinary classification: Predict a categorical variable where a designated positive label is the \"correct\" label in some way (e.g. \"good\" vs. \"bad\" customer service call)\n\nUnivariate regression: Predict a single continuous value (e.g. how hot will it be tomorrow?)\n\n\nFor more information, see our FAQ on the difference between classification and regression.\nSince our dataset contains multiple sentiment labels, we'll select Multiclass classification for this tutorial. This type of model is best suited for predicting categorical variables where each label is equally important.\n\n\n\n\nFinalize your custom model\nTo finish, enter a name and description for your custom model. If needed, these can be adjusted at a later time.\nOnce you're ready, click Start Training to begin the training process.\n\n\n\n\nYou will then be redirected to a page confirming that your model is actively training.\nTo check on the status of your model, click View Jobs. To see existing, finished models, click View Models.\n\n\n\n\nCheck the status of your training job\nYou can check the status of your model in the Jobs page of our Portal.\nIt may take a few minutes for your custom model to be ready. Once training is complete, the status will update to \"Completed,\" and you’ll have access to your custom model.\n\n\n\n\nTest your custom model\nWhen you're ready to test your custom model, navigate to the Expression Measurement page, then go to File Analysis.\n\n\n\n\nFrom the Select a model dropdown, choose the custom model you created from previous steps.\n\n\n\n\nTo select a file to analyze, click the Upload files button. You can upload local files, choose previously uploaded files in Hume, or use Hume’s example files to test your custom model.\nLet's test our custom model using one of the example files. Since our model is an image classifier, select an example image file to analyze.\n\n\n\n\nClick Analyze to analyze your selected file with the custom model.\n\n\n\n\nThat’s it! You’ve successfully analyzed a file using your custom model. To evaluate its performance, see our guide on evaluating your custom model."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.custom-models.evaluating-your-custom-model-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.custom-models.evaluating-your-custom-model-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/custom-models/evaluating-your-custom-model",
@@ -4641,7 +4641,7 @@
     "content": "Each custom model you train has a corresponding details page, viewable from the Hume Portal. The model details page displays metrics and visualizations to evaluate your model’s performance. This document serves to help you interpret those metrics and provide guidance on ways to improve your custom model.\n\n\nCustom model details\n\n\nLimitations of model validation metrics\nModel validation metrics are estimates based on a split of your dataset into training and evaluation parts. The larger the training set, the more reliable the metrics. However, it’s important to remember that these metrics are indicative and do not guarantee performance on unseen data."
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.custom-models.evaluating-your-custom-model-assessing-good-performance-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.custom-models.evaluating-your-custom-model-assessing-good-performance-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/custom-models/evaluating-your-custom-model",
@@ -4680,7 +4680,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.custom-models.evaluating-your-custom-model-advanced-evaluation-metrics-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.custom-models.evaluating-your-custom-model-advanced-evaluation-metrics-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/custom-models/evaluating-your-custom-model",
@@ -4719,7 +4719,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.custom-models.evaluating-your-custom-model-improving-model-performance-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.custom-models.evaluating-your-custom-model-improving-model-performance-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/custom-models/evaluating-your-custom-model",
@@ -4758,7 +4758,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.faq-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.expression-measurement.faq-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/expression-measurement/faq",
@@ -4805,7 +4805,7 @@
     "type": "markdown"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.billing-how-it-works-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.billing-how-it-works-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/billing",
@@ -4840,7 +4840,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.billing-managing-your-account-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.billing-managing-your-account-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/billing",
@@ -4875,7 +4875,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.billing-pricing-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.billing-pricing-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/billing",
@@ -4914,7 +4914,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.billing-billing-methodology-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.billing-billing-methodology-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/billing",
@@ -4953,7 +4953,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.billing-faq-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.billing-faq-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/billing",
@@ -5011,7 +5011,7 @@
     "type": "markdown"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.errors-configuration-errors-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.errors-configuration-errors-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/errors",
@@ -5046,7 +5046,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.errors-websocket-status-codes-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.errors-websocket-status-codes-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/errors",
@@ -5081,7 +5081,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.errors-service-errors-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.errors-service-errors-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/errors",
@@ -5116,7 +5116,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.errors-warnings-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.errors-warnings-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/errors",
@@ -5151,7 +5151,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.errors-common-errors-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.errors-common-errors-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/errors",
@@ -5186,7 +5186,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.errors-transcript-confidence-below-threshold-value-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.errors-transcript-confidence-below-threshold-value-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/errors",
@@ -5243,7 +5243,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.science-root-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.science-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/science",
@@ -5267,7 +5267,7 @@
     "content": "What is it about speaking in person that allows us to understand each other so much more accurately than text alone? It isn’t what we say—it’s the way we say it. Science consistently demonstrates that expressions convey important information that is vital for social interaction and forms the building blocks of empathy.\nThat being said, expressions aren’t direct windows into the human mind. Measuring and interpreting expressive behavior is a complex and nuanced task that is the subject of ongoing scientific research.\nThe scientists at Hume AI have run some of the largest-ever psychology studies to better understand how humans express themselves. By investigating expressions around the world and what they mean to the people making them, we’ve mapped out the nuances of expression in the voice, language, and face in unprecedented detail. We’ve published this research in the world’s leading scientific journals and, for the first time, translated it into cutting-edge machine learning models.\nThese models, shaped by a new understanding of human expression, include:\nFacial Expression\n\nSpeech Prosody\n\nVocal Bursts\n\nEmotional Language"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.science-facial-expression-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.science-facial-expression-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/science",
@@ -5306,7 +5306,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.science-speech-prosody-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.science-speech-prosody-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/science",
@@ -5345,7 +5345,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.science-vocal-bursts-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.science-vocal-bursts-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/science",
@@ -5384,7 +5384,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.science-emotional-language-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.science-emotional-language-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/science",
@@ -5423,7 +5423,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.science-published-research-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.science-published-research-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/science",
@@ -5481,7 +5481,7 @@
     "type": "markdown"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.use-case-guidelines-ethical-guidelines-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.use-case-guidelines-ethical-guidelines-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/use-case-guidelines",
@@ -5516,7 +5516,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.use-case-guidelines-scientific-best-practices-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.use-case-guidelines-scientific-best-practices-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/use-case-guidelines",
@@ -5574,7 +5574,7 @@
     "type": "markdown"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.privacy-privacy-policy-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.privacy-privacy-policy-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/privacy",
@@ -5609,7 +5609,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.privacy-zero-data-retention-and-data-usage-options-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.privacy-zero-data-retention-and-data-usage-options-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/privacy",
@@ -5648,7 +5648,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.privacy-to-enable-or-disable-these-options-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.privacy-to-enable-or-disable-these-options-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/privacy",
@@ -5691,7 +5691,7 @@
     "level": "h4"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.privacy-api-data-usage-policy-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.privacy-api-data-usage-policy-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/privacy",
@@ -5726,7 +5726,7 @@
     "level": "h2"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.privacy-consumer-services-faq-0",
+    "objectID": "hume:dev.hume.ai:root.uv.docs.docs.resources.privacy-consumer-services-faq-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/docs/resources/privacy",
@@ -5779,7 +5779,7 @@
     "type": "markdown"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-10-25-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-10-25-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -5813,7 +5813,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-10-25-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-10-25-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -5847,7 +5847,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-10-11-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-10-11-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -5881,7 +5881,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-10-11-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-10-11-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -5915,7 +5915,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-10-11-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-10-11-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -5949,7 +5949,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-09-27-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-09-27-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -5983,7 +5983,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-09-27-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-09-27-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6017,7 +6017,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-changes-09-20-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-changes-09-20-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6051,7 +6051,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-09-20-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-09-20-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6085,7 +6085,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-09-13-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-09-13-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6119,7 +6119,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-09-13-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-09-13-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6153,7 +6153,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-09-13-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-09-13-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6187,7 +6187,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-08-08-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-08-08-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6221,7 +6221,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-08-02-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-08-02-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6255,7 +6255,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-08-02-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-08-02-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6289,7 +6289,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-07-26-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-07-26-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6323,7 +6323,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-07-18-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-07-18-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6357,7 +6357,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-07-18-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-07-18-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6391,7 +6391,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-07-12-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-07-12-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6425,7 +6425,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-07-05-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-07-05-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6459,7 +6459,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-06-28-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-06-28-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6493,7 +6493,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-06-21-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-06-21-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6527,7 +6527,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-06-21-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-06-21-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6561,7 +6561,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-06-21-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-06-21-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6595,7 +6595,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-06-07-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-06-07-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6629,7 +6629,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-06-07-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-06-07-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6663,7 +6663,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-05-31-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-05-31-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6697,7 +6697,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-05-31-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-05-31-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6731,7 +6731,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-05-24-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-05-24-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6770,7 +6770,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-05-24-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-05-24-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6804,7 +6804,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-05-17-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-05-17-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6838,7 +6838,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-05-17-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-05-17-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6872,7 +6872,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-05-10-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-05-10-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6906,7 +6906,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-05-10-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-05-10-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6940,7 +6940,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-05-10-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-05-10-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -6974,7 +6974,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-05-03-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-05-03-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -7008,7 +7008,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-05-03-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-05-03-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -7042,7 +7042,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-04-30-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-additions-04-30-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -7076,7 +7076,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-04-30-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-evi-api-changes-04-30-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",
@@ -7110,7 +7110,7 @@
     "level": "h3"
   },
   {
-    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-04-30-2024-0",
+    "objectID": "hume:dev.hume.ai:root.uv.changelog.changelog.changelog-bugs-bashed-04-30-2024-chunk:0",
     "org_id": "hume",
     "domain": "dev.hume.ai",
     "canonicalPathname": "/changelog",

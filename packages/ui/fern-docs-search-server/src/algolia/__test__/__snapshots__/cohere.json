@@ -1,6 +1,6 @@
 [
   {
-    "objectID": "test-root-0",
+    "objectID": "test-chunk:0",
     "org_id": "test",
     "domain": "test",
     "canonicalPathname": "/test",
@@ -15,7 +15,7 @@
     "content": "Elasticsearch has all the tools developers need to build next generation search experiences with generative AI, and it supports native integration with Cohere through their inference API.\nUse Elastic if you’d like to build with:\nA vector database\n\nDeploy multiple ML models\n\nPerform text, vector and hybrid search\n\nSearch with filters, facet, aggregations\n\nApply document and field level security\n\nRun on-prem, cloud, or serverless (preview)\n\n\nThis guide uses a dataset of Wikipedia articles to set up a pipeline for semantic search. It will cover:\nCreating an Elastic inference processor using Cohere embeddings\n\nCreating an Elasticsearch index with embeddings\n\nPerforming hybrid search on the Elasticsearch index and reranking results\n\nPerforming basic RAG\n\n\nTo see the full code sample, refer to this notebook. You can also find an integration guide here."
   },
   {
-    "objectID": "test-prerequisites-0",
+    "objectID": "test-prerequisites-chunk:0",
     "org_id": "test",
     "domain": "test",
     "canonicalPathname": "/test",
@@ -40,7 +40,7 @@
     "level": "h2"
   },
   {
-    "objectID": "test-create-an-elastic-serverless-deployment-0",
+    "objectID": "test-create-an-elastic-serverless-deployment-chunk:0",
     "org_id": "test",
     "domain": "test",
     "canonicalPathname": "/test",
@@ -65,7 +65,7 @@
     "level": "h2"
   },
   {
-    "objectID": "test-install-the-required-packages-0",
+    "objectID": "test-install-the-required-packages-chunk:0",
     "org_id": "test",
     "domain": "test",
     "canonicalPathname": "/test",
@@ -97,7 +97,7 @@
     "level": "h2"
   },
   {
-    "objectID": "test-import-the-required-packages-0",
+    "objectID": "test-import-the-required-packages-chunk:0",
     "org_id": "test",
     "domain": "test",
     "canonicalPathname": "/test",
@@ -129,7 +129,7 @@
     "level": "h2"
   },
   {
-    "objectID": "test-create-an-elasticsearch-client-0",
+    "objectID": "test-create-an-elasticsearch-client-chunk:0",
     "org_id": "test",
     "domain": "test",
     "canonicalPathname": "/test",
@@ -161,7 +161,7 @@
     "level": "h2"
   },
   {
-    "objectID": "test-create-an-inference-endpoint-0",
+    "objectID": "test-create-an-inference-endpoint-chunk:0",
     "org_id": "test",
     "domain": "test",
     "canonicalPathname": "/test",
@@ -200,7 +200,7 @@
     "level": "h2"
   },
   {
-    "objectID": "test-create-the-index-0",
+    "objectID": "test-create-the-index-chunk:0",
     "org_id": "test",
     "domain": "test",
     "canonicalPathname": "/test",
@@ -239,7 +239,7 @@
     "level": "h2"
   },
   {
-    "objectID": "test-insert-documents-0",
+    "objectID": "test-insert-documents-chunk:0",
     "org_id": "test",
     "domain": "test",
     "canonicalPathname": "/test",
@@ -278,7 +278,7 @@
     "level": "h2"
   },
   {
-    "objectID": "test-semantic-search-0",
+    "objectID": "test-semantic-search-chunk:0",
     "org_id": "test",
     "domain": "test",
     "canonicalPathname": "/test",
@@ -317,7 +317,7 @@
     "level": "h2"
   },
   {
-    "objectID": "test-hybrid-search-0",
+    "objectID": "test-hybrid-search-chunk:0",
     "org_id": "test",
     "domain": "test",
     "canonicalPathname": "/test",
@@ -353,7 +353,7 @@
     "level": "h2"
   },
   {
-    "objectID": "test-ranking-0",
+    "objectID": "test-ranking-chunk:0",
     "org_id": "test",
     "domain": "test",
     "canonicalPathname": "/test",
@@ -394,7 +394,7 @@
     "level": "h2"
   },
   {
-    "objectID": "test-retrieval-augemented-generation-0",
+    "objectID": "test-retrieval-augemented-generation-chunk:0",
     "org_id": "test",
     "domain": "test",
     "canonicalPathname": "/test",

@@ -62,7 +62,6 @@
     "mdast-util-mdxjs-esm": "^2.0.1",
     "mdast-util-to-hast": "^13.1.0",
     "mdast-util-to-markdown": "^2.1.0",
-    "mdast-util-to-string": "^4.0.0",
     "micromark-extension-gfm": "^3.0.0",
     "micromark-extension-math": "^3.1.0",
     "micromark-extension-mdxjs": "^3.0.0",

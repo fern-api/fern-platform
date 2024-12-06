@@ -77,7 +77,7 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
             records.push({
                 ...base_root_markdown_record,
                 content: chunk,
-                objectID: `${base_root_markdown_record.objectID}-root-${i}`,
+                objectID: `${base_root_markdown_record.objectID}-chunk:${i}`,
             });
         });
     }
@@ -120,7 +120,7 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
         chunked_content.forEach((chunk, i) => {
             const record: MarkdownRecord = {
                 ...base_markdown_record,
-                objectID: `${base.objectID}-${heading.id}-${i}`, // theoretically this is unique, but we'll see
+                objectID: `${base.objectID}-${heading.id}-chunk:${i}`, // theoretically this is unique, but we'll see
                 title: decode(markdownToString(heading.title)),
                 hash: `#${heading.id}`,
                 content: chunk,

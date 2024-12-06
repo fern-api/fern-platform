@@ -10,7 +10,7 @@
     "canonicalPathname": "/guides/get-started/introduction",
     "content": "The Twelve Labs Video Understanding Platform leverages artificial intelligence to extract information from videos. It identifies and interprets movements, actions, objects, individuals, sounds, on-screen text, and spoken words. Built on a state-of-the-art multimodal foundation model optimized for videos, the platform enables you to add rich, contextual video understanding to your applications through developer-friendly APIs.",
     "domain": "test.com",
-    "objectID": "test:test.com:root.uv.guides.guides.get-started.introduction-root-0",
+    "objectID": "test:test.com:root.uv.guides.guides.get-started.introduction-chunk:0",
     "org_id": "test",
     "pathname": "/guides/get-started/introduction",
     "tab": {
@@ -56,7 +56,7 @@ Scalability: Our cloud-native distributed infrastructure seamlessly processes th
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:root.uv.guides.guides.get-started.introduction-key-capabilities-of-twelve-labs-for-multimodal-video-understanding-0",
+    "objectID": "test:test.com:root.uv.guides.guides.get-started.introduction-key-capabilities-of-twelve-labs-for-multimodal-video-understanding-chunk:0",
     "org_id": "test",
     "pathname": "/guides/get-started/introduction",
     "tab": {
@@ -107,7 +107,7 @@ For details on fine-tuning the models or different deployment options, please co
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:root.uv.guides.guides.get-started.introduction-twelve-labs-advantages-0",
+    "objectID": "test:test.com:root.uv.guides.guides.get-started.introduction-twelve-labs-advantages-chunk:0",
     "org_id": "test",
     "pathname": "/guides/get-started/introduction",
     "tab": {
@@ -142,7 +142,7 @@ For details on fine-tuning the models or different deployment options, please co
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:root.uv.guides.guides.get-started.introduction-discover-twelve-labs-0",
+    "objectID": "test:test.com:root.uv.guides.guides.get-started.introduction-discover-twelve-labs-chunk:0",
     "org_id": "test",
     "pathname": "/guides/get-started/introduction",
     "tab": {
@@ -166,7 +166,7 @@ For details on fine-tuning the models or different deployment options, please co
     "canonicalPathname": "/guides/get-started/platform-overview",
     "content": "The Twelve Labs Video Understanding Platform, currently in beta, offers an API suite for integrating a state-of-the-art foundation model that understands contextual information from your videos, making it accessible to your applications. The API is organized around REST and is compatible with most programming languages. You can also use Postman or other REST clients to send requests and view responses.",
     "domain": "test.com",
-    "objectID": "test:test.com:root.uv.guides.guides.get-started.platform-overview-root-0",
+    "objectID": "test:test.com:root.uv.guides.guides.get-started.platform-overview-chunk:0",
     "org_id": "test",
     "pathname": "/guides/get-started/platform-overview",
     "tab": {
@@ -201,7 +201,7 @@ For details on fine-tuning the models or different deployment options, please co
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:root.uv.guides.guides.get-started.platform-overview-architecture-overview-0",
+    "objectID": "test:test.com:root.uv.guides.guides.get-started.platform-overview-architecture-overview-chunk:0",
     "org_id": "test",
     "pathname": "/guides/get-started/platform-overview",
     "tab": {
@@ -240,7 +240,7 @@ For details on fine-tuning the models or different deployment options, please co
       },
     },
     "level": "h3",
-    "objectID": "test:test.com:root.uv.guides.guides.get-started.platform-overview-indexes-0",
+    "objectID": "test:test.com:root.uv.guides.guides.get-started.platform-overview-indexes-chunk:0",
     "org_id": "test",
     "pathname": "/guides/get-started/platform-overview",
     "tab": {
@@ -279,7 +279,7 @@ For details on fine-tuning the models or different deployment options, please co
       },
     },
     "level": "h3",
-    "objectID": "test:test.com:root.uv.guides.guides.get-started.platform-overview-video-understanding-engines-0",
+    "objectID": "test:test.com:root.uv.guides.guides.get-started.platform-overview-video-understanding-engines-chunk:0",
     "org_id": "test",
     "pathname": "/guides/get-started/platform-overview",
     "tab": {
@@ -328,7 +328,7 @@ For more details, see the Engine Options page.",
       },
     },
     "level": "h3",
-    "objectID": "test:test.com:root.uv.guides.guides.get-started.platform-overview-engine-options-0",
+    "objectID": "test:test.com:root.uv.guides.guides.get-started.platform-overview-engine-options-chunk:0",
     "org_id": "test",
     "pathname": "/guides/get-started/platform-overview",
     "tab": {
@@ -367,7 +367,7 @@ For more details, see the Engine Options page.",
       },
     },
     "level": "h3",
-    "objectID": "test:test.com:root.uv.guides.guides.get-started.platform-overview-queryprompt-processing-engine-0",
+    "objectID": "test:test.com:root.uv.guides.guides.get-started.platform-overview-queryprompt-processing-engine-chunk:0",
     "org_id": "test",
     "pathname": "/guides/get-started/platform-overview",
     "tab": {
@@ -400,7 +400,7 @@ Perform Downstream Tasks: Utilize the platform's capabilities to search, classif
 Each step is composed of a single API call, making the process straightforward and efficient.
 Note: You can interact with the platform using one of the available SDKs or an HTTP client like requests or axios. This guide demonstrates how to use the SDKs, the recommended approach for most scenarios.",
     "domain": "test.com",
-    "objectID": "test:test.com:root.uv.guides.guides.get-started.quickstart-root-0",
+    "objectID": "test:test.com:root.uv.guides.guides.get-started.quickstart-chunk:0",
     "org_id": "test",
     "pathname": "/guides/get-started/quickstart",
     "tab": {
@@ -457,7 +457,7 @@ Node.js: yarn add twelvelabs-js",
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:root.uv.guides.guides.get-started.quickstart-prerequisites-0",
+    "objectID": "test:test.com:root.uv.guides.guides.get-started.quickstart-prerequisites-chunk:0",
     "org_id": "test",
     "pathname": "/guides/get-started/quickstart",
     "tab": {
@@ -502,7 +502,7 @@ For detailed instructions, refer to the specific guides on each task.",
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:root.uv.guides.guides.get-started.quickstart-procedure-0",
+    "objectID": "test:test.com:root.uv.guides.guides.get-started.quickstart-procedure-chunk:0",
     "org_id": "test",
     "pathname": "/guides/get-started/quickstart",
     "tab": {
@@ -526,7 +526,7 @@ For detailed instructions, refer to the specific guides on each task.",
     "canonicalPathname": "/guides/guides/authentication",
     "content": "The Twelve Labs API uses API keys for authentication. Treat your API key like a password and do not distribute or hardcode it. If you suspect your account is compromised, generate a new key.",
     "domain": "test.com",
-    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-root-0",
+    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-chunk:0",
     "org_id": "test",
     "pathname": "/guides/guides/authentication",
     "tab": {
@@ -572,7 +572,7 @@ To temporarily suspend API usage without deleting your account, you can revoke y
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-managing-api-keys-0",
+    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-managing-api-keys-chunk:0",
     "org_id": "test",
     "pathname": "/guides/guides/authentication",
     "tab": {
@@ -607,7 +607,7 @@ To temporarily suspend API usage without deleting your account, you can revoke y
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-using-the-sdk-0",
+    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-using-the-sdk-chunk:0",
     "org_id": "test",
     "pathname": "/guides/guides/authentication",
     "tab": {
@@ -646,7 +646,7 @@ To temporarily suspend API usage without deleting your account, you can revoke y
       },
     },
     "level": "h3",
-    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-prerequisites-0",
+    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-prerequisites-chunk:0",
     "org_id": "test",
     "pathname": "/guides/guides/authentication",
     "tab": {
@@ -747,7 +747,7 @@ If the API key is valid, the index will be created successfully. If it is expire
       },
     },
     "level": "h3",
-    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-procedure-0",
+    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-procedure-chunk:0",
     "org_id": "test",
     "pathname": "/guides/guides/authentication",
     "tab": {
@@ -782,7 +782,7 @@ If the API key is valid, the index will be created successfully. If it is expire
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-using-an-http-client-0",
+    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-using-an-http-client-chunk:0",
     "org_id": "test",
     "pathname": "/guides/guides/authentication",
     "tab": {
@@ -823,7 +823,7 @@ The URL of the API service should be stored in the API_URL variable.",
       },
     },
     "level": "h3",
-    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-prerequisites-1-0",
+    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-prerequisites-1-chunk:0",
     "org_id": "test",
     "pathname": "/guides/guides/authentication",
     "tab": {
@@ -920,7 +920,7 @@ If the API key is valid, the index will be created successfully. If it is expire
       },
     },
     "level": "h3",
-    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-procedure-1-0",
+    "objectID": "test:test.com:root.uv.guides.guides.guides.authentication-procedure-1-chunk:0",
     "org_id": "test",
     "pathname": "/guides/guides/authentication",
     "tab": {
@@ -945,7 +945,7 @@ If the API key is valid, the index will be created successfully. If it is expire
     "content": "An index is a fundamental unit for organizing and storing video data, consisting of video embeddings and metadata. Indexes facilitate information retrieval and processing.
 You can use indexes to group related videos. For example, if you want to upload multiple videos from a car race, you can create a single index and upload all the videos to it. After uploading, you can search for specific moments across all videos in that index in a single request.",
     "domain": "test.com",
-    "objectID": "test:test.com:root.uv.guides.guides.guides.create-indexes-root-0",
+    "objectID": "test:test.com:root.uv.guides.guides.guides.create-indexes-chunk:0",
     "org_id": "test",
     "pathname": "/guides/guides/create-indexes",
     "tab": {
@@ -982,7 +982,7 @@ You have an API key. To retrieve your API key, navigate to the API Key page and 
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:root.uv.guides.guides.guides.create-indexes-prerequisites-0",
+    "objectID": "test:test.com:root.uv.guides.guides.guides.create-indexes-prerequisites-chunk:0",
     "org_id": "test",
     "pathname": "/guides/guides/create-indexes",
     "tab": {
@@ -1100,7 +1100,7 @@ Note that the response contains, among other information, a field named id, repr
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:root.uv.guides.guides.guides.create-indexes-procedure-0",
+    "objectID": "test:test.com:root.uv.guides.guides.guides.create-indexes-procedure-chunk:0",
     "org_id": "test",
     "pathname": "/guides/guides/create-indexes",
     "tab": {
@@ -1133,7 +1133,7 @@ The platform supports uploading video files that can play without additional use
 
 The ability to upload videos from YouTube is no longer supported.",
     "domain": "test.com",
-    "objectID": "test:test.com:root.uv.guides.guides.guides.upload-videos-root-0",
+    "objectID": "test:test.com:root.uv.guides.guides.guides.upload-videos-chunk:0",
     "org_id": "test",
     "pathname": "/guides/guides/upload-videos",
     "tab": {
@@ -1183,7 +1183,7 @@ Audio track: If the conversation engine option is selected, the video you're upl
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:root.uv.guides.guides.guides.upload-videos-prerequisites-0",
+    "objectID": "test:test.com:root.uv.guides.guides.guides.upload-videos-prerequisites-chunk:0",
     "org_id": "test",
     "pathname": "/guides/guides/upload-videos",
     "tab": {
@@ -1331,7 +1331,7 @@ Once a video has been successfully uploaded and indexed, the task object contain
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:root.uv.guides.guides.guides.upload-videos-procedure-0",
+    "objectID": "test:test.com:root.uv.guides.guides.guides.upload-videos-procedure-chunk:0",
     "org_id": "test",
     "pathname": "/guides/guides/upload-videos",
     "tab": {
@@ -1350,7 +1350,7 @@ Once a video has been successfully uploaded and indexed, the task object contain
     "canonicalPathname": "/api-reference/api-reference",
     "content": "The Twelve Labs API provides a comprehensive suite of tools for integrating advanced video understanding capabilities into your applications. This overview covers the key components and functionalities of the API, helping you get started with building powerful video-based solutions.",
     "domain": "test.com",
-    "objectID": "test:test.com:a1e69a1f-3ea3-4860-97ab-8cae4e192ea3-root-0",
+    "objectID": "test:test.com:a1e69a1f-3ea3-4860-97ab-8cae4e192ea3-chunk:0",
     "org_id": "test",
     "pathname": "/api-reference/api-reference",
     "tab": {
@@ -1388,7 +1388,7 @@ Multimodal Analysis: Leverage a video-first, multimodal approach for comprehensi
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:a1e69a1f-3ea3-4860-97ab-8cae4e192ea3-key-features-0",
+    "objectID": "test:test.com:a1e69a1f-3ea3-4860-97ab-8cae4e192ea3-key-features-chunk:0",
     "org_id": "test",
     "pathname": "/api-reference/api-reference",
     "tab": {
@@ -1425,7 +1425,7 @@ Classification and Analysis: Apply classification models and analyze video conte
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:a1e69a1f-3ea3-4860-97ab-8cae4e192ea3-api-structure-0",
+    "objectID": "test:test.com:a1e69a1f-3ea3-4860-97ab-8cae4e192ea3-api-structure-chunk:0",
     "org_id": "test",
     "pathname": "/api-reference/api-reference",
     "tab": {
@@ -1455,7 +1455,7 @@ Classification and Analysis: Apply classification models and analyze video conte
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:a1e69a1f-3ea3-4860-97ab-8cae4e192ea3-authentication-0",
+    "objectID": "test:test.com:a1e69a1f-3ea3-4860-97ab-8cae4e192ea3-authentication-chunk:0",
     "org_id": "test",
     "pathname": "/api-reference/api-reference",
     "tab": {
@@ -1496,7 +1496,7 @@ Explore API Endpoints: Use the API to create indexes, upload videos, and perform
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:a1e69a1f-3ea3-4860-97ab-8cae4e192ea3-getting-started-0",
+    "objectID": "test:test.com:a1e69a1f-3ea3-4860-97ab-8cae4e192ea3-getting-started-chunk:0",
     "org_id": "test",
     "pathname": "/api-reference/api-reference",
     "tab": {
@@ -1529,7 +1529,7 @@ This page provides a general overview of the Twelve Labs API, helping you unders
       },
     },
     "level": "h2",
-    "objectID": "test:test.com:a1e69a1f-3ea3-4860-97ab-8cae4e192ea3-support-and-resources-0",
+    "objectID": "test:test.com:a1e69a1f-3ea3-4860-97ab-8cae4e192ea3-support-and-resources-chunk:0",
     "org_id": "test",
     "pathname": "/api-reference/api-reference",
     "tab": {
