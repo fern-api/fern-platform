@@ -1,3 +1,4 @@
+import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import { algoliaAppId, algoliaSearchApikey } from "@/server/env-variables";
 import { selectFirst } from "@/server/utils/selectFirst";
 import { getDocsDomainNode } from "@/server/xfernhost/node";
@@ -18,6 +19,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const domain = getDocsDomainNode(req);
+
+    const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
+    if (orgMetadata == null) {
+        return res.status(404).send("Not found");
+    }
+
+    if (orgMetadata.isPreviewUrl) {
+        return res.status(400).send("Search is not supported for preview URLs");
+    }
+
     const userToken = getXUserToken(req);
 
     const apiKey = getSearchApiKey({
