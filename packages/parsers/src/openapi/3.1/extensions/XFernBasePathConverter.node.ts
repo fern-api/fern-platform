@@ -25,6 +25,8 @@ export class XFernBasePathConverterNode extends BaseOpenApiV3_1ConverterNode<Ope
             if (this.basePath.endsWith("/")) {
                 this.basePath = this.basePath.slice(0, -1);
             }
+        } else {
+            this.basePath = undefined;
         }
     }
 
