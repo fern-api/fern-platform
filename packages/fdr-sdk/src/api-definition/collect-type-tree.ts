@@ -18,6 +18,7 @@ import { unwrapObjectType, unwrapReference } from "./unwrap";
  * We collect the true shape of the path here so that the frontend can determine how to render it.
  */
 export type KeyPathItem =
+    | { type: "meta"; value: string; displayName: string | undefined }
     | { type: "objectProperty"; key: string; optional: boolean | undefined }
     | {
           type: "undiscriminatedUnionVariant";

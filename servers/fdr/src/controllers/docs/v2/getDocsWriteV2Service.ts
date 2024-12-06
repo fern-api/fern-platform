@@ -9,6 +9,7 @@ import {
     FernNavigation,
 } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { generateAlgoliaRecords } from "@fern-ui/fern-docs-search-server/archive";
 import { AuthType } from "@prisma/client";
 import { mapValues } from "es-toolkit";
 import urlJoin from "url-join";

@@ -20,6 +20,10 @@
       "types": "./dist/algolia/index.d.ts",
       "default": "./dist/algolia/index.js"
     },
+    "./archive": {
+      "types": "./dist/algolia/records/archive/index.d.ts",
+      "default": "./dist/algolia/records/archive/index.js"
+    },
     "./tasks": {
       "types": "./dist/tasks/index.d.ts",
       "default": "./dist/tasks/index.js"
