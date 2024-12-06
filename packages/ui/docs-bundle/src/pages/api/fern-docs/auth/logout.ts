@@ -30,10 +30,20 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         logoutUrl?.searchParams.set(return_to_param, req.nextUrl.searchParams.get(return_to_param)!);
     }
 
-    const redirectLocation =
+    let redirectLocation =
         logoutUrl ??
         safeUrl(req.nextUrl.searchParams.get(return_to_param)) ??
         safeUrl(withDefaultProtocol(getHostEdge(req)));
+
+    console.log("domain");
+    console.log(domain);
+    if (
+        typeof redirectLocation !== "undefined" &&
+        new URL(withDefaultProtocol(redirectLocation)).host !== new URL(withDefaultProtocol(domain)).host
+    ) {
+        // avoid malicious use of logout URL
+        redirectLocation = new URL(withDefaultProtocol(domain));
+    }
 
     const res = redirectLocation ? NextResponse.redirect(redirectLocation) : NextResponse.next();
     res.cookies.delete(withDeleteCookie(COOKIE_FERN_TOKEN, withDefaultProtocol(getHostEdge(req))));
