@@ -1,7 +1,7 @@
-import { Algolia, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import fs from "fs";
 import path from "path";
-import { generateAlgoliaRecords } from "../records/generateAlgoliaRecords.js";
+import { createAlgoliaRecords } from "../records/create-algolia-records";
 
 const fixturesDir = path.join(__dirname, "../../../../../fdr-sdk/src/__test__/fixtures");
 
@@ -51,28 +51,26 @@ for (const fixtureName of [
             const apis = FernNavigation.utils.toApis(fixture);
             const pages = FernNavigation.utils.toPages(fixture);
 
-            const records = generateAlgoliaRecords({
-                indexSegmentId: Algolia.IndexSegmentId("0"),
-                nodes: root,
+            const records = createAlgoliaRecords({
+                root,
+                domain: "test.com",
+                org_id: "test",
                 pages,
                 apis,
-                isFieldRecordsEnabled: true,
             });
 
             records.forEach((record) => {
-                if (
-                    (record.type === "page-v4" ||
-                        record.type === "endpoint-v4" ||
-                        record.type === "endpoint-field-v1") &&
-                    record.description
-                ) {
-                    expect(record.description.length).toBeLessThan(95000);
+                if (record.description != null) {
+                    expect(record.description.length).toBeLessThanOrEqual(50_000);
                 }
-                if ((record.type === "endpoint-v3" || record.type === "page-v3") && record.content) {
-                    expect(record.content.length).toBeLessThan(95000);
+
+                if (record.type === "markdown" && record.content != null) {
+                    expect(record.content.length).toBeLessThanOrEqual(50_000);
                 }
             });
-            expect(records).toMatchFileSnapshot(path.join("__snapshots__", `${fixtureName}.test.ts.snap`));
+            expect(JSON.stringify(records, null, 2)).toMatchFileSnapshot(
+                path.join("__snapshots__", `${fixtureName}.test.ts.json`),
+            );
         });
     });
 }

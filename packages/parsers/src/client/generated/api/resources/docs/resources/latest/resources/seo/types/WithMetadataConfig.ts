@@ -23,4 +23,5 @@ export interface WithMetadataConfig {
     "twitter:card": FernRegistry.docs.latest.TwitterCardSetting | undefined;
     noindex: boolean | undefined;
     nofollow: boolean | undefined;
+    keywords: FernRegistry.docs.latest.StringOrStringList | undefined;
 }

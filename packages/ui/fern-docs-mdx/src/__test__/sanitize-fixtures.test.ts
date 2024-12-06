@@ -1,8 +1,8 @@
 import { readFileSync, readdirSync } from "fs";
 import path from "path";
-import { getFrontmatter } from "../frontmatter.js";
-import { mdastToMarkdown } from "../mdast-utils/mdast-to-markdown.js";
-import { toTree } from "../parse.js";
+import { getFrontmatter } from "../frontmatter";
+import { mdastToMarkdown } from "../mdast-utils/mdast-to-markdown";
+import { toTree } from "../parse";
 
 describe("Sanitize fixtures", () => {
     const fixtures = readdirSync(path.join(__dirname, "fixtures"));

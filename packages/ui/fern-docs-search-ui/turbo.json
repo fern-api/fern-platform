@@ -1,0 +1,22 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "dev:build": {
+      "outputs": [".next/**", "!.next/cache/**"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "dependsOn": ["^build", "^compile"]
+    },
+    "dev": {
+      "dependsOn": ["^build", "^compile"],
+      "persistent": true
+    },
+    "dev:start": {
+      "dependsOn": ["dev:build"],
+      "persistent": true
+    },
+    "dev:lint": {
+      "dependsOn": ["^build", "^compile"]
+    }
+  }
+}

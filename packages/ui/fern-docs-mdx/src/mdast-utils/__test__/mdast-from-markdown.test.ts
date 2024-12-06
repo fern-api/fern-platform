@@ -1,4 +1,4 @@
-import { mdastFromMarkdown } from "../mdast-from-markdown.js";
+import { mdastFromMarkdown } from "../mdast-from-markdown";
 
 describe("mdast-from-markdown", () => {
     it("should convert markdown to mdast", () => {

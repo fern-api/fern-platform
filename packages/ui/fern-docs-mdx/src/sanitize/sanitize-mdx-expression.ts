@@ -1,6 +1,6 @@
 import { VFileMessage } from "vfile-message";
-import { mdastFromMarkdown } from "../mdast-utils/mdast-from-markdown.js";
-import { getStart, isPoint } from "../position.js";
+import { mdastFromMarkdown } from "../mdast-utils/mdast-from-markdown";
+import { getStart, isPoint } from "../position";
 
 interface ErrorContext {
     error: VFileMessage;

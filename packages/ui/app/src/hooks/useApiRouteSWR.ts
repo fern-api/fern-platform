@@ -1,27 +1,42 @@
 import useSWR, { Fetcher, SWRConfiguration, SWRResponse } from "swr";
 import useSWRImmutable from "swr/immutable";
+import { z } from "zod";
 import { withSkewProtection } from "../util/withSkewProtection";
 import { FernDocsApiRoute, useApiRoute } from "./useApiRoute";
 
 interface Options<T> extends SWRConfiguration<T, Error, Fetcher<T>> {
     disabled?: boolean;
     request?: RequestInit & { headers?: Record<string, string> };
+    validate?: z.ZodType<T>;
 }
 
-function createFetcher<T>(init?: RequestInit & { headers?: Record<string, string> }): (url: string) => Promise<T> {
+function createFetcher<T>(
+    init?: RequestInit & { headers?: Record<string, string> },
+    validate?: z.ZodType<T>,
+): (url: string) => Promise<T> {
     return async (url: string): Promise<T> => {
         const request = { ...init, headers: withSkewProtection(init?.headers) };
         const r = await fetch(url, request);
-        return await r.json();
+        const data = await r.json();
+        if (validate) {
+            return validate.parse(data);
+        }
+        return data;
     };
 }
 
-export function useApiRouteSWR<T>(route: FernDocsApiRoute, options?: Options<T>): SWRResponse<T> {
+export function useApiRouteSWR<T>(
+    route: FernDocsApiRoute,
+    { disabled, request, validate, ...options }: Options<T> = {},
+): SWRResponse<T> {
     const key = useApiRoute(route);
-    return useSWR(options?.disabled ? null : key, createFetcher(options?.request), options);
+    return useSWR(disabled ? null : key, createFetcher(request, validate), options);
 }
 
-export function useApiRouteSWRImmutable<T>(route: FernDocsApiRoute, options?: Options<T>): SWRResponse<T> {
+export function useApiRouteSWRImmutable<T>(
+    route: FernDocsApiRoute,
+    { disabled, request, validate, ...options }: Options<T> = {},
+): SWRResponse<T> {
     const key = useApiRoute(route);
-    return useSWRImmutable(options?.disabled ? null : key, createFetcher(options?.request), options);
+    return useSWRImmutable(disabled ? null : key, createFetcher(request, validate), options);
 }

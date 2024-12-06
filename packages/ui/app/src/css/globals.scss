@@ -5,8 +5,9 @@
 @import "./base";
 @import "@fern-ui/components/src/index.scss";
 @import "@fern-ui/chatbot/src/index.scss";
+@import "@fern-ui/fern-docs-syntax-highlighter/src/index.scss";
+@import "@fern-ui/fern-docs-search-ui/src/index.scss";
 @import "./components";
-@import "../syntax-highlighting/FernSyntaxHighlighter";
 @import "../api-reference";
 @import "../playground";
 @import "../components";

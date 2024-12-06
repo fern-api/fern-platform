@@ -1,6 +1,6 @@
 import { h } from "hastscript";
-import { hastMdxJsxElementHastToProps } from "../hast-utils/hast-mdx-to-props.js";
-import { unknownToMdxJsxAttributeValue } from "../mdx-utils/unknown-to-mdx-jsx-attr.js";
+import { hastMdxJsxElementHastToProps } from "../hast-utils/hast-mdx-to-props";
+import { unknownToMdxJsxAttributeValue } from "../mdx-utils/unknown-to-mdx-jsx-attr";
 
 describe("hast-mdx-to-attr", () => {
     const { props } = hastMdxJsxElementHastToProps({

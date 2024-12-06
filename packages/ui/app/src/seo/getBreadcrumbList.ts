@@ -1,8 +1,6 @@
-import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { getFrontmatter } from "@fern-ui/fern-docs-mdx";
 import { JsonLd } from "@fern-ui/next-seo";
 import urljoin from "url-join";
 
@@ -12,32 +10,11 @@ function toUrl(domain: string, slug: FernNavigation.Slug): string {
 
 export function getBreadcrumbList(
     domain: string,
-    pages: Record<string, DocsV1Read.PageContent>,
     parents: readonly FernNavigation.NavigationNode[],
     node: FernNavigation.NavigationNodePage,
+    title?: string,
 ): FernDocs.JsonLdBreadcrumbList {
-    let title = node.title;
-
-    if (FernNavigation.isPage(node)) {
-        const pageId = FernNavigation.getPageId(node);
-        if (pageId != null) {
-            const page = pages[pageId];
-            if (page != null) {
-                const { data: frontmatter } = getFrontmatter(page.markdown);
-
-                // if the frontmatter has a jsonld:breadcrumb, use that
-                if (frontmatter["jsonld:breadcrumb"] != null) {
-                    return frontmatter["jsonld:breadcrumb"];
-                }
-
-                // override the title used in the breadcrumb's last item.
-                // for example, if the sidebar's title is "Overview" but the page title is "This API Overview"
-                if (frontmatter.title != null) {
-                    title = frontmatter.title;
-                }
-            }
-        }
-    }
+    title ??= node.title;
 
     const elements: FernDocs.JsonLdBreadcrumbListElement[] = [];
     const visitedSlugs = new Set<string>();

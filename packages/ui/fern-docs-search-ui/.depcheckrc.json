@@ -1,0 +1,13 @@
+{
+  "ignores": [
+    "autoprefixer",
+    "postcss",
+    "cssnano",
+    "@chromatic-com/storybook",
+    "@storybook/addon-essentials",
+    "@storybook/addon-interactions",
+    "@storybook/addon-onboarding",
+    "@storybook/blocks"
+  ],
+  "ignore-patterns": ["dist"]
+}

@@ -1,10 +1,10 @@
 import { CopyToClipboardButton } from "@fern-ui/components";
+import { FernSyntaxHighlighter, type FernSyntaxHighlighterProps } from "@fern-ui/fern-docs-syntax-highlighter";
 import * as Tabs from "@radix-ui/react-tabs";
 import clsx from "clsx";
 import { useState } from "react";
 import { useFeatureFlags } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../components/HorizontalOverflowMask";
-import { FernSyntaxHighlighter, FernSyntaxHighlighterProps } from "../../../syntax-highlighting/FernSyntaxHighlighter";
 
 export declare namespace CodeGroup {
     export interface Item extends FernSyntaxHighlighterProps {

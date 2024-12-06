@@ -37,7 +37,9 @@ export function GuideLayout({
                         </div>
 
                         {!hideNavLinks && <BottomNavigationNeighbors />}
-                        <BuiltWithFern className="w-fit mx-auto my-8" />
+                        <div className="w-fit mx-auto my-8">
+                            <BuiltWithFern />
+                        </div>
                     </footer>
                 )}
             </article>
