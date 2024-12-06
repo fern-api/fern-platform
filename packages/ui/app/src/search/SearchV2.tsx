@@ -62,6 +62,8 @@ export function SearchV2(): ReactElement | false {
     const { data } = useApiRouteSWRImmutable("/api/fern-docs/search/v2/key", {
         request: { headers: { "X-User-Token": userToken } },
         validate: ApiKeySchema,
+        // api key expires 24 hours, so we refresh it every 12 hours
+        refreshInterval: 60 * 60 * 12 * 1000,
     });
 
     const facetApiEndpoint = useApiRoute("/api/fern-docs/search/v2/facet");
