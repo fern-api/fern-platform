@@ -1,4 +1,5 @@
 import { track } from "@/server/analytics/posthog";
+import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import { algoliaAppId, algoliaWriteApiKey, fdrEnvironment, fernToken } from "@/server/env-variables";
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
 import { getDocsDomainNode } from "@/server/xfernhost/node";
@@ -14,6 +15,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const domain = getDocsDomainNode(req);
 
     try {
+        const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
+        if (orgMetadata == null) {
+            return res.status(404).send("Not found");
+        }
+
+        // If the domain is a preview URL, we don't want to reindex
+        if (orgMetadata.isPreviewUrl) {
+            return res.status(200).json({
+                added: 0,
+                updated: 0,
+                deleted: 0,
+            });
+        }
+
         const start = Date.now();
         const [authEdgeConfig, featureFlags] = await Promise.all([getAuthEdgeConfig(domain), getFeatureFlags(domain)]);
 
@@ -51,7 +66,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             deleted: response.deletedObjectIDs.length,
         });
 
-        return res.status(200).json(response);
+        return res.status(200).json({
+            added: response.addedObjectIDs.length,
+            updated: response.updatedObjectIDs.length,
+            deleted: response.deletedObjectIDs.length,
+        });
     } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);

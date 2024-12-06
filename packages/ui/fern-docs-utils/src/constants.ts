@@ -7,7 +7,7 @@ export const COOKIE_REFRESH_TOKEN = "refresh_token" as const; // for api key inj
 export const COOKIE_EMAIL = "email" as const; // for api key injection
 export const HEADER_X_FERN_HOST = "x-fern-host" as const;
 export const HEADER_X_MATCHED_PATH = "x-matched-path" as const;
-export const HEADER_X_ALGOLIA_API_KEY = "x-algolia-api-key" as const;
+
 /**
  * The role that is used to represent everyone (including unauthenticated users)
  */

@@ -17,7 +17,6 @@ import {
     useFacetFilters,
     useIsMobile,
 } from "@fern-ui/fern-docs-search-ui";
-import { HEADER_X_ALGOLIA_API_KEY } from "@fern-ui/fern-docs-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/router";
@@ -63,6 +62,8 @@ export function SearchV2(): ReactElement | false {
     const { data } = useApiRouteSWRImmutable("/api/fern-docs/search/v2/key", {
         request: { headers: { "X-User-Token": userToken } },
         validate: ApiKeySchema,
+        // api key expires 24 hours, so we refresh it every 12 hours
+        refreshInterval: 60 * 60 * 12 * 1000,
     });
 
     const facetApiEndpoint = useApiRoute("/api/fern-docs/search/v2/facet");
@@ -73,12 +74,10 @@ export function SearchV2(): ReactElement | false {
                 return {};
             }
             const searchParams = new URLSearchParams();
+            searchParams.append("apiKey", data.apiKey);
             filters.forEach((filter) => searchParams.append("filters", filter));
             const search = String(searchParams);
-            const res = await fetch(`${facetApiEndpoint}${search ? `?${search}` : ""}`, {
-                method: "GET",
-                headers: { [HEADER_X_ALGOLIA_API_KEY]: data.apiKey },
-            });
+            const res = await fetch(`${facetApiEndpoint}?${search}`, { method: "GET" });
             return res.json();
         },
         [data, facetApiEndpoint],
