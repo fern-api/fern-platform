@@ -6,6 +6,7 @@ import {
     SEARCH_INDEX,
     getSearchApiKey,
 } from "@fern-ui/fern-docs-search-server/algolia";
+import { withoutStaging } from "@fern-ui/fern-docs-utils";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export const maxDuration = 10;
@@ -21,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const apiKey = getSearchApiKey({
         parentApiKey: algoliaSearchApikey(),
-        domain,
+        domain: withoutStaging(domain),
         roles: [],
         authed: false,
         expiresInSeconds: DEFAULT_SEARCH_API_KEY_EXPIRATION_SECONDS,
