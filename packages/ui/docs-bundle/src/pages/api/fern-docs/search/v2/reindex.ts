@@ -5,7 +5,7 @@ import { getDocsDomainNode } from "@/server/xfernhost/node";
 import { getAuthEdgeConfig, getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
 import { SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
 import { algoliaIndexSettingsTask, algoliaIndexerTask } from "@fern-ui/fern-docs-search-server/tasks";
-import { addLeadingSlash } from "@fern-ui/fern-docs-utils";
+import { addLeadingSlash, withoutStaging } from "@fern-ui/fern-docs-utils";
 import { NextApiRequest, NextApiResponse } from "next/types";
 
 export const maxDuration = 900; // 15 minutes
@@ -29,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             indexName: SEARCH_INDEX,
             environment: fdrEnvironment(),
             fernToken: fernToken(),
-            domain,
+            domain: withoutStaging(domain),
             authed: (node) => {
                 if (authEdgeConfig == null) {
                     return false;
