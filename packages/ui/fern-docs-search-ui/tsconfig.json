@@ -32,8 +32,11 @@
     },
     {
       "path": "../fern-docs-syntax-highlighter"
+    },
+    {
+      "path": "../../commons/react/react-commons"
     }
   ],
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx", "../components/src/kbd.tsx"],
   "exclude": ["node_modules", "src/server/**/*"]
 }

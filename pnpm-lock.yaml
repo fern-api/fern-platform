@@ -181,9 +181,6 @@ importers:
       tailwindcss:
         specifier: ^3.4.3
         version: 3.4.3(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.4.3))
-      tailwindcss-animate:
-        specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.4.3)))
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.4.3)
@@ -1178,9 +1175,6 @@ importers:
       hast-util-to-string:
         specifier: ^3.0.0
         version: 3.0.0
-      hastscript:
-        specifier: ^9.0.0
-        version: 9.0.0
       iconoir-react:
         specifier: ^7.7.0
         version: 7.7.0(react@18.3.1)
@@ -1271,9 +1265,6 @@ importers:
       selection-popover:
         specifier: ^0.3.0
         version: 0.3.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      shiki:
-        specifier: ^1.22.0
-        version: 1.22.0
       swr:
         specifier: ^2.2.5
         version: 2.2.5(react@18.3.1)
@@ -1606,6 +1597,9 @@ importers:
       sonner:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      tailwind-merge:
+        specifier: ^2.3.0
+        version: 2.3.0
       ts-extras:
         specifier: ^0.11.0
         version: 0.11.0
@@ -1766,9 +1760,15 @@ importers:
       '@fern-ui/fern-docs-search-server':
         specifier: workspace:*
         version: link:../fern-docs-search-server
+      '@fern-ui/fern-docs-search-ui':
+        specifier: workspace:*
+        version: link:../fern-docs-search-ui
       '@fern-ui/fern-docs-server':
         specifier: workspace:*
         version: link:../fern-docs-server
+      '@fern-ui/fern-docs-syntax-highlighter':
+        specifier: workspace:*
+        version: link:../fern-docs-syntax-highlighter
       '@fern-ui/fern-docs-utils':
         specifier: workspace:*
         version: link:../fern-docs-utils
@@ -1927,9 +1927,6 @@ importers:
       tailwindcss:
         specifier: ^3.4.3
         version: 3.4.3(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.4.3))
-      tailwindcss-animate:
-        specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.4.3)))
       typescript:
         specifier: 5.4.3
         version: 5.4.3
@@ -2421,6 +2418,9 @@ importers:
       '@fern-ui/fern-docs-syntax-highlighter':
         specifier: workspace:*
         version: link:../fern-docs-syntax-highlighter
+      '@fern-ui/react-commons':
+        specifier: workspace:*
+        version: link:../../commons/react/react-commons
       '@radix-ui/primitive':
         specifier: ^1.1.0
         version: 1.1.0
@@ -2484,9 +2484,6 @@ importers:
       es-toolkit:
         specifier: ^1.27.0
         version: 1.27.0
-      instantsearch.css:
-        specifier: 8.5.1
-        version: 8.5.1
       instantsearch.js:
         specifier: 4.75.4
         version: 4.75.4(algoliasearch@5.13.0)
@@ -2679,8 +2676,8 @@ importers:
         specifier: ^4.7.7
         version: 4.7.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       shiki:
-        specifier: ^1.22.0
-        version: 1.22.0
+        specifier: ^1.24.0
+        version: 1.24.0
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
@@ -6526,17 +6523,17 @@ packages:
     resolution: {integrity: sha512-7eDbqKv/OBd11jjdZjUwFGN8sHWkeUqLeHXHQxQ1azja2IM7WIH+z/aLgzR6LhB3/MINNwtjesDpjGqTMj2JKQ==}
     engines: {node: '>=12.0'}
 
-  '@shikijs/core@1.22.0':
-    resolution: {integrity: sha512-S8sMe4q71TJAW+qG93s5VaiihujRK6rqDFqBnxqvga/3LvqHEnxqBIOPkt//IdXVtHkQWKu4nOQNk0uBGicU7Q==}
+  '@shikijs/core@1.24.0':
+    resolution: {integrity: sha512-6pvdH0KoahMzr6689yh0QJ3rCgF4j1XsXRHNEeEN6M4xJTfQ6QPWrmHzIddotg+xPJUPEPzYzYCKzpYyhTI6Gw==}
 
-  '@shikijs/engine-javascript@1.22.0':
-    resolution: {integrity: sha512-AeEtF4Gcck2dwBqCFUKYfsCq0s+eEbCEbkUuFou53NZ0sTGnJnJ/05KHQFZxpii5HMXbocV9URYVowOP2wH5kw==}
+  '@shikijs/engine-javascript@1.24.0':
+    resolution: {integrity: sha512-ZA6sCeSsF3Mnlxxr+4wGEJ9Tto4RHmfIS7ox8KIAbH0MTVUkw3roHPHZN+LlJMOHJJOVupe6tvuAzRpN8qK1vA==}
 
-  '@shikijs/engine-oniguruma@1.22.0':
-    resolution: {integrity: sha512-5iBVjhu/DYs1HB0BKsRRFipRrD7rqjxlWTj4F2Pf+nQSPqc3kcyqFFeZXnBMzDf0HdqaFVvhDRAGiYNvyLP+Mw==}
+  '@shikijs/engine-oniguruma@1.24.0':
+    resolution: {integrity: sha512-Eua0qNOL73Y82lGA4GF5P+G2+VXX9XnuUxkiUuwcxQPH4wom+tE39kZpBFXfUuwNYxHSkrSxpB1p4kyRW0moSg==}
 
-  '@shikijs/types@1.22.0':
-    resolution: {integrity: sha512-Fw/Nr7FGFhlQqHfxzZY8Cwtwk5E9nKDUgeLjZgt3UuhcM3yJR9xj3ZGNravZZok8XmEZMiYkSMTPlPkULB8nww==}
+  '@shikijs/types@1.24.0':
+    resolution: {integrity: sha512-aptbEuq1Pk88DMlCe+FzXNnBZ17LCiLIGWAeCWhoFDzia5Q5Krx3DgnULLiouSdd6+LUM39XwXGppqYE0Ghtug==}
 
   '@shikijs/vscode-textmate@9.3.0':
     resolution: {integrity: sha512-jn7/7ky30idSkd/O5yDBfAnVt+JJpepofP/POZ1iMOxK59cOfqIgg/Dj0eFsjOTMw+4ycJN0uhZH/Eb0bs/EUA==}
@@ -10104,6 +10101,9 @@ packages:
     resolution: {integrity: sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==}
     engines: {node: '>=12'}
 
+  emoji-regex-xs@1.0.0:
+    resolution: {integrity: sha512-LRlerrMYoIDrT6jgpeZ2YYl/L8EulRTt5hQcYjy5AInh7HWXKimpqx68aknBFpGL2+/IcogTcaydJEgaTmOpDg==}
+
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
 
@@ -11434,9 +11434,6 @@ packages:
 
   instantsearch-ui-components@0.9.0:
     resolution: {integrity: sha512-ugQ+XdPx3i3Sxu+woRo6tPE0Fz/kWd4KblTUfZD1TZZBsm/8qFvcbg5dVBDvXX9v7ntoyugXCzC/XCZMzrSkig==}
-
-  instantsearch.css@8.5.1:
-    resolution: {integrity: sha512-lu4gWSa2crIA1OAuFwtrNJy4d8oRvKmkY5gv8Dbf3tuedQMm6cf7K+1kXJKRAHLm4pZos9RXIH10m57UfDKbyg==}
 
   instantsearch.js@4.75.4:
     resolution: {integrity: sha512-mgffSYa+URm8GDNNImg1yX4ak4LobhhtHVCxwjxVfpuODB09O7C97oZ/4UWKhw1EAJ5egYoli49Lt1CSGM5wkA==}
@@ -13114,8 +13111,8 @@ packages:
     resolution: {integrity: sha512-1FlR+gjXK7X+AsAHso35MnyN5KqGwJRi/31ft6x0M194ht7S+rWAvd7PHss9xSKMzE0asv1pyIHaJYq+BbacAQ==}
     engines: {node: '>=12'}
 
-  oniguruma-to-js@0.4.3:
-    resolution: {integrity: sha512-X0jWUcAlxORhOqqBREgPMgnshB7ZGYszBNspP+tS9hPD3l13CdaXcHbgImoHUHlrvGx/7AvFEkTRhAGYh+jzjQ==}
+  oniguruma-to-es@0.7.0:
+    resolution: {integrity: sha512-HRaRh09cE0gRS3+wi2zxekB+I5L8C/gN60S+vb11eADHUaB/q4u8wGGOX3GvwvitG8ixaeycZfeoyruKQzUgNg==}
 
   open@8.4.2:
     resolution: {integrity: sha512-7x81NCL719oNbsq/3mh+hVrAWmFuEYUqrq/Iw3kUzH8ReypT9QQ0BLoJS7/G9k6N81XjW4qHWtjWwe/9eLy1EQ==}
@@ -14210,8 +14207,14 @@ packages:
   regex-parser@2.3.0:
     resolution: {integrity: sha512-TVILVSz2jY5D47F4mA4MppkBrafEaiUWJO/TcZHEIuI13AqoZMkK1WMA4Om1YkYbTx+9Ki1/tSUXbceyr9saRg==}
 
-  regex@4.3.3:
-    resolution: {integrity: sha512-r/AadFO7owAq1QJVeZ/nq9jNS1vyZt+6t1p/E59B56Rn2GCya+gr1KSyOzNL/er+r+B7phv5jG2xU2Nz1YkmJg==}
+  regex-recursion@4.3.0:
+    resolution: {integrity: sha512-5LcLnizwjcQ2ALfOj95MjcatxyqF5RPySx9yT+PaXu3Gox2vyAtLDjHB8NTJLtMGkvyau6nI3CfpwFCjPUIs/A==}
+
+  regex-utilities@2.3.0:
+    resolution: {integrity: sha512-8VhliFJAWRaUiVvREIiW2NXXTmHs4vMNnSzuJVhscgmGav3g9VDxLrQndI3dZZVVdp0ZO/5v0xmX516/7M9cng==}
+
+  regex@5.0.2:
+    resolution: {integrity: sha512-/pczGbKIQgfTMRV0XjABvc5RzLqQmwqxLHdQao2RTXPk+pmTXB2P0IaUHYdYyk412YLwUIkaeMd5T+RzVgTqnQ==}
 
   regexp.prototype.flags@1.5.2:
     resolution: {integrity: sha512-NcDiDkTLuPR+++OCKB0nWafEmhg/Da8aUPLPMQbK+bxKKCm1/S5he+AqYa4PlMCVBalb4/yxIRub6qkEx5yJbw==}
@@ -14627,8 +14630,8 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  shiki@1.22.0:
-    resolution: {integrity: sha512-/t5LlhNs+UOKQCYBtl5ZsH/Vclz73GIqT2yQsCBygr8L/ppTdmpL4w3kPLoZJbMKVWtoG77Ue1feOjZfDxvMkw==}
+  shiki@1.24.0:
+    resolution: {integrity: sha512-qIneep7QRwxRd5oiHb8jaRzH15V/S8F3saCXOdjwRLgozZJr5x2yeBhQtqkO3FSzQDwYEFAYuifg4oHjpDghrg==}
 
   side-channel@1.0.6:
     resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
@@ -20564,27 +20567,27 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@shikijs/core@1.22.0':
+  '@shikijs/core@1.24.0':
     dependencies:
-      '@shikijs/engine-javascript': 1.22.0
-      '@shikijs/engine-oniguruma': 1.22.0
-      '@shikijs/types': 1.22.0
+      '@shikijs/engine-javascript': 1.24.0
+      '@shikijs/engine-oniguruma': 1.24.0
+      '@shikijs/types': 1.24.0
       '@shikijs/vscode-textmate': 9.3.0
       '@types/hast': 3.0.4
       hast-util-to-html: 9.0.3
 
-  '@shikijs/engine-javascript@1.22.0':
+  '@shikijs/engine-javascript@1.24.0':
     dependencies:
-      '@shikijs/types': 1.22.0
+      '@shikijs/types': 1.24.0
       '@shikijs/vscode-textmate': 9.3.0
-      oniguruma-to-js: 0.4.3
+      oniguruma-to-es: 0.7.0
 
-  '@shikijs/engine-oniguruma@1.22.0':
+  '@shikijs/engine-oniguruma@1.24.0':
     dependencies:
-      '@shikijs/types': 1.22.0
+      '@shikijs/types': 1.24.0
       '@shikijs/vscode-textmate': 9.3.0
 
-  '@shikijs/types@1.22.0':
+  '@shikijs/types@1.24.0':
     dependencies:
       '@shikijs/vscode-textmate': 9.3.0
       '@types/hast': 3.0.4
@@ -25909,6 +25912,8 @@ snapshots:
 
   emittery@0.13.1: {}
 
+  emoji-regex-xs@1.0.0: {}
+
   emoji-regex@8.0.0: {}
 
   emoji-regex@9.2.2: {}
@@ -26170,7 +26175,7 @@ snapshots:
       '@typescript-eslint/parser': 7.17.0(eslint@8.57.0)(typescript@5.4.3)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0)
+      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0))(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
       eslint-plugin-react: 7.34.1(eslint@8.57.0)
@@ -26193,12 +26198,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0):
+  eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0))(eslint@8.57.0):
     dependencies:
       debug: 4.3.7
       enhanced-resolve: 5.16.1
       eslint: 8.57.0
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0))(eslint@8.57.0)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.5
@@ -26210,14 +26215,14 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.8.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0))(eslint@8.57.0):
+  eslint-module-utils@2.8.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 7.17.0(eslint@8.57.0)(typescript@5.4.3)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0)
+      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0))(eslint@8.57.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -26251,7 +26256,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0))(eslint@8.57.0)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
       hasown: 2.0.2
       is-core-module: 2.13.1
       is-glob: 4.0.3
@@ -27715,8 +27720,6 @@ snapshots:
   instantsearch-ui-components@0.9.0:
     dependencies:
       '@babel/runtime': 7.24.5
-
-  instantsearch.css@8.5.1: {}
 
   instantsearch.js@4.75.4(algoliasearch@5.13.0):
     dependencies:
@@ -30078,9 +30081,11 @@ snapshots:
     dependencies:
       mimic-fn: 4.0.0
 
-  oniguruma-to-js@0.4.3:
+  oniguruma-to-es@0.7.0:
     dependencies:
-      regex: 4.3.3
+      emoji-regex-xs: 1.0.0
+      regex: 5.0.2
+      regex-recursion: 4.3.0
 
   open@8.4.2:
     dependencies:
@@ -31243,7 +31248,15 @@ snapshots:
 
   regex-parser@2.3.0: {}
 
-  regex@4.3.3: {}
+  regex-recursion@4.3.0:
+    dependencies:
+      regex-utilities: 2.3.0
+
+  regex-utilities@2.3.0: {}
+
+  regex@5.0.2:
+    dependencies:
+      regex-utilities: 2.3.0
 
   regexp.prototype.flags@1.5.2:
     dependencies:
@@ -31823,12 +31836,12 @@ snapshots:
 
   shebang-regex@3.0.0: {}
 
-  shiki@1.22.0:
+  shiki@1.24.0:
     dependencies:
-      '@shikijs/core': 1.22.0
-      '@shikijs/engine-javascript': 1.22.0
-      '@shikijs/engine-oniguruma': 1.22.0
-      '@shikijs/types': 1.22.0
+      '@shikijs/core': 1.24.0
+      '@shikijs/engine-javascript': 1.24.0
+      '@shikijs/engine-oniguruma': 1.24.0
+      '@shikijs/types': 1.24.0
       '@shikijs/vscode-textmate': 9.3.0
       '@types/hast': 3.0.4
 

@@ -1,3 +1,4 @@
+import { Kbd } from "@fern-ui/components";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import * as Dialog from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
@@ -17,7 +18,6 @@ import {
 import { type Components } from "react-markdown";
 import { Button } from "../ui/button";
 import { DialogTrigger } from "../ui/dialog";
-import { Kbd } from "../ui/kbd";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { Composer } from "./composer";
 import { ChatbotConversation } from "./conversation";

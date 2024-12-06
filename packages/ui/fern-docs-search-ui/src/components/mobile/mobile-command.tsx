@@ -5,12 +5,10 @@ import { useSearchBox } from "react-instantsearch";
 import { FacetFilter } from "../../types";
 import { FACET_DISPLAY_NAME_MAP } from "../../utils/facet-display";
 import { useFacetFilters } from "../search-client";
-import "../shared/common.scss";
 import { Button } from "../ui/button";
 import { cn } from "../ui/cn";
 import { Input } from "../ui/input";
 import { MobileFacetMenuBar } from "./mobile-facet-menu-bar";
-import "./mobile.scss";
 
 export interface MobileCommandProps {
     open?: boolean;

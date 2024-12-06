@@ -1,9 +1,13 @@
 #fern-search-desktop-command[cmdk-root] {
     overflow: hidden;
     border: 1px solid var(--grayscale-a6);
-    background-color: var(--grayscale-a2);
+    background-color: var(--grayscale-a1);
     backdrop-filter: blur(40px);
     border-radius: 0.5rem;
+
+    :is(.dark) & {
+        background-color: var(--grayscale-a2);
+    }
 
     [data-cmdk-fern-header] {
         border-bottom: 1px solid var(--grayscale-a6);
@@ -67,6 +71,7 @@
         overscroll-behavior: contain;
         transition: 100ms ease;
         transition-property: height;
+
         scroll-padding-block-start: 0.75rem;
         scroll-padding-block-end: 0.75rem;
 
@@ -112,7 +117,7 @@
         @media (hover: hover) and (pointer: fine) {
             &[data-selected="true"] {
                 background-color: var(--accent-a3);
-                color: var(--accent-a11);
+                color: var(--accent-a12);
 
                 .fern-search-hit-breadcrumb,
                 .fern-search-hit-snippet,

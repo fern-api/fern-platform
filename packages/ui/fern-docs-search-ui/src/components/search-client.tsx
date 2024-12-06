@@ -1,8 +1,9 @@
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { FacetsResponse } from "@fern-ui/fern-docs-search-server/algolia";
 import { FacetName } from "@fern-ui/fern-docs-search-server/types";
+import { useDeepCompareEffect, useEventCallback } from "@fern-ui/react-commons";
 import { LiteClient, liteClient } from "algoliasearch/lite";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { RESET, atomWithDefault } from "jotai/utils";
 import {
     Dispatch,
@@ -22,7 +23,6 @@ import { InstantSearchNext } from "react-instantsearch-nextjs";
 import { preload } from "swr";
 import useSWRImmutable from "swr/immutable";
 
-import { useDeepCompareEffectNoCheck } from "../hooks/use-deep-compare-callback";
 import { FacetFilter, isFacetName } from "../types";
 import { toAlgoliaFacetFilters } from "../utils/facet-filters";
 
@@ -144,12 +144,17 @@ function FacetFiltersProvider({
         [fetchFacets],
     );
 
+    const initialFiltersGetter = useEventCallback(() => toFacetFilters(initialFilters));
+    const ref = useRef(atomWithDefault(initialFiltersGetter));
+    const setFilters = useSetAtom(ref.current);
+
     // preload facets on initial render so that they're cached before the user runs `cmdk`
-    useDeepCompareEffectNoCheck(() => {
-        void preloadFacets(toFacetFilters(initialFilters));
+    useDeepCompareEffect(() => {
+        const filters = toFacetFilters(initialFilters);
+        void preloadFacets(filters);
+        setFilters(filters);
     }, [initialFilters]);
 
-    const ref = useRef(atomWithDefault(() => toFacetFilters(initialFilters)));
     const value = useMemo(() => ({ atom: ref.current, preloadFacets, fetchFacets }), [preloadFacets, fetchFacets]);
     return <FacetFiltersContext.Provider value={value}>{children}</FacetFiltersContext.Provider>;
 }
@@ -157,14 +162,16 @@ function FacetFiltersProvider({
 /**
  * Returns the facet filters and functions to manipulate them.
  */
-function useFacetFilters(): {
+function useFacetFilters(atom?: ReturnType<typeof atomWithDefault<readonly FacetFilter[]>>): {
     filters: readonly FacetFilter[];
     setFilters: Dispatch<SetStateAction<readonly FacetFilter[]>>;
     clearFilters: () => void;
     resetFilters: () => void;
     popFilter: () => void;
 } {
-    const [filters, setFilters] = useAtom(useContext(FacetFiltersContext).atom);
+    const contextAtom = useContext(FacetFiltersContext).atom;
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [filters, setFilters] = useAtom(atom ?? contextAtom);
     return useMemo(
         () => ({
             filters,
@@ -208,7 +215,7 @@ function toFacetFilters(initialFilters: Partial<Record<FacetName, string>> = EMP
     const toRet: FacetFilter[] = [];
 
     Object.entries(initialFilters).forEach(([facet, value]) => {
-        if (isFacetName(facet)) {
+        if (isFacetName(facet) && value) {
             toRet.push({ facet, value });
         }
     });

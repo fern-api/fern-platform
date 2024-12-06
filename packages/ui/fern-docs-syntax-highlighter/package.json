@@ -39,6 +39,6 @@
     "hast-util-to-jsx-runtime": "^2.3.0",
     "hastscript": "^9.0.0",
     "react-virtuoso": "^4.7.7",
-    "shiki": "^1.22.0"
+    "shiki": "^1.24.0"
   }
 }

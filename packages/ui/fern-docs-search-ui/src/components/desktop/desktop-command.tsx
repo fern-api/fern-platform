@@ -1,24 +1,16 @@
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { Command } from "cmdk";
-import {
-    ComponentProps,
-    ComponentPropsWithoutRef,
-    KeyboardEvent,
-    forwardRef,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import { ComponentPropsWithoutRef, KeyboardEvent, forwardRef, useRef, useState } from "react";
 import { useSearchBox } from "react-instantsearch";
 import tunnel from "tunnel-rat";
 
+import { useSearchHitsRerender } from "../../hooks/use-search-hits";
 import { useFacetFilters } from "../search-client";
 import { CommandUxProvider } from "../shared/command-ux";
-import "../shared/common.scss";
 import { DesktopCommandInputError } from "./desktop-command-input";
-import "./desktop.scss";
 
-export type DesktopCommandSharedProps = Omit<ComponentProps<typeof Command>, "onSelect">;
+import "../shared/common.scss";
+import "./desktop.scss";
 
 export interface DesktopCommandProps {
     onClose?: () => void;
@@ -34,35 +26,14 @@ const afterInput = tunnel();
  */
 const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps & ComponentPropsWithoutRef<typeof Command>>(
     ({ onEscape: onEscape_, onClose, children, ...props }, forwardedRef) => {
-        const [value, setValue] = useState("");
+        useSearchHitsRerender();
+
         const { query, refine, clear } = useSearchBox();
         const { filters, popFilter, clearFilters } = useFacetFilters();
         const [inputError, setInputError] = useState<string | null>(null);
 
         const inputRef = useRef<HTMLInputElement>(null);
         const scrollRef = useRef<HTMLDivElement>(null);
-
-        useEffect(() => {
-            if (!scrollRef.current) {
-                return;
-            }
-
-            const observer = new MutationObserver(() => {
-                setTimeout(() => {
-                    const cmdkItems = [...(scrollRef.current?.querySelectorAll("[cmdk-item]") ?? [])];
-                    const hasDataValue = cmdkItems.some((item) => item.getAttribute("data-value") === value);
-                    if (!hasDataValue) {
-                        const firstValue = cmdkItems[0]?.getAttribute("data-value");
-                        if (firstValue) {
-                            setValue(firstValue);
-                        }
-                    }
-                }, 0);
-            });
-            observer.observe(scrollRef.current, { childList: true, subtree: true });
-            return () => observer.disconnect();
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, []);
 
         const focus = ({ scrollToTop = true }: { scrollToTop?: boolean } = {}) => {
             // add a slight delay so that the focus doesn't get stolen
@@ -75,7 +46,7 @@ const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps & Componen
         };
 
         const popOrClearFilters = (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.metaKey) {
+            if (e.metaKey || e.ctrlKey) {
                 clearFilters();
             } else {
                 popFilter();
@@ -105,8 +76,8 @@ const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps & Componen
                 ref={forwardedRef}
                 {...props}
                 id="fern-search-desktop-command"
-                value={value}
-                onValueChange={setValue}
+                // value={value}
+                // onValueChange={setValue}
                 onKeyDownCapture={composeEventHandlers(
                     props.onKeyDownCapture,
                     (e) => {
@@ -140,7 +111,7 @@ const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps & Componen
                     { checkForDefaultPrevented: false },
                 )}
             >
-                <CommandUxProvider focus={focus} setInputError={setInputError} setValue={setValue}>
+                <CommandUxProvider focus={focus} setInputError={setInputError}>
                     <div
                         className="cursor-text"
                         onClick={() => {

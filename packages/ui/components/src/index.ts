@@ -23,5 +23,6 @@ export * from "./FernTextarea";
 export * from "./FernToast";
 export * from "./FernTooltip";
 export * from "./FontAwesomeIcon";
-export * from "./util/shared-component-types";
 export * from "./badges/badge";
+export * from "./kbd";
+export * from "./util/shared-component-types";

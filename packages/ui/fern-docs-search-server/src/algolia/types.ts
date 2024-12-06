@@ -38,12 +38,12 @@ export const FILTERABLE_FACET_ATTRIBUTES = [
 ] as const;
 
 export const SEARCHABLE_FACET_ATTRIBUTES = [
+    "product.title",
+    "version.title",
     "type",
     "api_type",
     "method",
     "status_code",
-    "product.title",
-    "version.title",
     "availability",
 ] as const;
 

@@ -1,10 +1,34 @@
+import { usePlatformKbdShortcut } from "@fern-ui/react-commons";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { ArrowLeft } from "lucide-react";
+import { Kbd } from "../../../../components/src/kbd";
 import { Button } from "../ui/button";
-import { Kbd } from "../ui/kbd";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
-export function DesktopBackButton({ pop, clear }: { pop: () => void; clear: () => void }): React.ReactNode {
+export function DesktopBackButton({
+    pop,
+    clear,
+    showAdditionalCommand,
+}: {
+    pop: () => void;
+    clear: () => void;
+    /**
+     * if false, the text says `Del` to go back
+     * if true, the text says `Del` to go back or `Ctrl` `Del` to go to root search
+     */
+    showAdditionalCommand?: boolean;
+}): React.ReactNode {
+    const shortcut = usePlatformKbdShortcut();
+
+    const additionalCommand = showAdditionalCommand && shortcut && (
+        <>
+            <span> or </span>
+            <Kbd className="mx-1">{shortcut}</Kbd>
+            <Kbd className="me-1">Del</Kbd>
+            <span> to go to root search</span>
+        </>
+    );
+
     return (
         <TooltipProvider>
             <Tooltip>
@@ -14,7 +38,7 @@ export function DesktopBackButton({ pop, clear }: { pop: () => void; clear: () =
                         variant="outline"
                         className="shrink-0"
                         onClickCapture={(e) => {
-                            if (e.metaKey) {
+                            if (e.metaKey || e.ctrlKey) {
                                 clear();
                             } else {
                                 pop();
@@ -22,7 +46,7 @@ export function DesktopBackButton({ pop, clear }: { pop: () => void; clear: () =
                         }}
                         onKeyDownCapture={(e) => {
                             if (e.key === "Backspace" || e.key === "Delete" || e.key === "Space" || e.key === "Enter") {
-                                if (e.metaKey) {
+                                if (e.metaKey || e.ctrlKey) {
                                     clear();
                                 } else {
                                     pop();
@@ -37,11 +61,9 @@ export function DesktopBackButton({ pop, clear }: { pop: () => void; clear: () =
                 <TooltipPortal>
                     <TooltipContent className="shrink-0">
                         <p>
-                            <Kbd className="me-1">del</Kbd>
-                            <span> to go back or </span>
-                            <Kbd className="mx-1">⌘</Kbd>
-                            <Kbd className="me-1">del</Kbd>
-                            <span> to go to root search</span>
+                            <Kbd className="me-1">Del</Kbd>
+                            <span> to go back</span>
+                            {additionalCommand}
                         </p>
                     </TooltipContent>
                 </TooltipPortal>

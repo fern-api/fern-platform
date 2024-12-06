@@ -1,26 +1,28 @@
 @import "@fern-ui/components/src/colors.css";
 @import "@fern-ui/components/src/fern-accent.scss";
+@import "@fern-ui/components/src/kbd.scss";
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import "@fern-ui/components/src/badges/index.scss";
 @import "@fern-ui/fern-docs-syntax-highlighter/src/index.scss";
-
-body {
-    font-family:
-        -apple-system,
-        blinkmacsystemfont,
-        segoe ui,
-        roboto,
-        oxygen,
-        ubuntu,
-        cantarell,
-        open sans,
-        helvetica neue,
-        sans-serif;
-}
+@import "../../index.scss";
 
 @layer base {
+    body {
+        font-family:
+            -apple-system,
+            blinkmacsystemfont,
+            segoe ui,
+            roboto,
+            oxygen,
+            ubuntu,
+            cantarell,
+            open sans,
+            helvetica neue,
+            sans-serif;
+    }
+
     :root {
         --grayscale-1: var(--olive-1);
         --grayscale-2: var(--olive-2);

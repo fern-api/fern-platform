@@ -102,7 +102,7 @@ export function DesktopFilterDropdownMenu({
                         >
                             <Minus className="size-4" />
                             Remove filter
-                            <DropdownMenuShortcut>del</DropdownMenuShortcut>
+                            <DropdownMenuShortcut>Del</DropdownMenuShortcut>
                         </DropdownMenuItem>
                     </DropdownMenuGroup>
                 </DropdownMenuContent>

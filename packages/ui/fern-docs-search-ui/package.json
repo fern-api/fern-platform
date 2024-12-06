@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./src/index.scss": "./src/index.scss"
   },
   "scripts": {
     "demo:dev": "next dev",
@@ -55,6 +56,7 @@
     "@date-fns/tz": "^1.1.2",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-ui/components": "workspace:*",
+    "@fern-ui/react-commons": "workspace:*",
     "@fern-ui/fern-docs-search-server": "workspace:*",
     "@fern-ui/fern-docs-syntax-highlighter": "workspace:*",
     "@radix-ui/primitive": "^1.1.0",
@@ -78,7 +80,6 @@
     "cmdk": "^1.0.4",
     "date-fns": "^2.30.0",
     "es-toolkit": "^1.27.0",
-    "instantsearch.css": "8.5.1",
     "instantsearch.js": "4.75.4",
     "jotai": "^2.8.1",
     "lucide-react": "^0.460.0",

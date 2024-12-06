@@ -23,7 +23,15 @@ import { useAtomValue } from "jotai";
 import { useRouter } from "next/router";
 import { Dispatch, ReactElement, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { z } from "zod";
-import { DOMAIN_ATOM, THEME_SWITCH_ENABLED_ATOM, atomWithStorageString, useFernUser, useSetTheme } from "../atoms";
+
+import {
+    CURRENT_VERSION_ATOM,
+    DOMAIN_ATOM,
+    THEME_SWITCH_ENABLED_ATOM,
+    atomWithStorageString,
+    useFernUser,
+    useSetTheme,
+} from "../atoms";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "../hooks/useApiRouteSWR";
 
@@ -42,6 +50,8 @@ function useAlgoliaUserToken() {
 }
 
 export function SearchV2(): ReactElement | false {
+    const version = useAtomValue(CURRENT_VERSION_ATOM);
+
     const userToken = useAlgoliaUserToken();
     const user = useFernUser();
 
@@ -49,13 +59,6 @@ export function SearchV2(): ReactElement | false {
     const domain = useAtomValue(DOMAIN_ATOM);
     const isThemeSwitchEnabled = useAtomValue(THEME_SWITCH_ENABLED_ATOM);
     const setTheme = useSetTheme();
-    const router = useRouter();
-
-    const handleNavigate = useEventCallback((path: string) => {
-        void router.push(path).then(() => {
-            setOpen(false);
-        });
-    });
 
     const { data } = useApiRouteSWRImmutable("/api/fern-docs/search/v2/key", {
         request: { headers: { "X-User-Token": userToken } },
@@ -95,6 +98,7 @@ export function SearchV2(): ReactElement | false {
             indexName={SEARCH_INDEX}
             fetchFacets={facetFetcher}
             authenticatedUserToken={user?.email}
+            initialFilters={{ "version.title": version?.title }}
         >
             <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild trigger={<DesktopSearchButton />}>
                 <DesktopCommand onClose={() => setOpen(false)}>
@@ -108,12 +112,24 @@ export function SearchV2(): ReactElement | false {
 
                     <CommandGroupFilters />
                     <CommandEmpty />
-                    <CommandSearchHits onSelect={handleNavigate} prefetch={router.prefetch} />
+                    <RouterAwareCommandSearchHits onClose={() => setOpen(false)} />
                     <CommandActions>{isThemeSwitchEnabled && <CommandGroupTheme setTheme={setTheme} />}</CommandActions>
                 </DesktopCommand>
             </DesktopSearchDialog>
         </SearchClientRoot>
     );
+}
+
+function RouterAwareCommandSearchHits({ onClose }: { onClose: () => void }) {
+    const router = useRouter();
+
+    const handleNavigate = useEventCallback((path: string) => {
+        void router.push(path).then(() => {
+            onClose();
+        });
+    });
+
+    return <CommandSearchHits onSelect={handleNavigate} prefetch={router.prefetch} />;
 }
 
 function BackButton() {
