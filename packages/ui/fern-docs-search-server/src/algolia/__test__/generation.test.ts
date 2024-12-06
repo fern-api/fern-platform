@@ -61,14 +61,16 @@ for (const fixtureName of [
 
             records.forEach((record) => {
                 if (record.description != null) {
-                    expect(record.description.length).toBeLessThan(95000);
+                    expect(record.description.length).toBeLessThanOrEqual(50_000);
                 }
 
                 if (record.type === "markdown" && record.content != null) {
-                    expect(record.content.length).toBeLessThan(95000);
+                    expect(record.content.length).toBeLessThanOrEqual(50_000);
                 }
             });
-            expect(records).toMatchFileSnapshot(path.join("__snapshots__", `${fixtureName}.test.ts.snap`));
+            expect(JSON.stringify(records, null, 2)).toMatchFileSnapshot(
+                path.join("__snapshots__", `${fixtureName}.test.ts.json`),
+            );
         });
     });
 }

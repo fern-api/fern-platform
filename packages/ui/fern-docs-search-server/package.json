@@ -50,7 +50,6 @@
     "@fern-ui/fern-docs-mdx": "workspace:*",
     "@fern-ui/fern-docs-utils": "workspace:*",
     "algoliasearch": "^5.13.0",
-    "date-fns": "^2.30.0",
     "es-toolkit": "^1.27.0",
     "html-entities": "^2.5.2",
     "html-to-text": "^9.0.5",

@@ -57,6 +57,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@date-fns/tz": "^1.1.2",
+    "date-fns": "^2.30.0",
     "strip-ansi": "^7.1.0",
     "title": "^3.5.3",
     "ua-parser-js": "^1.0.35"
@@ -68,10 +70,10 @@
     "@types/ua-parser-js": "^0.7.39",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
-    "vitest": "^2.1.4",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.3.2",
     "stylelint": "^16.1.0",
-    "typescript": "5.4.3"
+    "typescript": "5.4.3",
+    "vitest": "^2.1.4"
   }
 }

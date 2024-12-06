@@ -1,5 +1,5 @@
+import { formatUtc } from "@fern-api/ui-core-utils";
 import { getFrontmatter, markdownToString } from "@fern-ui/fern-docs-mdx";
-import { format } from "date-fns";
 import { compact, flatten } from "es-toolkit";
 import { decode } from "html-entities";
 import { BaseRecord, ChangelogRecord } from "../types";
@@ -29,7 +29,7 @@ export function createChangelogRecord({ base, markdown, date }: CreateChangelogR
         title,
         content: prepared.content,
         code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
-        date: format(new Date(date), "yyyy-MM-dd"),
+        date: formatUtc(new Date(date), "yyyy-MM-dd"),
         date_timestamp: Math.floor(new Date(date).getTime() / 1000),
     };
 }

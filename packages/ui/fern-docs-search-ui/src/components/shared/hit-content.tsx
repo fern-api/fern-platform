@@ -1,15 +1,12 @@
-import { tz } from "@date-fns/tz";
+import { formatUtc } from "@fern-api/ui-core-utils";
 import { AvailabilityBadge, HttpMethodBadge } from "@fern-ui/components/badges";
 import clsx from "clsx";
-import { format } from "date-fns";
 import { uniq } from "es-toolkit/array";
 import { ChevronRight } from "lucide-react";
 import { Fragment, ReactElement, ReactNode } from "react";
 import { Highlight, Snippet } from "react-instantsearch";
 import { MarkRequired, UnreachableCaseError } from "ts-essentials";
 import { AlgoliaRecordHit, ApiReferenceRecordHit, ChangelogRecordHit, MarkdownRecordHit } from "../../types";
-
-const utc = tz("UTC");
 
 const headingLevels = ["h0", "h1", "h2", "h3", "h4", "h5", "h6"] as const;
 
@@ -84,7 +81,7 @@ function MarkdownHitContent({ hit }: { hit: MarkdownRecordHit }): ReactElement {
 }
 
 function ChangelogHitContent({ hit }: { hit: ChangelogRecordHit }): ReactElement {
-    const datestring = format(utc(hit.date), "MMM d, yyyy");
+    const datestring = formatUtc(new Date(hit.date), "MMM d, yyyy");
     return (
         <HitContentWithTitle hit={hit}>
             <Breadcrumb breadcrumb={[...hit.breadcrumb.map((crumb) => crumb.title), datestring]} />

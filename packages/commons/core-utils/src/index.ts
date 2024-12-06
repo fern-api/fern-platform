@@ -7,6 +7,7 @@ export { combineURLs } from "./combineURLs";
 export { delay } from "./delay/delay";
 export { withMinimumTime } from "./delay/withMinimumTime";
 export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty";
+export { formatUtc } from "./formatUtc";
 export { identity } from "./identity";
 export { assertNonNullish, isNonNullish } from "./isNonNullish";
 export { entries, type Entries } from "./objects/entries";
