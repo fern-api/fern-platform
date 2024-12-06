@@ -4,6 +4,7 @@ import { Dispatch, ReactElement, SetStateAction, useDeferredValue } from "react"
 import { PlaygroundAuthorizationFormCard } from "../auth";
 import { PlaygroundEndpointRequestFormState } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
+import { shouldRenderAuth } from "../utils/should-render-auth";
 import { PlaygroundEndpointContentLayout } from "./PlaygroundEndpointContentLayout";
 import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
 import { PlaygroundEndpointFormButtons } from "./PlaygroundEndpointFormButtons";
@@ -33,7 +34,9 @@ export function PlaygroundEndpointContent({
 
     const form = (
         <div className="mx-auto w-full max-w-5xl space-y-6 pt-6 max-sm:pt-0 sm:pb-20">
-            {context.auth != null && <PlaygroundAuthorizationFormCard auth={context.auth} disabled={false} />}
+            {context.auth != null && shouldRenderAuth(context.endpoint, context.auth) && (
+                <PlaygroundAuthorizationFormCard auth={context.auth} disabled={false} />
+            )}
 
             <div className="col-span-2 space-y-8">
                 <PlaygroundEndpointForm context={context} formState={formState} setFormState={setFormState} />

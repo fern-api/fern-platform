@@ -1,14 +1,31 @@
 import { CodeExample } from "../examples/code-example";
 
 export type Language = string;
-export type ExampleId = string;
-export type StatusCode = number;
-export type ExampleIndex = number;
+export type StatusCode = string;
+export type ExampleKey = string;
 
 export type ExamplesByStatusCode = Record<StatusCode, CodeExample[]>;
-export type ExamplesByTitleAndStatusCode = Record<ExampleId, Record<StatusCode, CodeExample[]>>;
-export type ExamplesByClientAndTitleAndStatusCode = Record<
-    Language,
-    Record<ExampleId, Record<StatusCode, CodeExample[]>>
->;
-export type SelectedExampleKey = [Language, ExampleId | undefined, StatusCode | undefined, ExampleIndex | undefined];
+export type ExamplesByKeyAndStatusCode = Record<ExampleKey, ExamplesByStatusCode>;
+export type ExamplesByLanguageKeyAndStatusCode = Record<Language, ExamplesByKeyAndStatusCode>;
+
+/**
+ * This is a compound key that is used to index into ExamplesByLanguageKeyAndStatusCode.
+ */
+export type SelectedExampleKey = {
+    /**
+     * language of the example i.e. "typescript" or "curl"
+     */
+    language: Language;
+    /**
+     * join of exampleIndex and snippetIndex
+     */
+    exampleKey: ExampleKey | undefined;
+    /**
+     * status code of the example (as a string) i.e. "200"
+     */
+    statusCode: StatusCode | undefined;
+    /**
+     * index of the example in the values of ExamplesByStatusCode
+     */
+    responseIndex: number | undefined;
+};

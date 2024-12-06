@@ -11,7 +11,7 @@ export interface OAuthClientCredentialReferencedEndpointLoginFlowProps {
     formState: PlaygroundEndpointRequestFormState;
     endpoint: EndpointDefinition;
     proxyEnvironment: string;
-    oAuthClientCredentialsReferencedEndpoint: APIV1Read.OAuthClientCredentialsReferencedEndpoint;
+    referencedEndpoint: APIV1Read.OAuthClientCredentialsReferencedEndpoint;
     baseUrl: string | undefined;
     setValue: (value: (prev: any) => any) => void;
     closeContainer?: () => void;
@@ -22,7 +22,7 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     formState,
     endpoint,
     proxyEnvironment,
-    oAuthClientCredentialsReferencedEndpoint,
+    referencedEndpoint,
     baseUrl,
     setValue,
     closeContainer,
@@ -57,10 +57,7 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
         json: async (jsonRes) => {
             if (jsonRes.response.ok) {
                 try {
-                    const accessToken = jsonpath.query(
-                        jsonRes.response,
-                        oAuthClientCredentialsReferencedEndpoint.accessTokenLocator,
-                    )?.[0];
+                    const accessToken = jsonpath.query(jsonRes.response, referencedEndpoint.accessTokenLocator)?.[0];
                     setValue((prev) => ({
                         ...prev,
                         selectedInputMethod: "credentials",

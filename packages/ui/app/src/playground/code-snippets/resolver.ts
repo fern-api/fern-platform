@@ -2,10 +2,12 @@ import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { toCurlyBraceEndpointPathLiteral } from "@fern-api/fdr-sdk/api-definition";
 import { FdrAPI, type APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
+import { unknownToString } from "@fern-api/ui-core-utils";
 import { UnreachableCaseError } from "ts-essentials";
 import { provideRegistryService } from "../../services/registry";
 import { PlaygroundAuthState, PlaygroundEndpointRequestFormState } from "../types";
 import { buildAuthHeaders, convertToCustomSnippetPayload } from "../utils";
+import { shouldRenderAuth } from "../utils/should-render-auth";
 import { CurlSnippetBuilder } from "./builders/curl";
 import { PythonRequestSnippetBuilder } from "./builders/python";
 import { TypescriptFetchSnippetBuilder } from "./builders/typescript";
@@ -91,7 +93,9 @@ export class PlaygroundCodeSnippetResolver {
         setOAuthValue: (value: (prev: any) => any) => void,
     ) {
         const authHeaders = buildAuthHeaders(
-            this.context.auth,
+            this.context.auth != null && shouldRenderAuth(this.context.endpoint, this.context.auth)
+                ? this.context.auth
+                : undefined,
             authState,
             { redacted: isAuthHeadersRedacted },
             {
@@ -179,7 +183,7 @@ export class PlaygroundCodeSnippetResolver {
         const headers = { ...this.headers };
 
         // TODO: ensure case insensitivity
-        if (headers["Content-Type"] === "multipart/form-data") {
+        if (unknownToString(headers["Content-Type"]).includes("multipart/form-data")) {
             delete headers["Content-Type"]; // fetch will set this automatically
         }
 

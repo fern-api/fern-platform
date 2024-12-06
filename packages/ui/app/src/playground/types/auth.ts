@@ -19,7 +19,7 @@ export const PlaygroundAuthStateBasicAuthSchema = z.strictObject({
 export type PlaygroundAuthStateBasicAuth = z.infer<typeof PlaygroundAuthStateBasicAuthSchema>;
 export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL: PlaygroundAuthStateBasicAuth = { username: "", password: "" };
 
-export const PlaygroundAuthStateOAuthSchema = z.strictObject({
+export const PlaygroundAuthStateOAuthSchema = z.object({
     clientId: z.string(),
     clientSecret: z.string(),
     accessToken: z.string(),

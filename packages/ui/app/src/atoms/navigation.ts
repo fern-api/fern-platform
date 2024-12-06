@@ -1,5 +1,4 @@
 import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
-import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { SidebarTab, VersionSwitcherInfo } from "@fern-ui/fdr-utils";
 import { isEqual } from "es-toolkit/predicate";
@@ -8,6 +7,7 @@ import { selectAtom } from "jotai/utils";
 import { DocsContent } from "../resolver/DocsContent";
 import { DOCS_ATOM } from "./docs";
 import { SLUG_ATOM } from "./location";
+import { NavbarLink } from "./types";
 
 export const DOMAIN_ATOM = atom<string>((get) => get(DOCS_ATOM).baseUrl.domain);
 DOMAIN_ATOM.debugLabel = "DOMAIN_ATOM";
@@ -36,11 +36,7 @@ CURRENT_VERSION_ID_ATOM.debugLabel = "CURRENT_VERSION_ID_ATOM";
 export const TRAILING_SLASH_ATOM = atom<boolean>((get) => get(DOCS_ATOM).navigation.trailingSlash);
 TRAILING_SLASH_ATOM.debugLabel = "TRAILING_SLASH_ATOM";
 
-export const NAVBAR_LINKS_ATOM = selectAtom(
-    DOCS_ATOM,
-    (docs): ReadonlyArray<DocsV1Read.NavbarLink> => docs.navbarLinks,
-    isEqual,
-);
+export const NAVBAR_LINKS_ATOM = selectAtom(DOCS_ATOM, (docs): ReadonlyArray<NavbarLink> => docs.navbarLinks, isEqual);
 NAVBAR_LINKS_ATOM.debugLabel = "NAVBAR_LINKS_ATOM";
 
 export const CURRENT_VERSION_ATOM = atom((get) => {

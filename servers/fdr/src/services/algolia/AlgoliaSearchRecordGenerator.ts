@@ -196,7 +196,7 @@ export class AlgoliaSearchRecordGenerator {
                     title: page.title, // TODO: parse from frontmatter?
                     // TODO: Set to something more than 10kb on prod
                     // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
-                    content: truncateToBytes(processedContent, 10_000 - 1),
+                    content: truncateToBytes(processedContent, 50 * 1000),
                     path: {
                         parts: pageContext.pathParts,
                     },
@@ -392,7 +392,7 @@ export class AlgoliaSearchRecordGenerator {
                                 type: "endpoint-v3",
                                 objectID: uuid(),
                                 title: node.title,
-                                content: truncateToBytes(contents.join("\n"), 10_000 - 1),
+                                content: truncateToBytes(contents.join("\n"), 50 * 1000),
                                 breadcrumbs: toBreadcrumbs(parents),
                                 slug: node.slug,
                                 version,
@@ -483,7 +483,7 @@ export class AlgoliaSearchRecordGenerator {
                                 type: "websocket-v3",
                                 objectID: uuid(),
                                 title: node.title,
-                                content: truncateToBytes(contents.join("\n"), 10_000 - 1),
+                                content: truncateToBytes(contents.join("\n"), 50 * 1000),
                                 breadcrumbs: toBreadcrumbs(parents),
                                 slug: node.slug,
                                 version,
@@ -544,7 +544,7 @@ export class AlgoliaSearchRecordGenerator {
                                 type: "webhook-v3",
                                 objectID: uuid(),
                                 title: node.title,
-                                content: truncateToBytes(contents.join("\n"), 10_000 - 1),
+                                content: truncateToBytes(contents.join("\n"), 50 * 1000),
                                 breadcrumbs: toBreadcrumbs(parents),
                                 slug: node.slug,
                                 version,
@@ -574,7 +574,7 @@ export class AlgoliaSearchRecordGenerator {
                         type: "page-v3",
                         objectID: uuid(),
                         title: frontmatter.title ?? node.title,
-                        content: truncateToBytes(md, 10_000 - 1),
+                        content: truncateToBytes(md, 50 * 1000),
                         breadcrumbs: toBreadcrumbs(parents),
                         slug: node.slug,
                         version,
@@ -740,7 +740,7 @@ export class AlgoliaSearchRecordGenerator {
                         type: "page-v3",
                         objectID: uuid(),
                         title: node.title,
-                        content: md,
+                        content: truncateToBytes(md, 50 * 1000),
                         breadcrumbs: toBreadcrumbs(parents),
                         slug: node.slug,
                         version,
@@ -784,7 +784,7 @@ export class AlgoliaSearchRecordGenerator {
                         title,
                         // TODO: Set to something more than 10kb on prod
                         // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
-                        content: truncateToBytes(processedContent, 10_000 - 1),
+                        content: truncateToBytes(processedContent, 50 * 1000),
                         path: {
                             parts: pageContext.pathParts,
                         },
@@ -819,7 +819,7 @@ export class AlgoliaSearchRecordGenerator {
                             title: `${title} - ${changelogItem.date}`,
                             // TODO: Set to something more than 10kb on prod
                             // See: https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records-/
-                            content: truncateToBytes(processedContent, 10_000 - 1),
+                            content: truncateToBytes(processedContent, 50 * 1000),
                             path: {
                                 parts: changelogItemContext.pathParts,
                                 // TODO: add anchor

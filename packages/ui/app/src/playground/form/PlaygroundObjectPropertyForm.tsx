@@ -5,6 +5,7 @@ import {
     TypeReference,
     unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
+import { isPlainObject } from "@fern-api/ui-core-utils";
 import { FernButton, FernDropdown } from "@fern-ui/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
@@ -28,6 +29,7 @@ interface PlaygroundObjectPropertyFormProps {
     expandByDefault?: boolean;
     types: Record<TypeId, TypeDefinition>;
     disabled?: boolean;
+    defaultValue?: unknown;
 }
 
 export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps> = ({
@@ -38,6 +40,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
     expandByDefault = true,
     types,
     disabled,
+    defaultValue,
 }) => {
     const handleChange = useCallback(
         (newValue: unknown) => {
@@ -75,6 +78,7 @@ export const PlaygroundObjectPropertyForm: FC<PlaygroundObjectPropertyFormProps>
             onCloseStack={handleCloseStack}
             types={types}
             disabled={disabled}
+            defaultValue={defaultValue}
         />
     );
 };
@@ -85,13 +89,14 @@ interface PlaygroundObjectPropertiesFormProps {
     extraProperties: TypeReference | undefined;
     onChange: (value: unknown) => void;
     value: unknown;
+    defaultValue?: unknown;
     indent?: boolean;
     types: Record<string, TypeDefinition>;
     disabled?: boolean;
 }
 
 export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFormProps>((props) => {
-    const { id, properties, onChange, value, indent = false, types, disabled, extraProperties } = props;
+    const { id, properties, onChange, value, indent = false, types, disabled, extraProperties, defaultValue } = props;
 
     const onChangeObjectProperty = useCallback(
         (key: string, newValue: unknown) => {
@@ -129,7 +134,12 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                 type: "value",
                 value: property.key,
                 label: property.key,
-                helperText: renderTypeShorthandRoot(property.valueShape, types),
+                helperText: renderTypeShorthandRoot(
+                    { type: "optional", shape: property.valueShape, default: undefined },
+                    types,
+                    false,
+                    true,
+                ),
                 labelClassName: "font-mono",
                 tooltip: property.description != null ? <Markdown size="xs" mdx={property.description} /> : undefined,
             }),
@@ -193,6 +203,7 @@ export const PlaygroundObjectPropertiesForm = memo<PlaygroundObjectPropertiesFor
                                     value={castToRecord(value)[property.key]}
                                     types={types}
                                     disabled={disabled}
+                                    defaultValue={isPlainObject(defaultValue) ? defaultValue[property.key] : undefined}
                                 />
                             </li>
                         );

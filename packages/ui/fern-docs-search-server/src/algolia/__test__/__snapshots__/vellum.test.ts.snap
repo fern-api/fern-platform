@@ -43,7 +43,7 @@ Frequently Visited Resources
         "title": "Welcome",
       },
     ],
-    "description": "",
+    "description": undefined,
     "indexSegmentId": "0",
     "slug": "help-center/welcome/welcome#frequently-visited-resources",
     "title": "Frequently Visited Resources",

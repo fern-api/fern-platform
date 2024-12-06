@@ -7,7 +7,7 @@ import {
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { WritableAtom, atom, useAtom, useAtomValue, useSetAtom } from "jotai";
-import { atomFamily, atomWithStorage, useAtomCallback } from "jotai/utils";
+import { RESET, atomFamily, atomWithStorage, useAtomCallback } from "jotai/utils";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useCallbackOne } from "use-memo-one";
 import { selectHref } from "../hooks/useHref";
@@ -28,10 +28,11 @@ import {
     type PlaygroundWebSocketRequestFormState,
 } from "../playground/types";
 import {
-    getInitialEndpointRequestFormState,
     getInitialEndpointRequestFormStateWithExample,
     getInitialWebSocketRequestFormState,
 } from "../playground/utils";
+import { pascalCaseHeaderKeys } from "../playground/utils/header-key-case";
+import { FERN_USER_ATOM } from "./auth";
 import { FEATURE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { HEADER_HEIGHT_ATOM } from "./layout";
@@ -177,48 +178,144 @@ export const PLAYGROUND_AUTH_STATE_ATOM = atomWithStorageValidation<PlaygroundAu
 );
 
 export const PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM = atom(
-    (get) => get(PLAYGROUND_AUTH_STATE_ATOM).bearerAuth ?? PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL,
-    (_get, set, update: SetStateAction<PlaygroundAuthStateBearerToken>) => {
-        set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => ({
-            ...prev,
-            bearerAuth:
+    (get) => ({
+        token:
+            get(PLAYGROUND_AUTH_STATE_ATOM).bearerAuth?.token ??
+            get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.bearer_token ??
+            "",
+    }),
+    (_get, set, update: SetStateAction<PlaygroundAuthStateBearerToken> | typeof RESET) => {
+        set(PLAYGROUND_AUTH_STATE_ATOM, ({ bearerAuth: prevBearerAuth, ...rest }) => {
+            const nextBearerAuth =
                 typeof update === "function"
-                    ? update(prev.bearerAuth ?? PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL)
-                    : update,
-        }));
+                    ? update(prevBearerAuth ?? PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL)
+                    : update;
+
+            if (nextBearerAuth === RESET) {
+                return rest;
+            }
+
+            return { ...rest, bearerAuth: nextBearerAuth };
+        });
     },
 );
 
+/**
+ * If an injected bearer token is provided, the input bearer token should be resettable if it's not empty.
+ */
+export const PLAYGROUND_AUTH_STATE_BEARER_TOKEN_IS_RESETTABLE_ATOM = atom((get) => {
+    const inputBearerAuth = get(PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM).token;
+    const injectedBearerAuth = get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.bearer_token;
+    return injectedBearerAuth != null && inputBearerAuth !== injectedBearerAuth;
+});
+
 export const PLAYGROUND_AUTH_STATE_HEADER_ATOM = atom(
-    (get) => get(PLAYGROUND_AUTH_STATE_ATOM).header ?? PLAYGROUND_AUTH_STATE_HEADER_INITIAL,
-    (_get, set, update: SetStateAction<PlaygroundAuthStateHeader>) => {
-        set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => ({
-            ...prev,
-            header: typeof update === "function" ? update(prev.header ?? PLAYGROUND_AUTH_STATE_HEADER_INITIAL) : update,
-        }));
+    (get) => ({
+        headers: pascalCaseHeaderKeys({
+            ...(get(PLAYGROUND_AUTH_STATE_ATOM).header?.headers ??
+                get(FERN_USER_ATOM)?.playground?.initial_state?.headers),
+        }),
+    }),
+    (_get, set, update: SetStateAction<PlaygroundAuthStateHeader> | typeof RESET) => {
+        set(PLAYGROUND_AUTH_STATE_ATOM, ({ header: prevHeader, ...rest }) => {
+            const nextHeader =
+                typeof update === "function" ? update(prevHeader ?? PLAYGROUND_AUTH_STATE_HEADER_INITIAL) : update;
+
+            if (nextHeader === RESET) {
+                return rest;
+            }
+
+            return { ...rest, header: nextHeader };
+        });
     },
 );
 
 export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM = atom(
-    (get) => get(PLAYGROUND_AUTH_STATE_ATOM).basicAuth ?? PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL,
-    (_get, set, update: SetStateAction<PlaygroundAuthStateBasicAuth>) => {
-        set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => ({
-            ...prev,
-            basicAuth:
+    (get) => ({
+        username:
+            get(PLAYGROUND_AUTH_STATE_ATOM).basicAuth?.username ??
+            get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic?.username,
+        password:
+            get(PLAYGROUND_AUTH_STATE_ATOM).basicAuth?.password ??
+            get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic?.password,
+    }),
+    (_get, set, update: SetStateAction<Partial<PlaygroundAuthStateBasicAuth>> | typeof RESET) => {
+        set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => {
+            if (prev == null) {
+                return {};
+            }
+
+            const { basicAuth: prevBasicAuth, ...rest } = prev;
+
+            const nextBasicAuth =
                 typeof update === "function"
-                    ? update(prev.basicAuth ?? PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL)
-                    : update,
-        }));
+                    ? update(prevBasicAuth ?? PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL)
+                    : update;
+
+            if (nextBasicAuth === RESET) {
+                return rest;
+            }
+
+            return { ...rest, basicAuth: { username: "", password: "", ...prevBasicAuth, ...nextBasicAuth } };
+        });
     },
 );
 
+export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_USERNAME_ATOM = atom(
+    (get) => get(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM).username,
+    (_get, set, update: SetStateAction<string> | typeof RESET) => {
+        set(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM, ({ username: prevUsername, ...rest }) => {
+            const nextUsername = typeof update === "function" ? update(prevUsername ?? "") : update;
+
+            if (nextUsername === RESET) {
+                return rest;
+            }
+
+            return { ...rest, username: nextUsername };
+        });
+    },
+);
+
+export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_PASSWORD_ATOM = atom(
+    (get) => get(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM).password,
+    (_get, set, update: SetStateAction<string> | typeof RESET) => {
+        set(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM, ({ password: prevPassword, ...rest }) => {
+            const nextPassword = typeof update === "function" ? update(prevPassword ?? "") : update;
+
+            if (nextPassword === RESET) {
+                return rest;
+            }
+
+            return { ...rest, password: nextPassword };
+        });
+    },
+);
+
+export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_USERNAME_IS_RESETTABLE_ATOM = atom((get) => {
+    const inputBasicAuth = get(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM);
+    const injectedBasicAuth = get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic;
+    return injectedBasicAuth != null && inputBasicAuth.username !== injectedBasicAuth.username;
+});
+
+export const PLAYGROUND_AUTH_STATE_BASIC_AUTH_PASSWORD_IS_RESETTABLE_ATOM = atom((get) => {
+    const inputBasicAuth = get(PLAYGROUND_AUTH_STATE_BASIC_AUTH_ATOM);
+    const injectedBasicAuth = get(FERN_USER_ATOM)?.playground?.initial_state?.auth?.basic;
+    return injectedBasicAuth != null && inputBasicAuth.password !== injectedBasicAuth.password;
+});
+
 export const PLAYGROUND_AUTH_STATE_OAUTH_ATOM = atom(
     (get) => get(PLAYGROUND_AUTH_STATE_ATOM).oauth ?? PLAYGROUND_AUTH_STATE_OAUTH_INITIAL,
-    (_get, set, update: SetStateAction<PlaygroundAuthStateOAuth>) => {
-        set(PLAYGROUND_AUTH_STATE_ATOM, (prev) => ({
-            ...prev,
-            oauth: typeof update === "function" ? update(prev.oauth ?? PLAYGROUND_AUTH_STATE_OAUTH_INITIAL) : update,
-        }));
+    (_get, set, update: SetStateAction<PlaygroundAuthStateOAuth> | typeof RESET) => {
+        set(PLAYGROUND_AUTH_STATE_ATOM, ({ oauth: prevOauth, ...rest }) => {
+            const nextOauth =
+                typeof update === "function" ? update(prevOauth ?? PLAYGROUND_AUTH_STATE_OAUTH_INITIAL) : update;
+
+            if (nextOauth === RESET) {
+                return rest;
+            }
+
+            return { ...rest, oauth: nextOauth };
+        });
     },
 );
 
@@ -265,6 +362,8 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
                     return;
                 }
 
+                const playgroundInitialState = get(FERN_USER_ATOM)?.playground?.initial_state;
+
                 if (node.type === "endpoint") {
                     const context = createEndpointContext(node, definition);
 
@@ -277,7 +376,11 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
 
                     set(
                         formStateAtom,
-                        getInitialEndpointRequestFormStateWithExample(context, context.endpoint.examples?.[0]),
+                        getInitialEndpointRequestFormStateWithExample(
+                            context,
+                            context.endpoint.examples?.[0],
+                            playgroundInitialState,
+                        ),
                     );
                 } else if (node.type === "webSocket") {
                     const context = createWebSocketContext(node, definition);
@@ -290,7 +393,7 @@ export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeA
                         return;
                     }
 
-                    set(formStateAtom, getInitialWebSocketRequestFormState(context));
+                    set(formStateAtom, getInitialWebSocketRequestFormState(context, playgroundInitialState));
                 }
                 playgroundFormStateFamily.remove(node.id);
             },
@@ -304,9 +407,16 @@ export function usePlaygroundEndpointFormState(
 ): [PlaygroundEndpointRequestFormState, Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>] {
     const formStateAtom = playgroundFormStateFamily(ctx.node.id);
     const formState = useAtomValue(formStateAtom);
+    const user = useAtomValue(FERN_USER_ATOM);
 
     return [
-        formState?.type === "endpoint" ? formState : getInitialEndpointRequestFormState(ctx),
+        formState?.type === "endpoint"
+            ? formState
+            : getInitialEndpointRequestFormStateWithExample(
+                  ctx,
+                  ctx.endpoint.examples?.[0],
+                  user?.playground?.initial_state,
+              ),
         useAtomCallback(
             useCallbackOne(
                 (get, set, update: SetStateAction<PlaygroundEndpointRequestFormState>) => {
@@ -316,12 +426,16 @@ export function usePlaygroundEndpointFormState(
                             ? update(
                                   currentFormState?.type === "endpoint"
                                       ? currentFormState
-                                      : getInitialEndpointRequestFormState(ctx),
+                                      : getInitialEndpointRequestFormStateWithExample(
+                                            ctx,
+                                            ctx.endpoint.examples?.[0],
+                                            user?.playground?.initial_state,
+                                        ),
                               )
                             : update;
                     set(formStateAtom, newFormState);
                 },
-                [formStateAtom, ctx],
+                [formStateAtom, ctx, user?.playground?.initial_state],
             ),
         ),
     ];
@@ -332,9 +446,12 @@ export function usePlaygroundWebsocketFormState(
 ): [PlaygroundWebSocketRequestFormState, Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>] {
     const formStateAtom = playgroundFormStateFamily(context.node.id);
     const formState = useAtomValue(playgroundFormStateFamily(context.node.id));
+    const user = useAtomValue(FERN_USER_ATOM);
 
     return [
-        formState?.type === "websocket" ? formState : getInitialWebSocketRequestFormState(context),
+        formState?.type === "websocket"
+            ? formState
+            : getInitialWebSocketRequestFormState(context, user?.playground?.initial_state),
         useAtomCallback(
             useCallbackOne(
                 (get, set, update: SetStateAction<PlaygroundWebSocketRequestFormState>) => {
@@ -344,12 +461,12 @@ export function usePlaygroundWebsocketFormState(
                             ? update(
                                   currentFormState?.type === "websocket"
                                       ? currentFormState
-                                      : getInitialWebSocketRequestFormState(context),
+                                      : getInitialWebSocketRequestFormState(context, user?.playground?.initial_state),
                               )
                             : update;
                     set(formStateAtom, newFormState);
                 },
-                [formStateAtom, context],
+                [formStateAtom, context, user?.playground?.initial_state],
             ),
         ),
     ];

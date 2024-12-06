@@ -3,6 +3,7 @@ export * from "./CopyToClipboardButton";
 export * from "./Empty";
 export * from "./FernAudioPlayer";
 export * from "./FernButton";
+export * from "./FernButtonV2";
 export * from "./FernCard";
 export * from "./FernCheckbox";
 export * from "./FernChip";

@@ -121,8 +121,8 @@ export function getHarRequest(
                         visitDiscriminatedUnion(clientCredentials.value, "type")._visit({
                             referencedEndpoint: () => {
                                 request.headers.push({
-                                    name: "Authorization",
-                                    value: "Bearer <token>",
+                                    name: clientCredentials.value.headerName || "Authorization",
+                                    value: `${clientCredentials.value.tokenPrefix ? `${clientCredentials.value.tokenPrefix ?? "Bearer"} ` : ""}<token>.`,
                                 });
                             },
                         });

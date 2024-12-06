@@ -63,7 +63,7 @@ export function PlaygroundCardTriggerApiKeyInjected({
         }
     };
 
-    if (apiKey != null) {
+    if (apiKey != null && apiKey.trim().length > 0) {
         return (
             <FernCard className="rounded-xl p-4 shadow-sm mb-3" title="Login to send a real request">
                 <FernButton

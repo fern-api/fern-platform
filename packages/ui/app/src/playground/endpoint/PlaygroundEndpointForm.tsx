@@ -1,10 +1,13 @@
-import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
+import { PropertyKey, type EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_ARRAY, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { useAtomValue } from "jotai";
 import { Dispatch, FC, SetStateAction, useCallback, useMemo } from "react";
+import { FERN_USER_ATOM } from "../../atoms";
 import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";
 import { PlaygroundObjectForm } from "../form/PlaygroundObjectForm";
 import { PlaygroundObjectPropertiesForm } from "../form/PlaygroundObjectPropertyForm";
 import { PlaygroundEndpointRequestFormState, PlaygroundFormStateBody } from "../types";
+import { pascalCaseHeaderKey, pascalCaseHeaderKeys } from "../utils/header-key-case";
 import { PlaygroundEndpointAliasForm } from "./PlaygroundEndpointAliasForm";
 import { PlaygroundEndpointFormSection } from "./PlaygroundEndpointFormSection";
 import { PlaygroundEndpointMultipartForm } from "./PlaygroundEndpointMultipartForm";
@@ -22,6 +25,12 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
     setFormState,
     ignoreHeaders,
 }) => {
+    const {
+        headers: initialHeaders,
+        query_parameters: initialQueryParameters,
+        path_parameters: initialPathParameters,
+    } = useAtomValue(FERN_USER_ATOM)?.playground?.initial_state ?? {};
+
     const setHeaders = useCallback(
         (value: ((old: unknown) => unknown) | unknown) => {
             setFormState((state) => ({
@@ -104,10 +113,14 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Headers">
                     <PlaygroundObjectPropertiesForm
                         id="header"
-                        properties={headers}
+                        properties={headers.map((header) => ({
+                            ...header,
+                            key: PropertyKey(pascalCaseHeaderKey(header.key)),
+                        }))}
                         extraProperties={undefined}
                         onChange={setHeaders}
-                        value={headers}
+                        value={formState?.headers}
+                        defaultValue={pascalCaseHeaderKeys(initialHeaders)}
                         types={types}
                     />
                 </PlaygroundEndpointFormSection>
@@ -121,6 +134,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                         extraProperties={undefined}
                         onChange={setPathParameters}
                         value={formState?.pathParameters}
+                        defaultValue={initialPathParameters}
                         types={types}
                     />
                 </PlaygroundEndpointFormSection>
@@ -134,6 +148,7 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                         extraProperties={undefined}
                         onChange={setQueryParameters}
                         value={formState?.queryParameters}
+                        defaultValue={initialQueryParameters}
                         types={types}
                     />
                 </PlaygroundEndpointFormSection>

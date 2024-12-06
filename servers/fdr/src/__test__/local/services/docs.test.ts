@@ -84,6 +84,47 @@ it("docs register", async () => {
     });
 });
 
+it("test invalid domain URL - special characters", async () => {
+    const fdr = getClient({ authed: true, url: inject("url") });
+    const domain = `https://fern-${Math.random()}.docs.buildwithfern.com`;
+    // register docs
+    const startDocsRegisterResponse = getAPIResponse(
+        await fdr.docs.v2.write.startDocsRegister({
+            orgId: FdrAPI.OrgId(`plantstore-2024-test${Math.random()}`),
+            apiId: FdrAPI.ApiId(""),
+            domain,
+            customDomains: [],
+            filepaths: [
+                DocsV1Write.FilePath("logo.png"),
+                DocsV1Write.FilePath("guides/guide.mdx"),
+                DocsV1Write.FilePath("fonts/Syne.woff2"),
+            ],
+        }),
+    );
+    await fdr.docs.v2.write.finishDocsRegister(startDocsRegisterResponse.docsRegistrationId, {
+        docsDefinition: WRITE_DOCS_REGISTER_DEFINITION,
+    });
+
+    const startDocsRegisterResponse2 = await fdr.docs.v2.write.startDocsRegister({
+        orgId: FdrAPI.OrgId(`plantstore-2024-test${Math.random()}`),
+        apiId: FdrAPI.ApiId(""),
+        domain: domain + "//",
+        customDomains: [],
+        filepaths: [
+            DocsV1Write.FilePath("logo.png"),
+            DocsV1Write.FilePath("guides/guide.mdx"),
+            DocsV1Write.FilePath("fonts/Syne.woff2"),
+        ],
+    });
+
+    // expecting an error, because adding // to the domain should not bypass domain check
+    expect((startDocsRegisterResponse2 as any).error.content).toEqual({
+        body: `Domain URL is malformed: ${domain + "//"}`,
+        reason: "status-code",
+        statusCode: 400,
+    });
+});
+
 it("docs register V2", async () => {
     const fdr = getClient({ authed: true, url: inject("url") });
     // register docs

@@ -1,10 +1,11 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY, EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { FernButton, FernButtonGroup, FernScrollArea } from "@fern-ui/components";
+import { FernScrollArea } from "@fern-ui/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
-import { ReactNode, memo, useMemo, useRef } from "react";
+import { sortBy } from "es-toolkit";
+import { RESET } from "jotai/utils";
+import { ReactNode, SetStateAction, memo, useCallback, useMemo, useRef } from "react";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { StatusCodeTag, statusCodeToIntent } from "../../components/StatusCodeTag";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
@@ -13,16 +14,17 @@ import { AudioExample } from "../examples/AudioExample";
 import { CodeSnippetExample, JsonCodeSnippetExample } from "../examples/CodeSnippetExample";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TitledExample } from "../examples/TitledExample";
-import type { CodeExample, CodeExampleGroup } from "../examples/code-example";
+import type { CodeExample } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
 import {
-    ExampleIndex,
-    ExamplesByClientAndTitleAndStatusCode,
+    ExamplesByKeyAndStatusCode,
+    ExamplesByStatusCode,
     SelectedExampleKey,
     StatusCode,
 } from "../types/EndpointContent";
 import { WebSocketMessages } from "../web-socket/WebSocketMessages";
 import { CodeExampleClientDropdown } from "./CodeExampleClientDropdown";
+import { EndpointExampleSegmentedControl } from "./EndpointExampleSegmentedControl";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 import { ErrorExampleSelect } from "./ErrorExampleSelect";
 
@@ -30,12 +32,12 @@ export declare namespace EndpointContentCodeSnippets {
     export interface Props {
         node: FernNavigation.EndpointNode;
         endpoint: ApiDefinition.EndpointDefinition;
-        examplesByClientAndTitleAndStatusCode: ExamplesByClientAndTitleAndStatusCode | undefined;
-        selectedExampleKey: SelectedExampleKey | undefined;
-        setSelectedExampleKey: (exampleKey: SelectedExampleKey | undefined) => void;
-        clients: CodeExampleGroup[];
-        selectedClient: CodeExample;
-        onClickClient: (example: CodeExample) => void;
+        languages: string[];
+        examplesByKeyAndStatusCode: ExamplesByKeyAndStatusCode;
+        examplesByStatusCode: ExamplesByStatusCode;
+        selectedExample: CodeExample | undefined;
+        selectedLanguage: string;
+        setSelectedExampleKey: (exampleKey: SetStateAction<SelectedExampleKey> | typeof RESET) => void;
         requestCodeSnippet: string;
         requestCurlJson: unknown;
         hoveredRequestPropertyPath: JsonPropertyPath | undefined;
@@ -43,7 +45,6 @@ export declare namespace EndpointContentCodeSnippets {
         showErrors: boolean;
         errors: ApiDefinition.ErrorResponse[] | undefined;
         selectedError: ApiDefinition.ErrorResponse | undefined;
-        setSelectedError: (error: ApiDefinition.ErrorResponse | undefined) => void;
         measureHeight: (height: number) => void;
     }
 }
@@ -51,20 +52,17 @@ export declare namespace EndpointContentCodeSnippets {
 const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippets.Props> = ({
     node,
     endpoint,
-    examplesByClientAndTitleAndStatusCode,
-    selectedExampleKey,
+    examplesByKeyAndStatusCode,
+    examplesByStatusCode,
+    selectedExample,
+    selectedLanguage,
     setSelectedExampleKey,
-    clients,
-    selectedClient,
-    onClickClient,
+    languages,
     requestCodeSnippet,
     requestCurlJson,
     hoveredRequestPropertyPath = EMPTY_ARRAY,
     hoveredResponsePropertyPath = EMPTY_ARRAY,
     showErrors,
-    errors = EMPTY_ARRAY,
-    selectedError,
-    setSelectedError,
     measureHeight,
 }) => {
     const ref = useRef<HTMLDivElement>(null);
@@ -74,123 +72,83 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
             measureHeight(entry.contentRect.height);
         }
     });
-    const handleSelectErrorAndExample = (error: ApiDefinition.ErrorResponse | undefined) => {
-        setSelectedError(error);
-    };
 
-    const handleSelectExample = (statusCode: StatusCode, exampleIndex: ExampleIndex) => {
-        setSelectedExampleKey([selectedClient.language, selectedExampleKey?.[1], statusCode, exampleIndex]);
-    };
-
-    const getExampleId = useMemo(
-        () => (example: CodeExample | undefined, errorName: string | undefined, exampleIndex: number | undefined) =>
-            example?.exampleCall.responseBody != null
-                ? visitDiscriminatedUnion(example.exampleCall.responseBody)._visit<ReactNode>({
-                      json: () =>
-                          example.globalError || errorName
-                              ? renderErrorTitle(errorName, example.exampleCall.responseStatusCode, exampleIndex)
-                              : renderExampleTitle(
-                                    example.exampleCall.responseStatusCode,
-                                    endpoint.method,
-                                    exampleIndex,
-                                ),
-                      filename: () =>
-                          example.globalError || errorName
-                              ? renderErrorTitle(errorName, example.exampleCall.responseStatusCode, exampleIndex)
-                              : renderExampleTitle(
-                                    example.exampleCall.responseStatusCode,
-                                    endpoint.method,
-                                    exampleIndex,
-                                ),
-                      stream: () => "Streamed Response",
-                      sse: () => "Server-Sent Events",
-                      _other: () => "Response",
-                  })
-                : "Response",
-        [endpoint],
+    const handleSelectExample = useCallback(
+        (statusCode: StatusCode, responseIndex: number) => {
+            setSelectedExampleKey((prev) => ({ ...prev, statusCode, responseIndex }));
+        },
+        [setSelectedExampleKey],
     );
 
-    const selectedExample = useMemo(() => {
-        if (selectedExampleKey == null) {
-            return undefined;
-        }
-        const [language, title, statusCode, exampleIndex] = selectedExampleKey;
-        if (language == null || title == null || statusCode == null || exampleIndex == null) {
-            return undefined;
-        }
-        return examplesByClientAndTitleAndStatusCode?.[language]?.[title]?.[statusCode]?.[exampleIndex];
-    }, [selectedExampleKey, examplesByClientAndTitleAndStatusCode]);
-
-    const errorSelector = showErrors ? (
-        <ErrorExampleSelect
-            errors={errors}
-            selectedError={selectedError}
-            setSelectedErrorAndExample={handleSelectErrorAndExample}
-            selectedExampleKey={selectedExampleKey}
-            setSelectedExampleKey={handleSelectExample}
-            examplesByStatusCode={
-                examplesByClientAndTitleAndStatusCode?.[selectedClient.language]?.[selectedExampleKey?.[1] ?? ""]
+    const getExampleId = useCallback(
+        (example: CodeExample | undefined) => {
+            switch (example?.exampleCall.responseBody?.type) {
+                case "json":
+                case "filename": {
+                    const title =
+                        example.exampleCall.name ??
+                        ApiDefinition.getMessageForStatus(example.exampleCall.responseStatusCode, endpoint.method) ??
+                        "Response";
+                    return renderResponseTitle(title, example.exampleCall.responseStatusCode);
+                }
+                case "stream":
+                    return "Streamed Response";
+                case "sse":
+                    return "Server-Sent Events";
+                default:
+                    return "Response";
             }
-            getExampleId={getExampleId}
-        />
-    ) : (
-        <span className="text-sm t-muted">
-            {getExampleId(selectedExample, selectedError?.examples?.[0]?.name, undefined)}
-        </span>
+        },
+        [endpoint.method],
     );
+
+    const errorSelector =
+        showErrors && Object.keys(examplesByStatusCode).length > 1 ? (
+            <ErrorExampleSelect
+                examplesByStatusCode={examplesByStatusCode}
+                selectedExample={selectedExample}
+                setSelectedExampleKey={handleSelectExample}
+                getExampleId={getExampleId}
+            />
+        ) : (
+            <span className="text-sm t-muted line-clamp-1">{getExampleId(selectedExample)}</span>
+        );
 
     const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
 
-    const filteredClientExamples = useMemo(() => {
-        const examples = examplesByClientAndTitleAndStatusCode?.[selectedClient.language];
-        if (examples == null) {
-            return [];
-        }
-        return Object.values(examples).flatMap((examplesByStatusCode) => {
-            const statusCode = selectedExample?.exampleCall.responseStatusCode;
-            if (statusCode == null || statusCode >= 400) {
-                return [];
-            }
-            return examplesByStatusCode[statusCode]?.filter((e) => !e.globalError) ?? [];
-        });
-    }, [examplesByClientAndTitleAndStatusCode, selectedClient.language, selectedExample]);
+    const segmentedControlExamples = useMemo(() => {
+        return Object.entries(examplesByKeyAndStatusCode)
+            .map(([exampleKey, examples]) => {
+                const examplesSorted = sortBy(Object.values(examples).flat(), [
+                    (example) => example.exampleCall.responseStatusCode,
+                ]);
+                return { exampleKey, examples: examplesSorted };
+            })
+            .filter(
+                ({ examples }) =>
+                    examples.length > 0 &&
+                    (examples.some((example) => example.exampleCall.responseStatusCode < 400) ||
+                        examples[0]?.name != null),
+            );
+    }, [examplesByKeyAndStatusCode]);
 
+    // note: .fern-endpoint-code-snippets is used to detect clicks outside of the code snippets
+    // this is used to clear the selected error when the user clicks outside of the error
     return (
         <div className="fern-endpoint-code-snippets" ref={ref}>
-            {/* TODO: Replace this with a proper segmented control component */}
-            {filteredClientExamples != null && filteredClientExamples.length > 1 && (
-                <FernButtonGroup className="min-w-0 shrink">
-                    {filteredClientExamples.map(
-                        (example) =>
-                            example && (
-                                <FernButton
-                                    key={example.key}
-                                    rounded={true}
-                                    onClick={() => {
-                                        onClickClient(example);
-                                        const foundExampleIndex = examplesByClientAndTitleAndStatusCode?.[
-                                            example.language
-                                        ]?.[example.key]?.[example.exampleCall.responseStatusCode ?? 0]?.findIndex(
-                                            (e) => e?.key === example.key,
-                                        );
-                                        setSelectedExampleKey([
-                                            example.language,
-                                            example.key,
-                                            example.exampleCall.responseStatusCode,
-                                            foundExampleIndex && foundExampleIndex >= 0 ? foundExampleIndex : 0,
-                                        ]);
-                                    }}
-                                    className="min-w-0 shrink truncate"
-                                    mono
-                                    size="small"
-                                    variant={example === selectedClient ? "outlined" : "minimal"}
-                                    intent={example === selectedClient ? "primary" : "none"}
-                                >
-                                    {example.name}
-                                </FernButton>
-                            ),
-                    )}
-                </FernButtonGroup>
+            {segmentedControlExamples.length > 1 && (
+                <EndpointExampleSegmentedControl
+                    segmentedControlExamples={segmentedControlExamples}
+                    selectedExample={selectedExample}
+                    onSelectExample={(exampleKey) => {
+                        setSelectedExampleKey((prev) => {
+                            if (prev.exampleKey === exampleKey) {
+                                return prev;
+                            }
+                            return { ...prev, exampleKey };
+                        });
+                    }}
+                />
             )}
             <CodeSnippetExample
                 title={
@@ -209,28 +167,25 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                         {node != null && (
                             <PlaygroundButton
                                 state={node}
-                                // example={selectedClient.exampleCall}
+                                // example={selectedExample?.exampleCall}
                             />
                         )}
-                        {
-                            // filteredClientsByStatusCode != null && filteredClientsByStatusCode.length > 1 ? (
-                            clients.length > 1 ? (
-                                <CodeExampleClientDropdown
-                                    clients={clients}
-                                    onClickClient={onClickClient}
-                                    selectedClient={selectedClient}
-                                />
-                            ) : undefined
-                        }
+                        {languages.length > 1 && (
+                            <CodeExampleClientDropdown
+                                languages={languages}
+                                value={selectedLanguage}
+                                onValueChange={(language) => {
+                                    setSelectedExampleKey((prev) => ({ ...prev, language }));
+                                }}
+                            />
+                        )}
                     </>
                 }
                 code={resolveEnvironmentUrlInCodeSnippet(endpoint, requestCodeSnippet, baseUrl)}
-                language={selectedClient.language}
-                hoveredPropertyPath={selectedClient.language === "curl" ? hoveredRequestPropertyPath : undefined}
+                language={selectedLanguage}
+                hoveredPropertyPath={selectedLanguage === "curl" ? hoveredRequestPropertyPath : undefined}
                 json={requestCurlJson}
-                jsonStartLine={
-                    selectedClient.language === "curl" ? lineNumberOf(requestCodeSnippet, "-d '{") : undefined
-                }
+                jsonStartLine={selectedLanguage === "curl" ? lineNumberOf(requestCodeSnippet, "-d '{") : undefined}
             />
             {selectedExample != null && selectedExample.exampleCall.responseStatusCode >= 400 && (
                 <JsonCodeSnippetExample
@@ -299,24 +254,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
 };
 
 export const EndpointContentCodeSnippets = memo(UnmemoizedEndpointContentCodeSnippets);
-
-function applyExampleIndex(name: string | undefined, exampleIndex?: number) {
-    return exampleIndex ? `${name} Example ${exampleIndex}` : name;
-}
-
-function renderErrorTitle(errorName: string | undefined, statusCode: number, exampleIndex?: number) {
-    return renderResponseTitle(
-        applyExampleIndex(errorName, exampleIndex) ?? ApiDefinition.getMessageForStatus(statusCode),
-        statusCode,
-    );
-}
-
-function renderExampleTitle(statusCode: number, method?: APIV1Read.HttpMethod, exampleIndex?: number) {
-    return renderResponseTitle(
-        applyExampleIndex(ApiDefinition.getMessageForStatus(statusCode, method), exampleIndex) ?? "Response",
-        statusCode,
-    );
-}
 
 function renderResponseTitle(title: string, statusCode: number) {
     return (

@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { GitFork, GithubCircle, Star } from "iconoir-react";
 import React from "react";
 import useSWR from "swr";
@@ -16,7 +17,7 @@ const GitHubStat: React.FC<{
     );
 };
 
-export const GitHubWidget: React.FC<{ repo: string }> = ({ repo }) => {
+export const GitHubWidget: React.FC<{ repo: string; className?: string; id?: string }> = ({ repo, className, id }) => {
     const { data } = useSWR<GitHubInfo | null>(repo, getGitHubInfo);
 
     if (!data) {
@@ -28,7 +29,8 @@ export const GitHubWidget: React.FC<{ repo: string }> = ({ repo }) => {
             href={`https://github.com/${repo}`}
             icon={<GithubCircle className="!size-icon-lg" strokeWidth={1} />}
             variant="minimal"
-            className="h-10"
+            id={id}
+            className={clsx("h-10", className)}
         >
             <div className="font-medium">{repo}</div>
             <div className="flex gap-2 text-xs">

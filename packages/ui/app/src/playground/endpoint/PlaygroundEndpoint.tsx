@@ -6,9 +6,10 @@ import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/l
 import { useEventCallback } from "@fern-ui/react-commons";
 import { mapValues } from "es-toolkit/object";
 import { SendSolid } from "iconoir-react";
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { ReactElement, useCallback, useState } from "react";
 import {
+    FERN_USER_ATOM,
     PLAYGROUND_AUTH_STATE_ATOM,
     PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
     store,
@@ -25,27 +26,31 @@ import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
 import type { GrpcProxyRequest, ProxyRequest } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
-import {
-    buildAuthHeaders,
-    getInitialEndpointRequestFormState,
-    getInitialEndpointRequestFormStateWithExample,
-    serializeFormStateBody,
-} from "../utils";
+import { buildAuthHeaders, getInitialEndpointRequestFormStateWithExample, serializeFormStateBody } from "../utils";
 import { usePlaygroundBaseUrl } from "../utils/select-environment";
 import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
 import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
 
 export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): ReactElement => {
+    const user = useAtomValue(FERN_USER_ATOM);
     const { node, endpoint, auth } = context;
 
     const [formState, setFormState] = usePlaygroundEndpointFormState(context);
 
     const resetWithExample = useEventCallback(() => {
-        setFormState(getInitialEndpointRequestFormStateWithExample(context, context.endpoint.examples?.[0]));
+        setFormState(
+            getInitialEndpointRequestFormStateWithExample(
+                context,
+                context.endpoint.examples?.[0],
+                user?.playground?.initial_state,
+            ),
+        );
     });
 
     const resetWithoutExample = useEventCallback(() => {
-        setFormState(getInitialEndpointRequestFormState(context));
+        setFormState(
+            getInitialEndpointRequestFormStateWithExample(context, undefined, user?.playground?.initial_state),
+        );
     });
 
     const basePath = useBasePath();

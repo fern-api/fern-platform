@@ -1,0 +1,693 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "test-uuid-replacement": {
+      "description": "API that converts text into lifelike speech with best-in-class latency & uses the most advanced AI audio model ever. Create voiceovers for your videos, audiobooks, or create AI chatbots for free.",
+      "id": "/v1/text-to-speech",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "v1"
+        },
+        {
+          "type": "literal",
+          "value": "text-to-speech"
+        }
+      ],
+      "defaultEnvironment": "x-fern-server-name",
+      "environments": [
+        {
+          "id": "x-fern-server-name",
+          "baseUrl": "https://api.deeptune.com"
+        }
+      ],
+      "request": {
+        "contentType": "application/json",
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "TextToSpeechRequest"
+          }
+        }
+      },
+      "errors": [],
+      "examples": []
+    },
+    "test-uuid-replacement": {
+      "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
+      "id": "/v1/text-to-speech/from-prompt",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "v1"
+        },
+        {
+          "type": "literal",
+          "value": "text-to-speech"
+        },
+        {
+          "type": "literal",
+          "value": "from-prompt"
+        }
+      ],
+      "defaultEnvironment": "x-fern-server-name",
+      "environments": [
+        {
+          "id": "x-fern-server-name",
+          "baseUrl": "https://api.deeptune.com"
+        }
+      ],
+      "request": {
+        "contentType": "application/json",
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "TextToSpeechFromPromptRequest"
+          }
+        }
+      },
+      "errors": [],
+      "examples": []
+    },
+    "test-uuid-replacement": {
+      "description": "Retrieve all voices associated with the current workspace.",
+      "id": "/v1/voices",
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "v1"
+        },
+        {
+          "type": "literal",
+          "value": "voices"
+        }
+      ],
+      "defaultEnvironment": "x-fern-server-name",
+      "environments": [
+        {
+          "id": "x-fern-server-name",
+          "baseUrl": "https://api.deeptune.com"
+        }
+      ],
+      "response": {
+        "statusCode": 200,
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "ListVoicesResponse"
+          }
+        },
+        "description": "Successful response"
+      },
+      "errors": [],
+      "examples": []
+    },
+    "test-uuid-replacement": {
+      "description": "Create a new voice with a name, optional description, and audio file.",
+      "id": "/v1/voices",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "v1"
+        },
+        {
+          "type": "literal",
+          "value": "voices"
+        }
+      ],
+      "defaultEnvironment": "x-fern-server-name",
+      "environments": [
+        {
+          "id": "x-fern-server-name",
+          "baseUrl": "https://api.deeptune.com"
+        }
+      ],
+      "request": {
+        "contentType": "multipart/form-data",
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "CreateVoiceRequest"
+          }
+        }
+      },
+      "response": {
+        "statusCode": 200,
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "CreateVoiceResponse"
+          }
+        },
+        "description": "Successful response"
+      },
+      "errors": [],
+      "examples": []
+    },
+    "test-uuid-replacement": {
+      "description": "Retrieve a specific voice by its ID.",
+      "id": "/v1/voices/{voice_id}",
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "v1"
+        },
+        {
+          "type": "literal",
+          "value": "voices"
+        },
+        {
+          "type": "pathParameter",
+          "value": "voice_id"
+        }
+      ],
+      "defaultEnvironment": "x-fern-server-name",
+      "environments": [
+        {
+          "id": "x-fern-server-name",
+          "baseUrl": "https://api.deeptune.com"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "voice_id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "The ID of the voice to retrieve"
+        }
+      ],
+      "response": {
+        "statusCode": 200,
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "GetVoiceByIdResponse"
+          }
+        },
+        "description": "Successful response"
+      },
+      "errors": [],
+      "examples": []
+    },
+    "test-uuid-replacement": {
+      "description": "Update an existing voice with new name, description, or audio file.",
+      "id": "/v1/voices/{voice_id}",
+      "method": "PUT",
+      "path": [
+        {
+          "type": "literal",
+          "value": "v1"
+        },
+        {
+          "type": "literal",
+          "value": "voices"
+        },
+        {
+          "type": "pathParameter",
+          "value": "voice_id"
+        }
+      ],
+      "defaultEnvironment": "x-fern-server-name",
+      "environments": [
+        {
+          "id": "x-fern-server-name",
+          "baseUrl": "https://api.deeptune.com"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "voice_id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "The ID of the voice to update"
+        }
+      ],
+      "request": {
+        "contentType": "multipart/form-data",
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "UpdateVoiceRequest"
+          }
+        }
+      },
+      "response": {
+        "statusCode": 200,
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "UpdateVoiceResponse"
+          }
+        },
+        "description": "Successful response"
+      },
+      "errors": [],
+      "examples": []
+    },
+    "test-uuid-replacement": {
+      "description": "Delete an existing voice by its ID.",
+      "id": "/v1/voices/{voice_id}",
+      "method": "DELETE",
+      "path": [
+        {
+          "type": "literal",
+          "value": "v1"
+        },
+        {
+          "type": "literal",
+          "value": "voices"
+        },
+        {
+          "type": "pathParameter",
+          "value": "voice_id"
+        }
+      ],
+      "defaultEnvironment": "x-fern-server-name",
+      "environments": [
+        {
+          "id": "x-fern-server-name",
+          "baseUrl": "https://api.deeptune.com"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "voice_id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "The ID of the voice to delete"
+        }
+      ],
+      "errors": [],
+      "examples": []
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {
+    "TextToSpeechRequest": {
+      "name": "TextToSpeechRequest",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "text",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The text to be converted to speech."
+          },
+          {
+            "key": "voice",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Voice ID to be used, you can use the API or https://app.deeptune.com to browse voices and clone your own."
+          },
+          {
+            "key": "language_code",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Language code used to specify language/accent for the model, see supported languages. If not specified, language is auto-detected."
+          },
+          {
+            "key": "seed",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            "description": "Assuming all other properties didn't change, a fixed seed should always generate the exact same audio file."
+          }
+        ]
+      }
+    },
+    "TextToSpeechResponse": {
+      "name": "TextToSpeechResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "file",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "base64"
+                }
+              }
+            },
+            "description": "The generated audio file"
+          }
+        ]
+      }
+    },
+    "TextToSpeechFromPromptRequest": {
+      "name": "TextToSpeechFromPromptRequest",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "text",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The text to be converted to speech."
+          },
+          {
+            "key": "prompt_audio",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The audio of the voice prompt to clone. This can be the url of a publicly accessible audio file or base64 encoded byte string.\n\nThe audio file should have a duration ranging from 3 to 30 seconds (quality does not improve with more than 30 seconds of reference audio). It can be in any audio format, as long as it is less than 50 MB.\n"
+          },
+          {
+            "key": "language_code",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Language code used to specify language/accent for the model, see supported languages. If not specified, language is auto-detected."
+          },
+          {
+            "key": "seed",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            "description": "Assuming all other properties didn't change, a fixed seed should always generate the exact same audio file."
+          }
+        ]
+      }
+    },
+    "TextToSpeechFromPromptResponse": {
+      "name": "TextToSpeechFromPromptResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "file",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "base64"
+                }
+              }
+            },
+            "description": "The generated audio file"
+          }
+        ]
+      }
+    },
+    "ListVoicesResponse": {
+      "name": "ListVoicesResponse",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemShape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Voice"
+            }
+          }
+        }
+      }
+    },
+    "GetVoiceByIdResponse": {
+      "name": "GetVoiceByIdResponse",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "Voice"
+        }
+      }
+    },
+    "Voice": {
+      "name": "Voice",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "uuid"
+                }
+              }
+            },
+            "description": "Unique identifier for the voice."
+          },
+          {
+            "key": "name",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Name of the voice."
+          },
+          {
+            "key": "description",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Description of the voice. This field is required but can be an empty string."
+          },
+          {
+            "key": "is_public",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "description": "Indicates whether the voice is publicly accessible or not."
+          }
+        ]
+      }
+    },
+    "CreateVoiceRequest": {
+      "name": "CreateVoiceRequest",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The name of the new voice."
+          },
+          {
+            "key": "file",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "base64"
+                }
+              }
+            },
+            "description": "The audio file for the voice."
+          },
+          {
+            "key": "description",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Optional description of the voice."
+          }
+        ]
+      }
+    },
+    "CreateVoiceResponse": {
+      "name": "CreateVoiceResponse",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "Voice"
+        }
+      }
+    },
+    "UpdateVoiceRequest": {
+      "name": "UpdateVoiceRequest",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The name of the new voice."
+          },
+          {
+            "key": "file",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "base64"
+                }
+              }
+            },
+            "description": "The audio file for the voice."
+          },
+          {
+            "key": "description",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Optional description of the voice."
+          }
+        ]
+      }
+    },
+    "UpdateVoiceResponse": {
+      "name": "UpdateVoiceResponse",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "Voice"
+        }
+      }
+    }
+  },
+  "subpackages": {},
+  "auths": {}
+}

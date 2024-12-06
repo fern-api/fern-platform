@@ -69,7 +69,7 @@ export const Card: React.FC<Card.Props> = ({
                         {icon}
                     </span>
                 ) : null}
-                <div className="space-y-1">
+                <div className="space-y-1 w-full overflow-hidden">
                     <div className="t-default text-base font-semibold">{title}</div>
                     {children != null && <div className="t-muted">{children}</div>}
                 </div>

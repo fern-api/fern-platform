@@ -17,7 +17,7 @@ import { v4 as uuidv4 } from "uuid";
 import { DocsV2WriteService } from "../../../api";
 import { FernRegistry } from "../../../api/generated";
 import { OrgId } from "../../../api/generated/api";
-import { DomainBelongsToAnotherOrgError } from "../../../api/generated/api/resources/commons/errors";
+import { DomainBelongsToAnotherOrgError, InvalidUrlError } from "../../../api/generated/api/resources/commons/errors";
 import { DocsRegistrationIdNotFound } from "../../../api/generated/api/resources/docs/resources/v1/resources/write/errors";
 import { LoadDocsForUrlResponse } from "../../../api/generated/api/resources/docs/resources/v2/resources/read";
 import {
@@ -41,8 +41,22 @@ export interface DocsRegistrationInfo {
     authType: AuthType;
 }
 
+function pathnameIsMalformed(pathname: string): boolean {
+    if (pathname === "" || pathname === "/") {
+        return false;
+    }
+    if (!/^.*([a-z0-9]).*$/.test(pathname)) {
+        // does the pathname only contain special characters?
+        return true;
+    }
+    return false;
+}
+
 function validateAndParseFernDomainUrl({ app, url }: { app: FdrApplication; url: string }): ParsedBaseUrl {
     const baseUrl = ParsedBaseUrl.parse(url);
+    if (baseUrl.path != null && pathnameIsMalformed(baseUrl.path)) {
+        throw new InvalidUrlError(`Domain URL is malformed: https://${baseUrl.hostname + baseUrl.path}`);
+    }
     if (!baseUrl.hostname.endsWith(app.config.domainSuffix)) {
         throw new InvalidDomainError();
     }
@@ -352,12 +366,21 @@ async function uploadToAlgolia(
 
     let searchRecords: AlgoliaSearchRecord[] = [];
     if (dbDocsDefinition.config.root == null) {
-        searchRecords = await app.services.algolia.generateSearchRecords({
-            url: url.getFullUrl(),
-            docsDefinition: dbDocsDefinition,
-            apiDefinitionsById,
-            configSegmentTuples,
-        });
+        try {
+            searchRecords = await app.services.algolia.generateSearchRecords({
+                url: url.getFullUrl(),
+                docsDefinition: dbDocsDefinition,
+                apiDefinitionsById,
+                configSegmentTuples,
+            });
+        } catch (e) {
+            app.logger.error(`Error while trying to generate search records for ${url.getFullUrl()}`, e);
+            await app.services.slack.notify(
+                `Fatal error thrown while generating search records for ${url.getFullUrl()}. Search may not be available for this docs instance.`,
+                e,
+            );
+            throw e;
+        }
     } else {
         const loadDocsForUrlResponse: LoadDocsForUrlResponse = {
             baseUrl: {
@@ -386,21 +409,32 @@ async function uploadToAlgolia(
             lightModeEnabled: dbDocsDefinition.config.colorsV3?.type !== "dark",
             orgId: OrgId("dummy"),
         };
-        configSegmentTuples.map(([_, indexSegment]) => {
-            const v2Records = generateAlgoliaRecords({
-                indexSegmentId: indexSegment.id,
-                nodes: FernNavigation.utils.toRootNode(loadDocsForUrlResponse),
-                pages: FernNavigation.utils.toPages(loadDocsForUrlResponse),
-                apis: FernNavigation.utils.toApis(loadDocsForUrlResponse),
-                isFieldRecordsEnabled: true,
-            });
-            searchRecords.push(
-                ...v2Records.map((record) => ({
-                    ...record,
-                    objectID: uuidv4(),
-                })),
-            );
-        });
+        await Promise.all(
+            configSegmentTuples.map(async ([_, indexSegment]) => {
+                try {
+                    const v2Records = generateAlgoliaRecords({
+                        indexSegmentId: indexSegment.id,
+                        nodes: FernNavigation.utils.toRootNode(loadDocsForUrlResponse),
+                        pages: FernNavigation.utils.toPages(loadDocsForUrlResponse),
+                        apis: FernNavigation.utils.toApis(loadDocsForUrlResponse),
+                        isFieldRecordsEnabled: true,
+                    });
+                    searchRecords.push(
+                        ...v2Records.map((record) => ({
+                            ...record,
+                            objectID: uuidv4(),
+                        })),
+                    );
+                } catch (e) {
+                    app.logger.error(`Error while trying to generate search records for ${url.getFullUrl()}`, e);
+                    await app.services.slack.notify(
+                        `Fatal error thrown while generating search records for ${url.getFullUrl()}. Search may not be available for this docs instance.`,
+                        e,
+                    );
+                    throw e;
+                }
+            }),
+        );
     }
 
     app.logger.debug(`[${url.getFullUrl()}] Uploading search records to Algolia`);
