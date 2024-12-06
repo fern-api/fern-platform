@@ -36,6 +36,7 @@
     "@emotion/is-prop-valid": "^1.2.2",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-ui/fern-docs-utils": "workspace:*",
+    "@fern-ui/fern-docs-syntax-highlighter": "workspace:*",
     "@fern-ui/components": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-ui/fdr-utils": "workspace:*",
