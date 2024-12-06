@@ -82,7 +82,7 @@
     "jotai-location": "^0.5.5",
     "jsonpath": "^1.1.1",
     "launchdarkly-js-client-sdk": "^3.4.0",
-    "mdx-bundler": "^10.0.2",
+    "mdx-bundler": "^10.0.3",
     "mermaid": "^11.2.1",
     "moment": "^2.30.1",
     "next": "^14",
