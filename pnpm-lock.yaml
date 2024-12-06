@@ -2888,6 +2888,9 @@ importers:
       '@fern-ui/fdr-utils':
         specifier: workspace:*
         version: link:../../commons/fdr-utils
+      '@fern-ui/fern-docs-syntax-highlighter':
+        specifier: workspace:*
+        version: link:../fern-docs-syntax-highlighter
       '@fern-ui/fern-docs-utils':
         specifier: workspace:*
         version: link:../fern-docs-utils
