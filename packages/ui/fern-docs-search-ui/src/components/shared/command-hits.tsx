@@ -1,6 +1,6 @@
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { Command, useCommandState } from "cmdk";
-import { PropsWithChildren, ReactNode, memo } from "react";
+import { PropsWithChildren, ReactNode, memo, useEffect } from "react";
 import { Snippet } from "react-instantsearch";
 
 import { useSearchHits } from "../../hooks/use-search-hits";
@@ -9,7 +9,7 @@ import { PageIcon } from "../icons/page";
 import { useFacetFilters } from "../search-client";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { HitContent } from "./hit-content";
-import { generateHits } from "./hits";
+import { GroupedHit, generateHits } from "./hits";
 
 export const CommandSearchHits = ({
     onSelect,
@@ -46,42 +46,57 @@ const MemoizedCommandSearchHits = memo(
             <TooltipProvider>
                 {groups.map((group, index) => (
                     <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} forceMount>
-                        {group.hits.map((hit) => {
-                            if (!hit.record) {
-                                return false;
-                            }
-
-                            return (
-                                <CommandGroupSearchHitTooltip key={hit.path} hit={hit.record} path={hit.path}>
-                                    <Command.Item
-                                        value={hit.path}
-                                        onSelect={() => onSelect(hit.path)}
-                                        keywords={[hit.record.title]}
-                                        onPointerOver={() => {
-                                            void prefetch?.(hit.path);
-                                        }}
-                                    >
-                                        <PageIcon
-                                            icon={hit.icon}
-                                            type={
-                                                hit.record.type === "api-reference"
-                                                    ? hit.record.api_type
-                                                    : hit.record.type
-                                            }
-                                            isSubPage={hit.record.hash != null}
-                                            className="self-start"
-                                        />
-                                        <HitContent hit={hit.record} />
-                                    </Command.Item>
-                                </CommandGroupSearchHitTooltip>
-                            );
-                        })}
+                        {group.hits.map((hit) => (
+                            <CommandHit key={hit.path} hit={hit} onSelect={onSelect} prefetch={prefetch} />
+                        ))}
                     </Command.Group>
                 ))}
             </TooltipProvider>
         );
     },
 );
+
+function CommandHit({
+    hit,
+    onSelect,
+    prefetch,
+}: {
+    hit: GroupedHit;
+    onSelect: (path: string) => void;
+    prefetch?: (path: string) => Promise<void>;
+}) {
+    const isSelected = useCommandState((state) => state.value === hit.path) as boolean;
+    useEffect(() => {
+        if (isSelected) {
+            void prefetch?.(hit.path);
+        }
+    }, [hit.path, isSelected, prefetch]);
+
+    if (!hit.record) {
+        return false;
+    }
+
+    return (
+        <CommandGroupSearchHitTooltip key={hit.path} hit={hit.record} path={hit.path}>
+            <Command.Item
+                value={hit.path}
+                onSelect={() => onSelect(hit.path)}
+                keywords={[hit.record.title]}
+                onPointerOver={() => {
+                    void prefetch?.(hit.path);
+                }}
+            >
+                <PageIcon
+                    icon={hit.icon}
+                    type={hit.record.type === "api-reference" ? hit.record.api_type : hit.record.type}
+                    isSubPage={hit.record.hash != null}
+                    className="self-start"
+                />
+                <HitContent hit={hit.record} />
+            </Command.Item>
+        </CommandGroupSearchHitTooltip>
+    );
+}
 
 MemoizedCommandSearchHits.displayName = "MemoizedCommandSearchHits";
 

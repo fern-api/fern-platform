@@ -1,14 +1,15 @@
 import { AlgoliaRecordHit } from "../../types";
 
+export interface GroupedHit {
+    title: string;
+    path: string;
+    icon?: string;
+    record?: AlgoliaRecordHit;
+}
+
 export interface GroupedHits {
     title?: string;
-    hits: {
-        title: string;
-        path: string;
-        // category: string;
-        icon?: string;
-        record?: AlgoliaRecordHit;
-    }[];
+    hits: GroupedHit[];
 }
 
 // type SegmentType = "markdown" | "changelog" | "parameter" | "http" | "webhook" | "websocket";
