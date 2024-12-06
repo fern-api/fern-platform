@@ -17,7 +17,7 @@ export const SEARCHABLE_ATTRIBUTES = [
     "status_code",
     "parameter_type",
 
-    "description,payload_description,request_description,response_description",
+    "description",
     "unordered(content)",
 
     // make code snippets searchable
@@ -162,9 +162,6 @@ const EndpointBaseRecordSchema = BaseRecordSchema.extend({
 
 export const ApiReferenceRecordSchema = EndpointBaseRecordSchema.extend({
     type: z.literal("api-reference"),
-    payload_description: z.string().optional(),
-    request_description: z.string().optional(),
-    response_description: z.string().optional(),
 });
 
 export const ParameterRecordSchema = EndpointBaseRecordSchema.extend({

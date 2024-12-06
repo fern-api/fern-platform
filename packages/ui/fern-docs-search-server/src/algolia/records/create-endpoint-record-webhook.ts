@@ -1,4 +1,5 @@
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
+import { truncateToBytes } from "@fern-api/ui-core-utils";
 import { compact, flatten } from "es-toolkit";
 import { BaseRecord, EndpointBaseRecord } from "../types";
 import { maybePrepareMdxContent } from "./prepare-mdx-content";
@@ -43,7 +44,8 @@ export function createEndpointBaseRecordWebhook({
         api_endpoint_id: node.webhookId,
         method: node.method,
         endpoint_path: endpoint.path.join(""),
-        description: prepared.content,
+        // TODO: chunk this
+        description: prepared.content != null ? truncateToBytes(prepared.content, 50 * 1000) : undefined,
         code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
         availability: endpoint.availability,
         keywords: keywords.length > 0 ? keywords : undefined,

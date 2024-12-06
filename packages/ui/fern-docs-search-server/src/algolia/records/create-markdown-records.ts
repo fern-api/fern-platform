@@ -1,4 +1,4 @@
-import { isNonNullish } from "@fern-api/ui-core-utils";
+import { chunkToBytes, isNonNullish, truncateToBytes } from "@fern-api/ui-core-utils";
 import {
     MarkdownSectionRoot,
     getFrontmatter,
@@ -47,22 +47,40 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
 
     const records: MarkdownRecord[] = [];
 
-    // we should still insert this record even if there's no content, because
-    // the title of the record can still be matched
     const { content: description_content, code_snippets: description_code_snippets } =
         maybePrepareMdxContent(description);
     const { content: root_content, code_snippets: root_code_snippets } = maybePrepareMdxContent(rootContent);
     const code_snippets = flatten(compact([base.code_snippets, description_code_snippets, root_code_snippets]));
-    records.push({
+
+    const chunked_root_content = root_content != null ? chunkToBytes(root_content, 50 * 1000) : [];
+
+    const base_markdown_record: MarkdownRecord = {
         ...base,
         type: "markdown",
-        hash: undefined,
-        description: description_content,
-        content: root_content,
-        code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
-        title,
         keywords: data.keywords,
-    });
+    };
+
+    const base_root_markdown_record: MarkdownRecord = {
+        ...base_markdown_record,
+        title,
+        hash: undefined,
+        description: description_content != null ? truncateToBytes(description_content, 50 * 1000) : undefined,
+        code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
+    };
+
+    if (chunked_root_content.length === 0) {
+        // we should still insert this record even if there's no content, because
+        // the title of the record can still be matched
+        records.push(base_root_markdown_record);
+    } else {
+        chunked_root_content.forEach((chunk, i) => {
+            records.push({
+                ...base_root_markdown_record,
+                content: chunk,
+                objectID: `${base_root_markdown_record.objectID}-root-${i}`,
+            });
+        });
+    }
 
     sections.forEach((section, i) => {
         if (section.type === "root") {
@@ -94,23 +112,25 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
         const prepared = maybePrepareMdxContent(markdownContent);
         const code_snippets = flatten(compact([base.code_snippets, prepared.code_snippets]));
 
+        const chunked_content = prepared.content != null ? chunkToBytes(prepared.content, 50 * 1000) : [];
+
         // Note: unlike the root content, it's less important if subheadings are not indexed if there's no content inside
         // which should already been filtered out by splitMarkdownIntoSections()
         // TODO: we should probably separate this out into another record-type specifically for subheadings.
-        const record: MarkdownRecord = {
-            ...base,
-            objectID: `${base.objectID}-${heading.id}`, // theoretically this is unique, but we'll see
-            type: "markdown",
-            title: decode(markdownToString(heading.title)),
-            hash: `#${heading.id}`,
-            content: prepared.content,
-            code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
-            hierarchy,
-            level: `h${heading.depth}`,
-            keywords: data.keywords,
-        };
+        chunked_content.forEach((chunk, i) => {
+            const record: MarkdownRecord = {
+                ...base_markdown_record,
+                objectID: `${base.objectID}-${heading.id}-${i}`, // theoretically this is unique, but we'll see
+                title: decode(markdownToString(heading.title)),
+                hash: `#${heading.id}`,
+                content: chunk,
+                code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
+                hierarchy,
+                level: `h${heading.depth}`,
+            };
 
-        records.push(record);
+            records.push(record);
+        });
     });
 
     return records;
