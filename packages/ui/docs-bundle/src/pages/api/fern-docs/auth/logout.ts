@@ -35,8 +35,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         safeUrl(req.nextUrl.searchParams.get(return_to_param)) ??
         safeUrl(withDefaultProtocol(getHostEdge(req)));
 
-    console.log("domain");
-    console.log(domain);
     if (
         typeof redirectLocation !== "undefined" &&
         new URL(withDefaultProtocol(redirectLocation)).host !== new URL(withDefaultProtocol(domain)).host
