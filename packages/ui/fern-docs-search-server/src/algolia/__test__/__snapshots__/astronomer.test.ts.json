@@ -498,7 +498,7 @@
     "authed": false,
     "type": "changelog",
     "content": "Summary\nThis update introduces new endpoints for managing deploys, including image deploys, DAG deploys, and deploy rollbacks. See Astro documentation for more information.\nAdded\nNew endpoints:\nGET /organizations/{organizationId}/deployments/{deploymentId}/deploys to list deploys for a deployment.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys to create a new deploy.\n\nGET /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId} to retrieve a specific deploy.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId} to update an existing deploy.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId}/finalize to finalize a deploy.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId}/rollback to roll back a deploy.\n\n\nNew object schemas:\nCreateDeployRequest\n\nDeploy\n\nDeploysPaginated\n\nFinalizeDeployRequest\n\nUpdateDeployRequest\n\nDeployRollbackRequest",
-    "date": "2024-05-14",
+    "date": "2024-05-15",
     "date_timestamp": 1715731200
   },
   {
@@ -524,7 +524,7 @@
     "authed": false,
     "type": "changelog",
     "content": "The endpoint POST /organizations/{organizationId}/deployments now accepts an isDevelopmentMode query parameter",
-    "date": "2024-04-22",
+    "date": "2024-04-23",
     "date_timestamp": 1713830400
   },
   {
@@ -550,7 +550,7 @@
     "authed": false,
     "type": "changelog",
     "content": "You can now make requests to the Roles endpoint to manage custom roles in your Organization.\n\nThe endpoint GET /organizations/{organizationId}/clusters now accepts a names query parameter\n\nThe endpoint GET /organizations/{organizationId}/deploymentss now accepts a names query parameter\n\nThe endpoint GET /organizations/{organizationId}/workspaces now accepts a names query parameter",
-    "date": "2024-04-11",
+    "date": "2024-04-12",
     "date_timestamp": 1712880000
   },
   {
@@ -576,7 +576,7 @@
     "authed": false,
     "type": "changelog",
     "content": "The endpoint DELETE /organizations/{organizationId}/roles/{customRoleId} now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /authorization/permission-groups now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /organizations/{organizationId}/role-templates now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /organizations/{organizationId}/roles now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /organizations/{organizationId}/roles/{roleId} now returns a\ndeploymentRoles attribute\n\nThe endpoint POST /organizations/{organizationId}/roles now returns a\ndeploymentRoles attribute\n\nThe endpoint POST /organizations/{organizationId}/roles/{customRoleId} now returns a\ndeploymentRoles attribute",
-    "date": "2024-04-11",
+    "date": "2024-04-12",
     "date_timestamp": 1712880000
   },
   {

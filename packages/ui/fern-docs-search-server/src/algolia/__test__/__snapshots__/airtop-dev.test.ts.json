@@ -4603,7 +4603,7 @@
     "authed": false,
     "type": "changelog",
     "content": "Support for custom residential proxies\nAdded support for custom residential proxies. You can now use your own residential proxies with Airtop and easily configure them to use upon session creation. For more information see the guide documentation for proxies.",
-    "date": "2024-10-31",
+    "date": "2024-11-01",
     "date_timestamp": 1730419200
   },
   {
@@ -4620,7 +4620,7 @@
     "authed": false,
     "type": "changelog",
     "content": "New Native Window Management\nAdded support for creating windows, loading URLs, and closing windows without having to use Puppeteer or Playwright. For more information see the guide documentation for windows.",
-    "date": "2024-10-18",
+    "date": "2024-10-19",
     "date_timestamp": 1729296000
   },
   {

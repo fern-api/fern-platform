@@ -23,6 +23,7 @@ export function createChangelogRecord({ base, markdown, date }: CreateChangelogR
 
     const prepared = maybePrepareMdxContent(content);
     const code_snippets = flatten(compact([base.code_snippets, prepared.code_snippets]));
+
     return {
         ...base,
         type: "changelog",

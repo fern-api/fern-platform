@@ -1,8 +1,5 @@
-import { tz } from "@date-fns/tz";
-import { format as formatFn } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 
-const utc = tz("UTC");
-
-export function formatUtc(...args: Parameters<typeof formatFn>): string {
-    return formatFn(utc(args[0]), args[1], args[2]);
+export function formatUtc(date: Date | number | string, format: string): string {
+    return formatInTimeZone(date, "UTC", format);
 }
