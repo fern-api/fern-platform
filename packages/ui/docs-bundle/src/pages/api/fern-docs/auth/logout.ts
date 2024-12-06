@@ -37,7 +37,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
     if (
         typeof redirectLocation !== "undefined" &&
-        new URL(withDefaultProtocol(redirectLocation)).host !== new URL(withDefaultProtocol(domain)).host
+        new URL(redirectLocation).host !== new URL(withDefaultProtocol(domain)).host
     ) {
         // avoid malicious use of logout URL
         redirectLocation = new URL(withDefaultProtocol(domain));
