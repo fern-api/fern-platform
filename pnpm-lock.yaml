@@ -2417,9 +2417,6 @@ importers:
       prettier:
         specifier: ^3.3.2
         version: 3.3.2
-      server-only:
-        specifier: ^0.0.1
-        version: 0.0.1
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.4.3)
