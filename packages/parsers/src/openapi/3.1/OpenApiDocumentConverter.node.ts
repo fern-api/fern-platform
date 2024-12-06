@@ -5,7 +5,9 @@ import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../BaseOpenApiV3_1Converter.node";
+import { basePathExtensionKey } from "../types/extension.types";
 import { coalesceServers } from "../utils/3.1/coalesceServers";
+import { XFernBasePathConverterNode } from "./extensions/XFernBasePathConverter.node";
 import { PathsObjectConverterNode } from "./paths/PathsObjectConverter.node";
 import { ServerObjectConverterNode } from "./paths/ServerObjectConverter.node";
 import { ComponentsConverterNode } from "./schemas/ComponentsConverter.node";
@@ -18,6 +20,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
     // webhooks: WebhooksObjectConverterNode | undefined;
     components: ComponentsConverterNode | undefined;
     servers: ServerObjectConverterNode[] | undefined;
+    basePath: XFernBasePathConverterNode | undefined;
 
     constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.Document>) {
         super(args);
@@ -26,6 +29,12 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     parse(): void {
         this.servers = coalesceServers(this.servers, this.input.servers, this.context, this.accessPath);
+        this.basePath = new XFernBasePathConverterNode({
+            input: this.input,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: basePathExtensionKey,
+        });
 
         if (this.input.paths == null) {
             this.context.errors.warning({
@@ -41,6 +50,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
                     pathId: "paths",
                 },
                 this.servers,
+                this.basePath,
             );
         }
 

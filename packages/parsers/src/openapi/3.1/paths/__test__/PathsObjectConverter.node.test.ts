@@ -45,6 +45,7 @@ describe("PathsObjectConverterNode", () => {
                     pathId: "test",
                 },
                 undefined,
+                undefined,
             );
 
             const result = node.convert() ?? {};
@@ -71,6 +72,7 @@ describe("PathsObjectConverterNode", () => {
                     pathId: "test",
                 },
                 undefined,
+                undefined,
             );
 
             const result = node.convert();
@@ -89,6 +91,7 @@ describe("PathsObjectConverterNode", () => {
                     accessPath: [],
                     pathId: "test",
                 },
+                undefined,
                 undefined,
             );
 
@@ -122,6 +125,7 @@ describe("PathsObjectConverterNode", () => {
                     accessPath: [],
                     pathId: "test",
                 },
+                undefined,
                 undefined,
             );
 
