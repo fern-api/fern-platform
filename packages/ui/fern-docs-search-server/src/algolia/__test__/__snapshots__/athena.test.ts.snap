@@ -1,16 +1,20 @@
 [
   {
-    "breadcrumbs": [
+    "authed": false,
+    "breadcrumb": [
       {
-        "slug": "getting-started/athena-sdk-quickstart",
+        "pathname": "/getting-started",
         "title": "Getting Started",
       },
     ],
-    "description": "Learn how to get started with Athena Python SDK.
-
-We recommend using the SDK in Athena Notebooks.
-Install Athena Python SDK!pip install -U athena-intelligence
-Initialize Athena clientimport os
+    "canonicalPathname": "/getting-started/athena-sdk-quickstart",
+    "code_snippets": [
+      {
+        "code": "!pip install -U athena-intelligence",
+        "lang": "python",
+      },
+      {
+        "code": "import os
 
 ATHENA_API_KEY = os.environ["ATHENA_API_KEY"]
 
@@ -19,57 +23,73 @@ from athena.client import Athena
 
 athena = Athena(
     api_key=ATHENA_API_KEY,
-)
-To get API early access, reach out to team@athenaintelligence.aiContinueExplore examples and sample notebooks of end-to-end workflows with Athena SDK.
-Click Athena Notebooks -> File Viewer -> Sample Notebooks.",
-    "indexSegmentId": "0",
-    "slug": "getting-started/athena-sdk-quickstart",
-    "title": "Quickstart",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Getting Started",
+)",
+        "lang": "python",
+      },
+      {
+        "code": "!pip install -U athena-intelligence",
+        "lang": "python",
+      },
+      {
+        "code": "import os
+
+ATHENA_API_KEY = os.environ["ATHENA_API_KEY"]
+
+from athena import Model, Tools
+from athena.client import Athena
+
+athena = Athena(
+    api_key=ATHENA_API_KEY,
+)",
+        "lang": "python",
+      },
     ],
     "content": "We recommend using the SDK in Athena Notebooks.
-Install Athena Python SDK!pip install -U athena-intelligence
-Initialize Athena clientimport os
 
-ATHENA_API_KEY = os.environ["ATHENA_API_KEY"]
 
-from athena import Model, Tools
-from athena.client import Athena
-
-athena = Athena(
-    api_key=ATHENA_API_KEY,
-)
-To get API early access, reach out to team@athenaintelligence.aiContinueExplore examples and sample notebooks of end-to-end workflows with Athena SDK.
+Install Athena Python SDK
+Initialize Athena client
+To get API early access, reach out to team@athenaintelligence.ai
+Continue
+Explore examples and sample notebooks of end-to-end workflows with Athena SDK.
 Click Athena Notebooks -> File Viewer -> Sample Notebooks.",
-    "indexSegmentId": "0",
-    "slug": "getting-started/athena-sdk-quickstart",
+    "description": "Learn how to get started with Athena Python SDK.",
+    "domain": "test.com",
+    "objectID": "test:test.com:root.uv.getting-started.athena-sdk-quickstart-root-0",
+    "org_id": "test",
+    "pathname": "/getting-started/athena-sdk-quickstart",
     "title": "Quickstart",
-    "type": "page-v3",
-    "version": undefined,
+    "type": "markdown",
+    "visible_by": [
+      "role/everyone",
+    ],
   },
   {
-    "breadcrumbs": [
+    "authed": false,
+    "breadcrumb": [
       {
-        "slug": "guides/online-research",
+        "pathname": "/guides",
         "title": "Guides",
       },
     ],
-    "description": "Athena has the following tools to help you research information online:
-tools=[
+    "canonicalPathname": "/guides/online-research",
+    "code_snippets": [
+      {
+        "code": "tools=[
   Tools.SEARCH, 
   Tools.BROWSE, 
   Tools.WIKIPEDIA, 
   Tools.ENRICH_PERSON, 
   Tools.ENRICH_COMPANY
-  ]
-
-Set up environment!pip install -U athena-intelligence
-import json
+  ]",
+        "lang": "python",
+      },
+      {
+        "code": "!pip install -U athena-intelligence",
+        "lang": "python",
+      },
+      {
+        "code": "import json
 import pandas as pd
 import os
 
@@ -81,8 +101,11 @@ from athena.client import AsyncAthena
 athena = AsyncAthena(
     api_key=ATHENA_API_KEY,
 )
-
-Research general topics with search & browse and wikipedia tools.Write a reasearch request and add tools you want Athena to use.team = "KC Chiefs"
+",
+        "lang": "python",
+      },
+      {
+        "code": "team = "KC Chiefs"
 USER_MESSAGE_INPUT = f"""
 Who plays quarterback in {team}?
 """
@@ -93,8 +116,11 @@ message = await athena.message.submit_and_poll(
     tools=[Tools.SEARCH, Tools.BROWSE, Tools.WIKIPEDIA],
 )
 
-print(message.content)
-Research specific person or company with enrich_person and enrich_company tools.Athena data providers APIs to gather information about individuals and companies. However, these tools might not always provide detailed information for some queries. For more consistent results, consider adding the search and browse tools as fallback options.person = "Patrick Mahomes"
+print(message.content)",
+        "lang": "python",
+      },
+      {
+        "code": "person = "Patrick Mahomes"
 USER_MESSAGE_INPUT = f"""
 Answer the question below using available tools. 
 
@@ -108,27 +134,14 @@ message = await athena.message.submit_and_poll(
 )
 
 print(message.content)",
-    "indexSegmentId": "0",
-    "slug": "guides/online-research",
-    "title": "Online Research",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Guides",
-    ],
-    "content": "Athena has the following tools to help you research information online:
-tools=[
-  Tools.SEARCH, 
-  Tools.BROWSE, 
-  Tools.WIKIPEDIA, 
-  Tools.ENRICH_PERSON, 
-  Tools.ENRICH_COMPANY
-  ]
-
-Set up environment!pip install -U athena-intelligence
-import json
+        "lang": "python",
+      },
+      {
+        "code": "!pip install -U athena-intelligence",
+        "lang": "python",
+      },
+      {
+        "code": "import json
 import pandas as pd
 import os
 
@@ -140,8 +153,11 @@ from athena.client import AsyncAthena
 athena = AsyncAthena(
     api_key=ATHENA_API_KEY,
 )
-
-Research general topics with search & browse and wikipedia tools.Write a reasearch request and add tools you want Athena to use.team = "KC Chiefs"
+",
+        "lang": "python",
+      },
+      {
+        "code": "team = "KC Chiefs"
 USER_MESSAGE_INPUT = f"""
 Who plays quarterback in {team}?
 """
@@ -152,8 +168,11 @@ message = await athena.message.submit_and_poll(
     tools=[Tools.SEARCH, Tools.BROWSE, Tools.WIKIPEDIA],
 )
 
-print(message.content)
-Research specific person or company with enrich_person and enrich_company tools.Athena data providers APIs to gather information about individuals and companies. However, these tools might not always provide detailed information for some queries. For more consistent results, consider adding the search and browse tools as fallback options.person = "Patrick Mahomes"
+print(message.content)",
+        "lang": "python",
+      },
+      {
+        "code": "person = "Patrick Mahomes"
 USER_MESSAGE_INPUT = f"""
 Answer the question below using available tools. 
 
@@ -166,44 +185,40 @@ message = await athena.message.submit_and_poll(
     tools=[ Tools.ENRICH_PERSON, Tools. ENRICH_COMPANY, Tools.SEARCH, Tools.BROWSE],
 )
 
-print(message.content)
+print(message.content)",
+        "lang": "python",
+      },
+    ],
+    "content": "Athena has the following tools to help you research information online:
 
-Specifying tool order
-You can tell Athena which tools to use first by simply passing the request in the input message:
-team = "KC Chiefs"
-USER_MESSAGE_INPUT = f"""
-Answer the question below using available tools. 
-Use the tools in the following order: 
-1. Wikipedia
-2. Enrich tools
-3. Search and Browse - only use if Wikipedia didn't return results. 
 
-Who plays quarterback in {team}?
-"""
-
-message = await athena.message.submit_and_poll(
-    content=USER_MESSAGE_INPUT,
-    model=Model.GPT_4_TURBO_PREVIEW,
-    tools=[Tools.SEARCH, Tools.BROWSE, Tools.WIKIPEDIA, Tools.ENRICH_PERSON, Tools. ENRICH_COMPANY],
-)
-
-print(message.content)
-",
-    "indexSegmentId": "0",
-    "slug": "guides/online-research",
+Set up environment
+Research general topics with search & browse and wikipedia tools.
+Write a reasearch request and add tools you want Athena to use.
+Research specific person or company with enrich_person and enrich_company tools.
+Athena data providers APIs to gather information about individuals and companies. However, these tools might not always provide detailed information for some queries. For more consistent results, consider adding the search and browse tools as fallback options.",
+    "domain": "test.com",
+    "objectID": "test:test.com:root.uv.guides.online-research-root-0",
+    "org_id": "test",
+    "pathname": "/guides/online-research",
     "title": "Online Research",
-    "type": "page-v3",
-    "version": undefined,
+    "type": "markdown",
+    "visible_by": [
+      "role/everyone",
+    ],
   },
   {
-    "breadcrumbs": [
+    "authed": false,
+    "breadcrumb": [
       {
-        "slug": "guides/online-research",
+        "pathname": "/guides",
         "title": "Guides",
       },
     ],
-    "description": "You can tell Athena which tools to use first by simply passing the request in the input message:
-team = "KC Chiefs"
+    "canonicalPathname": "/guides/online-research",
+    "code_snippets": [
+      {
+        "code": "team = "KC Chiefs"
 USER_MESSAGE_INPUT = f"""
 Answer the question below using available tools. 
 Use the tools in the following order: 
@@ -220,54 +235,48 @@ message = await athena.message.submit_and_poll(
     tools=[Tools.SEARCH, Tools.BROWSE, Tools.WIKIPEDIA, Tools.ENRICH_PERSON, Tools. ENRICH_COMPANY],
 )
 
-print(message.content)
-",
-    "indexSegmentId": "0",
-    "slug": "guides/online-research#specifying-tool-order",
-    "title": "Specifying tool order",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Guides",
+print(message.content)",
+        "lang": "python",
+      },
     ],
-    "content": "You can tell Athena which tools to use first by simply passing the request in the input message:
-team = "KC Chiefs"
-USER_MESSAGE_INPUT = f"""
-Answer the question below using available tools. 
-Use the tools in the following order: 
-1. Wikipedia
-2. Enrich tools
-3. Search and Browse - only use if Wikipedia didn't return results. 
-
-Who plays quarterback in {team}?
-"""
-
-message = await athena.message.submit_and_poll(
-    content=USER_MESSAGE_INPUT,
-    model=Model.GPT_4_TURBO_PREVIEW,
-    tools=[Tools.SEARCH, Tools.BROWSE, Tools.WIKIPEDIA, Tools.ENRICH_PERSON, Tools. ENRICH_COMPANY],
-)
-
-print(message.content)
-",
-    "indexSegmentId": "0",
-    "slug": "guides/online-research#specifying-tool-order",
+    "content": "You can tell Athena which tools to use first by simply passing the request in the input message:",
+    "domain": "test.com",
+    "hash": "#specifying-tool-order",
+    "hierarchy": {
+      "h0": {
+        "title": "Online Research",
+      },
+      "h3": {
+        "id": "specifying-tool-order",
+        "title": "Specifying tool order",
+      },
+    },
+    "level": "h3",
+    "objectID": "test:test.com:root.uv.guides.online-research-specifying-tool-order-0",
+    "org_id": "test",
+    "pathname": "/guides/online-research",
     "title": "Specifying tool order",
-    "type": "page-v3",
-    "version": undefined,
+    "type": "markdown",
+    "visible_by": [
+      "role/everyone",
+    ],
   },
   {
-    "breadcrumbs": [
+    "authed": false,
+    "breadcrumb": [
       {
-        "slug": "guides/online-research",
+        "pathname": "/guides",
         "title": "Guides",
       },
     ],
-    "description": "Athena can leverage open-source models to research web and analyse results using open source models with tools.tool_first_workflow()
-Set up environment!pip install -U athena-intelligence
-import json
+    "canonicalPathname": "/guides/online-research-with-open-source-models",
+    "code_snippets": [
+      {
+        "code": "!pip install -U athena-intelligence",
+        "lang": "python",
+      },
+      {
+        "code": "import json
 import pandas as pd
 import os
 
@@ -279,8 +288,11 @@ from athena.client import AsyncAthena
 athena = AsyncAthena(
     api_key=ATHENA_API_KEY,
 )
-
-Set up search query and instructions for analysing resultsWrite a search request and what you want Athena to do with search results.message = await async_athena.tools.tool_first_workflow(
+",
+        "lang": "python",
+      },
+      {
+        "code": "message = await async_athena.tools.tool_first_workflow(
 
     model=ToolModels.MISTRAL_LARGE_0224,
     tool_name="tavily_search",
@@ -288,8 +300,11 @@ Set up search query and instructions for analysing resultsWrite a search request
     tool_kwargs={"query": "AI advances in April 2024"},
 
 )
-display(Markdown(message.output_message))
-Based on the search results, it appears that Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.
+display(Markdown(message.output_message))",
+        "lang": "python",
+      },
+      {
+        "code": "Based on the search results, it appears that Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.
 
 Stanford University's 2024 AI Index has charted the meteoric rise of AI tools, and AI is now outperforming humans at basic tasks, necessitating new benchmarks. The power of Gen AI, combined with traditional AI, is expected to provide even more help in the future.
 
@@ -300,19 +315,14 @@ The Gartner Hype Cycle positions Gen AI at the 'Peak of Inflated Expectations,' 
 In terms of regulations, policymakers have been drawing up tough new regulations, with Biden’s executive order coming out in October and the European Union’s AI Act being finally agreed in December.
 
 In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.",
-    "indexSegmentId": "0",
-    "slug": "guides/online-research-with-open-source-models",
-    "title": "Online Research with Open Source Models",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Guides",
-    ],
-    "content": "Athena can leverage open-source models to research web and analyse results using open source models with tools.tool_first_workflow()
-Set up environment!pip install -U athena-intelligence
-import json
+        "lang": "markdown",
+      },
+      {
+        "code": "!pip install -U athena-intelligence",
+        "lang": "python",
+      },
+      {
+        "code": "import json
 import pandas as pd
 import os
 
@@ -324,8 +334,11 @@ from athena.client import AsyncAthena
 athena = AsyncAthena(
     api_key=ATHENA_API_KEY,
 )
-
-Set up search query and instructions for analysing resultsWrite a search request and what you want Athena to do with search results.message = await async_athena.tools.tool_first_workflow(
+",
+        "lang": "python",
+      },
+      {
+        "code": "message = await async_athena.tools.tool_first_workflow(
 
     model=ToolModels.MISTRAL_LARGE_0224,
     tool_name="tavily_search",
@@ -333,8 +346,11 @@ Set up search query and instructions for analysing resultsWrite a search request
     tool_kwargs={"query": "AI advances in April 2024"},
 
 )
-display(Markdown(message.output_message))
-Based on the search results, it appears that Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.
+display(Markdown(message.output_message))",
+        "lang": "python",
+      },
+      {
+        "code": "Based on the search results, it appears that Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.
 
 Stanford University's 2024 AI Index has charted the meteoric rise of AI tools, and AI is now outperforming humans at basic tasks, necessitating new benchmarks. The power of Gen AI, combined with traditional AI, is expected to provide even more help in the future.
 
@@ -344,24 +360,42 @@ The Gartner Hype Cycle positions Gen AI at the 'Peak of Inflated Expectations,' 
 
 In terms of regulations, policymakers have been drawing up tough new regulations, with Biden’s executive order coming out in October and the European Union’s AI Act being finally agreed in December.
 
-In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.
-",
-    "indexSegmentId": "0",
-    "slug": "guides/online-research-with-open-source-models",
+In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.",
+        "lang": "markdown",
+      },
+    ],
+    "content": "Athena can leverage open-source models to research web and analyse results using open source models with tools.tool_first_workflow()
+
+
+Set up environment
+Set up search query and instructions for analysing results
+Write a search request and what you want Athena to do with search results.",
+    "domain": "test.com",
+    "objectID": "test:test.com:root.uv.guides.online-research-with-open-source-models-root-0",
+    "org_id": "test",
+    "pathname": "/guides/online-research-with-open-source-models",
     "title": "Online Research with Open Source Models",
-    "type": "page-v3",
-    "version": undefined,
+    "type": "markdown",
+    "visible_by": [
+      "role/everyone",
+    ],
   },
   {
-    "breadcrumbs": [
+    "authed": false,
+    "breadcrumb": [
       {
-        "slug": "guides/online-research",
+        "pathname": "/guides",
         "title": "Guides",
       },
     ],
-    "description": "Athena can return structured output if you pass it the desired schema using chain.structured_parse():
-Set up environment!pip install -U athena-intelligence
-import json
+    "canonicalPathname": "/guides/structured-output",
+    "code_snippets": [
+      {
+        "code": "!pip install -U athena-intelligence",
+        "lang": "python",
+      },
+      {
+        "code": "import json
 import pandas as pd
 import os
 
@@ -373,8 +407,11 @@ from athena.client import AsyncAthena
 athena = AsyncAthena(
     api_key=ATHENA_API_KEY,
 )
-
-Set up a sample search query:Write a search request and what you want Athena to do with search results.message = await async_athena.tools.tool_first_workflow(
+",
+        "lang": "python",
+      },
+      {
+        "code": "message = await async_athena.tools.tool_first_workflow(
 
     model=ToolModels.MISTRAL_LARGE_0224,
     tool_name="tavily_search",
@@ -382,8 +419,11 @@ Set up a sample search query:Write a search request and what you want Athena to 
     tool_kwargs={"query": "AI advances in April 2024"},
 
 )
-display(Markdown(message.output_message))
-Based on the search results, it appears that Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.
+display(Markdown(message.output_message))",
+        "lang": "python",
+      },
+      {
+        "code": "Based on the search results, it appears that Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.
 
 Stanford University's 2024 AI Index has charted the meteoric rise of AI tools, and AI is now outperforming humans at basic tasks, necessitating new benchmarks. The power of Gen AI, combined with traditional AI, is expected to provide even more help in the future.
 
@@ -393,33 +433,34 @@ The Gartner Hype Cycle positions Gen AI at the 'Peak of Inflated Expectations,' 
 
 In terms of regulations, policymakers have been drawing up tough new regulations, with Biden’s executive order coming out in October and the European Union’s AI Act being finally agreed in December.
 
-In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.
-Use structured_parse() to return structured outputfrom athena import StructuredParseInParsingModel
+In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.",
+        "lang": "markdown",
+      },
+      {
+        "code": "from athena import StructuredParseInParsingModel
 structured_output = athena.chain.structured_parse(
     text_input=message.output_message, 
     custom_type_dict={"news": {"news_item_1": "news_content_1", "news_item_2": "news_content_2"}},
     parsing_model=StructuredParseInParsingModel.MISTRAL_LARGE_0224,
 )
-structured_output.result
-{'news': {'news_item_1': 'Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.',
+structured_output.result",
+        "lang": "python",
+      },
+      {
+        "code": "{'news': {'news_item_1': 'Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.',
   'news_item_2': "Stanford University's 2024 AI Index has charted the meteoric rise of AI tools, and AI is now outperforming humans at basic tasks, necessitating new benchmarks. The power of Gen AI, combined with traditional AI, is expected to provide even more help in the future.",
   'news_item_3': "However, the use of Gen AI in the workplace is not without its challenges. Organizations must have a clear policy around Gen AI and be wary of 'shadow AI' - the unofficial use of AI in the workplace by employees without IT approval or oversight.",
   'news_item_4': "The Gartner Hype Cycle positions Gen AI at the 'Peak of Inflated Expectations,' on the cusp of a slide into the 'Trough of Disillusionment,' indicating a relatively underwhelming transition period. Despite this, many leaders expect substantial transformative impacts in the short term.",
   'news_item_5': 'In terms of regulations, policymakers have been drawing up tough new regulations, with Biden’s executive order coming out in October and the European Union’s AI Act being finally agreed in December.',
   'news_item_6': 'In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.'}}",
-    "indexSegmentId": "0",
-    "slug": "guides/structured-output",
-    "title": "Structured Output",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Guides",
-    ],
-    "content": "Athena can return structured output if you pass it the desired schema using chain.structured_parse():
-Set up environment!pip install -U athena-intelligence
-import json
+        "lang": "json",
+      },
+      {
+        "code": "!pip install -U athena-intelligence",
+        "lang": "python",
+      },
+      {
+        "code": "import json
 import pandas as pd
 import os
 
@@ -431,8 +472,11 @@ from athena.client import AsyncAthena
 athena = AsyncAthena(
     api_key=ATHENA_API_KEY,
 )
-
-Set up a sample search query:Write a search request and what you want Athena to do with search results.message = await async_athena.tools.tool_first_workflow(
+",
+        "lang": "python",
+      },
+      {
+        "code": "message = await async_athena.tools.tool_first_workflow(
 
     model=ToolModels.MISTRAL_LARGE_0224,
     tool_name="tavily_search",
@@ -440,8 +484,11 @@ Set up a sample search query:Write a search request and what you want Athena to 
     tool_kwargs={"query": "AI advances in April 2024"},
 
 )
-display(Markdown(message.output_message))
-Based on the search results, it appears that Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.
+display(Markdown(message.output_message))",
+        "lang": "python",
+      },
+      {
+        "code": "Based on the search results, it appears that Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.
 
 Stanford University's 2024 AI Index has charted the meteoric rise of AI tools, and AI is now outperforming humans at basic tasks, necessitating new benchmarks. The power of Gen AI, combined with traditional AI, is expected to provide even more help in the future.
 
@@ -451,36 +498,62 @@ The Gartner Hype Cycle positions Gen AI at the 'Peak of Inflated Expectations,' 
 
 In terms of regulations, policymakers have been drawing up tough new regulations, with Biden’s executive order coming out in October and the European Union’s AI Act being finally agreed in December.
 
-In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.
-Use structured_parse() to return structured outputfrom athena import StructuredParseInParsingModel
+In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.",
+        "lang": "markdown",
+      },
+      {
+        "code": "from athena import StructuredParseInParsingModel
 structured_output = athena.chain.structured_parse(
     text_input=message.output_message, 
     custom_type_dict={"news": {"news_item_1": "news_content_1", "news_item_2": "news_content_2"}},
     parsing_model=StructuredParseInParsingModel.MISTRAL_LARGE_0224,
 )
-structured_output.result
-{'news': {'news_item_1': 'Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.',
+structured_output.result",
+        "lang": "python",
+      },
+      {
+        "code": "{'news': {'news_item_1': 'Generative AI (Gen AI) is a significant technological advancement that has the potential to add up to $4.4 trillion in economic value to the global economy. However, companies are finding it challenging to capture this value. Gen AI is particularly exciting in the business world and is being used in various sectors such as manufacturing and the entertainment industry.',
   'news_item_2': "Stanford University's 2024 AI Index has charted the meteoric rise of AI tools, and AI is now outperforming humans at basic tasks, necessitating new benchmarks. The power of Gen AI, combined with traditional AI, is expected to provide even more help in the future.",
   'news_item_3': "However, the use of Gen AI in the workplace is not without its challenges. Organizations must have a clear policy around Gen AI and be wary of 'shadow AI' - the unofficial use of AI in the workplace by employees without IT approval or oversight.",
   'news_item_4': "The Gartner Hype Cycle positions Gen AI at the 'Peak of Inflated Expectations,' on the cusp of a slide into the 'Trough of Disillusionment,' indicating a relatively underwhelming transition period. Despite this, many leaders expect substantial transformative impacts in the short term.",
   'news_item_5': 'In terms of regulations, policymakers have been drawing up tough new regulations, with Biden’s executive order coming out in October and the European Union’s AI Act being finally agreed in December.',
-  'news_item_6': 'In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.'}}
-",
-    "indexSegmentId": "0",
-    "slug": "guides/structured-output",
+  'news_item_6': 'In conclusion, while Gen AI holds immense potential, it also presents challenges in terms of value capture, unofficial use, and regulations.'}}",
+        "lang": "json",
+      },
+    ],
+    "content": "Athena can return structured output if you pass it the desired schema using chain.structured_parse():
+
+
+Set up environment
+Set up a sample search query:
+Write a search request and what you want Athena to do with search results.
+Use structured_parse() to return structured output",
+    "domain": "test.com",
+    "objectID": "test:test.com:root.uv.guides.structured-output-root-0",
+    "org_id": "test",
+    "pathname": "/guides/structured-output",
     "title": "Structured Output",
-    "type": "page-v3",
-    "version": undefined,
+    "type": "markdown",
+    "visible_by": [
+      "role/everyone",
+    ],
   },
   {
-    "breadcrumbs": [
+    "authed": false,
+    "breadcrumb": [
       {
-        "slug": "guides/online-research",
+        "pathname": "/guides",
         "title": "Guides",
       },
     ],
-    "description": "Set up environment!pip install -U athena-intelligence
-import json
+    "canonicalPathname": "/guides/query-and-visualize",
+    "code_snippets": [
+      {
+        "code": "!pip install -U athena-intelligence",
+        "lang": "python",
+      },
+      {
+        "code": "import json
 import pandas as pd
 import os
 
@@ -491,10 +564,16 @@ from athena.client import Athena
 
 athena = Athena(
     api_key=ATHENA_API_KEY,
-)
-Query SQL with athena.query.execute()Initialize default database or specify id of another connected database. Ask Athena team if unclear.# default database id = 9
-default_database_id = 9
-Put your query herequery = """
+)",
+        "lang": "python",
+      },
+      {
+        "code": "# default database id = 9
+default_database_id = 9",
+        "lang": "python",
+      },
+      {
+        "code": "query = """
 WITH RankedCustomers AS (
   SELECT
     r.route_id,
@@ -530,8 +609,11 @@ WHERE
 ORDER BY
   route_id,
   rank;
-"""
-Run the query and convert to Pandas dataframe for subsequent analysisquery_result = athena.query.execute(
+"""",
+        "lang": "python",
+      },
+      {
+        "code": "query_result = athena.query.execute(
     sql_command = query,
     database_id = default_database_id
     )
@@ -544,19 +626,11 @@ df = pd.DataFrame(data_output)
 
 # Display the DataFrame to verify the contents
 df
-
-Visualize data using Athena Notebooks SidebarOnce you have an SQL output, you can harness the power and flexibility of visualisations or further analysis using Python. In Athena Notebooks, you can click "Chat" in the top right corner to ask Athena for help writing code for visualizations you need. Copy and paste a dataframe headers and 2-3 rows to give Athena all needed context.
-
-Write code to visualize this table:
-route_id 	route_source 	route_destination 	passenger_id 	customer_name 	total_tickets
-0 	1 	West Sylvia 	Williamsshire 	816 	Jaruwan Rogers 	13
-1 	1 	West Sylvia 	Williamsshire 	679 	Karen Tapp 	9
-
-
-Sure, here's the code:
-...
-
-Copy & run the code in the notebook.import pandas as pd
+",
+        "lang": "python",
+      },
+      {
+        "code": "import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -573,18 +647,14 @@ plt.ylabel('Total Tickets Sold')
 plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()",
-    "indexSegmentId": "0",
-    "slug": "guides/query-and-visualize",
-    "title": "Query and Visualize",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Guides",
-    ],
-    "content": "Set up environment!pip install -U athena-intelligence
-import json
+        "lang": "python",
+      },
+      {
+        "code": "!pip install -U athena-intelligence",
+        "lang": "python",
+      },
+      {
+        "code": "import json
 import pandas as pd
 import os
 
@@ -595,10 +665,16 @@ from athena.client import Athena
 
 athena = Athena(
     api_key=ATHENA_API_KEY,
-)
-Query SQL with athena.query.execute()Initialize default database or specify id of another connected database. Ask Athena team if unclear.# default database id = 9
-default_database_id = 9
-Put your query herequery = """
+)",
+        "lang": "python",
+      },
+      {
+        "code": "# default database id = 9
+default_database_id = 9",
+        "lang": "python",
+      },
+      {
+        "code": "query = """
 WITH RankedCustomers AS (
   SELECT
     r.route_id,
@@ -634,8 +710,11 @@ WHERE
 ORDER BY
   route_id,
   rank;
-"""
-Run the query and convert to Pandas dataframe for subsequent analysisquery_result = athena.query.execute(
+"""",
+        "lang": "python",
+      },
+      {
+        "code": "query_result = athena.query.execute(
     sql_command = query,
     database_id = default_database_id
     )
@@ -648,19 +727,11 @@ df = pd.DataFrame(data_output)
 
 # Display the DataFrame to verify the contents
 df
-
-Visualize data using Athena Notebooks SidebarOnce you have an SQL output, you can harness the power and flexibility of visualisations or further analysis using Python. In Athena Notebooks, you can click "Chat" in the top right corner to ask Athena for help writing code for visualizations you need. Copy and paste a dataframe headers and 2-3 rows to give Athena all needed context.
-
-Write code to visualize this table:
-route_id 	route_source 	route_destination 	passenger_id 	customer_name 	total_tickets
-0 	1 	West Sylvia 	Williamsshire 	816 	Jaruwan Rogers 	13
-1 	1 	West Sylvia 	Williamsshire 	679 	Karen Tapp 	9
-
-
-Sure, here's the code:
-...
-
-Copy & run the code in the notebook.import pandas as pd
+",
+        "lang": "python",
+      },
+      {
+        "code": "import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -676,611 +747,561 @@ plt.xlabel('Route ID')
 plt.ylabel('Total Tickets Sold')
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.show()
-",
-    "indexSegmentId": "0",
-    "slug": "guides/query-and-visualize",
-    "title": "Query and Visualize",
-    "type": "page-v3",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      {
-        "slug": "guides/online-research",
-        "title": "Guides",
+plt.show()",
+        "lang": "python",
       },
-    ],
-    "description": "Set up environment!pip install -U athena-intelligence
-import json
-import os
-import pandas as pd
-from IPython.display import Markdown
-
-ATHENA_API_KEY = os.environ["ATHENA_API_KEY"]
-
-from athena import Model, Tools
-from athena.client import Athena
-
-athena = Athena(
-    api_key=ATHENA_API_KEY,
-)
-Get datasetsCall dataset.get method to get datasets. Use optional pagination parameters to run bulk workflows with datasets.datasets = athena.dataset.get(page=1, page_size=5)
-datasets
-Athena returns a json object with a list of datasets with the following fields: dataset id, name, database id, schema details (dialect, CREATE statement and first 3 rows), as well as pagination info.To access raw json, use .json():data = json.loads(datasets.json())
-datasets_list = data['datasets']
-import pandas as pd
-pd.set_option('display.max_colwidth', None)
-df_datasets = pd.DataFrame(datasets_list)
-df_datasets
-Document individual datasets with athena.submit_and_pollWith datasets loaded, we can proceed with the documentation workflow. We'll start by defining a function that takes a list of datasets and send them one by one to Athena with a documentation prompt.documentation_responses = [] 
-def generate_documentation_for_dataset(dataset_name, dataset_schema_details):
-    # Placeholder for the function to submit and poll for documentation generation
-    message = athena.message.submit_and_poll(
-    content=
-    f"""
-**Task:** Generate comprehensive documentation for a dataset.
-
-**Objective:**
-Create output template documentation for a table, detailing its schema, fields, and relevant metadata. The documentation should follow the structure provided below and adhere to the specified markdown format and tone. Use metadata and other available information to produce the documentation tailored to the context. This documentation will serve as a guide for understanding the dataset's structure, purpose, and usage within the organization. It should be clear, concise, and informative, catering to both technical and non-technical stakeholders.
-
-**Instructions:**
-1. Explore information available on the dataset {dataset_name}:
-- dataset metadata: 
-
-{dataset_schema_details}
-
-
-2. For each section of the documentation, provide clear, concise information as outlined in the output template. Use professional language and ensure the documentation is accessible to a broad audience.
-3. Include a brief example value or description where requested to illustrate the type of content expected.
-4. Only include factual statements. When making assumptions or inferences, clearly label them as such.
-
-**Output Template:**
-
-## Athena Generated Dataset Documentation
-
-### TABLE: \`[TABLE NAME]\`
-
-**Generated on: [CURRENT DATE]**
-
-#### Dataset Description:
-Provide a comprehensive explanation of the table's purpose, detailing what one row represents and the business process or workflow it supports.
-
-#### Field Report:
-Document each field in the table, including its name, description, data type, and an example value.
-
-| Field Name | Field Description | Field Type | Example Value |
-| ---------- | ----------------- | ---------- | ------------- |
-| [FIELD NAME] | [FIELD DESCRIPTION] | [FIELD TYPE] | [EXAMPLE VALUE] |
-| ...additional fields as necessary... |
-
-#### Sample Query and First Three Rows:
-Include a sample SQL query that returns the first three rows of data, followed by the results of the query.
-
-#### Use Cases & Guidelines:
-Describe the organization's use cases and guidelines for using this dataset, highlighting any best practices or restrictions.
-
-#### Other Notes & Considerations:
-List any additional notes or considerations relevant to the dataset's use or interpretation.
-
-**End of Template**
-
-Please ensure all information is accurate and up-to-date, reflecting the current state of the dataset as of [CURRENT DATE].
-    """,
-    model=Model.MIXTRAL_SMALL_8_X_7_B_0211,
-    tools=[],
-    )
-    print(f"Generating documentation for dataset: {dataset_name}")
-    message_json=json.loads(message.json())
-    documentation_responses.append({'dataset_name': dataset_name, 'documentation_message': message_json['content']})
-    
-Now we can kick off the workflow.# Iterate over each row in the DataFrame
-for index, row in df_datasets.iterrows():
-    dataset_name = row['name']
-    dataset_schema_details = row['schema_details']
-    
-    # Generate documentation for the current dataset
-    generate_documentation_for_dataset(dataset_name, dataset_schema_details)
-Convert results to markdown to read and copy generated documentation.def json_to_markdown_document(json_list):
-    markdown_document = ""
-    if not json_list:
-        return "No data available"
-    
-    for item in json_list:
-        for key, value in item.items():
-            markdown_document += f"**{key}:** {value}\n\n"
-        markdown_document += "---\n\n"  # Separator line between items
-    
-    return markdown_document
-
-# Convert the list of dictionaries to Markdown
-markdown_document = json_to_markdown_document(documentation_responses)
-
-# Display the Markdown in the notebook
-display(Markdown(markdown_document))
-Generate documentation and ERD diagrams for multiple datasetsNow that we documented all individual tables, we can ask Athena to process proccess created documentation and generate a higher-level description of the whole body of data, together with joins and other notable relationships between tables.def generate_high_level_documentation(markdown_document):
-    # Placeholder for the function to submit and poll for high-level documentation generation
-    message = athena.message.submit_and_poll(
-    content=
-    f"""
-**Task:** Generate high-level comprehensive documentation for a body of datasets.
-
-**Objective:**
-Create high-level output documentation for multiple related tables, detailing their schema, fields, relationships, and relevant metadata. The documentation should follow the structure provided below and adhere to the specified markdown format and tone. Use the provided markdown document and other available information to produce the documentation tailored to the context. This documentation will serve as a guide for understanding the structure, purpose, and usage of the datasets within the organization. It should be clear, concise, and informative, catering to both technical and non-technical stakeholders.
-
-**Instructions:**
-1. Explore information available in the provided markdown document:
-- Provided markdown document:
-
-{markdown_document}
-
-
-2. For each section of the documentation, provide clear, concise information as outlined in the output template. Use professional language and ensure the documentation is accessible to a broad audience.
-3. Include diagrams such as Entity-Relationship Diagrams (ERD) and other helpful diagrams to explore relationships in the data.
-4. Discuss possible analyses and how the datasets can be joined for these analyses.
-5. Only include factual statements. When making assumptions or inferences, clearly label them as such.
-6. Pay attention to Mermaid diagram dialect and double-check yourself. 
-
-**Output Template:**
-
-## Athena Generated High-Level Dataset Documentation
-
-### Overview of Datasets
-
-Provide a brief overview of the datasets included in the markdown document, summarizing their purpose and how they relate to each other.
-
-### Entity-Relationship Diagram (ERD)
-
-Include an ERD that visually represents the relationships between the datasets.
-
-### Possible Analyses
-
-Discuss potential analyses that could be performed using these datasets, highlighting how they can be joined and what insights might be derived.
-
-### Other Helpful Diagrams
-
-Include other diagrams that may help in understanding the relationships between the datasets, such as flowcharts or sequence diagrams.
-
-### Guidelines for Use
-
-Describe the organization's guidelines for using these datasets together, including any best practices or restrictions.
-
-### Other Notes & Considerations
-
-List any additional notes or considerations relevant to the use or interpretation of these datasets as a whole.
-
-**End of Template**
-
-Please ensure all information is accurate and up-to-date, reflecting the current state of the datasets as of [CURRENT DATE].
-    """,
-    model=Model.MIXTRAL_SMALL_8_X_7_B_0211,
-    tools=[],
-    )
-    print("Generating description for provided dataset-level documentation")
-    message_json=json.loads(message.json())
-    return message_json['content']
-high_level_documentation = generate_high_level_documentation(markdown_document)
-display(Markdown(high_level_documentation))",
-    "indexSegmentId": "0",
-    "slug": "guides/generate-documentation",
-    "title": "Generate Data Documentation",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Guides",
-    ],
-    "content": "Set up environment!pip install -U athena-intelligence
-import json
-import os
-import pandas as pd
-from IPython.display import Markdown
-
-ATHENA_API_KEY = os.environ["ATHENA_API_KEY"]
-
-from athena import Model, Tools
-from athena.client import Athena
-
-athena = Athena(
-    api_key=ATHENA_API_KEY,
-)
-Get datasetsCall dataset.get method to get datasets. Use optional pagination parameters to run bulk workflows with datasets.datasets = athena.dataset.get(page=1, page_size=5)
-datasets
-Athena returns a json object with a list of datasets with the following fields: dataset id, name, database id, schema details (dialect, CREATE statement and first 3 rows), as well as pagination info.To access raw json, use .json():data = json.loads(datasets.json())
-datasets_list = data['datasets']
-import pandas as pd
-pd.set_option('display.max_colwidth', None)
-df_datasets = pd.DataFrame(datasets_list)
-df_datasets
-Document individual datasets with athena.submit_and_pollWith datasets loaded, we can proceed with the documentation workflow. We'll start by defining a function that takes a list of datasets and send them one by one to Athena with a documentation prompt.documentation_responses = [] 
-def generate_documentation_for_dataset(dataset_name, dataset_schema_details):
-    # Placeholder for the function to submit and poll for documentation generation
-    message = athena.message.submit_and_poll(
-    content=
-    f"""
-**Task:** Generate comprehensive documentation for a dataset.
-
-**Objective:**
-Create output template documentation for a table, detailing its schema, fields, and relevant metadata. The documentation should follow the structure provided below and adhere to the specified markdown format and tone. Use metadata and other available information to produce the documentation tailored to the context. This documentation will serve as a guide for understanding the dataset's structure, purpose, and usage within the organization. It should be clear, concise, and informative, catering to both technical and non-technical stakeholders.
-
-**Instructions:**
-1. Explore information available on the dataset {dataset_name}:
-- dataset metadata: 
-
-{dataset_schema_details}
-
-
-2. For each section of the documentation, provide clear, concise information as outlined in the output template. Use professional language and ensure the documentation is accessible to a broad audience.
-3. Include a brief example value or description where requested to illustrate the type of content expected.
-4. Only include factual statements. When making assumptions or inferences, clearly label them as such.
-
-**Output Template:**
-
-## Athena Generated Dataset Documentation
-
-### TABLE: \`[TABLE NAME]\`
-
-**Generated on: [CURRENT DATE]**
-
-#### Dataset Description:
-Provide a comprehensive explanation of the table's purpose, detailing what one row represents and the business process or workflow it supports.
-
-#### Field Report:
-Document each field in the table, including its name, description, data type, and an example value.
-
-| Field Name | Field Description | Field Type | Example Value |
-| ---------- | ----------------- | ---------- | ------------- |
-| [FIELD NAME] | [FIELD DESCRIPTION] | [FIELD TYPE] | [EXAMPLE VALUE] |
-| ...additional fields as necessary... |
-
-#### Sample Query and First Three Rows:
-Include a sample SQL query that returns the first three rows of data, followed by the results of the query.
-
-#### Use Cases & Guidelines:
-Describe the organization's use cases and guidelines for using this dataset, highlighting any best practices or restrictions.
-
-#### Other Notes & Considerations:
-List any additional notes or considerations relevant to the dataset's use or interpretation.
-
-**End of Template**
-
-Please ensure all information is accurate and up-to-date, reflecting the current state of the dataset as of [CURRENT DATE].
-    """,
-    model=Model.MIXTRAL_SMALL_8_X_7_B_0211,
-    tools=[],
-    )
-    print(f"Generating documentation for dataset: {dataset_name}")
-    message_json=json.loads(message.json())
-    documentation_responses.append({'dataset_name': dataset_name, 'documentation_message': message_json['content']})
-    
-Now we can kick off the workflow.# Iterate over each row in the DataFrame
-for index, row in df_datasets.iterrows():
-    dataset_name = row['name']
-    dataset_schema_details = row['schema_details']
-    
-    # Generate documentation for the current dataset
-    generate_documentation_for_dataset(dataset_name, dataset_schema_details)
-Convert results to markdown to read and copy generated documentation.def json_to_markdown_document(json_list):
-    markdown_document = ""
-    if not json_list:
-        return "No data available"
-    
-    for item in json_list:
-        for key, value in item.items():
-            markdown_document += f"**{key}:** {value}\n\n"
-        markdown_document += "---\n\n"  # Separator line between items
-    
-    return markdown_document
-
-# Convert the list of dictionaries to Markdown
-markdown_document = json_to_markdown_document(documentation_responses)
-
-# Display the Markdown in the notebook
-display(Markdown(markdown_document))
-Generate documentation and ERD diagrams for multiple datasetsNow that we documented all individual tables, we can ask Athena to process proccess created documentation and generate a higher-level description of the whole body of data, together with joins and other notable relationships between tables.def generate_high_level_documentation(markdown_document):
-    # Placeholder for the function to submit and poll for high-level documentation generation
-    message = athena.message.submit_and_poll(
-    content=
-    f"""
-**Task:** Generate high-level comprehensive documentation for a body of datasets.
-
-**Objective:**
-Create high-level output documentation for multiple related tables, detailing their schema, fields, relationships, and relevant metadata. The documentation should follow the structure provided below and adhere to the specified markdown format and tone. Use the provided markdown document and other available information to produce the documentation tailored to the context. This documentation will serve as a guide for understanding the structure, purpose, and usage of the datasets within the organization. It should be clear, concise, and informative, catering to both technical and non-technical stakeholders.
-
-**Instructions:**
-1. Explore information available in the provided markdown document:
-- Provided markdown document:
-
-{markdown_document}
-
-
-2. For each section of the documentation, provide clear, concise information as outlined in the output template. Use professional language and ensure the documentation is accessible to a broad audience.
-3. Include diagrams such as Entity-Relationship Diagrams (ERD) and other helpful diagrams to explore relationships in the data.
-4. Discuss possible analyses and how the datasets can be joined for these analyses.
-5. Only include factual statements. When making assumptions or inferences, clearly label them as such.
-6. Pay attention to Mermaid diagram dialect and double-check yourself. 
-
-**Output Template:**
-
-## Athena Generated High-Level Dataset Documentation
-
-### Overview of Datasets
-
-Provide a brief overview of the datasets included in the markdown document, summarizing their purpose and how they relate to each other.
-
-### Entity-Relationship Diagram (ERD)
-
-Include an ERD that visually represents the relationships between the datasets.
-
-### Possible Analyses
-
-Discuss potential analyses that could be performed using these datasets, highlighting how they can be joined and what insights might be derived.
-
-### Other Helpful Diagrams
-
-Include other diagrams that may help in understanding the relationships between the datasets, such as flowcharts or sequence diagrams.
-
-### Guidelines for Use
-
-Describe the organization's guidelines for using these datasets together, including any best practices or restrictions.
-
-### Other Notes & Considerations
-
-List any additional notes or considerations relevant to the use or interpretation of these datasets as a whole.
-
-**End of Template**
-
-Please ensure all information is accurate and up-to-date, reflecting the current state of the datasets as of [CURRENT DATE].
-    """,
-    model=Model.MIXTRAL_SMALL_8_X_7_B_0211,
-    tools=[],
-    )
-    print("Generating description for provided dataset-level documentation")
-    message_json=json.loads(message.json())
-    return message_json['content']
-high_level_documentation = generate_high_level_documentation(markdown_document)
-display(Markdown(high_level_documentation))
-",
-    "indexSegmentId": "0",
-    "slug": "guides/generate-documentation",
-    "title": "Generate Data Documentation",
-    "type": "page-v3",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      {
-        "slug": "guides/online-research",
-        "title": "Guides",
-      },
-    ],
-    "description": undefined,
-    "indexSegmentId": "0",
-    "slug": "guides/load-data-frames",
-    "title": "Load Data Frames",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Guides",
     ],
     "content": "Set up environment
-%pip install -U athena-intelligence
+Query SQL with athena.query.execute()
+Initialize default database or specify id of another connected database. Ask Athena team if unclear.
+Put your query here
+Run the query and convert to Pandas dataframe for subsequent analysis
+Visualize data using Athena Notebooks Sidebar
+Once you have an SQL output, you can harness the power and flexibility of visualisations or further analysis using Python. In Athena Notebooks, you can click "Chat" in the top right corner to ask Athena for help writing code for visualizations you need. Copy and paste a dataframe headers and 2-3 rows to give Athena all needed context.
+Write code to visualize this table:
+route_id 	route_source 	route_destination 	passenger_id 	customer_name 	total_tickets
+0 	1 	West Sylvia 	Williamsshire 	816 	Jaruwan Rogers 	13
+1 	1 	West Sylvia 	Williamsshire 	679 	Karen Tapp 	9
 
+Sure, here's the code:
+...
+
+
+Copy & run the code in the notebook.",
+    "domain": "test.com",
+    "objectID": "test:test.com:root.uv.guides.query-and-visualize-root-0",
+    "org_id": "test",
+    "pathname": "/guides/query-and-visualize",
+    "title": "Query and Visualize",
+    "type": "markdown",
+    "visible_by": [
+      "role/everyone",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [
+      {
+        "pathname": "/guides",
+        "title": "Guides",
+      },
+    ],
+    "canonicalPathname": "/guides/generate-documentation",
+    "code_snippets": [
+      {
+        "code": "!pip install -U athena-intelligence",
+        "lang": "python",
+      },
+      {
+        "code": "import json
 import os
+import pandas as pd
+from IPython.display import Markdown
 
 ATHENA_API_KEY = os.environ["ATHENA_API_KEY"]
 
+from athena import Model, Tools
 from athena.client import Athena
 
 athena = Athena(
     api_key=ATHENA_API_KEY,
-)
+)",
+        "lang": "python",
+      },
+      {
+        "code": "datasets = athena.dataset.get(page=1, page_size=5)
+datasets",
+        "lang": "python",
+      },
+      {
+        "code": "data = json.loads(datasets.json())
+datasets_list = data['datasets']
+import pandas as pd
+pd.set_option('display.max_colwidth', None)
+df_datasets = pd.DataFrame(datasets_list)
+df_datasets",
+        "lang": "python",
+      },
+      {
+        "code": "documentation_responses = [] 
+def generate_documentation_for_dataset(dataset_name, dataset_schema_details):
+    # Placeholder for the function to submit and poll for documentation generation
+    message = athena.message.submit_and_poll(
+    content=
+    f"""
+**Task:** Generate comprehensive documentation for a dataset.
 
-Load a JSON-serialisable data frame
-Call tools.data_frame() to load a data frame from a CSV/excel file:
-df = athena.tools.data_frame(
-    document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f'
-)
-df
+**Objective:**
+Create output template documentation for a table, detailing its schema, fields, and relevant metadata. The documentation should follow the structure provided below and adhere to the specified markdown format and tone. Use metadata and other available information to produce the documentation tailored to the context. This documentation will serve as a guide for understanding the dataset's structure, purpose, and usage within the organization. It should be clear, concise, and informative, catering to both technical and non-technical stakeholders.
 
-Athena returns a simple pandas DataFrame representation with the default parsing options. You can adjust the following options:
+**Instructions:**
+1. Explore information available on the dataset {dataset_name}:
+- dataset metadata: 
 
-row_limit: int number of rows to load,
-index_column: int column to use as an index,
-columns: list[str | int] indices or names of columns to include,
-sheet_name: str | int name of the sheet to load, only applicable to Excel files
-separator: str separator to use when parsing, only applicable to CSV files
+{dataset_schema_details}
 
-For example, when working with large datasets, it might be beneficial to first examine at the initial five rows:
-df_head = athena.tools.data_frame(
-    document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f',
-    row_limit=5
-)
-df_head
 
-Load a large or complex data frame
-The tools.data_frame() method is sufficient for handling well-formatted,
-medium-sized data frames and provides interface that is agnostic to the SDK version
-(a sister method is available in the TypeScript SDK).
-However, if your Excel files include values that cannot be JSON-serialized,
-are serializable with a loss of precision, or contain additional metadata,
-you may prefer to use tools.read_data_frame() method.
-This method skips the JSON serialization step and provides a raw byte stream
-to the pandas read_csv or read_excel methods, as appropriate.
-The keyword arguments provided to read_data_frame will be passed to
-the underlying read_csv/read_excel, depending on the file type.
-df_head = athena.tools.read_data_frame(
-    document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f',
-    dtype={"a": np.float64, "b": np.int32}
-)
-df_head
+2. For each section of the documentation, provide clear, concise information as outlined in the output template. Use professional language and ensure the documentation is accessible to a broad audience.
+3. Include a brief example value or description where requested to illustrate the type of content expected.
+4. Only include factual statements. When making assumptions or inferences, clearly label them as such.
 
-Load a data frame with another package
-If you prefer to use another data frame implementation, you can access the
-raw bytes stream object using the tools.get_file() method, which accepts
-a single argument - the document identifier. The resulting object complies
-with the io.BytesIO interface and can be used with most data frame libraries,
-for example:
-import polars as pl
+**Output Template:**
 
-bytes_io = athena.tools.get_file(
-    document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f',
-)
-df = pl.read_csv(bytes_io)
-",
-    "indexSegmentId": "0",
-    "slug": "guides/load-data-frames",
+## Athena Generated Dataset Documentation
+
+### TABLE: \`[TABLE NAME]\`
+
+**Generated on: [CURRENT DATE]**
+
+#### Dataset Description:
+Provide a comprehensive explanation of the table's purpose, detailing what one row represents and the business process or workflow it supports.
+
+#### Field Report:
+Document each field in the table, including its name, description, data type, and an example value.
+
+| Field Name | Field Description | Field Type | Example Value |
+| ---------- | ----------------- | ---------- | ------------- |
+| [FIELD NAME] | [FIELD DESCRIPTION] | [FIELD TYPE] | [EXAMPLE VALUE] |
+| ...additional fields as necessary... |
+
+#### Sample Query and First Three Rows:
+Include a sample SQL query that returns the first three rows of data, followed by the results of the query.
+
+#### Use Cases & Guidelines:
+Describe the organization's use cases and guidelines for using this dataset, highlighting any best practices or restrictions.
+
+#### Other Notes & Considerations:
+List any additional notes or considerations relevant to the dataset's use or interpretation.
+
+**End of Template**
+
+Please ensure all information is accurate and up-to-date, reflecting the current state of the dataset as of [CURRENT DATE].
+    """,
+    model=Model.MIXTRAL_SMALL_8_X_7_B_0211,
+    tools=[],
+    )
+    print(f"Generating documentation for dataset: {dataset_name}")
+    message_json=json.loads(message.json())
+    documentation_responses.append({'dataset_name': dataset_name, 'documentation_message': message_json['content']})
+    ",
+        "lang": "python",
+      },
+      {
+        "code": "# Iterate over each row in the DataFrame
+for index, row in df_datasets.iterrows():
+    dataset_name = row['name']
+    dataset_schema_details = row['schema_details']
+    
+    # Generate documentation for the current dataset
+    generate_documentation_for_dataset(dataset_name, dataset_schema_details)",
+        "lang": "python",
+      },
+      {
+        "code": "def json_to_markdown_document(json_list):
+    markdown_document = ""
+    if not json_list:
+        return "No data available"
+    
+    for item in json_list:
+        for key, value in item.items():
+            markdown_document += f"**{key}:** {value}\n\n"
+        markdown_document += "---\n\n"  # Separator line between items
+    
+    return markdown_document
+
+# Convert the list of dictionaries to Markdown
+markdown_document = json_to_markdown_document(documentation_responses)
+
+# Display the Markdown in the notebook
+display(Markdown(markdown_document))",
+        "lang": "python",
+      },
+      {
+        "code": "def generate_high_level_documentation(markdown_document):
+    # Placeholder for the function to submit and poll for high-level documentation generation
+    message = athena.message.submit_and_poll(
+    content=
+    f"""
+**Task:** Generate high-level comprehensive documentation for a body of datasets.
+
+**Objective:**
+Create high-level output documentation for multiple related tables, detailing their schema, fields, relationships, and relevant metadata. The documentation should follow the structure provided below and adhere to the specified markdown format and tone. Use the provided markdown document and other available information to produce the documentation tailored to the context. This documentation will serve as a guide for understanding the structure, purpose, and usage of the datasets within the organization. It should be clear, concise, and informative, catering to both technical and non-technical stakeholders.
+
+**Instructions:**
+1. Explore information available in the provided markdown document:
+- Provided markdown document:
+
+{markdown_document}
+
+
+2. For each section of the documentation, provide clear, concise information as outlined in the output template. Use professional language and ensure the documentation is accessible to a broad audience.
+3. Include diagrams such as Entity-Relationship Diagrams (ERD) and other helpful diagrams to explore relationships in the data.
+4. Discuss possible analyses and how the datasets can be joined for these analyses.
+5. Only include factual statements. When making assumptions or inferences, clearly label them as such.
+6. Pay attention to Mermaid diagram dialect and double-check yourself. 
+
+**Output Template:**
+
+## Athena Generated High-Level Dataset Documentation
+
+### Overview of Datasets
+
+Provide a brief overview of the datasets included in the markdown document, summarizing their purpose and how they relate to each other.
+
+### Entity-Relationship Diagram (ERD)
+
+Include an ERD that visually represents the relationships between the datasets.
+
+### Possible Analyses
+
+Discuss potential analyses that could be performed using these datasets, highlighting how they can be joined and what insights might be derived.
+
+### Other Helpful Diagrams
+
+Include other diagrams that may help in understanding the relationships between the datasets, such as flowcharts or sequence diagrams.
+
+### Guidelines for Use
+
+Describe the organization's guidelines for using these datasets together, including any best practices or restrictions.
+
+### Other Notes & Considerations
+
+List any additional notes or considerations relevant to the use or interpretation of these datasets as a whole.
+
+**End of Template**
+
+Please ensure all information is accurate and up-to-date, reflecting the current state of the datasets as of [CURRENT DATE].
+    """,
+    model=Model.MIXTRAL_SMALL_8_X_7_B_0211,
+    tools=[],
+    )
+    print("Generating description for provided dataset-level documentation")
+    message_json=json.loads(message.json())
+    return message_json['content']",
+        "lang": "python",
+      },
+      {
+        "code": "high_level_documentation = generate_high_level_documentation(markdown_document)
+display(Markdown(high_level_documentation))",
+        "lang": "python",
+      },
+      {
+        "code": "!pip install -U athena-intelligence",
+        "lang": "python",
+      },
+      {
+        "code": "import json
+import os
+import pandas as pd
+from IPython.display import Markdown
+
+ATHENA_API_KEY = os.environ["ATHENA_API_KEY"]
+
+from athena import Model, Tools
+from athena.client import Athena
+
+athena = Athena(
+    api_key=ATHENA_API_KEY,
+)",
+        "lang": "python",
+      },
+      {
+        "code": "datasets = athena.dataset.get(page=1, page_size=5)
+datasets",
+        "lang": "python",
+      },
+      {
+        "code": "data = json.loads(datasets.json())
+datasets_list = data['datasets']
+import pandas as pd
+pd.set_option('display.max_colwidth', None)
+df_datasets = pd.DataFrame(datasets_list)
+df_datasets",
+        "lang": "python",
+      },
+      {
+        "code": "documentation_responses = [] 
+def generate_documentation_for_dataset(dataset_name, dataset_schema_details):
+    # Placeholder for the function to submit and poll for documentation generation
+    message = athena.message.submit_and_poll(
+    content=
+    f"""
+**Task:** Generate comprehensive documentation for a dataset.
+
+**Objective:**
+Create output template documentation for a table, detailing its schema, fields, and relevant metadata. The documentation should follow the structure provided below and adhere to the specified markdown format and tone. Use metadata and other available information to produce the documentation tailored to the context. This documentation will serve as a guide for understanding the dataset's structure, purpose, and usage within the organization. It should be clear, concise, and informative, catering to both technical and non-technical stakeholders.
+
+**Instructions:**
+1. Explore information available on the dataset {dataset_name}:
+- dataset metadata: 
+
+{dataset_schema_details}
+
+
+2. For each section of the documentation, provide clear, concise information as outlined in the output template. Use professional language and ensure the documentation is accessible to a broad audience.
+3. Include a brief example value or description where requested to illustrate the type of content expected.
+4. Only include factual statements. When making assumptions or inferences, clearly label them as such.
+
+**Output Template:**
+
+## Athena Generated Dataset Documentation
+
+### TABLE: \`[TABLE NAME]\`
+
+**Generated on: [CURRENT DATE]**
+
+#### Dataset Description:
+Provide a comprehensive explanation of the table's purpose, detailing what one row represents and the business process or workflow it supports.
+
+#### Field Report:
+Document each field in the table, including its name, description, data type, and an example value.
+
+| Field Name | Field Description | Field Type | Example Value |
+| ---------- | ----------------- | ---------- | ------------- |
+| [FIELD NAME] | [FIELD DESCRIPTION] | [FIELD TYPE] | [EXAMPLE VALUE] |
+| ...additional fields as necessary... |
+
+#### Sample Query and First Three Rows:
+Include a sample SQL query that returns the first three rows of data, followed by the results of the query.
+
+#### Use Cases & Guidelines:
+Describe the organization's use cases and guidelines for using this dataset, highlighting any best practices or restrictions.
+
+#### Other Notes & Considerations:
+List any additional notes or considerations relevant to the dataset's use or interpretation.
+
+**End of Template**
+
+Please ensure all information is accurate and up-to-date, reflecting the current state of the dataset as of [CURRENT DATE].
+    """,
+    model=Model.MIXTRAL_SMALL_8_X_7_B_0211,
+    tools=[],
+    )
+    print(f"Generating documentation for dataset: {dataset_name}")
+    message_json=json.loads(message.json())
+    documentation_responses.append({'dataset_name': dataset_name, 'documentation_message': message_json['content']})
+    ",
+        "lang": "python",
+      },
+      {
+        "code": "# Iterate over each row in the DataFrame
+for index, row in df_datasets.iterrows():
+    dataset_name = row['name']
+    dataset_schema_details = row['schema_details']
+    
+    # Generate documentation for the current dataset
+    generate_documentation_for_dataset(dataset_name, dataset_schema_details)",
+        "lang": "python",
+      },
+      {
+        "code": "def json_to_markdown_document(json_list):
+    markdown_document = ""
+    if not json_list:
+        return "No data available"
+    
+    for item in json_list:
+        for key, value in item.items():
+            markdown_document += f"**{key}:** {value}\n\n"
+        markdown_document += "---\n\n"  # Separator line between items
+    
+    return markdown_document
+
+# Convert the list of dictionaries to Markdown
+markdown_document = json_to_markdown_document(documentation_responses)
+
+# Display the Markdown in the notebook
+display(Markdown(markdown_document))",
+        "lang": "python",
+      },
+      {
+        "code": "def generate_high_level_documentation(markdown_document):
+    # Placeholder for the function to submit and poll for high-level documentation generation
+    message = athena.message.submit_and_poll(
+    content=
+    f"""
+**Task:** Generate high-level comprehensive documentation for a body of datasets.
+
+**Objective:**
+Create high-level output documentation for multiple related tables, detailing their schema, fields, relationships, and relevant metadata. The documentation should follow the structure provided below and adhere to the specified markdown format and tone. Use the provided markdown document and other available information to produce the documentation tailored to the context. This documentation will serve as a guide for understanding the structure, purpose, and usage of the datasets within the organization. It should be clear, concise, and informative, catering to both technical and non-technical stakeholders.
+
+**Instructions:**
+1. Explore information available in the provided markdown document:
+- Provided markdown document:
+
+{markdown_document}
+
+
+2. For each section of the documentation, provide clear, concise information as outlined in the output template. Use professional language and ensure the documentation is accessible to a broad audience.
+3. Include diagrams such as Entity-Relationship Diagrams (ERD) and other helpful diagrams to explore relationships in the data.
+4. Discuss possible analyses and how the datasets can be joined for these analyses.
+5. Only include factual statements. When making assumptions or inferences, clearly label them as such.
+6. Pay attention to Mermaid diagram dialect and double-check yourself. 
+
+**Output Template:**
+
+## Athena Generated High-Level Dataset Documentation
+
+### Overview of Datasets
+
+Provide a brief overview of the datasets included in the markdown document, summarizing their purpose and how they relate to each other.
+
+### Entity-Relationship Diagram (ERD)
+
+Include an ERD that visually represents the relationships between the datasets.
+
+### Possible Analyses
+
+Discuss potential analyses that could be performed using these datasets, highlighting how they can be joined and what insights might be derived.
+
+### Other Helpful Diagrams
+
+Include other diagrams that may help in understanding the relationships between the datasets, such as flowcharts or sequence diagrams.
+
+### Guidelines for Use
+
+Describe the organization's guidelines for using these datasets together, including any best practices or restrictions.
+
+### Other Notes & Considerations
+
+List any additional notes or considerations relevant to the use or interpretation of these datasets as a whole.
+
+**End of Template**
+
+Please ensure all information is accurate and up-to-date, reflecting the current state of the datasets as of [CURRENT DATE].
+    """,
+    model=Model.MIXTRAL_SMALL_8_X_7_B_0211,
+    tools=[],
+    )
+    print("Generating description for provided dataset-level documentation")
+    message_json=json.loads(message.json())
+    return message_json['content']",
+        "lang": "python",
+      },
+      {
+        "code": "high_level_documentation = generate_high_level_documentation(markdown_document)
+display(Markdown(high_level_documentation))",
+        "lang": "python",
+      },
+    ],
+    "content": "Set up environment
+Get datasets
+Call dataset.get method to get datasets. Use optional pagination parameters to run bulk workflows with datasets.
+Athena returns a json object with a list of datasets with the following fields: dataset id, name, database id, schema details (dialect, CREATE statement and first 3 rows), as well as pagination info.
+To access raw json, use .json():
+Document individual datasets with athena.submit_and_poll
+With datasets loaded, we can proceed with the documentation workflow. We'll start by defining a function that takes a list of datasets and send them one by one to Athena with a documentation prompt.
+Now we can kick off the workflow.
+Convert results to markdown to read and copy generated documentation.
+Generate documentation and ERD diagrams for multiple datasets
+Now that we documented all individual tables, we can ask Athena to process proccess created documentation and generate a higher-level description of the whole body of data, together with joins and other notable relationships between tables.",
+    "domain": "test.com",
+    "objectID": "test:test.com:root.uv.guides.generate-documentation-root-0",
+    "org_id": "test",
+    "pathname": "/guides/generate-documentation",
+    "title": "Generate Data Documentation",
+    "type": "markdown",
+    "visible_by": [
+      "role/everyone",
+    ],
+  },
+  {
+    "authed": false,
+    "breadcrumb": [
+      {
+        "pathname": "/guides",
+        "title": "Guides",
+      },
+    ],
+    "canonicalPathname": "/guides/load-data-frames",
+    "domain": "test.com",
+    "objectID": "test:test.com:root.uv.guides.load-data-frames",
+    "org_id": "test",
+    "pathname": "/guides/load-data-frames",
     "title": "Load Data Frames",
-    "type": "page-v3",
-    "version": undefined,
+    "type": "markdown",
+    "visible_by": [
+      "role/everyone",
+    ],
   },
   {
-    "breadcrumbs": [
+    "authed": false,
+    "breadcrumb": [
       {
-        "slug": "guides/online-research",
+        "pathname": "/guides",
         "title": "Guides",
       },
     ],
-    "description": "%pip install -U athena-intelligence
-
-import os
-
-ATHENA_API_KEY = os.environ["ATHENA_API_KEY"]
-
-from athena.client import Athena
-
-athena = Athena(
-    api_key=ATHENA_API_KEY,
-)
-",
-    "indexSegmentId": "0",
-    "slug": "guides/load-data-frames#set-up-environment",
-    "title": "Set up environment",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Guides",
-    ],
-    "content": "%pip install -U athena-intelligence
-
-import os
-
-ATHENA_API_KEY = os.environ["ATHENA_API_KEY"]
-
-from athena.client import Athena
-
-athena = Athena(
-    api_key=ATHENA_API_KEY,
-)
-",
-    "indexSegmentId": "0",
-    "slug": "guides/load-data-frames#set-up-environment",
-    "title": "Set up environment",
-    "type": "page-v3",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
+    "canonicalPathname": "/guides/load-data-frames",
+    "code_snippets": [
       {
-        "slug": "guides/online-research",
-        "title": "Guides",
-      },
-    ],
-    "description": "Call tools.data_frame() to load a data frame from a CSV/excel file:
-df = athena.tools.data_frame(
+        "code": "df = athena.tools.data_frame(
     document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f'
 )
-df
-
-Athena returns a simple pandas DataFrame representation with the default parsing options. You can adjust the following options:
-
-row_limit: int number of rows to load,
-index_column: int column to use as an index,
-columns: list[str | int] indices or names of columns to include,
-sheet_name: str | int name of the sheet to load, only applicable to Excel files
-separator: str separator to use when parsing, only applicable to CSV files
-
-For example, when working with large datasets, it might be beneficial to first examine at the initial five rows:
-df_head = athena.tools.data_frame(
+df",
+        "lang": "python",
+      },
+      {
+        "code": "df_head = athena.tools.data_frame(
     document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f',
     row_limit=5
 )
-df_head
-",
-    "indexSegmentId": "0",
-    "slug": "guides/load-data-frames#load-a-json-serialisable-data-frame",
-    "title": "Load a JSON-serialisable data frame",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Guides",
+df_head",
+        "lang": "python",
+      },
     ],
     "content": "Call tools.data_frame() to load a data frame from a CSV/excel file:
-df = athena.tools.data_frame(
-    document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f'
-)
-df
-
 Athena returns a simple pandas DataFrame representation with the default parsing options. You can adjust the following options:
-
 row_limit: int number of rows to load,
+
 index_column: int column to use as an index,
+
 columns: list[str | int] indices or names of columns to include,
+
 sheet_name: str | int name of the sheet to load, only applicable to Excel files
+
 separator: str separator to use when parsing, only applicable to CSV files
 
-For example, when working with large datasets, it might be beneficial to first examine at the initial five rows:
-df_head = athena.tools.data_frame(
-    document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f',
-    row_limit=5
-)
-df_head
-",
-    "indexSegmentId": "0",
-    "slug": "guides/load-data-frames#load-a-json-serialisable-data-frame",
+
+For example, when working with large datasets, it might be beneficial to first examine at the initial five rows:",
+    "domain": "test.com",
+    "hash": "#load-a-json-serialisable-data-frame",
+    "hierarchy": {
+      "h0": {
+        "title": "Load Data Frames",
+      },
+      "h3": {
+        "id": "load-a-json-serialisable-data-frame",
+        "title": "Load a JSON-serialisable data frame",
+      },
+    },
+    "level": "h3",
+    "objectID": "test:test.com:root.uv.guides.load-data-frames-load-a-json-serialisable-data-frame-0",
+    "org_id": "test",
+    "pathname": "/guides/load-data-frames",
     "title": "Load a JSON-serialisable data frame",
-    "type": "page-v3",
-    "version": undefined,
+    "type": "markdown",
+    "visible_by": [
+      "role/everyone",
+    ],
   },
   {
-    "breadcrumbs": [
+    "authed": false,
+    "breadcrumb": [
       {
-        "slug": "guides/online-research",
+        "pathname": "/guides",
         "title": "Guides",
       },
     ],
-    "description": "The tools.data_frame() method is sufficient for handling well-formatted,
-medium-sized data frames and provides interface that is agnostic to the SDK version
-(a sister method is available in the TypeScript SDK).
-However, if your Excel files include values that cannot be JSON-serialized,
-are serializable with a loss of precision, or contain additional metadata,
-you may prefer to use tools.read_data_frame() method.
-This method skips the JSON serialization step and provides a raw byte stream
-to the pandas read_csv or read_excel methods, as appropriate.
-The keyword arguments provided to read_data_frame will be passed to
-the underlying read_csv/read_excel, depending on the file type.
-df_head = athena.tools.read_data_frame(
+    "canonicalPathname": "/guides/load-data-frames",
+    "code_snippets": [
+      {
+        "code": "df_head = athena.tools.read_data_frame(
     document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f',
     dtype={"a": np.float64, "b": np.int32}
 )
-df_head
-",
-    "indexSegmentId": "0",
-    "slug": "guides/load-data-frames#load-a-large-or-complex-data-frame",
-    "title": "Load a large or complex data frame",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Guides",
+df_head",
+        "lang": "python",
+      },
     ],
     "content": "The tools.data_frame() method is sufficient for handling well-formatted,
 medium-sized data frames and provides interface that is agnostic to the SDK version
@@ -1291,102 +1312,105 @@ you may prefer to use tools.read_data_frame() method.
 This method skips the JSON serialization step and provides a raw byte stream
 to the pandas read_csv or read_excel methods, as appropriate.
 The keyword arguments provided to read_data_frame will be passed to
-the underlying read_csv/read_excel, depending on the file type.
-df_head = athena.tools.read_data_frame(
-    document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f',
-    dtype={"a": np.float64, "b": np.int32}
-)
-df_head
-",
-    "indexSegmentId": "0",
-    "slug": "guides/load-data-frames#load-a-large-or-complex-data-frame",
+the underlying read_csv/read_excel, depending on the file type.",
+    "domain": "test.com",
+    "hash": "#load-a-large-or-complex-data-frame",
+    "hierarchy": {
+      "h0": {
+        "title": "Load Data Frames",
+      },
+      "h3": {
+        "id": "load-a-large-or-complex-data-frame",
+        "title": "Load a large or complex data frame",
+      },
+    },
+    "level": "h3",
+    "objectID": "test:test.com:root.uv.guides.load-data-frames-load-a-large-or-complex-data-frame-0",
+    "org_id": "test",
+    "pathname": "/guides/load-data-frames",
     "title": "Load a large or complex data frame",
-    "type": "page-v3",
-    "version": undefined,
+    "type": "markdown",
+    "visible_by": [
+      "role/everyone",
+    ],
   },
   {
-    "breadcrumbs": [
+    "authed": false,
+    "breadcrumb": [
       {
-        "slug": "guides/online-research",
+        "pathname": "/guides",
         "title": "Guides",
       },
     ],
-    "description": "If you prefer to use another data frame implementation, you can access the
-raw bytes stream object using the tools.get_file() method, which accepts
-a single argument - the document identifier. The resulting object complies
-with the io.BytesIO interface and can be used with most data frame libraries,
-for example:
-import polars as pl
+    "canonicalPathname": "/guides/load-data-frames",
+    "code_snippets": [
+      {
+        "code": "import polars as pl
 
 bytes_io = athena.tools.get_file(
     document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f',
 )
-df = pl.read_csv(bytes_io)
-",
-    "indexSegmentId": "0",
-    "slug": "guides/load-data-frames#load-a-data-frame-with-another-package",
-    "title": "Load a data frame with another package",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Guides",
+df = pl.read_csv(bytes_io)",
+        "lang": "python",
+      },
     ],
     "content": "If you prefer to use another data frame implementation, you can access the
 raw bytes stream object using the tools.get_file() method, which accepts
 a single argument - the document identifier. The resulting object complies
 with the io.BytesIO interface and can be used with most data frame libraries,
-for example:
-import polars as pl
-
-bytes_io = athena.tools.get_file(
-    document_id='doc_9249292-d118-42d3-95b4-00eccfe0754f',
-)
-df = pl.read_csv(bytes_io)
-",
-    "indexSegmentId": "0",
-    "slug": "guides/load-data-frames#load-a-data-frame-with-another-package",
+for example:",
+    "domain": "test.com",
+    "hash": "#load-a-data-frame-with-another-package",
+    "hierarchy": {
+      "h0": {
+        "title": "Load Data Frames",
+      },
+      "h3": {
+        "id": "load-a-data-frame-with-another-package",
+        "title": "Load a data frame with another package",
+      },
+    },
+    "level": "h3",
+    "objectID": "test:test.com:root.uv.guides.load-data-frames-load-a-data-frame-with-another-package-0",
+    "org_id": "test",
+    "pathname": "/guides/load-data-frames",
     "title": "Load a data frame with another package",
-    "type": "page-v3",
-    "version": undefined,
+    "type": "markdown",
+    "visible_by": [
+      "role/everyone",
+    ],
   },
   {
-    "breadcrumbs": [
+    "authed": false,
+    "breadcrumb": [
       {
-        "slug": "guides/online-research",
+        "pathname": "/guides",
         "title": "Guides",
       },
     ],
-    "description": undefined,
-    "indexSegmentId": "0",
-    "slug": "guides/upload-files",
+    "canonicalPathname": "/guides/upload-files",
+    "domain": "test.com",
+    "objectID": "test:test.com:root.uv.guides.upload-files",
+    "org_id": "test",
+    "pathname": "/guides/upload-files",
     "title": "Upload Files",
-    "type": "page-v4",
-    "version": undefined,
+    "type": "markdown",
+    "visible_by": [
+      "role/everyone",
+    ],
   },
   {
-    "breadcrumbs": [
-      "Guides",
+    "authed": false,
+    "breadcrumb": [
+      {
+        "pathname": "/guides",
+        "title": "Guides",
+      },
     ],
-    "content": "Set up environment
-%pip install -U athena-intelligence
-
-import os
-import io
-import asyncio
-from athena.client import Athena
-
-ATHENA_API_KEY = os.environ["ATHENA_API_KEY"]
-
-athena = Athena(
-    api_key=ATHENA_API_KEY,
-)
-
-Upload a file
-To upload a file using the Athena SDK, you can use the upload.upload_documents() method. This method accepts a list of file tuples, where each tuple contains the filename, file content as a BytesIO object, and the MIME type.
-Here's an example of how to upload an Excel file:
-async def upload_file():
+    "canonicalPathname": "/guides/upload-files",
+    "code_snippets": [
+      {
+        "code": "async def upload_file():
     # Prepare the file for upload
     file_bytes = io.BytesIO()
     with open("your_file.xlsx", "rb") as f:
@@ -1405,190 +1429,53 @@ async def upload_file():
     print(result)
 
 # Run the async function
-await upload_file()
-
-In this example:
-
-We open the file and read its contents into a BytesIO object.
-We create a tuple containing the filename, the BytesIO object, and the MIME type.
-We call athena.upload.upload_documents() with a list containing our file tuple.
-The function returns the result of the upload operation.
-
-Upload multiple files
-You can upload multiple files in a single request by adding more file tuples to the list:
-async def upload_multiple_files():
-    files = [
-        ("file1.xlsx", file1_bytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
-        ("file2.csv", file2_bytes, "text/csv"),
-        ("file3.pdf", file3_bytes, "application/pdf")
-    ]
-
-    result = await athena.upload.upload_documents(files=files)
-    print(result)
-
-await upload_multiple_files()
-
-Using with FastAPI
-If you're using FastAPI and want to upload files received from a client, you can use the UploadFile object:
-from fastapi import FastAPI, UploadFile
-
-app = FastAPI()
-
-@app.post("/upload/")
-async def upload_file(file: UploadFile):
-    file_tuple = (file.filename, file.file, file.content_type)
-    result = await athena.upload.upload_documents(files=[file_tuple])
-    return {"message": "File uploaded successfully", "result": result}
-
-This endpoint will accept file uploads and forward them to the Athena API using the SDK.
-Remember to handle exceptions and implement proper error checking in your production code.",
-    "indexSegmentId": "0",
-    "slug": "guides/upload-files",
-    "title": "Upload Files",
-    "type": "page-v3",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      {
-        "slug": "guides/online-research",
-        "title": "Guides",
+await upload_file()",
+        "lang": "python",
       },
-    ],
-    "description": "%pip install -U athena-intelligence
-
-import os
-import io
-import asyncio
-from athena.client import Athena
-
-ATHENA_API_KEY = os.environ["ATHENA_API_KEY"]
-
-athena = Athena(
-    api_key=ATHENA_API_KEY,
-)
-",
-    "indexSegmentId": "0",
-    "slug": "guides/upload-files#set-up-environment",
-    "title": "Set up environment",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Guides",
-    ],
-    "content": "%pip install -U athena-intelligence
-
-import os
-import io
-import asyncio
-from athena.client import Athena
-
-ATHENA_API_KEY = os.environ["ATHENA_API_KEY"]
-
-athena = Athena(
-    api_key=ATHENA_API_KEY,
-)
-",
-    "indexSegmentId": "0",
-    "slug": "guides/upload-files#set-up-environment",
-    "title": "Set up environment",
-    "type": "page-v3",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      {
-        "slug": "guides/online-research",
-        "title": "Guides",
-      },
-    ],
-    "description": "To upload a file using the Athena SDK, you can use the upload.upload_documents() method. This method accepts a list of file tuples, where each tuple contains the filename, file content as a BytesIO object, and the MIME type.
-Here's an example of how to upload an Excel file:
-async def upload_file():
-    # Prepare the file for upload
-    file_bytes = io.BytesIO()
-    with open("your_file.xlsx", "rb") as f:
-        file_bytes.write(f.read())
-        file_bytes.seek(0)  # Reset the cursor of the BytesIO object
-
-    # Create the file tuple
-    file_tuple = (
-        "your_file.xlsx",
-        file_bytes,
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-
-    # Upload the file
-    result = await athena.upload.upload_documents(files=[file_tuple])
-    print(result)
-
-# Run the async function
-await upload_file()
-
-In this example:
-
-We open the file and read its contents into a BytesIO object.
-We create a tuple containing the filename, the BytesIO object, and the MIME type.
-We call athena.upload.upload_documents() with a list containing our file tuple.
-The function returns the result of the upload operation.
-",
-    "indexSegmentId": "0",
-    "slug": "guides/upload-files#upload-a-file",
-    "title": "Upload a file",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Guides",
     ],
     "content": "To upload a file using the Athena SDK, you can use the upload.upload_documents() method. This method accepts a list of file tuples, where each tuple contains the filename, file content as a BytesIO object, and the MIME type.
 Here's an example of how to upload an Excel file:
-async def upload_file():
-    # Prepare the file for upload
-    file_bytes = io.BytesIO()
-    with open("your_file.xlsx", "rb") as f:
-        file_bytes.write(f.read())
-        file_bytes.seek(0)  # Reset the cursor of the BytesIO object
-
-    # Create the file tuple
-    file_tuple = (
-        "your_file.xlsx",
-        file_bytes,
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-
-    # Upload the file
-    result = await athena.upload.upload_documents(files=[file_tuple])
-    print(result)
-
-# Run the async function
-await upload_file()
-
 In this example:
-
 We open the file and read its contents into a BytesIO object.
+
 We create a tuple containing the filename, the BytesIO object, and the MIME type.
+
 We call athena.upload.upload_documents() with a list containing our file tuple.
-The function returns the result of the upload operation.
-",
-    "indexSegmentId": "0",
-    "slug": "guides/upload-files#upload-a-file",
+
+The function returns the result of the upload operation.",
+    "domain": "test.com",
+    "hash": "#upload-a-file",
+    "hierarchy": {
+      "h0": {
+        "title": "Upload Files",
+      },
+      "h3": {
+        "id": "upload-a-file",
+        "title": "Upload a file",
+      },
+    },
+    "level": "h3",
+    "objectID": "test:test.com:root.uv.guides.upload-files-upload-a-file-0",
+    "org_id": "test",
+    "pathname": "/guides/upload-files",
     "title": "Upload a file",
-    "type": "page-v3",
-    "version": undefined,
+    "type": "markdown",
+    "visible_by": [
+      "role/everyone",
+    ],
   },
   {
-    "breadcrumbs": [
+    "authed": false,
+    "breadcrumb": [
       {
-        "slug": "guides/online-research",
+        "pathname": "/guides",
         "title": "Guides",
       },
     ],
-    "description": "You can upload multiple files in a single request by adding more file tuples to the list:
-async def upload_multiple_files():
+    "canonicalPathname": "/guides/upload-files",
+    "code_snippets": [
+      {
+        "code": "async def upload_multiple_files():
     files = [
         ("file1.xlsx", file1_bytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
         ("file2.csv", file2_bytes, "text/csv"),
@@ -1598,46 +1485,44 @@ async def upload_multiple_files():
     result = await athena.upload.upload_documents(files=files)
     print(result)
 
-await upload_multiple_files()
-",
-    "indexSegmentId": "0",
-    "slug": "guides/upload-files#upload-multiple-files",
-    "title": "Upload multiple files",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Guides",
+await upload_multiple_files()",
+        "lang": "python",
+      },
     ],
-    "content": "You can upload multiple files in a single request by adding more file tuples to the list:
-async def upload_multiple_files():
-    files = [
-        ("file1.xlsx", file1_bytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
-        ("file2.csv", file2_bytes, "text/csv"),
-        ("file3.pdf", file3_bytes, "application/pdf")
-    ]
-
-    result = await athena.upload.upload_documents(files=files)
-    print(result)
-
-await upload_multiple_files()
-",
-    "indexSegmentId": "0",
-    "slug": "guides/upload-files#upload-multiple-files",
+    "content": "You can upload multiple files in a single request by adding more file tuples to the list:",
+    "domain": "test.com",
+    "hash": "#upload-multiple-files",
+    "hierarchy": {
+      "h0": {
+        "title": "Upload Files",
+      },
+      "h3": {
+        "id": "upload-multiple-files",
+        "title": "Upload multiple files",
+      },
+    },
+    "level": "h3",
+    "objectID": "test:test.com:root.uv.guides.upload-files-upload-multiple-files-0",
+    "org_id": "test",
+    "pathname": "/guides/upload-files",
     "title": "Upload multiple files",
-    "type": "page-v3",
-    "version": undefined,
+    "type": "markdown",
+    "visible_by": [
+      "role/everyone",
+    ],
   },
   {
-    "breadcrumbs": [
+    "authed": false,
+    "breadcrumb": [
       {
-        "slug": "guides/online-research",
+        "pathname": "/guides",
         "title": "Guides",
       },
     ],
-    "description": "If you're using FastAPI and want to upload files received from a client, you can use the UploadFile object:
-from fastapi import FastAPI, UploadFile
+    "canonicalPathname": "/guides/upload-files",
+    "code_snippets": [
+      {
+        "code": "from fastapi import FastAPI, UploadFile
 
 app = FastAPI()
 
@@ -1645,2297 +1530,139 @@ app = FastAPI()
 async def upload_file(file: UploadFile):
     file_tuple = (file.filename, file.file, file.content_type)
     result = await athena.upload.upload_documents(files=[file_tuple])
-    return {"message": "File uploaded successfully", "result": result}
-
-This endpoint will accept file uploads and forward them to the Athena API using the SDK.
-Remember to handle exceptions and implement proper error checking in your production code.",
-    "indexSegmentId": "0",
-    "slug": "guides/upload-files#using-with-fastapi",
-    "title": "Using with FastAPI",
-    "type": "page-v4",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "Guides",
+    return {"message": "File uploaded successfully", "result": result}",
+        "lang": "python",
+      },
     ],
     "content": "If you're using FastAPI and want to upload files received from a client, you can use the UploadFile object:
-from fastapi import FastAPI, UploadFile
-
-app = FastAPI()
-
-@app.post("/upload/")
-async def upload_file(file: UploadFile):
-    file_tuple = (file.filename, file.file, file.content_type)
-    result = await athena.upload.upload_documents(files=[file_tuple])
-    return {"message": "File uploaded successfully", "result": result}
-
 This endpoint will accept file uploads and forward them to the Athena API using the SDK.
 Remember to handle exceptions and implement proper error checking in your production code.",
-    "indexSegmentId": "0",
-    "slug": "guides/upload-files#using-with-fastapi",
+    "domain": "test.com",
+    "hash": "#using-with-fastapi",
+    "hierarchy": {
+      "h0": {
+        "title": "Upload Files",
+      },
+      "h3": {
+        "id": "using-with-fastapi",
+        "title": "Using with FastAPI",
+      },
+    },
+    "level": "h3",
+    "objectID": "test:test.com:root.uv.guides.upload-files-using-with-fastapi-0",
+    "org_id": "test",
+    "pathname": "/guides/upload-files",
     "title": "Using with FastAPI",
-    "type": "page-v3",
-    "version": undefined,
+    "type": "markdown",
+    "visible_by": [
+      "role/everyone",
+    ],
   },
   {
-    "breadcrumbs": [
-      "API Reference",
-      "Tools",
-    ],
-    "content": "
-## Path Parameters
-
-- /api/v0/tools/file/data-frame
-## Query Parameters
-
-- document_id=string 
-- row_limit=integer? 
-- index_column=integer? 
-- columns=type_tools:ToolsDataFrameRequestColumnsItem: unknown   | unknown   ? should be a list of strings or a list of integers
-- sheet_name=string? only for excel files
-- separator=string? only for csv files
-## Response
-
-### Body
-
-type_:DataFrameRequestOut: columns=List<type_:DataFrameRequestOutColumnsItem: unknown > 
-data=List<List<unknown>> 
-index=List<type_:DataFrameRequestOutIndexItem: unknown >  Response model with JSON dataframe representation.: ",
-    "endpointPath": [
+    "api_definition_id": "c173bee9-1794-4364-93d9-780ed8d82ec7",
+    "api_endpoint_id": "endpoint_tools._data_frame",
+    "api_type": "http",
+    "authed": false,
+    "availability": "Beta",
+    "breadcrumb": [
       {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
+        "pathname": "/api-reference",
+        "title": "API Reference",
+      },
+      {
+        "pathname": "/api-reference/tools",
+        "title": "Tools",
       },
     ],
-    "indexSegmentId": "0",
-    "isResponseStream": false,
+    "canonicalPathname": "/api-reference/tools/data-frame",
+    "default_environment_id": "Production",
+    "domain": "test.com",
+    "endpoint_path": "/api/v0/tools/file/data-frame",
+    "endpoint_path_alternates": [
+      "/api/v0/tools/file/data-frame",
+      "https://api.athenaintel.com/api/v0/tools/file/data-frame",
+      "https://api.athenaintel.com/api/v0/tools/file/data-frame",
+    ],
+    "environments": [
+      {
+        "id": "Production",
+        "url": "https://api.athenaintel.com",
+      },
+    ],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "FileFetchError",
+      "DataFrameUnknownFormatError",
+      "HTTPValidationError",
+      "DataFrameParsingError",
+    ],
     "method": "GET",
-    "slug": "api-reference/tools/data-frame",
+    "objectID": "test:test.com:c173bee9-1794-4364-93d9-780ed8d82ec7:endpoint_tools._data_frame",
+    "org_id": "test",
+    "pathname": "/api-reference/tools/data-frame",
+    "response_type": "json",
     "title": "Get Tabular Data from Object",
-    "type": "endpoint-v3",
-    "version": undefined,
+    "type": "api-reference",
+    "visible_by": [
+      "role/everyone",
+    ],
   },
   {
-    "availability": undefined,
-    "breadcrumbs": [
+    "api_definition_id": "c173bee9-1794-4364-93d9-780ed8d82ec7",
+    "api_endpoint_id": "endpoint_tools._raw_data",
+    "api_type": "http",
+    "authed": false,
+    "availability": "Beta",
+    "breadcrumb": [
       {
-        "slug": "api-reference/tools/data-frame",
+        "pathname": "/api-reference",
         "title": "API Reference",
       },
       {
-        "slug": "api-reference/tools/data-frame",
+        "pathname": "/api-reference/tools",
         "title": "Tools",
       },
+    ],
+    "canonicalPathname": "/api-reference/tools/raw-data",
+    "default_environment_id": "Production",
+    "description": "Get the raw file data for given asset.",
+    "domain": "test.com",
+    "endpoint_path": "/api/v0/tools/file/raw-data",
+    "endpoint_path_alternates": [
+      "/api/v0/tools/file/raw-data",
+      "https://api.athenaintel.com/api/v0/tools/file/raw-data",
+      "https://api.athenaintel.com/api/v0/tools/file/raw-data",
+    ],
+    "environments": [
       {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request.query",
-        "title": "Query Parameters",
+        "id": "Production",
+        "url": "https://api.athenaintel.com",
       },
     ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "file",
+      "FileFetchError",
+      "HTTPValidationError",
     ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
     "method": "GET",
-    "slug": "api-reference/tools/data-frame#request.query.document_id",
-    "title": "document_id",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request.query",
-        "title": "Query Parameters",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#request.query.document_id",
-    "title": "document_id",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request.query",
-        "title": "Query Parameters",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#request.query.row_limit",
-    "title": "row_limit",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request.query",
-        "title": "Query Parameters",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#request.query.row_limit",
-    "title": "row_limit",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request.query",
-        "title": "Query Parameters",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#request.query.index_column",
-    "title": "index_column",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request.query",
-        "title": "Query Parameters",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#request.query.index_column",
-    "title": "index_column",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request.query",
-        "title": "Query Parameters",
-      },
-    ],
-    "description": "should be a list of strings or a list of integers",
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#request.query.columns",
-    "title": "columns",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request.query",
-        "title": "Query Parameters",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#request.query.columns",
-    "title": "columns",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request.query",
-        "title": "Query Parameters",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#request.query.columns",
-    "title": "columns",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request.query",
-        "title": "Query Parameters",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#request.query.columns",
-    "title": "columns",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request.query",
-        "title": "Query Parameters",
-      },
-    ],
-    "description": "only for excel files",
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#request.query.sheet_name",
-    "title": "sheet_name",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request.query",
-        "title": "Query Parameters",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#request.query.sheet_name",
-    "title": "sheet_name",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request.query",
-        "title": "Query Parameters",
-      },
-    ],
-    "description": "only for csv files",
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#request.query.separator",
-    "title": "separator",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#request.query",
-        "title": "Query Parameters",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#request.query.separator",
-    "title": "separator",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-    ],
-    "description": "Response model with JSON dataframe representation.",
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response",
-    "title": "Response",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.body.index",
-    "title": "index",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.body.index",
-    "title": "index",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.body.index",
-    "title": "index",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.body.index",
-    "title": "index",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.body.index",
-    "title": "index",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.body.data",
-    "title": "data",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.body.data",
-    "title": "data",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.body.data",
-    "title": "data",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.body.columns",
-    "title": "columns",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.body.columns",
-    "title": "columns",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.body.columns",
-    "title": "columns",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.body.columns",
-    "title": "columns",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.body.columns",
-    "title": "columns",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-    ],
-    "description": "Not Found",
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.NotFound",
-    "title": "Not Found",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.NotFound",
-    "title": "Not Found",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error.NotFound",
-        "title": "Not Found",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.NotFound.status_code",
-    "title": "status_code",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error.NotFound",
-        "title": "Not Found",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.NotFound.message",
-    "title": "message",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-    ],
-    "description": "Unsupported Media Type",
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.UnsupportedMediaType",
-    "title": "Unsupported Media Type",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.UnsupportedMediaType",
-    "title": "Unsupported Media Type",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error.UnsupportedMediaType",
-        "title": "Unsupported Media Type",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.UnsupportedMediaType.message",
-    "title": "message",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error.UnsupportedMediaType",
-        "title": "Unsupported Media Type",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.UnsupportedMediaType.media_type",
-    "title": "media_type",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error.UnsupportedMediaType",
-        "title": "Unsupported Media Type",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.UnsupportedMediaType.document_id",
-    "title": "document_id",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-    ],
-    "description": "Validation Error",
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.UnprocessableEntity",
-    "title": "Unprocessable Entity",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.UnprocessableEntity",
-    "title": "Unprocessable Entity",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error.UnprocessableEntity",
-        "title": "Unprocessable Entity",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.UnprocessableEntity.detail",
-    "title": "detail",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error.UnprocessableEntity",
-        "title": "Unprocessable Entity",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.UnprocessableEntity.detail",
-    "title": "detail",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-    ],
-    "description": "Internal Server Error",
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.InternalServerError",
-    "title": "Internal Server Error",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.InternalServerError",
-    "title": "Internal Server Error",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error.InternalServerError",
-        "title": "Internal Server Error",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.InternalServerError.message",
-    "title": "message",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Get Tabular Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error",
-        "title": "Errors",
-      },
-      {
-        "slug": "api-reference/tools/data-frame#response.error.InternalServerError",
-        "title": "Internal Server Error",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/data-frame",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/data-frame#response.error.InternalServerError.document_id",
-    "title": "document_id",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "breadcrumbs": [
-      "API Reference",
-      "Tools",
-    ],
-    "content": "Get the raw file data for given asset.
-## Path Parameters
-
-- /api/v0/tools/file/raw-data
-## Query Parameters
-
-- document_id=string 
-## Response
-
-### Body
-",
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/raw-data",
-      },
-    ],
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/raw-data",
+    "objectID": "test:test.com:c173bee9-1794-4364-93d9-780ed8d82ec7:endpoint_tools._raw_data",
+    "org_id": "test",
+    "pathname": "/api-reference/tools/raw-data",
+    "response_type": "file",
     "title": "Get Raw File Data from Object",
-    "type": "endpoint-v3",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/raw-data",
-        "title": "Get Raw File Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#request.query",
-        "title": "Query Parameters",
-      },
+    "type": "api-reference",
+    "visible_by": [
+      "role/everyone",
     ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/raw-data",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/raw-data#request.query.document_id",
-    "title": "document_id",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/raw-data",
-        "title": "Get Raw File Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#request",
-        "title": "Request",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#request.query",
-        "title": "Query Parameters",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/raw-data",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/raw-data#request.query.document_id",
-    "title": "document_id",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/raw-data",
-        "title": "Get Raw File Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response.error",
-        "title": "Errors",
-      },
-    ],
-    "description": "Not Found",
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/raw-data",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/raw-data#response.error.NotFound",
-    "title": "Not Found",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/raw-data",
-        "title": "Get Raw File Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response.error",
-        "title": "Errors",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/raw-data",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/raw-data#response.error.NotFound",
-    "title": "Not Found",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/raw-data",
-        "title": "Get Raw File Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response.error",
-        "title": "Errors",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response.error.NotFound",
-        "title": "Not Found",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/raw-data",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/raw-data#response.error.NotFound.status_code",
-    "title": "status_code",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/raw-data",
-        "title": "Get Raw File Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response.error",
-        "title": "Errors",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response.error.NotFound",
-        "title": "Not Found",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/raw-data",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/raw-data#response.error.NotFound.message",
-    "title": "message",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/raw-data",
-        "title": "Get Raw File Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response.error",
-        "title": "Errors",
-      },
-    ],
-    "description": "Validation Error",
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/raw-data",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/raw-data#response.error.UnprocessableEntity",
-    "title": "Unprocessable Entity",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/raw-data",
-        "title": "Get Raw File Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response.error",
-        "title": "Errors",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/raw-data",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/raw-data#response.error.UnprocessableEntity",
-    "title": "Unprocessable Entity",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/raw-data",
-        "title": "Get Raw File Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response.error",
-        "title": "Errors",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response.error.UnprocessableEntity",
-        "title": "Unprocessable Entity",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/raw-data",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/raw-data#response.error.UnprocessableEntity.detail",
-    "title": "detail",
-    "type": "endpoint-field-v1",
-    "version": undefined,
-  },
-  {
-    "availability": undefined,
-    "breadcrumbs": [
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "API Reference",
-      },
-      {
-        "slug": "api-reference/tools/data-frame",
-        "title": "Tools",
-      },
-      {
-        "slug": "api-reference/tools/raw-data",
-        "title": "Get Raw File Data from Object",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response",
-        "title": "Response",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response.error",
-        "title": "Errors",
-      },
-      {
-        "slug": "api-reference/tools/raw-data#response.error.UnprocessableEntity",
-        "title": "Unprocessable Entity",
-      },
-    ],
-    "description": undefined,
-    "endpointPath": [
-      {
-        "type": "literal",
-        "value": "/api/v0/tools/file/raw-data",
-      },
-    ],
-    "extends": undefined,
-    "indexSegmentId": "0",
-    "isResponseStream": false,
-    "method": "GET",
-    "slug": "api-reference/tools/raw-data#response.error.UnprocessableEntity.detail",
-    "title": "detail",
-    "type": "endpoint-field-v1",
-    "version": undefined,
   },
 ]
