@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 
+import { UIColorOrder } from "../colors";
 import { Badge } from "./badge";
-import { UIColorOrder } from "./colors";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta: Meta<typeof Badge> = {

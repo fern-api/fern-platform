@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
+import { UIColor } from "../colors";
 import { Badge, BadgeProps } from "./badge";
-import { UIColor } from "./colors";
 
 export type HttpMethod = "GET" | "DELETE" | "POST" | "PUT" | "PATCH" | "HEAD" | "OPTIONS" | "CONNECT" | "TRACE";
 export const HttpMethod: Record<HttpMethod, HttpMethod> = {

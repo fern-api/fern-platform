@@ -2,6 +2,7 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import titleCase from "@fern-api/ui-core-utils/titleCase";
+import { AvailabilityBadge } from "@fern-ui/components/badges";
 import cn from "clsx";
 import { compact } from "es-toolkit/array";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -11,7 +12,6 @@ import { FernAnchor } from "../../../components/FernAnchor";
 import { useHref } from "../../../hooks/useHref";
 import { Markdown } from "../../../mdx/Markdown";
 import { getAnchorId } from "../../../util/anchor";
-import { EndpointAvailabilityTag } from "../../endpoints/EndpointAvailabilityTag";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -117,7 +117,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
             </div>
 
             {unionVariant.availability != null && (
-                <EndpointAvailabilityTag availability={unionVariant.availability} minimal={true} />
+                <AvailabilityBadge availability={unionVariant.availability} size="sm" rounded />
             )}
             <div className="flex flex-col">
                 <Markdown mdx={descriptions[0]} size="sm" />

@@ -1,9 +1,9 @@
 import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import cn from "clsx";
+import { HttpMethodBadge } from "@fern-ui/components/badges";
+import cn, { clsx } from "clsx";
 import { LongArrowDownLeft } from "iconoir-react";
 import type { Hit } from "instantsearch.js";
-import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { AlgoliaSnippet } from "../algolia/AlgoliaSnippet";
 import { SearchHitBreadCrumbsV3 } from "./SearchHitBreadCrumbsV3";
 
@@ -27,16 +27,19 @@ export const EndpointRecordV4: React.FC<EndpointRecordV4.Props> = ({ hit, isHove
                         "t-accent-aaa": isHovered,
                     })}
                 >
-                    <HttpMethodTag
-                        method={
-                            hit.type === "websocket-v4"
-                                ? "WSS"
-                                : hit.type === "endpoint-v4" && hit.isResponseStream
-                                  ? "STREAM"
-                                  : hit.method
-                        }
-                        active={isHovered}
-                    />
+                    <HttpMethodBadge
+                        method={hit.type === "websocket-v4" ? "GET" : hit.method}
+                        variant={isHovered ? "solid" : "subtle"}
+                        className={clsx({
+                            "tracking-tighter": hit.type === "endpoint-v4" && hit.isResponseStream,
+                        })}
+                    >
+                        {hit.type === "websocket-v4"
+                            ? "WSS"
+                            : hit.type === "endpoint-v4" && hit.isResponseStream
+                              ? "STREAM"
+                              : undefined}
+                    </HttpMethodBadge>
                     <div className="space-x-0.5 font-mono">
                         {hit.endpointPath
                             .filter((p) => p.type !== "literal" || p.value !== "")

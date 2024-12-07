@@ -1,5 +1,5 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { EndpointAvailabilityTag } from "../../../api-reference/endpoints/EndpointAvailabilityTag";
+import { AvailabilityBadge } from "@fern-ui/components/badges";
 
 export declare namespace Availability {
     export interface Props {
@@ -22,5 +22,5 @@ function parseAvailability(type: unknown): APIV1Read.Availability {
 }
 
 export const Availability: React.FC<Availability.Props> = ({ type }) => {
-    return <EndpointAvailabilityTag availability={parseAvailability(type)} />;
+    return <AvailabilityBadge availability={parseAvailability(type)} />;
 };

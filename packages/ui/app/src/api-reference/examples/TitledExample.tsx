@@ -1,11 +1,11 @@
-import { CopyToClipboardButton, Intent } from "@fern-ui/components";
+import { CopyToClipboardButton, SemanticColor } from "@fern-ui/components";
 import cn from "clsx";
-import { forwardRef, MouseEventHandler, PropsWithChildren, ReactElement, ReactNode } from "react";
+import { MouseEventHandler, PropsWithChildren, ReactElement, ReactNode, forwardRef } from "react";
 
 export declare namespace TitledExample {
     export interface Props {
         title: ReactNode;
-        intent?: Intent;
+        intent?: SemanticColor;
         actions?: ReactElement;
         className?: string;
         copyToClipboardText?: () => string; // use provider to lazily compute clipboard text

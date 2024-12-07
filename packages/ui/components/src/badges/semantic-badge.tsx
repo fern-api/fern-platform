@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
+import { SemanticColor, SemanticColorMap } from "../colors";
 import { Badge, BadgeProps } from "./badge";
-import { SemanticColor, SemanticColorMap } from "./colors";
 
 export interface SemanticBadgeProps extends Omit<BadgeProps, "color"> {
     intent?: SemanticColor;

@@ -3,6 +3,7 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CopyToClipboardButton, FernScrollArea } from "@fern-ui/components";
+import { AvailabilityBadge } from "@fern-ui/components/badges";
 import cn from "clsx";
 import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
 import { Children, FC, HTMLAttributes, ReactNode, useMemo, useRef } from "react";
@@ -13,7 +14,6 @@ import { Markdown } from "../../mdx/Markdown";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
 import { getSlugFromChildren } from "../../util/getSlugFromText";
-import { EndpointAvailabilityTag } from "../endpoints/EndpointAvailabilityTag";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { EndpointUrlWithOverflow } from "../endpoints/EndpointUrlWithOverflow";
@@ -117,7 +117,7 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                         <h1 className="fern-page-heading">{node.title}</h1>
                         {channel.availability != null && (
                             <span className="inline-block ml-2 align-text-bottom">
-                                <EndpointAvailabilityTag availability={channel.availability} minimal={true} />
+                                <AvailabilityBadge availability={channel.availability} rounded />
                             </span>
                         )}
                     </div>
