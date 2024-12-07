@@ -60,8 +60,6 @@ export function SearchV2(): ReactElement | false {
 
     const [open, setOpen] = useCommandTrigger();
     const domain = useAtomValue(DOMAIN_ATOM);
-    const isThemeSwitchEnabled = useAtomValue(THEME_SWITCH_ENABLED_ATOM);
-    const setTheme = useSetTheme();
 
     const { data } = useApiRouteSWRImmutable("/api/fern-docs/search/v2/key", {
         request: { headers: { "X-User-Token": userToken } },
