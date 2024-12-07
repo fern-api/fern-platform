@@ -1,4 +1,4 @@
-import { chunkToBytes, isNonNullish, truncateToBytes } from "@fern-api/ui-core-utils";
+import { chunkToBytes, isNonNullish, measureBytes, truncateToBytes } from "@fern-api/ui-core-utils";
 import {
     MarkdownSectionRoot,
     getFrontmatter,
@@ -50,7 +50,9 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
     const { content: description_content, code_snippets: description_code_snippets } =
         maybePrepareMdxContent(description);
     const { content: root_content, code_snippets: root_code_snippets } = maybePrepareMdxContent(rootContent);
-    const code_snippets = flatten(compact([base.code_snippets, description_code_snippets, root_code_snippets]));
+    const code_snippets = flatten(compact([base.code_snippets, description_code_snippets, root_code_snippets])).filter(
+        (codeSnippet) => measureBytes(codeSnippet.code) < 2000,
+    );
 
     const chunked_root_content = root_content != null ? chunkToBytes(root_content, 50 * 1000) : [];
 
@@ -110,7 +112,9 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
         hierarchy[`h${heading.depth}`] = { id: heading.id, title: heading.title };
 
         const prepared = maybePrepareMdxContent(markdownContent);
-        const code_snippets = flatten(compact([base.code_snippets, prepared.code_snippets]));
+        const code_snippets = flatten(compact([base.code_snippets, prepared.code_snippets])).filter(
+            (codeSnippet) => measureBytes(codeSnippet.code) < 2000,
+        );
 
         const chunked_content = prepared.content != null ? chunkToBytes(prepared.content, 50 * 1000) : [];
 

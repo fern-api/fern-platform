@@ -2,7 +2,7 @@ export { visitObject, type ObjectPropertiesVisitor } from "./ObjectPropertiesVis
 export { addPrefixToString } from "./addPrefixToString";
 export { assertNever, assertNeverNoThrow } from "./assertNever";
 export { assertVoidNoThrow } from "./assertVoidNoThrow";
-export { chunkToBytes, truncateToBytes } from "./bytes";
+export { chunkToBytes, measureBytes, truncateToBytes } from "./bytes";
 export { combineURLs } from "./combineURLs";
 export { delay } from "./delay/delay";
 export { withMinimumTime } from "./delay/withMinimumTime";

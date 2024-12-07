@@ -1,5 +1,7 @@
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { NavigationNodePage } from "@fern-api/fdr-sdk/navigation";
+import { measureBytes } from "@fern-api/ui-core-utils";
+import { groupBy } from "es-toolkit";
 import { AlgoliaRecord } from "../types";
 import { createApiReferenceRecordHttp } from "./create-api-reference-record-http";
 import { createApiReferenceRecordWebSocket } from "./create-api-reference-record-web-socket";
@@ -20,14 +22,16 @@ interface CreateAlgoliaRecordsOptions {
     authed?: (node: NavigationNodePage) => boolean;
 }
 
-export function createAlgoliaRecords({
-    root,
-    domain,
-    org_id,
-    pages,
-    apis,
-    authed,
-}: CreateAlgoliaRecordsOptions): AlgoliaRecord[] {
+export function createAlgoliaRecords({ root, domain, org_id, pages, apis, authed }: CreateAlgoliaRecordsOptions): {
+    records: AlgoliaRecord[];
+    /**
+     * Records that are >= 100kb
+     */
+    tooLarge: {
+        record: AlgoliaRecord;
+        size: number;
+    }[];
+} {
     const collector = FernNavigation.NodeCollector.collect(root);
 
     const pageNodes = Array.from(collector.slugMap.values())
@@ -152,7 +156,17 @@ export function createAlgoliaRecords({
     //     records.push(createNavigationRecord({ base, node_type: node.type }));
     // });
 
-    // remove all undefined values
-    // TODO: trim or filter out any record that is > 100kb
-    return JSON.parse(JSON.stringify(records));
+    // remove all undefined values and filter out any record that is >= 100kb
+    const jsonRecords = records.map((record) => JSON.stringify(record));
+    const grouped = groupBy(jsonRecords, (record): "indexable" | "tooLarge" =>
+        measureBytes(record) <= 100 * 1000 ? "indexable" : "tooLarge",
+    );
+    return {
+        records: grouped.indexable?.map((record) => JSON.parse(record)) ?? [],
+        tooLarge:
+            grouped.tooLarge?.map((record) => ({
+                record: JSON.parse(record),
+                size: measureBytes(record),
+            })) ?? [],
+    };
 }
