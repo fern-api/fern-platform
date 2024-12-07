@@ -24,6 +24,7 @@ export * from "./FernToast";
 export * from "./FernTooltip";
 export * from "./FontAwesomeIcon";
 export * from "./badges";
+export * from "./cn";
 export * from "./colors";
 export * from "./kbd";
 export * from "./util/shared-component-types";
