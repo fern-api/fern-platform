@@ -5,6 +5,7 @@ import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-ui/fern-docs-edge-config";
+import { FernNextResponse } from "@fern-ui/fern-docs-server";
 import { COOKIE_ACCESS_TOKEN, COOKIE_FERN_TOKEN, COOKIE_REFRESH_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -35,15 +36,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         safeUrl(req.nextUrl.searchParams.get(return_to_param)) ??
         safeUrl(withDefaultProtocol(getHostEdge(req)));
 
-    if (
-        typeof redirectLocation !== "undefined" &&
-        new URL(redirectLocation).host !== new URL(withDefaultProtocol(domain)).host
-    ) {
-        // avoid malicious use of logout URL
-        redirectLocation = new URL(withDefaultProtocol(domain));
-    }
-
-    const res = redirectLocation ? NextResponse.redirect(redirectLocation) : NextResponse.next();
+    const res = FernNextResponse.redirect(req, redirectLocation);
     res.cookies.delete(withDeleteCookie(COOKIE_FERN_TOKEN, withDefaultProtocol(getHostEdge(req))));
     res.cookies.delete(withDeleteCookie(COOKIE_ACCESS_TOKEN, withDefaultProtocol(getHostEdge(req))));
     res.cookies.delete(withDeleteCookie(COOKIE_REFRESH_TOKEN, withDefaultProtocol(getHostEdge(req))));
