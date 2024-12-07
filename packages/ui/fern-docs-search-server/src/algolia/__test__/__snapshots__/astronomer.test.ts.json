@@ -490,122 +490,114 @@
     },
     "level": "h2"
   },
-  [
-    {
-      "objectID": "test:test.com:root.uv.platform-api-reference.log.2024-5-15",
-      "org_id": "test",
-      "domain": "test.com",
-      "canonicalPathname": "/docs/api/platform-api-reference/changelog/2024/5/15",
-      "pathname": "/docs/api/platform-api-reference/changelog/2024/5/15",
-      "title": "May 15, 2024",
-      "breadcrumb": [
-        {
-          "title": "Platform API Reference",
-          "pathname": "/docs/api/platform-api-reference"
-        },
-        {
-          "title": "Changelog",
-          "pathname": "/docs/api/platform-api-reference/changelog"
-        }
-      ],
-      "visible_by": [
-        "role/everyone"
-      ],
-      "authed": false,
-      "page_position": 0,
-      "type": "changelog",
-      "date": "2024-05-15",
-      "date_timestamp": 1715731200,
-      "content": "Summary\nThis update introduces new endpoints for managing deploys, including image deploys, DAG deploys, and deploy rollbacks. See Astro documentation for more information.\nAdded\nNew endpoints:\nGET /organizations/{organizationId}/deployments/{deploymentId}/deploys to list deploys for a deployment.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys to create a new deploy.\n\nGET /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId} to retrieve a specific deploy.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId} to update an existing deploy.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId}/finalize to finalize a deploy.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId}/rollback to roll back a deploy.\n\n\nNew object schemas:\nCreateDeployRequest\n\nDeploy\n\nDeploysPaginated\n\nFinalizeDeployRequest\n\nUpdateDeployRequest\n\nDeployRollbackRequest"
-    }
-  ],
-  [
-    {
-      "objectID": "test:test.com:root.uv.platform-api-reference.log.2024-4-23",
-      "org_id": "test",
-      "domain": "test.com",
-      "canonicalPathname": "/docs/api/platform-api-reference/changelog/2024/4/23",
-      "pathname": "/docs/api/platform-api-reference/changelog/2024/4/23",
-      "title": "April 23, 2024",
-      "breadcrumb": [
-        {
-          "title": "Platform API Reference",
-          "pathname": "/docs/api/platform-api-reference"
-        },
-        {
-          "title": "Changelog",
-          "pathname": "/docs/api/platform-api-reference/changelog"
-        }
-      ],
-      "visible_by": [
-        "role/everyone"
-      ],
-      "authed": false,
-      "page_position": 0,
-      "type": "changelog",
-      "date": "2024-04-23",
-      "date_timestamp": 1713830400,
-      "content": "The endpoint POST /organizations/{organizationId}/deployments now accepts an isDevelopmentMode query parameter"
-    }
-  ],
-  [
-    {
-      "objectID": "test:test.com:root.uv.platform-api-reference.log.2024-4-12",
-      "org_id": "test",
-      "domain": "test.com",
-      "canonicalPathname": "/docs/api/platform-api-reference/changelog/2024/4/12",
-      "pathname": "/docs/api/platform-api-reference/changelog/2024/4/12",
-      "title": "April 12, 2024",
-      "breadcrumb": [
-        {
-          "title": "Platform API Reference",
-          "pathname": "/docs/api/platform-api-reference"
-        },
-        {
-          "title": "Changelog",
-          "pathname": "/docs/api/platform-api-reference/changelog"
-        }
-      ],
-      "visible_by": [
-        "role/everyone"
-      ],
-      "authed": false,
-      "page_position": 0,
-      "type": "changelog",
-      "date": "2024-04-12",
-      "date_timestamp": 1712880000,
-      "content": "You can now make requests to the Roles endpoint to manage custom roles in your Organization.\n\nThe endpoint GET /organizations/{organizationId}/clusters now accepts a names query parameter\n\nThe endpoint GET /organizations/{organizationId}/deploymentss now accepts a names query parameter\n\nThe endpoint GET /organizations/{organizationId}/workspaces now accepts a names query parameter"
-    }
-  ],
-  [
-    {
-      "objectID": "test:test.com:root.uv.iam-api-reference.log.2024-4-12",
-      "org_id": "test",
-      "domain": "test.com",
-      "canonicalPathname": "/docs/api/iam-api-reference/changelog/2024/4/12",
-      "pathname": "/docs/api/iam-api-reference/changelog/2024/4/12",
-      "title": "April 12, 2024",
-      "breadcrumb": [
-        {
-          "title": "IAM API Reference",
-          "pathname": "/docs/api/iam-api-reference"
-        },
-        {
-          "title": "Changelog",
-          "pathname": "/docs/api/iam-api-reference/changelog"
-        }
-      ],
-      "visible_by": [
-        "role/everyone"
-      ],
-      "authed": false,
-      "page_position": 0,
-      "type": "changelog",
-      "date": "2024-04-12",
-      "date_timestamp": 1712880000,
-      "content": "The endpoint DELETE /organizations/{organizationId}/roles/{customRoleId} now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /authorization/permission-groups now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /organizations/{organizationId}/role-templates now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /organizations/{organizationId}/roles now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /organizations/{organizationId}/roles/{roleId} now returns a\ndeploymentRoles attribute\n\nThe endpoint POST /organizations/{organizationId}/roles now returns a\ndeploymentRoles attribute\n\nThe endpoint POST /organizations/{organizationId}/roles/{customRoleId} now returns a\ndeploymentRoles attribute"
-    }
-  ],
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.log.2024-5-15",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/changelog/2024/5/15",
+    "pathname": "/docs/api/platform-api-reference/changelog/2024/5/15",
+    "title": "May 15, 2024",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Changelog",
+        "pathname": "/docs/api/platform-api-reference/changelog"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "type": "changelog",
+    "date": "2024-05-15",
+    "date_timestamp": 1715731200,
+    "content": "Summary\nThis update introduces new endpoints for managing deploys, including image deploys, DAG deploys, and deploy rollbacks. See Astro documentation for more information.\nAdded\nNew endpoints:\nGET /organizations/{organizationId}/deployments/{deploymentId}/deploys to list deploys for a deployment.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys to create a new deploy.\n\nGET /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId} to retrieve a specific deploy.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId} to update an existing deploy.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId}/finalize to finalize a deploy.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId}/rollback to roll back a deploy.\n\n\nNew object schemas:\nCreateDeployRequest\n\nDeploy\n\nDeploysPaginated\n\nFinalizeDeployRequest\n\nUpdateDeployRequest\n\nDeployRollbackRequest"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.log.2024-4-23",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/changelog/2024/4/23",
+    "pathname": "/docs/api/platform-api-reference/changelog/2024/4/23",
+    "title": "April 23, 2024",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Changelog",
+        "pathname": "/docs/api/platform-api-reference/changelog"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "type": "changelog",
+    "date": "2024-04-23",
+    "date_timestamp": 1713830400,
+    "content": "The endpoint POST /organizations/{organizationId}/deployments now accepts an isDevelopmentMode query parameter"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.log.2024-4-12",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/changelog/2024/4/12",
+    "pathname": "/docs/api/platform-api-reference/changelog/2024/4/12",
+    "title": "April 12, 2024",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Changelog",
+        "pathname": "/docs/api/platform-api-reference/changelog"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "type": "changelog",
+    "date": "2024-04-12",
+    "date_timestamp": 1712880000,
+    "content": "You can now make requests to the Roles endpoint to manage custom roles in your Organization.\n\nThe endpoint GET /organizations/{organizationId}/clusters now accepts a names query parameter\n\nThe endpoint GET /organizations/{organizationId}/deploymentss now accepts a names query parameter\n\nThe endpoint GET /organizations/{organizationId}/workspaces now accepts a names query parameter"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.log.2024-4-12",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/changelog/2024/4/12",
+    "pathname": "/docs/api/iam-api-reference/changelog/2024/4/12",
+    "title": "April 12, 2024",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Changelog",
+        "pathname": "/docs/api/iam-api-reference/changelog"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "type": "changelog",
+    "date": "2024-04-12",
+    "date_timestamp": 1712880000,
+    "content": "The endpoint DELETE /organizations/{organizationId}/roles/{customRoleId} now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /authorization/permission-groups now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /organizations/{organizationId}/role-templates now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /organizations/{organizationId}/roles now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /organizations/{organizationId}/roles/{roleId} now returns a\ndeploymentRoles attribute\n\nThe endpoint POST /organizations/{organizationId}/roles now returns a\ndeploymentRoles attribute\n\nThe endpoint POST /organizations/{organizationId}/roles/{customRoleId} now returns a\ndeploymentRoles attribute"
+  },
   {
     "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_organization.subpackage_organization.ListOrganizations",
     "org_id": "test",

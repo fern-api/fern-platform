@@ -4668,46 +4668,42 @@
     "type": "markdown",
     "content": "Welcome to our API reference. We currently offer a RESTful API, as well as Typescript/NodeJS and Python SDKs to use in your applications.\nIf you have any other languages that you would like us to support, please reach out to us.\n\n\n\n\n\n\nGithub \n\n\nNPM\n\n\n\n\nGithub \n\n\nPyPI"
   },
-  [
-    {
-      "objectID": "test:test.com:.changelog.2024-11-1",
-      "org_id": "test",
-      "domain": "test.com",
-      "canonicalPathname": "/changelog/2024/11/1",
-      "pathname": "/changelog/2024/11/1",
-      "title": "November 1, 2024",
-      "breadcrumb": [],
-      "visible_by": [
-        "role/everyone"
-      ],
-      "authed": false,
-      "page_position": 0,
-      "type": "changelog",
-      "date": "2024-11-01",
-      "date_timestamp": 1730419200,
-      "content": "Support for custom residential proxies\nAdded support for custom residential proxies. You can now use your own residential proxies with Airtop and easily configure them to use upon session creation. For more information see the guide documentation for proxies."
-    }
-  ],
-  [
-    {
-      "objectID": "test:test.com:.changelog.2024-10-19",
-      "org_id": "test",
-      "domain": "test.com",
-      "canonicalPathname": "/changelog/2024/10/19",
-      "pathname": "/changelog/2024/10/19",
-      "title": "October 19, 2024",
-      "breadcrumb": [],
-      "visible_by": [
-        "role/everyone"
-      ],
-      "authed": false,
-      "page_position": 0,
-      "type": "changelog",
-      "date": "2024-10-19",
-      "date_timestamp": 1729296000,
-      "content": "New Native Window Management\nAdded support for creating windows, loading URLs, and closing windows without having to use Puppeteer or Playwright. For more information see the guide documentation for windows."
-    }
-  ],
+  {
+    "objectID": "test:test.com:.changelog.2024-11-1",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/changelog/2024/11/1",
+    "pathname": "/changelog/2024/11/1",
+    "title": "November 1, 2024",
+    "breadcrumb": [],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "type": "changelog",
+    "date": "2024-11-01",
+    "date_timestamp": 1730419200,
+    "content": "Support for custom residential proxies\nAdded support for custom residential proxies. You can now use your own residential proxies with Airtop and easily configure them to use upon session creation. For more information see the guide documentation for proxies."
+  },
+  {
+    "objectID": "test:test.com:.changelog.2024-10-19",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/changelog/2024/10/19",
+    "pathname": "/changelog/2024/10/19",
+    "title": "October 19, 2024",
+    "breadcrumb": [],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "type": "changelog",
+    "date": "2024-10-19",
+    "date_timestamp": 1729296000,
+    "content": "New Native Window Management\nAdded support for creating windows, loading URLs, and closing windows without having to use Puppeteer or Playwright. For more information see the guide documentation for windows."
+  },
   {
     "objectID": "test:test.com:43168098-0988-47e7-bc82-78ae7aaf1fe6.subpackage_sessions.create",
     "org_id": "test",
