@@ -1,8 +1,8 @@
 import { useCopyToClipboard } from "@fern-ui/react-commons";
-import cn from "clsx";
 import { Check, Copy } from "iconoir-react";
 import { FernButton } from "./FernButton";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
+import { cn } from "./cn";
 
 export declare namespace CopyToClipboardButton {
     export interface Props {
