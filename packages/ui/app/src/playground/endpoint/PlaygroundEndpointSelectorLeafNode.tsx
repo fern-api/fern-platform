@@ -3,13 +3,11 @@ import { FernButton, FernTooltip } from "@fern-ui/components";
 import { HttpMethodBadge } from "@fern-ui/components/badges";
 import clsx from "clsx";
 import { atom, useAtomValue } from "jotai";
-import dynamic from "next/dynamic";
 import { ReactElement, forwardRef } from "react";
 import { useMemoOne } from "use-memo-one";
-import { getApiDefinitionAtom, useSetAndOpenPlayground } from "../../atoms";
+import { getApiDefinitionAtom, useOpenPlayground } from "../../atoms";
+import { Markdown } from "../../mdx/Markdown";
 import { usePreloadApiLeaf } from "../hooks/usePreloadApiLeaf";
-
-const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown));
 
 interface PlaygroundEndpointSelectorLeafNodeProps {
     node: FernNavigation.EndpointNode | FernNavigation.WebSocketNode;
@@ -42,7 +40,7 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<HTMLLIElement, Play
             ),
         );
 
-        const setSelectionStateAndOpen = useSetAndOpenPlayground();
+        const setSelectionStateAndOpen = useOpenPlayground();
 
         const createSelectEndpoint = (endpoint: FernNavigation.NavigationNodeApiLeaf) => () => {
             void setSelectionStateAndOpen(endpoint);
