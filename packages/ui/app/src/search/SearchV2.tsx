@@ -2,6 +2,7 @@ import {
     CommandActions,
     CommandEmpty,
     CommandGroupFilters,
+    CommandGroupPlayground,
     CommandGroupTheme,
     CommandSearchHits,
     DesktopBackButton,
@@ -26,10 +27,13 @@ import { z } from "zod";
 import {
     CURRENT_VERSION_ATOM,
     DOMAIN_ATOM,
+    HAS_API_PLAYGROUND,
     THEME_SWITCH_ENABLED_ATOM,
     atomWithStorageString,
     useFernUser,
+    useIsPlaygroundOpen,
     useSetTheme,
+    useTogglePlayground,
 } from "../atoms";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "../hooks/useApiRouteSWR";
@@ -112,10 +116,48 @@ export function SearchV2(): ReactElement | false {
                     <CommandGroupFilters />
                     <CommandEmpty />
                     <RouterAwareCommandSearchHits onClose={() => setOpen(false)} />
-                    <CommandActions>{isThemeSwitchEnabled && <CommandGroupTheme setTheme={setTheme} />}</CommandActions>
+                    <CommandActions>
+                        <CommandPlayground onClose={() => setOpen(false)} />
+                        <CommandTheme onClose={() => setOpen(false)} />
+                    </CommandActions>
                 </DesktopCommand>
             </DesktopSearchDialog>
         </SearchClientRoot>
+    );
+}
+
+function CommandPlayground({ onClose }: { onClose: () => void }) {
+    const hasApiPlayground = useAtomValue(HAS_API_PLAYGROUND);
+    const togglePlayground = useTogglePlayground();
+    const playgroundOpen = useIsPlaygroundOpen();
+
+    if (!hasApiPlayground) {
+        return null;
+    }
+    return (
+        <CommandGroupPlayground
+            togglePlayground={() => {
+                togglePlayground();
+                onClose();
+            }}
+            playgroundOpen={playgroundOpen}
+        />
+    );
+}
+
+function CommandTheme({ onClose }: { onClose: () => void }) {
+    const isThemeSwitchEnabled = useAtomValue(THEME_SWITCH_ENABLED_ATOM);
+    const setTheme = useSetTheme();
+    if (!isThemeSwitchEnabled) {
+        return null;
+    }
+    return (
+        <CommandGroupTheme
+            setTheme={(theme) => {
+                setTheme(theme);
+                onClose();
+            }}
+        />
     );
 }
 

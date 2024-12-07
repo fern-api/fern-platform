@@ -37,7 +37,7 @@ import { FEATURE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { HEADER_HEIGHT_ATOM } from "./layout";
 import { LOCATION_ATOM } from "./location";
-import { NAVIGATION_NODES_ATOM } from "./navigation";
+import { CURRENT_NODE_ATOM, NAVIGATION_NODES_ATOM } from "./navigation";
 import { atomWithStorageValidation } from "./utils/atomWithStorageValidation";
 import { IS_MOBILE_SCREEN_ATOM } from "./viewport";
 
@@ -136,14 +136,14 @@ export function useClosePlayground(): () => void {
     });
 }
 
-export function useOpenPlayground(): (nodeId?: FernNavigation.NodeId) => void {
-    const setNodeId = useSetAtom(PLAYGROUND_NODE_ID);
-    const prevNodeId = useAtomValue(PREV_PLAYGROUND_NODE_ID);
-    return useEventCallback((nodeId?: FernNavigation.NodeId) => {
-        // TODO: "" implicitly means open + empty state. This is a hack and we should rethink the UX.
-        setNodeId(nodeId ?? prevNodeId ?? FernNavigation.NodeId(""));
-    });
-}
+// export function useOpenPlayground(): (nodeId?: FernNavigation.NodeId) => void {
+//     const setNodeId = useSetAtom(PLAYGROUND_NODE_ID);
+//     const prevNodeId = useAtomValue(PREV_PLAYGROUND_NODE_ID);
+//     return useEventCallback((nodeId?: FernNavigation.NodeId) => {
+//         // TODO: "" implicitly means open + empty state. This is a hack and we should rethink the UX.
+//         setNodeId(nodeId ?? prevNodeId ?? FernNavigation.NodeId(""));
+//     });
+// }
 
 export function useTogglePlayground(): () => void {
     const isPlaygroundOpen = useIsPlaygroundOpen();
@@ -153,7 +153,7 @@ export function useTogglePlayground(): () => void {
         if (isPlaygroundOpen) {
             closePlayground();
         } else {
-            openPlayground();
+            void openPlayground();
         }
     });
 }
@@ -345,12 +345,42 @@ export const usePlaygroundFormStateAtom = (
     return formStateAtom;
 };
 
-export function useSetAndOpenPlayground(): (node: FernNavigation.NavigationNodeApiLeaf) => Promise<void> {
+const API_LEAF_NODES = atom((get) => get(NAVIGATION_NODES_ATOM).getNodesInOrder().filter(FernNavigation.isApiLeaf));
+export const HAS_API_PLAYGROUND = atom((get) => get(IS_PLAYGROUND_ENABLED_ATOM) && get(API_LEAF_NODES).length > 0);
+
+export function useOpenPlayground(): (node?: FernNavigation.NavigationNodeApiLeaf) => Promise<void> {
     const preload = usePreloadApiLeaf();
 
     return useAtomCallback(
         useCallbackOne(
-            async (get, set, node: FernNavigation.NavigationNodeApiLeaf) => {
+            async (get, set, node?: FernNavigation.NavigationNodeApiLeaf) => {
+                if (!get(HAS_API_PLAYGROUND)) {
+                    set(PLAYGROUND_NODE_ID, undefined);
+                    return;
+                }
+
+                if (node == null) {
+                    const prevNodeId = get(PREV_PLAYGROUND_NODE_ID);
+                    if (prevNodeId != null && get(API_LEAF_NODES).some((n) => n.id === prevNodeId)) {
+                        set(PLAYGROUND_NODE_ID, prevNodeId);
+                        return;
+                    }
+
+                    // if no previous node, use the current node (if it's an API leaf)
+                    const currentNode = get(CURRENT_NODE_ATOM);
+                    if (currentNode != null && FernNavigation.isApiLeaf(currentNode)) {
+                        set(PLAYGROUND_NODE_ID, currentNode.id);
+                        return;
+                    }
+
+                    // get the first API leaf node
+                    const firstApiLeafNode = get(API_LEAF_NODES)[0];
+                    if (firstApiLeafNode != null) {
+                        set(PLAYGROUND_NODE_ID, firstApiLeafNode.id);
+                    }
+                    return;
+                }
+
                 const formStateAtom = playgroundFormStateFamily(node.id);
                 set(PLAYGROUND_NODE_ID, node.id);
 

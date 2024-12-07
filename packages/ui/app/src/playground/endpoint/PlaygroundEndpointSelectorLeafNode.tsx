@@ -4,7 +4,7 @@ import { atom, useAtomValue } from "jotai";
 import dynamic from "next/dynamic";
 import { ReactElement, forwardRef } from "react";
 import { useMemoOne } from "use-memo-one";
-import { getApiDefinitionAtom, useSetAndOpenPlayground } from "../../atoms";
+import { getApiDefinitionAtom, useOpenPlayground } from "../../atoms";
 import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { usePreloadApiLeaf } from "../hooks/usePreloadApiLeaf";
 
@@ -41,7 +41,7 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<HTMLLIElement, Play
             ),
         );
 
-        const setSelectionStateAndOpen = useSetAndOpenPlayground();
+        const setSelectionStateAndOpen = useOpenPlayground();
 
         const createSelectEndpoint = (endpoint: FernNavigation.NavigationNodeApiLeaf) => () => {
             void setSelectionStateAndOpen(endpoint);
