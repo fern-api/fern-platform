@@ -70,7 +70,7 @@ export function createAlgoliaRecords({ root, domain, org_id, pages, apis, authed
         });
 
         if (node.type === "changelogEntry") {
-            records.push(createChangelogRecord({ base, markdown, date: node.date }));
+            records.push(...createChangelogRecord({ base, markdown, date: node.date }));
         } else {
             records.push(...createMarkdownRecords({ base, markdown }));
         }
