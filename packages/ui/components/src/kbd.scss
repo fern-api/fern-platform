@@ -8,6 +8,6 @@
 
 @layer components {
     .fern-kbd {
-        @apply bg-[var(--grayscale-a3)] text-[var(--grayscale-a10)] rounded px-1 py-0.5 text-xs;
+        @apply bg-[var(--grayscale-1)] text-[var(--grayscale-a12)] border border-[var(--grayscale-a6)] rounded-md px-1.5 py-0.5 text-xs;
     }
 }
