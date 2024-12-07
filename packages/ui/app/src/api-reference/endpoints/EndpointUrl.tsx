@@ -17,14 +17,14 @@ export declare namespace EndpointUrl {
         environmentId?: ApiDefinition.EnvironmentId;
         options?: APIV1Read.Environment[];
         showEnvironment?: boolean;
-        large?: boolean;
+        size?: "sm" | "md" | "lg";
         className?: string;
     }>;
 }
 
 // TODO: this component needs a refresh
 export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<EndpointUrl.Props>>(function EndpointUrl(
-    { path, method, baseUrl, environmentId, large, className, showEnvironment, options },
+    { path, method, baseUrl, environmentId, size = "md", className, showEnvironment, options },
     parentRef,
 ) {
     const ref = useRef<HTMLDivElement>(null);
@@ -86,7 +86,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
 
     return (
         <div ref={ref} className={cn("flex items-center gap-1 pr-2", className)}>
-            <HttpMethodTag method={method} />
+            <HttpMethodTag method={method} size={size === "sm" ? "sm" : "lg"} />
 
             <div className={cn("flex items-center")}>
                 <span
@@ -108,8 +108,8 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                             >
                                 <span
                                     className={cn("font-mono", {
-                                        "text-xs": !large,
-                                        "text-sm": large,
+                                        "text-xs": size === "sm" || size === "md",
+                                        "text-sm": size === "lg",
                                     })}
                                 >
                                     {showEnvironment && (

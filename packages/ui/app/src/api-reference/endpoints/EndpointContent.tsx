@@ -23,6 +23,7 @@ import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContentHeader } from "./EndpointContentHeader";
 import { EndpointContentLeft, convertNameToAnchorPart } from "./EndpointContentLeft";
+import { EndpointContentSummary } from "./EndpointContentSummary";
 import { useExampleSelection } from "./useExampleSelection";
 
 const EndpointContentCodeSnippets = dynamic(
@@ -251,6 +252,8 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialExampleHeight]);
 
+    const summaryRef = useRef<HTMLDivElement>(null);
+
     return (
         <section className="fern-endpoint-content" ref={ref} id={useHref(node.slug)}>
             <div
@@ -261,12 +264,14 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                 <EndpointContentHeader context={context} breadcrumb={breadcrumb} streamToggle={props.streamToggle} />
                 <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
                     <div
+                        ref={summaryRef}
                         className="flex min-w-0 max-w-content-width flex-1 flex-col pt-8 md:py-8"
                         style={{
                             // TODO: do we still need to set minHeight here?
                             minHeight: `${minHeight}px`,
                         }}
                     >
+                        <EndpointContentSummary context={context} boundary={summaryRef.current} />
                         <EndpointContentLeft
                             context={context}
                             // TODO: remove this code call

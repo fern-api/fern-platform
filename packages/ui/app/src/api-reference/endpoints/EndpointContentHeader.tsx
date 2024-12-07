@@ -37,7 +37,7 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ context
                 method={endpoint.method}
                 options={endpoint.environments}
                 showEnvironment
-                large
+                size="lg"
             />
         </header>
     );
