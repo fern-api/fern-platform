@@ -46,6 +46,9 @@
                 monospace !important;
             font-variant-numeric: slashed-zero;
             text-transform: uppercase;
+        }
+
+        &[data-badge-type="http-method"] {
             font-weight: 700;
         }
 

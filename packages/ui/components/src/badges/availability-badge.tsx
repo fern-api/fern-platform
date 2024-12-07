@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 
+import { UIColor } from "../colors";
 import { Badge, type BadgeProps } from "./badge";
-import { UIColor } from "./colors";
 
 export type Availability =
     | "Stable"
@@ -92,6 +92,26 @@ export const AvailabilityDisplayNames: Record<Availability, string> = {
     Retired: "Retired",
 };
 
+export const AvailabilityFullyQualifiedDisplayNames: Record<Availability, string> = {
+    Stable: "Stable",
+    GenerallyAvailable: "Generally Available",
+    ReleaseCandidate: "Release Candidate",
+    PublicBeta: "Public Beta",
+    Beta: "Beta",
+    PrivateBeta: "Private Beta",
+    LimitedAvailability: "Limited Availability",
+    CanaryRelease: "Canary Release",
+    Preview: "Preview",
+    PreRelease: "Pre-release",
+    Alpha: "Alpha",
+    Experimental: "Experimental",
+    Internal: "Internal",
+    InDevelopment: "In Development",
+    Sunset: "Sunset",
+    Deprecated: "Deprecated",
+    Retired: "Retired",
+};
+
 export const AvailabilityColorScheme: Record<Availability, UIColor> = {
     Stable: "green",
     GenerallyAvailable: "accent",
@@ -120,7 +140,13 @@ export const AvailabilityBadge = forwardRef<HTMLSpanElement & HTMLButtonElement,
     (props, ref) => {
         const { availability, ...rest } = props;
         return (
-            <Badge ref={ref} {...rest} color={AvailabilityColorScheme[availability]} data-badge-type="availability">
+            <Badge
+                ref={ref}
+                {...rest}
+                color={AvailabilityColorScheme[availability]}
+                data-badge-type="availability"
+                title={AvailabilityFullyQualifiedDisplayNames[availability]}
+            >
                 {props.children ?? AvailabilityDisplayNames[availability]}
             </Badge>
         );

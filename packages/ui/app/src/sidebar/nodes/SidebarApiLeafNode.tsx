@@ -1,6 +1,7 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { HttpMethodBadge } from "@fern-ui/components/badges";
+import clsx from "clsx";
 import { useIsSelectedSidebarNode } from "../../atoms";
-import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { SidebarSlugLink } from "../SidebarLink";
 
 interface SidebarApiLeafNodeProps {
@@ -16,27 +17,53 @@ export function SidebarApiLeafNode({ node, depth, shallow }: SidebarApiLeafNodeP
         return null;
     }
 
-    const renderRightElement = () => {
+    const renderLeftElement = () => {
         if (node.type === "webSocket") {
-            return <HttpMethodTag method="WSS" size="sm" active={selected} />;
+            return (
+                <HttpMethodBadge method="GET" size="sm" variant={selected ? "solid" : "subtle"}>
+                    WSS
+                </HttpMethodBadge>
+            );
         } else {
             if (node.type === "endpoint" && node.isResponseStream) {
-                return <HttpMethodTag method="STREAM" size="sm" active={selected} />;
+                return (
+                    <HttpMethodBadge
+                        method={node.method}
+                        size="sm"
+                        variant={selected ? "solid" : "subtle"}
+                        className={clsx({
+                            "tracking-tighter": node.isResponseStream,
+                        })}
+                    >
+                        STREAM
+                    </HttpMethodBadge>
+                );
             }
 
-            return <HttpMethodTag method={node.method} size="sm" active={selected} />;
+            return <HttpMethodBadge method={node.method} size="sm" variant={selected ? "solid" : "subtle"} />;
         }
     };
+
+    // const renderRightElement = () => {
+    //     if (node.availability == null) {
+    //         return undefined;
+    //     }
+    //     return <AvailabilityBadge availability={node.availability} size="sm" rounded className="ms-1" />;
+    // };
 
     return (
         <SidebarSlugLink
             nodeId={node.id}
             slug={node.slug}
-            title={node.title}
+            title={
+                <span className={clsx({ "opacity-70 line-through": node.availability === "Deprecated" })}>
+                    {node.title}
+                </span>
+            }
             depth={Math.max(0, depth - 1)}
             hidden={node.hidden}
             authed={node.authed}
-            icon={renderRightElement()}
+            icon={renderLeftElement()}
             selected={selected}
             shallow={shallow}
         />

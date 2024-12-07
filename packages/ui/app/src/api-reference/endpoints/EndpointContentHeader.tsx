@@ -1,9 +1,9 @@
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { AvailabilityBadge } from "@fern-ui/components/badges";
 import { memo, type ReactNode } from "react";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
-import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 interface EndpointContentHeaderProps {
@@ -23,7 +23,7 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(({ context
                     <h1 className="fern-page-heading">{node.title}</h1>
                     {endpoint.availability != null && (
                         <span className="inline-block ml-2 align-text-bottom">
-                            <EndpointAvailabilityTag availability={endpoint.availability} minimal={true} />
+                            <AvailabilityBadge availability={endpoint.availability} rounded />
                         </span>
                     )}
                 </span>
