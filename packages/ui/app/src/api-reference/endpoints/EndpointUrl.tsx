@@ -2,11 +2,11 @@ import { APIV1Read } from "@fern-api/fdr-sdk";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { CopyToClipboardButton } from "@fern-ui/components";
+import { HttpMethodBadge } from "@fern-ui/components/badges";
 import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
 import React, { PropsWithChildren, ReactElement, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { noop } from "ts-essentials";
-import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
 
 export declare namespace EndpointUrl {
@@ -86,7 +86,7 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
 
     return (
         <div ref={ref} className={cn("flex items-center gap-1 pr-2", className)}>
-            <HttpMethodTag method={method} />
+            <HttpMethodBadge method={method} />
 
             <div className={cn("flex items-center")}>
                 <span

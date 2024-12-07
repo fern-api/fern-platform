@@ -1,14 +1,13 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernTooltip } from "@fern-ui/components";
+import { HttpMethodBadge } from "@fern-ui/components/badges";
+import clsx from "clsx";
 import { atom, useAtomValue } from "jotai";
-import dynamic from "next/dynamic";
 import { ReactElement, forwardRef } from "react";
 import { useMemoOne } from "use-memo-one";
 import { getApiDefinitionAtom, useOpenPlayground } from "../../atoms";
-import { HttpMethodTag } from "../../components/HttpMethodTag";
+import { Markdown } from "../../mdx/Markdown";
 import { usePreloadApiLeaf } from "../hooks/usePreloadApiLeaf";
-
-const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown));
 
 interface PlaygroundEndpointSelectorLeafNodeProps {
     node: FernNavigation.EndpointNode | FernNavigation.WebSocketNode;
@@ -62,12 +61,16 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<HTMLLIElement, Play
                             active={active}
                             onClick={createSelectEndpoint(node)}
                             icon={
-                                <HttpMethodTag
-                                    method={node.isResponseStream ? "STREAM" : node.method}
+                                <HttpMethodBadge
+                                    method={node.method}
                                     size="sm"
-                                    active={active}
-                                    className="mr-1"
-                                />
+                                    variant={active ? "solid" : "subtle"}
+                                    className={clsx("mr-1", {
+                                        "tracking-tighter": node.isResponseStream,
+                                    })}
+                                >
+                                    {node.isResponseStream ? "STREAM" : undefined}
+                                </HttpMethodBadge>
                             }
                             onMouseEnter={() => void preload(node)}
                         />
@@ -85,7 +88,16 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<HTMLLIElement, Play
                             intent={active ? "primary" : "none"}
                             active={active}
                             onClick={createSelectEndpoint(node)}
-                            icon={<HttpMethodTag method="WSS" size="sm" className="mr-1" />}
+                            icon={
+                                <HttpMethodBadge
+                                    method="GET"
+                                    size="sm"
+                                    variant={active ? "solid" : "subtle"}
+                                    className="mr-1"
+                                >
+                                    WSS
+                                </HttpMethodBadge>
+                            }
                             onMouseEnter={() => void preload(node)}
                         />
                     </FernTooltip>

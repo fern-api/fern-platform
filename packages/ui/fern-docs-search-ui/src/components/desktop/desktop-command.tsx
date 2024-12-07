@@ -99,10 +99,17 @@ const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps & Componen
                             return;
                         }
 
-                        // if input is alphanumeric, focus input
+                        // if input is alphanumeric, space, backspace, delete, arrow left, arrow right, then focus input
                         // note: this func is onKeyDownCapture so it will fire before the input
                         // which is important so that the first character typed isn't swallowed
-                        if (/^[a-zA-Z0-9]$/.test(e.key)) {
+                        if (
+                            /^[a-zA-Z0-9]$/.test(e.key) ||
+                            e.key === " " ||
+                            e.key === "Backspace" ||
+                            e.key === "Delete" ||
+                            e.key === "ArrowLeft" ||
+                            e.key === "ArrowRight"
+                        ) {
                             // focus input _immediately_:
                             inputRef.current?.focus();
                             // scrollToTop();c

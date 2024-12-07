@@ -1,9 +1,9 @@
 import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
-import cn from "clsx";
+import { HttpMethodBadge } from "@fern-ui/components/badges";
+import cn, { clsx } from "clsx";
 import { LongArrowDownLeft } from "iconoir-react";
 import type { BaseHit, Hit } from "instantsearch.js";
-import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { AlgoliaSnippet } from "../algolia/AlgoliaSnippet";
 import { SearchHitBreadCrumbsV3 } from "./SearchHitBreadCrumbsV3";
 
@@ -31,16 +31,19 @@ export const FieldRecordV1: React.FC<FieldRecordV1.Props> = ({ hit, isHovered })
                         "t-accent-aaa": isHovered,
                     })}
                 >
-                    <HttpMethodTag
-                        method={
-                            hit.type === "websocket-field-v1"
-                                ? "WSS"
-                                : hit.type === "endpoint-field-v1" && hit.isResponseStream
-                                  ? "STREAM"
-                                  : hit.method
-                        }
-                        active={isHovered}
-                    />
+                    <HttpMethodBadge
+                        method={hit.type === "websocket-field-v1" ? "GET" : hit.method}
+                        variant={isHovered ? "solid" : "subtle"}
+                        className={clsx({
+                            "tracking-tighter": hit.type === "endpoint-field-v1" && hit.isResponseStream,
+                        })}
+                    >
+                        {hit.type === "websocket-field-v1"
+                            ? "WSS"
+                            : hit.type === "endpoint-field-v1" && hit.isResponseStream
+                              ? "STREAM"
+                              : undefined}
+                    </HttpMethodBadge>
                     <div className="space-x-0.5 font-mono">
                         {hit.endpointPath
                             .filter((p) => p.type !== "literal" || p.value !== "")

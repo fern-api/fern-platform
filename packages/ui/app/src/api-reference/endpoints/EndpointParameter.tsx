@@ -2,6 +2,7 @@ import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
+import { AvailabilityBadge } from "@fern-ui/components/badges";
 import cn from "clsx";
 import { compact } from "es-toolkit/array";
 import { FC, PropsWithChildren, ReactNode, memo, useEffect, useRef, useState } from "react";
@@ -13,7 +14,6 @@ import { Markdown } from "../../mdx/Markdown";
 import { renderTypeShorthandRoot } from "../../type-shorthand";
 import { getAnchorId } from "../../util/anchor";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
 export declare namespace EndpointParameter {
     export interface Props {
@@ -125,7 +125,7 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
                 <span className="inline-flex items-baseline gap-2">
                     <span className="fern-api-property-key">{name}</span>
                     {typeShorthand}
-                    {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
+                    {availability != null && <AvailabilityBadge availability={availability} size="sm" rounded />}
                 </span>
             </FernAnchor>
             <Markdown mdx={descriptions[0]} className="!t-muted" size="sm" />

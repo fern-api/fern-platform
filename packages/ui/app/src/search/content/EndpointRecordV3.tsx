@@ -1,8 +1,8 @@
 import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import cn from "clsx";
+import { HttpMethodBadge } from "@fern-ui/components/badges";
+import cn, { clsx } from "clsx";
 import { LongArrowDownLeft } from "iconoir-react";
-import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { SearchHitBreadCrumbsV2 } from "./SearchHitBreadCrumbsV2";
 
 export declare namespace EndpointRecordV3 {
@@ -22,16 +22,19 @@ export const EndpointRecordV3: React.FC<EndpointRecordV3.Props> = ({ hit, isHove
                         "t-accent-aaa": isHovered,
                     })}
                 >
-                    <HttpMethodTag
-                        method={
-                            hit.type === "websocket-v3"
-                                ? "WSS"
-                                : hit.type === "endpoint-v3" && hit.isResponseStream
-                                  ? "STREAM"
-                                  : hit.method
-                        }
-                        active={isHovered}
-                    />
+                    <HttpMethodBadge
+                        method={hit.type === "websocket-v3" ? "GET" : hit.method}
+                        variant={isHovered ? "solid" : "subtle"}
+                        className={clsx({
+                            "tracking-tighter": hit.type === "endpoint-v3" && hit.isResponseStream,
+                        })}
+                    >
+                        {hit.type === "websocket-v3"
+                            ? "WSS"
+                            : hit.type === "endpoint-v3" && hit.isResponseStream
+                              ? "STREAM"
+                              : undefined}
+                    </HttpMethodBadge>
                     <div className="space-x-0.5 font-mono">
                         {hit.endpointPath
                             .filter((p) => p.type !== "literal" || p.value !== "")
