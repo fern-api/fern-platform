@@ -15,6 +15,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "The easiest way to use LLMs",
     "content": "BAML is a domain-specific language to generate structured outputs from LLMs -- with the best developer experience.\nWith BAML you can build reliable Agents, Chatbots with RAG, extract data from PDFs, and more."
@@ -35,6 +36,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#a-small-sample-of-features",
     "content": "An amazingly fast developer experience for prompting in the BAML VSCode playground\n\nFully type-safe outputs, even when streaming structured data (that means autocomplete!)\n\nFlexibility -- it works with any LLM, any language, and any schema.\n\nState-of-the-art structured outputs that even outperform OpenAI with their own models -- plus it works with OpenSource models.",
@@ -65,6 +67,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#products",
     "content": "Everything you need to know about how to get started with BAML. From installation to prompt engineering techniques.\n\n\nAn online interactive playground to playaround with BAML without any installations.\n\n\nExamples of prompts, projects, and more.\n\n\nLanguage docs on all BAML syntax. Quickly learn syntax with simple examples and code snippets.",
@@ -95,6 +98,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#motivation",
     "content": "Prompts are more than just f-strings; they're actual functions with logic that can quickly become complex to organize, maintain, and test.\nCurrently, developers craft LLM prompts as if they're writing raw HTML and CSS in text files, lacking:\nType safety\n\nHot-reloading or previews\n\nLinting\n\n\nThe situation worsens when dealing with structured outputs. Since most prompts rely on Python and Pydantic, developers must execute their code and set up an entire Python environment just to test a minor prompt adjustment, or they have to setup a whole Python microservice just to call an LLM.\nBAML allows you to view and run prompts directly within your editor, similar to how Markdown Preview function -- no additional setup necessary, that interoperates with all your favorite languages and frameworks.\nJust as TSX/JSX provided the ideal abstraction for web development, BAML offers the perfect abstraction for prompt engineering. Watch our demo video to see it in action.",
@@ -125,6 +129,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#comparisons",
     "content": "Here's our in-depth comparison with a couple of popular frameworks:\nBAML vs Pydantic\n\nBAML vs Marvin",
@@ -161,6 +166,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The best way to understand BAML and its developer experience is to see it live in a demo (see below)."
   },
@@ -186,6 +192,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#demo-video",
     "content": "Here we write a BAML function definition, and then call it from a Python script.",
@@ -222,6 +229,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#examples",
     "content": "Interactive NextJS app with streaming\n\nStarter boilerplates for Python, Typescript, Ruby, etc.",
@@ -258,6 +266,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#high-level-developer-flow",
     "content": "Write a BAML function definition\nHere you can run tests in the VSCode Playground.\nGenerate baml_client from those .baml files.\nThis is auto-generated code with all boilerplate to call the LLM endpoint, parse the output, fix broken JSON, and handle errors.\n\n\nCall your function in any language\nwith type-safety, autocomplete, retry-logic, robust JSON parsing, etc..\n\n\nContinue on to the Installation Guides for your language to setup BAML in a few minutes!\nYou don't need to migrate 100% of your LLM code to BAML in one go! It works along-side any existing LLM framework.",
@@ -346,6 +355,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "baml_src is where you keep all your BAML files, and where all the prompt-related code lives. It must be named baml_src for our tooling to pick it up, but it can live wherever you want.\nIt helps keep your project organized, and makes it easy to separate prompt engineering from the rest of your code.\n\n\nSome things to note:\nAll declarations within this directory are accessible across all files contained in the baml_src folder.\n\nYou can have multiple files, and even nest subdirectories.\n\n\nYou don't need to worry about including this directory when deploying your code. See: Deploying"
   },
@@ -371,6 +381,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -403,6 +414,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#generating-baml_client",
     "content": "Refer to the Installation guides for how to set this up for your language, and how to generate it.\nBut at a high-level, you just include a generator block in any of your BAML files.\n\n\nThe baml_client transforms a BAML function into the same equivalent function in your language,",
@@ -481,6 +493,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "We provide a BAML VSCode extension:     https://marketplace.visualstudio.com/items?itemName=Boundary.baml-extension\nFeature Supported \nSyntax highlighting for BAML files ✅ \nCode snippets for BAML ✅ \nLLM playground for testing BAML functions ✅ \nJump to definition for BAML files ✅ \nJump to definition between Python/TS files and BAML files ✅ \nAuto generate baml_client on save ✅ \nBAML formatter ❌"
   },
@@ -506,6 +519,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#opening-baml-playground",
     "content": "Once you open a .baml file, in VSCode, you should see a small button over every BAML function: Open Playground.\n\n\nOr type BAML Playground in the VSCode Command Bar (CMD + Shift + P or CTRL + Shift + P) to open the playground.",
@@ -542,6 +556,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#setting-env-variables",
     "content": "Click on the Settings button in top right of the playground and set the environment variables.\nIt should have an indicator saying how many unset variables are there.\n\n\nThe playground should persist the environment variables between closing and opening VSCode.\n\n\nYou can set environment variables lazily. If anything is unset you'll get an error when you run the function.\n\n\nEnvironment Variables are stored in VSCode's local storage! We don't save any additional data to disk, or send them across the network.",
@@ -578,6 +593,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#running-tests",
     "content": "Click on the Run All Tests button in the playground.\n\nPress the ▶️ button next to an individual test case to run that just that test case.",
@@ -614,6 +630,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#switching-functions",
     "content": "The playground will automatically switch to the function you're currently editing.\nTo manually change it, click on the current function name in the playground (next to the dropdown) and search for your desired function.",
@@ -650,6 +667,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#switching-test-cases",
     "content": "The test case with the highlighted background is the currently rendered test case. Clicking on a different test case will render that test case.\n\n\nYou can toggle between seeing the results of all test cases or all test cases for the current function.",
@@ -686,6 +704,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Refer to the Cursor Extension Installation Guide to install the extension in Cursor.\n\n\nYou may need to update BAML extension manually using the process above. Auto-update does not seem to be working well for many extensions in Cursor."
   },
@@ -711,6 +730,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "We don't currently have any tier support for any other editors.\nJetBrains IDEs\n\nHelix\n\nZed\n\nVim\n\nEmacs\n\nSublime Text\n\nAtom\n\n\nSince the extension is a language server, we can technically pull out the language server and syntax highlighter and support any editor supporting the language server protocol.\nIf you're interested in contributing to the project and supporting another editor, please reach out.\nAn alternative is to edit your files in our Playground, and copy the code into your editor, but we recommend using VSCode to edit BAML files for now."
   },
@@ -736,6 +756,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -881,6 +902,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#baml-with-jupyter-notebooks",
     "content": "You can use the baml_client in a Jupyter notebook.\nOne of the common problems is making sure your code changes are picked up by the notebook without having to restart the whole kernel (and re-run all the cells)\nTo make sure your changes in .baml files are reflected in your notebook you must do these steps:\n\n\nSetup the autoreload extension\nThis will make sure to reload imports, such as baml_client's \"b\" object before every cell runs.\nImport baml_client module in your notebook\nNote it's different from how we import in python.\nUsually we import things as\nfrom baml_client import b, and we can call our functions using b, but the %autoreload notebook extension does not work well with from...import statements.\nCall BAML functions using the module name as a prefix\nNow your changes in .baml files are reflected in your notebook automatically, without needing to restart the Jupyter kernel.\n\n\nIf you want to keep using the from baml_client import b style, you'll just need to re-import it everytime you regenerate the baml_client.\n\n\nPylance will complain about any schema changes you make in .baml files. You can ignore these errors. If you want it to pick up your new types, you'll need to restart the kernel.\nThis auto-reload approach works best if you're only making changes to the prompts.\nYou're all set! Continue on to the Deployment Guides for your language to learn how to deploy your BAML code or check out the Interactive Examples to see more examples.",
@@ -949,6 +971,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -1094,6 +1117,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -1157,6 +1181,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -1416,6 +1441,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -1424,15 +1450,7 @@
       },
       {
         "lang": "typescript",
-        "code": "import { createStreamableValue, StreamableValue as BaseStreamableValue } from \"ai/rsc\";\nimport { BamlStream } from \"@boundaryml/baml\";\nimport { b } from \"@/baml_client\"; // You can change the path of this to wherever your baml_client is located.\n\n\n// ------------------------------\n// Helper functions\n// ------------------------------\n\n/**\n * Type alias for defining a StreamableValue based on a BamlStream.\n * It captures either a partial or final result depending on the stream state.\n */\ntype StreamableValue<T extends BamlStream<any, any>> =\n  | { partial: T extends BamlStream<infer StreamRet, any> ? StreamRet : never }\n  | { final: T extends BamlStream<any, infer Ret> ? Ret : never };\n\n/**\n * Helper function to manage and handle a BamlStream.\n * It consumes the stream, updates the streamable value for each partial event,\n * and finalizes the stream when complete.\n *\n * @param bamlStream - The BamlStream to be processed.\n * @returns A promise that resolves with an object containing the BaseStreamableValue.\n */\nexport async function streamHelper<T extends BamlStream<any, any>>(\n  bamlStream: T,\n): Promise<{\n  object: BaseStreamableValue<StreamableValue<T>>;\n}> {\n  const stream = createStreamableValue<StreamableValue<T>>();\n\n  // Asynchronous function to process the BamlStream events\n  (async () => {\n    try {\n      // Iterate through the stream and update the stream value with partial data\n      for await (const event of bamlStream) {\n        stream.update({ partial: event });\n      }\n\n      // Obtain the final response once all events are processed\n      const response = await bamlStream.getFinalResponse();\n      stream.done({ final: response });\n    } catch (err) {\n      // Handle any errors during stream processing\n      stream.error(err);\n    }\n  })();\n\n  return { object: stream.value };\n}\n\n/**\n * Utility function to create a streamable function from a BamlStream-producing function.\n * This function returns an asynchronous function that manages the streaming process.\n *\n * @param func - A function that produces a BamlStream when called.\n * @returns An asynchronous function that returns a BaseStreamableValue for the stream.\n */\nexport function makeStreamable<\n  BamlStreamFunc extends (...args: any) => BamlStream<any, any>,\n>(\n  func: BamlStreamFunc\n): (...args: Parameters<BamlStreamFunc>) => Promise<{\n  object: BaseStreamableValue<StreamableValue<ReturnType<BamlStreamFunc>>>;\n}> {\n  return async (...args) => {\n    const boundFunc = func.bind(b.stream);\n    const stream = boundFunc(...args);\n    return streamHelper(stream);\n  };\n}\n"
-      },
-      {
-        "lang": "typescript",
         "code": "import { makeStreamable } from \"../_baml_utils/streamableObjects\";\n\n\nexport const extractResume = makeStreamable(b.stream.ExtractResume);"
-      },
-      {
-        "lang": "typescript",
-        "code": "import { useState, useEffect } from \"react\";\nimport { readStreamableValue, StreamableValue } from \"ai/rsc\";\n\n/**\n * A hook that streams data from a server action. The server action must return a StreamableValue.\n * See the example actiimport { useState, useEffect } from \"react\";\nimport { readStreamableValue, StreamableValue } from \"ai/rsc\";\n\n/**\n * A hook that streams data from a server action. The server action must return a StreamableValue.\n * See the example action in app/actions/streamable_objects.tsx\n *  **/\nexport function useStream<PartialRet, Ret, P extends any[]>(\n  serverAction: (...args: P) => Promise<{ object: StreamableValue<{ partial: PartialRet } | { final: Ret }, any> }>\n) {\n  const [isLoading, setIsLoading] = useState(false);\n  const [isComplete, setIsComplete] = useState(false);\n  const [isError, setIsError] = useState(false);\n  const [error, setError] = useState<Error | null>(null);\n  const [partialData, setPartialData] = useState<PartialRet | undefined>(undefined); // Initialize data state\n  const [streamResult, setData] = useState<Ret  | undefined>(undefined); // full non-partial data\n\n  const mutate = async (\n    ...params: Parameters<typeof serverAction>\n  ): Promise<Ret | undefined> => {\n    console.log(\"mutate\", params);\n    setIsLoading(true);\n    setIsError(false);\n    setError(null);\n\n    try {\n      const { object } = await serverAction(...params);\n      const asyncIterable = readStreamableValue(object);\n\n      for await (const value of asyncIterable) {\n        if (value !== undefined) {\n\n          // could also add a callback here.\n          // if (options?.onData) {\n          //   options.onData(value as T);\n          // }\n          console.log(\"value\", value);\n          if (\"partial\" in value) {\n            setPartialData(value.partial); // Update data state with the latest value\n          } else if (\"final\" in value) {\n            setData(value.final); // Update data state with the latest value\n            setIsComplete(true);\n            return value.final;\n          }\n        }\n      }\n\n      // // If it completes, it means it's the full data.\n      // return streamedData;\n    } catch (err) {\n      console.log(\"error\", err);\n\n      setIsError(true);\n      setError(new Error(JSON.stringify(err) ?? \"An error occurred\"));\n      return undefined;\n    } finally {\n      setIsLoading(false);\n    }\n  };\n\n  // If you use the \"data\" property, your component will re-render when the data gets updated.\n  return { data: streamResult, partialData, isLoading, isComplete, isError, error, mutate };\n}\n"
       },
       {
         "lang": "tsx",
@@ -1444,15 +1462,7 @@
       },
       {
         "lang": "typescript",
-        "code": "import { createStreamableValue, StreamableValue as BaseStreamableValue } from \"ai/rsc\";\nimport { BamlStream } from \"@boundaryml/baml\";\nimport { b } from \"@/baml_client\"; // You can change the path of this to wherever your baml_client is located.\n\n\n// ------------------------------\n// Helper functions\n// ------------------------------\n\n/**\n * Type alias for defining a StreamableValue based on a BamlStream.\n * It captures either a partial or final result depending on the stream state.\n */\ntype StreamableValue<T extends BamlStream<any, any>> =\n  | { partial: T extends BamlStream<infer StreamRet, any> ? StreamRet : never }\n  | { final: T extends BamlStream<any, infer Ret> ? Ret : never };\n\n/**\n * Helper function to manage and handle a BamlStream.\n * It consumes the stream, updates the streamable value for each partial event,\n * and finalizes the stream when complete.\n *\n * @param bamlStream - The BamlStream to be processed.\n * @returns A promise that resolves with an object containing the BaseStreamableValue.\n */\nexport async function streamHelper<T extends BamlStream<any, any>>(\n  bamlStream: T,\n): Promise<{\n  object: BaseStreamableValue<StreamableValue<T>>;\n}> {\n  const stream = createStreamableValue<StreamableValue<T>>();\n\n  // Asynchronous function to process the BamlStream events\n  (async () => {\n    try {\n      // Iterate through the stream and update the stream value with partial data\n      for await (const event of bamlStream) {\n        stream.update({ partial: event });\n      }\n\n      // Obtain the final response once all events are processed\n      const response = await bamlStream.getFinalResponse();\n      stream.done({ final: response });\n    } catch (err) {\n      // Handle any errors during stream processing\n      stream.error(err);\n    }\n  })();\n\n  return { object: stream.value };\n}\n\n/**\n * Utility function to create a streamable function from a BamlStream-producing function.\n * This function returns an asynchronous function that manages the streaming process.\n *\n * @param func - A function that produces a BamlStream when called.\n * @returns An asynchronous function that returns a BaseStreamableValue for the stream.\n */\nexport function makeStreamable<\n  BamlStreamFunc extends (...args: any) => BamlStream<any, any>,\n>(\n  func: BamlStreamFunc\n): (...args: Parameters<BamlStreamFunc>) => Promise<{\n  object: BaseStreamableValue<StreamableValue<ReturnType<BamlStreamFunc>>>;\n}> {\n  return async (...args) => {\n    const boundFunc = func.bind(b.stream);\n    const stream = boundFunc(...args);\n    return streamHelper(stream);\n  };\n}\n"
-      },
-      {
-        "lang": "typescript",
         "code": "import { makeStreamable } from \"../_baml_utils/streamableObjects\";\n\n\nexport const extractResume = makeStreamable(b.stream.ExtractResume);"
-      },
-      {
-        "lang": "typescript",
-        "code": "import { useState, useEffect } from \"react\";\nimport { readStreamableValue, StreamableValue } from \"ai/rsc\";\n\n/**\n * A hook that streams data from a server action. The server action must return a StreamableValue.\n * See the example actiimport { useState, useEffect } from \"react\";\nimport { readStreamableValue, StreamableValue } from \"ai/rsc\";\n\n/**\n * A hook that streams data from a server action. The server action must return a StreamableValue.\n * See the example action in app/actions/streamable_objects.tsx\n *  **/\nexport function useStream<PartialRet, Ret, P extends any[]>(\n  serverAction: (...args: P) => Promise<{ object: StreamableValue<{ partial: PartialRet } | { final: Ret }, any> }>\n) {\n  const [isLoading, setIsLoading] = useState(false);\n  const [isComplete, setIsComplete] = useState(false);\n  const [isError, setIsError] = useState(false);\n  const [error, setError] = useState<Error | null>(null);\n  const [partialData, setPartialData] = useState<PartialRet | undefined>(undefined); // Initialize data state\n  const [streamResult, setData] = useState<Ret  | undefined>(undefined); // full non-partial data\n\n  const mutate = async (\n    ...params: Parameters<typeof serverAction>\n  ): Promise<Ret | undefined> => {\n    console.log(\"mutate\", params);\n    setIsLoading(true);\n    setIsError(false);\n    setError(null);\n\n    try {\n      const { object } = await serverAction(...params);\n      const asyncIterable = readStreamableValue(object);\n\n      for await (const value of asyncIterable) {\n        if (value !== undefined) {\n\n          // could also add a callback here.\n          // if (options?.onData) {\n          //   options.onData(value as T);\n          // }\n          console.log(\"value\", value);\n          if (\"partial\" in value) {\n            setPartialData(value.partial); // Update data state with the latest value\n          } else if (\"final\" in value) {\n            setData(value.final); // Update data state with the latest value\n            setIsComplete(true);\n            return value.final;\n          }\n        }\n      }\n\n      // // If it completes, it means it's the full data.\n      // return streamedData;\n    } catch (err) {\n      console.log(\"error\", err);\n\n      setIsError(true);\n      setError(new Error(JSON.stringify(err) ?? \"An error occurred\"));\n      return undefined;\n    } finally {\n      setIsLoading(false);\n    }\n  };\n\n  // If you use the \"data\" property, your component will re-render when the data gets updated.\n  return { data: streamResult, partialData, isLoading, isComplete, isError, error, mutate };\n}\n"
       },
       {
         "lang": "tsx",
@@ -1483,6 +1493,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -1507,6 +1518,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#environment-variables-in-baml",
     "content": "Sometimes you'll see environment variables used in BAML, like in clients:\nTo set environment variables:\n\n\n\n\nOnce you open a .baml file, in VSCode, you should see a small button over every BAML function: Open Playground.\nThen you should be able to set environment variables in the settings tab.\n\n\nOr type BAML Playground in the VSCode Command Bar (CMD + Shift + P or CTRL + Shift + P) to open the playground.\n\n\nBAML will expect these to be set already in your program before you import the baml_client in Python/ TS / etc.\nAny of the following strategies for setting env vars are compatible with BAML:\nsetting them in your shell before running your program\n\nin your Dockerfile\n\nin your next.config.js\n\nin your Kubernetes manifest\n\nfrom secrets-store.csi.k8s.io\n\nfrom a secrets provider such as Infisical / Doppler\n\nfrom a .env file (using dotenv cli)\n\nusing account credentials for ephemeral token generation (e.g. Vertex AI Auth Tokens)\n\n\n\n\n\n\nRequires BAML Version 0.57+\nIf you don't want BAML to try to auto-load your env vars, you can call manually reset_baml_env_vars\nwith the current environment variables.",
@@ -1587,6 +1599,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#dynamically-setting-llm-api-keys",
     "content": "You can set the API key for an LLM dynamically by passing in the key as a header or as a parameter (depending on the provider), using the ClientRegistry.",
@@ -1623,6 +1636,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -1658,6 +1672,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -1720,6 +1735,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#troubleshooting",
     "content": "See the VSCode BAML Extension reference for more information on how to prevent version mismatches.",
@@ -1760,6 +1776,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "You can use SST to define the Lambda configuration and deploy it.\nThe example below builds the BAML x86_64 rust binaries into a Lambda layer and uses the layer in the Lambda function.\nExample Node + SST Project\nLet us know if you want to deploy a python BAML project on AWS. Our example project is coming soon."
   },
@@ -1789,6 +1806,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#current-limitations",
     "content": "The BAML binaries only support the NodeJS 20.x runtime (or a runtime using Amazon Linux 2023). Let us know if you need a different runtime version.",
@@ -1829,6 +1847,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -1868,6 +1887,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -1929,6 +1949,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "This feature was added in: v0.55.0.\n\n\nThis page assumes you've gone through the OpenAPI quickstart.\nTo deploy BAML as a RESTful API, you'll need to do three things:\nhost your BAML functions in a Docker container\n\nupdate your app to call it\n\nrun BAML and your app side-by-side using docker-compose\n\n\nRead on to learn how to do this with docker-compose.\n\n\nYou can also run baml-cli in a subprocess from your app directly, and we\nmay recommend this approach in the future. Please let us know if you'd\nlike to see instructions for doing so, and in what language, by asking in\n[Discord][discord] or [on the GitHub issue][openapi-feedback-github-issue]."
   },
@@ -1958,6 +1979,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#host-your-baml-functions-in-a-docker-container",
     "content": "In the directory containing your baml_src/ directory, create a\nbaml.Dockerfile to host your BAML functions in a Docker container:\n\n\nBAML-over-HTTP is currently a preview feature. Please provide feedback either\nin [Discord][discord] or on [GitHub][openapi-feedback-github-issue] so that\nwe can stabilize the feature and keep you updated!\n\n\n\n\nAssuming you intend to run your own application in a container, we recommend\nusing docker-compose to run your app and BAML-over-HTTP side-by-side:\n\n\nTo call the BAML server from your laptop (i.e. the host machine), you must use\nlocalhost:2024. You may only reach it as baml-over-http:2024 from within\nanother Docker container.\n\n\nIf you don't care about using docker-compose, you can just run:\nTo verify for yourself that BAML-over-HTTP is up and running, you can run:",
@@ -2035,6 +2057,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#update-your-app-to-call-it",
     "content": "Update your code to use BOUNDARY_ENDPOINT, if set, as the endpoint for your BAML functions.\nIf you plan to use Boundary Cloud to host your BAML functions, you should also update it to use BOUNDARY_API_KEY.",
@@ -2117,6 +2140,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#run-your-app-with-docker-compose",
     "content": "Replace debug-container with the Dockerfile for your app in the\ndocker-compose.yaml file:\nAdditionally, you'll want to make sure that you generate the BAML client at\nimage build time, because baml_client/ should not be checked into your repo.\nThis means that in the CI workflow you use to push your Docker images, you'll\nwant to do something like this:",
@@ -2168,6 +2192,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#optional-secure-your-baml-functions",
     "content": "To secure your BAML server, you can also set a password on it using the\nBAML_PASSWORD environment variable:\n\n\n\n\n\n\nThis will require incoming requests to attach your specified password as\nauthorization metadata. You can verify this by confirming that this returns 403\nForbidden:\nIf you attach your password to the request, you'll see that it now returns 200 OK:\n\n\n\n\n\n\n\n\nBAML_PASSWORD will secure all endpoints except /_debug/ping, so that you\ncan always debug the reachability of your BAML server.",
@@ -2242,6 +2267,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "We recommend reading the installation instructions first\nBAML functions are special definitions that get converted into real code (Python, TS, etc) that calls LLMs. Think of them as a way to define AI-powered functions that are type-safe and easy to use in your application."
   },
@@ -2267,6 +2293,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#what-baml-functions-actually-do",
     "content": "When you write a BAML function like this:\nBAML converts it into code that:\nTakes your input (resume_text)\n\nSends a request to OpenAI's GPT-4 API with your prompt.\n\nParses the JSON response into your Resume type\n\nReturns a type-safe object you can use in your code",
@@ -2310,6 +2337,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#prompt-preview--seeing-the-curl-request",
     "content": "For maximum transparency, you can see the API request BAML makes to the LLM provider using the VSCode extension.\nBelow you can see the Prompt Preview, where you see the full rendered prompt (once you add a test case):\n\n\nNote how the {{ ctx.output_format }} macro is replaced with the output schema instructions.\nThe Playground will also show you the Raw CURL request (if you click on the \"curl\" checkbox):\n\n\n\n\nAlways include the {{ ctx.output_format }} macro in your prompt. This injects your output schema into the prompt, which helps the LLM output the right thing. You can also customize what it prints.\nOne of our design philosophies is to never hide the prompt from you. You control and can always see the entire prompt.",
@@ -2346,6 +2374,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#calling-the-function",
     "content": "Recall that BAML will generate a baml_client directory in the language of your choice using the parameters in your generator config. This contains the function and types you defined.\nNow we can call the function, which will make a request to the LLM and return the Resume object:\n\n\n\n\nDo not modify any code inside baml_client, as it's autogenerated.",
@@ -2414,6 +2443,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#next-steps",
     "content": "Checkout PromptFiddle to see various interactive BAML function examples or view the example prompts\nRead the next guide to learn more about choosing different LLM providers and running tests in the VSCode extension.\n\n\n\n\nUse any provider or open-source model\n\n\nTest your functions in the VSCode extension\n\n\nDefine user or assistant roles in your prompts\n\n\nUse function calling or tools in your prompts",
@@ -2450,6 +2480,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "BAML Supports getting structured output from all major providers as well as all OpenAI-API compatible open-source models. See LLM Providers Reference for how to set each one up.\n\n\nBAML can help you get structured output from any Open-Source model, with better performance than other techniques, even when it's not officially supported via a Tool-Use API (like o1-preview) or fine-tuned for it! Read more about how BAML does this."
   },
@@ -2475,6 +2506,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#using-client-providermodel",
     "content": "Using openai/model-name or anthropic/model-name will assume you have the ANTHROPIC_API_KEY or OPENAI_API_KEY environment variables set.",
@@ -2518,6 +2550,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#using-a-named-client",
     "content": "Use this if you are using open-source models or need customization\nThe longer form uses a named client, and supports adding any parameters supported by the provider or changing the temperature, top_p, etc.\nConsult the provider documentation for a list of supported providers\nand models, the default options, and setting retry policies.\n\n\nIf you want to specify which client to use at runtime, in your Python/TS/Ruby code,\nyou can use the client registry to do so.\nThis can come in handy if you're trying to, say, send 10% of your requests to a\ndifferent model.",
@@ -2561,6 +2594,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -2592,6 +2626,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#complex-object-inputs",
     "content": "Objects are injected as dictionaries",
@@ -2634,6 +2669,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#test-image-inputs-in-the-playground",
     "content": "For a function that takes an image as input, like so:\nYou can define test cases using image files, URLs, or base64 strings.\n\n\n\n\n\n\nCommitting a lot of images into your repository can make it slow to clone and\npull your repository. If you expect to commit >500MiB of images, please read\nGitHub's size limit documentation and consider setting\nup large file storage.\n\n\nThe path to the image file, relative to the directory containing the current BAML file.\nImage files must be somewhere in baml_src/.\n\n\nThe mime-type of the image. If not set, and the provider expects a mime-type\nto be provided, BAML will try to infer it based on first, the file extension,\nand second, the contents of the file.\n\n\n\n\nThe publicly accessible URL from which the image may be downloaded.\n\n\nThe mime-type of the image. If not set, and the provider expects a mime-type\nto be provided, BAML will try to infer it based on the contents of the file.\n\n\n\n\nThe base64-encoded image data.\n\n\nThe mime-type of the image. If not set, and the provider expects a mime-type\nto be provided, BAML will try to infer it based on the contents of the file.\nIf base64 is a data URL, this field will be ignored.",
@@ -2700,6 +2736,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#test-audio-inputs-in-the-playground",
     "content": "For a function that takes audio as input, like so:\nYou can define test cases using audio files, URLs, or base64 strings.\n\n\n\n\n\n\nCommitting a lot of audio files into your repository can make it slow to clone and\npull your repository. If you expect to commit >500MiB of audio, please read\n[GitHub's size limit documentation][github-large-files] and consider setting\nup [large file storage][github-lfs].\n\n\nThe path to the audio file, relative to the directory containing the current BAML file.\naudio files must be somewhere in baml_src/.\n\n\nThe mime-type of the audio. If not set, and the provider expects a mime-type\nto be provided, BAML will try to infer it based on first, the file extension,\nand second, the contents of the file.\n\n\n\n\nThe publicly accessible URL from which the audio may be downloaded.\n\n\nThe mime-type of the audio. If not set, and the provider expects a mime-type\nto be provided, BAML will try to infer it based on the contents of the file.\n\n\n\n\nThe base64-encoded audio data.\n\n\nThe mime-type of the audio. If not set, and the provider expects a mime-type\nto be provided, BAML will try to infer it based on the contents of the file.\nIf base64 is a data URL, this field will be ignored.",
@@ -2766,6 +2803,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#assertions",
     "content": "This is coming soon! We'll be supporting assertions in test cases. For now -- when you run a test you'll only see errors parsing the output into the right schema, or LLM-provider errors.",
@@ -2802,6 +2840,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -2870,6 +2909,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -2894,6 +2934,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#multi-modal-input",
     "content": "You can use audio or image input types in BAML prompts. Just create an input argument of that type and render it in the prompt.\nCheck the \"raw curl\" checkbox in the playground to see how BAML translates multi-modal input into the LLM Request body.\nSee how to test images in the playground.",
@@ -2936,6 +2977,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#images",
     "content": "Calling a BAML function with an image input argument type (see image types)\nThe from_url and from_base64 methods create an Image object based on input type.",
@@ -3008,6 +3050,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#audio",
     "content": "Calling functions that have audio types. See audio types",
@@ -3080,6 +3123,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "When BAML raises an exception, it will be an instance of a subclass of BamlError. This allows you to catch all BAML-specific exceptions with a single except block."
   },
@@ -3105,6 +3149,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bamlerror",
     "content": "Base class for all BAML exceptions.\n\n\nA human-readable error message.",
@@ -3141,6 +3186,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bamlinvalidargumenterror",
     "content": "Subclass of BamlError.\nRaised when one or multiple arguments to a function are invalid.",
@@ -3181,6 +3227,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bamlclienterror",
     "content": "Subclass of BamlError.\nRaised when a client fails to return a valid response.\n\n\nIn the case of aggregate clients like fallback or those with retry_policy, only the last client's error is raised.",
@@ -3221,6 +3268,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bamlclienthttperror",
     "content": "Subclass of BamlClientError.\nRaised when the HTTP request made by a client fails with a non-200 status code.\n\n\nThe status code of the response.\nCommon status codes are:\n1: Other\n\n2: Other\n\n400: Bad Request\n\n401: Unauthorized\n\n403: Forbidden\n\n404: Not Found\n\n429: Too Many Requests\n\n500: Internal Server Error",
@@ -3265,6 +3313,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bamlvalidationerror",
     "content": "Subclass of BamlError.\nRaised when BAML fails to parse a string from the LLM into the specified object.\n\n\nThe raw text from the LLM that failed to parse into the expected return type of a function.\n\n\nThe parsing-related error message.\n\n\nThe original prompt that was sent to the LLM, formatted as a plain string. Images sent as base64-encoded strings are not serialized into this field.",
@@ -3305,6 +3354,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -3360,6 +3410,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -3427,6 +3478,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#clientregistry-interface",
     "content": "Note: ClientRegistry is imported from baml_py in Python and @boundaryml/baml in TypeScript, not baml_client.\nAs we mature ClientRegistry, we will add a more type-safe and ergonomic interface directly in baml_client. See Github issue #766.\nMethods use snake_case in Python and camelCase in TypeScript.",
@@ -3463,6 +3515,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#add_llm_client--addllmclient",
     "content": "A function to add an LLM client to the registry.\n\n\nThe name of the client.\n\n\nUsing the exact same name as a client also defined in .baml files overwrites the existing client whenever the ClientRegistry is used.\n\n\nThis configures which provider to use. The provider is responsible for handling the actual API calls to the LLM service. The provider is a required field.\nThe configuration modifies the URL request BAML runtime makes.\nProvider Name Docs Notes \nanthropic Anthropic  \naws-bedrock AWS Bedrock  \nazure-openai Azure OpenAI  \ngoogle-ai Google AI  \nopenai OpenAI  \nopenai-generic OpenAI (generic) Any model provider that supports an OpenAI-compatible API \nvertex-ai Vertex AI  \n\nWe also have some special providers that allow composing clients together:\nProvider Name Docs Notes \nfallback Fallback Used to chain models conditional on failures \nround-robin Round Robin Used to load balance \n\n\n\nThese vary per provider. Please see provider specific documentation for more\ninformation. Generally they are pass through options to the POST request made\nto the LLM.\n\n\nThe name of a retry policy that is already defined in a .baml file. See Retry Policies.",
@@ -3503,6 +3556,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#set_primary--setprimary",
     "content": "This sets the client for the function to use. (i.e. replaces the client property in a function)\n\n\nThe name of the client to use.\nThis can be a new client that was added with add_llm_client or an existing client that is already in a .baml file.",
@@ -3543,6 +3597,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Sometimes you have output schemas that change at runtime -- for example if\nyou have a list of Categories that you need to classify that come from a\ndatabase, or your schema is user-provided.\nTypeBuilder is used to create or modify dynamic types at runtime to achieve this."
   },
@@ -3568,6 +3623,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#dynamic-baml-enums",
     "content": "Imagine we want to make a categorizer prompt, but the list of categories to output come from a database.\nAdd @@dynamic to the class or enum definition to mark it as dynamic in BAML.\n\n\nImport the TypeBuilder from baml_client in your runtime code and modify Category. All dynamic types you\ndefine in BAML will be available as properties of TypeBuilder. Think of the\ntypebuilder as a registry of modified runtime types that the baml function will\nread from when building the output schema in the prompt.\n\n\n\n\n\n\n\n\n\n\n\n\nDynamic types are not yet supported when used via OpenAPI.\nPlease let us know if you want this feature, either via Discord or GitHub.",
@@ -3635,6 +3691,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#dynamic-baml-classes",
     "content": "Now we'll add some properties to a User class at runtime using @@dynamic.\nWe can then modify the User schema at runtime. Since we marked User with @@dynamic, it'll be available as a property of TypeBuilder.",
@@ -3708,6 +3765,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#creating-new-dynamic-classes-or-enums-not-in-baml",
     "content": "The previous examples showed how to modify existing types. Here we create a new Hobbies enum, and a new class called Address without having them defined in BAML.\nNote that you must attach the new types to the existing Return Type of your BAML function(in this case it's User).\n\n\nTypeBuilder provides methods for building different kinds of types:\nMethod Description Example \nstring() Creates a string type tb.string() \nint() Creates an integer type tb.int() \nfloat() Creates a float type tb.float() \nbool() Creates a boolean type tb.bool() \nlist() Makes a type into a list tb.string().list() \noptional() Makes a type optional tb.string().optional()",
@@ -3776,6 +3834,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#building-dynamic-types-from-json-schema",
     "content": "We have a working implementation of this, but are waiting for a concrete use case to merge it.\nPlease chime in on the GitHub issue if this is\nsomething you'd like to use.",
@@ -3844,6 +3903,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#testing-dynamic-types-in-baml",
     "content": "This feature is coming soon! Let us know if you're interested in testing it out!\nYou can still write tests in Python, TypeScript, Ruby, etc in the meantime.",
@@ -3880,6 +3940,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -3912,6 +3973,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -3964,6 +4026,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "With custom type validations, you can set specific rules to ensure your data's\nvalue falls within an acceptable range.\nBAML provides two types of validations:\n@assert for strict validations. If a type fails an @assert validation, it\nwill not be returned in the response. If the failing assertion was part of the\ntop-level type, it will raise an exception. If it's part of a container, it\nwill be removed from the container.\n\n@check for non-exception-raising validations. Whether a @check passes or\nfails, the data will be returned. You can access the results of invidividual\nchecks in the response data."
   },
@@ -3989,6 +4052,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#assertions",
     "content": "Assertions are used to guarantee properties about a type or its components in a response.\nThey can be written directly as inline attributes next to the field\ndefinition or on the line following the field definition, or on a top-level type used\nin a function declaration.",
@@ -4025,6 +4089,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#using-assert",
     "content": "BAML will raise an exception if a function returns a Foo where Foo.bar\nis not between 0 and 10.\nIf the function NextInt8 returns 128, BAML will raise an exception.\nAsserts may be applied to a whole class via @@assert.",
@@ -4077,6 +4142,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#using-assert-with-union-types",
     "content": "Note that when using Unions, it is\ncrucial to specify where the @assert attribute is applied within the union\ntype, as it is not known until runtime which type the value will be.\nIn the above example, the @assert attribute is applied specifically to the\nint and string instances of the Union, rather than to the Foo.bar field\nas a whole.\nLikewise, the keyword this refers to the value of the type instance it is\ndirectly associated with (e.g., int or string).",
@@ -4124,6 +4190,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#chaining-assertions",
     "content": "You can have multiple assertions on a single field by chaining multiple @assert attributes.\nIn this example, the asserts on bar and baz are equivalent.\nChained asserts are evaluated in order from left to right. If the first assert\nfails, the second assert will not be evaluated.",
@@ -4167,6 +4234,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#writing-assertions",
     "content": "Assertions are represented as Jinja expressions and can be used to validate\nvarious types of data. Possible constraints include checking the length of a\nstring, comparing two values, or verifying the presence of a substring with\nregular expressions.\nIn the future, we plan to support shorthand syntax for common assertions to make\nwriting them easier.\nFor now, see our Jinja cookbook / guide\nor the Minijinja filters docs\nfor more information on writing expressions.",
@@ -4203,6 +4271,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#expression-keywords",
     "content": "this refers to the value of the current field being validated.\n\n\nthis.field is used to refer to a specific field within the context of this.\nAccess nested fields of a data type by chaining the field names together with a . as shown below.",
@@ -4250,6 +4319,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#assertion-errors",
     "content": "When validations fail, your BAML function will raise a BamlValidationError\nexception, same as when parsing fails. You can catch this exception and handle\nit as you see fit.\nYou can define custom names for each assertion, which will be included\nin the exception for that failure case. If you don't define a custom name,\nBAML will display the body of the assert expression.\nIn this example, if the quote field is empty, BAML raises a\nBamlValidationError with the message \"exact_citation_not_found\". If the\nwebsite_link field does not contain \"https://\", it raises a\nBamlValidationError with the message invalid_link.",
@@ -4313,6 +4383,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#checks",
     "content": "@check attributes add validations without raising exceptions if they fail.\nTypes with @check attributes allow the validations to be inspected at\nruntime.\n\n\nThe following example uses both @check and @assert. If line_number fails its\n@assert, no Citation will be returned by GetCitation(). However,\nexact_citation_not_found can fail without interrupting the result. Because it\nwas a @check, client code can inspect the result of the check.\n\n\nYou can also chain multiple @check and @assert attributes on a single field.\n\n\n When using @check, all checks on the response data are evaluated even if\none fails. In contrast, with @assert, a failure will stop the parsing process\nand immediately raise an exception.",
@@ -4406,6 +4477,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#advanced-example",
     "content": "The following example shows more complex minijinja expressions, see the\nMinijinja filters docs\nfor more information on available operators to use in your assertions.\n\n\nThe Book and Library classes below demonstrate how to validate a book's\ntitle, author, ISBN, publication year, genres, and a library's name and books.\nThe block-level assertion in the Library class ensures that all books have\nunique ISBNs.\nIn this example, we use a block-level @@assert to check a dependency across\na pair of fields.",
@@ -4457,6 +4529,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Learn how to host your BAML code on Boundary Functions and call it over HTTP.\n\n\nThis is a preview feature, available starting with baml-cli v0.66.0.\n\n\nThe BAML language, compiler, and runtime will always be 100% free and\nopen-source: we will always allow you to run BAML functions directly in your\nown backends.\nBoundary Functions' goal is to make it even easier to host and run BAML\nfunctions, by adding support for features like rate limits, telemetry, and\nend-user feedback.\nBoundary Functions allows you to host your BAML functions on our infrastructure, exposing\none REST API endpoint per BAML function.\n\n\n\n\nThis guide will walk you through:\ncreating a Boundary Cloud account,\n\ndeploying your BAML code to Boundary Functions,\n\nsetting your API keys, and\n\ncalling your BAML functions.\n\n\nOnce you've deployed your BAML functions, you can use the OpenAPI client to\ncall them."
   },
@@ -4485,6 +4558,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#get-started",
     "content": "First, create your account and organization at https://dashboard.boundaryml.com.\nThen, log in from your terminal:\nand run this command in your baml_src/ directory:\nThis will prompt you to create a new Boundary project, deploy your BAML code to it,\nand then point you to the dashboard, where you can set environment variables and\ncreate API keys to use to call your BAML functions.\n\n\n\n\nOnce you've set the environment variables you need (probably ANTHROPIC_API_KEY\nand/or OPENAI_API_KEY), you can call your BAML functions!\nIf you still have the ExtractResume function that your BAML project was created with,\nyou can use this command to test it out:\nCongratulations! You've gotten your first BAML functions working on Boundary Functions.",
@@ -4538,6 +4612,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#local-development-and-testing",
     "content": "To test your BAML functions locally, you can use baml-cli dev:\nwhich will allow you to call your functions at http://localhost:2024/call/<function_name> instead of\nhttps://api2.boundaryml.com/v3/functions/prod/call/<function_name> using the exact same curl command:",
@@ -4587,6 +4662,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Learn how to use your OpenAPI client to call your functions in Boundary Functions.\n\n\nThis page assumes you've already deployed your BAML code to Boundary Functions. If\nyou haven't done that yet, check out the guide for getting started.\n\n\nThis page assumes you're using an OpenAPI-generated BAML client. If you\nhaven't done that yet, check out the OpenAPI quickstart."
   },
@@ -4615,6 +4691,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#create-an-api-key",
     "content": "You can create API keys in the Boundary\nDashboard by going to the left sidebar and\nclicking on the key icon.\n\n\n\n\nOnce you've created a new key, update your application code to use it as BOUNDARY_API_KEY.",
@@ -4654,6 +4731,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#update-your-application-code",
     "content": "You also need to update your application code to use BOUNDARY_ENDPOINT and\nBOUNDARY_API_KEY, if set, when constructing the OpenAPI client.",
@@ -4735,6 +4813,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#set-your-environment-variables",
     "content": "You can now set the following environment variables in your application:",
@@ -4780,6 +4859,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#call-your-functions",
     "content": "You should now be able to call your deployed BAML functions using your OpenAPI client!",
@@ -4819,6 +4899,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Learn how to use Boundary Functions Environment Variables, which are key-value pairs\nconfigured outside your source code.\nEnvironment variables are key-value pairs, configured outside your source code,\nand used to provide secrets for your deployed BAML functions, such as\nANTHROPIC_API_KEY and OPENAI_API_KEY.\nYou can set environment variables in the Boundary\nDashboard by going to the left sidebar and\nclicking on the cloud icon.\n\n\n\n\nChanges to environment variables will take effect immediately."
   },
@@ -4847,6 +4928,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#limits",
     "content": "See Limits for more information.",
@@ -4887,6 +4969,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -4922,6 +5005,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#tracing-custom-events",
     "content": "BAML allows you to trace any function with the @trace decorator.\nThis will make the function's input and output show up in the Boundary dashboard. This works for any python function you define yourself. BAML LLM functions (or any other function declared in a .baml file) are already traced by default. Logs are only sent to the Dashboard if you setup your environment variables correctly.",
@@ -4962,6 +5046,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#example",
     "content": "In the example below, we trace each of the two functions pre_process_text and full_analysis:\n\n\nThis allows us to see each function invocation, as well as all its children in the dashboard:\n\n\nSee running tests for more information on how to run this test.",
@@ -5048,6 +5133,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#adding-custom-tags",
     "content": "The dashboard view allows you to see custom tags for each of the function calls. This is useful for adding metadata to your traces and allow you to query your generated logs more easily.\nTo add a custom tag, you can import set_tags(..) as below:",
@@ -5094,6 +5180,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -5137,6 +5224,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#using-baml",
     "content": "Here is the BAML equivalent of this classification task based off the prompt Marvin uses under-the-hood. Note how the prompt becomes transparent to you using BAML. You can easily make it more complex or simpler depending on the model.\nAnd you can call this function in your code\nThe prompt string may be more wordy, but with BAML you now have\nFully typed responses, guaranteed\n\nFull transparency and flexibility of the prompt string\n\nFull freedom for what model to use\n\nHelper functions to manipulate types in prompts (print_enum)\n\nTesting capabilities using the VSCode playground\n\nAnalytics in the Boundary Dashboard\n\nSupport for TypeScript\n\nA better understanding of how prompt engineering works\n\n\nMarvin was a big source of inspiration for us -- their approach is simple and elegant. We recommend checking out Marvin if you're just starting out with prompt engineering or want to do a one-off simple task in Python. But if you'd like a whole added set of features, we'd love for you to give BAML a try and let us know what you think.",
@@ -5183,6 +5271,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#limitations-of-baml",
     "content": "BAML does have some limitations we are continuously working on. Here are a few of them:\nIt is a new language. However, it is fully open source and getting started takes less than 10 minutes. We are on-call 24/7 to help with any issues (and even provide prompt engineering tips)\n\nDeveloping requires VSCode. You could use vim and we have workarounds but we don't recommend it.",
@@ -5219,6 +5308,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Pydantic is a popular library for data validation in Python used by most -- if not all -- LLM frameworks, like instructor.\nBAML also uses Pydantic. The BAML Rust compiler can generate Pydantic models from your .baml files. But that's not all the compiler does -- it also takes care of fixing common LLM parsing issues, supports more data types, handles retries, and reduces the amount of boilerplate code you have to write.\nLet's dive into how Pydantic is used and its limitations."
   },
@@ -5244,6 +5334,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#why-working-with-llms-requires-more-than-just-pydantic",
     "content": "Pydantic can help you get structured output from an LLM easily at first glance:\nThat's pretty good, but now we want to add an Education model to the Resume model. We add the following code:\nA little ugly, but still readable... But managing all these prompt strings can make your codebase disorganized very quickly.\nThen you realize the LLM sometimes outputs some text before giving you the json, like this:\nSo you add a regex to address that that extracts everything in {}:\nNext you realize you actually want an array of Resumes, but you can't really use List[Resume] because Pydantic and Python don't work this way, so you have to add another wrapper:\nNow you need to change the rest of your code to handle different models. That's good longterm, but it is now more boilerplate you have to write, test and maintain.\nNext, you notice the LLM sometimes outputs a single resume {...}, and sometimes an array [{...}]...\nYou must now change your parser to handle both cases:\nYou could retry the call against the LLM to fix the issue, but that will cost you precious seconds and tokens, so handling this corner case manually is the only solution.",
@@ -5306,6 +5397,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#a-small-tangent----json-schemas-vs-type-definitions",
     "content": "Sidenote: At this point your prompt looks like this:\nand sometimes even GPT-4 outputs incorrect stuff like this, even though it's technically correct JSON (OpenAI's \"JSON mode\" will still break you)\n(this is an actual result from GPT-4 before some more prompt engineering)\nwhen all you really want is a prompt that looks like the one below -- with way less tokens (and less likelihood of confusion). :\nAhh, much better. That's 80% less tokens with a simpler prompt, for the same results. (See also Microsoft's TypeChat which uses a similar schema format using typescript types)\n\n\nBut we digress, let's get back to the point. You can see how this can get out of hand quickly, and how Pydantic wasn't really made with LLMs in mind.  We haven't gotten around to adding resilience like retries, or falling back to a different model in the event of an outage. There's still a lot of wrapper code to write.",
@@ -5354,6 +5446,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#pydantic-and-enums",
     "content": "There are other core limitations.\nSay you want to do a classification task using Pydantic. An Enum is a great fit for modelling this.\nAssume this is our prompt:\nSince we have descriptions, we need to generate a custom enum we can use to build the prompt:\nWe add a class method to load the right enum from the LLM output string:\nUpdate the prompt to use the enum descriptions:\nAnd then we use it in our AI function:\nWhat gets hairy is if you want to change your types.\nWhat if you want the LLM to return an object instead? You have to change your enum, your prompt, AND your parser.\n\nWhat if you want to handle cases where the LLM outputs \"Real Estate\" or \"real estate\"?\n\nWhat if you want to save the enum information in a database? str(category) will save FinancialCategory.healthcare into your DB, but your parser only recognizes \"Healthcare\", so you'll need more boilerplate if you ever want to programmatically analyze your data.",
@@ -5416,6 +5509,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#alternatives",
     "content": "There are libraries like instructor do provide a great amount of boilerplate but you're still:\nUsing prompts that you cannot control. E.g. a commit may change your results underneath you.\n\nUsing more tokens than you may need to to declare schemas (higher costs and latencies)\n\nThere are no included testing capabilities.. Developers have to copy-paste JSON blobs everywhere, potentially between their IDEs and other websites. Existing LLM Playgrounds were not made with structured data in mind.\n\nLack of observability. No automatic tracing of requests.",
@@ -5456,6 +5550,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#enter-baml",
     "content": "The Boundary toolkit helps you iterate seamlessly compared to Pydantic.\nHere's all the BAML code you need to solve the Extract Resume problem from earlier (VSCode prompt preview is shown on the right):\n\n\n\n\nHere we use a \"GPT4\" client, but you can use any model. See client docs\n\n\nThe BAML compiler generates a python client that imports and calls the function:\nThat's it! No need to write any more code. Since the compiler knows what your function signature is we literally generate a custom deserializer for your own unique usecase that just works.\nConverting the Resume into an array of resumes requires a single line change in BAML (vs having to create array wrapper classes and parsing logic).\nIn this image we change the types and BAML automatically updates the prompt, parser, and the Python types you get back.\n\n\nAdding retries or resilience requires just a couple of modifications. And best of all, you can test things instantly, without leaving your VSCode.",
@@ -5498,6 +5593,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#conclusion",
     "content": "We built BAML because writing a Python library was just not powerful enough to do everything we envisioned, as we have just explored.\nCheck out the Hello World tutorial to get started.\nOur mission is to make the best DX for AI engineers working with LLMs. Contact us at founders@boundaryml.com or Join us on Discord to stay in touch with the community and influence the roadmap.",
@@ -5533,6 +5629,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "We have seen many different prompts for many use-cases. We'd love to hear about your prompt and how you use BAML.\nContact Us at contact@boundaryml.com\nor join our Discord"
   },
@@ -5553,6 +5650,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Check out the live examples that use NextJS, and the source code on Github."
   },
@@ -5578,6 +5676,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "We recommend these simple ways to reduce hallucinations:"
   },
@@ -5603,6 +5702,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#1-set-temperature-to-00-especially-if-extracting-data-verbatim",
     "content": "This will make the model less creative and more likely to just extract the data that you want verbatim.",
@@ -5646,6 +5746,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#2-reduce-the-number-of-input-tokens",
     "content": "Reduce the amount of data you're giving the model to process to reduce confusion.\nPrune as much data as possible, or split your prompt into multiple prompts analyzing subsets of the data.\nIf you're processing images, try cropping the parts of the image that you don't need. LLMs can only handle images of certain sizes, so every pixel counts. Make sure you resize images to the model's input size (even if the provider does the resizing for you), so you can gauge how clear the image is at the model's resolution. You'll notice the blurrier the image is, the higher the hallucination rate.\nLet us know if you want more tips for processing images, we have some helper prompts we can share with you, or help debug your prompt.",
@@ -5682,6 +5783,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#2-use-reasoning-or-reflection-prompting",
     "content": "Read our chain-of-thought guide for more.",
@@ -5718,6 +5820,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#3-watch-out-for-contradictions-and-word-associations",
     "content": "Each word you add into the prompt will cause it to associate it with something it saw before in its training data. This is why we have techniques like symbol tuning to help control this bias.\nLet's say you have a prompt that says:\nThe LLM may not write the // comment inline, because it's been trained to associate JSON with actual \"valid\" JSON.\nYou can get around this with some more coaxing like:\nThe LLM made an assumption that you want \"JSON\" -- which doesn't use comments -- and our instructions were not explicit enough to override that bias originally.\nKeep on reading for more tips and tricks! Or reach out in our Discord",
@@ -5764,6 +5867,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -5796,6 +5900,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -5858,6 +5963,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#choosing-multiple-tools",
     "content": "To choose ONE tool out of many, you can use a union:\n\n\nIf you use VSCode Playground, you can see what we inject into the prompt, with full transparency.Call the function like this:",
@@ -5931,6 +6037,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#choosing-n-tools",
     "content": "To choose many tools, you can use a union of a list:\nCall the function like this:",
@@ -6004,6 +6111,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#function-calling-apis-vs-prompting",
     "content": "Injecting your function schemas into the prompt, as BAML does, outperforms function-calling across all benchmarks for major providers (see our Berkeley FC Benchmark results with BAML).\nAmongst other limitations, function-calling APIs will at times:\nReturn a schema when you don't want any (you want an error)\n\nNot work for tools with more than 100 parameters.\n\nUse many more tokens than prompting.\n\n\nKeep in mind that \"JSON mode\" is nearly the same thing as \"prompting\", but it enforces the LLM response is ONLY a JSON blob.\nBAML does not use JSON mode since it allows developers to use better prompting techniques like chain-of-thought, to allow the LLM to express its reasoning before printing out the actual schema. BAML's parser can find the json schema(s) out of free-form text for you. Read more about different approaches to structured generation here\nBAML will still support native function-calling APIs in the future (please let us know more about your use-case so we can prioritize accordingly)",
@@ -6040,6 +6148,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -6071,6 +6180,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -6102,6 +6212,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -6120,6 +6231,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Welcome to the BAML reference guide!\nHere you can learn about every BAML keyword, feature, and setting.\nFor more in-depth explanations, we recommend reading the Guides first.\n\n\n\n\nLearn everything about BAML's language features.\n\n\nLearn about BAML's Jinja prompt syntax.\n\n\nBAML CLI commands and flags.\n\n\nVSCode BAML Extension settings\n\n\nLLM clients and how to configure them.\n\n\nAPI Reference for the baml_client object."
   },
@@ -6144,6 +6256,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The init command is used to initialize a project with BAML. It sets up the necessary directory structure and configuration files to get you started with BAML."
   },
@@ -6168,6 +6281,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#options",
     "content": "Option Description Default \n--dest <PATH> Specifies where to initialize the BAML project Current directory (.) \n--client-type <TYPE> Type of BAML client to generate Guesses based on where the CLI was installed from (python/pydantic for pip, typescript for npm, etc.) \n--openapi-client-type <TYPE> The OpenAPI client generator to run, if --client-type=openapi None",
@@ -6203,6 +6317,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#description",
     "content": "The init command performs the following actions:\nCreates a new BAML project structure in ${DEST}/baml_src.\n\nCreates a generators.baml file in the baml_src directory with initial configuration.\n\nIncludes some additional examples files in baml_src to get you started.",
@@ -6238,6 +6353,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-types",
     "content": "The --client-type option allows you to specify the type of BAML client to generate. Available options include:\npython/pydantic: For Python clients using Pydantic\n\ntypescript: For TypeScript clients\n\nruby/sorbet: For Ruby clients using Sorbet\n\nrest/openapi: For REST clients using OpenAPI\n\n\nIf not specified, it uses the default from the runtime CLI configuration.",
@@ -6273,6 +6389,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#openapi-client-types",
     "content": "When using --client-type=rest/openai, you can specify the OpenAPI client generator using the --openapi-client-type option. Some examples include:\ngo\n\njava\n\nphp\n\nruby\n\nrust\n\ncsharp\n\n\nFor a full list of supported OpenAPI client types, refer to the OpenAPI Generator documentation.",
@@ -6308,6 +6425,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#examples",
     "content": "Initialize a BAML project in the current directory with default settings:\n\nInitialize a BAML project in a specific directory:\n\nInitialize a BAML project for Python with Pydantic:\n\nInitialize a BAML project for OpenAPI with a Go client:",
@@ -6357,6 +6475,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#notes",
     "content": "If the destination directory already contains a baml_src directory, the command will fail to prevent overwriting existing projects.\n\nThe command attempts to infer the OpenAPI generator command based on what's available in your system PATH. It checks for openapi-generator, openapi-generator-cli, or falls back to using npx @openapitools/openapi-generator-cli.\n\nAfter initialization, follow the instructions provided in the console output for language-specific setup steps.\n\n\nFor more information on getting started with BAML, visit the BAML documentation.",
@@ -6392,6 +6511,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The generate command is used to generate BAML clients based on your BAML source files. It processes the BAML configurations and creates the necessary client code for your specified output type."
   },
@@ -6416,6 +6536,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#options",
     "content": "Option Description Default \n--from <PATH> Path to the baml_src directory ./baml_src \n--no-version-check Generate baml_client without checking for version mismatch false",
@@ -6451,6 +6572,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#description",
     "content": "The generate command performs the following actions:\nFinds all generators in the BAML project (usualy in generators.baml).\n\nEnsure all generators match the CLI version.\n\nGenerate each baml_client based on the generator configurations.",
@@ -6486,6 +6608,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#examples",
     "content": "Generate clients using default settings:\n\nGenerate clients from a specific directory:\n\nGenerate clients without version check:",
@@ -6532,6 +6655,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#output",
     "content": "The command provides informative output about the generation process:\nIf no clients were generated, it will suggest a configuration to add to your BAML files.\n\nIf clients were generated, it will report the number of clients generated and their locations.",
@@ -6567,6 +6691,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#notes",
     "content": "If no generator configurations are found in the BAML files, the command will generate a default client based on the CLI defaults and provide instructions on how to add a generator configuration to your BAML files.\n\nIf generator configurations are found, the command will generate clients according to those configurations.\n\nIf one of the generators fails, the command will stop at that point and report the error.",
@@ -6602,6 +6727,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The serve command starts a BAML-over-HTTP API server that exposes your BAML functions via HTTP endpoints. This feature allows you to interact with your BAML functions through a RESTful API interface.\n\n\nWarning: Preview Feature\nYou must include the --preview flag when running the dev command.\n\nBe aware that this feature is still being stabilized and may change in future releases."
   },
@@ -6626,6 +6752,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#usage",
     "content": "If you're actively developing, you can use the dev command to include hotreload functionality:\nSee more",
@@ -6672,6 +6799,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#options",
     "content": "Option Description Default \n--from <PATH> Path to the baml_src directory ./baml_src \n--port <PORT> Port to expose BAML on 2024 \n--no-version-check Generate baml_client without checking for version mismatch false \n--preview Enable the preview feature",
@@ -6707,6 +6835,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#description",
     "content": "The serve command performs the following actions:\nExposes BAML functions as HTTP endpoints on the specified port.\n\nProvides authentication middleware for secure access.",
@@ -6742,6 +6871,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#endpoints",
     "content": "POST /call/:function_name: Call a BAML function\n\n\nDebugging\nGET /docs: Interactive API documentation (Swagger UI)\n\nGET /openapi.json: OpenAPI specification for the BAML functions\n\nGET /_debug/ping: Health check endpoint\n\nGET /_debug/status: Server status and authentication check",
@@ -6777,6 +6907,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#authentication",
     "content": "We support the header: x-baml-api-key\nSet the BAML_PASSWORD environment variable to enable authentication.",
@@ -6812,6 +6943,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#examples",
     "content": "Start the server with default settings:\n\nStart the server with a custom source directory and port:",
@@ -6855,6 +6987,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#testing",
     "content": "To test the server, you can use the following curl commands:\nCheck if the server is running:\n\nCall a function:\n\nAccess the API documentation:\nOpen http://localhost:2024/docs in your web browser.",
@@ -6905,6 +7038,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The dev command starts a development server that watches your BAML source files for changes and automatically reloads the BAML runtime. This feature is designed to streamline the development process by providing real-time updates as you modify your BAML configurations.\n\n\nWarning: Preview Feature\nYou must include the --preview flag when running the dev command.\n\nBe aware that this feature is still being stabilized and may change in future releases."
   },
@@ -6929,6 +7063,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#details",
     "content": "See the serve command for more information on the arguments.\nThe dev command performs the exact same functionality, but it additionally:\nWatches the BAML source files for changes.\n\nAutomatically reloads the server when changes are detected.\n\nAutomatically runs any generators when changes are detected.",
@@ -6968,6 +7103,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -6995,6 +7131,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#single-line--trailing-comments",
     "content": "Denoted by //.",
@@ -7040,6 +7177,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#docstrings",
     "content": "We have no special syntax for docstrings. Instead, we use comments.\nEventually, we'll support a /// syntax for docstrings which will\nalso be used for generating documentation in baml_client.",
@@ -7079,6 +7217,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#comments-in-block-strings",
     "content": "See Block Strings for more information.",
@@ -7124,6 +7263,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -7158,6 +7298,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#example",
     "content": "Using an environment variable for API key:",
@@ -7203,6 +7344,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#setting-environment-variables",
     "content": "To set environment variables:\n\n\n\n\nOnce you open a .baml file, in VSCode, you should see a small button over every BAML function: Open Playground.\nThen you should be able to set environment variables in the settings tab.\n\n\nOr type BAML Playground in the VSCode Command Bar (CMD + Shift + P or CTRL + Shift + P) to open the playground.\n\n\nBAML will expect these to be set already in your program before you import the baml_client in Python/ TS / etc.\nAny of the following strategies for setting env vars are compatible with BAML:\nsetting them in your shell before running your program\n\nin your Dockerfile\n\nin your next.config.js\n\nin your Kubernetes manifest\n\nfrom secrets-store.csi.k8s.io\n\nfrom a secrets provider such as Infisical / Doppler\n\nfrom a .env file (using dotenv cli)\n\nusing account credentials for ephemeral token generation (e.g. Vertex AI Auth Tokens)\n\n\n\n\n\n\nRequires BAML Version 0.57+\nIf you don't want BAML to try to auto-load your env vars, you can call manually reset_baml_env_vars\nwith the current environment variables.",
@@ -7282,6 +7424,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#error-handling",
     "content": "Errors for unset environment variables are only thrown when the variable is accessed. If your BAML project has 15 environment variables and 1 is used for the function you are calling, only that one environment variable will be checked for existence.",
@@ -7321,6 +7464,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "BAML treats templatized strings as first-class citizens."
   },
@@ -7349,6 +7493,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#quoted-strings",
     "content": "These is a valid inline string, which is surrounded by double quotes. They behave like regular strings in most programming languages, and can be escaped with a backslash.\n\n\nThese cannot have template variables or expressions inside them. Use a block string for that.",
@@ -7394,6 +7539,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#unquoted-strings",
     "content": "BAML also supports simple unquoted in-line strings. The string below is valid! These are useful for simple strings such as configuration options.\nUnquoted strings may not have any of the following since they are reserved characters (note this may change in the future):\nQuotes \"double\" or 'single'\n\nAt-signs @\n\nCurlies \n\n\n\nhashtags #\n\nParentheses ()\n\nBrackets []\n\ncommas ,\n\nnewlines\n\n\nWhen in doubt, use a quoted string or a block string, but the VSCode extension will warn you if there is a parsing issue.",
@@ -7439,6 +7585,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#block-strings",
     "content": "If a string is on multiple lines, it must be surrounded by #\" and \"#. This is called a block string.\nBlock strings are automatically dedented and stripped of the first and last newline. This means that the following will render the same thing as above\nWhen used for templating, block strings can contain expressions and variables using Jinja syntax.",
@@ -7492,6 +7639,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#escape-characters",
     "content": "Escaped characters are injected as is into the string.\nThis will render as \\\\n in the output.",
@@ -7541,6 +7689,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#adding-a-",
     "content": "To include a \"# in a block string, you can prefix it with a different count of #.\nThis will render as #\"Hello\"#.",
@@ -7590,6 +7739,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Numerical values as denoted more specifically in BAML.\nValue Description \nint Integer \nfloat Floating point number \n\nWe support implicit casting of int -> float, but if you need something to explicitly be a float, use 0.0 instead of 0."
   },
@@ -7618,6 +7768,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "true or false"
   },
@@ -7646,6 +7797,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Allow you to store and manipulate collections of data. They can be declared in a concise and readable manner, supporting both single-line and multi-line formats."
   },
@@ -7674,6 +7826,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#syntax",
     "content": "To declare an array in a BAML file, you can use the following syntax:",
@@ -7719,6 +7872,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#key-points",
     "content": "Commas: Optional for multi-line arrays, but recommended for clarity.\n\nNested Arrays: Supported, allowing complex data structures.\n\nKey-Value Pairs: Arrays can contain objects with key-value pairs.",
@@ -7762,6 +7916,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Map values (AKA Dictionaries) allow you to store key-value pairs.\n\n\nMost of BAML (clients, tests, classes, etc) is represented as a map."
   },
@@ -7790,6 +7945,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#syntax",
     "content": "To declare a map in a BAML file, you can use the following syntax:",
@@ -7835,6 +7991,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#key-points",
     "content": "Colons: Not used in BAML maps; keys and values are separated by spaces.\n\nValue Types: Maps can contain unquoted or quoted strings, booleans, numbers, and nested maps as values.\n\nClasses: Classes in BAML are represented as maps with keys and values.",
@@ -7874,6 +8031,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Here's a list of all the types that can be represented in BAML:"
   },
@@ -7898,6 +8056,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#primitive-types",
     "content": "bool\n\nint\n\nfloat\n\nstring\n\nnull",
@@ -7933,6 +8092,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#literal-types",
     "content": "This feature was added in: v0.61.0.\nThe primitive types string, int and bool can be constrained to a specific value.\nFor example, you can use literal values as return types:\nSee Union(|) for more details.",
@@ -7974,6 +8134,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#multimodal-types",
     "content": "See calling a function with multimodal types\nand testing image inputs\n\n\nBAML's multimodal types are designed for ease of use: we have deliberately made it\neasy for you to construct a image or audio instance from a URL. Under the\nhood, depending on the model you're using, BAML may need to download the image\nand transcode it (usually as base64) for the model to consume.\nThis ease-of-use does come with some tradeoffs; namely, if you construct\nan image or audio instance using untrusted user input, you may be exposing\nyourself to server-side request forgery (SSRF) attacks. Attackers may be\nable to fetch files on your internal network, on external networks using your\napplication's identity, or simply excessively drive up your cloud network\nbandwidth bill.\nTo prevent this, we recommend only using URLs from trusted sources/users or\nvalidating them using allowlists or denylists.",
@@ -8009,6 +8170,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#image",
     "content": "You can use an image like this for models that support them:\nYou cannot name a variable image at the moment as it is a reserved keyword.\nCalling a function with an image type:\n\n\n\n\nIf using Pydantic, the following are valid ways to construct the Image type.",
@@ -8116,6 +8278,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#audio",
     "content": "Example\nCalling functions that have audio types.",
@@ -8191,6 +8354,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#enum",
     "content": "See also: Enum\nA user-defined type consisting of a set of named constants.\nUse it when you need a model to choose from a known set of values, like in classification problems\nIf you need to add new variants, because they need to be loaded from a file or fetched dynamically\nfrom a database, you can do this with Dynamic Types.",
@@ -8236,6 +8400,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#class",
     "content": "See also: Class\nClasses are for user-defined complex data structures.\nUse when you need an LLM to call another function (e.g. OpenAI's function calling), you can model the function's parameters as a class. You can also get models to return complex structured data by using a class.\nExample:\nNote that properties have no :\nIf you need to add fields to a class because some properties of your class are only\nknown at runtime, you can do this with Dynamic Types.",
@@ -8281,6 +8446,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#optional-",
     "content": "A type that represents a value that might or might not be present.\nUseful when a variable might not have a value and you want to explicitly handle its absence.\nSyntax: Type?\nExample: int? or (MyClass | int)?",
@@ -8320,6 +8486,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#union-",
     "content": "A type that can hold one of several specified types.\nThis can be helpful with function calling, where you want to return different types of data depending on which function should be called.\nSyntax: Type1 | Type2\nExample: int | string or (int | string) | MyClass or string | MyClass | int[]\n\n\nOrder is important. int | string is not the same as string | int.\nFor example, if you have a \"1\" string, it will be parsed as an int if\nyou use int | string, but as a string if you use string | int.",
@@ -8359,6 +8526,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#listarray-",
     "content": "A collection of elements of the same type.\nSyntax: Type[]\nExample: string[] or (int | string)[] or int[][]\n\n\nArray types can be nested to create multi-dimensional arrays\n\nAn array type cannot be optional",
@@ -8398,6 +8566,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#map",
     "content": "A mapping of strings to elements of another type.\nSyntax: map<string, ValueType>\nExample: map<string, string>",
@@ -8437,6 +8606,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#-set",
     "content": "Not yet supported. Use a List instead.",
@@ -8476,6 +8646,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#-tuple",
     "content": "Not yet supported. Use a class instead.",
@@ -8515,6 +8686,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#examples-and-equivalents",
     "content": "Here are some examples and what their equivalents are in different languages.",
@@ -8550,6 +8722,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#️-unsupported",
     "content": "any/json - Not supported. We don't want to encourage its use as it defeats the purpose of having a type system. if you really need it, for now use string and call json.parse yourself or use dynamic types\n\ndatetime - Not yet supported. Use a string instead.\n\nduration - Not yet supported. We recommend using string and specifying that it must be an \"ISO8601 duration\" in the description, which you can parse yourself into a duration.\n\nunits (currency, temperature) - Not yet supported. Use a number (int or float) and have the unit be part of the variable name. For example, temperature_fahrenheit and cost_usd (see @alias)",
@@ -8585,6 +8758,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Functions in BAML define the contract between your application and AI models, providing type-safe interfaces for AI operations."
   },
@@ -8609,6 +8783,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#overview",
     "content": "A BAML function consists of:\nInput parameters with explicit types\n\nA return type specification\n\nAn LLM client\n\nA prompt (as a block string)",
@@ -8650,6 +8825,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#parameters",
     "content": "name: The function identifier (must start with a capital letter!)\n\nparameters: One or more typed parameters (e.g., text: string, data: CustomType)\n\nreturn_type: The type that the function guarantees to return (e.g., string | MyType)\n\nllm_specification: The LLM to use (e.g., \"openai/gpt-4o-mini\", GPT4Turbo, Claude2)\n\nblock_string_specification: The prompt template using Jinja syntax",
@@ -8689,6 +8865,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#type-system",
     "content": "Functions leverage BAML's strong type system, supporting:",
@@ -8724,6 +8901,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#built-in-types",
     "content": "string: Text data\n\nint: Integer numbers\n\nfloat: Decimal numbers\n\nbool: True/false values\n\narray: Denoted with [] suffix (e.g., string[])\n\nmap: Key-value pairs (e.g., map<string, int>)\n\nliteral: Specific values (e.g., \"red\" | \"green\" | \"blue\")\n\nSee all",
@@ -8763,6 +8941,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#custom-types",
     "content": "Custom types can be defined using class declarations:",
@@ -8808,6 +8987,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#jinja-syntax",
     "content": "BAML uses Jinja templating for dynamic prompt generation:",
@@ -8853,6 +9033,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#special-variables",
     "content": "ctx.output_format: Automatically generates format instructions based on return type\n\nctx.client: Selected client and model name\n\n_.role: Define the role of the message chunk",
@@ -8892,6 +9073,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#error-handling",
     "content": "Functions automatically handle common AI model errors and provide type validation:\nJSON parsing errors are automatically corrected\n\nType mismatches are detected and reported\n\nNetwork and rate limit errors are propagated to the caller",
@@ -8927,6 +9109,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Tests are first-class citizens in BAML, designed to make testing AI functions straightforward and robust. BAML tests can be written anywhere in your codebase and run with minimal setup."
   },
@@ -8951,6 +9134,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#overview",
     "content": "A BAML test consists of:\nTest name and metadata\n\nFunctions under test\n\nInput arguments\n\nOptional testing configuration\n\nOptional assertions",
@@ -8992,6 +9176,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#components",
     "content": "name: Test identifier (unique per function)\n\nfunctions: List of functions to test\n\nargs: Input parameters for the test case",
@@ -9031,6 +9216,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#basic-types",
     "content": "Simple values are provided directly:",
@@ -9076,6 +9262,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#complex-objects",
     "content": "Objects are specified using nested structures:",
@@ -9121,6 +9308,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#arrays",
     "content": "Arrays use bracket notation:",
@@ -9166,6 +9354,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#images",
     "content": "Images can be specified using three methods:\nFile Reference\n\n\nURL Reference\n\n\nBase64 Data",
@@ -9222,6 +9411,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#audio",
     "content": "Similar to images, audio can be specified in three ways:\nFile Reference\n\n\nURL Reference\n\n\nBase64 Data",
@@ -9275,6 +9465,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#multi-line-strings",
     "content": "For long text inputs, use the block string syntax:",
@@ -9316,6 +9507,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#testing-multiple-functions",
     "content": "This requires each function to have teh exact same parameters:",
@@ -9357,6 +9549,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#vscode-integration",
     "content": "Tests can be run directly from the BAML playground\n\nReal-time syntax validation\n\nTest result visualization",
@@ -9396,6 +9589,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -9427,6 +9621,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -9463,6 +9658,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#fields",
     "content": "This configures which provider to use. The provider is responsible for handling the actual API calls to the LLM service. The provider is a required field.\nThe configuration modifies the URL request BAML runtime makes.\nProvider Name Docs Notes \nanthropic Anthropic  \naws-bedrock AWS Bedrock  \nazure-openai Azure OpenAI  \ngoogle-ai Google AI  \nopenai OpenAI  \nopenai-generic OpenAI (generic) Any model provider that supports an OpenAI-compatible API \nvertex-ai Vertex AI  \n\nWe also have some special providers that allow composing clients together:\nProvider Name Docs Notes \nfallback Fallback Used to chain models conditional on failures \nround-robin Round Robin Used to load balance \n\n\n\nThese vary per provider. Please see provider specific documentation for more\ninformation. Generally they are pass through options to the POST request made\nto the LLM.\n\n\nThe name of the retry policy. See Retry\nPolicy.",
@@ -9498,6 +9694,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -9554,6 +9751,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#field-attributes",
     "content": "When prompt engineering, you can also alias values and add descriptions.\n\n\nAliasing renames the field for the llm to potentially \"understand\" your value better, while keeping the original name in your code, so you don't need to change your downstream code everytime.\nThis will also be used for parsing the output of the LLM back into the original object.\n\n\nThis adds some additional context to the field in the prompt.",
@@ -9596,6 +9794,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#class-attributes",
     "content": "If set, will allow you to add fields to the class dynamically at runtime (in your python/ts/etc code). See dynamic classes for more information.",
@@ -9638,6 +9837,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#syntax",
     "content": "Classes may have any number of properties.\nProperty names must follow these rules:\nMust start with a letter\n\nMust contain only letters, numbers, and underscores\n\nMust be unique within the class\n\nclasses cannot be self-referential (cannot have a property of the same type as the class itself)\n\n\nThe type of a property can be any supported type",
@@ -9673,6 +9873,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#default-values",
     "content": "Not yet supported. For optional properties, the default value is None in python.",
@@ -9712,6 +9913,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#dynamic-classes",
     "content": "See Dynamic Types.",
@@ -9751,6 +9953,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#inheritance",
     "content": "Never supported. Like rust, we take the stance that composition is better than inheritance.",
@@ -9786,6 +9989,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -9842,6 +10046,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#enum-attributes",
     "content": "This is the name of the enum rendered in the prompt.\n\n\nIf set, will allow you to add/remove/modify values to the enum dynamically at runtime (in your python/ts/etc code). See dynamic enums for more information.",
@@ -9884,6 +10089,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#value-attributes",
     "content": "When prompt engineering, you can also alias values and add descriptions, or even skip them.\n\n\nAliasing renames the values for the llm to potentially \"understand\" your value better, while keeping the original name in your code, so you don't need to change your downstream code everytime.\nThis will also be used for parsing the output of the LLM back into the enum.\n\n\nThis adds some additional context to the value in the prompt.\n\n\nSkip this value in the prompt and during parsing.\nSee more in prompt syntax docs",
@@ -9926,6 +10132,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -9992,6 +10199,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "In BAML, attributes are used to provide additional metadata or behavior to fields and types. They can be applied at different levels, such as field-level or block-level, depending on their intended use."
   },
@@ -10016,6 +10224,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#field-level-attributes",
     "content": "Field-level attributes are applied directly to individual fields within a class or enum. They modify the behavior or metadata of that specific field.",
@@ -10051,6 +10260,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#examples-of-field-level-attributes",
     "content": "@alias: Renames a field for better understanding by the LLM.\n\n@description: Provides additional context to a field.\n\n@skip: Excludes a field from prompts or parsing.\n\n@assert: Applies strict validation to a field.\n\n@check: Adds non-exception-raising validation to a field.",
@@ -10097,6 +10307,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#block-level-attributes",
     "content": "Block-level attributes are applied to an entire class or enum, affecting all fields or values within that block. They are used to modify the behavior or metadata of the entire block.",
@@ -10132,6 +10343,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#examples-of-block-level-attributes",
     "content": "@@dynamic: Allows dynamic modification of fields or values at runtime.",
@@ -10178,6 +10390,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#key-differences",
     "content": "Scope: Field-level attributes affect individual fields, while block-level attributes affect the entire class or enum.\n\nUsage: Field-level attributes are used for specific field modifications, whereas block-level attributes are used for broader modifications affecting the whole block.\n\n\nUnderstanding the distinction between these types of attributes is crucial for effectively using BAML to define and manipulate data structures.\nFor more detailed information on each attribute, refer to the specific attribute pages in this section.",
@@ -10213,6 +10426,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The @alias attribute in BAML is used to rename fields or values for better understanding by the LLM, while keeping the original name in your code. This is particularly useful for prompt engineering, as it allows you to provide a more intuitive name for the LLM without altering your existing codebase."
   },
@@ -10237,6 +10451,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#without-alias",
     "content": "ctx.output_format:",
@@ -10286,6 +10501,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#with-alias",
     "content": "ctx.output_format:",
@@ -10335,6 +10551,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#prompt-impact-enum",
     "content": "ctx.output_format:",
@@ -10380,6 +10597,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#prompt-impact-enum-value",
     "content": "ctx.output_format:",
@@ -10425,6 +10643,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The @description attribute in BAML provides additional context to fields or values in prompts. This can help the LLM understand the intended use or meaning of a field or value."
   },
@@ -10449,6 +10668,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#without-description",
     "content": "ctx.output_format:",
@@ -10498,6 +10718,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#with-description",
     "content": "ctx.output_format:",
@@ -10547,6 +10768,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#without-description-1",
     "content": "ctx.output_format:",
@@ -10596,6 +10818,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#with-description-1",
     "content": "ctx.output_format:",
@@ -10645,6 +10868,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#prompt-impact-enum",
     "content": "ctx.output_format:",
@@ -10690,6 +10914,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The @skip attribute in BAML is used to exclude certain fields or values from being included in prompts or parsed responses. This can be useful when certain data is not relevant for the LLM's processing."
   },
@@ -10714,6 +10939,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#without-skip",
     "content": "ctx.output_format:",
@@ -10763,6 +10989,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#with-skip",
     "content": "ctx.output_format:",
@@ -10812,6 +11039,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The @assert attribute in BAML is used for strict validations. If a type fails an @assert validation, it will not be returned in the response, and an exception will be raised if it's part of the top-level type."
   },
@@ -10836,6 +11064,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#usage",
     "content": "Asserts can be named or unnamed.",
@@ -10871,6 +11100,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#parameter-assertion",
     "content": "Asserts can also be applied to parameters.",
@@ -10917,6 +11147,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#block-assertion",
     "content": "Asserts can be used in a block definition, referencing fields within the block.",
@@ -10963,6 +11194,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The @check attribute in BAML adds validations without raising exceptions if they fail. This allows the validations to be inspected at runtime."
   },
@@ -10987,6 +11219,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#benefits",
     "content": "Non-Intrusive Validation: Allows for validation checks without interrupting the flow of data processing.\n\nRuntime Inspection: Enables inspection of validation results at runtime.\n\n\nSee more in validations guide.",
@@ -11022,6 +11255,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The @@dynamic attribute in BAML allows for the dynamic modification of fields or values at runtime. This is particularly useful when you need to adapt the structure of your data models based on runtime conditions or external inputs."
   },
@@ -11046,6 +11280,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#dynamic-classes",
     "content": "The @@dynamic attribute can be applied to classes, enabling the addition of fields dynamically during runtime.",
@@ -11092,6 +11327,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#dynamic-enums",
     "content": "Similarly, the @@dynamic attribute can be applied to enums, allowing for the modification of enum values at runtime.",
@@ -11138,6 +11374,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#using-dynamic-with-typebuilder",
     "content": "To modify dynamic types at runtime, you can use the TypeBuilder from the baml_client. Below are examples for Python, TypeScript, and Ruby.",
@@ -11173,6 +11410,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "AWS Bedrock provider for BAML",
     "code_snippets": [
@@ -11205,6 +11443,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#authorization",
     "content": "We use the AWS SDK under the hood, which will respect all authentication\nmechanisms supported by the\nSDK, including but not\nlimited to:\nAWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY as set in your environment variables\n\nloading the specified AWS_PROFILE from ~/.aws/config\n\nbuilt-in authn for services running in EC2, ECS, Lambda, etc.",
@@ -11240,6 +11479,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#playground-setup",
     "content": "Add these three environment variables to your extension variables to use the AWS Bedrock provider in the playground.\nAWS_ACCESS_KEY_ID\n\nAWS_SECRET_ACCESS_KEY\n\nAWS_REGION - like us-east-1",
@@ -11275,6 +11515,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#non-forwarded-options",
     "content": "The default role for any prompts that don't specify a role. Default: system\nWe don't have any checks for this field, you can pass any string you wish.\n\n\nWhich role metadata should we forward to the API? Default: []\nFor example you can set this to [\"foo\", \"bar\"] to forward the cache policy to the API.\nIf you do not set allowed_role_metadata, we will not forward any role metadata to the API even if it is set in the prompt.\nThen in your prompt you can use something like:\nYou can use the playground to see the raw curl request to see what is being sent to the API.",
@@ -11320,6 +11561,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#forwarded-options",
     "content": "BAML will auto construct this field for you from the prompt\n\n\nThe model to use.\nModel Description \nanthropic.claude-3-haiku-20240307-v1:0 Fastest + Cheapest \nanthropic.claude-3-sonnet-20240307-v1:0 Smartest \nmeta.llama3-8b-instruct-v1:0  \nmeta.llama3-70b-instruct-v1:0  \nmistral.mistral-7b-instruct-v0:2  \nmistral.mixtral-8x7b-instruct-v0:1  \n\nRun aws bedrock list-foundation-models | jq '.modelSummaries.[].modelId to get\na list of available foundation models; you can also use any custom models you've\ndeployed.\nNote that to use any of these models you'll need to request model access.\n\n\nAdditional inference configuration to send with the request; see AWS Bedrock\ndocumentation.\nExample:",
@@ -11367,6 +11609,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -11398,6 +11641,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#non-forwarded-options",
     "content": "Will be passed as a bearer token. Default: env.ANTHROPIC_API_KEY\nAuthorization: Bearer $api_key\n\n\nThe base URL for the API. Default: https://api.anthropic.com\n\n\nThe default role for any prompts that don't specify a role. Default: system\nWe don't have any checks for this field, you can pass any string you wish.\n\n\nAdditional headers to send with the request.\nUnless specified with a different value, we inject in the following headers:\nExample:\n\n\nWhich role metadata should we forward to the API? Default: []\nFor example you can set this to [\"cache_control\"] to forward the cache policy to the API.\nIf you do not set allowed_role_metadata, we will not forward any role metadata to the API even if it is set in the prompt.\nThen in your prompt you can use something like:\nYou can use the playground to see the raw curl request to see what is being sent to the API.",
@@ -11457,6 +11701,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#forwarded-options",
     "content": "BAML will auto construct this field for you from the prompt, if necessary.\nOnly the first system message will be used, all subsequent ones will be cast to the assistant role.\n\n\nBAML will auto construct this field for you from the prompt\n\n\nBAML will auto construct this field for you based on how you call the client in your code\n\n\nThe model to use.\nModel \nclaude-3-5-sonnet-20240620 \nclaude-3-opus-20240229 \nclaude-3-sonnet-20240229 \nclaude-3-haiku-20240307 \n\n\n\nSee anthropic docs for the latest list of all models. You can pass any model name you wish, we will not check if it exists.\n\n\nThe maximum number of tokens to generate. Default: 4069\nFor all other options, see the official anthropic API documentation.",
@@ -11492,6 +11737,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -11523,6 +11769,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#non-forwarded-options",
     "content": "Will be passed as the x-goog-api-key header. Default: env.GOOGLE_API_KEY\nx-goog-api-key: $api_key\n\n\nThe base URL for the API. Default: https://generativelanguage.googleapis.com/v1beta\n\n\nThe default role for any prompts that don't specify a role. Default: user\nWe don't have any checks for this field, you can pass any string you wish.\n\n\nThe model to use. Default: gemini-1.5-flash\nWe don't have any checks for this field, you can pass any string you wish.\nModel Input(s) Optimized for \ngemini-1.5-pro Audio, images, videos, and text Complex reasoning tasks such as code and text generation, text editing, problem solving, data extraction and generation \ngemini-1.5-flash Audio, images, videos, and text Fast and versatile performance across a diverse variety of tasks \ngemini-1.0-pro Text Natural language tasks, multi-turn text and code chat, and code generation \n\nSee the Google Model Docs for the latest models.\n\n\nAdditional headers to send with the request.\nExample:\n\n\nWhich role metadata should we forward to the API? Default: []\nFor example you can set this to [\"foo\", \"bar\"] to forward the cache policy to the API.\nIf you do not set allowed_role_metadata, we will not forward any role metadata to the API even if it is set in the prompt.\nThen in your prompt you can use something like:\nYou can use the playground to see the raw curl request to see what is being sent to the API.",
@@ -11578,6 +11825,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#forwarded-options",
     "content": "BAML will auto construct this field for you from the prompt\nFor all other options, see the official Google Gemini API documentation.",
@@ -11613,6 +11861,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -11647,6 +11896,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#authorization",
     "content": "The vertex-ai provider uses the Google Cloud SDK to authenticate with a temporary access token. We generate these Google Cloud Authentication Tokens using Google Cloud service account credentials. We do not store this token, and it is only used for the duration of the request.",
@@ -11682,6 +11932,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#instructions-for-downloading-google-cloud-credentials",
     "content": "Go to the Google Cloud Console.\n\nClick on the project you want to use.\n\nSelect the IAM & Admin section, and click on Service Accounts.\n\nSelect an existing service account or create a new one.\n\nClick on the service account and select Add Key.\n\nChoose the JSON key type and click Create.\n\nSet the GOOGLE_APPLICATION_CREDENTIALS environment variable to the path of the file.\n\n\nSee the Google Cloud Application Default Credentials Docs for more information.\n\n\nThe project_id of your client object must match the project_id of your credentials file.\nThe options are passed through directly to the API, barring a few. Here's a shorthand of the options:",
@@ -11721,6 +11972,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#non-forwarded-options",
     "content": "The base URL for the API.\nDefault: https://{LOCATION}-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/locations/{LOCATION}/publishers/google/models/\n\nCan be used in lieu of the project_id and location fields, to manually set the request URL.\n\n\nVertex requires a Google Cloud project ID for each request. See the Google Cloud Project ID Docs for more information.\n\n\nVertex requires a location for each request. Some locations may have different models avaiable.\nCommon locations include:\nus-central1\n\nus-west1\n\nus-east1\n\nus-south1\n\n\nSee the Vertex Location Docs for all locations and supported models.\n\n\nPath to a JSON credentials file or a JSON object containing the credentials.\nDefault: env.GOOGLE_APPLICATION_CREDENTIALS\n\n\nIn this case, the path is resolved relative to the CWD of your process.\n\n\n\n\nThis field cannot be used in the BAML Playground. For the playground, use the credentials_content instead.\n\n\nOverrides contents of the Google Cloud Application Credentials. Default: env.GOOGLE_APPLICATION_CREDENTIALS_CONTENT\n\n\n\n\nOnly use this for the BAML Playground only. Use credentials for your runtime code.\n\n\nDirectly set Google Cloud Authentication Token in lieu of token generation via env.GOOGLE_APPLICATION_CREDENTIALS or env.GOOGLE_APPLICATION_CREDENTIALS_CONTENT fields.\n\n\nThe default role for any prompts that don't specify a role. Default: user\n\n\nThe Google model to use for the request.\nModel Input(s) Optimized for \ngemini-1.5-pro Audio, images, videos, and text Complex reasoning tasks such as code and text generation, text editing, problem solving, data extraction and generation \ngemini-1.5-flash Audio, images, videos, and text Fast and versatile performance across a diverse variety of tasks \ngemini-1.0-pro Text Natural language tasks, multi-turn text and code chat, and code generation \n\nSee the Google Model Docs for the latest models.\n\n\nAdditional headers to send with the request.\nExample:\n\n\nWhich role metadata should we forward to the API? Default: []\nFor example you can set this to [\"foo\", \"bar\"] to forward the cache policy to the API.\nIf you do not set allowed_role_metadata, we will not forward any role metadata to the API even if it is set in the prompt.\nThen in your prompt you can use something like:\nYou can use the playground to see the raw curl request to see what is being sent to the API.",
@@ -11806,6 +12058,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#forwarded-options",
     "content": "Safety settings to apply to the request. You can stack different safety settings with a new safetySettings header for each one. See the Google Vertex API Request Docs for more information on what safety settings can be set.\n\n\nGeneration configurations to apply to the request. See the Google Vertex API Request Docs for more information on what properties can be set.\nFor all other options, see the official Vertex AI documentation.",
@@ -11863,6 +12116,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -11894,6 +12148,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#non-forwarded-options",
     "content": "Will be used to build the Authorization header, like so: Authorization: Bearer $api_key\nDefault: env.OPENAI_API_KEY\n\n\nThe base URL for the API.\nDefault: https://api.openai.com/v1\n\n\nThe default role for any prompts that don't specify a role.\nWe don't do any validation of this field, so you can pass any string you wish.\nDefault: system\n\n\nAdditional headers to send with the request.\nExample:\n\n\nWhich role metadata should we forward to the API? Default: []\nFor example you can set this to [\"foo\", \"bar\"] to forward the cache policy to the API.\nIf you do not set allowed_role_metadata, we will not forward any role metadata to the API even if it is set in the prompt.\nThen in your prompt you can use something like:\nYou can use the playground to see the raw curl request to see what is being sent to the API.",
@@ -11949,6 +12204,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#forwarded-options",
     "content": "BAML will auto construct this field for you from the prompt\n\n\nBAML will auto construct this field for you based on how you call the client in your code\n\n\nThe model to use.\nModel Description \ngpt-3.5-turbo Fastest \ngpt-4o Fast + text + image \ngpt-4-turbo Smartest + text + image + code \ngpt-4o-mini Cheapest + text + image \n\nSee openai docs for the list of openai models. You can pass any model name you wish, we will not check if it exists.\nFor all other options, see the official OpenAI API documentation.",
@@ -11984,6 +12240,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -12015,6 +12272,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#non-forwarded-options",
     "content": "Will be injected via the header API-KEY. Default: env.AZURE_OPENAI_API_KEY\nAPI-KEY: $api_key\n\n\nThe base URL for the API. Default: https://${resource_name}.openai.azure.com/openai/deployments/${deployment_id}\nMay be used instead of resource_name and deployment_id.\n\n\nSee the base_url field.\n\n\nSee the base_url field.\n\n\nThe default role for any prompts that don't specify a role. Default: system\nWe don't have any checks for this field, you can pass any string you wish.\n\n\nWill be passed via a query parameter api-version.\n\n\nAdditional headers to send with the request.\nExample:\n\n\nWhich role metadata should we forward to the API? Default: []\nFor example you can set this to [\"foo\", \"bar\"] to forward the cache policy to the API.\nIf you do not set allowed_role_metadata, we will not forward any role metadata to the API even if it is set in the prompt.\nThen in your prompt you can use something like:\nYou can use the playground to see the raw curl request to see what is being sent to the API.",
@@ -12070,6 +12328,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#forwarded-options",
     "content": "BAML will auto construct this field for you from the prompt\n\n\nBAML will auto construct this field for you based on how you call the client in your code\nFor all other options, see the official Azure API documentation.",
@@ -12105,6 +12364,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -12136,6 +12396,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#non-forwarded-options",
     "content": "The base URL for the API.\nDefault: https://api.openai.com/v1\n\n\nThe default role for any prompts that don't specify a role.\nWe don't do any validation of this field, so you can pass any string you wish.\nDefault: system\n\n\nWill be used to build the Authorization header, like so: Authorization: Bearer $api_key\nIf api_key is not set, or is set to an empty string, the Authorization header will not be sent.\nDefault: <none>\n\n\nAdditional headers to send with the request.\nExample:",
@@ -12183,6 +12444,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#forwarded-options",
     "content": "BAML will auto construct this field for you from the prompt\n\n\nBAML will auto construct this field for you based on how you call the client in your code\n\n\nThe model to use.\nFor OpenAI, this might be \"gpt-4o-mini\"; for Ollama, this might be \"llama2\". The exact\nsyntax will depend on your API provider's documentation: we'll just forward it to them as-is.\nFor all other options, see the official OpenAI API documentation.",
@@ -12218,6 +12480,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -12249,6 +12512,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -12280,6 +12544,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Keywords AI is a proxying layer that allows you to route requests to hundreds of models.\nFollow the Keywords AI + BAML Installation Guide to get started!"
   },
@@ -12304,6 +12569,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -12335,6 +12601,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -12366,6 +12633,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#non-forwarded-options",
     "content": "The base URL for the API. Default: http://localhost:11434/v1\n\n\nNote the /v1 at the end of the URL. See Ollama's OpenAI compatability\n\n\nThe default role for any prompts that don't specify a role. Default: system\nWe don't have any checks for this field, you can pass any string you wish.\n\n\nAdditional headers to send with the request.\nExample:\n\n\nWhich role metadata should we forward to the API? Default: []\nFor example you can set this to [\"foo\", \"bar\"] to forward the cache policy to the API.\nIf you do not set allowed_role_metadata, we will not forward any role metadata to the API even if it is set in the prompt.\nThen in your prompt you can use something like:\nYou can use the playground to see the raw curl request to see what is being sent to the API.",
@@ -12421,6 +12689,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#forwarded-options",
     "content": "BAML will auto construct this field for you from the prompt\n\n\nBAML will auto construct this field for you based on how you call the client in your code\n\n\nThe model to use.\nModel Description \nllama3 Meta Llama 3: The most capable openly available LLM to date \nqwen2 Qwen2 is a new series of large language models from Alibaba group \nphi3 Phi-3 is a family of lightweight 3B (Mini) and 14B (Medium) state-of-the-art open models by Microsoft \naya Aya 23, released by Cohere, is a new family of state-of-the-art, multilingual models that support 23 languages. \nmistral The 7B model released by Mistral AI, updated to version 0.3. \ngemma Gemma is a family of lightweight, state-of-the-art open models built by Google DeepMind. Updated to version 1.1 \nmixtral A set of Mixture of Experts (MoE) model with open weights by Mistral AI in 8x7b and 8x22b parameter sizes. \n\nFor the most up-to-date list of models supported by Ollama, see their Model Library.\n\n\nTo use a specific version you would do: \"mixtral:8x22b\"",
@@ -12456,6 +12725,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -12487,6 +12757,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -12518,6 +12789,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -12549,6 +12821,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -12580,6 +12853,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -12616,6 +12890,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#fields",
     "content": "Number of additional retries to attempt after the initial request fails.\n\n\nThe strategy to use for retrying requests. Default is constant_delay(delay_ms=200).\nStrategy Docs Notes \nconstant_delay Docs  \nexponential_backoff Docs  \n\nExample:",
@@ -12663,6 +12938,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#constant_delay",
     "content": "Configures to the constant delay strategy.\n\n\nThe delay in milliseconds to wait between retries. Default: 200",
@@ -12702,6 +12978,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#exponential_backoff",
     "content": "Configures to the exponential backoff strategy.\n\n\nThe initial delay in milliseconds to wait between retries. Default: 200\n\n\nThe multiplier to apply to the delay after each retry. Default: 1.5\n\n\nThe maximum delay in milliseconds to wait between retries. Default: 10000",
@@ -12741,6 +13018,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -12772,6 +13050,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#options",
     "content": "The list of client names to try in order. Cannot be empty.",
@@ -12807,6 +13086,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#retry_policy",
     "content": "Like any other client, you can specify a retry policy for the fallback client. See retry_policy for more information.\nThe retry policy will test the fallback itself, after the entire strategy has failed.",
@@ -12849,6 +13129,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#nesting-multiple-fallbacks",
     "content": "You can nest multiple fallbacks inside of each other. The fallbacks will just chain as you would expect.",
@@ -12891,6 +13172,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -12922,6 +13204,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#options",
     "content": "The list of client names to try in order. Cannot be empty.\n\n\nThe index of the client to start with.\nDefault is random(0, len(strategy))\nIn the BAML Playground, Default is 0.",
@@ -12957,6 +13240,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#retry_policy",
     "content": "When using a retry_policy with a round-robin client, it will rotate the strategy list after each retry.",
@@ -12999,6 +13283,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#nesting-multiple-round-robin-clients",
     "content": "You can nest multiple round-robin clients inside of each other. The round-robin as you would expect.",
@@ -13041,6 +13326,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -13102,6 +13388,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#dynamic-types",
     "content": "There are two ways to use TypeBuilder:\nModifying existing BAML types marked with @@dynamic\n\nCreating entirely new types at runtime",
@@ -13137,6 +13424,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#modifying-existing-types",
     "content": "To modify an existing BAML type, mark it with @@dynamic:\n\n\nRuntime Usage\n\n\n\n\nRuntime Usage",
@@ -13254,6 +13542,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#creating-new-types",
     "content": "You can also create entirely new types at runtime:",
@@ -13325,6 +13614,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#type-builders",
     "content": "TypeBuilder provides methods for building different kinds of types:\nMethod Description Example \nstring() Creates a string type tb.string() \nint() Creates an integer type tb.int() \nfloat() Creates a float type tb.float() \nbool() Creates a boolean type tb.bool() \nlist() Makes a type into a list tb.string().list() \noptional() Makes a type optional tb.string().optional()",
@@ -13360,6 +13650,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#adding-descriptions",
     "content": "You can add descriptions to properties and enum values to help guide the LLM:",
@@ -13427,6 +13718,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#common-patterns",
     "content": "Here are some common patterns when using TypeBuilder:\nDynamic Categories: When categories come from a database or external source\n\n\n\n\nForm Fields: When extracting dynamic form fields\n\n\n\n\nOptional Properties: When some fields might not be present\n\n\n\n\n\n\nAll types added through TypeBuilder must be connected to the return type of your BAML function. Standalone types that aren't referenced won't affect the output schema.",
@@ -13554,6 +13846,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#future-features",
     "content": "We're working on additional features for TypeBuilder:\nJSON Schema support (awaiting use cases)\n\nOpenAPI schema integration\n\nPydantic model support\n\n\nIf you're interested in these features, please join the discussion in our GitHub issues.",
@@ -13589,6 +13882,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -13655,6 +13949,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#clientregistry-interface",
     "content": "Note: ClientRegistry is imported from baml_py in Python and @boundaryml/baml in TypeScript, not baml_client.\nAs we mature ClientRegistry, we will add a more type-safe and ergonomic interface directly in baml_client. See Github issue #766.\nMethods use snake_case in Python and camelCase in TypeScript.",
@@ -13690,6 +13985,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#add_llm_client--addllmclient",
     "content": "A function to add an LLM client to the registry.\n\n\nThe name of the client.\n\n\nUsing the exact same name as a client also defined in .baml files overwrites the existing client whenever the ClientRegistry is used.\n\n\nThis configures which provider to use. The provider is responsible for handling the actual API calls to the LLM service. The provider is a required field.\nThe configuration modifies the URL request BAML runtime makes.\nProvider Name Docs Notes \nanthropic Anthropic  \naws-bedrock AWS Bedrock  \nazure-openai Azure OpenAI  \ngoogle-ai Google AI  \nopenai OpenAI  \nopenai-generic OpenAI (generic) Any model provider that supports an OpenAI-compatible API \nvertex-ai Vertex AI  \n\nWe also have some special providers that allow composing clients together:\nProvider Name Docs Notes \nfallback Fallback Used to chain models conditional on failures \nround-robin Round Robin Used to load balance \n\n\n\nThese vary per provider. Please see provider specific documentation for more\ninformation. Generally they are pass through options to the POST request made\nto the LLM.\n\n\nThe name of a retry policy that is already defined in a .baml file. See Retry Policies.",
@@ -13729,6 +14025,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#set_primary--setprimary",
     "content": "This sets the client for the function to use. (i.e. replaces the client property in a function)\n\n\nThe name of the client to use.\nThis can be a new client that was added with add_llm_client or an existing client that is already in a .baml file.",
@@ -13768,6 +14065,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "BAML Prompt strings are essentially Minijinja templates, which offer the ability to express logic and data manipulation within strings. Jinja is a very popular and mature templating language amongst Python developers, so Github Copilot or another LLM can already help you write most of the logic you want."
   },
@@ -13792,6 +14090,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#jinja-cookbook",
     "content": "When in doubt -- use the BAML VSCode Playground preview. It will show you the fully rendered prompt, even when it has complex logic.",
@@ -13827,6 +14126,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#basic-syntax",
     "content": "{% ... %}: Use for executing statements such as for-loops or conditionals.\n\n{{ ... }}: Use for outputting expressions or variables.\n\n{# ... #}: Use for comments within the template, which will not be rendered.",
@@ -13866,6 +14166,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#loops--iterating-over-lists",
     "content": "Here's how you can iterate over a list of items, accessing each item's attributes:",
@@ -13912,6 +14213,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#conditional-statements",
     "content": "Use conditional statements to control the flow and output of your templates based on conditions:",
@@ -13958,6 +14260,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#setting-variables",
     "content": "You can define and use variables within your templates to simplify expressions or manage data:",
@@ -14003,6 +14306,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#including-other-templates",
     "content": "To promote reusability, you can include other templates within a template. See template strings:",
@@ -14048,6 +14352,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#built-in-filters",
     "content": "See jinja docs",
@@ -14087,6 +14392,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -14121,6 +14427,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#controlling-the-output_format",
     "content": "ctx.output_format can also be called as a function with parameters to customize how the schema is printed, like this:\nHere's the parameters:\n\n\nThe prefix instruction to use before printing out the schema.\nBAML's default prefix varies based on the function's return type.\nFuction return type Default Prefix \nPrimitive (String)  \nPrimitive (Other) Answer as a:  \nEnum Answer with any of the categories:\\n \nClass Answer in JSON using this schema:\\n \nList Answer with a JSON Array using this schema:\\n \nUnion Answer in JSON using any of these schemas:\\n \nOptional Answer in JSON using this schema:\\n \n\n\n\nWhether to inline the enum definitions in the schema, or print them above. Default: false\nInlined\nhoisted\n\n\nBAML will always hoist if you add a description to any of the enum values.\n\nDefault: or\nIf a type is a union like string | int or an optional like string?, this indicates how it's rendered.\nBAML renders it as property: string or null as we have observed some LLMs have trouble identifying what property: string | null means (and are better with plain english).\nYou can always set it to | or something else for a specific model you use.",
@@ -14182,6 +14489,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#why-baml-doesnt-use-json-schema-format-in-prompts",
     "content": "BAML uses \"type definitions\" or \"jsonish\" format instead of the long-winded json-schema format.\nThe tl;dr is that json schemas are\n4x more inefficient than \"type definitions\".\n\nvery unreadable by humans (and hence models)\n\nperform worse than type definitions (especially on deeper nested objects or smaller models)\n\n\nRead our full article on json schema vs type definitions",
@@ -14217,6 +14525,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "If you try rendering {{ ctx }} into the prompt (literally just write that out!), you'll see all the metadata we inject to run this prompt within the playground preview.\nIn the earlier tutorial we mentioned ctx.output_format, which contains the schema, but you can also access client information:"
   },
@@ -14241,6 +14550,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#usecase-conditionally-render-based-on-client-provider",
     "content": "In this example, we render the list of messages in XML tags if the provider is Anthropic (as they recommend using them as delimiters). See also  template_string as it's used in here.",
@@ -14282,6 +14592,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -14312,6 +14623,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#example----using-_role-in-for-loops",
     "content": "Here's how you can inject a list of user/assistant messages and mark each as a user or assistant role:",
@@ -14359,6 +14671,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "See template_string to learn how to add variables in .baml files"
   },
@@ -14383,6 +14696,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -14413,6 +14727,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -14443,6 +14758,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#loop",
     "content": "Jinja provides a loop object that can be used to access information about the loop. Here are some of the attributes of the loop object:\nVariable Description \nloop.index The current iteration of the loop. (1 indexed) \nloop.index0 The current iteration of the loop. (0 indexed) \nloop.revindex The number of iterations from the end of the loop (1 indexed) \nloop.revindex0 The number of iterations from the end of the loop (0 indexed) \nloop.first True if first iteration. \nloop.last True if last iteration. \nloop.length The number of items in the sequence. \nloop.cycle A helper function to cycle between a list of sequences. See the explanation below. \nloop.depth Indicates how deep in a recursive loop the rendering currently is. Starts at level 1 \nloop.depth0 Indicates how deep in a recursive loop the rendering currently is. Starts at level 0 \nloop.previtem The item from the previous iteration of the loop. Undefined during the first iteration. \nloop.nextitem The item from the following iteration of the loop. Undefined during the last iteration. \nloop.changed(*val) True if previously called with a different value (or not called at all).",
@@ -14484,6 +14800,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Type Value \nstring | null null \n\nIf set, all generated code will use this instead of the packaged generator shipped with the extension.\n\n\nWe recommend this setting! This prevents mismatches between the VSCode Extension and the installed BAML package."
   },
@@ -14508,6 +14825,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#usage",
     "content": "If you use unix, you can run where baml-cli in your project to figure out what the path is.",
@@ -14550,6 +14868,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -14579,6 +14898,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Type Default Value \nboolean true \n\ntrue: Automatically restarts the TypeScript Language Server in VSCode when the BAML extension generates the TypeScript baml_client files. This is a workaround for VSCode's issues with recognizing newly added directories and files in the TypeScript Language Server. No-op if not generating TypeScript files.\n\nfalse: Does not automatically restart the TypeScript Server. You may need to manually reload the TS server to ensure it recognizes the new types."
   },
@@ -14603,6 +14923,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "We leveraged our expertise in structured data extraction to create a general purpose extraction API that is independent of BAML.\nIf you are interested in converting PDF documents, invoices, images into readable structured data, this API is for you.\nTo try it out visit our Dashboard v2. Note that this is a different website from the current tracing/observability dashboard (app.boundaryml.com). We are working on unifying the two."
   },
@@ -14631,6 +14952,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -14654,6 +14976,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -14677,6 +15000,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#boundary-functions",
     "content": "baml_src, per-project:\nYou may deploy up to 100MiB of baml_src.\n\n\nEnvironment variables, per-project:\nYou may have up to 1000 environment variables.\n\nYou may have up to 64KiB of data across all environment variables combined.",
@@ -14708,6 +15032,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "All notable changes to this project will be documented in this file. See conventional commits for commit guidelines."
   },
@@ -14728,6 +15053,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation",
     "content": "New Documentation Structure: Introduced version 3 of the documentation, enhancing clarity and organization. (#1118)",
@@ -14763,6 +15089,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes",
     "content": "Python Type Handling: Moved Python Checked and Check types into baml_client for better type management. (#1122)\n\nLiteral Input Type Checking: Fixed an issue where literal inputs were not being type-checked correctly. (#1121)",
@@ -14798,6 +15125,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-1",
     "content": "Playground Stability: Prevented crashes in the playground due to malformed vertex credentials (#1107) - Samuel Lijin\n\nUnion Handling: Addressed an issue with union types in the schema (#1096) - Greg Hale\n\nWASM Function Signatures: Resolved stack overflow when computing WASM function signatures (#1100) - aaronvg\n\nVSCode Extension: Fixed crashes in the VSCode extension that caused the output panel to open unexpectedly (#1103) - hellovai\n\nStatic Analysis Improvements: Enhanced static analysis on Jinja expressions and regex_match functions (#1102, #1104) - hellovai\n\nCodegen Enhancements: Fixed code generation for Python boolean literals and updated integration tests (#1099) - Antonio Sarosi\n\nEnum Handling: Improved substring alias handling for enums (#1098) - Miguel Cárdenas\n\nSyntax Highlighting: Refined span calculations for Jinja expressions and improved VSCode syntax highlighting with Lezer (#1110) - hellovai\n\nRuby Support: Fixed literal boolean tests for Ruby (#1109) - Antonio Sarosi",
@@ -14833,6 +15161,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features",
     "content": "Constraint Support: Added the ability to define constraints using Jinja expressions (#1006) - Greg Hale\n\nVSCode & Fiddle UI: Introduced a new \"Intro to Checks\" UI for easier onboarding (#1106) - Samuel Lijin\n\nDev Container Configurations: Added Dev Container configurations for streamlined development environments (#1112) - Antonio Sarosi",
@@ -14868,6 +15197,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation-1",
     "content": "Constraints Documentation: Published new documentation for defining constraints in BAML (#1113) - Greg Hale\n\nDynamic Types Linking: Added cross-links to dynamic types documentation for easier navigation (#1116) - Greg Hale",
@@ -14903,6 +15233,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#miscellaneous",
     "content": "Code Quality: Improved style and fixed typos in the codebase (#1115) - Greg Hale\n\nParsing Stability: Added logic to prevent assertions from parsing errors and ensured checks no longer affect parsing (#1101) - hellovai\n\nVersion Bump: Bumped version to 0.64.0 (#1114, #ff7e152) - Vaibhav Gupta",
@@ -14938,6 +15269,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-2",
     "content": "Fix dynamic enums which already are defined in BAML (#1080) - (22d0f1c) - hellovai",
@@ -14973,6 +15305,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-1",
     "content": "Updated clients.baml to use the latest sonnet model (#1081) - (71df0b7) - aaronvg\n\nImproved clients.baml generated via baml init (#1089) - (682dd66) - hellovai",
@@ -15008,6 +15341,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-2",
     "content": "Support serializing/deserializing baml_py.Image, baml_py.Audio for pydantic (#1062) - (11cb699) - Samuel Lijin\n\nSupport rendering input classes with aliases (#1045) - (3824cda) - aaronvg\n\nAdd unstable_internal_repr on FunctionResult in python (#1068) - (00082e8) - hellovai\n\nAdd literal support for type_builder (#1069) - (c0085d9) - hellovai",
@@ -15043,6 +15377,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-3",
     "content": "Surface errors in fallbacks containing only erroneous clients (#1061) - (b69ef79) - Greg Hale\n\nFix parser so that we are able to correctly detect sequences of empty strings. (#1048) - (977e277) - hellovai\n\nMake substring match algorithm case insensitive (#1056) - (fa2c477) - Antonio Sarosi\n\nFix vertex-ai citation data being optional (#1058) - (5eae0a7) - aaronvg\n\nFix bug to correctly cast to pydantic types in ambiguous scenarios where BAML knows better (#1059) - (830b0cb) - hellovai\n\nParser: Prefer case sensitive match over case insensitive (#1063) - (cd6b141) - Antonio Sarosi\n\nOnly popup the vscode env var dialog once (#1066) - (1951474) - aaronvg",
@@ -15078,6 +15413,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation-2",
     "content": "Docs for literal types (#1030) - (55e5964) - Antonio Sarosi\n\nContribution guide (#1055) - (f09d943) - aaronvg",
@@ -15113,6 +15449,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#misc",
     "content": "Fix VSCode metrics (#1044) - (a131336) - hellovai\n\nAdd more test cases for unquoted strings in objects (#1054) - (2d1b700) - hellovai",
@@ -15148,6 +15485,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-4",
     "content": "add musl to the ts release artifacts (#1042) - (e74f3e9) - Samuel Lijin",
@@ -15183,6 +15521,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-3",
     "content": "Implement literal types (#978) - (9e7431f) - Antonio Sarosi\n\nallow installing the TS library on node-alpine (#1029) - (1c37a0d) - Samuel Lijin\n\nAdd WYSIWYG UI (Swagger UI) to baml-cli dev (#1019) - (0c73cab) - Greg Hale\n\nSuppress streaming for Numbers (#1032) - (3f4621b) - Greg Hale",
@@ -15218,6 +15557,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-5",
     "content": "Add limit on connection pool to prevent stalling issues in pyo3 and other ffi boundaries (#1027) - (eb90e62) - hellovai\n\nUpdate docs (#1025) - (2dd1bb6) - Farookh Zaheer Siddiqui\n\nFix parsing for streaming of objects more stable (#1031) - (8aa9c00) - hellovai\n\nFix python BamlValidationError type (#1036) - (59a9510) - aaronvg",
@@ -15253,6 +15593,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#miscellaneous-1",
     "content": "Popup settings dialog when no env vars set (#1033) - (b9fa52a) - aaronvg\n\nBump version to 0.61.0 - (ca2242b) - Aaron Villalpando",
@@ -15288,6 +15629,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#miscellaneous-chores",
     "content": "update Dockerfile (#1017) - (51539b7) - Ikko Eltociear Ashimine\n\nRevert \"feat: add a WYSIWYG UI (Swagger UI) to baml-cli dev (#1011)\" (#1018) - (f235050) - Greg Hale",
@@ -15323,6 +15665,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-6",
     "content": "Fix python types for BamlValidationError (#1020) - (520a09c) - aaronvg\n\ncoerce floats and ints with commas and other special cases (#1023) - (904492e) - aaronvg",
@@ -15358,6 +15701,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#docs",
     "content": "Add Docs for Jupyter notebook usage (#1008) - (c51d918) - aaronvg",
@@ -15393,6 +15737,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-4",
     "content": "(vertex) allow specifying creds as JSON object (#1009) - (98868da) - Samuel Lijin\n\nAdd prompt, raw_output and error message to BamlValidationError in TS and Python (#1005) - (447dbf4) - aaronvg\n\nAdd BamlValidationError to baml-cli serve (#1007) - (3b8cf16) - aaronvg\n\nInclude a WYSIWYG UI (Swagger UI) to baml-cli dev (#1011) - (fe9dde4) - imalsogreg",
@@ -15428,6 +15773,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-5",
     "content": "Add client registry support for BAML over Rest (OpenAPI) (#1000) - (abe70bf) - Lorenz Ohly",
@@ -15463,6 +15809,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-7",
     "content": "Improve performance of parsing escaped characters in strings during streaming. (#1002) - (b35ae2c) - hellovai",
@@ -15498,6 +15845,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation-3",
     "content": "Add Docs for Document Extraction API (#996) - (da1a5e8) - aaronvg",
@@ -15533,6 +15881,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-8",
     "content": "[BUGFIX] Parser should require a space between class keyword and class name (#990) - (7528247) - Greg Hale\n\nRemove dynamic string attributes (#991) - (0960ab2) - Greg Hale\n\nts fixes (#992) - (36af43f) - aaronvg\n\nBump version to 0.57.1 - (0aa71dd) - Aaron Villalpando",
@@ -15568,6 +15917,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation-4",
     "content": "Fix Python dynamic types example (#979) - (eade116) - lorenzoh",
@@ -15603,6 +15953,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-6",
     "content": "teach vscode/fiddle to explain when we drop information (#897) - (93e2b9b) - Samuel Lijin\n\nAdd ability for users to reset env vars to their desire. (#984) - (69e6c29) - hellovai",
@@ -15638,6 +15989,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-9",
     "content": "Fixed panic during logging for splitting on UTF-8 strings. (#987) - (c27a64f) - hellovai\n\nImprove SAP for triple quoted strings along with unions (#977) - (44202ab) - hellovai\n\nAdd more unit tests for parsing logic inspired by user (#980) - (48dd09f) - hellovai\n\nImprove syntax errors e.g. class / enum parsing and also update pestmodel to handle traling comments (#981) - (adbb6ae) - hellovai\n\nUpdating docs for env vars (#985) - (305d6b3) - hellovai\n\nWhen using openai-generic, use a string as the content type in the api request if theres no media (#988) - (e8fa739) - aaronvg",
@@ -15673,6 +16025,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-10",
     "content": "Improved parser for unions (#975) - (b390521) - hellovai\n\n[syntax] Allow lists to contain trailing comma (#974) - (9e3dc6c) - Greg Hale",
@@ -15708,6 +16061,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#0560---2024-09-20",
     "content": "Shout outs to Nico for fixing some internal Rust dependencies, and to Lorenz for correcting our documentation! We really appreciate it :)",
@@ -15739,6 +16093,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-7",
     "content": "use better default for openapi/rust client (#958) - (b74ef15) - Samuel Lijin",
@@ -15774,6 +16129,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-11",
     "content": "push optional-list and optional-map validation to post-parse (#959) - (c0480d5) - Samuel Lijin\n\nimprove OpenAPI instructions for windows/java (#962) - (6010efb) - Samuel Lijin\n\nassorted fixes: unquoted strings, openai-generic add api_key for bearer auth, support escape characters in quoted strings (#965) - (847f3a9) - hellovai\n\nserde-serialize can cause a package dependency cycle (#967) - (109ae09) - Nico\n\nmake anthropic work in fiddle/vscode (#970) - (32eccae) - Samuel Lijin\n\nmake dynamic enums work as outputs in Ruby (#972) - (7530402) - Samuel Lijin",
@@ -15809,6 +16165,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation-5",
     "content": "suggest correct python init command in vscode readme (#954) - (e99c5dd) - Samuel Lijin\n\nadd more vscode debugging instructions (#955) - (342b657) - Samuel Lijin\n\nNextJS hook needs to be bound to the correct context (#957) - (ee80451) - aaronvg\n\nupdate nextjs hooks and docs (#952) - (01cf855) - aaronvg\n\nFix some documentation typos (#966) - (5193cd7) - Greg Hale\n\nKeywords AI router (#953) - (1c6f975) - aaronvg\n\nFix post_generate comment (#968) - (919c79f) - lorenzoh",
@@ -15844,6 +16201,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-12",
     "content": "show actionable errors for string[]? and map<...>? type validation (#946) - (48879c0) - Samuel Lijin",
@@ -15879,6 +16237,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation-6",
     "content": "add reference docs about env vars (#945) - (dd43bc5) - Samuel Lijin",
@@ -15914,6 +16273,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-13",
     "content": "use correct locking strategy inside baml-cli serve (#943) - (fcb694d) - Samuel Lijin",
@@ -15949,6 +16309,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-8",
     "content": "allow using DANGER_ACCEPT_INVALID_CERTS to disable https verification (#901) - (8873fe7) - Samuel Lijin",
@@ -15984,6 +16345,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-14",
     "content": "in generated TS code, put eslint-disable before ts-nocheck - (16d04c6) - Sam Lijin\n\nbaml-cli in python works again - (b57ca0f) - Sam Lijin",
@@ -16019,6 +16381,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation-7",
     "content": "update java install instructions (#933) - (b497003) - Samuel Lijin",
@@ -16054,6 +16417,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#miscellaneous-chores-1",
     "content": "add version headers to the openapi docs (#931) - (21545f2) - Samuel Lijin",
@@ -16089,6 +16453,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#0550---2024-09-09",
     "content": "With this release, we're announcing support for BAML in all languages: we now\nallow you to call your functions over an HTTP interface, and will generate an\nOpenAPI specification for your BAML functions, so you can now generate a client\nin any language of your choice, be it Golang, Java, PHP, Ruby, Rust, or any of\nthe other languages which OpenAPI supports.\nStart here to learn more: https://docs.boundaryml.com/docs/get-started/quickstart/openapi",
@@ -16120,6 +16485,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-9",
     "content": "implement BAML-over-HTTP (#908) - (484fa93) - Samuel Lijin\n\nAdd anonymous telemetry about playground actions (#925) - (6f58c9e) - hellovai",
@@ -16155,6 +16521,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-10",
     "content": "Add a setting to disable restarting TS server in VSCode (#920) - (628f236) - aaronvg\n\nAdd prompt prefix for map types in ctx.output_format and add more type validation for map params (#919) - (4d304c5) - hellovai",
@@ -16190,6 +16557,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-15",
     "content": "Fix glibC issues for python linux-x86_64 (#922) - (9161bec) - Samuel Lijin",
@@ -16225,6 +16593,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation-8",
     "content": "Add nextjs hooks (#921) - (fe14f5a) - aaronvg",
@@ -16260,6 +16629,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#breaking-change",
     "content": "Fix escape characters in quoted strings (#905) - (9ba6eb8) - hellovai\n\n\nPrior \"\\n\" was interpreted as \"\\\\n\" in quoted strings. This has been fixed to interpret \"\\n\" as newline characters and true for other escape characters.",
@@ -16295,6 +16665,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation-9",
     "content": "updated dead vs-code-extension link (#914) - (b12f164) - Christian Warmuth\n\nUpdate docs for setting env vars (#904) - (ec1ca94) - hellovai\n\nAdd docs for LMStudio (#906) - (ea4c187) - hellovai\n\nFix docs for anthropic (#910) - (aba2764) - hellovai\n\nUpdate discord links on docs (#911) - (927357d) - hellovai",
@@ -16330,6 +16701,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-11",
     "content": "BAML_LOG will truncate messages to 1000 characters (modify using env var BOUNDARY_MAX_LOG_CHUNK_SIZE) (#907) - (d266e5c) - hellovai",
@@ -16365,6 +16737,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-16",
     "content": "Improve parsing parsing when there are initial closing ] or } (#903) - (46b0cde) - hellovai\n\nUpdate build script for ruby to build all platforms (#915) - (df2f51e) - hellovai\n\nAdd unit-test for openai-generic provider and ensure it compiles (#916) - (fde7c50) - hellovai",
@@ -16400,6 +16773,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#breaking-change-1",
     "content": "Update Default Gemini Base URL to v1beta (#891) - (a5d8c58) - gleed\n\n\nThe default base URL for the Gemini provider has been updated to v1beta. This change is should have no impact on existing users as v1beta is the default version for the Gemini python library, we are mirroring this change in BAML.",
@@ -16435,6 +16809,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-17",
     "content": "Allow promptfiddle to talk to localhost ollama (#886) - (5f02b2a) - Samuel Lijin\n\nUpdate Parser for unions so they handle nested objects better (#900) - (c5b9a75) - hellovai",
@@ -16470,6 +16845,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation-10",
     "content": "Add ollama to default prompt fiddle example (#888) - (49146c0) - Samuel Lijin\n\nAdding improved docs + unit tests for caching (#895) - (ff7be44) - hellovai",
@@ -16505,6 +16881,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-12",
     "content": "Allow local filepaths to be used in tests in BAML files (image and audio) (#871) - (fa6dc03) - Samuel Lijin\n\nAdd support for absolute file paths in the file specifier (#881) - (fcd189e) - hellovai\n\nImplement shorthand clients (You can now use \"openai/gpt-4o\" as short for creating a complete client.) (#879) - (ddd15c9) - Samuel Lijin\n\nAdd support for arbritrary metadata (e.g. cache_policy for anthropic) (#893) - (0d63a70) - hellovai\n\nExpose Exceptions to user code: BamlError, BamlInvalidArgumentError, BamlClientError, BamlClientHttpError, BamlValidationError (#770) - (7da14c4) - hellovai",
@@ -16540,6 +16917,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#internal",
     "content": "AST Restructuring (#857) - (75b51cb) - Anish Palakurthi",
@@ -16575,6 +16953,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-18",
     "content": "fix github release not passing params to napi script causing issues in x86_64 (#872)\n\n(06b962b) - aaronvg",
@@ -16610,6 +16989,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-13",
     "content": "Add Client orchestration graph in playground (#801) - (24b5895) - Anish Palakurthi\n\nincrease range of python FFI support (#870) - (ec9b66c) - Samuel Lijin",
@@ -16645,6 +17025,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#misc-1",
     "content": "Bump version to 0.53.1 - (e4301e3) - Aaron Villalpando",
@@ -16680,6 +17061,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-19",
     "content": "make image[] render correctly in prompts (#855) - (4a17dce) - Samuel Lijin",
@@ -16715,6 +17097,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-14",
     "content": "(ruby) implement dynamic types, dynamic clients, images, and audio (#842) - (4a21eed) - Samuel Lijin\n\nCodelenses for test cases (#812) - (7cd8794) - Anish Palakurthi",
@@ -16750,6 +17133,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#issue",
     "content": "removed vertex auth token printing (#846) - (b839316) - Anish Palakurthi\n\nFix google type deserialization issue - (a55b9a1) - Aaron Villalpando",
@@ -16785,6 +17169,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#miscellaneous-chores-2",
     "content": "clean up release stuff (#836) - (eed41b7) - Samuel Lijin\n\nAdd bfcl results to readme, fix links icons (#856) - (5ef7f3d) - aaronvg\n\nFix prompt fiddle and playground styles, add more logging, and add stop-reason to playground (#858) - (38e3153) - aaronvg\n\nBump version to 0.53.0 - (fd16839) - Aaron Villalpando",
@@ -16820,6 +17205,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-20",
     "content": "build python x86_64-linux with an older glibc (#834) - (db12540) - Samuel Lijin",
@@ -16855,6 +17241,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-15",
     "content": "Add official support for ruby (#823) - (e81cc79) - Samuel Lijin",
@@ -16890,6 +17277,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-21",
     "content": "Fix ClientRegistry for Typescript code-gen (#828) - (b69921f) - hellovai",
@@ -16925,6 +17313,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-16",
     "content": "Add support for unions / maps / null in TypeBuilder. (#820) - (8d9e92d) - hellovai",
@@ -16960,6 +17349,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-22",
     "content": "[Playground] Add a feedback button (#818) - (f749f2b) - Samuel Lijin",
@@ -16995,6 +17385,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation-11",
     "content": "Improvements across docs (#807) - (bc0c176) - Anish Palakurthi",
@@ -17030,6 +17421,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-17",
     "content": "Add a feedback button to VSCode Extension (#811) - (f371912) - Samuel Lijin",
@@ -17065,6 +17457,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug",
     "content": "Allow default_client_mode in the generator #813 (#815) - (6df7fca) - hellovai",
@@ -17100,6 +17493,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-23",
     "content": "Improve BAML Parser for numbers and single-key objects (#785) - (c5af7b0) - hellovai\n\nAdd docs for VLLM (#792) - (79e8773) - hellovai\n\nLLVM install and rebuild script (#794) - (9ee66ed) - Anish Palakurthi\n\nPrevent version mismatches when generating baml_client (#791) - (d793603) - aaronvg\n\nfiddle build fix (#800) - (d304203) - aaronvg\n\nDont drop extra fields in dynamic classes when passing them as inputs to a function (#802) - (4264c9b) - aaronvg\n\nAdding support for a sync client for Python + Typescript (#803) - (62085e7) - hellovai\n\nFix WASM-related issues introduced in #803 (#804) - (0a950e0) - hellovai\n\nAdding various fixes (#806) - (e8c1a61) - hellovai",
@@ -17135,6 +17529,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-18",
     "content": "implement maps in BAML (#797) - (97d7e62) - Samuel Lijin\n\nSupport Vertex AI (Google Cloud SDK) (#790) - (d98ee81) - Anish Palakurthi\n\nAdd copy buttons to test results in playground (#799) - (b5eee3d) - aaronvg",
@@ -17170,6 +17565,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#miscellaneous-chores-3",
     "content": "in fern config, defer to installed version (#789) - (479f1b2) - fern\n\npublish docs on every push to the default branch (#796) - (180824a) - Samuel Lijin\n\n🌿 introducing fern docs (#779) - (46f06a9) - fern\n\nAdd test for dynamic list input (#798) - (7528d6a) - aaronvg",
@@ -17205,6 +17601,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-24",
     "content": "[Playground] Environment variable button is now visible on all themes (#762) - (adc4da1) - aaronvg\n\n[Playground] Fix to cURL rendering and mime_type overriding (#763) - (67f9c6a) - Anish Palakurthi",
@@ -17240,6 +17637,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-19",
     "content": "[Runtime] Add support for clients that change at runtime using ClientRegistry (#683) - (c0fb454) - hellovai\nhttps://docs.boundaryml.com/docs/calling-baml/client-registry",
@@ -17275,6 +17673,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation-12",
     "content": "Add more documentation for TypeBuilder (#767) - (85dc8ab) - Samuel Lijin",
@@ -17310,6 +17709,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-25",
     "content": "Fixed Azure / Ollama clients. Removing stream_options from azure and ollama clients (#760) - (30bf88f) - hellovai",
@@ -17345,6 +17745,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-20",
     "content": "Add support for arm64-linux (#751) - (adb8ee3) - Samuel Lijin",
@@ -17380,6 +17781,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-26",
     "content": "Fix env variables dialoge on VSCode (#750)\n\nPlayground selects correct function after loading (#757) - (09963a0) - aaronvg",
@@ -17415,6 +17817,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#miscellaneous-chores-4",
     "content": "Better error messages on logging failures to Boundary Studio (#754) - (49c768f) - aaronvg",
@@ -17450,6 +17853,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-27",
     "content": "make settings dialog work in vscode again (#750) (c94e355) - aaronvg\n\nrestore releases on arm64-linux (#751) - (adb8ee3) - Samuel Lijin",
@@ -17485,6 +17889,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-28",
     "content": "Fixed tracing issues for Boundary Studio (#740) - (77a4db7) - Samuel Lijin\n\nFixed flush() to be more reliable (#744) - (9dd5fda) - Samuel Lijin\n\nRemove error when user passes in extra fields in a class (#746) - (2755b43) - aaronvg",
@@ -17520,6 +17925,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-21",
     "content": "Add support for base_url for the google-ai provider (#747) - (005b1d9) - hellovai\n\nPlayground UX improvements (#742) - (5cb56fd) - hellovai\n\nPrompt Fiddle now auto-switches functions when to change files (#745)",
@@ -17555,6 +17961,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation-13",
     "content": "Added a large example project on promptfiddle.com (#741) - (f80da1e) - aaronvg\n\nMark ruby as in beta (#743) - (901109d) - Samuel Lijin",
@@ -17590,6 +17997,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-29",
     "content": "Fixed streaming in Python Client which didn't show result until later (#726) - (e4f2daa) - Anish Palakurthi\n\nImprove playground stability on first load (#732) - (2ac7b32) - Anish Palakurthi\n\nAdd improved static analysis for jinja (#734) - (423faa1) - hellovai",
@@ -17625,6 +18033,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation-14",
     "content": "Docs for Dynamic Types (#722) https://docs.boundaryml.com/docs/calling-baml/dynamic-types",
@@ -17660,6 +18069,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-22",
     "content": "Show raw cURL request in Playground (#723) - (57928e1) - Anish Palakurthi\n\nSupport bedrock as a provider (#725) - (c64c665) - Samuel Lijin",
@@ -17695,6 +18105,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-30",
     "content": "Fix typebuilder for random enums (#721)",
@@ -17730,6 +18141,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-31",
     "content": "fix pnpm lockfile issue (#720)",
@@ -17765,6 +18177,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-32",
     "content": "correctly propagate LICENSE to baml-py (#695) - (3fda880) - Samuel Lijin",
@@ -17800,6 +18213,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#miscellaneous-chores-5",
     "content": "update jsonish readme (#685) - (b19f04a) - Samuel Lijin",
@@ -17835,6 +18249,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#vscode",
     "content": "add link to tracing, show token counts (#703) - (64aa18a) - Samuel Lijin",
@@ -17870,6 +18285,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#bug-fixes-33",
     "content": "rollback git lfs, images broken in docs rn (#534) - (6945506) - Samuel Lijin\n\nsearch for markdown blocks correctly (#641) - (6b8abf1) - Samuel Lijin\n\nrestore one-workspace-per-folder (#656) - (a464bde) - Samuel Lijin\n\nruby generator should be ruby/sorbet (#661) - (0019f39) - Samuel Lijin\n\nruby compile error snuck in (#663) - (0cb2583) - Samuel Lijin",
@@ -17905,6 +18321,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#documentation-15",
     "content": "add typescript examples (#477) - (532481c) - Samuel Lijin\n\nadd titles to code blocks for all CodeGroup elems (#483) - (76c6b68) - Samuel Lijin\n\nadd docs for round-robin clients (#500) - (221f902) - Samuel Lijin\n\nadd ruby example (#689) - (16e187f) - Samuel Lijin",
@@ -17940,6 +18357,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features-23",
     "content": "implement baml version --check --output json (#444) - (5f076ac) - Samuel Lijin\n\nshow update prompts in vscode (#451) - (b66da3e) - Samuel Lijin\n\nadd tests to check that baml version --check works (#454) - (be1499d) - Samuel Lijin\n\nparse typescript versions in version --check (#473) - (b4b2250) - Samuel Lijin\n\nimplement round robin client strategies (#494) - (599fcdd) - Samuel Lijin\n\nadd integ-tests support to build (#542) - (f59cf2e) - Samuel Lijin\n\nmake ruby work again (#650) - (6472bec) - Samuel Lijin\n\nAdd RB2B tracking script (#682) - (54547a3) - hellovai",
@@ -17975,6 +18393,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#miscellaneous-chores-6",
     "content": "add nodemon config to typescript/ (#435) - (231b396) - Samuel Lijin\n\nfinish gloo to BoundaryML renames (#452) - (88a7fda) - Samuel Lijin\n\nset up lfs (#511) - (3a43143) - Samuel Lijin\n\nadd internal build tooling for sam (#512) - (9ebacca) - Samuel Lijin\n\ndelete clients dir, this is now dead code (#652) - (ec2627f) - Samuel Lijin\n\nconsolidate vscode workspace, bump a bunch of deps (#654) - (82bf6ab) - Samuel Lijin\n\nAdd RB2B tracking script to propmt fiddle (#681) - (4cf806b) - hellovai\n\nAdding better release script (#688) - (5bec282) - hellovai",
@@ -18010,6 +18429,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#auto",
     "content": "patch] Version bump for nightly release [NIGHTLY:cli] [NIGHTLY:vscode_ext] [NIGHTLY:client-python] - (d05a22c) - GitHub Action",
@@ -18045,6 +18465,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#build",
     "content": "fix baml-core-ffi script (#521) - (b1b7f4a) - Samuel Lijin\n\nfix engine/ (#522) - (154f646) - Samuel Lijin",
@@ -18080,6 +18501,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#integ-tests",
     "content": "add ruby test - (c0bc101) - Sam Lijin",
@@ -18115,6 +18537,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#readme",
     "content": "add function calling, collapse the table (#505) - (2f9024c) - Samuel Lijin",
@@ -18150,6 +18573,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#release",
     "content": "bump versions for everything (#662) - (c0254ae) - Samuel Lijin",
@@ -18185,6 +18609,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#vscode-1",
     "content": "check for updates on the hour (#434) - (c70a3b3) - Samuel Lijin",
@@ -18228,6 +18653,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "eaa1074a-b676-4a6b-93df-43c52a64d62f",
     "api_endpoint_id": "endpoint_.extractData",
@@ -18267,7 +18693,7 @@
     "domain": "test.com",
     "canonicalPathname": "/ref/boundary-extraction-api/extract/extract-data",
     "pathname": "/ref/boundary-extraction-api/extract/extract-data",
-    "title": "Extract",
+    "title": "Extract - Response",
     "breadcrumb": [
       {
         "title": "Boundary Extraction API",
@@ -18276,6 +18702,10 @@
       {
         "title": "API Reference",
         "pathname": "/ref/boundary-extraction-api/extract"
+      },
+      {
+        "title": "Extract",
+        "pathname": "/ref/boundary-extraction-api/extract/extract-data"
       }
     ],
     "tab": {
@@ -18286,6 +18716,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "eaa1074a-b676-4a6b-93df-43c52a64d62f",
     "api_endpoint_id": "endpoint_.extractData",

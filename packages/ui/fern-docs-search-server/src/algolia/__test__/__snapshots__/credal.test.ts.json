@@ -16,6 +16,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Your security is our business\n\nWelcome to Credal's documentation! Here you'll find information to get started as well as our API Reference."
   },
@@ -36,6 +37,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#why-credal",
     "content": "Secure: Integrate in weeks, not months. We offer a modern, well-documented API.\n\nConnections: We connect to every major data source and provide secure APIs and Chatbots that let employees safely use that data with AI in their normal workflows.\n\nLoved by developers: The Credal features are backwards-compatible with OpenAI and Anthropic. This means you can add Credal's security benefits to your app, without significant code changes.",
@@ -67,6 +69,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#security",
     "content": "Our Founders and employees have received Government security clearances\nin the US and UK. We have led internationally recognized AI security projects\nfor the US Government's Military and Healthcare infrastructure. We have\nleveraged this experience to make sure our application is built securely from the ground up.\nData encrypted at all times in transit and at rest.\n\nRegular penetration testing and vulnerability scanning.\n\n24/7 monitoring of security logs from CloudWatch, Guard Duty, and other tools.\n\nSupports single tenant deployment.",
@@ -102,6 +105,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Credal's AI Copilots empower users to set up dedicated assistants for a wide range of use cases, from customer support to contract review.\nYou can think of Copilots as special-purposes AIs that you create, by specifying an AI model, data they should use, and a custom prompt.\nYou can then talk to them in a chat UI or deploy them to Slack or another application to help you perform workflows or answer questions. For example, a Slack Copilot in a channel could listen out for questions about benefits, and answer those. They combine AI with your data to provide accurate, context-aware responses, while citing their sources.\n\n\nCreate Your Copilot\nFrom the main screen, click “Copilots” in the navigation menu:\n\n\n\n\nThen click “Create Copilot”:\n\n\n\n\nGive your copilot a Name and add a Description of its function in the pop-out form. You can always come back and edit these later. Descriptions should be detailed enough to describe what kind of queries the copilot is responsible for.\n\n\n\n\nYou can click on “Copilots” in your left sidebar anytime to view the full list of Copilots you've created or that have been shared with you.\n\n\n\n\nConfigure the Copilot\nNow your copilot is set up, Credal will automatically direct you to the configure page, where you can tune your copilot for your use case. You can return to this page to edit your settings at any time. (For a detailed explanation of all the options, please see our Detailed Copilots User Guide.)\nYour Metadata (Name + Description) will be set already.\n\nYou can use the default Model (GPT-4o) for now, but feel free to experiment with OpenAI o1, Claude or any of the other models too.\n\nCreativity. We recommend starting with “balanced” or “precise”; “creative” is best for brainstorming, creative writing, or marketing use cases.\n\n\n\n\n\n\nPrompt\nHere you can provide a custom prompt, which will provide the copilot with context and instructions on how to handle user queries. By default, Credal instructs copilots to be helpful, honest, and to the point and to let users know when it is unsure of the answer.\n\n\n\n\n\n\nYou can revise this prompt to include the background information and instructions relevant to your Copilot. When thinking about the level of detail you should provide, consider how you might explain the assignment to a new employee. Your explanation might include:\nbackground information on the company;\n\nthe intended users;\n\nthe topics the copilot will be dealing with;\n\nany relevant guidelines or policies; and\n\nany other relevant considerations.\n\n\nThe content and depth of prompts will vary by use case.\n\n\n\n\nYou are a diligent, objective, detail-oriented, assistant. Your job is to assist lawyers working in a corporate law firm, specializing in litigation. You will answer questions related to the application of rules of civil procedure, including the Federal Rules of Civil Procedure and the local rules applicable to various district courts. You will respond to questions and prompts truthfully.\nInstructions:\nBelow is context to help you answer, followed by a prompt: read it and provide a helpful, honest, and to the point answer based only on the context provided.\n\nIf you're unsure of an answer, you can say \"I don't know\" or \"I'm not sure\".\n\nWhen providing a response, always include a reference to the rule number which contains the answer.\n\n\nThe Federal Rules of Civil Procedure are procedural rules that apply to civil court cases in United States federal district courts. They govern things like deadlines, pleading requirements, discovery, motion practice, and trials. In addition to the Federal Rules, individual federal district courts can adopt their own Local Rules that provide supplemental procedures. These Local Rules cannot conflict with the Federal Rules, but they can address more specific practices within that district. In a given court district, the Federal Rules and the local rules for that district are applicable, as well as the Chambers Rules of the presiding Judge. Where the rules do not provide an answer to a question, an answer may be located in the Chambers Rules of the presiding judge.\n--- Start Context ---\n{{data}}\n--- End Context ---\n\n\nYou are a friendly helpful, honest assistant, who helps Credal company employees answer questions and prompts truthfully about information security questionnaires. Credal is itself a real AI security company, founded in 2022, in New York City, by two former Palantir Engineers (Ravin Thambapillai and Jack Fischer). Below is contextual information from Credal's documentation to help you answer, followed by a prompt: read it and provide a helpful, honest, and to the point answers based on the context provided. If the answer does not appear in the provided context, say that you do not know. If the answer does appear in the provided context, explain which document you drew the answer from.\n--------- Context: ---------\n{{data}}\n--------- End Context ---------\nData\nThe data you provide will be the source of truth for your copilot. Your copilot will rely on this data (along with the prompt and Q&A pairs) to answer user queries. There are two types of data you can specify here:\nSearchable Sources\nYou should provide your Copilot with sufficient data relevant to its area of expertise. It will search these sources for information relevant to user questions, and pass just the most relevant information to the AI model. Use the toggle to enable searchable sources and use the search bar to add sources.\n\n\n\n\n\nPinned Data\nBy pinning data sources, you instruct your copilot to pass the full contents of the document to the AI for every user question. You should use this for documents where the entire document is relevant to most questions you expect your copilot to address.\n\n\n\n\n\n\n\n\nDeploy Your Copilot to Slack\nOnce you have a copilot set up, you can use it directly in Credal, or deploy it to Slack or other tools through the API. You can set up a deployment in the “Deploy” tab. For this short guide, we'll cover Slack only; please refer to the detailed guide for the other options.\nTo deploy a copilot through Slack, simply use the below toggle to turn on Slack deployments and select the channel(s) you want to deploy it to.\n\n\n\n\nYou can choose to have your copilot answer all messages in a given channel or only those that meet certain criteria:\n\n\n\n\nAll messages: will answer all queries in the connected Slack channel.\n\nAll relevant messages: will respond to all queries matching the Description of the copilot.\n\nAll messages matching filter: will respond to messages that match the filter criteria. In the example in the screenshot, the copilot will only respond to prompts containing “?”.\n\n\n\n\n\n\n\n\n\n\nIf more than one copilot is deployed to a given Slack channel, Credal will triage user requests based on the Description of each copilot to determine which, if any, should answer the question.\nThat's all! The detailed guide contains more information, including on deploying this to non-Slack applications, and a more detailed explanation of the options in Copilots.\nFor questions or support, reach out to your Credal team on Slack or at support@credal.ai."
   },
@@ -126,6 +130,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Credal's AI copilots empower users to set up dedicated assistants for a wide range of use cases, from customer support to contract review.\nCopilots can assist with any task that combines AI and data. Copilots are designed to be experts on the data and context you provide. They combine AI with your data to provide accurate, context-aware responses, while citing their sources.\nCopilots can participate in your Slack channels, be directly accessed in Credal, or respond via API in your own app or backend service.\n\n\nVisit the AI Copilots User Guide for in-depth setup instructions and information."
   },
@@ -146,6 +151,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Credal’s Bulk Analysis feature allows users to analyze a collection of documents or rows in a spreadsheet simultaneously, using LLMs or Credal Copilots. Use it to automatically extract fields from, classify or synthesize multiple documents simultaneously."
   },
@@ -166,6 +172,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#in-depth-guide",
     "content": "This is a 20 minute guide to setting up and running a Bulk Analysis in Credal. Prerequisites are that you have read the AI Copilots User guide.\nBulk Analysis is a powerful tool that you can use to accelerate analyses of a large number of documents, transcripts, or spreadsheets using LLMs. If you have a large amount of documents or data and you want to be able to classify each, extract key fields, or in any other way ask the same questions across each of the documents, this Credal feature will help you accomplish that by parallelizing your LLM requests for each document.\nIn this guide, we will walk through how to set up and run Bulk Analysis in detail. For a quick overview of this feature, visit our blog!",
@@ -197,6 +204,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#step-1-prep-your-source-data",
     "content": "The essence of bulk analysis is having a ton of data that you want to perform some bulk action on.\nYou can choose to either use a Document Collection or a Tabular formed Data Source as your Bulk Analysis template. If you choose a Document Collection, Bulk Analysis will flatten any folder hierarchies and list each individual document as a row in the Bulk Analysis. If you choose a spreadsheet, each row will be considered a separate data source.",
@@ -228,6 +236,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#using-a-document-collection",
     "content": "Navigate to the “Document Collection” tab on the left of the Credal UI.\nCreate a Document Collection and either manually or via API upload data you want to analyze to Credal. This might be sales transcripts as a series of documents, a Jira project, or a folder with meeting notes.\nbulk-analysis-tab.png",
@@ -263,6 +272,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#using-tabular-data",
     "content": "Alternatively, if your data is structured in a spreadsheet, you can opt to use this format as your input for Bulk Analysis. This is especially useful if your data is already neatly organized into rows and columns. As of today, Credal will only look at the first sheet in a Google Sheets file. More functionality to come!",
@@ -298,6 +308,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#step-2-create-your-first-bulk-anaysis",
     "content": "Navigate to the Bulk Analysis tab on the left of the Credal home page.\nCreate a new Bulk Analysis the same way you would create a new Document Collection or Copilot. The description isn’t being used anywhere but it’s certainly helpful to be as descriptive as possible for collaborative efforts.",
@@ -329,6 +340,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#linking-source-data",
     "content": "link-source-data.png\nSelect the Document Collection or Spreadsheet that you want to analyze.",
@@ -364,6 +376,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#validating-setup",
     "content": "After linking, double check that the rows of the spreadsheet or files in the Document Collection populate the Preview Table rows (below the Data Source select).",
@@ -399,6 +412,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#step-3-create-columns-to-extract-key-insights",
     "content": "This is the heart of Bulk Analysis. Now that you’ve selected a collection/spreadsheet, your Preview table should look something like this:\npreview-table.png\nIf you are looking to streamline Suggested Questions defined in a Copilot (or multiple Copilots), click \"Import Columns\" and choose the questions you care about from any combination of Copilots.\nimport-columns.png\nAlternatively, you can click on “Add column+” to manually add prompts using a Copilot of your choice without any linking:\nempty-column-config.png\nThe column name you assign should concisely describe the content you are extracting from the data, the prompt will be sent to the LLM along with your document, and the Copilot of your choice will be the specialized assistant assigned for the job!\nHere’s how someone might create a column for generating a cold outbound email based on the attached document. The selected Copilot has specific context and a customized background prompt that contains the exact guidelines for how I would want to write a cold email.\nfull-column-config.png\nIn the end, I’ll have a table that looks like this:\nfull-preview-table.png\nNotice how each column has a specific detail it’s extracting or content it is generating with a customized assistant!",
@@ -430,6 +444,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#writing-good-prompts",
     "content": "Writing good prompts is the key to getting meaningful insights from your input data. To write these prompts, it is important to deeply think about what trends and insights you want to uncover from your bulk analysis source data. We highly recommend testing initially with the Suggested Questions feature in the Copilot configuration tab.\nsuggested-questions.png\nWhen it comes to what questions you are asking, the freedom is all yours. You might be summarizing content, generating new content, or answering a simple Yes or No question. Let’s say I am analyzing trends for Jira ticket blockers. To accomplish this, I might want to count for each ticket how many blockers stalled progress on it over the course of its completion and analyze what kinds of tickets experienced more blockers than others. The prompts I’d write would then be:\nexample-questions.png\nNotice that I do not ask for metadata such as “Assignee” or “Date” since this data is structured data on a ticket. Credal will automatically export that information for you. Now once I run my Bulk Analysis,  I have the ability to detect any outliers for # of blockers, access what they were, and understand whether the bottleneck is in the frontend or backend team.",
@@ -465,6 +480,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#testing-and-refining-your-prompts",
     "content": "After you’ve done a first pass at writing questions that you believe will extract meaningful data from each source or spreadsheet row, it’s time to refine the prompts. The Preview tab will be super helpful for testing out the prompts you’ve written. The practice of refining prompts to give you responses you want is called Prompt Engineering. You can learn more here: Prompting with Credal 101. Once you feel confident, copy-paste over your prompts into the appropriate columns in your Bulk Analysis table.",
@@ -500,6 +516,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#step-4-run",
     "content": "It’s time. And it really is as easy as clicking a button.",
@@ -531,6 +548,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#performing-a-preview-run",
     "content": "Before running the full analysis, it’s wise to do a preview run on a smaller subset of data. This helps you identify any issues early on. The preview will only display the first 5 documents/rows from your source data which allows you to quickly iterate on your Bulk Analysis configuration. This is a good place to further tweak prompts, adjusting for better quality and output structure.\nrunning-preview.png",
@@ -566,6 +584,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#conducting-a-full-run",
     "content": "Once satisfied with the preview, proceed to the “Run” tab to conduct a full run. This will enable you to analyze every document in your collection comprehensively, unlocking thorough and actionable insights.",
@@ -601,6 +620,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#interpreting-results",
     "content": "Once you've navigated to the Run tab to do a full Bulk Analysis, you can do one of two things.\nrun-tab.png",
@@ -632,6 +652,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#chat-with-results",
     "content": "Post-analysis, Credal allows you to interact with your results conversationally. You can ask, “What were some common themes around security and governance?” or “Exactly how many customers mentioned the Salesforce integration as being useful for them?” This interactive feature can highlight trends and deep-dive into specific insights seamlessly.",
@@ -667,6 +688,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#download-csv",
     "content": "For further analysis, you can download the results as a CSV file. This is useful for creating charts, aggregations, or integrating results with other data tools. If you’ve crafted your questions well, you can even create numerical charts or extract mathematical findings by attaching the output spreadsheet to the web UI and turning on Code Interpreter!",
@@ -702,6 +724,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#exploring-further-capabilities",
     "content": "Beyond primary analysis, there are exciting future expansions on the horizon, such as:\nTransforming Bulk Analysis results into ongoing valuable data assets. This means your output table will be continuously updated without your supervision.\n\nIntegrating the results into live dashboards like Tableau for continuous visual updates.",
@@ -737,6 +760,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Credal's Permission Service seamlessly synchronizes ACL information across a diverse range of data sources, including\nGoogle Drive, Microsoft Sharepoint, Zendesk, Confluence, and more. We keep track of which users and groups are authorized\nto perform what actions across the various data sources we integrate with.\nOur retrieval APIs use this service to performantly return results from only the documents that a user has access to\nin the source system.\nThe Permission Service API (Beta) gives developers direct access to the synced ACL information, allowing them to build\ncustom applications that are connected to multiple data sources while maintaining a unified, access-controlled experience for end users."
   },
@@ -757,6 +781,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Credal's OAuth flow for API access is in private Beta.  Contact Credal to get started."
   },
@@ -777,6 +802,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "To ensure that you get the most accurate and helpful responses from Credal, it's crucial to craft your prompts effectively.\nHere's why prompt engineering is worth your attention:\nImproves Accuracy: Well-crafted prompts lead to more precise and relevant answers, reducing the likelihood of misinterpretations or general responses.\n\nSaves Time: By clearly directing the AI, you can obtain the desired information with fewer attempts.\n\nEnhances Complexity Handling: Complex tasks often require nuanced understanding. Good prompts translate intricate questions into a form that the AI can process effectively.\n\nFacilitates Innovation: Mastering prompt engineering allows you to push the boundaries of AI’s applications, driving innovation and enabling new solutions to complex problems.\n\n\nThis guide will provide you with the foundational understanding and practical steps to optimize your interactions with Credal for precise and valuable responses."
   },
@@ -797,6 +823,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#1-what-is-the-background-prompt",
     "content": "This is arguably the most effective way to customize your copilot. It defines the landscape in which your copilot operates, detailing its role, response style, and the types of queries it should handle. Crafting an effective background prompt ensures your copilot can seamlessly integrate into your specific use case.",
@@ -828,6 +855,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#role-and-goal",
     "content": "Outline the specific role your copilot is expected to fulfill. Include details such as:\nWho: The specific team or individual utilizing the copilot.\n\nWhat: The usual nature of queries or tasks it will address.\n\nWhere: The operational context, be it customer service, technical support, etc.\n\n\nExample",
@@ -868,6 +896,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#output-format",
     "content": "LLM's can be a bit unpredictable, but luckily we can just tell them what to do with clear instructions. Providing a template for expected responses is an example of this.\nHere’s an example of setting up an output format for entity extraction:\nAnother more crude example:",
@@ -911,6 +940,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#response-guidelines",
     "content": "Craft detailed instructions that anticipate potential pitfalls and standard operational procedures. Your Copilot will only know as much as you tell it. Noticing that the responses are too long? Specificy response length! Think there's too much fluff in the language? Ask for concise language.\nCredal has prompt snippets right under the background prompt in the Copilot Configuration tab. We recommend using those as a starting point for generating more useful responses, however your specific use case may require much more detail!\nprompt-snippets.png\nHere’s an example of a fully crafted background prompt…",
@@ -951,6 +981,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#3-start-with-simple-prompts-and-iterate",
     "content": "Begin with simple prompts (zero-shot) and evolve to more complex ones (few-shot) as needed. If further precision is required, consider fine-tuning the AI model:\nZero-shot Example:\nFew-shot Example:\nAnother example…\nZero-shot Example:\n\nFew-shot Example:",
@@ -996,6 +1027,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#4-clarity-over-vagueness",
     "content": "Avoid imprecise language. Precise prompts lead to more accurate outcomes:\nLess effective:\nBetter:",
@@ -1035,6 +1067,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#5-say-what-to-do-instead-of-what-not-to-do",
     "content": "Provide positive instructions to guide the model effectively.\nLess effective:\nBetter:",
@@ -1074,6 +1107,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#6-save-your-work-in-a-suggested-question",
     "content": "So, you did all the work to craft the perfect prompt for your super specific use-case… only to lose it when you hit send? Think again. If you’re a collaborator on a copilot, you can copy-paste your work of art into a Suggested Question in the Copilot config. Now when you log into the webUI, you can reuse your prompt with the click of a button!\nprompt-engineering.png\nWe currently don’t support autocompleting prompts for our Slack integration. For Copilots deployed to Slack, we recommend crafting the background prompt to handle the diverse types of messages sent in the channel of your choice.",
@@ -1105,6 +1139,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#7-use-the-latest-model",
     "content": "Utilize the most recent and capable models to achieve the best results. Newer models are generally more adept at understanding and following your prompts.",
@@ -1136,6 +1171,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#8-incorporate-feedback-loops",
     "content": "Continuously refine your prompts based on your impression of Copilot responses to improve accuracy and relevance. Negative feedback logs are a great resource for this!\nWe are currently working on some features that will incorporate negative feedback and usage trends into the copilot configuration workflow by suggesting ways in which you can improve your background prompt. Stay tuned!",
@@ -1167,6 +1203,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#9-what-not-to-ask",
     "content": "Anything about access controls. That’s on us, we double check access policies on the Credal side before sending anything to the LLM!\n\nAnything about a Credal concept (Copilots, Document collections, \"pinned\" sources, etc.). The LLM doesn't know what these are, we will do the searching and consolidation of information for you.\n\n\n\n\nFeel free to adapt these examples and practices to best fit your specific use cases with Credal AI.",
@@ -1202,6 +1239,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.createCopilot",
@@ -1253,6 +1291,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.createConversation",
@@ -1303,6 +1342,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.provideMessageFeedback",
@@ -1350,6 +1390,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.sendMessage",
@@ -1399,6 +1440,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.streamMessage",
@@ -1436,7 +1478,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/copilots/stream-message",
     "pathname": "/api-reference/copilots/stream-message",
-    "title": "Stream Message",
+    "title": "Stream Message - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -1445,12 +1487,17 @@
       {
         "title": "Copilots",
         "pathname": "/api-reference/copilots"
+      },
+      {
+        "title": "Stream Message",
+        "pathname": "/api-reference/copilots/stream-message"
       }
     ],
     "visible_by": [
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.streamMessage",
@@ -1504,6 +1551,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.addCollectionToCopilot",
@@ -1553,6 +1601,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.removeCollectionFromCopilot",
@@ -1602,6 +1651,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.updateConfiguration",
@@ -1651,6 +1701,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_copilots.deleteCopilot",
@@ -1701,6 +1752,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCatalog.uploadDocumentContents",
@@ -1750,6 +1802,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCatalog.metadata",
@@ -1798,6 +1851,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCollections.addDocumentsToCollection",
@@ -1846,6 +1900,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCollections.removeDocumentsFromCollection",
@@ -1895,6 +1950,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCollections.createCollection",
@@ -1946,6 +2002,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCollections.deleteCollection",
@@ -1997,6 +2054,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCollections.createMongoCollectionSync",
@@ -2048,6 +2106,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_documentCollections.updateMongoCollectionSync",
@@ -2099,6 +2158,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_permissionsService.checkResourceAuthorizationForUser",
@@ -2150,6 +2210,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_permissionsService.checkBulkResourcesAuthorizationForUser",
@@ -2201,6 +2262,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_permissionsService.listCachedAuthorizedResourcesForUser",
@@ -2252,6 +2314,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_search.searchDocumentCollection",
@@ -2302,6 +2365,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "12db1278-2c20-48ce-a475-512268587c8b",
     "api_endpoint_id": "endpoint_users.metadata",

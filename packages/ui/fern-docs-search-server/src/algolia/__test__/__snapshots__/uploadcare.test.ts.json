@@ -20,6 +20,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Uploadcare makes simple, powerful, developer-friendly building blocks to handle file uploading, storage, processing, and delivery. You get a complete file handling infrastructure.",
     "content": "Some explanation\n\n\n\n\n\n\n\n\n\n\nUploadcare makes simple, powerful, developer-friendly building blocks to handle file uploading, storage, processing, and delivery. You get a complete file handling infrastructure."
@@ -45,6 +46,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Uploadcare provides companies with simple, powerful, developer-friendly building blocks to handle file uploading, processing, and delivery. A complete out-of-the-box solution, built for engineers by engineers."
   },
@@ -69,6 +71,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#quick-start",
     "content": "When building a website or an app, you'll need to handle uploading, storing,\nprocessing, and delivering various files, either from you, or from your users.\nWe have various uploading methods, a few storage options, an API to manage\nfiles, and a CDN with on-the-fly processing capabilities. Everything is\ncompliant with numerous international regulations.\nIn this quickstart we'll show you our [File Uploader][file-uploader] and\n[image processing operations][transformations-image-list]. We will also cover the rest of our\nfeatures at the end of this article.",
@@ -104,6 +107,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#installation-and-configuration",
     "content": "You can either install File Uploader from CDN, or via NPM.\n\n\n\n\n\n\nCDN\n\nNPM\n\n\n\n\n\n\n\n\n\nFile Uploader can be presented in [a few ways][file-uploader-solutions], e.g.\nregularly, inline or minimalistic.\nRegular File Uploader:\nWhere lr-config is a configuration block, and lr-file-uploader-regular is a File Uploader block.\nctx-name attribute is used to wire up the configuration block with the File Uploader block.\ncss-src attribute is used to specify basic CSS styles.\nTo dive further, check out [configuration][file-uploader-configuration] guide.\nHere you can find examples how to integrate it into your stack of choice:\n[React][file-uploader-react-git]\n\n[Angular][file-uploader-angular-git]\n\n[Vue][file-uploader-vue-git]",
@@ -153,6 +157,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#step-2-storage--cdn",
     "content": "Once a file is uploaded, it goes to your Uploadcare storage and instantly\nbecomes available on CDN.\n\n\n(By default, Upload API doesn't store the files forever. There is a 24-hour\nwindow when you should decide whether to store uploaded files or not. But all\nof our official libraries, including File Uploader, inherit the\n[auto-store setting][project-settings-storage] from your project, where it's\nset to ON by default. You can read more about [storage behavior][storage-store]).\nYou can get the UUID of the uploaded files immediately on upload. For example:\nPlease refer to the [Events][file-uploader-events] page to view the complete list of available events.\nWe recommend saving UUIDs instead of CDN URLs because this will let you\nprocess these files easier later on.",
@@ -198,6 +203,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#step-3-processing",
     "content": "You can add image processing operations by including directives in the CDN URL:\n\n\nImagine you're building a service with a lot of street photos:\nYou'll need to optimize the size and quality of the images for page load time.\n\nYou'll have to blur the faces on the photos to comply with privacy laws.\n\nYou'll want to add your watermark to every picture.\n\n\nConstruct the value of the image src attribute template, adding the operations\nyou pick, and use this template for every street photo in your project:\n\n\nSee the full list of [image processing operations][image-operations-list].",
@@ -242,6 +248,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#more-features",
     "content": "Lear more about [uploading files][uploading-files] options.\n\nIntegrate Uploadcare into your mobile app with [native SDKs][integrations].\n\nImplement [secure workflows][security] for uploading and delivering files.\n\n[Fetch and deliver remote files][delivery-proxy] without explicitly uploading files.\n\nAdd [arbitrary metadata][file-metadata], [remove image background][remove-bg],\n[recognize objects][intelligence-object-recognition], [process videos][transformations-video],\n[convert documents][transformations-docs], and [detect viruses][malware-protection].\n\nExplore [project settings][settings-projects].\n\n[Migrate][migro-guide] your files to Uploadcare.",
@@ -281,6 +288,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Learn how Uploadcare can handle critical user data, including critical information in-line with the GDPR/CCPA and HIPAA compliances needed to operate in the EU and US legislation respectively."
   },
@@ -305,6 +313,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#security",
     "content": "At Uploadcare we honor the safety of personal and business-sensitive information\nand implement compliancy with GDPR, HIPAA and other standards and regulations.\nUploadcare provides you with advanced privacy features to upload, access and\nmanage your content in a secure way.",
@@ -340,6 +349,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#signed-uploads",
     "content": "Control who and when can upload files. It prevents from uploading files using a\nPublic API key only. You'll have to generate a security token on the backend\nto upload a file. [Signed uploads][secure-uploads] work for a particular\nUploadcare project.",
@@ -379,6 +389,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#signed-urls",
     "content": "Control who and when can request files. Enabling this feature limits access to\nyour project files. A user will require a token from your backend to access\nthe content.\n[Signed URLs][secure-delivery] work in conjunction with custom domains.",
@@ -418,6 +429,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#ddos-protection",
     "content": "Customers are automatically protected against Distributed Denial of Service (DDoS).",
@@ -457,6 +469,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#malware-protection",
     "content": "Enable [malware checking][malware-protection] for all uploaded files.",
@@ -496,6 +509,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#search-engine-indexing",
     "content": "Restrict [search engines][search-engine-indexing] to analyze and index content\nin your project for global search: image and text.\nSetup search engine indexing behavior for each of your projects.",
@@ -535,6 +549,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#signed-webhooks",
     "content": "Control who and when can call your webhook endpoint (URL). Without\nverification, anyone can spoof a request sent to the webhook URL. The solution\nis to sign each [webhook payload][secure-webhooks] with a secret.",
@@ -574,6 +589,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#hipaa-guide",
     "content": "HIPAA is US legislation providing data privacy and security provisions for\nsafeguarding electronic protected health information (ePHI). On our Enterprise\nplan, Uploadcare can be configured to support [HIPAA compliant][guide-hipaa]\nworkflow.",
@@ -613,6 +629,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#compliance",
     "content": "Uploadcare is committed to complying with industry-standard privacy and security\nmeasures and all applicable laws and regulations to keep customer and end-user\ndata safe and secure: SOC 2, HIPAA, GDPR. Learn more about it in our\n[Trust Center][uc-trust].",
@@ -652,6 +669,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "How Uploadcare account charges for Operations, Traffic & Storage usage."
   },
@@ -676,6 +694,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#billing",
     "content": "This page serves as a guide on Uploadcare billing process, explaining what\ncharges may apply to your Operations, Traffic,\nand Storage usage.",
@@ -711,6 +730,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#operations",
     "content": "Think of operations as a credit balance that is spent depending on the complexity\nof actions with your files using Uploadcare APIs: file uploading, image optimization\nand transformations, video processing, document conversion, outcoming webhooks\nand various API requests.\nAny incoming API request or outgoing request ([webhooks][webhooks]) is considered\nas 1 operation. However some advanced requests like background removal or\nAVIF image optimization require more operations to be performed.",
@@ -750,6 +770,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#uploading-volume",
     "content": "Every successful file upload results in an extra operation count for each 100 MB.\nNote that the file size is rounded up to the closest number divisible by 100\nfor calculation.",
@@ -797,6 +818,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#malware-protection",
     "content": "All uploaded files are screened for viruses.\nPlease note that a single additional operation is deducted for every 100 MB\nscanned for viruses.",
@@ -844,6 +866,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#examples",
     "content": "The cost of uploading a 20 MB file:\n1 operation for the API request.\n\n1 operation due to rounding up the file size to 100 MB.\n\n1 operation for the virus scan of 100 MB.\n\n\nFor a 250 MB file:\n2 operations for the API request.\n\n3 operations attributed to rounding the file size up to 300 MB.\n\n3 operations for the virus scan of 300 MB.\n\n\nUploading a file larger than 100 MB requires 2 API requests.\nLearn more about [Multipart uploading][uploading-files-multipart].",
@@ -891,6 +914,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#image-processing",
     "content": "When requesting an image from the CDN, you can do a lot of things all at once.\nYou can resize, apply effects, and make it load faster, all in one go.\nNo matter how complicated your task is, or how many changes are included\nin the URL, Uploadcare only counts it as one operation for each unique URL\nper billing cycle. Please note that, in addition to operations,\nCDN traffic related to your tasks is also taken into account.\nThere are certain tasks that require more computational power that will\nresult in additional operations being consumed:\nFeature Operations per request \n[Image compression to AVIF format][transformations-image-format] 2 \n[Animated images optimization][transformations-gif-to-video] 2 \n[Image transformations with facial detection][face-detection-operations] 2 \n[Background removal][remove-bg] 750",
@@ -934,6 +958,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#examples-1",
     "content": "Adjust the size, optimize, and convert the image format to WebP:\n1 operation for a unique URL.\n\n\nAdjust the size, optimize, and convert the image format to AVIF:\n1 operation for a unique URL.\n\n1 additional operation for AVIF conversion.\n\n\nRemove the background, add an overlay, and resize:\n1 operation for a unique URL.\n\n749 additional operations for background removal.",
@@ -981,6 +1006,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#delivery",
     "content": "When your users request a file, Uploadcare only counts the traffic if the\nfile is either the original or a cached version. However, if a file isn't\ncached and needs processing—especially if that processing involves complex\ntransformations specified in the URL—it will use up additional operations\nbased on the complexity of the tasks.\nWhen a file is requested, original or processed, it gets cached on CDN.\nThe lifespan of a file in the cache can vary depending on factors like\nhow frequently it's accessed. Popular files that are requested often tend\nto stay longer. On the other hand, infrequently accessed files might be removed.",
@@ -1024,6 +1050,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#file-management",
     "content": "Each API request counts as one operation.\nBut some actions can count as extra operations, depending on how complex they are:\nFeature Operations \n[Detecting unsafe content in an image][unsafe-content] 40 per image \n[Processing a video][transformations-video] 100 per minute \n[Converting a document][transformations-docs] 100 per 50 MB \n[Auto-tagging an image][intelligence-object-recognition] 40 per image \n\nThese operations affect your storage volume because each operation means\na new file is uploaded. But, they don't affect your traffic usage.",
@@ -1067,6 +1094,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#billing-1",
     "content": "Uploadcare calculates your operations and rounds up to the nearest thousand.\nSo, if you've executed 1700 operations, we'll account for it as 2000.",
@@ -1110,6 +1138,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#traffic",
     "content": "Total amount of content that's been delivered from your account.\nTo track how much traffic you're using, just check out the\n[Analytics][project-analytics] section in your Dashboard.",
@@ -1149,6 +1178,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#storage",
     "content": "Total size of all the files you have stored in your account.\nOnly the uploaded and stored files count towards this.\nActions like [CDN operations][delivery-operations] and\n[image processing operations][transformations-image-list] don't consume your\nstorage space because the results are only cached on the CDN.\nHowever, operations like video processing or document conversion do affect\nyour storage volume, as each operation results in a new file upload.\nTo monitor your storage usage, simply check the [Analytics][project-analytics]\nsection on your Dashboard.",
@@ -1188,6 +1218,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#plans-and-limits",
     "content": "Demo Pro Business Business Plus \nOperations 10,000 100,000 250,000 500,000 \nTraffic 5 GB 75 GB 200 GB 400 GB \nStorage 1 GB 50 GB 125 GB 250 GB \nMax file size 10 MB 1 GB 10 GB 100 GB \nTeam members Personal use only 3 4 5",
@@ -1227,6 +1258,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#additional-resources",
     "content": "Beginning with the Pro plan, we offer a pay-as-you-go model for additional\nusage, allowing you more flexibility and control over your usage.\nAny additional usage will be automatically charged at the rates specified below:\n Demo Pro Business Business Plus \n1,000 operations Not allowed $0.50 $0.45 $0.40 \n1 GB traffic Not allowed $0.50 $0.45 $0.40 \n1 GB storage Not allowed $0.50 $0.45 $0.45 \n\nIf you're interested in custom pricing and annual commitment,\n[contact our sales team][mail-sales].",
@@ -1270,6 +1302,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Uploadcare provides Upload API and powerful file uploaders for your website or app with no hassle."
   },
@@ -1294,6 +1327,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#file-uploading",
     "content": "You can upload any file type, from almost any source, using a variety of upload optionsBuilt-in storage and CDN\n\nUploading acceleration network\n\nMultipart uploading up to 5 TB per file\n\nFile analysis and moderation\n\nAuthenticated uploading process\n\nUnlimited scalability on demand\n\nAPI clients for popular platforms\n\n\nUpload files from almost any source using API or beautiful UI file uploaders.\nReceive and store: user-generated content, programmatically uploaded media,\nlarge files to be later optimized, etc.\nOnce uploaded, files become instantly accessible on our CDN via their unique\nand unguessable URLs. [Deliver][delivery] them with the set of image\noptimization and transformation operations, or [manage][file-management] via\nREST API.",
@@ -1329,6 +1363,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#file-uploader",
     "content": "Integrate our customizable uploading widget that provides a ton of features\nand works in all modern browsers:\n\n\nOur web and mobile uploading widgets:\n[File Uploader][file-uploader] — our flagship uploader\n\n[jQuery widget][jquery-widget]\n\n[iOS uploading widget][swift-integration]\n\n[Android uploading widget][android-integration]",
@@ -1368,6 +1403,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#upload-api",
     "content": "Build custom uploading flow using Upload API directly or with an API client.\n\n\n\n\n\n\nJavaScript\n\nPHP\n\nPython\n\nRuby\n\nSwift\n\ncUrl\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCheck out our guide to the various methods of [uploading files][uploading-files]\nand available integrations.",
@@ -1407,6 +1443,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#proxy",
     "content": "It is the best and simplest way to retrieve files from existing remote locations\nand deliver them using our CDN.\nLearn more about [Proxy][delivery-proxy].",
@@ -1451,6 +1488,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#table-of-contents",
     "content": "Article Description \n[Uploading files][uploading-files] Upload media files with various options. Whether you need to accept user-generated content or serve media on your website or app, we've got you covered \n[File Uploader][file-uploader] Open source, responsive and mobile-ready web solution that allows users to select and upload multiple files from various sources \n[Storage options][storage-store] Uploadcare storage requires no configuration and works out of the box. Learn about file storing behavior \n[Signed uploads][secure-uploads] Get to control who can and when can upload files to one of your Uploadcare projects \n[File analysis on upload][file-analysis] We extract a ton of helpful information about file that you can use to your benifit \n[Validation and moderation][moderation] You can validate the types of files you want to accept, and apply various checks after \n[Upload API][upload-api] Low-level access to provide several ways of uploading files to Uploadcare servers in a secure and reliable way \n[API integrations][integrations] You don't have to code most of the low-level API integrations. We have high-level libraries for all popular platforms",
@@ -1490,6 +1528,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Whether you need to accept user generated content, serve media on your website or app, or collect and prepare files to train your ML model — we’ve got you covered."
   },
@@ -1514,6 +1553,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#uploading-files",
     "content": "Whether you need to accept user generated content, serve media on your website\nor app, or collect and prepare files to train your ML model, we've got you\ncovered.\nUpload any file type from almost any source using various upload\noptions. Uploadcare provides a robust, secure, and comprehensive\nUpload API that you and your users can access from your backend\nor directly from the browser. We also offer state-of-the-art web\nFile Uploader and mobile widgets.\nEvery uploaded file is immediately available on [Uploadcare CDN][delivery]\nthrough unique and unguessable URLs. The files are stored in the integrated\nstorage. Once uploaded, you can [manage your files][managing-files] using the\nREST API and [deliver them][delivery], applying on-the-fly operations.",
@@ -1549,6 +1589,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#projects",
     "content": "All files are uploaded into the projects. Projects are separate environments\nwith unique sets of [API keys][api-keys], dedicated storage, and settings.\nFor example, projects can be used to separate development, staging and\nproduction environments. Learn more about [projects][settings-projects].\nNote: Image uploads are available on the [Demo plan][billing-plans].\nTo upload other file types, you must add a credit card to your account\naccording to \"Know your customer\" (KYC) principles,\nbut as long as you stay on the free plan, you won't be charged.",
@@ -1592,6 +1633,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#upload-api-request-and-response",
     "content": "When you upload a file,\n\n\n\n\n\n\nJavaScript\n\nPHP\n\nPython\n\nRuby\n\nSwift\n\ncURL\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nyou immediately receive the file's UUID in a 200 response,\nand the file immediately becomes available on our CDN.\nSave this UUID into your database and retrieve it to:\nServe optimized and transformed images.\n\nEncode videos based on their size and codec.\n\nOrganize them with arbitrary metadata.\n\nDetect the type of content.",
@@ -1643,6 +1685,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#file-storing-behavior",
     "content": "When uploading files, you can specify whether you want to keep\nthem permanently or not.\nNotice the UPLOADCARE_STORE parameter in the example above.\nIt can be set as follows:\n0 — the file will be deleted after 24 hours.\n\n1 — the file will be stored permanently until explicitly deleted.\n\nauto — defers the choice of storage behavior to the project's\n[auto-store setting][project-settings-storage] (which is ON by default).\n\n\nIf you don't specify UPLOADCARE_STORE parameter, the default value is auto.\nNote: Before, the value was 0 by default. Learn more about [storing behavior][storage-store].",
@@ -1686,6 +1729,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#information-about-uploaded-files",
     "content": "We can extract file data that you can use: from basic file\ninformation, e.g. EXIF, to insights into its content. We can automatically\n[analyze][file-analysis] files for things like malware or NSFW content.\nIt also allows you to use [MIME type moderation][moderation].\nCheck out [files section][files] in Dashboard to see it in action.",
@@ -1729,6 +1773,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#file-uploader",
     "content": "[File Uploader][file-uploader] is a new and highly customizable widget that\nallows users to upload files from various sources, utilizing the power of\nUploadcare APIs.\n\n\nIf you're looking for a [ready-made uploading solution][file-uploader], look no further.",
@@ -1768,6 +1813,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#uploading-from-the-browser",
     "content": "If you need to build your own uploading solution and don't want to use\n[File Uploader][file-uploader], one of the options is to use our JS SDK.\n[Upload Client][ext-uploadcare-upload-client] works with both Node.js and browsers.",
@@ -1811,6 +1857,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#uploading-widgets-for-ios-and-android",
     "content": "Both [Swift][swift-integration] and [Kotlin][android-integration] integrations\nhave not only uploaded API methods but include uploading widgets for iOS and Android.\nThey allow to:\nUpload files from a local disk, camera, and cloud sources.\n\nUpload multiple files at once.\n\nTrack, pause and continue multipart uploading.\n\nUpload in the background.",
@@ -1854,6 +1901,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-integrations",
     "content": "[JavaScript][js-integration]\n\n[PHP][php-integration]\n\n[Python & Django][python-integration]\n\n[Ruby][ruby-integration] and [Rails][rails-integration]\n\n[Swift][swift-integration] (iOS, iPadOS, macOS, tvOS, Linux)\n\n[Kotlin][android-integration] (Android)\n\n[Java][java-integration]\n\n[Golang][golang-integration]\n\n[Rust][rust-integration]",
@@ -1893,6 +1941,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#upload-api-features",
     "content": "The main features of our Upload API are:\n\n\n\n\n\n\n\n\nUpload local file\n\n\n\nUpload from URLs\n\n\n\nUpload large file\n\n\n\nAdd arbitrary metadata\n\n\n\nSigned uploads\n\n\n\nWebhooks on upload\n\n\n\nGet file infoYou can also check out the complete OpenAPI specification of [Upload API][upload-api].",
@@ -1932,6 +1981,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#upload-local-file",
     "content": "The simplest way to upload a local file is to perform a HTTP POST request.\nAs in the example above, you only need to specify the project's public key.\nDirect file uploads support files smaller than 100 MiB only. (If you want\nto upload larger files, please use multipart uploads instead).\n\n\n\n\n\n\nJavaScript\n\nPHP\n\nPython\n\nRuby\n\nSwift\n\ncURL\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCheck out detailed API reference for [direct uploads][api-reference-upload-direct].",
@@ -1975,6 +2025,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#upload-from-url",
     "content": "Uploadcare can fetch a file from a publicly available URL and upload it to your\nproject.\n\n\n\n\n\n\nJavaScript\n\nPHP\n\nPython\n\nRuby\n\nSwift\n\ncURL\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCheck out detailed [uploads from URL][api-reference-from-url-upload] API reference.\nRequests to the endpoint return a JSON dictionary with a token that can be\nfurther used to check the status of an upload request. The token is not a\nfile ID and can't be used to address the file directly. The actual file ID\nshould be retrieved by calling the /from_url/status/ endpoint.\nIntegration implementation may vary, please refer to the respective documentation.\n\n\n\n\n\n\nJavaScript\n\nPHP\n\nPython\n\nRuby\n\nSwift\n\ncURL\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCheck out detailed API reference for [uploads from URL][api-reference-from-url-upload-status].",
@@ -2018,6 +2069,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#duplicates-prevention",
     "content": "By default, every request to the /from_url/ endpoint with the same\nsource_url results in a new upload leading to file duplication.\nIf you would like Uploadcare to keep track of the requested URLs and avoid\nduplicate uploads, pass the save_URL_duplicates and check_URL_duplicates\nparameters described in [uploads from URL][api-reference-from-url-upload] API reference.\n\n\n\n\n\n\nJavaScript\n\nPHP\n\nPython\n\nRuby\n\nSwift\n\ncURL\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIf the source_url had already been fetched and uploaded previously, this\nrequest would return information about the already uploaded file.",
@@ -2065,6 +2117,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#alternative-remote-uploading-method",
     "content": "You can also upload remote files with CDN Proxy.",
@@ -2112,6 +2165,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#upload-large-file",
     "content": "Multipart uploads should be used if you need to upload files larger\nthan 100 MiB or if you want to explicitly trigger\n[AWS S3 Transfer Acceleration][ext-s3-transfer-acceleration].\n\n\n\n\n\n\nJavaScript\n\nPHP\n\nPython\n\nRuby\n\nSwift\n\ncURL\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCheck out detailed API reference for [multipart uploads][api-reference-upload-requests-multipart].\nNote: Each uploaded part should be at least 5242880 bytes in size except\nfor the last one, which can be smaller. You can upload the file parts\nin parallel, provided that the byte order stays unchanged.",
@@ -2155,6 +2209,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#add-arbitrary-metadata",
     "content": "You can add additional, arbitrary key-value data associated with uploaded files.\nFor example, you could store user IDs, order IDs, or tags.\n\n\n\n\n\n\nJavaScript\n\nPHP\n\nPython\n\nRuby\n\nSwift\n\ncURL\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLearn more about [file metadata][file-metadata].",
@@ -2198,6 +2253,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#signed-uploads",
     "content": "Signed upload requests include an authentication signature that is generated\nbased on your project's secret key and expiration time parameters. This\nsignature must be generated on your backend, as you must never expose your\nsecret key in client-side code.\nLearn more about [signed uploads][secure-uploads].",
@@ -2241,6 +2297,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#webhooks-on-upload",
     "content": "Uploadcare can notify your application when a new file has been uploaded\nasynchronously. For example, you may need to decide on your file\nbased on the abovementioned analysis. When an upload happens, we'll make a POST\nrequest with a JSON payload to the endpoint you provided. Learn more about\n[webhooks][webhooks].",
@@ -2284,6 +2341,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#get-file-info",
     "content": "There're various methods to get file information: via\n[Upload API][api-upload-file-info],\n[REST API][api-reference-fileinfo], or [URL API][url-api-file-info-json].\nUpload API gives you limited but essential access, while REST API gives full details.\nIntegration implementation may vary, please refer to the respective documentation.\n\n\n\n\n\n\nJavaScript\n\nPHP\n\nPython\n\nRuby\n\nSwift\n\ncURL\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCheck out detailed API reference for [file info][api-upload-file-info].",
@@ -2327,6 +2385,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#retrieve-remote-files-on-the-fly",
     "content": "Proxy automatically retrieves files from existing remote locations and delivers\nthem using [Uploadcare CDN][delivery]. It's easy to integrate, requiring only one\nURL modification:\nLearn more about [Proxy][delivery-proxy].",
@@ -2371,6 +2430,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#migrate-files-from-anywhere",
     "content": "If you migrated to Uploadcare from a DIY solution or another platform,\nyou need to migrate your files. First, copy the files from their current\nlocation to your Uploadcare storage so they can be processed and\ndelivered using the Uploadcare CDN.\nLearn more about [Migro][migro-guide].",
@@ -2414,6 +2474,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Upload and store files with one secure, reliable and compatible solution. Use our ready-made uploader interface and infrastructure."
   },
@@ -2442,6 +2503,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#uploadcare-file-uploader",
     "content": "[File Uploader][file-uploader-product-page] is a new and highly customizable\nwidget that allows users to upload files from various sources. It utilizes the\npower of Uploadcare APIs and can run within any web tech stack.",
@@ -2481,6 +2543,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#solutions",
     "content": "We supply a set of ready-made solutions for the most frequent file uploading\ncases: regular, inline, and minimal. Each with its own set of features\nand customization options. You can also use them as is or as a custom build reference.",
@@ -2524,6 +2587,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#regular-file-uploader",
     "content": "The Regular File Uploader is a dialog-based solution that enables easy integration of an uploading button into your application.\nThe button opens a dialog where users can select files to upload from various sources, including local files, external URLs, or social platforms.\nBoth the button and the dialog can be customized to match your application's look and feel.",
@@ -2571,6 +2635,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#inline-file-uploader",
     "content": "The Inline mode is quite similar to the Regular uploader and is useful when you want to upload files without opening a dialog window.\nThis mode is particularly handy if you prefer using your own button and dialog components.\nThe Inline mode can also be useful when you want to embed the file uploader directly within a form or a specific section of your application's user interface.\nThis allows users to seamlessly upload files in context, without being redirected to a separate dialog window, thus enhancing the overall user experience.",
@@ -2618,6 +2683,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#minimal-file-uploader",
     "content": "The Minimal uploader is the last, but certainly not the least, type of uploader.\nIt offers a streamlined approach, enabling file uploads without any additional UI elements.\nThe minimalistic uploader functions as a simple drag-and-drop area.\nHowever, some features, such as social sources and cloud editor, are unavailable with this uploader type.",
@@ -2665,6 +2731,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#embed-image-editor",
     "content": "Both Regular and Inline modes include a built-in cloud image editor that provides a few dozen popular image edit operations.",
@@ -2712,6 +2779,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features",
     "content": "The main feature of the new File Uploader is the ease of customization and\nlocalization with basic HTML and CSS.\nAdd a file uploading capability to your website:\nReceive files from anybody.\n\nUpload files of any type and up to 5 TB in size.\n\nUpload multiple files in one go.\n\nTrack upload jobs with an individual progress bar for each file.\n\nGet files from various sources, including local storage, camera, social media, and cloud storage services.\n\nSpeed up the uploading with the uploading network (it works like CDN).\n\nShow image previews.\n\nResize, crop, rotate, add effects, enhance images, add overlays right after upload.\n\nValidate files by their format or size.\n\nPrevent remote code execution through widgets and code execution in uploaded files like SVG, html and xml.\n\n\nAll your uploads go to the storage covered by SLA with a 99.9% uptime. On top of that, Uploadcare infrastructure is compliant with SOC 2, HIPAA, and more.",
@@ -2755,6 +2823,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#frameworks-support",
     "content": "You can run the File Uploader within any tech stack. Here are a few examples:\nReact\n\nVue\n\nAngular\n\nSvetle",
@@ -2798,6 +2867,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#supported-browsers",
     "content": "File Uploader is supported and tested in all major modern desktop and mobile browsers:\nChrome\n\nFirefox\n\nSafari\n\nEdge\n\nOpera\n\n\nIf you need IE support, please use our [jQuery widget][jquery-widget].",
@@ -2841,6 +2911,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#typescript-support",
     "content": "We use [JSDoc type annotations][ext-jsdoc-supported-types]\nfor TypeScript static analysis support during development.\nAdditionally, we provide type definitions ([*.d.ts files][ext-jsdoc-supported-types])\nfor the TypeScript projects in our packages.\nCheck the [JSDoc Reference][ext-jsdoc-supported-types]\npage in TypeScript official documentation.\nBasic types are automatically loaded when you import the package.\nTo enable JSX support, add the following to your tsconfig.json file:",
@@ -2890,6 +2961,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#technology-behind",
     "content": "We built the File Uploader as close to the native web platform as possible and\ndo not force you to use any specific development environment tools.\nUploader is built with web components, service workers, wasm, and a set of\nother modern technologies. Modern ESM-level code sharing. Minimum of external\ndependencies.\nThe build stage is unnecessary for development. Use the code directly in any\nmodern browser or Node.js. We encourage you to build your custom solutions with\nall building blocks that we have.",
@@ -2933,6 +3005,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#fast-start",
     "content": "We recommend beginning with the File Uploader [configurator][configurator].\nIt includes all necessary settings and generates ready-to-use code snippets and\nstep-by-step instructions tailored to your project's environment. If you don't\nhave an account yet, now is the perfect time to [get one][account-signup].\nOr start with File Uploader [installation][file-uploader-installation].",
@@ -2976,6 +3049,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#accessibility",
     "content": "We are actively working to make the File Uploader accessible to everyone.\nHowever, please note that it is not currently fully accessible.\nWe have plans to incorporate support for accessibility features in the near future.\nIf accessibility is critical for your needs, we recommend checking out our\nprevious [jQuery widget][jquery-widget].",
@@ -3019,6 +3093,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#other-uploading-widgets",
     "content": "This is our latest file uploading solution. If you're looking for a previous\none, please refer to the [jQuery widget][jquery-widget]. In contrast\nto the previous one, new uploader is 57% lighter, has a modern and highly\ncustomizable view, and works with any JavaScript framework, while previous\njQuery widget requires additional work.\nIf you're a mobile developer, check our Swift and Kotlin integrations:\n[iOS uploading widget][swift-integration]\n\n[Android uploading widget][android-integration]",
@@ -3058,6 +3133,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Uploadcare allows process images on the fly with a set of CDN operations on the fly to alter images the way you need."
   },
@@ -3082,6 +3158,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#image-optimization",
     "content": "Image optimization is essential for improving the performance of your website\nor application. Resizing your images and compressing them without sacrificing\nquality are the critical factors to consider:\nScaling operations, such as various methods of resize and crop,\nhave the biggest effect.\n\nDelivering the most efficient format\nthat the client's browser supports.\n\nFurther optimization of the image quality of the\nresulting image, especially for high pixel ratios.\n\n\n\n\nIt's important to use all three types of operations to achieve the best\nresults.\nCheck out our [responsive images][guide-image-responsive] guide for more details.",
@@ -3117,6 +3194,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#how-it-works",
     "content": "Every URL transformation generates a modified image version on the fly, while\nthe original file stays intact. The transformed image version will be cached\non [CDN nodes][delivery] to optimize delivery.\n\n\nAlso, you can [fetch and deliver images][delivery-proxy] to apply operations\nwithout explicitly uploading them:\nWhen applying any image operation, a new file is created (cached on our CDN,\nand not counted towards your storage limits). If not set, this file is encoded\nwith the default quality and format.\nImage processing operation may be applied only to the appropriate file.\nOn uploading, the file is analyzed by Uploadcare: file type, metadata, and so on;\nthe file is assigned an attribute is_image. If this attribute is true, then\nan operation can be applied to the file. See the Limitations section.\nWithout any image processing operation in the URL, CDN [instructs][delivery-cdn-inline]\nbrowsers to show images (Content-Disposition: inline) and download other file\ntypes (Content-Disposition: attachment). Browsers may not show all image formats,\nsuch as TIFF and HEIC. If you need to display an image, add any image\nprocessing operation, [-/preview/][transformations-image-preview] for instance.",
@@ -3161,6 +3239,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#limitations",
     "content": "Image processing operations have limits that you should consider:\nInput image formats\n\nMandatory usage of core operations\n\nFile size\n\nOutput image dimensions\n\nSVG files\n\nImage resolution\n\nRotation\n\nAnimated images\n\n\nLearn more about [image processing limitations][delivery-operations-limits].",
@@ -3204,6 +3283,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#scaling-operations",
     "content": "Rather than delivering large, full-sized images and relying on the browser to\nresize them, you can do it programmatically:\n[Preview][transformations-image-preview]\n\n[Scale crop][transformations-image-scale-crop]\n\n[Resize][transformations-image-resize]\n\n[Crop][transformations-image-crop]\n\n\nThe advanced scaling operations allows you to resize images more precisely:\n[Smart crop][transformations-image-smart-crop]\n\n[Crop by ratio][transformations-image-crop-ratio]\n\n[Crop by objects][transformations-image-crop-objects]\n\n[Smart resize][transformations-smart-resize]\n\n[Zoom][transformations-image-zoom-objects]",
@@ -3243,6 +3323,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#format",
     "content": "-/format/:format/\nIf any other image processing operation is applied (such as scaling operations),\nthe default format is auto (see how auto works).\nAlternatively, you can use the -/format/ operation to convert an image\nto one of the following formats:\njpeg is a lossy image format (good compression for photos). JPEG doesn’t\nsupport an alpha channel; hence you can use the\n[setfill][transformations-image-setfill] operation that sets a background\ncolor. All browsers support JPEG.\n\npng is a lossless format (good compression only for graphics) with\nalpha channel support. All browsers support PNG.\n\nwebp is a modern format with more efficient compression than JPEG and with\nalpha channel support. It works well for all images, yet [not all][ext-caniuse-webp]\nbrowsers and OSs support it.\n\nauto the default behavior; is an automatic image format selection based on\nalpha channel presenceand a client's device and browser.\n\npreserve returns the image in the original format if it is PNG or JPEG,\notherwise coerces to PNG or JPEG. This option is useful\nwhen you need to save the image, rather than display it to the end-user.",
@@ -3282,6 +3363,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#how-auto-works-and-prioritize-image-formats",
     "content": "First, the algorithm checks the Accept header with MIME types to figure out\nwhat image format a client browser supports.\nAVIF is used as output when all the following conditions are met:\nimage/avif MIME type is supported by the client.\n\nOutput image resolution is under the threshold (currently 2 MPx).\n\n\n\nWebP is used when image/webp MIME type is supported by the client.\n\nPNG is used when the source image contains an alpha channel with non-opaque pixels\nor when the image has limited color diversity, resembling artwork.\n\nJPEG is used otherwise.\n\n\nYou can disable the selection of modern formats, specifically AVIF and WebP,\nfor your project in the Dashboard. Alternatively, you may consider adding the\n-/format/preserve/ operation to a specific URL.\nNote: auto works when you use primary Uploadcare [storage][storage] (not S3\nBucket) and the default [Uploadcare CDN][delivery] domain ucarecdn.com.\n\n\n\n\n\n\n\n\n\n\n\n\n400x301 \n\npng 116Kb\n\n\nTransparent\n\n\n\n\n\n\n\n\n400x301 \n\njpeg 16Kb\n\n\nOpaque\n\n\n\n\n\n\n\n\n400x301 \n\nwebp 15Kb\n\n\nTransparent, size is equal\n\n\nto the opaque one.\nBrowsers that support WebP will load this image version, while others will\ndisplay JPEG or PNG instead.",
@@ -3325,6 +3407,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#quality",
     "content": "-/quality/:value/\nSets output quality for [lossy formats][ext-lossy-formats] (JPEG, WebP, and AVIF).\nSince actual settings vary from codec to codec and, more importantly, from format\nto format, we provide five simple tiers that are consistent across\ndifferent formats and other settings and suit most cases of image distribution.\nA higher quality level will typically result in a larger output file.\nHowever, setting the quality level higher than the original level of the\nuploaded image won’t increase your file size.\nnormal — the default behavior when no quality operation is applied.\nThe reasonable quality for 1x pixel density.\n\nbetter — can be used to render relatively small and detailed previews. ≈125%\nfile size compared to normal.\n\nbest — can be used to deliver images close to their pristine quality\n(e.g., for artwork). ≈170% file size.\n\nlighter — useful when applied to relatively large images to save traffic\nwithout significant quality loss. ≈80% file size.\n\nlightest — highest compression ratio for high pixel ratio. ≈50% file size.",
@@ -3364,6 +3447,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#adaptive-quality",
     "content": "Adaptive quality could be enabled per project in the Dashboard. In this case,\nwe analyze the output image using content-aware algorithms to determine\nmaximum compression that won't cause noticeable visual artefacts and\nadjust the compression level accordingly.",
@@ -3403,6 +3487,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#optimizing-for-high-pixel-ratios",
     "content": "A great approach for high pixel densities is to increase images resolution\nand reduce quality at the same time. Compared to just increasing quality,\nimages will look clearer on all screens with nearly the same file size.\nTo adjust quality, you can use lighter and lightest presets.\n\n\n\n\n\n\n\n\n\n\n\n\n1x \n\nbest 16Kb\n\n\nBlurry on retina.\n\n\n\n\n\n\n\n\n1.5x \n\nlighter 14Kb\n\n\n\n\n\n\n\n\n\n\n2x \n\nlightest 12Kb\n\n\nPerfect for all screens.",
@@ -3442,6 +3527,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#progressive-jpeg",
     "content": "-/progressive/yes/\n\n\n-/progressive/no/\nReturns a progressive image. In progressive images, data are compressed in\nmultiple passes of progressively higher detail. This is ideal for large images\nthat will be displayed while downloading over a slow connection allowing a\nreasonable preview after receiving only a portion of the data.\nThe operation does not affect non-JPEG images; does not force image formats\nto JPEG.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBaseline loading.\n\n\n\n\n\n\n\n\n\n\n\n\nProgressive loading.",
@@ -3481,6 +3567,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#strip-meta-information",
     "content": "-/strip_meta/all/\n\n\n-/strip_meta/none/\n\n\n-/strip_meta/sensitive/\nThe original image often comes with additional information built into the image\nfile. In most cases, this information doesn't affect image rendering and thus\ncan be safely stripped from the processed images to reduce image weight.\nCurrently, you can only keep EXIF meta information. Other storage, such as XMP\nor IPTC, will always be stripped when creating a new processed image version.\nall — the default behavior when no strip_meta operation is applied.\nNo meta information will be added to the processed file.\n\nnone — uses the EXIF from the original file.\nThe orientation tag will be set to 1 (normal orientation).\n\nsensitive — uses the EXIF from the original file but skips geolocation.\nThe orientation tag will be set to 1 (normal orientation).\n\n\nIf you need to restrict user access to EXIF information, please\n[protect your images from editing][mutability].",
@@ -3520,6 +3607,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#animated-images-optimization",
     "content": "Video files are much smaller than GIFs, without noticeable quality loss. Their\ndelivery to end users is much faster. Gif to video operation converts animated\nimage files, such as GIF, WebP, and HEIC, to video and transforms them on the\nfly. Learn more about [animated images optimization][transformations-gif-to-video].",
@@ -3559,6 +3647,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Uploadcare allows process images on the fly with a set of CDN operations on the fly to alter images the way you need."
   },
@@ -3583,6 +3672,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#image-transformations-and-art-direction",
     "content": "With Uploadcare, you can easily build custom image processing workflows and\nautomate most image transformation tasks. For example, you can set up a chain of\nactions for user-generated images that'll unify their look.\n\n\n\n\n\n\nUse and stack transformations right in the image URL:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOriginal image\n\n\n\n\n\n\n\n\n\nSharpen \n\n-/sharp/15/\n\n\n\n\n\n\n\n\n\nEnhance \n\n-/enhance/100/",
@@ -3618,6 +3708,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#how-it-works",
     "content": "Every URL transformation generates a modified image version on the fly, while\nthe original file stays intact. The transformed image version will be cached\non [CDN nodes][delivery] to optimize delivery.\n\n\nAlso, you can [fetch and deliver images][delivery-proxy] to apply operations\nwithout explicitly uploading them:\nImage processing operation may only apply to [appropriate file][delivery-operations-formats].\nOn uploading, the file is analyzed by Uploadcare: file type, metadata, and so on;\nthe file is assigned an attribute is_image. If this attribute is true, then\nan operation can be applied to the file. See the Limitations section.\nWhen applying any image operation, a new file is created (cached on our CDN,\nand not counted towards your storage limits). If not set, this file is encoded\nwith the default [quality][transformations-image-quality] and original\n[format][transformations-image-format]. However, you can adjust them to meet your\nrequirements better.",
@@ -3662,6 +3753,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#full-list-of-image-transformations-operations",
     "content": "Most of the image processing operations work on-the-fly:\n\n\n\n\n\n\n\n\nResize, crop, rotation\n\n\n\n \n\nPreview\n\n \n\nResize\n\n \n\nSmart resize\n\n \n\nCrop\n\n \n\nCrop by ratio\n\n \n\nCrop by objects\n\n \n\nScale crop\n\n \n\nSmart crop\n\n \n\nBorder radius and circle crop\n\n \n\nSet fill color\n\n \n\nZoom objects\n\n \n\nAutomatic rotation, EXIF-based\n\n \n\nManual rotation\n\n \n\nFlip\n\n \n\nMirror\n\n\n\nOverlays and watermarks\n\n\n\n\n\nImage overlay\n\n\n\nSelf overlay\n\n\n\nText overlay\n\n\n\nEffects and enhancements\n\n\n\n\n\nBasic color adjustment\n\n\n\nEnhance\n\n\n\nGrayscale\n\n\n\nInverting\n\n\n\nColor profile management\n\n\n\n\n\nConversion to sRGB\n\n\n\nICC profile size threshold\n\n\n\nPhoto filters\n\n\n\nBlur\n\n\n\nBlur region\n\n\n\nBlur faces\n\n\n\nUnsharp masking\n\n\n\nSharpen\n\n\n\nColor recognition\n\n\n\nFace-detection based transformations\n\n\n\nAnimated images optimization\n\n\n\nSVG transformations and rasterizationNote: Some image operations can't be perfomed on the fly and work asynchronously via [REST API][rest-api]:\n\n\n\n\n\n\n\n\nBackground removal\n\n\n\nObject recognition\n\n\n\nVideo thumbnail generation\n\n\n\nDocument thumbnail generationImage optimization operations can be found in a separate section:\n\n\n\n\n\n\n\n\nCompression\n\n\n\n\n\nFormat\n\n\n\nQuality\n\n\n\nSmart compression\n\n\n\nProgressive JPEG\n\n\n\nMeta information control",
@@ -3701,6 +3793,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#limitations",
     "content": "Image processing operations have limits that you should consider:\nInput image formats\n\nMandatory usage of core operations\n\nFile size\n\nOutput image dimensions\n\nSVG files\n\nImage resolution\n\nRotation\n\nAnimated images\n\n\nLearn more about [image processing limitations][delivery-operations-limits].",
@@ -3740,6 +3833,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Uploadcare CDN is a fast and reliable content delivery network that optimizes your images and videos for any device and platform."
   },
@@ -3764,6 +3858,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#file-delivery-with-uploadcare",
     "content": "Every uploaded file is immediately available on the Uploadcare CDN\n— the best place to host your files for media deliveryGlobal CDN network\n\nFastest on-the-fly image operations\n\nHuge set of image transformations\n\nDeliver files from any remote storage\n\nDDoS protection and access control\n\nUnlimited scalability on demand\n\n\nCDN is a geographically distributed system of servers that delivers content to\nclient devices from the servers nearby, which saves time on long-distance data\nexchange.\nWhile traditional CDNs are typically limited to basic copying and caching\nfunctions, Uploadcare CDN stands out by offering dynamic image modifications.\nThis unique feature not only ensures faster page load times and better uptime,\nbut also allows on-the-fly image optimization and transformation of images to\nsuit the device they are being consumed on.",
@@ -3799,6 +3894,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#how-it-works",
     "content": "Access files in Uploadcare CDN at ucarecdn.com over HTTP/HTTPS liks this:\n\n\nYou can add CDN operations by including directives in the CDN URL:\n\n\n:uuid stands for the unique file identifier, UUID, assigned on upload.\n\n/-/ is a mandatory parsing delimiter to divide operations and other path\ncomponents.\n\n:operation/:params/ is a CDN operation directive with parameters.\n\n:filename is an optional filename you can add after a trailing slash /.\n\n\nYou can stack two and more operations like this:\n/:operation/:params/-/:operation/:params/\nSame applies when using [Proxy][delivery-proxy]:",
@@ -3843,6 +3939,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#seo-optimization",
     "content": "One way to improve your site's SEO is to name your files relevantly,\nsuch as integrating keywords into your image URLs.\nValid URLs typically have words separated by a hyphen,\nfor example seo-optimize-images.\nYou can specify an additional filename after the UUID\ninstead of the automatically generated one:\n\n\nThe filename can be added to both the original (after the UUID) and at the end\nof the URL with operations applied, as in the example above.",
@@ -3882,6 +3979,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#table-of-contents",
     "content": "Article Description \n[On-the-fly operations][delivery-operations] Uploadcare CDN features on-the-fly image optimization, large set of image transformations, and non-image file operations, such as getting file information or changing file delivery behavior \n[Image optimizations][transformations-image-compression] Scale your images and compress them without sacrificing quality to improve the performance of your website or application \n[Image transformations][transformations-image] Build custom image processing workflows and automate most image transformation tasks: scaling, rotation, overlays, effects and enhancements, face-detection, SVG transformation and many more \n[CDN settings][delivery-settings] Set up custom CDN CNAME, cache duration, search engine indexing behavior, or even bring your own CDN \n[Fetch and deliver remote files][delivery-proxy] When you need to get all the benefits of image optimization for files that you already store somewhere else, use Proxy. It automatically retrieves files from existing remote locations and delivers them using the CDN \n[Signed URLs][secure-delivery] Control who and for how long can access files in your project via signed URLs. Protect end-users sensitive data, authorize clients, limit access by time \n[URL API][url-api] List of all CDN operations, its limitations, and settings",
@@ -3921,6 +4019,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Implement custom workflows for your uploaded files with Uploadcare REST API."
   },
@@ -3945,6 +4044,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#file-management",
     "content": "Implement custom workflows for your uploaded files.Manage files with REST API\n\nWebhooks for various events\n\nArbitrary file metadata management\n\nS3 bucket integration\n\nVideo processing\n\nDocument conversion\n\nUnsafe content detection\n\nObject recognition\n\nMalware protection\n\nAPI clients for popular platforms\n\n\nOnce uploaded, you can manage files using REST API and project storage settings.",
@@ -3980,6 +4080,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#how-it-works",
     "content": "Manage your files using REST API directly or with an API client.\n\n\n\n\n\n\nJavaScript\n\nPHP\n\nPython\n\nRuby\n\nSwift\n\ncUrl",
@@ -4019,6 +4120,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#table-of-contents",
     "content": "Article Description \n[Managing files][managing-files] Uploadcare provides various methods for managing already uploaded files with its REST API \n[Webhooks][webhooks] Setup webhooks to notify your application about certain events that occur in your project asynchronously \n[File metadata][file-metadata] File metadata is additional, arbitrary key-value data associated with uploaded files. For example, you could store a unique file identifier from your system \n[S3 bucket integration][storage-custom] Connect an Amazon S3 bucket to one or more of your Uploadcare projects to implement custom file workflows, integrated deeply into your system \n[Storage backups][storage-backup] Automatically copy all of you stored files to a custom S3 bucket. Connect the storage once, and the system will do backups on a timely basis \n[Video processing][transformations-video] Encode video files to MP4, WEBM, or OGG, and transform them to adjust the viewing experience, create thumbnails, and save bandwidth \n[Document conversion][transformations-docs] Convert documents and create their thumbnails to improve user experience \n[Unsafe content detection][unsafe-content] Detect and identify inappropriate, unwanted, NSFW, or offensive user-generated content \n[Object recognition][intelligence-object-recognition] Categorize and tag people, objects, and other content classes in your images \n[Malware protection][malware-protection] Automatically detect infected or malicious files to protect your users \n[REST API][rest-api] Low-level access to Uploadcare features, e.g. CRUD files and their metadata, receive webhooks, and run add-ons \n[API integrations][integrations] You don't have to code most of the low-level API integrations. We have high-level libraries for all popular platforms",
@@ -4053,6 +4155,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Uploadcare features widgets, API clients, plugins, no-code integrations, and low-code guides for different languages, frameworks and platforms."
   },
@@ -4072,6 +4175,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#file-uploader",
     "content": "The new and highly customizable widget that allows users to upload and edit\nfiles from various sources, utilizing the power of Uploadcare APIs.\nWe built it as close to the native web platform as possible (web components,\nservice workers, wasm, etc). It doesn't force you to use any specific\ndevelopment environment tools.\n\n\n\n\n\n\n\n\nDocumentation\n\n\n\n\n\nReact example\n\n\n\n\n\nVue example\n\n\n\n\n\nAngular example\n\n\n\n\n\nNext.js example\n\n\n\n\n\nSvelte example",
@@ -4106,6 +4210,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#previous-stable-version",
     "content": "We continue to support our previous uploading widget. It's built using jQuery,\nvery stable, and supports every customer request we received over the years.\n\n\n\n\n\n\n\n\nDocumentation\n\n\n\n\n\nReact wrapper\n\n\n\n\n\nAngular wrapper",
@@ -4144,6 +4249,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-clients",
     "content": "JS\n\n\n\n\n\nPHP\n\n\n\n\n\nPython\n\n\n\n\n\nRuby\n\n\n\n\n\nRails\n\n\n\n\n\nJava\n\n\n\n\n\nGolang\n\n\n\n\n\nRust\n\n\n\n\n\niOS (Swift)\n\n\n\n\n\nAndroid (Kotlin)",
@@ -4178,6 +4284,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#cdn-sdks",
     "content": "Next.js\n\n\n\n\n\nNuxtImage\n\nby Nuxt",
@@ -4212,6 +4319,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#plugins-and-no-code-integrations",
     "content": "WooCommerce\n\nby snowray.co\n\n\n\n\n\nContentful\n\n \n\n\n\n\n\nCKEditor\n\n \n\n\n\n\n\nTinyMCE\n\n \n\n\n\n\n\nRedactor\n\n \n\n\n\n\n\nZapier\n\n \n\n\n\n\n\nMake\n\n \n\n\n\n\n\nIntegrately\n\n \n\n\n\n\n\nWix Uploadly\n\nby Inspon",
@@ -4246,6 +4354,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#low-code-guides",
     "content": "Shopify\n\n \n\n\n\n\n\nWebflow\n\n \n\n\n\n\n\nMarketo",
@@ -4280,6 +4389,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#third-party-integrations",
     "content": "Lovely libs made by those who believe in Uploadcare.\n\n\n\n\n\n\n\n\nPHP Transformation URLs generation\n\nby Vormkracht10\n\n\n\n\n\nFlysystem driver for Laravel\n\nby Vormkracht10\n\n\n\n\n\nVue.js\n\nby Josh Smith\n\n\n\n\n\nVue.js\n\nby Tipe.io\n\n\n\n\n\nC#\n\nby Anton Kheystver\n\n\n\n\n\nErlang\n\nby Roman Chvanikoff\n\n\n\n\n\nElixir\n\nby CryptoHamsters\n\n\n\n\n\nFlutter\n\nby Konstantin Kai\n\n\n\n\n\nA-Frame\n\nby Fernando Serrano\n\n\n\n\n\nGetSimple CMS\n\nby zekoolweb",
@@ -4314,6 +4424,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#misc",
     "content": "Adaptive delivery SDK\n\n \n\n\n\n\n\nWebpack\n\nby Roman Dubinin\n\n\n\n\n\nWordPress\n\n \n\n\n\n\n\nJotForm\n\n \n\n\n\n\n\nNetlify CMS\n\n Got an integration request? [Hit us up!][mail-help]",
@@ -4353,6 +4464,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Uploadcare Python & Django integrations handle uploads and further operations with files by wrapping Upload and REST APIs."
   },
@@ -4377,6 +4489,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#python-api-client",
     "content": "Uploadcare Python & Django integrations handle uploads and further operations\nwith files by wrapping Upload and REST APIs.\n[GitHub →][pyuploadcare-github-readme]",
@@ -4412,6 +4525,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#features",
     "content": "Uploading ([Upload API][upload-api]):\nUpload files from a local storage and URLs (up to 5 TB)\n\nMultipart uploading for large files\n\nUploading network to speed up uploading jobs (like CDN)\n\n\nFile management ([REST API][rest-api]):\nGet file info\n\nPerform various file operations (store/delete/copy/group)\n\nDetect unsafe and malicious content\n\nEncode and transform videos\n\nConvert documents and other files\n\nRecognize objects in the image\n\nAdd arbitrary file metadata\n\nManage webhooks\n\n\nImage processing ([URL API][url-api]):\nCompression\n\nGeometry\n\nColors\n\nDefinition\n\nImage and text overlays\n\nRotations\n\nRecognition\n\nFile info\n\nProxy (fetch)\n\n\nSecurity features:\nSecure authentication\n\nSecure uploads (signed uploads)\n\nSecure delivery (signed URLs)\n\nSecure webhooks (signing secret)",
@@ -4451,6 +4565,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#installation",
     "content": "In order to install pyuploadcare, run these command in CLI:\nTo use in Django project install with extra dependencies:",
@@ -4500,6 +4615,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#usage-example",
     "content": "Here is an example how to include Uploadcare ImageField into an existing\nDjango project.",
@@ -4545,6 +4661,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#example-django-project",
     "content": "Check out example Django project.\nIt features:\nProject section\n\nFiles section\n\nFile Groups section\n\nFiles uploading\n\nDocuments conversion\n\nVideo conversion\n\nWebhooks\n\nPosts section",
@@ -4584,6 +4701,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#requirements",
     "content": "Python 3.8, 3.9, 3.10, 3.11, 3.12\n\n\nTo use pyuploadcare with Python 3.6 or 3.7 please install pyuploadcare < 5.0.\nTo use pyuploadcare with Python 2.7 please install pyuploadcare < 3.0.\nDjango compatibility:\nPy/Dj 2.2 3.0 3.1 3.2 4.0 4.1 4.2 5.0 \n3.8 X X X X X X X  \n3.9 X X X X X X X  \n3.10    X X X X X \n3.11      X X X \n3.12       X X",
@@ -4627,6 +4745,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
     "api_endpoint_id": "subpackage_upload.baseUpload",
@@ -4686,6 +4805,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
     "api_endpoint_id": "subpackage_upload.multipartFileUploadStart",
@@ -4740,6 +4860,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
     "api_endpoint_id": "subpackage_upload.multipartFileUploadPart",
@@ -4792,6 +4913,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
     "api_endpoint_id": "subpackage_upload.multipartFileUploadComplete",
@@ -4846,6 +4968,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
     "api_endpoint_id": "subpackage_upload.fromURLUpload",
@@ -4900,6 +5023,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
     "api_endpoint_id": "subpackage_upload.fromURLUploadStatus",
@@ -4954,6 +5078,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
     "api_endpoint_id": "subpackage_upload.fileUploadInfo",
@@ -5008,6 +5133,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
     "api_endpoint_id": "subpackage_groups.createFilesGroup",
@@ -5062,6 +5188,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "15c16fe3-9b9c-4a04-ae4f-f9749d504bc7",
     "api_endpoint_id": "subpackage_groups.filesGroupInfo",
@@ -5112,6 +5239,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "__package__.File metadata",
@@ -5166,6 +5294,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_file.filesList",
@@ -5220,6 +5349,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_file.storeFile",
@@ -5274,6 +5404,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_file.deleteFileStorage",
@@ -5328,6 +5459,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_file.info",
@@ -5382,6 +5514,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_file.filesStoring",
@@ -5436,6 +5569,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_file.filesDelete",
@@ -5490,6 +5624,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_file.createLocalCopy",
@@ -5544,6 +5679,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_file.createRemoteCopy",
@@ -5598,6 +5734,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_addOns.awsRekognitionExecute",
@@ -5652,6 +5789,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_addOns.awsRekognitionExecutionStatus",
@@ -5706,6 +5844,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_addOns.awsRekognitionDetectModerationLabelsExecute",
@@ -5760,6 +5899,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_addOns.awsRekognitionDetectModerationLabelsExecutionStatus",
@@ -5814,6 +5954,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_addOns.ucClamavVirusScanExecute",
@@ -5868,6 +6009,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_addOns.ucClamavVirusScanExecutionStatus",
@@ -5922,6 +6064,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_addOns.removeBgExecute",
@@ -5976,6 +6119,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_addOns.removeBgExecutionStatus",
@@ -6030,6 +6174,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_fileMetadata.key",
@@ -6084,6 +6229,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_fileMetadata.updateFileMetadataKey",
@@ -6138,6 +6284,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_fileMetadata.deleteFileMetadataKey",
@@ -6190,6 +6337,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_group.groupsList",
@@ -6244,6 +6392,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_group.info",
@@ -6298,6 +6447,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_group.deleteGroup",
@@ -6350,6 +6500,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_project.info",
@@ -6404,6 +6555,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_webhook.webhooksList",
@@ -6458,6 +6610,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_webhook.create",
@@ -6512,6 +6665,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_webhook.updateWebhook",
@@ -6566,6 +6720,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_webhook.unsubscribe",
@@ -6618,6 +6773,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_conversion.documentConvertInfo",
@@ -6672,6 +6828,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_conversion.documentConvert",
@@ -6726,6 +6883,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_conversion.documentConvertStatus",
@@ -6780,6 +6938,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_conversion.videoConvert",
@@ -6834,6 +6993,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fb019a78-a773-4315-9c7b-6dcb585d6b30",
     "api_endpoint_id": "subpackage_conversion.videoConvertStatus",
@@ -6888,6 +7048,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
     "api_endpoint_id": "subpackage_fileInformation.fileInfoJson",
@@ -6942,6 +7103,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
     "api_endpoint_id": "subpackage_fileInformation.fileInfoJsonp",
@@ -6996,6 +7158,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "6e1b77b7-26ce-4bba-9544-a24a9b3519dc",
     "api_endpoint_id": "subpackage_fileNames.fileWithName",

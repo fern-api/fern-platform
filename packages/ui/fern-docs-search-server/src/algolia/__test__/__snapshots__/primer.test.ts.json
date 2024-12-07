@@ -21,6 +21,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The Primer API is used to manage Client Sessions, Payments and saved payment methods.\nAll other actions are either managed in the Universal Checkout implementation or in the Dashboard.\nCheck out:\nClient Sessions\n\nUniversal Checkout\n\nManaging Payments\n\n\nTest the APIs yourself in our API Reference. Don't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io, or contact your Primer account manager."
   },
@@ -46,6 +47,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-endpoint-deployments",
     "content": "Sandbox: https://api.sandbox.primer.io\n\nProduction: https://api.primer.io",
@@ -82,6 +84,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-versions",
     "content": "Primer makes updates to the APIs on a regular basis, as we release new features. To allow you to update your integration as you are ready, we allow for a X-Api-Version header to be passed on all API requests.\nIf you omit the version header, your request will default to the earliest supported version of the API.",
@@ -124,6 +127,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#available-versions",
     "content": "Read about the available versions of the APIs below on our Changelog.",
@@ -164,6 +168,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -195,6 +200,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#managing-api-keys",
     "content": "Head up to the Developers area on the dashboard to manage your API keys.\nYou will be able to generate or revoke API keys and edit their respective scopes. Be aware that any changes to existing API keys will be reflected immediately and could cause unwanted side effects.",
@@ -231,6 +237,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#available-scopes",
     "content": "Scope Description \nclient_tokens:write Create client tokens for use with the client SDK. \nthird_party:webhook_trigger Allows you to post to our webhooks endpoint. API keys with this scope can be used to enable communication between your processor and Primer about important payment lifecycle events. \ntransactions:authorize Authorize a payment \ntransactions:cancel Cancel a payment. \ntransactions:capture Submit a payment for settlement. \ntransactions:retrieve Retrieve one or more payments. \ntransactions:refund Refund a payment. \npayment_instrument:read Read stored payment methods. \npayment_instrument:write Write stored payment methods.",
@@ -267,6 +274,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -291,6 +299,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#status-codes",
     "content": "The following table summarizes the HTTP response codes you may receive from\nthe Primer REST API.\nStatus Code Description \n200 Success \n400 Bad Request \n401 Unauthorized \n403 Forbidden \n404 Entity Not Found \n409 Entity Already Exists \n422 Input Validation Failed",
@@ -327,6 +336,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#error-responses",
     "content": "Primer uses conventional HTTP response codes to indicate the success or failure of an API request. HTTP codes in the 2XX range indicate a successful request, whereas codes in the 4XX range indicate a failed request usually due to invalid inputs or operations.\nThe format of the payload for all errors is common. When an unsuccessful request occurs, you will receive a payload in the following format:\nAll error payloads will be comprised of a unique errorId which you can use to identify the error, a human description description, and a diagnosticsId that you can quote when contacting the support team (support@primer.io). In case of a badly formed request, Primer will also return additional validationErrors.",
@@ -369,6 +379,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payment-status",
     "content": "As the payments are created, processed, and finalised, they go through a number of states that you will get as an API response, through webhook notifications, and in the Dashboard. These states are used across all processors, as processor specific states are mapped to these. An additional message, in the field processorMessage, from the processor may also be included that details the reason for the state, primarily on failure states.\nStatus Description \nPENDING The payment has been created by Primer but not yet authorized. \nFAILED The processor failed to process this payment. \nAUTHORIZED The payment is authorized and awaiting capture. \nSETTLING The payment has been submitted for settlement and funds will be settled later. \nPARTIALLY_SETTLED The payment has been partially settled. \nSETTLED Funds have been settled into your account. \nDECLINED This payment was declined by the processor, either at a gateway or acquirer level. See the reason object in your response payload for more details. \nCANCELLED The payment was cancelled prior to it being settled. \n\nDon't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io, or contact your Primer account manager.",
@@ -405,6 +416,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -436,6 +448,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.\nAll of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection. Primer will provide this once the loyalty provider connection is created.\nTo identify the customer in the context of the loyalty provider, a customerId is also necessary."
   },
@@ -461,6 +474,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#get-the-customer-balance",
     "content": "Call the Loyalty Customers endpoint, which includes the customer's balance. In future this object could contain further details.",
@@ -497,6 +511,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#redeem-points",
     "content": "Call the Loyalty Transactions endpoint to create a REDEMPTION transaction.\nProvide an orderId to link multiple transactions together.",
@@ -533,6 +548,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#refund-points",
     "content": "Call the Loyalty Transactions endpoint to create a REFUND transaction. This transaction is completely independent from a redeem transaction.\nProvide an orderId to link multiple transactions together.",
@@ -569,6 +585,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#get-a-list-of-transactions",
     "content": "Call the Loyalty Transactions endpoint to retrieve a list of all your transactions. In most cases it makes sense to filter by connectionId. You can also filter by customerId or orderId.",
@@ -605,6 +622,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -629,6 +647,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v23",
     "content": "This version includes improvements to the Payments API.\nSet X-Api-Version header to 2.3 to use v2.3 of the API.",
@@ -665,6 +684,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api",
     "content": "Improvements\nThe Payments API endpoints were modified to return error code IdempotencyKeyAlreadyExists  with status 409 when a payment request is submitted with an X-Idempotency-Keythat was already sent in a previous request.\n\nThe payment creation endpoint was improved to return the correct paymentMethodType\n\nThe payment status webhook was improved to return the correct paymentMethodType",
@@ -705,6 +725,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v22",
     "content": "This version includes improvements to the Client Session API, Payments API and the Payment Methods API.\nYou must set the X-Api-Version header to 2.2 to use v2.2 of the API.",
@@ -741,6 +762,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-session-api",
     "content": "Added order.lineItems.productData on the request and response",
@@ -781,6 +803,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api-1",
     "content": "Added order.lineItems.productData on the request and response",
@@ -821,6 +844,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v21",
     "content": "Version 2.1 includes improvements to the Client Session API, Payments API and the Payment Methods API.\nStarting API v2.1, the API Version X-Api-Version is a semantic version without a patch (e.g. 2.1) rather than a date 🎉\nSet the X-Api-Version header to 2.1 to use v2.1 of the API.",
@@ -857,6 +881,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-session-api-1",
     "content": "Added paymentMethod.paymentType and paymentMethod.descriptor on the request and response of the client session\n\nAdded order.lineItems[].productType on the request and response of the client session\n\nAdded GET /client-session to get the content of a client session\n\nAdded PATCH /client-session to update the content of a client session\n\nAdditional validation has been put in place to ensure that a currencyCode is always passed if any amount value is passed",
@@ -897,6 +922,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api-2",
     "content": "Added paymentMethod.isVaulted boolean field to indicate whether the paymentMethod.paymentMethodToken in the response is a vaulted token (and can therefore be used for future payments) or not. This replaces vaultedPaymentMethodToken.\n\nAdded order.lineItems[].productType on the request and response\n\namount, currencyCode, customerId and orderId are now required fields when making a payment with a vaulted token (i.e. a recurring payment).\n\nWhen paying with a vaulted token, additional validation has been put in place to ensure the customerId matches the customerId associated with the vaulted token.",
@@ -937,6 +963,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payment-methods-api",
     "content": "Added verify in POST /payment-instruments/{paymentMethodToken}/vault to set whether or not the payment method token should be verified before vaulting\n\nAdded isVerified to the payment method response",
@@ -977,6 +1004,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v2",
     "content": "Version 2 includes improvements to the Client Session API and the Payments API.",
@@ -1013,6 +1041,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-session-api-2",
     "content": "X-API-Version -> 2021-09-27\n\nCreating a payment using only a payment method token is now possible. The order, customer and metadata passed on the Client Session request is then used for the payment.\n\nThe create Client Session endpoint request was extended to include order, customer, etc.\n\nAll references to paymentInstrument from the previous Payments API version have been refactored to paymentMethod to be more consistent throughout\n\nThe customer billingAddress and shippingAddress fields are now all optional",
@@ -1053,6 +1082,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api-3",
     "content": "X-API-Version -> 2021-09-27\n\nCreating a payment using only a payment method token is now possible. The order, customer and metadata passed on the Client Session request is then used for the payment.\n\nThe create payment endpoint request was extended to include order, customer, etc. It now more closely resembles the /client-session endpoint\n\nThe response of all the Payments API endpoints was refactored to match the create payment request structure\n\nAll references to paymentInstrument from the previous Payments API version have been refactored to paymentMethod to be more consistent throughout\n\nAll the payments API endpoints (create, capture, cancel, refund, etc.) are now versioned\n\npaymentMethodData in PaymentMethod responses (for card payment method types) all now contain a first6digits field in addition to the last4digits returned. This is an opt-in field, so it is null by default.\n\nThe customer billingAddress and shippingAddress fields are now all optional",
@@ -1093,6 +1123,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The Primer API is used to manage Client Sessions, Payments and saved payment methods.\nAll other actions are either managed in the Universal Checkout implementation or in the Dashboard.\nCheck out:\nClient Sessions\n\nUniversal Checkout\n\nManaging Payments\n\n\nTest the APIs yourself in our API Reference. Don't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io, or contact your Primer account manager."
   },
@@ -1118,6 +1149,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-endpoint-deployments",
     "content": "Sandbox: https://api.sandbox.primer.io\n\nProduction: https://api.primer.io",
@@ -1154,6 +1186,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-versions",
     "content": "Primer makes updates to the APIs on a regular basis, as we release new features. To allow you to update your integration as you are ready, we allow for a X-Api-Version header to be passed on all API requests.\nIf you omit the version header, your request will default to the earliest supported version of the API.",
@@ -1196,6 +1229,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#available-versions",
     "content": "Read about the available versions of the APIs below on our Changelog.",
@@ -1236,6 +1270,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -1267,6 +1302,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#managing-api-keys",
     "content": "Head up to the Developers area on the dashboard to manage your API keys.\nYou will be able to generate or revoke API keys and edit their respective scopes. Be aware that any changes to existing API keys will be reflected immediately and could cause unwanted side effects.",
@@ -1303,6 +1339,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#available-scopes",
     "content": "Scope Description \nclient_tokens:write Create client tokens for use with the client SDK. \nthird_party:webhook_trigger Allows you to post to our webhooks endpoint. API keys with this scope can be used to enable communication between your processor and Primer about important payment lifecycle events. \ntransactions:authorize Authorize a payment \ntransactions:cancel Cancel a payment. \ntransactions:capture Submit a payment for settlement. \ntransactions:retrieve Retrieve one or more payments. \ntransactions:refund Refund a payment. \npayment_instrument:read Read stored payment methods. \npayment_instrument:write Write stored payment methods.",
@@ -1339,6 +1376,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -1363,6 +1401,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#status-codes",
     "content": "The following table summarizes the HTTP response codes you may receive from\nthe Primer REST API.\nStatus Code Description \n200 Success \n400 Bad Request \n401 Unauthorized \n403 Forbidden \n404 Entity Not Found \n409 Entity Already Exists \n422 Input Validation Failed",
@@ -1399,6 +1438,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#error-responses",
     "content": "Primer uses conventional HTTP response codes to indicate the success or failure of an API request. HTTP codes in the 2XX range indicate a successful request, whereas codes in the 4XX range indicate a failed request usually due to invalid inputs or operations.\nThe format of the payload for all errors is common. When an unsuccessful request occurs, you will receive a payload in the following format:\nAll error payloads will be comprised of a unique errorId which you can use to identify the error, a human description description, and a diagnosticsId that you can quote when contacting the support team (support@primer.io). In case of a badly formed request, Primer will also return additional validationErrors.",
@@ -1441,6 +1481,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payment-status",
     "content": "As the payments are created, processed, and finalised, they go through a number of states that you will get as an API response, through webhook notifications, and in the Dashboard. These states are used across all processors, as processor specific states are mapped to these. An additional message, in the field processorMessage, from the processor may also be included that details the reason for the state, primarily on failure states.\nStatus Description \nPENDING The payment has been created by Primer but not yet authorized. \nFAILED The processor failed to process this payment. \nAUTHORIZED The payment is authorized and awaiting capture. \nSETTLING The payment has been submitted for settlement and funds will be settled later. \nPARTIALLY_SETTLED The payment has been partially settled. \nSETTLED Funds have been settled into your account. \nDECLINED This payment was declined by the processor, either at a gateway or acquirer level. See the reason object in your response payload for more details. \nCANCELLED The payment was cancelled prior to it being settled. \n\nDon't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io, or contact your Primer account manager.",
@@ -1477,6 +1518,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -1508,6 +1550,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.\nAll of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection. Primer will provide this once the loyalty provider connection is created.\nTo identify the customer in the context of the loyalty provider, a customerId is also necessary."
   },
@@ -1533,6 +1576,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#get-the-customer-balance",
     "content": "Call the Loyalty Customers endpoint, which includes the customer's balance. In future this object could contain further details.",
@@ -1569,6 +1613,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#redeem-points",
     "content": "Call the Loyalty Transactions endpoint to create a REDEMPTION transaction.\nProvide an orderId to link multiple transactions together.",
@@ -1605,6 +1650,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#refund-points",
     "content": "Call the Loyalty Transactions endpoint to create a REFUND transaction. This transaction is completely independent from a redeem transaction.\nProvide an orderId to link multiple transactions together.",
@@ -1641,6 +1687,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#get-a-list-of-transactions",
     "content": "Call the Loyalty Transactions endpoint to retrieve a list of all your transactions. In most cases it makes sense to filter by connectionId. You can also filter by customerId or orderId.",
@@ -1677,6 +1724,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -1701,6 +1749,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v23",
     "content": "This version includes improvements to the Payments API.\nSet X-Api-Version header to 2.3 to use v2.3 of the API.",
@@ -1737,6 +1786,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api",
     "content": "Improvements\nThe Payments API endpoints were modified to return error code IdempotencyKeyAlreadyExists  with status 409 when a payment request is submitted with an X-Idempotency-Keythat was already sent in a previous request.\n\nThe payment creation endpoint was improved to return the correct paymentMethodType\n\nThe payment status webhook was improved to return the correct paymentMethodType",
@@ -1777,6 +1827,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v22",
     "content": "This version includes improvements to the Client Session API, Payments API and the Payment Methods API.\nYou must set the X-Api-Version header to 2.2 to use v2.2 of the API.",
@@ -1813,6 +1864,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-session-api",
     "content": "Added order.lineItems.productData on the request and response",
@@ -1853,6 +1905,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api-1",
     "content": "Added order.lineItems.productData on the request and response",
@@ -1893,6 +1946,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v21",
     "content": "Version 2.1 includes improvements to the Client Session API, Payments API and the Payment Methods API.\nStarting API v2.1, the API Version X-Api-Version is a semantic version without a patch (e.g. 2.1) rather than a date 🎉\nSet the X-Api-Version header to 2.1 to use v2.1 of the API.",
@@ -1929,6 +1983,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-session-api-1",
     "content": "Added paymentMethod.paymentType and paymentMethod.descriptor on the request and response of the client session\n\nAdded order.lineItems[].productType on the request and response of the client session\n\nAdded GET /client-session to get the content of a client session\n\nAdded PATCH /client-session to update the content of a client session\n\nAdditional validation has been put in place to ensure that a currencyCode is always passed if any amount value is passed",
@@ -1969,6 +2024,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api-2",
     "content": "Added paymentMethod.isVaulted boolean field to indicate whether the paymentMethod.paymentMethodToken in the response is a vaulted token (and can therefore be used for future payments) or not. This replaces vaultedPaymentMethodToken.\n\nAdded order.lineItems[].productType on the request and response\n\namount, currencyCode, customerId and orderId are now required fields when making a payment with a vaulted token (i.e. a recurring payment).\n\nWhen paying with a vaulted token, additional validation has been put in place to ensure the customerId matches the customerId associated with the vaulted token.",
@@ -2009,6 +2065,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payment-methods-api",
     "content": "Added verify in POST /payment-instruments/{paymentMethodToken}/vault to set whether or not the payment method token should be verified before vaulting\n\nAdded isVerified to the payment method response",
@@ -2049,6 +2106,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v2",
     "content": "Version 2 includes improvements to the Client Session API and the Payments API.",
@@ -2085,6 +2143,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-session-api-2",
     "content": "X-API-Version -> 2021-09-27\n\nCreating a payment using only a payment method token is now possible. The order, customer and metadata passed on the Client Session request is then used for the payment.\n\nThe create Client Session endpoint request was extended to include order, customer, etc.\n\nAll references to paymentInstrument from the previous Payments API version have been refactored to paymentMethod to be more consistent throughout\n\nThe customer billingAddress and shippingAddress fields are now all optional",
@@ -2125,6 +2184,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api-3",
     "content": "X-API-Version -> 2021-09-27\n\nCreating a payment using only a payment method token is now possible. The order, customer and metadata passed on the Client Session request is then used for the payment.\n\nThe create payment endpoint request was extended to include order, customer, etc. It now more closely resembles the /client-session endpoint\n\nThe response of all the Payments API endpoints was refactored to match the create payment request structure\n\nAll references to paymentInstrument from the previous Payments API version have been refactored to paymentMethod to be more consistent throughout\n\nAll the payments API endpoints (create, capture, cancel, refund, etc.) are now versioned\n\npaymentMethodData in PaymentMethod responses (for card payment method types) all now contain a first6digits field in addition to the last4digits returned. This is an opt-in field, so it is null by default.\n\nThe customer billingAddress and shippingAddress fields are now all optional",
@@ -2165,6 +2225,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The Primer API is used to manage Client Sessions, Payments and saved payment methods.\nAll other actions are either managed in the Universal Checkout implementation or in the Dashboard.\nCheck out:\nClient Sessions\n\nUniversal Checkout\n\nManaging Payments\n\n\nTest the APIs yourself in our API Reference. Don't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io, or contact your Primer account manager."
   },
@@ -2190,6 +2251,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-endpoint-deployments",
     "content": "Sandbox: https://api.sandbox.primer.io\n\nProduction: https://api.primer.io",
@@ -2226,6 +2288,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-versions",
     "content": "Primer makes updates to the APIs on a regular basis, as we release new features. To allow you to update your integration as you are ready, we allow for a X-Api-Version header to be passed on all API requests.\nIf you omit the version header, your request will default to the earliest supported version of the API.",
@@ -2268,6 +2331,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#available-versions",
     "content": "Read about the available versions of the APIs below on our Changelog.",
@@ -2308,6 +2372,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -2339,6 +2404,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#managing-api-keys",
     "content": "Head up to the Developers area on the dashboard to manage your API keys.\nYou will be able to generate or revoke API keys and edit their respective scopes. Be aware that any changes to existing API keys will be reflected immediately and could cause unwanted side effects.",
@@ -2375,6 +2441,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#available-scopes",
     "content": "Scope Description \nclient_tokens:write Create client tokens for use with the client SDK. \nthird_party:webhook_trigger Allows you to post to our webhooks endpoint. API keys with this scope can be used to enable communication between your processor and Primer about important payment lifecycle events. \ntransactions:authorize Authorize a payment \ntransactions:cancel Cancel a payment. \ntransactions:capture Submit a payment for settlement. \ntransactions:retrieve Retrieve one or more payments. \ntransactions:refund Refund a payment. \npayment_instrument:read Read stored payment methods. \npayment_instrument:write Write stored payment methods.",
@@ -2411,6 +2478,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -2435,6 +2503,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#status-codes",
     "content": "The following table summarizes the HTTP response codes you may receive from\nthe Primer REST API.\nStatus Code Description \n200 Success \n400 Bad Request \n401 Unauthorized \n403 Forbidden \n404 Entity Not Found \n409 Entity Already Exists \n422 Input Validation Failed",
@@ -2471,6 +2540,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#error-responses",
     "content": "Primer uses conventional HTTP response codes to indicate the success or failure of an API request. HTTP codes in the 2XX range indicate a successful request, whereas codes in the 4XX range indicate a failed request usually due to invalid inputs or operations.\nThe format of the payload for all errors is common. When an unsuccessful request occurs, you will receive a payload in the following format:\nAll error payloads will be comprised of a unique errorId which you can use to identify the error, a human description description, and a diagnosticsId that you can quote when contacting the support team (support@primer.io). In case of a badly formed request, Primer will also return additional validationErrors.",
@@ -2513,6 +2583,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payment-status",
     "content": "As the payments are created, processed, and finalised, they go through a number of states that you will get as an API response, through webhook notifications, and in the Dashboard. These states are used across all processors, as processor specific states are mapped to these. An additional message, in the field processorMessage, from the processor may also be included that details the reason for the state, primarily on failure states.\nStatus Description \nPENDING The payment has been created by Primer but not yet authorized. \nFAILED The processor failed to process this payment. \nAUTHORIZED The payment is authorized and awaiting capture. \nSETTLING The payment has been submitted for settlement and funds will be settled later. \nPARTIALLY_SETTLED The payment has been partially settled. \nSETTLED Funds have been settled into your account. \nDECLINED This payment was declined by the processor, either at a gateway or acquirer level. See the reason object in your response payload for more details. \nCANCELLED The payment was cancelled prior to it being settled. \n\nDon't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io, or contact your Primer account manager.",
@@ -2549,6 +2620,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -2580,6 +2652,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.\nAll of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection. Primer will provide this once the loyalty provider connection is created.\nTo identify the customer in the context of the loyalty provider, a customerId is also necessary."
   },
@@ -2605,6 +2678,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#get-the-customer-balance",
     "content": "Call the Loyalty Customers endpoint, which includes the customer's balance. In future this object could contain further details.",
@@ -2641,6 +2715,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#redeem-points",
     "content": "Call the Loyalty Transactions endpoint to create a REDEMPTION transaction.\nProvide an orderId to link multiple transactions together.",
@@ -2677,6 +2752,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#refund-points",
     "content": "Call the Loyalty Transactions endpoint to create a REFUND transaction. This transaction is completely independent from a redeem transaction.\nProvide an orderId to link multiple transactions together.",
@@ -2713,6 +2789,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#get-a-list-of-transactions",
     "content": "Call the Loyalty Transactions endpoint to retrieve a list of all your transactions. In most cases it makes sense to filter by connectionId. You can also filter by customerId or orderId.",
@@ -2749,6 +2826,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -2773,6 +2851,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v23",
     "content": "This version includes improvements to the Payments API.\nSet X-Api-Version header to 2.3 to use v2.3 of the API.",
@@ -2809,6 +2888,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api",
     "content": "Improvements\nThe Payments API endpoints were modified to return error code IdempotencyKeyAlreadyExists  with status 409 when a payment request is submitted with an X-Idempotency-Keythat was already sent in a previous request.\n\nThe payment creation endpoint was improved to return the correct paymentMethodType\n\nThe payment status webhook was improved to return the correct paymentMethodType",
@@ -2849,6 +2929,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v22",
     "content": "This version includes improvements to the Client Session API, Payments API and the Payment Methods API.\nYou must set the X-Api-Version header to 2.2 to use v2.2 of the API.",
@@ -2885,6 +2966,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-session-api",
     "content": "Added order.lineItems.productData on the request and response",
@@ -2925,6 +3007,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api-1",
     "content": "Added order.lineItems.productData on the request and response",
@@ -2965,6 +3048,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v21",
     "content": "Version 2.1 includes improvements to the Client Session API, Payments API and the Payment Methods API.\nStarting API v2.1, the API Version X-Api-Version is a semantic version without a patch (e.g. 2.1) rather than a date 🎉\nSet the X-Api-Version header to 2.1 to use v2.1 of the API.",
@@ -3001,6 +3085,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-session-api-1",
     "content": "Added paymentMethod.paymentType and paymentMethod.descriptor on the request and response of the client session\n\nAdded order.lineItems[].productType on the request and response of the client session\n\nAdded GET /client-session to get the content of a client session\n\nAdded PATCH /client-session to update the content of a client session\n\nAdditional validation has been put in place to ensure that a currencyCode is always passed if any amount value is passed",
@@ -3041,6 +3126,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api-2",
     "content": "Added paymentMethod.isVaulted boolean field to indicate whether the paymentMethod.paymentMethodToken in the response is a vaulted token (and can therefore be used for future payments) or not. This replaces vaultedPaymentMethodToken.\n\nAdded order.lineItems[].productType on the request and response\n\namount, currencyCode, customerId and orderId are now required fields when making a payment with a vaulted token (i.e. a recurring payment).\n\nWhen paying with a vaulted token, additional validation has been put in place to ensure the customerId matches the customerId associated with the vaulted token.",
@@ -3081,6 +3167,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payment-methods-api",
     "content": "Added verify in POST /payment-instruments/{paymentMethodToken}/vault to set whether or not the payment method token should be verified before vaulting\n\nAdded isVerified to the payment method response",
@@ -3121,6 +3208,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v2",
     "content": "Version 2 includes improvements to the Client Session API and the Payments API.",
@@ -3157,6 +3245,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-session-api-2",
     "content": "X-API-Version -> 2021-09-27\n\nCreating a payment using only a payment method token is now possible. The order, customer and metadata passed on the Client Session request is then used for the payment.\n\nThe create Client Session endpoint request was extended to include order, customer, etc.\n\nAll references to paymentInstrument from the previous Payments API version have been refactored to paymentMethod to be more consistent throughout\n\nThe customer billingAddress and shippingAddress fields are now all optional",
@@ -3197,6 +3286,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api-3",
     "content": "X-API-Version -> 2021-09-27\n\nCreating a payment using only a payment method token is now possible. The order, customer and metadata passed on the Client Session request is then used for the payment.\n\nThe create payment endpoint request was extended to include order, customer, etc. It now more closely resembles the /client-session endpoint\n\nThe response of all the Payments API endpoints was refactored to match the create payment request structure\n\nAll references to paymentInstrument from the previous Payments API version have been refactored to paymentMethod to be more consistent throughout\n\nAll the payments API endpoints (create, capture, cancel, refund, etc.) are now versioned\n\npaymentMethodData in PaymentMethod responses (for card payment method types) all now contain a first6digits field in addition to the last4digits returned. This is an opt-in field, so it is null by default.\n\nThe customer billingAddress and shippingAddress fields are now all optional",
@@ -3237,6 +3327,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The Primer API is used to manage Client Sessions, Payments and saved payment methods.\nAll other actions are either managed in the Universal Checkout implementation or in the Dashboard.\nCheck out:\nClient Sessions\n\nUniversal Checkout\n\nManaging Payments\n\n\nTest the APIs yourself in our API Reference. Don't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io, or contact your Primer account manager."
   },
@@ -3262,6 +3353,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-endpoint-deployments",
     "content": "Sandbox: https://api.sandbox.primer.io\n\nProduction: https://api.primer.io",
@@ -3298,6 +3390,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-versions",
     "content": "Primer makes updates to the APIs on a regular basis, as we release new features. To allow you to update your integration as you are ready, we allow for a X-Api-Version header to be passed on all API requests.\nIf you omit the version header, your request will default to the earliest supported version of the API.",
@@ -3340,6 +3433,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#available-versions",
     "content": "Read about the available versions of the APIs below on our Changelog.",
@@ -3380,6 +3474,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -3411,6 +3506,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#managing-api-keys",
     "content": "Head up to the Developers area on the dashboard to manage your API keys.\nYou will be able to generate or revoke API keys and edit their respective scopes. Be aware that any changes to existing API keys will be reflected immediately and could cause unwanted side effects.",
@@ -3447,6 +3543,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#available-scopes",
     "content": "Scope Description \nclient_tokens:write Create client tokens for use with the client SDK. \nthird_party:webhook_trigger Allows you to post to our webhooks endpoint. API keys with this scope can be used to enable communication between your processor and Primer about important payment lifecycle events. \ntransactions:authorize Authorize a payment \ntransactions:cancel Cancel a payment. \ntransactions:capture Submit a payment for settlement. \ntransactions:retrieve Retrieve one or more payments. \ntransactions:refund Refund a payment. \npayment_instrument:read Read stored payment methods. \npayment_instrument:write Write stored payment methods.",
@@ -3483,6 +3580,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -3507,6 +3605,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#status-codes",
     "content": "The following table summarizes the HTTP response codes you may receive from\nthe Primer REST API.\nStatus Code Description \n200 Success \n400 Bad Request \n401 Unauthorized \n403 Forbidden \n404 Entity Not Found \n409 Entity Already Exists \n422 Input Validation Failed",
@@ -3543,6 +3642,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#error-responses",
     "content": "Primer uses conventional HTTP response codes to indicate the success or failure of an API request. HTTP codes in the 2XX range indicate a successful request, whereas codes in the 4XX range indicate a failed request usually due to invalid inputs or operations.\nThe format of the payload for all errors is common. When an unsuccessful request occurs, you will receive a payload in the following format:\nAll error payloads will be comprised of a unique errorId which you can use to identify the error, a human description description, and a diagnosticsId that you can quote when contacting the support team (support@primer.io). In case of a badly formed request, Primer will also return additional validationErrors.",
@@ -3585,6 +3685,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payment-status",
     "content": "As the payments are created, processed, and finalised, they go through a number of states that you will get as an API response, through webhook notifications, and in the Dashboard. These states are used across all processors, as processor specific states are mapped to these. An additional message, in the field processorMessage, from the processor may also be included that details the reason for the state, primarily on failure states.\nStatus Description \nPENDING The payment has been created by Primer but not yet authorized. \nFAILED The processor failed to process this payment. \nAUTHORIZED The payment is authorized and awaiting capture. \nSETTLING The payment has been submitted for settlement and funds will be settled later. \nPARTIALLY_SETTLED The payment has been partially settled. \nSETTLED Funds have been settled into your account. \nDECLINED This payment was declined by the processor, either at a gateway or acquirer level. See the reason object in your response payload for more details. \nCANCELLED The payment was cancelled prior to it being settled. \n\nDon't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io, or contact your Primer account manager.",
@@ -3621,6 +3722,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -3652,6 +3754,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.\nAll of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection. Primer will provide this once the loyalty provider connection is created.\nTo identify the customer in the context of the loyalty provider, a customerId is also necessary."
   },
@@ -3677,6 +3780,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#get-the-customer-balance",
     "content": "Call the Loyalty Customers endpoint, which includes the customer's balance. In future this object could contain further details.",
@@ -3713,6 +3817,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#redeem-points",
     "content": "Call the Loyalty Transactions endpoint to create a REDEMPTION transaction.\nProvide an orderId to link multiple transactions together.",
@@ -3749,6 +3854,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#refund-points",
     "content": "Call the Loyalty Transactions endpoint to create a REFUND transaction. This transaction is completely independent from a redeem transaction.\nProvide an orderId to link multiple transactions together.",
@@ -3785,6 +3891,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#get-a-list-of-transactions",
     "content": "Call the Loyalty Transactions endpoint to retrieve a list of all your transactions. In most cases it makes sense to filter by connectionId. You can also filter by customerId or orderId.",
@@ -3821,6 +3928,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -3845,6 +3953,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v23",
     "content": "This version includes improvements to the Payments API.\nSet X-Api-Version header to 2.3 to use v2.3 of the API.",
@@ -3881,6 +3990,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api",
     "content": "Improvements\nThe Payments API endpoints were modified to return error code IdempotencyKeyAlreadyExists  with status 409 when a payment request is submitted with an X-Idempotency-Keythat was already sent in a previous request.\n\nThe payment creation endpoint was improved to return the correct paymentMethodType\n\nThe payment status webhook was improved to return the correct paymentMethodType",
@@ -3921,6 +4031,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v22",
     "content": "This version includes improvements to the Client Session API, Payments API and the Payment Methods API.\nYou must set the X-Api-Version header to 2.2 to use v2.2 of the API.",
@@ -3957,6 +4068,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-session-api",
     "content": "Added order.lineItems.productData on the request and response",
@@ -3997,6 +4109,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api-1",
     "content": "Added order.lineItems.productData on the request and response",
@@ -4037,6 +4150,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v21",
     "content": "Version 2.1 includes improvements to the Client Session API, Payments API and the Payment Methods API.\nStarting API v2.1, the API Version X-Api-Version is a semantic version without a patch (e.g. 2.1) rather than a date 🎉\nSet the X-Api-Version header to 2.1 to use v2.1 of the API.",
@@ -4073,6 +4187,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-session-api-1",
     "content": "Added paymentMethod.paymentType and paymentMethod.descriptor on the request and response of the client session\n\nAdded order.lineItems[].productType on the request and response of the client session\n\nAdded GET /client-session to get the content of a client session\n\nAdded PATCH /client-session to update the content of a client session\n\nAdditional validation has been put in place to ensure that a currencyCode is always passed if any amount value is passed",
@@ -4113,6 +4228,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api-2",
     "content": "Added paymentMethod.isVaulted boolean field to indicate whether the paymentMethod.paymentMethodToken in the response is a vaulted token (and can therefore be used for future payments) or not. This replaces vaultedPaymentMethodToken.\n\nAdded order.lineItems[].productType on the request and response\n\namount, currencyCode, customerId and orderId are now required fields when making a payment with a vaulted token (i.e. a recurring payment).\n\nWhen paying with a vaulted token, additional validation has been put in place to ensure the customerId matches the customerId associated with the vaulted token.",
@@ -4153,6 +4269,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payment-methods-api",
     "content": "Added verify in POST /payment-instruments/{paymentMethodToken}/vault to set whether or not the payment method token should be verified before vaulting\n\nAdded isVerified to the payment method response",
@@ -4193,6 +4310,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v2",
     "content": "Version 2 includes improvements to the Client Session API and the Payments API.",
@@ -4229,6 +4347,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-session-api-2",
     "content": "X-API-Version -> 2021-09-27\n\nCreating a payment using only a payment method token is now possible. The order, customer and metadata passed on the Client Session request is then used for the payment.\n\nThe create Client Session endpoint request was extended to include order, customer, etc.\n\nAll references to paymentInstrument from the previous Payments API version have been refactored to paymentMethod to be more consistent throughout\n\nThe customer billingAddress and shippingAddress fields are now all optional",
@@ -4269,6 +4388,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api-3",
     "content": "X-API-Version -> 2021-09-27\n\nCreating a payment using only a payment method token is now possible. The order, customer and metadata passed on the Client Session request is then used for the payment.\n\nThe create payment endpoint request was extended to include order, customer, etc. It now more closely resembles the /client-session endpoint\n\nThe response of all the Payments API endpoints was refactored to match the create payment request structure\n\nAll references to paymentInstrument from the previous Payments API version have been refactored to paymentMethod to be more consistent throughout\n\nAll the payments API endpoints (create, capture, cancel, refund, etc.) are now versioned\n\npaymentMethodData in PaymentMethod responses (for card payment method types) all now contain a first6digits field in addition to the last4digits returned. This is an opt-in field, so it is null by default.\n\nThe customer billingAddress and shippingAddress fields are now all optional",
@@ -4309,6 +4429,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The Primer API is used to manage Client Sessions, Payments and saved payment methods.\nAll other actions are either managed in the Universal Checkout implementation or in the Dashboard.\nCheck out:\nClient Sessions\n\nUniversal Checkout\n\nManaging Payments\n\n\nTest the APIs yourself in our API Reference. Don't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io, or contact your Primer account manager."
   },
@@ -4334,6 +4455,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-endpoint-deployments",
     "content": "Sandbox: https://api.sandbox.primer.io\n\nProduction: https://api.primer.io",
@@ -4370,6 +4492,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-versions",
     "content": "Primer makes updates to the APIs on a regular basis, as we release new features. To allow you to update your integration as you are ready, we allow for a X-Api-Version header to be passed on all API requests.\nIf you omit the version header, your request will default to the earliest supported version of the API.",
@@ -4412,6 +4535,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#available-versions",
     "content": "Read about the available versions of the APIs below on our Changelog.",
@@ -4452,6 +4576,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -4483,6 +4608,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#managing-api-keys",
     "content": "Head up to the Developers area on the dashboard to manage your API keys.\nYou will be able to generate or revoke API keys and edit their respective scopes. Be aware that any changes to existing API keys will be reflected immediately and could cause unwanted side effects.",
@@ -4519,6 +4645,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#available-scopes",
     "content": "Scope Description \nclient_tokens:write Create client tokens for use with the client SDK. \nthird_party:webhook_trigger Allows you to post to our webhooks endpoint. API keys with this scope can be used to enable communication between your processor and Primer about important payment lifecycle events. \ntransactions:authorize Authorize a payment \ntransactions:cancel Cancel a payment. \ntransactions:capture Submit a payment for settlement. \ntransactions:retrieve Retrieve one or more payments. \ntransactions:refund Refund a payment. \npayment_instrument:read Read stored payment methods. \npayment_instrument:write Write stored payment methods.",
@@ -4555,6 +4682,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -4579,6 +4707,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#status-codes",
     "content": "The following table summarizes the HTTP response codes you may receive from\nthe Primer REST API.\nStatus Code Description \n200 Success \n400 Bad Request \n401 Unauthorized \n403 Forbidden \n404 Entity Not Found \n409 Entity Already Exists \n422 Input Validation Failed",
@@ -4615,6 +4744,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#error-responses",
     "content": "Primer uses conventional HTTP response codes to indicate the success or failure of an API request. HTTP codes in the 2XX range indicate a successful request, whereas codes in the 4XX range indicate a failed request usually due to invalid inputs or operations.\nThe format of the payload for all errors is common. When an unsuccessful request occurs, you will receive a payload in the following format:\nAll error payloads will be comprised of a unique errorId which you can use to identify the error, a human description description, and a diagnosticsId that you can quote when contacting the support team (support@primer.io). In case of a badly formed request, Primer will also return additional validationErrors.",
@@ -4657,6 +4787,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payment-status",
     "content": "As the payments are created, processed, and finalised, they go through a number of states that you will get as an API response, through webhook notifications, and in the Dashboard. These states are used across all processors, as processor specific states are mapped to these. An additional message, in the field processorMessage, from the processor may also be included that details the reason for the state, primarily on failure states.\nStatus Description \nPENDING The payment has been created by Primer but not yet authorized. \nFAILED The processor failed to process this payment. \nAUTHORIZED The payment is authorized and awaiting capture. \nSETTLING The payment has been submitted for settlement and funds will be settled later. \nPARTIALLY_SETTLED The payment has been partially settled. \nSETTLED Funds have been settled into your account. \nDECLINED This payment was declined by the processor, either at a gateway or acquirer level. See the reason object in your response payload for more details. \nCANCELLED The payment was cancelled prior to it being settled. \n\nDon't hesitate to reach out with any questions or feedback. You can email Primer directly at support@primer.io, or contact your Primer account manager.",
@@ -4693,6 +4824,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -4724,6 +4856,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Primer's Loyalty API provides an interface to interact with 3rd party loyalty point and service providers.\nAll of the endpoints below reference a connectionId. This is the unique Primer identifier for your loyalty provider connection. Primer will provide this once the loyalty provider connection is created.\nTo identify the customer in the context of the loyalty provider, a customerId is also necessary."
   },
@@ -4749,6 +4882,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#get-the-customer-balance",
     "content": "Call the Loyalty Customers endpoint, which includes the customer's balance. In future this object could contain further details.",
@@ -4785,6 +4919,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#redeem-points",
     "content": "Call the Loyalty Transactions endpoint to create a REDEMPTION transaction.\nProvide an orderId to link multiple transactions together.",
@@ -4821,6 +4956,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#refund-points",
     "content": "Call the Loyalty Transactions endpoint to create a REFUND transaction. This transaction is completely independent from a redeem transaction.\nProvide an orderId to link multiple transactions together.",
@@ -4857,6 +4993,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#get-a-list-of-transactions",
     "content": "Call the Loyalty Transactions endpoint to retrieve a list of all your transactions. In most cases it makes sense to filter by connectionId. You can also filter by customerId or orderId.",
@@ -4893,6 +5030,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -4917,6 +5055,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v23",
     "content": "This version includes improvements to the Payments API.\nSet X-Api-Version header to 2.3 to use v2.3 of the API.",
@@ -4953,6 +5092,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api",
     "content": "Improvements\nThe Payments API endpoints were modified to return error code IdempotencyKeyAlreadyExists  with status 409 when a payment request is submitted with an X-Idempotency-Keythat was already sent in a previous request.\n\nThe payment creation endpoint was improved to return the correct paymentMethodType\n\nThe payment status webhook was improved to return the correct paymentMethodType",
@@ -4993,6 +5133,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v22",
     "content": "This version includes improvements to the Client Session API, Payments API and the Payment Methods API.\nYou must set the X-Api-Version header to 2.2 to use v2.2 of the API.",
@@ -5029,6 +5170,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-session-api",
     "content": "Added order.lineItems.productData on the request and response",
@@ -5069,6 +5211,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api-1",
     "content": "Added order.lineItems.productData on the request and response",
@@ -5109,6 +5252,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v21",
     "content": "Version 2.1 includes improvements to the Client Session API, Payments API and the Payment Methods API.\nStarting API v2.1, the API Version X-Api-Version is a semantic version without a patch (e.g. 2.1) rather than a date 🎉\nSet the X-Api-Version header to 2.1 to use v2.1 of the API.",
@@ -5145,6 +5289,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-session-api-1",
     "content": "Added paymentMethod.paymentType and paymentMethod.descriptor on the request and response of the client session\n\nAdded order.lineItems[].productType on the request and response of the client session\n\nAdded GET /client-session to get the content of a client session\n\nAdded PATCH /client-session to update the content of a client session\n\nAdditional validation has been put in place to ensure that a currencyCode is always passed if any amount value is passed",
@@ -5185,6 +5330,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api-2",
     "content": "Added paymentMethod.isVaulted boolean field to indicate whether the paymentMethod.paymentMethodToken in the response is a vaulted token (and can therefore be used for future payments) or not. This replaces vaultedPaymentMethodToken.\n\nAdded order.lineItems[].productType on the request and response\n\namount, currencyCode, customerId and orderId are now required fields when making a payment with a vaulted token (i.e. a recurring payment).\n\nWhen paying with a vaulted token, additional validation has been put in place to ensure the customerId matches the customerId associated with the vaulted token.",
@@ -5225,6 +5371,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payment-methods-api",
     "content": "Added verify in POST /payment-instruments/{paymentMethodToken}/vault to set whether or not the payment method token should be verified before vaulting\n\nAdded isVerified to the payment method response",
@@ -5265,6 +5412,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-v2",
     "content": "Version 2 includes improvements to the Client Session API and the Payments API.",
@@ -5301,6 +5449,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-session-api-2",
     "content": "X-API-Version -> 2021-09-27\n\nCreating a payment using only a payment method token is now possible. The order, customer and metadata passed on the Client Session request is then used for the payment.\n\nThe create Client Session endpoint request was extended to include order, customer, etc.\n\nAll references to paymentInstrument from the previous Payments API version have been refactored to paymentMethod to be more consistent throughout\n\nThe customer billingAddress and shippingAddress fields are now all optional",
@@ -5341,6 +5490,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#payments-api-3",
     "content": "X-API-Version -> 2021-09-27\n\nCreating a payment using only a payment method token is now possible. The order, customer and metadata passed on the Client Session request is then used for the payment.\n\nThe create payment endpoint request was extended to include order, customer, etc. It now more closely resembles the /client-session endpoint\n\nThe response of all the Payments API endpoints was refactored to match the create payment request structure\n\nAll references to paymentInstrument from the previous Payments API version have been refactored to paymentMethod to be more consistent throughout\n\nAll the payments API endpoints (create, capture, cancel, refund, etc.) are now versioned\n\npaymentMethodData in PaymentMethod responses (for card payment method types) all now contain a first6digits field in addition to the last4digits returned. This is an opt-in field, so it is null by default.\n\nThe customer billingAddress and shippingAddress fields are now all optional",
@@ -5385,6 +5535,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_clientSessionApi.retrieveClientSideToken",
@@ -5442,6 +5593,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_clientSessionApi.createClientSideToken",
@@ -5499,6 +5651,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_clientSessionApi.updateClientSideToken",
@@ -5556,6 +5709,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.listPayments",
@@ -5618,6 +5772,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.createPayment",
@@ -5675,6 +5830,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.authorizePayment",
@@ -5734,6 +5890,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.capturePayment",
@@ -5792,6 +5949,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.cancelPayment",
@@ -5849,6 +6007,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.refundPayment",
@@ -5907,6 +6066,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.resumePayment",
@@ -5963,6 +6123,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.adjustAuthorization",
@@ -6022,6 +6183,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.getPaymentById",
@@ -6078,6 +6240,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
@@ -6135,6 +6298,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
@@ -6190,6 +6354,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
@@ -6246,6 +6411,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
@@ -6302,6 +6468,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_observabilityApiBeta.external_payment",
@@ -6357,6 +6524,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_observabilityApiBeta.external_payment_update",
@@ -6412,6 +6580,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_loyaltyApi.get_loyalty_customer",
@@ -6468,6 +6637,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_loyaltyApi.get_loyalty_customer_transactions",
@@ -6525,6 +6695,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_loyaltyApi.post_loyalty_transaction",
@@ -6582,18 +6753,13 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "ca56f687-5be3-4661-aeed-674a0f1f7193",
     "api_endpoint_id": "subpackage_paymentWebhooks.payment_status_webhook_event",
     "method": "POST",
     "endpoint_path": "",
     "description": "Primer notifies you with a PAYMENT.STATUS webhook when a payment's status has been updated. This is especially useful for asyncronous processor Connections, which do not respond with an upfront authorization.\nThe webhook events will arrive in the order that the payment status changes, for example you should expect a status of PENDING, then AUTHORIZED, then SETTLED (depending on how your workflow is set up).\nThe webhook body contains the full payment object.\nExample payment status notification:\nLearn more about how Primer handles webhooks.",
-    "code_snippets": [
-      {
-        "lang": "JSON",
-        "code": "{\n  \"eventType\":\"PAYMENT.STATUS\",\n  \"date\":\"2021-02-21T15:36:16.367687\",\n  \"notificationConfig\":{\n    \"id\":\"cc51f9f0-7e1c-492b-9d37-f83a818f6070\",\n    \"description\":\"Payment webhook\"\n  },\n  \"version\":\"2.3\",\n  \"signedAt\": \"1689221338\",\n  \"payment\":{\n    \"id\":\"DdRZ6YY0\",\n    \"date\":\"2021-02-21T15:34:16.367687\",\n    \"dateUpdated\":\"2021-02-21T15:35:16.133701\",\n    \"amount\":3000,\n    \"currencyCode\":\"GBP\",\n    \"customerId\":\"cust-123\",\n    \"orderId\":\"order-123\",\n    \"status\":\"SETTLED\",\n    \"cardTokenType\":\"CARD_PAN\",\n    \"customer\": {\n      \"emailAddress\": \"test@primer.io\",\n      \"mobileNumber\": \"0123456789\",\n      \"billingAddress\": {\n        \"firstName\": \"John\",\n        \"postalCode\": \"CB94BQ\",\n        \"addressLine1\": \"10001 Alpha St\",\n        \"countryCode\": \"GB\",\n        \"city\": \"Cambridge\",\n        \"state\": \"Cambridgeshire\"\n      }\n    },\n    \"paymentMethod\":{\n      \"paymentType\":\"FIRST_PAYMENT\",\n      \"paymentMethodToken\":\"-lcWjvBAAs2DnIRXwxNjUzNTYzNjIy\",\n      \"isVaulted\": \"false\",\n      \"analyticsId\":\"LUi5pETUaVsdSEamK25L\",\n      \"paymentMethodType\":\"PAYMENT_CARD\",\n      \"paymentMethodData\":{\n        \"last4Digits\":\"1111\",\n        \"first6Digits\": \"411111\",\n        \"expirationMonth\":\"03\",\n        \"expirationYear\":\"2030\",\n        \"cardholderName\":\"ADYEN\",\n        \"network\":\"Visa\",\n        \"isNetworkTokenized\":false,\n        \"binData\":{\n          \"network\":\"VISA\",\n          \"issuerCountryCode\":\"US\",\n          \"issuerName\":\"JPMORGAN CHASE BANK, N.A.\",\n          \"regionalRestriction\":\"UNKNOWN\",\n          \"accountNumberType\":\"UNKNOWN\",\n          \"accountFundingType\":\"UNKNOWN\",\n          \"prepaidReloadableIndicator\":\"NOT_APPLICABLE\",\n          \"productUsageType\":\"UNKNOWN\",\n          \"productCode\":\"UNKNOWN\",\n          \"productName\":\"UNKNOWN\"\n        }\n      },\n      \"authorizationType\": \"FINAL\",\n      \"threeDSecureAuthentication\":{\n        \"responseCode\":\"NOT_PERFORMED\"\n      }\n    },\n    \"processor\":{\n      \"name\":\"STRIPE\",\n      \"processorMerchantId\":\"acct_1GORasdasqNWFwi8c\",\n      \"amountCaptured\":3000,\n      \"amountRefunded\":0\n    },\n    \"transactions\":[\n      {\n        \"date\":\"2021-02-21T15:34:16.367687\",\n        \"amount\":3000,\n        \"currencyCode\":\"GBP\",\n        \"transactionType\":\"SALE\",\n        \"orderId\":\"order-123\",\n        \"processorTransactionId\":\"pi_3L3edsGZasdasdc1iget38p\",\n        \"processorName\":\"STRIPE\",\n        \"processorMerchantId\":\"acct_1GORasvasdNWFwi8c\",\n        \"processorStatus\":\"SETTLED\",\n        \"cardTokenType\":\"CARD_PAN\"\n      }\n    ],\n    \"riskData\":{\n      \"fraudChecks\":{\n        \"source\":\"riskified\",\n        \"preAuthorizationResult\":\"THREE_DS\",\n        \"postAuthorizationResult\":\"ACCEPT\"\n      },\n      \"cvvCheck\": {\n        \"source\": \"processor\",\n        \"result\": \"MATCHED\"\n      },\n      \"avsCheck\": {\n        \"source\": \"processor\",\n        \"result\": {\n          \"streetAddress\": \"NOT_MATCHED\",\n          \"postalCode\": \"NOT_VERIFIED\"\n        }\n      }\n    }\n  }\n}"
-      }
-    ],
     "keywords": [
       "endpoint",
       "api",
@@ -6628,6 +6794,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "ca56f687-5be3-4661-aeed-674a0f1f7193",
     "api_endpoint_id": "subpackage_paymentWebhooks.payment_refund_webhook_event",
@@ -6668,6 +6835,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "ca56f687-5be3-4661-aeed-674a0f1f7193",
     "api_endpoint_id": "subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
@@ -6708,6 +6876,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "ca56f687-5be3-4661-aeed-674a0f1f7193",
     "api_endpoint_id": "subpackage_disputeChargebacksWebhooks.dispute_status_webhook_event",
@@ -6748,6 +6917,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_clientSessionApi.retrieveClientSideToken",
@@ -6805,6 +6975,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_clientSessionApi.createClientSideToken",
@@ -6862,6 +7033,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_clientSessionApi.updateClientSideToken",
@@ -6919,6 +7091,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.listPayments",
@@ -6981,6 +7154,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.createPayment",
@@ -7038,6 +7212,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.authorizePayment",
@@ -7097,6 +7272,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.capturePayment",
@@ -7155,6 +7331,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.cancelPayment",
@@ -7212,6 +7389,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.refundPayment",
@@ -7270,6 +7448,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.resumePayment",
@@ -7326,6 +7505,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.adjustAuthorization",
@@ -7385,6 +7565,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentsApi.getPaymentById",
@@ -7441,6 +7622,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
@@ -7498,6 +7680,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
@@ -7553,6 +7736,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
@@ -7609,6 +7793,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
@@ -7665,6 +7850,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_observabilityApiBeta.external_payment",
@@ -7720,6 +7906,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_observabilityApiBeta.external_payment_update",
@@ -7775,6 +7962,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_loyaltyApi.get_loyalty_customer",
@@ -7831,6 +8019,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_loyaltyApi.get_loyalty_customer_transactions",
@@ -7888,6 +8077,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "0d20b529-65ad-4f2b-99a5-562a73e0b3c9",
     "api_endpoint_id": "subpackage_loyaltyApi.post_loyalty_transaction",
@@ -7945,18 +8135,13 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "ca56f687-5be3-4661-aeed-674a0f1f7193",
     "api_endpoint_id": "subpackage_paymentWebhooks.payment_status_webhook_event",
     "method": "POST",
     "endpoint_path": "",
     "description": "Primer notifies you with a PAYMENT.STATUS webhook when a payment's status has been updated. This is especially useful for asyncronous processor Connections, which do not respond with an upfront authorization.\nThe webhook events will arrive in the order that the payment status changes, for example you should expect a status of PENDING, then AUTHORIZED, then SETTLED (depending on how your workflow is set up).\nThe webhook body contains the full payment object.\nExample payment status notification:\nLearn more about how Primer handles webhooks.",
-    "code_snippets": [
-      {
-        "lang": "JSON",
-        "code": "{\n  \"eventType\":\"PAYMENT.STATUS\",\n  \"date\":\"2021-02-21T15:36:16.367687\",\n  \"notificationConfig\":{\n    \"id\":\"cc51f9f0-7e1c-492b-9d37-f83a818f6070\",\n    \"description\":\"Payment webhook\"\n  },\n  \"version\":\"2.3\",\n  \"signedAt\": \"1689221338\",\n  \"payment\":{\n    \"id\":\"DdRZ6YY0\",\n    \"date\":\"2021-02-21T15:34:16.367687\",\n    \"dateUpdated\":\"2021-02-21T15:35:16.133701\",\n    \"amount\":3000,\n    \"currencyCode\":\"GBP\",\n    \"customerId\":\"cust-123\",\n    \"orderId\":\"order-123\",\n    \"status\":\"SETTLED\",\n    \"cardTokenType\":\"CARD_PAN\",\n    \"customer\": {\n      \"emailAddress\": \"test@primer.io\",\n      \"mobileNumber\": \"0123456789\",\n      \"billingAddress\": {\n        \"firstName\": \"John\",\n        \"postalCode\": \"CB94BQ\",\n        \"addressLine1\": \"10001 Alpha St\",\n        \"countryCode\": \"GB\",\n        \"city\": \"Cambridge\",\n        \"state\": \"Cambridgeshire\"\n      }\n    },\n    \"paymentMethod\":{\n      \"paymentType\":\"FIRST_PAYMENT\",\n      \"paymentMethodToken\":\"-lcWjvBAAs2DnIRXwxNjUzNTYzNjIy\",\n      \"isVaulted\": \"false\",\n      \"analyticsId\":\"LUi5pETUaVsdSEamK25L\",\n      \"paymentMethodType\":\"PAYMENT_CARD\",\n      \"paymentMethodData\":{\n        \"last4Digits\":\"1111\",\n        \"first6Digits\": \"411111\",\n        \"expirationMonth\":\"03\",\n        \"expirationYear\":\"2030\",\n        \"cardholderName\":\"ADYEN\",\n        \"network\":\"Visa\",\n        \"isNetworkTokenized\":false,\n        \"binData\":{\n          \"network\":\"VISA\",\n          \"issuerCountryCode\":\"US\",\n          \"issuerName\":\"JPMORGAN CHASE BANK, N.A.\",\n          \"regionalRestriction\":\"UNKNOWN\",\n          \"accountNumberType\":\"UNKNOWN\",\n          \"accountFundingType\":\"UNKNOWN\",\n          \"prepaidReloadableIndicator\":\"NOT_APPLICABLE\",\n          \"productUsageType\":\"UNKNOWN\",\n          \"productCode\":\"UNKNOWN\",\n          \"productName\":\"UNKNOWN\"\n        }\n      },\n      \"authorizationType\": \"FINAL\",\n      \"threeDSecureAuthentication\":{\n        \"responseCode\":\"NOT_PERFORMED\"\n      }\n    },\n    \"processor\":{\n      \"name\":\"STRIPE\",\n      \"processorMerchantId\":\"acct_1GORasdasqNWFwi8c\",\n      \"amountCaptured\":3000,\n      \"amountRefunded\":0\n    },\n    \"transactions\":[\n      {\n        \"date\":\"2021-02-21T15:34:16.367687\",\n        \"amount\":3000,\n        \"currencyCode\":\"GBP\",\n        \"transactionType\":\"SALE\",\n        \"orderId\":\"order-123\",\n        \"processorTransactionId\":\"pi_3L3edsGZasdasdc1iget38p\",\n        \"processorName\":\"STRIPE\",\n        \"processorMerchantId\":\"acct_1GORasvasdNWFwi8c\",\n        \"processorStatus\":\"SETTLED\",\n        \"cardTokenType\":\"CARD_PAN\"\n      }\n    ],\n    \"riskData\":{\n      \"fraudChecks\":{\n        \"source\":\"riskified\",\n        \"preAuthorizationResult\":\"THREE_DS\",\n        \"postAuthorizationResult\":\"ACCEPT\"\n      },\n      \"cvvCheck\": {\n        \"source\": \"processor\",\n        \"result\": \"MATCHED\"\n      },\n      \"avsCheck\": {\n        \"source\": \"processor\",\n        \"result\": {\n          \"streetAddress\": \"NOT_MATCHED\",\n          \"postalCode\": \"NOT_VERIFIED\"\n        }\n      }\n    }\n  }\n}"
-      }
-    ],
     "keywords": [
       "endpoint",
       "api",
@@ -7991,6 +8176,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "ca56f687-5be3-4661-aeed-674a0f1f7193",
     "api_endpoint_id": "subpackage_paymentWebhooks.payment_refund_webhook_event",
@@ -8031,6 +8217,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "ca56f687-5be3-4661-aeed-674a0f1f7193",
     "api_endpoint_id": "subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
@@ -8071,6 +8258,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "ca56f687-5be3-4661-aeed-674a0f1f7193",
     "api_endpoint_id": "subpackage_disputeChargebacksWebhooks.dispute_status_webhook_event",
@@ -8111,6 +8299,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_clientSessionApi.retrieveClientSideToken",
@@ -8168,6 +8357,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_clientSessionApi.createClientSideToken",
@@ -8225,6 +8415,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_clientSessionApi.updateClientSideToken",
@@ -8282,6 +8473,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.listPayments",
@@ -8344,6 +8536,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.createPayment",
@@ -8401,6 +8594,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.authorizePayment",
@@ -8460,6 +8654,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.capturePayment",
@@ -8517,6 +8712,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.cancelPayment",
@@ -8573,6 +8769,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.refundPayment",
@@ -8630,6 +8827,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.resumePayment",
@@ -8686,6 +8884,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.adjustAuthorization",
@@ -8744,6 +8943,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentsApi.getPaymentById",
@@ -8800,6 +9000,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
@@ -8857,6 +9058,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
@@ -8912,6 +9114,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
@@ -8968,6 +9171,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
@@ -9024,6 +9228,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_observabilityApiBeta.external_payment",
@@ -9079,6 +9284,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_observabilityApiBeta.external_payment_update",
@@ -9134,6 +9340,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_loyaltyApi.get_loyalty_customer",
@@ -9190,6 +9397,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_loyaltyApi.get_loyalty_customer_transactions",
@@ -9247,6 +9455,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "090e0b31-c453-4f41-8269-845a6e8a461f",
     "api_endpoint_id": "subpackage_loyaltyApi.post_loyalty_transaction",
@@ -9304,18 +9513,13 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "c5629660-3984-4ce0-989e-9c6fb0df36d9",
     "api_endpoint_id": "subpackage_paymentWebhooks.payment_status_webhook_event",
     "method": "POST",
     "endpoint_path": "",
     "description": "Primer notifies you with a PAYMENT.STATUS webhook when a payment's status has been updated. This is especially useful for asyncronous processor Connections, which do not respond with an upfront authorization.\nThe webhook events will arrive in the order that the payment status changes, for example you should expect a status of PENDING, then AUTHORIZED, then SETTLED (depending on how your workflow is set up).\nThe webhook body contains the full payment object.\nExample payment status notification:\nLearn more about how Primer handles webhooks.",
-    "code_snippets": [
-      {
-        "lang": "JSON",
-        "code": "{\n  \"eventType\":\"PAYMENT.STATUS\",\n  \"date\":\"2021-02-21T15:36:16.367687\",\n  \"notificationConfig\":{\n    \"id\":\"cc51f9f0-7e1c-492b-9d37-f83a818f6070\",\n    \"description\":\"Payment webhook\"\n  },\n  \"version\":\"2.2\",\n  \"signedAt\": \"1689221338\",\n  \"payment\":{\n    \"id\":\"DdRZ6YY0\",\n    \"date\":\"2021-02-21T15:34:16.367687\",\n    \"dateUpdated\":\"2021-02-21T15:35:16.133701\",\n    \"amount\":3000,\n    \"currencyCode\":\"GBP\",\n    \"customerId\":\"cust-123\",\n    \"orderId\":\"order-123\",\n    \"status\":\"SETTLED\",\n    \"cardTokenType\":\"CARD_PAN\",\n    \"customer\": {\n      \"emailAddress\": \"test@primer.io\",\n      \"mobileNumber\": \"0123456789\",\n      \"billingAddress\": {\n        \"firstName\": \"John\",\n        \"postalCode\": \"CB94BQ\",\n        \"addressLine1\": \"10001 Alpha St\",\n        \"countryCode\": \"GB\",\n        \"city\": \"Cambridge\",\n        \"state\": \"Cambridgeshire\"\n      }\n    },\n    \"paymentMethod\":{\n      \"paymentType\":\"FIRST_PAYMENT\",\n      \"paymentMethodToken\":\"-lcWjvBAAs2DnIRXwxNjUzNTYzNjIy\",\n      \"isVaulted\": \"false\",\n      \"analyticsId\":\"LUi5pETUaVsdSEamK25L\",\n      \"paymentMethodType\":\"PAYMENT_CARD\",\n      \"paymentMethodData\":{\n        \"last4Digits\":\"1111\",\n        \"first6Digits\": \"411111\",\n        \"expirationMonth\":\"03\",\n        \"expirationYear\":\"2030\",\n        \"cardholderName\":\"ADYEN\",\n        \"network\":\"Visa\",\n        \"isNetworkTokenized\":false,\n        \"binData\":{\n          \"network\":\"VISA\",\n          \"issuerCountryCode\":\"US\",\n          \"issuerName\":\"JPMORGAN CHASE BANK, N.A.\",\n          \"regionalRestriction\":\"UNKNOWN\",\n          \"accountNumberType\":\"UNKNOWN\",\n          \"accountFundingType\":\"UNKNOWN\",\n          \"prepaidReloadableIndicator\":\"NOT_APPLICABLE\",\n          \"productUsageType\":\"UNKNOWN\",\n          \"productCode\":\"UNKNOWN\",\n          \"productName\":\"UNKNOWN\"\n        }\n      },\n      \"authorizationType\": \"FINAL\",\n      \"threeDSecureAuthentication\":{\n        \"responseCode\":\"NOT_PERFORMED\"\n      }\n    },\n    \"processor\":{\n      \"name\":\"STRIPE\",\n      \"processorMerchantId\":\"acct_1GORasdasqNWFwi8c\",\n      \"amountCaptured\":3000,\n      \"amountRefunded\":0\n    },\n    \"transactions\":[\n      {\n        \"date\":\"2021-02-21T15:34:16.367687\",\n        \"amount\":3000,\n        \"currencyCode\":\"GBP\",\n        \"transactionType\":\"SALE\",\n        \"orderId\":\"order-123\",\n        \"processorTransactionId\":\"pi_3L3edsGZasdasdc1iget38p\",\n        \"processorName\":\"STRIPE\",\n        \"processorMerchantId\":\"acct_1GORasvasdNWFwi8c\",\n        \"processorStatus\":\"SETTLED\",\n        \"cardTokenType\":\"CARD_PAN\"\n      }\n    ],\n    \"riskData\":{\n      \"fraudChecks\":{\n        \"source\":\"riskified\",\n        \"preAuthorizationResult\":\"THREE_DS\",\n        \"postAuthorizationResult\":\"ACCEPT\"\n      },\n      \"cvvCheck\": {\n        \"source\": \"processor\",\n        \"result\": \"MATCHED\"\n      },\n      \"avsCheck\": {\n        \"source\": \"processor\",\n        \"result\": {\n          \"streetAddress\": \"NOT_MATCHED\",\n          \"postalCode\": \"NOT_VERIFIED\"\n        }\n      }\n    }\n  }\n}"
-      }
-    ],
     "keywords": [
       "endpoint",
       "api",
@@ -9350,6 +9554,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "c5629660-3984-4ce0-989e-9c6fb0df36d9",
     "api_endpoint_id": "subpackage_paymentWebhooks.payment_refund_webhook_event",
@@ -9390,6 +9595,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "c5629660-3984-4ce0-989e-9c6fb0df36d9",
     "api_endpoint_id": "subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
@@ -9430,6 +9636,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "c5629660-3984-4ce0-989e-9c6fb0df36d9",
     "api_endpoint_id": "subpackage_disputeChargebacksWebhooks.dispute_status_webhook_event",
@@ -9470,6 +9677,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_clientSessionApi.retrieveClientSideToken",
@@ -9527,6 +9735,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_clientSessionApi.createClientSideToken",
@@ -9584,6 +9793,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_clientSessionApi.updateClientSideToken",
@@ -9641,6 +9851,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentsApi.listPayments",
@@ -9703,6 +9914,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentsApi.createPayment",
@@ -9760,6 +9972,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentsApi.capturePayment",
@@ -9817,6 +10030,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentsApi.cancelPayment",
@@ -9873,6 +10087,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentsApi.refundPayment",
@@ -9930,6 +10145,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentsApi.resumePayment",
@@ -9986,6 +10202,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentsApi.getPaymentById",
@@ -10042,6 +10259,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
@@ -10099,6 +10317,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
@@ -10154,6 +10373,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
@@ -10210,6 +10430,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "7ed504c0-fc2e-4a52-b3fd-b277869eda14",
     "api_endpoint_id": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",
@@ -10266,6 +10487,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3e1141df-b4bc-4dab-9542-53cf91851645",
     "api_endpoint_id": "subpackage_paymentWebhooks.payment_status_webhook_event",
@@ -10325,6 +10547,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3e1141df-b4bc-4dab-9542-53cf91851645",
     "api_endpoint_id": "subpackage_paymentWebhooks.payment_refund_webhook_event",
@@ -10336,12 +10559,6 @@
       "https://api.sandbox.primer.io/payment-refund"
     ],
     "description": "Primer notifies you with a PAYMENT.REFUND Webhook when a refund request has been fully processed by a payment processor and the refund has reached a final state.\nCheck the transaction with the most recent transactionType: \"REFUND\" in the transactions array:\nif processorStatus is SETTLED, the refund was successful and the funds have been returned to the customer\n\nif processorStatus is FAILED, the refund was unsuccessful\n\n\nExample refund notification:\nLearn more about how Primer handles webhooks.",
-    "code_snippets": [
-      {
-        "lang": "JSON",
-        "code": "{\n  \"eventType\":\"PAYMENT.REFUND\",\n  \"date\":\"2021-02-21T15:36:16.367687\",\n  \"notificationConfig\":{\n    \"id\":\"cc51f9f0-7e1c-492b-9d37-f83a818f6070\",\n    \"description\":\"Refund webhook\"\n  },\n  \"signedAt\": \"1689221338\",\n  \"version\":\"2.1\",\n  \"payment\":{\n    \"id\":\"DdRZ6YY0\",\n    \"date\":\"2022-01-01T12:12:12.000000\",\n    \"amount\":3000,\n    \"currencyCode\":\"GBP\",\n    \"customerId\":\"cust-123\",\n    \"orderId\":\"order-123\",\n    \"status\":\"SETTLED\",\n    \"paymentMethod\":{\n      \"paymentMethodToken\":\"-lcWjvBASh2EpYaHgVwxNjUzNTYzNjIy\",\n      \"analyticsId\":\"LUi5pETUV2EpYaHgV77SEamK25L\",\n      \"paymentMethodType\":\"PAYMENT_CARD\",\n      \"paymentMethodData\":{\n        \"paymentType\":\"FIRST_PAYMENT\",\n        \"last4Digits\":\"1111\",\n        \"expirationMonth\":\"03\",\n        \"expirationYear\":\"2030\",\n        \"cardholderName\":\"ADYEN\",\n        \"network\":\"Visa\",\n        \"isNetworkTokenized\":false,\n        \"binData\":{\n          \"network\":\"VISA\",\n          \"issuerCountryCode\":\"US\",\n          \"issuerName\":\"JPMORGAN CHASE BANK, N.A.\",\n          \"regionalRestriction\":\"UNKNOWN\",\n          \"accountNumberType\":\"UNKNOWN\",\n          \"accountFundingType\":\"UNKNOWN\",\n          \"prepaidReloadableIndicator\":\"NOT_APPLICABLE\",\n          \"productUsageType\":\"UNKNOWN\",\n          \"productCode\":\"UNKNOWN\",\n          \"productName\":\"UNKNOWN\"\n        }\n      },\n      \"threeDSecureAuthentication\":{\n        \"responseCode\":\"NOT_PERFORMED\"\n      }\n    },\n    \"processor\":{\n      \"name\":\"STRIPE\",\n      \"processorMerchantId\":\"acct_1G2EpYaHgVZqNWFwi8c\",\n      \"amountCaptured\":3000,\n      \"amountRefunded\":3000\n    },\n    \"transactions\":[\n      {\n        \"date\":\"2022-05-26T11:14:11.946300\",\n        \"amount\":3000,\n        \"currencyCode\":\"GBP\",\n        \"transactionType\":\"SALE\",\n        \"processorTransactionId\":\"pi_3L3ed23NWFwiNWFwi8c1iget38p\",\n        \"processorName\":\"STRIPE\",\n        \"processorMerchantId\":\"acct_1GORcaGv23NWFwi8c\",\n        \"processorStatus\":\"SETTLED\"\n      },\n      {\n        \"date\":\"2022-05-26T11:14:11.946300\",\n        \"amount\":3001,\n        \"currencyCode\":\"GBP\",\n        \"transactionType\":\"REFUND\",\n        \"processorTransactionId\":\"pi_3L3ed23NWFwiNWFwi8c1iget38p\",\n        \"processorName\":\"STRIPE\",\n        \"processorMerchantId\":\"acct_1GORcaGv23NWFwi8c\",\n        \"processorStatus\":\"FAILED\",\n        \"processorStatusReason\":{\n          \"type\":\"APPLICATION_ERROR\",\n          \"declineType\":\"SOFT_DECLINE\",\n          \"code\":\"UNKNOWN\",\n          \"message\":\"Refund amount too large\"\n        }\n      }\n    ]\n  }\n}"
-      }
-    ],
     "environments": [
       {
         "id": "Default",
@@ -10384,6 +10601,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3e1141df-b4bc-4dab-9542-53cf91851645",
     "api_endpoint_id": "subpackage_disputeChargebacksWebhooks.dispute_open_webhook_event",
@@ -10443,6 +10661,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_clientSessionApi.createClientSideToken",
@@ -10500,6 +10719,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentsApi.listPayments",
@@ -10562,6 +10782,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentsApi.createPayment",
@@ -10619,6 +10840,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentsApi.capturePayment",
@@ -10676,6 +10898,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentsApi.cancelPayment",
@@ -10732,6 +10955,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentsApi.refundPayment",
@@ -10789,6 +11013,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentsApi.resumePayment",
@@ -10845,6 +11070,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentsApi.getPaymentById",
@@ -10901,6 +11127,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentMethodsApi.vault_payment_method_payment_methods__token__vault_post",
@@ -10957,6 +11184,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentMethodsApi.get_payment_methods_payment_methods_get",
@@ -11012,6 +11240,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentMethodsApi.delete_payment_method_payment_methods__token__delete",
@@ -11068,6 +11297,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "fe590ab9-f9e7-4719-8ec5-b595affff88d",
     "api_endpoint_id": "subpackage_paymentMethodsApi.set_payment_method_default_payment_methods__token__default_post",

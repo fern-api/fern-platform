@@ -98,6 +98,12 @@ export const BaseRecordSchema = z.object({
         .describe("A list of searchable keywords that are relevant to this record"),
     visible_by: z.array(z.string()).describe("The roles that can view this record"),
     authed: z.boolean().describe("Whether this record requires authentication to view"),
+    page_position: z
+        .number()
+        .optional()
+        .describe(
+            "The position of this record within the page, which is used to sort before distinct, so that the root node is preferred over a deeply nested node",
+        ),
 });
 
 const HierarchySchema = z

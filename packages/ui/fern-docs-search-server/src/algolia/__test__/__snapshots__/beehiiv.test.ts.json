@@ -16,6 +16,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "beehiiv is the newsletter platform built for growth.",
     "content": "Harness beehiiv's API to enrich your user records with custom fields from external forms,\nmanage lists and segmentation programmatically, and integrate your beehiiv publication\nmore closely with advertising platforms.\n\n\n\n\n\n\n\n\n\n\nLooking for support? Inspiration? Check out our other resources:\nKnowledge Base: Product support, documentation, and assistance.\n\nTutorials: Archive of video tutorials.\n\nCourse: How to build, scale, and monetize your newsletter.\n\nBlog: Best practices to help scale your newsletter.\n\nSubmit a support ticket"
@@ -37,6 +38,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Get up and running with the beehiiv API.",
     "content": "The beehiiv API key is used as the Bearer Token for all requests.\nIt enables secure account authentication and should be kept secret at all times.\n\n\nLog in to beehiiv.\nNavigate to the Integrations page\nClick on Settings and then Integrations\nClick the New API Key button\nAfter creating your API key, be sure to copy and safely save the key, as it\nwill be inaccessible after leaving the page. You may be prompted to verify\nyour identity with Stripe.\n\n\nAs an alternative to Stripe, you may contact support to be verified\nwithin 48-72 hours."
@@ -58,6 +60,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Not a developer? Not a problem.",
     "content": "If you're wanting to work with the beehiiv API to integrate your publications with other software but don't have the time or resources to build an integration yourself, there's a few options available to you.\nThe beehiiv team currently maintains a Zapier integration and a Make integration. Both offer a no-code way to integrate your publication with other software."
@@ -79,6 +82,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#zapier",
     "content": "Zapier is a platform that allows you to connect your publication to other software without having to write any code. You can use Zapier to receive real-time notifications when certain events occur on your publication, such as when a new subscriber signs up, or to make changes to your publication, such as adding a new subscriber from another service.\nTo get started, you'll need to sign up for an account, create a new \"Zap\", and search for \"beehiiv\" in the list of apps to connect to.\nTriggers are how Zapier refers to webhooks. When you create a new Zap, you'll be able to select the type of event you want to trigger your Zap. Actions are how Zapier refers to the API calls that you want to make to the beehiiv API. Both follow similar patterns to the webhooks and API reference found elsewhere in this documentation, but are tailored to Zapier's UI and capabilities.\nFor more information on how to use Zapier, check out their documentation.",
@@ -110,6 +114,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#make",
     "content": "Make is another platform that allows you to connect your publication to other software without having to write any code. You can also use Make to receive real-time notifications when certain events occur on your publication, such as when a new subscriber signs up, or to make changes to your publication, such as adding a new subscriber from another service.\nTo get started, you'll need to sign up for an account, create a new \"Scenario\", and search for \"beehiiv\" in the list of apps to connect to.\nTo use webhooks with Make, please refer to our webhooks documentation for more information. For other actions, Make provides a UI for you to interact with the beehiiv API in a similar fashion to the API reference.\nCompared to Zapier, Make offers additional functionality, such as easy-to-use functions for formatting and manipulating data in between steps.\nFor more information on how to use Make, check out their documentation.\n\n\nThe beehiiv support team only services Make and Zapier for no-code integrations. If you're using other no-code\nplatforms, we may not be able to provide direct support for your integration.",
@@ -136,6 +141,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "An easy way to receive real-time notifications when certain events occur on your beehiiv publication.",
     "content": "Webhooks are currently only available for paid users on the Scale plan and above. To upgrade your account, click\nhere."
@@ -152,6 +158,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#why-use-webhooks",
     "content": "Webhooks are a way to receive real-time notifications when certain events occur on your beehiiv publication. These can be helpful for:\nIntegrating your publication with other services.\n\nKeeping track of your audience in third-party apps.\n\nAnd more.",
@@ -178,6 +185,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#how-to-configure-webhooks",
     "content": "Webhooks can be configured in two ways:\nIn the app: Navigate to Settings > Integrations > Webhooks.\n\nUsing the API: Send a POST request to the /webhooks endpoint (see API reference).\n\n\nThe event types are listed in the sidebar of this page and are organized by the resource they are associated with.",
@@ -204,6 +212,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#webhooks-in-zapier-and-make",
     "content": "The beehiiv team currently maintain a Zapier integration and a Make integration.\nIn Zapier, webhooks are known as \"Triggers,\" which assist the user set up a webhook without having to set them up in the app as outlined above. In Make, users should use the Custom Webhook module and follow step 1 above to set up their webhook to point to the Make-provided URL.",
@@ -239,6 +248,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
     "api_endpoint_id": "subpackage_post.sent",
@@ -273,6 +283,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
     "api_endpoint_id": "subpackage_subscription.created",
@@ -307,6 +318,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
     "api_endpoint_id": "subpackage_subscription.confirmed",
@@ -341,6 +353,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
     "api_endpoint_id": "subpackage_subscription.deleted",
@@ -375,6 +388,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
     "api_endpoint_id": "subpackage_subscription.upgraded",
@@ -409,6 +423,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
     "api_endpoint_id": "subpackage_subscription.downgraded",
@@ -443,6 +458,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
     "api_endpoint_id": "subpackage_subscription.tier_added",
@@ -477,6 +493,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
     "api_endpoint_id": "subpackage_subscription.tier_deleted",
@@ -511,6 +528,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8bc5b8d2-4f22-459a-868c-60517d846e4c",
     "api_endpoint_id": "subpackage_survey.submitted",
@@ -545,6 +563,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_automationJourneys.create",
@@ -599,6 +618,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_automationJourneys.index",
@@ -653,6 +673,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_automationJourneys.show",
@@ -707,6 +728,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_automations.index",
@@ -760,6 +782,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_automations.show",
@@ -813,6 +836,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_bulkSubscriptionUpdates.index",
@@ -867,6 +891,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_bulkSubscriptionUpdates.show",
@@ -921,6 +946,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_bulkSubscriptionUpdates.put",
@@ -975,6 +1001,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_bulkSubscriptionUpdates.patch",
@@ -1029,6 +1056,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_bulkSubscriptionUpdates.put-status",
@@ -1077,6 +1105,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_bulkSubscriptionUpdates.patch-status",
@@ -1125,6 +1154,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_customFields.create",
@@ -1179,6 +1209,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_customFields.show",
@@ -1233,6 +1264,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_customFields.index",
@@ -1287,6 +1319,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_customFields.put",
@@ -1341,6 +1374,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_customFields.patch",
@@ -1395,6 +1429,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_customFields.delete",
@@ -1449,6 +1484,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_posts.index",
@@ -1503,6 +1539,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_posts.show",
@@ -1557,6 +1594,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_posts.delete",
@@ -1611,6 +1649,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_publications.index",
@@ -1665,6 +1704,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_publications.show",
@@ -1719,6 +1759,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_referralProgram.show",
@@ -1773,6 +1814,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_segments.index",
@@ -1827,6 +1869,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_segments.show",
@@ -1880,6 +1923,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_segments.expand_results",
@@ -1934,6 +1978,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_segments.delete",
@@ -1987,6 +2032,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptions.create",
@@ -2041,6 +2087,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptions.index",
@@ -2095,6 +2142,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptions.get-by-email",
@@ -2149,6 +2197,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptions.get-by-id",
@@ -2203,6 +2252,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptions.put",
@@ -2257,6 +2307,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptions.patch",
@@ -2311,6 +2362,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptions.delete",
@@ -2365,6 +2417,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_subscriptionTags.create",
@@ -2419,6 +2472,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_tiers.create",
@@ -2473,6 +2527,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_tiers.index",
@@ -2527,6 +2582,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_tiers.show",
@@ -2581,6 +2637,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_tiers.put",
@@ -2635,6 +2692,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_tiers.patch",
@@ -2689,6 +2747,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_webhooks.create",
@@ -2743,6 +2802,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_webhooks.index",
@@ -2797,6 +2857,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_webhooks.show",
@@ -2852,6 +2913,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "3cb867a9-1bb5-44e9-aba4-4ca6deee9cbc",
     "api_endpoint_id": "endpoint_webhooks.delete",

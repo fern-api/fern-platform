@@ -131,6 +131,7 @@ export function createMarkdownRecords({ base, markdown }: CreateMarkdownRecordsO
                 code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
                 hierarchy,
                 level: `h${heading.depth}`,
+                page_position: i + 1,
             };
 
             records.push(record);

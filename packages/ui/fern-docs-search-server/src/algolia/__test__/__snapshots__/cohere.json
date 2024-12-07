@@ -37,7 +37,8 @@
         "title": "Prerequisites"
       }
     },
-    "level": "h2"
+    "level": "h2",
+    "page_position": 1
   },
   {
     "objectID": "test-create-an-elastic-serverless-deployment-chunk:0",
@@ -62,7 +63,8 @@
         "title": "Create an Elastic Serverless deployment"
       }
     },
-    "level": "h2"
+    "level": "h2",
+    "page_position": 1
   },
   {
     "objectID": "test-install-the-required-packages-chunk:0",
@@ -94,7 +96,8 @@
         "title": "Install the required packages"
       }
     },
-    "level": "h2"
+    "level": "h2",
+    "page_position": 1
   },
   {
     "objectID": "test-import-the-required-packages-chunk:0",
@@ -126,7 +129,8 @@
         "title": "Import the required packages"
       }
     },
-    "level": "h2"
+    "level": "h2",
+    "page_position": 1
   },
   {
     "objectID": "test-create-an-elasticsearch-client-chunk:0",
@@ -158,7 +162,8 @@
         "title": "Create an Elasticsearch client"
       }
     },
-    "level": "h2"
+    "level": "h2",
+    "page_position": 1
   },
   {
     "objectID": "test-create-an-inference-endpoint-chunk:0",
@@ -197,7 +202,8 @@
         "title": "Create an inference endpoint"
       }
     },
-    "level": "h2"
+    "level": "h2",
+    "page_position": 1
   },
   {
     "objectID": "test-create-the-index-chunk:0",
@@ -236,7 +242,8 @@
         "title": "Create the Index"
       }
     },
-    "level": "h2"
+    "level": "h2",
+    "page_position": 1
   },
   {
     "objectID": "test-insert-documents-chunk:0",
@@ -275,7 +282,8 @@
         "title": "Insert Documents"
       }
     },
-    "level": "h2"
+    "level": "h2",
+    "page_position": 1
   },
   {
     "objectID": "test-semantic-search-chunk:0",
@@ -311,7 +319,8 @@
         "title": "Semantic Search"
       }
     },
-    "level": "h2"
+    "level": "h2",
+    "page_position": 1
   },
   {
     "objectID": "test-hybrid-search-chunk:0",
@@ -347,7 +356,8 @@
         "title": "Hybrid Search"
       }
     },
-    "level": "h2"
+    "level": "h2",
+    "page_position": 1
   },
   {
     "objectID": "test-ranking-chunk:0",
@@ -388,7 +398,8 @@
         "title": "Ranking"
       }
     },
-    "level": "h2"
+    "level": "h2",
+    "page_position": 1
   },
   {
     "objectID": "test-retrieval-augemented-generation-chunk:0",
@@ -429,6 +440,7 @@
         "title": "Retrieval augemented generation"
       }
     },
-    "level": "h2"
+    "level": "h2",
+    "page_position": 1
   }
 ]

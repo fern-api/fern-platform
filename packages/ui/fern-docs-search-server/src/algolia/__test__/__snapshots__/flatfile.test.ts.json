@@ -17,6 +17,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "It's a wild west of data out there, where rules and best practices are shot from the hip. This makes injesting data cleanly a colossal pain in the ass. Flatfile is the missing API for data exchange, import, and migration.\nWith Flatfile, you can:\nAccept, transform, and validate data so that it arrives in your systems in exactly the right shape\n\nEmbed an easy-to-use, self-service data importer directly into your app\n\nInvite your customers to collaborate on a hosted onboarding project, replacing hours of back-and-forth communication\n\n\nLet's design and build your dream data exchange experience."
   },
@@ -38,6 +39,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#about-our-api",
     "content": "The Flatfile API uses REST. Our API is designed to have predictable resource-oriented URLs and to use HTTP response codes to indicate API errors. It accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\nThe Flatfile API doesn't have a test mode; however, Environments  allow you to test without affecting your live data.",
@@ -70,6 +72,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#getting-started",
     "content": "To begin working with Flatfile, follow this link to sign up and immediately retrieve your API keys.",
@@ -102,6 +105,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#were-here-to-help",
     "content": "Contact Support at support@flatfile.com to get help from our team of in-house experts.",
@@ -134,6 +138,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Learn how to use API keys to authenticate API requests.\nFlatfile provides two different kinds of environment-specific API keys you can use to interact with the API. In addition, you can work with a development key or a production environment.\nRead on to learn more about how to think about which keys to use and how to test in development mode."
   },
@@ -155,6 +160,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#testing-and-development",
     "content": "Environments are isolated entities and are intended to be a safe place to create and\ntest different configurations. A development and production environment are created\nby default.\nisProd Name Description \nfalse development Use this default environment, and its associated test API keys, as you build with Flatfile. \ntrue production When you're ready to launch, create a new environment and swap out your keys. \n\n\n\nThe development environment does not count towards your paid credits.",
@@ -187,6 +193,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#secret-and-publishable-keys",
     "content": "All Accounts have two key types for each environment. Learn when to use each type of key:\nType Id Description \nSecret key sk_23ghsyuyshs7dcrty On the server-side: Store this securely in your server-side code. Don’t expose this key in an application. \nPublishable key pk_23ghsyuyshs7dcert On the client-side: Can be publicly-accessible in your application's client-side code. Use when embedding Flatfile. \n\n\n\nThe accessToken provided from publishableKey will remain valid for a\nduration of 24 hours.",
@@ -219,6 +226,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Learn how to use Environments for testing and authentication.\nEnvironments are isolated entities and are intended to be a safe place to create and\ntest different configurations. Environments serve as self-contained, secure domains\nwhere diverse configurations can be created and tested. By default, a development\nand a production environment are set up.\nisProd Name Description \nfalse development Use this default environment, and it’s associated test API keys, as you build with Flatfile. \ntrue production When you're ready to launch, create a new environment and swap out your keys. \n\n\n\nThe development environment does not count towards your paid credits."
   },
@@ -240,6 +248,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#guest-authentication",
     "content": "Environments support two types of guest authentication:\nmagic_link: This method dispatches an email to your guests, which includes a magic link to facilitate login.\n\nshared_link: This method transforms the Space URL into a public one, typically used in conjunction with embedded Flatfile.",
@@ -272,6 +281,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#additional-info",
     "content": "Should the guestAuthentication be left unspecified, both magic_link and shared_link types are enabled by default.\nIt's important to note that guestAuthentication settings can be applied at both Environment and Space levels. However, in case of any conflicting settings, the authentication type set at the Space level will take precedence over the Environment level setting. This flexibility enables customization based on specific needs, ensuring the right balance of accessibility and security.",
@@ -308,6 +318,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#secret-and-publishable-keys",
     "content": "All Accounts have two key types for each environment. Learn when to use each type of key:\nType Id Description \nSecret key sk_23ghsyuyshs7dcrty On the server-side: Store this securely in your server-side code. Don’t expose this key in an application. \nPublishable key pk_23ghsyuyshs7dcert On the client-side: Can be publicly-accessible in your application's client-side code. Use when embedding Flatfile. \n\n\n\nThe publishable key only has permissions to create a Space.",
@@ -343,6 +354,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_accounts.getCurrent",
@@ -393,6 +405,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_accounts.updateCurrent",
@@ -443,6 +456,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_actions.create",
@@ -492,6 +506,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_actions.bulkCreate",
@@ -541,6 +556,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_actions.get",
@@ -590,6 +606,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_actions.update",
@@ -639,6 +656,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_actions.delete",
@@ -688,6 +706,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_agents.list",
@@ -737,6 +756,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_agents.create",
@@ -787,6 +807,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_agents.get",
@@ -838,6 +859,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_agents.listVersions",
@@ -889,6 +911,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_agents.revert",
@@ -940,6 +963,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_agents.listAgentRoles",
@@ -993,6 +1017,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_agents.assignAgentRole",
@@ -1046,6 +1071,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_agents.deleteAgentRole",
@@ -1099,6 +1125,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_agents.getAgentLogs",
@@ -1150,6 +1177,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_agents.getAgentLog",
@@ -1201,6 +1229,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_agents.getEnvironmentAgentLogs",
@@ -1252,6 +1281,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_agents.getEnvironmentAgentExecutions",
@@ -1303,6 +1333,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_agents.delete",
@@ -1355,6 +1386,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_apps.list",
@@ -1405,6 +1437,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_apps.get",
@@ -1455,6 +1488,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_apps.update",
@@ -1505,6 +1539,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_apps.create",
@@ -1555,6 +1590,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_apps.delete",
@@ -1605,6 +1641,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_apps.getConstraints",
@@ -1655,6 +1692,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_apps.createConstraint",
@@ -1705,6 +1743,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_apps.getConstraintById",
@@ -1755,6 +1794,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_apps.getConstraintVersions",
@@ -1805,6 +1845,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_apps.getConstraintVersion",
@@ -1855,6 +1896,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_apps.updateConstraint",
@@ -1905,6 +1947,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_apps.deleteConstraint",
@@ -1955,6 +1998,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_assistant.list",
@@ -2005,6 +2049,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_assistant.get",
@@ -2055,6 +2100,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_assistant.update",
@@ -2105,6 +2151,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_assistant.create",
@@ -2155,6 +2202,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_assistant.delete",
@@ -2205,6 +2253,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_commits.get",
@@ -2257,6 +2306,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_commits.complete",
@@ -2309,6 +2359,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_commits.replay",
@@ -2361,6 +2412,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_data-retention-policies.list",
@@ -2413,6 +2465,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_data-retention-policies.create",
@@ -2465,6 +2518,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_data-retention-policies.get",
@@ -2517,6 +2571,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_data-retention-policies.update",
@@ -2569,6 +2624,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_data-retention-policies.delete",
@@ -2621,6 +2677,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_documents.list",
@@ -2673,6 +2730,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_documents.create",
@@ -2725,6 +2783,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_documents.get",
@@ -2777,6 +2836,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_documents.update",
@@ -2829,6 +2889,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_documents.delete",
@@ -2881,6 +2942,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_entitlements.list",
@@ -2933,6 +2995,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_environments.list",
@@ -2983,6 +3046,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_environments.create",
@@ -3033,6 +3097,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_environments.getEnvironmentEventToken",
@@ -3085,6 +3150,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_environments.get",
@@ -3137,6 +3203,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_environments.update",
@@ -3187,6 +3254,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_environments.delete",
@@ -3239,6 +3307,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_events.list",
@@ -3289,6 +3358,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_events.create",
@@ -3340,6 +3410,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_events.get",
@@ -3389,6 +3460,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_events.ack",
@@ -3438,6 +3510,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_events.getEventToken",
@@ -3490,6 +3563,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_files.list",
@@ -3539,6 +3613,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_files.upload",
@@ -3589,6 +3664,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_files.get",
@@ -3640,6 +3716,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_files.delete",
@@ -3691,6 +3768,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_files.update",
@@ -3743,6 +3821,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_files.download",
@@ -3794,6 +3873,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_guests.list",
@@ -3844,6 +3924,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_guests.create",
@@ -3894,6 +3975,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_guests.get",
@@ -3944,6 +4026,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_guests.delete",
@@ -3994,6 +4077,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_guests.update",
@@ -4044,6 +4128,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_guests.getGuestToken",
@@ -4094,6 +4179,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_guests.listGuestRoles",
@@ -4147,6 +4233,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_guests.assignGuestRole",
@@ -4200,6 +4287,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_guests.deleteGuestRole",
@@ -4253,6 +4341,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_guests.invite",
@@ -4303,6 +4392,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.list",
@@ -4352,6 +4442,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.create",
@@ -4401,6 +4492,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.get",
@@ -4450,6 +4542,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.update",
@@ -4499,6 +4592,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.delete",
@@ -4548,6 +4642,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.execute",
@@ -4598,6 +4693,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.getExecutionPlan",
@@ -4648,6 +4744,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.updateExecutionPlan",
@@ -4698,6 +4795,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.updateExecutionPlanFields",
@@ -4748,6 +4846,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.ack",
@@ -4798,6 +4897,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.ackOutcome",
@@ -4848,6 +4948,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.complete",
@@ -4898,6 +4999,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.fail",
@@ -4948,6 +5050,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.cancel",
@@ -4998,6 +5101,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.retry",
@@ -5048,6 +5152,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.previewMutation",
@@ -5098,6 +5203,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_jobs.split",
@@ -5148,6 +5254,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_mapping.createMappingProgram",
@@ -5200,6 +5307,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_mapping.deleteAllHistoryForUser",
@@ -5252,6 +5360,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_mapping.listMappingPrograms",
@@ -5303,6 +5412,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_mapping.getMappingProgram",
@@ -5355,6 +5465,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_mapping.updateMappingProgram",
@@ -5407,6 +5518,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_mapping.deleteMappingProgram",
@@ -5459,6 +5571,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_mapping.createRules",
@@ -5511,6 +5624,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_mapping.deleteMultipleRules",
@@ -5563,6 +5677,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_mapping.listRules",
@@ -5615,6 +5730,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_mapping.getRule",
@@ -5667,6 +5783,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_mapping.updateRule",
@@ -5719,6 +5836,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_mapping.updateRules",
@@ -5771,6 +5889,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_mapping.deleteRule",
@@ -5823,6 +5942,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_records.get",
@@ -5875,6 +5995,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_records.update",
@@ -5927,6 +6048,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_records.insert",
@@ -5979,6 +6101,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_records.delete",
@@ -6031,6 +6154,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_records.findAndReplace",
@@ -6081,6 +6205,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_roles.list",
@@ -6131,6 +6256,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_secrets.list",
@@ -6183,6 +6309,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_secrets.upsert",
@@ -6235,6 +6362,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_secrets.delete",
@@ -6287,6 +6415,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_sheets.list",
@@ -6337,6 +6466,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_sheets.get",
@@ -6387,6 +6517,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_sheets.delete",
@@ -6439,6 +6570,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_sheets.validate",
@@ -6491,6 +6623,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_sheets.getRecordsAsCsv",
@@ -6541,6 +6674,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_sheets.getRecordCounts",
@@ -6591,6 +6725,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_sheets.getSheetCommits",
@@ -6641,6 +6776,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_sheets.lockSheet",
@@ -6693,6 +6829,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_sheets.unlockSheet",
@@ -6745,6 +6882,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_sheets.getCellValues",
@@ -6795,6 +6933,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_sheets.updateSheet",
@@ -6847,6 +6986,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_snapshots.createSnapshot",
@@ -6899,6 +7039,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_snapshots.listSnapshots",
@@ -6951,6 +7092,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_snapshots.getSnapshot",
@@ -7003,6 +7145,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_snapshots.deleteSnapshot",
@@ -7055,6 +7198,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_snapshots.restoreSnapshot",
@@ -7107,6 +7251,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_snapshots.getSnapshotRecords",
@@ -7159,6 +7304,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_spaces.list",
@@ -7210,6 +7356,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_spaces.create",
@@ -7262,6 +7409,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_spaces.get",
@@ -7314,6 +7462,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_spaces.delete",
@@ -7366,6 +7515,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_spaces.bulkDelete",
@@ -7418,6 +7568,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_spaces.update",
@@ -7470,6 +7621,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_spaces.archiveSpace",
@@ -7522,6 +7674,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_spaces.unarchiveSpace",
@@ -7574,6 +7727,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_users.list",
@@ -7624,6 +7778,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_users.createAndInvite",
@@ -7674,6 +7829,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_users.resendInvite",
@@ -7724,6 +7880,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_users.update",
@@ -7774,6 +7931,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_users.get",
@@ -7824,6 +7982,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_users.delete",
@@ -7874,6 +8033,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_users.listUserRoles",
@@ -7927,6 +8087,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_users.assignUserRole",
@@ -7980,6 +8141,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_users.deleteUserRole",
@@ -8033,6 +8195,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_versions.createId",
@@ -8083,6 +8246,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_views.list",
@@ -8135,6 +8299,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_views.create",
@@ -8187,6 +8352,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_views.get",
@@ -8239,6 +8405,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_views.update",
@@ -8291,6 +8458,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_views.delete",
@@ -8341,6 +8509,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_workbooks.list",
@@ -8392,6 +8561,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_workbooks.create",
@@ -8443,6 +8613,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_workbooks.get",
@@ -8495,6 +8666,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_workbooks.delete",
@@ -8547,6 +8719,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_workbooks.update",
@@ -8599,6 +8772,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "71e56795-ad60-4fec-aa7b-ecd860b41022",
     "api_endpoint_id": "endpoint_workbooks.getWorkbookCommits",

@@ -35,6 +35,7 @@ export function createApiReferenceRecordHttp({
             code_snippets: request_description_code_snippets?.filter(
                 (codeSnippet) => measureBytes(codeSnippet.code) < 2000,
             ),
+            page_position: 1,
         });
     }
 
@@ -54,6 +55,7 @@ export function createApiReferenceRecordHttp({
             code_snippets: response_description_code_snippets?.filter(
                 (codeSnippet) => measureBytes(codeSnippet.code) < 2000,
             ),
+            page_position: 1,
         });
     }
 

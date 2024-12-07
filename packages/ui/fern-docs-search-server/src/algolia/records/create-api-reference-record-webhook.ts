@@ -37,6 +37,7 @@ export function createApiReferenceRecordWebhook({
             hash: "#payload",
             description: payload_description != null ? truncateToBytes(payload_description, 50 * 1000) : undefined,
             code_snippets: code_snippets?.length ? code_snippets : undefined,
+            page_position: 1,
         });
     }
 

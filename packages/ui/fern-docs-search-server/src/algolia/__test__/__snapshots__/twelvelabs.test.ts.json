@@ -20,6 +20,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The Twelve Labs Video Understanding Platform leverages artificial intelligence to extract information from videos. It identifies and interprets movements, actions, objects, individuals, sounds, on-screen text, and spoken words. Built on a state-of-the-art multimodal foundation model optimized for videos, the platform enables you to add rich, contextual video understanding to your applications through developer-friendly APIs."
   },
@@ -44,6 +45,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#key-capabilities-of-twelve-labs-for-multimodal-video-understanding",
     "content": "Twelve Labs equips developers with the following key capabilities:\nDeep Semantic Search: Find the exact moment you need within your videos using natural language queries instead of tags or metadata.\n\nZero-shot Classification: Use natural language to create your custom taxonomy, facilitating accurate and efficient video classification tailored to your unique use case.\n\nDynamic Video-to-Text Generation: Capture the essence of your videos into concise summaries or custom reports. The platform offers built-in formats to generate titles, topics, summaries, hashtags, chapters, and highlights. Additionally, you can provide a prompt detailing the content and desired output format, such as a police report, to tailor the results to your needs.\n\nIntuitive Integration: Embed a state-of-the-art multimodal foundation model for video understanding into your application in just a few API calls.\n\nRapid Result Retrieval: Receive your results within seconds.\n\nScalability: Our cloud-native distributed infrastructure seamlessly processes thousands of concurrent requests.",
@@ -79,6 +81,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#twelve-labs-advantages",
     "content": "The table below provides a basic comparison between Twelve Labs Video Understanding Platform and other video AI solutions:\nSimplified API Integration: Perform a rich set of video understanding tasks with just a few API calls. This allows you to focus on building your application rather than aggregating data from separate image and speech APIs or managing multiple data sources.\n\nNatural Language Use: Tap into the model's capabilities using everyday language to write queries or prompts. This method is more effective, intuitive, flexible, and accurate than using solely rules, tags, or keywords.\n\nImage-to-Video Search: Perform searches using images as queries and find videos semantically similar to the provided images. This addresses the challenges you face when the existing reverse image search tools yield inconsistent results or when describing the desired results using text is challenging.\n\nMultimodal Approach: The platform adopts a video-first, multimodal approach, surpassing traditional unimodal models that depend exclusively on text or images, providing a comprehensive understanding of your videos.\n\nOne-time Video Indexing for Multiple Tasks: Index your videos once and create contextual video embeddings that encapsulate semantics for scaling and repurposing, allowing you to search and classify your videos swiftly.\n\nFlexible Deployment: The platform can adapt to varied business needs, with deployment options spanning on-premise, hybrid, or cloud-based environments.\n\nFine-tuning Capabilities: Though our state-of-the-art foundation model for video understanding already yields highly accurate results, we can provide fine-tuning capabilities to help you get more out of the models and achieve better results with only a few examples.\n\n\nFor details on fine-tuning the models or different deployment options, please contact us at [email protected].",
@@ -114,6 +117,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#discover-twelve-labs",
     "content": "Experience the key capabilities of the Twelve Labs Video Understanding platform by signing up for a free account.",
@@ -149,6 +153,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The Twelve Labs Video Understanding Platform, currently in beta, offers an API suite for integrating a state-of-the-art foundation model that understands contextual information from your videos, making it accessible to your applications. The API is organized around REST and is compatible with most programming languages. You can also use Postman or other REST clients to send requests and view responses."
   },
@@ -173,6 +178,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#architecture-overview",
     "content": "The following diagram illustrates the architecture of the Twelve Labs Video Understanding Platform and how different parts interact:",
@@ -208,6 +214,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#indexes",
     "content": "An index is a basic unit for organizing and storing video data, consisting of video embeddings and metadata. Indexes facilitate information retrieval and processing. You can use indexes to group related videos, making it easier to manage and search through your video data.",
@@ -247,6 +254,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#video-understanding-engines",
     "content": "A video understanding engine consists of a family of deep neural networks built on top of our multimodal foundation model for video understanding. These engines offer search, classification, and summarization capabilities. For each index, you must configure the engines you want to enable. The available engines and their capabilities are detailed on the Video Understanding Engines page.",
@@ -286,6 +294,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#engine-options",
     "content": "The engine options define the types of information that a specific engine will process. Currently, the platform provides the following engine options:\nVisual: Processes visual elements within the video.\n\nConversation: Analyzes spoken words and dialogues.\n\nText in Video: Detects and processes text appearing in the video.\n\nLogo: Identifies logos within the video content.\n\n\nFor more details, see the Engine Options page.",
@@ -325,6 +334,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#queryprompt-processing-engine",
     "content": "This component processes user inputs such as search queries, classification queries, and prompts for generating text from video. It returns the corresponding results to your application, enabling you to leverage the platform's capabilities effectively.",
@@ -364,6 +374,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "This guide demonstrates building a production-ready video understanding service using a three-step process:\nCreate an Index: Organize and store video data, consisting of video embeddings and metadata.\n\nUpload Videos: Add video content to your index for processing.\n\nPerform Downstream Tasks: Utilize the platform's capabilities to search, classify, and generate text from videos.\n\n\nEach step is composed of a single API call, making the process straightforward and efficient.\nNote: You can interact with the platform using one of the available SDKs or an HTTP client like requests or axios. This guide demonstrates how to use the SDKs, the recommended approach for most scenarios."
   },
@@ -388,6 +399,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#prerequisites",
     "content": "Familiarity with the concepts described on the Platform overview page.\n\nA free account on Twelve Labs. Sign up or sign in if you already have one.\n\nAn API key. Retrieve it by navigating to the API Key page, logging in, and selecting the Copy icon next to your API key.\n\nVideos to upload must meet the following requirements:\nVideo resolution: Between 360p and 4K.\n\nVideo and audio formats: Must be encoded in formats listed on the FFmpeg Formats Documentation page.\n\nDuration: For Marengo, between 4 seconds and 2 hours. For Pegasus, between 4 seconds and 30 minutes.\n\nFile size: Must not exceed 2 GB.\n\nAudio track: Required if the conversation engine option is selected.\n\n\n\nInstall the Twelve Labs SDK for your programming language:\nPython: pip install twelvelabs\n\nNode.js: yarn add twelvelabs-js",
@@ -423,6 +435,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#procedure",
     "content": "Follow the steps in one of the guides below, depending on what task you want to complete:\nSearch Videos: Use natural language queries to find specific moments in your videos.\n\nGenerate Text from Video: Create summaries, titles, and more from video content.\n\nClassify Videos: Organize videos into categories based on custom taxonomies.\n\nCreate Video Embeddings: Generate embeddings for advanced video analysis.\n\n\nFor detailed instructions, refer to the specific guides on each task.",
@@ -458,6 +471,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The Twelve Labs API uses API keys for authentication. Treat your API key like a password and do not distribute or hardcode it. If you suspect your account is compromised, generate a new key."
   },
@@ -482,6 +496,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#managing-api-keys",
     "content": "Retrieve API Key: Go to the API key page and select the copy icon next to the key to copy it to your clipboard.\n\nGenerate a New API Key: Go to the API key page and select the Regenerate Key button under the API Key section.\n\nRevoke API Key: Go to the API key page and select the Revoke Key button under the API Key section.\n\n\nFor security reasons, API keys automatically expire every 90 days. You must generate a new key to continue using the API once it expires.\nNote\nIf your policy requires more frequent key rotation, you can generate a new key at any time.\n\nTo temporarily suspend API usage without deleting your account, you can revoke your API key.",
@@ -517,6 +532,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#using-the-sdk",
     "content": "When using the SDK client, provide the API key when instantiating the client.",
@@ -552,6 +568,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#prerequisites",
     "content": "You must have an API key.",
@@ -591,6 +608,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#procedure",
     "content": "Install the twelvelabs package:\nPython: pip install twelvelabs\n\nNode.js: yarn add twelvelabs-js\n\n\n\nImport the SDK into your application:\nPython: from twelvelabs import TwelveLabs\n\nNode.js: import { TwelveLabs } from 'twelvelabs-js';\n\n\n\nInstantiate the SDK client:\nPython: client = TwelveLabs(api_key=\"<YOUR_API_KEY>\")\n\nNode.js: const client = new TwelveLabs({ apiKey: '<YOUR_API_KEY>' });\n\n\n\nUse the SDK to interact with the platform:\nExample: Create an index\n\n\n\n\nIf the API key is valid, the index will be created successfully. If it is expired or invalid, an error message will be returned.",
@@ -640,6 +658,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#using-an-http-client",
     "content": "When using an HTTP client like requests or axios, include the API key in the headers of each HTTP request.",
@@ -675,6 +694,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#prerequisites-1",
     "content": "You must have an API key.\n\nThe URL of the API service should be stored in the API_URL variable.",
@@ -714,6 +734,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#procedure-1",
     "content": "Install the necessary packages:\nPython: python -m pip install requests\n\nNode.js: npm install axios form-data\n\n\n\nConfigure the HTTP request headers:\nPython: headers = { \"x-api-key\": \"<YOUR_API_KEY>\" }\n\nNode.js: const headers = { 'x-api-key': '<YOUR_API_KEY>' }\n\n\n\nDeclare the /indexes endpoint:\nPython: INDEXES_URL = f\"{API_URL}/indexes\"\n\nNode.js: const INDEXES_URL = ${API_URL}/indexes;\n\n\n\nUse the POST method to create a new index:\n\n\nIf the API key is valid, the index will be created successfully. If it is expired or invalid, an error message will be returned.",
@@ -763,6 +784,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "An index is a fundamental unit for organizing and storing video data, consisting of video embeddings and metadata. Indexes facilitate information retrieval and processing.\nYou can use indexes to group related videos. For example, if you want to upload multiple videos from a car race, you can create a single index and upload all the videos to it. After uploading, you can search for specific moments across all videos in that index in a single request."
   },
@@ -787,6 +809,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#prerequisites",
     "content": "You’re familiar with the concepts described on the Platform overview page.\n\nYou have an API key. To retrieve your API key, navigate to the API Key page and log in with your credentials. Then, select the Copy icon to the right of your API key to copy it to your clipboard.",
@@ -822,6 +845,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#procedure",
     "content": "Import the SDK into your application:\nPython: from twelvelabs import TwelveLabs\n\nNode.js: import { TwelveLabs } from 'twelvelabs-js';\n\n\n\nInstantiate the SDK client with your API key:\nPython: client = TwelveLabs(api_key=\"<YOUR_API_KEY>\")\n\nNode.js: const client = new TwelveLabs({ apiKey: '<YOUR_API_KEY>' });\n\n\n\nSpecify the desired engine configuration:\nThe example below enables the Marengo video understanding engine and the following engine options - visual, conversation, text_in_video, and logo:\nPython:\n\nNode.js:\n\n\n\n\n\nCreate a new index:\nInvoke the create method of the client.index object with the following parameters:\nname: A string representing the name of your new index. Choose a succinct and descriptive name for your index.\n\nengines: An object specifying your engine configuration. You constructed this object in the previous step.\n\n(Optional) addons: An array of strings specifying the add-ons you want to enable for your index. This example enables the thumbnail generation feature.\n\nPython:\n\nNode.js:\n\n\n\n\n\n\nThe response should look similar to the following one:\nNote that the response contains, among other information, a field named id, representing the unique identifier of your new index.",
@@ -878,6 +902,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "This guide shows how you can upload a video file to the Twelve Labs platform. The platform offers the following options for uploading single videos:\nUpload from the local file system: Use this option to upload a single video file from your local file system.\n\nUpload from a direct URL: Use this option to upload a video file from a publicly accessible URL. The platform will retrieve the file directly from the specified URL, so your application doesn't have to store the video locally and upload it.\n\n\nNotes:\nThe platform supports uploading video files that can play without additional user interaction or custom video players. Ensure your URL points to the raw video file, not a web page containing the video. Links to third-party hosting sites, cloud storage services, or videos requiring extra steps to play are not supported.\n\nThe ability to upload videos from YouTube is no longer supported."
   },
@@ -902,6 +927,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#prerequisites",
     "content": "You’re familiar with the concepts described on the Platform overview page.\n\nYou have an API key. To retrieve your API key, navigate to the API Key page and log in with your credentials. Then, select the Copy icon to the right of your API key to copy it to your clipboard.\n\nYou’ve already created an index.\n\nThe video you wish to upload must meet the following requirements:\nVideo resolution: Must be greater or equal to 360p and less or equal to 4K.\n\nVideo and audio formats: The video files you wish to upload must be encoded in the video and audio formats listed on the FFmpeg Formats Documentation page.\n\nDuration: For Marengo, it must be between 4 seconds and 2 hours (7,200s). For Pegasus, it must be between 4 seconds and 30 minutes (1,800s).\n\nFile size: Must not exceed 2 GB.\n\nAudio track: If the conversation engine option is selected, the video you're uploading must contain an audio track.",
@@ -937,6 +963,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#procedure",
     "content": "Import the required packages into your application:\nPython:\n\nNode.js:\n\n\n\nInstantiate the SDK client with your API key:\nPython:\n\nNode.js:\n\n\n\nUpload a video:\nFrom the local file system:\nPython:\n\nNode.js:\n\n\n\nFrom a direct URL:\nPython:\n\nNode.js:\n\n\n\n\n\nMonitor the indexing process:\nPython:\n\nNode.js:\n\n\n\n\nOnce a video has been successfully uploaded and indexed, the task object contains, among other information, a field named video_id, representing the unique identifier of your video.",
@@ -1009,6 +1036,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The Twelve Labs API provides a comprehensive suite of tools for integrating advanced video understanding capabilities into your applications. This overview covers the key components and functionalities of the API, helping you get started with building powerful video-based solutions."
   },
@@ -1028,6 +1056,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#key-features",
     "content": "Video Indexing: Organize and store video data efficiently, enabling fast retrieval and processing.\n\nSemantic Search: Use natural language queries to find specific moments within videos.\n\nVideo Classification: Categorize videos based on custom taxonomies using zero-shot classification.\n\nText Generation: Create summaries, titles, and other text outputs from video content.\n\nMultimodal Analysis: Leverage a video-first, multimodal approach for comprehensive video understanding.",
@@ -1058,6 +1087,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-structure",
     "content": "The API is organized around REST principles, making it easy to integrate with most programming languages and tools. It supports the following operations:\nIndex Management: Create, update, and manage video indexes.\n\nVideo Uploading: Add videos to your indexes from local files or direct URLs.\n\nSearch and Query: Perform searches and queries to extract information from videos.\n\nClassification and Analysis: Apply classification models and analyze video content.",
@@ -1088,6 +1118,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#authentication",
     "content": "Access to the API requires an API key, which you can obtain by signing up for a Twelve Labs account. Include the API key in the headers of your requests to authenticate and authorize your access.",
@@ -1118,6 +1149,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#getting-started",
     "content": "Sign Up: Create a free account on Twelve Labs to access the API.\n\nObtain API Key: Retrieve your API key from the API Key page after logging in.\n\nInstall SDK: Use the Twelve Labs SDK for your preferred programming language to simplify API interactions.\nPython: pip install twelvelabs\n\nNode.js: yarn add twelvelabs-js\n\n\n\nExplore API Endpoints: Use the API to create indexes, upload videos, and perform various video understanding tasks.",
@@ -1148,6 +1180,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#support-and-resources",
     "content": "For more detailed information on each API endpoint and its parameters, refer to the specific API documentation sections. If you encounter any issues or have questions, contact Twelve Labs support or visit the community forums for assistance.\n\n\nThis page provides a general overview of the Twelve Labs API, helping you understand its capabilities and how to start using it effectively.",
@@ -1187,6 +1220,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_tasks.list",
@@ -1223,7 +1257,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/tasks/list",
     "pathname": "/api-reference/api-reference/tasks/list",
-    "title": "List video indexing tasks",
+    "title": "List video indexing tasks - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -1232,6 +1266,10 @@
       {
         "title": "Tasks",
         "pathname": "/api-reference/api-reference/tasks"
+      },
+      {
+        "title": "List video indexing tasks",
+        "pathname": "/api-reference/api-reference/tasks/list"
       }
     ],
     "tab": {
@@ -1242,6 +1280,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_tasks.list",
@@ -1298,6 +1337,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_tasks.create",
@@ -1334,7 +1374,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/tasks/create",
     "pathname": "/api-reference/api-reference/tasks/create",
-    "title": "Create a video indexing task",
+    "title": "Create a video indexing task - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -1343,6 +1383,10 @@
       {
         "title": "Tasks",
         "pathname": "/api-reference/api-reference/tasks"
+      },
+      {
+        "title": "Create a video indexing task",
+        "pathname": "/api-reference/api-reference/tasks/create"
       }
     ],
     "tab": {
@@ -1353,6 +1397,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_tasks.create",
@@ -1409,6 +1454,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_tasks.retrieve",
@@ -1445,7 +1491,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/tasks/retrieve",
     "pathname": "/api-reference/api-reference/tasks/retrieve",
-    "title": "Retrieve a video indexing task",
+    "title": "Retrieve a video indexing task - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -1454,6 +1500,10 @@
       {
         "title": "Tasks",
         "pathname": "/api-reference/api-reference/tasks"
+      },
+      {
+        "title": "Retrieve a video indexing task",
+        "pathname": "/api-reference/api-reference/tasks/retrieve"
       }
     ],
     "tab": {
@@ -1464,6 +1514,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_tasks.retrieve",
@@ -1520,6 +1571,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_tasks.delete",
@@ -1573,6 +1625,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_tasks.status",
@@ -1609,7 +1662,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/tasks/status",
     "pathname": "/api-reference/api-reference/tasks/status",
-    "title": "Retrieve tasks by status",
+    "title": "Retrieve tasks by status - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -1618,6 +1671,10 @@
       {
         "title": "Tasks",
         "pathname": "/api-reference/api-reference/tasks"
+      },
+      {
+        "title": "Retrieve tasks by status",
+        "pathname": "/api-reference/api-reference/tasks/status"
       }
     ],
     "tab": {
@@ -1628,6 +1685,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_tasks.status",
@@ -1684,6 +1742,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_tasks.transfers",
@@ -1735,6 +1794,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_uploadVideos.cloud-to-cloud-import-videos",
@@ -1771,7 +1831,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/upload-videos/cloud-to-cloud-import-videos",
     "pathname": "/api-reference/api-reference/upload-videos/cloud-to-cloud-import-videos",
-    "title": "Import videos",
+    "title": "Import videos - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -1780,6 +1840,10 @@
       {
         "title": "Upload videos",
         "pathname": "/api-reference/api-reference/upload-videos"
+      },
+      {
+        "title": "Import videos",
+        "pathname": "/api-reference/api-reference/upload-videos/cloud-to-cloud-import-videos"
       }
     ],
     "tab": {
@@ -1790,6 +1854,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_uploadVideos.cloud-to-cloud-import-videos",
@@ -1846,6 +1911,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_uploadVideos.cloud-to-cloud-retrieve-status",
@@ -1882,7 +1948,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/upload-videos/cloud-to-cloud-retrieve-status",
     "pathname": "/api-reference/api-reference/upload-videos/cloud-to-cloud-retrieve-status",
-    "title": "Retrieve import status",
+    "title": "Retrieve import status - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -1891,6 +1957,10 @@
       {
         "title": "Upload videos",
         "pathname": "/api-reference/api-reference/upload-videos"
+      },
+      {
+        "title": "Retrieve import status",
+        "pathname": "/api-reference/api-reference/upload-videos/cloud-to-cloud-retrieve-status"
       }
     ],
     "tab": {
@@ -1901,6 +1971,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_uploadVideos.cloud-to-cloud-retrieve-status",
@@ -1957,6 +2028,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_uploadVideos.cloud-to-cloud-retrieve-import-logs",
@@ -1993,7 +2065,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/upload-videos/cloud-to-cloud-retrieve-import-logs",
     "pathname": "/api-reference/api-reference/upload-videos/cloud-to-cloud-retrieve-import-logs",
-    "title": "Retrieve import logs",
+    "title": "Retrieve import logs - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -2002,6 +2074,10 @@
       {
         "title": "Upload videos",
         "pathname": "/api-reference/api-reference/upload-videos"
+      },
+      {
+        "title": "Retrieve import logs",
+        "pathname": "/api-reference/api-reference/upload-videos/cloud-to-cloud-retrieve-import-logs"
       }
     ],
     "tab": {
@@ -2012,6 +2088,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_uploadVideos.cloud-to-cloud-retrieve-import-logs",
@@ -2068,6 +2145,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_indexes.list",
@@ -2104,7 +2182,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/indexes/list",
     "pathname": "/api-reference/api-reference/indexes/list",
-    "title": "List indexes",
+    "title": "List indexes - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -2113,6 +2191,10 @@
       {
         "title": "Indexes",
         "pathname": "/api-reference/api-reference/indexes"
+      },
+      {
+        "title": "List indexes",
+        "pathname": "/api-reference/api-reference/indexes/list"
       }
     ],
     "tab": {
@@ -2123,6 +2205,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_indexes.list",
@@ -2179,6 +2262,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_indexes.create",
@@ -2215,7 +2299,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/indexes/create",
     "pathname": "/api-reference/api-reference/indexes/create",
-    "title": "Create an index",
+    "title": "Create an index - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -2224,6 +2308,10 @@
       {
         "title": "Indexes",
         "pathname": "/api-reference/api-reference/indexes"
+      },
+      {
+        "title": "Create an index",
+        "pathname": "/api-reference/api-reference/indexes/create"
       }
     ],
     "tab": {
@@ -2234,6 +2322,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_indexes.create",
@@ -2290,6 +2379,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_indexes.retrieve",
@@ -2326,7 +2416,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/indexes/retrieve",
     "pathname": "/api-reference/api-reference/indexes/retrieve",
-    "title": "Retrieve an index",
+    "title": "Retrieve an index - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -2335,6 +2425,10 @@
       {
         "title": "Indexes",
         "pathname": "/api-reference/api-reference/indexes"
+      },
+      {
+        "title": "Retrieve an index",
+        "pathname": "/api-reference/api-reference/indexes/retrieve"
       }
     ],
     "tab": {
@@ -2345,6 +2439,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_indexes.retrieve",
@@ -2401,6 +2496,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_indexes.update",
@@ -2454,6 +2550,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_indexes.delete",
@@ -2511,6 +2608,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_indexes/videos.list",
@@ -2547,7 +2645,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/indexes/videos/list",
     "pathname": "/api-reference/api-reference/indexes/videos/list",
-    "title": "List videos",
+    "title": "List videos - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -2560,6 +2658,10 @@
       {
         "title": "Videos",
         "pathname": "/api-reference/api-reference/indexes/videos"
+      },
+      {
+        "title": "List videos",
+        "pathname": "/api-reference/api-reference/indexes/videos/list"
       }
     ],
     "tab": {
@@ -2570,6 +2672,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_indexes/videos.list",
@@ -2630,6 +2733,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_indexes/videos.retrieve",
@@ -2666,7 +2770,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/indexes/videos/retrieve",
     "pathname": "/api-reference/api-reference/indexes/videos/retrieve",
-    "title": "Retrieve video information",
+    "title": "Retrieve video information - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -2679,6 +2783,10 @@
       {
         "title": "Videos",
         "pathname": "/api-reference/api-reference/indexes/videos"
+      },
+      {
+        "title": "Retrieve video information",
+        "pathname": "/api-reference/api-reference/indexes/videos/retrieve"
       }
     ],
     "tab": {
@@ -2689,6 +2797,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_indexes/videos.retrieve",
@@ -2749,6 +2858,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_indexes/videos.update",
@@ -2806,6 +2916,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_indexes/videos.delete",
@@ -2859,6 +2970,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_summarize.create",
@@ -2895,7 +3007,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/summarize/create",
     "pathname": "/api-reference/api-reference/summarize/create",
-    "title": "Summaries, chapters, or highlights",
+    "title": "Summaries, chapters, or highlights - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -2904,6 +3016,10 @@
       {
         "title": "Summarize",
         "pathname": "/api-reference/api-reference/summarize"
+      },
+      {
+        "title": "Summaries, chapters, or highlights",
+        "pathname": "/api-reference/api-reference/summarize/create"
       }
     ],
     "tab": {
@@ -2914,6 +3030,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_summarize.create",
@@ -2970,6 +3087,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_generate.create",
@@ -3006,7 +3124,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/generate/create",
     "pathname": "/api-reference/api-reference/generate/create",
-    "title": "Open-ended texts",
+    "title": "Open-ended texts - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -3015,6 +3133,10 @@
       {
         "title": "Generate",
         "pathname": "/api-reference/api-reference/generate"
+      },
+      {
+        "title": "Open-ended texts",
+        "pathname": "/api-reference/api-reference/generate/create"
       }
     ],
     "tab": {
@@ -3025,6 +3147,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_generate.create",
@@ -3081,6 +3204,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_embed.create",
@@ -3117,7 +3241,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/embed/create",
     "pathname": "/api-reference/api-reference/embed/create",
-    "title": "Create embeddings for text, image, and audio",
+    "title": "Create embeddings for text, image, and audio - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -3126,6 +3250,10 @@
       {
         "title": "Embed",
         "pathname": "/api-reference/api-reference/embed"
+      },
+      {
+        "title": "Create embeddings for text, image, and audio",
+        "pathname": "/api-reference/api-reference/embed/create"
       }
     ],
     "tab": {
@@ -3136,6 +3264,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_embed.create",
@@ -3196,6 +3325,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_embed/tasks.list",
@@ -3232,7 +3362,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/embed/tasks/list",
     "pathname": "/api-reference/api-reference/embed/tasks/list",
-    "title": "List video embedding tasks",
+    "title": "List video embedding tasks - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -3245,6 +3375,10 @@
       {
         "title": "Tasks",
         "pathname": "/api-reference/api-reference/embed/tasks"
+      },
+      {
+        "title": "List video embedding tasks",
+        "pathname": "/api-reference/api-reference/embed/tasks/list"
       }
     ],
     "tab": {
@@ -3255,6 +3389,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_embed/tasks.list",
@@ -3315,6 +3450,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_embed/tasks.create",
@@ -3351,7 +3487,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/embed/tasks/create",
     "pathname": "/api-reference/api-reference/embed/tasks/create",
-    "title": "Create a video embedding task",
+    "title": "Create a video embedding task - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -3364,6 +3500,10 @@
       {
         "title": "Tasks",
         "pathname": "/api-reference/api-reference/embed/tasks"
+      },
+      {
+        "title": "Create a video embedding task",
+        "pathname": "/api-reference/api-reference/embed/tasks/create"
       }
     ],
     "tab": {
@@ -3374,6 +3514,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_embed/tasks.create",
@@ -3434,6 +3575,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_embed/tasks.retrieve",
@@ -3470,7 +3612,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/embed/tasks/retrieve",
     "pathname": "/api-reference/api-reference/embed/tasks/retrieve",
-    "title": "Retrieve video embeddings",
+    "title": "Retrieve video embeddings - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -3483,6 +3625,10 @@
       {
         "title": "Tasks",
         "pathname": "/api-reference/api-reference/embed/tasks"
+      },
+      {
+        "title": "Retrieve video embeddings",
+        "pathname": "/api-reference/api-reference/embed/tasks/retrieve"
       }
     ],
     "tab": {
@@ -3493,6 +3639,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_embed/tasks.retrieve",
@@ -3557,6 +3704,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_embed/tasks/status.retrieve",
@@ -3593,7 +3741,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/embed/tasks/status/retrieve",
     "pathname": "/api-reference/api-reference/embed/tasks/status/retrieve",
-    "title": "Retrieve the status of a video embedding task",
+    "title": "Retrieve the status of a video embedding task - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -3610,6 +3758,10 @@
       {
         "title": "Status",
         "pathname": "/api-reference/api-reference/embed/tasks/status"
+      },
+      {
+        "title": "Retrieve the status of a video embedding task",
+        "pathname": "/api-reference/api-reference/embed/tasks/status/retrieve"
       }
     ],
     "tab": {
@@ -3620,6 +3772,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_embed/tasks/status.retrieve",
@@ -3676,6 +3829,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_search.query",
@@ -3712,7 +3866,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/search/query",
     "pathname": "/api-reference/api-reference/search/query",
-    "title": "Make any-to-video search requests",
+    "title": "Make any-to-video search requests - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -3721,6 +3875,10 @@
       {
         "title": "Search",
         "pathname": "/api-reference/api-reference/search"
+      },
+      {
+        "title": "Make any-to-video search requests",
+        "pathname": "/api-reference/api-reference/search/query"
       }
     ],
     "tab": {
@@ -3731,6 +3889,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_search.query",
@@ -3787,6 +3946,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_search.retrieve",
@@ -3823,7 +3983,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/api-reference/search/retrieve",
     "pathname": "/api-reference/api-reference/search/retrieve",
-    "title": "Retrieve a specific page of search results",
+    "title": "Retrieve a specific page of search results - Response",
     "breadcrumb": [
       {
         "title": "API Reference",
@@ -3832,6 +3992,10 @@
       {
         "title": "Search",
         "pathname": "/api-reference/api-reference/search"
+      },
+      {
+        "title": "Retrieve a specific page of search results",
+        "pathname": "/api-reference/api-reference/search/retrieve"
       }
     ],
     "tab": {
@@ -3842,6 +4006,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_search.retrieve",
@@ -3898,6 +4063,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_gist.create",
@@ -3949,6 +4115,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "a1e69a1f-3ea3-4860-97ab-8cae4e192ea3",
     "api_endpoint_id": "endpoint_embedNew.create",

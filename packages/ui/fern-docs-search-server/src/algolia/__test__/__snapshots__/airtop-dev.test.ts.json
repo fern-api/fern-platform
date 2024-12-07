@@ -20,6 +20,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Why do you need Airtop and how does it work?"
   },
@@ -44,6 +45,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#overview",
     "content": "Airtop is a cloud browser platform that allows you, your AI Agent, or your automation tools to control a web browser in the cloud.\nAny application that wants to automate actions on behalf of users has 2 options:\nUse a service's APIs\n\nUse a browser automation tool and interact with a web application directly.\n\n\nQuite often, the first option is not possible because the service's API is unavailable or does not provide the necessary functionality, so developers must go with option #2.\nHowever, browser automation is very challenging to do well at scale for the following reasons:\nInfrastructure Complexity: Properly managing a browser infrastructure is a complex task. You need to manage a cluster of virtual machines, maintain pre-warmed pools of browsers, ensure high availability, manage security of browser sessions, keep browser versions updated to prevent security vulnerabilities, and more.\n\nHigh Cost: Managing a fleet of browsers is expensive, both in terms of money and infrastructure. In particular, keeping a warm pool of browsers to guarantee high availability is very resource-intensive and not where you want to spend your money.\n\nFragile Scripts: Writing Puppeteer/Playwright/Selenium scripts is fragile. CSS selectors often break when the page is updated, and the scripts are hard to maintain and scale.\n\nAnti-bot Detection: Most web applications have anti-bot detection mechanisms that make it difficult to automate actions at scale. You need to deal with CAPTCHAs, residential proxies, fingerprinting, and more.\n\nAuthentication: Many web applications have authentication mechanisms that make it difficult to automate actions on behalf of users. You need to handle OAuth, SSO, 2FA, and other methods, all with exceptional security requirements.\n\n\nAirtop solves all of these problems by offering you a simple, scalable, and cost-effective service to run large numbers of browser sessions in the cloud and automate actions via natural language, all through a powerful, yet simple API.",
@@ -79,6 +81,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#creating-a-browser-session",
     "content": "The first step to using Airtop is to create a browser session, which is as simple as a single line of code.\n\n\nThis will instantiate a cloud browser that you can use to navigate the web, either directly as an end-user, or via an API as an AI Agent.",
@@ -140,6 +143,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#ai-apis",
     "content": "Airtop offers a powerful AI API that allows your agent to control the browser through natural language. For example, suppose that you wanted to extract all the search results in a product search page, including across all pages of results. You could simply call this API with your prompt:\n\n\nThese APIs are powered by a state-of-the-art LLM that understands the structure of the web, and can navigate complex pages. We use a multi-modal approach that incorporates visual information, text, and DOM structure to understand and navigate pages.\nThis is an excellent option if you want to automate the browser without having to go deep into the DOM structure and craft site specific scripts.",
@@ -201,6 +205,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#playwrightpuppeteerselenium-scripts",
     "content": "There are times when you do want lower level control of your automation. We fully support Playwright, Puppeteer, and Selenium scripts, and can easily integrate with them.\nHere is a brief example of how to use Puppeteer/Playwright with Airtop:",
@@ -262,6 +267,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#authentication",
     "content": "Often times, you will need to automate a web application that requires authentication. Airtop offers a powerful authentication system that allows you to ask your users to login and, and subsequently allow your agents to continue browsing the web on their behalf.\nFirst, you create a a browser session as shown above. Then, you can create a live browser view, which you can embed in your own web app and allow your users to interact and log in to the target site.\nOnce the user logs in, you can save the session profile, which includes all cookies and other artifacts of the browser session. You can subsequently instantiate new browser sessions with that profile, which will include the authenticated state. We never store any actual credentials, including passwords and store the entire profile fully encrypted.\n\n\n\n\nThis powerful feature allows you to build applications that can interact with authenticated web services on behalf of your users, while maintaining the highest level of security and privacy.",
@@ -301,6 +307,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#residential-proxies",
     "content": "There are times when a site blocks requests from a single or a non-residential IP address. In these cases, you can use Airtop's residential proxy feature to proxy traffic to residential IPs and ensure your traffic is not blocked. We include an integrated residential proxy network with over 100 million residential IPs from 100+ countries. Or if you already have your own proxy vendor or infrastructure, you can use your own.",
@@ -340,6 +347,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#where-to-go-from-here",
     "content": "Now that you have a basic understanding of what Airtop is and how it works, you can start building your own applications. We recommend the following resources:\nCheck out our Quickstart Guide to get started.\n\nFor more detailed guides on how to use each of our features, check out our How-To Guides section.\n\nIf you need to reference our API, check out our API Reference.\n\nWe have prepared a set of Recipes, fully functioning, open-sourced examples, that you can download and modify to get started quickly.\n\nFinally, if you get stuck, you can always reach out to us for support.",
@@ -375,6 +383,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Connect your AI Agent to the web in just 2 minutes",
     "code_snippets": [
@@ -542,6 +551,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "How to create a session with Airtop"
   },
@@ -566,6 +576,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#what-is-a-session",
     "content": "A session represents an instance of a browser. Each session is identified by a unique UUID and can contain multiple windows that each can load a page.",
@@ -601,6 +612,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#how-to-create-a-session",
     "content": "You can create a session by simply calling the create function on the API as follows:\n\n\nWhen you create a session, it may take a small amount of time to initialize. Usually it's a matter of seconds, but in rare cases when hardware isn't immediately available, it may take around 1 minute. The create function will wait until the session is fully initialized and ready to be used. However, if you would like to create a session and not wait for initialization, you can pass the skipWaitSessionReady parameter as true.\n\n\nIf you choose to not wait for the session to initialize, you can use the waitForSessionReady function to wait until the session is ready.\n\n\nBy default, session have a TTL (Time To Live) of 10 mins. Once the TTL expires, the session will be automatically terminated. You can also specify a custom timeout when creating a session by passing the timeoutMinutes parameter.\n\n\nYou can also terminate a session at any point by calling the terminate function.\n\n\n\n\nRemember that sessions are billed per 30s increments, so it's important to terminate sessions when you're done with them to avoid unnecessary charges.",
@@ -738,6 +750,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#session-states",
     "content": "Sessions can be in one of the following states:\ninitializing: The session is pending initialization.\n\nawaiting_capacity: The session is waiting for capacity.\n\nrunning: The session is running and ready for use.\n\nended: The session has been ended by the user or due to inactivity.\n\n\nIn general, if you are creating a session via the SDK without the skipWaitSessionReady: true parameter, you do not need to worry about initializing and awaiting_capacity states. These states are only relevant if you are creating a session with the skipWaitSessionReady: true parameter or directly through the REST API. A session might be ended if it terminated due to TTL timeout, if you explicitly terminate it, or if it was terminated due to an error.\nYou can check the state of a session by calling the getInfo function.",
@@ -795,6 +808,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#profiles",
     "content": "When creating a session, you can choose to save the profile of the browser for future use, or load a saved profile. This will allow you to reuse cookies and local storage between sessions. For more detailed information on how to use profiles, see Profiles.",
@@ -830,6 +844,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#windows",
     "content": "After you create a session, you can create one or more windows to load pages within the session. You can create a window by calling the create function on the windows API.",
@@ -887,6 +902,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#wait-until-options",
     "content": "Before you can interact or prompt the page, the page must be fully loaded. You can provide a waitUntil parameter to the create function to customize exactly what you are waiting for. There are 2 options for the waitUntil parameter: load and domcontentloaded.\nload: Wait until the page and all resources are fully loaded (default).\n\ndomcontentloaded: Wait until the DOM is fully loaded.",
@@ -948,6 +964,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#screen-resolution",
     "content": "You can also specify the screen resolution of the window by passing the screenResolution parameter to the create function. This is useful if you want to ensure that the browser is loaded at a specific resolution. The screen resolution should be passed as a string in the format of widthxheight.",
@@ -1009,6 +1026,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#loading-urls",
     "content": "If you've already created a window and want to load a URL in it, you can use the loadUrl function using the window ID.",
@@ -1070,6 +1088,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#closing-windows",
     "content": "If you terminate a browser session (see Timeouts and Termination above), all windows associated with that session will be closed automatically.\nIf you have a window ID, you can close that specific window by calling the close function.\n\n\nThis can be useful if you have a long running session with multiple windows and want to close windows you aren't using anymore to free up resources.",
@@ -1131,6 +1150,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "How to save and restore profiles with Airtop"
   },
@@ -1155,6 +1175,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#what-are-profiles",
     "content": "Profiles are saved archives of the artifacts produced by a browsing session. Most importantly, they contain the cookies and local storage of a session, which can be used to hydrate future sessions and keep the same authenticated state. You will want to use profiles when your users need to authenticate to a site via a Live View, and you want to save the authenticated state for your agents to use.",
@@ -1190,6 +1211,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#creating-a-new-profile",
     "content": "When you create a new session, you can request that the profile generated by that session be persisted by passing the persistProfile parameter as true.\n\n\nWhen the session returns, you will have a new profile ID that you can use to restore the profile later. Note that the profile will not be persisted until the session has been terminated.",
@@ -1247,6 +1269,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#restoring-an-existing-profile",
     "content": "If you have an existing profile ID, you can restore the profile by passing it to the sessions.create method.\n\n\nThis session will be restored from the existing profile.\n\n\nProfiles are immutable and cannot be changed once created. When you restore a profile, you are duplicating a base profile and making modifications to it. If you want to save a modified version of a profile, you will need start with a base profile and also request that your session's profile be persisted, thereby creating a new profile.\n\n\nIn this example, ORIGINAL_PROFILE_ID will be used to restore the profile, but the modified version of the profile will be saved with a new ID returned in profileId.",
@@ -1324,6 +1347,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#fetching-and-deleting-profiles",
     "content": "You can fetch a list of all profiles for your account using the profiles.get method.\n\n\nYou can also fetch a single profile by ID or a list of IDs, which is useful if you want to check the status of a profile.\n\n\nFinally, you can delete profiles by ID, if you no longer want to retain them.",
@@ -1421,6 +1445,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#security--privacy",
     "content": "Airtop takes the security and privacy of your data seriously. We never share any customer data, including profile data, with any third parties, nor do we use that data for any purpose other than to provide the service to you. All profiles are encrypted at rest using AES-256 encryption. If you have any questions or concerns about data privacy and security, please reach out to us at support@airtop.ai.",
@@ -1456,6 +1481,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "How to provide interactive access of your browser to your users"
   },
@@ -1480,6 +1506,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#what-is-a-live-view",
     "content": "A live view is a way to provide real-time interactive access of your browser to your users. You can use a live view to support a range of use cases, including:\nAuthentication workflows\n\nHuman / AI training use cases\n\nHuman in the loop workflows",
@@ -1515,6 +1542,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#how-to-use-a-live-view",
     "content": "Step 1\nOnce you have a session and have loaded a url in a window, you can request a live view URL from the API.\n\n\n\n\nIf you're using Puppeteer, Playwright, or Selenium, you can use framework specific getWindowInfo variants.\n\n\nStep 2\nYou may load the live view URL in your browser, or more likely, embed it in your application as an iframe.\nHere's an example of what an embeded live view might look like in an application:\n\n\n\n\nStep 3\nYou can optionally set up the live view to include a navigation bar, which will provide a URL bar and other controls to the user.\n\n\n\n\n\n\nStep 4\nIf you would like to receive messages from the Live View, you can set up a message listener in your application to let you know when certain events occur, such as when the page url changes. Check out the section below on Messages for more information.",
@@ -1620,6 +1648,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#controlling-the-live-views-dimensions",
     "content": "By default, the live view will resize to fit the wrapping iframe or window. You can control the Live View's size by simply adjusting the iframe's dimensions and the browser contents will resize to fit. However, you may also choose to set the screen resolution and disable resizing as shown below.",
@@ -1677,6 +1706,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#messages",
     "content": "The Live View iframe and parent window can communicate with each other via the window.postMessage API.\nEach message has an eventName field that indicates the type of event, and some messages have a payload field containing relevant data.\nTo send and receive live view messages, you will first need to install the Airtop SDK for your frontend JS/TS app.",
@@ -1718,6 +1748,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#message-handling-in-the-parent-window",
     "content": "You can set up a message listener in your application to handle messages from the Live View as shown below.\nWhenever a relevant event occurs in the live view, the live view iframe will send a message to the parent window, which you can handle as appropriate for your use case.",
@@ -1763,6 +1794,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#sending-messages-to-the-live-view",
     "content": "If you need your frontend application to send messages to the live view, you can use the postMessage API as shown below. Typically, if you use the built in navigation bar, you won't need to send messages to the live view, but if you have a custom navigation bar, you may need to use this mechanism to control the live view. Of course, your backend service can always control the browser and any changes will be reflected in the live view for your end users.",
@@ -1808,6 +1840,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Avoid bot detection with a residential proxy"
   },
@@ -1832,6 +1865,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#what-is-a-residential-proxy",
     "content": "Some websites have mechanisms to detect and block bot traffic coming from datacenter IPs. Residential proxies are networks of residential IP addresses that proxy requests, making them look like regular human traffic. Airtop has support for using residential proxies to avoid detection.",
@@ -1867,6 +1901,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#proxy-options",
     "content": "You can use a proxy in 2 different ways:\nSpecifying that you want to use Airtop's integrated proxy service when creating a session. With this option, you don't have to do anything else and you'll be charged for the bandwidth that your session uses.\n\n\n\n\nOur integrated proxy service is in alpha mode and not generally available. We plan on rolling it out to all users in Nov 2024.\nYou can also bring your own proxy. If you'd like to use your own proxy, Airtop doesn't charge for the data that your session uses, and you handle the billing for the proxy yourself with your provider of choice. We have a list of recommended proxy providers below.",
@@ -1902,6 +1937,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#how-to-configure-a-custom-proxy",
     "content": "You can specify a custom proxy in the sessions.create function. proxy can either take a string or an object with url, username, and password properties.",
@@ -1959,6 +1995,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#limiting-proxy-usage-to-specific-domains",
     "content": "You can limit proxy usage to specific domains by passing an array of { domainPattern, relay } objects to the proxy parameter. This gives you the flexibility to only use the proxy for certain domains, or to use a different proxy for each domain.\nIn this example, the first object in the array will apply to all requests to all subdomains of wikipedia.org, while the second object will apply to all other domains.\n\n\nIn this example, only requests to subdomains of wikipedia.org will use the proxy, while all other requests will not use any proxy.\n\n\ndomainPattern is a string where * is a wildcard that matches any string. You can also use the ? character to match a single character.",
@@ -2040,6 +2077,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#recommended-proxy-providers",
     "content": "Different proxy providers have different pros and cons. These are 3 that we've tested and have had good results with, but you should do your own due diligence to see which one will work best for your use case.\nOxylabs\n\nSmartproxy\n\nIPRoyal",
@@ -2075,6 +2113,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "How to open DevTools for a browser",
     "content": "You can access the remote browser's DevTools via a Live View. Here you'll be able to inspect a page, network requests, console logs, cookies, and much more."
@@ -2100,6 +2139,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#load-the-debugger",
     "content": "First you'll need to create a session and get a Live View URL with the includeNavigationBar parameter set to true. Load the url in your browser.\nIn the navigation bar inside the Live View, enter debugger in the url field and press enter.\n\n\n\n\nThis will load the DevTools page selector where you can select the window you want to inspect.\n\n\n\n\nOnce you select a page, the DevTools will connect to the browser and you'll be able to inspect the page.",
@@ -2139,6 +2179,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "How to use Puppeteer with Airtop",
     "content": "Puppeteer is a popular automation library for Node.js that allows you to control headless browsers. Airtop provides a Puppeteer connector that allows you to use Puppeteer to automate your browser.\n\n\nPuppeteer is not supported in Python. We recommend using Playwright or Selenium instead."
@@ -2168,6 +2209,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#installation",
     "content": "You will need to install the puppeteer-core package to use Puppeteer with Airtop.",
@@ -2239,6 +2281,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#usage",
     "content": "Once you have created a session with Airtop, you can use the puppeteer-core package to control the browser by connecting Puppeteer to the CDP endpoint provided by Airtop.\nIf you're not already familiar with Puppeteer, you might want to check out their documentation to learn more about the library and its capabilities.",
@@ -2284,6 +2327,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#combining-puppeteer-and-airtop-window-management",
     "content": "You can use Airtop's window management functions in combination with Puppeteer to automate your browser. For example, you might want to create a new window, load a URL in it, use our AI APIs, but use Puppeteer to push a few buttons on the page.\nOnce you create a window, you'll be given a window ID, which you'll use to interact with the window using Airtop's SDK. But you'll also be given a targetId, which you'll use to connect Puppeteer to the window.",
@@ -2329,6 +2373,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#common-errors",
     "content": "Here are some common errors you might encounter when using Puppeteer with Airtop when you initially connect to the CDP endpoint:\nError Code Common Cause \n400 Bad request. Check that you specify the essential parts of the request. For example, is there an “Authorization: Bearer API_KEY” header with a valid airtop API key \n401 Unauthorized. Check that you are using a valid API key. \n404 Not found. Check that the session ID you specified in your request is correct, and that the url path is correct \n422 Unprocessable Content. Check that your inputs are well-formed. For example, is your session ID a valid UUID? \n503 Service Unavailable. The session is valid, but it cannot be connected to. Check whether the session has timed out or that you haven't already terminated it.",
@@ -2368,6 +2413,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "How to use Playwright with Airtop",
     "content": "Playwright is a powerful automation library that allows you to control headless browsers. Airtop provides a Playwright connector that allows you to use Playwright to automate your browser."
@@ -2397,6 +2443,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#installation",
     "content": "You will need to install the playwright-core package to use Playwright with Airtop.",
@@ -2478,6 +2525,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#usage",
     "content": "Once you have created a session with Airtop, you can use the Playwright library to control the browser by connecting Playwright to the CDP endpoint provided by Airtop. Please note that currently, Airtop only supports using the default browser context.\n\n\nIf you're not already familiar with Playwright, you might want to check out their documentation to learn more about the library and its capabilities.",
@@ -2539,6 +2587,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#combining-playwright-and-airtop-window-management",
     "content": "You can use Airtop's window management functions in combination with Playwright to automate your browser. For example, you might want to create a new window, load a URL in it, use our AI APIs, but use Playwright to push a few buttons on the page.\nOnce you create a window, you'll be given a window ID, which you'll use to interact with the window using Airtop's SDK. But you'll also be given a targetId, which you'll use to connect Playwright to the window.",
@@ -2600,6 +2649,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#common-errors",
     "content": "Here are some common errors you might encounter when using Playwright with Airtop when you initially connect to the CDP endpoint:\nError Code Common Cause \n400 Bad request. Check that you specify the essential parts of the request. For example, is there an “Authorization: Bearer API_KEY” header with a valid airtop API key \n401 Unauthorized. Check that you are using a valid API key. \n404 Not found. Check that the session ID you specified in your request is correct, and that the url path is correct \n422 Unprocessable Content. Check that your inputs are well-formed. For example, is your session ID a valid UUID? \n503 Service Unavailable. The session is valid, but it cannot be connected to. Check whether the session has timed out or that you haven't already terminated it.",
@@ -2639,6 +2689,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "How to use Selenium with Airtop",
     "content": "Selenium is a powerful automation framework for web browsers. Airtop provides a Selenium connector that allows you to use Selenium to automate your browser."
@@ -2668,6 +2719,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#installation",
     "content": "You will need to install the selenium-webdriver package to use Selenium with Airtop.",
@@ -2749,6 +2801,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#usage",
     "content": "Once you have created a session with Airtop, you can use the Selenium library to control the browser by connecting Selenium to the ChromeDriver endpoint provided by Airtop.\n\n\nIf you're not already familiar with Selenium, you might want to check out their documentation to learn more about the library and its capabilities.",
@@ -2810,6 +2863,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Enhance your scraping with AI",
     "content": "You can use the scrapeContent method to intelligently scrape the content of a page. This method extracts the content of the page and formats it as markdown, which is easy to read and ingest into your application. It will extract headers, formatting, tables, and more and present them in a structured manner.\nAdditionally, this method will correctly scrape content from Office365 and Google Workspace documents. These applications are notoriously difficult to scrape due to their use virtualized DOMs and require more sophisticated methods. Not only will Airtop correctly parse text content, but also table content from Microsoft Excel and Google Sheets and present it in CSV format."
@@ -2839,6 +2893,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#usage-example",
     "content": "First, you'll need to create a session.\n\n\nNext, you'll need to create a window and load a URL.\n\n\nFinally, you can request a scrape of the page.\n\n\nIf you inspect content.data.modelResponse.scrapedContent.text, you'll see the result of the scrape. Additionally, content.data.modelResponse.scrapedContent.contentType will be the MIME type of the content, which you can use to determine how to parse the content. It is typically text/plain, but could also be text/csv if the page is a Google Sheet document.",
@@ -2940,6 +2995,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#result-comparison",
     "content": "Here is a a quick snippet comparison first ~20 lines of a raw text scrape vs a smart scrape for this wikipedia page.\n\n\n\n\n\n\nHere's another example of a smart scrape for a google doc.\n\n\n\n\nThe entire document is too large to fit in the snippet, but you get the point. You'll actually not find any of the content in the raw scrape since the content is never present in the DOM.\n\n\nWith Smart Scraping, you actually get the content from the page, without any of the noise.",
@@ -2951,22 +3007,6 @@
       {
         "lang": "text",
         "code": "Jump to content\n\nMain menu\n\n    Main menu\n    move to sidebar\n    hide\n\n\n\n\n\n            Navigation\n\n\n\n\n\n                    Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us\n\n\n\n\n\n\n\n\n\n            Contribute\n\n\n\n\n\n                    HelpLearn to editCommunity portalRecent changesUpload file\n\nSearch\n\n                            Search\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n                    Donate\n\nAppearance\n\n    Appearance\n    move to sidebar\n    hide\n\nTextSmallStandardLargeThis page always uses small font sizeWidthStandardWideThe content is as wide as possible for your browser window.Color (beta)AutomaticLightDarkThis page is always in light mode.\n"
-      },
-      {
-        "lang": "md",
-        "code": "# Margrit Waltz\n\nFrom Wikipedia, the free encyclopedia\n\n| Margrit Waltz       |                             |\n| ------------------- | --------------------------- |\n| **Aviation career** |                             |\n| Full name           | Margrit Budert Waltz        |\n| First flight        | Cessna-150                  |\n| Famous flights      | Transatlantic ferry flights |\n| Flight license      | 1975                        |\n\n[![](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Daher_TBM_960_%2810-20-2022%29.jpg/220px-Daher_TBM_960_%2810-20-2022%29.jpg)](https://en.wikipedia.org/wiki/File:Daher_TBM_960_%2810-20-2022%29.jpg)\n\nA TBM 960 aircraft, similar to the one flown by Waltz on her 960th ferry flight\n\n**Margrit Waltz** ([née](https://en.wikipedia.org/wiki/Birth_name#Maiden_and_married_names 'Birth name') **Budert**; born February 10, 1957)<sup>[\\[1\\]](#cite_note-1)</sup> is a [ferry pilot](https://en.wikipedia.org/wiki/Ferry_pilot 'Ferry pilot'). As of April 2024, she had completed 960 ferry flights. The 960th flight was performed in a [Daher TBM 960](https://en.wikipedia.org/wiki/SOCATA_TBM 'SOCATA TBM') single-engine [turboprop](https://en.wikipedia.org/wiki/Turboprop 'Turboprop'), taking 15 hours and 38 minutes of flight time to deliver the plane from [Tarbes, France](https://en.wikipedia.org/wiki/Tarbes 'Tarbes') to [Pompano Beach, Florida](https://en.wikipedia.org/wiki/Pompano_Beach,_Florida 'Pompano Beach, Florida'). Stops were made in [Wick](https://en.wikipedia.org/wiki/Wick,_Caithness 'Wick, Caithness'), Scotland; [Keflavík](https://en.wikipedia.org/wiki/Keflav%C3%ADk 'Keflavík'), Iceland; and [Goose Bay](https://en.wikipedia.org/wiki/Happy_Valley-Goose_Bay 'Happy Valley-Goose Bay'), Canada.<sup>[\\[2\\]](#cite_note-2)</sup>\n\nAccording to a [Daher-Socata](https://en.wikipedia.org/wiki/SOCATA 'SOCATA') press release, Waltz is \"one of the world's most experienced ferry pilots\".<sup>[\\[3\\]](#cite_note-:0-3)</sup> She has been delivering planes for Daher for 33 years, and has delivered over 300 Daher [TBM](https://en.wikipedia.org/wiki/SOCATA_TBM 'SOCATA TBM') aircraft from their manufacturing plant in [Tarbes](https://en.wikipedia.org/wiki/Tarbes 'Tarbes'), France, to customers in North America.<sup>[\\[3\\]](#cite_note-:0-3)</sup> She has also made deliveries to Africa, Asia, and Australia.<sup>[\\[3\\]](#cite_note-:0-3)</sup>\n"
-      },
-      {
-        "lang": "md",
-        "code": "# Margrit Waltz\n\nFrom Wikipedia, the free encyclopedia\n\n| Margrit Waltz       |                             |\n| ------------------- | --------------------------- |\n| **Aviation career** |                             |\n| Full name           | Margrit Budert Waltz        |\n| First flight        | Cessna-150                  |\n| Famous flights      | Transatlantic ferry flights |\n| Flight license      | 1975                        |\n\n[![](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Daher_TBM_960_%2810-20-2022%29.jpg/220px-Daher_TBM_960_%2810-20-2022%29.jpg)](https://en.wikipedia.org/wiki/File:Daher_TBM_960_%2810-20-2022%29.jpg)\n\nA TBM 960 aircraft, similar to the one flown by Waltz on her 960th ferry flight\n\n**Margrit Waltz** ([née](https://en.wikipedia.org/wiki/Birth_name#Maiden_and_married_names 'Birth name') **Budert**; born February 10, 1957)<sup>[\\[1\\]](#cite_note-1)</sup> is a [ferry pilot](https://en.wikipedia.org/wiki/Ferry_pilot 'Ferry pilot'). As of April 2024, she had completed 960 ferry flights. The 960th flight was performed in a [Daher TBM 960](https://en.wikipedia.org/wiki/SOCATA_TBM 'SOCATA TBM') single-engine [turboprop](https://en.wikipedia.org/wiki/Turboprop 'Turboprop'), taking 15 hours and 38 minutes of flight time to deliver the plane from [Tarbes, France](https://en.wikipedia.org/wiki/Tarbes 'Tarbes') to [Pompano Beach, Florida](https://en.wikipedia.org/wiki/Pompano_Beach,_Florida 'Pompano Beach, Florida'). Stops were made in [Wick](https://en.wikipedia.org/wiki/Wick,_Caithness 'Wick, Caithness'), Scotland; [Keflavík](https://en.wikipedia.org/wiki/Keflav%C3%ADk 'Keflavík'), Iceland; and [Goose Bay](https://en.wikipedia.org/wiki/Happy_Valley-Goose_Bay 'Happy Valley-Goose Bay'), Canada.<sup>[\\[2\\]](#cite_note-2)</sup>\n\nAccording to a [Daher-Socata](https://en.wikipedia.org/wiki/SOCATA 'SOCATA') press release, Waltz is \"one of the world's most experienced ferry pilots\".<sup>[\\[3\\]](#cite_note-:0-3)</sup> She has been delivering planes for Daher for 33 years, and has delivered over 300 Daher [TBM](https://en.wikipedia.org/wiki/SOCATA_TBM 'SOCATA TBM') aircraft from their manufacturing plant in [Tarbes](https://en.wikipedia.org/wiki/Tarbes 'Tarbes'), France, to customers in North America.<sup>[\\[3\\]](#cite_note-:0-3)</sup> She has also made deliveries to Africa, Asia, and Australia.<sup>[\\[3\\]](#cite_note-:0-3)</sup>\n"
-      },
-      {
-        "lang": "text",
-        "code": "<div class=\"docs-butterbar-container\"><div class=\"docs-butterbar-wrap\"><div class=\"jfk-butterBar jfk-butterBar-shown jfk-butterBar-warning\">JavaScript isn't enabled in your browser, so this file can't be opened. Enable and reload.</div></div><br /></div>(function() {function setIframeSrcdoc(iframe) {var coreJsIframePolicy; var contentsString = \"\\x3clink rel\\x3d\\x22stylesheet\\x22 href\\x3d\\x22https://fonts.googleapis.com/css?family\\x3dGoogle+Sans:bold,normal\\x26lang\\x3den\\x22 nonce\\x3d\\x22L42FF1JdHJPKWYWFGRXMNA\\x22\\x3e\\x3clink rel\\x3d\\x22stylesheet\\x22 href\\x3d\\x22https://fonts.googleapis.com/css?family\\x3dRoboto:normal\\x26lang\\x3den\\x22 nonce\\x3d\\x22L42FF1JdHJPKWYWFGRXMNA\\x22\\x3e\\x3cstyle nonce\\x3d\\x22L42FF1JdHJPKWYWFGRXMNA\\x22\\x3e:root \\x7b--brand-color: #1a73e8\\x7dli:nth-child(1) h4:before \\x7bcontent: \\x22Step 1\\x22;\\x7dli:nth-child(2) h4:before \\x7bcontent: \\x22Step 2\\x22;\\x7d\\x3c/style\\x3e\\x3cstyle\\x3ebutton.text-button.brand-color\\x7bbackground-color:var(--brand-color);color:#fff;border:none\\x7dbody\\x7bfont-family:Roboto;font-size:14px;font-weight:400;margin:0;padding:24px;overflow-x:hidden\\x7dh3,h4,li,ol,p\\x7bmargin:0;padding:0\\x7dh3\\x7bfont-family:Google Sans;font-size:22px;font-weight:400;margin:0;padding:0\\x7dli\\x7bmargin-top:16px\\x7dp\\x7bmargin-top:5px\\x7dli h4:before\\x7bfont-weight:700\\x7dp#chrome-url-box\\x7bborder:1px solid #bdc1c6;-moz-box-sizing:border-box;box-sizing:border-box;border-radius:4px;padding:6px;height:36px\\x7dbutton#chrome-settings-url-copy\\x7bcolor:var(--brand-color);text-decoration:none;display:inline-block;border:none;padding:0;float:right;background:none;height:24px\\x7dp#chrome-url-box code\\x7bfont-family:inherit;display:block;float:left;height:24px;vertical-align:middle\\x7dp#buttons-row\\x7btext-align:right\\x7dp#buttons-row button\\x7bmargin-left:16px\\x7dbutton.text-button\\x7bfont-family:Google Sans;font-size:14px;text-decoration:none;display:inline-block;border-radius:4px;border:1px solid transparent;height:36px;padding-left:24px;padding-right:24px;cursor:pointer\\x7dbutton.text-button:disabled\\x7bborder-width:1px;border-color:#bdc1c6;border-style:solid;background-color:#fff;color:gray\\x7d.sr-only\\x7bposition:absolute;width:1px;height:1px;margin:-1px;clip:rect(0,0,0,0)\\x7dbutton#chrome-settings-url-copy svg path\\x7bfill:var(--brand-color)\\x7dol\\x7blist-style:none;padding-left:0\\x7d\\n/*# sourceMappingURL\\x3dcorejserror_ltr.css.map */\\x3c/style\\x3e\\x3cbody role\\x3d\\x22dialog\\x22 aria-labelledby\\x3d\\x22heading\\x22 aria-describedby\\x3d\\x22description\\x22\\x3e\\x3ch3 id\\x3d\\x22heading\\x22\\x3eLoading issue\\x3c/h3\\x3e\\x3cp id\\x3d\\x22description\\x22\\x3eTroubleshoot this issue by clearing application resources\\x3c/p\\x3e\\x3col\\x3e\\x3cli\\x3e\\x3ch4 class\\x3d\\x22step-header\\x22\\x3e\\x3c/h4\\x3e\\x3cp\\x3eFollow \\x3ca href\\x3d\\x22https://support.google.com/accounts/answer/32050\\x22 target\\x3d\\x22_blank\\x22\\x3ethese instructions\\x3c/a\\x3e to clear your cache and cookies\\x3c/p\\x3e\\x3c/li\\x3e\\x3cli\\x3e\\x3ch4 class\\x3d\\x22step-header\\x22\\x3e\\x3c/h4\\x3e\\x3cp\\x3eThen, reload this page\\x3c/p\\x3e\\x3c/li\\x3e\\x3c/ol\\x3e\\x3cp id\\x3d\\x22buttons-row\\x22\\x3e\\x3cbutton class\\x3d\\x22text-button\\x22 id\\x3d\\x22send-feedback\\x22 disabled\\x3eSend feedback\\x3c/button\\x3e\\x3cbutton class\\x3d\\x22text-button brand-color\\x22 id\\x3d\\x22reload-now\\x22\\x3eReload now\\x3c/button\\x3e\\x3c/p\\x3e\\x3cscript nonce\\x3d\\x22uBfdd5ElM-eQ4cCUZ50mBw\\x22\\x3efunction _F_toggles_initialize(a)\\x7b(typeof globalThis!\\x3d\\x3d\\x22undefined\\x22?globalThis:typeof self!\\x3d\\x3d\\x22undefined\\x22?self:this)._F_toggles\\x3da||\\x5b\\x5d\\x7d_F_toggles_initialize(\\x5b\\x5d);\\nvar d\\x3ddocument.getElementById(\\x22chrome-settings-url-copy\\x22);function e()\\x7bvar a\\x3ddocument.getElementById(\\x22chrome-settings-url\\x22),b\\x3dnew Range;b.setStart(a,0);b.setEnd(a,1);a\\x3dwindow.getSelection();a.empty();a.addRange(b);document.execCommand(\\x22copy\\x22);setTimeout(function()\\x7bvar c\\x3ddocument.createElement(\\x22p\\x22);c.setAttribute(\\x22role\\x22,\\x22alert\\x22);c.style.position\\x3d\\x22absolute\\x22;c.style.top\\x3d\\x22-10000px\\x22;c.appendChild(document.createTextNode(\\x22Link copied\\x22));document.body.appendChild(c)\\x7d,500);d\\x26\\x26d.focus()\\x7dd\\x26\\x26(d.onclick\\x3de);\\ndocument.getElementById(\\x22reload-now\\x22).onclick\\x3dfunction()\\x7bwindow.parent.location.reload()\\x7d;document.addEventListener(\\x22keydown\\x22,function(a)\\x7bvar b\\x3ddocument.querySelectorAll(\\x22a\\x5bhref\\x5d:not(\\x5bdisabled\\x5d), button:not(\\x5bdisabled\\x5d)\\x22),c\\x3db\\x5b0\\x5d;b\\x3db\\x5bb.length-1\\x5d;if(a.key\\x3d\\x3d\\x3d\\x22Tab\\x22||a.keyCode\\x3d\\x3d\\x3d9)a.shiftKey\\x26\\x26document.activeElement\\x3d\\x3dc?(b.focus(),a.preventDefault()):a.shiftKey||document.activeElement!\\x3db||(c.focus(),a.preventDefault())\\x7d);\\nwindow.onload\\x3dfunction()\\x7bvar a\\x3dwindow.parent.document.getElementById(\\x22core-js-error-dialog\\x22);if(a)\\x7bvar b\\x3ddocument.body.scrollHeight;a.style.height\\x3db+\\x22px\\x22;a.style\\x5b\\x22margin-top\\x22\\x5d\\x3d-Math.round(b/2)+\\x22px\\x22\\x7d\\x7d;\\n// Google Inc.\\n\\n//# sourceMappingURL\\x3dcorejserror_corejserror_chunk.sourcemap\\n\\x3c/script\\x3e\\x3cscript src\\x3d\\x22/static/document/client/js/898020166-corejserrorfeedback_corejserrorfeedback_chunk.js\\x22 nonce\\x3d\\x22uBfdd5ElM-eQ4cCUZ50mBw\\x22\\x3e\\x3c/script\\x3e\\x3c/body\\x3e\"; if (self.trustedTypes && self.trustedTypes.createPolicy) {coreJsIframePolicy = trustedTypes.createPolicy( 'docsCoreJsIframePolicy',{createHTML: function(ignored) {return contentsString;}});}var contentsTt = coreJsIframePolicy ? coreJsIframePolicy.createHTML('ignored') : contentsString; if ('srcdoc' in iframe) {iframe.srcdoc = contentsTt; return;}iframe.contentWindow.document.open(); iframe.contentWindow.document.write(contentsTt); iframe.contentWindow.document.close(); if ( true  && window.navigator && window.navigator.sendBeacon) {window.navigator.sendBeacon( '/document/jserror?jobset\\x3dprod\\x26error\\x3dJS+binary+load+failure&context.coreJsNoSrcdoc=true&context.serviceWorkerControlled=' + !!(navigator.serviceWorker && navigator.serviceWorker.controller) + '\\x26context.actionName\\x3dEdit');}}function enterCoreJsErrorDialog() {if (!setIframeSrcdoc) {return;}var overlay = document.getElementById('core-js-error-dialog-overlay');var overlayPolicy; if (self.trustedTypes && self.trustedTypes.createPolicy) {overlayPolicy = trustedTypes.createPolicy( 'docsCoreJsOverlayPolicy',{createHTML: function(ignored) {return \"\\x3cdiv style\\x3d\\x22position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: rgb(0, 0, 0, 0.6)\\x22\\x3e\\x3c/div\\x3e\\x3ciframe id\\x3d\\x22core-js-error-dialog\\x22 style\\x3d\\x22position: absolute; left: 50%; top: 50%; width: 512px; height: 430px; margin-left: -256px; margin-top: -215px; background: white; border: none; border-radius: 8px\\x22\\x3e\\x3c/iframe\\x3e\";}});}var overlayTt = overlayPolicy ? overlayPolicy.createHTML('ignored') : \"\\x3cdiv style\\x3d\\x22position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: rgb(0, 0, 0, 0.6)\\x22\\x3e\\x3c/div\\x3e\\x3ciframe id\\x3d\\x22core-js-error-dialog\\x22 style\\x3d\\x22position: absolute; left: 50%; top: 50%; width: 512px; height: 430px; margin-left: -256px; margin-top: -215px; background: white; border: none; border-radius: 8px\\x22\\x3e\\x3c/iframe\\x3e\"; overlay.innerHTML = overlayTt; var iframe = document.getElementById('core-js-error-dialog'); overlay.onmousedown = function(e) {iframe.focus(); e.preventDefault();}; setIframeSrcdoc(iframe); setIframeSrcdoc = null; overlay.style.display = 'block'; iframe.focus();}window.enterCoreJsErrorDialog = enterCoreJsErrorDialog;})();Explore the Random Cats        Request edit access Sign inDOCS_timing['sdb']=new Date().getTime();FileEditViewToolsHelpAccessibilityDebugDOCS_timing['edb']=new Date().getTime();DOCS_timing['che'] = new Date().getTime();DOCS_timing['chv'] = new Date().getTime();KX_resize = function() {if (KX_kixApp) {KX_kixApp.resize();}}; Gemini created these notes. They can contain errors so should be double-checked. How Gemini takes notes  OutlineOutlineDocument tabs    Headings you add to the document will appear here. Changes bythis.gbar_=this.gbar_||{};(function(_){var window=this;\ntry{\n_.Pd=function(a,b,c){if(!a.j)if(c instanceof Array)for(var d of c)_.Pd(a,b,d);else{d=(0,_.z)(a.C,a,b);const e=a.v+c;a.v++;b.dataset.eqid=e;a.B[e]=d;b&&b.addEventListener?b.addEventListener(c,d,!1):b&&b.attachEvent?b.attachEvent(\"on\"+c,d):a.o.log(Error(\"B`\"+b))}};\n}catch(e){_._DumpException(e)}\ntry{\nvar Qd=document.querySelector(\".gb_I .gb_A\"),Rd=document.querySelector(\"#gb.gb_Sc\");Qd&&!Rd&&_.Pd(_.zd,Qd,\"click\");\n}catch(e){_._DumpException(e)}\ntry{"
-      },
-      {
-        "lang": "text",
-        "code": "<div class=\"docs-butterbar-container\"><div class=\"docs-butterbar-wrap\"><div class=\"jfk-butterBar jfk-butterBar-shown jfk-butterBar-warning\">JavaScript isn't enabled in your browser, so this file can't be opened. Enable and reload.</div></div><br /></div>(function() {function setIframeSrcdoc(iframe) {var coreJsIframePolicy; var contentsString = \"\\x3clink rel\\x3d\\x22stylesheet\\x22 href\\x3d\\x22https://fonts.googleapis.com/css?family\\x3dGoogle+Sans:bold,normal\\x26lang\\x3den\\x22 nonce\\x3d\\x22L42FF1JdHJPKWYWFGRXMNA\\x22\\x3e\\x3clink rel\\x3d\\x22stylesheet\\x22 href\\x3d\\x22https://fonts.googleapis.com/css?family\\x3dRoboto:normal\\x26lang\\x3den\\x22 nonce\\x3d\\x22L42FF1JdHJPKWYWFGRXMNA\\x22\\x3e\\x3cstyle nonce\\x3d\\x22L42FF1JdHJPKWYWFGRXMNA\\x22\\x3e:root \\x7b--brand-color: #1a73e8\\x7dli:nth-child(1) h4:before \\x7bcontent: \\x22Step 1\\x22;\\x7dli:nth-child(2) h4:before \\x7bcontent: \\x22Step 2\\x22;\\x7d\\x3c/style\\x3e\\x3cstyle\\x3ebutton.text-button.brand-color\\x7bbackground-color:var(--brand-color);color:#fff;border:none\\x7dbody\\x7bfont-family:Roboto;font-size:14px;font-weight:400;margin:0;padding:24px;overflow-x:hidden\\x7dh3,h4,li,ol,p\\x7bmargin:0;padding:0\\x7dh3\\x7bfont-family:Google Sans;font-size:22px;font-weight:400;margin:0;padding:0\\x7dli\\x7bmargin-top:16px\\x7dp\\x7bmargin-top:5px\\x7dli h4:before\\x7bfont-weight:700\\x7dp#chrome-url-box\\x7bborder:1px solid #bdc1c6;-moz-box-sizing:border-box;box-sizing:border-box;border-radius:4px;padding:6px;height:36px\\x7dbutton#chrome-settings-url-copy\\x7bcolor:var(--brand-color);text-decoration:none;display:inline-block;border:none;padding:0;float:right;background:none;height:24px\\x7dp#chrome-url-box code\\x7bfont-family:inherit;display:block;float:left;height:24px;vertical-align:middle\\x7dp#buttons-row\\x7btext-align:right\\x7dp#buttons-row button\\x7bmargin-left:16px\\x7dbutton.text-button\\x7bfont-family:Google Sans;font-size:14px;text-decoration:none;display:inline-block;border-radius:4px;border:1px solid transparent;height:36px;padding-left:24px;padding-right:24px;cursor:pointer\\x7dbutton.text-button:disabled\\x7bborder-width:1px;border-color:#bdc1c6;border-style:solid;background-color:#fff;color:gray\\x7d.sr-only\\x7bposition:absolute;width:1px;height:1px;margin:-1px;clip:rect(0,0,0,0)\\x7dbutton#chrome-settings-url-copy svg path\\x7bfill:var(--brand-color)\\x7dol\\x7blist-style:none;padding-left:0\\x7d\\n/*# sourceMappingURL\\x3dcorejserror_ltr.css.map */\\x3c/style\\x3e\\x3cbody role\\x3d\\x22dialog\\x22 aria-labelledby\\x3d\\x22heading\\x22 aria-describedby\\x3d\\x22description\\x22\\x3e\\x3ch3 id\\x3d\\x22heading\\x22\\x3eLoading issue\\x3c/h3\\x3e\\x3cp id\\x3d\\x22description\\x22\\x3eTroubleshoot this issue by clearing application resources\\x3c/p\\x3e\\x3col\\x3e\\x3cli\\x3e\\x3ch4 class\\x3d\\x22step-header\\x22\\x3e\\x3c/h4\\x3e\\x3cp\\x3eFollow \\x3ca href\\x3d\\x22https://support.google.com/accounts/answer/32050\\x22 target\\x3d\\x22_blank\\x22\\x3ethese instructions\\x3c/a\\x3e to clear your cache and cookies\\x3c/p\\x3e\\x3c/li\\x3e\\x3cli\\x3e\\x3ch4 class\\x3d\\x22step-header\\x22\\x3e\\x3c/h4\\x3e\\x3cp\\x3eThen, reload this page\\x3c/p\\x3e\\x3c/li\\x3e\\x3c/ol\\x3e\\x3cp id\\x3d\\x22buttons-row\\x22\\x3e\\x3cbutton class\\x3d\\x22text-button\\x22 id\\x3d\\x22send-feedback\\x22 disabled\\x3eSend feedback\\x3c/button\\x3e\\x3cbutton class\\x3d\\x22text-button brand-color\\x22 id\\x3d\\x22reload-now\\x22\\x3eReload now\\x3c/button\\x3e\\x3c/p\\x3e\\x3cscript nonce\\x3d\\x22uBfdd5ElM-eQ4cCUZ50mBw\\x22\\x3efunction _F_toggles_initialize(a)\\x7b(typeof globalThis!\\x3d\\x3d\\x22undefined\\x22?globalThis:typeof self!\\x3d\\x3d\\x22undefined\\x22?self:this)._F_toggles\\x3da||\\x5b\\x5d\\x7d_F_toggles_initialize(\\x5b\\x5d);\\nvar d\\x3ddocument.getElementById(\\x22chrome-settings-url-copy\\x22);function e()\\x7bvar a\\x3ddocument.getElementById(\\x22chrome-settings-url\\x22),b\\x3dnew Range;b.setStart(a,0);b.setEnd(a,1);a\\x3dwindow.getSelection();a.empty();a.addRange(b);document.execCommand(\\x22copy\\x22);setTimeout(function()\\x7bvar c\\x3ddocument.createElement(\\x22p\\x22);c.setAttribute(\\x22role\\x22,\\x22alert\\x22);c.style.position\\x3d\\x22absolute\\x22;c.style.top\\x3d\\x22-10000px\\x22;c.appendChild(document.createTextNode(\\x22Link copied\\x22));document.body.appendChild(c)\\x7d,500);d\\x26\\x26d.focus()\\x7dd\\x26\\x26(d.onclick\\x3de);\\ndocument.getElementById(\\x22reload-now\\x22).onclick\\x3dfunction()\\x7bwindow.parent.location.reload()\\x7d;document.addEventListener(\\x22keydown\\x22,function(a)\\x7bvar b\\x3ddocument.querySelectorAll(\\x22a\\x5bhref\\x5d:not(\\x5bdisabled\\x5d), button:not(\\x5bdisabled\\x5d)\\x22),c\\x3db\\x5b0\\x5d;b\\x3db\\x5bb.length-1\\x5d;if(a.key\\x3d\\x3d\\x3d\\x22Tab\\x22||a.keyCode\\x3d\\x3d\\x3d9)a.shiftKey\\x26\\x26document.activeElement\\x3d\\x3dc?(b.focus(),a.preventDefault()):a.shiftKey||document.activeElement!\\x3db||(c.focus(),a.preventDefault())\\x7d);\\nwindow.onload\\x3dfunction()\\x7bvar a\\x3dwindow.parent.document.getElementById(\\x22core-js-error-dialog\\x22);if(a)\\x7bvar b\\x3ddocument.body.scrollHeight;a.style.height\\x3db+\\x22px\\x22;a.style\\x5b\\x22margin-top\\x22\\x5d\\x3d-Math.round(b/2)+\\x22px\\x22\\x7d\\x7d;\\n// Google Inc.\\n\\n//# sourceMappingURL\\x3dcorejserror_corejserror_chunk.sourcemap\\n\\x3c/script\\x3e\\x3cscript src\\x3d\\x22/static/document/client/js/898020166-corejserrorfeedback_corejserrorfeedback_chunk.js\\x22 nonce\\x3d\\x22uBfdd5ElM-eQ4cCUZ50mBw\\x22\\x3e\\x3c/script\\x3e\\x3c/body\\x3e\"; if (self.trustedTypes && self.trustedTypes.createPolicy) {coreJsIframePolicy = trustedTypes.createPolicy( 'docsCoreJsIframePolicy',{createHTML: function(ignored) {return contentsString;}});}var contentsTt = coreJsIframePolicy ? coreJsIframePolicy.createHTML('ignored') : contentsString; if ('srcdoc' in iframe) {iframe.srcdoc = contentsTt; return;}iframe.contentWindow.document.open(); iframe.contentWindow.document.write(contentsTt); iframe.contentWindow.document.close(); if ( true  && window.navigator && window.navigator.sendBeacon) {window.navigator.sendBeacon( '/document/jserror?jobset\\x3dprod\\x26error\\x3dJS+binary+load+failure&context.coreJsNoSrcdoc=true&context.serviceWorkerControlled=' + !!(navigator.serviceWorker && navigator.serviceWorker.controller) + '\\x26context.actionName\\x3dEdit');}}function enterCoreJsErrorDialog() {if (!setIframeSrcdoc) {return;}var overlay = document.getElementById('core-js-error-dialog-overlay');var overlayPolicy; if (self.trustedTypes && self.trustedTypes.createPolicy) {overlayPolicy = trustedTypes.createPolicy( 'docsCoreJsOverlayPolicy',{createHTML: function(ignored) {return \"\\x3cdiv style\\x3d\\x22position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: rgb(0, 0, 0, 0.6)\\x22\\x3e\\x3c/div\\x3e\\x3ciframe id\\x3d\\x22core-js-error-dialog\\x22 style\\x3d\\x22position: absolute; left: 50%; top: 50%; width: 512px; height: 430px; margin-left: -256px; margin-top: -215px; background: white; border: none; border-radius: 8px\\x22\\x3e\\x3c/iframe\\x3e\";}});}var overlayTt = overlayPolicy ? overlayPolicy.createHTML('ignored') : \"\\x3cdiv style\\x3d\\x22position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: rgb(0, 0, 0, 0.6)\\x22\\x3e\\x3c/div\\x3e\\x3ciframe id\\x3d\\x22core-js-error-dialog\\x22 style\\x3d\\x22position: absolute; left: 50%; top: 50%; width: 512px; height: 430px; margin-left: -256px; margin-top: -215px; background: white; border: none; border-radius: 8px\\x22\\x3e\\x3c/iframe\\x3e\"; overlay.innerHTML = overlayTt; var iframe = document.getElementById('core-js-error-dialog'); overlay.onmousedown = function(e) {iframe.focus(); e.preventDefault();}; setIframeSrcdoc(iframe); setIframeSrcdoc = null; overlay.style.display = 'block'; iframe.focus();}window.enterCoreJsErrorDialog = enterCoreJsErrorDialog;})();Explore the Random Cats        Request edit access Sign inDOCS_timing['sdb']=new Date().getTime();FileEditViewToolsHelpAccessibilityDebugDOCS_timing['edb']=new Date().getTime();DOCS_timing['che'] = new Date().getTime();DOCS_timing['chv'] = new Date().getTime();KX_resize = function() {if (KX_kixApp) {KX_kixApp.resize();}}; Gemini created these notes. They can contain errors so should be double-checked. How Gemini takes notes  OutlineOutlineDocument tabs    Headings you add to the document will appear here. Changes bythis.gbar_=this.gbar_||{};(function(_){var window=this;\ntry{\n_.Pd=function(a,b,c){if(!a.j)if(c instanceof Array)for(var d of c)_.Pd(a,b,d);else{d=(0,_.z)(a.C,a,b);const e=a.v+c;a.v++;b.dataset.eqid=e;a.B[e]=d;b&&b.addEventListener?b.addEventListener(c,d,!1):b&&b.attachEvent?b.attachEvent(\"on\"+c,d):a.o.log(Error(\"B`\"+b))}};\n}catch(e){_._DumpException(e)}\ntry{\nvar Qd=document.querySelector(\".gb_I .gb_A\"),Rd=document.querySelector(\"#gb.gb_Sc\");Qd&&!Rd&&_.Pd(_.zd,Qd,\"click\");\n}catch(e){_._DumpException(e)}\ntry{"
       },
       {
         "lang": "md",
@@ -3013,6 +3053,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Interact with a page using LLMs",
     "content": "You can use the promptContent method to interact with a page using LLMs. You might want to use this method to scrape a page for specific information, or even ask a more general question about the page.\nExamples:\nOn a company's website, ask if they have a certain job opening.\n\nOn a foreign news website, ask for a translation.\n\nOn a product page, ask for list of product, but with the price in different currencies.\n\netc."
@@ -3042,6 +3083,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#usage-example",
     "content": "First, you'll need to create a session.\n\n\nNext, you'll need to create a window and load a URL.\n\n\nFinally, you can prompt the page.\n\n\nExample output:",
@@ -3147,6 +3189,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#paginated-results",
     "content": "If you're scraping a paginated page, Airtop will automatically handle pagination for you. You just need to pass the followPaginationLinks: true option and specify the number of pages or results you want to scrape.\n\n\nExample output:",
@@ -3212,6 +3255,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#prompting-tips",
     "content": "Like any LLM based tool, the quality of the results depends heavily on the quality of the prompt. Here are some tips to get the best results:",
@@ -3251,6 +3295,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#basic-prompting-tips",
     "content": "Provide the AI with some context by telling it a little bit about the web page or content it's looking at.\n\nBe clear about your goals and what you want the AI to do.\n\nIf, to complete the request, more content than is originally visible must be loaded (i.e. paginated results or infinite scrolling or \"Load More\" controls), be sure to include a clear limit on when the AI should stop. It can also be helpful to be explicit about how more content should be loaded.\n\nProvide an example or two of how you would like the AI to respond, or include a JSON schema if you want a structured response that is more suitable for automated processing.",
@@ -3294,6 +3339,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#tips-for-using-json-schemas",
     "content": "Take advantage of the description fields to give the AI additional clarity and instructions about how to populate the property, and consider even adding examples (especially if you would prefer certain formatting).\n\nDon't mark a property as required unless you're certain it will always be possible to provide. If the AI feels compelled to provide data that doesn't exist, it's very likely to hallucinate it.\n\nBe sure to include a valid way for the AI to report back failure if it cannot fulfill the objective. If your schema does not allow the AI to report failure and something happens, it may feel compelled to return a natural language response instead, or even hallucinate results in order to honor the schema and your request to use it for responses.\n\nYou can sometimes use schema constraints to guide the AI response. For example, if you find that it includes an empty string or array for an optional property when unavailable, and you'd rather see that property omitted instead, you can add a constraint of minLength: 1 (or minItems: 1 for an array). Of course, make sure those properties are not marked as required.\n\nMost major LLMs are quite good at generating JSON schemas from examples (or even natural language descriptions) if you'd rather not write them by hand.",
@@ -3337,6 +3383,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Learn more about how AI costs are calculated and how to control them",
     "content": "If you are using any of the AI APIs, you may be charged for the tokens used. The cost is calculated based on the number of input and output tokens used, as well as the model used.\nAirtop uses a credit system to keep track of your usage since we often use multiple models and different pricing tiers for each model. We do not charge any markup on LLM costs."
@@ -3366,6 +3413,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#keeping-track-of-costs",
     "content": "Every AI API call returns a meta.usage object containing the number of credits used by this call. You can use this number to monitor your usage on a per-request basis.\nYou can also see your consumed AI credits for the month on the billing page of the developer portal.",
@@ -3405,6 +3453,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#controlling-costs",
     "content": "In addition to monitoring, you can also specify a max cost for every AI API call. There are 2 fields that can be helpful for this:\ncostThresholdCredits: A credit threshold that, once exceeded, will cause the operation to be cancelled. Note that this is not a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A request may slightly exceed the threshold if it's in the middle of an LLM call that is already in progress, but any subsequent calls will not be permitted to continue.\n\ntimeThresholdSeconds: A time threshold in seconds that, once exceeded, will cause the operation to be cancelled. Note that this is not a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. If you would like to prevent a single request from running for more than a certain amount of time rather than a cost threshold, you can use this field.",
@@ -3440,6 +3489,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "How to get help with Airtop",
     "content": "We're happy to help with any issues you're having with Airtop and eager to hear your feedback. If you run into any issues, please reach out to us at support@airtop.ai.\nIf you run into any bugs, please file an issue on GitHub."
@@ -3465,6 +3515,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Answers to frequently asked questions"
   },
@@ -3489,6 +3540,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#what-llms-do-you-use",
     "content": "Airtop uses a variety of LLMs from OpenAI, Anthropic, and custom fine-tuned models. Airtop may dynamically switch between different models based on the workload and model capabilities. Additionally, Airtop may failover to a different model if a model is experiencing high latency or downtime. Airtop additionally uses vision capable models to provide visual data to aid in the identification of content, making prompting against sites more accurate.",
@@ -3524,6 +3576,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#how-does-the-ai-credit-system-work",
     "content": "Airtop uses a credit system to track usage of AI APIs. If you use an AI API to summarize content, or prompt a page, Airtop will charge your account for the cost of the API call in the form of credits.\nCredits are calculated from input and output tokens of the LLMs, which is also how OpenAI and Anthropic charge for their APIs. Airtop does not add any markup on the cost of the LLMs.",
@@ -3559,6 +3612,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#why-doesnt-airtop-charge-for-token-usage-directly",
     "content": "Because Airtop uses a variety of LLMs, sometimes within the same API call, Airtop cannot charge for token usage directly since different token consumption may have a different cost. Instead, Airtop assigns a credit value to each LLM's token use and presents a single unified cost to developers. We are constantly working to lower the cost of LLM usage and pass on savings to developers.",
@@ -3598,6 +3652,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#will-my-data-be-shared-with-third-parties-for-ai-training",
     "content": "No. In the cases where Airtop uses an LLM hosted by a third party, Airtop always does so under contracts that prohibit the third party from using Airtop's customers' data for their own model training.",
@@ -3633,6 +3688,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#are-you-soc-2-compliant",
     "content": "Yes, Airtop is SOC 2 compliant. If you need access to our SOC 2 report, please reach out to us at support@airtop.ai.",
@@ -3668,6 +3724,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#are-there-any-restrictions-on-what-i-can-do-with-airtop",
     "content": "Airtop is designed to be used for good things. We do not allow any use of Airtop to engage in any activity that violates laws or the terms of service of the websites you are visiting. Please be aware that the excessive or abusive use of bots, or automation tools on some websites can lead to penalties, including temporary or even permanent restrictions on your account. We recommend you read and adhere to the specific terms of the websites you are visiting and using to avoid any disruptions or issues. We do not assume any responsibility for the consequences of abuse.",
@@ -3703,6 +3760,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -3726,6 +3784,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#overview",
     "content": "This recipe demonstrates how to use Airtop to automate the summarization of a webpage. By leveraging Airtop's cloud browser capabilities, we can extract a concise summary from any webpage using a simple API.\nThe instructions below will walk through creating a script that connects to Airtop, opens a webpage in a cloud browser session, and retrieves a summary of its content. The full source code is available on GitHub for your reference.",
@@ -3761,6 +3820,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#prerequisites",
     "content": "To get started, ensure you have:\nNode.js installed on your system.\n\nAn Airtop API key. You can get one for free.",
@@ -3796,6 +3856,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#getting-started",
     "content": "Clone the repository\nStart by cloning the source code from GitHub:\n\nInstall dependencies\nRun the following command to install the necessary dependencies, including Puppeteer and the Airtop SDK:\n\nConfigure your environment\nYou will need to provide your Airtop API key in a .env file. First, copy the provided example .env file:\nNow edit the .env file to add your Airtop API key:",
@@ -3848,6 +3909,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#script-walkthrough",
     "content": "The script in index.ts performs the following steps:\nInitialize the Airtop Client\nFirst, we initialize the AirtopClient using your provided API key. This client will be used to create browser sessions and interact with the page content.\n\nCreate a Browser Session\nCreating a browser session will allow us to connect to and control a cloud-based browser.\n\nConnect to the Browser\nNote that we use Puppeteer in this example to connect to a browser, but you can use other browser automation tools such as Playwright or Selenium if you prefer.\n\nNavigate to the Target URL\nThe script opens a new page and navigates to the target URL. In this example we use a a Wikipedia page, however you can replace this with the URL of your choice.\n\nSummarize the Content\nLeverage Airtop to summarize the webpage's content using natural language. We utilize the promptContent API to specify how the summary should be structured.\nHere we instruct Airtop to summarize the content of the page in 1 paragraph, however you can customize this prompt to suit your needs (i.e. asking it to provide bullet points).\n\nClean Up\nFinally, the script closes the browser and terminates the session.",
@@ -3909,6 +3971,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#running-the-script",
     "content": "To run the script, execute the following command in your terminal:",
@@ -3950,6 +4013,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#summary",
     "content": "Airtop makes extracting key information from web pages as simple as writing a few lines of code. By combining the power of cloud browser automation with AI summarization, you can efficiently gather and understand content from any website on the internet.",
@@ -3985,6 +4049,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -4008,6 +4073,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#overview",
     "content": "This recipe demonstrates how to use Airtop to extract data from a website using a prompt. By leveraging Airtop's live view capabilities, you can have your users log into any of their accounts inside a browser session to provide your agents access to content that requires authentication. Airtop profiles can be used to persist a user's login state across sessions and avoid the need to have them log in again.\nThe instructions below will walk through creating a script that connects to Airtop, provides a live view for a user to log into their Glassdoor account if necessary, and retrieves a list of relevant job postings from the Glassdoor website. Similar logic can be applied to any website that requires authentication.\nThe full source code is available on GitHub for your reference.",
@@ -4043,6 +4109,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#prerequisites",
     "content": "To get started, ensure you have:\nNode.js installed on your system.\n\nAn Airtop API key. You can get one for free.",
@@ -4078,6 +4145,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#getting-started",
     "content": "Clone the repository\nStart by cloning the source code from GitHub:\n\nInstall dependencies\nRun the following command to install the necessary dependencies, including Puppeteer and the Airtop SDK:\n\nConfigure your environment\nYou will need to provide your Airtop API key in a .env file. First, copy the provided example .env file:\nNow edit the .env file to add your Airtop API key:",
@@ -4130,6 +4198,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#script-walkthrough",
     "content": "The script in index.ts performs the following steps:\nInitialize the Airtop Client\nFirst, we initialize the AirtopClient using your provided API key. This client will be used to create browser sessions and interact with the page content.\n\nCreate a Browser Session\nCreating a browser session will allow us to connect to and control a cloud-based browser. The API accepts an optional baseProfileId parameter, which can be used to reuse a user's previously provided credentials. If no baseProfileId is given, the user will be prompted to log in at the provided live view URL (see Step 4).\n\nConnect to the Browser\nNote that we use Puppeteer in this example to connect to a browser, but you can use other browser automation tools such as Playwright or Selenium if you prefer.\n\nNavigate to the Login Page\nNext, the script navigates to the Glassdoor's user profile page. If the user is not logged in, it waits for the user to log in at the provided live view URL. The user is also provided with a profileId that can be used to avoid logging in again on subsequent runs.\nIf the user is already logged in, they are navigated to the target URL to proceed with data extraction.\n\nNavigate to the Target URL\nAfter logging in, the script navigates to the target URL, which in this case is a Glassdoor search page for software engineering jobs in San Francisco.\n\nPrompt the AI to Extract Data\nWe construct a prompt that asks the AI to extract data about job postings that are related to AI companies and provide a JSON schema for the output.\nNote that an optimal prompt will begin by providing context about the webpage and what the model is viewing. It will also include information in the\ndescription fields of a provided JSON schema to guide the model's output.\nUtilizing Airtop's prompt feature, the script requests data about job postings that are related to AI companies, formatted as per the provided JSON schema. The AI agent can follow pagination links to gather more results on sites with multiple pages or from a feed with infinite scrolling.\n\nClean Up\nFinally, the script closes the browser and terminates the session.",
@@ -4199,6 +4268,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#running-the-script",
     "content": "To run the script, execute the following command in your terminal:",
@@ -4240,6 +4310,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#summary",
     "content": "This recipe showcases how Airtop can be used to automate tasks that require authentication and data extraction from dynamic content. By combining Airtop's live view feature for manual login with automated data extraction via natural language prompts, you can interact with and extract data from complex websites that require user credentials.",
@@ -4275,6 +4346,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -4298,6 +4370,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#overview",
     "content": "This recipe demonstrates how to use Airtop to scrape the SEC database for recent S-1 filings. It extracts company names and CIK numbers from the filings and sends the results via Telegram. This project showcases the power of combining web scraping, AI-assisted data extraction, and automated notifications.",
@@ -4333,6 +4406,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#prerequisites",
     "content": "To get started, ensure you have:\nNode.js installed on your system.\n\nAn Airtop API key. You can get one for free.",
@@ -4372,6 +4446,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#getting-started",
     "content": "Clone the repository\nStart by opening your terminal and cloning the source code from GitHub:\n\nInstall dependencies\nRun the following command to install the necessary dependencies, including Puppeteer, TelegramBot, and the Airtop SDK:\n\nGet your Telegram keys\nOpen Telegram application then search for @BotFather or just click this link @BotFather\n\nClick Start\n\nClick Menu -> /newbot or type /newbot and hit Send\n\nFollow the instruction until we get message like so:\n\n\nGet your user ID by talking to the UserInfoBot by clicking this link @UserInfoBot.\nSend /start to it and you should get a message like this:\n\n\n\nConfigure your environment\nYou will need to provide your Airtop API key, Telegram bot token and user ID, in a .env file. First, copy the provided example .env file:\nNow edit the .env file to add your keys:",
@@ -4434,6 +4509,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#script-walkthrough",
     "content": "The script in index.ts performs the following steps:\nInitialize the Airtop Client\nFirst, we initialize the AirtopClient using your provided API key. This client will be used to create browser sessions and interact with the page content.\n\nInitialize the Telegram Bot\nWe initialize the Telegram bot using the token and user ID we got back on step 3. This bot will be used to send notifications to the user.\n\nCreate a function to send a message to the user\nThis function receives a message formatted as HTML and sends it to the user via Telegram.\n\nCreate a Browser Session\nCreating a browser session will allow us to connect to and control a cloud-based browser.\n\nNavigate to the SEC website\nNext, the script navigates to the SEC's website and waits for the page to load.\n\nPrompt the AI to Extract Data\nThere are several results on this page, but we want to provide specific instructions to our prompt regarding the exact data we need. Since these results are returned in plain text, we also want to instruct our prompt to convert the extracted information into a structured JSON format. This will allow us to easily parse and process the data in subsequent steps of our analysis.\nTo achieve this, we'll create a detailed prompt that outlines:\nThe specific information to extract (company names and CIK numbers)\n\nThe criteria for selecting entries (only S-1 filings, not S-1/A)\n\nHow to handle special characters in company names\n\nThe desired JSON structure for the output\n\n\nBy providing clear and precise instructions, we ensure that the AI model can accurately extract and format the data we need from the page in a repeatable way.\nUtilizing Airtop's AI prompt feature, the script requests data about SEC filings, formatted as per the provided JSON schema. The AI agent can follow pagination links to gather more results from the SEC database, which may contain multiple pages of filings by passing the followPaginationLinks parameter to the promptContent method.\n\nProcess the extracted content\n\nClean Up\nFinally, the script closes the browser and terminates the session.",
@@ -4507,6 +4583,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#running-the-script",
     "content": "To run the script, execute the following command in your terminal:",
@@ -4552,6 +4629,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#summary",
     "content": "This recipe demonstrates how Airtop can be utilized to automate tasks involving plain-text data extraction. By leveraging Airtop's AI prompt feature and pagination handling capabilities, you can efficiently retrieve and process information about S-1 filings from the SEC database. The script showcases how to interact with complex data sources, parse JSON responses, and format the extracted information for easy readability and further analysis.",
@@ -4586,43 +4664,50 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Welcome to our API reference. We currently offer a RESTful API, as well as Typescript/NodeJS and Python SDKs to use in your applications.\nIf you have any other languages that you would like us to support, please reach out to us.\n\n\n\n\n\n\nGithub \n\n\nNPM\n\n\n\n\nGithub \n\n\nPyPI"
   },
-  {
-    "objectID": "test:test.com:.changelog.2024-11-1",
-    "org_id": "test",
-    "domain": "test.com",
-    "canonicalPathname": "/changelog/2024/11/1",
-    "pathname": "/changelog/2024/11/1",
-    "title": "November 1, 2024",
-    "breadcrumb": [],
-    "visible_by": [
-      "role/everyone"
-    ],
-    "authed": false,
-    "type": "changelog",
-    "content": "Support for custom residential proxies\nAdded support for custom residential proxies. You can now use your own residential proxies with Airtop and easily configure them to use upon session creation. For more information see the guide documentation for proxies.",
-    "date": "2024-11-01",
-    "date_timestamp": 1730419200
-  },
-  {
-    "objectID": "test:test.com:.changelog.2024-10-19",
-    "org_id": "test",
-    "domain": "test.com",
-    "canonicalPathname": "/changelog/2024/10/19",
-    "pathname": "/changelog/2024/10/19",
-    "title": "October 19, 2024",
-    "breadcrumb": [],
-    "visible_by": [
-      "role/everyone"
-    ],
-    "authed": false,
-    "type": "changelog",
-    "content": "New Native Window Management\nAdded support for creating windows, loading URLs, and closing windows without having to use Puppeteer or Playwright. For more information see the guide documentation for windows.",
-    "date": "2024-10-19",
-    "date_timestamp": 1729296000
-  },
+  [
+    {
+      "objectID": "test:test.com:.changelog.2024-11-1",
+      "org_id": "test",
+      "domain": "test.com",
+      "canonicalPathname": "/changelog/2024/11/1",
+      "pathname": "/changelog/2024/11/1",
+      "title": "November 1, 2024",
+      "breadcrumb": [],
+      "visible_by": [
+        "role/everyone"
+      ],
+      "authed": false,
+      "page_position": 0,
+      "type": "changelog",
+      "date": "2024-11-01",
+      "date_timestamp": 1730419200,
+      "content": "Support for custom residential proxies\nAdded support for custom residential proxies. You can now use your own residential proxies with Airtop and easily configure them to use upon session creation. For more information see the guide documentation for proxies."
+    }
+  ],
+  [
+    {
+      "objectID": "test:test.com:.changelog.2024-10-19",
+      "org_id": "test",
+      "domain": "test.com",
+      "canonicalPathname": "/changelog/2024/10/19",
+      "pathname": "/changelog/2024/10/19",
+      "title": "October 19, 2024",
+      "breadcrumb": [],
+      "visible_by": [
+        "role/everyone"
+      ],
+      "authed": false,
+      "page_position": 0,
+      "type": "changelog",
+      "date": "2024-10-19",
+      "date_timestamp": 1729296000,
+      "content": "New Native Window Management\nAdded support for creating windows, loading URLs, and closing windows without having to use Puppeteer or Playwright. For more information see the guide documentation for windows."
+    }
+  ],
   {
     "objectID": "test:test.com:43168098-0988-47e7-bc82-78ae7aaf1fe6.subpackage_sessions.create",
     "org_id": "test",
@@ -4648,6 +4733,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_sessions.create",
@@ -4682,7 +4768,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/airtop-api/sessions/create",
     "pathname": "/api-reference/airtop-api/sessions/create",
-    "title": "Create a session",
+    "title": "Create a session - Response",
     "breadcrumb": [
       {
         "title": "Airtop API",
@@ -4691,6 +4777,10 @@
       {
         "title": "Sessions",
         "pathname": "/api-reference/airtop-api/sessions"
+      },
+      {
+        "title": "Create a session",
+        "pathname": "/api-reference/airtop-api/sessions/create"
       }
     ],
     "tab": {
@@ -4701,6 +4791,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_sessions.create",
@@ -4756,6 +4847,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_sessions.list",
@@ -4794,7 +4886,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/airtop-api/sessions/list",
     "pathname": "/api-reference/airtop-api/sessions/list",
-    "title": "Get a list of sessions",
+    "title": "Get a list of sessions - Response",
     "breadcrumb": [
       {
         "title": "Airtop API",
@@ -4803,6 +4895,10 @@
       {
         "title": "Sessions",
         "pathname": "/api-reference/airtop-api/sessions"
+      },
+      {
+        "title": "Get a list of sessions",
+        "pathname": "/api-reference/airtop-api/sessions/list"
       }
     ],
     "tab": {
@@ -4813,6 +4909,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_sessions.list",
@@ -4871,6 +4968,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_sessions.getInfo",
@@ -4909,7 +5007,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/airtop-api/sessions/get-info",
     "pathname": "/api-reference/airtop-api/sessions/get-info",
-    "title": "Get info for a session",
+    "title": "Get info for a session - Response",
     "breadcrumb": [
       {
         "title": "Airtop API",
@@ -4918,6 +5016,10 @@
       {
         "title": "Sessions",
         "pathname": "/api-reference/airtop-api/sessions"
+      },
+      {
+        "title": "Get info for a session",
+        "pathname": "/api-reference/airtop-api/sessions/get-info"
       }
     ],
     "tab": {
@@ -4928,6 +5030,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_sessions.getInfo",
@@ -4986,6 +5089,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_sessions.terminate",
@@ -5038,6 +5142,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_windows.summarize-content",
@@ -5073,7 +5178,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/airtop-api/windows/summarize-content",
     "pathname": "/api-reference/airtop-api/windows/summarize-content",
-    "title": "Get a summary of content in a browser window",
+    "title": "Get a summary of content in a browser window - Response",
     "breadcrumb": [
       {
         "title": "Airtop API",
@@ -5082,6 +5187,10 @@
       {
         "title": "Windows",
         "pathname": "/api-reference/airtop-api/windows"
+      },
+      {
+        "title": "Get a summary of content in a browser window",
+        "pathname": "/api-reference/airtop-api/windows/summarize-content"
       }
     ],
     "tab": {
@@ -5092,6 +5201,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_windows.summarize-content",
@@ -5148,6 +5258,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_windows.scrape-content",
@@ -5182,7 +5293,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/airtop-api/windows/scrape-content",
     "pathname": "/api-reference/airtop-api/windows/scrape-content",
-    "title": "Scrape a window",
+    "title": "Scrape a window - Response",
     "breadcrumb": [
       {
         "title": "Airtop API",
@@ -5191,6 +5302,10 @@
       {
         "title": "Windows",
         "pathname": "/api-reference/airtop-api/windows"
+      },
+      {
+        "title": "Scrape a window",
+        "pathname": "/api-reference/airtop-api/windows/scrape-content"
       }
     ],
     "tab": {
@@ -5201,6 +5316,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_windows.scrape-content",
@@ -5256,6 +5372,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_windows.prompt-content",
@@ -5290,7 +5407,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/airtop-api/windows/prompt-content",
     "pathname": "/api-reference/airtop-api/windows/prompt-content",
-    "title": "Submit a prompt about the content in a specific browser window.",
+    "title": "Submit a prompt about the content in a specific browser window. - Response",
     "breadcrumb": [
       {
         "title": "Airtop API",
@@ -5299,6 +5416,10 @@
       {
         "title": "Windows",
         "pathname": "/api-reference/airtop-api/windows"
+      },
+      {
+        "title": "Submit a prompt about the content in a specific browser window.",
+        "pathname": "/api-reference/airtop-api/windows/prompt-content"
       }
     ],
     "tab": {
@@ -5309,6 +5430,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_windows.prompt-content",
@@ -5364,6 +5486,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_windows.create",
@@ -5398,7 +5521,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/airtop-api/windows/create",
     "pathname": "/api-reference/airtop-api/windows/create",
-    "title": "Creates a new browser window in a session",
+    "title": "Creates a new browser window in a session - Response",
     "breadcrumb": [
       {
         "title": "Airtop API",
@@ -5407,6 +5530,10 @@
       {
         "title": "Windows",
         "pathname": "/api-reference/airtop-api/windows"
+      },
+      {
+        "title": "Creates a new browser window in a session",
+        "pathname": "/api-reference/airtop-api/windows/create"
       }
     ],
     "tab": {
@@ -5417,6 +5544,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_windows.create",
@@ -5472,6 +5600,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_windows.get-window-info",
@@ -5506,7 +5635,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/airtop-api/windows/get-window-info",
     "pathname": "/api-reference/airtop-api/windows/get-window-info",
-    "title": "Get information about a browser window in a session",
+    "title": "Get information about a browser window in a session - Response",
     "breadcrumb": [
       {
         "title": "Airtop API",
@@ -5515,6 +5644,10 @@
       {
         "title": "Windows",
         "pathname": "/api-reference/airtop-api/windows"
+      },
+      {
+        "title": "Get information about a browser window in a session",
+        "pathname": "/api-reference/airtop-api/windows/get-window-info"
       }
     ],
     "tab": {
@@ -5525,6 +5658,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_windows.get-window-info",
@@ -5580,6 +5714,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_windows.loadUrl",
@@ -5614,7 +5749,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/airtop-api/windows/load-url",
     "pathname": "/api-reference/airtop-api/windows/load-url",
-    "title": "Loads a specified url on a given window",
+    "title": "Loads a specified url on a given window - Response",
     "breadcrumb": [
       {
         "title": "Airtop API",
@@ -5623,6 +5758,10 @@
       {
         "title": "Windows",
         "pathname": "/api-reference/airtop-api/windows"
+      },
+      {
+        "title": "Loads a specified url on a given window",
+        "pathname": "/api-reference/airtop-api/windows/load-url"
       }
     ],
     "tab": {
@@ -5633,6 +5772,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_windows.loadUrl",
@@ -5688,6 +5828,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_windows.close",
@@ -5722,7 +5863,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/airtop-api/windows/close",
     "pathname": "/api-reference/airtop-api/windows/close",
-    "title": "Close the specified window",
+    "title": "Close the specified window - Response",
     "breadcrumb": [
       {
         "title": "Airtop API",
@@ -5731,6 +5872,10 @@
       {
         "title": "Windows",
         "pathname": "/api-reference/airtop-api/windows"
+      },
+      {
+        "title": "Close the specified window",
+        "pathname": "/api-reference/airtop-api/windows/close"
       }
     ],
     "tab": {
@@ -5741,6 +5886,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_windows.close",
@@ -5796,6 +5942,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_profiles.get",
@@ -5831,7 +5978,7 @@
     "domain": "test.com",
     "canonicalPathname": "/api-reference/airtop-api/profiles/get",
     "pathname": "/api-reference/airtop-api/profiles/get",
-    "title": "Get profiles",
+    "title": "Get profiles - Response",
     "breadcrumb": [
       {
         "title": "Airtop API",
@@ -5840,6 +5987,10 @@
       {
         "title": "Profiles",
         "pathname": "/api-reference/airtop-api/profiles"
+      },
+      {
+        "title": "Get profiles",
+        "pathname": "/api-reference/airtop-api/profiles/get"
       }
     ],
     "tab": {
@@ -5850,6 +6001,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_profiles.get",
@@ -5905,6 +6057,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "43168098-0988-47e7-bc82-78ae7aaf1fe6",
     "api_endpoint_id": "endpoint_profiles.delete",

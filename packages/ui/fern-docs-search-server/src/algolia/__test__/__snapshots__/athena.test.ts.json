@@ -16,6 +16,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Learn how to get started with Athena Python SDK.",
     "code_snippets": [
@@ -55,6 +56,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -113,6 +115,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#specifying-tool-order",
     "content": "You can tell Athena which tools to use first by simply passing the request in the input message:",
@@ -150,6 +153,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -204,6 +208,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -274,6 +279,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -344,6 +350,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -364,19 +371,11 @@
       },
       {
         "lang": "python",
-        "code": "documentation_responses = [] \ndef generate_documentation_for_dataset(dataset_name, dataset_schema_details):\n    # Placeholder for the function to submit and poll for documentation generation\n    message = athena.message.submit_and_poll(\n    content=\n    f\"\"\"\n**Task:** Generate comprehensive documentation for a dataset.\n\n**Objective:**\nCreate output template documentation for a table, detailing its schema, fields, and relevant metadata. The documentation should follow the structure provided below and adhere to the specified markdown format and tone. Use metadata and other available information to produce the documentation tailored to the context. This documentation will serve as a guide for understanding the dataset's structure, purpose, and usage within the organization. It should be clear, concise, and informative, catering to both technical and non-technical stakeholders.\n\n**Instructions:**\n1. Explore information available on the dataset {dataset_name}:\n- dataset metadata: \n\n{dataset_schema_details}\n\n\n2. For each section of the documentation, provide clear, concise information as outlined in the output template. Use professional language and ensure the documentation is accessible to a broad audience.\n3. Include a brief example value or description where requested to illustrate the type of content expected.\n4. Only include factual statements. When making assumptions or inferences, clearly label them as such.\n\n**Output Template:**\n\n## Athena Generated Dataset Documentation\n\n### TABLE: \\`[TABLE NAME]\\`\n\n**Generated on: [CURRENT DATE]**\n\n#### Dataset Description:\nProvide a comprehensive explanation of the table's purpose, detailing what one row represents and the business process or workflow it supports.\n\n#### Field Report:\nDocument each field in the table, including its name, description, data type, and an example value.\n\n| Field Name | Field Description | Field Type | Example Value |\n| ---------- | ----------------- | ---------- | ------------- |\n| [FIELD NAME] | [FIELD DESCRIPTION] | [FIELD TYPE] | [EXAMPLE VALUE] |\n| ...additional fields as necessary... |\n\n#### Sample Query and First Three Rows:\nInclude a sample SQL query that returns the first three rows of data, followed by the results of the query.\n\n#### Use Cases & Guidelines:\nDescribe the organization's use cases and guidelines for using this dataset, highlighting any best practices or restrictions.\n\n#### Other Notes & Considerations:\nList any additional notes or considerations relevant to the dataset's use or interpretation.\n\n**End of Template**\n\nPlease ensure all information is accurate and up-to-date, reflecting the current state of the dataset as of [CURRENT DATE].\n    \"\"\",\n    model=Model.MIXTRAL_SMALL_8_X_7_B_0211,\n    tools=[],\n    )\n    print(f\"Generating documentation for dataset: {dataset_name}\")\n    message_json=json.loads(message.json())\n    documentation_responses.append({'dataset_name': dataset_name, 'documentation_message': message_json['content']})\n    "
-      },
-      {
-        "lang": "python",
         "code": "# Iterate over each row in the DataFrame\nfor index, row in df_datasets.iterrows():\n    dataset_name = row['name']\n    dataset_schema_details = row['schema_details']\n    \n    # Generate documentation for the current dataset\n    generate_documentation_for_dataset(dataset_name, dataset_schema_details)"
       },
       {
         "lang": "python",
         "code": "def json_to_markdown_document(json_list):\n    markdown_document = \"\"\n    if not json_list:\n        return \"No data available\"\n    \n    for item in json_list:\n        for key, value in item.items():\n            markdown_document += f\"**{key}:** {value}\\n\\n\"\n        markdown_document += \"---\\n\\n\"  # Separator line between items\n    \n    return markdown_document\n\n# Convert the list of dictionaries to Markdown\nmarkdown_document = json_to_markdown_document(documentation_responses)\n\n# Display the Markdown in the notebook\ndisplay(Markdown(markdown_document))"
-      },
-      {
-        "lang": "python",
-        "code": "def generate_high_level_documentation(markdown_document):\n    # Placeholder for the function to submit and poll for high-level documentation generation\n    message = athena.message.submit_and_poll(\n    content=\n    f\"\"\"\n**Task:** Generate high-level comprehensive documentation for a body of datasets.\n\n**Objective:**\nCreate high-level output documentation for multiple related tables, detailing their schema, fields, relationships, and relevant metadata. The documentation should follow the structure provided below and adhere to the specified markdown format and tone. Use the provided markdown document and other available information to produce the documentation tailored to the context. This documentation will serve as a guide for understanding the structure, purpose, and usage of the datasets within the organization. It should be clear, concise, and informative, catering to both technical and non-technical stakeholders.\n\n**Instructions:**\n1. Explore information available in the provided markdown document:\n- Provided markdown document:\n\n{markdown_document}\n\n\n2. For each section of the documentation, provide clear, concise information as outlined in the output template. Use professional language and ensure the documentation is accessible to a broad audience.\n3. Include diagrams such as Entity-Relationship Diagrams (ERD) and other helpful diagrams to explore relationships in the data.\n4. Discuss possible analyses and how the datasets can be joined for these analyses.\n5. Only include factual statements. When making assumptions or inferences, clearly label them as such.\n6. Pay attention to Mermaid diagram dialect and double-check yourself. \n\n**Output Template:**\n\n## Athena Generated High-Level Dataset Documentation\n\n### Overview of Datasets\n\nProvide a brief overview of the datasets included in the markdown document, summarizing their purpose and how they relate to each other.\n\n### Entity-Relationship Diagram (ERD)\n\nInclude an ERD that visually represents the relationships between the datasets.\n\n### Possible Analyses\n\nDiscuss potential analyses that could be performed using these datasets, highlighting how they can be joined and what insights might be derived.\n\n### Other Helpful Diagrams\n\nInclude other diagrams that may help in understanding the relationships between the datasets, such as flowcharts or sequence diagrams.\n\n### Guidelines for Use\n\nDescribe the organization's guidelines for using these datasets together, including any best practices or restrictions.\n\n### Other Notes & Considerations\n\nList any additional notes or considerations relevant to the use or interpretation of these datasets as a whole.\n\n**End of Template**\n\nPlease ensure all information is accurate and up-to-date, reflecting the current state of the datasets as of [CURRENT DATE].\n    \"\"\",\n    model=Model.MIXTRAL_SMALL_8_X_7_B_0211,\n    tools=[],\n    )\n    print(\"Generating description for provided dataset-level documentation\")\n    message_json=json.loads(message.json())\n    return message_json['content']"
       },
       {
         "lang": "python",
@@ -400,19 +399,11 @@
       },
       {
         "lang": "python",
-        "code": "documentation_responses = [] \ndef generate_documentation_for_dataset(dataset_name, dataset_schema_details):\n    # Placeholder for the function to submit and poll for documentation generation\n    message = athena.message.submit_and_poll(\n    content=\n    f\"\"\"\n**Task:** Generate comprehensive documentation for a dataset.\n\n**Objective:**\nCreate output template documentation for a table, detailing its schema, fields, and relevant metadata. The documentation should follow the structure provided below and adhere to the specified markdown format and tone. Use metadata and other available information to produce the documentation tailored to the context. This documentation will serve as a guide for understanding the dataset's structure, purpose, and usage within the organization. It should be clear, concise, and informative, catering to both technical and non-technical stakeholders.\n\n**Instructions:**\n1. Explore information available on the dataset {dataset_name}:\n- dataset metadata: \n\n{dataset_schema_details}\n\n\n2. For each section of the documentation, provide clear, concise information as outlined in the output template. Use professional language and ensure the documentation is accessible to a broad audience.\n3. Include a brief example value or description where requested to illustrate the type of content expected.\n4. Only include factual statements. When making assumptions or inferences, clearly label them as such.\n\n**Output Template:**\n\n## Athena Generated Dataset Documentation\n\n### TABLE: \\`[TABLE NAME]\\`\n\n**Generated on: [CURRENT DATE]**\n\n#### Dataset Description:\nProvide a comprehensive explanation of the table's purpose, detailing what one row represents and the business process or workflow it supports.\n\n#### Field Report:\nDocument each field in the table, including its name, description, data type, and an example value.\n\n| Field Name | Field Description | Field Type | Example Value |\n| ---------- | ----------------- | ---------- | ------------- |\n| [FIELD NAME] | [FIELD DESCRIPTION] | [FIELD TYPE] | [EXAMPLE VALUE] |\n| ...additional fields as necessary... |\n\n#### Sample Query and First Three Rows:\nInclude a sample SQL query that returns the first three rows of data, followed by the results of the query.\n\n#### Use Cases & Guidelines:\nDescribe the organization's use cases and guidelines for using this dataset, highlighting any best practices or restrictions.\n\n#### Other Notes & Considerations:\nList any additional notes or considerations relevant to the dataset's use or interpretation.\n\n**End of Template**\n\nPlease ensure all information is accurate and up-to-date, reflecting the current state of the dataset as of [CURRENT DATE].\n    \"\"\",\n    model=Model.MIXTRAL_SMALL_8_X_7_B_0211,\n    tools=[],\n    )\n    print(f\"Generating documentation for dataset: {dataset_name}\")\n    message_json=json.loads(message.json())\n    documentation_responses.append({'dataset_name': dataset_name, 'documentation_message': message_json['content']})\n    "
-      },
-      {
-        "lang": "python",
         "code": "# Iterate over each row in the DataFrame\nfor index, row in df_datasets.iterrows():\n    dataset_name = row['name']\n    dataset_schema_details = row['schema_details']\n    \n    # Generate documentation for the current dataset\n    generate_documentation_for_dataset(dataset_name, dataset_schema_details)"
       },
       {
         "lang": "python",
         "code": "def json_to_markdown_document(json_list):\n    markdown_document = \"\"\n    if not json_list:\n        return \"No data available\"\n    \n    for item in json_list:\n        for key, value in item.items():\n            markdown_document += f\"**{key}:** {value}\\n\\n\"\n        markdown_document += \"---\\n\\n\"  # Separator line between items\n    \n    return markdown_document\n\n# Convert the list of dictionaries to Markdown\nmarkdown_document = json_to_markdown_document(documentation_responses)\n\n# Display the Markdown in the notebook\ndisplay(Markdown(markdown_document))"
-      },
-      {
-        "lang": "python",
-        "code": "def generate_high_level_documentation(markdown_document):\n    # Placeholder for the function to submit and poll for high-level documentation generation\n    message = athena.message.submit_and_poll(\n    content=\n    f\"\"\"\n**Task:** Generate high-level comprehensive documentation for a body of datasets.\n\n**Objective:**\nCreate high-level output documentation for multiple related tables, detailing their schema, fields, relationships, and relevant metadata. The documentation should follow the structure provided below and adhere to the specified markdown format and tone. Use the provided markdown document and other available information to produce the documentation tailored to the context. This documentation will serve as a guide for understanding the structure, purpose, and usage of the datasets within the organization. It should be clear, concise, and informative, catering to both technical and non-technical stakeholders.\n\n**Instructions:**\n1. Explore information available in the provided markdown document:\n- Provided markdown document:\n\n{markdown_document}\n\n\n2. For each section of the documentation, provide clear, concise information as outlined in the output template. Use professional language and ensure the documentation is accessible to a broad audience.\n3. Include diagrams such as Entity-Relationship Diagrams (ERD) and other helpful diagrams to explore relationships in the data.\n4. Discuss possible analyses and how the datasets can be joined for these analyses.\n5. Only include factual statements. When making assumptions or inferences, clearly label them as such.\n6. Pay attention to Mermaid diagram dialect and double-check yourself. \n\n**Output Template:**\n\n## Athena Generated High-Level Dataset Documentation\n\n### Overview of Datasets\n\nProvide a brief overview of the datasets included in the markdown document, summarizing their purpose and how they relate to each other.\n\n### Entity-Relationship Diagram (ERD)\n\nInclude an ERD that visually represents the relationships between the datasets.\n\n### Possible Analyses\n\nDiscuss potential analyses that could be performed using these datasets, highlighting how they can be joined and what insights might be derived.\n\n### Other Helpful Diagrams\n\nInclude other diagrams that may help in understanding the relationships between the datasets, such as flowcharts or sequence diagrams.\n\n### Guidelines for Use\n\nDescribe the organization's guidelines for using these datasets together, including any best practices or restrictions.\n\n### Other Notes & Considerations\n\nList any additional notes or considerations relevant to the use or interpretation of these datasets as a whole.\n\n**End of Template**\n\nPlease ensure all information is accurate and up-to-date, reflecting the current state of the datasets as of [CURRENT DATE].\n    \"\"\",\n    model=Model.MIXTRAL_SMALL_8_X_7_B_0211,\n    tools=[],\n    )\n    print(\"Generating description for provided dataset-level documentation\")\n    message_json=json.loads(message.json())\n    return message_json['content']"
       },
       {
         "lang": "python",
@@ -438,6 +429,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -457,6 +449,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#load-a-json-serialisable-data-frame",
     "content": "Call tools.data_frame() to load a data frame from a CSV/excel file:\nAthena returns a simple pandas DataFrame representation with the default parsing options. You can adjust the following options:\nrow_limit: int number of rows to load,\n\nindex_column: int column to use as an index,\n\ncolumns: list[str | int] indices or names of columns to include,\n\nsheet_name: str | int name of the sheet to load, only applicable to Excel files\n\nseparator: str separator to use when parsing, only applicable to CSV files\n\n\nFor example, when working with large datasets, it might be beneficial to first examine at the initial five rows:",
@@ -498,6 +491,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#load-a-large-or-complex-data-frame",
     "content": "The tools.data_frame() method is sufficient for handling well-formatted,\nmedium-sized data frames and provides interface that is agnostic to the SDK version\n(a sister method is available in the TypeScript SDK).\nHowever, if your Excel files include values that cannot be JSON-serialized,\nare serializable with a loss of precision, or contain additional metadata,\nyou may prefer to use tools.read_data_frame() method.\nThis method skips the JSON serialization step and provides a raw byte stream\nto the pandas read_csv or read_excel methods, as appropriate.\nThe keyword arguments provided to read_data_frame will be passed to\nthe underlying read_csv/read_excel, depending on the file type.",
@@ -535,6 +529,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#load-a-data-frame-with-another-package",
     "content": "If you prefer to use another data frame implementation, you can access the\nraw bytes stream object using the tools.get_file() method, which accepts\na single argument - the document identifier. The resulting object complies\nwith the io.BytesIO interface and can be used with most data frame libraries,\nfor example:",
@@ -572,6 +567,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -591,6 +587,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#upload-a-file",
     "content": "To upload a file using the Athena SDK, you can use the upload.upload_documents() method. This method accepts a list of file tuples, where each tuple contains the filename, file content as a BytesIO object, and the MIME type.\nHere's an example of how to upload an Excel file:\nIn this example:\nWe open the file and read its contents into a BytesIO object.\n\nWe create a tuple containing the filename, the BytesIO object, and the MIME type.\n\nWe call athena.upload.upload_documents() with a list containing our file tuple.\n\nThe function returns the result of the upload operation.",
@@ -628,6 +625,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#upload-multiple-files",
     "content": "You can upload multiple files in a single request by adding more file tuples to the list:",
@@ -665,6 +663,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#using-with-fastapi",
     "content": "If you're using FastAPI and want to upload files received from a client, you can use the UploadFile object:\nThis endpoint will accept file uploads and forward them to the Athena API using the SDK.\nRemember to handle exceptions and implement proper error checking in your production code.",
@@ -706,6 +705,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "c173bee9-1794-4364-93d9-780ed8d82ec7",
     "api_endpoint_id": "endpoint_tools._data_frame",
@@ -760,6 +760,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "c173bee9-1794-4364-93d9-780ed8d82ec7",
     "api_endpoint_id": "endpoint_tools._raw_data",

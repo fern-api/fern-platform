@@ -11,6 +11,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The Ferry Health API provides programmatic access to Appointment Tasks.\nUse the API to:\nCreate Appointment Tasks\n\nLoad Appointment Tasks"
   },
@@ -26,6 +27,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#authentication",
     "content": "To use the Ferry API, you'll need an API key. If you don't have one already, please\nreach out to get one: support@ferry.health.\nIn all API requests, you should provide your token using the Authorization\nheader with the \"Bearer \" prefix:",
@@ -58,6 +60,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#appointment-tasks",
     "content": "You can create Appointment Tasks to initiate a search for providers. See the\n/create-appointment-task endpoint for the\navailable request properties.\nWhen you create an Appointment Task, we will return an appointmentTaskId, and Ferry will asynchronously\ncompile a list of providers with validated availability. You can poll for the status of a task using\nthe /get-appointment-task endpoint.\nOnce the task is in the \"AVAILABLE\" state, it will include some appointment availabilities:",
@@ -100,6 +103,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
     "api_endpoint_id": "endpoint_.CreateAppointmentTask",
@@ -150,6 +154,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
     "api_endpoint_id": "endpoint_.GetAppointmentTask",
@@ -200,6 +205,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
     "api_endpoint_id": "endpoint_.CancelAppointmentTask",
@@ -248,6 +254,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
     "api_endpoint_id": "endpoint_.GetAllAppointmentTasks",
