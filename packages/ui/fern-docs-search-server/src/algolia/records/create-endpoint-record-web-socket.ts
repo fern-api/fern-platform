@@ -1,5 +1,5 @@
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
-import { truncateToBytes, withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { measureBytes, truncateToBytes, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { compact, flatten } from "es-toolkit";
 import { BaseRecord, EndpointBaseRecord } from "../types";
 import { maybePrepareMdxContent } from "./prepare-mdx-content";
@@ -19,7 +19,9 @@ export function createEndpointBaseRecordWebSocket({
     types,
 }: CreateWebSocketEndpointBaseRecordOptions): EndpointBaseRecord {
     const prepared = maybePrepareMdxContent(toDescription(endpoint.description));
-    const code_snippets = flatten(compact([base.code_snippets, prepared.code_snippets]));
+    const code_snippets = flatten(compact([base.code_snippets, prepared.code_snippets])).filter(
+        (codeSnippet) => measureBytes(codeSnippet.code) < 2000,
+    );
 
     const keywords: string[] = [...(base.keywords ?? [])];
 

@@ -1,5 +1,5 @@
 import { ApiDefinition } from "@fern-api/fdr-sdk";
-import { truncateToBytes } from "@fern-api/ui-core-utils";
+import { measureBytes, truncateToBytes } from "@fern-api/ui-core-utils";
 import { ApiReferenceRecord, EndpointBaseRecord } from "../types";
 import { maybePrepareMdxContent } from "./prepare-mdx-content";
 import { toDescription } from "./to-description";
@@ -24,13 +24,20 @@ export function createApiReferenceRecordWebhook({
         toDescription(endpoint.payload?.description),
     );
 
-    if (payload_description != null || payload_description_code_snippets?.length) {
+    const code_snippets = payload_description_code_snippets?.filter(
+        (codeSnippet) => measureBytes(codeSnippet.code) < 2000,
+    );
+
+    if (payload_description != null || code_snippets?.length) {
         records.push({
             ...base,
+            breadcrumb: [...(base.breadcrumb ?? []), { title: base.title, pathname: base.pathname }],
+            title: `${base.title} - Payload`,
             objectID: `${base.objectID}-payload`,
             hash: "#payload",
             description: payload_description != null ? truncateToBytes(payload_description, 50 * 1000) : undefined,
-            code_snippets: payload_description_code_snippets,
+            code_snippets: code_snippets?.length ? code_snippets : undefined,
+            page_position: 1,
         });
     }
 

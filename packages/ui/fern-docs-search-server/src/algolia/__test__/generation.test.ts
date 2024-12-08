@@ -51,13 +51,15 @@ for (const fixtureName of [
             const apis = FernNavigation.utils.toApis(fixture);
             const pages = FernNavigation.utils.toPages(fixture);
 
-            const records = createAlgoliaRecords({
+            const { records, tooLarge } = createAlgoliaRecords({
                 root,
                 domain: "test.com",
                 org_id: "test",
                 pages,
                 apis,
             });
+
+            expect(tooLarge.length).toBe(0);
 
             records.forEach((record) => {
                 if (record.description != null) {

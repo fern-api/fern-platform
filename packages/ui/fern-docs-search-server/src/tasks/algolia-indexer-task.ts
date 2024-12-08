@@ -3,6 +3,7 @@ import { algoliasearch } from "algoliasearch";
 import { assert } from "ts-essentials";
 import { browseAllObjectsForDomain } from "../algolia/browse-all-objects";
 import { createAlgoliaRecords } from "../algolia/records/create-algolia-records";
+import { AlgoliaRecord } from "../algolia/types";
 import { loadDocsWithUrl } from "../fdr/load-docs-with-url";
 
 interface AlgoliaIndexerPayload {
@@ -54,6 +55,10 @@ export interface AlgoliaIndexerTaskResponse {
     deletedObjectIDs: string[];
     addedObjectIDs: string[];
     updatedObjectIDs: string[];
+    tooLarge: {
+        record: AlgoliaRecord;
+        size: number;
+    }[];
 }
 
 export async function algoliaIndexerTask(payload: AlgoliaIndexerPayload): Promise<AlgoliaIndexerTaskResponse> {
@@ -66,7 +71,7 @@ export async function algoliaIndexerTask(payload: AlgoliaIndexerPayload): Promis
     const { org_id, root, pages, apis, domain } = await loadDocsWithUrl(payload);
 
     // create new records (this is the target state of the index)
-    const targetRecords = createAlgoliaRecords({
+    const { records: targetRecords, tooLarge } = createAlgoliaRecords({
         root,
         domain,
         org_id,
@@ -114,5 +119,6 @@ export async function algoliaIndexerTask(payload: AlgoliaIndexerPayload): Promis
         deletedObjectIDs,
         addedObjectIDs,
         updatedObjectIDs,
+        tooLarge,
     };
 }

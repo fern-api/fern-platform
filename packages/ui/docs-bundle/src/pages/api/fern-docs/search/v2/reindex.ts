@@ -26,6 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 added: 0,
                 updated: 0,
                 deleted: 0,
+                unindexable: 0,
             });
         }
 
@@ -64,12 +65,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             added: response.addedObjectIDs.length,
             updated: response.updatedObjectIDs.length,
             deleted: response.deletedObjectIDs.length,
+            unindexable: response.tooLarge.length,
+        });
+
+        response.tooLarge.forEach(({ record, size }) => {
+            // eslint-disable-next-line no-console
+            console.warn(
+                `Could not index record because it was too large: https://${record.domain}${record.pathname}${record.hash ?? ""} (${String(size)} bytes)`,
+            );
         });
 
         return res.status(200).json({
             added: response.addedObjectIDs.length,
             updated: response.updatedObjectIDs.length,
             deleted: response.deletedObjectIDs.length,
+            unindexable: response.tooLarge.length,
         });
     } catch (error) {
         // eslint-disable-next-line no-console

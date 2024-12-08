@@ -60,7 +60,7 @@ export function prepareMdxContent(content: string): PreparedMdxContent {
     }).trim();
 
     return {
-        content: stringifiedContent.length > 0 ? stringifiedContent : undefined,
+        content: stringifiedContent.trimStart().length > 0 ? stringifiedContent : undefined,
         code_snippets: code_snippets.length > 0 ? code_snippets : undefined,
     };
 }

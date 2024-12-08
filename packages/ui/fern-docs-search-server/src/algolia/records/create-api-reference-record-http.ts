@@ -1,5 +1,5 @@
 import { ApiDefinition } from "@fern-api/fdr-sdk";
-import { truncateToBytes } from "@fern-api/ui-core-utils";
+import { measureBytes, truncateToBytes } from "@fern-api/ui-core-utils";
 import { ApiReferenceRecord, EndpointBaseRecord } from "../types";
 import { maybePrepareMdxContent } from "./prepare-mdx-content";
 import { toDescription } from "./to-description";
@@ -28,9 +28,14 @@ export function createApiReferenceRecordHttp({
             ...base,
             objectID: `${base.objectID}-request`,
             hash: "#request",
+            breadcrumb: [...(base.breadcrumb ?? []), { title: base.title, pathname: base.pathname }],
+            title: `${base.title} - Request`,
             // TODO: chunk this
             description: request_description != null ? truncateToBytes(request_description, 50 * 1000) : undefined,
-            code_snippets: request_description_code_snippets,
+            code_snippets: request_description_code_snippets?.filter(
+                (codeSnippet) => measureBytes(codeSnippet.code) < 2000,
+            ),
+            page_position: 1,
         });
     }
 
@@ -43,9 +48,14 @@ export function createApiReferenceRecordHttp({
             ...base,
             objectID: `${base.objectID}-response`,
             hash: "#response",
+            breadcrumb: [...(base.breadcrumb ?? []), { title: base.title, pathname: base.pathname }],
+            title: `${base.title} - Response`,
             // TODO: chunk this
             description: response_description != null ? truncateToBytes(response_description, 50 * 1000) : undefined,
-            code_snippets: response_description_code_snippets,
+            code_snippets: response_description_code_snippets?.filter(
+                (codeSnippet) => measureBytes(codeSnippet.code) < 2000,
+            ),
+            page_position: 1,
         });
     }
 

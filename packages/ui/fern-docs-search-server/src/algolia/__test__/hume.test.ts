@@ -7,13 +7,15 @@ describe("hume", () => {
         const [fixture, snapshotFilepath] = readFixture("hume");
         const { root, apis, pages } = readFixtureToRootNode(fixture);
 
-        const records = createAlgoliaRecords({
+        const { records, tooLarge } = createAlgoliaRecords({
             root,
             domain: "dev.hume.ai",
             org_id: "hume",
             pages,
             apis,
         });
+
+        expect(tooLarge.length).toBe(0);
 
         const objectIDs = records.map((record) => record.objectID);
 

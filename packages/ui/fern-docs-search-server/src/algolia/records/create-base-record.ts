@@ -77,6 +77,7 @@ export function createBaseRecord({
             : undefined,
         visible_by: roles.map(createRoleFacet),
         authed,
+        page_position: 0,
     };
 }
 

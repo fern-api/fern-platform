@@ -16,6 +16,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Welcome to Stack Auth, the open-source authentication platform!",
     "content": "You can get started in five minutes with our setup guide, or jump straight into the documentation.\n\n\n\n\nGet started with Stack in 5 minutes\n\n\nLearn how to use Stack's SDKs for Next.js\n\n\nExplore Stack's REST API for your backends\n\n\nJoin our Discord community"
@@ -37,6 +38,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#why-choose-stack",
     "content": "Authentication is inherently difficult. Few things are more sensitive than user data and more complex than cryptography. Not surprisingly, many online businesses struggle to get it right.\nThe optimal authentication solution should be secure, yet approachable. If a developer has to worry about JWTs, OAuth flows, or password hashing, then we have failed. If an authentication solution uses closed-source, unauditable code for the most critical parts of your application, then we have failed.\nIn truth, the authentication services industry has collectively failed. It's dominated by proprietary giants with predatory \"bait-and-switch\" pricing, providing no transparency into their codebase and delivering a subpar developer experience — because they know enterprises will pay more if setting up auth systems is painful.\nThat's why we built Stack. Integrating secure authentication into your app should take 5 minutes, not 5 days.\nAt the core of Stack are deep integrations into frontend and backend frameworks. We offer the best developer experience with Next.js. Instead of providing mediocre support for numerous frameworks, we focused on making a few integrations excellent before adding new ones. We also offer a cross-compatible REST API as a fallback.\nHere's an example. To get the current user, simply call:\nThat's it! Stack will either return a User object or redirect the user to the login page.\nYou can also add a button to change the user's name:\nThe user data will update in both the frontend and backend automatically. The updated user data will be reflected in all other components on your page as well.\nYou also get pages and components for the authentication flow out-of-the-box. This is the sign-in page you get without writing a single line of code:\nStack sign in page\nNotice, there's no branding on our components. We believe we should grow by building the best product, not by forcing our brand onto your users. This means we rely on you to spread the word about Stack. If you like what you're reading, please take a moment to tell one or two of your friends about us.\nIf you prefer a fully customized UI, you can use our low-level functions like signInWithOAuth or signInWithCredential to build your own sign-in page:\nTo manage everything efficiently, there is a powerful admin dashboard:\nStack dashboard\nBest of all, Stack is 100% open-source. This means the client, server, dashboard, and even this documentation you're reading right now. Check out our GitHub to open an issue or pull request.\nThis is just a glimpse of what Stack can do. Stack also handles many other tasks like backend integration, data storage, emails, teams, permissions, and more, which you will learn about later in the documentation.\nIf this sounds interesting, get started with our interactive setup wizard, or join our Discord community to ask questions and get help from our team.\nWe're excited to have you on board! 🚀",
@@ -82,6 +84,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Frequently asked questions about Stack"
   },
@@ -102,6 +105,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#languages--frameworks",
     "content": "In the frontend, Stack supports TypeScript and JavaScript with Next.js. In the backend, Stack has a flexible REST API that can be used with any language or framework.\n\n\nWhile you can use any backend framework with Stack, the frontend is tightly integrated with Next.js. If you want to use a different frontend framework, you will have to build the integration ourselves with the client endpoints of our REST API. Some members of our community have started projects to do this, so you may want to join our Discord to coordinate with them.\n\n\nOnly the Next.js app router is currently supported. However, just like any other unsupported framework, you can use the client endpoints of our REST API to build your own integration.",
@@ -133,6 +137,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#product",
     "content": "Ask yourself about <X>:\nIs <X> open-source?\n\nIs <X> developer-friendly, well-documented, and lets you get started in minutes?\n\nBesides authentication, does <X> also do authorization and user management (see feature list below)?\n\n\nIf you answered \"no\" to any of these questions, then that's how Stack Auth is different from <X>.\n\n\nWhile you can use any backend framework with Stack, the frontend is tightly integrated with Next.js. If you want to use a different frontend framework, you will have to build the integration ourselves with the client endpoints of our REST API. Some members of our community have started projects to do this, so you may want to join our Discord to coordinate with them.\n\n\nOnly the Next.js app router is currently supported. However, just like any other unsupported framework, you can use the client endpoints of our REST API to build your own integration.",
@@ -164,6 +169,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#other",
     "content": "Please carefully read our CONTRIBUTING.md.",
@@ -200,6 +206,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Getting started with Stack in 5 minutes"
   },
@@ -225,6 +232,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#setup",
     "content": "To get started with Stack, you need a Next.js project with the app router. The pages router is not supported.\nWe recommend using our setup wizard, which will automatically detect your project structure and guide you through the installation process. In case it fails, you can choose to do the manual installation instead.\n\n\n\n\n\n\nRun installation wizard\nRun Stack's installation wizard with the following command:\nUpdate API keys\nThen, create an account on the Stack Auth dashboard, create a new project with an API key, and copy its environment variables into the .env.local file of your Next.js project:\nDone!\nThat's it! The following files should have been created or updated in your project:\napp/handler/[...stack]/page.tsx: This file contains the default pages for sign-in, sign-out, account settings, and more. If you prefer, later you will learn how to use custom pages instead.\n\napp/layout.tsx: The layout file was updated to wrap the entire body with StackProvider and StackTheme.\n\napp/loading.tsx: If not yet found, Stack automatically adds a Suspense boundary to your app. This is shown to the user while Stack's async hooks, like useUser, are loading.\n\nstack.ts: This file contains the stackServerApp which you can use to access Stack from Server Components, Server Actions, API routes, and middleware.\n\n\n\n\nNote: The setup wizard also supports existing, complicated projects. Cases where manual installation is necessary are rare.\nIf you are struggling with the setup wizard, please reach out to us on our Discord first, where we'll be happy to help you.\n\n\nInstall npm package\nFirst, install Stack with npm, yarn, or pnpm:\nCreate API keys\nIf you haven't already, register a new account on Stack. Create a project in the dashboard, create a new API key from the left sidebar, and copy the project ID, publishable client key, and secret server key into a new file called .env.local in the root of your Next.js project:\nCreate stack.ts file\nCreate a new file stack.ts in your root directory and fill it with the following:\nThis will read the environment variables automatically and create a server app that you can later use to access Stack from your Next.js server.\nCheck out the StackServerApp documentation to learn more about its other options.\nCreate Stack handler\nCreate a new file in app/handler/[...stack]/page.tsx and paste the following code:\nThis will create pages for sign-in, sign-up, password reset, and others. Additionally, it will be used as a callback URL for OAuth. You can replace them with your own pages later.\nAdd StackProvider to layout.tsx\nIn your app/layout.tsx, wrap the entire body with a StackProvider and StackTheme. Afterwards, it should look like this:\nAdd Suspense boundary\nBy default, Stack uses Suspense to handle loading states. To show a loading indicator while Stack is fetching user data, make sure there is a loading.tsx file in your app directory:\nDone!",
@@ -343,6 +351,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#post-setup",
     "content": "That's it! Stack is now configured in your Next.js project. If you start your Next.js app with npm run dev and navigate to http://localhost:3000/handler/signup, you will see the Stack sign-up page.\nStack sign in page\nAfter signing up/in, you will be redirected back to the home page. We will show you how to add user information to it in the next section. You can also check out the http://localhost:3000/handler/account-settings page which looks like this:\nStack account settings page",
@@ -379,6 +388,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#next-steps",
     "content": "Next up, we will show you how to retrieve and update user information, and how to protect a page.",
@@ -415,6 +425,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Pre-built Next.js components to make your life easier",
     "content": "In the last guide, we initialized Stack. This time, we will take a quick look at some of the most useful Next.js components.\nFor the full documentation of all available components, please refer to the components reference."
@@ -441,6 +452,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#userbutton-",
     "content": "The <UserButton /> component shows the user's avatar and opens a dropdown with various user settings.\nUserButton",
@@ -484,6 +496,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#signin--and-signup-",
     "content": "These components show a sign-in and sign-up form, respectively.\nSign-in Component\nAll of Stack's components are modular and built from smaller primitives. For example, the <SignIn /> component is composed of the following:\nAn <OAuthButtonGroup />, which itself is composed of multiple <OAuthButton /> components\n\nA <MagicLinkSignIn />, which has a text field and calls useStackApp().signInWithMagicLink()\n\nA <CredentialSignIn />, which has two text fields and calls useStackApp().signInWithCredential()\n\n\nYou can use these components individually to build a custom sign-in component.\nTo change the default sign-in URL to your own, see the documentation on custom pages.",
@@ -527,6 +540,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#others",
     "content": "Stack has many more components available. For a comprehensive list, please check the documentation on components.",
@@ -563,6 +577,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#next-steps",
     "content": "In the next guide, we will do a deep-dive into retrieving and modifying user objects, as well as how to protect a page.",
@@ -599,6 +614,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Reading and writing user information, and protecting pages",
     "content": "You will inevitably build custom components that access the user in one way or another. In this section, we will take a closer look at the functions and hooks that let you do this."
@@ -625,6 +641,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-component-basics",
     "content": "The useUser() hook returns the current user in a Client Component. By default, it will return null if the user is not signed in.\nThe useUser() hook is simply a shorthand for useStackApp().useUser(). useStackApp() also contains other useful hooks and methods for clients, which will be described later.\nSometimes, you want to retrieve the user only if they're signed in, and redirect to the sign-in page otherwise. In this case, simply pass { or: \"redirect\" }, and the function will never return null.",
@@ -672,6 +689,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#server-component-basics",
     "content": "Since useUser() is a stateful hook, you can't use it on server components. Instead, you can import stackServerApp from stack.ts and call getUser():\n\n\nSince useUser() is a hook, it will re-render the component on user changes (eg. signout), while getUser() will only fetch the user once (on page load). You can also call useStackApp().getUser() on the client side to get the user in a non-component context.",
@@ -715,6 +733,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#protecting-a-page",
     "content": "There are three ways to protect a page: in Client Components with useUser({ or: \"redirect\" }), in Server Components with await getUser({ or: \"redirect\" }), or with middleware.\nOn Client Components, the useUser({ or: 'redirect' }) hook will redirect the user to the sign-in page if they are not logged in. Similarly, on Server Components, call await getUser({ or: \"redirect\" }) to protect a page (or component).\nMiddleware can be used whenever it is easy to tell whether a page should be protected given just the URL, for example, when you have a /private section only accessible to logged-in users.\n\n\n\n\n\n\n\n\n\n\nIf you have sensitive information hidden in the page HTML itself, be aware of Next.js differences when using Server vs. Client Components.\nClient Components: Client components are always sent to the browser, regardless of page protection. This is standard Next.js behavior. For more information, please refer to the Next.js documentation.\n\nServer Components: If a component is protected, it is guaranteed that its bundled HTML will not be sent to the browser if the user is not logged in. However, this is not necessarily true for its children and the rest of the page, as Next.js may split components on the same page and send them to the client separately for performance.\nFor example, if your page is <Parent><Child /></Parent>, where Parent is protected and Child is not, Next.js may still send <Child /> to the browser even if the user is not logged in. (Normal browsers will never display it, but attackers may be able to retrieve it.) Notably, this also applies to unprotected pages inside protected layouts.\nTo remediate this, every component/page that contains sensitive information should protect itself, instead of relying on an outer layout. This is good practice anyways; it prevents you from accidentally exposing the data.\n\nMiddleware: Because middleware runs on the edge, it ensures that the protected URLs are not accessible to anyone who is not authorized, so you don't have to worry about Next.js pre-sending unprotected components to the client.\n\n\nIrregardless of which method you use, attackers will never be able to, say, impersonate a user.",
@@ -783,6 +802,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#user-data",
     "content": "You can update attributes on a user object with the user.update() function.\nYou can also store custom user data in the clientMetadata, serverMetadata, or clientReadonlyMetadata fields. More information here.",
@@ -826,6 +846,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#signing-out",
     "content": "You can sign out the user by redirecting them to /handler/sign-out or simply by calling user.signOut(). They will be redirected to the URL configured as afterSignOut in the StackServerApp.",
@@ -884,6 +905,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#example-custom-profile-page",
     "content": "Stack automatically creates a user profile on sign-up. Let's build a page that displays this information. In app/profile/page.tsx:\n\n\n\n\n\n\nAfter saving your code, you can see the profile page on http://localhost:3000/profile.\nFor more examples on how to use the User object, check the the SDK documentation.",
@@ -942,6 +964,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#next-steps",
     "content": "In the next guide, we will show you how to put your application into production.",
@@ -978,6 +1001,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Steps to prepare Stack for production use",
     "content": "Stack makes development easy with various default settings, but these settings need to be optimized for security and user experience when moving to production. Here's a checklist of things you need to do before switching to production mode:"
@@ -1004,6 +1028,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#domains-and-handlers",
     "content": "By default, Stack allows all localhost paths as valid callback URLs. This is convenient for development but poses a security risk in production because attackers could use their own domains as callback URLs to intercept sensitive information. Therefore, in production, Stack must know your domain (e.g., https://your-website.com) and only allow callbacks from those domains.\nFollow these steps when you're ready to push your application to production:\nAdd Your Domain: Navigate to the Domain & Handlers tab in the Stack dashboard. If you haven't configured your handler, you can leave it as the default. (Learn more about handlers here).\n\nDisable Localhost Callbacks: For enhanced security, disable the Allow all localhost callbacks for development option.",
@@ -1040,6 +1065,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#oauth-providers",
     "content": "Stack uses shared OAuth keys for development to simplify setup when using \"Sign in with Google/GitHub/etc.\" However, this isn't secure for production as it displays \"Stack Development\" on the providers' consent screens, making it unclear to users if the OAuth request is genuinely from your site. Thus, you should configure your own OAuth keys with the providers and connect them to Stack.\nTo use your own OAuth provider setups in production, follow these steps for each provider you use:\nCreate an OAuth App: On the provider's website, create an OAuth app and set the callback URL to the corresponding Stack callback URL. Copy the client ID and client secret.\n\n\n\n\nGoogle OAuth Setup Guide\n\nCallback URL:\n\nhttps://api.stack-auth.com/api/v1/auth/oauth/callback/google\n\n\nGitHub OAuth Setup Guide\n\nCallback URL:\n\nhttps://api.stack-auth.com/api/v1/auth/oauth/callback/github\n\n\nFacebook OAuth Setup Guide\n\nCallback URL:\n\nhttps://api.stack-auth.com/api/v1/auth/oauth/callback/facebook\n\n\nMicrosoft Azure OAuth Setup Guide\n\nCallback URL:\n\nhttps://api.stack-auth.com/api/v1/auth/oauth/callback/microsoft\n\n\nSpotify OAuth Setup Guide\n\nCallback URL:\n\nhttps://api.stack-auth.com/api/v1/auth/oauth/callback/spotify\n\n\nGitlab OAuth Setup Guide\n\nCallback URL:\n\nhttps://api.stack-auth.com/api/v1/auth/oauth/callback/gitlab\n\n\nBitbucket OAuth Setup Guide\n\nCallback URL:\n\nhttps://api.stack-auth.com/api/v1/auth/oauth/callback/bitbucket\n\n\nLinkedIn OAuth Setup Guide\n\nCallback URL:\n\nhttps://api.stack-auth.com/api/v1/auth/oauth/callback/linkedin\n\n\nX OAuth Setup Guide\n\nCallback URL:\n\nhttps://api.stack-auth.com/api/v1/auth/oauth/callback/x\n\nEnter OAuth Credentials: Go to the Auth Methods section in the Stack dashboard, open the provider's settings, switch from shared keys to custom keys, and enter the client ID and client secret.",
@@ -1076,6 +1102,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#email-server",
     "content": "For development, Stack uses a shared email server, which sends emails from Stack's domain. This is not ideal for production as users may not trust emails from an unfamiliar domain. You should set up an email server connected to your own domain.\nSteps to connect your own email server with Stack:\nSetup Email Server: Configure your own email server and connect it to your domain (this step is beyond Stack's documentation scope).\n\nConfigure Stack's Email Settings: Navigate to the Emails section in the Stack dashboard, click Edit in the Email Server section, switch from Shared to Custom SMTP server, enter your SMTP configurations, and save.",
@@ -1112,6 +1139,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#enabling-production-mode",
     "content": "After completing the steps above, you can enable production mode on the Project Settings tab in the Stack dashboard, ensuring that your website runs securely with Stack in a production environment.",
@@ -1148,6 +1176,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "The most important object of your Stack project",
     "content": "By now, you may have seen the useApp() hook and the stackServerApp variable. Both return a StackApp, of type StackClientApp and StackServerApp respectively.\nNearly all of Stack's functionality is on your StackApp object. Think of this object as the \"connection\" from your code to Stack's servers. Each app is always associated with one specific project ID (by default the one found in your environment variables).\nThere is also a page on StackApp in the SDK reference, which lists all available functions."
@@ -1174,6 +1203,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#getxyzlistxyz-vs-usexyz",
     "content": "You will see that most of the asynchronous functions on StackApp come in two flavors: getXyz/listXyz and useXyz. The former are asynchronous fetching functions which return a Promise, while the latter are React hooks that suspend the current component until the data is available.\nNormally, you would choose between the two based on whether you are in a React Server Component or a React Client Component. However, there are some scenarios where you use getXyz on the client, for example as the callback of an onClick handler.",
@@ -1216,6 +1246,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-vs-server",
     "content": "StackClientApp contains everything needed to build a frontend application, for example the currently authenticated user. It requires a publishable client key in its initialization (usually set by the NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY environment variable).\nStackServerApp has all the functionality of StackClientApp, but also some functions with elevated permissions, eg. listing or modifying ALL users. This requires a secret server key (usually set by the STACK_SECRET_SERVER_KEY environment variable), which must always be kept secret.\nThere is also a third type, StackAdminApp, but it is rarely used. You can use it for automation or internal tools, and can edit your project's configuration.\n\n\nSome of the functions have different return types; for example, StackClientApp.getUser() returns a Promise<User> while StackServerApp.getUser() returns a Promise<ServerUser>. The Server or Admin prefixes indicate that the object contains server-/admin-only functionality.",
@@ -1252,6 +1283,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "How to store custom user metadata in Stack Auth",
     "content": "Stack Auth allows storing additional user information through three types of metadata fields:\nclientMetadata: Readable and writable from a client.\n\nserverMetadata: Readable and writable only from a server.\n\nclientReadOnlyMetadata: Readable from a client, writable only from a server."
@@ -1278,6 +1310,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-metadata",
     "content": "You can use the clientMetadata field to store non-sensitive information that both the client and server can read and write.",
@@ -1320,6 +1353,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#server-side-metadata",
     "content": "For sensitive information, use the serverMetadata field. This ensures the data is only accessible and modifiable by the server.",
@@ -1362,6 +1396,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#client-read-only-metadata",
     "content": "Use clientReadOnlyMetadata for data that clients need to read but never modify, such as subscription status.",
@@ -1404,6 +1439,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Implementing a user onboarding page and collecting information on sign-up",
     "content": "By default, Stack Auth collects information such as email addresses from OAuth providers. Sometimes, you may want to collect additional information from users during sign-up, for example a name or address.\nThe most straightforward approach is to redirect users to an onboarding page right after they sign up. However, this is not recommended for the following reasons:\nUsers can accidentally (or purposefully) close or navigate away from the page before completing the onboarding.\n\nRedirect URLs may vary depending on the context. For instance, if a user is redirected to a sign-in page after trying to access a protected page, they'll expect to return to the original protected page post-authentication.\n\n\nInstead, a more reliable strategy is to store an onboarded flag in the user's metadata and redirect users to the onboarding page if they haven't completed it yet."
@@ -1430,6 +1466,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#example-implementation",
     "content": "Let's say you have an onboarding page that asks for an address and stores it in the user's metadata:\n\n\nWhile the above implementation offers a basic onboarding process, users can still skip onboarding by directly sending an API request to update the clientMetadata.onboarded flag. If you want to ensure that onboarding cannot be bypassed on the API level, you should create a server endpoint to validate and store the data, then save the onboarded flag in the clientReadonlyMetadata on the server side after validation.\nNext, we can create a hook/function to check if the user has completed onboarding and redirect them to the onboarding page:\n\n\n\n\n\n\nYou can then use these functions wherever onboarding is required:",
@@ -1513,6 +1550,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Managing third-party OAuth access tokens",
     "content": "Stack has good support for working with OAuth and OIDC providers, such as Google, Facebook, Microsoft, and others.\nBeyond using OAuth for signing in, Stack can manage your users' access token so you can invoke APIs on their behalf. For example, you can use this to send emails with Gmail, access repositories on GitHub, or access files on OneDrive.\nA connected account is simply an external account that is linked to the user in some way. If you are not using shared keys (see note below), any user created with \"Sign up with OAuth\" is automatically connected to the account they signed up with, but it's also possible to connect a user with a provider that is unavailable for sign in.\n\n\nYou cannot connect a user's accounts with shared OAuth keys. You need to set up your own OAuth client ID and client secret in Stack's dashboard. For more details, check Going to Production."
@@ -1539,6 +1577,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#connecting-with-oauth-providers",
     "content": "You can access a user's connected account with the user.getConnectedAccount(providerId) function or user.useConnectedAccount(providerId) hook.\nOften, you'll want to redirect the user to the OAuth provider's authorization page if they have not connected the account yet. Just like the getUser(...) function, getConnectedAccount(...) can also take an { or: \"redirect\" } argument to achieve this.\nHere's how to connect with Google:",
@@ -1581,6 +1620,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#providing-scopes",
     "content": "Most providers have access control in the form of OAuth scopes. These are the permissions that the user will see on the authorization screen (eg. \"Your App wants access to your calendar\"). For instance, to read Google Drive content, you need the https://www.googleapis.com/auth/drive.readonly scope:\nCheck your provider's API documentation to find a list of available scopes.",
@@ -1623,6 +1663,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#retrieving-the-access-token",
     "content": "Once connected with an OAuth provider, obtain the access token with the account.getAccessToken() function. Check your provider's API documentation to understand how you can use this token to authorize the user in requests.",
@@ -1665,6 +1706,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#sign-in-default-scopes",
     "content": "To avoid showing the authorization page twice, you can already request scopes during the sign-in flow. This approach is optional. Some applications may prefer to request extra permissions only when needed, while others might want to obtain all necessary permissions upfront.\nTo do this, edit the oauthScopesOnSignIn setting of your stackServerApp:",
@@ -1708,6 +1750,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Manage teams and team members",
     "content": "Teams provide a structured way to group users and manage their permissions. Users can belong to multiple teams simultaneously, allowing them to represent departments, B2B customers, or projects.\nThe server can perform all operations on a team, but the client can only carry out some actions if the user has the necessary permissions. This applies to all actions that can be performed on a server/client-side User object and a Team object."
@@ -1734,6 +1777,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#team-permissions",
     "content": "If you attempt to perform an action without the necessary team permissions, the function will throw an error. Always check if the user has the required permission before performing any action. Learn more about permissions here.\nHere is an example of how to check if a user has a specific permission on the client",
@@ -1780,6 +1824,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#team-profile",
     "content": "A user can have a different profile for each team they belong to (Note this is different to the user's personal profile). This profile contains information like displayName and profileImageUrl. The team profile can be left empty and it will automatically take the user's personal profile information.\nThe team profile is visible to all the other users in the team that have the $read_members permission.",
@@ -1820,6 +1865,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#retrieving-a-users-teams",
     "content": "You can list all teams a user belongs to using the listTeams or useTeams functions or fetch a specific team with getTeam or useTeam. These functions work on both clients and servers.",
@@ -1874,6 +1920,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#creating-a-team",
     "content": "To create a team, use the createTeam function on the User object. The user will be added to the team with the default team creator permissions (You can change this on the permissions tab in the Stack dashboard).\nOn the client side, this requires enabling the \"client side team creation\" on the team settings tab in the Stack dashboard.\nTo create a team on the server without adding a specific user, use the createTeam function on the ServerApp object:",
@@ -1920,6 +1967,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#updating-a-team",
     "content": "You can update a team with the update function on the Team object.\nOn the client, the user must have the $update_team permission to perform this action.",
@@ -1962,6 +2010,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#custom-team-metadata",
     "content": "You can store custom metadata on a team object, similar to the user object. The metadata can be any JSON object.\nclientMetadata: Can be read and updated on both the client and server sides.\n\nserverMetadata: Can only be read and updated on the server side.\n\nclientReadOnlyMetadata: Can be read on both the client and server sides, but can only be updated on the server side.",
@@ -2004,6 +2053,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#list-users-in-a-team",
     "content": "You can list all users in a team with the listUsers function or the useUsers hook on the Team object. Note that if you want to get the team profile, you need to get it with user.teamProfile.\nOn the client, the current user must have the $read_members permission in the team to perform this action.",
@@ -2058,6 +2108,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#get-current-users-team-profile",
     "content": "You can get the current user's team profile with the getTeamProfile or useTeamProfile function on the User object. This function returns the team profile for the team with the given ID.",
@@ -2112,6 +2163,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#invite-a-user-to-a-team",
     "content": "You can invite a user to a team using the inviteUser function on the Team object. The user will receive an email with a link to join the team.\nOn the client side, the current user must have the $invite_members permission to perform this action.",
@@ -2154,6 +2206,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#adding-a-user-to-a-team",
     "content": "If you want to add a user to a team without sending an email, use the addUser function on the ServerTeam object. This function can only be called on the server side.",
@@ -2196,6 +2249,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#removing-a-user-from-a-team",
     "content": "You can remove a user from a team with the removeUser function on the Team object.\nOn the client side, the current user must have the $remove_members permission to perform this action.",
@@ -2238,6 +2292,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#leaving-a-team",
     "content": "All users can leave a team without any permissions required.",
@@ -2280,6 +2335,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#deleting-a-team",
     "content": "You can delete a team with the delete function on the Team object.\nOn the client side, the current user must have the $delete_team permission to perform this action.",
@@ -2322,6 +2378,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Switch between multiple teams of a user",
     "content": "A user can be a member of multiple teams, so most websites using teams will need a way to select a \"current team\" that the user is working on. There are two primary methods to accomplish this:\nDeep Link: Each team has a unique URL, for example, your-website.com/team/<team-id>. When a team is selected, it redirects to a page with that team's URL.\n\nCurrent Team: When a user selects a team, the app stores the team as a global \"current team\" state. In this way, the URL of the current team might be something like your-website.com/current-team, and the URL won't change after switching teams."
@@ -2348,6 +2405,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#deep-link-method",
     "content": "The deep link method is generally recommended because it avoids some common issues associated with the current team method. If two users share a link while using deep link URLs, the receiving user will always be directed to the correct team's information based on the link.",
@@ -2384,6 +2442,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#current-team-method",
     "content": "While the current team method can be simpler to implement, it has a downside. If a user shares a link, the recipient might see information about the wrong team (if their \"current team\" is set differently). This method can also cause problems when a user has multiple browser tabs open with different teams.",
@@ -2420,6 +2479,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#selected-team-switcher",
     "content": "To facilitate team selection, Stack provides a component that looks like this:\nTeamSwitcher\nYou can import and use the SelectedTeamSwitcher component for the \"current team\" method. It updates the selectedTeam when a user selects a team:\nTo combine the switcher with the deep link method, you can pass in urlMap and selectedTeam. The urlMap is a function to generate a URL based on the team information, and selectedTeam is the team that the user is currently working on. This lets you implement \"deep link\" + \"most recent team\". The component will update the user.selectedTeam with the selectedTeam prop:\nTo implement the \"deep link\" + \"default team\" method, where you update the selectedTeam only when the user clicks \"set to default team\" or similar, pass noUpdateSelectedTeam:",
@@ -2470,6 +2530,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#example-deep-link--most-recent-team",
     "content": "First, create a page at /app/team/[teamId]/page.tsx to display information about a specific team:\nNext, create a page to display all teams at /app/team/page.tsx:\nNow, if you navigate to http://localhost:3000/team, you should be able to see and interact with the teams.",
@@ -2518,6 +2579,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Control what each user can do and access with the permission system"
   },
@@ -2543,6 +2605,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#team-permissions",
     "content": "Team permissions control what a user can do within each team. You can create and assign permissions to team members from the Stack dashboard. These permissions could include actions like create_post or read_secret_info, or roles like admin or moderator. Within your app, you can verify if a user has a specific permission within a team.\nPermissions can be nested to create a hierarchical structure. For example, an admin permission can include both moderator and user permissions. We provide tools to help you verify whether a user has a permission directly or indirectly.",
@@ -2579,6 +2642,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#creating-a-permission",
     "content": "To create a new permission, navigate to the Team Permissions section of the Stack dashboard. You can select the permissions that the new permission will contain. Any permissions included within these selected permissions will also be recursively included.",
@@ -2619,6 +2683,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#system-permissions",
     "content": "Stack comes with a few predefined team permissions known as system permissions. These permissions start with a dollar sign ($). While you can assign these permissions to members or include them within other permissions, you cannot modify them as they are integral to the Stack backend system.",
@@ -2659,6 +2724,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#checking-if-a-user-has-a-permission",
     "content": "To check whether a user has a specific permission, use the getPermission method or the usePermission hook on the User object. This returns the Permission object if the user has it; otherwise, it returns null. Always perform permission checks on the server side for business logic, as client-side checks can be bypassed. Here's an example:",
@@ -2721,6 +2787,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#listing-all-permissions-of-a-user",
     "content": "To get a list of all permissions a user has, use the listPermissions method or the usePermissions hook on the User object. This method retrieves both direct and indirect permissions. Here is an example:",
@@ -2783,6 +2850,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#granting-a-permission-to-a-user",
     "content": "To grant a permission to a user, use the grantPermission method on the ServerUser. Here's an example:",
@@ -2829,6 +2897,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#revoking-a-permission-from-a-user",
     "content": "To revoke a permission from a user, use the revokePermission method on the ServerUser. Here's an example:\nBy following these guidelines, you can efficiently manage and verify team permissions within your application.",
@@ -2875,6 +2944,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Syncing team & user data with your backend",
     "content": "Webhooks are a powerful way to keep your backend in sync with Stack. They allow you to receive real-time updates when events occur in your Stack project, such as when a user or team is created, updated, or deleted."
@@ -2901,6 +2971,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#setting-up-webhooks",
     "content": "In the Stack dashboard, you can create a webhook endpoint in the \"Webhooks\" section. After creating this endpoint with your server URL, you will start receiving POST requests with a JSON payload at that endpoint. The event payload will look something like this:",
@@ -2943,6 +3014,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#testing-webhooks-locally",
     "content": "You can use services like Svix Playground or Webhook.site to test the receiving of webhooks or relay them to your local development environment.",
@@ -2979,6 +3051,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#verifying-webhooks",
     "content": "To ensure the webhook is coming from Stack (and not from a malicious actor) and is not prone to replay attacks, you should verify the request.\nStack signs the webhook payload with a secret key that you can find in the endpoint details on the dashboard. You can verify the signature using the Svix client library. Check out the Svix documentation for instructions on how to verify the signature in JavaScript, Python, Ruby, and other languages. Here is an quick example in JavaScript:\nIf you do not want to install the Svix client library or are using a language that is not supported, you can verify the signature manually.",
@@ -3021,6 +3094,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#event-types",
     "content": "Please refer to the webhook endpoint API reference for more details on the available event types and their payload structures.\nuser.created\n\nuser.updated\n\nuser.deleted\n\nteam.created\n\nteam.updated\n\nteam.deleted",
@@ -3057,6 +3131,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#examples",
     "content": "Some members of the community have shared their webhook implementations. For example, here is an example by Clark Gredoña that validates the Webhook schema and update a database user.",
@@ -3093,6 +3168,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Integrate Stack Auth with your own server with the REST APIs",
     "content": "To authenticate your endpoints, you need to send the user's access token in the headers of the request to your server, and then make a request to Stack's server API to verify the user's identity."
@@ -3119,6 +3195,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#sending-requests-to-your-server-endpoints",
     "content": "To authenticate your own server endpoints using Stack's server API, you need to protect your endpoints by sending the user's access token in the headers of the request.\nOn the client side, you can retrieve the access token from the user object by calling user.getAuthJson(). This will return an object containing accessToken.\nThen, you can call your server endpoint with these two tokens in the headers, like this:",
@@ -3161,6 +3238,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#authenticating-the-user-on-the-server-endpoints",
     "content": "On the server side, you can extract the access token from the headers of the request and use it to authenticate the user with the REST API.",
@@ -3215,6 +3293,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -3254,6 +3333,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -3286,6 +3366,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -3310,6 +3391,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#setup",
     "content": "Internationalization with Stack is very straightforward. Simply pass the lang prop to the StackProvider component, and all the pages will be translated to the specified language.\nBy default, if no language is provided, it will be set to en-US.\nYou can choose which languages to use by employing your own methods, such as storing the language in localStorage or using the user's browser language.",
@@ -3353,6 +3435,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#supported-languages",
     "content": "en-US: English (United States)\n\nde-DE: German (Germany)\n\nes-419: Spanish (Latin America)\n\nes-ES: Spanish (Spain)\n\nfr-CA: French (Canada)\n\nfr-FR: French (France)\n\nit-IT: Italian (Italy)\n\npt-BR: Portuguese (Brazil)\n\npt-PT: Portuguese (Portugal)",
@@ -3389,6 +3472,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "If you want to have full control over the layout and logic flow, you can build your own pages using our built-in components or low-level functions.\nBy default, StackHandler creates all pages you need, however, you can replace them with your own pages."
   },
@@ -3414,6 +3498,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#simple-example",
     "content": "For example, if you want to create a custom sign-in page with a customized title on the top, you can create a file at app/signin/page.tsx:\nThen you can instruct the Stack app in stack.ts to use your custom sign in page:\nYou are now all set! If you visit the /signin page, you should see your custom sign in page. If your user visits a protected page or the old /handler/sign-in URL, they will be redirected to your new sign-in page.\nFor more examples, please refer to the Examples.",
@@ -3462,6 +3547,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#from-scratch",
     "content": "We also provide the low-level functions powering our components, so that you can build your own logic. For example, to build a custom OAuth sign-in button, create a file at app/signin/page.tsx:\nAgain, edit the Stack app in stack.ts to use your custom sign in page:\nAs above, visit the /signin page to see your newly created custom OAuth page.",
@@ -3513,6 +3599,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -3540,6 +3627,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#custom-page-with-signin-component",
     "content": "You can also use useUser at the beginning of the sign in page to check if wether the user is already signed in and redirect them to some other page if they are.",
@@ -3585,6 +3673,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#other-useful-components",
     "content": "CredentialSignIn: A component that contains a form for signing in with email and password.\nOAuthGroup: A list of available OAuth provider signin buttons components. The available provider list is fetched from the server.\nOAuthButton: A single OAuth sign in button.",
@@ -3624,6 +3713,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown"
   },
   {
@@ -3651,6 +3741,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#custom-page-with-signup-component",
     "content": "You can also use useUser at the beginning of the sign in page to check if wether the user is already signed in and redirect them to some other page if they are.",
@@ -3696,6 +3787,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#other-useful-components",
     "content": "CredentialSignUp: A component that contains a form for signing in with email and password.\nOAuthGroup: A list of available OAuth provider sign-up buttons components. The available provider list is fetched from the server.\nOAuthButton: A single OAuth sign-up button.",
@@ -3735,6 +3827,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#custom-oauth-sign-up",
     "content": "OAuth sign-in and sign-up shares the same function. Check out the Sign In example for more information.",
@@ -3774,6 +3867,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#custom-magic-link-sign-up",
     "content": "Magic link sign-in and sign-up shares the same function. Check out the Sign In example for more information.",
@@ -3810,6 +3904,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Integrate Stack Auth with Supabase RLS",
     "content": "This guide shows how to integrate Stack Auth with Supabase row level security (RLS).\n\n\nThis guide only focuses on the RLS/JWT integration and does not sync user data between Supabase and Stack. You should use webhooks to achieve data sync."
@@ -3836,6 +3931,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#setup",
     "content": "Let's create a sample table and some RLS policies to demonstrate how to integrate Stack Auth with Supabase RLS. You can apply the same logic to your own tables and policies.\n\n\nSetup Supabase\nFirst, let's create a Supabase project, then go to the SQL Editor and create a new table with some sample data and RLS policies.\nSetup a new Next.js project\nNow let's create a new Next.js project and install Stack Auth and Supabase client. (more details on Next.js setup, Stack Auth setup, and Supabase setup)\nNow copy the environment variables from the Supabase dashboard to the .env.local file:\nNEXT_PUBLIC_SUPABASE_URL\n\nNEXT_PUBLIC_SUPABASE_ANON_KEY\n\nSUPABASE_JWT_SECRET\n\n\nCopy environment variables from the Stack dashboard to the .env.local file.\nNEXT_PUBLIC_STACK_PROJECT_ID\n\nNEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY\n\nSTACK_SECRET_SERVER_KEY\n\n\nSet up Supbase client\nNow let's create a server action that mints a supabase JWT with the Stack Auth user ID if the user is authenticated.\nAnd now create a helper function to create a Supabase client with the JWT signed by the server action\nFetch data from Supabase\nLet's create an example page that fetches data from Supabase and displays it.\nNow you should be able to compare the data you can view with an anonymous user, an authenticated user. You can also add your user Id to the row 3 of the Supabase table, and you should be able to see the row if and only if you are signed in with that user.\nYou can find the full example here on GitHub.",
@@ -3924,6 +4020,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "Self-host Stack Auth on your own server",
     "content": "Stack Auth is fully open-source and can be self-hosted on your own infrastructure. This guide will introduce each component of the project and how to set them up.\n\n\nIf you are unsure whether you should self-host, here are some things to consider:\nComplexity: Stack Auth is a complex project with many interdependent services. Self-hosting requires managing these services and ensuring they work together seamlessly.\n\nUpdates: Stack Auth is a rapidly evolving project with frequent feature and fix releases. Self-hosting requires you to manage updates and apply them timely.\n\nReliability: Self-hosting requires you to ensure the reliability of your infrastructure. Downtimes and outages can be costly to handle.\n\nSecurity: Self-hosting requires ensuring the security of your infrastructure. A compromised service can affect your users.\n\n\nFor most users, we recommend using Stack Auth's cloud hosted solution. However, if you understand the above challenges and are comfortable managing them, follow the instructions below to self-host!"
@@ -3950,6 +4047,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#services",
     "content": "On a high level, Stack Auth is composed of the following services:\nAPI backend: The core of Stack Auth, providing the REST API that the dashboard and your app connect to. This is what api.stack-auth.com provides.\n\nDashboard: The interface for managing users, teams, auth methods, etc. This is available at app.stack-auth.com.\n\nClient SDK: An SDK used to connect your app to the Stack Auth API backend, wrapping API calls and providing easy-to-use interfaces. More details here.\n\nPostgres database: Used to store all user data. We use Prisma as the ORM and manage the database schema migrations.\n\nSvix: Used to send webhooks. Svix is open-source and can be self-hosted, but also offers a cloud hosted solution. More on Svix here\n\nEmail server: We use Inbucket as a local email server for development and a separate SMTP server for production. Any email service supporting SMTP will work.",
@@ -3986,6 +4084,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#setup",
     "content": "Clone the repository and check out the directory:\nPre-populated .env files for the setup below are available and used by default in .env.development in each package. Copy all the .env.development files to .env.local in the respective packages for local development.\nIn a terminal, start the dependencies (Postgres and Inbucket) as Docker containers:\nThen open a new terminal:\nYou can now open the dashboard at http://localhost:8101, the API on port 8102, a demo on port 8103, docs on port 8104, Inbucket (emails) on port 8105, and Prisma Studio on port 8106.\nYour IDE may show errors on all @stackframe/XYZ imports. To fix this, restart the TypeScript language server; for example, in VSCode, you can open the command palette (Ctrl+Shift+P) and run Developer: Reload Window or TypeScript: Restart TS server.",
@@ -4040,6 +4139,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#database-migrations",
     "content": "If you make changes to the Prisma schema, you need to run the following command to create a migration:",
@@ -4086,6 +4186,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#database-svix-email",
     "content": "Deploy these services with your preferred platform. Copy the URLs/API keys—you'll need them in the next step.",
@@ -4126,6 +4227,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#api-backend",
     "content": "Clone the repository and check out the root directory:\nSet all the necessary environment variables (you can check out apps/backend/.env). Note that STACK_BASE_URL should be the URL of your deployed domain (e.g., https://your-backend-url.com).\nBuild and start the server:",
@@ -4176,6 +4278,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#dashboard",
     "content": "Clone the repository (if you are running it on a separate server, or skip this step if you are using the same server as the API backend) and check out the dashboard directory:\nSet all the necessary environment variables (you can check out apps/dashboard/.env). Note that NEXT_PUBLIC_STACK_URL should be the URL of your deployed backend (e.g., https://your-backend-url.com).\nBuild and start the server:",
@@ -4226,6 +4329,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#initialize-the-database",
     "content": "You need to initialize the database with the following command with the backend environment variables set:\nThe database is still empty; you need to create a project with the ID \"internal\" used by the dashboard to authenticate itself. You can do this with the following command:\nNow you can go to the dashboard (e.g., https://your-dashboard-url.com) and sign up for an account.\nTo manage your dashboard configs with this account, manually go into the database, find the user you just created, and add { managedProjectIds: [\"internal\"] } to the serverMetadata jsonb column.\nGo back to the dashboard, refresh the page, and you should see the \"Stack Dashboard\" project. We recommend disabling new user sign-ups to your internal project to avoid unauthorized account and project creations.\nNow, create a new project for your app and follow the normal setup process. Add NEXT_PUBLIC_STACK_URL=https://your-backend-url.com to your app's environment variables so that it connects to your API backend instead of the default Stack Auth API backend (https://api.stack-auth.com).",
@@ -4275,6 +4379,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Renders a user button component with optional user information, color mode toggle, and extra menu items.\nUserButton"
   },
@@ -4299,6 +4404,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#props",
     "content": "showUserInfo: boolean - Whether to display user information (display name and email) or only show the avatar.\n\ncolorModeToggle: () => void | Promise<void> - Function to be called when the color mode toggle button is clicked. If specified, a color mode toggle button will be shown.\n\nextraItems: Array<{text: string, icon: React.ReactNode, onClick: Function}> - Additional menu items to display.",
@@ -4334,6 +4440,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "A React component for switching between teams. It displays a dropdown of teams and allows the user to select a team.\nSelectedTeamSwitcher\nFor a comprehensive guide on using this component, refer to our Team Selection documentation."
   },
@@ -4358,6 +4465,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#props",
     "content": "urlMap (optional): (team: Team) => string - A function that maps a team to a URL. If provided, the component will navigate to this URL when a team is selected.\n\nselectedTeam (optional): Team - The initially selected team.\n\nnoUpdateSelectedTeam (optional): boolean - If true, prevents updating the selected team in the user's settings when a new team is selected. Default is false.",
@@ -4393,6 +4501,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Renders an account settings page with customizable sidebar items and optional full-page layout."
   },
@@ -4417,6 +4526,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#props",
     "content": "fullPage (optional): boolean - If true, renders the component in full-page mode.\n\nextraItems (optional): Array - Additional items to be added to the sidebar. Each item should have the following properties:\ntitle: string - The title of the item.\n\nicon: LucideIcon - The icon component for the item.\n\ncontent: React.ReactNode - The content to be rendered for the item.\n\nsubpath: string - The subpath for the item's route.",
@@ -4452,6 +4562,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Renders a sign-in component with customizable options.\nSignIn\nFor more information, please refer to the custom pages guide."
   },
@@ -4476,6 +4587,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#props",
     "content": "fullPage (optional): boolean - If true, renders the sign-in page in full-page mode.\n\nautomaticRedirect (optional): boolean - If true, redirect to afterSignIn URL if the user is already signed-in.\n\nextraInfo (optional): React.ReactNode - Additional content to be displayed on the sign-in page.\n\nfirstTab (optional): 'magic-link' | 'password' - Determines which tab is initially active. Defaults to 'magic-link' if not specified.",
@@ -4511,6 +4623,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "A component that renders a sign-up page with various customization options.\nSignUp\nFor more information, please refer to the custom pages guide."
   },
@@ -4535,6 +4648,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#props",
     "content": "fullPage (optional): boolean - If true, renders the sign-up page in full-page mode.\n\nautomaticRedirect (optional): boolean - If true, redirect to afterSignUp URL if the user is already signed-in.\n\nnoPasswordRepeat (optional): boolean - If true, removes the password confirmation field.\n\nextraInfo (optional): React.ReactNode - Additional information to display on the sign-up page.\n\nfirstTab (optional): `'magic-link' | 'password' - Determines which tab is initially active. Defaults to 'magic-link' if not specified.",
@@ -4570,6 +4684,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "A component that renders a sign-in form with email and password fields.\nCredentialSignIn\nNote that if credential sign-in is disabled in the dashboard, this component will still render. However, attempting to use it will result in an error being thrown.\nFor more information, please refer to the custom pages guide."
   },
@@ -4594,6 +4709,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#props",
     "content": "This component does not accept any props.",
@@ -4629,6 +4745,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "A component that renders a sign-up form with email and password fields.\nCredentialSignUp\nNote that if credential sign-up is disabled in the dashboard, this component will still render. However, attempting to use it will result in an error being thrown.\nFor more information, please refer to the custom pages guide."
   },
@@ -4653,6 +4770,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#props",
     "content": "noPasswordRepeat (optional): boolean - If set to true, the form will not include a password repeat field.",
@@ -4688,6 +4806,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Renders a customized OAuth button for various providers to initiate sign-in or sign-up processes.\nOAuthButton\nNote that if the specific OAuth provider is disabled in the dashboard, this component will still render. However, attempting to use it will result in an error being thrown.\nFor more information, please refer to the custom pages guide."
   },
@@ -4712,6 +4831,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#props",
     "content": "provider: string - The name of the OAuth provider (e.g., 'google', 'github', 'facebook').\n\ntype: 'sign-in' | 'sign-up' - Determines whether the button text is for signing in or signing up. (both are the same in terms of functionality)",
@@ -4747,6 +4867,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#example",
     "content": "The OAuthButton component automatically styles itself based on the provided OAuth provider and handles the sign-in or sign-up process when clicked.",
@@ -4788,6 +4909,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Renders all the available OAuth buttons for sign-in or sign-up functionality.\nOAuthButtonGroup\nNote that if there are no OAuth providers enabled in the dashboard, this component will be empty."
   },
@@ -4812,6 +4934,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#props",
     "content": "type: 'sign-in' | 'sign-up' - Specifies whether the buttons text are for sign-in or sign-up (both are the same in terms of functionality).",
@@ -4847,6 +4970,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "Renders the appropriate authentication or account-related component based on the current route.\nFor detailed usage instructions, please refer to the manual section of the setup guide."
   },
@@ -4871,6 +4995,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#props",
     "content": "app: StackServerApp - The Stack server application instance.\n\nparams: { stack?: string[] } - The route parameters, where stack is an array of path segments.\n\nsearchParams: Record<string, string> - The URL search parameters.\n\nfullPage: boolean - Whether to render the component in full-page mode.\n\ncomponentProps: { [K in keyof Components]?: Partial<ComponentProps<Components[K]>> } - Props to pass to the rendered components.",
@@ -4906,6 +5031,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "A React component that provides Stack context to its children.\nFor detailed usage instructions, please refer to the manual section of the setup guide."
   },
@@ -4930,6 +5056,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#props",
     "content": "children: React.ReactNode - The child components to be wrapped by the StackProvider.\n\napp: StackClientApp | StackServerApp - The Stack app instance to be used.\n\nlang (optional): \"en-US\" | \"de-DE\" | \"es-419\" | \"es-ES\" | \"fr-CA\" | \"fr-FR\" | \"it-IT\" | \"pt-BR\" | \"pt-PT\" - The language to be used for translations.",
@@ -4965,6 +5092,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "A component that applies a theme to its children.\nFor more information, please refer to the color and styles guide."
   },
@@ -4989,6 +5117,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#props",
     "content": "theme (optional): ThemeConfig - Custom theme configuration to override the default theme.\n\nchildren (optional): React.ReactNode - Child components to be rendered within the themed context.",
@@ -5024,6 +5153,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "This is a detailed reference for the User object. If you're looking for a more high-level overview, please refer to our guide on users here."
   },
@@ -5048,6 +5178,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#different-types-of-user-objects",
     "content": "There are a few types of user objects in Stack Auth:\nCurrentUser\nRepresents the authenticated user on the client side\n\nHas an active session (typically stored in browser cookies)\n\nUsed in client-side code\n\nObtained by calling useUser() in a Client Component\n\n\n\nServerUser\nRepresents a user on the server side without an active session\n\nextends most of the attributes and methods of CurrentUser\n\nHas additional capabilities like being able to update emails or passwords without confirmation\n\nLacks session-dependent functions like signOut()\n\nObtained by calling stackServerApp.getUser('user_id_123') or stackServerApp.listUsers() on the server side\n\n\n\nCurrentServerUser\nCombines attributes and methods of both ServerUser and CurrentUser\n\nObtained by calling stackServerApp.getUser() on the server side\n\n\n\n\nThese user types provide flexible and secure user management across both client and server environments, each serving a specific purpose in different application contexts.",
@@ -5083,6 +5214,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#currentuser",
     "content": "You can call useUser() or stackServerApp.getUser() to get the CurrentUser object.",
@@ -5118,6 +5250,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#properties",
     "content": "The user ID. This is the unique identifier of the user.\n\n\nThe display name of the user. Can be changed by the user.\n\n\nThe primary email of the user. Note: this is not unique.\n\n\nWhether the primary email is verified.\n\n\nThe profile image URL of the user.\n\n\nThe Date when the user signed up.\n\n\nWhether the user has a password set.\n\n\nThe JSON metadata that is visible on the client side. Note that this should not contain information that should be kept private on the server side or information that should not be modified by the client.\n\n\nMetadata that can be read on the client side but can only be modified on the server side.\n\n\nThe currently selected team for the user, if applicable.",
@@ -5157,6 +5290,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#update",
     "content": "Update the user information.\nParameters:\n\n\n\n\n\n\n\n\nThe new display name for the user.\n\n\nCustom metadata visible to the client.\n\n\nThe ID of the team to set as selected, or null to clear selection.\n\n\nThe URL of the user's new profile image (base64 image allowed, crop and compress before passing it in), or null to remove.\nReturns:\n\n\nPromise<void>\nExample:",
@@ -5202,6 +5336,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#getteam",
     "content": "Get the team with the given ID.\nParameters:\n\n\n\n\nThe ID of the team to get.\nReturns:\n\n\nPromise<Team | null>: The team object, or null if the team is not found (either because it doesn't exist or because the user is not a member of the team).\nExample:",
@@ -5247,6 +5382,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#useteam",
     "content": "Get the team with the given ID.\nThis is the same as getTeam but it is a React hook.\nParameters:\n\n\n\n\nThe ID of the team to get.\nReturns:\n\n\nTeam | null: The team object, or null if the team is not found (either because it doesn't exist or because the user is not a member of the team).\nExample:",
@@ -5292,6 +5428,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#listteams",
     "content": "List all the teams the user is a member of.\nParameters:\n\n\nNo parameters.\nReturns:\n\n\nPromise<Team[]>: The list of teams.\nExample:",
@@ -5337,6 +5474,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#useteams",
     "content": "List all the teams the user is a member of.\nThis is the same as listTeams but it is a React hook.\nParameters:\n\n\nNo parameters.\nReturns:\n\n\nTeam[]: The list of teams.\nExample:",
@@ -5382,6 +5520,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#setselectedteam",
     "content": "Parameters:\n\n\n\n\nThe team to set as selected, or null to clear selection.\nReturns:\n\n\nPromise<void>\nSet the currently selected team for the user.\nExample:",
@@ -5427,6 +5566,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#createteam",
     "content": "Create a new team for the user. The user will be added to the team and be given the creator permissions.\nNote that if client side team creation is disabled in the Stack dashboard, this will throw an error.\nParameters:\n\n\n\n\n\n\n\n\nThe display name for the team.\n\n\nThe URL of the team's profile image (base64 image allowed, crop and compress before passing it in), or null to remove.\nReturns:\n\n\nPromise<Team>: The created team.\nExample:",
@@ -5472,6 +5612,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#leaveteam",
     "content": "Leave a team.\nNote that if the user is not a member of the team, this will throw an error.\nParameters:\n\n\n\n\nThe team to leave.\nReturns:\n\n\nPromise<void>\nExample:",
@@ -5517,6 +5658,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#getteamprofile",
     "content": "Get the user's profile for a team.\nParameters:\n\n\n\n\nThe team to get the profile for.\nReturns:\n\n\nPromise<EditableTeamMemberProfile>: The editable team member profile\nExample:",
@@ -5562,6 +5704,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#useteamprofile",
     "content": "Get the user's profile for a team.\nThis is the same as getTeamProfile but it is a React hook.\nParameters:\n\n\n\n\nThe team to get the profile for.\nReturns:\nEditableTeamMemberProfile: The editable team member profile\nExample:",
@@ -5607,6 +5750,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#haspermission",
     "content": "Parameters:\n\n\n\n\nThe team to check the permission for.\n\n\nThe ID of the permission to check.\nReturns:\n\n\nPromise<boolean>: Whether the user has the permission.\nThis will check if the user has a permission for a team. Note that if the permission is not defined in the Stack dashboard, it will still return false.\nExample:",
@@ -5652,6 +5796,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#getpermission",
     "content": "Parameters:\n\n\n\n\nThe team to get the permission for.\n\n\nThe ID of the permission to get.\n\n\n\n\n\n\nWhether to get the permission recursively. default true.\nReturns:\n\n\nPromise<TeamPermission | null>: The permission object, or null if the permission is not found.\nThis will get the permission of a user for a team. Note that if the permission is not defined in the Stack dashboard, it will still return null.\nExample:",
@@ -5697,6 +5842,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#usepermission",
     "content": "TeamPermission | null: The permission object, or null if the permission is not found.\n\n\nThis will get the permission of a user for a team. Note that if the permission is not defined in the Stack dashboard, it will still return null.\nThis is the same as getPermission but it is a React hook.\nParameters:\n\n\n\n\nThe team to get the permission for.\n\n\nThe ID of the permission to get.\n\n\n\n\n\n\nWhether to get the permission recursively. default true.\nReturns:\n\n\nTeamPermission | null: The permission object, or null if the permission is not found.\nExample:",
@@ -5742,6 +5888,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#listpermissions",
     "content": "List all the permissions a user has for a team.\nParameters:\n\n\n\n\nThe team to list the permissions for.\n\n\n\n\n\n\nWhether to list the permissions recursively. default true.\nReturns:\n\n\nPromise<TeamPermission[]>: The list of permissions.\nExample:",
@@ -5787,6 +5934,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#usepermissions",
     "content": "List all the permissions a user has for a team.\nThis is the same as listPermissions but it is a React hook.\nParameters:\n\n\n\n\nThe team to use the permissions for.\n\n\n\n\n\n\nWhether to use the permissions recursively. default true.\nReturns:\n\n\nTeamPermission[]: The list of permissions.\nExample:",
@@ -5832,6 +5980,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#listcontactchannels",
     "content": "List all the contact channels of the user.\nParameters:\n\n\nNo parameters.\nReturns:\n\n\nPromise<ContactChannel[]>: The list of contact channels.\nExample:",
@@ -5877,6 +6026,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#usecontactchannels",
     "content": "List all the contact channels of the user.\nThis is the same as listContactChannels but it is a React hook.\nParameters:\n\n\nNo parameters.\nReturns:\n\n\nContactChannel[]: The list of contact channels.\nExample:",
@@ -5922,6 +6072,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#updatepassword",
     "content": "This will update the user's password. It will return an error object (not throw an error) if the passwords mismatch or if the new password does not meet the requirements. If successful, it will return undefined.\nParameters:\n\n\n\n\n\n\n\n\nThe old password.\n\n\nThe new password.\nReturns:\n\n\nPromise<void>\nExample:",
@@ -5967,6 +6118,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#getauthjson",
     "content": "This will return the authentication tokens of the user. This is normally then used for authentication to an external server. See more details here.\nParameters:\n\n\nNo parameters.\nReturns:\n\n\nPromise<{ accessToken: string | null }>\nExample:",
@@ -6012,6 +6164,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#signout",
     "content": "This will sign out the user and clear the session.\nParameters:\n\n\nNo parameters.\nReturns:\n\n\nPromise<void>\nExample:",
@@ -6057,6 +6210,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#delete",
     "content": "Delete the user. Use it with caution as it is irreversible. Note that this only works if the \"allow client side user deletion\" option is enabled in the Stack dashboard.\nParameters:\n\n\nNo parameters.\nReturns:\n\n\nPromise<void>\nExample:",
@@ -6102,6 +6256,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#serveruser",
     "content": "ServerUser is only available on the server side. Some of the methods on the StackServerApp return ServerUser objects, for example stackServerApp.listUsers() or stackServerApp.getUser('user_id_123').\nThe ServerUser object contains everything in the CurrentUser object, except for the following methods:\nsignOut()\n\ngetAuthJson()\n\n\nIt also has some additional properties and methods (some of the methods have the same name but more capabilities):",
@@ -6137,6 +6292,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#properties-1",
     "content": "The last active at date of the user.\n\n\nThe server metadata of the user. Only readable and writable on the server side.",
@@ -6176,6 +6332,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#update-1",
     "content": "Update the user information.\nThis is similar to the CurrentUser.update() method, but is strictly more powerful (like update password, update server metadata, etc.)\nParameters:\n\n\n\n\n\n\n\n\nThe new display name for the user.\n\n\nCustom metadata visible to the client.\n\n\nThe ID of the team to set as selected, or null to clear selection.\n\n\nThe URL of the user's new profile image (base64 image allowed, crop and compress before passing it in), or null to remove.\n\n\nMetadata that can be read on the client side but can only be modified on the server side.\n\n\nMetadata that can be read and modified on the server side.\n\n\nThe new password for the user.\nReturns:\n\n\nPromise<void>\nExample:",
@@ -6221,6 +6378,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#listcontactchannels-1",
     "content": "List all the contact channels of the user.\nThis is similar to CurrentUser.listContactChannels() but it returns a list of ServerContactChannel objects instead of ContactChannel objects.\nParameters:\n\n\nNo parameters.\nReturns:\n\n\nPromise<ServerContactChannel[]>: The list of contact channels.\nExample:",
@@ -6266,6 +6424,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#usecontactchannels-1",
     "content": "List all the contact channels of the user.\nThis is the same as listContactChannels but it is a React hook. This is also similar to CurrentUser.useContactChannels() but it returns a list of ServerContactChannel objects instead of ContactChannel objects.\nParameters:\n\n\nNo parameters.\nReturns:\n\n\nServerContactChannel[]: The list of contact channels.\nExample:",
@@ -6311,6 +6470,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#grantpermission",
     "content": "Grant a permission to a user for a team.\nThis action will still succeed if the permission is already granted. It will throw an error if the permission is not defined in the Stack dashboard.\nParameters:\n\n\n\n\nThe team to grant the permission to.\n\n\nThe ID of the permission to grant.\nReturns:\n\n\nPromise<void>\nExample:",
@@ -6356,6 +6516,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#revokepermission",
     "content": "Revoke a permission from a user for a team.\nThis action will still succeed if the permission is not granted in the first place. It will throw an error if the permission is not defined in the Stack dashboard.\nParameters:\n\n\n\n\nThe team to revoke the permission from.\n\n\nThe ID of the permission to revoke.\nReturns:\n\n\nPromise<void>\nExample:",
@@ -6401,6 +6562,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#currentserveruser",
     "content": "The CurrentServerUser has the same properties and methods from ServerUser and CurrentUser combined (for the overloaded methods like update, the ServerUser methods take precedence).\nTo get a CurrentServerUser object, you can use the stackServerApp.getUser() method. Note that this can only be used on the server side.",
@@ -6436,6 +6598,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "This is a detailed reference for the StackApp object. Here is a more high-level overview."
   },
@@ -6460,6 +6623,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#different-types-of-stackapp-objects",
     "content": "Stack offers two types of app objects: StackClientApp and StackServerApp.\nStackClientApp:\nDesigned for client-side applications\n\nProvides functionality like signInWithOAuth, useUser, useProject, etc.\n\nObtain it by calling useStackApp() in a Client Component\n\n\n\nStackServerApp:\nextends StackClientApp\n\nHas additional capabilities like being able to listing all the users in the project\n\nAccess it by importing the object from the file where you created it (import { stackServerApp } from '@/stack')\n\nWhile StackServerApp includes useXYZ hooks, they are generally not usable in server-side code due to its non-reactive nature. These hooks are primarily designed for client-side use where reactivity is supported.\n\n\n\n\nChoose the appropriate type based on your application's needs and environment.",
@@ -6495,6 +6659,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#stackclientapp",
     "content": "You can get a StackClientApp instance by calling useStackApp() in a Client Component.",
@@ -6530,6 +6695,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#initialization",
     "content": "In most cases, we don't create a StackClientApp directly. Instead, we typically:\nCreate a StackServerApp instance, pass it into the StackProvider component\n\nUse the useStackApp() hook to obtain a StackClientApp from it\n\n\nCheck out the manual setup guide for more details. For details on how to initialize a StackServerApp, refer to the StackServerApp section below.",
@@ -6569,6 +6735,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#properties",
     "content": "The ID of the project that the app is associated with.\n\n\nThe URLs that Stack uses to route and redirect.\n\n\n\n\nThe URL of the home page.\n\n\nThe URL of the sign-in page.\n\n\nThe URL that the user will be redirected to after successful signing in.\n\n\nThe URL of the sign-up page.\n\n\nThe URL that the user will be redirected to after successful signing up.\n\n\nThe URL that the user will be redirected to after successful signing out.\n\n\nThe URL of the email verification page.\n\n\nThe URL of the password reset page.\n\n\nThe URL of the forgot password page.\n\n\nThe URL of the account settings page.\n\n\nThe URL of the handler root.",
@@ -6608,6 +6775,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#getuser",
     "content": "Get the current user.\nParameters:\n\n\n\n\n\n\n\n\nWhat to do if the user is not signed in. Can be:\n\"redirect\": Redirects the user to the signIn URL.\n\n\"throw\": Throws an error.\n\n\nReturns:\n\n\nIf or is not provided, returns Promise<CurrentUser | null>.\n\nIf or is \"redirect\" or \"throw\", always returns Promise<CurrentUser>.\n\n\nExample:",
@@ -6653,6 +6821,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#useuser",
     "content": "Get the current user.\nThis is the same as getUser() but it is a React hook. The useUser hook imported from the package is an alias for this function.\nParameters:\n\n\n\n\n\n\n\n\nWhat to do if the user is not signed in. Can be:\n\"redirect\": Redirects the user to the signIn URL.\n\n\"throw\": Throws an error.\n\n\nReturns:\n\n\nIf or is not provided, returns CurrentUser | null.\n\nIf or is \"redirect\" or \"throw\", always returns CurrentUser.\n\n\nExample:",
@@ -6698,6 +6867,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#signinwithoauth",
     "content": "Initiates the OAuth sign-in process with the specified provider. This method:\nRedirects the user to the OAuth provider's sign-in page.\n\nAfter successful authentication, redirects the user back to your application.\n\nThe final redirect destination is determined as follows:\nIf an after_auth_return_to query parameter was provided when calling this function, it uses that URL.\n\nOtherwise, it uses the afterSignIn URL configured in the app settings.\n\n\n\n\nParameters:\n\n\n\n\nThe type of the OAuth provider to sign in with.\nReturns:\n\n\nPromise<void>: A promise that resolves when the redirect is complete.\nExample:",
@@ -6743,6 +6913,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#signinwithcredential",
     "content": "Sign in using email and password credentials. The behavior is as follows:\nIf sign-in is successful:\nBy default, redirects the user to the afterSignIn URL.\n\nIf after_auth_return_to is provided in the query parameters, redirects to that URL instead.\n\nIf noRedirect is set to true, it will not redirect and instead return a success Result object.\n\n\n\nIf sign-in fails:\nNo redirection occurs.\n\nReturns a Result object containing error information.\n\n\n\n\nParameters:\n\n\n\n\n\n\n\n\nThe email of the user to sign in with.\n\n\nThe password of the user to sign in with.\n\n\nWhether to not redirect the user after sign-in. Defaults to false.\nReturns:\n\n\nPromise<Result<undefined, KnownErrors[\"EmailPasswordMismatch\"]>>: A promise that resolves to a Result object.\nExample:",
@@ -6788,6 +6959,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#signupwithcredential",
     "content": "Sign up using email and password credentials. The behavior is as follows:\nIf sign-up is successful:\nBy default, redirects the user to the afterSignUp URL.\n\nIf after_auth_return_to is provided in the query parameters, redirects to that URL instead.\n\nIf noRedirect is set to true, it will not redirect and instead return a success Result object.\n\n\n\nIf sign-up fails:\nNo redirection occurs.\n\nReturns a Result object containing error information.\n\n\n\n\nParameters:\n\n\n\n\n\n\n\n\nThe email of the user to sign up with.\n\n\nThe password of the user to sign up with.\n\n\nWhether to not redirect the user after sign-up. Defaults to false.\nReturns:\n\n\nPromise<Result<undefined, KnownErrors[\"UserEmailAlreadyExists\"] | KnownErrors[\"PasswordRequirementsNotMet\"]>>: A promise that resolves to a Result object.\nExample:",
@@ -6833,6 +7005,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#sendforgotpasswordemail",
     "content": "Send a forgot password email to an email address.\nParameters:\n\n\n\n\nThe email of the user to send the forgot password email to.\nReturns:\n\n\nPromise<Result<undefined, KnownErrors[\"UserNotFound\"]>>: A promise that resolves to a Result object.\nExample:",
@@ -6878,6 +7051,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#sendmagiclinkemail",
     "content": "Send a magic link/OTP sign-in email to an email address.\nParameters:\n\n\n\n\nThe email of the user to send the magic link email to.\nReturns:\n\n\nPromise<Result<{ nonce: string }, KnownErrors[\"RedirectUrlNotWhitelisted\"]>>: A promise that resolves to a Result object.\nExample:",
@@ -6923,6 +7097,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#getproject",
     "content": "Get the current project.\nParameters:\n\n\nNo parameters.\nReturns:\n\n\nPromise<Project>: The current project.\nExample:",
@@ -6968,6 +7143,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#useproject",
     "content": "Get the current project.\nThis is the same as getProject() but it is a React hook. The useProject hook imported from the package is an alias for this function.\nParameters:\n\n\nNo parameters.\nReturns:\n\n\nProject: The current project.\nExample:",
@@ -7013,6 +7189,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#stackserverapp",
     "content": "StackServerApp extends StackClientApp, so it has all the same capabilities, plus some extra ones listed below.\nNote that although the useXYZ hooks are available on StackServerApp, they are generally not usable in server-side code due to its non-reactive nature. These hooks are primarily designed for client-side use where reactivity is supported.",
@@ -7048,6 +7225,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#initialization-1",
     "content": "Parameters:\n\n\n\n\n\n\n\n\nWhere to store the auth tokens. Currently only \"nextjs-cookie\" is supported.\n\n\nExtra OAuth scopes to request when signing in. It is an object of format { [provider: string]: string[] }, where the key is the provider type (e.g. \"google\", \"apple\", etc.) and the value is an array of scopes to request. Checkout the OAuth page for more details.\n\n\nThe base URL of the Stack server. By default it is read from the NEXT_PUBLIC_STACK_URL environment variable if it exists, or use https://api.stack-auth.com if it doesn't.\n\n\nThe ID of the project to use. By default it is read from the NEXT_PUBLIC_STACK_PROJECT_ID environment variable.\n\n\nThe publishable client key to use. By default it is read from the NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY environment variable.\n\n\nThe secret server key to use. By default it is read from the STACK_SECRET_SERVER_KEY environment variable.\n\n\nModify the URLs that Stack uses to route and redirect.\n\n\n\n\nThe URL of the home page.\n\n\nThe URL of the sign-in page.\n\n\nThe URL that the user will be redirected to after successful signing in.\n\n\nThe URL of the sign-up page.\n\n\nThe URL that the user will be redirected to after successful signing up.\n\n\nThe URL that the user will be redirected to after successful signing out.\n\n\nThe URL of the email verification page.\n\n\nThe URL of the password reset page.\n\n\nThe URL of the forgot password page.\n\n\nThe URL of the account settings page.\n\n\nThe URL of the handler root. When changing this, you should also change the location of the StackHandler component and the domain handler path on the dashboard. Currently putting the handler at the root / is not supported.\nExample:",
@@ -7093,6 +7271,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#properties-1",
     "content": "Same as StackClientApp.",
@@ -7132,6 +7311,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#getuser-1",
     "content": "Get a user. There are two overloads:\nOverload 1 (get current server user):\nParameters:\n\n\n\n\n\n\n\n\nWhat to do if the user is not signed in. Can be:\n\"redirect\": Redirects the user to the signIn URL.\n\n\"throw\": Throws an error.\n\n\nReturns:\n\n\nIf or is not provided, returns Promise<ServerUser | null>.\n\nIf or is \"redirect\" or \"throw\", always returns Promise<ServerUser>.\n\n\nExample:\nOverload 2 (get user by ID):\nParameters:\n\n\n\n\nThe ID of the user to get.\nReturns:\n\n\nPromise<ServerUser | null>: The user, or null if not found.\nExample:",
@@ -7181,6 +7361,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#listusers",
     "content": "Lists users.\nIf limit is not provided, it will return all users by making multiple requests to the server (this might be slow for a large number of users, so it is recommended to always use pagination).\nParameters:\n\n\n\n\n\n\n\n\nThe cursor to start the result set from.\n\n\nThe maximum number of items to return. If not provided, it will return all users.\n\n\nThe field to sort the results by. Currently only signedUpAt is supported.\n\n\nWhether to sort the results in descending order.\n\n\nA query to filter the results by. This is a free-text search on the user's display name and emails.\nReturns:\n\n\nPromise<ServerUser[] & { nextCursor: string | null }>: The list of users. If nextCursor is not null, there is a next page.\nExample:",
@@ -7226,6 +7407,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#useusers",
     "content": "Get the list of users.\nIf limit is not provided, it will return all users by making multiple requests to the server (this might be slow for a large number of users, so it is recommended to always use pagination).\nThis is the same as listUsers() but it is a React hook.\nParameters:\n\n\n\n\n\n\n\n\nThe cursor to start the result set from.\n\n\nThe maximum number of items to return. If not provided, it will return all users.\n\n\nThe field to sort the results by. Currently only signedUpAt is supported.\n\n\nWhether to sort the results in descending order.\n\n\nA query to filter the results by. This is a free-text search on the user's display name and emails.\nReturns:\n\n\nServerUser[] & { nextCursor: string | null }: The list of users. If nextCursor is not null, there is a next page.\nExample:",
@@ -7271,6 +7453,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#createuser",
     "content": "Create a new user.\nParameters:\n\n\n\n\n\n\n\n\nThe primary email of the user to create.\n\n\nWhether the primary email is enabled. When using password or otp auth, this must be set to true, otherwise the user will not be able to sign in.\n\n\nThe password for the new user. An error will be thrown if a password is provided\nbut password authentication is not enabled for the project in the dashboard.\n\n\nEnables OTP (One-Time Password) or magic link sign-in using the primary email.\nNote: Only verified emails can be used for OTP sign-in. An error will be thrown\nif set to true when OTP authentication is not enabled in the dashboard.\n\n\nThe display name of the user to create.\n\n\nWhether the primary email is verified.\nReturns:\n\n\nPromise<ServerUser>: The created user.\nExample:",
@@ -7316,6 +7499,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#getteam",
     "content": "Get a team by ID.\nParameters:\n\n\n\n\nThe ID of the team to get.\nReturns:\n\n\nPromise<ServerTeam | null>: The team, or null if not found.\nExample:",
@@ -7361,6 +7545,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#listteams",
     "content": "List all teams.\nReturns:\n\n\nPromise<ServerTeam[]>: The list of teams.\nExample:",
@@ -7406,6 +7591,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#createteam",
     "content": "create a team without a user.\nThis is similar to user.createTeam(), except it does not add the user to the team.\nParameters:\n\n\n\n\n\n\n\n\nThe display name for the team.\n\n\nThe URL of the team's profile image (base64 image allowed, crop and compress before passing it in), or null to remove.\nReturns:\n\n\nPromise<ServerTeam>: The created team.\nExample:",
@@ -7451,6 +7637,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "This is a detailed reference for the Team object. If you're looking for a more high-level overview, please refer to our guide on teams here."
   },
@@ -7475,6 +7662,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#different-types-of-team-objects",
     "content": "Stack Auth provides two types of Team objects:\nTeam\nRepresents a team on the client side\n\nProvides functions like update and inviteUser\n\nRequires appropriate user permissions for function usage\n\nObtained by calling user.useTeam('team_id_123') or user.useTeams()\n\n\n\nServerTeam\nRepresents a team on the server side\n\nIncludes additional capabilities such as delete and addUser\n\nNo user permissions required for function usage\n\nObtained by calling stackServerApp.getTeam('team_id_123') or stackServerApp.listTeams()",
@@ -7510,6 +7698,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#team",
     "content": "You can call user.useTeam('team_id_123') or user.useTeams() to get the Team object.",
@@ -7545,6 +7734,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#properties",
     "content": "The team ID. This is the unique identifier of the team.\n\n\nThe display name of the team.\n\n\nThe profile image URL of the team.\n\n\nThe client metadata of the team.\n\n\nThe client read-only metadata of the team.",
@@ -7584,6 +7774,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#update",
     "content": "Update the team information.\nNote that this operation requires the current user to have the $update_team permission. If the user lacks this permission, an error will be thrown.\nParameters\n\n\n\n\n\n\n\n\nThe display name of the team.\n\n\nThe profile image URL of the team.\n\n\nThe client metadata of the team.\nReturns\n\n\nPromise<void>\nExample",
@@ -7629,6 +7820,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#inviteuser",
     "content": "Send an invitation email to a user to join the team.\nNote that this operation requires the current user to have the $invite_members permission. If the user lacks this permission, an error will be thrown.\nAn invitation email containing a magic link will be sent to the specified user. If the user has an existing account, they will be automatically added to the team upon clicking the link. For users without an account, the link will guide them through the sign-up process before adding them to the team.\nParameters\n\n\n\n\n\n\n\n\nThe email of the user to invite.\nReturns\n\n\nPromise<void>\nExample",
@@ -7674,6 +7866,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#listusers",
     "content": "Get a list of users in the team.\nNote that this operation requires the current user to have the $read_members permission. If the user lacks this permission, an error will be thrown.\nParameters\n\n\nNo parameters.\nReturns\n\n\nPromise<TeamUser[]>\nExample",
@@ -7719,6 +7912,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#useusers",
     "content": "Get a list of users in the team.\nNote that this operation requires the current user to have the $read_members permission. If the user lacks this permission, an error will be thrown.\nThis is the same as listUsers but it is a React hook.\nParameters\n\n\nNo parameters.\nReturns\n\n\nTeamUser[]\nExample",
@@ -7764,6 +7958,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#serverteam",
     "content": "You can call stackServerApp.getTeam('team_id_123') or stackServerApp.listTeams() to get the ServerTeam object.\nServerTeam extends the Team object, providing additional functions and properties as detailed below. It's important to note that while the Team object's functions may require specific user permissions, the corresponding functions in ServerTeam can be executed without these permission checks. This allows for more flexible and unrestricted team management on the server side.",
@@ -7799,6 +7994,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#properties-1",
     "content": "The date and time when the team was created.\n\n\nThe server metadata of the team.",
@@ -7838,6 +8034,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#listusers-1",
     "content": "Get a list of users in the team.\nThis is similar to the listUsers method on the Team object, but it returns ServerTeamUser objects instead of TeamUser objects and does not require any permissions.\nParameters\n\n\nNo parameters.\nReturns\n\n\nPromise<ServerTeamUser[]>\nExample",
@@ -7883,6 +8080,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#useusers-1",
     "content": "Get a list of users in the team.\nThis is similar to the useUsers method on the Team object, but it returns ServerTeamUser objects instead of TeamUser objects and does not require any permissions. This is the same as listUsers but it is a React hook.\nParameters\n\n\nNo parameters.\nReturns\n\n\nServerTeamUser[]\nExample",
@@ -7928,6 +8126,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#adduser",
     "content": "Add a user to the team directly without sending an invitation email.\nParameters\n\n\n\n\nThe ID of the user to add.\nReturns\n\n\nPromise<void>\nExample",
@@ -7973,6 +8172,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#removeuser",
     "content": "Remove a user from the team.\nParameters\n\n\n\n\nThe ID of the user to remove.\nReturns\n\n\nPromise<void>\nExample",
@@ -8018,6 +8218,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#delete",
     "content": "Delete the team.\nParameters\n\n\nNo parameters.\nReturns\n\n\nPromise<void>\nExample",
@@ -8063,6 +8264,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "TeamUser is represents a user in the context of a team. There are two types of TeamUser\nTeamUser\nThis is used on the client side.\n\nIt contains minimal information about the user, only the user's ID.\n\nIt contains a teamProfile object, which is the user's profile for the team.\n\nYou can obtain it by calling team.useUsers() or team.listUsers() on a Team object.\n\n\n\nServerTeamUser\nThis is used on the server side.\n\nCurrently it only contains the user's ID, but in the future it will extend ServerUser.\n\nYou can obtain it by calling serverTeam.listUsers() on a ServerTeam object."
   },
@@ -8087,6 +8289,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#properties",
     "content": "The ID of the user.\n\n\nThe team profile of the user.",
@@ -8126,6 +8329,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#properties-1",
     "content": "The ID of the user.\n\n\nThe team profile of the user.",
@@ -8165,6 +8369,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "TeamProfile is the profile of a user in the context of a team. There are two types of TeamProfile\nTeamProfile\nThis is used on the client side.\n\nIt contains the user's profile information for the team.\n\nYou can obtain it by calling teamUser.teamProfile on a TeamUser object.\n\n\n\nServerTeamProfile\nThis is used on the server side.\n\nCurrently it contains the same information as TeamProfile, but in the future it might contain more information.\n\nYou can obtain it by calling serverTeamUser.teamProfile on a ServerTeamUser object."
   },
@@ -8189,6 +8394,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#properties",
     "content": "The display name of the user.\n\n\nThe profile image URL of the user.",
@@ -8228,6 +8434,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#serverteamprofile",
     "content": "Same as TeamProfile.",
@@ -8263,6 +8470,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "TeamPermission represents that a user has a certain permission for a team. It is currently very simple and only contains an id.\nIt can be obtained by calling functions like user.getPermission() or user.listPermissions()."
   },
@@ -8287,6 +8495,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#properties",
     "content": "The id of the permission.",
@@ -8322,6 +8531,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "The Project object contains the information and configuration of a project like the name, description, enabled auth methods, etc.\nYou can obtain a Project object by calling stackApp.getProject() or useProject()."
   },
@@ -8346,6 +8556,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#properties",
     "content": "The id of the project.\n\n\nThe display name of the project.\n\n\n\n\n\n\nWhether sign up is enabled for the project.\n\n\nWhether credential auth is enabled for the project.\n\n\nWhether magic link auth is enabled for the project.\n\n\nWhether client-side team creation is enabled for the project.\n\n\nWhether client-side user deletion is enabled for the project.",
@@ -8385,6 +8596,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "ContactChannel represents a user's contact information, such as an email address. In the future, it will support additional contact types like phone numbers. Contact channels can optionally be used for authentication.\nStack provides two types of contact channels:\nContactChannel\nUsed on the client side\n\nContains basic information like the contact value (e.g. email address) and type\n\nYou can obtain it by calling user.listContactChannels() or user.useContactChannels()\n\n\n\nServerContactChannel\nUsed on the server side\n\nExtends ContactChannel with additional properties:\nVerification status\n\nWhether it's the user's primary contact channel\n\n\n\nYou can obtain it by calling serverUser.listContactChannels() or serverUser.useContactChannels()"
   },
@@ -8409,6 +8621,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#properties",
     "content": "The id of the contact channel.\n\n\nThe value of the contact channel. If type is \"email\", this is an email address.\n\n\nThe type of the contact channel. Currently always \"email\".\n\n\nWhether the contact channel is the user's primary contact channel. If an email is set to primary, it will be the value on the user.primaryEmail field.\n\n\nWhether the contact channel is verified.\n\n\nWhether the contact channel is used for authentication. If set to true, the user can use this contact channel together with OTP or password to sign in.",
@@ -8448,6 +8661,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#sendverificationemail",
     "content": "Sends a verification email to this contact channel. Once the user clicks the verification link in the email, the contact channel will be marked as verified.\nThis method will throw an error if the contact channel has already been verified.\nParameters:\n\n\nNone\nReturns:\n\n\nPromise<void>\nExample:",
@@ -8493,6 +8707,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#update",
     "content": "Update the contact channel.\nAfter updating the value, the contact channel will be marked as unverified.\nParameters:\n\n\n\n\n\n\n\n\nThe new value of the contact channel.\n\n\nThe new type of the contact channel. Currently always \"email\".\n\n\nWhether the contact channel is used for authentication.\nReturns:\n\n\nPromise<void>\nExample:",
@@ -8538,6 +8753,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#delete",
     "content": "Delete the contact channel.\nParameters:\n\n\nNo parameters\nReturns:\n\n\nPromise<void>\nExample:",
@@ -8583,6 +8799,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#servercontactchannel",
     "content": "It extends ContactChannel with additional methods listed below.",
@@ -8618,6 +8835,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#update-1",
     "content": "Update the contact channel.\nThis is similar to ContactChannel.update(), but it also allows you to set the isVerified property.\nParameters:\n\n\n\n\n\n\n\n\nThe new value of the contact channel.\n\n\nThe new type of the contact channel. Currently always \"email\".\n\n\nWhether the contact channel is used for authentication.\n\n\nWhether the contact channel is verified.\nReturns:\n\n\nPromise<void>\nExample:",
@@ -8663,6 +8881,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "content": "A React hook that fetches and manages user data."
   },
@@ -8687,6 +8906,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#returns",
     "content": "user: User | null - The user data object if available, or null if not fetched yet.\n\nloading: boolean - Indicates whether the user data is currently being fetched.",
@@ -8722,6 +8942,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#example",
     "content": "The same hook can also be used to protect a page. (You might also want to check out the server-side version here)",
@@ -8767,6 +8988,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#throw-an-error-when-not-authenticated",
     "content": "By passing { or: \"throw\" } into the hook, it will throw an error if the user is not authenticated. This can be used for places where the user should never be unauthenticated if the app is working correctly.",
@@ -8808,6 +9030,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "code_snippets": [
       {
@@ -8834,6 +9057,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "type": "markdown",
     "description": "REST API Overview",
     "content": "Stack offers a REST API for backends & frontends of any programming language or framework. This API is used to authenticate users, manage user data, and more."
@@ -8855,6 +9079,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#authentication",
     "content": "The following authentication headers are common to every endpoint:\nHeader Type Description \nX-Stack-Access-Type \"client\" | \"server\" Required. \"client\" (without quotes) for the frontend API, or \"server\" for the backend API. \nX-Stack-Project-Id UUID Required. The project ID as found on the Stack dashboard. \nX-Stack-Publishable-Client-Key string Required for client access. The API key as found on the Stack dashboard. \nX-Stack-Secret-Server-Key string Required for server access. The API key as found on the Stack dashboard. \nX-Stack-Access-Token string Optional. The access token for the current user. If not given, the request is considered to be logged out. \n\nTo see how to use these headers in various programming languages, see the examples.",
@@ -8892,6 +9117,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 1,
     "type": "markdown",
     "hash": "#faq",
     "content": "Any language that has the ability to send HTTP requests can use the Stack REST API. This includes JavaScript, Python, Ruby, Java, Go, C#, Dart, and many more.\n\n\nClient access type is mostly used for client-side applications, like a browser or mobile app. The client APIs can only read and update the currently authenticated user's data, and it is usually fine to post the publishable client key in the client-side code.\nServer access type, on the other hand, is for your backend server that you control. It has full access over all user data, and the secret server key should never be exposed to client-side code.\nFor more information, see the concept documentation on StackApp.\n\n\nIf you'd like to build your own version of the Stack dashboard (or update project configuration programmatically), you can use the admin access type. These endpoints are very dangerous and you should only use them if you know what you're doing.\nFor more information, see the concept documentation on StackApp.",
@@ -8927,6 +9153,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_.apiV1",
@@ -8979,6 +9206,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.listContactChannels",
@@ -9032,6 +9260,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.createAContactChannel",
@@ -9085,6 +9314,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.verifyAnEmail",
@@ -9139,6 +9369,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.checkEmailVerificationCode",
@@ -9193,6 +9424,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.getAContactChannel",
@@ -9246,6 +9478,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.deleteAContactChannel",
@@ -9299,6 +9532,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.updateAContactChannel",
@@ -9352,6 +9586,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_contactChannels.sendContactChannelVerificationCode",
@@ -9406,6 +9641,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_oauth.oAuthTokenEndpoints",
@@ -9460,6 +9696,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_oauth.oAuthAuthorizeEndpoint",
@@ -9512,6 +9749,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_otp.signInWithACode",
@@ -9566,6 +9804,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_otp.sendSignInCode",
@@ -9620,6 +9859,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_otp.mfaSignIn",
@@ -9674,6 +9914,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_otp.checkSignInCode",
@@ -9728,6 +9969,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_password.updatePassword",
@@ -9782,6 +10024,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_password.signUpWithEmailAndPassword",
@@ -9836,6 +10079,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_password.signInWithEmailAndPassword",
@@ -9890,6 +10134,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_password.setPassword",
@@ -9944,6 +10189,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_password.sendResetPasswordCode",
@@ -9998,6 +10244,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_password.resetPasswordWithACode",
@@ -10052,6 +10299,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_password.checkResetPasswordCode",
@@ -10106,6 +10354,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_permissions.listTeamPermissions",
@@ -10160,6 +10409,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_projects.getTheCurrentProject",
@@ -10214,6 +10464,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_sessions.signOutOfTheCurrentSession",
@@ -10268,6 +10519,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_sessions.refreshAccessToken",
@@ -10322,6 +10574,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.listTeams",
@@ -10376,6 +10629,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.createATeam",
@@ -10430,6 +10684,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.listTeamMembersProfiles",
@@ -10484,6 +10739,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.getATeam",
@@ -10538,6 +10794,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.deleteATeam",
@@ -10592,6 +10849,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.updateATeam",
@@ -10646,6 +10904,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.sendAnEmailToInviteAUserToATeam",
@@ -10700,6 +10959,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.inviteAUserToATeam",
@@ -10754,6 +11014,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.removeAUserFromATeam",
@@ -10808,6 +11069,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.getATeamMemberProfile",
@@ -10862,6 +11124,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.updateYourTeamMemberProfile",
@@ -10916,6 +11179,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.getTeamInvitationDetails",
@@ -10970,6 +11234,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_teams.checkIfATeamInvitationCodeIsValid",
@@ -11024,6 +11289,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_users.getCurrentUser",
@@ -11078,6 +11344,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_users.deleteCurrentUser",
@@ -11132,6 +11399,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "4f0a40b7-799b-4d5d-b569-9a0888910a39",
     "api_endpoint_id": "endpoint_users.updateCurrentUser",
@@ -11182,6 +11450,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_.apiV1",
@@ -11234,6 +11503,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.listContactChannels",
@@ -11287,6 +11557,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.createAContactChannel",
@@ -11340,6 +11611,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.verifyAnEmail",
@@ -11394,6 +11666,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.checkEmailVerificationCode",
@@ -11448,6 +11721,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.getAContactChannel",
@@ -11501,6 +11775,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.deleteAContactChannel",
@@ -11554,6 +11829,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.updateAContactChannel",
@@ -11607,6 +11883,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_contactChannels.sendContactChannelVerificationCode",
@@ -11661,6 +11938,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_oauth.oAuthTokenEndpoints",
@@ -11715,6 +11993,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_oauth.oAuthAuthorizeEndpoint",
@@ -11767,6 +12046,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_otp.signInWithACode",
@@ -11821,6 +12101,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_otp.sendSignInCode",
@@ -11875,6 +12156,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_otp.mfaSignIn",
@@ -11929,6 +12211,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_otp.checkSignInCode",
@@ -11983,6 +12266,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_password.updatePassword",
@@ -12037,6 +12321,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_password.signUpWithEmailAndPassword",
@@ -12091,6 +12376,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_password.signInWithEmailAndPassword",
@@ -12145,6 +12431,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_password.setPassword",
@@ -12199,6 +12486,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_password.sendResetPasswordCode",
@@ -12253,6 +12541,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_password.resetPasswordWithACode",
@@ -12307,6 +12596,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_password.checkResetPasswordCode",
@@ -12361,6 +12651,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_permissions.listTeamPermissionsOfAUser",
@@ -12415,6 +12706,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_permissions.grantATeamPermissionToAUser",
@@ -12469,6 +12761,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_permissions.revokeATeamPermissionFromAUser",
@@ -12523,6 +12816,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_projects.getTheCurrentProject",
@@ -12577,6 +12871,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_sessions.createSession",
@@ -12631,6 +12926,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_sessions.signOutOfTheCurrentSession",
@@ -12685,6 +12981,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_sessions.refreshAccessToken",
@@ -12739,6 +13036,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.listTeams",
@@ -12793,6 +13091,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.createATeam",
@@ -12847,6 +13146,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.listTeamMembersProfiles",
@@ -12901,6 +13201,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.getATeam",
@@ -12955,6 +13256,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.deleteATeam",
@@ -13009,6 +13311,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.updateATeam",
@@ -13063,6 +13366,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.sendAnEmailToInviteAUserToATeam",
@@ -13117,6 +13421,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.inviteAUserToATeam",
@@ -13171,6 +13476,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.addAUserToATeam",
@@ -13224,6 +13530,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.removeAUserFromATeam",
@@ -13277,6 +13584,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.getATeamMemberProfile",
@@ -13331,6 +13639,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.updateATeamMemberProfile",
@@ -13385,6 +13694,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.getTeamInvitationDetails",
@@ -13439,6 +13749,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_teams.checkIfATeamInvitationCodeIsValid",
@@ -13493,6 +13804,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.listUsers",
@@ -13547,6 +13859,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.createUser",
@@ -13601,6 +13914,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.getCurrentUser",
@@ -13655,6 +13969,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.deleteCurrentUser",
@@ -13709,6 +14024,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.updateCurrentUser",
@@ -13763,6 +14079,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.getUser",
@@ -13817,6 +14134,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.deleteUser",
@@ -13871,6 +14189,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "http",
     "api_definition_id": "e3e3def3-a1a3-4749-a69a-fa4dbe581533",
     "api_endpoint_id": "endpoint_users.updateUser",
@@ -13925,6 +14244,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8c451807-ffb6-4876-9831-21d410bcb716",
     "api_endpoint_id": "subpackage_users.user.created",
@@ -13964,6 +14284,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8c451807-ffb6-4876-9831-21d410bcb716",
     "api_endpoint_id": "subpackage_users.user.updated",
@@ -14003,6 +14324,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8c451807-ffb6-4876-9831-21d410bcb716",
     "api_endpoint_id": "subpackage_users.user.deleted",
@@ -14042,6 +14364,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8c451807-ffb6-4876-9831-21d410bcb716",
     "api_endpoint_id": "subpackage_teams.team.created",
@@ -14081,6 +14404,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8c451807-ffb6-4876-9831-21d410bcb716",
     "api_endpoint_id": "subpackage_teams.team.updated",
@@ -14120,6 +14444,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8c451807-ffb6-4876-9831-21d410bcb716",
     "api_endpoint_id": "subpackage_teams.team.deleted",
@@ -14159,6 +14484,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8c451807-ffb6-4876-9831-21d410bcb716",
     "api_endpoint_id": "subpackage_teams.team_membership.created",
@@ -14198,6 +14524,7 @@
       "role/everyone"
     ],
     "authed": false,
+    "page_position": 0,
     "api_type": "webhook",
     "api_definition_id": "8c451807-ffb6-4876-9831-21d410bcb716",
     "api_endpoint_id": "subpackage_teams.team_membership.deleted",
