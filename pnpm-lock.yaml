@@ -2712,9 +2712,6 @@ importers:
 
   playwright/forward-proxy/nextjs-proxy:
     dependencies:
-      '@fern-ui/docs-bundle':
-        specifier: workspace:*
-        version: link:../../../packages/ui/docs-bundle
       next:
         specifier: 14.2.15
         version: 14.2.15(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)
