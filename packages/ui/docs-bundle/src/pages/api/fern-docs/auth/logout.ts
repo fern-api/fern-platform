@@ -34,9 +34,10 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     let redirectLocation =
         logoutUrl ??
         safeUrl(req.nextUrl.searchParams.get(return_to_param)) ??
-        safeUrl(withDefaultProtocol(getHostEdge(req)));
+        safeUrl(withDefaultProtocol(getHostEdge(req))) ??
+        new URL(domain);
 
-    const res = FernNextResponse.redirect(req, redirectLocation);
+    const res = FernNextResponse.redirect(req, redirectLocation.toString());
     res.cookies.delete(withDeleteCookie(COOKIE_FERN_TOKEN, withDefaultProtocol(getHostEdge(req))));
     res.cookies.delete(withDeleteCookie(COOKIE_ACCESS_TOKEN, withDefaultProtocol(getHostEdge(req))));
     res.cookies.delete(withDeleteCookie(COOKIE_REFRESH_TOKEN, withDefaultProtocol(getHostEdge(req))));

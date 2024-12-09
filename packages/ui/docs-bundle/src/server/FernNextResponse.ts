@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDocsDomainEdge } from "./xfernhost/edge";
 
 export class FernNextResponse {
-    public static redirect(req: NextRequest, destination?: string): Promise<NextResponse> {
+    public static redirect(req: NextRequest, destination?: string): NextResponse {
         if (typeof destination === "undefined") {
             return NextResponse.next();
         }

@@ -4,6 +4,7 @@ import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthStateEdge } from "./auth/getAuthStateEdge";
 import { withSecureCookie } from "./auth/with-secure-cookie";
+import { FernNextResponse } from "./FernNextResponse";
 import { getHostEdge } from "./xfernhost/edge";
 
 /**
@@ -41,7 +42,7 @@ export async function withMiddlewareAuth(
     }
 
     if (res.authorizationUrl) {
-        return NextResponse.redirect(res.authorizationUrl);
+        return FernNextResponse.redirect(request, res.authorizationUrl);
     }
 
     return NextResponse.next({ status: 401 });
