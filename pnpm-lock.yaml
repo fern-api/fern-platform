@@ -51,8 +51,8 @@ importers:
         specifier: 14.2.9
         version: 14.2.9
       '@playwright/test':
-        specifier: ^1.47.1
-        version: 1.47.1
+        specifier: ^1.49.0
+        version: 1.49.0
       '@tailwindcss/forms':
         specifier: ^0.5.7
         version: 0.5.7(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.4.3)))
@@ -517,7 +517,7 @@ importers:
         version: link:../../fdr-sdk
       next:
         specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -1149,7 +1149,7 @@ importers:
         version: 0.2.288(@internationalized/date@3.5.4)(@types/react@18.3.3)(jsdom@24.0.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.3)
       '@next/third-parties':
         specifier: 14.2.9
-        version: 14.2.9(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)
+        version: 14.2.9(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)
       '@radix-ui/colors':
         specifier: ^3.0.0
         version: 3.0.0
@@ -1251,7 +1251,7 @@ importers:
         version: 2.30.1
       next:
         specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       next-mdx-remote:
         specifier: ^5.0.0
         version: 5.0.0(@types/react@18.3.3)(react@18.3.1)
@@ -1363,7 +1363,7 @@ importers:
         version: 8.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.4(prettier@3.3.2))
       '@storybook/nextjs':
         specifier: ^8.4.4
-        version: 8.4.4(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(esbuild@0.20.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.3.2))(type-fest@4.21.0)(typescript@5.4.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.20.2))
+        version: 8.4.4(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(esbuild@0.20.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.3.2))(type-fest@4.21.0)(typescript@5.4.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.20.2))
       '@storybook/react':
         specifier: ^8.4.4
         version: 8.4.4(@storybook/test@8.4.4(storybook@8.4.4(prettier@3.3.2)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.4(prettier@3.3.2))(typescript@5.4.3)
@@ -1438,7 +1438,7 @@ importers:
         version: 24.0.0
       next-router-mock:
         specifier: ^0.9.13
-        version: 0.9.13(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)
+        version: 0.9.13(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -1842,7 +1842,7 @@ importers:
         version: 2.0.0
       '@workos-inc/node':
         specifier: ^7.29.0
-        version: 7.30.0(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.1)
+        version: 7.30.0(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.1)
       algoliasearch:
         specifier: ^5.13.0
         version: 5.13.0
@@ -1875,7 +1875,7 @@ importers:
         version: 1.1.1
       next:
         specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       node-fetch:
         specifier: 2.7.0
         version: 2.7.0
@@ -2539,7 +2539,7 @@ importers:
         version: 7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-instantsearch-nextjs:
         specifier: ^0.3.17
-        version: 0.3.17(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react-instantsearch@7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 0.3.17(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react-instantsearch@7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       react-markdown:
         specifier: ^9.0.1
         version: 9.0.1(@types/react@18.3.3)(react@18.3.1)
@@ -2582,7 +2582,7 @@ importers:
         version: 8.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.4(prettier@3.3.3))
       '@storybook/nextjs':
         specifier: ^8.4.4
-        version: 8.4.4(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.3.3))(type-fest@4.21.0)(typescript@5.4.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7))
+        version: 8.4.4(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.3.3))(type-fest@4.21.0)(typescript@5.4.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7))
       '@storybook/react':
         specifier: ^8.4.4
         version: 8.4.4(@storybook/test@8.4.4(storybook@8.4.4(prettier@3.3.3)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.4(prettier@3.3.3))(typescript@5.4.3)
@@ -2615,7 +2615,7 @@ importers:
         version: 6.1.2(postcss@8.4.31)
       next:
         specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       postcss:
         specifier: 8.4.31
         version: 8.4.31
@@ -2743,7 +2743,7 @@ importers:
         version: link:../../fdr-sdk
       next:
         specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       path-to-regexp:
         specifier: 6.3.0
         version: 6.3.0
@@ -2854,7 +2854,7 @@ importers:
         version: 8.57.0
       next:
         specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -2905,7 +2905,7 @@ importers:
         version: 1.1.1
       next:
         specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       node-fetch:
         specifier: 2.7.0
         version: 2.7.0
@@ -3006,7 +3006,7 @@ importers:
     dependencies:
       next:
         specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -5618,8 +5618,8 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
-  '@playwright/test@1.47.1':
-    resolution: {integrity: sha512-dbWpcNQZ5nj16m+A5UNScYx7HX5trIy7g4phrcitn+Nk83S32EBX/CLU4hiF4RGKX/yRc93AAqtfaXB7JWBd4Q==}
+  '@playwright/test@1.49.0':
+    resolution: {integrity: sha512-DMulbwQURa8rNIQrf94+jPJQ4FmOVdpE5ZppRNvWVjvhC+6sOeo28r8MgIpQRYouXRtt/FCCXU7zn20jnHR4Qw==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -13459,8 +13459,18 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  playwright-core@1.49.0:
+    resolution: {integrity: sha512-R+3KKTQF3npy5GTiKH/T+kdhoJfJojjHESR1YEWhYuEKRVfVaxH3+4+GvXE5xyCngCxhxnykk0Vlah9v8fs3jA==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   playwright@1.47.1:
     resolution: {integrity: sha512-SUEKi6947IqYbKxRiqnbUobVZY4bF1uu+ZnZNJX9DfU1tlf2UhWfvVjLf01pQx9URsOr18bFVUKXmanYWhbfkw==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  playwright@1.49.0:
+    resolution: {integrity: sha512-eKpmys0UFDnfNb3vfsf8Vx2LEOtflgRebl0Im2eQQnYMA4Aqd+Zw8bEOB+7ZKvN76901mRnqdsiOGKxzVTbi7A==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -18526,7 +18536,7 @@ snapshots:
       '@fern-api/core-utils': 0.4.24-rc1
       chalk: 5.3.0
 
-  '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)':
+  '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)':
     dependencies:
       '@next/env': 14.2.9
       '@swc/helpers': 0.5.5
@@ -18539,7 +18549,7 @@ snapshots:
       styled-jsx: 5.1.1(@babel/core@7.26.0)(react@18.3.1)
     optionalDependencies:
       '@opentelemetry/api': 1.9.0
-      '@playwright/test': 1.47.1
+      '@playwright/test': 1.49.0
       sass: 1.77.0
     transitivePeerDependencies:
       - '@babel/core'
@@ -19265,9 +19275,9 @@ snapshots:
   '@next/swc-win32-x64-msvc@14.2.9':
     optional: true
 
-  '@next/third-parties@14.2.9(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)':
+  '@next/third-parties@14.2.9(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)':
     dependencies:
-      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       react: 18.3.1
       third-party-capital: 1.0.20
 
@@ -19638,9 +19648,9 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@playwright/test@1.47.1':
+  '@playwright/test@1.49.0':
     dependencies:
-      playwright: 1.47.1
+      playwright: 1.49.0
 
   '@pmmmwh/react-refresh-webpack-plugin@0.5.13(react-refresh@0.14.2)(type-fest@4.21.0)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.20.2))':
     dependencies:
@@ -21471,7 +21481,7 @@ snapshots:
     dependencies:
       storybook: 8.4.4(prettier@3.3.3)
 
-  '@storybook/nextjs@8.4.4(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(esbuild@0.20.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.3.2))(type-fest@4.21.0)(typescript@5.4.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.20.2))':
+  '@storybook/nextjs@8.4.4(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(esbuild@0.20.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.3.2))(type-fest@4.21.0)(typescript@5.4.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.20.2))':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.26.0)
@@ -21498,7 +21508,7 @@ snapshots:
       find-up: 5.0.0
       image-size: 1.1.1
       loader-utils: 3.2.1
-      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       node-polyfill-webpack-plugin: 2.0.1(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.20.2))
       pnp-webpack-plugin: 1.7.0(typescript@5.4.3)
       postcss: 8.4.31
@@ -21538,7 +21548,7 @@ snapshots:
       - webpack-hot-middleware
       - webpack-plugin-serve
 
-  '@storybook/nextjs@8.4.4(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.3.3))(type-fest@4.21.0)(typescript@5.4.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7))':
+  '@storybook/nextjs@8.4.4(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.3.3))(type-fest@4.21.0)(typescript@5.4.3)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7))':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.26.0)
@@ -21565,7 +21575,7 @@ snapshots:
       find-up: 5.0.0
       image-size: 1.1.1
       loader-utils: 3.2.1
-      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       node-polyfill-webpack-plugin: 2.0.1(webpack@5.94.0(@swc/core@1.5.7))
       pnp-webpack-plugin: 1.7.0(typescript@5.4.3)
       postcss: 8.4.31
@@ -23028,9 +23038,9 @@ snapshots:
       '@webassemblyjs/ast': 1.12.1
       '@xtuc/long': 4.2.2
 
-  '@workos-inc/node@7.30.0(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.1)':
+  '@workos-inc/node@7.30.0(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.1)':
     dependencies:
-      iron-session: 6.3.1(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.1)
+      iron-session: 6.3.1(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.1)
       jose: 5.6.3
       pluralize: 8.0.0
     transitivePeerDependencies:
@@ -26230,7 +26240,7 @@ snapshots:
       '@typescript-eslint/parser': 7.17.0(eslint@8.57.0)(typescript@5.4.3)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0))(eslint@8.57.0)
+      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
       eslint-plugin-react: 7.34.1(eslint@8.57.0)
@@ -26253,12 +26263,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0))(eslint@8.57.0):
+  eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0):
     dependencies:
       debug: 4.3.7
       enhanced-resolve: 5.16.1
       eslint: 8.57.0
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0))(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.5
@@ -26270,14 +26280,14 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.8.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0):
+  eslint-module-utils@2.8.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0))(eslint@8.57.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 7.17.0(eslint@8.57.0)(typescript@5.4.3)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0))(eslint@8.57.0)
+      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -26311,7 +26321,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0))(eslint@8.57.0)
       hasown: 2.0.2
       is-core-module: 2.13.1
       is-glob: 4.0.3
@@ -27822,7 +27832,7 @@ snapshots:
 
   ipaddr.js@1.9.1: {}
 
-  iron-session@6.3.1(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.1):
+  iron-session@6.3.1(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.1):
     dependencies:
       '@peculiar/webcrypto': 1.5.0
       '@types/cookie': 0.5.4
@@ -27833,7 +27843,7 @@ snapshots:
       iron-webcrypto: 0.2.8
     optionalDependencies:
       express: 4.21.1
-      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
 
   iron-session@8.0.3:
     dependencies:
@@ -29881,9 +29891,9 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  next-router-mock@0.9.13(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1):
+  next-router-mock@0.9.13(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1):
     dependencies:
-      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       react: 18.3.1
 
   next-themes@0.4.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
@@ -30442,9 +30452,17 @@ snapshots:
 
   playwright-core@1.47.1: {}
 
+  playwright-core@1.49.0: {}
+
   playwright@1.47.1:
     dependencies:
       playwright-core: 1.47.1
+    optionalDependencies:
+      fsevents: 2.3.2
+
+  playwright@1.49.0:
+    dependencies:
+      playwright-core: 1.49.0
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -31016,9 +31034,9 @@ snapshots:
       react: 18.3.1
       use-sync-external-store: 1.2.2(react@18.3.1)
 
-  react-instantsearch-nextjs@0.3.17(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react-instantsearch@7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
+  react-instantsearch-nextjs@0.3.17(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react-instantsearch@7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
-      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       react-instantsearch: 7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   react-instantsearch@7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
