@@ -2415,9 +2415,6 @@ importers:
       httpsnippet-lite:
         specifier: ^3.0.5
         version: 3.0.5
-      next:
-        specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
       ts-essentials:
         specifier: ^10.0.1
         version: 10.0.1(typescript@5.4.3)
