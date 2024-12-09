@@ -1,10 +1,9 @@
-import { FernNextResponse } from "@fern-ui/docs-bundle";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
     if (request.nextUrl.pathname === "/subpath/test-capture-the-flag") {
-        return FernNextResponse.redirect(new URL("/subpath/capture-the-flag", request.url));
+        return NextResponse.redirect(new URL("/subpath/capture-the-flag", request.url));
     }
 
     const headers = new Headers(request.headers);
