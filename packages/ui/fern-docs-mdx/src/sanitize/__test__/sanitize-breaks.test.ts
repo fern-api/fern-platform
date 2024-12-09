@@ -1,4 +1,4 @@
-import { sanitizeBreaks } from "../sanitize-breaks.js";
+import { sanitizeBreaks } from "../sanitize-breaks";
 
 describe("sanitizeBreaks", () => {
     it("should replace <br> with <br />", () => {

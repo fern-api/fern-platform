@@ -1,1 +1,1 @@
-export * from "./custom-headings.js";
+export * from "./custom-headings";

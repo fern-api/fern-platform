@@ -1,0 +1,131 @@
+:root {
+    --shiki-dark: white;
+}
+
+@layer components {
+    .code-block-root {
+        @apply overflow-hidden flex flex-col w-full;
+
+        counter-reset: code-block-line;
+        background-color: unset !important;
+    }
+
+    .code-block-root > .fern-scroll-area {
+        @apply shrink min-h-0;
+    }
+
+    .code-block,
+    .code-block.text-sm,
+    .code-block.text-xs,
+    .code-block.text-base {
+        @apply font-mono leading-relaxed;
+    }
+
+    .code-block-inner {
+        @apply py-3;
+    }
+
+    .code-block.text-xs > .code-block-inner {
+        @apply py-2;
+    }
+
+    .code-block-line-group {
+        @apply border-spacing-0 min-w-full;
+    }
+
+    .code-block-line-gutter {
+        @apply p-0 align-top w-0 select-none;
+    }
+
+    .code-block-line-gutter > span {
+        @apply pl-3;
+        color: var(--grayscale-a9, var(--gray-a9));
+    }
+
+    .code-block-line-content {
+        @apply px-3 py-0;
+    }
+
+    .code-block-line-group.word-wrap .code-block-line-content {
+        @apply break-all whitespace-pre-wrap;
+    }
+
+    .code-block-line-group.highlight-focus .code-block-line:not(.highlight) {
+        @apply blur-[1.5px] opacity-40 dark:opacity-50 transition-[filter,opacity];
+    }
+
+    .code-block:hover .code-block-line-group.highlight-focus .code-block-line:not(.highlight) {
+        @apply blur-0 opacity-100 dark:opacity-100;
+    }
+
+    .code-block-line-group:not(.highlight-focus) .code-block-line.highlight {
+        @apply transition-[background,shadow] shadow-transparent;
+        background-color: var(--accent-2);
+    }
+
+    .code-block-line-group:not(.highlight-focus) .code-block-line:not(.highlight) + .code-block-line.highlight,
+    .code-block-line-group:not(.highlight-focus) .code-block-line.highlight:first-child {
+        box-shadow: inset 0 1px 0 0 rgba(var(--accent), 0.2);
+    }
+
+    :is(.dark)
+        .code-block-line-group:not(.highlight-focus)
+        .code-block-line:not(.highlight)
+        + .code-block-line.highlight,
+    :is(.dark) .code-block-line-group:not(.highlight-focus) .code-block-line.highlight:first-child {
+        box-shadow: inset 0 1px 0 0 rgba(var(--accent), 0.33);
+    }
+
+    .code-block-line-group:not(.highlight-focus) .code-block-line.highlight:has(+ .code-block-line:not(.highlight)),
+    .code-block-line-group:not(.highlight-focus) .code-block-line.highlight:last-child {
+        box-shadow: inset 0 -1px 0 0 rgba(var(--accent), 0.2);
+    }
+
+    :is(.dark)
+        .code-block-line-group:not(.highlight-focus)
+        .code-block-line.highlight:has(+ .code-block-line:not(.highlight)),
+    :is(.dark) .code-block-line-group:not(.highlight-focus) .code-block-line.highlight:last-child {
+        box-shadow: inset 0 -1px 0 0 rgba(var(--accent), 0.33);
+    }
+
+    .code-block-line-group:not(.highlight-focus)
+        .code-block-line:not(.highlight)
+        + .code-block-line.highlight:has(+ .code-block-line:not(.highlight)),
+    .code-block-line-group:not(.highlight-focus)
+        .code-block-line.highlight:first-child:has(+ .code-block-line:not(.highlight)),
+    .code-block-line-group:not(.highlight-focus)
+        .code-block-line:not(.highlight)
+        + .code-block-line.highlight:last-child {
+        box-shadow:
+            inset 0 -1px 0 0 rgba(var(--accent), 0.2),
+            inset 0 1px 0 0 rgba(var(--accent), 0.2);
+    }
+
+    :is(.dark)
+        .code-block-line-group:not(.highlight-focus)
+        .code-block-line:not(.highlight)
+        + .code-block-line.highlight:has(+ .code-block-line:not(.highlight)),
+    :is(.dark)
+        .code-block-line-group:not(.highlight-focus)
+        .code-block-line.highlight:first-child:has(+ .code-block-line:not(.highlight)),
+    :is(.dark)
+        .code-block-line-group:not(.highlight-focus)
+        .code-block-line:not(.highlight)
+        + .code-block-line.highlight:last-child {
+        box-shadow:
+            inset 0 -1px 0 0 rgba(var(--accent), 0.33),
+            inset 0 1px 0 0 rgba(var(--accent), 0.33);
+    }
+
+    :is(.dark) .code-block-root,
+    :is(.dark) .code-block-root .code-block-line-content span {
+        color: var(--shiki-dark) !important;
+
+        /* background-color: var(--shiki-dark-bg) !important; */
+
+        /* Optional, if you also want font styles */
+        font-style: var(--shiki-dark-font-style) !important;
+        font-weight: var(--shiki-dark-font-weight) !important;
+        text-decoration: var(--shiki-dark-text-decoration) !important;
+    }
+}

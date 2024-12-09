@@ -9,10 +9,10 @@ function algoliaAppId(): string {
     return algoliaAppId;
 }
 
-export function algoliaApiKey(): string {
-    const algoliaApiKey = process.env.ALGOLIA_API_KEY;
+export function algoliaWriteApiKey(): string {
+    const algoliaApiKey = process.env.ALGOLIA_WRITE_API_KEY;
     if (algoliaApiKey == null) {
-        throw new Error("ALGOLIA_API_KEY must be set");
+        throw new Error("ALGOLIA_WRITE_API_KEY must be set");
     }
     return algoliaApiKey;
 }
@@ -26,5 +26,5 @@ export function algoliaSearchIndex(): string {
 }
 
 export const provideAlgoliaClient = once(() => {
-    return algoliasearch(algoliaAppId(), algoliaApiKey());
+    return algoliasearch(algoliaAppId(), algoliaWriteApiKey());
 });

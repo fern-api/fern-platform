@@ -1,5 +1,5 @@
-import { HeadingMetadata, collectRootHeadings } from "./headings.js";
-import { toTree } from "./parse.js";
+import { HeadingMetadata, collectRootHeadings } from "./headings";
+import { toTree } from "./parse";
 
 export interface MarkdownSectionRoot {
     type: "root";

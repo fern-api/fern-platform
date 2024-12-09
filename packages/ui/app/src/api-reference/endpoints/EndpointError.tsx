@@ -3,13 +3,13 @@ import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { FernCollapse } from "@fern-ui/components";
+import { AvailabilityBadge } from "@fern-ui/components/badges";
 import cn from "clsx";
 import { MouseEventHandler, memo } from "react";
 import { MdxContent } from "../../mdx/MdxContent";
 import { renderTypeShorthand } from "../../type-shorthand";
 import { type JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
-import { EndpointAvailabilityTag } from "./EndpointAvailabilityTag";
 
 export declare namespace EndpointError {
     export interface Props {
@@ -58,7 +58,7 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
             <div className="flex items-baseline space-x-2">
                 <div className="rounded-lg bg-tag-danger px-2 py-1 text-xs text-intent-danger">{error.statusCode}</div>
                 <div className="t-muted text-xs text-left">{error.name}</div>
-                {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
+                {availability != null && <AvailabilityBadge availability={availability} size="sm" rounded />}
             </div>
 
             {error.shape != null && (

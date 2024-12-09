@@ -11,6 +11,7 @@ import { buildRequestUrl, unwrapReference } from "@fern-api/fdr-sdk/api-definiti
 import unknownToString from "@fern-api/ui-core-utils/unknownToString";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { CopyToClipboardButton, FernButton } from "@fern-ui/components";
+import { HttpMethodBadge } from "@fern-ui/components/badges";
 import { useBooleanState } from "@fern-ui/react-commons";
 import * as Dialog from "@radix-ui/react-dialog";
 import cn from "clsx";
@@ -19,7 +20,6 @@ import { isUndefined } from "es-toolkit/predicate";
 import { Xmark } from "iconoir-react";
 import { FC, Fragment, ReactNode } from "react";
 import { useAllEnvironmentIds } from "../../atoms/environment";
-import { HttpMethodTag } from "../../components/HttpMethodTag";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
 import { PlaygroundRequestFormState } from "../types";
@@ -57,7 +57,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
     return (
         <div className="playground-endpoint">
             <div className="flex h-10 min-w-0 flex-1 shrink gap-2 rounded-lg bg-tag-default px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px] items-center">
-                {method != null && <HttpMethodTag method={method} className="playground-endpoint-method" />}
+                {method != null && <HttpMethodBadge method={method} className="playground-endpoint-method" />}
                 <span
                     className={cn(
                         environmentIds.length > 1 ? "playground-endpoint-url-with-switcher" : "playground-endpoint-url",

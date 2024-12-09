@@ -29,8 +29,8 @@
     "algoliasearch": "^4.24.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
-    "date-fns": "^2.30.0",
-    "es-toolkit": "^1.24.0",
+    "date-fns": "^4.1.0",
+    "es-toolkit": "^1.27.0",
     "express": "^4.20.0",
     "gray-matter": "^4.0.3",
     "html-to-text": "^9.0.5",
@@ -50,9 +50,9 @@
     "winston": "^3.10.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.9",
-    "@babel/preset-env": "^7.24.3",
-    "@babel/preset-typescript": "^7.24.1",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-typescript": "^7.26.0",
     "@fern-platform/configs": "workspace:*",
     "@types/compression": "^1.7.5",
     "@types/cors": "^2.8.13",

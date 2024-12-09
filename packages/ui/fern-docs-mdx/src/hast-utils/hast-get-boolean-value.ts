@@ -1,5 +1,5 @@
 import type { MdxJsxAttribute } from "mdast-util-mdx";
-import { isMdxJsxAttributeValueExpression } from "../mdx-utils/is-mdx-jsx-attr.js";
+import { isMdxJsxAttributeValueExpression } from "../mdx-utils/is-mdx-jsx-attr";
 
 /**
  * Converts a string or mdx jsx attribute value expression into a boolean (true/false) or undefined.

@@ -1,3 +1,7 @@
+export function measureBytes(str: string): number {
+    return new TextEncoder().encode(str).length;
+}
+
 /**
  * Chunks a string into an array of strings, each of the specified byte size.
  * @param str - The string to chunk.

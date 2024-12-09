@@ -1,2 +1,2 @@
-export * from "./sanitize-breaks.js";
-export * from "./sanitize-mdx-expression.js";
+export * from "./sanitize-breaks";
+export * from "./sanitize-mdx-expression";

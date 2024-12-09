@@ -1,5 +1,6 @@
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { FernTooltipProvider, Toaster } from "@fern-ui/components";
+import { SyntaxHighlighterFeatureFlagsProvider } from "@fern-ui/fern-docs-syntax-highlighter";
 import { Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import { ReactElement } from "react";
@@ -29,7 +30,11 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
                 <FernTooltipProvider>
                     <SWRConfig value={{ fallback: pageProps?.fallback ?? EMPTY_OBJECT }}>
                         <FernErrorBoundary className="flex h-screen items-center justify-center" refreshOnError>
-                            <Component {...pageProps} />
+                            <SyntaxHighlighterFeatureFlagsProvider
+                                isDarkCodeEnabled={pageProps?.featureFlags?.isDarkCodeEnabled ?? false}
+                            >
+                                <Component {...pageProps} />
+                            </SyntaxHighlighterFeatureFlagsProvider>
                         </FernErrorBoundary>
                     </SWRConfig>
                 </FernTooltipProvider>

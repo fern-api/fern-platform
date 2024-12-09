@@ -1,3 +1,4 @@
+import { MdxFlowExpression, MdxTextExpression } from "mdast-util-mdx";
 import type {
     MdxJsxFlowElement,
     MdxJsxFlowElementHast,
@@ -8,6 +9,7 @@ import type { Data as UnistData } from "unist";
 
 export type MdxJsxElement = MdxJsxFlowElement | MdxJsxTextElement;
 export type MdxJsxElementHast = MdxJsxFlowElementHast | MdxJsxTextElementHast;
+export type MdxExpression = MdxFlowExpression | MdxTextExpression;
 
 interface EsastData extends UnistData {
     /**

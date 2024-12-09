@@ -1,0 +1,446 @@
+[
+  {
+    "objectID": "test-chunk:0",
+    "org_id": "test",
+    "domain": "test",
+    "canonicalPathname": "/test",
+    "pathname": "/test",
+    "title": "Elasticsearch and Cohere",
+    "breadcrumb": [],
+    "visible_by": [],
+    "authed": false,
+    "type": "markdown",
+    "keywords": "Cohere integrations, Elasticsearch",
+    "description": "Learn how to create a semantic search pipeline with Elasticsearch and Cohere's generative AI capabilities.",
+    "content": "Elasticsearch has all the tools developers need to build next generation search experiences with generative AI, and it supports native integration with Cohere through their inference API.\nUse Elastic if you’d like to build with:\nA vector database\n\nDeploy multiple ML models\n\nPerform text, vector and hybrid search\n\nSearch with filters, facet, aggregations\n\nApply document and field level security\n\nRun on-prem, cloud, or serverless (preview)\n\n\nThis guide uses a dataset of Wikipedia articles to set up a pipeline for semantic search. It will cover:\nCreating an Elastic inference processor using Cohere embeddings\n\nCreating an Elasticsearch index with embeddings\n\nPerforming hybrid search on the Elasticsearch index and reranking results\n\nPerforming basic RAG\n\n\nTo see the full code sample, refer to this notebook. You can also find an integration guide here."
+  },
+  {
+    "objectID": "test-prerequisites-chunk:0",
+    "org_id": "test",
+    "domain": "test",
+    "canonicalPathname": "/test",
+    "pathname": "/test",
+    "title": "Prerequisites",
+    "breadcrumb": [],
+    "visible_by": [],
+    "authed": false,
+    "type": "markdown",
+    "keywords": "Cohere integrations, Elasticsearch",
+    "hash": "#prerequisites",
+    "content": "This tutorial assumes you have the following:\nAn Elastic Cloud account through Elastic Cloud, available with a free trial\n\nA Cohere production API Key. Get your API Key at this link if you don't have one\n\nPython 3.7 or higher\n\n\nNote: While this tutorial integrates Cohere with an Elastic Cloud serverless project, you can also integrate with your self-managed Elasticsearch deployment or Elastic Cloud deployment by simply switching from the serverless to the general language client.",
+    "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
+      "h2": {
+        "id": "prerequisites",
+        "title": "Prerequisites"
+      }
+    },
+    "level": "h2",
+    "page_position": 1
+  },
+  {
+    "objectID": "test-create-an-elastic-serverless-deployment-chunk:0",
+    "org_id": "test",
+    "domain": "test",
+    "canonicalPathname": "/test",
+    "pathname": "/test",
+    "title": "Create an Elastic Serverless deployment",
+    "breadcrumb": [],
+    "visible_by": [],
+    "authed": false,
+    "type": "markdown",
+    "keywords": "Cohere integrations, Elasticsearch",
+    "hash": "#create-an-elastic-serverless-deployment",
+    "content": "If you don't have an Elastic Cloud deployment, sign up here for a free trial and request access to Elastic Serverless",
+    "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
+      "h2": {
+        "id": "create-an-elastic-serverless-deployment",
+        "title": "Create an Elastic Serverless deployment"
+      }
+    },
+    "level": "h2",
+    "page_position": 1
+  },
+  {
+    "objectID": "test-install-the-required-packages-chunk:0",
+    "org_id": "test",
+    "domain": "test",
+    "canonicalPathname": "/test",
+    "pathname": "/test",
+    "title": "Install the required packages",
+    "breadcrumb": [],
+    "visible_by": [],
+    "authed": false,
+    "type": "markdown",
+    "keywords": "Cohere integrations, Elasticsearch",
+    "hash": "#install-the-required-packages",
+    "content": "Install and import the required Python Packages:\nelasticsearch_serverless\n\ncohere: ensure you are on version 5.2.5 or later\n\n\nTo install the packages, use the following code\nAfter the instalation has finished, find your endpoint URL and create your API key in the Serverless dashboard.",
+    "code_snippets": [
+      {
+        "lang": "python",
+        "meta": "PYTHON",
+        "code": "!pip install elasticsearch_serverless==0.2.0.20231031\n!pip install cohere==5.2.5"
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
+      "h2": {
+        "id": "install-the-required-packages",
+        "title": "Install the required packages"
+      }
+    },
+    "level": "h2",
+    "page_position": 1
+  },
+  {
+    "objectID": "test-import-the-required-packages-chunk:0",
+    "org_id": "test",
+    "domain": "test",
+    "canonicalPathname": "/test",
+    "pathname": "/test",
+    "title": "Import the required packages",
+    "breadcrumb": [],
+    "visible_by": [],
+    "authed": false,
+    "type": "markdown",
+    "keywords": "Cohere integrations, Elasticsearch",
+    "hash": "#import-the-required-packages",
+    "content": "Next, we need to import the modules we need. 🔐 NOTE: getpass enables us to securely prompt the user for credentials without echoing them to the terminal, or storing it in memory.",
+    "code_snippets": [
+      {
+        "lang": "python",
+        "meta": "PYTHON",
+        "code": "from elasticsearch_serverless import Elasticsearch, helpers\nfrom getpass import getpass\nimport cohere\nimport json\nimport requests"
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
+      "h2": {
+        "id": "import-the-required-packages",
+        "title": "Import the required packages"
+      }
+    },
+    "level": "h2",
+    "page_position": 1
+  },
+  {
+    "objectID": "test-create-an-elasticsearch-client-chunk:0",
+    "org_id": "test",
+    "domain": "test",
+    "canonicalPathname": "/test",
+    "pathname": "/test",
+    "title": "Create an Elasticsearch client",
+    "breadcrumb": [],
+    "visible_by": [],
+    "authed": false,
+    "type": "markdown",
+    "keywords": "Cohere integrations, Elasticsearch",
+    "hash": "#create-an-elasticsearch-client",
+    "content": "Now we can instantiate the Python Elasticsearch client.\nFirst we prompt the user for their endpoint and encoded API key. Then we create a client object that instantiates an instance of the Elasticsearch class.\nWhen creating your Elastic Serverless API key make sure to turn on Control security privileges, and edit cluster privileges to specify \"cluster\": [\"all\"].",
+    "code_snippets": [
+      {
+        "lang": "python",
+        "meta": "PYTHON",
+        "code": "ELASTICSEARCH_ENDPOINT = getpass(\"Elastic Endpoint: \")\nELASTIC_API_KEY = getpass(\"Elastic encoded API key: \") # Use the encoded API key\n\nclient = Elasticsearch(\n  ELASTICSEARCH_ENDPOINT,\n  api_key=ELASTIC_API_KEY\n)\n\n# Confirm the client has connected\nprint(client.info())"
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
+      "h2": {
+        "id": "create-an-elasticsearch-client",
+        "title": "Create an Elasticsearch client"
+      }
+    },
+    "level": "h2",
+    "page_position": 1
+  },
+  {
+    "objectID": "test-create-an-inference-endpoint-chunk:0",
+    "org_id": "test",
+    "domain": "test",
+    "canonicalPathname": "/test",
+    "pathname": "/test",
+    "title": "Create an inference endpoint",
+    "breadcrumb": [],
+    "visible_by": [],
+    "authed": false,
+    "type": "markdown",
+    "keywords": "Cohere integrations, Elasticsearch",
+    "hash": "#create-an-inference-endpoint",
+    "content": "One of the biggest pain points of building a vector search index is computing embeddings for a large corpus of data. Fortunately Elastic offers inference endpoints that can be used in ingest pipelines to automatically compute embeddings when bulk indexing operations are performed.\nTo set up an inference pipeline for ingestion we first must create an inference endpoint that uses Cohere embeddings. You'll need a Cohere API key for this that you can find in your Cohere account under the API keys section.\nWe will create an inference endpoint that uses embed-english-v3.0 and int8 or byte compression to save on storage.\nHere's what you might see:",
+    "code_snippets": [
+      {
+        "lang": "python",
+        "meta": "PYTHON",
+        "code": "COHERE_API_KEY = getpass(\"Enter Cohere API key:  \")\n# Delete the inference model if it already exists\nclient.options(ignore_status=[404]).inference.delete(inference_id=\"cohere_embeddings\")\n\nclient.inference.put(\n    task_type=\"text_embedding\",\n    inference_id=\"cohere_embeddings\",\n    body={\n        \"service\": \"cohere\",\n        \"service_settings\": {\n            \"api_key\": COHERE_API_KEY,\n            \"model_id\": \"embed-english-v3.0\",\n            \"embedding_type\": \"int8\",\n            \"similarity\": \"cosine\"\n        },\n        \"task_settings\": {},\n    },\n)"
+      },
+      {
+        "code": "Enter Cohere API key:  ··········\nObjectApiResponse({'model_id': 'cohere_embeddings', 'inference_id': 'cohere_embeddings', 'task_type': 'text_embedding', 'service': 'cohere', 'service_settings': {'similarity': 'cosine', 'dimensions': 1024, 'model_id': 'embed-english-v3.0', 'rate_limit': {'requests_per_minute': 10000}, 'embedding_type': 'byte'}, 'task_settings': {}})"
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
+      "h1": {
+        "id": "build-a-hybrid-search-index-with-cohere-and-elasticsearch",
+        "title": "Build a Hybrid Search Index with Cohere and Elasticsearch"
+      },
+      "h2": {
+        "id": "create-an-inference-endpoint",
+        "title": "Create an inference endpoint"
+      }
+    },
+    "level": "h2",
+    "page_position": 1
+  },
+  {
+    "objectID": "test-create-the-index-chunk:0",
+    "org_id": "test",
+    "domain": "test",
+    "canonicalPathname": "/test",
+    "pathname": "/test",
+    "title": "Create the Index",
+    "breadcrumb": [],
+    "visible_by": [],
+    "authed": false,
+    "type": "markdown",
+    "keywords": "Cohere integrations, Elasticsearch",
+    "hash": "#create-the-index",
+    "content": "The mapping of the destination index – the index that contains the embeddings that the model will generate based on your input text – must be created. The destination index must have a field with the semantic_text field type to index the output of the Cohere model.\nLet's create an index named cohere-wiki-embeddings with the mappings we need\nYou might see something like this:\nLet's note a few important parameters from that API call:\nsemantic_text: A field type automatically generates embeddings for text content using an inference endpoint.\n\ninference_id: Specifies the ID of the inference endpoint to be used. In this example, the model ID is set to cohere_embeddings.\n\ncopy_to: Specifies the output field which contains inference results",
+    "code_snippets": [
+      {
+        "lang": "python",
+        "meta": "PYTHON",
+        "code": "client.indices.delete(index=\"cohere-wiki-embeddings\", ignore_unavailable=True)\nclient.indices.create(\n    index=\"cohere-wiki-embeddings\",\n    mappings={\n        \"properties\": {\n            \"text_semantic\": {\n                \"type\": \"semantic_text\",\n                \"inference_id\": \"cohere_embeddings\"\n            },\n            \"text\": {\"type\": \"text\", \"copy_to\": \"text_semantic\"},\n            \"wiki_id\": {\"type\": \"integer\"},\n            \"url\": {\"type\": \"text\"},\n            \"views\": {\"type\": \"float\"},\n            \"langs\": {\"type\": \"integer\"},\n            \"title\": {\"type\": \"text\"},\n            \"paragraph_id\": {\"type\": \"integer\"},\n            \"id\": {\"type\": \"integer\"}\n        }\n    },\n)"
+      },
+      {
+        "code": "ObjectApiResponse({'acknowledged': True, 'shards_acknowledged': True, 'index': 'cohere-wiki-embeddings'})"
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
+      "h1": {
+        "id": "build-a-hybrid-search-index-with-cohere-and-elasticsearch",
+        "title": "Build a Hybrid Search Index with Cohere and Elasticsearch"
+      },
+      "h2": {
+        "id": "create-the-index",
+        "title": "Create the Index"
+      }
+    },
+    "level": "h2",
+    "page_position": 1
+  },
+  {
+    "objectID": "test-insert-documents-chunk:0",
+    "org_id": "test",
+    "domain": "test",
+    "canonicalPathname": "/test",
+    "pathname": "/test",
+    "title": "Insert Documents",
+    "breadcrumb": [],
+    "visible_by": [],
+    "authed": false,
+    "type": "markdown",
+    "keywords": "Cohere integrations, Elasticsearch",
+    "hash": "#insert-documents",
+    "content": "Let's insert our example wiki dataset. You need a production Cohere account to complete this step, otherwise the documentation ingest will time out due to the API request rate limits.\nYou should see this:",
+    "code_snippets": [
+      {
+        "lang": "python",
+        "meta": "PYTHON",
+        "code": "url = \"https://raw.githubusercontent.com/cohere-ai/notebooks/main/notebooks/data/embed_jobs_sample_data.jsonl\"\nresponse = requests.get(url)\n\n# Load the response data into a JSON object\njsonl_data = response.content.decode('utf-8').splitlines()\n\n# Prepare the documents to be indexed\ndocuments = []\nfor line in jsonl_data:\n    data_dict = json.loads(line)\n    documents.append({\n        \"_index\": \"cohere-wiki-embeddings\",\n        \"_source\": data_dict,\n        }\n      )\n\n# Use the bulk endpoint to index\nhelpers.bulk(client, documents)\n\nprint(\"Done indexing documents into `cohere-wiki-embeddings` index!\")"
+      },
+      {
+        "code": "Done indexing documents into `cohere-wiki-embeddings` index!"
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
+      "h1": {
+        "id": "build-a-hybrid-search-index-with-cohere-and-elasticsearch",
+        "title": "Build a Hybrid Search Index with Cohere and Elasticsearch"
+      },
+      "h2": {
+        "id": "insert-documents",
+        "title": "Insert Documents"
+      }
+    },
+    "level": "h2",
+    "page_position": 1
+  },
+  {
+    "objectID": "test-semantic-search-chunk:0",
+    "org_id": "test",
+    "domain": "test",
+    "canonicalPathname": "/test",
+    "pathname": "/test",
+    "title": "Semantic Search",
+    "breadcrumb": [],
+    "visible_by": [],
+    "authed": false,
+    "type": "markdown",
+    "keywords": "Cohere integrations, Elasticsearch",
+    "hash": "#semantic-search",
+    "content": "After the dataset has been enriched with the embeddings, you can query the data using the semantic query provided by Elasticsearch. semantic_text in Elasticsearch simplifies the semantic search significantly. Learn more about how semantic text in Elasticsearch allows you to focus on your model and results instead of on the technical details.\nHere's what that might look like:",
+    "code_snippets": [
+      {
+        "lang": "python",
+        "meta": "PYTHON ",
+        "code": "query = \"When were the semi-finals of the 2022 FIFA world cup played?\"\n\nresponse = client.search(\n    index=\"cohere-wiki-embeddings\",\n    size=100,\n    query = {\n        \"semantic\": {\n                    \"query\": \"When were the semi-finals of the 2022 FIFA world cup played?\",\n                     \"field\": \"text_semantic\"\n        }\n    }\n)\n\nraw_documents = response[\"hits\"][\"hits\"]\n\n# Display the first 10 results\nfor document in raw_documents[0:10]:\n  print(f'Title: {document[\"_source\"][\"title\"]}\\nText: {document[\"_source\"][\"text\"]}\\n')\n\n# Format the documents for ranking\ndocuments = []\nfor hit in response[\"hits\"][\"hits\"]:\n    documents.append(hit[\"_source\"][\"text\"])"
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
+      "h1": {
+        "id": "build-a-hybrid-search-index-with-cohere-and-elasticsearch",
+        "title": "Build a Hybrid Search Index with Cohere and Elasticsearch"
+      },
+      "h2": {
+        "id": "semantic-search",
+        "title": "Semantic Search"
+      }
+    },
+    "level": "h2",
+    "page_position": 1
+  },
+  {
+    "objectID": "test-hybrid-search-chunk:0",
+    "org_id": "test",
+    "domain": "test",
+    "canonicalPathname": "/test",
+    "pathname": "/test",
+    "title": "Hybrid Search",
+    "breadcrumb": [],
+    "visible_by": [],
+    "authed": false,
+    "type": "markdown",
+    "keywords": "Cohere integrations, Elasticsearch",
+    "hash": "#hybrid-search",
+    "content": "After the dataset has been enriched with the embeddings, you can query the data using hybrid search.\nPass a semantic query, and provide the query text and the model you have used to create the embeddings.",
+    "code_snippets": [
+      {
+        "lang": "python",
+        "meta": "PYTHON ",
+        "code": "query = \"When were the semi-finals of the 2022 FIFA world cup played?\"\n\nresponse = client.search(\n    index=\"cohere-wiki-embeddings\",\n    size=100,\n    query={\n        \"bool\": {\n            \"must\": {\n                \"multi_match\": {\n                \"query\": \"When were the semi-finals of the 2022 FIFA world cup played?\",\n                \"fields\": [\"text\", \"title\"]\n        }\n            },\n            \"should\": {\n                \"semantic\": {\n                    \"query\": \"When were the semi-finals of the 2022 FIFA world cup played?\",\n                     \"field\": \"text_semantic\"\n                }\n            },\n        }\n    }\n\n)\n\nraw_documents = response[\"hits\"][\"hits\"]\n\n# Display the first 10 results\nfor document in raw_documents[0:10]:\n  print(f'Title: {document[\"_source\"][\"title\"]}\\nText: {document[\"_source\"][\"text\"]}\\n')\n\n# Format the documents for ranking\ndocuments = []\nfor hit in response[\"hits\"][\"hits\"]:\n    documents.append(hit[\"_source\"][\"text\"])"
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
+      "h1": {
+        "id": "build-a-hybrid-search-index-with-cohere-and-elasticsearch",
+        "title": "Build a Hybrid Search Index with Cohere and Elasticsearch"
+      },
+      "h2": {
+        "id": "hybrid-search",
+        "title": "Hybrid Search"
+      }
+    },
+    "level": "h2",
+    "page_position": 1
+  },
+  {
+    "objectID": "test-ranking-chunk:0",
+    "org_id": "test",
+    "domain": "test",
+    "canonicalPathname": "/test",
+    "pathname": "/test",
+    "title": "Ranking",
+    "breadcrumb": [],
+    "visible_by": [],
+    "authed": false,
+    "type": "markdown",
+    "keywords": "Cohere integrations, Elasticsearch",
+    "hash": "#ranking",
+    "content": "In order to effectively combine the results from our vector and BM25 retrieval, we can use Cohere's Rerank 3 model through the inference API to provide a final, more precise, semantic reranking of our results.\nFirst, create an inference endpoint with your Cohere API key. Make sure to specify a name for your endpoint, and the model_id of one of the rerank models. In this example we will use Rerank 3.\nYou can now rerank your results using that inference endpoint. Here we will pass in the query we used for retrieval, along with the documents we just retrieved using hybrid search.\nThe inference service will respond with a list of documents in descending order of relevance. Each document has a corresponding index (reflecting to the order the documents were in when sent to the inference endpoint), and if the “return_documents” task setting is True, then the document texts will be included as well.\nIn this case we will set the response to False and will reconstruct the input documents based on the index returned in the response.",
+    "code_snippets": [
+      {
+        "lang": "python",
+        "meta": "PYTHON ",
+        "code": "# Delete the inference model if it already exists\nclient.options(ignore_status=[404]).inference.delete(inference_id=\"cohere_rerank\")\n\nclient.inference.put(\n    task_type=\"rerank\",\n    inference_id=\"cohere_rerank\",\n    body={\n        \"service\": \"cohere\",\n        \"service_settings\":{\n            \"api_key\": COHERE_API_KEY,\n            \"model_id\": \"rerank-english-v3.0\"\n           },\n        \"task_settings\": {\n            \"top_n\": 10,\n        },\n    }\n)"
+      },
+      {
+        "lang": "python",
+        "meta": "PYTHON ",
+        "code": "response = client.inference.inference(\n    inference_id=\"cohere_rerank\",\n    body={\n        \"query\": query,\n        \"input\": documents,\n        \"task_settings\": {\n            \"return_documents\": False\n            }\n        }\n)\n\n# Reconstruct the input documents based on the index provided in the rereank response\nranked_documents = []\nfor document in response.body[\"rerank\"]:\n  ranked_documents.append({\n      \"title\": raw_documents[int(document[\"index\"])][\"_source\"][\"title\"],\n      \"text\": raw_documents[int(document[\"index\"])][\"_source\"][\"text\"]\n  })\n\n# Print the top 10 results\nfor document in ranked_documents[0:10]:\n  print(f\"Title: {document['title']}\\nText: {document['text']}\\n\")"
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
+      "h1": {
+        "id": "build-a-hybrid-search-index-with-cohere-and-elasticsearch",
+        "title": "Build a Hybrid Search Index with Cohere and Elasticsearch"
+      },
+      "h2": {
+        "id": "ranking",
+        "title": "Ranking"
+      }
+    },
+    "level": "h2",
+    "page_position": 1
+  },
+  {
+    "objectID": "test-retrieval-augemented-generation-chunk:0",
+    "org_id": "test",
+    "domain": "test",
+    "canonicalPathname": "/test",
+    "pathname": "/test",
+    "title": "Retrieval augemented generation",
+    "breadcrumb": [],
+    "visible_by": [],
+    "authed": false,
+    "type": "markdown",
+    "keywords": "Cohere integrations, Elasticsearch",
+    "hash": "#retrieval-augemented-generation",
+    "content": "Now that we have ranked our results, we can easily turn this into a RAG system with Cohere's Chat API. Pass in the retrieved documents, along with the query and see the grounded response using Cohere's newest generative model Command R+.\nFirst, we will create the Cohere client.\nNext, we can easily get a grounded generation with citations from the Cohere Chat API. We simply pass in the user query and documents retrieved from Elastic to the API, and print out our grounded response.\nAnd there you have it! A quick and easy implementation of hybrid search and RAG with Cohere and Elastic.",
+    "code_snippets": [
+      {
+        "lang": "python",
+        "meta": "PYTHON ",
+        "code": "co = cohere.Client(COHERE_API_KEY)"
+      },
+      {
+        "lang": "python",
+        "meta": "PYTHON",
+        "code": "response = co.chat(\n    message=query,\n    documents=ranked_documents,\n    model='command-r-plus-08-2024'\n)\n\nsource_documents = []\nfor citation in response.citations:\n  for document_id in citation.document_ids:\n    if document_id not in source_documents:\n      source_documents.append(document_id)\n\nprint(f\"Query: {query}\")\nprint(f\"Response: {response.text}\")\nprint(\"Sources:\")\nfor document in response.documents:\n  if document['id'] in source_documents:\n    print(f\"{document['title']}: {document['text']}\")"
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Elasticsearch and Cohere"
+      },
+      "h1": {
+        "id": "build-a-hybrid-search-index-with-cohere-and-elasticsearch",
+        "title": "Build a Hybrid Search Index with Cohere and Elasticsearch"
+      },
+      "h2": {
+        "id": "retrieval-augemented-generation",
+        "title": "Retrieval augemented generation"
+      }
+    },
+    "level": "h2",
+    "page_position": 1
+  }
+]

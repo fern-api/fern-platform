@@ -3,10 +3,10 @@ import type { Doctype, ElementContent, Root } from "hast";
 import { headingRank } from "hast-util-heading-rank";
 import { toString } from "hast-util-to-string";
 import { SKIP, visit, type BuildVisitor } from "unist-util-visit";
-import { hastGetBooleanValue } from "./hast-utils/hast-get-boolean-value.js";
-import { isHastElement } from "./hast-utils/is-hast-element.js";
-import { isMdxJsxElementHast } from "./mdx-utils/is-mdx-element.js";
-import { isMdxJsxAttribute } from "./mdx-utils/is-mdx-jsx-attr.js";
+import { hastGetBooleanValue } from "./hast-utils/hast-get-boolean-value";
+import { isHastElement } from "./hast-utils/is-hast-element";
+import { isMdxJsxElementHast } from "./mdx-utils/is-mdx-element";
+import { isMdxJsxAttribute } from "./mdx-utils/is-mdx-jsx-attr";
 
 interface FoundHeading {
     depth: number;

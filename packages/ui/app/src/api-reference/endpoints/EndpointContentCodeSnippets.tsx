@@ -1,13 +1,12 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY, EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { FernScrollArea } from "@fern-ui/components";
+import { FernScrollArea, StatusCodeBadge, statusCodeToIntent } from "@fern-ui/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import { sortBy } from "es-toolkit";
 import { RESET } from "jotai/utils";
 import { ReactNode, SetStateAction, memo, useCallback, useMemo, useRef } from "react";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
-import { StatusCodeTag, statusCodeToIntent } from "../../components/StatusCodeTag";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
 import { AudioExample } from "../examples/AudioExample";
@@ -195,7 +194,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
                     }}
                     hoveredPropertyPath={hoveredResponsePropertyPath}
                     json={selectedExample?.exampleCall.responseBody?.value ?? EMPTY_OBJECT}
-                    intent={statusCodeToIntent(selectedExample.exampleCall.responseStatusCode)}
+                    intent={statusCodeToIntent(String(selectedExample.exampleCall.responseStatusCode))}
                 />
             )}
             {selectedExample?.exampleCall.responseBody != null &&
@@ -255,11 +254,11 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<EndpointContentCodeSnippet
 
 export const EndpointContentCodeSnippets = memo(UnmemoizedEndpointContentCodeSnippets);
 
-function renderResponseTitle(title: string, statusCode: number) {
+function renderResponseTitle(title: string, statusCode: number | string) {
     return (
         <span className="inline-flex items-center gap-2">
-            <StatusCodeTag statusCode={statusCode} />
-            <span className={`text-intent-${statusCodeToIntent(Number(statusCode))}`}>{title}</span>
+            <StatusCodeBadge statusCode={statusCode} />
+            <span className={`text-intent-${statusCodeToIntent(String(statusCode))}`}>{title}</span>
         </span>
     );
 }

@@ -1,5 +1,4 @@
 import { DocsLoader } from "@/server/DocsLoader";
-import { addLeadingSlash } from "@/server/addLeadingSlash";
 import { getMarkdownForPath } from "@/server/getMarkdownForPath";
 import { getSectionRoot } from "@/server/getSectionRoot";
 import { getStringParam } from "@/server/getStringParam";
@@ -9,7 +8,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
-import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
+import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-ui/fern-docs-utils";
 import { NextApiRequest, NextApiResponse } from "next";
 
 /**

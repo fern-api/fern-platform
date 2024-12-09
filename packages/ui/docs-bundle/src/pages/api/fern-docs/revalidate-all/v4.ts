@@ -1,9 +1,12 @@
 import { DocsKVCache } from "@/server/DocsCache";
 import { DocsLoader } from "@/server/DocsLoader";
+import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
+import { queueAlgoliaReindex } from "@/server/queueAlgoliaReindex";
 import { Revalidator } from "@/server/revalidator";
 import { getDocsDomainNode, getHostNode } from "@/server/xfernhost/node";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import type { FernDocs } from "@fern-fern/fern-docs-sdk";
+import { withoutStaging } from "@fern-ui/fern-docs-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 export const config = {
@@ -57,6 +60,17 @@ const handler: NextApiHandler = async (
     const revalidate = new Revalidator(res, domain);
 
     if (offset === 0) {
+        // queue algolia reindexing
+        try {
+            const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
+            if (orgMetadata?.isPreviewUrl === false) {
+                await queueAlgoliaReindex(host, withoutStaging(domain), root.slug);
+            }
+        } catch (err) {
+            // eslint-disable-next-line no-console
+            console.error(err);
+        }
+
         const cache = DocsKVCache.getInstance(domain);
         const previouslyVisitedSlugs = (await cache.getVisitedSlugs()).filter((slug) => !slugs.includes(slug));
 

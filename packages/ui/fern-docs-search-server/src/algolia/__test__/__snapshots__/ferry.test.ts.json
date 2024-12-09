@@ -1,0 +1,287 @@
+[
+  {
+    "objectID": "test:test.com:root.uv.overview-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/",
+    "pathname": "/",
+    "title": "Ferry Health API",
+    "breadcrumb": [],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "type": "markdown",
+    "content": "The Ferry Health API provides programmatic access to Appointment Tasks.\nUse the API to:\nCreate Appointment Tasks\n\nLoad Appointment Tasks"
+  },
+  {
+    "objectID": "test:test.com:root.uv.overview-authentication-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/",
+    "pathname": "/",
+    "title": "Authentication",
+    "breadcrumb": [],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 1,
+    "type": "markdown",
+    "hash": "#authentication",
+    "content": "To use the Ferry API, you'll need an API key. If you don't have one already, please\nreach out to get one: support@ferry.health.\nIn all API requests, you should provide your token using the Authorization\nheader with the \"Bearer \" prefix:",
+    "code_snippets": [
+      {
+        "lang": "json",
+        "code": "\"Authorization\": \"Bearer <YOUR TOKEN>\""
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Ferry Health API"
+      },
+      "h2": {
+        "id": "authentication",
+        "title": "Authentication"
+      }
+    },
+    "level": "h2"
+  },
+  {
+    "objectID": "test:test.com:root.uv.overview-appointment-tasks-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/",
+    "pathname": "/",
+    "title": "Appointment Tasks",
+    "breadcrumb": [],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 1,
+    "type": "markdown",
+    "hash": "#appointment-tasks",
+    "content": "You can create Appointment Tasks to initiate a search for providers. See the\n/create-appointment-task endpoint for the\navailable request properties.\nWhen you create an Appointment Task, we will return an appointmentTaskId, and Ferry will asynchronously\ncompile a list of providers with validated availability. You can poll for the status of a task using\nthe /get-appointment-task endpoint.\nOnce the task is in the \"AVAILABLE\" state, it will include some appointment availabilities:",
+    "code_snippets": [
+      {
+        "lang": "json",
+        "meta": "Available Task",
+        "code": "{\n  \"appointmentTaskId\": \"ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e\",\n  \"status\": \"AVAILABLE\",\n  \"patient\": {\n    \"firstName\": \"Jane\",\n    \"lastName\": \"Smith\",\n    \"sex\": \"Female\",\n    \"dateOfBirth\": \"1980-01-01\",\n    \"homeAddress\": \"123 Happy Lane, New York, NY 11211\",\n    \"insurancePlan\": \"Aetna - Managed Choice Open Access\",\n    \"memberId\": \"123456\"\n  },\n  \"results\": {\n    \"appointmentAvailabilities\": [\n      {\n        \"provider\": {\n          \"npi\": \"1234567890\",\n          \"firstName\": \"Jane\",\n          \"lastName\": \"Smith\"\n        },\n        \"location\": {\n          \"name\": \"Louisville Health Center\",\n          \"address\": \"123 Happy Lane, Louisville KY 01234\"\n        },\n        \"nextAvailableAppointments\": [\n          \"2024-09-15T12:00:00.000Z\",\n          \"2024-09-18T14:00:00.000Z\",\n          \"2024-09-20T11:45:00.000Z\"\n        ],\n        \"availabilityNotes\": \"Scheduling 2 weeks out\",\n        \"reasonForInclusion\": \"CLOSEST_LOCATION\"\n      }\n    ]\n  }\n}"
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Ferry Health API"
+      },
+      "h2": {
+        "id": "appointment-tasks",
+        "title": "Appointment Tasks"
+      }
+    },
+    "level": "h2"
+  },
+  {
+    "objectID": "test:test.com:b20d860e-c8a8-4c88-96b3-61f801a57f31.CreateAppointmentTask",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/appointment-tasks/create-appointment-task",
+    "pathname": "/api-reference/appointment-tasks/create-appointment-task",
+    "title": "Create Appointment Task",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "Appointment Tasks",
+        "pathname": "/api-reference/appointment-tasks"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+    "api_endpoint_id": "endpoint_.CreateAppointmentTask",
+    "method": "POST",
+    "endpoint_path": "/api/v1/appointment-tasks/create",
+    "endpoint_path_alternates": [
+      "/api/v1/appointment-tasks/create",
+      "https://api.ferry.health/api/v1/appointment-tasks/create",
+      "https://api.ferry.health/api/v1/appointment-tasks/create"
+    ],
+    "response_type": "json",
+    "description": "Create an appointment task for a patient.\nOnce you create a task, Ferry will asynchronously process the task to find providers with validated availability. You can poll for the status of the task with the Get Appointment Task endpoint.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.ferry.health"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:b20d860e-c8a8-4c88-96b3-61f801a57f31.GetAppointmentTask",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/appointment-tasks/get-appointment-task",
+    "pathname": "/api-reference/appointment-tasks/get-appointment-task",
+    "title": "Get Appointment Task",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "Appointment Tasks",
+        "pathname": "/api-reference/appointment-tasks"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+    "api_endpoint_id": "endpoint_.GetAppointmentTask",
+    "method": "GET",
+    "endpoint_path": "/api/v1/appointment-tasks/:appointmentTaskId",
+    "endpoint_path_alternates": [
+      "/api/v1/appointment-tasks/{appointmentTaskId}",
+      "https://api.ferry.health/api/v1/appointment-tasks/:appointmentTaskId",
+      "https://api.ferry.health/api/v1/appointment-tasks/%7BappointmentTaskId%7D"
+    ],
+    "response_type": "json",
+    "description": "Load a task by its ID.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.ferry.health"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:b20d860e-c8a8-4c88-96b3-61f801a57f31.CancelAppointmentTask",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/appointment-tasks/cancel-appointment-task",
+    "pathname": "/api-reference/appointment-tasks/cancel-appointment-task",
+    "title": "Cancel Appointment Task",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "Appointment Tasks",
+        "pathname": "/api-reference/appointment-tasks"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+    "api_endpoint_id": "endpoint_.CancelAppointmentTask",
+    "method": "POST",
+    "endpoint_path": "/api/v1/appointment-tasks/:appointmentTaskId/cancel",
+    "endpoint_path_alternates": [
+      "/api/v1/appointment-tasks/{appointmentTaskId}/cancel",
+      "https://api.ferry.health/api/v1/appointment-tasks/:appointmentTaskId/cancel",
+      "https://api.ferry.health/api/v1/appointment-tasks/%7BappointmentTaskId%7D/cancel"
+    ],
+    "description": "Cancel a task. This stops Ferry from processing the task.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.ferry.health"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:b20d860e-c8a8-4c88-96b3-61f801a57f31.GetAllAppointmentTasks",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/appointment-tasks/get-all-appointment-tasks",
+    "pathname": "/api-reference/appointment-tasks/get-all-appointment-tasks",
+    "title": "Get All Appointment Tasks",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "Appointment Tasks",
+        "pathname": "/api-reference/appointment-tasks"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "b20d860e-c8a8-4c88-96b3-61f801a57f31",
+    "api_endpoint_id": "endpoint_.GetAllAppointmentTasks",
+    "method": "GET",
+    "endpoint_path": "/api/v1/appointment-tasks",
+    "endpoint_path_alternates": [
+      "/api/v1/appointment-tasks",
+      "https://api.ferry.health/api/v1/appointment-tasks",
+      "https://api.ferry.health/api/v1/appointment-tasks"
+    ],
+    "response_type": "json",
+    "description": "Get all appointment task IDs. You can load the details of a task using the Get Appointment Task endpoint.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.ferry.health"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  }
+]

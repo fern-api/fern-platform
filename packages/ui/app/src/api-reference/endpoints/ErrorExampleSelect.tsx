@@ -1,9 +1,8 @@
-import { FernButton, Intent } from "@fern-ui/components";
+import { FernButton, SemanticColor, statusCodeToIntent } from "@fern-ui/components";
 import * as Select from "@radix-ui/react-select";
 import clsx from "clsx";
 import { NavArrowDown, NavArrowUp } from "iconoir-react";
 import { FC, Fragment, PropsWithChildren, ReactNode, forwardRef } from "react";
-import { statusCodeToIntent } from "../../components/StatusCodeTag";
 import { CodeExample } from "../examples/code-example";
 import { ExamplesByStatusCode, StatusCode } from "../types/EndpointContent";
 
@@ -47,7 +46,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                     className="-ml-1 pl-1"
                     intent={
                         selectedExample != null
-                            ? statusCodeToIntent(selectedExample.exampleCall.responseStatusCode)
+                            ? statusCodeToIntent(String(selectedExample.exampleCall.responseStatusCode))
                             : "none"
                     }
                 >
@@ -69,7 +68,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
                                             <FernSelectItem
                                                 value={`${statusCode}:${j}`}
                                                 key={j}
-                                                intent={statusCodeToIntent(Number(statusCode))}
+                                                intent={statusCodeToIntent(statusCode)}
                                             >
                                                 {getExampleId(example)}
                                             </FernSelectItem>
@@ -90,7 +89,7 @@ export const ErrorExampleSelect: FC<PropsWithChildren<ErrorExampleSelect.Props>>
 
 export const FernSelectItem = forwardRef<
     HTMLDivElement,
-    Select.SelectItemProps & { textClassName?: string; intent?: Intent }
+    Select.SelectItemProps & { textClassName?: string; intent?: SemanticColor }
 >(function FernSelectItem({ children, className, textClassName, intent = "none", ...props }, forwardedRef) {
     return (
         <Select.Item

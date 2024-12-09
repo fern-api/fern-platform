@@ -6,10 +6,10 @@ import {
     unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton, FernTooltip } from "@fern-ui/components";
+import { AvailabilityBadge } from "@fern-ui/components/badges";
 import cn from "clsx";
 import { HelpCircle, Xmark } from "iconoir-react";
 import { FC, PropsWithChildren, ReactNode } from "react";
-import { EndpointAvailabilityTag } from "../api-reference/endpoints/EndpointAvailabilityTag";
 import { Markdown } from "../mdx/Markdown";
 import { renderTypeShorthandRoot } from "../type-shorthand";
 import { shouldRenderInline } from "./utils";
@@ -98,7 +98,7 @@ export const WithLabelInternal: FC<PropsWithChildren<WithLabelInternalProps>> = 
                         </FernTooltip>
                     )}
 
-                    {availability != null && <EndpointAvailabilityTag availability={availability} minimal={true} />}
+                    {availability != null && <AvailabilityBadge availability={availability} />}
                     <span className="whitespace-nowrap text-xs">
                         <span className="t-muted">{typeShorthand}</span>
                     </span>

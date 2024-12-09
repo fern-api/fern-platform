@@ -1,0 +1,3696 @@
+[
+  {
+    "objectID": "test:test.com:root.uv.astro-api.overview-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/overview",
+    "pathname": "/docs/api/overview",
+    "title": "Astro API overview",
+    "breadcrumb": [
+      {
+        "title": "Astro API",
+        "pathname": "/docs/api/astro-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "type": "markdown",
+    "content": "The Astro API is a standard REST API that you can use to develop applications and scripts for interacting with Astro components.\nThe API contains multiple schemas. Each schema covers a different part of Astro management:\nPlatform API schema: Includes endpoints for updating your Astro infrastructure and resources, such as clusters, Deployments, and Workspaces.\n\nIdentity and access management (IAM) API schema: Includes endpoints for managing role-based access control (RBAC) components, such as users and Teams.\n\n\nTo make your first request using the Astro API, see Get started with the Astro API.\n\n\nThe Astro API is currently in beta. See Support for all policies related to using beta releases of the API.\n\n\nLooking to use the Airflow REST API instead? See the Astro documentation to learn how to make requests to Airflow Deployments using the Airflow API."
+  },
+  {
+    "objectID": "test:test.com:root.uv.astro-api.overview-authentication-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/overview",
+    "pathname": "/docs/api/overview",
+    "title": "Authentication",
+    "breadcrumb": [
+      {
+        "title": "Astro API",
+        "pathname": "/docs/api/astro-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 1,
+    "type": "markdown",
+    "hash": "#authentication",
+    "content": "All requests to the API must be authenticated. You can use bearer authentication to authenticate with a Workspace API token, Organization API token, or Deployment API token. The following example shows how you can add a token to a curl request:\nEndpoints can return subsets of specific attributes based on the permissions of your API token. If your token's role allows you to access something in the Astro UI or Astro CLI, it also allows you to access the same thing or action using the API. See User permissions for a list of all possible permissions.",
+    "code_snippets": [
+      {
+        "lang": "curl",
+        "code": "curl --location 'https://api.astronomer.io/platform/v1beta1/organizations/<your-organization-id>/clusters' \\\n--header 'Authorization: Bearer <your-api-token>'"
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Astro API overview"
+      },
+      "h2": {
+        "id": "authentication",
+        "title": "Authentication"
+      }
+    },
+    "level": "h2"
+  },
+  {
+    "objectID": "test:test.com:root.uv.astro-api.overview-rate-limiting-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/overview",
+    "pathname": "/docs/api/overview",
+    "title": "Rate limiting",
+    "breadcrumb": [
+      {
+        "title": "Astro API",
+        "pathname": "/docs/api/astro-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 1,
+    "type": "markdown",
+    "hash": "#rate-limiting",
+    "content": "The maximum number of API requests you can make with the same API token depends on the type of request you're making:\nPOST requests: You can make a make a maximum of 10 requests per second using the same API token.\n\nDELETE requests: You can make a make a maximum of 5 requests per second using the same API token.\n\nGET requests: You can make a make a maximum of 25 requests per second using the same API token.",
+    "hierarchy": {
+      "h0": {
+        "title": "Astro API overview"
+      },
+      "h2": {
+        "id": "rate-limiting",
+        "title": "Rate limiting"
+      }
+    },
+    "level": "h2"
+  },
+  {
+    "objectID": "test:test.com:root.uv.astro-api.overview-idempotent-requests-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/overview",
+    "pathname": "/docs/api/overview",
+    "title": "Idempotent requests",
+    "breadcrumb": [
+      {
+        "title": "Astro API",
+        "pathname": "/docs/api/astro-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 1,
+    "type": "markdown",
+    "hash": "#idempotent-requests",
+    "content": "Astro supports different levels of idempotency for different request types.\nPOST requests (Create): Identical POST requests to create a new object will result in the creation of multiple objects. For example, if you make identical requests to create an Organization, Astro creates multiple Organizations with identical settings and unique IDs.\n\nPOST requests (Update): Idempotency is guaranteed for all POST requests to update an existing object.\n\nDELETE requests: Idempotency is guaranteed for all DELETE requests. Any successive identical DELETE requests return a 404 error.",
+    "hierarchy": {
+      "h0": {
+        "title": "Astro API overview"
+      },
+      "h2": {
+        "id": "idempotent-requests",
+        "title": "Idempotent requests"
+      }
+    },
+    "level": "h2"
+  },
+  {
+    "objectID": "test:test.com:root.uv.astro-api.overview-api-status-codes-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/overview",
+    "pathname": "/docs/api/overview",
+    "title": "API status codes",
+    "breadcrumb": [
+      {
+        "title": "Astro API",
+        "pathname": "/docs/api/astro-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 1,
+    "type": "markdown",
+    "hash": "#api-status-codes",
+    "content": "If the API returns a 200 or 204 code, your API request was a success. If the API returns a 40x or 500 code, your request resulted in one of the following errors:\n400: Bad Request - Your request was not successful because it was not formatted properly, possibly due to missing required parameters.\n\n401: Unauthorized - Your request did not include an API token.\n\n404: Resource Not Found - The resource you're trying to access does not exist.\n\n403: Forbidden - The API token you included did not have sufficient permissions to complete the request.\n\n500: Internal sever error - The request could not be completed because of an error caused by Astro.\n\n\nAll error responses include a requestId that you can share with Astronomer support if you want to learn more about the error.",
+    "hierarchy": {
+      "h0": {
+        "title": "Astro API overview"
+      },
+      "h2": {
+        "id": "api-status-codes",
+        "title": "API status codes"
+      }
+    },
+    "level": "h2"
+  },
+  {
+    "objectID": "test:test.com:root.uv.astro-api.get-started-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/get-started",
+    "pathname": "/docs/api/get-started",
+    "title": "Get started with the Astro API",
+    "breadcrumb": [
+      {
+        "title": "Astro API",
+        "pathname": "/docs/api/astro-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "type": "markdown",
+    "description": "Run a few simple commands to learn how to use the Astro API.",
+    "content": "In this quick introduction to the Astro API, you'll make some simple requests to retrieve details about your Organization and create a Workspace API token."
+  },
+  {
+    "objectID": "test:test.com:root.uv.astro-api.get-started-prerequisites-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/get-started",
+    "pathname": "/docs/api/get-started",
+    "title": "Prerequisites",
+    "breadcrumb": [
+      {
+        "title": "Astro API",
+        "pathname": "/docs/api/astro-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 1,
+    "type": "markdown",
+    "hash": "#prerequisites",
+    "content": "An Astro account.\n\nAn Organization API token with the Organization Owner role. Astronomer recommends that you create a new API token for this tutorial.\n\nAn Astro Workspace.\n\nA method for making API requests. This tutorial assumes you're using curl, but you can also use tools such as Postman.",
+    "hierarchy": {
+      "h0": {
+        "title": "Get started with the Astro API"
+      },
+      "h2": {
+        "id": "prerequisites",
+        "title": "Prerequisites"
+      }
+    },
+    "level": "h2"
+  },
+  {
+    "objectID": "test:test.com:root.uv.astro-api.get-started-step-1-make-your-first-api-request-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/get-started",
+    "pathname": "/docs/api/get-started",
+    "title": "Step 1: Make your first API request",
+    "breadcrumb": [
+      {
+        "title": "Astro API",
+        "pathname": "/docs/api/astro-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 1,
+    "type": "markdown",
+    "hash": "#step-1-make-your-first-api-request",
+    "content": "To access most endpoints, you need to provide an Organization ID to the API as a path parameter. One of the few requests that doesn't require an Organization ID is the List Organizations request, which means that you can programmatically retrieve an Organization ID.\nTo retrieve the Organization ID through the API, run the following command:\nIf the command was successful, then you receive a response that begins similarly to the following:\nCopy the top-level id from this response. This is your Organization ID.\nWhile you could have retrieved this value manually from the Astro UI, using the API lets you script this workflow and execute it on a regular basis.",
+    "code_snippets": [
+      {
+        "lang": "bash",
+        "code": "curl --location 'https://api.astronomer.io/platform/v1beta1/organizations' \\\n--header 'Authorization: Bearer <your-organization-api-token>' "
+      },
+      {
+        "lang": "json",
+        "meta": "{14}",
+        "code": "{\n  \"organizations\": [\n    {\n      \"billingEmail\": \"billing@example.com\",\n      \"createdAt\": \"2022-11-22T04:37:12T\",\n      \"createdBySubject\": {\n        \"apiTokenName\": \"my-token\",\n        \"avatarUrl\": \"https://avatar.url\",\n        \"fullName\": \"Jane Doe\",\n        \"id\": \"clm8qv74h000008mlf08scq7k\",\n        \"subjectType\": \"USER\",\n        \"username\": \"user1@example.com\"\n      },\n      \"id\": \"clmaxoarx000008l2c5ayb9pt\",\n      \"isScimEnabled\": false,\n...\n      ],"
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Get started with the Astro API"
+      },
+      "h2": {
+        "id": "step-1-make-your-first-api-request",
+        "title": "Step 1: Make your first API request"
+      }
+    },
+    "level": "h2"
+  },
+  {
+    "objectID": "test:test.com:root.uv.astro-api.get-started-step-2-request-workspace-details-from-the-api-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/get-started",
+    "pathname": "/docs/api/get-started",
+    "title": "Step 2: Request Workspace details from the API",
+    "breadcrumb": [
+      {
+        "title": "Astro API",
+        "pathname": "/docs/api/astro-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 1,
+    "type": "markdown",
+    "hash": "#step-2-request-workspace-details-from-the-api",
+    "content": "Using the Organization ID you copied, you can now find the ID for the Workspace where you want to create your API token.\nRun the following command to list all Workspaces in your Organization:\nIf the command succeeds, the API returns a list of Workspaces similar to the following:\nIn the response for your specific Workspace, copy the top-level id. This is your Workspace ID.\n\n\nIf the API returns too many Workspaces, add some pagination parameters to your URL. For example, to limit your results to only the 20 most recently updated Workspaces, you can run:",
+    "code_snippets": [
+      {
+        "lang": "bash",
+        "code": "curl --location 'https://api.astronomer.io/platform/v1beta1/organizations/<your-organization-id>/workspaces' \\\n--header 'Authorization: Bearer <your-api-token>' "
+      },
+      {
+        "lang": "json",
+        "meta": "{15}",
+        "code": "{\n  \"workspaces\": [\n    {\n      \"cicdEnforcedDefault\": true,\n      \"createdAt\": \"2023-09-08T12:00:00Z\",\n      \"createdBy\": {\n        \"apiTokenName\": \"my-token\",\n        \"avatarUrl\": \"https://avatar.url\",\n        \"fullName\": \"Jane Doe\",\n        \"id\": \"clm8qv74h000008mlf08scq7k\",\n        \"subjectType\": \"USER\",\n        \"username\": \"user1@example.com\"\n      },\n      \"description\": \"This is a test workspace\",\n      \"id\": \"clm8t5u4q000008jq4qoc3036\",\n      \"name\": \"My Workspace\",\n      \"organizationId\": \"clm8t5u4q000008jq4qoc3036\",\n      \"organizationName\": \"My Organization\",\n      \"updatedAt\": \"2023-09-08T13:30:00Z\",\n      \"updatedBy\": {\n        \"apiTokenName\": \"my-token\",\n        \"avatarUrl\": \"https://avatar.url\",\n        \"fullName\": \"Jane Doe\",\n        \"id\": \"clm8qv74h000008mlf08scq7k\",\n        \"subjectType\": \"USER\",\n        \"username\": \"user1@example.com\"\n      }\n    }\n  ]\n}"
+      },
+      {
+        "lang": "bash",
+        "code": "curl --location 'https://api.astronomer.io/platform/v1beta1/organizations/<your-organization-id>/workspaces?limit=20&sorts=updatedAt:asc' \\\n--header 'Authorization: Bearer <your-organization-api-token>'"
+      },
+      {
+        "lang": "bash",
+        "code": "curl --location 'https://api.astronomer.io/platform/v1beta1/organizations/<your-organization-id>/workspaces?limit=20&sorts=updatedAt:asc' \\\n--header 'Authorization: Bearer <your-organization-api-token>'"
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Get started with the Astro API"
+      },
+      "h2": {
+        "id": "step-2-request-workspace-details-from-the-api",
+        "title": "Step 2: Request Workspace details from the API"
+      }
+    },
+    "level": "h2"
+  },
+  {
+    "objectID": "test:test.com:root.uv.astro-api.get-started-step-3-update-your-token-description-using-the-api-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/get-started",
+    "pathname": "/docs/api/get-started",
+    "title": "Step 3: Update your token description using the API",
+    "breadcrumb": [
+      {
+        "title": "Astro API",
+        "pathname": "/docs/api/astro-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 1,
+    "type": "markdown",
+    "hash": "#step-3-update-your-token-description-using-the-api",
+    "content": "Now that you have both an Organization ID and a Workspace ID, you can create a Workspace API token using the Astro API.\nRun the following command to create a new Workspace API token:\nIf the request was successful, the API will return a response with your new token's details.\n\nIn the Astro UI, go to Workspace Settings > Access Management > API Tokens and find your Workspace API token. You should see your updated description under Description.",
+    "code_snippets": [
+      {
+        "lang": "bash",
+        "code": "curl --location 'https://api.astronomer.io/iam/v1beta1/organizations/<your-organization-id>/tokens' \\                                            \n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer <your-organization-api-token>' \\                                                                                                                  \n--data '{\n    \"description\": \"I wrote this description using the Astro API!\",\n    \"entityId\": \"<your-workspace-id>\",\n    \"name\": \"My new API token\",\n    \"role\": \"WORKSPACE_MEMBER\",\n    \"type\": \"WORKSPACE\"\n}'"
+      }
+    ],
+    "hierarchy": {
+      "h0": {
+        "title": "Get started with the Astro API"
+      },
+      "h2": {
+        "id": "step-3-update-your-token-description-using-the-api",
+        "title": "Step 3: Update your token description using the API"
+      }
+    },
+    "level": "h2"
+  },
+  {
+    "objectID": "test:test.com:root.uv.astro-api.versioning-and-support-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/versioning-and-support",
+    "pathname": "/docs/api/versioning-and-support",
+    "title": "Astro API versioning, maintenance, and support",
+    "breadcrumb": [
+      {
+        "title": "Astro API",
+        "pathname": "/docs/api/astro-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "type": "markdown",
+    "description": "Learn how Astronomer versions and maintains the Astro API.",
+    "content": "The Astro API is currently in beta. The following policies apply to all beta versions of the Astro API."
+  },
+  {
+    "objectID": "test:test.com:root.uv.astro-api.versioning-and-support-releases-and-versioning-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/versioning-and-support",
+    "pathname": "/docs/api/versioning-and-support",
+    "title": "Releases and versioning",
+    "breadcrumb": [
+      {
+        "title": "Astro API",
+        "pathname": "/docs/api/astro-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 1,
+    "type": "markdown",
+    "hash": "#releases-and-versioning",
+    "content": "All API endpoints include a release name in their URL that determines which release of the API you use.\nEach Astro API release name includes both a major version number and a release number, formatted as <major-version>beta<release-number>. For example, v2beta3 is the third release of the second major version.\nFor a given release, Astronomer can make non-breaking changes in place without incrementing the release name. Astronomer can make breaking changes, also known as backward-incompatible changes, only between new releases. See Version upgrades and breaking changes.",
+    "hierarchy": {
+      "h0": {
+        "title": "Astro API versioning, maintenance, and support"
+      },
+      "h2": {
+        "id": "releases-and-versioning",
+        "title": "Releases and versioning"
+      }
+    },
+    "level": "h2"
+  },
+  {
+    "objectID": "test:test.com:root.uv.astro-api.versioning-and-support-deprecations-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/versioning-and-support",
+    "pathname": "/docs/api/versioning-and-support",
+    "title": "Deprecations",
+    "breadcrumb": [
+      {
+        "title": "Astro API",
+        "pathname": "/docs/api/astro-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 1,
+    "type": "markdown",
+    "hash": "#deprecations",
+    "content": "Astronomer reserves the right to mark specific API endpoints or features as deprecated within a given release. When an API endpoint is marked as deprecated, you will receive a notification and have 90 days to migrate away from the endpoint. After 90 days, Astronomer can make breaking changes to the endpoint, even within the same release.",
+    "hierarchy": {
+      "h0": {
+        "title": "Astro API versioning, maintenance, and support"
+      },
+      "h2": {
+        "id": "deprecations",
+        "title": "Deprecations"
+      }
+    },
+    "level": "h2"
+  },
+  {
+    "objectID": "test:test.com:root.uv.astro-api.versioning-and-support-version-upgrades-and-breaking-changes-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/versioning-and-support",
+    "pathname": "/docs/api/versioning-and-support",
+    "title": "Version upgrades and breaking changes",
+    "breadcrumb": [
+      {
+        "title": "Astro API",
+        "pathname": "/docs/api/astro-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 1,
+    "type": "markdown",
+    "hash": "#version-upgrades-and-breaking-changes",
+    "content": "Any upgrade between versioned API releases can include breaking changes, including for non-deprecated endpoints. For example, an upgrade from v1beta1 to v1beta2 can include breaking changes. However, another release of v1beta1 can include a breaking change to an endpoint only if the endpoint has been marked as deprecated for at least 90 days.",
+    "hierarchy": {
+      "h0": {
+        "title": "Astro API versioning, maintenance, and support"
+      },
+      "h2": {
+        "id": "version-upgrades-and-breaking-changes",
+        "title": "Version upgrades and breaking changes"
+      }
+    },
+    "level": "h2"
+  },
+  {
+    "objectID": "test:test.com:root.uv.astro-api.versioning-and-support-api-support-chunk:0",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/versioning-and-support",
+    "pathname": "/docs/api/versioning-and-support",
+    "title": "API support",
+    "breadcrumb": [
+      {
+        "title": "Astro API",
+        "pathname": "/docs/api/astro-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 1,
+    "type": "markdown",
+    "hash": "#api-support",
+    "content": "Astronomer offers support only for the two most recent releases at any given time. If you are on an earlier version that's out of support, you must upgrade to one of the two most recent versions to receive support. Support cases for beta releases of the Astro API are treated with lower priority than other generally available Astro features.\nAstronomer reserves the right to shut down endpoints for a given beta release one year after all of its endpoints have equivalent functionality in a stable version.",
+    "hierarchy": {
+      "h0": {
+        "title": "Astro API versioning, maintenance, and support"
+      },
+      "h2": {
+        "id": "api-support",
+        "title": "API support"
+      }
+    },
+    "level": "h2"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.log.2024-5-15",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/changelog/2024/5/15",
+    "pathname": "/docs/api/platform-api-reference/changelog/2024/5/15",
+    "title": "May 15, 2024",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Changelog",
+        "pathname": "/docs/api/platform-api-reference/changelog"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "type": "changelog",
+    "date": "2024-05-15",
+    "date_timestamp": 1715731200,
+    "content": "Summary\nThis update introduces new endpoints for managing deploys, including image deploys, DAG deploys, and deploy rollbacks. See Astro documentation for more information.\nAdded\nNew endpoints:\nGET /organizations/{organizationId}/deployments/{deploymentId}/deploys to list deploys for a deployment.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys to create a new deploy.\n\nGET /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId} to retrieve a specific deploy.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId} to update an existing deploy.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId}/finalize to finalize a deploy.\n\nPOST /organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId}/rollback to roll back a deploy.\n\n\nNew object schemas:\nCreateDeployRequest\n\nDeploy\n\nDeploysPaginated\n\nFinalizeDeployRequest\n\nUpdateDeployRequest\n\nDeployRollbackRequest"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.log.2024-4-23",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/changelog/2024/4/23",
+    "pathname": "/docs/api/platform-api-reference/changelog/2024/4/23",
+    "title": "April 23, 2024",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Changelog",
+        "pathname": "/docs/api/platform-api-reference/changelog"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "type": "changelog",
+    "date": "2024-04-23",
+    "date_timestamp": 1713830400,
+    "content": "The endpoint POST /organizations/{organizationId}/deployments now accepts an isDevelopmentMode query parameter"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.log.2024-4-12",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/changelog/2024/4/12",
+    "pathname": "/docs/api/platform-api-reference/changelog/2024/4/12",
+    "title": "April 12, 2024",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Changelog",
+        "pathname": "/docs/api/platform-api-reference/changelog"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "type": "changelog",
+    "date": "2024-04-12",
+    "date_timestamp": 1712880000,
+    "content": "You can now make requests to the Roles endpoint to manage custom roles in your Organization.\n\nThe endpoint GET /organizations/{organizationId}/clusters now accepts a names query parameter\n\nThe endpoint GET /organizations/{organizationId}/deploymentss now accepts a names query parameter\n\nThe endpoint GET /organizations/{organizationId}/workspaces now accepts a names query parameter"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.log.2024-4-12",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/changelog/2024/4/12",
+    "pathname": "/docs/api/iam-api-reference/changelog/2024/4/12",
+    "title": "April 12, 2024",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Changelog",
+        "pathname": "/docs/api/iam-api-reference/changelog"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "type": "changelog",
+    "date": "2024-04-12",
+    "date_timestamp": 1712880000,
+    "content": "The endpoint DELETE /organizations/{organizationId}/roles/{customRoleId} now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /authorization/permission-groups now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /organizations/{organizationId}/role-templates now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /organizations/{organizationId}/roles now returns a\ndeploymentRoles attribute\n\nThe endpoint GET /organizations/{organizationId}/roles/{roleId} now returns a\ndeploymentRoles attribute\n\nThe endpoint POST /organizations/{organizationId}/roles now returns a\ndeploymentRoles attribute\n\nThe endpoint POST /organizations/{organizationId}/roles/{customRoleId} now returns a\ndeploymentRoles attribute"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_organization.subpackage_organization.ListOrganizations",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/organization/list-organizations",
+    "pathname": "/docs/api/platform-api-reference/organization/list-organizations",
+    "title": "List Organizations",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Organization",
+        "pathname": "/docs/api/platform-api-reference/organization"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_organization.ListOrganizations",
+    "method": "GET",
+    "endpoint_path": "/organizations",
+    "endpoint_path_alternates": [
+      "/organizations",
+      "https://api.astronomer.io/organizations",
+      "https://api.astronomer.io/organizations"
+    ],
+    "response_type": "json",
+    "description": "List the details about all Organizations that you have access to. Requires using a personal access token (PAT) for authentication.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_organization.subpackage_organization.GetOrganization",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/organization/get-organization",
+    "pathname": "/docs/api/platform-api-reference/organization/get-organization",
+    "title": "Get an Organization",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Organization",
+        "pathname": "/docs/api/platform-api-reference/organization"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_organization.GetOrganization",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}",
+      "https://api.astronomer.io/organizations/:organizationId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D"
+    ],
+    "response_type": "json",
+    "description": "Retrieve information about a specific Organization.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_organization.subpackage_organization.UpdateOrganization",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/organization/update-organization",
+    "pathname": "/docs/api/platform-api-reference/organization/update-organization",
+    "title": "Update an Organization",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Organization",
+        "pathname": "/docs/api/platform-api-reference/organization"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_organization.UpdateOrganization",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}",
+      "https://api.astronomer.io/organizations/:organizationId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D"
+    ],
+    "response_type": "json",
+    "description": "Update an Organization's details.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_options.subpackage_options.GetClusterOptions",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/options/get-cluster-options",
+    "pathname": "/docs/api/platform-api-reference/options/get-cluster-options",
+    "title": "Get cluster options",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Options",
+        "pathname": "/docs/api/platform-api-reference/options"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_options.GetClusterOptions",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/cluster-options",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/cluster-options",
+      "https://api.astronomer.io/organizations/:organizationId/cluster-options",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/cluster-options"
+    ],
+    "response_type": "json",
+    "description": "Get all possible options for configuring a cluster.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_options.subpackage_options.GetDeploymentOptions",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/options/get-deployment-options",
+    "pathname": "/docs/api/platform-api-reference/options/get-deployment-options",
+    "title": "Get Deployment options",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Options",
+        "pathname": "/docs/api/platform-api-reference/options"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_options.GetDeploymentOptions",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/deployment-options",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/deployment-options",
+      "https://api.astronomer.io/organizations/:organizationId/deployment-options",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/deployment-options"
+    ],
+    "response_type": "json",
+    "description": "Get the options available for configuring a Deployment.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.ListClusters",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/cluster/list-clusters",
+    "pathname": "/docs/api/platform-api-reference/cluster/list-clusters",
+    "title": "List clusters",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Cluster",
+        "pathname": "/docs/api/platform-api-reference/cluster"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_cluster.ListClusters",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/clusters",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/clusters",
+      "https://api.astronomer.io/organizations/:organizationId/clusters",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/clusters"
+    ],
+    "response_type": "json",
+    "description": "List clusters in an Organization.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.CreateCluster",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/cluster/create-cluster",
+    "pathname": "/docs/api/platform-api-reference/cluster/create-cluster",
+    "title": "Create a cluster",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Cluster",
+        "pathname": "/docs/api/platform-api-reference/cluster"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_cluster.CreateCluster",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/clusters",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/clusters",
+      "https://api.astronomer.io/organizations/:organizationId/clusters",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/clusters"
+    ],
+    "response_type": "json",
+    "description": "Create a cluster in the Organization. An Astro cluster is a Kubernetes cluster that hosts the infrastructure required to run Deployments.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.GetCluster",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/cluster/get-cluster",
+    "pathname": "/docs/api/platform-api-reference/cluster/get-cluster",
+    "title": "Get a cluster",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Cluster",
+        "pathname": "/docs/api/platform-api-reference/cluster"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_cluster.GetCluster",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/clusters/:clusterId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/clusters/{clusterId}",
+      "https://api.astronomer.io/organizations/:organizationId/clusters/:clusterId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/clusters/%7BclusterId%7D"
+    ],
+    "response_type": "json",
+    "description": "Retrieve details about a cluster.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.UpdateCluster",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/cluster/update-cluster",
+    "pathname": "/docs/api/platform-api-reference/cluster/update-cluster",
+    "title": "Update a cluster",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Cluster",
+        "pathname": "/docs/api/platform-api-reference/cluster"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_cluster.UpdateCluster",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/clusters/:clusterId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/clusters/{clusterId}",
+      "https://api.astronomer.io/organizations/:organizationId/clusters/:clusterId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/clusters/%7BclusterId%7D"
+    ],
+    "response_type": "json",
+    "description": "Update a cluster in the Organization.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_cluster.subpackage_cluster.DeleteCluster",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/cluster/delete-cluster",
+    "pathname": "/docs/api/platform-api-reference/cluster/delete-cluster",
+    "title": "Delete a cluster",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Cluster",
+        "pathname": "/docs/api/platform-api-reference/cluster"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_cluster.DeleteCluster",
+    "method": "DELETE",
+    "endpoint_path": "/organizations/:organizationId/clusters/:clusterId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/clusters/{clusterId}",
+      "https://api.astronomer.io/organizations/:organizationId/clusters/:clusterId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/clusters/%7BclusterId%7D"
+    ],
+    "description": "Delete a cluster.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.ListDeployments",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/deployment/list-deployments",
+    "pathname": "/docs/api/platform-api-reference/deployment/list-deployments",
+    "title": "List Deployments",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Deployment",
+        "pathname": "/docs/api/platform-api-reference/deployment"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_deployment.ListDeployments",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/deployments",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/deployments",
+      "https://api.astronomer.io/organizations/:organizationId/deployments",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/deployments"
+    ],
+    "response_type": "json",
+    "description": "List Deployments in an Organization.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.CreateDeployment",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/deployment/create-deployment",
+    "pathname": "/docs/api/platform-api-reference/deployment/create-deployment",
+    "title": "Create a Deployment",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Deployment",
+        "pathname": "/docs/api/platform-api-reference/deployment"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_deployment.CreateDeployment",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/deployments",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/deployments",
+      "https://api.astronomer.io/organizations/:organizationId/deployments",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/deployments"
+    ],
+    "response_type": "json",
+    "description": "Create a Deployment in the Organization. An Astro Deployment is an Airflow environment that is powered by all core Airflow components.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.GetDeployment",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/deployment/get-deployment",
+    "pathname": "/docs/api/platform-api-reference/deployment/get-deployment",
+    "title": "Get a Deployment",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Deployment",
+        "pathname": "/docs/api/platform-api-reference/deployment"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_deployment.GetDeployment",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/deployments/:deploymentId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/deployments/{deploymentId}",
+      "https://api.astronomer.io/organizations/:organizationId/deployments/:deploymentId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/deployments/%7BdeploymentId%7D"
+    ],
+    "response_type": "json",
+    "description": "Retrieve details about a Deployment.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.UpdateDeployment",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/deployment/update-deployment",
+    "pathname": "/docs/api/platform-api-reference/deployment/update-deployment",
+    "title": "Update a Deployment",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Deployment",
+        "pathname": "/docs/api/platform-api-reference/deployment"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_deployment.UpdateDeployment",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/deployments/:deploymentId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/deployments/{deploymentId}",
+      "https://api.astronomer.io/organizations/:organizationId/deployments/:deploymentId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/deployments/%7BdeploymentId%7D"
+    ],
+    "response_type": "json",
+    "description": "Update a Deployment in the Organization.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.DeleteDeployment",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/deployment/delete-deployment",
+    "pathname": "/docs/api/platform-api-reference/deployment/delete-deployment",
+    "title": "Delete a Deployment",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Deployment",
+        "pathname": "/docs/api/platform-api-reference/deployment"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_deployment.DeleteDeployment",
+    "method": "DELETE",
+    "endpoint_path": "/organizations/:organizationId/deployments/:deploymentId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/deployments/{deploymentId}",
+      "https://api.astronomer.io/organizations/:organizationId/deployments/:deploymentId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/deployments/%7BdeploymentId%7D"
+    ],
+    "description": "Delete a Deployment from an Organization.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.UpdateDeploymentHibernationOverride",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/deployment/update-deployment-hibernation-override",
+    "pathname": "/docs/api/platform-api-reference/deployment/update-deployment-hibernation-override",
+    "title": "Configure a hibernation override for a deployment",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Deployment",
+        "pathname": "/docs/api/platform-api-reference/deployment"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_deployment.UpdateDeploymentHibernationOverride",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/deployments/:deploymentId/hibernation-override",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/deployments/{deploymentId}/hibernation-override",
+      "https://api.astronomer.io/organizations/:organizationId/deployments/:deploymentId/hibernation-override",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/deployments/%7BdeploymentId%7D/hibernation-override"
+    ],
+    "response_type": "json",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_deployment.subpackage_deployment.DeleteDeploymentHibernationOverride",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/deployment/delete-deployment-hibernation-override",
+    "pathname": "/docs/api/platform-api-reference/deployment/delete-deployment-hibernation-override",
+    "title": "Delete a hibernation override for a deployment",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Deployment",
+        "pathname": "/docs/api/platform-api-reference/deployment"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_deployment.DeleteDeploymentHibernationOverride",
+    "method": "DELETE",
+    "endpoint_path": "/organizations/:organizationId/deployments/:deploymentId/hibernation-override",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/deployments/{deploymentId}/hibernation-override",
+      "https://api.astronomer.io/organizations/:organizationId/deployments/:deploymentId/hibernation-override",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/deployments/%7BdeploymentId%7D/hibernation-override"
+    ],
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.ListDeploys",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/deploy/list-deploys",
+    "pathname": "/docs/api/platform-api-reference/deploy/list-deploys",
+    "title": "List deploys for a deployment",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Deploy",
+        "pathname": "/docs/api/platform-api-reference/deploy"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_deploy.ListDeploys",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/deployments/:deploymentId/deploys",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/deployments/{deploymentId}/deploys",
+      "https://api.astronomer.io/organizations/:organizationId/deployments/:deploymentId/deploys",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/deployments/%7BdeploymentId%7D/deploys"
+    ],
+    "response_type": "json",
+    "description": "List deploys for a deployment",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.CreateDeploy",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/deploy/create-deploy",
+    "pathname": "/docs/api/platform-api-reference/deploy/create-deploy",
+    "title": "Create a Deploy",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Deploy",
+        "pathname": "/docs/api/platform-api-reference/deploy"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_deploy.CreateDeploy",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/deployments/:deploymentId/deploys",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/deployments/{deploymentId}/deploys",
+      "https://api.astronomer.io/organizations/:organizationId/deployments/:deploymentId/deploys",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/deployments/%7BdeploymentId%7D/deploys"
+    ],
+    "response_type": "json",
+    "description": "Create a new Deploy. A Deploy represents an intent to deploy new DAG code to an Astro Deployment.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.GetDeploy",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/deploy/get-deploy",
+    "pathname": "/docs/api/platform-api-reference/deploy/get-deploy",
+    "title": "Get a deploy for a deployment",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Deploy",
+        "pathname": "/docs/api/platform-api-reference/deploy"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_deploy.GetDeploy",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId}",
+      "https://api.astronomer.io/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/deployments/%7BdeploymentId%7D/deploys/%7BdeployId%7D"
+    ],
+    "response_type": "json",
+    "description": "Get a deploy for a deployment",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.UpdateDeploy",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/deploy/update-deploy",
+    "pathname": "/docs/api/platform-api-reference/deploy/update-deploy",
+    "title": "Update a Deploy",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Deploy",
+        "pathname": "/docs/api/platform-api-reference/deploy"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_deploy.UpdateDeploy",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId}",
+      "https://api.astronomer.io/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/deployments/%7BdeploymentId%7D/deploys/%7BdeployId%7D"
+    ],
+    "response_type": "json",
+    "description": "Update an existing Deploy. A Deploy represents an intent to deploy new DAG code to an Astro Deployment.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.FinalizeDeploy",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/deploy/finalize-deploy",
+    "pathname": "/docs/api/platform-api-reference/deploy/finalize-deploy",
+    "title": "Finalize deploy of a deployment",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Deploy",
+        "pathname": "/docs/api/platform-api-reference/deploy"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_deploy.FinalizeDeploy",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId/finalize",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId}/finalize",
+      "https://api.astronomer.io/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId/finalize",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/deployments/%7BdeploymentId%7D/deploys/%7BdeployId%7D/finalize"
+    ],
+    "response_type": "json",
+    "description": "Finalize deploy of a deployment",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_deploy.subpackage_deploy.DeployRollback",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/deploy/deploy-rollback",
+    "pathname": "/docs/api/platform-api-reference/deploy/deploy-rollback",
+    "title": "Deploy rollback of a deployment",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Deploy",
+        "pathname": "/docs/api/platform-api-reference/deploy"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_deploy.DeployRollback",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId/rollback",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/deployments/{deploymentId}/deploys/{deployId}/rollback",
+      "https://api.astronomer.io/organizations/:organizationId/deployments/:deploymentId/deploys/:deployId/rollback",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/deployments/%7BdeploymentId%7D/deploys/%7BdeployId%7D/rollback"
+    ],
+    "response_type": "json",
+    "description": "Deploy rollback of a deployment",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.ListWorkspaces",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/workspace/list-workspaces",
+    "pathname": "/docs/api/platform-api-reference/workspace/list-workspaces",
+    "title": "List Workspaces",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Workspace",
+        "pathname": "/docs/api/platform-api-reference/workspace"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_workspace.ListWorkspaces",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/workspaces",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/workspaces",
+      "https://api.astronomer.io/organizations/:organizationId/workspaces",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/workspaces"
+    ],
+    "response_type": "json",
+    "description": "List Workspaces in an Organization",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.CreateWorkspace",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/workspace/create-workspace",
+    "pathname": "/docs/api/platform-api-reference/workspace/create-workspace",
+    "title": "Create Workspace",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Workspace",
+        "pathname": "/docs/api/platform-api-reference/workspace"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_workspace.CreateWorkspace",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/workspaces",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/workspaces",
+      "https://api.astronomer.io/organizations/:organizationId/workspaces",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/workspaces"
+    ],
+    "response_type": "json",
+    "description": "Create a Workspace.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.GetWorkspace",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/workspace/get-workspace",
+    "pathname": "/docs/api/platform-api-reference/workspace/get-workspace",
+    "title": "Get Workspace",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Workspace",
+        "pathname": "/docs/api/platform-api-reference/workspace"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_workspace.GetWorkspace",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/workspaces/:workspaceId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/workspaces/{workspaceId}",
+      "https://api.astronomer.io/organizations/:organizationId/workspaces/:workspaceId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/workspaces/%7BworkspaceId%7D"
+    ],
+    "response_type": "json",
+    "description": "Get information about a Workspace.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.UpdateWorkspace",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/workspace/update-workspace",
+    "pathname": "/docs/api/platform-api-reference/workspace/update-workspace",
+    "title": "Update Workspace",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Workspace",
+        "pathname": "/docs/api/platform-api-reference/workspace"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_workspace.UpdateWorkspace",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/workspaces/:workspaceId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/workspaces/{workspaceId}",
+      "https://api.astronomer.io/organizations/:organizationId/workspaces/:workspaceId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/workspaces/%7BworkspaceId%7D"
+    ],
+    "response_type": "json",
+    "description": "Update a Workspace.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.platform-api-reference.subpackage_workspace.subpackage_workspace.DeleteWorkspace",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/platform-api-reference/workspace/delete-workspace",
+    "pathname": "/docs/api/platform-api-reference/workspace/delete-workspace",
+    "title": "Delete Workspace",
+    "breadcrumb": [
+      {
+        "title": "Platform API Reference",
+        "pathname": "/docs/api/platform-api-reference"
+      },
+      {
+        "title": "Workspace",
+        "pathname": "/docs/api/platform-api-reference/workspace"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "7bbd8b60-d410-43c1-bda4-3c0813a4fbb7",
+    "api_endpoint_id": "subpackage_workspace.DeleteWorkspace",
+    "method": "DELETE",
+    "endpoint_path": "/organizations/:organizationId/workspaces/:workspaceId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/workspaces/{workspaceId}",
+      "https://api.astronomer.io/organizations/:organizationId/workspaces/:workspaceId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/workspaces/%7BworkspaceId%7D"
+    ],
+    "description": "Delete a Workspace.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/platform/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_authorization.subpackage_authorization.ListPermissionGroups",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/authorization/list-permission-groups",
+    "pathname": "/docs/api/iam-api-reference/authorization/list-permission-groups",
+    "title": "List authorization permission groups",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Authorization",
+        "pathname": "/docs/api/iam-api-reference/authorization"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_authorization.ListPermissionGroups",
+    "method": "GET",
+    "endpoint_path": "/authorization/permission-groups",
+    "endpoint_path_alternates": [
+      "/authorization/permission-groups",
+      "https://api.astronomer.io/authorization/permission-groups",
+      "https://api.astronomer.io/authorization/permission-groups"
+    ],
+    "response_type": "json",
+    "description": "List the available permissions you can grant to a custom role.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_invite.subpackage_invite.CreateUserInvite",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/invite/create-user-invite",
+    "pathname": "/docs/api/iam-api-reference/invite/create-user-invite",
+    "title": "Create a user invitation",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Invite",
+        "pathname": "/docs/api/iam-api-reference/invite"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_invite.CreateUserInvite",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/invites",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/invites",
+      "https://api.astronomer.io/organizations/:organizationId/invites",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/invites"
+    ],
+    "response_type": "json",
+    "description": "Invite a user to an Organization.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_invite.subpackage_invite.DeleteUserInvite",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/invite/delete-user-invite",
+    "pathname": "/docs/api/iam-api-reference/invite/delete-user-invite",
+    "title": "Delete a user invite",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Invite",
+        "pathname": "/docs/api/iam-api-reference/invite"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_invite.DeleteUserInvite",
+    "method": "DELETE",
+    "endpoint_path": "/organizations/:organizationId/invites/:inviteId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/invites/{inviteId}",
+      "https://api.astronomer.io/organizations/:organizationId/invites/:inviteId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/invites/%7BinviteId%7D"
+    ],
+    "description": "Delete an existing user invite.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_role.subpackage_role.ListRoleTemplates",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/role/list-role-templates",
+    "pathname": "/docs/api/iam-api-reference/role/list-role-templates",
+    "title": "Get role templates",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Role",
+        "pathname": "/docs/api/iam-api-reference/role"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_role.ListRoleTemplates",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/role-templates",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/role-templates",
+      "https://api.astronomer.io/organizations/:organizationId/role-templates",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/role-templates"
+    ],
+    "response_type": "json",
+    "description": "Get a list of available role templates in an Organization. A role template can be used as the basis for creating a new custom role.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_role.subpackage_role.ListRoles",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/role/list-roles",
+    "pathname": "/docs/api/iam-api-reference/role/list-roles",
+    "title": "List roles",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Role",
+        "pathname": "/docs/api/iam-api-reference/role"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_role.ListRoles",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/roles",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/roles",
+      "https://api.astronomer.io/organizations/:organizationId/roles",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/roles"
+    ],
+    "response_type": "json",
+    "description": "List available user roles in an Organization.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_role.subpackage_role.CreateCustomRole",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/role/create-custom-role",
+    "pathname": "/docs/api/iam-api-reference/role/create-custom-role",
+    "title": "Create a custom role",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Role",
+        "pathname": "/docs/api/iam-api-reference/role"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_role.CreateCustomRole",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/roles",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/roles",
+      "https://api.astronomer.io/organizations/:organizationId/roles",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/roles"
+    ],
+    "response_type": "json",
+    "description": "Create a custom role that you can assign to users, Teams, and API tokens.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_role.subpackage_role.UpdateCustomRole",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/role/update-custom-role",
+    "pathname": "/docs/api/iam-api-reference/role/update-custom-role",
+    "title": "Update custom role",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Role",
+        "pathname": "/docs/api/iam-api-reference/role"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_role.UpdateCustomRole",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/roles/:customRoleId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/roles/{customRoleId}",
+      "https://api.astronomer.io/organizations/:organizationId/roles/:customRoleId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/roles/%7BcustomRoleId%7D"
+    ],
+    "response_type": "json",
+    "description": "Update the metadata or included permissions for a custom role.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_role.subpackage_role.DeleteCustomRole",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/role/delete-custom-role",
+    "pathname": "/docs/api/iam-api-reference/role/delete-custom-role",
+    "title": "Delete a custom role",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Role",
+        "pathname": "/docs/api/iam-api-reference/role"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_role.DeleteCustomRole",
+    "method": "DELETE",
+    "endpoint_path": "/organizations/:organizationId/roles/:customRoleId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/roles/{customRoleId}",
+      "https://api.astronomer.io/organizations/:organizationId/roles/:customRoleId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/roles/%7BcustomRoleId%7D"
+    ],
+    "description": "Delete a custom role.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_role.subpackage_role.GetCustomRole",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/role/get-custom-role",
+    "pathname": "/docs/api/iam-api-reference/role/get-custom-role",
+    "title": "Get a custom role",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Role",
+        "pathname": "/docs/api/iam-api-reference/role"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_role.GetCustomRole",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/roles/:roleId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/roles/{roleId}",
+      "https://api.astronomer.io/organizations/:organizationId/roles/:roleId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/roles/%7BroleId%7D"
+    ],
+    "response_type": "json",
+    "description": "Get details about a custom role.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_team.subpackage_team.ListTeams",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/team/list-teams",
+    "pathname": "/docs/api/iam-api-reference/team/list-teams",
+    "title": "List Teams",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Team",
+        "pathname": "/docs/api/iam-api-reference/team"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_team.ListTeams",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/teams",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/teams",
+      "https://api.astronomer.io/organizations/:organizationId/teams",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/teams"
+    ],
+    "response_type": "json",
+    "description": "List all Teams in an Organization.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_team.subpackage_team.CreateTeam",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/team/create-team",
+    "pathname": "/docs/api/iam-api-reference/team/create-team",
+    "title": "Create a Team",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Team",
+        "pathname": "/docs/api/iam-api-reference/team"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_team.CreateTeam",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/teams",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/teams",
+      "https://api.astronomer.io/organizations/:organizationId/teams",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/teams"
+    ],
+    "response_type": "json",
+    "description": "Create a Team in an Organization. A Team is a group of users that have the same set of permissions in an Organization or Workspace.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_team.subpackage_team.GetTeam",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/team/get-team",
+    "pathname": "/docs/api/iam-api-reference/team/get-team",
+    "title": "Get a Team",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Team",
+        "pathname": "/docs/api/iam-api-reference/team"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_team.GetTeam",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/teams/:teamId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/teams/{teamId}",
+      "https://api.astronomer.io/organizations/:organizationId/teams/:teamId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/teams/%7BteamId%7D"
+    ],
+    "response_type": "json",
+    "description": "Retrieve details about a specific Team.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_team.subpackage_team.UpdateTeam",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/team/update-team",
+    "pathname": "/docs/api/iam-api-reference/team/update-team",
+    "title": "Update a Team",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Team",
+        "pathname": "/docs/api/iam-api-reference/team"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_team.UpdateTeam",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/teams/:teamId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/teams/{teamId}",
+      "https://api.astronomer.io/organizations/:organizationId/teams/:teamId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/teams/%7BteamId%7D"
+    ],
+    "response_type": "json",
+    "description": "Update a Team's details.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_team.subpackage_team.DeleteTeam",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/team/delete-team",
+    "pathname": "/docs/api/iam-api-reference/team/delete-team",
+    "title": "Delete a Team",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Team",
+        "pathname": "/docs/api/iam-api-reference/team"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_team.DeleteTeam",
+    "method": "DELETE",
+    "endpoint_path": "/organizations/:organizationId/teams/:teamId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/teams/{teamId}",
+      "https://api.astronomer.io/organizations/:organizationId/teams/:teamId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/teams/%7BteamId%7D"
+    ],
+    "description": "Delete a Team. Deleting a Team will remove all permissions associated with the Team. Users that previously belonged to the Team will no longer have these permissions.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_team.subpackage_team.ListTeamMembers",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/team/list-team-members",
+    "pathname": "/docs/api/iam-api-reference/team/list-team-members",
+    "title": "List Team members",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Team",
+        "pathname": "/docs/api/iam-api-reference/team"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_team.ListTeamMembers",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/teams/:teamId/members",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/teams/{teamId}/members",
+      "https://api.astronomer.io/organizations/:organizationId/teams/:teamId/members",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/teams/%7BteamId%7D/members"
+    ],
+    "response_type": "json",
+    "description": "List the details about all users that belong to a specific Team.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_team.subpackage_team.AddTeamMembers",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/team/add-team-members",
+    "pathname": "/docs/api/iam-api-reference/team/add-team-members",
+    "title": "Add members to a team",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Team",
+        "pathname": "/docs/api/iam-api-reference/team"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_team.AddTeamMembers",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/teams/:teamId/members",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/teams/{teamId}/members",
+      "https://api.astronomer.io/organizations/:organizationId/teams/:teamId/members",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/teams/%7BteamId%7D/members"
+    ],
+    "description": "Add members to a team",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_team.subpackage_team.RemoveTeamMember",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/team/remove-team-member",
+    "pathname": "/docs/api/iam-api-reference/team/remove-team-member",
+    "title": "Remove Team member",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Team",
+        "pathname": "/docs/api/iam-api-reference/team"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_team.RemoveTeamMember",
+    "method": "DELETE",
+    "endpoint_path": "/organizations/:organizationId/teams/:teamId/members/:memberId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/teams/{teamId}/members/{memberId}",
+      "https://api.astronomer.io/organizations/:organizationId/teams/:teamId/members/:memberId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/teams/%7BteamId%7D/members/%7BmemberId%7D"
+    ],
+    "description": "Remove a user from a Team. The user loses all permissions associated with the Team.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_team.subpackage_team.UpdateTeamRoles",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/team/update-team-roles",
+    "pathname": "/docs/api/iam-api-reference/team/update-team-roles",
+    "title": "Update Team roles",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "Team",
+        "pathname": "/docs/api/iam-api-reference/team"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_team.UpdateTeamRoles",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/teams/:teamId/roles",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/teams/{teamId}/roles",
+      "https://api.astronomer.io/organizations/:organizationId/teams/:teamId/roles",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/teams/%7BteamId%7D/roles"
+    ],
+    "response_type": "json",
+    "description": "Update Organization and Workspace roles for a Team.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.ListApiTokens",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/api-token/list-api-tokens",
+    "pathname": "/docs/api/iam-api-reference/api-token/list-api-tokens",
+    "title": "List API tokens",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "ApiToken",
+        "pathname": "/docs/api/iam-api-reference/api-token"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_apiToken.ListApiTokens",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/tokens",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/tokens",
+      "https://api.astronomer.io/organizations/:organizationId/tokens",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/tokens"
+    ],
+    "response_type": "json",
+    "description": "List information about all API tokens from an Organization. Filters on Workspace when Workspace ID is provided. When includeOnlyOrganizationTokens is true, only Organization API tokens are returned.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.CreateApiToken",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/api-token/create-api-token",
+    "pathname": "/docs/api/iam-api-reference/api-token/create-api-token",
+    "title": "Create an API token",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "ApiToken",
+        "pathname": "/docs/api/iam-api-reference/api-token"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_apiToken.CreateApiToken",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/tokens",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/tokens",
+      "https://api.astronomer.io/organizations/:organizationId/tokens",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/tokens"
+    ],
+    "response_type": "json",
+    "description": "Create an API token. An API token is an alphanumeric token that grants programmatic access to Astro for automated workflows. An API token can be scoped to an Organization or a Workspace.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.GetApiToken",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/api-token/get-api-token",
+    "pathname": "/docs/api/iam-api-reference/api-token/get-api-token",
+    "title": "Get an API token",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "ApiToken",
+        "pathname": "/docs/api/iam-api-reference/api-token"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_apiToken.GetApiToken",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/tokens/:tokenId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/tokens/{tokenId}",
+      "https://api.astronomer.io/organizations/:organizationId/tokens/:tokenId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/tokens/%7BtokenId%7D"
+    ],
+    "response_type": "json",
+    "description": "Retrieve information about a specific API token.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.UpdateApiToken",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/api-token/update-api-token",
+    "pathname": "/docs/api/iam-api-reference/api-token/update-api-token",
+    "title": "Update an API token",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "ApiToken",
+        "pathname": "/docs/api/iam-api-reference/api-token"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_apiToken.UpdateApiToken",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/tokens/:tokenId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/tokens/{tokenId}",
+      "https://api.astronomer.io/organizations/:organizationId/tokens/:tokenId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/tokens/%7BtokenId%7D"
+    ],
+    "response_type": "json",
+    "description": "Update the name and description of an API token.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.DeleteApiToken",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/api-token/delete-api-token",
+    "pathname": "/docs/api/iam-api-reference/api-token/delete-api-token",
+    "title": "Delete an API token",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "ApiToken",
+        "pathname": "/docs/api/iam-api-reference/api-token"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_apiToken.DeleteApiToken",
+    "method": "DELETE",
+    "endpoint_path": "/organizations/:organizationId/tokens/:tokenId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/tokens/{tokenId}",
+      "https://api.astronomer.io/organizations/:organizationId/tokens/:tokenId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/tokens/%7BtokenId%7D"
+    ],
+    "description": "Delete an API token. When you delete an API token, make sure that no existing automation workflows are using it. After it's deleted, an API token cannot be recovered.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.UpdateApiTokenRoles",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/api-token/update-api-token-roles",
+    "pathname": "/docs/api/iam-api-reference/api-token/update-api-token-roles",
+    "title": "Update API token roles",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "ApiToken",
+        "pathname": "/docs/api/iam-api-reference/api-token"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_apiToken.UpdateApiTokenRoles",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/tokens/:tokenId/roles",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/tokens/{tokenId}/roles",
+      "https://api.astronomer.io/organizations/:organizationId/tokens/:tokenId/roles",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/tokens/%7BtokenId%7D/roles"
+    ],
+    "response_type": "json",
+    "description": "Update Workspace and Organization roles for an API token.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_apiToken.subpackage_apiToken.RotateApiToken",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/api-token/rotate-api-token",
+    "pathname": "/docs/api/iam-api-reference/api-token/rotate-api-token",
+    "title": "Rotate API token",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "ApiToken",
+        "pathname": "/docs/api/iam-api-reference/api-token"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_apiToken.RotateApiToken",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/tokens/:tokenId/rotate",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/tokens/{tokenId}/rotate",
+      "https://api.astronomer.io/organizations/:organizationId/tokens/:tokenId/rotate",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/tokens/%7BtokenId%7D/rotate"
+    ],
+    "response_type": "json",
+    "description": "Rotate an API token. Creates a new API token and invalidates the one you specify. Any workflows using the previous value stop working.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_user.subpackage_user.ListUsers",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/user/list-users",
+    "pathname": "/docs/api/iam-api-reference/user/list-users",
+    "title": "List users in an Organization",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "User",
+        "pathname": "/docs/api/iam-api-reference/user"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_user.ListUsers",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/users",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/users",
+      "https://api.astronomer.io/organizations/:organizationId/users",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/users"
+    ],
+    "response_type": "json",
+    "description": "List users in an Organization or a specific Workspace within an Organization.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_user.subpackage_user.GetUser",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/user/get-user",
+    "pathname": "/docs/api/iam-api-reference/user/get-user",
+    "title": "Get user information",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "User",
+        "pathname": "/docs/api/iam-api-reference/user"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_user.GetUser",
+    "method": "GET",
+    "endpoint_path": "/organizations/:organizationId/users/:userId",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/users/{userId}",
+      "https://api.astronomer.io/organizations/:organizationId/users/:userId",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/users/%7BuserId%7D"
+    ],
+    "response_type": "json",
+    "description": "Retrieve user information about a specific user account.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:root.uv.iam-api-reference.subpackage_user.subpackage_user.UpdateUserRoles",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/docs/api/iam-api-reference/user/update-user-roles",
+    "pathname": "/docs/api/iam-api-reference/user/update-user-roles",
+    "title": "Update a user's roles",
+    "breadcrumb": [
+      {
+        "title": "IAM API Reference",
+        "pathname": "/docs/api/iam-api-reference"
+      },
+      {
+        "title": "User",
+        "pathname": "/docs/api/iam-api-reference/user"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "a4030141-9ea5-4ac9-8d2b-f44b815980a8",
+    "api_endpoint_id": "subpackage_user.UpdateUserRoles",
+    "method": "POST",
+    "endpoint_path": "/organizations/:organizationId/users/:userId/roles",
+    "endpoint_path_alternates": [
+      "/organizations/{organizationId}/users/{userId}/roles",
+      "https://api.astronomer.io/organizations/:organizationId/users/:userId/roles",
+      "https://api.astronomer.io/organizations/%7BorganizationId%7D/users/%7BuserId%7D/roles"
+    ],
+    "response_type": "json",
+    "description": "Update Organization and Workspace roles for a user.",
+    "environments": [
+      {
+        "id": "Default",
+        "url": "https://api.astronomer.io/iam/v1beta1"
+      }
+    ],
+    "default_environment_id": "Default",
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json",
+      "Error",
+      "Error",
+      "Error",
+      "Error",
+      "Error"
+    ],
+    "type": "api-reference"
+  }
+]
