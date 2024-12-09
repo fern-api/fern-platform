@@ -37,6 +37,7 @@ code .
 ```
 pnpm install
 ```
+(If pnpm is not installed, installing specific version `9.4.0` is recommended using `curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=9.4.0 sh -`)
 
 ### Compiling
 
@@ -86,6 +87,23 @@ The frontend is served at `localhost:3000`. You can configure which docs are loa
 
 # paste all environment variables found in .vercel/.env.development.local here
 ```
+
+### Docs Dev Environment
+
+To run the docs dev environment, make sure vercel is installed:
+- `npm install -g vercel`
+
+Then link vercel to the project:
+- `vercel link --project app.buildwithfern.com`
+- When prompted to setup the project, say `yes`
+- When prompted what scope should contain the project, say `fern`
+- When prompted to link to the project, say `yes`
+
+Then, run `vercel pull`, which will create `/fern-platform/.vercel/.env.development.local`
+Then, copy that file (creating if necessary) to `/fern-platform/packages/ui/docs-bundle/.env.local`
+Finally, to run the dev server, `cd /packages/ui/docs-bundle` and run `pnpm docs:dev`, which should begin running on `localhost:3000`
+
+Optionally, to reroute to a different docs domain, add a `NEXT_PUBLIC_DOCS_DOMAIN` to `.env.local`
 
 ## Testing in Staging
 
