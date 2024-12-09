@@ -57,7 +57,9 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             code,
         });
 
-        const res = redirectLocation ? FernNextResponse.redirect(req, redirectLocation.toString()) : NextResponse.next();
+        const res = redirectLocation
+            ? FernNextResponse.redirect(req, redirectLocation.toString())
+            : NextResponse.next();
         res.cookies.set("access_token", accessToken, withSecureCookie(withDefaultProtocol(host)));
         return res;
     } catch (error) {

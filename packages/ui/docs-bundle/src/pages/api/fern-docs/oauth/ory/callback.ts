@@ -62,7 +62,9 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         };
         const expires = token.exp == null ? undefined : new Date(token.exp * 1000);
         // TODO: validate allowlist of domains to prevent open redirects
-        const res = redirectLocation ? FernNextResponse.redirect(req, redirectLocation.toString()) : NextResponse.next();
+        const res = redirectLocation
+            ? FernNextResponse.redirect(req, redirectLocation.toString())
+            : NextResponse.next();
         res.cookies.set(
             COOKIE_FERN_TOKEN,
             await signFernJWT(fernUser),

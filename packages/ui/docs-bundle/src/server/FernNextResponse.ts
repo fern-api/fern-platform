@@ -12,9 +12,7 @@ export class FernNextResponse {
         let redirectLocation = new URL(destination);
 
         // sanitize potentially problematic open redirects
-        if (
-            new URL(destination).host !== new URL(withDefaultProtocol(domain)).host
-        ) {
+        if (new URL(destination).host !== new URL(withDefaultProtocol(domain)).host) {
             redirectLocation = new URL(withDefaultProtocol(domain));
         }
 
