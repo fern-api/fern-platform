@@ -31,7 +31,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         logoutUrl?.searchParams.set(return_to_param, req.nextUrl.searchParams.get(return_to_param)!);
     }
 
-    let redirectLocation =
+    const redirectLocation =
         logoutUrl ??
         safeUrl(req.nextUrl.searchParams.get(return_to_param)) ??
         safeUrl(withDefaultProtocol(getHostEdge(req))) ??
