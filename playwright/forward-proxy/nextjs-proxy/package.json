@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@fern-ui/docs-bundle": "workspace:*",
     "react": "^18",
     "react-dom": "^18",
     "next": "14.2.15"
