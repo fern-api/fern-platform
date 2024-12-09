@@ -37,6 +37,7 @@ code .
 ```
 pnpm install
 ```
+
 (If pnpm is not installed, installing specific version `9.4.0` is recommended using `curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=9.4.0 sh -`)
 
 ### Compiling
@@ -91,9 +92,11 @@ The frontend is served at `localhost:3000`. You can configure which docs are loa
 ### Docs Dev Environment
 
 To run the docs dev environment, make sure vercel is installed:
+
 - `npm install -g vercel`
 
 Then link vercel to the project:
+
 - `vercel link --project app.buildwithfern.com`
 - When prompted to setup the project, say `yes`
 - When prompted what scope should contain the project, say `fern`
