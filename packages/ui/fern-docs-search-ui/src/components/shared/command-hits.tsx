@@ -63,7 +63,7 @@ function CommandHit({
 }: {
     hit: GroupedHit;
     /**
-     * @param path - the path to navigate to
+     * @param path - the path to navigate to via nextjs router
      */
     onSelect: (path: string) => void;
     prefetch?: (path: string) => Promise<void>;
