@@ -24,7 +24,10 @@ export class SecurityRequirementObjectConverterNode extends BaseOpenApiV3_1Conve
             Object.keys(securityScheme).map((key) => {
                 const resolvedSecurityScheme = resolveSecurityScheme(key, this.context.document);
                 if (resolvedSecurityScheme == null) {
-                    this.context.logger.warn(`No auth scheme found for ${key}`);
+                    this.context.errors.warning({
+                        message: `No auth scheme found for ${key}`,
+                        path: this.accessPath,
+                    });
                     return;
                 }
 
@@ -39,7 +42,10 @@ export class SecurityRequirementObjectConverterNode extends BaseOpenApiV3_1Conve
                     this.authNodesMap ??= {};
                     this.authNodesMap[key] = resolvedAuthScheme;
                 } else {
-                    this.context.logger.warn(`No auth scheme found for ${key}`);
+                    this.context.errors.warning({
+                        message: `No auth scheme found for ${key}`,
+                        path: this.accessPath,
+                    });
                 }
             }),
         );
