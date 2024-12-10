@@ -4,7 +4,7 @@
     "outDir": "./dist",
     "rootDir": "./src"
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "./src/types/*.d.ts"],
   "references": [
     {
       "path": "../../commons/react/react-commons"

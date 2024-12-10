@@ -8,8 +8,8 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 import { motion, useMotionValueEvent, useSpring } from "framer-motion";
-import fragmentShader from "WaveformComplexShader.frag";
-import vertexShader from "WaveformComplexShader.vert";
+import fragmentShader from "./WaveformComplexShader.frag";
+import vertexShader from "./WaveformComplexShader.vert";
 
 const DEFAULT_SPEED = 1;
 const INITIAL_ZOOM = 95;
@@ -34,7 +34,7 @@ export default function WaveformComplex({
     zoom?: number;
     blur?: number;
     speed?: number;
-}) {
+}): React.JSX.Element {
     const colors = gradientColors[color] || gradientColors.neutral;
     const canvasWrapper = useRef<HTMLDivElement>(null);
     const [displayCanvas, setDisplayCanvas] = useState(false);
@@ -74,7 +74,7 @@ export default function WaveformComplex({
     );
 }
 
-const Camera = ({ zoom }: { zoom: number }) => {
+const Camera = ({ zoom }: { zoom: number }): JSX.Element => {
     const cameraRef = useRef() as any;
     const { viewport } = useThree();
     const zoomSpring = useSpring(INITIAL_ZOOM, springSettings);
@@ -86,7 +86,7 @@ const Camera = ({ zoom }: { zoom: number }) => {
 
     useEffect(() => {
         zoomSpring.set(zoom);
-    }, [zoom]);
+    }, [zoom, zoomSpring]);
 
     useMotionValueEvent(zoomSpring, "change", (latest) => {
         cameraRef.current.zoom = latest;
@@ -96,7 +96,7 @@ const Camera = ({ zoom }: { zoom: number }) => {
     return <OrthographicCamera far={100} makeDefault near={-100} ref={cameraRef} zoom={zoomSpring.get()} />;
 };
 
-function Scene({ colors, speed }: { colors: GradientStop[]; speed: number }) {
+function Scene({ colors, speed }: { colors: GradientStop[]; speed: number }): JSX.Element {
     const { gl } = useThree();
     const planeRef = useRef() as any;
     const targetColorsRef = useRef(colors);
@@ -121,7 +121,9 @@ function Scene({ colors, speed }: { colors: GradientStop[]; speed: number }) {
     }, [colors]);
 
     useFrame(({ clock }) => {
-        if (!planeRef.current) return;
+        if (!planeRef.current) {
+            return;
+        }
         planeRef.current.material.uniforms.uTime.value = clock.getElapsedTime();
         planeRef.current.material.uniforms.uGradientStops.value.map((stop: { color: THREE.Vector4 }, index: number) => {
             stop.color.lerp(
@@ -155,7 +157,7 @@ function Scene({ colors, speed }: { colors: GradientStop[]; speed: number }) {
                 })),
             ),
         };
-    }, []);
+    }, [speed]);
 
     return (
         <mesh ref={planeRef} rotation={[Math.PI / 2, -Math.PI, 0]}>
