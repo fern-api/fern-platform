@@ -1,34 +1,26 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { ReactNode } from "react";
 import { useFeatureFlags } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
 import { renderTypeShorthand } from "../../type-shorthand";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 
-export declare namespace EndpointResponseSection {
-    export interface Props {
-        response: ApiDefinition.HttpResponse;
-        exampleResponseBody: ApiDefinition.ExampleEndpointResponse | undefined;
-        onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
-        anchorIdParts: readonly string[];
-        slug: FernNavigation.Slug;
-        types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
-    }
-}
-
-export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = ({
+const EndpointResponseSection = ({
     response,
     exampleResponseBody,
     onHoverProperty,
-    anchorIdParts,
-    slug,
     types,
-}) => {
+}: {
+    response: ApiDefinition.HttpResponse;
+    exampleResponseBody: ApiDefinition.ExampleEndpointResponse | undefined;
+    onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
+    types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
+}): ReactNode => {
     const { isAudioFileDownloadSpanSummary } = useFeatureFlags();
 
     return (
-        <div>
+        <>
             <Markdown
                 size="sm"
                 className="!t-muted border-default border-b pb-5 leading-6"
@@ -40,44 +32,28 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                     isAudioFileDownloadSpanSummary,
                 })}
             />
-            <EndpointResponseSectionContent
-                body={response.body}
-                onHoverProperty={onHoverProperty}
-                anchorIdParts={anchorIdParts}
-                slug={slug}
-                types={types}
-            />
-        </div>
+            <EndpointResponseSectionContent body={response.body} onHoverProperty={onHoverProperty} types={types} />
+        </>
     );
 };
 
 interface EndpointResponseSectionContentProps {
     body: ApiDefinition.HttpResponseBodyShape;
     onHoverProperty: ((path: JsonPropertyPath, opts: { isHovering: boolean }) => void) | undefined;
-    anchorIdParts: readonly string[];
-    slug: FernNavigation.Slug;
     types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
 }
 
-function EndpointResponseSectionContent({
-    body,
-    onHoverProperty,
-    anchorIdParts,
-    slug,
-    types,
-}: EndpointResponseSectionContentProps) {
+function EndpointResponseSectionContent({ body, onHoverProperty, types }: EndpointResponseSectionContentProps) {
     switch (body.type) {
         case "fileDownload":
         case "streamingText":
-            return null;
+            return false;
         case "stream":
             return (
                 <TypeReferenceDefinitions
                     shape={body.shape}
                     isCollapsible={false}
                     onHoverProperty={onHoverProperty}
-                    anchorIdParts={anchorIdParts}
-                    slug={slug}
                     applyErrorStyles={false}
                     types={types}
                     isResponse={true}
@@ -89,8 +65,6 @@ function EndpointResponseSectionContent({
                     shape={body}
                     isCollapsible={false}
                     onHoverProperty={onHoverProperty}
-                    anchorIdParts={anchorIdParts}
-                    slug={slug}
                     applyErrorStyles={false}
                     types={types}
                     isResponse={true}
@@ -129,3 +103,5 @@ function getResponseSummary({
             return `This endpoint returns ${renderTypeShorthand(response.body, { withArticle: true }, types)}.`;
     }
 }
+
+export { EndpointResponseSection };

@@ -1,6 +1,7 @@
 import { createEndpointContext, type ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { memo, useMemo } from "react";
+import { SlugProvider } from "./AnchorIdParts";
 import { EndpointContent } from "./EndpointContent";
 
 export declare namespace Endpoint {
@@ -31,13 +32,15 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
     }
 
     return (
-        <EndpointContent
-            breadcrumb={breadcrumb}
-            showErrors={showErrors}
-            context={context}
-            streamToggle={streamToggle}
-            last={last}
-        />
+        <SlugProvider slug={node.slug}>
+            <EndpointContent
+                breadcrumb={breadcrumb}
+                showErrors={showErrors}
+                context={context}
+                streamToggle={streamToggle}
+                last={last}
+            />
+        </SlugProvider>
     );
 };
 

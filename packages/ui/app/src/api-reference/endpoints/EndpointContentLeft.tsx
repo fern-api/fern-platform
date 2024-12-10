@@ -8,11 +8,12 @@ import { useFeatureFlags } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
+import { AnchorProvider } from "./AnchorIdParts";
 import { EndpointError } from "./EndpointError";
 import { EndpointParameter } from "./EndpointParameter";
 import { EndpointRequestSection } from "./EndpointRequestSection";
 import { EndpointResponseSection } from "./EndpointResponseSection";
-import { EndpointSection } from "./EndpointSection";
+import { EndpointSection, EndpointSectionTitle } from "./EndpointSection";
 
 export interface HoveringProps {
     isHovering: boolean;
@@ -32,17 +33,17 @@ export declare namespace EndpointContentLeft {
     }
 }
 
-const REQUEST = ["request"];
-const RESPONSE = ["response"];
-const REQUEST_PATH = ["request", "path"];
-const REQUEST_QUERY = ["request", "query"];
-const REQUEST_HEADER = ["request", "header"];
-const REQUEST_BODY = ["request", "body"];
-const RESPONSE_BODY = ["response", "body"];
-const RESPONSE_ERROR = ["response", "error"];
+// const REQUEST = ["request"];
+// const RESPONSE = ["response"];
+// const REQUEST_PATH = ["request", "path"];
+// const REQUEST_QUERY = ["request", "query"];
+// const REQUEST_HEADER = ["request", "header"];
+// const REQUEST_BODY = ["request", "body"];
+// const RESPONSE_BODY = ["response", "body"];
+// const RESPONSE_ERROR = ["response", "error"];
 
 const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
-    context: { node, endpoint, types, auth, globalHeaders },
+    context: { endpoint, types, auth, globalHeaders },
     example,
     showErrors,
     onHoverRequestProperty,
@@ -157,55 +158,16 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
         <div className="flex max-w-full flex-1 flex-col gap-12">
             <Markdown className="text-base leading-6" mdx={endpoint.description} />
             {endpoint.pathParameters && endpoint.pathParameters.length > 0 && (
-                <EndpointSection title="Path parameters" anchorIdParts={REQUEST_PATH} slug={node.slug}>
-                    <div>
-                        {endpoint.pathParameters.map((parameter) => (
-                            <div key={parameter.key}>
-                                <TypeComponentSeparator />
-                                <EndpointParameter
-                                    name={parameter.key}
-                                    shape={parameter.valueShape}
-                                    anchorIdParts={[...REQUEST_PATH, parameter.key]}
-                                    slug={node.slug}
-                                    description={parameter.description}
-                                    additionalDescriptions={
-                                        ApiDefinition.unwrapReference(parameter.valueShape, types).descriptions
-                                    }
-                                    availability={parameter.availability}
-                                    types={types}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </EndpointSection>
-            )}
-            {headers.length > 0 && (
-                <EndpointSection title="Headers" anchorIdParts={REQUEST_HEADER} slug={node.slug}>
-                    <div>
-                        {headers.map((parameter) => {
-                            let isAuth = false;
-                            if (
-                                (auth?.type === "header" && parameter.key === auth?.headerWireValue) ||
-                                parameter.key === "Authorization"
-                            ) {
-                                isAuth = true;
-                            }
-
-                            return (
-                                <div key={parameter.key} className="relative">
-                                    {isAuth && (
-                                        <div className="absolute right-0 top-3">
-                                            <div className="px-2 bg-tag-danger rounded-xl flex items-center h-5">
-                                                <span className="text-xs t-danger">Auth</span>
-                                            </div>
-                                        </div>
-                                    )}
+                <AnchorProvider parts={["request", "path"]}>
+                    <EndpointSection>
+                        <EndpointSectionTitle>Path parameters</EndpointSectionTitle>
+                        <div>
+                            {endpoint.pathParameters.map((parameter) => (
+                                <AnchorProvider key={parameter.key} parts={parameter.key}>
                                     <TypeComponentSeparator />
                                     <EndpointParameter
                                         name={parameter.key}
                                         shape={parameter.valueShape}
-                                        anchorIdParts={[...REQUEST_HEADER, parameter.key]}
-                                        slug={node.slug}
                                         description={parameter.description}
                                         additionalDescriptions={
                                             ApiDefinition.unwrapReference(parameter.valueShape, types).descriptions
@@ -213,34 +175,79 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                         availability={parameter.availability}
                                         types={types}
                                     />
-                                </div>
-                            );
-                        })}
-                    </div>
-                </EndpointSection>
+                                </AnchorProvider>
+                            ))}
+                        </div>
+                    </EndpointSection>
+                </AnchorProvider>
+            )}
+            {headers.length > 0 && (
+                <AnchorProvider parts={["request", "header"]}>
+                    <EndpointSection>
+                        <EndpointSectionTitle>Headers</EndpointSectionTitle>
+                        <div>
+                            {headers.map((parameter) => {
+                                let isAuth = false;
+                                if (
+                                    (auth?.type === "header" && parameter.key === auth?.headerWireValue) ||
+                                    parameter.key === "Authorization"
+                                ) {
+                                    isAuth = true;
+                                }
+
+                                return (
+                                    <AnchorProvider key={parameter.key} parts={parameter.key}>
+                                        <div className="relative">
+                                            {isAuth && (
+                                                <div className="absolute right-0 top-3">
+                                                    <div className="px-2 bg-tag-danger rounded-xl flex items-center h-5">
+                                                        <span className="text-xs t-danger">Auth</span>
+                                                    </div>
+                                                </div>
+                                            )}
+                                            <TypeComponentSeparator />
+                                            <EndpointParameter
+                                                name={parameter.key}
+                                                shape={parameter.valueShape}
+                                                description={parameter.description}
+                                                additionalDescriptions={
+                                                    ApiDefinition.unwrapReference(parameter.valueShape, types)
+                                                        .descriptions
+                                                }
+                                                availability={parameter.availability}
+                                                types={types}
+                                            />
+                                        </div>
+                                    </AnchorProvider>
+                                );
+                            })}
+                        </div>
+                    </EndpointSection>
+                </AnchorProvider>
             )}
             {endpoint.queryParameters && endpoint.queryParameters.length > 0 && (
-                <EndpointSection title="Query parameters" anchorIdParts={REQUEST_QUERY} slug={node.slug}>
-                    <div>
-                        {endpoint.queryParameters.map((parameter) => (
-                            <div key={parameter.key}>
-                                <TypeComponentSeparator />
-                                <EndpointParameter
-                                    name={parameter.key}
-                                    shape={parameter.valueShape}
-                                    anchorIdParts={[...REQUEST_QUERY, parameter.key]}
-                                    slug={node.slug}
-                                    description={parameter.description}
-                                    additionalDescriptions={
-                                        ApiDefinition.unwrapReference(parameter.valueShape, types).descriptions
-                                    }
-                                    availability={parameter.availability}
-                                    types={types}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </EndpointSection>
+                <AnchorProvider parts={["request", "query"]}>
+                    <EndpointSection>
+                        <EndpointSectionTitle>Query parameters</EndpointSectionTitle>
+                        <div>
+                            {endpoint.queryParameters.map((parameter) => (
+                                <AnchorProvider key={parameter.key} parts={parameter.key}>
+                                    <TypeComponentSeparator />
+                                    <EndpointParameter
+                                        name={parameter.key}
+                                        shape={parameter.valueShape}
+                                        description={parameter.description}
+                                        additionalDescriptions={
+                                            ApiDefinition.unwrapReference(parameter.valueShape, types).descriptions
+                                        }
+                                        availability={parameter.availability}
+                                        types={types}
+                                    />
+                                </AnchorProvider>
+                            ))}
+                        </div>
+                    </EndpointSection>
+                </AnchorProvider>
             )}
             {/* {endpoint.requestBody.length > 1 && (
                 <Tabs.Root asChild={true} value={contentType} onValueChange={setContentType}>
@@ -270,10 +277,10 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                                 <Tabs.Content key={requestBody.contentType} value={requestBody.contentType}>
                                     <EndpointSection
                                         key={requestBody.contentType}
-                                        title="Request"
                                         anchorIdParts={REQUEST}
                                         slug={endpoint.slug}
                                     >
+                                        <EndpointSectionTitle>Request</EndpointSectionTitle>
                                         <EndpointRequestSection
                                             requestBody={requestBody}
                                             onHoverProperty={onHoverRequestProperty}
@@ -289,61 +296,64 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 </Tabs.Root>
             )} */}
             {endpoint.request && (
-                <EndpointSection
-                    key={endpoint.request.contentType}
-                    title="Request"
-                    anchorIdParts={REQUEST}
-                    slug={node.slug}
-                >
-                    <EndpointRequestSection
-                        request={endpoint.request}
-                        onHoverProperty={onHoverRequestProperty}
-                        anchorIdParts={REQUEST_BODY}
-                        slug={node.slug}
-                        types={types}
-                    />
-                </EndpointSection>
+                <AnchorProvider parts="request">
+                    <EndpointSection>
+                        <EndpointSectionTitle>Request</EndpointSectionTitle>
+                        <AnchorProvider parts="body">
+                            <EndpointRequestSection
+                                request={endpoint.request}
+                                onHoverProperty={onHoverRequestProperty}
+                                types={types}
+                            />
+                        </AnchorProvider>
+                    </EndpointSection>
+                </AnchorProvider>
             )}
             {endpoint.response && (
-                <EndpointSection title="Response" anchorIdParts={RESPONSE} slug={node.slug}>
-                    <EndpointResponseSection
-                        response={endpoint.response}
-                        exampleResponseBody={example?.responseBody}
-                        onHoverProperty={onHoverResponseProperty}
-                        anchorIdParts={RESPONSE_BODY}
-                        slug={node.slug}
-                        types={types}
-                    />
-                </EndpointSection>
+                <AnchorProvider parts="response">
+                    <EndpointSection>
+                        <EndpointSectionTitle>Response</EndpointSectionTitle>
+                        <AnchorProvider parts="body">
+                            <EndpointResponseSection
+                                response={endpoint.response}
+                                exampleResponseBody={example?.responseBody}
+                                onHoverProperty={onHoverResponseProperty}
+                                types={types}
+                            />
+                        </AnchorProvider>
+                    </EndpointSection>
+                </AnchorProvider>
             )}
             {showErrors && endpoint.errors && endpoint.errors.length > 0 && (
-                <EndpointSection title="Errors" anchorIdParts={RESPONSE_ERROR} slug={node.slug}>
-                    <div className="border-default flex flex-col overflow-visible rounded-lg border" ref={errorRef}>
-                        {sortBy(endpoint.errors, [(e) => e.statusCode, (e) => e.name]).map((error, idx) => {
-                            return (
-                                <EndpointError
-                                    key={idx}
-                                    error={error}
-                                    isFirst={idx === 0}
-                                    isLast={idx === (endpoint.errors?.length ?? 0) - 1}
-                                    isSelected={selectedError != null && isErrorEqual(error, selectedError)}
-                                    onClick={(event) => {
-                                        event.stopPropagation();
-                                        setSelectedError(error);
-                                    }}
-                                    onHoverProperty={onHoverResponseProperty}
-                                    anchorIdParts={[
-                                        ...RESPONSE_ERROR,
-                                        `${convertNameToAnchorPart(error.name) ?? error.statusCode}`,
-                                    ]}
-                                    slug={node.slug}
-                                    availability={error.availability}
-                                    types={types}
-                                />
-                            );
-                        })}
-                    </div>
-                </EndpointSection>
+                <AnchorProvider parts={["response", "error"]}>
+                    <EndpointSection>
+                        <EndpointSectionTitle>Errors</EndpointSectionTitle>
+                        <div className="border-default flex flex-col overflow-visible rounded-lg border" ref={errorRef}>
+                            {sortBy(endpoint.errors, [(e) => e.statusCode, (e) => e.name]).map((error, idx) => {
+                                return (
+                                    <AnchorProvider
+                                        key={idx}
+                                        parts={`${convertNameToAnchorPart(error.name) ?? String(error.statusCode)}`}
+                                    >
+                                        <EndpointError
+                                            error={error}
+                                            isFirst={idx === 0}
+                                            isLast={idx === (endpoint.errors?.length ?? 0) - 1}
+                                            isSelected={selectedError != null && isErrorEqual(error, selectedError)}
+                                            onClick={(event) => {
+                                                event.stopPropagation();
+                                                setSelectedError(error);
+                                            }}
+                                            onHoverProperty={onHoverResponseProperty}
+                                            availability={error.availability}
+                                            types={types}
+                                        />
+                                    </AnchorProvider>
+                                );
+                            })}
+                        </div>
+                    </EndpointSection>
+                </AnchorProvider>
             )}
         </div>
     );

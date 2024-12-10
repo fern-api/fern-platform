@@ -15,7 +15,7 @@ import { PlaygroundButton } from "../../playground/PlaygroundButton";
 import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
 import { getSlugFromChildren } from "../../util/getSlugFromText";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
-import { EndpointSection } from "../endpoints/EndpointSection";
+import { EndpointSection, EndpointSectionTitle } from "../endpoints/EndpointSection";
 import { EndpointUrlWithOverflow } from "../endpoints/EndpointUrlWithOverflow";
 import { TitledExample } from "../examples/TitledExample";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
@@ -158,11 +158,8 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                 }
                             >
                                 {headers && headers.length > 0 && (
-                                    <EndpointSection
-                                        title="Headers"
-                                        anchorIdParts={["request", "headers"]}
-                                        slug={node.slug}
-                                    >
+                                    <EndpointSection anchorIdParts={["request", "headers"]} slug={node.slug}>
+                                        <EndpointSectionTitle>Headers</EndpointSectionTitle>
                                         <div className="flex flex-col">
                                             {headers.map((parameter) => (
                                                 <div className="flex flex-col" key={parameter.key}>
@@ -186,11 +183,8 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                     </EndpointSection>
                                 )}
                                 {channel.pathParameters && channel.pathParameters.length > 0 && (
-                                    <EndpointSection
-                                        title="Path parameters"
-                                        anchorIdParts={["request", "path"]}
-                                        slug={node.slug}
-                                    >
+                                    <EndpointSection anchorIdParts={["request", "path"]} slug={node.slug}>
+                                        <EndpointSectionTitle>Path parameters</EndpointSectionTitle>
                                         <div className="flex flex-col">
                                             {channel.pathParameters.map((parameter) => (
                                                 <div className="flex flex-col" key={parameter.key}>
@@ -214,11 +208,8 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                     </EndpointSection>
                                 )}
                                 {channel.queryParameters && channel.queryParameters.length > 0 && (
-                                    <EndpointSection
-                                        title="Query parameters"
-                                        anchorIdParts={["request", "query"]}
-                                        slug={node.slug}
-                                    >
+                                    <EndpointSection anchorIdParts={["request", "query"]} slug={node.slug}>
+                                        <EndpointSectionTitle>Query parameters</EndpointSectionTitle>
                                         <div className="flex flex-col">
                                             {channel.queryParameters.map((parameter) => {
                                                 return (
@@ -248,19 +239,15 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                             </CardedSection>
 
                             {publishMessages.length > 0 && (
-                                <EndpointSection
-                                    title={
+                                <EndpointSection anchorIdParts={["send"]} slug={node.slug}>
+                                    <EndpointSectionTitle level={2}>
                                         <span className="inline-flex items-center gap-2">
                                             {"Send"}
                                             <span className="t-success inline-block rounded-full bg-tag-success p-1">
                                                 <ArrowUp className="size-icon" />
                                             </span>
                                         </span>
-                                    }
-                                    anchorIdParts={["send"]}
-                                    slug={node.slug}
-                                    headerType="h2"
-                                >
+                                    </EndpointSectionTitle>
                                     {/* <Markdown
                                         size="sm"
                                         className="t-muted border-default border-b leading-6"
@@ -280,19 +267,15 @@ const WebhookContent: FC<WebhookContentProps> = ({ context, breadcrumb, last }) 
                                 </EndpointSection>
                             )}
                             {subscribeMessages.length > 0 && (
-                                <EndpointSection
-                                    title={
+                                <EndpointSection anchorIdParts={["receive"]} slug={node.slug}>
+                                    <EndpointSectionTitle level={2}>
                                         <span className="inline-flex items-center gap-2">
                                             {"Receive"}
                                             <span className="t-accent-aaa inline-block rounded-full bg-tag-primary p-1">
                                                 <ArrowDown className="size-icon" />
                                             </span>
                                         </span>
-                                    }
-                                    anchorIdParts={["receive"]}
-                                    slug={node.slug}
-                                    headerType="h2"
-                                >
+                                    </EndpointSectionTitle>
                                     {/* <Markdown
                                         size="sm"
                                         className="t-muted border-default border-b leading-6"
@@ -378,7 +361,7 @@ function CardedSection({
     return (
         <section {...props} id={href} className="border-default divide-default -mx-4 divide-y rounded-xl border">
             <div className="space-y-4 rounded-t-[inherit] bg-tag-default-soft p-4 last:rounded-b-[inherit]">
-                <FernAnchor href={href}>
+                <FernAnchor href={href} asChild>
                     <h2 className="relative mt-0 flex items-center">{title}</h2>
                 </FernAnchor>
                 {headingElement}

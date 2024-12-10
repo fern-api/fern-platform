@@ -1,12 +1,11 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { useBooleanState, useIsHovering } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { memo, useCallback, useMemo } from "react";
 import { useRouteListener } from "../../../atoms";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
-import { getAnchorId } from "../../../util/anchor";
+import { useAnchorId, useSlug } from "../../endpoints/AnchorIdParts";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
@@ -21,8 +20,6 @@ export declare namespace InternalTypeDefinition {
     export interface Props {
         shape: ApiDefinition.TypeShapeOrReference;
         isCollapsible: boolean;
-        anchorIdParts: readonly string[];
-        slug: FernNavigation.Slug;
         types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
     }
 }
@@ -30,20 +27,16 @@ export declare namespace InternalTypeDefinition {
 export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(function InternalTypeDefinition({
     shape,
     isCollapsible,
-    anchorIdParts,
-    slug,
     types,
 }) {
-    const collapsableContent = useMemo(
-        () => createCollapsibleContent(shape, types, anchorIdParts, slug),
-        [shape, types, anchorIdParts, slug],
-    );
+    const slug = useSlug();
+    const anchorId = useAnchorId();
+    const collapsableContent = useMemo(() => createCollapsibleContent(shape, types), [shape, types]);
 
-    const anchorIdSoFar = getAnchorId(anchorIdParts);
     const { value: isCollapsed, toggleValue: toggleIsCollapsed, setValue: setCollapsed } = useBooleanState(true);
 
     useRouteListener(slug, (anchor) => {
-        const isActive = anchor?.startsWith(anchorIdSoFar + ".") ?? false;
+        const isActive = anchor?.startsWith(anchorId + ".") ?? false;
         if (isActive) {
             setCollapsed(false);
         }
@@ -90,45 +83,41 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(functio
             ? `Hide ${collapsableContent.elementNameSingular}`
             : `Hide ${collapsableContent.elements.length} ${collapsableContent.elementNamePlural}`;
 
-    const renderContent = () => (
-        <div
-            className={cn(
-                "text-sm internal-type-definition-container",
-                collapsableContent.elementNameSingular === "enum value" ? "enum-container" : undefined,
-            )}
-        >
-            {collapsableContent.elementNameSingular !== "enum value" ? (
-                collapsableContent.elements.length === 0 ? null : (
-                    <FernCollapseWithButton
-                        isOpen={!isCollapsed}
-                        toggleIsOpen={toggleIsCollapsed}
-                        showText={showText}
-                        hideText={hideText}
-                        buttonProps={containerCallbacks}
-                    >
-                        <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
-                            <TypeDefinitionDetails
-                                elements={collapsableContent.elements}
-                                separatorText={collapsableContent.separatorText}
-                            />
-                        </TypeDefinitionContext.Provider>
-                    </FernCollapseWithButton>
-                )
-            ) : (
-                <EnumTypeDefinition
-                    elements={collapsableContent.elements}
-                    isCollapsed={isCollapsed}
-                    toggleIsCollapsed={toggleIsCollapsed}
-                    collapsibleContentContextValue={collapsibleContentContextValue}
-                    showText={showText}
-                />
-            )}
-        </div>
-    );
-
     return (
         <FernErrorBoundary component="InternalTypeDefinition">
-            <FernTooltipProvider>{renderContent()}</FernTooltipProvider>
+            <div
+                className={cn(
+                    "text-sm internal-type-definition-container",
+                    collapsableContent.elementNameSingular === "enum value" ? "enum-container" : undefined,
+                )}
+            >
+                {collapsableContent.elementNameSingular !== "enum value" ? (
+                    collapsableContent.elements.length === 0 ? null : (
+                        <FernCollapseWithButton
+                            isOpen={!isCollapsed}
+                            toggleIsOpen={toggleIsCollapsed}
+                            showText={showText}
+                            hideText={hideText}
+                            buttonProps={containerCallbacks}
+                        >
+                            <TypeDefinitionContext.Provider value={collapsibleContentContextValue}>
+                                <TypeDefinitionDetails
+                                    elements={collapsableContent.elements}
+                                    separatorText={collapsableContent.separatorText}
+                                />
+                            </TypeDefinitionContext.Provider>
+                        </FernCollapseWithButton>
+                    )
+                ) : (
+                    <EnumTypeDefinition
+                        elements={collapsableContent.elements}
+                        isCollapsed={isCollapsed}
+                        toggleIsCollapsed={toggleIsCollapsed}
+                        collapsibleContentContextValue={collapsibleContentContextValue}
+                        showText={showText}
+                    />
+                )}
+            </div>
         </FernErrorBoundary>
     );
 });

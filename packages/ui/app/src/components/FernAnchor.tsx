@@ -8,10 +8,16 @@ import { FernLink } from "./FernLink";
 interface FernAnchorProps {
     href: string;
     sideOffset?: number;
+    asChild?: boolean;
 }
 
-export function FernAnchor({ href, sideOffset = 12, children }: PropsWithChildren<FernAnchorProps>): ReactElement {
-    const { copyToClipboard, wasJustCopied } = useCopyToClipboard(() => new URL(href, window.location.href).toString());
+export function FernAnchor({
+    href,
+    sideOffset = 12,
+    children,
+    asChild,
+}: PropsWithChildren<FernAnchorProps>): ReactElement {
+    const { copyToClipboard, wasJustCopied } = useCopyToClipboard(() => String(new URL(href, window.location.href)));
 
     const [forceMount, setIsMounted] = useState<true | undefined>(wasJustCopied ? true : undefined);
     useEffect(() => {
@@ -27,7 +33,7 @@ export function FernAnchor({ href, sideOffset = 12, children }: PropsWithChildre
     return (
         <Tooltip.Provider>
             <Tooltip.Root delayDuration={0}>
-                <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
+                <Tooltip.Trigger asChild={asChild}>{children}</Tooltip.Trigger>
                 <Tooltip.Portal forceMount={forceMount}>
                     <Tooltip.Content sideOffset={sideOffset} collisionPadding={6} side="left" asChild>
                         <FernLink

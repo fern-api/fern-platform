@@ -6,7 +6,7 @@ import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { useHref } from "../../hooks/useHref";
 import { Markdown } from "../../mdx/Markdown";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
-import { EndpointSection } from "../endpoints/EndpointSection";
+import { EndpointSection, EndpointSectionTitle } from "../endpoints/EndpointSection";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
@@ -63,7 +63,8 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
                     {webhook.headers && webhook.headers.length > 0 && (
                         <div className="mt-8 flex">
                             <div className="flex max-w-full flex-1 flex-col gap-12">
-                                <EndpointSection title="Headers" anchorIdParts={["payload", "header"]} slug={node.slug}>
+                                <EndpointSection anchorIdParts={["payload", "header"]} slug={node.slug}>
+                                    <EndpointSectionTitle>Headers</EndpointSectionTitle>
                                     <div className="flex flex-col">
                                         {webhook.headers.map((parameter) => (
                                             <div className="flex flex-col" key={parameter.key}>
@@ -92,7 +93,8 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
                     {webhook.payload && (
                         <div className="mt-8 flex">
                             <div className="flex max-w-full flex-1 flex-col gap-12">
-                                <EndpointSection title="Payload" anchorIdParts={["payload"]} slug={node.slug}>
+                                <EndpointSection anchorIdParts={["payload"]} slug={node.slug}>
+                                    <EndpointSectionTitle>Payload</EndpointSectionTitle>
                                     <WebhookPayloadSection
                                         payload={webhook.payload}
                                         onHoverProperty={onHoverPayloadProperty}
@@ -107,7 +109,8 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
 
                     <div className="mt-8 flex">
                         <div className="flex max-w-full flex-1 flex-col gap-12">
-                            <EndpointSection title="Response" anchorIdParts={["response"]} slug={node.slug}>
+                            <EndpointSection anchorIdParts={["response"]} slug={node.slug}>
+                                <EndpointSectionTitle>Response</EndpointSectionTitle>
                                 <WebhookResponseSection />
                             </EndpointSection>
                         </div>

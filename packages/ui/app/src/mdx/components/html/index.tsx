@@ -20,7 +20,11 @@ import { FernLink } from "../../../components/FernLink";
 import { useFrontmatter } from "../../../contexts/frontmatter";
 
 export const HeadingRenderer = (level: number, props: ComponentProps<"h1">): ReactElement => {
-    return <FernAnchor href={`#${props.id}`}>{createElement(`h${level}`, props)}</FernAnchor>;
+    return (
+        <FernAnchor href={`#${props.id}`} asChild>
+            {createElement(`h${level}`, props)}
+        </FernAnchor>
+    );
 };
 
 export const P: FC<{ variant: "api" | "markdown" } & ComponentProps<"p">> = ({ variant, className, ...rest }) => {

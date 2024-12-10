@@ -1,5 +1,4 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { AvailabilityBadge } from "@fern-ui/components/badges";
 import cn from "clsx";
@@ -74,9 +73,7 @@ function getIconForTypeReference(
 export declare namespace UndiscriminatedUnionVariant {
     export interface Props {
         unionVariant: ApiDefinition.UndiscriminatedUnionVariant;
-        anchorIdParts: readonly string[];
         applyErrorStyles: boolean;
-        slug: FernNavigation.Slug;
         idx: number;
         types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
     }
@@ -84,9 +81,7 @@ export declare namespace UndiscriminatedUnionVariant {
 
 export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.Props> = ({
     unionVariant,
-    anchorIdParts,
     applyErrorStyles,
-    slug,
     types,
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
@@ -122,10 +117,8 @@ export const UndiscriminatedUnionVariant: React.FC<UndiscriminatedUnionVariant.P
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeReferenceDefinitions
                         shape={unionVariant.shape}
-                        anchorIdParts={anchorIdParts}
                         isCollapsible
                         applyErrorStyles={applyErrorStyles}
-                        slug={slug}
                         types={types}
                     />
                 </TypeDefinitionContext.Provider>

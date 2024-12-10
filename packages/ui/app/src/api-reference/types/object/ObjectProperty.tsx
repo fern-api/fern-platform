@@ -1,6 +1,6 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { AvailabilityBadge } from "@fern-ui/components/badges";
+import { CopyToClipboardButton } from "@fern-ui/components";
+import { AvailabilityBadge, Badge } from "@fern-ui/components/badges";
 import cn from "clsx";
 import { compact } from "es-toolkit/array";
 import { forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -11,7 +11,7 @@ import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { useHref } from "../../../hooks/useHref";
 import { Markdown } from "../../../mdx/Markdown";
 import { renderTypeShorthandRoot } from "../../../type-shorthand";
-import { getAnchorId } from "../../../util/anchor";
+import { useAnchorId, useSlug } from "../../endpoints/AnchorIdParts";
 import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
 import {
     TypeDefinitionContext,
@@ -27,16 +27,14 @@ import {
 export declare namespace ObjectProperty {
     export interface Props {
         property: ApiDefinition.ObjectProperty;
-        anchorIdParts: readonly string[];
-        slug: FernNavigation.Slug;
         applyErrorStyles: boolean;
         types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
     }
 }
 
 export const ObjectProperty: React.FC<ObjectProperty.Props> = (props) => {
-    const { slug, anchorIdParts } = props;
-    const anchorId = getAnchorId(anchorIdParts);
+    const slug = useSlug();
+    const anchorId = useAnchorId();
     const ref = useRef<HTMLDivElement>(null);
 
     const [isActive, setIsActive] = useState(false);
@@ -51,16 +49,19 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = (props) => {
         }
     });
 
-    return <ObjectPropertyInternal ref={ref} anchorId={anchorId} isActive={isActive} {...props} />;
+    return <ObjectPropertyInternal ref={ref} isActive={isActive} {...props} />;
 };
 
 interface ObjectPropertyInternalProps extends ObjectProperty.Props {
-    anchorId: string;
     isActive: boolean;
 }
 
 const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectPropertyInternalProps>((props, ref) => {
-    const { slug, property, applyErrorStyles, types, anchorIdParts, anchorId, isActive } = props;
+    const { property, applyErrorStyles, types, isActive } = props;
+
+    const slug = useSlug();
+    const anchorId = useAnchorId();
+
     const contextValue = useTypeDefinitionContext();
     const jsonPropertyPath = useMemo(
         (): JsonPropertyPath => [
@@ -110,9 +111,8 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
     useEffect(() => {
         if (descriptions.length > 0) {
             capturePosthogEvent("api_reference_multiple_descriptions", {
-                name: property.key,
-                slug,
-                anchorIdParts,
+                name,
+                href: String(new URL(`/${slug}#${anchorId}`, window.location.href)),
                 count: descriptions.length,
                 descriptions,
             });
@@ -130,14 +130,20 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
             })}
         >
             <div className="fern-api-property-header">
-                <FernAnchor href={href} sideOffset={6}>
-                    <span
-                        className="fern-api-property-key"
-                        onMouseEnter={onMouseEnterPropertyName}
-                        onMouseOut={onMouseOutPropertyName}
-                    >
-                        {property.key}
-                    </span>
+                <FernAnchor href={href} asChild>
+                    <CopyToClipboardButton content={property.key} asChild hideIcon>
+                        <Badge
+                            className="fern-api-property-key -ml-2"
+                            variant="ghost"
+                            rounded
+                            interactive
+                            color="accent"
+                            onMouseEnter={onMouseEnterPropertyName}
+                            onMouseLeave={onMouseOutPropertyName}
+                        >
+                            {property.key}
+                        </Badge>
+                    </CopyToClipboardButton>
                 </FernAnchor>
                 {renderTypeShorthandRoot(property.valueShape, types, contextValue.isResponse)}
                 {property.availability != null && (
@@ -151,8 +157,6 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                             shape={property.valueShape}
                             isCollapsible
                             applyErrorStyles={applyErrorStyles}
-                            anchorIdParts={anchorIdParts}
-                            slug={slug}
                             types={types}
                         />
                     </TypeDefinitionContext.Provider>
@@ -166,8 +170,6 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
                             shape={property.valueShape}
                             isCollapsible
                             applyErrorStyles={applyErrorStyles}
-                            anchorIdParts={anchorIdParts}
-                            slug={slug}
                             types={types}
                         />
                     </TypeDefinitionContext.Provider>

@@ -5,9 +5,9 @@ import {
     unwrapObjectType,
     unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
-import { Slug } from "@fern-api/fdr-sdk/navigation";
 import { ReactElement } from "react";
 import { Chip } from "../../../components/Chip";
+import { AnchorProvider } from "../../endpoints/AnchorIdParts";
 import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant";
 import { ObjectProperty } from "../object/ObjectProperty";
 import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant";
@@ -22,8 +22,8 @@ interface CollapsibleContent {
 export function createCollapsibleContent(
     shape: TypeShapeOrReference,
     types: Record<TypeId, TypeDefinition>,
-    anchorIdParts: readonly string[],
-    slug: Slug,
+    // anchorIdParts: readonly string[],
+    // slug: Slug,
 ): CollapsibleContent | undefined {
     const unwrapped = unwrapReference(shape, types);
 
@@ -32,14 +32,13 @@ export function createCollapsibleContent(
             const union = unwrapped.shape;
             return {
                 elements: union.variants.map((variant) => (
-                    <DiscriminatedUnionVariant
-                        key={variant.discriminantValue}
-                        discriminant={union.discriminant}
-                        unionVariant={variant}
-                        anchorIdParts={[...anchorIdParts, variant.discriminantValue]}
-                        slug={slug}
-                        types={types}
-                    />
+                    <AnchorProvider key={variant.discriminantValue} parts={variant.discriminantValue}>
+                        <DiscriminatedUnionVariant
+                            discriminant={union.discriminant}
+                            unionVariant={variant}
+                            types={types}
+                        />
+                    </AnchorProvider>
                 )),
                 elementNameSingular: "variant",
                 elementNamePlural: "variants",
@@ -60,14 +59,9 @@ export function createCollapsibleContent(
             const { properties } = unwrapObjectType(unwrapped.shape, types);
             return {
                 elements: properties.map((property) => (
-                    <ObjectProperty
-                        key={property.key}
-                        property={property}
-                        anchorIdParts={[...anchorIdParts, property.key]}
-                        slug={slug}
-                        applyErrorStyles
-                        types={types}
-                    />
+                    <AnchorProvider key={property.key} parts={property.key}>
+                        <ObjectProperty property={property} types={types} applyErrorStyles />
+                    </AnchorProvider>
                 )),
                 elementNameSingular: "property",
                 elementNamePlural: "properties",
@@ -76,15 +70,14 @@ export function createCollapsibleContent(
         case "undiscriminatedUnion": {
             return {
                 elements: unwrapped.shape.variants.map((variant, variantIdx) => (
-                    <UndiscriminatedUnionVariant
-                        key={variantIdx}
-                        unionVariant={variant}
-                        anchorIdParts={[...anchorIdParts, variant.displayName ?? variantIdx.toString()]}
-                        applyErrorStyles={false}
-                        slug={slug}
-                        idx={variantIdx}
-                        types={types}
-                    />
+                    <AnchorProvider key={variantIdx} parts={variant.displayName ?? variantIdx.toString()}>
+                        <UndiscriminatedUnionVariant
+                            unionVariant={variant}
+                            applyErrorStyles={false}
+                            idx={variantIdx}
+                            types={types}
+                        />
+                    </AnchorProvider>
                 )),
                 elementNameSingular: "variant",
                 elementNamePlural: "variants",

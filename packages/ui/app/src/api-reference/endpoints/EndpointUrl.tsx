@@ -99,39 +99,35 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
                                 path,
                             })
                         }
+                        asChild
+                        hideIcon
                     >
-                        {(onClick) => (
-                            <button
-                                onClick={onClick}
-                                onMouseEnter={() => setIsHovered(true)}
-                                onMouseLeave={() => setIsHovered(false)}
+                        <button onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+                            <span
+                                className={cn("font-mono", {
+                                    "text-xs": !large,
+                                    "text-sm": large,
+                                })}
                             >
-                                <span
-                                    className={cn("font-mono", {
-                                        "text-xs": !large,
-                                        "text-sm": large,
-                                    })}
-                                >
-                                    {showEnvironment && (
-                                        <span className="whitespace-nowrap max-sm:hidden">
-                                            <MaybeEnvironmentDropdown
-                                                baseUrl={baseUrl}
-                                                environmentId={environmentId}
-                                                options={options}
-                                                urlTextStyle="t-muted"
-                                                protocolTextStyle="text-faded"
-                                                isEditingEnvironment={isEditingEnvironment}
-                                                editable
-                                            />
-                                        </span>
-                                    )}
-                                    {!showEnvironment && environmentBasepath && environmentBasepath !== "/" && (
-                                        <span className="t-muted">{environmentBasepath}</span>
-                                    )}
-                                    {pathParts}
-                                </span>
-                            </button>
-                        )}
+                                {showEnvironment && (
+                                    <span className="whitespace-nowrap max-sm:hidden">
+                                        <MaybeEnvironmentDropdown
+                                            baseUrl={baseUrl}
+                                            environmentId={environmentId}
+                                            options={options}
+                                            urlTextStyle="t-muted"
+                                            protocolTextStyle="text-faded"
+                                            isEditingEnvironment={isEditingEnvironment}
+                                            editable
+                                        />
+                                    </span>
+                                )}
+                                {!showEnvironment && environmentBasepath && environmentBasepath !== "/" && (
+                                    <span className="t-muted">{environmentBasepath}</span>
+                                )}
+                                {pathParts}
+                            </span>
+                        </button>
                     </CopyToClipboardButton>
                 </span>
             </div>

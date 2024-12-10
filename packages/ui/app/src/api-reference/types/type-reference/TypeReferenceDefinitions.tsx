@@ -1,5 +1,4 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { memo } from "react";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
 import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
@@ -11,9 +10,7 @@ export declare namespace TypeReferenceDefinitions {
         applyErrorStyles: boolean;
         isCollapsible: boolean;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
-        anchorIdParts: readonly string[];
         className?: string;
-        slug: FernNavigation.Slug;
         shape: ApiDefinition.TypeShapeOrReference;
         types: Record<string, ApiDefinition.TypeDefinition>;
         isResponse?: boolean;
@@ -25,9 +22,7 @@ export const TypeReferenceDefinitions = memo<TypeReferenceDefinitions.Props>(fun
     isCollapsible,
     applyErrorStyles,
     onHoverProperty,
-    anchorIdParts,
     className,
-    slug,
     types,
     isResponse,
 }) {
@@ -39,8 +34,6 @@ export const TypeReferenceDefinitions = memo<TypeReferenceDefinitions.Props>(fun
                     isCollapsible={isCollapsible}
                     applyErrorStyles={applyErrorStyles}
                     className={className}
-                    anchorIdParts={anchorIdParts}
-                    slug={slug}
                     types={types}
                 />
             </TypeDefinitionContextProvider>

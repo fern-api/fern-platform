@@ -1,5 +1,4 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import React from "react";
 import { UnreachableCaseError } from "ts-essentials";
@@ -12,8 +11,6 @@ export declare namespace InternalTypeReferenceDefinitions {
         applyErrorStyles: boolean;
         isCollapsible: boolean;
         className?: string;
-        anchorIdParts: readonly string[];
-        slug: FernNavigation.Slug;
         shape: ApiDefinition.TypeShapeOrReference;
         types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
         isResponse?: boolean;
@@ -66,62 +63,19 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
     applyErrorStyles,
     isCollapsible,
     className,
-    anchorIdParts,
-    slug,
     types,
 }) => {
     const unwrapped = ApiDefinition.unwrapReference(shape, types);
     switch (unwrapped.shape.type) {
-        case "object": {
-            if (unwrapped.shape.extraProperties != null) {
-                // TODO: (rohin) Refactor this
-                return (
-                    <InternalTypeDefinition
-                        shape={unwrapped.shape}
-                        isCollapsible={isCollapsible}
-                        anchorIdParts={anchorIdParts}
-                        slug={slug}
-                        types={types}
-                    />
-                );
-            }
-            return (
-                <InternalTypeDefinition
-                    shape={unwrapped.shape}
-                    isCollapsible={isCollapsible}
-                    anchorIdParts={anchorIdParts}
-                    slug={slug}
-                    types={types}
-                />
-            );
-        }
+        case "object":
         case "enum":
         case "primitive":
-        case "undiscriminatedUnion": {
-            return (
-                <InternalTypeDefinition
-                    shape={unwrapped.shape}
-                    isCollapsible={isCollapsible}
-                    anchorIdParts={anchorIdParts}
-                    slug={slug}
-                    types={types}
-                />
-            );
-        }
-        case "discriminatedUnion": {
-            const union = unwrapped.shape;
-            return (
-                <InternalTypeDefinition
-                    shape={union}
-                    isCollapsible={isCollapsible}
-                    anchorIdParts={anchorIdParts}
-                    slug={slug}
-                    types={types}
-                />
-            );
-        }
+        case "undiscriminatedUnion":
+        case "discriminatedUnion":
+            return <InternalTypeDefinition shape={unwrapped.shape} isCollapsible={isCollapsible} types={types} />;
+
         case "list":
-        case "set": {
+        case "set":
             return (
                 <ListTypeContextProvider>
                     <InternalTypeReferenceDefinitions
@@ -129,14 +83,12 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                         isCollapsible={isCollapsible}
                         applyErrorStyles={applyErrorStyles}
                         className={className}
-                        anchorIdParts={anchorIdParts}
-                        slug={slug}
                         types={types}
                     />
                 </ListTypeContextProvider>
             );
-        }
-        case "map": {
+
+        case "map":
             return (
                 <MapTypeContextProvider>
                     <InternalTypeReferenceDefinitions
@@ -144,8 +96,6 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                         isCollapsible={isCollapsible}
                         applyErrorStyles={applyErrorStyles}
                         className={className}
-                        anchorIdParts={anchorIdParts}
-                        slug={slug}
                         types={types}
                     />
                     <InternalTypeReferenceDefinitions
@@ -153,16 +103,14 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                         isCollapsible={isCollapsible}
                         applyErrorStyles={applyErrorStyles}
                         className={className}
-                        anchorIdParts={anchorIdParts}
-                        slug={slug}
                         types={types}
                     />
                 </MapTypeContextProvider>
             );
-        }
+
         case "literal":
         case "unknown":
-            return null;
+            return false;
         default:
             throw new UnreachableCaseError(unwrapped.shape);
     }

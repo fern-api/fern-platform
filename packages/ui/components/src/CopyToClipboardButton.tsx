@@ -1,31 +1,24 @@
 import { useCopyToClipboard } from "@fern-ui/react-commons";
+import { composeEventHandlers } from "@radix-ui/primitive";
+import { Slot, Slottable } from "@radix-ui/react-slot";
 import { Check, Copy } from "iconoir-react";
-import { FernButton } from "./FernButton";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { Button } from "./FernButtonV2";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 import { cn } from "./cn";
 
-export declare namespace CopyToClipboardButton {
-    export interface Props {
-        className?: string;
+export const CopyToClipboardButton = forwardRef<
+    HTMLButtonElement,
+    Omit<ComponentPropsWithoutRef<"button">, "content"> & {
         content?: string | (() => string | Promise<string>);
-        testId?: string;
-        children?: (onClick: ((e: React.MouseEvent) => void) | undefined) => React.ReactNode;
-        onClick?: (e: React.MouseEvent) => void;
+        asChild?: boolean;
+        size?: ComponentPropsWithoutRef<typeof Button>["size"];
+        hideIcon?: boolean;
     }
-}
-
-export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
-    className,
-    content,
-    testId,
-    children,
-    onClick,
-}) => {
+>(({ className, content, children, asChild, hideIcon, ...props }, ref) => {
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(content);
 
-    if (content == null) {
-        return null;
-    }
+    const Comp = asChild ? Slot : Button;
 
     return (
         <FernTooltipProvider>
@@ -33,26 +26,20 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
                 content={wasJustCopied ? "Copied!" : "Copy to clipboard"}
                 open={wasJustCopied ? true : undefined}
             >
-                {children?.((e) => {
-                    onClick?.(e);
-                    copyToClipboard?.();
-                }) ?? (
-                    <FernButton
-                        className={cn("group fern-copy-button", className)}
-                        disabled={copyToClipboard == null}
-                        onClickCapture={(e) => {
-                            onClick?.(e);
-                            copyToClipboard?.();
-                        }}
-                        data-testid={testId}
-                        rounded={true}
-                        icon={wasJustCopied ? <Check /> : <Copy />}
-                        variant="minimal"
-                        intent={wasJustCopied ? "success" : "none"}
-                        disableAutomaticTooltip={true}
-                    />
-                )}
+                <Comp
+                    size={hideIcon ? undefined : "icon"}
+                    {...props}
+                    ref={ref}
+                    className={cn("group fern-copy-button", className)}
+                    disabled={copyToClipboard == null}
+                    onClick={composeEventHandlers(props.onClick, copyToClipboard, { checkForDefaultPrevented: true })}
+                >
+                    {hideIcon ? null : wasJustCopied ? <Check /> : <Copy />}
+                    <Slottable>{children}</Slottable>
+                </Comp>
             </FernTooltip>
         </FernTooltipProvider>
     );
-};
+});
+
+CopyToClipboardButton.displayName = "CopyToClipboardButton";

@@ -1,6 +1,5 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { FernCollapse } from "@fern-ui/components";
 import { AvailabilityBadge } from "@fern-ui/components/badges";
@@ -19,8 +18,6 @@ export declare namespace EndpointError {
         isSelected: boolean;
         onClick: MouseEventHandler<HTMLButtonElement>;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
-        anchorIdParts: readonly string[];
-        slug: FernNavigation.Slug;
         availability: APIV1Read.Availability | null | undefined;
         types: Record<string, ApiDefinition.TypeDefinition>;
     }
@@ -33,8 +30,6 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
     isSelected,
     onHoverProperty,
     onClick,
-    anchorIdParts,
-    slug,
     availability,
     types,
 }) {
@@ -77,8 +72,6 @@ export const EndpointError = memo<EndpointError.Props>(function EndpointErrorUnm
                                     applyErrorStyles
                                     shape={error.shape}
                                     onHoverProperty={onHoverProperty}
-                                    anchorIdParts={anchorIdParts}
-                                    slug={slug}
                                     types={types}
                                     isResponse={true}
                                 />

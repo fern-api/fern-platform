@@ -19,13 +19,13 @@ afterEach(cleanup);
 describe("CopyToClipboardButton", () => {
     it("renders correctly", async () => {
         // eslint-disable-next-line deprecation/deprecation
-        const component = renderer.create(<CopyToClipboardButton testId="copy-btn" content={"test"} />);
+        const component = renderer.create(<CopyToClipboardButton data-testid="copy-btn" content={"test"} />);
         const tree = component.toJSON() as renderer.ReactTestRendererJSON;
         expect(tree).toMatchSnapshot();
     });
 
     it("changes content after click", () => {
-        const { getByTestId } = render(<CopyToClipboardButton content="abc" testId="copy-btn" />);
+        const { getByTestId } = render(<CopyToClipboardButton content="abc" data-testid="copy-btn" />);
 
         const innerHtmlBeforeClick = getByTestId("copy-btn").innerHTML;
 

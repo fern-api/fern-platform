@@ -7,13 +7,6 @@ interface FernCollapseProps extends Collapsible.CollapsibleProps {
     trigger?: ReactNode;
 }
 
-export enum AnimationStates {
-    OPEN_START,
-    OPEN,
-    CLOSING_START,
-    CLOSED,
-}
-
 export const FernCollapse: FC<PropsWithChildren<FernCollapseProps>> = ({ children, trigger, ...props }) => {
     return (
         <Collapsible.Root {...props}>

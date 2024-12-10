@@ -1,46 +1,61 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { cn } from "@fern-ui/components";
 import dynamic from "next/dynamic";
-import { ReactNode, createElement, useRef } from "react";
+import { ComponentPropsWithoutRef, createElement, forwardRef } from "react";
 import { FernAnchor } from "../../components/FernAnchor";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
-import { useHref } from "../../hooks/useHref";
-import { getAnchorId } from "../../util/anchor";
+import { useAnchorId } from "./AnchorIdParts";
 
 const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {
     ssr: true,
 });
 
-export declare namespace EndpointSection {
-    export type Props = React.PropsWithChildren<{
-        headerType?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-        title: ReactNode;
-        description?: FernDocs.MarkdownText | undefined;
-        anchorIdParts: readonly string[];
-        slug: FernNavigation.Slug;
-    }>;
-}
-
-export const EndpointSection: React.FC<EndpointSection.Props> = ({
-    headerType = "h3",
-    title,
-    description,
-    anchorIdParts,
-    slug,
-    children,
-}) => {
-    const ref = useRef<HTMLDivElement>(null);
-    const anchorId = getAnchorId(anchorIdParts);
-    const href = useHref(slug, anchorId);
-    return (
+const EndpointSection = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<"section">>(
+    ({ children, ...props }, forwardedRef) => (
         <FernErrorBoundary component="EndpointSection">
-            <div ref={ref} id={href} className="scroll-mt-content">
-                <FernAnchor href={href}>
-                    {createElement(headerType, { className: "relative mt-0 flex items-center mb-3" }, title)}
-                </FernAnchor>
-                <Markdown className="text-base mb-2" mdx={description} />
+            <section
+                {...props}
+                ref={forwardedRef}
+                id={useAnchorId()}
+                className={cn("scroll-mt-header-height-padded", props.className)}
+            >
                 {children}
-            </div>
+            </section>
         </FernErrorBoundary>
+    ),
+);
+
+EndpointSection.displayName = "EndpointSection";
+
+const EndpointSectionTitle = forwardRef<
+    HTMLHeadingElement,
+    ComponentPropsWithoutRef<"h1"> & {
+        level?: 1 | 2 | 3 | 4 | 5 | 6;
+    }
+>(({ level = 3, children, ...props }, forwardRef) => {
+    const anchorId = useAnchorId();
+    return (
+        <FernAnchor href={`#${anchorId}`} asChild>
+            {createElement(
+                `h${level}`,
+                { ...props, className: cn("relative mt-0 flex items-center mb-3", props.className), ref: forwardRef },
+                children,
+            )}
+        </FernAnchor>
     );
-};
+});
+
+EndpointSectionTitle.displayName = "EndpointSectionTitle";
+
+const EndpointSectionDescription = forwardRef<
+    HTMLDivElement,
+    Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+        children: FernDocs.MarkdownText;
+    }
+>(({ children, ...props }, forwardRef) => {
+    return <Markdown {...props} ref={forwardRef} className={cn("text-base mb-2", props.className)} mdx={children} />;
+});
+
+EndpointSectionDescription.displayName = "EndpointSectionDescription";
+
+export { EndpointSection, EndpointSectionDescription, EndpointSectionTitle };
