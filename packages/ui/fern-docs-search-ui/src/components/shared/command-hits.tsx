@@ -1,6 +1,6 @@
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { Command, useCommandState } from "cmdk";
-import { PropsWithChildren, ReactNode, memo, useEffect } from "react";
+import { PropsWithChildren, ReactNode, memo, useEffect, useRef } from "react";
 import { Snippet } from "react-instantsearch";
 
 import { useSearchHits } from "../../hooks/use-search-hits";
@@ -62,15 +62,31 @@ function CommandHit({
     prefetch,
 }: {
     hit: GroupedHit;
+    /**
+     * @param path - the path to navigate to via nextjs router
+     */
     onSelect: (path: string) => void;
     prefetch?: (path: string) => Promise<void>;
 }) {
+    const ref = useRef<HTMLDivElement>(null);
+
     const isSelected = useCommandState((state) => state.value === hit.path) as boolean;
     useEffect(() => {
         if (isSelected) {
             void prefetch?.(hit.path);
         }
     }, [hit.path, isSelected, prefetch]);
+
+    // the following mirrors the `onSelect` handling in the original cmdk codebase
+    useEffect(() => {
+        const element = ref.current;
+        if (!element) {
+            return;
+        }
+        const listener = () => onSelect(hit.path);
+        element.addEventListener("cmdk-item-select", listener);
+        return () => element.removeEventListener("cmdk-item-select", listener);
+    }, [hit.path, isSelected, onSelect, prefetch]);
 
     if (!hit.record) {
         return false;
@@ -79,20 +95,41 @@ function CommandHit({
     return (
         <CommandGroupSearchHitTooltip key={hit.path} hit={hit.record} path={hit.path}>
             <Command.Item
+                // Note: `onSelect` is purposely not passed in here because these command items must be rendered as
+                // `<a>` elements to allow opening the links in a new tab, an new window, etc + showing the default browser context menu.
+                ref={ref}
                 value={hit.path}
-                onSelect={() => onSelect(hit.path)}
                 keywords={[hit.record.title]}
                 onPointerOver={() => {
                     void prefetch?.(hit.path);
                 }}
+                asChild
             >
-                <PageIcon
-                    icon={hit.icon}
-                    type={hit.record.type === "api-reference" ? hit.record.api_type : hit.record.type}
-                    isSubPage={hit.record.hash != null}
-                    className="self-start"
-                />
-                <HitContent hit={hit.record} />
+                <a
+                    href={hit.path}
+                    onClick={(e) => {
+                        // if the user clicked this link without any modifier keys, and it's a left click, then we want to
+                        // navigate to the link using the `onSelect` handler to defer the behavior to the NextJS router.
+                        if (
+                            !e.metaKey &&
+                            !e.ctrlKey &&
+                            !e.shiftKey &&
+                            !e.altKey &&
+                            (e.button === 0 || e.button === 1)
+                        ) {
+                            e.preventDefault();
+                            onSelect(hit.path);
+                        }
+                    }}
+                >
+                    <PageIcon
+                        icon={hit.icon}
+                        type={hit.record.type === "api-reference" ? hit.record.api_type : hit.record.type}
+                        isSubPage={hit.record.hash != null}
+                        className="self-start"
+                    />
+                    <HitContent hit={hit.record} />
+                </a>
             </Command.Item>
         </CommandGroupSearchHitTooltip>
     );
