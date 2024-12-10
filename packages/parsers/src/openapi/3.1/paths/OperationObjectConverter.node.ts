@@ -57,6 +57,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         }
 
         this.description = this.input.description;
+
         this.availability = new AvailabilityConverterNode({
             input: this.input,
             context: this.context,
@@ -156,6 +157,10 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             accessPath: this.accessPath,
             pathId: "x-fern-group-name",
         });
+
+        if (this.namespace?.groupName == null && this.input.tags != null) {
+            this.namespace.groupName = this.input.tags;
+        }
     }
 
     extractPathParameterIds(): string[] | undefined {
