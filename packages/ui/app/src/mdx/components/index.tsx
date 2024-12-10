@@ -127,7 +127,7 @@ const ALIASED_HTML_COMPONENTS = {
     Table,
 };
 
-export const MDX_COMPONENTS = {
+export const MDX_COMPONENTS: MDXComponents = {
     ...FERN_COMPONENTS,
     ...INTERNAL_COMPONENTS,
     ...HTML_COMPONENTS,
