@@ -1,3 +1,4 @@
+import { getDevice, getPlatform } from "@fern-api/ui-core-utils";
 import { createSearchPlaceholderWithVersion } from "@fern-ui/search-utils";
 import * as Dialog from "@radix-ui/react-dialog";
 import type { LiteClient as SearchClient } from "algoliasearch/lite";
@@ -10,6 +11,7 @@ import {
     IS_MOBILE_SCREEN_ATOM,
     POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM,
     SEARCH_DIALOG_OPEN_ATOM,
+    useDomain,
     useFeatureFlags,
     useIsSearchDialogOpen,
     useSidebarNodes,
@@ -83,6 +85,7 @@ function NoResults() {
 }
 
 function FernInstantSearch({ searchClient, indexName, inputRef }: FernInstantSearchProps) {
+    const domain = useDomain();
     const sidebar = useSidebarNodes();
     const activeVersion = useAtomValue(CURRENT_VERSION_ATOM);
     const placeholder = useMemo(
@@ -92,7 +95,12 @@ function FernInstantSearch({ searchClient, indexName, inputRef }: FernInstantSea
     const { isNewSearchExperienceEnabled } = useFeatureFlags();
     return (
         <InstantSearch searchClient={searchClient} indexName={indexName}>
-            <Configure filters={getFeatureFlagFilters(isNewSearchExperienceEnabled)} hitsPerPage={40} />
+            <Configure
+                filters={getFeatureFlagFilters(isNewSearchExperienceEnabled)}
+                hitsPerPage={40}
+                analytics
+                analyticsTags={["search-v1-dialog", getPlatform(), getDevice(), domain]}
+            />
             <div className="bg-search-dialog border-default flex h-auto min-h-0 shrink flex-col overflow-hidden rounded-xl border text-left align-middle shadow-2xl backdrop-blur-lg">
                 <SearchBox
                     ref={inputRef}
