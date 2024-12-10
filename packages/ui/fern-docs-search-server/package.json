@@ -12,14 +12,25 @@
   ],
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+    "./types": {
+      "types": "./dist/algolia/types.d.ts",
+      "default": "./dist/algolia/types.js"
+    },
+    "./algolia": {
+      "types": "./dist/algolia/index.d.ts",
+      "default": "./dist/algolia/index.js"
+    },
+    "./archive": {
+      "types": "./dist/algolia/records/archive/index.d.ts",
+      "default": "./dist/algolia/records/archive/index.js"
+    },
+    "./tasks": {
+      "types": "./dist/tasks/index.d.ts",
+      "default": "./dist/tasks/index.js"
     }
   },
   "sideEffects": false,
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "test": "vitest --run --passWithNoTests --globals",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
@@ -37,12 +48,15 @@
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-ui/fern-docs-mdx": "workspace:*",
-    "algoliasearch": "^5.8.1",
-    "es-toolkit": "^1.24.0",
+    "@fern-ui/fern-docs-utils": "workspace:*",
+    "algoliasearch": "^5.13.0",
+    "es-toolkit": "^1.27.0",
+    "html-entities": "^2.5.2",
     "html-to-text": "^9.0.5",
     "marked": "^5.1.0",
     "pnpm": "^9.12.1",
-    "ts-essentials": "^10.0.1"
+    "ts-essentials": "^10.0.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

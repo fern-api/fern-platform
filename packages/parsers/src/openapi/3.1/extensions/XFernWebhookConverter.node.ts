@@ -1,11 +1,10 @@
 import { BaseOpenApiV3_1ConverterNode } from "../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../utils/extendType";
-
-const xFernWebhookKey = "x-fern-webhook";
+import { xFernWebhookKey } from "./fernExtension.consts";
 
 export declare namespace XFernWebhookConverterNode {
     export interface Input {
-        [xFernWebhookKey]: boolean;
+        [xFernWebhookKey]?: boolean;
     }
 }
 

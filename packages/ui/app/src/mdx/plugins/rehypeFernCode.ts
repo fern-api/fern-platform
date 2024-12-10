@@ -7,10 +7,10 @@ import {
     type MdxJsxAttribute,
     type MdxJsxElementHast,
 } from "@fern-ui/fern-docs-mdx";
+import type { FernSyntaxHighlighterProps } from "@fern-ui/fern-docs-syntax-highlighter";
 import type { Element, Root } from "hast";
 import rangeParser from "parse-numeric-range";
 import { visit } from "unist-util-visit";
-import type { FernSyntaxHighlighterProps } from "../../syntax-highlighting/FernSyntaxHighlighter";
 import type { CodeGroup } from "../components/code";
 
 declare module "hast" {

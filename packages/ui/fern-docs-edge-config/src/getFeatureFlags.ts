@@ -35,6 +35,7 @@ const FEATURE_FLAGS = [
     "new-search-experience" as const,
     "grpc-endpoints" as const,
     "authenticated-pages-discoverable" as const,
+    "search-v2" as const,
 ];
 
 type FeatureFlag = (typeof FEATURE_FLAGS)[number];
@@ -92,6 +93,8 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             domain,
             config["authenticated-pages-discoverable"],
         );
+        const isSearchV2Enabled =
+            domain === "buildwithfern.com" ? true : checkDomainMatchesCustomers(domain, config["search-v2"]);
         const grpcEndpoints = config["grpc-endpoints"];
 
         return {
@@ -124,6 +127,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             is404PageHidden,
             isNewSearchExperienceEnabled,
             isAuthenticatedPagesDiscoverable,
+            isSearchV2Enabled,
             grpcEndpoints,
         };
     } catch (e) {
@@ -159,6 +163,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             is404PageHidden: false,
             isNewSearchExperienceEnabled: false,
             isAuthenticatedPagesDiscoverable: false,
+            isSearchV2Enabled: domain === "buildwithfern.com",
             grpcEndpoints: [],
         };
     }

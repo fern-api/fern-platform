@@ -1,7 +1,7 @@
 import { createMockContext } from "../../../../../__test__/createMockContext.util";
-import { XFernBearerFormatConverterNode } from "../../auth/XFernBearerFormatConverter.node";
+import { XBearerFormatConverterNode } from "../../auth/XBearerFormatConverter.node";
 
-describe("XFernBearerFormatConverterNode", () => {
+describe("XBearerFormatConverterNode", () => {
     const mockContext = createMockContext();
 
     it("should parse bearer format", () => {
@@ -9,7 +9,7 @@ describe("XFernBearerFormatConverterNode", () => {
             "x-bearer-format": "JWT",
         };
 
-        const node = new XFernBearerFormatConverterNode({
+        const node = new XBearerFormatConverterNode({
             input,
             context: mockContext,
             accessPath: [],
@@ -23,7 +23,7 @@ describe("XFernBearerFormatConverterNode", () => {
     it("should handle missing bearer format", () => {
         const input = {};
 
-        const node = new XFernBearerFormatConverterNode({
+        const node = new XBearerFormatConverterNode({
             input,
             context: mockContext,
             accessPath: [],

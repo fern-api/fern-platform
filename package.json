@@ -34,13 +34,12 @@
     "fdr:generate": "pnpm fern generate --api fdr --local && pnpm turbo --filter=@fern-api/fdr-sdk compile"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.7",
-    "@babel/preset-env": "^7.24.3",
-    "@babel/preset-react": "^7.22.15",
-    "@babel/preset-typescript": "^7.24.1",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.25.9",
+    "@babel/preset-typescript": "^7.26.0",
     "@next/eslint-plugin-next": "14.2.9",
     "@playwright/test": "^1.47.1",
-    "@storybook/nextjs": "8.4.1",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
     "@types/express": "^4.17.13",
@@ -55,7 +54,7 @@
     "depcheck": "^1.4.3",
     "dotenv": "^16.4.5",
     "eslint": "^8.56.0",
-    "eslint-config-next": "^14.0.4",
+    "eslint-config-next": "14.2.15",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-deprecation": "^2.0.0",
     "eslint-plugin-import": "^2.29.1",
@@ -75,7 +74,7 @@
     "organize-imports-cli": "^0.10.0",
     "playwright": "^1.47.1",
     "prettier": "^3.3.2",
-    "react": "^18.2.0",
+    "react": "^18",
     "rollup": "^4.22.4",
     "styled-jsx": "^5.1.2",
     "stylelint": "^16.1.0",
@@ -97,11 +96,16 @@
     "micromatch": "4.0.8",
     "postcss": "8.4.31",
     "esbuild": "0.20.2",
+    "instantsearch.js": "4.75.4",
+    "next": "npm:@fern-api/next@14.2.9-fork.2",
     "jsonpath-plus": "10.0.7",
     "markdown-to-jsx": "7.4.0",
     "webpack": "5.94.0",
     "clipboardy": "4.0.0",
-    "elliptic": "6.6.0"
+    "elliptic": "6.6.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "@babel/core": "7.26.0"
   },
   "dependenciesMeta": {
     "jsonc-parser@2.2.1": {

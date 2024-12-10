@@ -1,0 +1,6256 @@
+[
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/aiprise/aiprise_webhook_api.verify",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/aiprise/aiprise-webhook-api/verify",
+    "pathname": "/api-reference/api/aiprise/aiprise-webhook-api/verify",
+    "title": "Verify User Callback",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Aiprise",
+        "pathname": "/api-reference/api/aiprise"
+      },
+      {
+        "title": "AiPrise Webhook",
+        "pathname": "/api-reference/api/aiprise/aiprise-webhook-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/aiprise/aiprise_webhook_api.verify",
+    "method": "POST",
+    "endpoint_path": "/aiprise/webhook/verification/callback",
+    "endpoint_path_alternates": [
+      "/aiprise/webhook/verification/callback"
+    ],
+    "description": "Not to be used by FE. AiPrise calls this API automatically.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/dev/dev.uploadEor",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/dev/dev/upload-eor",
+    "pathname": "/api-reference/api/dev/dev/upload-eor",
+    "title": "Upload Eor",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Dev",
+        "pathname": "/api-reference/api/dev"
+      },
+      {
+        "title": "Dev",
+        "pathname": "/api-reference/api/dev/dev"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/dev/dev.uploadEor",
+    "method": "POST",
+    "endpoint_path": "/dev/eor",
+    "endpoint_path_alternates": [
+      "/dev/eor"
+    ],
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/services/file.attachDocumentToEmployment",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/services/file/attach-document-to-employment",
+    "pathname": "/api-reference/api/services/file/attach-document-to-employment",
+    "title": "Attach Document To Employment",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Services",
+        "pathname": "/api-reference/api/services"
+      },
+      {
+        "title": "File",
+        "pathname": "/api-reference/api/services/file"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/services/file.attachDocumentToEmployment",
+    "method": "POST",
+    "endpoint_path": "//contracts/:contractID/generic-document",
+    "endpoint_path_alternates": [
+      "//contracts/{contractID}/generic-document"
+    ],
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/services/file.deleteDocumentFromEmployment",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/services/file/delete-document-from-employment",
+    "pathname": "/api-reference/api/services/file/delete-document-from-employment",
+    "title": "Delete Document From Employment",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Services",
+        "pathname": "/api-reference/api/services"
+      },
+      {
+        "title": "File",
+        "pathname": "/api-reference/api/services/file"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/services/file.deleteDocumentFromEmployment",
+    "method": "DELETE",
+    "endpoint_path": "//contracts/:contractID/generic-document/:s3Key",
+    "endpoint_path_alternates": [
+      "//contracts/{contractID}/generic-document/{s3Key}"
+    ],
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/services/file.loadGenericDocumentFromEmployment",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/services/file/load-generic-document-from-employment",
+    "pathname": "/api-reference/api/services/file/load-generic-document-from-employment",
+    "title": "Load Generic Document From Employment",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Services",
+        "pathname": "/api-reference/api/services"
+      },
+      {
+        "title": "File",
+        "pathname": "/api-reference/api/services/file"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/services/file.loadGenericDocumentFromEmployment",
+    "method": "GET",
+    "endpoint_path": "//contracts/:contractID/generic-document/:s3Key/file-url",
+    "endpoint_path_alternates": [
+      "//contracts/{contractID}/generic-document/{s3Key}/file-url"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/services/file.loadPayslipFromEorEmployment",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/services/file/load-payslip-from-eor-employment",
+    "pathname": "/api-reference/api/services/file/load-payslip-from-eor-employment",
+    "title": "Load Payslip From Eor Employment",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Services",
+        "pathname": "/api-reference/api/services"
+      },
+      {
+        "title": "File",
+        "pathname": "/api-reference/api/services/file"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/services/file.loadPayslipFromEorEmployment",
+    "method": "GET",
+    "endpoint_path": "//contracts/eor/:contractID/payslips/:s3Key/fileUrl",
+    "endpoint_path_alternates": [
+      "//contracts/eor/{contractID}/payslips/{s3Key}/fileUrl"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/services/file.loadPayInFromEorEmployment",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/services/file/load-pay-in-from-eor-employment",
+    "pathname": "/api-reference/api/services/file/load-pay-in-from-eor-employment",
+    "title": "Load Pay In From Eor Employment",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Services",
+        "pathname": "/api-reference/api/services"
+      },
+      {
+        "title": "File",
+        "pathname": "/api-reference/api/services/file"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/services/file.loadPayInFromEorEmployment",
+    "method": "GET",
+    "endpoint_path": "//companies/:companyId/contracts/eor/pay-in/:s3Key/file-url",
+    "endpoint_path_alternates": [
+      "//companies/{companyId}/contracts/eor/pay-in/{s3Key}/file-url"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/accounting/accounting_api.changeAccountingIntegrationSetting",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/accounting/accounting-api/change-accounting-integration-setting",
+    "pathname": "/api-reference/api/thera/accounting/accounting-api/change-accounting-integration-setting",
+    "title": "Change Accounting Integration Setting",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Accounting",
+        "pathname": "/api-reference/api/thera/accounting"
+      },
+      {
+        "title": "Accounting API",
+        "pathname": "/api-reference/api/thera/accounting/accounting-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/accounting/accounting_api.changeAccountingIntegrationSetting",
+    "method": "PUT",
+    "endpoint_path": "/companies/:companyId/accounting/settings",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/accounting/settings"
+    ],
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/accounting/accounting_api.getAccountingIntegrationsInfo",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/accounting/accounting-api/get-accounting-integrations-info",
+    "pathname": "/api-reference/api/thera/accounting/accounting-api/get-accounting-integrations-info",
+    "title": "Get Company Accounting Integrations Info",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Accounting",
+        "pathname": "/api-reference/api/thera/accounting"
+      },
+      {
+        "title": "Accounting API",
+        "pathname": "/api-reference/api/thera/accounting/accounting-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/accounting/accounting_api.getAccountingIntegrationsInfo",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/accounting/info",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/accounting/info"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/accounting/accounting_api.getCompanyAccountingMappingDetails",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/accounting/accounting-api/get-company-accounting-mapping-details",
+    "pathname": "/api-reference/api/thera/accounting/accounting-api/get-company-accounting-mapping-details",
+    "title": "Get Company Accounting Mapping Details",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Accounting",
+        "pathname": "/api-reference/api/thera/accounting"
+      },
+      {
+        "title": "Accounting API",
+        "pathname": "/api-reference/api/thera/accounting/accounting-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/accounting/accounting_api.getCompanyAccountingMappingDetails",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/accounting/account-mapping",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/accounting/account-mapping"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/accounting/accounting_api.completeAccountingIntegrationAuth",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/accounting/accounting-api/complete-accounting-integration-auth",
+    "pathname": "/api-reference/api/thera/accounting/accounting-api/complete-accounting-integration-auth",
+    "title": "Complete Accounting Integration Auth",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Accounting",
+        "pathname": "/api-reference/api/thera/accounting"
+      },
+      {
+        "title": "Accounting API",
+        "pathname": "/api-reference/api/thera/accounting/accounting-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/accounting/accounting_api.completeAccountingIntegrationAuth",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/accounting/authorize",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/accounting/authorize"
+    ],
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getPlaidBankDetails",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/get-plaid-bank-details",
+    "pathname": "/api-reference/api/thera/bank/bank-api/get-plaid-bank-details",
+    "title": "Get Plaid Bank Account Details",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getPlaidBankDetails",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/bank/account",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/bank/account"
+    ],
+    "response_type": "json",
+    "description": "Get Plaid Bank Account Details (employer/admin's bank account status). Contains Status, etc",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.generatePlaidUpdateFlowLinkToken",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/generate-plaid-update-flow-link-token",
+    "pathname": "/api-reference/api/thera/bank/bank-api/generate-plaid-update-flow-link-token",
+    "title": "Generate Plaid Update Flow Link Token",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.generatePlaidUpdateFlowLinkToken",
+    "method": "POST",
+    "endpoint_path": "/bank/account/update",
+    "endpoint_path_alternates": [
+      "/bank/account/update"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.generateBankSignup",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/generate-bank-signup",
+    "pathname": "/api-reference/api/thera/bank/bank-api/generate-bank-signup",
+    "title": "Generate Bank Signup Token",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.generateBankSignup",
+    "method": "POST",
+    "endpoint_path": "/bank/account/signup/link",
+    "endpoint_path_alternates": [
+      "/bank/account/signup/link"
+    ],
+    "response_type": "json",
+    "description": "Get Plaid's link-token",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.completeBankSignup",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/complete-bank-signup",
+    "pathname": "/api-reference/api/thera/bank/bank-api/complete-bank-signup",
+    "title": "Complete Bank Signup",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.completeBankSignup",
+    "method": "POST",
+    "endpoint_path": "/bank/account/signup/complete",
+    "endpoint_path_alternates": [
+      "/bank/account/signup/complete"
+    ],
+    "description": "Calling this API to signify that company's bank account has been provided to Plaid",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.reattachStripeMandate",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/reattach-stripe-mandate",
+    "pathname": "/api-reference/api/thera/bank/bank-api/reattach-stripe-mandate",
+    "title": "Re-attach Stripe Mandate",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.reattachStripeMandate",
+    "method": "POST",
+    "endpoint_path": "/bank/stripe/attach",
+    "endpoint_path_alternates": [
+      "/bank/stripe/attach"
+    ],
+    "description": "Calling this API to re-attach Stripe Mandate",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getPaymentMethods",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/get-payment-methods",
+    "pathname": "/api-reference/api/thera/bank/bank-api/get-payment-methods",
+    "title": "Get Payment Methods",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getPaymentMethods",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/payment-methods",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/payment-methods"
+    ],
+    "response_type": "json",
+    "description": "Gets a company's payment methods",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.deletePaymentMethod",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/delete-payment-method",
+    "pathname": "/api-reference/api/thera/bank/bank-api/delete-payment-method",
+    "title": "Delete Payment Method",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.deletePaymentMethod",
+    "method": "DELETE",
+    "endpoint_path": "/companies/:companyId/payment-methods/:paymentMethodId",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/payment-methods/{paymentMethodId}"
+    ],
+    "description": "Delete a company's payment method",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.chooseW2PaymentMethod",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/choose-w-2-payment-method",
+    "pathname": "/api-reference/api/thera/bank/bank-api/choose-w-2-payment-method",
+    "title": "Choose W2 Payment Method",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.chooseW2PaymentMethod",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/payment-methods/:paymentMethodId/select-for-w2",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/payment-methods/{paymentMethodId}/select-for-w2"
+    ],
+    "description": "Select the payment method that should be used for this company's W2 payroll",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.verifyBankSignup",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/verify-bank-signup",
+    "pathname": "/api-reference/api/thera/bank/bank-api/verify-bank-signup",
+    "title": "Verify Bank Signup",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.verifyBankSignup",
+    "method": "POST",
+    "endpoint_path": "/bank/account/signup/verify",
+    "endpoint_path_alternates": [
+      "/bank/account/signup/verify"
+    ],
+    "response_type": "json",
+    "description": "Used for Manual Verification. Calling this API to check in Plaid if the account has been verified",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.setAutoPay",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/set-auto-pay",
+    "pathname": "/api-reference/api/thera/bank/bank-api/set-auto-pay",
+    "title": "Set Autopay",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.setAutoPay",
+    "method": "POST",
+    "endpoint_path": "/company/:companyId/teams/:teamId/autopay",
+    "endpoint_path_alternates": [
+      "/company/{companyId}/teams/{teamId}/autopay"
+    ],
+    "description": "Adjust autopay settings for a given team",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWithdrawalMethodCurrencies",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/get-withdrawal-method-currencies",
+    "pathname": "/api-reference/api/thera/bank/bank-api/get-withdrawal-method-currencies",
+    "title": "Get Withdrawal Method Currencies",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWithdrawalMethodCurrencies",
+    "method": "GET",
+    "endpoint_path": "/worker/supported-withdrawal-method-currencies",
+    "endpoint_path_alternates": [
+      "/worker/supported-withdrawal-method-currencies"
+    ],
+    "response_type": "json",
+    "description": "Get the Supported Currencies for Each Withdrawal Method",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getBankTransferCurrenciesByCountry",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/get-bank-transfer-currencies-by-country",
+    "pathname": "/api-reference/api/thera/bank/bank-api/get-bank-transfer-currencies-by-country",
+    "title": "Get Bank Transfer Currencies By Country",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getBankTransferCurrenciesByCountry",
+    "method": "GET",
+    "endpoint_path": "/worker/supported-bank-transfer-currencies",
+    "endpoint_path_alternates": [
+      "/worker/supported-bank-transfer-currencies"
+    ],
+    "response_type": "json",
+    "description": "Get the Supported Currencies for Bank Transfer Withdrawals by Country",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWithdrawalLimitsByMethod",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/get-withdrawal-limits-by-method",
+    "pathname": "/api-reference/api/thera/bank/bank-api/get-withdrawal-limits-by-method",
+    "title": "Get Worker Withdrawal Limits By Method",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWithdrawalLimitsByMethod",
+    "method": "GET",
+    "endpoint_path": "/workers/:userId/withdrawal-methods/:paymentMethodId/withdrawal-limits",
+    "endpoint_path_alternates": [
+      "/workers/{userId}/withdrawal-methods/{paymentMethodId}/withdrawal-limits"
+    ],
+    "response_type": "json",
+    "description": "Get the minimum and maximum amount that can be withdrawn for a given currency to avoid incurring silly fees or not meeting\nprovider limits.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByCurrency",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/get-withdrawal-minimum-by-currency",
+    "pathname": "/api-reference/api/thera/bank/bank-api/get-withdrawal-minimum-by-currency",
+    "title": "Get Worker Withdrawal Minimum By Currency (DEPRECATED SOON)",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByCurrency",
+    "method": "GET",
+    "endpoint_path": "/worker/withdrawal-minimum-by-currency",
+    "endpoint_path_alternates": [
+      "/worker/withdrawal-minimum-by-currency"
+    ],
+    "response_type": "json",
+    "description": "Get the minimum amount that must be withdrawn for a given currency to avoid incurring silly fees.\nWill be deprecated shortly in favor of getWithdrawalMinimumByMethod.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByMethod",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/get-withdrawal-minimum-by-method",
+    "pathname": "/api-reference/api/thera/bank/bank-api/get-withdrawal-minimum-by-method",
+    "title": "Get Worker Withdrawal Minimum By Method",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWithdrawalMinimumByMethod",
+    "method": "GET",
+    "endpoint_path": "/workers/:userId/withdrawal-methods/:paymentMethodId/withdrawal-minimum",
+    "endpoint_path_alternates": [
+      "/workers/{userId}/withdrawal-methods/{paymentMethodId}/withdrawal-minimum"
+    ],
+    "response_type": "json",
+    "description": "Get the minimum amount that must be withdrawn for a given currency to avoid incurring silly fees or not meeting\nprovider minimums.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getSupportedWithdrawalMethods",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/get-supported-withdrawal-methods",
+    "pathname": "/api-reference/api/thera/bank/bank-api/get-supported-withdrawal-methods",
+    "title": "Get Supported Withdrawal Methods",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getSupportedWithdrawalMethods",
+    "method": "POST",
+    "endpoint_path": "/worker/supported-withdrawal-methods",
+    "endpoint_path_alternates": [
+      "/worker/supported-withdrawal-methods"
+    ],
+    "response_type": "json",
+    "description": "This endpoint should be used to dynamically create a form that allows a worker to enter their withdrawal method information. The user should initially be prompted to provide their currency. FE should then pass this with user's address that we've already saved in their employeeInformation for recipientAddress, and the user's first name and last name for accountHolderName. A response will be returned a list of types that the user should select from, then provide the corresponding details for in the form. This is the same response returned by [this endpoint] (https://docs.wise.com/api-docs/api-reference/recipient#account-requirements) in Wise. These details should continue to be posted to this endpoint whenever a field with refreshRequirementsOnChange = true is changed to get the most up to date requirements, just like the Wise endpoint.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.saveWithdrawalMethod",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/save-withdrawal-method",
+    "pathname": "/api-reference/api/thera/bank/bank-api/save-withdrawal-method",
+    "title": "Save Withdrawal Methods",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.saveWithdrawalMethod",
+    "method": "POST",
+    "endpoint_path": "/worker/:userId/withdrawal-method",
+    "endpoint_path_alternates": [
+      "/worker/{userId}/withdrawal-method"
+    ],
+    "response_type": "json",
+    "description": "After gathering all the dynamic fields required for the Get Supported Withdrawal Methods, they should be submitted here in order to save the payment method.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.deleteWithdrawalMethod",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/delete-withdrawal-method",
+    "pathname": "/api-reference/api/thera/bank/bank-api/delete-withdrawal-method",
+    "title": "Delete Withdrawal Methods",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.deleteWithdrawalMethod",
+    "method": "DELETE",
+    "endpoint_path": "/worker/:userId/withdrawal-method/:withdrawalMethodId",
+    "endpoint_path_alternates": [
+      "/worker/{userId}/withdrawal-method/{withdrawalMethodId}"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.editWithdrawalMethod",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/edit-withdrawal-method",
+    "pathname": "/api-reference/api/thera/bank/bank-api/edit-withdrawal-method",
+    "title": "Edit Withdrawal Methods",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.editWithdrawalMethod",
+    "method": "PATCH",
+    "endpoint_path": "/worker/:userId/withdrawal-method/:withdrawalMethodId",
+    "endpoint_path_alternates": [
+      "/worker/{userId}/withdrawal-method/{withdrawalMethodId}"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWorkerWithdrawalPreview",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/get-worker-withdrawal-preview",
+    "pathname": "/api-reference/api/thera/bank/bank-api/get-worker-withdrawal-preview",
+    "title": "Get Worker Withdrawal Preview",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWorkerWithdrawalPreview",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/workers/:userId/payout-preview",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/workers/{userId}/payout-preview"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.initiateWorkerWithdrawal",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/initiate-worker-withdrawal",
+    "pathname": "/api-reference/api/thera/bank/bank-api/initiate-worker-withdrawal",
+    "title": "Initiate Worker Withdrawal",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.initiateWorkerWithdrawal",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/workers/:userId/payout",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/workers/{userId}/payout"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWorkerBalance",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/get-worker-balance",
+    "pathname": "/api-reference/api/thera/bank/bank-api/get-worker-balance",
+    "title": "Get Worker Balance",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWorkerBalance",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/workers/:userId/balances",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/workers/{userId}/balances"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWorkerTransactions",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/get-worker-transactions",
+    "pathname": "/api-reference/api/thera/bank/bank-api/get-worker-transactions",
+    "title": "Get Worker Transactions",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWorkerTransactions",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/workers/:userId/transactions",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/workers/{userId}/transactions"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getWorkerWithdrawalDeliveryEstimate",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/get-worker-transactions",
+    "pathname": "/api-reference/api/thera/bank/bank-api/get-worker-withdrawal-delivery-estimate",
+    "title": "Get Worker Transactions",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getWorkerWithdrawalDeliveryEstimate",
+    "method": "GET",
+    "endpoint_path": "/workers/withdrawals/delivery-estimate/:withdrawalId",
+    "endpoint_path_alternates": [
+      "/workers/withdrawals/delivery-estimate/{withdrawalId}"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getPayInHistory",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/get-pay-in-history",
+    "pathname": "/api-reference/api/thera/bank/bank-api/get-pay-in-history",
+    "title": "Get Pay in History",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getPayInHistory",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/pay-ins",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/pay-ins"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getPayInDetails",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/get-pay-in-details",
+    "pathname": "/api-reference/api/thera/bank/bank-api/get-pay-in-details",
+    "title": "Get Pay In Details",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getPayInDetails",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/pay-ins/:payInId",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/pay-ins/{payInId}"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.deleteOffPlatformPayment",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/delete-off-platform-payment",
+    "pathname": "/api-reference/api/thera/bank/bank-api/delete-off-platform-payment",
+    "title": "Delete Off Platform Payment",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.deleteOffPlatformPayment",
+    "method": "DELETE",
+    "endpoint_path": "/companies/:companyId/pay-ins/off-platform/:payInId",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/pay-ins/off-platform/{payInId}"
+    ],
+    "response_type": "json",
+    "description": "Deletes an off platform pay in. Intended to be used when client made a mistake and didn't mean to initiate\nthis particular off platform payment. Only pending off platform payments can be deleted, and requires the\nsame permissions as paying all of the invoices.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.getCurrencyConversion",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/get-currency-conversion",
+    "pathname": "/api-reference/api/thera/bank/bank-api/get-currency-conversion",
+    "title": "Get Currency Conversion",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.getCurrencyConversion",
+    "method": "GET",
+    "endpoint_path": "/currency/convert",
+    "endpoint_path_alternates": [
+      "/currency/convert"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.setAutoWithdrawals",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/set-auto-withdrawals",
+    "pathname": "/api-reference/api/thera/bank/bank-api/set-auto-withdrawals",
+    "title": "Set Auto-Withdrawals for Worker",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.setAutoWithdrawals",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/workers/:userId/auto-withdrawals",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/workers/{userId}/auto-withdrawals"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.createCheckPaymentMethodFromPlaid",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/create-check-payment-method-from-plaid",
+    "pathname": "/api-reference/api/thera/bank/bank-api/create-check-payment-method-from-plaid",
+    "title": "Create Check Payment Method from Plaid",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.createCheckPaymentMethodFromPlaid",
+    "method": "POST",
+    "endpoint_path": "/bank/check/payment-method",
+    "endpoint_path_alternates": [
+      "/bank/check/payment-method"
+    ],
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/bank/bank_api.createStripePaymentMethodFromPlaid",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/bank/bank-api/create-stripe-payment-method-from-plaid",
+    "pathname": "/api-reference/api/thera/bank/bank-api/create-stripe-payment-method-from-plaid",
+    "title": "Create Stripe Payment Method from Plaid",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Bank",
+        "pathname": "/api-reference/api/thera/bank"
+      },
+      {
+        "title": "Bank API",
+        "pathname": "/api-reference/api/thera/bank/bank-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/bank/bank_api.createStripePaymentMethodFromPlaid",
+    "method": "POST",
+    "endpoint_path": "/bank/stripe/payment-method",
+    "endpoint_path_alternates": [
+      "/bank/stripe/payment-method"
+    ],
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getMoniteToken",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/get-monite-token",
+    "pathname": "/api-reference/api/thera/company/company-api/get-monite-token",
+    "title": "Get Monite Token",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.getMoniteToken",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/monite/token",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/monite/token"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.inviteContractor",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/invite-contractor",
+    "pathname": "/api-reference/api/thera/company/company-api/invite-contractor",
+    "title": "Create Contract",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.inviteContractor",
+    "method": "POST",
+    "endpoint_path": "/companies/employees",
+    "endpoint_path_alternates": [
+      "/companies/employees"
+    ],
+    "response_type": "json",
+    "description": "Invite Contractor or Create Contract",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.inviteManager",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/invite-manager",
+    "pathname": "/api-reference/api/thera/company/company-api/invite-manager",
+    "title": "Invite Manager",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.inviteManager",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/managers",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/managers"
+    ],
+    "response_type": "json",
+    "description": "Invite manager to the platform",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.editManagerRoles",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/edit-manager-roles",
+    "pathname": "/api-reference/api/thera/company/company-api/edit-manager-roles",
+    "title": "Edit Manager Roles",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.editManagerRoles",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/managers/:userId",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/managers/{userId}"
+    ],
+    "response_type": "json",
+    "description": "Edit the teams / roles that the manager belongs to. If no team role is provided, their role is removed for that team.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.editOrgRoles",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/edit-org-roles",
+    "pathname": "/api-reference/api/thera/company/company-api/edit-org-roles",
+    "title": "Edit Org Roles (Org Admins or Org Manager)",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.editOrgRoles",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/admins",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/admins"
+    ],
+    "response_type": "json",
+    "description": "Edit org admins with ultimate admin permissions across the platform or Org Managers. These users must already be managers of the org.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.removeManager",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/remove-manager",
+    "pathname": "/api-reference/api/thera/company/company-api/remove-manager",
+    "title": "Remove Manager",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.removeManager",
+    "method": "DELETE",
+    "endpoint_path": "/companies/:companyId/managers/:userId",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/managers/{userId}"
+    ],
+    "response_type": "json",
+    "description": "< Removes a manager from the org entirely, revoking all team and org level roles.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.changeContractTeam",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/change-contract-team",
+    "pathname": "/api-reference/api/thera/company/company-api/change-contract-team",
+    "title": "Change Contract Team",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.changeContractTeam",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/contracts/:contractId/team",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/contracts/{contractId}/team"
+    ],
+    "response_type": "json",
+    "description": "< Add org admins, with ultimate admin permissions across the platform. These users must already be managers of the org.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getTeams",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/get-teams",
+    "pathname": "/api-reference/api/thera/company/company-api/get-teams",
+    "title": "Get Teams For Company",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.getTeams",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/teams",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/teams"
+    ],
+    "response_type": "json",
+    "description": "Get all of the teams and their contracts for a company",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getManagers",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/get-managers",
+    "pathname": "/api-reference/api/thera/company/company-api/get-managers",
+    "title": "Get Managers",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.getManagers",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/managers",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/managers"
+    ],
+    "response_type": "json",
+    "description": "Get all of the managers for a company",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.createTeam",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/create-team",
+    "pathname": "/api-reference/api/thera/company/company-api/create-team",
+    "title": "Create Team",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.createTeam",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/teams",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/teams"
+    ],
+    "response_type": "json",
+    "description": "Create a team within a company. At least one Team Admin must be added.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.deleteTeam",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/delete-team",
+    "pathname": "/api-reference/api/thera/company/company-api/delete-team",
+    "title": "Delete Team",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.deleteTeam",
+    "method": "DELETE",
+    "endpoint_path": "/companies/:companyId/teams/:teamId",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/teams/{teamId}"
+    ],
+    "response_type": "json",
+    "description": "Delete a team. All contracts must be removed from this team first",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.editTeam",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/edit-team",
+    "pathname": "/api-reference/api/thera/company/company-api/edit-team",
+    "title": "Edit Team",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.editTeam",
+    "method": "PATCH",
+    "endpoint_path": "/companies/:companyId/teams/:teamId",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/teams/{teamId}"
+    ],
+    "response_type": "json",
+    "description": "Change details related to a team. For now, you can just edit its name.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getAllCompanyAffiliations",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/get-all-company-affiliations",
+    "pathname": "/api-reference/api/thera/company/company-api/get-all-company-affiliations",
+    "title": "Get All Company Affiliations",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.getAllCompanyAffiliations",
+    "method": "GET",
+    "endpoint_path": "/users/:userId/affiliations",
+    "endpoint_path_alternates": [
+      "/users/{userId}/affiliations"
+    ],
+    "response_type": "json",
+    "description": "Gets all team and org permissions across all orgs for a given user, along with the contracts on which they're the worker.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.checkCanCreateAccount",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/check-can-create-account",
+    "pathname": "/api-reference/api/thera/company/company-api/check-can-create-account",
+    "title": "Check Can Create Account",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.checkCanCreateAccount",
+    "method": "GET",
+    "endpoint_path": "/check-can-create-account",
+    "endpoint_path_alternates": [
+      "/check-can-create-account"
+    ],
+    "response_type": "json",
+    "description": "Check that a new user is authorized to create a new account. This is determined by an allow list that is stored in our db.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.addEorEmployee",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/add-eor-employee",
+    "pathname": "/api-reference/api/thera/company/company-api/add-eor-employee",
+    "title": "Add EOR Employee",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.addEorEmployee",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/eor",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/eor"
+    ],
+    "response_type": "json",
+    "description": "For now, just messages Slack with employee information. The rest is handled manually (nothing is persisted).",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getContractorCsv",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/get-contractor-csv",
+    "pathname": "/api-reference/api/thera/company/company-api/get-contractor-csv",
+    "title": "Get Contractor CSV",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.getContractorCsv",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/contractors/csv",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/contractors/csv"
+    ],
+    "response_type": "json",
+    "description": "Get CSV with Details About Each Worker and Their Contracts",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_api.getContractsCSV",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-api/get-contracts-csv",
+    "pathname": "/api-reference/api/thera/company/company-api/get-contracts-csv",
+    "title": "Get Contracts CSV",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company/company-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_api.getContractsCSV",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/contracts/csv",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/contracts/csv"
+    ],
+    "response_type": "json",
+    "description": "Get CSV with Details About Contracts Within a Date Range",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_w2payroll_api.onboardW2Payroll",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-w-2-payroll-api/onboard-w-2-payroll",
+    "pathname": "/api-reference/api/thera/company/company-w-2-payroll-api/onboard-w-2-payroll",
+    "title": "Onboard W2 Payroll",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "W2 Payroll",
+        "pathname": "/api-reference/api/thera/company/company-w-2-payroll-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_w2payroll_api.onboardW2Payroll",
+    "method": "POST",
+    "endpoint_path": "/company/w2Payroll",
+    "endpoint_path_alternates": [
+      "/company/w2Payroll"
+    ],
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_w2payroll_api.toggleW2PayrollOnboardingFlowComplete",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-w-2-payroll-api/toggle-w-2-payroll-onboarding-flow-complete",
+    "pathname": "/api-reference/api/thera/company/company-w-2-payroll-api/toggle-w-2-payroll-onboarding-flow-complete",
+    "title": "Toggle W2 Payroll Onboarding Flow Complete",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "W2 Payroll",
+        "pathname": "/api-reference/api/thera/company/company-w-2-payroll-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_w2payroll_api.toggleW2PayrollOnboardingFlowComplete",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/w2/toggle-onboarding-flow-complete",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/w2/toggle-onboarding-flow-complete"
+    ],
+    "description": "Sets the field company.w2payroll.onboardingFlowComplete. Should be called when Thera's multi step onboarding\nflow is completed.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/company/company_w2payroll_api.setupPayroll",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/company/company-w-2-payroll-api/setup-payroll",
+    "pathname": "/api-reference/api/thera/company/company-w-2-payroll-api/setup-payroll",
+    "title": "Setup W2 Payroll",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Company",
+        "pathname": "/api-reference/api/thera/company"
+      },
+      {
+        "title": "W2 Payroll",
+        "pathname": "/api-reference/api/thera/company/company-w-2-payroll-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/company/company_w2payroll_api.setupPayroll",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/w2/payroll/setup",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/w2/payroll/setup"
+    ],
+    "description": "Call this API only after W2 company has finished onboarding, but hasn't finished setting up payroll yet.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/contractor/contractor_api.getUsContractorsTaxInfo",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/contractor/contractor-api/get-us-contractors-tax-info",
+    "pathname": "/api-reference/api/thera/contractor/contractor-api/get-us-contractors-tax-info",
+    "title": "Get US Contractors Tax Info API",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Contractor",
+        "pathname": "/api-reference/api/thera/contractor"
+      },
+      {
+        "title": "Contractor API",
+        "pathname": "/api-reference/api/thera/contractor/contractor-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/contractor/contractor_api.getUsContractorsTaxInfo",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/us-contractors/tax-info",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/us-contractors/tax-info"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/contractor/contractor_api.updateUsContractorTaxInfo",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/contractor/contractor-api/update-us-contractor-tax-info",
+    "pathname": "/api-reference/api/thera/contractor/contractor-api/update-us-contractor-tax-info",
+    "title": "Update US Contractors Tax Info",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Contractor",
+        "pathname": "/api-reference/api/thera/contractor"
+      },
+      {
+        "title": "Contractor API",
+        "pathname": "/api-reference/api/thera/contractor/contractor-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/contractor/contractor_api.updateUsContractorTaxInfo",
+    "method": "PUT",
+    "endpoint_path": "/companies/:companyId/us-contractors/:userId/tax-info",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/us-contractors/{userId}/tax-info"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/contractor/contractor_api.onboardContractorsCsv",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/contractor/contractor-api/onboard-contractors-csv",
+    "pathname": "/api-reference/api/thera/contractor/contractor-api/onboard-contractors-csv",
+    "title": "Onboard Contractors Via CSV",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Contractor",
+        "pathname": "/api-reference/api/thera/contractor"
+      },
+      {
+        "title": "Contractor API",
+        "pathname": "/api-reference/api/thera/contractor/contractor-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/contractor/contractor_api.onboardContractorsCsv",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyID/contractors/csv",
+    "endpoint_path_alternates": [
+      "/companies/{companyID}/contractors/csv"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.uploadCsvInvoice",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/disbursement/disbursement-api/upload-csv-invoice",
+    "pathname": "/api-reference/api/thera/disbursement/disbursement-api/upload-csv-invoice",
+    "title": "Upload CSV Invoice",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Disbursement",
+        "pathname": "/api-reference/api/thera/disbursement"
+      },
+      {
+        "title": "Disbursement API",
+        "pathname": "/api-reference/api/thera/disbursement/disbursement-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/disbursement/disbursement_api.uploadCsvInvoice",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyID/invoices/csv",
+    "endpoint_path_alternates": [
+      "/companies/{companyID}/invoices/csv"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.createDisbursement",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/disbursement/disbursement-api/create-disbursement",
+    "pathname": "/api-reference/api/thera/disbursement/disbursement-api/create-disbursement",
+    "title": "Create Disbursement",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Disbursement",
+        "pathname": "/api-reference/api/thera/disbursement"
+      },
+      {
+        "title": "Disbursement API",
+        "pathname": "/api-reference/api/thera/disbursement/disbursement-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/disbursement/disbursement_api.createDisbursement",
+    "method": "POST",
+    "endpoint_path": "/disbursement",
+    "endpoint_path_alternates": [
+      "/disbursement"
+    ],
+    "response_type": "json",
+    "description": "For the response type, please check Swagger. Info for the Invoice Work Unit type: 1. workUnitTotal is used to replace hours. 2. Check the WageType of Invoice in the Contract API to know if it's hourly, daily or weekly invoice.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.approveInvoice",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/disbursement/disbursement-api/approve-invoice",
+    "pathname": "/api-reference/api/thera/disbursement/disbursement-api/approve-invoice",
+    "title": "Approve Invoice",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Disbursement",
+        "pathname": "/api-reference/api/thera/disbursement"
+      },
+      {
+        "title": "Disbursement API",
+        "pathname": "/api-reference/api/thera/disbursement/disbursement-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/disbursement/disbursement_api.approveInvoice",
+    "method": "POST",
+    "endpoint_path": "/disbursement/invoices/:invoiceId/approve",
+    "endpoint_path_alternates": [
+      "/disbursement/invoices/{invoiceId}/approve"
+    ],
+    "description": "Approve Invoice",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.createInvoiceDeduction",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/disbursement/disbursement-api/create-invoice-deduction",
+    "pathname": "/api-reference/api/thera/disbursement/disbursement-api/create-invoice-deduction",
+    "title": "Create Invoice Deduction",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Disbursement",
+        "pathname": "/api-reference/api/thera/disbursement"
+      },
+      {
+        "title": "Disbursement API",
+        "pathname": "/api-reference/api/thera/disbursement/disbursement-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/disbursement/disbursement_api.createInvoiceDeduction",
+    "method": "POST",
+    "endpoint_path": "/disbursement/invoices/:invoiceId/deduction",
+    "endpoint_path_alternates": [
+      "/disbursement/invoices/{invoiceId}/deduction"
+    ],
+    "response_type": "json",
+    "description": "Add a deduction to an invoice.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.deleteInvoiceDeduction",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/disbursement/disbursement-api/delete-invoice-deduction",
+    "pathname": "/api-reference/api/thera/disbursement/disbursement-api/delete-invoice-deduction",
+    "title": "Delete Invoice Deduction",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Disbursement",
+        "pathname": "/api-reference/api/thera/disbursement"
+      },
+      {
+        "title": "Disbursement API",
+        "pathname": "/api-reference/api/thera/disbursement/disbursement-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/disbursement/disbursement_api.deleteInvoiceDeduction",
+    "method": "DELETE",
+    "endpoint_path": "/disbursement/invoices/:invoiceId/deduction/:deductionId",
+    "endpoint_path_alternates": [
+      "/disbursement/invoices/{invoiceId}/deduction/{deductionId}"
+    ],
+    "response_type": "json",
+    "description": "Delete a deduction to an invoice.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_api.getInvoicesCsv",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/disbursement/disbursement-api/get-invoices-csv",
+    "pathname": "/api-reference/api/thera/disbursement/disbursement-api/get-invoices-csv",
+    "title": "Get Invoices CSV",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Disbursement",
+        "pathname": "/api-reference/api/thera/disbursement"
+      },
+      {
+        "title": "Disbursement API",
+        "pathname": "/api-reference/api/thera/disbursement/disbursement-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/disbursement/disbursement_api.getInvoicesCsv",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyID/invoices/csv",
+    "endpoint_path_alternates": [
+      "/companies/{companyID}/invoices/csv"
+    ],
+    "response_type": "json",
+    "description": "Retrieve invoices as CSV within a specified date range",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/disbursement/disbursement_webhook_api.invoiceWebhook",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/disbursement/disbursement-webhook-api/invoice-webhook",
+    "pathname": "/api-reference/api/thera/disbursement/disbursement-webhook-api/invoice-webhook",
+    "title": "Invoice Webhook",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Disbursement",
+        "pathname": "/api-reference/api/thera/disbursement"
+      },
+      {
+        "title": "Disbursement Webhook API",
+        "pathname": "/api-reference/api/thera/disbursement/disbursement-webhook-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/disbursement/disbursement_webhook_api.invoiceWebhook",
+    "method": "POST",
+    "endpoint_path": "/webhook/disbursement/invoice",
+    "endpoint_path_alternates": [
+      "/webhook/disbursement/invoice"
+    ],
+    "response_type": "json",
+    "description": "Calling this API will trigger automatic creation of invoices that need to be created",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/document/document_api.getW9Document",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/document/document-api/get-w-9-document",
+    "pathname": "/api-reference/api/thera/document/document-api/get-w-9-document",
+    "title": "Get US IRS W9 Document API",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Document",
+        "pathname": "/api-reference/api/thera/document"
+      },
+      {
+        "title": "Document API",
+        "pathname": "/api-reference/api/thera/document/document-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/document/document_api.getW9Document",
+    "method": "GET",
+    "endpoint_path": "/w9-document",
+    "endpoint_path_alternates": [
+      "/w9-document"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/document/document_api.getUsIrs1099NecDocument",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/document/document-api/get-us-irs-1099-nec-document",
+    "pathname": "/api-reference/api/thera/document/document-api/get-us-irs-1099-nec-document",
+    "title": "Get US IRS 1099-NEC Document Metadata",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Document",
+        "pathname": "/api-reference/api/thera/document"
+      },
+      {
+        "title": "Document API",
+        "pathname": "/api-reference/api/thera/document/document-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/document/document_api.getUsIrs1099NecDocument",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/1099-nec-document",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/1099-nec-document"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/document/document_api.bulkFileUsIrs1099NecDocument",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/document/document-api/bulk-file-us-irs-1099-nec-document",
+    "pathname": "/api-reference/api/thera/document/document-api/bulk-file-us-irs-1099-nec-document",
+    "title": "Bulk File US IRS 1099-NEC Documents",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Document",
+        "pathname": "/api-reference/api/thera/document"
+      },
+      {
+        "title": "Document API",
+        "pathname": "/api-reference/api/thera/document/document-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/document/document_api.bulkFileUsIrs1099NecDocument",
+    "method": "POST",
+    "endpoint_path": "/1099-nec-document/file",
+    "endpoint_path_alternates": [
+      "/1099-nec-document/file"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/email/email_api.sendLoginEmail",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/email/email-api/send-login-email",
+    "pathname": "/api-reference/api/thera/email/email-api/send-login-email",
+    "title": "Send Login Email",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Email",
+        "pathname": "/api-reference/api/thera/email"
+      },
+      {
+        "title": "Email API",
+        "pathname": "/api-reference/api/thera/email/email-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/email/email_api.sendLoginEmail",
+    "method": "POST",
+    "endpoint_path": "/email/login",
+    "endpoint_path_alternates": [
+      "/email/login"
+    ],
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/email/email_api.updateUserEmail",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/email/email-api/update-user-email",
+    "pathname": "/api-reference/api/thera/email/email-api/update-user-email",
+    "title": "Change User's Email",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Email",
+        "pathname": "/api-reference/api/thera/email"
+      },
+      {
+        "title": "Email API",
+        "pathname": "/api-reference/api/thera/email/email-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/email/email_api.updateUserEmail",
+    "method": "PUT",
+    "endpoint_path": "/user/:userId/update-email",
+    "endpoint_path_alternates": [
+      "/user/{userId}/update-email"
+    ],
+    "description": "Change User's Email by userId",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/employment/employment_api.deleteInvoiceItemRecurrence",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/employment/employment-api/delete-invoice-item-recurrence",
+    "pathname": "/api-reference/api/thera/employment/employment-api/delete-invoice-item-recurrence",
+    "title": "Delete Contract's Invoice Item Recurrence",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Employment",
+        "pathname": "/api-reference/api/thera/employment"
+      },
+      {
+        "title": "Contracts API",
+        "pathname": "/api-reference/api/thera/employment/employment-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/employment/employment_api.deleteInvoiceItemRecurrence",
+    "method": "DELETE",
+    "endpoint_path": "/contracts/:contractId/pay-cycle/recurrences/:recurrenceId",
+    "endpoint_path_alternates": [
+      "/contracts/{contractId}/pay-cycle/recurrences/{recurrenceId}"
+    ],
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/employment/employment_api.estimateContract",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/employment/employment-api/estimate-contract",
+    "pathname": "/api-reference/api/thera/employment/employment-api/estimate-contract",
+    "title": "Estimate Contract",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Employment",
+        "pathname": "/api-reference/api/thera/employment"
+      },
+      {
+        "title": "Contracts API",
+        "pathname": "/api-reference/api/thera/employment/employment-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/employment/employment_api.estimateContract",
+    "method": "POST",
+    "endpoint_path": "/contracts/estimate",
+    "endpoint_path_alternates": [
+      "/contracts/estimate"
+    ],
+    "response_type": "json",
+    "description": "Get estimate for this contract (cycle date, list of cycles, etc) based on provided paycycle",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/employment/employment_api.deleteContract",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/employment/employment-api/delete-contract",
+    "pathname": "/api-reference/api/thera/employment/employment-api/delete-contract",
+    "title": "Hard Delete Contract",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Employment",
+        "pathname": "/api-reference/api/thera/employment"
+      },
+      {
+        "title": "Contracts API",
+        "pathname": "/api-reference/api/thera/employment/employment-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/employment/employment_api.deleteContract",
+    "method": "DELETE",
+    "endpoint_path": "/contracts/:contractId",
+    "endpoint_path_alternates": [
+      "/contracts/{contractId}"
+    ],
+    "description": "Hard delete contract",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/employment/employment_api.cancelContractTermination",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/employment/employment-api/cancel-contract-termination",
+    "pathname": "/api-reference/api/thera/employment/employment-api/cancel-contract-termination",
+    "title": "Cancel Contract Termination",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Employment",
+        "pathname": "/api-reference/api/thera/employment"
+      },
+      {
+        "title": "Contracts API",
+        "pathname": "/api-reference/api/thera/employment/employment-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/employment/employment_api.cancelContractTermination",
+    "method": "POST",
+    "endpoint_path": "/contracts/:contractId/termination-cancellation",
+    "endpoint_path_alternates": [
+      "/contracts/{contractId}/termination-cancellation"
+    ],
+    "description": "Cancel contract termination",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/employment/employment_api.getPayCycle",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/employment/employment-api/get-pay-cycle",
+    "pathname": "/api-reference/api/thera/employment/employment-api/get-pay-cycle",
+    "title": "Get Pay Cycle",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Employment",
+        "pathname": "/api-reference/api/thera/employment"
+      },
+      {
+        "title": "Contracts API",
+        "pathname": "/api-reference/api/thera/employment/employment-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/employment/employment_api.getPayCycle",
+    "method": "GET",
+    "endpoint_path": "/contracts/:contractId/payCycle/:baseDate",
+    "endpoint_path_alternates": [
+      "/contracts/{contractId}/payCycle/{baseDate}"
+    ],
+    "response_type": "json",
+    "description": "Get Cycle for this contract given a date",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/misc/misc.regularCron",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/misc/misc/regular-cron",
+    "pathname": "/api-reference/api/thera/misc/misc/regular-cron",
+    "title": "Daily Cron",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Misc",
+        "pathname": "/api-reference/api/thera/misc"
+      },
+      {
+        "title": "Miscellaneous API",
+        "pathname": "/api-reference/api/thera/misc/misc"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/misc/misc.regularCron",
+    "method": "POST",
+    "endpoint_path": "/webhook/regular-cron",
+    "endpoint_path_alternates": [
+      "/webhook/regular-cron"
+    ],
+    "response_type": "json",
+    "description": "Calling this API will trigger automatic payouts for all workers that have auto-withdrawals turned on. This cron may be re-used for other daily tasks in the future",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/misc/misc.autoPayCron",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/misc/misc/auto-pay-cron",
+    "pathname": "/api-reference/api/thera/misc/misc/auto-pay-cron",
+    "title": "Auto Pay Cron",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Misc",
+        "pathname": "/api-reference/api/thera/misc"
+      },
+      {
+        "title": "Miscellaneous API",
+        "pathname": "/api-reference/api/thera/misc/misc"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/misc/misc.autoPayCron",
+    "method": "POST",
+    "endpoint_path": "/webhook/autopay-invoices-cron",
+    "endpoint_path_alternates": [
+      "/webhook/autopay-invoices-cron"
+    ],
+    "description": "Calling this API will trigger automatic auto payment of invoices for all companies that have auto-pay turned on.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/misc/misc.autoPayEmailNotificationCron",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/misc/misc/auto-pay-email-notification-cron",
+    "pathname": "/api-reference/api/thera/misc/misc/auto-pay-email-notification-cron",
+    "title": "Email Notification Cron",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Misc",
+        "pathname": "/api-reference/api/thera/misc"
+      },
+      {
+        "title": "Miscellaneous API",
+        "pathname": "/api-reference/api/thera/misc/misc"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/misc/misc.autoPayEmailNotificationCron",
+    "method": "POST",
+    "endpoint_path": "/webhook/autopay-email-cron",
+    "endpoint_path_alternates": [
+      "/webhook/autopay-email-cron"
+    ],
+    "description": "Calling this API will trigger automatic email notifications for all companies that have auto-pay turned on.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/misc/misc.contractRenewalCron",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/misc/misc/contract-renewal-cron",
+    "pathname": "/api-reference/api/thera/misc/misc/contract-renewal-cron",
+    "title": "Contract Renewal Cron",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Misc",
+        "pathname": "/api-reference/api/thera/misc"
+      },
+      {
+        "title": "Miscellaneous API",
+        "pathname": "/api-reference/api/thera/misc/misc"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/misc/misc.contractRenewalCron",
+    "method": "POST",
+    "endpoint_path": "/webhook/contract-renewal-cron",
+    "endpoint_path_alternates": [
+      "/webhook/contract-renewal-cron"
+    ],
+    "response_type": "json",
+    "description": "Calling this API will trigger a check for contracts that need renewal and notify the Slack TODO channel.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/payroll/offcycle_api.getCurrentOffCycleChecks",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/payroll/offcycle-api/get-current-off-cycle-checks",
+    "pathname": "/api-reference/api/thera/payroll/offcycle-api/get-current-off-cycle-checks",
+    "title": "Get Current Offcycle Checks",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Payroll",
+        "pathname": "/api-reference/api/thera/payroll"
+      },
+      {
+        "title": "Offcycle API",
+        "pathname": "/api-reference/api/thera/payroll/offcycle-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/payroll/offcycle_api.getCurrentOffCycleChecks",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/w2-payroll/off-cycle-checks",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/w2-payroll/off-cycle-checks"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/payroll/oncycle_api.approveOncycleChecks",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/payroll/oncycle-api/approve-oncycle-checks",
+    "pathname": "/api-reference/api/thera/payroll/oncycle-api/approve-oncycle-checks",
+    "title": "Approve Oncycle Checks",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Payroll",
+        "pathname": "/api-reference/api/thera/payroll"
+      },
+      {
+        "title": "Oncycle API",
+        "pathname": "/api-reference/api/thera/payroll/oncycle-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/payroll/oncycle_api.approveOncycleChecks",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyID/w2-payroll/on-cycle-checks/approve",
+    "endpoint_path_alternates": [
+      "/companies/{companyID}/w2-payroll/on-cycle-checks/approve"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/payroll/oncycle_api.getOnCycleChecks",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/payroll/oncycle-api/get-on-cycle-checks",
+    "pathname": "/api-reference/api/thera/payroll/oncycle-api/get-on-cycle-checks",
+    "title": "Get Oncycle Checks",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Payroll",
+        "pathname": "/api-reference/api/thera/payroll"
+      },
+      {
+        "title": "Oncycle API",
+        "pathname": "/api-reference/api/thera/payroll/oncycle-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/payroll/oncycle_api.getOnCycleChecks",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyID/w2-payroll/on-cycle-checks",
+    "endpoint_path_alternates": [
+      "/companies/{companyID}/w2-payroll/on-cycle-checks"
+    ],
+    "response_type": "json",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/payroll/oncycle_api.cancelCurrentAutopilotPayroll",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/payroll/oncycle-api/cancel-current-autopilot-payroll",
+    "pathname": "/api-reference/api/thera/payroll/oncycle-api/cancel-current-autopilot-payroll",
+    "title": "Cancel Current Autopilot Payroll",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Payroll",
+        "pathname": "/api-reference/api/thera/payroll"
+      },
+      {
+        "title": "Oncycle API",
+        "pathname": "/api-reference/api/thera/payroll/oncycle-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/payroll/oncycle_api.cancelCurrentAutopilotPayroll",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyID/w2-payroll/on-cycle-checks/cancel",
+    "endpoint_path_alternates": [
+      "/companies/{companyID}/w2-payroll/on-cycle-checks/cancel"
+    ],
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.associateTimeOffPolicyToContractor",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/timeoff/timeoff-api/associate-time-off-policy-to-contractor",
+    "pathname": "/api-reference/api/thera/timeoff/timeoff-api/associate-time-off-policy-to-contractor",
+    "title": "Associate Time Off Policy To Contractors",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Timeoff",
+        "pathname": "/api-reference/api/thera/timeoff"
+      },
+      {
+        "title": "Time Off Management",
+        "pathname": "/api-reference/api/thera/timeoff/timeoff-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.associateTimeOffPolicyToContractor",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/timeoff-policy/:policyId/pto/associate-contractors",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/timeoff-policy/{policyId}/pto/associate-contractors"
+    ],
+    "description": "Submit a list of complete contractors to be associated to the policy. Contractors not in the request are then automatically removed from the policy.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.requestPtoForContractor",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/timeoff/timeoff-api/request-pto-for-contractor",
+    "pathname": "/api-reference/api/thera/timeoff/timeoff-api/request-pto-for-contractor",
+    "title": "Request PTO For Contractor",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Timeoff",
+        "pathname": "/api-reference/api/thera/timeoff"
+      },
+      {
+        "title": "Time Off Management",
+        "pathname": "/api-reference/api/thera/timeoff/timeoff-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.requestPtoForContractor",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/timeoff-policy/:policyId/pto/request",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/timeoff-policy/{policyId}/pto/request"
+    ],
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.addTimeOffPolicy",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/timeoff/timeoff-api/add-time-off-policy",
+    "pathname": "/api-reference/api/thera/timeoff/timeoff-api/add-time-off-policy",
+    "title": "Add Timeoff Policy",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Timeoff",
+        "pathname": "/api-reference/api/thera/timeoff"
+      },
+      {
+        "title": "Time Off Management",
+        "pathname": "/api-reference/api/thera/timeoff/timeoff-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.addTimeOffPolicy",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/timeoff-policy",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/timeoff-policy"
+    ],
+    "response_type": "json",
+    "description": "Adds a timeoff policy to company",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.getTimeOffPolicy",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/timeoff/timeoff-api/get-time-off-policy",
+    "pathname": "/api-reference/api/thera/timeoff/timeoff-api/get-time-off-policy",
+    "title": "Get Timeoff Policy",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Timeoff",
+        "pathname": "/api-reference/api/thera/timeoff"
+      },
+      {
+        "title": "Time Off Management",
+        "pathname": "/api-reference/api/thera/timeoff/timeoff-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.getTimeOffPolicy",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/timeoff-policy/:policyId",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/timeoff-policy/{policyId}"
+    ],
+    "response_type": "json",
+    "description": "Gets a timeoff policy from company",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.updateTimeOffPolicy",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/timeoff/timeoff-api/update-time-off-policy",
+    "pathname": "/api-reference/api/thera/timeoff/timeoff-api/update-time-off-policy",
+    "title": "Update Timeoff Policy",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Timeoff",
+        "pathname": "/api-reference/api/thera/timeoff"
+      },
+      {
+        "title": "Time Off Management",
+        "pathname": "/api-reference/api/thera/timeoff/timeoff-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.updateTimeOffPolicy",
+    "method": "PUT",
+    "endpoint_path": "/companies/:companyId/timeoff-policy/:policyId",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/timeoff-policy/{policyId}"
+    ],
+    "response_type": "json",
+    "description": "Modifys a timeoff policy to company",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.deleteTimeOffPolicy",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/timeoff/timeoff-api/delete-time-off-policy",
+    "pathname": "/api-reference/api/thera/timeoff/timeoff-api/delete-time-off-policy",
+    "title": "Deletes a Timeoff Policy",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Timeoff",
+        "pathname": "/api-reference/api/thera/timeoff"
+      },
+      {
+        "title": "Time Off Management",
+        "pathname": "/api-reference/api/thera/timeoff/timeoff-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.deleteTimeOffPolicy",
+    "method": "DELETE",
+    "endpoint_path": "/companies/:companyId/timeoff-policy/:policyId",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/timeoff-policy/{policyId}"
+    ],
+    "response_type": "json",
+    "description": "Deletes a timeoff policy from company",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.getContractorsTimeOffHistoryByCompany",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/timeoff/timeoff-api/get-contractors-time-off-history-by-company",
+    "pathname": "/api-reference/api/thera/timeoff/timeoff-api/get-contractors-time-off-history-by-company",
+    "title": "Get All Contractors' Time Off by Company",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Timeoff",
+        "pathname": "/api-reference/api/thera/timeoff"
+      },
+      {
+        "title": "Time Off Management",
+        "pathname": "/api-reference/api/thera/timeoff/timeoff-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.getContractorsTimeOffHistoryByCompany",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/time-off-history",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/time-off-history"
+    ],
+    "response_type": "json",
+    "description": "Get All Contractors' Time Offs by Company",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.getTimeOffHistoryByContractor",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/timeoff/timeoff-api/get-time-off-history-by-contractor",
+    "pathname": "/api-reference/api/thera/timeoff/timeoff-api/get-time-off-history-by-contractor",
+    "title": "Get Time Off History By Contractor",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Timeoff",
+        "pathname": "/api-reference/api/thera/timeoff"
+      },
+      {
+        "title": "Time Off Management",
+        "pathname": "/api-reference/api/thera/timeoff/timeoff-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.getTimeOffHistoryByContractor",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/users/:userId/time-off-history",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/users/{userId}/time-off-history"
+    ],
+    "response_type": "json",
+    "description": "Get Time Off History By Contractor",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByPolicy",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/timeoff/timeoff-api/get-contractors-policies-details-by-policy",
+    "pathname": "/api-reference/api/thera/timeoff/timeoff-api/get-contractors-policies-details-by-policy",
+    "title": "Get Contractor Policies' Details By Policy",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Timeoff",
+        "pathname": "/api-reference/api/thera/timeoff"
+      },
+      {
+        "title": "Time Off Management",
+        "pathname": "/api-reference/api/thera/timeoff/timeoff-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByPolicy",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/timeoff-policies/:policyId/contractors-details",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/timeoff-policies/{policyId}/contractors-details"
+    ],
+    "response_type": "json",
+    "description": "Get Contractor Policies' Details By Policy",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByContractor",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/timeoff/timeoff-api/get-contractors-policies-details-by-contractor",
+    "pathname": "/api-reference/api/thera/timeoff/timeoff-api/get-contractors-policies-details-by-contractor",
+    "title": "Get Contractor's Policies Details",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Timeoff",
+        "pathname": "/api-reference/api/thera/timeoff"
+      },
+      {
+        "title": "Time Off Management",
+        "pathname": "/api-reference/api/thera/timeoff/timeoff-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.getContractorsPoliciesDetailsByContractor",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/contractors/:userId/timeoff-policies",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/contractors/{userId}/timeoff-policies"
+    ],
+    "response_type": "json",
+    "description": "Get Contractor's Policies Details",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.modifyTimeOffStatus",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/timeoff/timeoff-api/modify-time-off-status",
+    "pathname": "/api-reference/api/thera/timeoff/timeoff-api/modify-time-off-status",
+    "title": "Modify Time Off Status",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Timeoff",
+        "pathname": "/api-reference/api/thera/timeoff"
+      },
+      {
+        "title": "Time Off Management",
+        "pathname": "/api-reference/api/thera/timeoff/timeoff-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.modifyTimeOffStatus",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/timeoff-policy/:policyId/time-off/:timeOffId/status-update",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/timeoff-policy/{policyId}/time-off/{timeOffId}/status-update"
+    ],
+    "response_type": "json",
+    "description": "Modify Time Off Status",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.bulkModifyTimeOffStatuses",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/timeoff/timeoff-api/bulk-modify-time-off-statuses",
+    "pathname": "/api-reference/api/thera/timeoff/timeoff-api/bulk-modify-time-off-statuses",
+    "title": "Bulk Modify Time Off Statuses",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Timeoff",
+        "pathname": "/api-reference/api/thera/timeoff"
+      },
+      {
+        "title": "Time Off Management",
+        "pathname": "/api-reference/api/thera/timeoff/timeoff-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.bulkModifyTimeOffStatuses",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/time-off/bulk-status-update/:status",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/time-off/bulk-status-update/{status}"
+    ],
+    "description": "Bulk Modify Time Off Statuses",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/timeoff/timeoff_api.updatePTOForContractor",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/timeoff/timeoff-api/update-pto-for-contractor",
+    "pathname": "/api-reference/api/thera/timeoff/timeoff-api/update-pto-for-contractor",
+    "title": "Update PTO For Contractor",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Timeoff",
+        "pathname": "/api-reference/api/thera/timeoff"
+      },
+      {
+        "title": "Time Off Management",
+        "pathname": "/api-reference/api/thera/timeoff/timeoff-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/timeoff/timeoff_api.updatePTOForContractor",
+    "method": "PUT",
+    "endpoint_path": "/companies/:companyId/users/:userId/time-off/:timeOffId",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/users/{userId}/time-off/{timeOffId}"
+    ],
+    "response_type": "json",
+    "description": "Update PTO For Contractor",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.addCompanyBankingDetails",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/tp/tp-api/add-company-banking-details",
+    "pathname": "/api-reference/api/thera/tp/tp-api/add-company-banking-details",
+    "title": "Add Company Banking Details",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Tp",
+        "pathname": "/api-reference/api/thera/tp"
+      },
+      {
+        "title": "Treasury Prime",
+        "pathname": "/api-reference/api/thera/tp/tp-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/tp/tp_api.addCompanyBankingDetails",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/banking-details",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/banking-details"
+    ],
+    "response_type": "json",
+    "description": "Final step of company onboarding, if the company is using Thera banking.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.getNaicsCodes",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/tp/tp-api/get-naics-codes",
+    "pathname": "/api-reference/api/thera/tp/tp-api/get-naics-codes",
+    "title": "Get NAICS Codes",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Tp",
+        "pathname": "/api-reference/api/thera/tp"
+      },
+      {
+        "title": "Treasury Prime",
+        "pathname": "/api-reference/api/thera/tp/tp-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/tp/tp_api.getNaicsCodes",
+    "method": "GET",
+    "endpoint_path": "/naics-codes",
+    "endpoint_path_alternates": [
+      "/naics-codes"
+    ],
+    "response_type": "json",
+    "description": "Get NAICS codes to be usd in the addCompanyBankingDetails endpoint.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.processTreasuryPrimePayment",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/tp/tp-api/process-treasury-prime-payment",
+    "pathname": "/api-reference/api/thera/tp/tp-api/process-treasury-prime-payment",
+    "title": "Process payments to fbo accounts",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Tp",
+        "pathname": "/api-reference/api/thera/tp"
+      },
+      {
+        "title": "Treasury Prime",
+        "pathname": "/api-reference/api/thera/tp/tp-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/tp/tp_api.processTreasuryPrimePayment",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/process-funds",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/process-funds"
+    ],
+    "response_type": "json",
+    "description": "Process funds from company account to fbo account",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.createCounterPartyForBanking",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/tp/tp-api/create-counter-party-for-banking",
+    "pathname": "/api-reference/api/thera/tp/tp-api/create-counter-party-for-banking",
+    "title": "Create TP counter party required for processing payments",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Tp",
+        "pathname": "/api-reference/api/thera/tp"
+      },
+      {
+        "title": "Treasury Prime",
+        "pathname": "/api-reference/api/thera/tp/tp-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/tp/tp_api.createCounterPartyForBanking",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/create-counterparty",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/create-counterparty"
+    ],
+    "response_type": "json",
+    "description": "Create TP counter party required for processing payments, each payment method needs to have a counterparty before initiating payments",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.getTpAccountsForCompany",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/tp/tp-api/get-tp-accounts-for-company",
+    "pathname": "/api-reference/api/thera/tp/tp-api/get-tp-accounts-for-company",
+    "title": "Get All Accounts for a Given Company",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Tp",
+        "pathname": "/api-reference/api/thera/tp"
+      },
+      {
+        "title": "Treasury Prime",
+        "pathname": "/api-reference/api/thera/tp/tp-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/tp/tp_api.getTpAccountsForCompany",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/fetch-accounts",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/fetch-accounts"
+    ],
+    "response_type": "json",
+    "description": "Get all tp accounts to display the account info by fe",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.getTpAccount",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/tp/tp-api/get-tp-account",
+    "pathname": "/api-reference/api/thera/tp/tp-api/get-tp-account",
+    "title": "Get a TP Account",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Tp",
+        "pathname": "/api-reference/api/thera/tp"
+      },
+      {
+        "title": "Treasury Prime",
+        "pathname": "/api-reference/api/thera/tp/tp-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/tp/tp_api.getTpAccount",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/fetch-accounts/:accountId",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/fetch-accounts/{accountId}"
+    ],
+    "response_type": "json",
+    "description": "Get a tp accounts to display the detailed account info",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.transferFundsToOmnibusAccount",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/tp/tp-api/transfer-funds-to-omnibus-account",
+    "pathname": "/api-reference/api/thera/tp/tp-api/transfer-funds-to-omnibus-account",
+    "title": "transfer funds from FBO to omnibus account",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Tp",
+        "pathname": "/api-reference/api/thera/tp"
+      },
+      {
+        "title": "Treasury Prime",
+        "pathname": "/api-reference/api/thera/tp/tp-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/tp/tp_api.transferFundsToOmnibusAccount",
+    "method": "POST",
+    "endpoint_path": "/companies/:companyId/transfer-fbo-omnibus",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/transfer-fbo-omnibus"
+    ],
+    "response_type": "json",
+    "description": "Transfer funds from FBO to omnibus account",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.transactionHistory",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/tp/tp-api/transaction-history",
+    "pathname": "/api-reference/api/thera/tp/tp-api/transaction-history",
+    "title": "Get all account Transactions",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Tp",
+        "pathname": "/api-reference/api/thera/tp"
+      },
+      {
+        "title": "Treasury Prime",
+        "pathname": "/api-reference/api/thera/tp/tp-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/tp/tp_api.transactionHistory",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/fetch-transactions/:accountId",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/fetch-transactions/{accountId}"
+    ],
+    "response_type": "json",
+    "description": "Get all account Transactions",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.deatiledTpTransaction",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/tp/tp-api/deatiled-tp-transaction",
+    "pathname": "/api-reference/api/thera/tp/tp-api/deatiled-tp-transaction",
+    "title": "Get a detailed account transaction",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Tp",
+        "pathname": "/api-reference/api/thera/tp"
+      },
+      {
+        "title": "Treasury Prime",
+        "pathname": "/api-reference/api/thera/tp/tp-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/tp/tp_api.deatiledTpTransaction",
+    "method": "GET",
+    "endpoint_path": "/companies/:companyId/tp-transaction/:transactionId",
+    "endpoint_path_alternates": [
+      "/companies/{companyId}/tp-transaction/{transactionId}"
+    ],
+    "response_type": "json",
+    "description": "Get a detailed account transaction",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/tp/tp_api.externalTransferFund",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/tp/tp-api/external-transfer-fund",
+    "pathname": "/api-reference/api/thera/tp/tp-api/external-transfer-fund",
+    "title": "Use for sending funds to wise/dlocal from omnibus Account",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "Tp",
+        "pathname": "/api-reference/api/thera/tp"
+      },
+      {
+        "title": "Treasury Prime",
+        "pathname": "/api-reference/api/thera/tp/tp-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/tp/tp_api.externalTransferFund",
+    "method": "POST",
+    "endpoint_path": "/webhook/tp/external-transfer-funds",
+    "endpoint_path_alternates": [
+      "/webhook/tp/external-transfer-funds"
+    ],
+    "response_type": "json",
+    "description": "Use for sending funds to wise/dlocal from omnibus Account",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/user/user_api.setUserComplianceSetting",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/user/user-api/set-user-compliance-setting",
+    "pathname": "/api-reference/api/thera/user/user-api/set-user-compliance-setting",
+    "title": "Set User Compliance Setting",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "User",
+        "pathname": "/api-reference/api/thera/user"
+      },
+      {
+        "title": "User API",
+        "pathname": "/api-reference/api/thera/user/user-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/user/user_api.setUserComplianceSetting",
+    "method": "POST",
+    "endpoint_path": "/company/:companyId/user/:userId",
+    "endpoint_path_alternates": [
+      "/company/{companyId}/user/{userId}"
+    ],
+    "description": "Set User Compliance Setting (KYC and Compliance docs)",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/user/user_api.getComplianceUserSetting",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/user/user-api/get-compliance-user-setting",
+    "pathname": "/api-reference/api/thera/user/user-api/get-compliance-user-setting",
+    "title": "Get User Compliance Setting",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "User",
+        "pathname": "/api-reference/api/thera/user"
+      },
+      {
+        "title": "User API",
+        "pathname": "/api-reference/api/thera/user/user-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/user/user_api.getComplianceUserSetting",
+    "method": "GET",
+    "endpoint_path": "/company/:companyId/user",
+    "endpoint_path_alternates": [
+      "/company/{companyId}/user"
+    ],
+    "response_type": "json",
+    "description": "Get Compliance User Setting (KYC and Compliance docs). How it works: 1. If ANY of the created contract has KYC or Compliance setting enabled, then the respective setting for that user will be considered as enabled. 2. If ALL of the contracts has KYC or Compliant Setting disabled, then the respective setting for that user is disabled In the future, this API will accept team ID.",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  },
+  {
+    "objectID": "test:test.com:6e51c44e-1dc0-48b8-a9de-be9b07d5c312:endpoint_api/thera/user/user_api.getUser",
+    "org_id": "test",
+    "domain": "test.com",
+    "canonicalPathname": "/api-reference/api/thera/user/user-api/get-user",
+    "pathname": "/api-reference/api/thera/user/user-api/get-user",
+    "title": "Get User",
+    "breadcrumb": [
+      {
+        "title": "API Reference",
+        "pathname": "/api-reference"
+      },
+      {
+        "title": "API",
+        "pathname": "/api-reference/api"
+      },
+      {
+        "title": "Thera",
+        "pathname": "/api-reference/api/thera"
+      },
+      {
+        "title": "User",
+        "pathname": "/api-reference/api/thera/user"
+      },
+      {
+        "title": "User API",
+        "pathname": "/api-reference/api/thera/user/user-api"
+      }
+    ],
+    "visible_by": [
+      "role/everyone"
+    ],
+    "authed": false,
+    "page_position": 0,
+    "api_type": "http",
+    "api_definition_id": "6e51c44e-1dc0-48b8-a9de-be9b07d5c312",
+    "api_endpoint_id": "endpoint_api/thera/user/user_api.getUser",
+    "method": "GET",
+    "endpoint_path": "/user",
+    "endpoint_path_alternates": [
+      "/user"
+    ],
+    "response_type": "json",
+    "description": "Get User API",
+    "environments": [],
+    "keywords": [
+      "endpoint",
+      "api",
+      "http",
+      "rest",
+      "openapi",
+      "json"
+    ],
+    "type": "api-reference"
+  }
+]

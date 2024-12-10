@@ -1,10 +1,10 @@
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { CopyToClipboardButton } from "@fern-ui/components";
+import { FernSyntaxHighlighter } from "@fern-ui/fern-docs-syntax-highlighter";
 import * as Accordion from "@radix-ui/react-accordion";
 import cn from "clsx";
 import { ArrowDown, ArrowUp, NavArrowDown } from "iconoir-react";
 import { FC } from "react";
-import { FernSyntaxHighlighter } from "../../syntax-highlighting/FernSyntaxHighlighter";
 import { WebSocketMessage } from "./WebSocketMessages";
 
 export interface WebSocketMessageAccordionItemProps {

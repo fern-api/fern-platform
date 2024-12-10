@@ -4,8 +4,8 @@ import {
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../utils/extendType";
+import { xFernGroupsKey } from "./fernExtension.consts";
 
-const xFernGroupsKey = "x-fern-groups";
 export declare namespace XFernGroupsConverterNode {
     export interface Group {
         description?: string;
@@ -13,7 +13,7 @@ export declare namespace XFernGroupsConverterNode {
     }
 
     export interface Input {
-        [xFernGroupsKey]: Record<string, Group>[];
+        [xFernGroupsKey]?: Record<string, Group>[];
     }
 }
 

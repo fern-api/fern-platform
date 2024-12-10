@@ -32,12 +32,12 @@
   "dependencies": {
     "@fern-ui/loadable": "workspace:*",
     "@tanstack/react-query": "^4.36.1",
-    "react": "^18.2.0"
+    "react": "^18"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@types/node": "^18.7.18",
-    "@types/react": "^18.0.20",
+    "@types/react": "^18",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",

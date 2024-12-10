@@ -1,50 +1,25 @@
-import cn from "clsx";
-import React, { ReactElement } from "react";
+import { SemanticColor } from "@fern-ui/components";
+import { Badge as BadgeComponent, SemanticBadge } from "@fern-ui/components/badges";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
 
-export declare namespace Badge {
-    export type Props = React.PropsWithChildren<{
-        intent?: "none" | "primary" | "success" | "warning" | "danger"; // from FernButton
-        className?: string;
+export const Badge = forwardRef<
+    HTMLSpanElement & HTMLButtonElement,
+    ComponentPropsWithoutRef<typeof BadgeComponent> & {
+        /**
+         * If undefined, the badge will default to the color specified in the `color` prop.
+         */
+        intent?: SemanticColor;
         minimal?: boolean;
         outlined?: boolean;
-    }>;
-}
+    }
+>(({ intent, minimal = false, outlined = false, ...props }, ref) => {
+    const variant = outlined && minimal ? "outlined-subtle" : outlined ? "outlined" : minimal ? "subtle" : "solid";
 
-export function Badge({
-    className,
-    intent = "none",
-    minimal = false,
-    outlined = false,
-    children,
-}: Badge.Props): ReactElement {
-    return (
-        <span
-            className={cn(
-                "rounded-full text-xs px-1.5 py-0.5",
-                {
-                    "ring-1 ring-inset": outlined,
-                    "text-white dark:text-black": !minimal && intent !== "primary",
-                    "dark:ring-white/30 ring-black/30": outlined,
-                    "bg-intent-default": intent === "none",
-                    "bg-accent text-accent-contrast": intent === "primary" && !minimal,
-                    "bg-intent-success": intent === "success" && !minimal,
-                    "bg-intent-warning": intent === "warning" && !minimal,
-                    "bg-intent-danger": intent === "danger" && !minimal,
-                    "bg-tag-default t-default": intent === "none" && minimal,
-                    "ring-border-default": intent === "none" && minimal && outlined,
-                    "bg-tag-primary t-accent": intent === "primary" && minimal,
-                    "ring-border-primary": intent === "primary" && minimal && outlined,
-                    "bg-tag-success t-success": intent === "success" && minimal,
-                    "ring-border-success": intent === "success" && minimal && outlined,
-                    "bg-tag-warning t-warning": intent === "warning" && minimal,
-                    "ring-border-warning": intent === "warning" && minimal && outlined,
-                    "bg-tag-danger t-danger": intent === "danger" && minimal,
-                    "ring-border-danger": intent === "danger" && minimal && outlined,
-                },
-                className,
-            )}
-        >
-            {children}
-        </span>
-    );
-}
+    if (intent == null) {
+        return <BadgeComponent ref={ref} variant={variant} {...props} />;
+    }
+
+    return <SemanticBadge ref={ref} intent={intent} variant={variant} {...props} />;
+});
+
+Badge.displayName = "Badge";

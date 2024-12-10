@@ -7,6 +7,7 @@ export declare namespace useIsHovering {
         onMouseOver: () => void;
         onMouseLeave: () => void;
         onMouseMove: () => void;
+        onMouseEnter: () => void;
     }
 }
 
@@ -37,5 +38,6 @@ export function useIsHovering(): useIsHovering.Return {
         onMouseOver: useCallback(() => dispatch("mouseover"), []),
         onMouseLeave: useCallback(() => dispatch("mouseleave"), []),
         onMouseMove: useCallback(() => dispatch("mousemove"), []),
+        onMouseEnter: useCallback(() => dispatch("mouseenter"), []),
     };
 }

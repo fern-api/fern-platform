@@ -1,4 +1,4 @@
-import { markdownToString } from "../markdown-to-string.js";
+import { markdownToString } from "../markdown-to-string";
 
 describe("markdownToString", () => {
     it("should strip markdown formatting", () => {

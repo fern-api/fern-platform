@@ -3,14 +3,6 @@ import { getBreadcrumbList } from "../getBreadcrumbList";
 
 describe("getBreadcrumbList", () => {
     it("should override the title used in the breadcrumb's last item", () => {
-        const markdown = `
----
-title: Overriden Title
----
-
-## This is a markdown file
-`;
-
         const node: FernNavigation.PageNode = {
             id: FernNavigation.NodeId("id"),
             type: "page",
@@ -44,16 +36,7 @@ title: Overriden Title
                 orphaned: undefined,
             },
         ];
-        expect(
-            getBreadcrumbList(
-                "buildwithfern.com",
-                {
-                    [node.pageId]: { markdown, editThisPageUrl: undefined },
-                },
-                parents,
-                node,
-            ),
-        ).toEqual({
+        expect(getBreadcrumbList("buildwithfern.com", parents, node, "Overriden Title")).toEqual({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [

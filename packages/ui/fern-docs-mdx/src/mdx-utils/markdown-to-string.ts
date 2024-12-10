@@ -1,5 +1,5 @@
-import { toString as mdastToString } from "mdast-util-to-string";
-import { toTree } from "../parse.js";
+import { mdastToString } from "../mdast-utils/mdast-to-string";
+import { toTree } from "../parse";
 
 /**
  * Strips the markdown of all formatting and returns a plain string.
@@ -15,6 +15,7 @@ export function markdownToString(markdown: string | undefined, format?: "md" | "
         return mdastToString(tree.mdast, {
             includeImageAlt: false,
             includeHtml: false,
+            preserveNewlines: true,
         }).trim();
     } catch (e) {
         // eslint-disable-next-line no-console

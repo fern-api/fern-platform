@@ -7,6 +7,7 @@ import {
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { resolveWebhookReference } from "../../utils/3.1/resolveWebhookReference";
+import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter.node";
 import { PathItemObjectConverterNode } from "./PathItemObjectConverter.node";
 
 export class WebhooksObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
@@ -15,7 +16,10 @@ export class WebhooksObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 > {
     webhooks: Record<string, PathItemObjectConverterNode> | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.Document["webhooks"]>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.Document["webhooks"]>,
+        protected readonly basePath: XFernBasePathConverterNode | undefined,
+    ) {
         super(args);
         this.safeParse();
     }
@@ -38,6 +42,7 @@ export class WebhooksObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                                 pathId: operation,
                             },
                             undefined,
+                            this.basePath,
                             true,
                         ),
                     ];

@@ -1,14 +1,14 @@
 import GithubSlugger from "github-slugger";
 import type { Root } from "mdast";
-import { toString } from "mdast-util-to-string";
 import { visit } from "unist-util-visit";
-import { extractAnchorFromHeadingText } from "./handlers/custom-headings.js";
-import { getPosition } from "./position.js";
+import { extractAnchorFromHeadingText } from "./handlers/custom-headings";
+import { mdastToString } from "./mdast-utils/mdast-to-string";
+import { getPosition } from "./position";
 
 export interface HeadingMetadata {
     depth: 1 | 2 | 3 | 4 | 5 | 6;
     title: string;
-    anchor: string;
+    id: string;
 
     /**
      * Position of the heading in the raw markdown
@@ -43,19 +43,22 @@ export function collectRootHeadings(tree: Root, lines: readonly string[]): Headi
 
         // `toString` will strip away all markdown formatting for the title
         // TODO: we should preserve some formatting within the heading, i.e. `<code>` and `<u>`, etc.
-        const title = toString(heading);
+        const rawTitle = mdastToString(heading, { preserveNewlines: false });
 
-        let anchor = extractAnchorFromHeadingText(title).anchor;
+        const extractedTitle = extractAnchorFromHeadingText(rawTitle);
+        const title = extractedTitle.text;
 
-        if (anchor == null) {
-            anchor = slugger.slug(title);
+        let id = extractedTitle.anchor;
+
+        if (id == null) {
+            id = slugger.slug(title);
         } else {
             // add occurrences to ensure uniqueness
-            slugger.occurrences[anchor] = (slugger.occurrences[anchor] ?? 0) + 1;
+            slugger.occurrences[id] = (slugger.occurrences[id] ?? 0) + 1;
         }
 
         const { start, length } = getPosition(lines, heading.position);
-        headings.push({ depth: heading.depth, title, anchor, start, length });
+        headings.push({ depth: heading.depth, title, id, start, length });
     });
 
     return headings;

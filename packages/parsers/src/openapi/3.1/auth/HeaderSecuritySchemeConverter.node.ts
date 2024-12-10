@@ -6,7 +6,7 @@ import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
-import { XFernBearerFormatConverterNode } from "../extensions/auth/XFernBearerFormatConverter.node";
+import { XBearerFormatConverterNode } from "../extensions/auth/XBearerFormatConverter.node";
 import { XFernHeaderAuthConverterNode } from "../extensions/auth/XFernHeaderAuthConverter.node";
 import { XFernHeaderVariableNameConverterNode } from "../extensions/auth/XFernHeaderVariableNameConverter.node";
 import { isApiKeySecurityScheme } from "../guards/isApiKeySecurityScheme";
@@ -23,7 +23,7 @@ export class HeaderSecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterN
 > {
     headerName: string | undefined;
     // x-bearer-format
-    headerBearerFormatNode: XFernBearerFormatConverterNode | undefined;
+    headerBearerFormatNode: XBearerFormatConverterNode | undefined;
     // x-fern-header
     headerAuthNode: XFernHeaderAuthConverterNode | undefined;
     // x-fern-header-variable-name
@@ -54,7 +54,7 @@ export class HeaderSecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterN
             accessPath: this.accessPath,
             pathId: this.pathId,
         });
-        this.headerBearerFormatNode = new XFernBearerFormatConverterNode({
+        this.headerBearerFormatNode = new XBearerFormatConverterNode({
             input: this.input,
             context: this.context,
             accessPath: this.accessPath,

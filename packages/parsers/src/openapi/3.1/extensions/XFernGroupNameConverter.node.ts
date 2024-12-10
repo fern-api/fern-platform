@@ -4,8 +4,7 @@ import {
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../utils/extendType";
-
-const xFernGroupNameKey = "x-fern-sdk-group-name";
+import { xFernGroupNameKey } from "./fernExtension.consts";
 
 export declare namespace XFernGroupNameConverterNode {
     export interface Input {

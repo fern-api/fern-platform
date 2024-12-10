@@ -10,7 +10,9 @@ export function CustomLayout({ children }: CustomLayoutProps): ReactElement {
         <main>
             {children}
 
-            <BuiltWithFern className="w-fit mx-auto my-8" />
+            <div className="w-fit mx-auto my-8">
+                <BuiltWithFern />
+            </div>
         </main>
     );
 }

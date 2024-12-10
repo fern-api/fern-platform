@@ -1,0 +1,6 @@
+packages/**/dist
+packages/**/build
+packages/**/lib
+servers/**
+clis/**
+docker/**

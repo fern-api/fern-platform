@@ -25,6 +25,13 @@ export const NEXT_SEO_ATOM = atom<NextSeoProps>((get) => {
         ...seo,
         themeColor: themeBgColor,
         viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
+        additionalMetaTags: [
+            {
+                name: "generator",
+                content: "buildwithfern.com",
+            },
+            ...(seo.additionalMetaTags ?? []),
+        ],
     };
 });
 NEXT_SEO_ATOM.debugLabel = "NEXT_SEO_ATOM";

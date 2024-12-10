@@ -29,6 +29,7 @@ describe("OperationObjectConverterNode", () => {
                 undefined,
                 "/pets/{petId}",
                 "GET",
+                undefined,
             );
 
             const result = node.convert();
@@ -81,6 +82,7 @@ describe("OperationObjectConverterNode", () => {
                 undefined,
                 undefined,
                 "GET",
+                undefined,
             );
 
             const result = node.convert();
@@ -100,6 +102,7 @@ describe("OperationObjectConverterNode", () => {
                 undefined,
                 "/users/{userId}/posts/{postId}",
                 "GET",
+                undefined,
             );
 
             const result = node.convertPathToPathParts();

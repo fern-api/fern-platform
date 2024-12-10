@@ -10,6 +10,7 @@ import { resolveParameterReference } from "../../utils/3.1/resolveParameterRefer
 import { getEndpointId } from "../../utils/getEndpointId";
 import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
 import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.node";
+import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter.node";
 import { XFernGroupNameConverterNode } from "../extensions/XFernGroupNameConverter.node";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
@@ -39,6 +40,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         protected servers: ServerObjectConverterNode[] | undefined,
         protected path: string | undefined,
         protected method: "GET" | "POST" | "PUT" | "DELETE",
+        protected basePath: XFernBasePathConverterNode | undefined,
         protected isWebhook?: boolean,
     ) {
         super(args);
@@ -178,8 +180,10 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         }
 
         const path = this.path.startsWith("/") ? this.path.slice(1) : this.path;
+        const basePath = this.basePath?.convert();
+        const pathParts = basePath ? [basePath, ...path.split("/")] : path.split("/");
 
-        return path.split("/").map((part) => {
+        return pathParts.map((part) => {
             if (part.startsWith("{") && part.endsWith("}")) {
                 return {
                     type: "pathParameter" as const,

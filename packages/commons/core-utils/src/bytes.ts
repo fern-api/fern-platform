@@ -1,45 +1,37 @@
-function _truncate(getLength: (str: string) => number, string: string, byteLength: number) {
-    if (typeof string !== "string") {
-        throw new Error("Input must be string");
-    }
-
-    let curByteLength = 0;
-    let codePoint;
-    let segment;
-
-    for (let i = 0; i < string.length; i += 1) {
-        codePoint = string.charCodeAt(i);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        segment = string[i]!;
-
-        if (isHighSurrogate(codePoint) && isLowSurrogate(string.charCodeAt(i + 1))) {
-            i += 1;
-            segment += string[i];
-        }
-
-        curByteLength += getLength(segment);
-
-        if (curByteLength === byteLength) {
-            return string.slice(0, i + 1);
-        } else if (curByteLength > byteLength) {
-            return string.slice(0, i - segment.length + 1);
-        }
-    }
-
-    return string;
+export function measureBytes(str: string): number {
+    return new TextEncoder().encode(str).length;
 }
 
-function isHighSurrogate(codePoint: number) {
-    return codePoint >= 0xd800 && codePoint <= 0xdbff;
-}
+/**
+ * Chunks a string into an array of strings, each of the specified byte size.
+ * @param str - The string to chunk.
+ * @param byteSize - The byte size of each chunk. i.e. 10KB = 50 * 1000
+ * @returns An array of strings, each of the specified byte size.
+ */
+export function chunkToBytes(str: string, byteSize: number): string[] {
+    const encoder = new TextEncoder();
 
-function isLowSurrogate(codePoint: number) {
-    return codePoint >= 0xdc00 && codePoint <= 0xdfff;
+    // TODO: what if the string isn't utf8?
+    const utf8Bytes = encoder.encode(str);
+    const numChunks = Math.ceil(utf8Bytes.length / byteSize);
+    const chunks = new Array(numChunks);
+
+    for (let i = 0, o = 0; i < numChunks; ++i, o += byteSize) {
+        chunks[i] = new TextDecoder().decode(utf8Bytes.slice(o, o + byteSize));
+    }
+
+    return chunks;
 }
 
 /**
  * Truncates a string to the specified byte length.
- *
- * @see https://github.com/parshap/truncate-utf8-bytes
+ * @param str - The string to truncate.
+ * @param byteSize - The byte size of the truncated string. i.e. 10KB = 50 * 1000
+ * @returns The truncated string.
  */
-export const truncateToBytes = _truncate.bind(null, Buffer.byteLength.bind(Buffer));
+export function truncateToBytes(str: string, byteSize: number): string {
+    const encoder = new TextEncoder();
+    const utf8Bytes = encoder.encode(str);
+    const truncatedBytes = utf8Bytes.slice(0, byteSize);
+    return new TextDecoder().decode(truncatedBytes);
+}

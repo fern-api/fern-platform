@@ -58,7 +58,9 @@ export const ApiEndpointPage: React.FC<ApiEndpointPage.Props> = ({ content }) =>
             <div className="px-4 md:px-6 lg:px-8 lg:hidden">
                 <BottomNavigationNeighbors />
             </div>
-            <BuiltWithFern className="w-fit mx-auto my-8" />
+            <div className="w-fit mx-auto my-8">
+                <BuiltWithFern />
+            </div>
         </ApiPageContext.Provider>
     );
 };

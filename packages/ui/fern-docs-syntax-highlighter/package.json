@@ -1,0 +1,44 @@
+{
+  "name": "@fern-ui/fern-docs-syntax-highlighter",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/fern-docs-syntax-highlighter"
+  },
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./src/index.scss": "./src/index.scss"
+  },
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
+  "files": [
+    "src"
+  ],
+  "devDependencies": {
+    "@fern-platform/configs": "workspace:*",
+    "@types/hast": "^3.0.4",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "peerDependencies": {
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "dependencies": {
+    "@fern-ui/components": "workspace:*",
+    "@fern-ui/fern-docs-mdx": "workspace:*",
+    "clsx": "^2.1.1",
+    "es-toolkit": "^1.27.0",
+    "hast-util-to-jsx-runtime": "^2.3.0",
+    "hastscript": "^9.0.0",
+    "react-virtuoso": "^4.7.7",
+    "shiki": "^1.24.0"
+  }
+}

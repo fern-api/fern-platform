@@ -1,16 +1,15 @@
 import cn, { clsx } from "clsx";
 import { ComponentProps, createElement, forwardRef, PropsWithChildren, ReactElement, ReactNode, useRef } from "react";
+import { SemanticColor } from "./colors";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
 import { RemoteFontAwesomeIcon } from "./FontAwesomeIcon";
-
-export type Intent = "none" | "primary" | "success" | "warning" | "danger";
 
 export interface FernButtonSharedProps {
     className?: string;
     icon?: string | ReactNode;
     rightIcon?: string | ReactNode;
     variant?: "minimal" | "filled" | "outlined";
-    intent?: Intent;
+    intent?: SemanticColor;
     size?: "small" | "normal" | "large";
     mono?: boolean;
     active?: boolean;

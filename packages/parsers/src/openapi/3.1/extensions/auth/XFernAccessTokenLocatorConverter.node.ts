@@ -4,12 +4,11 @@ import {
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../../utils/extendType";
 import { isValidJsonPath } from "../../../utils/isValidJsonPath";
-
-const headerVariableNameExtensionKey = "x-fern-access-token-locator";
+import { xFernAccessTokenLocatorKey } from "../fernExtension.consts";
 
 export declare namespace XFernAccessTokenLocatorConverterNode {
     export interface Input {
-        [headerVariableNameExtensionKey]?: string;
+        [xFernAccessTokenLocatorKey]?: string;
     }
 }
 
@@ -23,7 +22,7 @@ export class XFernAccessTokenLocatorConverterNode extends BaseOpenApiV3_1Convert
 
     parse(): void {
         this.accessTokenLocator = extendType<XFernAccessTokenLocatorConverterNode.Input>(this.input)[
-            headerVariableNameExtensionKey
+            xFernAccessTokenLocatorKey
         ];
         if (this.accessTokenLocator != null) {
             if (!isValidJsonPath(this.accessTokenLocator)) {
