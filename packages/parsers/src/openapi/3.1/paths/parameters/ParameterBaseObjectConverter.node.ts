@@ -1,12 +1,29 @@
+import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
+import { convertToObjectProperties } from "../../../utils/3.1/convertToObjectProperties";
 import { AvailabilityConverterNode } from "../../extensions/AvailabilityConverter.node";
 import { isReferenceObject } from "../../guards/isReferenceObject";
 import { SchemaConverterNode } from "../../schemas/SchemaConverter.node";
+
+export function convertOperationObjectProperties(
+    properties: Record<string, ParameterBaseObjectConverterNode> | undefined,
+): FernRegistry.api.latest.ObjectProperty[] | undefined {
+    if (properties == null) {
+        return undefined;
+    }
+
+    return convertToObjectProperties(
+        properties,
+        Object.entries(properties ?? {})
+            .map(([key, header]) => (header.required ? key : undefined))
+            .filter(isNonNullish),
+    );
+}
 
 export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.ParameterBaseObject | OpenAPIV3_1.ReferenceObject,

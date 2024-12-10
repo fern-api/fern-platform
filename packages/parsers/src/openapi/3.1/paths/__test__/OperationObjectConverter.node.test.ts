@@ -48,9 +48,15 @@ describe("OperationObjectConverterNode", () => {
                         valueShape: {
                             type: "alias",
                             value: {
-                                type: "primitive",
-                                value: {
-                                    type: "string",
+                                type: "optional",
+                                shape: {
+                                    type: "alias",
+                                    value: {
+                                        type: "primitive",
+                                        value: {
+                                            type: "string",
+                                        },
+                                    },
                                 },
                             },
                         },
