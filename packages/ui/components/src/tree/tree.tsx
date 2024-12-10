@@ -1,5 +1,4 @@
 import { composeEventHandlers } from "@radix-ui/primitive";
-import { Slot } from "@radix-ui/react-slot";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { noop } from "es-toolkit/function";
 import { ChevronRight, Plus } from "lucide-react";
@@ -84,14 +83,15 @@ const TreeItem = forwardRef<
                 {...props}
                 ref={ref}
                 open={open}
-                onToggle={composeEventHandlers(props.onToggle, (e) => setOpen(e.currentTarget.open))}
+                defaultOpen={defaultOpen}
+                onOpenChange={setOpen}
                 data-level={indent}
             >
                 {summary}
                 {other.length > 0 && (
                     <ctx.Provider value={indent + 1}>
-                        <Disclosure.Content className="grid grid-cols-[24px_1fr] xs:grid-cols-[32px_1fr] relative">
-                            {other}
+                        <Disclosure.Content asChild>
+                            <div className="grid grid-cols-[24px_1fr] xs:grid-cols-[32px_1fr] relative">{other}</div>
                         </Disclosure.Content>
                     </ctx.Provider>
                 )}
@@ -124,7 +124,7 @@ const TreeItemContent = ({ children }: PropsWithChildren): ReactNode => {
 
 const TreeItemsContentAdditional = ({
     children,
-    open: openProp,
+    open,
     defaultOpen,
     onOpenChange,
 }: PropsWithChildren<{
@@ -132,46 +132,47 @@ const TreeItemsContentAdditional = ({
     defaultOpen?: boolean;
     onOpenChange?: (open: boolean) => void;
 }>): ReactNode => {
-    const [open = false, setOpen] = useControllableState({
-        prop: openProp,
-        defaultProp: defaultOpen,
-        onChange: onOpenChange,
-    });
-
     const childrenArray = Children.toArray(children);
 
     if (childrenArray.length === 0) {
         return false;
     }
 
-    if (open) {
-        return (
-            <>
-                {childrenArray.map((child, i) => (
-                    <Fragment key={i}>
-                        <TreeBranch onClick={() => setOpen(false)} />
-                        {child}
-                    </Fragment>
-                ))}
-            </>
-        );
-    }
-
     return (
-        <>
-            <TreeBranch />
-            <div className="py-2">
-                <Badge rounded interactive onClick={() => setOpen(true)} className="-ml-2" variant="outlined-subtle">
-                    <Plus />
-                    {childrenArray.length} more attributes
-                </Badge>
-            </div>
-        </>
+        <Disclosure.Details open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange} className="col-span-2">
+            <Disclosure.Summary className="list-none">
+                {({ open }) =>
+                    !open && (
+                        <div className="grid grid-cols-[24px_1fr] xs:grid-cols-[32px_1fr] relative">
+                            <TreeBranch />
+                            <div className="py-2">
+                                <Disclosure.Trigger asChild>
+                                    <Badge rounded interactive className="-ml-2" variant="outlined-subtle">
+                                        <Plus />
+                                        {childrenArray.length} more attributes
+                                    </Badge>
+                                </Disclosure.Trigger>
+                            </div>
+                        </div>
+                    )
+                }
+            </Disclosure.Summary>
+            <Disclosure.Content>
+                <div className="grid grid-cols-[24px_1fr] xs:grid-cols-[32px_1fr] relative">
+                    {childrenArray.map((child, i) => (
+                        <Fragment key={i}>
+                            <TreeBranch />
+                            {child}
+                        </Fragment>
+                    ))}
+                </div>
+            </Disclosure.Content>
+        </Disclosure.Details>
     );
 };
 
 const TreeItemSummary = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<"div">>(({ children, ...props }, ref) => {
-    const { setOpen, open, expandable } = useDetailContext();
+    const { open, expandable } = useDetailContext();
     return (
         <Disclosure.Summary
             {...props}
@@ -186,10 +187,12 @@ const TreeItemSummary = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<"div
         >
             {children}
             {!open && expandable && (
-                <Badge rounded interactive onClick={() => setOpen(true)} className="mt-2" variant="outlined-subtle">
-                    <Plus />
-                    Show child attributes
-                </Badge>
+                <Disclosure.Trigger asChild>
+                    <Badge rounded interactive className="mt-2" variant="outlined-subtle">
+                        <Plus />
+                        Show child attributes
+                    </Badge>
+                </Disclosure.Trigger>
             )}
         </Disclosure.Summary>
     );
@@ -213,29 +216,17 @@ const TreeDetailIndicator = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<
 
 TreeDetailIndicator.displayName = "TreeDetailIndicator";
 
-const TreeItemSummaryTrigger = forwardRef<
-    HTMLButtonElement,
-    ComponentPropsWithoutRef<"button"> & {
-        asChild?: boolean;
-    }
->(({ children, asChild, ...props }, ref) => {
-    const { setOpen } = useContext(openCtx);
-    const interactive = props.onClick != null;
-    const Comp = asChild ? Slot : "button";
-    return (
-        <Comp
-            tabIndex={interactive ? 0 : undefined}
-            {...props}
-            ref={ref}
-            onClick={composeEventHandlers(props.onClick, () => setOpen((prev) => !prev), {
-                checkForDefaultPrevented: true,
-            })}
-            className={cn("w-full", interactive ? "cursor-pointer" : "cursor-default", props.className)}
-        >
-            {children}
-        </Comp>
-    );
-});
+const TreeItemSummaryTrigger = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<"div">>(
+    ({ children, ...props }, ref) => {
+        return (
+            <Disclosure.Trigger asChild>
+                <div {...props} ref={ref}>
+                    {children}
+                </div>
+            </Disclosure.Trigger>
+        );
+    },
+);
 
 TreeItemSummaryTrigger.displayName = "TreeItemSummaryTrigger";
 
@@ -248,6 +239,7 @@ const TreeBranch = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<"div">>((
             className={cn(props.className, "relative h-full nth-last-2:hidden", {
                 "cursor-pointer": props.onClick != null || props.onClickCapture != null,
             })}
+            data-branch=""
         >
             <div className="absolute inset-0 h-full w-0 border-[var(--grayscale-6)] border-l" data-line="" />
             <div

@@ -1,0 +1,9 @@
+@layer components {
+    [data-branch] {
+        &:nth-last-child(2) {
+            > [data-line] {
+                display: none;
+            }
+        }
+    }
+}

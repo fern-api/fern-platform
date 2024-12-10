@@ -25,7 +25,7 @@ export const Default: Story = {
                 <TreeItem>
                     <TreeItemSummary>
                         <TreeItemSummaryTrigger className="flex items-center text-left relative">
-                            <TreeDetailIndicator className="" />
+                            <TreeDetailIndicator className="absolute left-[-20px]" />
                             <ParameterDescription
                                 className="flex-1"
                                 parameterName="customer"
@@ -42,7 +42,7 @@ export const Default: Story = {
                         <TreeItem>
                             <TreeItemSummary>
                                 <TreeItemSummaryTrigger className="flex items-center text-left relative">
-                                    <TreeDetailIndicator className="absolute left-[-24px]" />
+                                    <TreeDetailIndicator className="absolute left-[-20px]" />
                                     <ParameterDescription
                                         className="flex-1"
                                         parameterName="id"
@@ -59,7 +59,7 @@ export const Default: Story = {
                         <TreeItem>
                             <TreeItemSummary>
                                 <TreeItemSummaryTrigger className="flex items-center text-left relative">
-                                    <TreeDetailIndicator className="absolute left-[-24px]" />
+                                    <TreeDetailIndicator className="absolute left-[-20px]" />
                                     <ParameterDescription
                                         className="flex-1"
                                         parameterName="email"
@@ -79,7 +79,7 @@ export const Default: Story = {
                         <TreeItem>
                             <TreeItemSummary>
                                 <TreeItemSummaryTrigger className="flex items-center text-left relative">
-                                    <TreeDetailIndicator className="absolute left-[-24px]" />
+                                    <TreeDetailIndicator className="absolute left-[-20px]" />
                                     <ParameterDescription
                                         className="flex-1"
                                         parameterName="first_name"
@@ -99,7 +99,7 @@ export const Default: Story = {
                         <TreeItem>
                             <TreeItemSummary>
                                 <TreeItemSummaryTrigger className="flex items-center text-left relative">
-                                    <TreeDetailIndicator className="absolute left-[-24px]" />
+                                    <TreeDetailIndicator className="absolute left-[-20px]" />
                                     <ParameterDescription
                                         className="flex-1"
                                         parameterName="last_name"
@@ -121,7 +121,7 @@ export const Default: Story = {
                         <TreeItem>
                             <TreeItemSummary>
                                 <TreeItemSummaryTrigger className="flex items-center text-left relative">
-                                    <TreeDetailIndicator className="absolute left-[-24px]" />
+                                    <TreeDetailIndicator className="absolute left-[-20px]" />
                                     <ParameterDescription
                                         className="flex-1"
                                         parameterName="groups"
@@ -140,7 +140,7 @@ export const Default: Story = {
                                 <TreeItem>
                                     <TreeItemSummary>
                                         <TreeItemSummaryTrigger className="flex items-center text-left relative">
-                                            <TreeDetailIndicator className="absolute left-[-24px]" />
+                                            <TreeDetailIndicator className="absolute left-[-20px]" />
                                             <ParameterDescription
                                                 className="flex-1"
                                                 parameterName="id"
@@ -154,7 +154,7 @@ export const Default: Story = {
                                 <TreeItem>
                                     <TreeItemSummary>
                                         <TreeItemSummaryTrigger className="flex items-center text-left relative">
-                                            <TreeDetailIndicator className="absolute left-[-24px]" />
+                                            <TreeDetailIndicator className="absolute left-[-20px]" />
                                             <ParameterDescription
                                                 className="flex-1"
                                                 parameterName="name"
@@ -168,7 +168,7 @@ export const Default: Story = {
                                 <TreeItem>
                                     <TreeItemSummary>
                                         <TreeItemSummaryTrigger className="flex items-center text-left relative">
-                                            <TreeDetailIndicator className="absolute left-[-24px]" />
+                                            <TreeDetailIndicator className="absolute left-[-20px]" />
                                             <ParameterDescription
                                                 className="flex-1"
                                                 parameterName="created_at"
@@ -182,7 +182,7 @@ export const Default: Story = {
                                 <TreeItem>
                                     <TreeItemSummary>
                                         <TreeItemSummaryTrigger className="flex items-center text-left relative">
-                                            <TreeDetailIndicator className="absolute left-[-24px]" />
+                                            <TreeDetailIndicator className="absolute left-[-20px]" />
                                             <ParameterDescription
                                                 className="flex-1"
                                                 parameterName="updated_at"
@@ -196,7 +196,7 @@ export const Default: Story = {
                                 <TreeItem>
                                     <TreeItemSummary>
                                         <TreeItemSummaryTrigger className="flex items-center text-left relative">
-                                            <TreeDetailIndicator className="absolute left-[-24px]" />
+                                            <TreeDetailIndicator className="absolute left-[-20px]" />
                                             <ParameterDescription
                                                 className="flex-1"
                                                 parameterName="deleted_at"

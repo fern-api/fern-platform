@@ -40,7 +40,7 @@ export const ParameterDescription = forwardRef<
                 decorative
                 className="inline-block mx-1 flex-1 w-10 h-0 border-b border-dashed border-[var(--grayscale-a6)] self-center invisible group-hover/trigger:visible"
             />
-            <span className={cn("text-xs", required ? "text-[var(--red-a11)]" : "text-[var(--grayscale-a9)]")}>
+            <span className={cn("text-xs", required ? "text-[var(--orange-a9)]" : "text-[var(--grayscale-a9)]")}>
                 {required ? "required" : "optional"}
             </span>
         </div>
