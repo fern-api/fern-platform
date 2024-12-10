@@ -86,6 +86,16 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     useImperativeHandle(parentRef, () => ref.current!);
 
+    const closeMobileSidebar = useCloseMobileSidebar();
+
+    const handleClick = useCallback<React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>>(
+        (e) => {
+            onClick?.(e);
+            closeMobileSidebar();
+        },
+        [closeMobileSidebar, onClick],
+    );
+
     if (hidden && !expanded && !selected) {
         return null;
     }
@@ -97,10 +107,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
             <FernLink
                 href={href}
                 className={linkClassName}
-                onClick={(e) => {
-                    onClick?.(e);
-                    toggleExpand?.();
-                }}
+                onClick={handleClick}
                 shallow={shallow}
                 target={target}
                 rel={rel}
