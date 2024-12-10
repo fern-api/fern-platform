@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import type { GradientStop, WaveformColor } from "./types";
 import { gradientColors } from "./types";
 
