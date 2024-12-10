@@ -1,5 +1,7 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { OpenNewWindow } from "iconoir-react";
+import { useAtomValue } from "jotai";
+import { LOCATION_ATOM } from "../../atoms";
 import { SidebarLink } from "../SidebarLink";
 
 interface SidebarLinkNodeProps {
@@ -9,8 +11,12 @@ interface SidebarLinkNodeProps {
 }
 
 export function SidebarLinkNode({ node, depth, className }: SidebarLinkNodeProps): React.ReactElement {
+    const { pathname, hash } = useAtomValue(LOCATION_ATOM);
+    const isSelected = `${pathname}${hash}` === node.url;
+
     return (
         <SidebarLink
+            selected={isSelected}
             icon={node.icon}
             nodeId={node.id}
             className={className}
