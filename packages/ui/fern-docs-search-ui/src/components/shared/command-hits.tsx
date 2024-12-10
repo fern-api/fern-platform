@@ -85,14 +85,17 @@ function CommandHit({
                 onPointerOver={() => {
                     void prefetch?.(hit.path);
                 }}
+                asChild
             >
-                <PageIcon
-                    icon={hit.icon}
-                    type={hit.record.type === "api-reference" ? hit.record.api_type : hit.record.type}
-                    isSubPage={hit.record.hash != null}
-                    className="self-start"
-                />
-                <HitContent hit={hit.record} />
+                <a href={hit.path}>
+                    <PageIcon
+                        icon={hit.icon}
+                        type={hit.record.type === "api-reference" ? hit.record.api_type : hit.record.type}
+                        isSubPage={hit.record.hash != null}
+                        className="self-start"
+                    />
+                    <HitContent hit={hit.record} />
+                </a>
             </Command.Item>
         </CommandGroupSearchHitTooltip>
     );
