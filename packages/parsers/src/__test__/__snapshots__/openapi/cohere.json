@@ -15,10 +15,10 @@
           "value": "chat"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -872,10 +872,10 @@
           "value": "chat"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -1519,10 +1519,10 @@
           "value": "generate"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -2215,10 +2215,10 @@
           "value": "embed"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -2634,10 +2634,10 @@
           "value": "embed"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -3104,10 +3104,10 @@
           "value": "embed-jobs"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -3449,10 +3449,10 @@
           "value": "embed-jobs"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -3808,10 +3808,10 @@
           "value": "id"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -4176,10 +4176,10 @@
           "value": "cancel"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -4501,10 +4501,10 @@
           "value": "rerank"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -5069,10 +5069,10 @@
           "value": "rerank"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -5558,10 +5558,10 @@
           "value": "classify"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -6193,10 +6193,10 @@
           "value": "datasets"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -6646,10 +6646,10 @@
           "value": "datasets"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -7158,10 +7158,10 @@
           "value": "usage"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -7498,10 +7498,10 @@
           "value": "id"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -7849,10 +7849,10 @@
           "value": "id"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -8182,10 +8182,10 @@
           "value": "summarize"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -8716,10 +8716,10 @@
           "value": "tokenize"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -9145,10 +9145,10 @@
           "value": "detokenize"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -9559,10 +9559,10 @@
           "value": "connectors"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -9925,10 +9925,10 @@
           "value": "connectors"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -10263,10 +10263,10 @@
           "value": "id"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -10606,10 +10606,10 @@
           "value": "id"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -10957,10 +10957,10 @@
           "value": "authorize"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -11321,10 +11321,10 @@
           "value": "model"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -11680,10 +11680,10 @@
           "value": "models"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -12056,10 +12056,10 @@
           "value": "check-api-key"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -12430,10 +12430,10 @@
           "value": "finetuned-models"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -12624,10 +12624,10 @@
           "value": "finetuned-models"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -12773,10 +12773,10 @@
           "value": "id"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -12927,10 +12927,10 @@
           "value": "id"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -13085,10 +13085,10 @@
           "value": "events"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -13302,10 +13302,10 @@
           "value": "training-step-metrics"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.cohere.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.cohere.com",
           "baseUrl": "https://api.cohere.com"
         }
       ],
@@ -21957,7 +21957,32 @@
       "description": "Response to a request to list training-step metrics of a fine-tuned model."
     }
   },
-  "subpackages": {},
+  "subpackages": {
+    "v2": {
+      "id": "v2",
+      "name": "v2"
+    },
+    "embed-jobs": {
+      "id": "embed-jobs",
+      "name": "embed-jobs"
+    },
+    "datasets": {
+      "id": "datasets",
+      "name": "datasets"
+    },
+    "connectors": {
+      "id": "connectors",
+      "name": "connectors"
+    },
+    "models": {
+      "id": "models",
+      "name": "models"
+    },
+    "finetuning": {
+      "id": "finetuning",
+      "name": "finetuning"
+    }
+  },
   "auths": {
     "bearerAuth": {
       "type": "bearerAuth"

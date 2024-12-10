@@ -18,10 +18,10 @@
           "value": "text-to-speech"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.deeptune.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.deeptune.com",
           "baseUrl": "https://api.deeptune.com"
         }
       ],
@@ -59,10 +59,10 @@
           "value": "from-prompt"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.deeptune.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.deeptune.com",
           "baseUrl": "https://api.deeptune.com"
         }
       ],
@@ -96,10 +96,10 @@
           "value": "voices"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.deeptune.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.deeptune.com",
           "baseUrl": "https://api.deeptune.com"
         }
       ],
@@ -134,10 +134,10 @@
           "value": "voices"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.deeptune.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.deeptune.com",
           "baseUrl": "https://api.deeptune.com"
         }
       ],
@@ -186,10 +186,10 @@
           "value": "voice_id"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.deeptune.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.deeptune.com",
           "baseUrl": "https://api.deeptune.com"
         }
       ],
@@ -243,10 +243,10 @@
           "value": "voice_id"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.deeptune.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.deeptune.com",
           "baseUrl": "https://api.deeptune.com"
         }
       ],
@@ -310,10 +310,10 @@
           "value": "voice_id"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.deeptune.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.deeptune.com",
           "baseUrl": "https://api.deeptune.com"
         }
       ],
@@ -739,6 +739,15 @@
       }
     }
   },
-  "subpackages": {},
+  "subpackages": {
+    "text_to_speech": {
+      "id": "text_to_speech",
+      "name": "text_to_speech"
+    },
+    "voices": {
+      "id": "voices",
+      "name": "voices"
+    }
+  },
   "auths": {}
 }

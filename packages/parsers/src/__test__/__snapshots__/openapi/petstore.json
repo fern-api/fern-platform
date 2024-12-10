@@ -3,6 +3,9 @@
   "endpoints": {
     "post-pet": {
       "description": "Add a new pet to the store",
+      "namespace": [
+        "pet"
+      ],
       "id": "post-pet",
       "method": "POST",
       "path": [
@@ -12,10 +15,10 @@
         }
       ],
       "auth": [],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "/api/v31",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "/api/v31",
           "baseUrl": "/api/v31"
         }
       ],
@@ -45,6 +48,9 @@
     },
     "put-pet": {
       "description": "Update an existing pet by Id",
+      "namespace": [
+        "pet"
+      ],
       "id": "put-pet",
       "method": "PUT",
       "path": [
@@ -54,10 +60,10 @@
         }
       ],
       "auth": [],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "/api/v31",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "/api/v31",
           "baseUrl": "/api/v31"
         }
       ],
@@ -87,6 +93,9 @@
     },
     "get-pet-pet-id": {
       "description": "Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate API error conditions",
+      "namespace": [
+        "pets"
+      ],
       "id": "get-pet-pet-id",
       "method": "GET",
       "path": [
@@ -100,10 +109,10 @@
         }
       ],
       "auth": [],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "/api/v31",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "/api/v31",
           "baseUrl": "/api/v31"
         }
       ],
@@ -695,6 +704,15 @@
       }
     }
   },
-  "subpackages": {},
+  "subpackages": {
+    "pet": {
+      "id": "pet",
+      "name": "pet"
+    },
+    "pets": {
+      "id": "pets",
+      "name": "pets"
+    }
+  },
   "auths": {}
 }
