@@ -47,11 +47,11 @@ describe("PathsObjectConverterNode", () => {
                 undefined,
             );
 
-            const result = node.convert() ?? {};
+            const result = node.convert() ?? { endpoints: {} };
 
             expect(result).toBeDefined();
-            expect(Object.keys(result)).toHaveLength(2);
-            Object.values(result).forEach((endpoint) => {
+            expect(Object.keys(result.endpoints)).toHaveLength(2);
+            Object.values(result.endpoints).forEach((endpoint) => {
                 expect(endpoint).toEqual(
                     expect.objectContaining({
                         method: "GET",
@@ -74,7 +74,10 @@ describe("PathsObjectConverterNode", () => {
             );
 
             const result = node.convert();
-            expect(result).toEqual({});
+            expect(result).toEqual({
+                endpoints: {},
+                webhookEndpoints: {},
+            });
         });
 
         it("should handle null path items", () => {
@@ -93,7 +96,10 @@ describe("PathsObjectConverterNode", () => {
             );
 
             const result = node.convert();
-            expect(result).toEqual({});
+            expect(result).toEqual({
+                endpoints: {},
+                webhookEndpoints: {},
+            });
         });
 
         it("should handle paths with servers", () => {
@@ -125,9 +131,9 @@ describe("PathsObjectConverterNode", () => {
                 undefined,
             );
 
-            const result = node.convert() ?? {};
+            const result = node.convert() ?? { endpoints: {} };
             expect(result).toBeDefined();
-            expect(Object.keys(result)).toHaveLength(1);
+            expect(Object.keys(result.endpoints)).toHaveLength(1);
         });
     });
 });

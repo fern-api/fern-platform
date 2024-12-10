@@ -1,7 +1,7 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "test-uuid-replacement": {
+    "post-v-1-chat": {
       "description": "Generates a text response to a user message.\nTo learn how to use the Chat API and RAG follow our [Text Generation guides](https://docs.cohere.com/docs/chat-api).\n",
       "id": "post-v-1-chat",
       "method": "POST",
@@ -452,7 +452,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -474,7 +474,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -496,7 +496,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -518,7 +518,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -540,7 +540,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -562,7 +562,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -584,7 +584,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -606,7 +606,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -628,7 +628,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -650,7 +650,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -672,7 +672,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -694,13 +694,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-2-chat": {
       "description": "Generates a text response to a user message and streams it down, token by token. To learn how to use the Chat API with streaming follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).\n\nFollow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.\n",
+      "namespace": [
+        "v2"
+      ],
       "id": "post-v-2-chat",
       "method": "POST",
       "path": [
@@ -1003,7 +1006,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -1025,7 +1028,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -1047,7 +1050,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -1069,7 +1072,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -1091,7 +1094,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -1113,7 +1116,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -1135,7 +1138,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -1157,7 +1160,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -1179,7 +1182,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -1201,7 +1204,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -1223,7 +1226,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -1245,12 +1248,12 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-generate": {
       "description": "<Warning>\nThis API is marked as \"Legacy\" and is no longer maintained. Follow the [migration guide](https://docs.cohere.com/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.\n</Warning>\nGenerates realistic text conditioned on a given input.\n",
       "id": "post-v-1-generate",
       "method": "POST",
@@ -1589,7 +1592,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -1611,7 +1614,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -1633,7 +1636,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -1655,7 +1658,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -1677,7 +1680,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -1699,7 +1702,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -1721,7 +1724,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -1743,7 +1746,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -1765,7 +1768,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -1787,7 +1790,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -1809,7 +1812,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -1831,12 +1834,12 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-embed": {
       "description": "This endpoint returns text and image embeddings. An embedding is a list of floating point numbers that captures semantic information about the content that it represents.\n\nEmbeddings can be used to create classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.\n\nIf you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](https://docs.cohere.com/docs/semantic-search).",
       "id": "post-v-1-embed",
       "method": "POST",
@@ -1999,7 +2002,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -2021,7 +2024,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -2043,7 +2046,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -2065,7 +2068,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -2087,7 +2090,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -2109,7 +2112,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -2131,7 +2134,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -2153,7 +2156,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -2175,7 +2178,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -2197,7 +2200,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -2219,7 +2222,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -2241,13 +2244,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-2-embed": {
       "description": "This endpoint returns text embeddings. An embedding is a list of floating point numbers that captures semantic information about the text that it represents.\n\nEmbeddings can be used to create text classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.\n\nIf you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](https://docs.cohere.com/docs/semantic-search).",
+      "namespace": [
+        "v2"
+      ],
       "id": "post-v-2-embed",
       "method": "POST",
       "path": [
@@ -2435,7 +2441,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -2457,7 +2463,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -2479,7 +2485,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -2501,7 +2507,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -2523,7 +2529,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -2545,7 +2551,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -2567,7 +2573,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -2589,7 +2595,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -2611,7 +2617,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -2633,7 +2639,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -2655,7 +2661,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -2677,13 +2683,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-v-1-embed-jobs": {
       "description": "The list embed job endpoint allows users to view all embed jobs history for that specific user.",
+      "namespace": [
+        "embed-jobs"
+      ],
       "id": "get-v-1-embed-jobs",
       "method": "GET",
       "path": [
@@ -2765,7 +2774,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -2787,7 +2796,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -2809,7 +2818,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -2831,7 +2840,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -2853,7 +2862,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -2875,7 +2884,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -2897,7 +2906,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -2919,7 +2928,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -2941,7 +2950,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -2963,7 +2972,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -2985,7 +2994,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -3007,13 +3016,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-embed-jobs": {
       "description": "This API launches an async Embed job for a [Dataset](https://docs.cohere.com/docs/datasets) of type `embed-input`. The result of a completed embed job is new Dataset of type `embed-output`, which contains the original text entries and the corresponding embeddings.",
+      "namespace": [
+        "embed-jobs"
+      ],
       "id": "post-v-1-embed-jobs",
       "method": "POST",
       "path": [
@@ -3105,7 +3117,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -3127,7 +3139,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -3149,7 +3161,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -3171,7 +3183,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -3193,7 +3205,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -3215,7 +3227,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -3237,7 +3249,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -3259,7 +3271,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -3281,7 +3293,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -3303,7 +3315,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -3325,7 +3337,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -3347,13 +3359,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-v-1-embed-jobs-id": {
       "description": "This API retrieves the details about an embed job started by the same user.",
+      "namespace": [
+        "embed-jobs"
+      ],
       "id": "get-v-1-embed-jobs-id",
       "method": "GET",
       "path": [
@@ -3454,7 +3469,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -3476,7 +3491,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -3498,7 +3513,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -3520,7 +3535,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -3542,7 +3557,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -3564,7 +3579,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -3586,7 +3601,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -3608,7 +3623,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -3630,7 +3645,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -3652,7 +3667,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -3674,7 +3689,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -3696,13 +3711,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-embed-jobs-id-cancel": {
       "description": "This API allows users to cancel an active embed job. Once invoked, the embedding process will be terminated, and users will be charged for the embeddings processed up to the cancellation point. It's important to note that partial results will not be available to users after cancellation.",
+      "namespace": [
+        "embed-jobs"
+      ],
       "id": "post-v-1-embed-jobs-id-cancel",
       "method": "POST",
       "path": [
@@ -3781,7 +3799,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -3803,7 +3821,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -3825,7 +3843,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -3847,7 +3865,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -3869,7 +3887,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -3891,7 +3909,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -3913,7 +3931,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -3935,7 +3953,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -3957,7 +3975,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -3979,7 +3997,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -4001,7 +4019,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -4023,12 +4041,12 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-rerank": {
       "description": "This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.",
       "id": "post-v-1-rerank",
       "method": "POST",
@@ -4292,7 +4310,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -4314,7 +4332,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -4336,7 +4354,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -4358,7 +4376,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -4380,7 +4398,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -4402,7 +4420,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -4424,7 +4442,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -4446,7 +4464,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -4468,7 +4486,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -4490,7 +4508,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -4512,7 +4530,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -4534,13 +4552,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-2-rerank": {
       "description": "This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.",
+      "namespace": [
+        "v2"
+      ],
       "id": "post-v-2-rerank",
       "method": "POST",
       "path": [
@@ -4751,7 +4772,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -4773,7 +4794,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -4795,7 +4816,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -4817,7 +4838,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -4839,7 +4860,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -4861,7 +4882,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -4883,7 +4904,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -4905,7 +4926,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -4927,7 +4948,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -4949,7 +4970,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -4971,7 +4992,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -4993,12 +5014,12 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-classify": {
       "description": "This endpoint makes a prediction about which label fits the specified text inputs best. To make a prediction, Classify uses the provided `examples` of text + label pairs as a reference.\nNote: [Fine-tuned models](https://docs.cohere.com/docs/classify-fine-tuning) trained on classification examples don't require the `examples` parameter to be passed in explicitly.",
       "id": "post-v-1-classify",
       "method": "POST",
@@ -5322,7 +5343,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -5344,7 +5365,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -5366,7 +5387,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -5388,7 +5409,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -5410,7 +5431,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -5432,7 +5453,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -5454,7 +5475,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -5476,7 +5497,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -5498,7 +5519,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -5520,7 +5541,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -5542,7 +5563,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -5564,13 +5585,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-v-1-datasets": {
       "description": "List datasets that have been created.",
+      "namespace": [
+        "datasets"
+      ],
       "id": "get-v-1-datasets",
       "method": "GET",
       "path": [
@@ -5730,7 +5754,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -5752,7 +5776,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -5774,7 +5798,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -5796,7 +5820,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -5818,7 +5842,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -5840,7 +5864,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -5862,7 +5886,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -5884,7 +5908,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -5906,7 +5930,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -5928,7 +5952,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -5950,7 +5974,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -5972,13 +5996,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-datasets": {
       "description": "Create a dataset by uploading a file. See ['Dataset Creation'](https://docs.cohere.com/docs/datasets#dataset-creation) for more information.",
+      "namespace": [
+        "datasets"
+      ],
       "id": "post-v-1-datasets",
       "method": "POST",
       "path": [
@@ -6193,7 +6220,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -6215,7 +6242,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -6237,7 +6264,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -6259,7 +6286,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -6281,7 +6308,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -6303,7 +6330,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -6325,7 +6352,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -6347,7 +6374,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -6369,7 +6396,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -6391,7 +6418,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -6413,7 +6440,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -6435,13 +6462,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-v-1-datasets-usage": {
       "description": "View the dataset storage usage for your Organization. Each Organization can have up to 10GB of storage across all their users.",
+      "namespace": [
+        "datasets"
+      ],
       "id": "get-v-1-datasets-usage",
       "method": "GET",
       "path": [
@@ -6524,7 +6554,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -6546,7 +6576,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -6568,7 +6598,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -6590,7 +6620,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -6612,7 +6642,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -6634,7 +6664,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -6656,7 +6686,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -6678,7 +6708,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -6700,7 +6730,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -6722,7 +6752,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -6744,7 +6774,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -6766,13 +6796,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-v-1-datasets-id": {
       "description": "Retrieve a dataset by ID. See ['Datasets'](https://docs.cohere.com/docs/datasets) for more information.",
+      "namespace": [
+        "datasets"
+      ],
       "id": "get-v-1-datasets-id",
       "method": "GET",
       "path": [
@@ -6866,7 +6899,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -6888,7 +6921,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -6910,7 +6943,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -6932,7 +6965,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -6954,7 +6987,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -6976,7 +7009,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -6998,7 +7031,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -7020,7 +7053,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -7042,7 +7075,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -7064,7 +7097,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -7086,7 +7119,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -7108,13 +7141,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "delete-v-1-datasets-id": {
       "description": "Delete a dataset by ID. Datasets are automatically deleted after 30 days, but they can also be deleted manually.",
+      "namespace": [
+        "datasets"
+      ],
       "id": "delete-v-1-datasets-id",
       "method": "DELETE",
       "path": [
@@ -7197,7 +7233,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -7219,7 +7255,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -7241,7 +7277,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -7263,7 +7299,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -7285,7 +7321,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -7307,7 +7343,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -7329,7 +7365,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -7351,7 +7387,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -7373,7 +7409,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -7395,7 +7431,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -7417,7 +7453,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -7439,12 +7475,12 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-summarize": {
       "description": "<Warning>\nThis API is marked as \"Legacy\" and is no longer maintained. Follow the [migration guide](https://docs.cohere.com/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.\n</Warning>\nGenerates a summary in English for a given text.\n",
       "id": "post-v-1-summarize",
       "method": "POST",
@@ -7680,7 +7716,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -7702,7 +7738,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -7724,7 +7760,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -7746,7 +7782,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -7768,7 +7804,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -7790,7 +7826,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -7812,7 +7848,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -7834,7 +7870,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -7856,7 +7892,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -7878,7 +7914,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -7900,7 +7936,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -7922,12 +7958,12 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-tokenize": {
       "description": "This endpoint splits input text into smaller units called tokens using byte-pair encoding (BPE). To learn more about tokenization and byte pair encoding, see the tokens page.",
       "id": "post-v-1-tokenize",
       "method": "POST",
@@ -8091,7 +8127,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -8113,7 +8149,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -8135,7 +8171,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -8157,7 +8193,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -8179,7 +8215,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -8201,7 +8237,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -8223,7 +8259,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -8245,7 +8281,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -8267,7 +8303,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -8289,7 +8325,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -8311,7 +8347,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -8333,12 +8369,12 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-detokenize": {
       "description": "This endpoint takes tokens using byte-pair encoding and returns their text representation. To learn more about tokenization and byte pair encoding, see the tokens page.",
       "id": "post-v-1-detokenize",
       "method": "POST",
@@ -8484,7 +8520,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -8506,7 +8542,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -8528,7 +8564,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -8550,7 +8586,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -8572,7 +8608,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -8594,7 +8630,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -8616,7 +8652,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -8638,7 +8674,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -8660,7 +8696,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -8682,7 +8718,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -8704,7 +8740,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -8726,13 +8762,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-v-1-connectors": {
       "description": "Returns a list of connectors ordered by descending creation date (newer first). See ['Managing your Connector'](https://docs.cohere.com/docs/managing-your-connector) for more information.",
+      "namespace": [
+        "connectors"
+      ],
       "id": "get-v-1-connectors",
       "method": "GET",
       "path": [
@@ -8829,7 +8868,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -8851,7 +8890,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -8873,7 +8912,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -8895,7 +8934,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -8917,7 +8956,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -8939,7 +8978,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -8961,7 +9000,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -8983,7 +9022,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -9005,7 +9044,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -9027,7 +9066,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -9049,7 +9088,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -9071,13 +9110,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-connectors": {
       "description": "Creates a new connector. The connector is tested during registration and will cancel registration when the test is unsuccessful. See ['Creating and Deploying a Connector'](https://docs.cohere.com/v1/docs/creating-and-deploying-a-connector) for more information.",
+      "namespace": [
+        "connectors"
+      ],
       "id": "post-v-1-connectors",
       "method": "POST",
       "path": [
@@ -9154,7 +9196,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -9176,7 +9218,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -9198,7 +9240,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -9220,7 +9262,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -9242,7 +9284,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -9264,7 +9306,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -9286,7 +9328,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -9308,7 +9350,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -9330,7 +9372,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -9352,7 +9394,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -9374,7 +9416,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -9396,13 +9438,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-v-1-connectors-id": {
       "description": "Retrieve a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connectors) for more information.",
+      "namespace": [
+        "connectors"
+      ],
       "id": "get-v-1-connectors-id",
       "method": "GET",
       "path": [
@@ -9488,7 +9533,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -9510,7 +9555,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -9532,7 +9577,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -9554,7 +9599,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -9576,7 +9621,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -9598,7 +9643,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -9620,7 +9665,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -9642,7 +9687,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -9664,7 +9709,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -9686,7 +9731,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -9708,7 +9753,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -9730,13 +9775,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "delete-v-1-connectors-id": {
       "description": "Delete a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connectors) for more information.",
+      "namespace": [
+        "connectors"
+      ],
       "id": "delete-v-1-connectors-id",
       "method": "DELETE",
       "path": [
@@ -9822,7 +9870,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -9844,7 +9892,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -9866,7 +9914,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -9888,7 +9936,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -9910,7 +9958,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -9932,7 +9980,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -9954,7 +10002,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -9976,7 +10024,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -9998,7 +10046,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -10020,7 +10068,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -10042,7 +10090,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -10064,13 +10112,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-connectors-id-oauth-authorize": {
       "description": "Authorize the connector with the given ID for the connector oauth app.  See ['Connector Authentication'](https://docs.cohere.com/docs/connector-authentication) for more information.",
+      "namespace": [
+        "connectors"
+      ],
       "id": "post-v-1-connectors-id-oauth-authorize",
       "method": "POST",
       "path": [
@@ -10179,7 +10230,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -10201,7 +10252,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -10223,7 +10274,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -10245,7 +10296,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -10267,7 +10318,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -10289,7 +10340,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -10311,7 +10362,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -10333,7 +10384,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -10355,7 +10406,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -10377,7 +10428,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -10399,7 +10450,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -10421,13 +10472,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-v-1-models-model": {
       "description": "Returns the details of a model, provided its name.",
+      "namespace": [
+        "models"
+      ],
       "id": "get-v-1-models-model",
       "method": "GET",
       "path": [
@@ -10527,7 +10581,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -10549,7 +10603,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -10571,7 +10625,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -10593,7 +10647,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -10615,7 +10669,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -10637,7 +10691,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -10659,7 +10713,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -10681,7 +10735,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -10703,7 +10757,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -10725,7 +10779,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -10747,7 +10801,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -10769,13 +10823,16 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-v-1-models": {
       "description": "Returns a list of models available for use. The list contains models from Cohere as well as your fine-tuned models.",
+      "namespace": [
+        "models"
+      ],
       "id": "get-v-1-models",
       "method": "GET",
       "path": [
@@ -10879,7 +10936,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -10901,7 +10958,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -10923,7 +10980,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -10945,7 +11002,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -10967,7 +11024,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -10989,7 +11046,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -11011,7 +11068,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -11033,7 +11090,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -11055,7 +11112,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -11077,7 +11134,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -11099,7 +11156,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -11121,12 +11178,12 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-check-api-key": {
       "description": "Checks that the api key in the Authorization header is valid and active\n",
       "id": "post-v-1-check-api-key",
       "method": "POST",
@@ -11229,7 +11286,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -11251,7 +11308,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -11273,7 +11330,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -11295,7 +11352,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 422,
@@ -11317,7 +11374,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Unprocessable Entity"
         },
         {
           "statusCode": 429,
@@ -11339,7 +11396,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Too Many Requests"
         },
         {
           "statusCode": 498,
@@ -11361,7 +11418,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 499,
@@ -11383,7 +11440,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "UNKNOWN ERROR"
         },
         {
           "statusCode": 500,
@@ -11405,7 +11462,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 501,
@@ -11427,7 +11484,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Not Implemented"
         },
         {
           "statusCode": 503,
@@ -11449,7 +11506,7 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Service Unavailable"
         },
         {
           "statusCode": 504,
@@ -11471,12 +11528,15 @@
               }
             ]
           },
-          "name": "dummy error"
+          "name": "Gateway Timeout"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-v-1-finetuning-finetuned-models": {
+      "namespace": [
+        "finetuning"
+      ],
       "id": "get-v-1-finetuning-finetuned-models",
       "method": "GET",
       "path": [
@@ -11578,7 +11638,7 @@
             }
           },
           "description": "Bad Request",
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -11590,7 +11650,7 @@
             }
           },
           "description": "Unauthorized",
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -11602,7 +11662,7 @@
             }
           },
           "description": "Forbidden",
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -11614,7 +11674,7 @@
             }
           },
           "description": "Not Found",
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 500,
@@ -11626,7 +11686,7 @@
             }
           },
           "description": "Internal Server Error",
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 503,
@@ -11638,12 +11698,15 @@
             }
           },
           "description": "Status Service Unavailable",
-          "name": "dummy error"
+          "name": "Service Unavailable"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-finetuning-finetuned-models": {
+      "namespace": [
+        "finetuning"
+      ],
       "id": "post-v-1-finetuning-finetuned-models",
       "method": "POST",
       "path": [
@@ -11714,7 +11777,7 @@
             }
           },
           "description": "Bad Request",
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -11726,7 +11789,7 @@
             }
           },
           "description": "Unauthorized",
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -11738,7 +11801,7 @@
             }
           },
           "description": "Forbidden",
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -11750,7 +11813,7 @@
             }
           },
           "description": "Not Found",
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 500,
@@ -11762,7 +11825,7 @@
             }
           },
           "description": "Internal Server Error",
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 503,
@@ -11774,12 +11837,15 @@
             }
           },
           "description": "Status Service Unavailable",
-          "name": "dummy error"
+          "name": "Service Unavailable"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-v-1-finetuning-finetuned-models-id": {
+      "namespace": [
+        "finetuning"
+      ],
       "id": "get-v-1-finetuning-finetuned-models-id",
       "method": "GET",
       "path": [
@@ -11859,7 +11925,7 @@
             }
           },
           "description": "Bad Request",
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -11871,7 +11937,7 @@
             }
           },
           "description": "Unauthorized",
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -11883,7 +11949,7 @@
             }
           },
           "description": "Forbidden",
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -11895,7 +11961,7 @@
             }
           },
           "description": "Not Found",
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 500,
@@ -11907,7 +11973,7 @@
             }
           },
           "description": "Internal Server Error",
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 503,
@@ -11919,12 +11985,15 @@
             }
           },
           "description": "Status Service Unavailable",
-          "name": "dummy error"
+          "name": "Service Unavailable"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "delete-v-1-finetuning-finetuned-models-id": {
+      "namespace": [
+        "finetuning"
+      ],
       "id": "delete-v-1-finetuning-finetuned-models-id",
       "method": "DELETE",
       "path": [
@@ -12004,7 +12073,7 @@
             }
           },
           "description": "Bad Request",
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -12016,7 +12085,7 @@
             }
           },
           "description": "Unauthorized",
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -12028,7 +12097,7 @@
             }
           },
           "description": "Forbidden",
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -12040,7 +12109,7 @@
             }
           },
           "description": "Not Found",
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 500,
@@ -12052,7 +12121,7 @@
             }
           },
           "description": "Internal Server Error",
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 503,
@@ -12064,12 +12133,15 @@
             }
           },
           "description": "Status Service Unavailable",
-          "name": "dummy error"
+          "name": "Service Unavailable"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-v-1-finetuning-finetuned-models-finetuned-model-id-events": {
+      "namespace": [
+        "finetuning"
+      ],
       "id": "get-v-1-finetuning-finetuned-models-finetuned-model-id-events",
       "method": "GET",
       "path": [
@@ -12194,7 +12266,7 @@
             }
           },
           "description": "Bad Request",
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -12206,7 +12278,7 @@
             }
           },
           "description": "Unauthorized",
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -12218,7 +12290,7 @@
             }
           },
           "description": "Forbidden",
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -12230,7 +12302,7 @@
             }
           },
           "description": "Not Found",
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 500,
@@ -12242,7 +12314,7 @@
             }
           },
           "description": "Internal Server Error",
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 503,
@@ -12254,12 +12326,15 @@
             }
           },
           "description": "Status Service Unavailable",
-          "name": "dummy error"
+          "name": "Service Unavailable"
         }
       ],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-v-1-finetuning-finetuned-models-finetuned-model-id-training-step-metrics": {
+      "namespace": [
+        "finetuning"
+      ],
       "id": "get-v-1-finetuning-finetuned-models-finetuned-model-id-training-step-metrics",
       "method": "GET",
       "path": [
@@ -12371,7 +12446,7 @@
             }
           },
           "description": "Bad Request",
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 401,
@@ -12383,7 +12458,7 @@
             }
           },
           "description": "Unauthorized",
-          "name": "dummy error"
+          "name": "Unauthorized"
         },
         {
           "statusCode": 403,
@@ -12395,7 +12470,7 @@
             }
           },
           "description": "Forbidden",
-          "name": "dummy error"
+          "name": "Forbidden"
         },
         {
           "statusCode": 404,
@@ -12407,7 +12482,7 @@
             }
           },
           "description": "Not Found",
-          "name": "dummy error"
+          "name": "Not Found"
         },
         {
           "statusCode": 500,
@@ -12419,7 +12494,7 @@
             }
           },
           "description": "Internal Server Error",
-          "name": "dummy error"
+          "name": "Internal Server Error"
         },
         {
           "statusCode": 503,
@@ -12431,7 +12506,7 @@
             }
           },
           "description": "Status Service Unavailable",
-          "name": "dummy error"
+          "name": "Service Unavailable"
         }
       ],
       "examples": []

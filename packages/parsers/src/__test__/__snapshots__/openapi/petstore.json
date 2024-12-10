@@ -1,7 +1,7 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "test-uuid-replacement": {
+    "post-pet": {
       "description": "Add a new pet to the store",
       "id": "post-pet",
       "method": "POST",
@@ -43,7 +43,7 @@
       "errors": [],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "put-pet": {
       "description": "Update an existing pet by Id",
       "id": "put-pet",
       "method": "PUT",
@@ -85,7 +85,7 @@
       "errors": [],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-pet-pet-id": {
       "description": "Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate API error conditions",
       "id": "get-pet-pet-id",
       "method": "GET",
@@ -144,7 +144,7 @@
             }
           },
           "description": "Invalid ID supplied",
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 404,
@@ -156,7 +156,7 @@
             }
           },
           "description": "Pet not found",
-          "name": "dummy error"
+          "name": "Not Found"
         }
       ],
       "examples": []

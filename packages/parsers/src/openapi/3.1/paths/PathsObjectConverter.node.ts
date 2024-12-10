@@ -1,18 +1,25 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
-import { v4 } from "uuid";
 import { FernRegistry } from "../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
+import { isWebhookDefinition } from "../guards/isWebhookDefinition";
 import { PathItemObjectConverterNode } from "./PathItemObjectConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
+export declare namespace PathsObjectConverterNode {
+    export interface Output {
+        endpoints: Record<FernRegistry.EndpointId, FernRegistry.api.latest.EndpointDefinition>;
+        webhookEndpoints: Record<FernRegistry.WebhookId, FernRegistry.api.latest.WebhookDefinition>;
+    }
+}
+
 export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.PathsObject,
-    Record<FernRegistry.EndpointId, FernRegistry.api.latest.EndpointDefinition>
+    PathsObjectConverterNode.Output
 > {
     paths: PathItemObjectConverterNode[] | undefined;
 
@@ -23,6 +30,7 @@ export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         super(args);
         this.safeParse();
     }
+
     parse(): void {
         this.paths = Object.entries(this.input)
             .map(([path, pathItem]) => {
@@ -37,30 +45,38 @@ export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                         pathId: path,
                     },
                     coalesceServers(this.servers, pathItem.servers, this.context, this.accessPath),
+                    undefined,
                 );
             })
             .filter(isNonNullish);
     }
 
-    convert(): Record<FernRegistry.EndpointId, FernRegistry.api.latest.EndpointDefinition> | undefined {
+    convert(): PathsObjectConverterNode.Output | undefined {
         if (this.paths == null) {
             return undefined;
         }
 
-        return Object.fromEntries(
-            Object.values(this.paths)
-                .flatMap((pathItem) => {
-                    const endpointDefinitions = pathItem.convert();
-                    if (endpointDefinitions == null) {
-                        return undefined;
-                    }
+        const endpoints: Record<FernRegistry.EndpointId, FernRegistry.api.latest.EndpointDefinition> = {};
+        const webhookEndpoints: Record<FernRegistry.WebhookId, FernRegistry.api.latest.WebhookDefinition> = {};
 
-                    return endpointDefinitions.map((endpointDefinition) => [
-                        FernRegistry.EndpointId(v4()),
-                        endpointDefinition,
-                    ]);
-                })
-                .filter(isNonNullish),
-        );
+        this.paths.forEach((pathItem) => {
+            const pathItemDefinitions = pathItem.convert();
+            if (pathItemDefinitions == null) {
+                return undefined;
+            }
+
+            pathItemDefinitions.forEach((definition) => {
+                if (isWebhookDefinition(definition)) {
+                    webhookEndpoints[FernRegistry.WebhookId(definition.id)] = definition;
+                } else {
+                    endpoints[FernRegistry.EndpointId(definition.id)] = definition;
+                }
+            });
+        });
+
+        return {
+            endpoints,
+            webhookEndpoints,
+        };
     }
 }
