@@ -1,9 +1,9 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "test-uuid-replacement": {
+    "post-pet": {
       "description": "Add a new pet to the store",
-      "id": "/pet",
+      "id": "post-pet",
       "method": "POST",
       "path": [
         {
@@ -11,6 +11,7 @@
           "value": "pet"
         }
       ],
+      "auth": [],
       "defaultEnvironment": "x-fern-server-name",
       "environments": [
         {
@@ -42,9 +43,9 @@
       "errors": [],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "put-pet": {
       "description": "Update an existing pet by Id",
-      "id": "/pet",
+      "id": "put-pet",
       "method": "PUT",
       "path": [
         {
@@ -52,6 +53,7 @@
           "value": "pet"
         }
       ],
+      "auth": [],
       "defaultEnvironment": "x-fern-server-name",
       "environments": [
         {
@@ -83,9 +85,9 @@
       "errors": [],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-pet-pet-id": {
       "description": "Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate API error conditions",
-      "id": "/pet/{petId}",
+      "id": "get-pet-pet-id",
       "method": "GET",
       "path": [
         {
@@ -97,6 +99,7 @@
           "value": "petId"
         }
       ],
+      "auth": [],
       "defaultEnvironment": "x-fern-server-name",
       "environments": [
         {
@@ -141,7 +144,7 @@
             }
           },
           "description": "Invalid ID supplied",
-          "name": "dummy error"
+          "name": "Bad Request"
         },
         {
           "statusCode": 404,
@@ -153,7 +156,7 @@
             }
           },
           "description": "Pet not found",
-          "name": "dummy error"
+          "name": "Not Found"
         }
       ],
       "examples": []
@@ -538,9 +541,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "long"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "long"
+                    }
+                  }
                 }
               }
             }
@@ -562,8 +571,14 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "id",
-                "id": "Category"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Category"
+                  }
+                }
               }
             }
           },
@@ -590,12 +605,18 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "list",
-                "itemShape": {
+                "type": "optional",
+                "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "id",
-                    "id": "Tag"
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Tag"
+                      }
+                    }
                   }
                 }
               }
@@ -604,18 +625,24 @@
           {
             "key": "status",
             "valueShape": {
-              "type": "enum",
-              "values": [
-                {
-                  "value": "available"
-                },
-                {
-                  "value": "pending"
-                },
-                {
-                  "value": "sold"
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "enum",
+                  "values": [
+                    {
+                      "value": "available"
+                    },
+                    {
+                      "value": "pending"
+                    },
+                    {
+                      "value": "sold"
+                    }
+                  ]
                 }
-              ]
+              }
             },
             "description": "pet status in the store"
           }

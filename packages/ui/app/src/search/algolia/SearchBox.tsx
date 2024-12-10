@@ -1,4 +1,4 @@
-import { PLATFORM } from "@fern-api/ui-core-utils";
+import { getPlatform } from "@fern-api/ui-core-utils";
 import { FernButton, FernInput } from "@fern-ui/components";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 import { Search, Xmark } from "iconoir-react";
@@ -52,7 +52,7 @@ export const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(function S
 
     useKeyboardCommand({
         key: "A",
-        platform: PLATFORM,
+        platform: getPlatform(),
         onCommand: focusInput,
         preventDefault: false,
     });
