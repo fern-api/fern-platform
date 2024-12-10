@@ -1,4 +1,4 @@
-import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
+import { EMPTY_OBJECT, getDevice, getPlatform } from "@fern-api/ui-core-utils";
 import { FacetsResponse } from "@fern-ui/fern-docs-search-server/algolia";
 import { FacetName } from "@fern-ui/fern-docs-search-server/types";
 import { useDeepCompareEffect, useEventCallback } from "@fern-ui/react-commons";
@@ -23,6 +23,7 @@ import { InstantSearchNext } from "react-instantsearch-nextjs";
 import { preload } from "swr";
 import useSWRImmutable from "swr/immutable";
 
+import { uniq } from "es-toolkit/compat";
 import { FacetFilter, isFacetName } from "../types";
 import { toAlgoliaFacetFilters } from "../utils/facet-filters";
 
@@ -31,6 +32,7 @@ function SearchClientRoot({
     fetchFacets,
     initialFilters,
     authenticatedUserToken,
+    analyticsTags,
     ...props
 }: PropsWithChildren<{
     /**
@@ -62,11 +64,20 @@ function SearchClientRoot({
      */
     authenticatedUserToken?: string;
     children: ReactNode;
+    /**
+     * Additional analytics tags to track metrics for this search client.
+     */
+    analyticsTags?: string[];
 }>): ReactNode {
     return (
         <SearchClientProvider {...props}>
             <FacetFiltersProvider fetchFacets={fetchFacets} initialFilters={initialFilters}>
-                <InstantSearchWrapper authenticatedUserToken={authenticatedUserToken}>{children}</InstantSearchWrapper>
+                <InstantSearchWrapper
+                    authenticatedUserToken={authenticatedUserToken}
+                    analyticsTags={uniq([getPlatform(), getDevice(), props.domain, ...(analyticsTags ?? [])])}
+                >
+                    {children}
+                </InstantSearchWrapper>
             </FacetFiltersProvider>
         </SearchClientProvider>
     );
@@ -229,7 +240,8 @@ function toFacetFilters(initialFilters: Partial<Record<FacetName, string>> = EMP
 function InstantSearchWrapper({
     authenticatedUserToken,
     children,
-}: PropsWithChildren<{ authenticatedUserToken?: string }>): ReactElement {
+    analyticsTags,
+}: PropsWithChildren<{ authenticatedUserToken?: string; analyticsTags?: string[] }>): ReactElement {
     const { searchClient, indexName } = useSearchClient();
     const { filters } = useFacetFilters();
 
@@ -251,6 +263,8 @@ function InstantSearchWrapper({
                 ignorePlurals
                 enableRules
                 decompoundQuery
+                analytics
+                analyticsTags={analyticsTags}
             />
             {children}
         </InstantSearchNext>

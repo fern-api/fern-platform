@@ -1,3 +1,4 @@
+import { getDevice, getPlatform } from "@fern-api/ui-core-utils";
 import { createSearchPlaceholderWithVersion } from "@fern-ui/search-utils";
 import { useAtomValue, useSetAtom } from "jotai";
 import dynamic from "next/dynamic";
@@ -7,6 +8,7 @@ import {
     CURRENT_VERSION_ATOM,
     IS_MOBILE_SCREEN_ATOM,
     SEARCH_DIALOG_OPEN_ATOM,
+    useDomain,
     useFeatureFlag,
     useFeatureFlags,
     useIsSearchDialogOpen,
@@ -75,6 +77,7 @@ export declare namespace SearchSidebar {
 }
 
 export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = ({ children }) => {
+    const domain = useDomain();
     const sidebar = useSidebarNodes();
     const activeVersion = useAtomValue(CURRENT_VERSION_ATOM);
     const placeholder = useMemo(
@@ -98,7 +101,12 @@ export const SearchSidebar: React.FC<PropsWithChildren<SearchSidebar.Props>> = (
 
         return (
             <InstantSearch searchClient={searchClient} indexName={indexName}>
-                <Configure filters={getFeatureFlagFilters(isNewSearchExperienceEnabled)} hitsPerPage={40} />
+                <Configure
+                    filters={getFeatureFlagFilters(isNewSearchExperienceEnabled)}
+                    hitsPerPage={40}
+                    analytics
+                    analyticsTags={["search-v1-mobile", getPlatform(), getDevice(), domain]}
+                />
                 <SearchMobileBox ref={inputRef} placeholder={placeholder} className="mx-4 mt-4" />
                 <SearchMobileHits>{children}</SearchMobileHits>
             </InstantSearch>
