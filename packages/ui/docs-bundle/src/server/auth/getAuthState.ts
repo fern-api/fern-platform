@@ -5,6 +5,7 @@ import { withoutStaging } from "@fern-ui/fern-docs-utils";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import urlJoin from "url-join";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
+import { getAllowedRedirectUrls } from "./allowed-redirects";
 import { getOrgMetadataForDomain } from "./metadata-for-url";
 import { getOryAuthorizationUrl } from "./ory";
 import { getReturnToQueryParam } from "./return-to";
@@ -24,6 +25,11 @@ interface DomainAndHost {
      * The host of the request
      */
     host: string;
+
+    /**
+     * allowed destinations for redirects
+     */
+    allowedDestinations: string[];
 }
 
 interface AuthStateBase {
@@ -161,7 +167,7 @@ export async function getAuthState(
         previewAuthConfig: orgMetadata != null ? await getPreviewUrlAuthConfig(orgMetadata) : undefined,
     });
 
-    return { ...authState, domain, host };
+    return { ...authState, domain, host, allowedDestinations: getAllowedRedirectUrls(authConfig) };
 }
 
 function getAuthorizationUrl(authConfig: AuthEdgeConfig, host: string, pathname?: string): string | undefined {

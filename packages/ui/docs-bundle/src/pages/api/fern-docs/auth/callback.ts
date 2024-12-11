@@ -1,4 +1,6 @@
+import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
+import { FernNextResponse } from "@/server/FernNextResponse";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
@@ -26,11 +28,12 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const redirectLocation = safeUrl(return_to) ?? safeUrl(withDefaultProtocol(host));
 
     if (error != null) {
-        return redirectWithLoginError(redirectLocation, error, error_description);
+        return redirectWithLoginError(req, redirectLocation, error, error_description);
     }
 
     if (typeof code !== "string") {
         return redirectWithLoginError(
+            req,
             redirectLocation,
             "missing_authorization_code",
             "Couldn't login, please try again",
@@ -51,11 +54,17 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             "/api/fern-docs/auth/callback",
             "/api/fern-docs/oauth/ory/callback",
         );
-        return NextResponse.redirect(nextUrl);
+        return FernNextResponse.redirect(req, {
+            destination: nextUrl,
+            allowedDestinations: getAllowedRedirectUrls(config),
+        });
     } else if (config?.type === "sso") {
         nextUrl.pathname = nextUrl.pathname.replace("/api/fern-docs/auth/callback", "/api/fern-docs/auth/sso/callback");
-        return NextResponse.redirect(nextUrl);
+        return FernNextResponse.redirect(req, {
+            destination: nextUrl,
+            allowedDestinations: getAllowedRedirectUrls(config),
+        });
     }
 
-    return redirectWithLoginError(redirectLocation, "unknown_error", "Couldn't login, please try again");
+    return redirectWithLoginError(req, redirectLocation, "unknown_error", "Couldn't login, please try again");
 }
