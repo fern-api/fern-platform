@@ -39,7 +39,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         new URL(domain);
 
     const res = FernNextResponse.redirect(req, {
-        destination: redirectLocation.toString(),
+        destination: redirectLocation,
         allowedDestinations: getAllowedRedirectUrls(authConfig),
     });
     res.cookies.delete(withDeleteCookie(COOKIE_FERN_TOKEN, withDefaultProtocol(getHostEdge(req))));

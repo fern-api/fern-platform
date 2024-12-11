@@ -41,7 +41,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
 
     const res = redirectLocation
         ? FernNextResponse.redirect(req, {
-              destination: redirectLocation.toString(),
+              destination: redirectLocation,
               allowedDestinations: getAllowedRedirectUrls(edgeConfig),
           })
         : NextResponse.next();
