@@ -1,5 +1,5 @@
 import { AuthEdgeConfig } from "@fern-ui/fern-docs-auth";
-import { compact } from "es-toolkit/compat";
+import { compact } from "es-toolkit/array";
 
 const WORKOS_API_URL = "https://api.workos.com";
 
