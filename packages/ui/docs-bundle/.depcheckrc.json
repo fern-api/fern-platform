@@ -2,7 +2,7 @@
   "ignores": [
     "@fern-platform/configs",
     "@types/node",
-    "@types/react",
+    "@types/react", 
     "@types/react-dom",
     "autoprefixer",
     "postcss",
@@ -15,7 +15,10 @@
     "node-fetch",
     "@types/node-fetch",
     "sharp",
-    "esbuild"
+    "esbuild",
+    "glslify-import",
+    "glslify-loader",
+    "raw-loader"
   ],
   "ignore-patterns": ["dist"]
 }
