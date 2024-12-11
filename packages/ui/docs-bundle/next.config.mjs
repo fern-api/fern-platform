@@ -58,6 +58,7 @@ const nextConfig = {
         "@fern-ui/react-commons",
         "@fern-ui/search-utils",
         "@fern-ui/ui",
+        "three",
     ],
     experimental: {
         scrollRestoration: true,

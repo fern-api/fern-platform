@@ -23,6 +23,7 @@ const nextConfig = {
         "@fern-ui/react-commons",
         "@fern-ui/search-utils",
         "@fern-ui/ui",
+        "three"
     ],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
     reactProductionProfiling: process.env.ENABLE_SOURCE_MAPS === "true",
@@ -35,6 +36,24 @@ const nextConfig = {
         unoptimized: true,
     },
     output: "export",
+    webpack: (config) => {
+        config.module.rules.push({
+            test: /\.(glsl|vert|frag)$/,
+            exclude: /node_modules/,
+            use: [
+                {
+                    loader: "raw-loader",
+                },
+                {
+                    loader: "glslify-loader",
+                    options: {
+                        transform: ["glslify-import"],
+                    },
+                },
+            ],
+        });
+        return config;
+    },
 };
 
 const withBundleAnalyzer = createWithBundleAnalyzer({

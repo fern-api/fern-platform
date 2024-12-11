@@ -2995,6 +2995,12 @@ importers:
       express:
         specifier: ^4.20.0
         version: 4.21.1
+      glslify-import:
+        specifier: ^3.1.0
+        version: 3.1.0
+      glslify-loader:
+        specifier: ^2.0.0
+        version: 2.0.0
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -3004,6 +3010,9 @@ importers:
       prettier:
         specifier: ^3.3.2
         version: 3.3.2
+      raw-loader:
+        specifier: ^4.0.2
+        version: 4.0.2(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.5)))
       sass:
         specifier: ^1.74.1
         version: 1.77.0
@@ -31620,6 +31629,12 @@ snapshots:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
       webpack: 5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.5))(esbuild@0.20.2)
+
+  raw-loader@4.0.2(webpack@5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.5))):
+    dependencies:
+      loader-utils: 2.0.4
+      schema-utils: 3.3.0
+      webpack: 5.94.0(@swc/core@1.5.7(@swc/helpers@0.5.5))
 
   rc@1.2.8:
     dependencies:
