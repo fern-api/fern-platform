@@ -39,6 +39,8 @@ import { Tooltip } from "./tooltip";
 
 const LaunchDarkly = dynamic(() => import("./launchdarkly/LaunchDarkly").then((mod) => mod.LaunchDarkly));
 
+const ElevenLabsWaveform = dynamic(() => import("./waveform/WaveformComplex").then((mod) => mod.default));
+
 const FERN_COMPONENTS = {
     AccordionGroup,
     Availability,
@@ -81,6 +83,7 @@ const FERN_COMPONENTS = {
     Cards: CardGroup,
     CodeBlocks: CodeGroup,
     Tabs: TabGroup,
+    ElevenLabsWaveform,
 };
 
 // internal-use only
