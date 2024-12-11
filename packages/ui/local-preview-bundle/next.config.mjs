@@ -6,6 +6,7 @@ const nextConfig = {
     transpilePackages: [
         "next-mdx-remote",
         "es-toolkit",
+        "three",
 
         /**
          * Monorepo packages that are not transpiled by default.
@@ -23,7 +24,6 @@ const nextConfig = {
         "@fern-ui/react-commons",
         "@fern-ui/search-utils",
         "@fern-ui/ui",
-        "three"
     ],
     productionBrowserSourceMaps: process.env.ENABLE_SOURCE_MAPS === "true",
     reactProductionProfiling: process.env.ENABLE_SOURCE_MAPS === "true",
@@ -38,12 +38,10 @@ const nextConfig = {
     output: "export",
     webpack: (config) => {
         config.module.rules.push({
-            test: /\.(glsl|vert|frag)$/,
+            test: /\.(glsl|vs|fs|vert|frag)$/,
             exclude: /node_modules/,
             use: [
-                {
-                    loader: "raw-loader",
-                },
+                "raw-loader",
                 {
                     loader: "glslify-loader",
                     options: {

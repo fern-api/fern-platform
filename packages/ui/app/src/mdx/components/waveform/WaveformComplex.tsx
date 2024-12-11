@@ -5,7 +5,7 @@ import { gradientColors } from "./types";
 import { OrthographicCamera } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import cn from "clsx";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 import { motion, useMotionValueEvent, useSpring } from "framer-motion";
@@ -35,7 +35,7 @@ export default function WaveformComplex({
     zoom?: number;
     blur?: number;
     speed?: number;
-}): React.JSX.Element {
+}): ReactNode {
     const colors = gradientColors[color] || gradientColors.neutral;
     const canvasWrapper = useRef<HTMLDivElement>(null);
     const [displayCanvas, setDisplayCanvas] = useState(false);

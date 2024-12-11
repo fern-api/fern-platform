@@ -36,6 +36,7 @@ const nextConfig = {
         "next-mdx-remote",
         "esbuild",
         "es-toolkit",
+        "three",
 
         /**
          * Monorepo packages that are not transpiled by default.
@@ -58,7 +59,6 @@ const nextConfig = {
         "@fern-ui/react-commons",
         "@fern-ui/search-utils",
         "@fern-ui/ui",
-        "three",
     ],
     experimental: {
         scrollRestoration: true,
@@ -147,12 +147,10 @@ const nextConfig = {
             config.externals.push("esbuild");
         }
         config.module.rules.push({
-            test: /\.(glsl|vert|frag)$/,
+            test: /\.(glsl|vs|fs|vert|frag)$/,
             exclude: /node_modules/,
             use: [
-                {
-                    loader: "raw-loader",
-                },
+                "raw-loader",
                 {
                     loader: "glslify-loader",
                     options: {
