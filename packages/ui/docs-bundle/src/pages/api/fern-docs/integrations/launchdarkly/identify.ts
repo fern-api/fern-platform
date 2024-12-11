@@ -9,7 +9,7 @@ export const runtime = "edge";
 export default async function handler(req: NextRequest): Promise<NextResponse> {
     const email = req.nextUrl.searchParams.get(COOKIE_EMAIL);
 
-    const res = FernNextResponse.redirect(req, withDefaultProtocol(getHostEdge(req)));
+    const res = FernNextResponse.redirect(req, { destination: withDefaultProtocol(getHostEdge(req)) });
 
     if (email) {
         res.cookies.set({ name: COOKIE_EMAIL, value: email });

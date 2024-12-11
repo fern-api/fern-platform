@@ -1,21 +1,30 @@
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { NextRequest, NextResponse } from "next/server";
-import { getDocsDomainEdge } from "./xfernhost/edge";
+import { getHostEdge } from "./xfernhost/edge";
 
 export class FernNextResponse {
-    public static redirect(req: NextRequest, destination?: string): NextResponse {
+    public static redirect(
+        req: NextRequest,
+        {
+            destination,
+            allowedDestinations,
+        }: {
+            destination?: string | URL;
+            allowedDestinations?: string[];
+        },
+        init?: ResponseInit,
+    ): NextResponse {
         if (typeof destination === "undefined") {
             return NextResponse.next();
         }
 
-        const domain = getDocsDomainEdge(req);
-        let redirectLocation = new URL(destination);
+        const allowedDomains = [getHostEdge(req), ...(allowedDestinations ?? []).map((url) => new URL(url).host)];
+        const redirectLocation = new URL(destination);
 
-        // sanitize potentially problematic open redirects
-        if (new URL(destination).host !== new URL(withDefaultProtocol(domain)).host) {
-            redirectLocation = new URL(withDefaultProtocol(domain));
+        if (!allowedDomains.includes(redirectLocation.host)) {
+            // open redirect to unknown host detected:
+            return new NextResponse(null, { status: 410 });
         }
 
-        return NextResponse.redirect(redirectLocation);
+        return NextResponse.redirect(redirectLocation, init);
     }
 }

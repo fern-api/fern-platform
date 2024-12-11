@@ -1,3 +1,4 @@
+import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withDeleteCookie } from "@/server/auth/with-secure-cookie";
 import { revokeSessionForToken } from "@/server/auth/workos-session";
@@ -37,7 +38,10 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         safeUrl(withDefaultProtocol(getHostEdge(req))) ??
         new URL(domain);
 
-    const res = FernNextResponse.redirect(req, redirectLocation.toString());
+    const res = FernNextResponse.redirect(req, {
+        destination: redirectLocation.toString(),
+        allowedDestinations: getAllowedRedirectUrls(authConfig),
+    });
     res.cookies.delete(withDeleteCookie(COOKIE_FERN_TOKEN, withDefaultProtocol(getHostEdge(req))));
     res.cookies.delete(withDeleteCookie(COOKIE_ACCESS_TOKEN, withDefaultProtocol(getHostEdge(req))));
     res.cookies.delete(withDeleteCookie(COOKIE_REFRESH_TOKEN, withDefaultProtocol(getHostEdge(req))));

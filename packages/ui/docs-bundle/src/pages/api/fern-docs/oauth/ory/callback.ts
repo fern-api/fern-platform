@@ -1,3 +1,4 @@
+import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
 import { signFernJWT } from "@/server/auth/FernJWT";
 import { OryOAuth2Client } from "@/server/auth/ory";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
@@ -63,7 +64,10 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         const expires = token.exp == null ? undefined : new Date(token.exp * 1000);
         // TODO: validate allowlist of domains to prevent open redirects
         const res = redirectLocation
-            ? FernNextResponse.redirect(req, redirectLocation.toString())
+            ? FernNextResponse.redirect(req, {
+                  destination: redirectLocation,
+                  allowedDestinations: getAllowedRedirectUrls(config),
+              })
             : NextResponse.next();
         res.cookies.set(
             COOKIE_FERN_TOKEN,

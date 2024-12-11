@@ -1,3 +1,4 @@
+import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { FernNextResponse } from "@/server/FernNextResponse";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
@@ -53,10 +54,16 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
             "/api/fern-docs/auth/callback",
             "/api/fern-docs/oauth/ory/callback",
         );
-        return FernNextResponse.redirect(req, nextUrl.toString());
+        return FernNextResponse.redirect(req, {
+            destination: nextUrl,
+            allowedDestinations: getAllowedRedirectUrls(config),
+        });
     } else if (config?.type === "sso") {
         nextUrl.pathname = nextUrl.pathname.replace("/api/fern-docs/auth/callback", "/api/fern-docs/auth/sso/callback");
-        return FernNextResponse.redirect(req, nextUrl.toString());
+        return FernNextResponse.redirect(req, {
+            destination: nextUrl,
+            allowedDestinations: getAllowedRedirectUrls(config),
+        });
     }
 
     return redirectWithLoginError(req, redirectLocation, "unknown_error", "Couldn't login, please try again");

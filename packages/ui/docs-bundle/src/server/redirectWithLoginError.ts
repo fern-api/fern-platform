@@ -16,6 +16,6 @@ export function redirectWithLoginError(
     if (error_description != null) {
         url.searchParams.set("error_description", error_description);
     }
-    // TODO: validate allowlist of domains to prevent open redirects
-    return FernNextResponse.redirect(request, url.toString());
+    // TODO: check if we need to provide allowedDestinations (getAllowedRedirectUrls(edgeConfig))
+    return FernNextResponse.redirect(request, { destination: url });
 }

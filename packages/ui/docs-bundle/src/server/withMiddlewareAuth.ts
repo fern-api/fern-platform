@@ -2,9 +2,9 @@ import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { FernUser } from "@fern-ui/fern-docs-auth";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { NextRequest, NextResponse } from "next/server";
+import { FernNextResponse } from "./FernNextResponse";
 import { getAuthStateEdge } from "./auth/getAuthStateEdge";
 import { withSecureCookie } from "./auth/with-secure-cookie";
-import { FernNextResponse } from "./FernNextResponse";
 import { getHostEdge } from "./xfernhost/edge";
 
 /**
@@ -42,7 +42,10 @@ export async function withMiddlewareAuth(
     }
 
     if (res.authorizationUrl) {
-        return FernNextResponse.redirect(request, res.authorizationUrl);
+        return FernNextResponse.redirect(request, {
+            destination: res.authorizationUrl,
+            allowedDestinations: res.allowedDestinations,
+        });
     }
 
     return NextResponse.next({ status: 401 });

@@ -59,7 +59,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
         // TODO: need to support docs instances with subpaths (forward-proxied from the origin).
         const destination = new URL(`${req.nextUrl.pathname}${req.nextUrl.search}`, url.origin);
         destination.searchParams.set(FORWARDED_HOST_QUERY, req.nextUrl.host);
-        return FernNextResponse.redirect(req, destination.toString());
+        return FernNextResponse.redirect(req, { destination });
     }
 
     const code = req.nextUrl.searchParams.get(CODE_QUERY);
@@ -87,7 +87,8 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
             impersonator,
         });
 
-        const res = FernNextResponse.redirect(req, url.toString());
+        // TODO: check if we need to run `getAllowedRedirectUrls(config)` because we don't have the edge config imported here
+        const res = FernNextResponse.redirect(req, { destination: url });
         res.cookies.set(COOKIE_FERN_TOKEN, session, withSecureCookie(url.origin));
 
         return res;

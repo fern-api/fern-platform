@@ -1,3 +1,4 @@
+import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { FernNextResponse } from "@/server/FernNextResponse";
@@ -58,7 +59,10 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         });
 
         const res = redirectLocation
-            ? FernNextResponse.redirect(req, redirectLocation.toString())
+            ? FernNextResponse.redirect(req, {
+                  destination: redirectLocation,
+                  allowedDestinations: getAllowedRedirectUrls(config),
+              })
             : NextResponse.next();
         res.cookies.set("access_token", accessToken, withSecureCookie(withDefaultProtocol(host)));
         return res;

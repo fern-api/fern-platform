@@ -1,3 +1,4 @@
+import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
@@ -38,7 +39,12 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
         return redirectWithLoginError(req, redirectLocation, "unknown_error", "Couldn't login, please try again");
     }
 
-    const res = redirectLocation ? FernNextResponse.redirect(req, redirectLocation.toString()) : NextResponse.next();
+    const res = redirectLocation
+        ? FernNextResponse.redirect(req, {
+              destination: redirectLocation.toString(),
+              allowedDestinations: getAllowedRedirectUrls(edgeConfig),
+          })
+        : NextResponse.next();
     res.cookies.set(COOKIE_FERN_TOKEN, token, withSecureCookie(withDefaultProtocol(host)));
     return res;
 }
