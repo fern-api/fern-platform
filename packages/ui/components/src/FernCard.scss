@@ -17,7 +17,11 @@
         }
 
         li {
-            @apply list-inside;
+            @apply list-outside;
+        }
+        
+        ul {
+            @apply pl-5;
         }
     }
 }
