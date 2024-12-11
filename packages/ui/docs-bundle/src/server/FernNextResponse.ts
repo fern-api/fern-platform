@@ -20,11 +20,15 @@ export class FernNextResponse {
         const allowedDomains = [getHostEdge(req), ...(allowedDestinations ?? []).map((url) => new URL(url).host)];
         const redirectLocation = new URL(destination);
 
-        if (!allowedDomains.includes(redirectLocation.host)) {
+        if (!allowedDomains.includes(redirectLocation.host) || isBuildWithFern(redirectLocation.host)) {
             // open redirect to unknown host detected:
             return new NextResponse(null, { status: 410 });
         }
 
         return NextResponse.redirect(redirectLocation, init);
     }
+}
+
+function isBuildWithFern(host: string): boolean {
+    return host.toLowerCase().endsWith(".buildwithfern.com");
 }
