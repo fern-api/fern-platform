@@ -9,5 +9,4 @@ export default defineConfig({
         },
     },
     plugins: [react()],
-    assetsInclude: ["**/*.frag", "**/*.vert"],
 });
