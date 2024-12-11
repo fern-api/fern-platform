@@ -5,5 +5,10 @@
                 display: none;
             }
         }
+
+        + * {
+            position: relative;
+            z-index: 10;
+        }
     }
 }

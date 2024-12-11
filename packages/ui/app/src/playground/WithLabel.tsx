@@ -93,7 +93,7 @@ export const WithLabelInternal: FC<PropsWithChildren<WithLabelInternalProps>> = 
                     <span className={cn("font-mono text-sm")}>{propertyKey}</span>
 
                     {description != null && (
-                        <FernTooltip content={<Markdown mdx={description} size="xs" />} delayDuration={0}>
+                        <FernTooltip content={<Markdown mdx={description} size="xs" />} delayDuration={0} asChild>
                             <HelpCircle className="t-muted size-4 self-center" />
                         </FernTooltip>
                     )}

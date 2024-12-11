@@ -52,7 +52,7 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<HTMLLIElement, Play
         if (node.type === "endpoint") {
             return (
                 <li ref={ref}>
-                    <FernTooltip content={tooltipContent} side="right">
+                    <FernTooltip content={tooltipContent} side="right" asChild>
                         <FernButton
                             text={text}
                             className="w-full text-left"
@@ -80,7 +80,7 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<HTMLLIElement, Play
         } else if (node.type === "webSocket") {
             return (
                 <li ref={ref}>
-                    <FernTooltip content={tooltipContent} side="right">
+                    <FernTooltip content={tooltipContent} side="right" asChild>
                         <FernButton
                             text={text}
                             className="w-full text-left"

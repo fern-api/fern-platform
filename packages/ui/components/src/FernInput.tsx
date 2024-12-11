@@ -120,6 +120,7 @@ function FernInputRightElement({
                             </p>
                         </div>
                     }
+                    asChild
                 >
                     <FernInputResetButton onClick={onReset} className="shrink-0 mr-0.5" />
                 </FernTooltip>

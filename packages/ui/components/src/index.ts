@@ -27,4 +27,5 @@ export * from "./badges";
 export * from "./cn";
 export * from "./colors";
 export * from "./kbd";
+export * from "./tree";
 export * from "./util/shared-component-types";

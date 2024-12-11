@@ -11,7 +11,7 @@ import React, {
     forwardRef,
     memo,
     useContext,
-    useMemo,
+    useEffect,
     useRef,
     useState,
 } from "react";
@@ -31,12 +31,13 @@ const DisclosureContext = createContext<OptionalEffectTiming>(defaultAnimationOp
 
 const DisclosureItemContext = createContext<{
     open: boolean;
-    setDetailsEl: React.Dispatch<React.SetStateAction<HTMLDetailsElement | null>>;
-    setResizerEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
-    setContentEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
-    setSummaryRef: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
-    setOpen: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+    setDetailsEl: (el: HTMLDetailsElement | null) => void;
+    setResizerEl: (el: HTMLElement | null) => void;
+    setContentEl: (el: HTMLElement | null) => void;
+    setSummaryRef: (el: HTMLElement | null) => void;
+    setOpen: (open: boolean | undefined) => void;
     handleClick: (e: React.MouseEvent<HTMLElement>) => void;
+    handleClose: (e: React.MouseEvent<HTMLElement>) => void;
 }>({
     open: false,
     setDetailsEl: noop,
@@ -45,6 +46,7 @@ const DisclosureItemContext = createContext<{
     setSummaryRef: noop,
     setOpen: noop,
     handleClick: noop,
+    handleClose: noop,
 });
 
 const Disclosure = ({
@@ -104,6 +106,17 @@ const DisclosureTrigger = forwardRef<HTMLButtonElement, ComponentPropsWithoutRef
 
 DisclosureTrigger.displayName = "DisclosureTrigger";
 
+const DisclosureCloseTrigger = forwardRef<
+    HTMLButtonElement,
+    ComponentPropsWithoutRef<"button"> & { asChild?: boolean }
+>(({ asChild, ...props }, ref) => {
+    const { handleClick } = useContext(DisclosureItemContext);
+    const Comp = asChild ? Slot : "button";
+    return <Comp ref={ref} {...props} onClick={handleClick} />;
+});
+
+DisclosureCloseTrigger.displayName = "DisclosureCloseTrigger";
+
 const DisclosureDetails = forwardRef<
     HTMLDetailsElement,
     ComponentPropsWithoutRef<"details"> & {
@@ -115,14 +128,13 @@ const DisclosureDetails = forwardRef<
     }
 >(({ children, asChild, open: openProp, defaultOpen, onOpenChange, ...props }, forwardedRef) => {
     const [open = false, setOpen] = useControllableState({
-        prop: openProp,
         defaultProp: defaultOpen,
         onChange: onOpenChange,
     });
-    const [detailsEl, setDetailsEl] = useState<HTMLDetailsElement | null>(null);
-    const [resizerEl, setResizerEl] = useState<HTMLElement | null>(null);
-    const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
-    const [_summaryRef, setSummaryRef] = useState<HTMLElement | null>(null);
+    const detailsRef = useRef<HTMLDetailsElement | null>(null);
+    const resizerRef = useRef<HTMLElement | null>(null);
+    const contentRef = useRef<HTMLElement | null>(null);
+    const summaryRef = useRef<HTMLElement | null>(null);
 
     const animate1 = useRef<Animation>();
     const animate2 = useRef<Animation>();
@@ -130,177 +142,213 @@ const DisclosureDetails = forwardRef<
 
     const animationOptions = useContext(DisclosureContext);
 
-    const ctxValue = useMemo(() => {
-        const handleAnimateHeight = ({
-            animationState,
+    const handleAnimateHeight = ({
+        animationState,
+        startHeight,
+        endHeight,
+        open,
+    }: {
+        animationState: AnimationState;
+        startHeight: number;
+        endHeight: number;
+        open: boolean;
+    }) => {
+        setAnimationState(animationState);
+
+        animate1.current?.cancel();
+        animate2.current?.cancel();
+
+        // When expanding
+        if (startHeight < endHeight) {
+            animate1.current = contentRef.current?.animate(
+                {
+                    height: [`${startHeight}px`, `${endHeight}px`],
+                    opacity: [0, 1],
+                },
+                animationOptions,
+            );
+
+            animate2.current = contentRef.current?.animate(
+                {
+                    transform: ["translateY(-20px)", "translateY(0)"],
+                },
+                animationOptions,
+            );
+        }
+        // When shrinking
+        else {
+            animate1.current = contentRef.current?.animate(
+                {
+                    height: [`${startHeight}px`, `${endHeight}px`],
+                    opacity: [1, 0],
+                },
+                animationOptions,
+            );
+
+            animate2.current = contentRef.current?.animate(
+                {
+                    transform: ["translateY(0)", "translateY(-20px)"],
+                },
+                animationOptions,
+            );
+        }
+
+        setOpen(open);
+        if (animate1.current) {
+            animate1.current.onfinish = () => onAnimationFinish(open);
+            animate1.current.oncancel = () => {
+                animate2.current?.cancel();
+                setAnimationState(AnimationState.IDLE);
+            };
+        }
+    };
+
+    const handleShrink = () => {
+        if (animationState === AnimationState.SHRINKING) {
+            return;
+        }
+
+        setAnimationState(AnimationState.SHRINKING);
+
+        const startHeight =
+            animationState === AnimationState.IDLE
+                ? contentRef.current?.offsetHeight ?? 0
+                : resizerRef.current?.offsetHeight ?? 0;
+        const endHeight = 0;
+
+        handleAnimateHeight({
+            animationState: AnimationState.SHRINKING,
             startHeight,
             endHeight,
-            open,
-        }: {
-            animationState: AnimationState;
-            startHeight: number;
-            endHeight: number;
-            open: boolean;
-        }) => {
-            setAnimationState(animationState);
+            open: false,
+        });
+    };
 
-            animate1.current?.cancel();
-            animate2.current?.cancel();
+    const handleExpand = () => {
+        if (animationState === AnimationState.EXPANDING) {
+            return;
+        }
 
-            // When expanding
-            if (startHeight < endHeight) {
-                animate1.current = contentEl?.animate(
-                    {
-                        height: [`${startHeight}px`, `${endHeight}px`],
-                        opacity: [0, 1],
-                    },
-                    animationOptions,
-                );
+        const startHeight = animationState === AnimationState.IDLE ? 0 : resizerRef.current?.offsetHeight ?? 0;
+        const endHeight = contentRef.current?.scrollHeight ?? 0;
 
-                animate2.current = contentEl?.animate(
-                    {
-                        transform: ["translateY(-20px)", "translateY(0)"],
-                    },
-                    animationOptions,
-                );
+        handleAnimateHeight({
+            animationState: AnimationState.EXPANDING,
+            startHeight,
+            endHeight,
+            open: true,
+        });
+    };
+
+    const onAnimationFinish = (open: boolean) => {
+        if (detailsRef.current) {
+            detailsRef.current.open = open;
+        }
+
+        if (resizerRef.current) {
+            resizerRef.current.style.height = "";
+            resizerRef.current.style.overflow = "";
+            resizerRef.current.style.willChange = "";
+        }
+
+        if (contentRef.current) {
+            contentRef.current.style.willChange = "";
+        }
+
+        animate1.current = undefined;
+        animate2.current = undefined;
+        setAnimationState(AnimationState.IDLE);
+    };
+
+    const handleClose = () => {
+        if (resizerRef.current) {
+            resizerRef.current.style.overflow = "hidden";
+            resizerRef.current.style.willChange = "height";
+        }
+
+        if (contentRef.current) {
+            contentRef.current.style.willChange = "transform";
+        }
+
+        requestAnimationFrame(() => handleShrink());
+    };
+
+    const handleOpen = () => {
+        if (resizerRef.current) {
+            resizerRef.current.style.overflow = "hidden";
+            resizerRef.current.style.willChange = "height";
+        }
+
+        if (contentRef.current) {
+            contentRef.current.style.willChange = "transform";
+        }
+
+        if (detailsRef.current) {
+            detailsRef.current.open = true;
+        }
+
+        setOpen(true);
+
+        requestAnimationFrame(() => handleExpand());
+    };
+
+    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+        if (detailsRef.current) {
+            if (animationState === AnimationState.SHRINKING || !detailsRef.current.open) {
+                handleOpen();
+            } else if (animationState === AnimationState.EXPANDING || detailsRef.current.open) {
+                handleClose();
             }
-            // When shrinking
-            else {
-                animate1.current = contentEl?.animate(
-                    {
-                        height: [`${startHeight}px`, `${endHeight}px`],
-                        opacity: [1, 0],
-                    },
-                    animationOptions,
-                );
+        }
+    };
 
-                animate2.current = contentEl?.animate(
-                    {
-                        transform: ["translateY(0)", "translateY(-20px)"],
-                    },
-                    animationOptions,
-                );
+    useEffect(() => {
+        if (detailsRef.current) {
+            if (openProp === true) {
+                handleOpen();
+            } else if (openProp === false) {
+                handleClose();
             }
-
-            setOpen(open);
-            if (animate1.current) {
-                animate1.current.onfinish = () => onAnimationFinish(open);
-                animate1.current.oncancel = () => {
-                    animate2.current?.cancel();
-                    setAnimationState(AnimationState.IDLE);
-                };
-            }
-        };
-
-        const handleShrink = () => {
-            setAnimationState(AnimationState.SHRINKING);
-
-            const startHeight =
-                animationState === AnimationState.IDLE ? contentEl?.offsetHeight ?? 0 : resizerEl?.offsetHeight ?? 0;
-            const endHeight = 0;
-
-            handleAnimateHeight({
-                animationState: AnimationState.SHRINKING,
-                startHeight,
-                endHeight,
-                open: false,
-            });
-        };
-
-        const handleExpand = () => {
-            const startHeight = animationState === AnimationState.IDLE ? 0 : resizerEl?.offsetHeight ?? 0;
-            const endHeight = contentEl?.offsetHeight ?? 0;
-
-            handleAnimateHeight({
-                animationState: AnimationState.EXPANDING,
-                startHeight,
-                endHeight,
-                open: true,
-            });
-        };
-
-        const onAnimationFinish = (open: boolean) => {
-            if (detailsEl) {
-                detailsEl.open = open;
-            }
-
-            if (resizerEl) {
-                resizerEl.style.height = "";
-                resizerEl.style.overflow = "";
-                resizerEl.style.willChange = "";
-            }
-
-            if (contentEl) {
-                contentEl.style.willChange = "";
-            }
-
-            animate1.current = undefined;
-            animate2.current = undefined;
-            setAnimationState(AnimationState.IDLE);
-        };
-
-        const handleClose = () => {
-            if (resizerEl) {
-                resizerEl.style.willChange = "height";
-            }
-
-            if (contentEl) {
-                contentEl.style.willChange = "transform";
-            }
-
-            requestAnimationFrame(() => handleShrink());
-        };
-
-        const handleOpen = () => {
-            if (resizerEl) {
-                resizerEl.style.height = `${resizerEl.offsetHeight}px`;
-                resizerEl.style.willChange = "height";
-            }
-
-            if (contentEl) {
-                contentEl.style.willChange = "transform";
-            }
-
-            if (detailsEl) {
-                detailsEl.open = true;
-            }
-
-            setOpen(true);
-
-            requestAnimationFrame(() => handleExpand());
-        };
-
-        const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-            e.preventDefault();
-            if (resizerEl && detailsEl) {
-                resizerEl.style.overflow = "hidden";
-
-                if (animationState === AnimationState.SHRINKING || !detailsEl.open) {
-                    handleOpen();
-                } else if (animationState === AnimationState.EXPANDING || detailsEl.open) {
-                    handleClose();
-                }
-            }
-        };
-
-        return {
-            open,
-            setDetailsEl,
-            setResizerEl,
-            setContentEl,
-            setSummaryRef,
-            setOpen,
-            handleClick,
-        };
-    }, [animationOptions, animationState, contentEl, detailsEl, open, resizerEl, setOpen]);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [openProp]);
 
     const Comp = asChild ? Slot : "details";
 
+    const { handleClose: handleCloseParent } = useContext(DisclosureItemContext);
+
     return (
-        <DisclosureItemContext.Provider value={ctxValue}>
+        <DisclosureItemContext.Provider
+            value={{
+                open,
+                setDetailsEl: (el) => {
+                    detailsRef.current = el;
+                },
+                setResizerEl: (el) => {
+                    resizerRef.current = el;
+                },
+                setContentEl: (el) => {
+                    contentRef.current = el;
+                },
+                setSummaryRef: (el) => {
+                    summaryRef.current = el;
+                },
+                setOpen,
+                handleClick,
+                handleClose: open
+                    ? (e) => {
+                          e.preventDefault();
+                          handleClose();
+                      }
+                    : handleCloseParent,
+            }}
+        >
             <Comp
                 {...props}
-                ref={composeRefs(forwardedRef, (div) => setDetailsEl(div))}
+                ref={composeRefs(forwardedRef, (div) => {
+                    detailsRef.current = div;
+                })}
                 onToggle={(e) => {
                     setOpen(e.currentTarget.open);
                 }}
@@ -332,6 +380,7 @@ Disclosure.Details = memo(DisclosureDetails);
 Disclosure.Summary = DisclosureSummary;
 Disclosure.Content = DisclosureContent;
 Disclosure.Trigger = DisclosureTrigger;
+Disclosure.CloseTrigger = DisclosureCloseTrigger;
 
 export default Disclosure;
 export { Disclosure };

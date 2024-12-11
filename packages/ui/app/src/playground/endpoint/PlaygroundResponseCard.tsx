@@ -62,7 +62,7 @@ export function PlaygroundResponseCard({ response, sendRequest }: PlaygroundResp
                     loaded: (response) =>
                         response.type === "file" ? (
                             <FernTooltipProvider>
-                                <FernTooltip content="Download file">
+                                <FernTooltip content="Download file" asChild>
                                     <FernButton
                                         icon={<Download />}
                                         size="small"

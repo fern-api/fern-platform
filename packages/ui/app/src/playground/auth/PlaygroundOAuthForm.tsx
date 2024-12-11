@@ -99,7 +99,10 @@ function FoundOAuthReferencedEndpointForm({
                                     <label className="inline-flex items-baseline gap-2 truncate">
                                         <span className="font-mono text-sm inline-flex">
                                             Generated OAuth Token
-                                            <FernTooltip content="This bearer token was generated from an OAuth API call, and as a result cannot be edited">
+                                            <FernTooltip
+                                                content="This bearer token was generated from an OAuth API call, and as a result cannot be edited"
+                                                asChild
+                                            >
                                                 <HelpCircle className="t-muted size-4 self-center ml-2" />
                                             </FernTooltip>
                                         </span>

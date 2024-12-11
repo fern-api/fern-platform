@@ -204,6 +204,7 @@ function FernDropdownItemValue({
             side="right"
             sideOffset={8}
             container={container}
+            asChild
         >
             <DropdownMenu.RadioItem asChild={true} value={option.value}>
                 {dropdownMenuElement != null ? (

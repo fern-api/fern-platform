@@ -87,7 +87,7 @@ export const FernButton = forwardRef<HTMLButtonElement, FernButtonProps>(functio
 
     if (isEllipsisActive() && !disableAutomaticTooltip && (children ?? text) != null) {
         return (
-            <FernTooltip content={children ?? text} className="line-clamp-3">
+            <FernTooltip content={children ?? text} className="line-clamp-3" asChild>
                 {button}
             </FernTooltip>
         );

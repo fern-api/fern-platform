@@ -25,6 +25,7 @@ export const PlaygroundButton: FC<{
                         Customize and run in <span className="font-semibold t-accent">API Playground</span>
                     </span>
                 }
+                asChild
             >
                 <FernButton
                     aria-description={

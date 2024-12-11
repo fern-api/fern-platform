@@ -23,6 +23,7 @@ export const Chip = ({ name, description = undefined, small }: ChipProps): React
                     <Markdown mdx={description} className="text-xs" />
                 ) : undefined
             }
+            asChild
         >
             <span
                 className={cn(

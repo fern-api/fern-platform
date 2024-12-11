@@ -8,7 +8,7 @@ export const ApiReferenceButton: React.FC<{ slug: FernNavigation.Slug }> = ({ sl
     const href = useHref(slug);
     return (
         <FernTooltipProvider>
-            <FernTooltip content="Open in API reference">
+            <FernTooltip content="Open in API reference" asChild>
                 <FernLinkButton
                     className="-m-1"
                     rounded

@@ -17,7 +17,7 @@ export const FernRadioGroup = forwardRef<HTMLDivElement, FernRadioGroupProps>(
                 {options.map(
                     (item) =>
                         item.type === "value" && (
-                            <FernTooltip content={item.tooltip} key={item.value} container={container}>
+                            <FernTooltip content={item.tooltip} key={item.value} container={container} asChild>
                                 <label className="fern-radio-label">
                                     <RadioGroup.Item value={item.value} className="fern-radio-item">
                                         <RadioGroup.Indicator className="fern-radio-indicator" />

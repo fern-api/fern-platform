@@ -124,7 +124,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
     const withTooltip = (content: ReactNode) => {
         if (authed) {
             return (
-                <FernTooltip content="You must be logged in to view this page" side="right">
+                <FernTooltip content="You must be logged in to view this page" side="right" asChild>
                     {content}
                 </FernTooltip>
             );
@@ -135,7 +135,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>((props,
         }
 
         return (
-            <FernTooltip content={tooltipContent} side="right">
+            <FernTooltip content={tooltipContent} side="right" asChild>
                 {content}
             </FernTooltip>
         );
