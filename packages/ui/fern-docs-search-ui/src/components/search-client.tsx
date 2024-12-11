@@ -23,7 +23,7 @@ import { InstantSearchNext } from "react-instantsearch-nextjs";
 import { preload } from "swr";
 import useSWRImmutable from "swr/immutable";
 
-import { uniq } from "es-toolkit/compat";
+import { uniq } from "es-toolkit/array";
 import { FacetFilter, isFacetName } from "../types";
 import { toAlgoliaFacetFilters } from "../utils/facet-filters";
 
