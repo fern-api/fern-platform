@@ -30,5 +30,10 @@ export class FernNextResponse {
 }
 
 function isBuildWithFern(host: string): boolean {
-    return host.toLowerCase().endsWith(".buildwithfern.com");
+    return (
+        host.toLowerCase().endsWith(".buildwithfern.com") ||
+        host.toLowerCase().endsWith(".ferndocs.app") ||
+        host.toLowerCase().endsWith(".ferndocs.com") ||
+        host.toLowerCase().endsWith(".ferndocs.dev")
+    );
 }
