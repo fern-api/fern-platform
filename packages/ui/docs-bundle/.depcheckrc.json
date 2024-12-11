@@ -2,7 +2,7 @@
   "ignores": [
     "@fern-platform/configs",
     "@types/node",
-    "@types/react", 
+    "@types/react",
     "@types/react-dom",
     "autoprefixer",
     "postcss",
