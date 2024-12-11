@@ -8,8 +8,15 @@ import {
 import { ConstArrayToType, SUPPORTED_X_FERN_AVAILABILITY_VALUES } from "../../types/format.types";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
 import { extendType } from "../../utils/extendType";
+import { xFernAvailabilityKey } from "./fernExtension.consts";
 
 export type Availability = ConstArrayToType<typeof SUPPORTED_X_FERN_AVAILABILITY_VALUES>;
+
+export declare namespace AvailabilityConverterNode {
+    export interface Input {
+        [xFernAvailabilityKey]?: Availability;
+    }
+}
 
 export class AvailabilityConverterNode extends BaseOpenApiV3_1ConverterNode<
     { deprecated?: boolean } | OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject,
@@ -30,9 +37,7 @@ export class AvailabilityConverterNode extends BaseOpenApiV3_1ConverterNode<
         if (input?.deprecated) {
             this.availability = "deprecated";
         } else {
-            const maybeAvailability = extendType<{
-                "x-fern-availability"?: Availability;
-            }>(this.input)["x-fern-availability"];
+            const maybeAvailability = extendType<AvailabilityConverterNode.Input>(this.input)[xFernAvailabilityKey];
             if (maybeAvailability != null) {
                 if (SUPPORTED_X_FERN_AVAILABILITY_VALUES.includes(maybeAvailability)) {
                     this.availability = maybeAvailability;

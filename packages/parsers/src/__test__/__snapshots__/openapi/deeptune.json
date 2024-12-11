@@ -1,9 +1,12 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "test-uuid-replacement": {
+    "post-v-1-text-to-speech": {
       "description": "API that converts text into lifelike speech with best-in-class latency & uses the most advanced AI audio model ever. Create voiceovers for your videos, audiobooks, or create AI chatbots for free.",
-      "id": "/v1/text-to-speech",
+      "namespace": [
+        "text_to_speech"
+      ],
+      "id": "post-v-1-text-to-speech",
       "method": "POST",
       "path": [
         {
@@ -35,9 +38,12 @@
       "errors": [],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-text-to-speech-from-prompt": {
       "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
-      "id": "/v1/text-to-speech/from-prompt",
+      "namespace": [
+        "text_to_speech"
+      ],
+      "id": "post-v-1-text-to-speech-from-prompt",
       "method": "POST",
       "path": [
         {
@@ -73,9 +79,12 @@
       "errors": [],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-v-1-voices": {
       "description": "Retrieve all voices associated with the current workspace.",
-      "id": "/v1/voices",
+      "namespace": [
+        "voices"
+      ],
+      "id": "get-v-1-voices",
       "method": "GET",
       "path": [
         {
@@ -108,9 +117,12 @@
       "errors": [],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "post-v-1-voices": {
       "description": "Create a new voice with a name, optional description, and audio file.",
-      "id": "/v1/voices",
+      "namespace": [
+        "voices"
+      ],
+      "id": "post-v-1-voices",
       "method": "POST",
       "path": [
         {
@@ -153,9 +165,12 @@
       "errors": [],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "get-v-1-voices-voice-id": {
       "description": "Retrieve a specific voice by its ID.",
-      "id": "/v1/voices/{voice_id}",
+      "namespace": [
+        "voices"
+      ],
+      "id": "get-v-1-voices-voice-id",
       "method": "GET",
       "path": [
         {
@@ -207,9 +222,12 @@
       "errors": [],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "put-v-1-voices-voice-id": {
       "description": "Update an existing voice with new name, description, or audio file.",
-      "id": "/v1/voices/{voice_id}",
+      "namespace": [
+        "voices"
+      ],
+      "id": "put-v-1-voices-voice-id",
       "method": "PUT",
       "path": [
         {
@@ -271,9 +289,12 @@
       "errors": [],
       "examples": []
     },
-    "test-uuid-replacement": {
+    "delete-v-1-voices-voice-id": {
       "description": "Delete an existing voice by its ID.",
-      "id": "/v1/voices/{voice_id}",
+      "namespace": [
+        "voices"
+      ],
+      "id": "delete-v-1-voices-voice-id",
       "method": "DELETE",
       "path": [
         {
@@ -355,9 +376,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -368,9 +395,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
                 }
               }
             },
@@ -438,9 +471,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -451,9 +490,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
                 }
               }
             },
@@ -608,9 +653,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },

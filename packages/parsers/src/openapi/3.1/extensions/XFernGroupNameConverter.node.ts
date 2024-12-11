@@ -1,17 +1,22 @@
+import { FernRegistry } from "../../../client/generated";
 import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../utils/extendType";
+import { xFernGroupNameKey } from "./fernExtension.consts";
 
 export declare namespace XFernGroupNameConverterNode {
     export interface Input {
-        "x-fern-group-name"?: string;
+        [xFernGroupNameKey]?: string | string[];
     }
 }
 
-export class XFernGroupNameConverterNode extends BaseOpenApiV3_1ConverterNode<unknown, string | undefined> {
-    groupName?: string;
+export class XFernGroupNameConverterNode extends BaseOpenApiV3_1ConverterNode<
+    unknown,
+    FernRegistry.api.latest.SubpackageId[]
+> {
+    groupName?: string | string[];
 
     constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
         super(args);
@@ -20,10 +25,21 @@ export class XFernGroupNameConverterNode extends BaseOpenApiV3_1ConverterNode<un
 
     // This would be used to set a member on the node
     parse(): void {
-        this.groupName = extendType<{ "x-fern-group-name"?: string }>(this.input)["x-fern-group-name"];
+        this.groupName = extendType<XFernGroupNameConverterNode.Input>(this.input)[xFernGroupNameKey];
     }
 
-    convert(): string | undefined {
-        return this.groupName;
+    convert(): FernRegistry.api.latest.SubpackageId[] | undefined {
+        if (this.groupName == null) {
+            return undefined;
+        }
+
+        let subpackagePath: string[];
+        if (Array.isArray(this.groupName)) {
+            subpackagePath = this.groupName;
+        } else {
+            subpackagePath = [this.groupName];
+        }
+
+        return subpackagePath.map((path) => FernRegistry.api.v1.SubpackageId(path));
     }
 }

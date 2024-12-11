@@ -24,6 +24,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     extends: string[] = [];
     properties: Record<string, SchemaConverterNode> | undefined;
     extraProperties: string | SchemaConverterNode | undefined;
+    requiredProperties: string[] | undefined;
 
     constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<ObjectConverterNode.Input>) {
         super(args);
@@ -33,6 +34,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     parse(): void {
         this.extends = [];
 
+        this.requiredProperties = this.input.required;
         this.properties = Object.fromEntries(
             Object.entries(this.input.properties ?? {}).map(([key, property]) => {
                 return [
@@ -99,7 +101,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             return undefined;
         }
 
-        return convertToObjectProperties(this.properties);
+        return convertToObjectProperties(this.properties, this.requiredProperties);
     }
 
     convertExtraProperties(): FernRegistry.api.latest.TypeReference | undefined {

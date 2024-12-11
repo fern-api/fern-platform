@@ -1,7 +1,9 @@
+import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
 import { signFernJWT } from "@/server/auth/FernJWT";
 import { OryOAuth2Client } from "@/server/auth/ory";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
+import { FernNextResponse } from "@/server/FernNextResponse";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
@@ -31,13 +33,14 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     if (error != null) {
         // eslint-disable-next-line no-console
         console.error(`OAuth2 error: ${error} - ${error_description}`);
-        return redirectWithLoginError(redirectLocation, error, error_description);
+        return redirectWithLoginError(req, redirectLocation, error, error_description);
     }
 
     if (typeof code !== "string") {
         // eslint-disable-next-line no-console
         console.error("Missing code in query params");
         return redirectWithLoginError(
+            req,
             redirectLocation,
             "missing_authorization_code",
             "Couldn't login, please try again",
@@ -47,7 +50,7 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     if (config == null || config.type !== "oauth2" || config.partner !== "ory") {
         // eslint-disable-next-line no-console
         console.log(`Invalid config for domain ${domain}`);
-        return redirectWithLoginError(redirectLocation, "unknown_error", "Couldn't login, please try again");
+        return redirectWithLoginError(req, redirectLocation, "unknown_error", "Couldn't login, please try again");
     }
 
     const oauthClient = new OryOAuth2Client(config);
@@ -60,7 +63,12 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
         };
         const expires = token.exp == null ? undefined : new Date(token.exp * 1000);
         // TODO: validate allowlist of domains to prevent open redirects
-        const res = redirectLocation ? NextResponse.redirect(redirectLocation) : NextResponse.next();
+        const res = redirectLocation
+            ? FernNextResponse.redirect(req, {
+                  destination: redirectLocation,
+                  allowedDestinations: getAllowedRedirectUrls(config),
+              })
+            : NextResponse.next();
         res.cookies.set(
             COOKIE_FERN_TOKEN,
             await signFernJWT(fernUser),
@@ -82,6 +90,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     } catch (error) {
         // eslint-disable-next-line no-console
         console.error("Error getting access token", error);
-        return redirectWithLoginError(redirectLocation, "unknown_error", "Couldn't login, please try again");
+        return redirectWithLoginError(req, redirectLocation, "unknown_error", "Couldn't login, please try again");
     }
 }
