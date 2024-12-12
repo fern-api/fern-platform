@@ -1,6 +1,8 @@
+import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withDeleteCookie } from "@/server/auth/with-secure-cookie";
 import { revokeSessionForToken } from "@/server/auth/workos-session";
+import { FernNextResponse } from "@/server/FernNextResponse";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
@@ -33,9 +35,13 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     const redirectLocation =
         logoutUrl ??
         safeUrl(req.nextUrl.searchParams.get(return_to_param)) ??
-        safeUrl(withDefaultProtocol(getHostEdge(req)));
+        safeUrl(withDefaultProtocol(getHostEdge(req))) ??
+        new URL(domain);
 
-    const res = redirectLocation ? NextResponse.redirect(redirectLocation) : NextResponse.next();
+    const res = FernNextResponse.redirect(req, {
+        destination: redirectLocation,
+        allowedDestinations: getAllowedRedirectUrls(authConfig),
+    });
     res.cookies.delete(withDeleteCookie(COOKIE_FERN_TOKEN, withDefaultProtocol(getHostEdge(req))));
     res.cookies.delete(withDeleteCookie(COOKIE_ACCESS_TOKEN, withDefaultProtocol(getHostEdge(req))));
     res.cookies.delete(withDeleteCookie(COOKIE_REFRESH_TOKEN, withDefaultProtocol(getHostEdge(req))));

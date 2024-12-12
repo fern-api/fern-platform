@@ -1,4 +1,4 @@
-import { PLATFORM } from "@fern-api/ui-core-utils";
+import { getPlatform } from "@fern-api/ui-core-utils";
 import { useEventCallback, useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
 
 export function useSearchTrigger(setOpen: (open: boolean) => void): void {
@@ -20,5 +20,5 @@ export function useSearchTrigger(setOpen: (open: boolean) => void): void {
     });
 
     // fallback (old behavior)
-    useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: useEventCallback(() => setOpen(true)) });
+    useKeyboardCommand({ key: "K", platform: getPlatform(), onCommand: useEventCallback(() => setOpen(true)) });
 }

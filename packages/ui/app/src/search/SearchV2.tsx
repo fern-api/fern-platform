@@ -100,6 +100,7 @@ export function SearchV2(): ReactElement | false {
             fetchFacets={facetFetcher}
             authenticatedUserToken={user?.email}
             initialFilters={{ "version.title": version?.title }}
+            analyticsTags={["search-v2-dialog"]}
         >
             <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild trigger={<DesktopSearchButton />}>
                 <DesktopCommand onClose={() => setOpen(false)}>

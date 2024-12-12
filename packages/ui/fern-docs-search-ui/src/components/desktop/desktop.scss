@@ -98,7 +98,10 @@
         display: flex;
         gap: 1rem;
         align-items: center;
-        cursor: default;
+
+        &:not(a) {
+            cursor: default;
+        }
 
         svg:first-child {
             width: 1rem;

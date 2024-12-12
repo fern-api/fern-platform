@@ -36,7 +36,7 @@ describe("OperationObjectConverterNode", () => {
 
             expect(result).toEqual({
                 description: "Get a pet",
-                id: FernRegistry.EndpointId("/pets/{petId}"),
+                id: "get-pets-pet-id",
                 method: "GET",
                 path: [
                     { type: "literal", value: "pets" },
@@ -49,9 +49,15 @@ describe("OperationObjectConverterNode", () => {
                         valueShape: {
                             type: "alias",
                             value: {
-                                type: "primitive",
-                                value: {
-                                    type: "string",
+                                type: "optional",
+                                shape: {
+                                    type: "alias",
+                                    value: {
+                                        type: "primitive",
+                                        value: {
+                                            type: "string",
+                                        },
+                                    },
                                 },
                             },
                         },

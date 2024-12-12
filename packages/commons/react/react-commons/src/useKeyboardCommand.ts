@@ -1,10 +1,10 @@
-import { type Digit, type UppercaseLetter } from "@fern-api/ui-core-utils";
+import { type Digit, type Platform, type UppercaseLetter } from "@fern-api/ui-core-utils";
 import { useEffect } from "react";
 
 export declare namespace useKeyboardCommand {
     export interface Args {
         key: UppercaseLetter | Digit;
-        platform: "mac" | "windows" | "other";
+        platform: Platform;
         onCommand: () => void | Promise<void>;
         preventDefault?: boolean;
     }

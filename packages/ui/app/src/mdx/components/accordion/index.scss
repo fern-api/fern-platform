@@ -1,6 +1,10 @@
 @layer components {
     .fern-accordion {
         @apply fern-card divide-default divide-y rounded-lg m-mdx;
+
+        li {
+            @apply list-outside;
+        }
     }
 
     .fern-accordion-item {

@@ -3,8 +3,13 @@ import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
-import { basePathExtensionKey } from "../../types/extension.types";
 import { extendType } from "../../utils/extendType";
+import { xFernBasePathKey } from "./fernExtension.consts";
+export declare namespace XFernBasePathConverterNode {
+    export interface Input {
+        [xFernBasePathKey]?: string;
+    }
+}
 
 export class XFernBasePathConverterNode extends BaseOpenApiV3_1ConverterNode<OpenAPIV3_1.Document, string | undefined> {
     basePath?: string;
@@ -15,7 +20,7 @@ export class XFernBasePathConverterNode extends BaseOpenApiV3_1ConverterNode<Ope
     }
 
     parse(): void {
-        this.basePath = extendType<{ [key in typeof basePathExtensionKey]?: string }>(this.input)[basePathExtensionKey];
+        this.basePath = extendType<XFernBasePathConverterNode.Input>(this.input)[xFernBasePathKey];
 
         if (this.basePath != null) {
             if (this.basePath.startsWith("/")) {
