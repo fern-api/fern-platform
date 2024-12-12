@@ -118,6 +118,7 @@ class MockRevalidatorService implements RevalidatorService {
 export const baseMockFdrConfig: FdrConfig = {
     awsAccessKey: "",
     awsSecretKey: "",
+    cdnPublicDocsUrl: "https://files.buildwithfern.com",
     publicDocsS3: {
         bucketName: "fdr",
         bucketRegion: "us-east-1",

@@ -55,12 +55,14 @@ export interface S3Service {
 }
 
 export class S3ServiceImpl implements S3Service {
+    private publicDocsCDNUrl: string;
     private publicDocsS3: S3Client;
     private privateDocsS3: S3Client;
     private privateApiDefinitionSourceS3: S3Client;
     private presignedDownloadUrlCache = new Cache<string>(10_000, ONE_WEEK_IN_SECONDS);
 
     constructor(private readonly config: FdrConfig) {
+        this.publicDocsCDNUrl = config.cdnPublicDocsUrl;
         this.publicDocsS3 = new S3Client({
             ...(config.publicDocsS3.urlOverride != null ? { endpoint: config.publicDocsS3.urlOverride } : {}),
             region: config.publicDocsS3.bucketRegion,
@@ -111,7 +113,7 @@ export class S3ServiceImpl implements S3Service {
             return FdrAPI.Url(signedUrl);
         }
 
-        return FdrAPI.Url(`https://${this.config.publicDocsS3.bucketName}.s3.amazonaws.com/${key}`);
+        return FdrAPI.Url(`https://${this.publicDocsCDNUrl}/${key}`);
     }
 
     async getPresignedDocsAssetsUploadUrls({
