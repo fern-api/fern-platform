@@ -31,7 +31,7 @@ const PORT = 8080;
 const config = getConfig();
 
 const expressApp = express();
-expressApp.disable('x-powered-by');
+expressApp.disable("x-powered-by");
 
 // ========= Init Sentry =========
 Sentry.init({
