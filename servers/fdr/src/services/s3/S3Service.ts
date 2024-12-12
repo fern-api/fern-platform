@@ -113,7 +113,7 @@ export class S3ServiceImpl implements S3Service {
             return FdrAPI.Url(signedUrl);
         }
 
-        return FdrAPI.Url(`https://${this.publicDocsCDNUrl}/${key}`);
+        return FdrAPI.Url(`${this.publicDocsCDNUrl}/${key}`);
     }
 
     async getPresignedDocsAssetsUploadUrls({
