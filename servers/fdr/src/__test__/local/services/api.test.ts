@@ -1,4 +1,5 @@
 import { APIV1Write, FdrAPI } from "@fern-api/fdr-sdk";
+import http from "http";
 import { inject } from "vitest";
 import { createApiDefinition, getAPIResponse, getClient } from "../util";
 
@@ -72,3 +73,36 @@ it("register api", async () => {
         JSON.stringify(MOCK_REGISTER_API_DEFINITION.subpackages),
     );
 });
+
+it("test graceful handling of garbage POST", async () => {
+    const fdr = getClient({ authed: true, url: inject("url") });
+    expect(inject("url")).toEqual("");
+
+    const postData = "oneleet";
+    const req = http.request({
+        hostname: inject("url"),
+        port: 80,
+        path: "/",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Content-Length": Buffer.byteLength(postData),
+        },
+    }, (res) => {
+        res.on('data', chunk => {
+            throw new Error("shouldn't have succeeded");
+        })
+        res.on('error', e => {
+            expect(e.message).toEqual("");
+        })
+    })
+    req.write(postData);
+    req.end();
+    throw new Error("shouldn't have succeeded");
+
+    // try {
+        
+    // } catch(e) {
+    //     expect(e).toEqual("");
+    // }
+})
