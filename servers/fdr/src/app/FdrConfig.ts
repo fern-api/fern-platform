@@ -27,6 +27,7 @@ const ENABLE_CUSTOMER_NOTIFICATIONS_ENV_VAR = "ENABLE_CUSTOMER_NOTIFICATIONS";
 const REDIS_ENABLED_ENV_VAR = "REDIS_ENABLED";
 const REDIS_CLUSTERING_ENABLED_ENV_VAR = "REDIS_CLUSTERING_ENABLED";
 const APPLICATION_ENVIRONMENT_ENV_VAR = "APPLICATION_ENVIRONMENT";
+const PUBLIC_DOCS_CDN_URL = "PUBLIC_DOCS_CDN_URL";
 
 export interface S3Config {
     bucketName: string;
@@ -38,6 +39,7 @@ export interface FdrConfig {
     venusUrl: string;
     awsAccessKey: string;
     awsSecretKey: string;
+    cdnPublicDocsUrl: string;
     publicDocsS3: S3Config;
     privateDocsS3: S3Config;
     privateApiDefinitionSourceS3: S3Config;
@@ -89,6 +91,7 @@ export function getConfig(): FdrConfig {
         redisEnabled: process.env[REDIS_ENABLED_ENV_VAR] === "true",
         redisClusteringEnabled: process.env[REDIS_CLUSTERING_ENABLED_ENV_VAR] === "true",
         applicationEnvironment: getEnvironmentVariableOrThrow(APPLICATION_ENVIRONMENT_ENV_VAR),
+        cdnPublicDocsUrl: getEnvironmentVariableOrThrow(PUBLIC_DOCS_CDN_URL),
     };
 }
 
